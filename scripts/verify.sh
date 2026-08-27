@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -1905,6 +1905,52 @@ run_corpus_sweep() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: corpus-trap-audit-selftest
+#
+# Runs scripts/tests/test_corpus_trap_audit_baseline.sh — the detection
+# self-test for the comparator `corpus-trap-audit` below decides its verdict
+# with. Same reasoning as corpus-sweep-selftest: this gate must stay green
+# over SD-33's registered inherited debt while failing instantly on a
+# `wiring-class-mismatch` recurrence, and a comparator that lost its ability
+# to say NO would look identical from the outside. `SD30-CARRY-001` drove
+# that same check to 0 on 2026-08-14 and it regressed to 7,015 defects
+# unnoticed, because nothing re-ran it.
+#
+# QUICK as well as FULL: synthetic payloads only, never reads the corpus.
+# ---------------------------------------------------------------------------
+
+run_corpus_trap_audit_selftest() {
+    stage_start "corpus-trap-audit-selftest — scripts/tests/test_corpus_trap_audit_baseline.sh"
+    local log="$LOG_DIR/corpus-trap-audit-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_corpus_trap_audit_baseline.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail corpus-trap-audit-selftest "self-test script missing at scripts/tests/test_corpus_trap_audit_baseline.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail corpus-trap-audit-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail corpus-trap-audit-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass corpus-trap-audit-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: corpus-trap-audit
 #
 # Runs `v06_corpus_trap_report --audit --json` -- `AT-34-E1-007`
@@ -1958,40 +2004,53 @@ run_corpus_trap_audit() {
         return
     fi
 
+    # Per-kind verdict, not an aggregate `defects == 0`. SD-34
+    # `decisions.md` §13 rules the four trap kinds SD-33 registered in
+    # `forward-scope-register.md` D1.1 to stay REGISTERED, NOT ABSORBED --
+    # reported at their own counts, by name, every run -- while leaving
+    # AT-34-E1-007's `exits 0` bar unchanged. An aggregate check cannot hold
+    # both: it is blind to which kind moved, so it stays red forever over
+    # registered debt and tells nobody anything, decaying into exactly the
+    # unwired gate this stage exists to end. The comparator is a ratchet on
+    # named kinds -- an unregistered kind, a kind above its pin, or a kind
+    # below its pin all FAIL -- and it is itself covered by
+    # `corpus-trap-audit-selftest`, which mutation-proves its ability to say
+    # NO. That is strictly more information than the aggregate it replaces.
+    local verdict
+    verdict=$(python3 "$REPO_ROOT/scripts/corpus_trap_audit_baseline.py" "$log" 2>&1)
+    local verdict_status=$?
+
     local tally
-    tally=$(python3 - "$log" <<'PYEOF'
-import json, sys
-path = sys.argv[1]
-try:
-    with open(path, encoding="utf-8", errors="replace") as f:
-        lines = [ln for ln in f if ln.lstrip().startswith('{"findings"')]
-    if not lines:
-        print("PARSE_ERROR=no findings line in log")
-        raise SystemExit
-    data = json.loads(lines[-1])
-    findings = data["findings"]
-    defects = sum(1 for x in findings if x.get("severity") == "DEFECT")
-    traps = sum(1 for x in findings if x.get("severity") == "TRAP")
-    print(f"defects={defects} traps={traps}")
-except Exception as e:
-    print(f"PARSE_ERROR={e}")
-PYEOF
-)
-    local defects traps
-    defects=$(sed -n 's/^defects=\([0-9]*\).*$/\1/p' <<<"$tally")
-    traps=$(sed -n 's/.*traps=\([0-9]*\)$/\1/p' <<<"$tally")
+    tally=$(sed -n 's/^tally=//p' <<<"$verdict")
 
-    if [[ "$tally" == PARSE_ERROR=* || -z "$defects" ]]; then
-        stage_fail corpus-trap-audit "could not parse --json output (${tally:-no output}) — $log"
+    if (( verdict_status == 1 )); then
+        stage_fail corpus-trap-audit "could not parse --json output ($(sed -n 's/^PARSE_ERROR=//p' <<<"$verdict" | head -1)) — $log"
         return
     fi
 
-    if (( status != 0 )); then
-        stage_fail corpus-trap-audit "records_examined=${population:-?} defects=${defects} traps=${traps} (exit $status) — $log"
+    # The binary exits 2 while any DEFECT stands, including registered debt.
+    # 0 and 2 both hand the verdict to the comparator; anything else is the
+    # stage's own problem and fails here.
+    if (( status != 0 && status != 2 )); then
+        stage_fail corpus-trap-audit "unexpected exit $status — ${tally:-no tally} — $log"
         return
     fi
 
-    stage_pass corpus-trap-audit "records_examined=${population:-?} defects=0 traps=${traps}"
+    if (( verdict_status != 0 )); then
+        local why
+        why=$(sed -n 's/^reason=//p' <<<"$verdict" | paste -sd '; ' -)
+        stage_fail corpus-trap-audit "records_examined=${population:-?} ${tally} — ${why} — $log"
+        return
+    fi
+
+    # A pass naming no population is vacuous (`workflow-instruction.md §12`
+    # row 15) -- the same guard the population count above exists for.
+    if [[ -z "${population:-}" || "${population:-0}" -eq 0 ]]; then
+        stage_fail corpus-trap-audit "examined 0 records — a vacuous pass is not a pass — $log"
+        return
+    fi
+
+    stage_pass corpus-trap-audit "records_examined=${population} ${tally} — all defect kinds at their registered counts"
 }
 
 # ---------------------------------------------------------------------------
@@ -2143,6 +2202,7 @@ for stage in "${SELECTED[@]}"; do
         reclaim-selftest)    run_reclaim_selftest ;;
         driver-selftest)     run_driver_selftest ;;
         corpus-sweep-selftest) run_corpus_sweep_selftest ;;
+        corpus-trap-audit-selftest) run_corpus_trap_audit_selftest ;;
         corpus-sweep)        run_corpus_sweep ;;
         corpus-trap-audit)   run_corpus_trap_audit ;;
         supersession-gate)   run_supersession_gate ;;

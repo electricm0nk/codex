@@ -56,9 +56,9 @@ findings:
 (`workflow-instruction.md §3`) lists no `data/corpus/**` path for Epic 1 at all — regeneration is
 gated to Epic 3 (Core Rulebook, 798 of the 7,015 wiring-class-mismatch defects; 807 of 10,196
 counting all four defect traps for that book) and Epic 4 (Ultimate Campaign, 152 of the 7,015;
-163 of 10,196 all-trap) later in this same bundle, and even those two epics only cover 970 of
-10,196 all-trap defects (9.5%). The
-other 9,226 defects, across 32 books with no assigned epic in this bundle's plan, have no
+163 of 10,196 all-trap) later in this same bundle, and even those two epics only cover
+970 of 10,196 all-trap defects (9.5% of 10,196).
+The other 9,226 defects, across 32 books with no assigned epic in this bundle's plan, have no
 sanctioned fix mechanism today. SD30-CARRY-001's own precedent (re-run `gen_book_cache` per
 affected book, diff license/PI/`raw_tokens` survival, re-audit to confirm) scales to roughly 3.4×
 its own 10-book/177-defect scope here — real, bounded, but a multi-cycle remediation wave in its

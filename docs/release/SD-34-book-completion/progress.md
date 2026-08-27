@@ -17,7 +17,8 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**6 of 27 criteria complete. 6 of 26 kanban rows complete.**
+**8 of 27 criteria complete. 8 of 26 kanban rows complete.** Epic 1 is closed at 8 of 8;
+Epic 2 is unblocked.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -35,6 +36,42 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 7-R — AT-34-E1-007 re-verified after AT-34-E1-008 — `corpus-trap-audit` is GREEN
+
+`scripts/verify.sh --only corpus-trap-audit` now **exits 0**:
+
+```
+PASS  corpus-trap-audit  (records_examined=27638 defects[wiring-class-mismatch=0
+  disabled-line=165 key-differs-from-name=650 mod-record=2117
+  shared-name-distinct-records=249] traps=407 — all defect kinds at their registered counts)
+```
+
+`wiring-class-mismatch` is **0 of 3,181** remaining DEFECT findings, down from **7,015 of
+10,196** at the blocker. The four inherited kinds are each at **exactly** their launch count —
+`mod-record` 2,117, `key-differs-from-name` 650, `shared-name-distinct-records` 249,
+`disabled-line` 165, summing to 3,181 of 3,181 — **reported by name, not absorbed**. Books
+carrying ≥1 DEFECT: **29 of 37**, down from 34 of 37. `corpus_literal_sweep`: **0 findings,
+48,699 of 51,473 examined**, delta 0.
+
+**One instrument correction was required first.** The stage decided PASS/FAIL from an aggregate
+`defects == 0`, which (a) never reported `wiring-class-mismatch` at all, so AT-34-E1-008's
+"reported at their counts and not absorbed" bar could not be read from it, and (b) cannot
+satisfy `decisions.md §13`, which in one paragraph keeps AT-34-E1-007's `exits 0` bar **and**
+rules SD-33's 3,181 registered defects **registered, not absorbed** — they are DEFECT severity,
+so the aggregate stayed red forever. The verdict is now a **ratchet on named kinds**
+(`scripts/corpus_trap_audit_baseline.py`): an unregistered kind, a kind above its pin, **or a
+kind below its pin** all FAIL, and every kind's count prints on every run. Strictly more
+discriminating than the aggregate it replaces; the registered set did not grow and nothing was
+excused. Mutation-proved by `scripts/tests/test_corpus_trap_audit_baseline.sh` (14 cases, wired
+as the new `corpus-trap-audit-selftest` stage in QUICK and FULL) and by a live plant-and-remove
+on one real corpus record: `wiring-class-mismatch` moves `0 → 1 → 0` while `records_examined`,
+`traps` and all four registered kinds hold still.
+
+Rows 7 and 8 both go `complete`, from the counts: the stage's own verdict line, and 34 of 34
+book rows in `artifacts/epic-1-atlas/wiring-class-remediation.json` at `after=0` with 34 of 34
+provenance checks PASS. Receipt:
+`artifacts/epic-1-atlas/AT-34-E1-007_re-verification_receipt.md`.
 
 ### Cycle 8 — AT-34-E1-008 — `wiring-class-mismatch` driven to zero, group by group
 
