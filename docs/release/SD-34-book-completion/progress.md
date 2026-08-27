@@ -17,8 +17,8 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**10 of 27 criteria complete. 10 of 27 kanban rows complete.** Epic 1 is closed at 8 of 8;
-Epic 2 has landed its first two criteria (AT-34-E2-001, AT-34-E2-002).
+**11 of 27 criteria complete. 11 of 27 kanban rows complete.** Epic 1 is closed at 8 of 8;
+Epic 2 has landed its first three criteria (AT-34-E2-001, AT-34-E2-002, AT-34-E2-003).
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -36,6 +36,38 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 11 — AT-34-E2-003 — the measured build rate is recorded
+
+**Status: complete.** Records the real cost of building Epic 2's 8 tables to
+`artifacts/epic-2-tables/table-build-rate.json`: no production code this cycle, only
+measurement of work already landed (`AT-34-E2-001` commit `052a9182bf`, `AT-34-E2-002` commit
+`b7507f3817`).
+
+**No blended average.** Marginal lines per kind spread **2 to 12** (6×): `domain`/`skill`/
+`language` cost 2 lines each (a one-line directory-table entry + a one-line macro test
+invocation); `trait` cost 12 (the same two lines, plus a 7-line dedicated regression test and 3
+doc lines pinning its `trait_generic` directory-name mismatch — the "shallow glob lies" hazard
+from `workflow-instruction.md §4`); `ability`/`template`/`deity` cost 7 each (typical macro
+block); `companion`'s table costs 0 this bundle (pre-existing, SD-29 — only its 21-line
+fail-closed test is new). **Finding for Epic 5:** record count does not predict cost — `ability`
+(4,337 records) and `domain` (183 records) cost almost the same, because both reuse one shared
+generic loader unmodified. The real driver is whether a kind's corpus directory name matches
+its kind name; `power`'s Epic 5 price depends on whether `ultimate_psionics` needs its own
+shape handling the way `trait` did, not on its 421-unit count.
+
+**Wall time, honestly scoped:** the 7 new tables were built through one shared loader in a
+single commit — there were never 7 independent build sessions to time. The artifact reports
+real, re-derivable whole-cycle wall time (`AT-34-E2-001`: 1,359s / 0:22:39; `AT-34-E2-002`:
+779s / 0:12:59, both from `git log --format=%ci`) and, separately, per-table wall time
+pro-rated from measured marginal lines — explicitly labeled **ESTIMATE** in the artifact and
+receipt, never presented as independently measured (`AGENTS.md` rule 9).
+
+Row-count command output: `python3 -c "import json; print(len(json.load(open('artifacts/epic-2-tables/table-build-rate.json'))['tables']))"` → `8`, of the 8 tables Epic 2 builds.
+Build scope: `cargo test --locked --no-run` exit 0 (workspace, 600 executables) and
+`apps/desktop/src-tauri` exit 0 (one pre-existing unrelated `dead_code` warning), both at HEAD
+`b7507f38178e41b3962ef3161ee525e5ad9ee9b0`. Receipt:
+`artifacts/epic-2-tables/AT-34-E2-003_cycle_receipt.md`.
 
 ### Cycle 10 — AT-34-E2-002 — each new table is fail-closed
 
