@@ -30,7 +30,7 @@ One row per acceptance criterion. **27 rows covering 28 criteria** — the last 
 | 10 | `tables-fail-closed` | 2 | AT-34-E2-002 | complete | `artifacts/epic-2-tables/fail-closed-proofs.md`, `artifacts/epic-2-tables/AT-34-E2-002_cycle_receipt.md` |
 | 11 | `table-build-rate-measured` | 2 | AT-34-E2-003 | complete | `artifacts/epic-2-tables/table-build-rate.json`, `artifacts/epic-2-tables/AT-34-E2-003_cycle_receipt.md` |
 | 12 | `bucket-a-zero-both-books` | 2 | AT-34-E2-004 | complete | `artifacts/epic-2-tables/AT-34-E2-004_cycle_receipt.md` |
-| 13 | `core-bucket-b-zero` | 3 | AT-34-E3-001 | not-started | |
+| 13 | `core-bucket-b-zero` | 3 | AT-34-E3-001 | blocked-escalated | `artifacts/epic-3-core-rulebook/AT-34-E3-001_cycle_receipt.md` — 29/1035 cleared (1 of 11 mechanisms), 1006 remain, escalated in `progress.md` |
 | 14 | `core-bucket-c-zero` | 3 | AT-34-E3-002 | not-started | |
 | 15 | `core-buckets-m-v-d-u-x-zero` | 3 | AT-34-E3-003 | not-started | |
 | 16 | `core-step-cost-ledger` | 3 | AT-34-E3-004 | not-started | |

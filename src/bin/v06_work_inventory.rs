@@ -5379,6 +5379,28 @@ impl EngineFacts {
                 .get(&name.to_lowercase())
                 .map(|b| *b == book)
                 .unwrap_or(false),
+            // `AT-34-E3-001`: the seven Epic 2 simple-kind-table kinds
+            // (`simple_kind_tables::SEVEN_KIND_DIRS`) fell through to the
+            // catch-all `false` below, which silently defeated the
+            // `decisions.md §9` re-attribution widening for every one of
+            // them -- a row whose `source_book` resolves to a rule set with
+            // no table of this kind at all could never be observed as held
+            // by the `book` it is actually reported and filed under, no
+            // matter how real that book's own table entry was. Delegates to
+            // the SAME `SimpleKindTable::resolve` `simple_kind_verdict`
+            // itself calls, so this predicate and the verdict it feeds
+            // agree by construction.
+            Kind::Ability
+            | Kind::Template
+            | Kind::Deity
+            | Kind::Domain
+            | Kind::Trait
+            | Kind::Language
+            | Kind::Skill => self
+                .simple_kind_tables
+                .get(kind.id())
+                .map(|t| t.resolve(book, key).is_some() || (name_fallback && t.resolve(book, name).is_some()))
+                .unwrap_or(false),
             _ => false,
         }
     }
@@ -15265,6 +15287,92 @@ mod companion_text_complete_rung_tests {
             verdict.evidence,
             "trait_content_table_resolve_returned_a_real_record_with_description"
         );
+    }
+
+    /// `AT-34-E3-001` bucket B, mechanism 1: `holds_key_inner` has no arm
+    /// for the seven Epic 2 simple-kind-table kinds (`Kind::Ability`,
+    /// `Kind::Template`, `Kind::Deity`, `Kind::Domain`, `Kind::Trait`,
+    /// `Kind::Language`, `Kind::Skill`) -- it falls through to `_ => false`.
+    /// That silently defeats the `decisions.md §9` re-attribution widening
+    /// for exactly these kinds: a row whose `source_book` (the raw
+    /// ingestion tree, e.g. `core_essentials`) has no table of this kind at
+    /// all, but whose reported `book` (`core_rulebook`) DOES hold this
+    /// row's own key, is left stranded reporting
+    /// `..._absent_from_..._table_in_core_essentials` -- bucket B, wrong
+    /// book -- forever, because `holds_unit_by_key` can never observe the
+    /// hit that would fire the widening.
+    ///
+    /// Real, not fabricated: `data/corpus/core_rulebook/ability/
+    /// racial_traits_dwarf.json` carries `"key": "Racial Traits ~ Dwarf"`;
+    /// its own `source.path` is
+    /// `pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/
+    /// dwarf_abilities_globalvar.lst` (verified 2026-08-27), which is why
+    /// `source_book` resolves to `core_essentials` even though the unit is
+    /// filed, and physically held, under `core_rulebook`.
+    #[test]
+    fn an_ability_reattributed_off_a_tableless_source_book_is_credited_to_the_book_that_holds_its_key()
+    {
+        let facts = facts_with_simple_kind_table("ability");
+        let mut unit = simple_kind_test_unit(
+            Kind::Ability,
+            "core_essentials",
+            "dwarf_abilities_globalvar.lst",
+            9,
+            "Racial Traits ~ Dwarf",
+            1,
+        );
+        unit.book = "core_rulebook".to_string();
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(
+            verdict.engine_book.as_deref(),
+            Some("core_rulebook"),
+            "the widening must credit the book that really holds this row's own key"
+        );
+        assert_ne!(verdict.status, "engine-does-not-hold");
+        assert!(!verdict.evidence.contains("absent_from_ability_table_in_core_essentials"));
+    }
+
+    /// Sibling proof on `Kind::Template`, the other simple-kind-table kind
+    /// this cycle's live corpus shows carrying the same defect (`IsDwarf`,
+    /// `data/corpus/core_rulebook/template/isdwarf.json`).
+    #[test]
+    fn a_template_reattributed_off_a_tableless_source_book_is_credited_to_the_book_that_holds_its_key()
+    {
+        let facts = facts_with_simple_kind_table("template");
+        let mut unit = simple_kind_test_unit(
+            Kind::Template,
+            "core_essentials",
+            "cr_templates_race.lst",
+            1,
+            "IsDwarf",
+            0,
+        );
+        unit.book = "core_rulebook".to_string();
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.engine_book.as_deref(), Some("core_rulebook"));
+        assert_ne!(verdict.status, "engine-does-not-hold");
+        assert!(!verdict.evidence.contains("absent_from_template_table_in_core_essentials"));
+    }
+
+    /// MONOTONICITY sibling (mirrors `the_widening_never_fires_when_the_
+    /// reattributed_books_table_is_empty`): when NO table is loaded at all,
+    /// the new arm must answer `false`, not panic and not fire the
+    /// widening — the fix adds a real predicate, it does not default to
+    /// `true`.
+    #[test]
+    fn the_new_simple_kind_arm_never_fires_with_no_table_loaded() {
+        let facts = EngineFacts::default();
+        let mut unit = simple_kind_test_unit(
+            Kind::Ability,
+            "core_essentials",
+            "dwarf_abilities_globalvar.lst",
+            9,
+            "Racial Traits ~ Dwarf",
+            1,
+        );
+        unit.book = "core_rulebook".to_string();
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_ne!(verdict.engine_book.as_deref(), Some("core_rulebook"));
     }
 
     /// PROVE THE RUNG CAN FAIL, case 4 (SD31-D7-PROSE-004, Decision 7

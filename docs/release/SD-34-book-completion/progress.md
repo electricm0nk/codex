@@ -18,7 +18,10 @@ Item 10 (widest build scope + inherited test baseline) is a separate lane's obli
 not reported here. Epic 1 dispatch underway.
 
 **12 of 27 criteria complete. 12 of 27 kanban rows complete.** Epic 1 is closed at 8 of 8;
-Epic 2 is closed at 4 of 4 (AT-34-E2-001..004). Epic 3 (Core Rulebook to zero) is next.
+Epic 2 is closed at 4 of 4 (AT-34-E2-001..004). Epic 3 (Core Rulebook to zero) is underway:
+AT-34-E3-001 (row 13) ran one cycle, cleared one of its eleven mechanisms (29 of 1035 bucket-B
+units), and escalated the remaining ten for further per-mechanism cycles — see Cycle 13 and
+`## Open blockers` below.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -36,6 +39,81 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 13 — AT-34-E3-001 — bucket B closes: records reach their tables
+
+**Status: blocked-escalated.** Bucket B for `core_rulebook` moved
+`1035 -> 1006` (one of eleven named mechanisms fully cleared, verified
+end-to-end); the criterion requires zero, so this cycle does not close it.
+
+**Denominator corrected, not carried forward.** `epic-breakdown.md` states
+970; re-derived at this cycle's start SHA (`bfe1e7e380`):
+`python3 scripts/completion_atlas.py --book core_rulebook --check` → `B:
+1035`. Logged as a `correction` retro event, `--verified-by` the same
+command.
+
+**Bucket B partitions into eleven distinct mechanisms**, not one (grouped
+by exact evidence string on `docs/work-inventory.json`):
+`class_feature_option_pool_record_with_magnitude_not_held_by_engine` (333),
+`class_feature_owner_matched_by_name_but_record_not_held_by_engine` (330),
+`race_trait_race_not_modelled` (132), `companion_absent_from_
+core_rulebook_companion_tables` (100), `class_feature_option_pool_record_
+not_held_by_engine` (63), `template_content_absent_from_template_table_in_
+core_essentials` (22), `deity_content_absent_from_deity_table_in_core_
+rulebook` (21), `class_absent_from_ClassId_ALL_and_book_class_id_enums`
+(17), `race_trait_absent_from_race_traits` (9),
+`ability_content_absent_from_ability_table_in_core_essentials` (7),
+`domain_content_absent_from_domain_table_in_core_rulebook` (1).
+
+**Fixed this cycle: the `template` (22) and `ability` (7) mechanisms — 29
+units, one root cause.** `holds_key_inner` (`src/bin/v06_work_inventory.rs`)
+had no match arm for the seven Epic 2 simple-kind-table kinds
+(`Ability`/`Template`/`Deity`/`Domain`/`Trait`/`Language`/`Skill`), which
+silently defeated the `decisions.md §9` re-attribution widening for every
+one of them: a unit whose raw ingestion tree (`source_book`) resolves to
+`core_essentials` (which has no `ability`/`template` directory) could never
+be credited to the book (`core_rulebook`) that actually, physically holds
+its own record. Verified real, not fabricated:
+`data/corpus/core_rulebook/ability/racial_traits_dwarf.json` and
+`data/corpus/core_rulebook/template/isdwarf.json` both carry a real,
+matching key. RED (`cargo test --locked --bin v06_work_inventory
+reattributed_off_a_tableless` → 2 failed, `engine_book` stayed `None`
+instead of `Some("core_rulebook")`) → GREEN after one new match arm
+delegating to the same `SimpleKindTable::resolve` the verdict itself
+already calls. Full binary suite: `369 -> 375 passed, 0 failed`.
+
+**Self-caught regression, fixed same cycle:** the new arm's 22 inserted
+lines shifted every one of `completion_atlas.py`'s ten hardcoded
+`BUCKET_DEFINITIONS` `file:line` citations by `+22`, tripping
+`citation_failures=10` (AT-34-E1-002 condition 6, fail-closed as designed).
+Re-derived each new line by `grep -n`, fixed the ten literals,
+`citation_failures` back to `0`. Logged as an `incident`
+(`recurrence-key: line-number-citation-drift`).
+
+**Remaining ten mechanisms (1006 units) are each independently named**
+with their own population and verified root cause in
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_cycle_receipt.md` — two
+`class_feature` mechanisms (726 combined, real class-feature engine
+modelling, more than two-thirds of what remains), race/race-trait modelling
+(141), companion-table extension (100), full `ClassId` modelling for 17
+NPC/prestige classes, and two mechanisms needing an explicit ruling before
+any code change: `deity` (21, every corpus record PI-redacted, resolvable
+only by source-coordinate, not key/name) and `domain` (1, a genuinely
+missing corpus record with no JSON anywhere in `data/corpus/core_rulebook/`
+— a guarded-generator job, not a resolve fix).
+
+**Verification:** `corpus_literal_sweep` unchanged, `48699 of 51473`
+before and after (record delta 0, matches). `cargo test --locked --no-run`
+exit 0 at the full workspace scope; `apps/desktop/src-tauri` (separate
+workspace, its own `CARGO_TARGET_DIR`) `--no-run` exit 0 too, though
+untouched by this cycle. Both dual-audit greps: `OK_NO_BUNDLE_TAGS`,
+`OK_NO_TOKENS`.
+
+**Escalating per `workflow-instruction.md §8`:** this criterion bundles
+eleven distinct engineering-sized mechanisms under one card; a single
+dispatched cycle can close a lookup-predicate defect like this one but
+cannot also model new classes/races/companions in the same turn. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_cycle_receipt.md`.
 
 ### Cycle 12 — AT-34-E2-004 — bucket A reaches zero for both vehicle books
 
@@ -452,6 +530,32 @@ it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is
 disposition, never a closure path, and no later cycle may proceed past a blocked card on its
 own authority.
 
+### AT-34-E3-001 — bucket B does not close in one cycle: eleven mechanisms, not one
+
+Filed 2026-08-27 by the `AT-34-E3-001` cycle. `core_rulebook` bucket B
+partitions into eleven distinct mechanisms (populations and root causes in
+Cycle 13 above and `artifacts/epic-3-core-rulebook/AT-34-E3-001_cycle_
+receipt.md`). This cycle cleared one (`template`+`ability`, 29 of 1035) with
+a verified engine fix. The remaining ten sum to 1006 and are not closable
+in one further cycle either — two require real class-feature engine
+modelling (726 combined), one requires race/race-trait modelling (141),
+one requires extending `companion_chassis` (100), one requires modelling
+17 NPC/prestige classes as full `ClassId` entries (17), and two need an
+explicit ruling before any code is written: `deity` (21, every corpus
+record PI-redacted — resolving by source-coordinate risks a different code
+path exposing the redacted real name, the nearest precedent being SD-32's
+§28 PI ruling) and `domain` (1, a corpus record missing entirely, requiring
+the guarded `gen_book_cache` generator).
+
+**Requested disposition:** decompose `AT-34-E3-001` into further dispatched
+cycles, one or a small group of mechanisms at a time (matching the "one
+bucket per cycle, cheapest-first" discipline `workflow-instruction.md
+§2.4` already applies one level up, at the epic level) — cheapest-first
+order recommended in the cycle receipt's "Next-cycle plan". This is not a
+request to narrow the criterion's zero bar; it is a request to run it as
+more than one cycle, per `workflow-instruction.md §8`'s "a blocker bigger
+than one cycle is a sequencing problem, not an exemption."
+
 ### AT-34-E1-007 — RESOLVED 2026-08-27 by orchestrator ruling (`decisions.md §13`)
 
 <details>
@@ -485,4 +589,5 @@ The bundle is un-paused. No later epic proceeded past the blocked card while it 
 
 </details>
 
-*(no active blockers)*
+**Active: `AT-34-E3-001` (filed above, 2026-08-27) — awaiting an operator ruling on
+decomposing the criterion into further per-mechanism cycles.**
