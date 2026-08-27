@@ -16,8 +16,7 @@ print(len(cr))"
 
 Matches `decisions.md §14`'s stated 100 exactly.
 
-- **Commit SHA:** (this cycle's own commit; see `git log -1` after push, recorded in the
-  dispatch return value)
+- **Commit SHA:** `ae0f387dd3`
 - **Files touched:**
   - `scripts/transcribe_companion_tables.py` (Shape 7, book-wide grant — new)
   - `src/rules_core/rules_tables/crb/companion_data.rs` (regenerated)
