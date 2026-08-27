@@ -530,64 +530,35 @@ it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is
 disposition, never a closure path, and no later cycle may proceed past a blocked card on its
 own authority.
 
-### AT-34-E3-001 — bucket B does not close in one cycle: eleven mechanisms, not one
-
-Filed 2026-08-27 by the `AT-34-E3-001` cycle. `core_rulebook` bucket B
-partitions into eleven distinct mechanisms (populations and root causes in
-Cycle 13 above and `artifacts/epic-3-core-rulebook/AT-34-E3-001_cycle_
-receipt.md`). This cycle cleared one (`template`+`ability`, 29 of 1035) with
-a verified engine fix. The remaining ten sum to 1006 and are not closable
-in one further cycle either — two require real class-feature engine
-modelling (726 combined), one requires race/race-trait modelling (141),
-one requires extending `companion_chassis` (100), one requires modelling
-17 NPC/prestige classes as full `ClassId` entries (17), and two need an
-explicit ruling before any code is written: `deity` (21, every corpus
-record PI-redacted — resolving by source-coordinate risks a different code
-path exposing the redacted real name, the nearest precedent being SD-32's
-§28 PI ruling) and `domain` (1, a corpus record missing entirely, requiring
-the guarded `gen_book_cache` generator).
-
-**Requested disposition:** decompose `AT-34-E3-001` into further dispatched
-cycles, one or a small group of mechanisms at a time (matching the "one
-bucket per cycle, cheapest-first" discipline `workflow-instruction.md
-§2.4` already applies one level up, at the epic level) — cheapest-first
-order recommended in the cycle receipt's "Next-cycle plan". This is not a
-request to narrow the criterion's zero bar; it is a request to run it as
-more than one cycle, per `workflow-instruction.md §8`'s "a blocker bigger
-than one cycle is a sequencing problem, not an exemption."
-
-### AT-34-E1-007 — RESOLVED 2026-08-27 by orchestrator ruling (`decisions.md §13`)
+### AT-34-E3-001 — RESOLVED 2026-08-27 by orchestrator ruling (`decisions.md §14`)
 
 <details>
-<summary>Archived — the blocker as filed, and the ruling that cleared it</summary>
+<summary>Archived — the filing, and the ruling that cleared it</summary>
 
-The cycle-7 lane filed this asking how AT-34-E1-007 closes when the stage it wires reports
-`records_examined=27638 defects=10196 traps=407` against the live corpus. It offered two
-dispositions: (1) authorize a corpus-regeneration wave, or (2) rule the criterion satisfied by
-the stage's mechanical wiring, independent of whether the corpus is clean.
+The cycle asked the operator to authorize running AT-34-E3-001 as further per-mechanism cycles
+rather than one. **That is a sequencing decision, not an operator ruling**, and filing it paused
+the bundle to ask permission to keep working — the one use an escalation must never be put to
+(`../../governance/blocker-closure-doctrine.md`: a large blocker is a sequencing problem, not an
+exemption). Cleared without escalation; the nine mechanisms are dispatched as their own cycles,
+cheapest-first, and the criterion's bar is unchanged.
 
-**Ruling: option 1. The criterion is not narrowed.** Option 2 is a carve-out — a gate that passes
-because its bar moved — which `../../governance/blocker-closure-doctrine.md` rejects. A large
-blocker is a sequencing problem, not an exemption.
+The cycle's own valuable half stands: it named the remainder **by mechanism with a population
+each**, which is what makes the next wave dispatchable. Re-derived at HEAD, the enumeration
+returns **nine** mechanisms summing to **1,006 of 1,006** — the filing said "ten"; the count is
+corrected here, not carried.
 
-**Verified independently before ruling**, from the orchestrating session, not transcribed from the
-lane: the audit re-run gives `findings=10603`, `DEFECT=10196 of 10603`, `TRAP=407 of 10603`, and
-`wiring-class-mismatch=7015 of 10196` across **34 of 37** books (largest:
-`advanced_players_guide` 875, `core_rulebook` 798, `beastiary` 783, `ultimate_psionics` 759).
-`git log -1 b32926f2af` confirms `SD30-CARRY-001` drove this same check `177 -> 0` on 2026-08-14;
-nothing has re-run `--audit` since. The remaining `3,181 of 10,196` (`mod-record` 2,117,
-`key-differs-from-name` 650, `shared-name-distinct-records` 249, `disabled-line` 165) are SD-33's
-registered out-of-DoD debt and stay registered, not absorbed.
+Its two sub-questions are answered in `decisions.md §14`: `domain` (1 unit) is ordinary guarded-
+generator ingestion work, and `deity` (21 units) proceeds under a stated PI constraint — match on
+stored coordinates, keep the masked keys, never read or emit a redacted name, both PI gates stay
+green. Only an inability to work inside that constraint would be a genuine escalation.
 
-**Decomposed into `AT-34-E1-008`** (kanban row 8): drive `wiring-class-mismatch` to zero across all
-34 books via the guarded `gen_book_cache` path, per-record PI/`raw_tokens` survival verified,
-`corpus_literal_sweep` examined-population moving by exactly the record delta. Epic 1 gains
-`data/corpus/**` write scope for that criterion only. AT-34-E1-007's own `exits 0` bar is
-unchanged and it closes when AT-34-E1-008 lands.
+Also of note, and not a defect: this cycle's own 22-line insertion shifted all ten of
+`completion_atlas.py`'s `BUCKET_DEFINITIONS` `file:line` citations, and **AT-34-E1-002 condition 6
+fired exactly as designed** (`citation_failures` 10). The cycle re-derived each line and closed it
+in the same cycle. The gate caught a real regression on its first live opportunity.
 
-The bundle is un-paused. No later epic proceeded past the blocked card while it was open.
+The bundle is un-paused.
 
 </details>
 
-**Active: `AT-34-E3-001` (filed above, 2026-08-27) — awaiting an operator ruling on
-decomposing the criterion into further per-mechanism cycles.**
+*(no active blockers)*

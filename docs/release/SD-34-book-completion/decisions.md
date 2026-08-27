@@ -313,6 +313,61 @@ with a named resolution point, not an unresolved placeholder.
 
 ---
 
+## §14 — Decomposing a criterion into more cycles is a sequencing decision, not an operator ruling
+
+**Decision.** AT-34-E3-001's escalation is **cleared without an operator ruling**. Bucket B for
+`core_rulebook` is **nine** mechanisms totalling **1,006 of 1,006** remaining units — re-derived
+from `docs/work-inventory.json` at HEAD, not transcribed (the filing cycle said "ten"; the
+enumeration returns nine, and their populations sum to 1,006 exactly). Each becomes its own
+dispatched cycle, cheapest-first. The criterion's bar — bucket B at zero for `core_rulebook` — is
+unchanged.
+
+**Reasoning.** "This does not fit in one cycle, may I run more cycles?" is the orchestrator's
+sequencing call, and `../../governance/blocker-closure-doctrine.md` answers it directly: **a large
+blocker is a sequencing problem, not an exemption.** Filing it as `## Open blockers` pauses the
+bundle to ask permission to keep working, which is the one thing an escalation must never be used
+for. The filing cycle did the valuable half correctly — it **named the remainder by mechanism with
+a population each**, which is what makes the next wave dispatchable at all. A remainder called
+"the rest" would have been the defect.
+
+| Mechanism | Units of 1,006 |
+|---|---:|
+| `domain_content_absent_from_domain_table_in_core_rulebook` | 1 |
+| `race_trait_absent_from_race_traits` | 9 |
+| `class_absent_from_ClassId_ALL_and_book_class_id_enums` | 17 |
+| `deity_content_absent_from_deity_table_in_core_rulebook` | 21 |
+| `class_feature_option_pool_record_not_held_by_engine` | 63 |
+| `companion_absent_from_core_rulebook_companion_tables` | 100 |
+| `race_trait_race_not_modelled` | 132 |
+| `class_feature_owner_matched_by_name_but_record_not_held_by_engine` | 330 |
+| `class_feature_option_pool_record_with_magnitude_not_held_by_engine` | 333 |
+
+**The two sub-questions the filing cycle raised are answered, not forwarded:**
+
+**`domain` (1 unit).** `Death (Pharasma)` at `cr_domains.lst:46` has no corpus JSON anywhere under
+`data/corpus/core_rulebook/`. That is ordinary ingestion work through the guarded `gen_book_cache`
+path — never hand-authored (`§N5`). No ruling needed.
+
+**`deity` (21 units) — PI constraint, stated rather than escalated.** Every one of these records is
+already redacted (`codex_generated_name: true`, key rewritten to `Codex-Named Unit (...)`). Two
+precedents settle it. SD-32 `§28`'s **standing consequence**: a term is not Product Identity unless
+it is on the `§19` 60-term list, and re-raising requires new evidence, not a fresh scan. And this
+bundle's own AT-34-E2-001 already shipped the deity table **keying on and returning the masked
+keys, because that is what the corpus holds** — explicitly recorded there as not a defect.
+
+Placing these 21 records therefore proceeds **under a named constraint**: the fix matches on the
+record's already-stored `source_file`/`source_line` coordinates and keeps the masked key. It must
+**not read, log, emit, or reconstruct the redacted real name** in any new code path, receipt, test
+name, or commit message. `scripts/verify.sh --only site-public-status-pi-gate` and
+`--only site-dashboard-pi-gate` must stay green. **If a lane finds the work cannot be done inside
+that constraint, that is a genuine escalation** — un-redaction is not a decision any cycle makes on
+its own authority.
+
+**Enforced by:** AT-34-E3-001's own bar (bucket B at zero for `core_rulebook`), re-derived by
+AT-34-E6-001 at HEAD; the two PI gates above.
+
+---
+
 ## §13 — AT-34-E1-007's blocker is CLEARED by decomposition, not by narrowing the criterion
 
 **Decision.** The `corpus-trap-audit` stage AT-34-E1-007 wired reports **10,196 defects of 10,603
