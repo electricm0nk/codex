@@ -1,0 +1,34 @@
+{
+  "criterion": "AT-34-E1-008",
+  "description": "Per-book wiring-class-mismatch remediation rows, one group per commit. Population and command per docs/release/SD-34-book-completion/decisions.md §13. Regenerate via `cargo run --locked --bin v06_corpus_trap_report -- --audit --json` and filter findings where trap==\"wiring-class-mismatch\" and severity==\"DEFECT\", grouped by the book segment of `file`.",
+  "groups": [
+    {
+      "group": "G1",
+      "books": [
+        {
+          "book": "advanced_players_guide",
+          "wiring_class_mismatch_before": 875,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 964,
+          "records_scanned": 2077,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- advanced_players_guide",
+          "provenance_check": "PASS -- 4460 records byte-diffed against pre-change backup on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "core_rulebook",
+          "wiring_class_mismatch_before": 798,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 1031,
+          "records_scanned": 1466,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- core_rulebook",
+          "provenance_check": "PASS -- 6720 records byte-diffed against pre-change backup on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        }
+      ],
+      "commit_sha": "54e2d24e83",
+      "corpus_literal_sweep_before": 48699,
+      "corpus_literal_sweep_after": 48699,
+      "corpus_literal_sweep_delta": 0,
+      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only), so 0 delta is expected and correct per decisions.md §12 L8's own framing (population must grow when records are ADDED -- none were)."
+    }
+  ]
+}
