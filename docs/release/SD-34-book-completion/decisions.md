@@ -313,6 +313,42 @@ with a named resolution point, not an unresolved placeholder.
 
 ---
 
+## §15 — A cycle that closes part of its population and names the rest reports `partial`, not `blocked-escalated`
+
+**Decision.** A dispatched cycle has **three** terminal states, not two:
+
+| Status | Meaning | Effect |
+|---|---|---|
+| `complete` | the cycle's whole assigned population reached the bar | its kanban row goes `complete` |
+| `partial` | it closed part, and **named every remaining unit by sub-cause with populations that sum exactly** | its row stays `in-progress`; **the dispatch continues** and a later cycle takes the remainder |
+| `blocked-escalated` | it needs an **operator ruling** — a policy or scope question no cycle may decide | **pauses the bundle** |
+
+**Needing more cycles is never `blocked-escalated`. It is `partial`.**
+
+**Reasoning — this was a defect in the dispatch contract, not in the lane.** AT-34-E3-001's
+`class_feature_option_pool_record_not_held_by_engine` cycle did everything right: it closed 6 of
+63, named all **57 of 57** remaining across seven sub-causes summing exactly
+(28+10+9+3+3+2+2), explicitly **declined** to file a `## Open blockers` entry, and wrote in its own
+receipt *"Not an operator-ruling request … this is a sequencing report."* Its `status` field still
+had to read `blocked-escalated`, because the dispatch schema offered no other non-`complete` value
+— and that value halts the wave. **An honest cycle was forced to choose the word that stops the
+bundle.** A vocabulary that cannot express "I did my share, here is the named remainder" will keep
+producing false pauses, and — worse in the other direction — tempt a cycle to report `complete`
+over a partial result, which is the counterfeit-completion failure this program has hit repeatedly.
+
+**This is not a new kanban state and not a deferral route.** `in-progress` already exists in
+`kanban.md`'s vocabulary and is exactly what a partially-closed criterion is. Nothing is forwarded
+to a successor bundle, nothing leaves the Definition of Done, and `§6`'s rule stands unchanged: a
+blocker on the DoD is cleared or escalated, never deferred. The **named remainder is the price** —
+a `partial` whose sub-causes do not sum to its stated total is a `complete` claim in disguise, and
+fails the same way (`§4`).
+
+**Enforced by:** the dispatch script's `CYCLE_SCHEMA` (`artifacts/sd-34-dispatch.workflow.js`),
+where only `blocked-escalated` halts and `partial` requires the `remainder` field; AT-34-E6-001's
+scan, which re-derives every `complete` from the repo and fails on any row still `in-progress`.
+
+---
+
 ## §14 — Decomposing a criterion into more cycles is a sequencing decision, not an operator ruling
 
 **Decision.** AT-34-E3-001's escalation is **cleared without an operator ruling**. Bucket B for

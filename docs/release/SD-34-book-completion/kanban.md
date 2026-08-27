@@ -12,6 +12,11 @@ One row per acceptance criterion. **27 rows covering 28 criteria** — the last 
 
 **Status vocabulary:** `not-started` | `in-progress` | `complete` | `blocked-escalated`.
 
+A cycle that closes part of its population and **names every remaining unit by sub-cause, with
+populations that sum exactly** leaves its row at `in-progress` and reports `partial` — the
+dispatch continues and a later cycle takes the remainder (`decisions.md §15`). **Needing more
+cycles is never `blocked-escalated`.**
+
 **There is no `returned-to-backlog` and no `deferred`.** A blocker on the Definition of Done is cleared or escalated (`../../governance/blocker-closure-doctrine.md`). `blocked-escalated` pauses the bundle and does not satisfy AT-34-E6-001.
 
 **Row hygiene:** per-cycle narrative goes in `progress.md` and the cycle receipt, **not the Notes column.** Notes here are a pointer, never a story.
