@@ -26,20 +26,35 @@ bundle's copy. States the current dispatch procedure only.
 
 ## 1. Pre-launch checklist
 
-**NOT YET RUN — this bundle is planning-ready, not launch-ready.** Every command below
-must be executed for real with its output pasted here before SD-34 launches. A command
-written from memory is not a verified precondition. SD-33's closure PR #377 merged 2026-08-27
-(`ea2b3396f2`), so item 3 is satisfiable now; items 2 and 8 pass at the `tranche/14` cut.
-**`git fetch origin` first** — a stale local `origin/develop` makes item 3 fail falsely.
+**Run 2026-08-27 at `tranche/14` cut SHA `571307724f6d865d744fb025760ed8ab58a26229`.** Items 1-9, 11, 12 below carry their pasted output. Item 10 (widest build scope + inherited test baseline) is run by its own lane and pasted when it lands; until it is, the bundle is NOT launch-ready. `git fetch origin` first — a stale local `origin/develop` makes item 3 fail falsely.
 
 1. **Board reachable.** `test -f docs/release/SD-34-book-completion/kanban.md && echo KANBAN_PRESENT`
+
+   **Output:**
+   ```
+   KANBAN_PRESENT
+   ```
 2. **Version source of truth read.** Both of:
    `python3 -c "import json;print(json.load(open('apps/desktop/package.json'))['version'])"`
    and the same for `apps/desktop/src-tauri/tauri.conf.json`. Expect `0.14.0` after the cut.
+
+   **Output:**
+   ```
+   0.14.0
+   0.14.0
+   ```
 3. **Predecessor's closure PR merged to develop.** `gh pr view 377 --json state,mergedAt,mergeCommit`
    (expect `MERGED`, `2026-08-27T01:35:37Z`, `ea2b3396f2…`)
    plus `git log origin/develop --oneline | head -3`, confirming the merge commit is in
    `origin/develop`'s ancestry. **Tier-1 launch gate.**
+
+   **Output:**
+   ```
+   {"mergeCommit":{"oid":"ea2b3396f2fde9223dde93522bd2288b463a21ee"},"mergedAt":"2026-08-27T01:35:37Z","state":"MERGED"}
+   ea2b3396f2 Merge pull request #377 from electricm0nk/tranche/13
+   9a00662f22 docs(sd33): record this cycle's verify.sh denominator-gate run in the retro log
+   73dcfc21f6 docs(sd33): fold-docs -- re-derive closure documents for the operator's fold, PR #377 body updated
+   ```
 4. **SD-33's instrument debt closed inside SD-33.** SD-33 closed at
    `oracle_disagreement=0`, `## Open blockers` empty, and its own deferrals enumerated.
    Re-derive: `python3 scripts/retro.py summary --since 2026-08-24 --json` and enumerate
@@ -47,20 +62,73 @@ written from memory is not a verified precondition. SD-33's closure PR #377 merg
    `sd33-e4-unknown`, one `sd33-r6-skillcombat`) — each carried in `forward-scope-register.md`
    under "Carried forward from SD-33" with its revisit condition. A different count is a finding
    to explain, not to paste.
+
+   **Output:**
+   ```
+   open= 3
+   1787633115006-sd33-e4-unknown-136912
+   1787633121875-sd33-e4-unknown-58d073
+   1787667636036-sd33-r6-skillcombat-3dee2d
+   ```
 5. **Working tree clean on the bundle branch.** `git status --porcelain`
+
+   **Output:**
+   ```
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-closure-epilogue.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-dispatch.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-fold-fix.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-fold-recovered-work.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-remediation-2.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-remediation-3.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-remediation-4.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-remediation-5.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-remediation-6.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-remediation-7.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-remediation-8.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-remediation-9.workflow.js
+   ?? docs/release/SD-33-computed-value-verification/artifacts/sd-33-remediation.workflow.js
+   ```
 6. **Doctrine gates.** The live gate is §6's inline grep pair plus the doctrine docs of
    record — `../../governance/no-stub-mvp-doctrine.md`,
    `../../doctrine-external/identifier-discipline.md`. The `~/.hermes/` profile-path check
    is moot post-2026-08-01.
+
+   **Output:**
+   ```
+   docs/doctrine-external/identifier-discipline.md
+   docs/governance/no-stub-mvp-doctrine.md
+   ```
 7. **Oracle pin present and readable.** `grep -E "^[A-Z_]+=" scripts/pcgen-oracle-pin.env`
    **`~/workspace/repos/pcgen` is forbidden as an oracle path** — `fetch-pcgen-oracle.sh`'s
    default `--dest` resolves there and a `preflight-oracle` PASS against it fails silently.
    Use the repo-local slot and pass `--dest` explicitly.
+
+   **Output:**
+   ```
+   PCGEN_ORACLE_REPO=https://github.com/PCGen/pcgen.git
+   PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6
+   PCGEN_ORACLE_SHA_DATE=2026-06-17            # informational: upstream commit date of the pin
+   PCGEN_ORACLE_SPARSE_PATHS="data/pathfinder system/gameModes/Pathfinder"
+   ```
 8. **`tranche/14` cut from `develop` and pushed.** `git ls-remote --heads origin tranche/14`
+
+   **Output:**
+   ```
+   4ff9e08a921e33a4efc27c7789c370a87fa47757	refs/heads/tranche/14
+   ```
 9. **Inherited instruments live.** All of these ship from SD-33 and SD-34 depends on them:
    `scripts/verify.sh --only denominator-gate` exits 0; `python3 scripts/box_ledger.py --check`
    exits 0; `scripts/oracle_harness/` present; `cargo run --locked --bin corpus_literal_sweep`
    reports 0 findings.
+
+   **Output:**
+   ```
+   box_ledger: uncovered=0 overlap=0 population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False
+   box_ledger EXIT=0
+   oracle_harness/: __init__.py __pycache__ campaign_key.py charbuild-remainder.txt.ftl charbuild_remainder_generate.py charbuild_remainder_run_one.sh compare.py derive_spell_casting_ability_mapping.py eqm-fixtures oracle_export.py run.py spell_casting_ability_mapping.json weapon-family.txt.ftl
+   verify.sh --only denominator-gate: PASS (files_checked=70 violations=0)
+   corpus_literal_sweep: 48699 records examined of 51473 read, 413288 tokens compared (9 synthesized), 51460 digests checked, 0 findings CLEAN
+   ```
 10. **Widest build scope green** (`decisions.md §10`): `cargo test --locked --no-run` exits 0;
     `cargo test --locked --lib`; `cd apps/desktop/src-tauri && cargo test --locked`. SD-33
     closed with **29 of 599** workspace suites carrying **46 of 8,034** failures **proven
@@ -70,10 +138,26 @@ written from memory is not a verified precondition. SD-33's closure PR #377 merg
     set is SD-34's.**
 11. **Artifact directories exist, one per epic.** See `artifacts/README.md`. Each holds a
     `.gitkeep` so the directory survives the commit.
+
+    **Output:**
+    ```
+    epic-1-atlas/: .gitkeep
+    epic-2-tables/: .gitkeep
+    epic-3-core-rulebook/: .gitkeep
+    epic-4-ultimate-campaign/: .gitkeep
+    epic-5-forward-plan/: .gitkeep
+    epic-6-closure/: .gitkeep
+    ```
 12. **Denominator gate pointed at THIS package.** The gate's default scope is SD-33's folder
     (`decisions.md §3`). Run
     `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'`
     and paste `files_checked=N violations=0`.
+
+    **Output:**
+    ```
+    files_checked=15
+    violations=0
+    ```
 
 ## 2. Orchestration mode
 
@@ -244,7 +328,7 @@ as it goes rather than delivering nothing until it finishes.
 correct any that does not exist as written **before** launch. Paths marked `(new)` are epic
 deliverables — confirm the **parent directory** exists and that the name does not collide.
 
-**Run for real 2026-08-27 at `origin/develop` `ea2b3396f2`:**
+**Run for real 2026-08-27 at `tranche/14` `571307724f` (version bump commit):**
 
 ```
 EXISTS   src/bin/v06_work_inventory.rs
