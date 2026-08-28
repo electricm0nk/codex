@@ -24,7 +24,7 @@ print(len(cr))"
 
 Matches the third cycle's own after-figure exactly.
 
-- **Commit SHA:** `PENDING` (filled by a same-day follow-up docs commit, per precedent)
+- **Commit SHA:** `faae8dd4972096c17439fd18c7b93196e35bd275`
 - **Files touched:**
   - `src/rules_core/rules_tables/companion_chassis.rs` — added
     `GRANT_TOKEN_ONLY_DISPATCH_ROWS: &[(&str, &str)]` (12 named keys + reason strings) and
