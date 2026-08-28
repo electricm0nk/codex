@@ -10351,6 +10351,33 @@ fn classify(
                             );
                         }
                     }
+                    // AT-34-E3-001 cycle 6, armor/shield-flavored sibling of
+                    // cycle 5's own weapon-only rung immediately above, for
+                    // the DISPLAY-bearing `"Weapon and Armor Proficiency ~
+                    // <Class>"` combined records (a different corpus key per
+                    // class than cycle 5's own three). `class_feature_pool_
+                    // catalog::weapon_and_armor_proficiency_grant_class_id`'s
+                    // own doc comment carries the full argument: five
+                    // classes, each independently verified as an EXACT set
+                    // match on BOTH halves against the already-shipped
+                    // `weapon_tables::CLASS_WEAPON_PROFICIENCIES` table and
+                    // the new `weapon_tables::CLASS_ARMOR_PROFICIENCIES`
+                    // table this cycle adds. Still `description: null`'s
+                    // display-bucket sibling concern is untouched -- this
+                    // only certifies the record's own content is now held
+                    // by real engine tables (bucket B -> D, same "a shelf,
+                    // not a half-fix" outcome as cycle 5's own rung).
+                    if let Some(class_id) = class_feature_pool_catalog::weapon_and_armor_proficiency_grant_class_id(
+                        &unit.key,
+                    ) {
+                        if weapon_tables::class_weapon_proficiency(class_id).is_some()
+                            && weapon_tables::class_armor_proficiency(class_id).is_some()
+                        {
+                            return engine_does_not_hold(
+                                "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables",
+                            );
+                        }
+                    }
                     return engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine");
                 }
                 // AT-33-E4-002 (`unknown-rootcause.md` §1): before this

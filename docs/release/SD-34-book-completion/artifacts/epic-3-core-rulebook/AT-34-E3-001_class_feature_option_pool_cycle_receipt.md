@@ -1,3 +1,249 @@
+# Cycle 6 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
+
+- **Commit SHA:** <pending — filled by this cycle's second, docs-only commit per cycle 5's own precedent>
+- **Files touched:** `src/rules_core/rules_tables/crb/weapon_tables.rs`, `src/rules_core/class_feature_pool_catalog.rs`, `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py`, `scripts/missing_engine_tables.py`, `docs/work-inventory.json` (regenerated), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` (re-derived), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/missing-engine-tables.json` (re-derived), this receipt.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`
+- **Wired-integration audit result:** non-empty (17 matches), but every match is `placeholder` inside PRE-EXISTING lines from earlier sibling cycles on this branch (confirmed none is in this cycle's own diff — see "Dual-audit gate" below). Equivalent to `OK_NO_TOKENS` for this cycle's own work.
+- **Acceptance criterion (verbatim, `epic-breakdown.md`):** "**970** Core Rulebook units whose table exists but which are not in it. **Evidence:** the atlas reporting bucket B at zero for `core_rulebook`, and the mechanism that placed them named — by mechanism, not per record." This receipt covers only the `class_feature_option_pool_record_not_held_by_engine` mechanism, one of nine.
+
+## Re-derived population, this cycle's start
+
+```
+$ python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+u = [x for x in d['units'] if x['book']=='core_rulebook' and x['status']=='engine-does-not-hold'
+     and x['evidence']=='class_feature_option_pool_record_not_held_by_engine']
+print(len(u))
+"
+49
+```
+Matches the dispatch brief's own stated 49 exactly — of **569** `core_rulebook` bucket-B units
+(whole book, all 9 mechanisms), of **49,438** corpus-wide units total.
+
+## Cycle 5's own next-cycle plan, checked against the real corpus first
+
+Cycle 5 proposed building an armor/shield-proficiency table "the exact same way
+`CLASS_WEAPON_PROFICIENCIES` was originally built," transcribed from each class's own
+`AUTO:ARMORPROF|ARMORTYPE=X` grant. Read against the live corpus first: the standalone
+`Armor Prof ~ {Light,Medium,Heavy}` / `Shield Prof` / `Shield Prof ~ Tower` records (6 of the
+49) are generic `CATEGORY:Internal` indirection TARGETS shared across many classes — the same
+shape as the already-investigated `Weapon Prof ~ Auto/Martial/Simple` generic targets cycle 5
+correctly left unclosed. No class grants armor via a per-class `AUTO:ARMORPROF|<named list>`
+token the way weapons work; PF1 armor proficiency has no per-item exotic analogue at all.
+
+The real per-class armor/shield data instead lives inside each class's own DISPLAY-bearing
+`"Weapon and Armor Proficiency ~ <Class>"` combined record's `ABILITY:Internal|AUTOMATIC|`
+indirection list — a DIFFERENT corpus key from the internal weapon-only chassis rows cycle 5's
+own `WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES` already covers (Bard/Druid/Rogue). 7 of this
+cycle's 49 units are these combined records: Bard, Druid, Fighter, Monk, Paladin, Ranger, Rogue.
+
+## What was and was not safely closable — verified per-record, not by name shape
+
+Built `weapon_tables::CLASS_ARMOR_PROFICIENCIES` (new `ClassArmorProficiency` struct: light/
+medium/heavy/shield/tower_shield booleans — PF1 armor proficiency has no named-item analogue to
+a weapon's exotic list, so five booleans is the whole grant), each row transcribed from that
+class's own combined record's literal `ABILITY:Internal|AUTOMATIC|Armor Prof ~ <Tier>` /
+`Shield Prof` / `Shield Prof ~ Tower` indirection targets, verified byte-for-byte against the
+live corpus JSON in a new test (`class_armor_proficiencies_match_their_own_corpus_records`).
+
+Then, for each of the 7 combined records, checked BOTH halves — weapon AND armor — against real
+tables, exactly as careful as cycle 5's own single-table check:
+
+| Class | Weapon-side content | Matches `CLASS_WEAPON_PROFICIENCIES`? | Armor/shield-side content | Matches new table? | Closed? |
+|---|---|---|---|---|---|
+| Bard | Longsword/Rapier/Sap/Sword (Short)/Shortbow/Whip + Simple tier | **YES** (exact) | Light + Shield | **YES** | **YES** |
+| Fighter | Simple+Martial tiers only | **YES** (exact) | Heavy+Medium+Light+Shield+Tower | **YES** | **YES** |
+| Paladin | Simple+Martial tiers only | **YES** (exact) | Heavy+Medium+Light+Shield | **YES** | **YES** |
+| Ranger | Simple+Martial tiers only | **YES** (exact) | Light+Medium+Shield | **YES** | **YES** |
+| Rogue | Crossbow (Hand)/Rapier/Sap/Shortbow/Sword (Short) + Simple tier | **YES** (exact) | Light only, no shield | **YES** | **YES** |
+| Druid | 9 named weapons (Club/Dagger/Dart/Quarterstaff/Scimitar/Sickle/Shortspear/Sling/Spear) | **NO** — missing `Scythe` against BOTH the table row AND Druid's own dedicated `"Weapon Proficiencies ~ Druid"` record (a real corpus-internal discrepancy between two records naming the same class) | (not checked further) | — | **NO** |
+| Monk | 16 named weapons, last is `"Flurry of Blows"` | **NO** — repeats cycle 5's own established `Flurry of Blows`/`Unarmed Strike` mismatch | (not checked further) | — | **NO** |
+
+Druid and Monk were investigated and correctly left unclosed — a near-match is not a match, per
+this mechanism's own Cycle 2/5 precedent. Requiring BOTH the weapon and armor halves to verify
+byte-for-byte (rather than gating on record shape or class-name pattern alone) is exactly the
+discipline that avoids repeating the 188-record near-miss Cycle 2's own investigation caught and
+reverted pre-commit.
+
+## The fix
+
+`src/rules_core/rules_tables/crb/weapon_tables.rs`: new `ClassArmorProficiency` struct +
+`CLASS_ARMOR_PROFICIENCIES` const (5-class closed list, mirroring
+`WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`'s own established named-list pattern — never a
+shape predicate) + `class_armor_proficiency` lookup, with two new tests: one proves every row's
+armor/shield fields byte-match the live corpus record's own `ABILITY` tokens, one proves
+Druid/Monk stay excluded.
+
+`src/rules_core/class_feature_pool_catalog.rs`: new
+`WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES` (5-entry closed list) +
+`weapon_and_armor_proficiency_grant_class_id` lookup, with a test proving BOTH halves (weapon
+against `CLASS_WEAPON_PROFICIENCIES`, armor against the new `CLASS_ARMOR_PROFICIENCIES`) match
+the live corpus record exactly, and a test proving Druid/Monk stay excluded.
+
+`src/bin/v06_work_inventory.rs`: `Kind::ClassFeature`'s `text_only` fallback now consults the
+new lookup immediately after cycle 5's own weapon-only rung, before the mechanism's own generic
+fallback. A match whose class has BOTH a real `CLASS_WEAPON_PROFICIENCIES` row and a real
+`CLASS_ARMOR_PROFICIENCIES` row returns `status: "engine-does-not-hold"` with a NEW evidence
+string, `class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables` —
+deliberately still `engine-does-not-hold`, not `text-complete`: these records DO carry a real
+`description` (unlike cycle 5's own three matches), but `has_real_description`'s own
+display-bucket concern belongs to a separate mechanism; this only certifies the record's own
+content is now genuinely held by real engine tables (bucket B -> D, `decisions.md §2`'s "a
+shelf, not a half-fix" outcome, same as cycle 5's own rung).
+
+RED confirmed before the fix: the 5 target keys returned `status: "engine-does-not-hold"` with
+evidence `class_feature_option_pool_record_not_held_by_engine` (the mechanism's own generic
+fallback) rather than the new evidence string. GREEN after: `weapon_and_armor_proficiency_grant_class_table_matches_are_exact`
+(new test) and the two new classify()-adjacent unit tests on `CLASS_ARMOR_PROFICIENCIES` both
+pass, and the regenerated `docs/work-inventory.json` shows all 5 keys under the new evidence
+string.
+
+## Row-count command output (this cycle's own artifact, before → after)
+
+```
+BEFORE: 49
+AFTER:  44
+```
+(Same re-derive command as the top of this receipt, run against the regenerated
+`docs/work-inventory.json`.)
+
+## Figures + their re-derive commands
+
+| Figure | Value | Command | Denominator |
+|---|---|---|---|
+| Mechanism population, before | 49 | see top of this receipt | of 569 `core_rulebook` bucket-B units (whole book, all 9 mechanisms) |
+| Mechanism population, after | 44 | same command against post-regen `docs/work-inventory.json` | of 564 |
+| `core_rulebook` bucket B, whole book | 569 → 564 | `python3 scripts/completion_atlas.py --by-book` | of 6,701 `core_rulebook` units |
+| Units closed this cycle | 5 (`Weapon and Armor Proficiency ~ {Bard, Fighter, Paladin, Ranger, Rogue}`) | `python3 -c "..."` filtering `evidence=='class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables'` | of 49 |
+| Corpus-wide population, unchanged | 49,438 | `len(d['units'])` on regenerated `docs/work-inventory.json` | of 49,438 |
+| `completion_atlas.py --check` | `population=49438 buckets=10 unclassified=0 overlap=0 citation_failures=0` | `python3 scripts/completion_atlas.py --check` | of 49,438 |
+| `missing_engine_tables.py --check` | `citation_failures=0` (was 0 before too; two of its citation lines still shifted and were re-derived defensively) | `python3 scripts/missing_engine_tables.py --check` | of 449 bucket-A units |
+| `denominator_gate.py --check` | `files_checked=16 violations=0` (16 = 15 pre-existing + this receipt) | `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` | of 16 files |
+| `corpus_literal_sweep` examined population | 48,708 of 51,482, unchanged (0 corpus records added/regenerated — only `data/corpus/**` READ by the new tests, no new file) | `corpus_literal_sweep --json-out`, this cycle's own fresh run | of 51,482 |
+| `derived_evaluator_fixture_check` | `1839 unit(s) cleared over 2580 fixture row(s); 0 failed; 0 not ingested` (unchanged) | this cycle's own fresh run, `--json-out` | of 2,580 fixture rows |
+
+## Citation-drift self-heal (task brief's own named hazard)
+
+This cycle's own +~165-net-line insertion into `weapon_tables.rs`/`class_feature_pool_catalog.rs`
+does not shift any of `completion_atlas.py`'s citations by itself, but the corresponding
+`v06_work_inventory.rs` insertion (+27 net lines in `Kind::ClassFeature`'s `text_only` arm) does.
+Caught by running `python3 scripts/completion_atlas.py --check` before writing this receipt
+(`citation_failures` would have been non-zero without the fix below). Each shifted citation was
+independently re-derived by grepping the literal target content, not computed from the diff hunk
+offset alone:
+
+| Citation | Old line | New line |
+|---|---:|---:|
+| B (`not_held_by_engine`) | 10354 | 10381 |
+| C (`explanation_id`) | 10579 | 10606 |
+| A (`has_no_engine_table`) | 10674 | 10701 |
+| V (`literal-verified`) | 11325 | 11352 |
+| `missing_engine_tables.py` companion | 10674 | 10701 |
+| `missing_engine_tables.py` power | 10753 | 10780 |
+
+Both gates clean at this cycle's HEAD: `citation_failures=0` for both, confirmed by a fresh run
+after the fix. A retro `correction` event was filed for this.
+
+## Build scope verified
+
+- `cargo test --locked --lib` (workspace lib): `2895 passed; 0 failed; 14 ignored`.
+- `cargo test --locked --bin v06_work_inventory` (scoped): `397 passed; 0 failed` (new tests:
+  `class_armor_proficiency_tests::class_armor_proficiencies_match_their_own_corpus_records`,
+  `class_armor_proficiency_tests::druid_and_monk_are_deliberately_absent`,
+  `weapon_and_armor_proficiency_grant_class_table_matches_are_exact`,
+  `weapon_and_armor_proficiency_grant_class_table_matches_excludes_druid_and_monk`), run
+  **after** the last write that could move a figure (the `docs/work-inventory.json`
+  regeneration) — `decisions.md §12` L7.
+- `cargo test --locked --no-run` (full workspace): clean, exit 0, `grep -c '^error'` → 0.
+  `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001`.
+- `apps/desktop/src-tauri` (separate cargo workspace, tested explicitly): `cargo test --locked
+  --no-run` in that directory, own `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001-desktop` —
+  clean, exit 0.
+- Run at SHA: see `commit_sha` in this cycle's structured return / the commit this receipt
+  ships in.
+- Disk healthy this cycle (`df -h /` → 484G free before the workspace build).
+
+## Sweep population
+
+`corpus_literal_sweep`: `48708 records examined of 51482 read, 413336 tokens compared, 51469
+digests checked, 0 findings, CLEAN` — same as the inherited baseline; this cycle added/
+regenerated zero corpus records (the new tests only READ already-committed
+`data/corpus/core_rulebook/class_feature/weapon_and_armor_proficiency/*.json` files), so the
+examined population must not move, and does not (`decisions.md §12` L8).
+
+## Dual-audit gate
+
+File-touch set: `src/rules_core/ src/bin/ scripts/oracle_harness/` (Epic 3's own §3 set,
+`scripts/oracle_harness/` untouched this cycle, no records).
+
+- Bundle-tag scan: `OK_NO_BUNDLE_TAGS`.
+- Stub/mock/placeholder scan: non-empty (17 matches across the branch's cumulative history),
+  but every match is `placeholder` inside PRE-EXISTING lines from earlier sibling cycles
+  (confirmed by re-running the same grep restricted to only this cycle's own touched files'
+  uncommitted diff — zero matches). Matches this mechanism's own established precedent (cycle
+  1's and cycle 5's receipts record the identical finding for different tokens). No new
+  stub/mock/placeholder token in any line this cycle actually wrote.
+
+## Oracle pin
+
+Not applicable — no figure in this receipt comes from the pinned PCGen oracle corpus; every
+figure comes from the repo's own committed `data/corpus/`, `weapon_tables.rs`, and
+`docs/work-inventory.json`.
+
+## Movement, four buckets
+
+- **Closure:** 5 — `Weapon and Armor Proficiency ~ {Bard, Fighter, Paladin, Ranger, Rogue}`
+  moved bucket B (`engine-does-not-hold`, B-marker evidence) → bucket D (`engine-does-not-hold`,
+  no A/B/C marker) via two real, tested engine tables (one pre-existing, one new this cycle) —
+  the engine genuinely holds these records' content now, not a relabeling. **Not bucket DONE**:
+  these carry a real `description`, so a later mechanism's own `has_real_description`/wiring-
+  class gate decides whether they reach `text-complete` — a separate, unrelated concern.
+- **Reclassification:** 0 — no unit changed bucket without a genuine holds change; Druid/Monk
+  were investigated and confirmed to stay unmatched.
+- **Reachability:** 0 — no `reach_gate` finding changed; no character-build path touched.
+- **Instrument-correction:** 6 citation-line fixes (see above) — tooling metadata (line-number
+  pointers), not a measurement method; moved no unit count on any board.
+
+- **Status:** partial
+
+## Remainder — 44 units, named by sub-cause
+
+| Sub-cause | Units | Why not closed this cycle |
+|---|---:|---|
+| Proficiency/mechanical-grant possession-tracking, generic weapon-flavored indirection targets (`Weapon Prof ~ Auto/Martial/Simple`, `All {Automatic,Martial Weapon} Proficiencies`, `Single Simple Weapon Proficiency`) plus `Weapon Proficiencies ~ {Cleric,Monk}` (cycle 5's own excluded pair) | 8 | Generic shared indirection targets do not map 1:1 to one class table row; Cleric/Monk individually investigated and confirmed non-matching (cycle 5's own table). |
+| Weapon+armor combined records, excluded this cycle | 2 | `Weapon and Armor Proficiency ~ {Druid, Monk}` — Druid's weapon list is missing `Scythe` against both the table and its own dedicated record; Monk repeats the established 16/17 mismatch. |
+| Proficiency/mechanical-grant possession-tracking, armor/shield-flavored generic indirection targets, plus non-weapon extras | 10 | `Armor Prof ~ {Heavy,Light,Medium}`, `Armor Training ~ Heavy Armor`, `Shield Prof`, `Shield Prof ~ Tower` remain generic indirection targets with no 1:1 class row (same shape as the weapon-flavored generics above, now confirmed by this cycle's own investigation); `Add Spoken Language`, `Channel {Negative,Positive} Energy`, `Evasion` each need a genuinely new, unrelated subsystem. |
+| Class-skill/companion-mount attribution | 13 | Unchanged from cycle 5 — all 13 carry `description: null`; `skill_allocation.rs`'s own bounded 3-class/5-skill posture does not cover the full-list shape these records carry. |
+| Wizard opposition-school spell tracking | 9 | Unchanged from cycle 5 — all 9 carry `description: null`; no spell-known-per-school consumer exists. |
+| Domain Power `CLASS_FEATURE_POOLS` registration gap | 2 | Unchanged from cycle 5 — Leadership/Sun's Blessing both need real new consumers wider than what exists today. |
+
+**8 + 2 + 10 + 13 + 9 + 2 = 44.** Every remaining unit is named by sub-cause with a population;
+none is folded into "the rest".
+
+`decisions.md §16` ("only the count grounds") was checked against this remainder before writing
+this table: it covers records whose corpus content IS a "pick N from an eligible set" choice
+(the Sorcerer Bloodline Feat / Ranger Combat Style Feat shape a sibling mechanism's own cycle 5
+already closed under it). None of these 44 remaining units carry that shape — they are
+attribute/possession-tracking grants (proficiency, class-skill list membership, companion/mount
+identity, opposition-school membership) and generic PCGen indirection targets, not player
+choices among options. §16 does not apply to any of them.
+
+## Next-cycle plan
+
+The class-skill (13) and wizard-opposition-school (9) groups remain the largest genuine
+new-subsystem investments, unchanged in shape from cycles 4-5's own assessment — each needs a
+real new consumer this engine does not have (a full class-skill-list table wider than
+`skill_allocation.rs`'s own bounded posture; a spell-known-per-school tracker). The 10-unit
+armor/shield-generic-plus-extras group and the 8-unit weapon-generic group are both, by this
+cycle's own investigation, genuinely generic indirection targets with no 1:1 class mapping —
+closing them (if ever) needs a different verification shape than the class-table-match pattern
+this mechanism has used for its last two cycles, not a repeat of it; a future cycle should not
+retry the class-table-match approach against them without a new idea. Domain Power (2) stays
+smallest-but-not-cheapest, deferred to whichever cycle also builds the `with_magnitude`
+sibling's own Sun/Leadership consumer work.
+
+---
 # Cycle 5 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
 
 Re-derived the mechanism population fresh at this cycle's starting HEAD (`1de361c850`, unchanged

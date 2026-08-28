@@ -89,7 +89,15 @@ query found only 171 of 461 safe, proving shape alone unsafe) to `deferred-with-
 (bucket X); the 2 monster-class rows remain, needing a genuine level-progression record type
 now verified against its 2 real second/third consumers (`ultimate_magic` 3 rows,
 `book_of_the_damned_volume_1` 2 rows) for a future cycle. Reported `partial`. See the cycle log
-below; `## Open blockers` is empty.
+below; `## Open blockers` is empty. This cycle re-picked up
+`class_feature_option_pool_record_not_held_by_engine` again (49 → 44): built a new
+`weapon_tables::CLASS_ARMOR_PROFICIENCIES` table and, verifying BOTH weapon AND armor content
+byte-for-byte against the live corpus, closed 5 of the 7 `"Weapon and Armor Proficiency ~
+<Class>"` combined records (Bard, Fighter, Paladin, Ranger, Rogue); Druid and Monk stay
+correctly excluded (a real corpus-internal `Scythe` discrepancy and cycle 5's own established
+`Flurry of Blows` mismatch, respectively). `core_rulebook` bucket B now 564 of 6,701. Reported
+`partial`, 44 remaining named exactly by sub-cause. See the cycle log below; `## Open blockers`
+is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -107,6 +115,49 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 6) — one of nine, `decisions.md §14` — partial
+
+Re-derived the mechanism population fresh at this cycle's starting HEAD (`16aea9b4dd`): 49,
+matching the dispatch brief's own stated figure exactly (of 569 `core_rulebook` bucket-B units,
+whole book). Checked cycle 5's own next-cycle plan (build a class armor-proficiency table)
+against the live corpus before building anything: the standalone `Armor Prof ~ {Light,Medium,
+Heavy}` / `Shield Prof` / `Shield Prof ~ Tower` records are generic `CATEGORY:Internal`
+indirection targets shared across many classes — the same unclosable shape as the already-
+investigated weapon-flavored generics, not a per-class grant. The real per-class armor/shield
+data instead lives inside each class's own DISPLAY-bearing `"Weapon and Armor Proficiency ~
+<Class>"` combined record (7 of the 49 units: Bard, Druid, Fighter, Monk, Paladin, Ranger,
+Rogue) — a different corpus key from cycle 5's own three weapon-only matches.
+
+Built `weapon_tables::CLASS_ARMOR_PROFICIENCIES` (new table, mirroring
+`CLASS_WEAPON_PROFICIENCIES`'s own established pattern) and, for each of the 7 combined
+records, verified BOTH the weapon-side content against `CLASS_WEAPON_PROFICIENCIES` AND the
+armor-side content against the new table, byte-for-byte against the live corpus JSON. 5 of 7
+matched exactly (Bard, Fighter, Paladin, Ranger, Rogue); Druid and Monk were investigated and
+correctly excluded — Druid's own `AUTO:WEAPONPROF` list is missing `Scythe` against BOTH the
+table row and its own dedicated `"Weapon Proficiencies ~ Druid"` record (a real corpus-internal
+discrepancy), and Monk repeats cycle 5's own established `Flurry of Blows`/`Unarmed Strike`
+mismatch. New `weapon_and_armor_proficiency_grant_class_id` closed-list lookup moves the 5 from
+bucket B to bucket D (`engine-does-not-hold`, new evidence
+`class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables`) —
+`decisions.md §16`'s "only the count grounds" precedent was checked and does not apply (none of
+these 44 remaining units carry a "pick N" choice shape).
+
+**5 of 49 closed this cycle** (bucket B, `core_rulebook`, 569 → 564 of 6,701 —
+`python3 scripts/completion_atlas.py --by-book`). `cargo test --locked --no-run` re-run at this
+cycle's own commit SHA, exit 0, workspace-wide and `apps/desktop/src-tauri` (separate crate,
+tested explicitly); `cargo test --locked --lib` 2,895 passed / 0 failed / 14 ignored;
+`cargo test --locked --bin v06_work_inventory` 397 passed / 0 failed (4 new tests). No
+instrument movement this cycle: `corpus_literal_sweep` stayed 48,708 of 51,482 (only READ 3
+already-committed corpus files, added/regenerated none). Re-derived and fixed 6 shifted
+`file:line` citations in `completion_atlas.py`/`missing_engine_tables.py`
+(`citation_failures=0` on both after). 44 remain, sub-cause partition re-derived fresh and sums
+exactly: weapon-flavored generic indirection targets 8, `Weapon and Armor Proficiency ~
+{Druid, Monk}` 2, armor/shield-flavored generic indirection targets plus non-weapon extras 10,
+class-skill/companion-mount attribution 13, wizard opposition-school tracking 9, Domain Power
+registration gap 2. Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_cycle_receipt.md`
+(prepended, cycle 6 section).
 
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 5) — one of nine, `decisions.md §14` — partial
 

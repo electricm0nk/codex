@@ -760,6 +760,60 @@ pub fn weapon_proficiency_grant_class_id(key: &str) -> Option<&'static str> {
     WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES.iter().find(|(k, _)| *k == key).map(|(_, c)| *c)
 }
 
+/// `AT-34-E3-001` cycle 6, armor/shield-flavored slice of the proficiency/
+/// mechanical-grant possession-tracking sub-cause cycle 5's own next-cycle
+/// plan named. Sibling of
+/// [`WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`], but for the DISPLAY-
+/// bearing `"Weapon and Armor Proficiency ~ <Class>"` combined records
+/// (`VISIBLE:DISPLAY`, a real `DESC:`) rather than the internal weapon-only
+/// chassis rows that mechanism's own cycle 5 covers — a DIFFERENT corpus
+/// key per class, so closing this record does not re-close cycle 5's own
+/// three.
+///
+/// **Each entry requires BOTH halves to verify, not just armor.** A
+/// combined record's weapon-side content must be an EXACT set match
+/// against
+/// [`crate::rules_core::rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES`]
+/// AND its armor/shield-side content an exact match against
+/// [`crate::rules_core::rules_tables::crb::weapon_tables::CLASS_ARMOR_PROFICIENCIES`]
+/// (verified against the live corpus record for both,
+/// `weapon_and_armor_proficiency_grant_class_table_matches_are_exact`
+/// below) before this table names the class at all. Two classes with a
+/// combined record in the same corpus directory were investigated and
+/// correctly excluded:
+///
+/// - Druid's own `"Weapon and Armor Proficiency ~ Druid"` `AUTO:WEAPONPROF`
+///   list is missing `Scythe` against BOTH its own dedicated `"Weapon
+///   Proficiencies ~ Druid"` record (cycle 5's own match) and
+///   `CLASS_WEAPON_PROFICIENCIES`'s Druid row — nine weapons named where
+///   ten are expected. A real corpus-internal discrepancy between two
+///   records naming the same class's proficiency, not a near-match to
+///   force through.
+/// - Monk repeats cycle 5's own established `"Flurry of Blows"`/`"Unarmed
+///   Strike"` mismatch (its combined record carries the identical
+///   `AUTO:WEAPONPROF` list as the standalone record cycle 5 already
+///   rejected).
+pub const WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES: &[(&str, &str)] = &[
+    ("Weapon and Armor Proficiency ~ Bard", "class:bard"),
+    ("Weapon and Armor Proficiency ~ Fighter", "class:fighter"),
+    ("Weapon and Armor Proficiency ~ Paladin", "class:paladin"),
+    ("Weapon and Armor Proficiency ~ Ranger", "class:ranger"),
+    ("Weapon and Armor Proficiency ~ Rogue", "class:rogue"),
+];
+
+/// Looks up [`WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`] by
+/// key, returning the class id both the weapon and armor/shield halves
+/// were verified against. `v06_work_inventory.rs`'s `Kind::ClassFeature`
+/// arm consults this immediately after [`weapon_proficiency_grant_class_id`],
+/// mirroring its own named-list pattern (never a live shape scan) for the
+/// identical reason.
+pub fn weapon_and_armor_proficiency_grant_class_id(key: &str) -> Option<&'static str> {
+    WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES
+        .iter()
+        .find(|(k, _)| *k == key)
+        .map(|(_, c)| *c)
+}
+
 /// `(book, key) -> description` for every entry the catalog holds — the
 /// shape `v06_work_inventory.rs`'s `EngineFacts` (and `Kind::ClassFeature`'s
 /// classify arm) actually consults, mirroring `feat_served_descriptions`'
@@ -888,6 +942,89 @@ mod tests {
     fn weapon_proficiency_grant_class_table_matches_excludes_cleric_and_monk() {
         assert_eq!(weapon_proficiency_grant_class_id("Weapon Proficiencies ~ Cleric"), None);
         assert_eq!(weapon_proficiency_grant_class_id("Weapon Proficiencies ~ Monk"), None);
+    }
+
+    /// Proves `WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`'s
+    /// own claim against BOTH the live corpus AND both live tables — not
+    /// merely asserted in a doc comment. RED if either table, or the
+    /// corpus record, ever changes such that a listed class's weapon OR
+    /// armor content stops being an exact set match (`decisions.md §2`'s
+    /// "cleared by revisiting the stated condition").
+    #[test]
+    fn weapon_and_armor_proficiency_grant_class_table_matches_are_exact() {
+        use crate::rules_core::rules_tables::crb::weapon_tables;
+        let dir = repo_root().join("data/corpus/core_rulebook/class_feature/weapon_and_armor_proficiency");
+        for (key, class_id) in WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES {
+            let class_name = key.rsplit(' ').next().expect("key has a class-name suffix");
+            let mut matched_file = None;
+            for entry in std::fs::read_dir(&dir).expect("dir exists") {
+                let entry = entry.expect("readable dir entry");
+                let text = std::fs::read_to_string(entry.path()).expect("readable corpus json");
+                let json: Value = serde_json::from_str(&text).expect("valid corpus json");
+                if json["data"]["key"].as_str() == Some(*key) {
+                    matched_file = Some(json);
+                    break;
+                }
+            }
+            let json = matched_file.unwrap_or_else(|| panic!("no corpus file found for key {key}"));
+            assert!(
+                !json["data"]["description"].is_null(),
+                "{key} must carry a real description -- this table is only for the DISPLAY-\
+                 bearing combined records, not the internal weapon-only chassis rows"
+            );
+            let tokens = json["data"]["raw_tokens"].as_array().expect("raw_tokens is an array");
+
+            // Weapon-side: named list (if any) must be an exact set match.
+            let named_weapons: std::collections::BTreeSet<String> = tokens
+                .iter()
+                .find(|t| t["key"].as_str() == Some("AUTO"))
+                .and_then(|t| t["value"].as_str())
+                .and_then(|v| v.strip_prefix("WEAPONPROF|"))
+                .map(|list| {
+                    list.split('|')
+                        .filter(|w| !w.starts_with("TYPE=") && !w.starts_with('!'))
+                        .map(|w| w.to_string())
+                        .collect()
+                })
+                .unwrap_or_default();
+            let table_row = weapon_tables::class_weapon_proficiency(class_id)
+                .unwrap_or_else(|| panic!("{class_id} must be a real row in CLASS_WEAPON_PROFICIENCIES"));
+            let table_named: std::collections::BTreeSet<String> =
+                table_row.named.iter().map(|w| w.to_string()).collect();
+            assert_eq!(named_weapons, table_named, "{key} named weapon list must match exactly");
+
+            // Armor-side: verified independently by
+            // `class_armor_proficiency_tests` in `weapon_tables.rs`
+            // against this SAME corpus file. Re-derive it here too so a
+            // caller reading only this test still sees the full claim.
+            let armor_row = weapon_tables::class_armor_proficiency(class_id)
+                .unwrap_or_else(|| panic!("{class_id} must be a real row in CLASS_ARMOR_PROFICIENCIES"));
+            let ability_tokens: Vec<String> = tokens
+                .iter()
+                .filter(|t| t["key"].as_str() == Some("ABILITY"))
+                .map(|t| t["value"].as_str().unwrap_or_default().to_string())
+                .collect();
+            let has = |needle: &str| ability_tokens.iter().any(|v| v.contains(needle));
+            assert_eq!(has("Armor Prof ~ Light"), armor_row.light, "{key} light armor");
+            assert_eq!(has("Armor Prof ~ Medium"), armor_row.medium, "{key} medium armor");
+            assert_eq!(has("Armor Prof ~ Heavy"), armor_row.heavy, "{key} heavy armor");
+            assert_eq!(has("Shield Prof ~ Tower"), armor_row.tower_shield, "{key} tower shield");
+            let has_plain_shield_prof =
+                ability_tokens.iter().any(|v| v.split('|').any(|part| part == "Shield Prof"));
+            assert_eq!(has_plain_shield_prof, armor_row.shield, "{key} shield (non-tower)");
+            let _ = class_name;
+        }
+    }
+
+    /// Druid and Monk both have a combined `"Weapon and Armor Proficiency
+    /// ~ <Class>"` record in the same corpus directory but were
+    /// investigated and correctly excluded (see the table's own doc
+    /// comment) -- RED if a future edit widens the lookup by name-pattern
+    /// rather than by verified content.
+    #[test]
+    fn weapon_and_armor_proficiency_grant_class_table_matches_excludes_druid_and_monk() {
+        assert_eq!(weapon_and_armor_proficiency_grant_class_id("Weapon and Armor Proficiency ~ Druid"), None);
+        assert_eq!(weapon_and_armor_proficiency_grant_class_id("Weapon and Armor Proficiency ~ Monk"), None);
     }
 
     #[test]

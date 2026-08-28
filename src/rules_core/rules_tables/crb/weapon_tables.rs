@@ -591,6 +591,163 @@ pub fn class_is_proficient_with(
     }
 }
 
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism, cycle 6, armor/shield-flavored slice of the proficiency/
+/// mechanical-grant possession-tracking sub-cause cycle 5's own next-cycle
+/// plan named). One class's armor/shield proficiency, read the same way
+/// [`ClassWeaponProficiency`] is: each field transcribed from that class's
+/// own `cr_abilities_class.lst` `"Weapon and Armor Proficiency ~ <Class>"`
+/// record's literal `ABILITY:Internal|AUTOMATIC|Armor Prof ~ <Tier>` /
+/// `Shield Prof` / `Shield Prof ~ Tower` indirection targets -- never a
+/// shape guess. PF1 armor proficiency has no per-item exotic-armor
+/// analogue to a weapon's named list, so a class's whole grant is exactly
+/// these five booleans.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ClassArmorProficiency {
+    /// The engine's class id, e.g. `"class:fighter"`.
+    pub class_id: &'static str,
+    pub light: bool,
+    pub medium: bool,
+    pub heavy: bool,
+    /// Buckler/Light Shield/Heavy Shield (`Shield Prof`'s own grant, NOT
+    /// the tower shield).
+    pub shield: bool,
+    pub tower_shield: bool,
+}
+
+/// Armor/shield proficiency for the five CRB base classes whose own
+/// `"Weapon and Armor Proficiency ~ <Class>"` record's weapon-side content
+/// was ALSO independently verified (`weapon_and_armor_proficiency_grant_
+/// class_table_matches_are_exact` in `class_feature_pool_catalog.rs`) as
+/// an exact match against [`CLASS_WEAPON_PROFICIENCIES`] -- Druid and Monk
+/// were investigated and are deliberately absent (see that test's own doc
+/// comment): Druid's combined record's `AUTO:WEAPONPROF` list is missing
+/// `Scythe` against its own dedicated `"Weapon Proficiencies ~ Druid"`
+/// record and the table row (a real corpus-internal discrepancy, not this
+/// table's concern to paper over), and Monk repeats the established
+/// `Flurry of Blows`/`Unarmed Strike` mismatch. Widening this table to any
+/// other class requires the same per-record verification, not a name
+/// pattern.
+pub const CLASS_ARMOR_PROFICIENCIES: &[ClassArmorProficiency] = &[
+    // Bard: `ABILITY:Internal|AUTOMATIC|Armor Prof ~ Light|Shield Prof`.
+    ClassArmorProficiency {
+        class_id: "class:bard",
+        light: true,
+        medium: false,
+        heavy: false,
+        shield: true,
+        tower_shield: false,
+    },
+    // Fighter: Heavy + Medium + Light + Shield Prof + Shield Prof ~ Tower,
+    // each its own separate `ABILITY:Internal|AUTOMATIC|` indirection.
+    ClassArmorProficiency {
+        class_id: "class:fighter",
+        light: true,
+        medium: true,
+        heavy: true,
+        shield: true,
+        tower_shield: true,
+    },
+    // Paladin: Heavy + Medium + Light + Shield Prof (no tower).
+    ClassArmorProficiency {
+        class_id: "class:paladin",
+        light: true,
+        medium: true,
+        heavy: true,
+        shield: true,
+        tower_shield: false,
+    },
+    // Ranger: Light + Medium + Shield Prof (no heavy, no tower).
+    ClassArmorProficiency {
+        class_id: "class:ranger",
+        light: true,
+        medium: true,
+        heavy: false,
+        shield: true,
+        tower_shield: false,
+    },
+    // Rogue: Light only, no shield of any kind.
+    ClassArmorProficiency {
+        class_id: "class:rogue",
+        light: true,
+        medium: false,
+        heavy: false,
+        shield: false,
+        tower_shield: false,
+    },
+];
+
+/// This class's armor/shield proficiency, or `None` for a class this table
+/// does not cover. `None` means "not ingested", NOT "proficient with
+/// nothing" -- same discipline as [`class_weapon_proficiency`].
+pub fn class_armor_proficiency(class_id: &str) -> Option<&'static ClassArmorProficiency> {
+    CLASS_ARMOR_PROFICIENCIES.iter().find(|entry| entry.class_id == class_id)
+}
+
+#[cfg(test)]
+mod class_armor_proficiency_tests {
+    use super::*;
+
+    /// Every row's own claim, re-derived from the LIVE corpus record's own
+    /// `ABILITY` tokens -- not merely asserted in the table above. RED if
+    /// the corpus record ever changes which armor/shield tiers it grants.
+    #[test]
+    fn class_armor_proficiencies_match_their_own_corpus_records() {
+        use std::path::PathBuf;
+        let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("data/corpus/core_rulebook/class_feature/weapon_and_armor_proficiency");
+        let expectations: &[(&str, &str)] = &[
+            ("class:bard", "Bard"),
+            ("class:fighter", "Fighter"),
+            ("class:paladin", "Paladin"),
+            ("class:ranger", "Ranger"),
+            ("class:rogue", "Rogue"),
+        ];
+        for (class_id, class_name) in expectations {
+            let row = class_armor_proficiency(class_id)
+                .unwrap_or_else(|| panic!("{class_id} must be a real row in CLASS_ARMOR_PROFICIENCIES"));
+            let mut found_file = false;
+            for entry in std::fs::read_dir(&dir).expect("weapon_and_armor_proficiency dir exists") {
+                let entry = entry.expect("readable dir entry");
+                let text = std::fs::read_to_string(entry.path()).expect("readable corpus json");
+                let json: serde_json::Value =
+                    serde_json::from_str(&text).expect("valid corpus json");
+                let key = json["data"]["key"].as_str().unwrap_or_default();
+                if key != format!("Weapon and Armor Proficiency ~ {class_name}") {
+                    continue;
+                }
+                found_file = true;
+                let ability_tokens: Vec<String> = json["data"]["raw_tokens"]
+                    .as_array()
+                    .expect("raw_tokens is an array")
+                    .iter()
+                    .filter(|t| t["key"].as_str() == Some("ABILITY"))
+                    .map(|t| t["value"].as_str().unwrap_or_default().to_string())
+                    .collect();
+                let has = |needle: &str| ability_tokens.iter().any(|v| v.contains(needle));
+                assert_eq!(has("Armor Prof ~ Light"), row.light, "{class_name} light armor");
+                assert_eq!(has("Armor Prof ~ Medium"), row.medium, "{class_name} medium armor");
+                assert_eq!(has("Armor Prof ~ Heavy"), row.heavy, "{class_name} heavy armor");
+                assert_eq!(has("Shield Prof ~ Tower"), row.tower_shield, "{class_name} tower shield");
+                // "Shield Prof" alone (not "Shield Prof ~ Tower") is the
+                // Buckler/Light/Heavy-shield grant -- must be checked
+                // without matching the Tower variant's own substring.
+                let has_plain_shield_prof = ability_tokens
+                    .iter()
+                    .any(|v| v.split('|').any(|part| part == "Shield Prof"));
+                assert_eq!(has_plain_shield_prof, row.shield, "{class_name} shield (non-tower)");
+            }
+            assert!(found_file, "no corpus record found for {class_name}");
+        }
+    }
+
+    #[test]
+    fn druid_and_monk_are_deliberately_absent() {
+        assert!(class_armor_proficiency("class:druid").is_none());
+        assert!(class_armor_proficiency("class:monk").is_none());
+    }
+}
+
 #[cfg(test)]
 mod class_weapon_proficiency_tests {
     use super::*;
