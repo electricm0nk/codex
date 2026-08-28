@@ -101,6 +101,46 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 4) — one of nine, `decisions.md §14` — partial
+
+Re-derived the mechanism population fresh at this cycle's starting HEAD (`16c772cca9`):
+still 346, unchanged from the three prior cycles. This cycle independently re-derived the
+same 346-unit sub-cause partition from scratch (a temporary diagnostic binary, deleted
+before commit) before reading the prior receipts, confirming both agree to within 1 unit
+on every sub-cause. Three prior cycles on this exact mechanism had each closed 0 of 346;
+cycle 3's own next-cycle plan named two live paths — an operator-scoped classification
+ruling, or real engine wiring one shape at a time on the smaller sub-causes. This cycle
+picked up the wiring path: cycle 3's own 13-shape partition of the 121-unit
+`engine_effect_token_present` sub-cause named a long tail including five classes' own
+"Weapon and Armor Proficiency" class feature (Assassin, Cleric, Shadowdancer, Sorcerer,
+Wizard) — a zero-magnitude, grant-only identity record this engine already has a proven,
+shipped precedent for (`class_slayer.rs`'s `ground_slayer_weapon_and_armor_proficiency`,
+built for Advanced Class Guide's Slayer). Sorcerer and Wizard both have a registered
+`pilot_compute` chassis and no archetype able to claim this slot, so the base grant
+mirrors cleanly with no supersession complexity; a new
+`explain_base_class_weapon_and_armor_proficiency` grounds both (TDD: RED confirmed by
+temporarily disabling the call site, then GREEN), each reaching `text-complete` through
+`classify()`'s EXISTING generic "owner resolved + explanation id observed" rung — no new
+bucket-specific fallback added. Cleric's own record carries a real archetype-supersession
+branch (the same complexity Slayer's own function handles) and Assassin/Shadowdancer are
+prestige classes with no registered chassis at all — both deferred with a named revisit
+condition (`docs/retro/events/sd34-at-34-e3-001.jsonl`), not silently dropped.
+
+**2 of 346 closed this cycle** (bucket B, `core_rulebook`, 694 → 692 of 6,701 —
+`python3 scripts/completion_atlas.py --by-book`). `cargo test --locked --no-run` re-run at
+this cycle's HEAD, full workspace, exit 0 (`apps/desktop/src-tauri` not touched, not
+re-run). `docs/work-inventory.json` regenerated at HEAD via the guarded path
+(`CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` set from this cycle's own
+fresh sweep/fixture-check runs, no `--allow-stamp-loss`); `corpus_literal_sweep` stays 0
+findings (this cycle added no corpus records; the small examined-population delta versus
+this bundle's baseline is other concurrent lanes' activity on this shared checkout).
+`completion_atlas.py --check` → `citation_failures=0` (this cycle did not touch
+`src/bin/v06_work_inventory.rs`, so no `BUCKET_DEFINITIONS` line-citation drift). 344
+remaining units still need real engine wiring (one shape at a time) or the two
+operator-scoped rulings cycle 2/3 already named; full sub-cause partition, remainder
+table, and next-cycle plan:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_4.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 3) — one of nine, `decisions.md §14` — partial
 
 Re-derived the mechanism population fresh at this cycle's HEAD (`c3202a90ce`): still 346,

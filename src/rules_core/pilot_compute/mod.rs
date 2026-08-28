@@ -8382,6 +8382,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
     explain_rogue_level1_chassis(input, &ability_modifiers, &mut explanations);
+    explain_base_class_weapon_and_armor_proficiency(input, &mut explanations);
 
 
     // SD13-E3/E4/E5 Paladin-only decomposition: split the F6 hybrid class-feature
@@ -41321,6 +41322,161 @@ fn explain_rogue_level1_chassis(
                  so no save-DC computation is claimed"
             ),
         });
+    }
+}
+
+/// `AT-34-E3-001` (`class_feature_owner_matched_by_name_but_record_not_held_
+/// by_engine` mechanism, `engine_effect_token_present` sub-cause): grounds
+/// a base class's zero-magnitude "Weapon and Armor Proficiency" class
+/// feature as a bounded grant-only identity record, quoting the real
+/// corpus DESC text -- the same "grant-only identity record" idiom this
+/// file already uses for Sorcerer's own Arcane Apotheosis and Rogue's
+/// Master Strike, and the SAME idiom `class_slayer.rs`'s
+/// `ground_slayer_weapon_and_armor_proficiency` already establishes for
+/// this exact record SHAPE, without that function's archetype-supersession
+/// complexity: neither Sorcerer nor Wizard has a registered archetype able
+/// to claim this slot anywhere in this engine today
+/// (`archetype_resolver::archetype_claiming_slot_entry` has no Sorcerer/
+/// Wizard-owned proficiency-shaped slot id to resolve), so the base grant
+/// always applies once the class is present, unconditionally.
+///
+/// **Zero-magnitude, grant-only record, by design**, confirmed against the
+/// ingested corpus JSON for both records (`data/corpus/core_rulebook/
+/// class_feature/sorcerer/weapon_and_armor_proficiency.json`, `data/corpus/
+/// core_rulebook/class_feature/wizard/weapon_and_armor_proficiency.json`,
+/// both `wiring_class: "display"`, `wiring_class_signals:
+/// ["display:no_magnitude_token"]`): each row's only tokens are
+/// `ABILITY:...AUTOMATIC` proficiency grants, no `BONUS:` magnitude
+/// anywhere. Explanation id shape (`class_feature.<owner>.weapon_and_armor_
+/// proficiency`) matches `v06_work_inventory.rs`'s `classify()` `Kind::
+/// ClassFeature` "owner resolved" arm's own `class_feature_exact_suffix_
+/// grounded` check (`.{owner}.` substring, trailing dot-segment equal to
+/// `class_feature_engine_join_slug("Weapon and Armor Proficiency")` ==
+/// `"weapon_and_armor_proficiency"`), so both records now ground via that
+/// EXISTING generic check rather than a new bucket-specific fallback --
+/// promoting each to `text-complete` under the classify() function's own
+/// unchanged Decision-7 gates (`text_only`, `has_real_description`,
+/// `display` wiring class, `!universal_sheet_modifier`).
+///
+/// **The weapon half's real mechanical consequence is grounded elsewhere,
+/// not duplicated here**, exactly like the Slayer precedent:
+/// `weapon_tables::class_weapon_proficiency("class:sorcerer"/"class:
+/// wizard")` already carries each class's own weapon tiers and is read by
+/// `character_is_proficient_with` to decide the real -4 nonproficiency
+/// penalty -- this function grounds only the class-features-tab DISPLAY
+/// record, a different concern.
+fn explain_base_class_weapon_and_armor_proficiency(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let has_class = |class_id: &str| {
+        input.chosen.class_levels.iter().any(|class_level| class_level.class_id == class_id)
+    };
+
+    if has_class(SORCERER_CLASS_ID) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.sorcerer.weapon_and_armor_proficiency".to_owned(),
+            value: 0,
+            detail: "Sorcerer Weapon and Armor Proficiency (corpus KEY:Sorcerer ~ Weapon and \
+                 Armor Proficiency): \"Sorcerers are proficient with all simple weapons. They \
+                 are not proficient with any type of armor or shield. Armor interferes with a \
+                 sorcerer's gestures, which can cause her spells with somatic components to \
+                 fail.\" This is a bounded grant-only identity record (value 0, \
+                 non-fabricated): the record's only tokens are ABILITY:...AUTOMATIC \
+                 proficiency grants, no BONUS: magnitude anywhere. The weapon half's real \
+                 mechanical consequence -- avoiding the -4 nonproficiency attack penalty -- is \
+                 already grounded separately by \
+                 `weapon_tables::class_weapon_proficiency(\"class:sorcerer\")`, which this \
+                 record does not duplicate. No armor-nonproficiency-penalty mechanic exists \
+                 anywhere in this engine"
+                .to_owned(),
+        });
+    }
+
+    if has_class(WIZARD_CLASS_ID) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.wizard.weapon_and_armor_proficiency".to_owned(),
+            value: 0,
+            detail: "Wizard Weapon and Armor Proficiency (corpus KEY:Wizard ~ Weapon and Armor \
+                 Proficiency): \"Wizards are proficient with the club, dagger, heavy crossbow, \
+                 light crossbow, and quarterstaff, but not with any type of armor or shield. \
+                 Armor interferes with a wizard's movements, which can cause his spells with \
+                 somatic components to fail.\" This is a bounded grant-only identity record \
+                 (value 0, non-fabricated): the record's only tokens are ABILITY:...AUTOMATIC \
+                 proficiency grants, no BONUS: magnitude anywhere. The weapon half's real \
+                 mechanical consequence -- avoiding the -4 nonproficiency attack penalty -- is \
+                 already grounded separately by \
+                 `weapon_tables::class_weapon_proficiency(\"class:wizard\")`, which this \
+                 record does not duplicate. No armor-nonproficiency-penalty mechanic exists \
+                 anywhere in this engine"
+                .to_owned(),
+        });
+    }
+}
+
+#[cfg(test)]
+mod base_class_weapon_and_armor_proficiency_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, SORCERER_CLASS_ID,
+        WIZARD_CLASS_ID,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation<'a>(
+        input: &CharacterInput,
+        id: &str,
+    ) -> Option<(i16, String)> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .into_iter()
+            .find(|e| e.id == id)
+            .map(|e| (e.value, e.detail))
+    }
+
+    #[test]
+    fn sorcerer_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant() {
+        let input = character(SORCERER_CLASS_ID, 1);
+        let (value, detail) = explanation(&input, "class_feature.sorcerer.weapon_and_armor_proficiency")
+            .expect("a Sorcerer must ground this base-class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("proficient with all simple weapons"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+    }
+
+    #[test]
+    fn wizard_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant() {
+        let input = character(WIZARD_CLASS_ID, 1);
+        let (value, detail) = explanation(&input, "class_feature.wizard.weapon_and_armor_proficiency")
+            .expect("a Wizard must ground this base-class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("proficient with the club, dagger"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+    }
+
+    #[test]
+    fn a_non_sorcerer_non_wizard_character_grounds_neither_explanation() {
+        let input = character(SORCERER_CLASS_ID, 1);
+        // A Wizard-only character must not carry the Sorcerer explanation,
+        // and vice versa -- confirms the per-class gate, not a blanket grant.
+        assert!(explanation(&input, "class_feature.wizard.weapon_and_armor_proficiency").is_none());
     }
 }
 
