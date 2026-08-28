@@ -116,6 +116,45 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E2-001 reconfirmation at HEAD — complete, no drift found
+
+**Status: complete.** This lane was dispatched against `AT-34-E2-001` after the criterion had
+already landed (`AT-34-E2-001_cycle_receipt.md`, commit `052a9182bf`, kanban row 9 already
+`complete`). Per `decisions.md §12` L2/L19, every figure was re-derived from this lane's own
+shell against HEAD `e403495d29` rather than transcribed:
+
+- `cargo test --locked --lib rules_core::rules_tables::simple_kind_tables` → `13 passed, 0
+  failed` (2 more than the `11` at the original commit — both added by `AT-34-E2-002`'s later
+  cycle, still green; no regression).
+- `v06_work_inventory --epic2-table-transcript`, regenerated fresh at HEAD, diffs
+  **byte-identical** against the committed
+  `artifacts/epic-2-tables/AT-34-E2-001_table_transcript.txt`. All 8 of the 8 kinds Epic 2
+  builds (`ability`, `template`, `trait`, `deity`, `domain`, `skill`, `language`, `companion`)
+  still report `HELD` on a named record and `REFUSED` on a fabricated key — no drift from the
+  corpus-wide `wiring_class` restamp (`AT-34-E1-008`) or Epic 3's later work, because neither
+  touches these kinds' record identity, only unrelated fields `simple_kind_tables::resolve`
+  does not read.
+- `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` →
+  `violations=0` (15 files).
+- `cargo run --locked --bin corpus_literal_sweep` live: `48708 records examined of 51482 read
+  … 0 findings … CLEAN`. This cycle added zero corpus records
+  (`git status --porcelain -- data/corpus` empty throughout); the `48699 → 48708` movement
+  since the package's stated launch baseline belongs to later, unrelated Epic-1/Epic-3 corpus
+  growth, not to this cycle.
+- `cargo test --locked --no-run -j2` → exit 0 at HEAD (full root workspace). `apps/desktop/
+  src-tauri` not touched by this cycle's file-touch set, not run.
+- Dual audit re-run on Epic 2's §3 file-touch set: `OK_NO_BUNDLE_TAGS`; the wired-integration
+  pattern's only hits are Epic 3's real, correctly-spelled PCGen domain term "placeholder row"
+  (CHOOSE-menu no-selection corpus rows), not a stub or unfinished marker — reviewed and
+  confirmed non-defect; `simple_kind_tables.rs` itself carries zero hits of either pattern.
+
+Row-count command output: `grep HELD …AT-34-E2-001_table_transcript.txt | grep -oE
+"kind=[a-z]+" | sort -u | wc -l` → `8`. No production code, `docs/work-inventory.json`, or
+`data/corpus/**` edit was needed — the criterion was already met and remains met at HEAD.
+`kanban.md` row 9 already reads `complete` with correct receipt links; unchanged (a new
+reconfirmation receipt path is added to its Notes pointer).
+Receipt: `artifacts/epic-2-tables/AT-34-E2-001_reconfirmation_receipt.md`.
+
 ### Cycle — AT-34-E1-008 reconfirmation at HEAD — complete, no drift found
 
 **Status: complete.** This lane was dispatched against `AT-34-E1-008` after the criterion had
