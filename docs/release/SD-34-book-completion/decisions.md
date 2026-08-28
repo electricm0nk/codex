@@ -324,6 +324,29 @@ requirement that decides `X`:
 
 ### `U` — DONE
 
+**Correction to this section's own examples, 2026-08-28.** As first written this ruling named
+`BANE`, `FLM_BRST` and `FRT_HVY` as examples of the no-description shape. **They are not.** All
+three carry a real corpus description and are among the 18 units that did **not** close. I took
+three of four examples from the unit list without reading their corpus records — the same
+field-name-is-not-field-meaning error this bundle already recorded twice. The ruling's *substance*
+held; its illustrations did not, and a reader checking it against `BANE` would reasonably have
+concluded the reasoning did not apply.
+
+**What actually closed:** 110 of 321 units corpus-wide, `core_rulebook` **58 → 18**, all
+`kind=equipment_modifier` with zero magnitude tokens and no description anywhere in the token
+closure, verified by a whole-corpus before/after diff by unit id showing exactly 110 changed and
+the id-set unchanged at 49,438. Writing the predicate generically rather than per-book moved 110
+units where a `core_rulebook`-only one would have moved 40.
+
+**The 30 corpus-wide remainders are a different shape, and split cleanly:**
+- **21** carry an unresolved PCGen substitution (`%CHOICE`, `%d<N>`) — a real unmodelled choice or
+  value. That is nearer bucket `X`'s "deliberately not modelled" than blanket DONE, and it needs
+  its own ruling rather than an extension of this one.
+- **9** trip a confirmed defect in `render_pcgen_desc`, which drops a bare `%` even when preceded
+  by a digit (so *"75% chance…"* loses its sign). That is a **real shipping bug found incidentally**,
+  filed as its own scoped fix, not absorbed into this ruling.
+
+
 The 58 `core_rulebook` `unmeasurable` units are internal equipment-modifier codes (`BANE`,
 `FLM_BRST`, `FRT_HVY`, `Magical Enhancments (+1..+10)`). **0 of 58 carry a magnitude token**, and
 **37 of 58 are `visible: false`**. The player reads *"+1 Flaming Burst Longsword"* on the weapon
