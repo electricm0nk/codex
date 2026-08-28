@@ -6255,6 +6255,16 @@ const MONK_IMPROVED_GRAPPLE_BONUS: i16 = 2;
 // against the class table's blank level-4 "Special" column and the spells-per-day
 // table's still-blank 3rd-level spell column at level 4).
 const CLERIC_CLASS_ID: &str = "class:cleric";
+/// `AT-34-E3-001` owner-matched cycle 6: Assassin's and Shadowdancer's own
+/// class ids, needed only by `ground_class_weapon_and_armor_proficiency`'s
+/// per-class dispatch below -- neither prestige class has any chassis
+/// wired anywhere else in this file (`§13559`'s own dispatched-and-
+/// documented finding: neither is a registered `ClassId`-family enum
+/// member, so no chassis dispatch can reach them), and this record's own
+/// `has_class` check reads only `CharacterClassLevel.class_id`, a flat
+/// `String` field with no enum-membership precondition.
+const ASSASSIN_CLASS_ID: &str = "class:assassin";
+const SHADOWDANCER_CLASS_ID: &str = "class:shadowdancer";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` idiom. Verified against
@@ -41870,13 +41880,180 @@ fn explain_base_class_weapon_and_armor_proficiency(
                 .to_owned(),
         });
     }
+
+    ground_class_weapon_and_armor_proficiency(
+        input,
+        CLERIC_CLASS_ID,
+        "Cleric",
+        &["ClericWeaponProficiencies", "ClericArmorProficiencies", "ClericWeaponProficiency", "ClericArmorProficiency"],
+        "class_feature.cleric.weapon_and_armor_proficiency",
+        "Cleric",
+        "Clerics are proficient with all simple weapons, light armor, medium armor, and \
+         shields (except tower shields). Clerics are also proficient with the favored \
+         weapon of their deity.",
+        true,
+        explanations,
+    );
+
+    ground_class_weapon_and_armor_proficiency(
+        input,
+        ASSASSIN_CLASS_ID,
+        "Assassin",
+        &[],
+        "class_feature.assassin.weapon_and_armor_proficiency",
+        "Assassin",
+        "Assassins are proficient with the crossbow (hand, light, or heavy), dagger (any \
+         type), dart, rapier, sap, shortbow (normal and composite), and short sword. \
+         Assassins are proficient with light armor but not with shields.",
+        false,
+        explanations,
+    );
+
+    ground_class_weapon_and_armor_proficiency(
+        input,
+        SHADOWDANCER_CLASS_ID,
+        "Shadowdancer",
+        &[],
+        "class_feature.shadowdancer.weapon_and_armor_proficiency",
+        "Shadowdancer",
+        "Shadowdancers are proficient with the club, crossbow (hand, light, or heavy), \
+         dagger (any type), dart, mace, morningstar, quarterstaff, rapier, sap, shortbow \
+         (normal and composite), and short sword. Shadowdancers are proficient with light \
+         armor but not with shields.",
+        false,
+        explanations,
+    );
+}
+
+/// `AT-34-E3-001` (`class_feature_owner_matched_by_name_but_record_not_held_
+/// by_engine` mechanism, `engine_effect_token_present` sub-cause, cycle 6):
+/// grounds a class's own zero-magnitude "Weapon and Armor Proficiency"
+/// class feature as a bounded grant-only identity record, mirroring
+/// `class_slayer.rs`'s `ground_slayer_weapon_and_armor_proficiency` -- the
+/// SAME real archetype-supersession primitive
+/// (`archetype_resolver::archetype_claiming_slot_entry`), now shared by
+/// three more callers (Cleric, Assassin, Shadowdancer) instead of
+/// re-implemented per class.
+///
+/// **Cleric is the first BASE class this shape covers with a real
+/// registered archetype**, and its own proficiency slot carries FOUR
+/// distinct spellings across the corpus's own archetype catalog, not
+/// Slayer's uniform three -- confirmed by direct corpus grep across all
+/// seven tier-1 archetype tables, not assumed from one book:
+/// `ClericWeaponProficiencies`/`ClericArmorProficiencies` (ACG's own
+/// Ecclesitheurge, whose own "~ Weapon and Armor Proficiency" sub-feature
+/// grant this branch reads directly, the same idiom Slayer's Bounty
+/// Hunter/Deliverer/Stygian Slayer branch already established) and
+/// `ClericWeaponProficiency`/`ClericArmorProficiency` (Ultimate Magic's
+/// Sacred Servant and three Ultimate Combat entries, none of which name a
+/// "~ Weapon and Armor Proficiency" sub-feature grant of their own, so
+/// those fall through to the "superseded, replacement text not resolved"
+/// branch exactly as an un-named Slayer archetype claim would).
+///
+/// **Assassin and Shadowdancer carry no registered archetype in this
+/// engine today** (confirmed: `grep -rn 'subject: "Assassin"\|subject:
+/// "Shadowdancer"' src/rules_core/rules_tables/*/archetype_tables.rs` --
+/// zero matches), so `proficiency_slot_ids` is passed empty for both and
+/// the archetype lookup is always a no-op -- never fabricating a slot
+/// check that has nothing real to test, while keeping this one function
+/// the single place a future archetype landing in the catalog would need
+/// to be wired for all three of this shape's callers.
+///
+/// **`weapon_half_grounded_elsewhere` is honest per class, not assumed
+/// true for all three.** Cleric's own Simple-weapon tier is a real,
+/// registered `weapon_tables::class_weapon_proficiency("class:cleric")`
+/// entry (`rules_tables/crb/weapon_tables.rs:468`) feeding the real -4
+/// nonproficiency-attack-penalty check, matching Sorcerer/Wizard/Slayer's
+/// own precedent exactly. Assassin and Shadowdancer have **no** entry in
+/// that table at all (confirmed by direct grep -- neither class id
+/// appears in `weapon_tables.rs`), so for those two this function states
+/// plainly that the weapon half's mechanical consequence is NOT grounded
+/// elsewhere in this engine, rather than repeating Cleric's claim for a
+/// class it is not true of.
+fn ground_class_weapon_and_armor_proficiency(
+    input: &CharacterInput,
+    class_id: &str,
+    archetype_subject: &str,
+    proficiency_slot_ids: &[&str],
+    explanation_id: &str,
+    class_name: &str,
+    base_desc: &str,
+    weapon_half_grounded_elsewhere: bool,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let has_class =
+        input.chosen.class_levels.iter().any(|class_level| class_level.class_id == class_id);
+    if !has_class {
+        return;
+    }
+
+    let claimed = proficiency_slot_ids.iter().find_map(|slot| {
+        archetype_resolver::archetype_claiming_slot_entry(input, archetype_subject, slot)
+    });
+
+    if let Some(entry) = claimed {
+        // Supersession branch -- identical shape to `class_slayer.rs`'s own: the
+        // archetype's OWN "~ Weapon and Armor Proficiency" sub-feature text is read
+        // directly off its real catalog `grants` entry when present, never re-typed
+        // by hand a second time; when the catalog entry names no such sub-feature
+        // (Sacred Servant and the three Ultimate Combat entries above), the honest
+        // "not resolved in this catalog entry" branch applies instead.
+        let own_grant = entry
+            .grants
+            .iter()
+            .find(|g| g.grants_feature_key.ends_with("~ Weapon and Armor Proficiency"));
+        let detail = match own_grant.and_then(|g| g.description) {
+            Some(text) => format!(
+                "{class_name} Weapon and Armor Proficiency: superseded by the selected {} \
+                 archetype (corpus KEY:{}), which replaces this base-class slot. {}'s own \
+                 text: \"{text}\"",
+                entry.archetype_name, entry.key, entry.archetype_name
+            ),
+            None => format!(
+                "{class_name} Weapon and Armor Proficiency: superseded by the selected {} \
+                 archetype (corpus KEY:{}), which replaces this base-class slot. The base \
+                 progression does not apply; {}'s own replacement proficiency text is not \
+                 resolved in this catalog entry",
+                entry.archetype_name, entry.key, entry.archetype_name
+            ),
+        };
+        explanations.push(ComputationExplanation { id: explanation_id.to_owned(), value: 0, detail });
+        return;
+    }
+
+    let weapon_half_note = if weapon_half_grounded_elsewhere {
+        "The weapon half's real mechanical consequence -- avoiding the -4 nonproficiency \
+         attack penalty -- is already grounded separately by \
+         `weapon_tables::class_weapon_proficiency`, which this record does not duplicate."
+            .to_owned()
+    } else {
+        "No `weapon_tables::class_weapon_proficiency` entry exists for this class in this \
+         engine, so the weapon half's real mechanical consequence -- avoiding the -4 \
+         nonproficiency attack penalty -- is NOT grounded elsewhere; this record is the \
+         class-features-tab DISPLAY fact only."
+            .to_owned()
+    };
+    explanations.push(ComputationExplanation {
+        id: explanation_id.to_owned(),
+        value: 0,
+        detail: format!(
+            "{class_name} Weapon and Armor Proficiency (corpus KEY:{class_name} ~ Weapon and \
+             Armor Proficiency): \"{base_desc}\" This is a bounded grant-only identity record \
+             (value 0, non-fabricated): the record's only proficiency tokens are \
+             ABILITY:...AUTOMATIC/AUTO:WEAPONPROF grants, no BONUS: magnitude anywhere. \
+             {weapon_half_note} No armor-nonproficiency-penalty mechanic exists anywhere in \
+             this engine (the game system's own miscinfo.lst carries only \
+             WEAPONNONPROFPENALTY:-4, no armor equivalent), so the armor half has nothing \
+             further to compute here"
+        ),
+    });
 }
 
 #[cfg(test)]
 mod base_class_weapon_and_armor_proficiency_tests {
     use super::{
-        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, SORCERER_CLASS_ID,
-        WIZARD_CLASS_ID,
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, ASSASSIN_CLASS_ID,
+        CLERIC_CLASS_ID, SHADOWDANCER_CLASS_ID, SORCERER_CLASS_ID, WIZARD_CLASS_ID,
     };
     use crate::rules_core::character_input::load_character_input_fixture;
 
@@ -41935,6 +42112,99 @@ mod base_class_weapon_and_armor_proficiency_tests {
         // A Wizard-only character must not carry the Sorcerer explanation,
         // and vice versa -- confirms the per-class gate, not a blanket grant.
         assert!(explanation(&input, "class_feature.wizard.weapon_and_armor_proficiency").is_none());
+    }
+
+    #[test]
+    fn cleric_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant() {
+        let input = character(CLERIC_CLASS_ID, 1);
+        let (value, detail) = explanation(&input, "class_feature.cleric.weapon_and_armor_proficiency")
+            .expect("a Cleric must ground this base-class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("favored weapon of their deity"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+        assert!(
+            detail.contains("already grounded separately"),
+            "Cleric has a real weapon_tables entry, so the weapon half's grounding-\
+             elsewhere claim must be honest: {detail}"
+        );
+        assert!(
+            !detail.to_lowercase().contains("superseded"),
+            "no archetype is selected, so nothing is superseded: {detail}"
+        );
+    }
+
+    /// Supersession branch: Ecclesitheurge's own real catalog entry names a
+    /// "~ Weapon and Armor Proficiency" sub-feature, so it must replace
+    /// the base grant's text entirely -- the same shape Slayer's Bounty
+    /// Hunter proves, now exercised for a BASE class's own archetype for
+    /// the first time.
+    #[test]
+    fn cleric_weapon_and_armor_proficiency_is_superseded_by_ecclesitheurge() {
+        let mut input = character(CLERIC_CLASS_ID, 1);
+        input.chosen.selected_choices.push(
+            crate::rules_core::character_input::SelectedChoice {
+                choice_set_id: crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID
+                    .to_owned(),
+                selection_id: "Cleric Archetype ~ Ecclesitheurge".to_owned(),
+            },
+        );
+        let (value, detail) = explanation(&input, "class_feature.cleric.weapon_and_armor_proficiency")
+            .expect("the record must still ground, with superseded text");
+        assert_eq!(value, 0);
+        assert!(detail.contains("Ecclesitheurge"), "must name the superseding archetype: {detail}");
+        assert!(
+            detail.contains("proficient with the club, dagger, heavy crossbow"),
+            "must quote Ecclesitheurge's OWN real corpus text, not the base grant's: {detail}"
+        );
+        assert!(
+            !detail.contains("light armor, medium armor, and shields (except"),
+            "the base grant's own text must NOT appear once superseded: {detail}"
+        );
+    }
+
+    #[test]
+    fn assassin_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant_with_honest_disclosure() {
+        let input = character(ASSASSIN_CLASS_ID, 1);
+        let (value, detail) = explanation(&input, "class_feature.assassin.weapon_and_armor_proficiency")
+            .expect("an Assassin must ground this class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("proficient with the crossbow"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+        assert!(
+            detail.contains("NOT grounded elsewhere"),
+            "Assassin has no weapon_tables entry, so this must NOT claim the weapon half is \
+             grounded elsewhere the way Cleric/Sorcerer/Wizard's own explanations do: {detail}"
+        );
+    }
+
+    #[test]
+    fn shadowdancer_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant() {
+        let input = character(SHADOWDANCER_CLASS_ID, 1);
+        let (value, detail) =
+            explanation(&input, "class_feature.shadowdancer.weapon_and_armor_proficiency")
+                .expect("a Shadowdancer must ground this class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("proficient with the club, crossbow"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+        assert!(
+            detail.contains("NOT grounded elsewhere"),
+            "Shadowdancer has no weapon_tables entry either: {detail}"
+        );
+    }
+
+    #[test]
+    fn a_cleric_character_does_not_ground_the_assassin_or_shadowdancer_explanations() {
+        let input = character(CLERIC_CLASS_ID, 1);
+        assert!(explanation(&input, "class_feature.assassin.weapon_and_armor_proficiency").is_none());
+        assert!(
+            explanation(&input, "class_feature.shadowdancer.weapon_and_armor_proficiency").is_none()
+        );
     }
 }
 

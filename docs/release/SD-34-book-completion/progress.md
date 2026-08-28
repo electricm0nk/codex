@@ -164,6 +164,57 @@ prestige-class-chassis cycle), `New Arcana` 9 (ruled out), small 2-3-unit groups
 88. Receipt:
 `artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt_6.md`.
 
+### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 6) — one of nine, `decisions.md §14` — partial, 251 → 248
+
+Re-derived the mechanism population fresh at this cycle's starting HEAD: 251, unchanged from
+cycle 5's own closing figure (`2829c89e18`, the tip at start, touched only `decisions.md` and
+left `docs/work-inventory.json` byte-identical). Independently re-derived the total and its
+`wiring_class` split (`display` 185, `ambiguous` 46, `computed` 19, `derived` 1); confirmed by
+direct grep that exactly 3 of the 251 are the dispatch brief's own named next-cheapest shape —
+`{Cleric, Assassin, Shadowdancer} ~ Weapon and Armor Proficiency`.
+
+Extended cycle 4's own `explain_base_class_weapon_and_armor_proficiency` (which already grounds
+Sorcerer/Wizard) with a new shared helper, `ground_class_weapon_and_armor_proficiency`, mirroring
+`class_slayer.rs`'s shipped precedent including its real archetype-supersession primitive
+(`archetype_resolver::archetype_claiming_slot_entry`). Cleric is the first BASE class this shape
+covers with a REAL registered archetype (Ecclesitheurge, ACG) — its own proficiency slot carries
+four distinct id spellings across the corpus's own archetype catalog (confirmed by grep across
+all seven tier-1 archetype tables), and a dedicated test proves the supersession branch fires for
+real. Assassin and Shadowdancer carry no registered archetype anywhere in this engine (confirmed
+by grep, zero matches), so this cycle **corrects cycle 4's own stated reason for deferring them**
+("no prestige-class chassis exists" — that reasoning does not apply to a class-feature-only
+grounding, which reads only `CharacterClassLevel.class_id`, a flat string with no enum-membership
+precondition). Each class's own "weapon half grounded elsewhere" claim is stated honestly and
+per-class: true for Cleric (a real `weapon_tables::class_weapon_proficiency("class:cleric")`
+entry exists), explicitly false for Assassin/Shadowdancer (no entry exists for either — confirmed
+by grep), never over-claimed for the two prestige classes.
+
+**A live concurrent-write collision was caught and worked around mid-cycle**, not touched: the
+shared checkout's `src/bin/v06_work_inventory.rs` carried 110 uncommitted lines this cycle never
+wrote (a different lane's own in-progress bucket-U ruling implementation), and the checkout's own
+HEAD moved forward mid-turn to `2829c89e18` — confirming a second live writer. A first
+regeneration attempt picked up that contamination and correctly failed closed
+(`citation_failures=10`, the gate working as designed against someone else's uncommitted lines).
+The contaminated `docs/work-inventory.json` was discarded without ever touching the other lane's
+file; this cycle's own diff was instead applied and verified inside an isolated `git worktree`
+checked out from `origin/tranche/14`, with its own `CARGO_TARGET_DIR`. The full 2,901-test lib
+suite, `corpus_literal_sweep` (48,708/51,482, 0 findings — unchanged from cycle 5, zero corpus
+records added), `derived_evaluator_fixture_check`, and the regeneration all ran clean there. A
+whole-corpus (all 49,438 units, not only this mechanism's own bucket) before/after diff confirms
+**exactly 3 units changed, zero collision** — the collision-hazard check cycle 5 found the hard
+way, now run against the full corpus rather than one mechanism's bucket.
+
+3/251 closed (`engine-does-not-hold` → `text-complete`, bucket B → DONE directly — a real,
+non-fabricated grant-only explanation now exists for each, quoting the corpus's own DESC text).
+248 remain. This cycle independently verified the total and its `wiring_class` split but did
+**not** rebuild cycle 3's own retired classification instrumentation to re-verify the finer
+four-way sub-cause split cycle 4/5 once reported (`description_is_null_internal_bookkeeping`
+118, `engine_effect_token_present` tail, `catalog_serves_it_but_classify_wiring_class_gate_
+blocks_promotion` 67, small long tail) — flagged in the receipt as inherited, not re-derived, so
+the next cycle re-derives it fresh from the live corpus before taking a lever from it.
+`core_rulebook` bucket B (atlas-real partition) 562 → 559/6,701 remains (DONE 1,380 → 1,383).
+Full receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_6.md`.
+
 ### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism, cycle 5) — one of nine, `decisions.md §14` — complete, mechanism reaches 0
 
 Re-derived the mechanism population fresh at this cycle's starting HEAD (`50a5785592`): 2,
