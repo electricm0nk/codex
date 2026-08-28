@@ -116,6 +116,41 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E1-008 reconfirmation at HEAD — complete, no drift found
+
+**Status: complete.** This lane was dispatched against `AT-34-E1-008` after the criterion had
+already landed (`AT-34-E1-008_G1..G4_cycle_receipt.md`, kanban row already `complete`,
+verifying instrument `AT-34-E1-007_re-verification_receipt.md` at `a47cdbee21`, further
+reconfirmed at `ba23c938b1`). Per `decisions.md §12` L2/L20, every figure was re-derived from
+this lane's own shell against HEAD `ba23c938b1` rather than transcribed:
+
+- `scripts/verify.sh --only corpus-trap-audit` → `PASS (records_examined=27638
+  defects[wiring-class-mismatch=0 disabled-line=165 key-differs-from-name=650
+  mod-record=2117 shared-name-distinct-records=249] traps=407 — all defect kinds at their
+  registered counts)`. `wiring-class-mismatch=0`, the criterion's bar, with the other four
+  inherited trap kinds reported by name at their unchanged counts, not absorbed.
+- `wiring-class-remediation.json` re-summed: 4 groups, 34 books, `before=7015 after=0
+  regenerated=10298` — matches `decisions.md §13` and the criterion text exactly.
+- `cargo run --locked --bin corpus_literal_sweep` live: `48708 records examined of 51482
+  read … 0 findings … CLEAN`. AT-34-E1-008's own four group receipts each independently
+  recorded `48699 → 48699, delta 0` for their own in-place restamps at the time they ran
+  (0 records added by this criterion's own regeneration); the `48699 → 48708` movement since
+  then belongs to later, unrelated Epic-1/Epic-3 corpus growth (e.g. AT-34-E3-001's `domain`
+  ingestion), not to AT-34-E1-008.
+- `cargo test --locked --no-run` → exit 0 at HEAD. `apps/desktop/src-tauri` not touched by
+  this criterion's file-touch set, not run.
+- Dual audit re-run on Epic 1's cumulative file-touch set: every `sd[0-9]+_`/stub-token hit is
+  either a `-` (removed) provenance-tag line inside this criterion's own already-landed
+  regeneration, a real PCGen "no selection" placeholder value in regenerated corpus JSON
+  (already ruled non-defect by `AT-34-E3-001`), or doc prose belonging to the already-closed
+  `AT-34-E1-006` criterion. Nothing new, nothing in shipping code.
+
+Row-count command output: `ls …AT-34-E1-008_G*_cycle_receipt.md | wc -l` → `4`;
+`wiring-class-remediation.json` → `4 groups, 34 books`. Self-consistent. No production code,
+`docs/work-inventory.json`, or `data/corpus/**` edit was needed — the criterion was already
+met. `kanban.md` row 8 already reads `complete` with correct receipt links; unchanged.
+Receipt: `artifacts/epic-1-atlas/AT-34-E1-008_reconfirmation_receipt.md`.
+
 ### Cycle — AT-34-E1-007 re-verification at HEAD — complete, no drift found
 
 **Status: complete.** Re-derived `AT-34-E1-007` (`corpus-trap-audit` wired into `verify.sh`)
