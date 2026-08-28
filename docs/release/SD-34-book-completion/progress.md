@@ -116,6 +116,31 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E1-002 re-verification at HEAD — complete, 0 units moved
+
+Re-dispatched against `AT-34-E1-002` (already `complete` from an earlier cycle, commit
+`5289e646dd`) to re-derive rather than carry the prior claim forward (`decisions.md §12`
+L2/L19). `HEAD` had moved by two Epic-3 mechanism-closure cycles since the original landing,
+moving `docs/work-inventory.json` by 3 units (bucket `B` 11,967→11,964, `DONE` 14,581→14,584 —
+a real closure, not drift) and leaving the committed `completion-atlas.json` stale, with an
+uncommitted regeneration diff already sitting in the working tree. This cycle regenerated the
+atlas at current `HEAD` (`8439f31c867d30e12dc4e3489a00e35835e4dd77`), re-ran the full 38-test
+`scripts/tests/test_completion_atlas.py` suite (all six fail-closed conditions are mechanized
+as permanent regression tests, not one-off transcripts), confirmed the live `--check` result
+(`population=49438 buckets=10 unclassified=0 overlap=0 done_evidence_violations=0
+missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`), confirmed
+`derived_at` is an ancestor of `HEAD`, and re-ran `cargo test --locked --no-run` (exit 0, full
+workspace) after the regeneration. No `completion_atlas.py` logic changed — a measurement
+wave, not a code cycle (`decisions.md §12` L6). Kanban row 2 stays `complete`.
+
+**Discovery named, not absorbed:** `scripts/box_ledger.py --check` (SD-33's independent
+second partition, reading `docs/release/SD-33-computed-value-verification/THE-BOX.md`) now
+reports `uncovered=19861`, up from `0` at the `tranche/14` launch checklist. `THE-BOX.md` is
+out of this bundle's write scope and out of AT-34-E1-002's file-touch set — it has simply not
+been kept in sync with Epic 3/4's mechanism closures. Not this criterion's gate; flagged here
+for whichever cycle next touches that file. See
+`artifacts/epic-1-atlas/AT-34-E1-002_re-verification_receipt.md` for full figures.
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 8) — one of nine, `decisions.md §14` — partial, 0 units moved
 
 Re-derived at this cycle's starting HEAD (`2c56ac5a71`): still 34 of 543 `core_rulebook`
