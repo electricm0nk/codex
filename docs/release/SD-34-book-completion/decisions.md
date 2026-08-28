@@ -313,6 +313,57 @@ with a named resolution point, not an unresolved placeholder.
 
 ---
 
+## §17 — Operator ruling, 2026-08-28: bucket `U` is DONE; bucket `X` needs the choice filter
+
+**Operator ruling.** Presented with three options on whether records the engine deliberately does
+not model can be `DONE`, the operator chose **option C — split the two buckets** — and supplied the
+requirement that decides `X`:
+
+> *"in x, when a character levels up the ui will query the back end to pull valid choices for the
+> player to select from. the back end needs to be able to conduct the filter"*
+
+### `U` — DONE
+
+The 58 `core_rulebook` `unmeasurable` units are internal equipment-modifier codes (`BANE`,
+`FLM_BRST`, `FRT_HVY`, `Magical Enhancments (+1..+10)`). **0 of 58 carry a magnitude token**, and
+**37 of 58 are `visible: false`**. The player reads *"+1 Flaming Burst Longsword"* on the weapon
+record; the code itself is plumbing that attaches an effect, never a thing anyone reads.
+
+The precedent is already inside this book: **186 of its 1,380 `DONE` units are `visible: false`.**
+Invisibility has never blocked `DONE` here, and these carry no content a player is owed. They are
+finished.
+
+### `X` — NOT done, and now with a named clearing mechanism
+
+**This corrects `§16`.** *"Only the count grounds; which option is chosen is not modelled"* is
+sound **engineering** for the magnitude, but it is **not a terminal product state**. The operator's
+requirement makes the option rows real work: at level-up the UI asks the backend for the valid
+choices, so **the backend must be able to filter the eligible set against a specific character**.
+A static list of eight feats is not an answer to *"what can THIS sorcerer take right now?"*
+
+That was the flaw in `§16` and in the ratified Fighter/Cavalier/Brawler precedent it rested on:
+both stop at the count. The product needs the filter, so the precedent is **insufficient**, not
+merely inconsistent.
+
+**The capability is half-built, and the missing half is nameable:**
+
+| Piece | State |
+|---|---|
+| `list_class_feature_pool_options()` (`apps/desktop/src-tauri/src/class_feature_pool_picker.rs`) | **exists** — returns `pool_options().clone()`, the whole static list, unfiltered |
+| `evaluate_feat_prerequisites`, `evaluate_catalog_feat_prerequisites`, `character_prereq_facts` (`src/rules_core/feat_prereqs.rs`) | **exists** — can judge a prerequisite against character facts |
+| a query joining them: *given this character, which options are valid* | **MISSING** — this is the whole gap |
+
+**Consequence.** Bucket `X`'s clearing mechanism is no longer "revisit the stated condition". It is
+**build the per-character choice filter and expose it to the UI**. That is a named, buildable
+capability, and it belongs in AT-34-E5-002's capability register whether or not SD-34 builds it.
+No cycle may move a unit into `X` to park it (`§16` amendment), and no cycle may call an option row
+`DONE` on the strength of the count alone.
+
+**Enforced by:** AT-34-E3-001's bar; AT-34-E5-002's capability register; AT-34-E6-001 re-deriving
+both at HEAD.
+
+---
+
 ## §16 — "Only the count grounds" is ratified precedent, not an open question
 
 **Decision.** A class-feature record whose content is *"pick N from this eligible set"* is
