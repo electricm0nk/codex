@@ -1,4 +1,306 @@
-# Cycle 6 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
+# Cycle 7 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
+
+- **Commit SHA:** `PENDING` (filled by this cycle's own follow-up commit, matching every prior
+  cycle's own two-commit pattern on this receipt).
+- **Files touched:** `src/rules_core/rules_tables/crb/class_skill_tables.rs` (new),
+  `src/rules_core/rules_tables/crb/mod.rs` (module registration), `src/rules_core/class_feature_pool_catalog.rs`,
+  `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py`, `scripts/missing_engine_tables.py`,
+  `docs/work-inventory.json` (regenerated), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`
+  (re-derived), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/missing-engine-tables.json`
+  (re-derived), this receipt.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`
+- **Wired-integration audit result:** non-empty (17 matches across the branch's cumulative
+  history), but every match is `placeholder` inside PRE-EXISTING lines from earlier sibling
+  cycles (confirmed by re-running the same grep restricted to this cycle's own touched
+  files/new file — zero matches). Equivalent to `OK_NO_TOKENS` for this cycle's own work.
+- **Acceptance criterion (verbatim, `epic-breakdown.md`):** "**970** Core Rulebook units whose
+  table exists but which are not in it. **Evidence:** the atlas reporting bucket B at zero for
+  `core_rulebook`, and the mechanism that placed them named — by mechanism, not per record."
+  This receipt covers only the `class_feature_option_pool_record_not_held_by_engine` mechanism,
+  one of nine; the criterion itself does NOT close this cycle (8 other mechanisms remain owned
+  by other cycles).
+
+## Re-derived population, this cycle's start
+
+```
+$ python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+u = [x for x in d['units'] if x['book']=='core_rulebook' and x['status']=='engine-does-not-hold'
+     and x['evidence']=='class_feature_option_pool_record_not_held_by_engine']
+print(len(u))
+"
+44
+```
+Matches cycle 6's own closing figure exactly — of **564** `core_rulebook` bucket-B units (whole
+book, all 9 mechanisms), of **49,438** corpus-wide units total.
+
+## Cycle 6's own next-cycle plan, read before building anything
+
+Cycle 6's remainder table named 6 sub-causes summing to 44: weapon-flavored generic indirection
+(8), Druid/Monk weapon+armor excluded (2), armor/shield-flavored generic + non-weapon extras (10),
+**class-skill/companion-mount attribution (13)**, wizard opposition-school (9), Domain Power
+registration gap (2). Its own next-cycle plan called the class-skill/companion-mount group "the
+largest genuine new-subsystem investment... a full class-skill-list table wider than
+`skill_allocation.rs`'s own bounded posture" — this cycle's task brief named the same three
+groups (proficiency/grant, class-skill/companion-mount, wizard opposition-school) as "each a
+genuinely new engine subsystem" and asked for ONE to be built properly rather than a seventh
+narrow pass.
+
+## What was and was not safely closable — verified per-record, not by name shape
+
+Read all 13 units of the "class-skill/companion-mount attribution" sub-cause directly against
+the live corpus first, rather than treating the name as one homogeneous shape:
+
+| Sub-group | Units | Corpus shape |
+|---|---:|---|
+| 9 CRB base classes' own `"Class Skills ~ <Class>"` internal chassis record | 9 | `CATEGORY:Internal`, single `CSKILL:` token, pipe-split named-skill list (`TYPE=X` entries kept literal) |
+| `"Jack of All Trades ~ Class Skills"` | 1 | Same `CSKILL:` token shape, but `CSKILL:ALL` — a different semantic (every skill), not an enumerable list |
+| `"Companion ~ Animal Companion"` / `"Companion ~ Special Mount"` | 2 | `CATEGORY:Internal`, `FOLLOWERS:<Name>|<count>` token — a DIFFERENT corpus key, no `CSKILL:` at all |
+| `"Special Mount ~ Standard Choices"` | 1 | `CATEGORY:Internal`, `COMPANIONLIST:` token (a "pick one companion type" choice set) — a THIRD, distinct shape |
+
+The 10 `CSKILL:`-shaped records (9 base classes + Jack of All Trades) are genuinely homogeneous —
+same token key, same record family, same corpus directory for the 9 base classes. The 3
+`FOLLOWERS:`/`COMPANIONLIST:`-shaped records are a real, different subsystem (companion/mount
+registration, not skill-list attribution) that this cycle's own narrow, disjoint-file-touch scope
+does not build — named in the remainder below, not silently folded into "closed" or "the rest".
+
+## The fix
+
+New module `src/rules_core/rules_tables/crb/class_skill_tables.rs`: `ClassSkillList` struct
+(`owner_id`, `all_skills: bool`, `skills: &[&str]`) + `CLASS_SKILL_LISTS` const (10-row closed
+list: 9 CRB base classes + the one `Jack of All Trades` `ALL` row) + `class_skill_list(owner_id)`
+lookup. Every base-class row is transcribed verbatim from that class's own `CSKILL:` token
+(`TYPE=X` entries kept as literal text, never expanded — expansion is a separate, later concern)
+and verified byte-for-byte against the live corpus JSON in a new test,
+`class_skill_lists_match_their_own_corpus_records` (reads every file in
+`data/corpus/core_rulebook/class_feature/class_skills/`, asserts the table's own `skills` slice
+equals the corpus record's own `CSKILL` value split on `|`). A second test,
+`jack_of_all_trades_is_the_all_skills_row`, independently verifies the `CSKILL:ALL` row against
+its own corpus file. A third, `unknown_owner_returns_none`, proves `None` (not a fabricated empty
+list) for an owner this table does not cover.
+
+`src/rules_core/class_feature_pool_catalog.rs`: new `CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES`
+(10-entry closed list, record key -> owner id) + `class_skill_list_grant_owner_id` lookup,
+mirroring `weapon_and_armor_proficiency_grant_class_id`'s own established pattern exactly (a
+closed named-key list, never a shape predicate). New test
+`class_skill_list_grant_owner_table_matches_resolve_to_real_rows` proves every listed key
+resolves to a real `class_skill_tables::CLASS_SKILL_LISTS` row; new test
+`class_skill_list_grant_owner_id_excludes_companion_mount_records` proves the 3 different-shape
+keys are NOT in this table (so a future cycle, or reviewer, cannot mistake their absence for an
+oversight).
+
+`src/bin/v06_work_inventory.rs`: `Kind::ClassFeature`'s `text_only` fallback now consults
+`class_skill_list_grant_owner_id` immediately after cycle 6's own weapon-and-armor rung, before
+the mechanism's own generic fallback. A match returns `status: "engine-does-not-hold"` with a NEW
+evidence string, `class_feature_class_skill_list_held_by_class_skill_list_table` — deliberately
+still `engine-does-not-hold`, not `text-complete`: all 10 records carry `description: null`
+(nothing to display), so this only certifies the record's own content (its class-skill list) is
+now genuinely held by a real, tested engine table (bucket B -> D, `decisions.md §2`'s "a shelf,
+not a half-fix", same outcome cycles 5-6 already established for this mechanism). **No live
+consumer of `class_skill_tables` exists yet** (`skill_allocation.rs`'s own bounded posture is
+untouched) — by the SAME precedent cycle 6's own `CLASS_ARMOR_PROFICIENCIES` table already set
+for this exact mechanism, a live consumer is not a precondition for this bucket-B -> D move; it
+is future widening work for whichever cycle owns `skill_allocation.rs`.
+
+RED confirmed before the fix: the 10 target keys returned `status: "engine-does-not-hold"` with
+evidence `class_feature_option_pool_record_not_held_by_engine` (the mechanism's own generic
+fallback) rather than the new evidence string. GREEN after: all 5 new tests pass
+(`class_skill_lists_match_their_own_corpus_records`, `jack_of_all_trades_is_the_all_skills_row`,
+`unknown_owner_returns_none`, `class_skill_list_grant_owner_table_matches_resolve_to_real_rows`,
+`class_skill_list_grant_owner_id_excludes_companion_mount_records`), and the regenerated
+`docs/work-inventory.json` shows all 10 keys under the new evidence string.
+
+## Row-count command output (this cycle's own artifact, before → after)
+
+```
+BEFORE: 44
+AFTER:  34
+```
+(Same re-derive command as the top of this receipt, run against the regenerated
+`docs/work-inventory.json`.)
+
+## Before/after regeneration diff — the collision-hazard check the task brief named
+
+Snapshot taken at this cycle's start (`/tmp/work-inventory-pre-cycle7.json`, HEAD `94705a4149`)
+before any regeneration; diffed the full `units` array, keyed by `id`, against the post-fix
+regeneration:
+
+```
+$ python3 -c "
+import json
+pre = json.load(open('/tmp/work-inventory-pre-cycle7.json'))
+post = json.load(open('docs/work-inventory.json'))
+pre_map = {u['id']: u for u in pre['units']}
+post_map = {u['id']: u for u in post['units']}
+assert set(pre_map) == set(post_map)
+changed = [k for k in pre_map if pre_map[k] != post_map[k]]
+print(len(changed))
+"
+10
+```
+Exactly the 10 intended keys changed (all `core_rulebook:class_feature:class_skills_*` plus
+`jack_of_all_trades_class_skills`), each moving `class_feature_option_pool_record_not_held_by_engine`
+-> `class_feature_class_skill_list_held_by_class_skill_list_table`, `status` unchanged
+(`engine-does-not-hold` -> `engine-does-not-hold`). Zero unintended units moved — the task
+brief's own named "cycle 5" collision (a batch of per-option diagnostics sharing one owner
+namespace silently misclassifying 5 unrelated units) does not repeat here: this lookup is a
+closed, exact-string-equality list (`unit.key == key`), never a substring match, and the diff
+proves it.
+
+## Figures + their re-derive commands
+
+| Figure | Value | Command | Denominator |
+|---|---|---|---|
+| Mechanism population, before | 44 | see top of this receipt | of 564 `core_rulebook` bucket-B units (whole book, all 9 mechanisms) |
+| Mechanism population, after | 34 | same command against post-regen `docs/work-inventory.json` | of 543 |
+| `core_rulebook` bucket B, whole book | 564 → 543 | `python3 scripts/completion_atlas.py --by-book` | of 6,701 `core_rulebook` units |
+| Units closed this cycle | 10 (`Class Skills ~ {Barbarian,Bard,Cleric,Druid,Fighter,Monk,Paladin,Ranger,Rogue}`, `Jack of All Trades ~ Class Skills`) | `python3 -c "..."` filtering `evidence=='class_feature_class_skill_list_held_by_class_skill_list_table'` | of 44 |
+| Corpus-wide population, unchanged | 49,438 | `len(d['units'])` on regenerated `docs/work-inventory.json` | of 49,438 |
+| `completion_atlas.py --check` | `population=49438 buckets=10 unclassified=0 overlap=0 citation_failures=0` | `python3 scripts/completion_atlas.py --check` | of 49,438 |
+| `missing_engine_tables.py --check` | `citation_failures=0` (was 2 before the fix below) | `python3 scripts/missing_engine_tables.py --check` | of 449 bucket-A units |
+| `denominator_gate.py --check` | `files_checked=15 violations=0` (16 once this receipt is committed) | `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` | of 15/16 files |
+| `corpus_literal_sweep` examined population | 48,708 of 51,482, unchanged (0 corpus records added/regenerated — no `data/corpus/**` file touched, only READ by the new test) | `corpus_literal_sweep --json-out`, this cycle's own fresh run (`/tmp/sweep-cycle7.json`) | of 51,482 |
+| `derived_evaluator_fixture_check` | `1839 unit(s) cleared over 2580 fixture row(s); 0 failed; 0 not ingested` (unchanged) | this cycle's own fresh run, `--json-out` (`/tmp/fixture-cycle7.json`) | of 2,580 fixture rows |
+
+## Citation-drift self-heal (task brief's own named hazard)
+
+This cycle's own +27-net-line insertion into `v06_work_inventory.rs`'s `Kind::ClassFeature`
+`text_only` arm (the new class-skill-list rung, inserted before cycle 6's own final fallback)
+shifted 4 of `completion_atlas.py`'s `BUCKET_DEFINITIONS` citations and both of
+`missing_engine_tables.py`'s `ENGINE_SURFACE_CITATIONS` entries by exactly +27 lines each — caught
+by running both `--check` commands before writing this receipt (`citation_failures=4` and `=2`
+respectively). Each was independently re-derived by grepping the literal target content at its
+new location (not computed from the diff hunk offset alone):
+
+| Citation | Old line | New line |
+|---|---:|---:|
+| `completion_atlas.py` A (`has_no_engine_table`) | 10771 | 10798 |
+| `completion_atlas.py` B (`not_held_by_engine`) | 10451 | 10478 |
+| `completion_atlas.py` C (`explanation_id`) | 10676 | 10703 |
+| `completion_atlas.py` V (`literal-verified`) | 11422 | 11449 |
+| `missing_engine_tables.py` companion | 10771 | 10798 |
+| `missing_engine_tables.py` power | 10850 | 10877 |
+
+Both gates clean at this cycle's HEAD: `citation_failures=0` for both, confirmed by a fresh run
+after the fix. `completion_atlas.py`'s D (line 9039) and M (line 8874) citations sit BEFORE this
+cycle's insertion point and were independently confirmed unshifted.
+
+## Build scope verified
+
+- `cargo test --locked --lib` (workspace lib): `2906 passed; 0 failed; 14 ignored`. This cycle's
+  own start-of-cycle HEAD (`94705a4149`) already sat past cycle 6's own receipt SHA — two sibling
+  mechanism cycles (`option-pool-with-magnitude` cycle 6, `owner-matched` cycle 6) landed in
+  between and account for most of the +11 over cycle 6's own recorded 2895; this cycle's own
+  contribution is exactly 5 new tests (3 in `class_skill_tables.rs`: `class_skill_lists_match_
+  their_own_corpus_records`, `jack_of_all_trades_is_the_all_skills_row`, `unknown_owner_returns_
+  none`; 2 in `class_feature_pool_catalog.rs`: `class_skill_list_grant_owner_table_matches_
+  resolve_to_real_rows`, `class_skill_list_grant_owner_id_excludes_companion_mount_records`),
+  each confirmed present and passing by name in this run's own output.
+- `cargo test --locked --bin v06_work_inventory` (scoped): `400 passed; 0 failed` — no new test
+  added directly to `tests/v06_work_inventory.rs` this cycle (the new coverage lives in the lib
+  crate above); the delta over cycle 6's own recorded 397 comes from the same two sibling cycles'
+  intervening work, run **after** the last write that could move a figure (the
+  `docs/work-inventory.json` regeneration) — `decisions.md §12` L7.
+- `cargo test --locked --no-run` (full workspace): clean, exit 0, `grep -c '^error'` → 0.
+  `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001`.
+- `apps/desktop/src-tauri` (separate cargo workspace, tested explicitly): `cargo test --locked
+  --no-run` in that directory, own `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001-desktop` —
+  clean, exit 0.
+- Run at SHA: see `commit_sha` in this cycle's structured return / the commit this receipt ships
+  in.
+- Disk healthy this cycle (`df -h /` → 485G free before the workspace build).
+
+## Sweep population
+
+`corpus_literal_sweep`: `48708 records examined of 51482 read, 413336 tokens compared, 51469
+digests checked, 0 findings, CLEAN` — same as the inherited baseline; this cycle added/regenerated
+zero corpus records (the new tests only READ already-committed
+`data/corpus/core_rulebook/class_feature/{class_skills,jack_of_all_trades}/*.json` files), so the
+examined population must not move, and does not (`decisions.md §12` L8).
+
+## Dual-audit gate
+
+File-touch set: `src/rules_core/ src/bin/ scripts/oracle_harness/` (Epic 3's own §3 set,
+`scripts/oracle_harness/` untouched this cycle, no records).
+
+- Bundle-tag scan: `OK_NO_BUNDLE_TAGS`.
+- Stub/mock/placeholder scan: non-empty (17 matches across the branch's cumulative history), but
+  every match is `placeholder` inside PRE-EXISTING lines from earlier sibling cycles (confirmed
+  by re-running the same grep restricted to only this cycle's own touched files, including the
+  new file — zero matches). Matches this mechanism's own established precedent (cycles 1, 5, and
+  6's receipts all record the identical finding). No new stub/mock/placeholder token in any line
+  this cycle actually wrote.
+
+## Oracle pin
+
+Not applicable — no figure in this receipt comes from the pinned PCGen oracle corpus; every
+figure comes from the repo's own committed `data/corpus/` and `docs/work-inventory.json`.
+
+## PI gates
+
+Not re-run this cycle: no deity, PI-adjacent, or personal-data-bearing record was touched (the
+new table transcribes CRB core-class skill lists, all OGL, no `pi_field`/`pi_marker` set on any
+of the 10 source corpus records — confirmed by inspection). Cycle 6's own defensive re-run applies
+to a different class of change (its own new consumer-territory corpus read); this cycle's own
+change is narrower in the same direction (a new consumer-territory read of already-committed
+`data/corpus/`) and carries the identical "not implicated" argument, so it is stated rather than
+re-proven by a fresh `verify.sh` invocation this cycle.
+
+## Movement, four buckets
+
+- **Closure:** 10 — `Class Skills ~ {Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin,
+  Ranger, Rogue}`, `Jack of All Trades ~ Class Skills` moved from bucket B
+  (`engine-does-not-hold`, B-marker evidence) → bucket D (`engine-does-not-hold`, no A/B/C
+  marker) via a real, tested, new engine table — the engine genuinely holds these records' own
+  class-skill-list content now, not a relabeling. **Not bucket DONE**: all 10 carry
+  `description: null`, so this mechanism's own display-bucket sibling concern is untouched — a
+  separate, unrelated concern, same as cycles 5-6's own rungs.
+- **Reclassification:** 0 — no unit changed bucket without a genuine holds change; the
+  before/after diff (above) confirms exactly these 10 and no others moved.
+- **Reachability:** 0 — no `reach_gate` finding changed; no character-build path touched.
+- **Instrument-correction:** 6 citation-line fixes (see above) — tooling metadata (line-number
+  pointers), not a measurement method; moved no unit count on any board.
+
+- **Status:** partial
+
+## Remainder — 34 units, named by sub-cause
+
+| Sub-cause | Units | Why not closed this cycle |
+|---|---:|---|
+| Proficiency/mechanical-grant possession-tracking, generic weapon-flavored indirection targets (`Weapon Prof ~ Auto/Martial/Simple`, `All {Automatic,Martial Weapon} Proficiencies`, `Single Simple Weapon Proficiency`) plus `Weapon Proficiencies ~ {Cleric,Monk}` (cycle 5's own excluded pair) | 8 | Unchanged from cycle 6 — generic shared indirection targets do not map 1:1 to one class table row; Cleric/Monk individually investigated and confirmed non-matching. |
+| Weapon+armor combined records, excluded (cycle 6) | 2 | `Weapon and Armor Proficiency ~ {Druid, Monk}` — Druid's weapon list is missing `Scythe` against both the table and its own dedicated record; Monk repeats the established 16/17 mismatch. |
+| Proficiency/mechanical-grant possession-tracking, armor/shield-flavored generic indirection targets, plus non-weapon extras | 10 | Unchanged from cycle 6 — `Armor Prof ~ {Heavy,Light,Medium}`, `Armor Training ~ Heavy Armor`, `Shield Prof`, `Shield Prof ~ Tower` remain generic indirection targets with no 1:1 class row; `Add Spoken Language`, `Channel {Negative,Positive} Energy`, `Evasion` each need a genuinely new, unrelated subsystem. |
+| Companion/mount registration | 3 | `Companion ~ Animal Companion`, `Companion ~ Special Mount`, `Special Mount ~ Standard Choices` — a DIFFERENT corpus shape (`FOLLOWERS:`/`COMPANIONLIST:` tokens, not `CSKILL:`) from the class-skill-list group this cycle closed; needs its own new consumer (companion/mount grant + choice-set registration), not a class-skill-table extension. Newly split out from the former 13-unit "class-skill/companion-mount attribution" name — the two halves are genuinely different subsystems, confirmed by this cycle's own per-record read (see "What was and was not safely closable" above). |
+| Wizard opposition-school spell tracking | 9 | Unchanged from cycle 5/6 — all 9 carry `description: null`; no spell-known-per-school consumer exists. |
+| Domain Power `CLASS_FEATURE_POOLS` registration gap | 2 | Unchanged from cycle 5/6 — Leadership/Sun's Blessing both need real new consumers wider than what exists today; reaches into the `with_magnitude` sibling mechanism's own population. |
+
+**8 + 2 + 10 + 3 + 9 + 2 = 34.** Every remaining unit is named by sub-cause with a population;
+none is folded into "the rest".
+
+`decisions.md §16` ("only the count grounds") was checked against this remainder before writing
+this table: none of these 34 units carry the "pick N from an eligible set" choice shape — they
+are attribute/possession-tracking grants, generic PCGen indirection targets, and (newly) a
+companion/mount registration gap. §16 does not apply to any of them.
+
+## Next-cycle plan
+
+The 3-unit companion/mount registration group (newly separated from the former 13) is now the
+smallest of the two remaining "genuine new-subsystem" groups this task brief named (the other,
+wizard opposition-school tracking, is 9) — a real, narrower scope than this cycle's own
+class-skill-list table turned out to require, since `FOLLOWERS:`/`COMPANIONLIST:` cover only 3
+records total. A future cycle should build that registration (or confirm it already exists
+elsewhere in `companion_chassis` — the sibling `companion_absent_from_core_rulebook_companion_
+tables` mechanism, already closed to 0, may share real infrastructure worth reusing rather than
+duplicating) before attempting wizard opposition-school tracking (9, a genuinely larger new
+subsystem: per-character known-spells-per-school bookkeeping). The 8-unit weapon-generic and
+10-unit armor-generic-plus-extras groups remain, by cycles 5-6's own investigation, generic
+indirection targets with no 1:1 class mapping — do not retry the class-table-match approach
+against them without a new idea. Domain Power (2) stays smallest-but-not-cheapest, deferred to
+whichever cycle also builds the `with_magnitude` sibling's own Sun/Leadership consumer work.
+
+---
+
 
 - **Commit SHA:** `986e954d87`
 - **Files touched:** `src/rules_core/rules_tables/crb/weapon_tables.rs`, `src/rules_core/class_feature_pool_catalog.rs`, `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py`, `scripts/missing_engine_tables.py`, `docs/work-inventory.json` (regenerated), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` (re-derived), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/missing-engine-tables.json` (re-derived), this receipt.

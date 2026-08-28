@@ -116,6 +116,51 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 7) — one of nine, `decisions.md §14` — partial
+
+Re-derived at this cycle's starting HEAD (`94705a4149`): still 44 of 564 `core_rulebook`
+bucket-B units, unchanged from cycle 6's own closing figure. The task brief named "class-skill/
+companion-mount attribution" (13 units, cycle 6's own remainder) as one of three genuine
+new-subsystem investments and asked for one to be BUILT properly rather than another narrow
+pass. Read all 13 units directly against the live corpus before assuming the name described one
+shape: 10 carry a `CSKILL:` token (9 CRB base classes' own `"Class Skills ~ <Class>"` internal
+chassis record + `"Jack of All Trades ~ Class Skills"`), the other 3 carry `FOLLOWERS:`/
+`COMPANIONLIST:` tokens instead (`Companion ~ Animal Companion`, `Companion ~ Special Mount`,
+`Special Mount ~ Standard Choices`) — a genuinely different subsystem (companion/mount
+registration, not class-skill attribution).
+
+Built the homogeneous 10-unit half: new `rules_tables::crb::class_skill_tables::CLASS_SKILL_LISTS`
+(10-row closed table — 9 base classes' skill lists transcribed verbatim from each class's own
+`CSKILL:` token, plus Jack of All Trades' `CSKILL:ALL` row), each independently verified
+byte-for-byte against the live corpus JSON in a new test. New
+`class_feature_pool_catalog::class_skill_list_grant_owner_id` closed-list lookup (record key ->
+owner id, mirroring cycle 6's own `weapon_and_armor_proficiency_grant_class_id` pattern exactly),
+wired into `v06_work_inventory.rs`'s `Kind::ClassFeature` `text_only` arm immediately after
+cycle 6's own weapon-and-armor rung. **No live consumer required** — same precedent cycle 6's own
+`CLASS_ARMOR_PROFICIENCIES` table already established for this mechanism: a real, tested table
+that verifiably holds the record's own content is enough to move bucket B -> D (`decisions.md §2`
+"a shelf, not a half-fix"); `skill_allocation.rs`'s own bounded posture is untouched, future
+widening work for whichever cycle owns it.
+
+**10 of 44 closed this cycle** (`Class Skills ~ {Barbarian, Bard, Cleric, Druid, Fighter, Monk,
+Paladin, Ranger, Rogue}`, `Jack of All Trades ~ Class Skills`). `core_rulebook` bucket B
+(atlas-real) 564 -> 543 of 6,701. Before/after whole-corpus diff (snapshot taken before
+regeneration, per the task brief's own named cycle-5 collision hazard) confirms exactly these 10
+keys moved and nothing else — zero collision. `cargo test --locked --no-run` exit 0,
+workspace-wide and `apps/desktop/src-tauri`; `cargo test --locked --lib` 2,906 passed / 0 failed
+/ 14 ignored (5 new tests); `cargo test --locked --bin v06_work_inventory` 400 passed / 0
+failed. No instrument movement: `corpus_literal_sweep` stayed 48,708 of 51,482 (0 corpus records
+added/regenerated, only already-committed files read by the new tests), `derived_evaluator_
+fixture_check` unchanged. Fixed 6 shifted `file:line` citations in `completion_atlas.py`/
+`missing_engine_tables.py` (`citation_failures=0` on both after). 34 remain, sub-cause partition
+re-derived fresh and sums exactly: weapon-flavored generic indirection 8, `Weapon and Armor
+Proficiency ~ {Druid,Monk}` excluded 2, armor/shield-flavored generic + non-weapon extras 10,
+companion/mount registration 3 (newly split out of the former 13), wizard opposition-school
+tracking 9, Domain Power `CLASS_FEATURE_POOLS` registration gap 2. AT-34-E3-001 itself remains
+open (8 other mechanisms + this mechanism's own 34 remain). Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_cycle_receipt.md` (Cycle 7
+section, prepended).
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 6) — one of nine, `decisions.md §14` — partial
 
 Re-derived at this cycle's starting HEAD (`2829c89e18`): still 267, unchanged from cycle 5's

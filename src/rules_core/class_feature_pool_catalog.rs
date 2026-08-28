@@ -814,6 +814,46 @@ pub fn weapon_and_armor_proficiency_grant_class_id(key: &str) -> Option<&'static
         .map(|(_, c)| *c)
 }
 
+/// `AT-34-E3-001` cycle 7, class-skill-list slice of the "class-skill/
+/// companion-mount attribution" sub-cause cycles 5-6 both named as a
+/// genuine new-subsystem investment. Maps each of the 9 CRB base classes'
+/// own `"Class Skills ~ <Class>"` internal chassis record, plus `"Jack of
+/// All Trades ~ Class Skills"`, to the owner id
+/// `crate::rules_core::rules_tables::crb::class_skill_tables::class_skill_list`
+/// was independently verified against (byte-for-byte, its own module's
+/// `class_skill_lists_match_their_own_corpus_records` test). Closed,
+/// named-key list — never a shape predicate — mirroring
+/// [`WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`]'s own
+/// pattern.
+///
+/// The remaining 3 units of that 13-unit sub-cause (`Companion ~ Animal
+/// Companion`, `Companion ~ Special Mount`, `Special Mount ~ Standard
+/// Choices`) are a DIFFERENT corpus shape (`FOLLOWERS:`/`COMPANIONLIST:`,
+/// not `CSKILL:`) and are deliberately absent from this table — named in
+/// this cycle's own receipt remainder, not silently folded in here.
+pub const CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES: &[(&str, &str)] = &[
+    ("Class Skills ~ Barbarian", "class:barbarian"),
+    ("Class Skills ~ Bard", "class:bard"),
+    ("Class Skills ~ Cleric", "class:cleric"),
+    ("Class Skills ~ Druid", "class:druid"),
+    ("Class Skills ~ Fighter", "class:fighter"),
+    ("Class Skills ~ Monk", "class:monk"),
+    ("Class Skills ~ Paladin", "class:paladin"),
+    ("Class Skills ~ Ranger", "class:ranger"),
+    ("Class Skills ~ Rogue", "class:rogue"),
+    ("Jack of All Trades ~ Class Skills", "class_feature:jack_of_all_trades"),
+];
+
+/// Looks up [`CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES`] by key,
+/// returning the owner id the record's own `CSKILL` content was verified
+/// against. `v06_work_inventory.rs`'s `Kind::ClassFeature` arm consults
+/// this immediately after [`weapon_and_armor_proficiency_grant_class_id`],
+/// mirroring its own named-list pattern (never a live shape scan) for the
+/// identical reason.
+pub fn class_skill_list_grant_owner_id(key: &str) -> Option<&'static str> {
+    CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES.iter().find(|(k, _)| *k == key).map(|(_, o)| *o)
+}
+
 /// `(book, key) -> description` for every entry the catalog holds — the
 /// shape `v06_work_inventory.rs`'s `EngineFacts` (and `Kind::ClassFeature`'s
 /// classify arm) actually consults, mirroring `feat_served_descriptions`'
@@ -1025,6 +1065,34 @@ mod tests {
     fn weapon_and_armor_proficiency_grant_class_table_matches_excludes_druid_and_monk() {
         assert_eq!(weapon_and_armor_proficiency_grant_class_id("Weapon and Armor Proficiency ~ Druid"), None);
         assert_eq!(weapon_and_armor_proficiency_grant_class_id("Weapon and Armor Proficiency ~ Monk"), None);
+    }
+
+    /// Proves `CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES`'s own claim: for
+    /// every listed key, `class_skill_tables::class_skill_list(owner_id)`
+    /// is a real row (already independently verified against the live
+    /// corpus by that module's own test) -- this test only proves the
+    /// KEY -> owner_id mapping itself is complete and correct, not a
+    /// duplicate re-derivation of the skill-list content.
+    #[test]
+    fn class_skill_list_grant_owner_table_matches_resolve_to_real_rows() {
+        use crate::rules_core::rules_tables::crb::class_skill_tables;
+        for (key, owner_id) in CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES {
+            assert_eq!(class_skill_list_grant_owner_id(key), Some(*owner_id));
+            assert!(
+                class_skill_tables::class_skill_list(owner_id).is_some(),
+                "{owner_id} (from key {key}) must be a real row in CLASS_SKILL_LISTS"
+            );
+        }
+        assert_eq!(CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES.len(), 10);
+    }
+
+    /// A key this table does not cover (the 3-unit companion/mount
+    /// sibling this cycle deliberately left unclosed) returns `None`.
+    #[test]
+    fn class_skill_list_grant_owner_id_excludes_companion_mount_records() {
+        assert_eq!(class_skill_list_grant_owner_id("Companion ~ Animal Companion"), None);
+        assert_eq!(class_skill_list_grant_owner_id("Companion ~ Special Mount"), None);
+        assert_eq!(class_skill_list_grant_owner_id("Special Mount ~ Standard Choices"), None);
     }
 
     #[test]

@@ -10448,6 +10448,33 @@ fn classify(
                             );
                         }
                     }
+                    // AT-34-E3-001 cycle 7, class-skill-list slice of the
+                    // "class-skill/companion-mount attribution" sub-cause
+                    // cycles 5-6 both named as a genuine new-subsystem
+                    // investment. `class_feature_pool_catalog::
+                    // class_skill_list_grant_owner_id`'s own doc comment
+                    // carries the full argument: 10 keys (9 CRB base
+                    // classes' own `"Class Skills ~ <Class>"` internal
+                    // chassis record plus `"Jack of All Trades ~ Class
+                    // Skills"`), each independently verified byte-for-byte
+                    // against the live corpus's own `CSKILL` token by
+                    // `class_skill_tables`'s own test. Still `description:
+                    // null`'s display-bucket sibling concern is untouched
+                    // -- this only certifies the record's own content is
+                    // now held by a real engine table (bucket B -> D,
+                    // same "a shelf, not a half-fix" outcome as cycles 5-6's
+                    // own rungs). The remaining 3 units of the 13-unit
+                    // sub-cause (`Companion ~ Animal Companion`, `Companion
+                    // ~ Special Mount`, `Special Mount ~ Standard Choices`)
+                    // are a DIFFERENT corpus shape (`FOLLOWERS:`/
+                    // `COMPANIONLIST:`, not `CSKILL:`) and fall through to
+                    // this arm's own fallback below, unchanged.
+                    if class_feature_pool_catalog::class_skill_list_grant_owner_id(&unit.key).is_some()
+                    {
+                        return engine_does_not_hold(
+                            "class_feature_class_skill_list_held_by_class_skill_list_table",
+                        );
+                    }
                     return engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine");
                 }
                 // AT-33-E4-002 (`unknown-rootcause.md` §1): before this

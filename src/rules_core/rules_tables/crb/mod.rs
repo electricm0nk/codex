@@ -90,6 +90,7 @@ pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
 }
 
 pub mod bard_spell_list;
+pub mod class_skill_tables;
 pub mod class_tables;
 pub mod cleric_spell_list;
 pub mod druid_spell_list;
