@@ -8985,8 +8985,30 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // pushed. Pathfinder Unchained classes already push their own hand-
     // curated roster from inside `compute_pu_class_chassis` (a DIFFERENT id
     // namespace, `class_feature.pu.*`); this call is a no-op for them.
-    if chassis_supported
-        && let [class_level] = input.chosen.class_levels.as_slice()
+    //
+    // SD-34 AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_
+    // not_held_by_engine` mechanism, cycle 7): `chassis_supported` ALONE
+    // used to gate this whole call, which meant a prestige-class-only
+    // character (Assassin, Shadowdancer, Duelist, ...) never got a single
+    // one of their own real, corpus-described class features, because
+    // `compute_class_chassis`'s own `prestige_class_entry_gate` branch,
+    // above, deliberately returns `None` for the BAB/save chassis
+    // regardless of whether the class id is real -- "chassis magnitude
+    // still unsupported" is not the same claim as "this class does not
+    // exist". `prestige_class_entry_gate::is_registered` answers the
+    // narrower, correct question this call site actually needs: is
+    // `class_level.class_id` a real class id the engine's own census
+    // recognizes, whether or not its numeric chassis is built yet. Widening
+    // to `||` rather than replacing `chassis_supported` outright preserves
+    // every existing modelled class's behaviour unchanged (chassis_supported
+    // is still sufficient on its own), and adds coverage only for the
+    // registry's own named prestige classes -- never for an arbitrary
+    // unrecognized class id, which still grounds nothing here (see
+    // `prestige_class_feature_generic_grant_tests::
+    // an_unrecognized_class_id_still_grounds_nothing_from_the_widened_gate`).
+    if let [class_level] = input.chosen.class_levels.as_slice()
+        && (chassis_supported
+            || prestige_class_entry_gate::is_registered(&class_level.class_id))
     {
         class_feature_grant_consumer::push_generic_class_feature_grant_records(
             &class_level.class_id,
@@ -42205,6 +42227,108 @@ mod base_class_weapon_and_armor_proficiency_tests {
         assert!(
             explanation(&input, "class_feature.shadowdancer.weapon_and_armor_proficiency").is_none()
         );
+    }
+}
+
+/// SD-34 AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_
+/// held_by_engine` mechanism, cycle 7). Proves the widened precondition on
+/// `compute_pilot_base_chassis`'s generic class_feature grant roster call
+/// (this module, just above `compute_class_chassis`'s prestige-entry-gate
+/// branch): a prestige-class-only character now gets the SAME generic
+/// roster every other modelled class already gets, even though
+/// `compute_class_chassis` genuinely produces no BAB/save chassis for any
+/// CRB prestige class (asserted directly, as this suite's own premise, not
+/// assumed).
+#[cfg(test)]
+mod prestige_class_feature_generic_grant_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, ASSASSIN_CLASS_ID,
+        SHADOWDANCER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation(input: &CharacterInput, id: &str) -> Option<(i16, String)> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .into_iter()
+            .find(|e| e.id == id)
+            .map(|e| (e.value, e.detail))
+    }
+
+    #[test]
+    fn assassin_class_features_ground_even_though_no_bab_save_chassis_exists() {
+        let input = character(ASSASSIN_CLASS_ID, 8);
+        assert!(
+            explanation(&input, "class_chassis.base_attack_bonus").is_none(),
+            "this test's own premise: a CRB prestige class's chassis is genuinely \
+             unsupported by compute_class_chassis today"
+        );
+        let (value, detail) =
+            explanation(&input, "class_feature.assassin.corpus_record.hidden_weapons")
+                .expect("a level-8 Assassin must be granted Hidden Weapons (real, level-4 grant)");
+        assert_eq!(value, 4);
+        assert!(
+            detail.contains("Hidden Weapons") && detail.contains("granted from class level 4"),
+            "must name the real feature and its real granted-at level: {detail}"
+        );
+        let (death_value, _) =
+            explanation(&input, "class_feature.assassin.corpus_record.true_death")
+                .expect("a level-8 Assassin must also be granted True Death (level-4 grant)");
+        assert_eq!(death_value, 4);
+    }
+
+    #[test]
+    fn shadowdancer_class_features_ground_even_though_no_bab_save_chassis_exists() {
+        let input = character(SHADOWDANCER_CLASS_ID, 8);
+        assert!(explanation(&input, "class_chassis.base_attack_bonus").is_none());
+        let (value, detail) =
+            explanation(&input, "class_feature.shadowdancer.corpus_record.darkvision")
+                .expect("a level-8 Shadowdancer must be granted Darkvision (real, level-2 grant)");
+        assert_eq!(value, 2);
+        assert!(
+            detail.contains("Darkvision") && detail.contains("granted from class level 2"),
+            "must name the real feature and its real granted-at level: {detail}"
+        );
+    }
+
+    #[test]
+    fn duelist_deflect_arrows_grounds_even_though_no_bab_save_chassis_exists() {
+        let input = character("class:duelist", 9);
+        assert!(explanation(&input, "class_chassis.base_attack_bonus").is_none());
+        let (value, detail) =
+            explanation(&input, "class_feature.duelist.corpus_record.deflect_arrows")
+                .expect("a level-9 Duelist must be granted Deflect Arrows (real, level-9 grant)");
+        assert_eq!(value, 9);
+        assert!(detail.contains("Deflect Arrows"), "must name the real feature: {detail}");
+    }
+
+    #[test]
+    fn an_unrecognized_class_id_still_grounds_nothing_from_the_widened_gate() {
+        // Sanity: the widened gate is keyed on the real prestige-class-entry
+        // registry, not merely "chassis_supported happened to be false" --
+        // an arbitrary unrecognized class id must still ground nothing.
+        let input = character("class:not_a_real_class", 5);
+        assert!(explanation(&input, "class_chassis.base_attack_bonus").is_none());
+        let has_roster_id = build_pilot_headless_receipt(&input)
+            .computation
+            .explanations
+            .iter()
+            .any(|e| e.id.contains(".not_a_real_class."));
+        assert!(!has_roster_id, "an unrecognized class id must never gain the generic roster");
     }
 }
 

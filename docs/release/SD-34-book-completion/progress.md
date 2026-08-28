@@ -116,6 +116,44 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 7) — one of nine, `decisions.md §14` — partial
+
+Re-derived at this cycle's starting HEAD (`2ae06fe4cd`): still 248 of 6,701 `core_rulebook`
+bucket-B units in this mechanism, matching cycle 6's own closing figure exactly. Cycle 6's own
+next-cycle plan flagged that its inherited four-way sub-cause split (118/15/67/48) needed fresh
+re-derivation before any lever was taken from it; re-derived fresh by direct corpus query instead
+(105 real-description / 143 null-description-with-tokens / 0 neither, sums exactly), and grouping
+by owning class found **218 of 248** already blocked by a real, pre-existing, previously-escalated
+architectural gate (`class_feature_grant_consumer::ANTI_FABRICATION_GATE_EXCLUDED_CLASSES` —
+Sorcerer/Cleric/Monk/Wizard/Paladin/Bard/Druid, guarding 9 shipped anti-fabrication tests,
+`OPEN-ISSUES.md` rows 330/338, OPEN and not this cycle's to decide). Of the remaining 30
+(non-excluded classes), traced why several with real corpus descriptions and real grant facts
+(Assassin, Shadowdancer, Duelist, Arcane Trickster, Dragon Disciple, Pathfinder Chronicler) still
+failed to ground: `compute_pilot_base_chassis`'s generic class_feature grant-roster call site used
+`chassis_supported` — "has a computed BAB/save chassis" — as its sole "is this a real class"
+precondition, and `compute_class_chassis`'s own prestige-entry-gate branch always returns `None`
+for every CRB prestige class's chassis regardless of whether the class id is real. New
+`prestige_class_entry_gate::is_registered` accessor plus a widened `||` at the call site (no
+change to any anti-fabrication gate, description-quality check, or collision guard) lets the SAME
+already-shipped, already-unit-tested generic roster fire for a prestige-class-only character.
+TDD: RED (3 of 4 new tests failing for the intended missing-explanation reason) → GREEN. 6/248
+closed (`assassin_hidden_weapons`, `assassin_true_death`, `duelist_deflect_arrows`,
+`shadowdancer_darkvision`, `shadowdancer_defensive_roll`, `shadowdancer_shadow_power`), all
+`engine-does-not-hold` → `text-complete`, verified by a whole-corpus before/after diff (35 changed
+ids total, all `core_rulebook:class_feature:*`, zero cross-book movement; 29 of the 35 are
+same-status evidence-string relabelling on OTHER prestige-class records this cycle's fix also
+newly explains, not bucket moves — verified none carries this mechanism's own evidence string).
+242 remain, NOT closed — named by sub-cause: 218 excluded-class (real blocker, needs an operator
+ruling on `OPEN-ISSUES.md` 330/338), ~20 non-excluded-class internal-bookkeeping (no description,
+no resolvable formula chain — same OPEN definitional question `atlas-defects.md` already names),
+~4 not yet individually re-verified this cycle. `core_rulebook` bucket B (atlas-real partition)
+543 → 537/6,701. `box_ledger.py --check` exits 1 both before and after (pre-existing since prior
+cycles' status-string rename, confirmed against the untouched pre-cycle snapshot; `uncovered`
+19,870 → 19,864, an improvement, not a regression; `overlap=0`/`population=49438` hold both
+before and after). Movement: 6 closure, 29 reclassification, 6 reachability, 0
+instrument-correction. AT-34-E3-001 itself remains open (8 other mechanisms + this mechanism's
+own 242 remain).
+
 ### Cycle — AT-34-E3-003 (bucket `U` ruling, cycle 1, `decisions.md §17`) — partial, reclassification only
 
 Applied operator ruling `decisions.md §17` ("bucket `U` is DONE"): a `Kind::EquipmentModifier`

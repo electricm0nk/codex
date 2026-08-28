@@ -118,6 +118,31 @@ fn find_by_class_id(class_id_str: &str) -> Option<&'static PrestigeClassEntryReq
         .find(|entry| entry.class_id == class_id_str)
 }
 
+/// True iff `class_id_str` names a prestige class this registry census'd --
+/// i.e. a class id the engine genuinely recognizes as real, even though
+/// `compute_class_chassis` does not (yet) compute a BAB/save chassis for it
+/// (see that function's own `prestige_class_entry_gate` branch, which always
+/// returns `None` for the chassis regardless of `qualifies`).
+///
+/// SD-34 AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_
+/// held_by_engine` mechanism): `pilot_compute::compute_pilot_base_chassis`'s
+/// generic class_feature grant roster call site used `chassis_supported`
+/// alone as its "is this a real, modelled class" precondition, which
+/// silently withheld every one of a prestige-class character's own real,
+/// described class features (e.g. Assassin's Hidden Weapons, Shadowdancer's
+/// Darkvision) -- not because the roster couldn't ground them (it can; see
+/// `class_feature_grant_consumer`'s own direct unit tests for exactly these
+/// records), but because no chassis magnitude happens to exist for the
+/// class that owns them. This accessor lets that call site widen its
+/// precondition to "chassis_supported OR a real prestige class id", without
+/// this module needing to expose its private registry lookup or say
+/// anything about entry-requirement legality (a character need not qualify
+/// for the prestige class to have chosen it -- the same "compute regardless
+/// of legality" posture every other class id in this engine already gets).
+pub fn is_registered(class_id_str: &str) -> bool {
+    find_by_class_id(class_id_str).is_some()
+}
+
 /// The per-clause verdicts and overall qualification outcome for one
 /// prestige class against one character's chosen input.
 #[derive(Debug, Clone, PartialEq, Eq)]

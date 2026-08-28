@@ -18,7 +18,7 @@
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 11973,
+      "count": 11967,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
@@ -29,7 +29,7 @@
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
-      "count": 4407,
+      "count": 4395,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'explanation_id' / 'diagnostic')",
       "meaning": "held and computed, never surfaced"
     },
@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 3041,
+      "count": 3053,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 14575,
+      "count": 14581,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "9c9f13f8c52d3c7fbd1575d71b5ad3b08f6a7aa0",
+  "derived_at": "2ae06fe4cd7c94ae1523bc11c1c27e310319501f",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -124,7 +124,7 @@
     "D": {
       "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 294,
       "class_feature_class_skill_list_held_by_class_skill_list_table": 10,
-      "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 153,
+      "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 165,
       "class_feature_of_unmodelled_corpus_class:adaptive_warrior": 18,
       "class_feature_of_unmodelled_corpus_class:aldori_swordlord": 13,
       "class_feature_of_unmodelled_corpus_class:animal": 23,
