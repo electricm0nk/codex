@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10425,
+        "line": 10558,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,18 +14,18 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10123,
+        "line": 10256,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 12143,
+      "count": 12138,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10348,
+        "line": 10481,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -36,7 +36,7 @@
     "D": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8803,
+        "line": 8916,
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
@@ -47,18 +47,18 @@
     "DONE": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8831,
+        "line": 8944,
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 14434,
+      "count": 14438,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
     "M": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8638,
+        "line": 8751,
         "must_contain": "ingested-magnitude"
       },
       "clears": "running the compute path (shape engine)",
@@ -69,7 +69,7 @@
     "U": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8890,
+        "line": 9003,
         "must_contain": "unmeasurable"
       },
       "clears": "instrument correction",
@@ -80,18 +80,18 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 11076,
+        "line": 11209,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
-      "count": 9513,
+      "count": 9514,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
       "meaning": "verified by proxy, never by the oracle"
     },
     "X": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8850,
+        "line": 8963,
         "must_contain": "deferred-with-reason"
       },
       "clears": "revisiting the stated condition",
@@ -102,7 +102,7 @@
     "Z": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8711,
+        "line": 8824,
         "must_contain": "not-started"
       },
       "clears": "ordinary work",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "16c772cca9830cafe2a02431741ed62b01e60bc7",
+  "derived_at": "3e680734230409bf7d8dc4ca52bd8f928228a842",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],

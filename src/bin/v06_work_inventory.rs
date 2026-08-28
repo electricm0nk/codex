@@ -5208,6 +5208,14 @@ struct EngineFacts {
     /// `ranger_favored_enemy_bonus_wired` above, gated at ranger level 3
     /// (Favored Terrain's own real class-table gate) rather than level 1.
     ranger_favored_terrain_bonus_wired: BTreeSet<String>,
+    /// `AT-34-E3-001` (mechanism 2 continuation, cycle 4): full corpus_key
+    /// strings (`"Evocation School ~ Intense Spells"`, ...) whose own
+    /// per-power explanation id was genuinely observed via
+    /// [`probe_wizard_arcane_school_wiring`], bounded to exactly the two
+    /// schools (Evocation, Abjuration) the engine has a real formula for.
+    /// See that probe's own doc comment for why every other school and both
+    /// schools' top-level recognition records are deliberately excluded.
+    wizard_arcane_school_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -7310,6 +7318,110 @@ fn probe_ranger_favored_terrain_bonus_wiring(fixture: &CharacterInput) -> BTreeS
     wired
 }
 
+/// `AT-34-E3-001` (mechanism 2 continuation, cycle 4): the wizard arcane
+/// school sub-cause, same shape as Domain Power / Weapon Training / Favored
+/// Enemy above -- `"Evocation School ~ Intense Spells"`'s own `group` is
+/// `"Evocation School"`, which can never equal `"wizard"`, so
+/// `class_feature_owner` and its two fallbacks can never resolve an owner
+/// (`type_facet` here is `"WizardClassFeatures.SpecialQuality...."`, no
+/// space before `ClassFeatures`, so `class_feature_type_facet_owner_
+/// candidates`'s marker match fails too), and even a resolved owner would
+/// fail `class_feature_exact_suffix_grounded`'s `group == owner` guard.
+///
+/// Unlike Domain Power's five-domain sweep, this probe does not try every
+/// school -- it observes exactly the two school selections
+/// `explain_ranger_level1_chassis_and_class_feature_separation`'s own Wizard
+/// arm already has real, tested, non-fabricated per-power formulas for
+/// (confirmed by reading the function directly, not assumed): Evocation
+/// (`canonical_seeds_for("wizard")`'s own standard seed -- Intense Spells'
+/// `max(1, EvocationSchoolLVL/2)` and Force Missile's `3 + Intelligence
+/// modifier` pool, both verified against the corpus's own `cr_abilities_
+/// class.lst` formula tokens above this fn) and Abjuration
+/// (`wizard_has_canonical_abjuration_selection`'s own gate -- Resistance's
+/// stepped `5`/`10`, Protective Ward's three flat sub-magnitudes, and
+/// Energy Absorption's `AbjurationSchoolLVL*3`). Every OTHER school
+/// (Conjuration, Divination, Enchantment, Illusion, Necromancy,
+/// Transmutation, Universal) and both schools' own top-level `"<School>
+/// School"` / `"<School> Opposition School"` recognition records have no
+/// such formula built yet (only the shared, non-numeric `Pool_
+/// ArcaneOppositionSchool`/`OppositionalSchool` prohibited-school tokens),
+/// so this probe deliberately never claims them -- crediting a school with
+/// no real per-power formula, or a recognition record no explanation id
+/// exists for, would be exactly the "plausible-looking but not actually
+/// observed" shape the Sorcerer New Arcana finding (cycle 3's own receipt)
+/// already ruled out for this mechanism.
+fn probe_wizard_arcane_school_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &level in SWEEP_LEVELS {
+        // Evocation: the class's own standard canonical seed already selects
+        // it (`canonical_seeds_for("wizard")`), so no choice override needed.
+        let input = class_sweep_input(fixture, "wizard", level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        if let Ok(computation) = outcome {
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.wizard.intense_bonus_damage")
+            {
+                wired.insert("Evocation School ~ Intense Spells".to_string());
+            }
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.wizard.force_missile_uses_per_day")
+            {
+                wired.insert("Evocation School ~ Force Missile".to_string());
+            }
+        }
+
+        // Abjuration: swap the specialization choice, keep the same
+        // Necromancy/Transmutation opposed pair `wizard_has_canonical_
+        // abjuration_selection` requires (mirrors `wizard_has_canonical_
+        // specialization_selections`'s own precondition exactly).
+        let mut abjuration_input = class_sweep_input(fixture, "wizard", level);
+        abjuration_input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:wizard_school_specialization");
+        abjuration_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_school_specialization".to_string(),
+            selection_id: "school:abjuration".to_string(),
+        });
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&abjuration_input)
+        }));
+        if let Ok(computation) = outcome {
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.school.abjuration.resistance")
+            {
+                wired.insert("Abjuration School ~ Resistance".to_string());
+            }
+            if computation.explanations.iter().any(|e| {
+                e.id.starts_with("class_feature.school.abjuration.protective_ward")
+            }) {
+                wired.insert("Abjuration School ~ Protective Ward".to_string());
+            }
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.school.abjuration.energy_absorption")
+            {
+                wired.insert("Abjuration School ~ Energy Absorption".to_string());
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -7696,6 +7808,7 @@ fn gather_engine_facts(
         fighter_weapon_training_wired: probe_fighter_weapon_training_wiring(fixture),
         ranger_favored_enemy_bonus_wired: probe_ranger_favored_enemy_bonus_wiring(fixture),
         ranger_favored_terrain_bonus_wired: probe_ranger_favored_terrain_bonus_wiring(fixture),
+        wizard_arcane_school_wired: probe_wizard_arcane_school_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -9934,6 +10047,26 @@ fn classify(
                         engine_book: engine_book_field,
                     };
                 }
+            }
+            // `AT-34-E3-001` (mechanism 2 continuation, cycle 4): wizard
+            // arcane school sub-cause, same shape as Domain Power / Weapon
+            // Training / Favored Enemy above -- `group` here is `"Evocation
+            // School"` or `"Abjuration School"`, which can never equal
+            // `"wizard"`, so `class_feature_owner` and its two fallbacks can
+            // never resolve an owner. `probe_wizard_arcane_school_wiring` is
+            // the real, separate attribution path -- see its own doc comment
+            // for why it is bounded to exactly the two schools (Evocation,
+            // Abjuration) the engine has a real per-power formula for, never
+            // the other seven or either school's own top-level recognition
+            // record.
+            if facts.wizard_arcane_school_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
             }
             // `SD31-W17-CLASSFEATURE-001`: the corpus_key group prefix is
             // tried first (unchanged); only when it fails to name an
@@ -16899,6 +17032,59 @@ mod class_feature_text_complete_rung_tests {
             "cr_abilities_class.lst",
             1600,
             "Favored Terrain Bonus ~ Cold",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
+    /// held_by_engine` mechanism, cycle 4, wizard arcane school sub-cause,
+    /// proof case: `probe_wizard_arcane_school_wiring` observed a real,
+    /// live-computed Force Missile uses-per-day magnitude for this exact
+    /// corpus record on a canonical Evocation wizard, so it is `grounded` --
+    /// never routed to the generic bucket-B evidence.
+    #[test]
+    fn a_wizard_arcane_school_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .wizard_arcane_school_wired
+            .insert("Evocation School ~ Force Missile".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2620,
+            "Evocation School ~ Force Missile",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an UNPROBED wizard arcane school record (the
+    /// probe's own `EngineFacts` set is empty here) is completely
+    /// unaffected -- it still falls through to the pre-existing
+    /// `engine-does-not-hold` finding, unchanged, proving this cycle's fix
+    /// credits nothing it did not actually observe. Uses a school
+    /// (`"Conjuration School ~ Acid Dart"`) the probe deliberately never
+    /// claims (no real per-power formula built for it), so this also
+    /// doubles as proof the probe's bound is honored.
+    #[test]
+    fn a_wizard_arcane_school_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2621,
+            "Conjuration School ~ Acid Dart",
             2,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);

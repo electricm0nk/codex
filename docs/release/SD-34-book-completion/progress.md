@@ -101,6 +101,48 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 4) — one of nine, `decisions.md §14` — partial
+
+Re-derived the mechanism population fresh at this cycle's starting HEAD (`3e68073423`): still
+282, unchanged from cycle 3's own closing figure. Read cycle 3's own receipt and its
+"Next-cycle plan" before touching anything, which named the wizard arcane-school cluster (38-43
+units depending on exact partition boundary) as the cheapest remaining lever, sharing its root
+cause with the sibling `class_feature_option_pool_record_not_held_by_engine` mechanism's own
+cycle 1 finding (which declined the FULL cluster as needing genuinely new engine subsystems).
+Read `pilot_compute/mod.rs` directly rather than re-trusting that finding wholesale, and found a
+real, narrower, already-built subset within it: Task #55 (Evocation, `intense_bonus_damage` /
+`force_missile_uses_per_day`) and Task #66 (Abjuration, `resistance` / `protective_ward_*` /
+`energy_absorption`) had ALREADY built real, tested, non-fabricated per-power formulas for two
+of the nine schools — never wired to `classify()`, for the same "group prefix can never equal
+the owning class name" reason Domain Power / Weapon Training / Favored Enemy/Terrain Bonus each
+were. New `probe_wizard_arcane_school_wiring` (mirrors `probe_domain_power_effect_wiring`)
+observes exactly those two schools' own explanation ids against the real compute pipeline and
+grounds only the 5 corpus records they cover — deliberately never claiming the other 7 schools
+(no formula exists) or either school's own top-level/opposition-school recognition record (only
+shared, uncredited prohibited-school bookkeeping, no explanation id built for it).
+
+**5 of 282 closed this cycle** (bucket B, `core_rulebook`, 692 → 687 of 6,701 —
+`python3 scripts/completion_atlas.py --by-book`). `cargo test --locked --no-run` re-run at this
+cycle's own commit SHA, exit 0, workspace-wide; `cargo test --locked --lib` 2,881 passed / 0
+failed / 14 ignored; `cargo test --locked --bin v06_work_inventory` 393 passed / 0 failed (2 new
+tests). Real instrument-correction, not a bad re-derivation: cycle 3's own F1 re-pin (5,402) was
+true at cycle 3's own start and end; this cycle's own fix moved it (5,402 → 5,401 — of the 5
+newly-grounded records, exactly 1, `Abjuration School ~ Resistance`, carries F1's own
+bare-literal-magnitude shape), re-pinned with a retro `correction` event. Re-derived and fixed
+10 + 2 shifted `file:line` citations in `completion_atlas.py`/`missing_engine_tables.py`
+(`citation_failures=0` on both after). Self-healed one inherited `denominator_gate.py`
+violation from cycle 3's own committed text in this file (a bare percentage describing disk
+fullness, not the exempted false-percentage idiom) — `denominator_gate.py --check` now reports
+`violations=0` again. 277 remain, sub-cause partition re-derived fresh and sums exactly:
+`Domain Power` 56, `Domain Base` 33, wizard-school cluster remainder 38, `Bardic
+Performance`/`Draconic Bloodline Choice`/`Secret Lore` 10 each (30), `New Arcana` 9 (ruled out
+by cycle 3, not re-investigated), small 2-3-unit per-class groups 22, long-tail singles 89.
+Flagged, not fixed (out of this mechanism's own scope, unchanged from cycle 3): the same
+pre-existing `cargo test --locked --test v06_work_inventory` failure on 3
+`vacuous_placeholder_row_no_corpus_content_to_render` units — a different sibling mechanism's
+own cycle 3 fix. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt_4.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 4) — one of nine, `decisions.md §14` — partial
 
 Re-derived the mechanism population fresh at this cycle's starting HEAD (`16c772cca9`):
@@ -199,7 +241,7 @@ not fixed** (out of this mechanism's own scope): `cargo test --locked --test v06
 fails one pre-existing test on 3 `vacuous_placeholder_row_no_corpus_content_to_render` units — a
 different sibling mechanism's own cycle 3 fix, confirmed present in `docs/work-inventory.json`
 before this cycle touched anything, named for that mechanism's next cycle to pick up. Hit the same
-disk-exhaustion condition an earlier cycle in this same wave documented (`/` at 100%); reclaimed
+disk-exhaustion condition an earlier cycle in this same wave documented (`/` full); reclaimed
 40GB by deleting this lane's own two orphaned (no `.reclaim-claim`), already-committed-cycle
 `CARGO_TARGET_DIR`s, which unblocked the workspace `--no-run` re-run; did not additionally reach
 `apps/desktop/src-tauri`'s own full suite this cycle. `core_rulebook` bucket B (atlas-real
