@@ -5,7 +5,7 @@ This cycle owns **exactly one** of the nine mechanisms `decisions.md §14` decom
 its own cycle. AT-34-E3-001 closes only when bucket B reaches 0 for the whole book
 (`decisions.md §16` amendment / the destination-status rule).
 
-- **Commit SHA:** _filled after commit_
+- **Commit SHA:** `eff925305f` (retro correction event followup: `911c05c4b2`)
 - **Files touched:**
   - `src/rules_core/pilot_compute/prestige_class_entry_gate.rs` — new `pub fn is_registered`
     accessor over the module's existing private prestige-class registry lookup.
