@@ -116,6 +116,43 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E1-007 re-verification at HEAD — complete, no drift found
+
+**Status: complete.** Re-derived `AT-34-E1-007` (`corpus-trap-audit` wired into `verify.sh`)
+fresh at HEAD `da5589f3c2`, per `decisions.md §12` L2/L19, since AT-34-E1-008's
+G1–G4 remediation and Epic 3's cycles have both landed since `AT-34-E1-007`'s own
+`_re-verification_receipt.md` was written at `a47cdbee21`. No drift: the stage's
+per-kind ratchet still holds at HEAD.
+
+- `scripts/verify.sh --only corpus-trap-audit` → `PASS  (records_examined=27638
+  defects[wiring-class-mismatch=0 disabled-line=165 key-differs-from-name=650
+  mod-record=2117 shared-name-distinct-records=249] traps=407 — all defect kinds
+  at their registered counts)`, exit 0 — the exact command
+  `acceptance-and-verification.md §1` row 23 names.
+- `scripts/verify.sh --only corpus-trap-audit-selftest` → `PASS (14 passed, 0
+  failed)`, exit 0 — the comparator's own mutation-proved detection self-test.
+- `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'`
+  → `files_checked=15 violations=0`.
+- Widest build scope, run after confirming `git status --porcelain` was clean under
+  `data/corpus/`, `scripts/`, `src/` (no write this cycle could move a figure):
+  `cargo test --locked --no-run -j2` (root workspace, `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e1-007`)
+  → exit 0; `cd apps/desktop/src-tauri && cargo test --locked --no-run -j2`
+  (separate cargo workspace, `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e1-007-desktop`)
+  → exit 0. Both run at HEAD `da5589f3c2`.
+- `docs/release/SD-34-book-completion/kanban.md` row 7 (`AT-34-E1-007`) was already
+  `complete` from the prior cycle's re-verification and needs no change — this
+  cycle is a reconfirmation, not new closure. No code, no corpus record, and no
+  `docs/work-inventory.json` change this cycle (`git status --porcelain` clean on
+  all three before this commit, apart from this progress-log edit and the retro
+  event append below).
+- **Movement, four buckets:** all zero — closure (none, already closed),
+  reclassification (none), reachability (none — the stage's population and every
+  kind's count are unchanged from `a47cdbee21`), instrument-correction (none —
+  no defect in the instrument found this time).
+- Retro event: `docs/retro/events/sd34-at-34-e1-007.jsonl` gained one `verification`
+  row for this run (`stages_passed: ["corpus-trap-audit"]`, `result: PASS`,
+  `head: da5589f3c2`).
+
 ### Cycle — AT-34-E1-006 re-verification at HEAD — complete, instrument-correction (14-violation regression found and fixed)
 
 **Status: complete.** Re-derived `AT-34-E1-006` (the `figure-provenance` `verify.sh` stage +
