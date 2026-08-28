@@ -116,6 +116,33 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E1-004 re-verification at HEAD — complete, reclassification (not this cycle's own)
+
+Re-dispatched against `AT-34-E1-004` (already `complete` from an earlier cycle, commit
+`4d69afd6e4`, receipt reporting `not_held_by_engine=13119 of 26396`, citation at
+`v06_work_inventory.rs:9592-9595`) to re-derive rather than carry the original numbers forward
+(`decisions.md §12` L2). Confirmed `python3 scripts/shape_engine_boundary.py --check` now fails
+closed (`STALE_CITATION`, exit 1, no artifact written) for the intended reason: Epic 3's
+nine-mechanism `AT-34-E3-001` work added code above the promotion ladder's original location,
+shifting the exact four-condition block (byte-identical to `technical-design.md §3` /
+`decisions.md §2a`'s quote) down to `10854-10857`. Also re-derived the counts:
+`magnitude_bearing` held at `26396`; `not_held_by_engine` dropped `13119 -> 9475` — real
+Epic-3 closure work promoting 3,644 units past `engine-does-not-hold`, not a measurement
+change (`git log 4d69afd6e4..HEAD -- docs/work-inventory.json` shows 25+ regeneration commits
+between the two measurements).
+
+Fixed `scripts/shape_engine_boundary.py`'s `PROMOTION_LADDER_LINES`/`PROMOTION_LADDER_ANCHOR_LINE`
+to `10854-10857`/`10857`, updated its markdown-template narrative (previously "half the
+feedstock", now "roughly a third", with both the launch-time and current fractions stated) and
+docstring example, and updated `scripts/tests/test_shape_engine_boundary.py`'s line-number and
+count expectations. `python3 -m unittest scripts.tests.test_shape_engine_boundary -v` — 12/12
+green after the fix (RED confirmed first: 4 failures + 2 errors, one directly asserting
+`9475 != 13119`). Regenerated `shape-engine-boundary.md`; `python3 scripts/denominator_gate.py
+--check 'docs/release/SD-34-book-completion/*.md'` -> `files_checked=15 violations=0`.
+`cargo test --locked --no-run` exits 0 (no Rust source touched this cycle). Retro correction
+logged (`docs/retro/events/sd34-at-34-e1-004.jsonl`). `kanban.md` row 4 stays `complete`,
+receipt link added. Receipt: `artifacts/epic-1-atlas/AT-34-E1-004_re-verification_receipt.md`.
+
 ### Cycle — AT-34-E1-003 re-verification at HEAD — complete, 0 units moved
 
 Re-dispatched against `AT-34-E1-003` (already `complete` from an earlier cycle, commit

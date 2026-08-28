@@ -26,7 +26,7 @@ number re-verified at HEAD, not assumed:
                     && facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)
 ```
 
-(`src/bin/v06_work_inventory.rs:9595` -- re-checked by content,
+(`src/bin/v06_work_inventory.rs:10857` -- re-checked by content,
 not just path/line, on every run of this instrument.)
 
 None of the four conditions is "a value was computed". Fail the last one and the verdict is
@@ -41,15 +41,19 @@ record it would attach to.
   `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(sum(1 for u in d['units'] if (u.get('magnitude_token_count') or 0) > 0))"`
   (denominator: 26396 of the corpus's full unit population, printed by
   `scripts/completion_atlas.py --check`)
-- Of those **26396**, **13119** are still not
-  held by the engine (`status == not-ingested`) -- re-derive:
-  `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); m=[u for u in d['units'] if (u.get('magnitude_token_count') or 0) > 0]; print(sum(1 for u in m if u.get('status') == 'not-ingested'))"`
+- Of those **26396**, **9475** are still not
+  held by the engine (`status == engine-does-not-hold`) -- re-derive:
+  `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); m=[u for u in d['units'] if (u.get('magnitude_token_count') or 0) > 0]; print(sum(1 for u in m if u.get('status') == 'engine-does-not-hold'))"`
   (denominator: 26396 magnitude-bearing units, computed immediately
   above)
 
-**Half the shape engine's own feedstock is stuck downstream of it.** This is exactly the gap
-Epic 2's tables and Epics 3-4's per-bucket work close -- the engine already works; the boundary
-is where its output goes next.
+**Roughly a third of the shape engine's own feedstock is still stuck downstream of it** (this
+fraction moved from just over half, 13119/26396, at Epic 1's original AT-34-E1-004 cycle
+to 9475/26396 here, as Epic 3's per-bucket
+work closed real units -- see `decisions.md §12` L10: a count that drops from measurement
+work is closure, not a re-measurement artifact). This is exactly the gap Epic 2's tables and
+Epics 3-4's per-bucket work close -- the engine already works; the boundary is where its
+output goes next.
 
 ## Why this is a fact, not an assumption
 

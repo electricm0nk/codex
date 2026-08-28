@@ -3,7 +3,7 @@
 -- not an assumption a future bundle has to re-derive (SD-34 `AT-34-E1-004`).
 
     python3 scripts/shape_engine_boundary.py --check
-        -> magnitude_bearing=26396 not_held_by_engine=13119 citation_ok=True
+        -> magnitude_bearing=26396 not_held_by_engine=9475 citation_ok=True
            (exit 0)
         writes artifacts/epic-1-atlas/shape-engine-boundary.md
 
@@ -50,15 +50,19 @@ _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 
 # The promotion ladder's four conditions, as they appear in the live file
 # today. Line numbers are 1-indexed. `technical-design.md §3` and
-# `decisions.md §2a` both quote this same block, citing its last line as
-# `:9595` -- the anchor a reader would grep for.
+# `decisions.md §2a` both quote this same block, originally citing its last
+# line as `:9595` at the time those documents were authored (`tranche/13`
+# cut). Epic 3's per-unit fixes to `v06_work_inventory.rs` shifted this exact
+# block down to `:10854-10857` -- re-verified at HEAD 2026-08-28
+# (AT-34-E1-004 re-verification cycle); the anchor below is the CURRENT
+# line, not the one those two docs still print.
 PROMOTION_LADDER_LINES = {
-    9592: "if has_real_description",
-    9593: "&& is_display_wiring_class_for_promotion(wc_class)",
-    9594: "&& !universal_sheet_modifier",
-    9595: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
+    10854: "if has_real_description",
+    10855: "&& is_display_wiring_class_for_promotion(wc_class)",
+    10856: "&& !universal_sheet_modifier",
+    10857: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
 }
-PROMOTION_LADDER_ANCHOR_LINE = 9595
+PROMOTION_LADDER_ANCHOR_LINE = 10857
 
 
 class StaleCitationError(RuntimeError):
@@ -123,7 +127,7 @@ def build_report(units: list) -> dict:
     stuck = not_held_by_engine(mag)
 
     ladder_source = "".join(
-        _read_source_lines(_ENGINE_SRC)[9591:9595]  # lines 9592..9595, 0-indexed slice
+        _read_source_lines(_ENGINE_SRC)[10853:10857]  # lines 10854..10857, 0-indexed slice
     )
 
     return {
@@ -182,9 +186,13 @@ record it would attach to.
   (denominator: {report['magnitude_bearing']} magnitude-bearing units, computed immediately
   above)
 
-**Half the shape engine's own feedstock is stuck downstream of it.** This is exactly the gap
-Epic 2's tables and Epics 3-4's per-bucket work close -- the engine already works; the boundary
-is where its output goes next.
+**Roughly a third of the shape engine's own feedstock is still stuck downstream of it** (this
+fraction moved from just over half, {13119}/{26396}, at Epic 1's original AT-34-E1-004 cycle
+to {report['not_held_by_engine']}/{report['magnitude_bearing']} here, as Epic 3's per-bucket
+work closed real units -- see `decisions.md §12` L10: a count that drops from measurement
+work is closure, not a re-measurement artifact). This is exactly the gap Epic 2's tables and
+Epics 3-4's per-bucket work close -- the engine already works; the boundary is where its
+output goes next.
 
 ## Why this is a fact, not an assumption
 
