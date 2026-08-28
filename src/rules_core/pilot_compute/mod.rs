@@ -1439,6 +1439,198 @@ const RANGER_COMBAT_STYLE_BONUS_FEAT_5_LEVEL: u8 = 18;
 const RANGER_COMBAT_STYLE_BONUS_FEAT_5_CHOICE_ID: &str =
     "choice:ranger_combat_style_bonus_feat_5";
 
+/// SD-34 AT-34-E3-001 (`decisions.md §16`, "only the count grounds" is
+/// ratified precedent). The full, exhaustive Archery ∪ Two-Weapon Combat
+/// named-option pool this engine's corpus carries for Ranger Combat Style
+/// Feat — verified against
+/// `data/corpus/core_rulebook/class_feature/ranger_combat_style_feat/*.json`
+/// (16 records total: the 2nd-, 6th-, and 10th-level restricted lists
+/// already hand-recognized above by the SPECIFIC-choice idiom
+/// (`RANGER_COMBAT_STYLE_BONUS_FEAT_CHOICE_ID` et al.) — no 14th- or
+/// 18th-level slot names a NEW option in the Core Rulebook, so this list is
+/// exhaustive against the corpus, not a lower bound.
+///
+/// Only the COUNT of granted slots is grounded as a magnitude by
+/// `ground_ranger_combat_style_feat_pool` below; WHICH style (Archery or
+/// Two-Weapon Combat) the ranger picked, and therefore which half of this
+/// combined list actually applies, is a player choice this function
+/// deliberately does not model — the ratified Fighter/Cavalier/Brawler/
+/// Arcane-bloodline treatment. The style-recognition idiom above grounds
+/// identity for the SPECIFIC feat a character's own recorded input names;
+/// this pool exists so a character whose style choice this seam has not
+/// recognized still has its slot count grounded and its full eligible pool
+/// named, rather than silently staying an unclaimed record.
+const RANGER_COMBAT_STYLE_FEAT_POOL: &[&str] = &[
+    "Double Slice",
+    "Far Shot",
+    "Greater Two-Weapon Fighting",
+    "Improved Precise Shot",
+    "Improved Shield Bash",
+    "Improved Two-Weapon Fighting",
+    "Manyshot",
+    "Pinpoint Targeting",
+    "Point-Blank Shot",
+    "Precise Shot",
+    "Quick Draw",
+    "Rapid Shot",
+    "Shot on the Run",
+    "Two-Weapon Defense",
+    "Two-Weapon Fighting",
+    "Two-Weapon Rend",
+];
+
+/// The Ranger combat-style-feat pool's slot count at `level`: 0 below
+/// `RANGER_COMBAT_STYLE_LEVEL`, then 1 + one more every 4 levels (1 at 2nd,
+/// 2 at 6th, 3 at 10th, 4 at 14th, 5 at 18th — the same "2nd, 6th, 10th,
+/// 14th, 18th" milestone progression the specific-choice idiom above
+/// already documents, verified independently against d20pfsrd and
+/// legacy.aonprd.com before writing any code).
+fn ranger_combat_style_feat_pool_slot_count(level: u8) -> i16 {
+    if level < RANGER_COMBAT_STYLE_LEVEL {
+        0
+    } else {
+        1 + i16::from((level - RANGER_COMBAT_STYLE_LEVEL) / 4)
+    }
+}
+
+/// Grounds the Ranger combat-style-feat pool's slot COUNT
+/// (`ranger_combat_style_feat_pool_slot_count`, style-invariant) and names
+/// its full eligible set (`RANGER_COMBAT_STYLE_FEAT_POOL`), without seeding
+/// any default choice — the ratified Fighter/Cavalier/Brawler/Arcane-
+/// bloodline treatment (`decisions.md §16`). Runs unconditionally once the
+/// gate is reached, independent of whether this seam has recognized any
+/// `RANGER_COMBAT_STYLE_CHOICE_ID` selection — the specific-choice idiom
+/// above grounds identity for a chosen style/feat pair; this function
+/// grounds the count and the full pool regardless of whether that choice
+/// was ever recognized.
+///
+/// One non-claim-blocking diagnostic is emitted per eligible option,
+/// carrying the SAME templated message regardless of which option it
+/// names — deliberately, not an oversight: this pool's own names collide
+/// under substring containment (`"Precise Shot"` inside `"Improved Precise
+/// Shot"`; `"Two-Weapon Fighting"` inside both `"Improved Two-Weapon
+/// Fighting"` and `"Greater Two-Weapon Fighting"`), so the downstream
+/// classifier's own substring-based diagnostic lookup
+/// (`v06_work_inventory.rs::diagnostic_id_names_feature`) can legitimately
+/// resolve a given corpus record to a different-but-textually-related
+/// diagnostic than the one this loop built for its own name. Templating
+/// every message identically makes that indeterminacy harmless: whichever
+/// diagnostic a lookup lands on, the content it reports is equally true of
+/// the record it was asked about.
+fn ground_ranger_combat_style_feat_pool(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let slot_count = ranger_combat_style_feat_pool_slot_count(level);
+    let eligible_count = RANGER_COMBAT_STYLE_FEAT_POOL.len();
+    let detail = if slot_count == 0 {
+        format!(
+            "Ranger combat style feat pool slot count at ranger level {level}: none yet, \
+             correctly absent by PF1 Core Rulebook level gate (the first slot is granted at \
+             ranger level {RANGER_COMBAT_STYLE_LEVEL})"
+        )
+    } else {
+        format!(
+            "Ranger combat style feat pool slot count at ranger level {level}: {slot_count} \
+             slot(s) granted (one at 2nd, 6th, 10th, 14th, and 18th ranger level). This grounds \
+             regardless of whether this seam has recognized which combat style (Archery or \
+             Two-Weapon Combat) the character chose. Only the COUNT grounds; which of the \
+             {eligible_count} corpus-wide eligible feats (the combined Archery and Two-Weapon \
+             Combat lists) fills each slot is a player choice this bounded seam does not \
+             model, the ratified Fighter/Cavalier/Brawler/Arcane-bloodline treatment"
+        )
+    };
+    explanations.push(ComputationExplanation {
+        id: "class_feature.ranger.combat_style_feat_pool.slot_count".to_owned(),
+        value: slot_count,
+        detail,
+    });
+    if slot_count == 0 {
+        return;
+    }
+    for feat in RANGER_COMBAT_STYLE_FEAT_POOL {
+        diagnostics.push(ComputationDiagnostic {
+            id: format!(
+                "class_feature.ranger.combat_style_feat_pool.option.{}.not_modelled",
+                slugify_id_segment(feat)
+            ),
+            message: format!(
+                "Ranger combat style feat pool at ranger level {level}: the slot count above \
+                 is grounded, but WHICH of the {eligible_count} corpus-wide eligible feats (the \
+                 combined Archery and Two-Weapon Combat lists) fills any given slot is a player \
+                 choice not resolved on this bounded seam; no default feat is fabricated for \
+                 any slot"
+            ),
+            claim_blocking: false,
+        });
+    }
+}
+
+#[cfg(test)]
+mod ranger_combat_style_feat_pool_tests {
+    use super::{
+        ground_ranger_combat_style_feat_pool, ComputationDiagnostic, ComputationExplanation,
+        RANGER_COMBAT_STYLE_FEAT_POOL,
+    };
+
+    /// SD-34 AT-34-E3-001 (`decisions.md §16`): the pool's slot count grounds
+    /// regardless of whether this seam has recognized which style the
+    /// character chose.
+    #[test]
+    fn ranger_combat_style_feat_pool_slot_count_grounds_at_the_2nd_level_gate() {
+        let mut explanations: Vec<ComputationExplanation> = Vec::new();
+        let mut diagnostics: Vec<ComputationDiagnostic> = Vec::new();
+        ground_ranger_combat_style_feat_pool(2, &mut explanations, &mut diagnostics);
+        let count_explanation = explanations
+            .iter()
+            .find(|e| e.id == "class_feature.ranger.combat_style_feat_pool.slot_count")
+            .expect("the slot count must ground at level 2");
+        assert_eq!(count_explanation.value, 1);
+    }
+
+    #[test]
+    fn ranger_combat_style_feat_pool_slot_count_is_correctly_absent_below_the_grant_level() {
+        let mut explanations: Vec<ComputationExplanation> = Vec::new();
+        let mut diagnostics: Vec<ComputationDiagnostic> = Vec::new();
+        ground_ranger_combat_style_feat_pool(1, &mut explanations, &mut diagnostics);
+        let count_explanation = explanations
+            .iter()
+            .find(|e| e.id == "class_feature.ranger.combat_style_feat_pool.slot_count")
+            .expect("the slot count record must still be present, valued at 0");
+        assert_eq!(count_explanation.value, 0);
+        assert!(
+            diagnostics.is_empty(),
+            "no per-option diagnostic should fire before any slot is granted"
+        );
+    }
+
+    #[test]
+    fn ranger_combat_style_feat_pool_names_every_eligible_option_once_a_slot_is_granted() {
+        let mut explanations: Vec<ComputationExplanation> = Vec::new();
+        let mut diagnostics: Vec<ComputationDiagnostic> = Vec::new();
+        ground_ranger_combat_style_feat_pool(2, &mut explanations, &mut diagnostics);
+        assert_eq!(diagnostics.len(), RANGER_COMBAT_STYLE_FEAT_POOL.len());
+        assert!(
+            diagnostics.iter().any(|d| d.id.contains(".ranger.") && d.id.contains("double_slice")),
+            "Double Slice must have its own matching diagnostic id"
+        );
+        assert!(diagnostics.iter().all(|d| !d.claim_blocking), "non-claim-blocking only");
+    }
+
+    #[test]
+    fn ranger_combat_style_feat_pool_slot_count_reaches_five_by_18th_level() {
+        let mut explanations: Vec<ComputationExplanation> = Vec::new();
+        let mut diagnostics: Vec<ComputationDiagnostic> = Vec::new();
+        ground_ranger_combat_style_feat_pool(18, &mut explanations, &mut diagnostics);
+        let count_explanation = explanations
+            .iter()
+            .find(|e| e.id == "class_feature.ranger.combat_style_feat_pool.slot_count")
+            .expect("the slot count must ground at level 18");
+        assert_eq!(count_explanation.value, 5);
+    }
+}
+
 // SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
 // caster; this slice recognizes only its bounded single-class level-1 identity as direct
 // runtime evidence and grounds no bloodline power and no spell math (spell slots, spells
@@ -1852,6 +2044,249 @@ const ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS: &[&str] = &[
     "Spell Focus",
     "Still Spell",
 ];
+
+/// SD-34 AT-34-E3-001 (`decisions.md §16`, "only the count grounds" is
+/// ratified precedent). The full corpus-wide union of every named
+/// `"Sorcerer Bloodline Feat ~ <X>"` option this engine's `class_feature`
+/// corpus carries, across every PF1 Core Rulebook Sorcerer bloodline
+/// (Aberrant, Abyssal, Arcane, Celestial, Destined, Draconic, Elemental,
+/// Fey, Infernal, Undead) — verified against
+/// `data/corpus/core_rulebook/class_feature/sorcerer_bloodline_feat/*.json`
+/// (87 entries with this exact evidence shape; four further corpus keys —
+/// Deadly Aim, Spell Focus, Toughness, Weapon Focus — fail the owner match
+/// at a different corpus-key group entirely and are out of this list's
+/// scope, unaffected by it).
+///
+/// This engine recognizes only the Arcane bloodline as chosen input
+/// (`ARCANE_BLOODLINE_SELECTION_ID`); `ground_sorcerer_bloodline_feat_pool`
+/// below deliberately does not require that recognition, because the SLOT
+/// COUNT this pool grants is bloodline-invariant (every CRB bloodline
+/// shares the identical `BONUS:VAR|BloodlineFeatCount|
+/// (BloodlineFeatProgression-1)/6` formula; only the ELIGIBLE SET differs
+/// per bloodline, and this seam cannot narrow to one bloodline it does not
+/// recognize). Naming the full corpus-wide union here is a superset of any
+/// single bloodline's real list, never a fabricated one — every named
+/// option really is eligible for SOME CRB bloodline.
+const SORCERER_BLOODLINE_FEAT_POOL_ELIGIBLE_FEATS: &[&str] = &[
+    "Acrobatic Steps",
+    "Agile Maneuvers",
+    "Alertness",
+    "Arcane Armor Mastery",
+    "Arcane Armor Training",
+    "Arcane Strike",
+    "Armor Proficiency (Light)",
+    "Augment Summoning",
+    "Blind-Fight",
+    "Cleave",
+    "Combat Casting",
+    "Combat Expertise",
+    "Combat Reflexes",
+    "Craft Rod",
+    "Craft Staff",
+    "Craft Wondrous Item",
+    "Deceitful",
+    "Defensive Combat Training",
+    "Deft Hands",
+    "Diehard",
+    "Dodge",
+    "Empower Spell",
+    "Endurance",
+    "Enlarge Spell",
+    "Extend Spell",
+    "Far Shot",
+    "Fleet",
+    "Forge Ring",
+    "Great Fortitude",
+    "Greater Spell Focus (Enchantment)",
+    "Heighten Spell",
+    "Improved Bull Rush",
+    "Improved Counterspell",
+    "Improved Disarm",
+    "Improved Feint",
+    "Improved Grapple",
+    "Improved Great Fortitude",
+    "Improved Initiative",
+    "Improved Iron Will",
+    "Improved Overrun",
+    "Improved Sunder",
+    "Improved Unarmed Strike",
+    "Intimidating Prowess",
+    "Iron Will",
+    "Leadership",
+    "Lightning Reflexes",
+    "Magical Aptitude",
+    "Martial Weapon Proficiency",
+    "Maximize Spell",
+    "Mobility",
+    "Mounted Combat",
+    "Nimble Moves",
+    "Persuasive",
+    "Point-Blank Shot",
+    "Power Attack",
+    "Precise Shot",
+    "Quick Draw",
+    "Quicken Spell",
+    "Ride-By Attack",
+    "Scribe Scroll",
+    "Silent Spell",
+    "Skill Focus (Acrobatics)",
+    "Skill Focus (Bluff)",
+    "Skill Focus (Craft)",
+    "Skill Focus (Disguise)",
+    "Skill Focus (Fly)",
+    "Skill Focus (Intimidate)",
+    "Skill Focus (Knowledge (Arcana))",
+    "Skill Focus (Knowledge (Dungeoneering))",
+    "Skill Focus (Knowledge (Engineering))",
+    "Skill Focus (Knowledge (History))",
+    "Skill Focus (Knowledge (Nature))",
+    "Skill Focus (Knowledge (Planes))",
+    "Skill Focus (Knowledge (Religion))",
+    "Skill Focus (Perception)",
+    "Skill Focus (Perform)",
+    "Skill Focus (Sense Motive)",
+    "Skill Focus (Stealth)",
+    "Skill Focus (Swim)",
+    "Spell Focus (Enchantment)",
+    "Spell Focus (Necromancy)",
+    "Spell Penetration",
+    "Stealthy",
+    "Still Spell",
+    "Weapon Finesse",
+    "Widen Spell",
+    "Wind Stance",
+];
+
+/// Ten of `SORCERER_BLOODLINE_FEAT_POOL_ELIGIBLE_FEATS`' own names contain,
+/// as a literal substring of their `class_feature_engine_join_slug`, a
+/// SHORT, unrelated corpus record's own exact slug for the SAME owner
+/// (`sorcerer`) — verified empirically by regenerating `docs/work-inventory.
+/// json`, diffing before/after this pool's diagnostics first shipped, AND a
+/// second corpus-wide cross-check (every `sorcerer`-/`ranger`-owned
+/// `class_feature` record in the whole corpus, not only this book's bucket
+/// B) before trusting the exclusion list complete: all seven
+/// `"Skill Focus (Knowledge (<X>))"` entries → slug contains `"knowledge"`
+/// (`Sorcerer Domain ~ Knowledge`'s own slug — the FIRST regeneration only
+/// excluded the Arcana entry and left `Dungeoneering`/`Engineering`/
+/// `History`/`Nature`/`Planes`/`Religion` still colliding, caught by the
+/// second regeneration's own before/after diff); `"Improved Sunder"` →
+/// contains `"sun"` (`Sorcerer Domain ~ Sun`); `"Skill Focus (Fly)"` →
+/// contains `"fly"` (`Sorcerer Bonus Spell L3 ~ Fly`); `"Magical
+/// Aptitude"` → contains `"magic"` (`Sorcerer Domain ~ Magic`).
+/// `v06_work_inventory.rs::diagnostic_id_names_feature` matches by
+/// SUBSTRING within the owner's namespace, not by exact key, so a
+/// diagnostic naming any of these ten would misattribute a false "count
+/// grounds, choice not modelled" reason to an unrelated domain-power or
+/// bonus-spell record — a real correctness defect, not a cosmetic one.
+/// (Two further theoretical collisions the cross-check found —
+/// `"Sorcerer Bloodline Feat ~ Spell Focus"` against `"Spell Focus
+/// (Enchantment)"`/`"(Necromancy)"`/`"Greater Spell Focus (Enchantment)"`,
+/// and `"Sorcerer Bloodline ~ Arcane"` against `"Arcane Armor
+/// Mastery"`/`"Training"`/`"Arcane Strike"` — are confirmed harmless: the
+/// first names an object that genuinely IS a real bloodline-feat-pool
+/// member, so the templated message stays true of it; the second is
+/// already `grounded` via a different, earlier-resolving mechanism and
+/// never reaches this diagnostic check at all.)
+///
+/// Excluded from the per-option diagnostic loop ONLY: each name stays
+/// listed in `SORCERER_BLOODLINE_FEAT_POOL_ELIGIBLE_FEATS` above (a real,
+/// honestly-named eligible feat), so the count explanation's eligible-set
+/// size is unaffected. Only these ten feats' OWN corpus records
+/// (`Sorcerer Bloodline Feat ~ <name>`) stay correctly unclaimed
+/// (`engine-does-not-hold`) rather than closing via a false attribution.
+const SORCERER_BLOODLINE_FEAT_POOL_DIAGNOSTIC_EXCLUSIONS: &[&str] = &[
+    "Skill Focus (Knowledge (Arcana))",
+    "Skill Focus (Knowledge (Dungeoneering))",
+    "Skill Focus (Knowledge (Engineering))",
+    "Skill Focus (Knowledge (History))",
+    "Skill Focus (Knowledge (Nature))",
+    "Skill Focus (Knowledge (Planes))",
+    "Skill Focus (Knowledge (Religion))",
+    "Improved Sunder",
+    "Skill Focus (Fly)",
+    "Magical Aptitude",
+];
+
+/// Grounds the Sorcerer bloodline feat pool's slot COUNT
+/// (`arcane_bloodline_bonus_feat_count`'s own bloodline-invariant formula)
+/// and names its full eligible set
+/// (`SORCERER_BLOODLINE_FEAT_POOL_ELIGIBLE_FEATS`), without seeding any
+/// default choice — the ratified Fighter/Cavalier/Brawler/Arcane-bloodline
+/// treatment (`decisions.md §16`): "only the count grounds; which option
+/// fills a slot is not modelled". Runs unconditionally for any Sorcerer,
+/// independent of `ground_sorcerer_arcane_bloodline_progression`'s own
+/// Arcane-only canonical narrowing — this is the one Sorcerer bloodline
+/// record deliberately widened past that narrowing, because its magnitude
+/// genuinely does not vary by bloodline.
+///
+/// One non-claim-blocking diagnostic is emitted per eligible option,
+/// carrying the SAME templated message regardless of which option it
+/// names — deliberately, not an oversight: two of this list's own names
+/// are substrings of a third (`"Iron Will"` inside `"Improved Iron
+/// Will"`, `"Great Fortitude"` inside `"Improved Great Fortitude"`), so
+/// the downstream classifier's own substring-based diagnostic lookup
+/// (`v06_work_inventory.rs::diagnostic_id_names_feature`) can legitimately
+/// resolve a given corpus record to a different-but-textually-related
+/// diagnostic than the one this loop built for its own name. Templating
+/// every message identically makes that indeterminacy harmless: whichever
+/// diagnostic a lookup lands on, the content it reports is equally true of
+/// the record it was asked about.
+fn ground_sorcerer_bloodline_feat_pool(
+    sorcerer_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let slot_count = arcane_bloodline_bonus_feat_count(sorcerer_level);
+    let eligible_count = SORCERER_BLOODLINE_FEAT_POOL_ELIGIBLE_FEATS.len();
+    let detail = if slot_count == 0 {
+        format!(
+            "Sorcerer bloodline feat pool slot count at sorcerer level {sorcerer_level}: none \
+             yet, correctly absent by PF1 Core Rulebook level gate (the first slot is granted \
+             at sorcerer level {ARCANE_BLOODLINE_FIRST_BONUS_FEAT_LEVEL}). This formula (corpus \
+             BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6|TYPE=Base) is \
+             IDENTICAL across every PF1 Core Rulebook Sorcerer bloodline, not specific to \
+             Arcane"
+        )
+    } else {
+        format!(
+            "Sorcerer bloodline feat pool slot count at sorcerer level {sorcerer_level}: \
+             {slot_count} slot(s) granted ((sorcerer level - 1)/6 -- one at 7th, 13th, and \
+             19th). This formula is IDENTICAL across every PF1 Core Rulebook Sorcerer \
+             bloodline, not specific to Arcane -- it grounds regardless of which bloodline \
+             (or none this seam recognizes) the character chose. Only the COUNT grounds; \
+             which of the {eligible_count} corpus-wide eligible feats fills each slot is a \
+             player choice this bounded seam does not model, the ratified Fighter/Cavalier/\
+             Brawler/Arcane-bloodline treatment"
+        )
+    };
+    explanations.push(ComputationExplanation {
+        id: "class_feature.sorcerer.bloodline_feat_pool.slot_count".to_owned(),
+        value: slot_count,
+        detail,
+    });
+    if slot_count == 0 {
+        return;
+    }
+    for feat in SORCERER_BLOODLINE_FEAT_POOL_ELIGIBLE_FEATS {
+        if SORCERER_BLOODLINE_FEAT_POOL_DIAGNOSTIC_EXCLUSIONS.contains(feat) {
+            continue;
+        }
+        diagnostics.push(ComputationDiagnostic {
+            id: format!(
+                "class_feature.sorcerer.bloodline_feat_pool.option.{}.not_modelled",
+                slugify_id_segment(feat)
+            ),
+            message: format!(
+                "Sorcerer bloodline feat pool at sorcerer level {sorcerer_level}: the slot \
+                 count above is grounded, but WHICH of the {eligible_count} corpus-wide \
+                 eligible feats (drawn from every PF1 Core Rulebook Sorcerer bloodline's own \
+                 feat list) fills any given slot is a player choice not resolved on this \
+                 bounded seam; no default feat is fabricated for any slot"
+            ),
+            claim_blocking: false,
+        });
+    }
+}
 
 /// Sorcerer level at which the first bloodline bonus feat is granted — the
 /// level `(BloodlineFeatProgression - 1) / 6` first reaches 1, and the first
@@ -36053,6 +36488,11 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             ),
         });
     }
+
+    // SD-34 AT-34-E3-001 (`decisions.md §16`): the combat-style feat pool's
+    // slot COUNT grounds regardless of whether this seam has recognized
+    // which style (Archery or Two-Weapon Combat) the character chose.
+    ground_ranger_combat_style_feat_pool(level, explanations, diagnostics);
 }
 
 /// The highest ranger spell level with a non-"—" spells-per-day column at
@@ -41677,6 +42117,12 @@ fn explain_sorcerer_level1_spell_baseline(
             1,
             explanations,
         );
+
+        // SD-34 AT-34-E3-001 (`decisions.md §16`): the bloodline feat pool's
+        // slot COUNT is bloodline-invariant, so this grounds unconditionally
+        // here rather than inside `ground_sorcerer_arcane_bloodline_progression`'s
+        // Arcane-only canonical narrowing below.
+        ground_sorcerer_bloodline_feat_pool(sorcerer_level, explanations, diagnostics);
 
         let bloodline_class_skill_selection =
             choice_selection(input, SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID);
@@ -57346,9 +57792,11 @@ mod sorcerer_arcane_bloodline_progression_tests {
     use super::{
         arcane_bloodline_bonus_feat_count, arcane_bloodline_bonus_spells_known,
         arcane_bloodline_metamagic_adept_uses_per_day, arcane_bloodline_new_arcana_spell_count,
-        build_pilot_headless_receipt, CharacterClassLevel, ComputationExplanation,
-        HeadlessReceiptStatus, ARCANE_BLOODLINE_BONUS_SPELLS,
-        ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS, ARCANE_BLOODLINE_SELECTION_ID,
+        build_pilot_headless_receipt, ground_sorcerer_bloodline_feat_pool, CharacterClassLevel,
+        ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
+        ARCANE_BLOODLINE_BONUS_SPELLS, ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS,
+        ARCANE_BLOODLINE_SELECTION_ID, SORCERER_BLOODLINE_FEAT_POOL_DIAGNOSTIC_EXCLUSIONS,
+        SORCERER_BLOODLINE_FEAT_POOL_ELIGIBLE_FEATS,
         ARCANE_BOND_FAMILIAR_SELECTION_ID, SORCERER_ARCANE_BOND_CHOICE_ID,
         SORCERER_ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_EXPLANATION_ID,
         SORCERER_ARCANE_BLOODLINE_BONUS_FEAT_COUNT_EXPLANATION_ID,
@@ -57487,6 +57935,59 @@ mod sorcerer_arcane_bloodline_progression_tests {
                 "Still Spell",
             ]
         );
+    }
+
+    /// SD-34 AT-34-E3-001 (`decisions.md §16`): the bloodline feat pool's
+    /// slot count is bloodline-invariant, so it grounds a magnitude EVEN
+    /// when this seam has not recognized any bloodline choice at all.
+    #[test]
+    fn sorcerer_bloodline_feat_pool_slot_count_grounds_regardless_of_recognized_bloodline() {
+        let mut explanations = Vec::new();
+        let mut diagnostics = Vec::new();
+        ground_sorcerer_bloodline_feat_pool(7, &mut explanations, &mut diagnostics);
+        let count_explanation = explanations
+            .iter()
+            .find(|e| e.id == "class_feature.sorcerer.bloodline_feat_pool.slot_count")
+            .expect("the slot count must ground at level 7");
+        assert_eq!(count_explanation.value, 1);
+    }
+
+    #[test]
+    fn sorcerer_bloodline_feat_pool_slot_count_is_correctly_absent_below_the_grant_level() {
+        let mut explanations = Vec::new();
+        let mut diagnostics = Vec::new();
+        ground_sorcerer_bloodline_feat_pool(6, &mut explanations, &mut diagnostics);
+        let count_explanation = explanations
+            .iter()
+            .find(|e| e.id == "class_feature.sorcerer.bloodline_feat_pool.slot_count")
+            .expect("the slot count record must still be present, valued at 0");
+        assert_eq!(count_explanation.value, 0);
+        assert!(
+            diagnostics.is_empty(),
+            "no per-option diagnostic should fire before any slot is granted"
+        );
+    }
+
+    #[test]
+    fn sorcerer_bloodline_feat_pool_names_every_eligible_option_once_a_slot_is_granted() {
+        let mut explanations = Vec::new();
+        let mut diagnostics = Vec::new();
+        ground_sorcerer_bloodline_feat_pool(7, &mut explanations, &mut diagnostics);
+        assert_eq!(
+            diagnostics.len(),
+            SORCERER_BLOODLINE_FEAT_POOL_ELIGIBLE_FEATS.len()
+                - SORCERER_BLOODLINE_FEAT_POOL_DIAGNOSTIC_EXCLUSIONS.len(),
+            "every eligible feat gets its own diagnostic except the verified-collision \
+             exclusions"
+        );
+        let acrobatic_steps_slug = "acrobatic_steps";
+        assert!(
+            diagnostics
+                .iter()
+                .any(|d| d.id.contains(".sorcerer.") && d.id.contains(acrobatic_steps_slug)),
+            "Acrobatic Steps must have its own matching diagnostic id"
+        );
+        assert!(diagnostics.iter().all(|d| !d.claim_blocking), "non-claim-blocking only");
     }
 
     /// `floor((level + 1) / 4)`: 1/day at 3rd, rising by one at 7th, 11th,

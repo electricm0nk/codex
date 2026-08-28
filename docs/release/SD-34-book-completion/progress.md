@@ -108,6 +108,54 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 5) — one of nine, `decisions.md §14` — partial
+
+Re-derived at this cycle's starting HEAD (`c4e6ac92f9`): still 344, unchanged from cycle 4's
+own closing figure. `decisions.md §16` (written for this cycle) settled that cycles 2-4's own
+"operator-scoped classification ruling" on the 103-unit `Sorcerer Bloodline Feat` (87) +
+`Ranger Combat Style Feat` (16) majority is not open: it is the ALREADY-RATIFIED
+"only the count grounds" Fighter/Cavalier/Brawler/Arcane-bloodline treatment
+(`pilot_compute/mod.rs`, `ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS` +
+`ground_sorcerer_arcane_bloodline_progression`), applied to two more record shapes rather than a
+new decision.
+
+Built `ground_sorcerer_bloodline_feat_pool` and `ground_ranger_combat_style_feat_pool`: each
+grounds a bloodline/style-INVARIANT slot COUNT as a magnitude (the Sorcerer formula is the same
+`(sorcerer level - 1)/6` `arcane_bloodline_bonus_feat_count` already implements, verified
+bloodline-agnostic in the corpus's own token; the Ranger formula is the same 2nd/6th/10th/
+14th/18th milestone progression the existing specific-choice idiom already documents), names
+the full corpus-wide eligible set (87 Sorcerer names across every CRB bloodline; 16 Ranger names,
+the exhaustive combined Archery+Two-Weapon-Combat pool), and emits one non-claim-blocking
+diagnostic per option stating the choice is not modelled — never seeding a default. Neither
+function requires this seam's own narrow bloodline/style recognition, so both ground regardless
+of whether a character's specific choice was ever recognized.
+
+**A real defect found and fixed in this cycle's own work, not a prior cycle's**: the first
+regeneration pass closed the intended 103 units but a before/after diff against a saved
+pre-cycle snapshot found 4 unrelated units (`Sorcerer Domain ~ Sun/Knowledge/Magic`, `Sorcerer
+Bonus Spell L3 ~ Fly`) incidentally routed to `deferred-with-reason` through
+`v06_work_inventory.rs::diagnostic_id_names_feature`'s substring-based (not exact-key) match —
+e.g. `"Improved Sunder"`'s slug contains `"sun"`. A first fix excluding the 4 literal colliders
+still left 6 of 7 `"Skill Focus (Knowledge (<school>))"` entries colliding the same way,
+caught by a SECOND regeneration's own diff. A corpus-wide Python cross-check (every
+`sorcerer`-/`ranger`-owned `class_feature` record in the whole corpus, 431 + 282 units, not
+only this book's bucket B) confirmed the final 10-name exclusion list is complete before a
+THIRD, final regeneration — which shows zero unintended movement.
+
+**93 of 344 closed** (`Sorcerer Bloodline Feat` 77 of 87 — 10 names' own diagnostics
+deliberately withheld to avoid the verified collision, still listed in the honest eligible-set
+text; `Ranger Combat Style Feat` 16 of 16), all moved `engine-does-not-hold` → `deferred-with-
+reason` (bucket B → bucket X, `decisions.md §2`), never `text-complete` or `grounded` — no
+display or magnitude claimed for any individual option. `core_rulebook` bucket B (atlas-real
+partition) 692 → 579 of 6,701. Full details, TDD RED→GREEN evidence, and the exact exclusion
+list with its verification: `artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_5.md`.
+
+**251 remain.** Next-cheapest known shape (cycle 4's own long tail, unaffected by this cycle):
+`Rogue Talent` 3, `Wizard` 2, `Core Domain` 2, `Monk` 2, and 8 further 1-unit records, each real
+engine wiring. The 118-unit zero-description internal-bookkeeping sub-cause and the 67-unit
+`catalog_serves_it_but_classify_wiring_class_gate_blocks_promotion` sub-cause remain untouched,
+per the dispatch brief's own scope.
+
 ### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism, cycle 4) — one of nine, `decisions.md §14` — partial
 
 Re-derived the mechanism population fresh at this cycle's starting HEAD (`dbf97940fd`): still

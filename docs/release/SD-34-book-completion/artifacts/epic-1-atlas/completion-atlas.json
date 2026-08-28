@@ -18,7 +18,7 @@
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 12123,
+      "count": 12017,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
@@ -29,7 +29,7 @@
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
-      "count": 4411,
+      "count": 4407,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'explanation_id' / 'diagnostic')",
       "meaning": "held and computed, never surfaced"
     },
@@ -95,7 +95,7 @@
         "must_contain": "deferred-with-reason"
       },
       "clears": "revisiting the stated condition",
-      "count": 61,
+      "count": 171,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
       "meaning": "deferred with a stated reason"
     },
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "dbf97940fddb5c1d2d56df7745e3df05f193262a",
+  "derived_at": "c4e6ac92f985a883cdc757c5ae034c8cd4613043",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
