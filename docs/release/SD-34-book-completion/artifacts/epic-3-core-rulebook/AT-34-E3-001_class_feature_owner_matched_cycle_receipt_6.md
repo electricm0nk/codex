@@ -5,7 +5,7 @@ This cycle owns **exactly one** of the nine mechanisms `decisions.md §14` decom
 each its own cycle. AT-34-E3-001 closes only when bucket B reaches 0 for the whole book
 (`decisions.md §16` amendment / the destination-status rule).
 
-- **Commit SHA:** `<FILLED AFTER COMMIT>`
+- **Commit SHA:** `49d72f5e03`
 - **Files touched:**
   - `src/rules_core/pilot_compute/mod.rs` — `ground_class_weapon_and_armor_proficiency`, a
     shared function mirroring `class_slayer.rs`'s `ground_slayer_weapon_and_armor_proficiency`
@@ -84,10 +84,10 @@ brief's named next-cheapest shape is real and exact: exactly **3** units are
 `{Cleric, Assassin, Shadowdancer} ~ Weapon and Armor Proficiency` (`source_file
 cr_abilities_class.lst`, lines 562/2944/3065) — the `engine_effect_token_present` long tail's
 Weapon-and-Armor-Proficiency triple the dispatch brief named, verified by direct grep against
-`docs/work-inventory.json`, not by inheriting cycle 4's 15-unit count (which bundled several
-different shapes together — this cycle's own re-derivation isolates just the three named here;
-the remaining ~12-unit `engine_effect_token_present` long tail is untouched, see "Remainder"
-below).
+`docs/work-inventory.json` rather than by trusting the brief's own count unchecked. The rest of
+the `engine_effect_token_present` long tail (whatever it sums to after these 3) is untouched
+this cycle — see "Remainder" below for exactly what this cycle did and did not independently
+verify about its size.
 
 ## This cycle's own contribution — mirroring `class_slayer.rs`'s precedent for three more classes
 
