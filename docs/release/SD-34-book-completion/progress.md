@@ -116,6 +116,38 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 8) — one of nine, `decisions.md §14` — partial, 0 units moved
+
+Re-derived at this cycle's starting HEAD (`2c56ac5a71`): still 34 of 543 `core_rulebook`
+bucket-B units in this mechanism. Cycle 7's own remainder named 6 sub-causes; this cycle's task
+brief pointed at 2 of them ("proficiency/grant possession-tracking and wizard opposition-school
+tracking — genuinely new engine subsystems. BUILD one properly, or return `partial`") and this
+cycle independently verified — by reading the live corpus JSON and grepping the live engine,
+not by re-quoting prior cycles' claims — that all 3 non-sibling-owned sub-causes really do need
+a new subsystem, not a same-shape extension of an already-shipped table: **companion/mount
+registration** (3 units) turned out the most promising on inspection (Druid's own Animal
+Companion progression IS wired, `ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL` +
+`class_chassis.druid.animal_companion.*`), but the shared `Companion ~ Animal Companion` internal
+indirection target is also referenced by 3 other unwired owners (Ranger's Hunter's Bond, Cleric's
+Domain Power, Nature's Bond), and `Companion ~ Special Mount`/`Special Mount ~ Standard Choices`
+have zero Paladin-side engine computation anywhere (confirmed by grep — only comment-only
+references to the corpus's own `SpecialMountLVL` token, no formula, no `choice:special_mount`
+registration). **Wizard opposition-school spell tracking** (9 units, `Abjuration Wizard Spells`
+… `Universal Wizard Spells`) has no consumer anywhere in `rules_core` (`grep -rn "Wizard Spells"
+src/rules_core/` returns nothing) — a genuinely unbuilt per-school spell-list-access subsystem.
+**Proficiency/mechanical-grant possession-tracking** (20 units) re-confirmed unchanged from
+cycles 5/6's own finding: generic multi-class indirection targets with no 1:1 class row, plus 3
+standalone facts (`Add Spoken Language`, `Channel {Negative,Positive} Energy`, `Evasion`) needing
+their own new possession-tracked engine fact. The remaining 2 units (Domain Power `Leadership`/
+`Sun's Blessing`) belong to the `with_magnitude` sibling mechanism, not this cycle's to fix.
+Given none of the 3 subsystems is safely buildable as a narrow lever within this cycle, and per
+`decisions.md §9` ("a measurement wave that banks zero units is a legitimate deliverable"), 0
+units moved rather than risk an unsafe or dishonest bucket move — no unit was placed into X/U on
+this cycle's own authority. Remainder re-derived and named exactly (8 + 2 + 10 + 3 + 9 + 2 = 34),
+each with what must be built next. Movement: 0 closure, 0 reclassification, 0 reachability, 0
+instrument-correction. AT-34-E3-001 itself remains open (8 other mechanisms + this mechanism's
+own 34 remain). Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 7) — one of nine, `decisions.md §14` — partial
 
 Re-derived at this cycle's starting HEAD (`0827dcd59b`): still 261 of 562 `core_rulebook`
