@@ -5216,6 +5216,13 @@ struct EngineFacts {
     /// See that probe's own doc comment for why every other school and both
     /// schools' top-level recognition records are deliberately excluded.
     wizard_arcane_school_wired: BTreeSet<String>,
+    /// `AT-34-E3-001` (mechanism 2 continuation, cycle 5): full corpus_key
+    /// strings (`"Bardic Performance ~ Fascinate"`, ...) whose own
+    /// per-performance explanation id was genuinely observed via
+    /// [`probe_bard_bardic_performance_wiring`]. Covers all 10 Bardic
+    /// Performance sub-records: 7 whose formula already existed and 3
+    /// (Suggestion, Mass Suggestion, Inspire Greatness) this cycle added.
+    bard_bardic_performance_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -7422,6 +7429,54 @@ fn probe_wizard_arcane_school_wiring(fixture: &CharacterInput) -> BTreeSet<Strin
     wired
 }
 
+/// `AT-34-E3-001` (`class_feature_option_pool_record_with_magnitude_not_
+/// held_by_engine` mechanism, cycle 5): full `"Bardic Performance ~ <name>"`
+/// corpus_key strings whose own per-performance explanation id was
+/// genuinely observed on a real canonical Bard across the class sweep. Same
+/// owner-resolution failure shape as the wizard arcane-school probe above
+/// (`group` here is `"Bardic Performance"`, which can never equal
+/// `"bard"`) -- no choice override is needed, unlike the wizard probe,
+/// because every Bardic Performance record is granted automatically by
+/// level, not gated behind a specialization choice.
+fn probe_bard_bardic_performance_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &level in SWEEP_LEVELS {
+        let input = class_sweep_input(fixture, "bard", level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        let ids: BTreeSet<&str> =
+            computation.explanations.iter().map(|e| e.id.as_str()).collect();
+        // (corpus_key, explanation id it needs to see) -- every one already
+        // built before this cycle except suggestion_dc, mass_suggestion_dc,
+        // and inspire_greatness_allies, which this cycle's own formulas add.
+        const PAIRS: &[(&str, &str)] = &[
+            ("Bardic Performance ~ Fascinate", "class_chassis.bard.fascinate_dc"),
+            ("Bardic Performance ~ Inspire Courage", "class_chassis.bard.inspire_courage_bonus"),
+            ("Bardic Performance ~ Inspire Competence", "class_feature.bard.inspire_competence"),
+            ("Bardic Performance ~ Soothing Performance", "class_feature.bard.soothing_performance"),
+            ("Bardic Performance ~ Frightening Tune", "class_chassis.bard.frightening_tune_dc"),
+            ("Bardic Performance ~ Deadly Performance", "class_feature.bard.deadly_performance_dc"),
+            ("Bardic Performance ~ Inspire Heroics", "class_feature.bard.inspire_heroics_save_bonus"),
+            ("Bardic Performance ~ Suggestion", "class_feature.bard.suggestion_dc"),
+            ("Bardic Performance ~ Mass Suggestion", "class_feature.bard.mass_suggestion_dc"),
+            ("Bardic Performance ~ Inspire Greatness", "class_feature.bard.inspire_greatness_allies"),
+        ];
+        for (corpus_key, needed_id) in PAIRS {
+            if ids.contains(needed_id) {
+                wired.insert((*corpus_key).to_string());
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -7809,6 +7864,7 @@ fn gather_engine_facts(
         ranger_favored_enemy_bonus_wired: probe_ranger_favored_enemy_bonus_wiring(fixture),
         ranger_favored_terrain_bonus_wired: probe_ranger_favored_terrain_bonus_wiring(fixture),
         wizard_arcane_school_wired: probe_wizard_arcane_school_wiring(fixture),
+        bard_bardic_performance_wired: probe_bard_bardic_performance_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -10063,6 +10119,23 @@ fn classify(
                 return Verdict {
                     status: "grounded",
                     evidence: "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // `AT-34-E3-001` (mechanism 2 continuation, cycle 5): Bardic
+            // Performance sub-cause, same shape as the wizard arcane-school
+            // block immediately above -- `group` here is `"Bardic
+            // Performance"`, which can never equal `"bard"`, so
+            // `class_feature_owner` and its two fallbacks can never resolve
+            // an owner. `probe_bard_bardic_performance_wiring` is the real,
+            // separate attribution path, covering all 10 Bardic Performance
+            // sub-records.
+            if facts.bard_bardic_performance_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "bard_bardic_performance_probe_observed_a_real_computed_magnitude"
                         .to_string(),
                     reason: None,
                     engine_book: engine_book_field,
@@ -17129,6 +17202,61 @@ mod class_feature_text_complete_rung_tests {
             2621,
             "Conjuration School ~ Acid Dart",
             2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
+    /// held_by_engine` mechanism, cycle 5, Bardic Performance sub-cause,
+    /// proof case: `probe_bard_bardic_performance_wiring` observed a real,
+    /// live-computed Fascinate Will-save DC magnitude for this exact
+    /// corpus record on a canonical Bard, so it is `grounded` -- never
+    /// routed to the generic bucket-B evidence.
+    #[test]
+    fn a_bard_bardic_performance_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .bard_bardic_performance_wired
+            .insert("Bardic Performance ~ Fascinate".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            520,
+            "Bardic Performance ~ Fascinate",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "bard_bardic_performance_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an UNPROBED Bardic Performance record (the probe's
+    /// own `EngineFacts` set is empty here) is completely unaffected -- it
+    /// still falls through to the pre-existing `engine-does-not-hold`
+    /// finding, unchanged, proving this cycle's fix credits nothing it did
+    /// not actually observe. Uses a synthetic `magnitude_token_count: 1` so
+    /// the unit takes the same code path a real unclaimed magnitude-bearing
+    /// Bardic Performance record would (this cycle's real fix closes all 10
+    /// genuine magnitude-bearing records, so no live corpus example of an
+    /// unclaimed one remains -- this proves the probe's own bound, not a
+    /// live gap).
+    #[test]
+    fn a_bard_bardic_performance_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            519,
+            "Bardic Performance ~ Not A Real Performance",
+            1,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_eq!(verdict.status, "engine-does-not-hold");

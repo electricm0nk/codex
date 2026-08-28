@@ -4682,6 +4682,24 @@ const BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT_SECOND_TIER: i16 = 2;
 // constant, since the level and Charisma terms are already grounded elsewhere.
 const FASCINATE_DC_BASE: i16 = 10;
 
+/// `AT-34-E3-001` (`class_feature_option_pool_record_with_magnitude_not_
+/// held_by_engine` mechanism, cycle 5): PF1 Core Rulebook level gate at
+/// which the Bard gains Suggestion, verified directly against this repo's
+/// own ingested corpus record's `PREVARGTEQ:BardicPerformanceLVL,6` token
+/// (`data/corpus/core_rulebook/class_feature/bard/bardic_performance.json`),
+/// not from memory.
+const BARD_SUGGESTION_LEVEL: u8 = 6;
+/// PF1 Core Rulebook level gate at which the Bard gains Inspire Greatness,
+/// verified the same way against `PREVARGTEQ:BardicPerformanceLVL,9`.
+const BARD_INSPIRE_GREATNESS_LEVEL: u8 = 9;
+/// PF1 Core Rulebook level gate at which the Bard gains Mass Suggestion,
+/// verified the same way against `PREVARGTEQ:BardicPerformanceLVL,18`.
+const BARD_MASS_SUGGESTION_LEVEL: u8 = 18;
+/// PF1 Core Rulebook Inspire Greatness maximum allies-affected count (the
+/// corpus's own `BONUS:VAR|InspireGreatnessAllies|min((BardicPerformanceLVL-6)/3,4)`
+/// token caps at 4 within the level range this codebase ever reaches).
+const BARD_INSPIRE_GREATNESS_MAX_ALLIES: i16 = 4;
+
 // Grounded SD13-E4-R3 Human Wizard level-1 prepared arcane spell-bearing baseline
 // identities. The Wizard class is the canonical PF1 prepared arcane full caster;
 // its class identity differs from Sorcerer in two ways that this bounded slice
@@ -48046,6 +48064,94 @@ fn explain_bard_level1_spell_baseline(
                  an already-generalized tiered if/else chain, the same idiom as Inspire \
                  Courage/Inspire Competence/Lore Master's own tier additions). This grounds \
                  only the flat count; no targeting or performance-state execution is computed"
+            ),
+        });
+    }
+
+    // `AT-34-E3-001` (`class_feature_option_pool_record_with_magnitude_not_
+    // held_by_engine` mechanism, cycle 5): Suggestion, a 6th-level Bard
+    // class feature verified directly against this repo's own ingested
+    // corpus record (`data/corpus/core_rulebook/class_feature/bardic_
+    // performance/suggestion.json`, `BONUS:VAR|SuggestionDC|10+(BardicPerformanceLVL/2)+CHA`)
+    // -- the exact same formula shape as the already-grounded Fascinate DC,
+    // Frightening Tune DC, and Deadly Performance DC, so only that flat DC
+    // magnitude is grounded here, mirroring those idioms exactly. Below the
+    // level-6 gate no record is pushed at all. No range/audible-performance
+    // checking, no Will-save resolution, and no suggestion-effect
+    // application is ever computed because neither the performance-state
+    // engine nor an effect-resolution engine is implemented.
+    if level >= BARD_SUGGESTION_LEVEL {
+        let suggestion_dc = FASCINATE_DC_BASE + (level_value / 2) + ability_modifiers.charisma;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.suggestion_dc".to_owned(),
+            value: suggestion_dc,
+            detail: format!(
+                "Bard Suggestion Will save DC at bard level {level} (PF1 Core Rulebook, 6th-level \
+                 Bard class feature): DC = 10 + 1/2 bard level + Charisma modifier, the same \
+                 formula shape as the Fascinate DC. At bard level {level} and Charisma modifier \
+                 {} this is {FASCINATE_DC_BASE} + ({level} / 2) + {} = {suggestion_dc}. This \
+                 grounds only the flat DC magnitude; no range/audible-performance-requirement \
+                 checking, no Will-save resolution, and no application of the suggestion effect \
+                 is computed because neither the performance-state engine nor an \
+                 effect-resolution engine is implemented",
+                ability_modifiers.charisma, ability_modifiers.charisma
+            ),
+        });
+    }
+
+    // `AT-34-E3-001` (same mechanism/cycle as Suggestion above): Mass
+    // Suggestion, an 18th-level Bard class feature verified directly
+    // against this repo's own ingested corpus record (`.../bardic_
+    // performance/mass_suggestion.json`, `BONUS:VAR|MassSuggestionDC|
+    // 10+(BardicPerformanceLVL/2)+CHA`) -- the identical DC formula shape,
+    // mirroring the Suggestion idiom immediately above. Below the level-18
+    // gate no record is pushed at all.
+    if level >= BARD_MASS_SUGGESTION_LEVEL {
+        let mass_suggestion_dc = FASCINATE_DC_BASE + (level_value / 2) + ability_modifiers.charisma;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.mass_suggestion_dc".to_owned(),
+            value: mass_suggestion_dc,
+            detail: format!(
+                "Bard Mass Suggestion Will save DC at bard level {level} (PF1 Core Rulebook, \
+                 18th-level Bard class feature): DC = 10 + 1/2 bard level + Charisma modifier, \
+                 the same formula shape as the Fascinate/Suggestion DC. At bard level {level} \
+                 and Charisma modifier {} this is {FASCINATE_DC_BASE} + ({level} / 2) + {} = \
+                 {mass_suggestion_dc}. This grounds only the flat DC magnitude; no \
+                 range/audible-performance-requirement checking, no multi-target Will-save \
+                 resolution, and no application of the suggestion effect is computed because \
+                 neither the performance-state engine nor an effect-resolution engine is \
+                 implemented",
+                ability_modifiers.charisma, ability_modifiers.charisma
+            ),
+        });
+    }
+
+    // `AT-34-E3-001` (same mechanism/cycle): Inspire Greatness, a 9th-level
+    // Bard class feature verified directly against this repo's own
+    // ingested corpus record (`.../bardic_performance/inspire_greatness
+    // .json`, `BONUS:VAR|InspireGreatnessAllies|min((BardicPerformanceLVL-6)/3,4)`)
+    // -- the same "flat count formula" shape as the already-grounded
+    // Fascinate affected-creature-count, mirroring that idiom. Below the
+    // level-9 gate no record is pushed at all; the corpus's own `min(...,4)`
+    // cap is preserved exactly, never re-derived as an unbounded rise.
+    if level >= BARD_INSPIRE_GREATNESS_LEVEL {
+        let inspire_greatness_allies = std::cmp::min(
+            (level_value - BARD_INSPIRE_GREATNESS_LEVEL as i16 + 3) / 3,
+            BARD_INSPIRE_GREATNESS_MAX_ALLIES,
+        );
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.inspire_greatness_allies".to_owned(),
+            value: inspire_greatness_allies,
+            detail: format!(
+                "Bard Inspire Greatness affected-ally count at bard level {level} (PF1 Core \
+                 Rulebook, 9th-level Bard class feature): the corpus's own formula \
+                 min((bard level - 6) / 3, 4). At bard level {level} this is min(({level} - 6) \
+                 / 3, {BARD_INSPIRE_GREATNESS_MAX_ALLIES}) = {inspire_greatness_allies}. This \
+                 grounds only the flat ally-count magnitude; no targeting and no application of \
+                 the granted bonuses (a copy of the bard's own Bardic Knowledge, extra hit \
+                 points, and a +1 bonus on saves against death/negative-energy/spells) to any \
+                 ally is computed because no such multi-recipient application engine exists \
+                 anywhere in this codebase"
             ),
         });
     }

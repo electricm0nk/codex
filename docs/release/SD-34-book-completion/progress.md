@@ -108,6 +108,42 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 5) — one of nine, `decisions.md §14` — partial
+
+Re-derived the mechanism population fresh at this cycle's starting HEAD (`3ebc08b451`): still
+277, unchanged from cycle 4's own closing figure. Read cycle 4's own receipt and its "Next-cycle
+plan" before touching anything; its own remainder table named a `Bardic Performance` cluster (10
+units, untouched) alongside the wizard-school lever. Read
+`data/corpus/core_rulebook/class_feature/bardic_performance/*.json` directly rather than assuming
+a "pick one from a roster" shape, and found every one of the 10 sub-records carries a real
+`BONUS:VAR|...` formula token. `pilot_compute/mod.rs` already computes 7 of the 10 (Fascinate,
+Inspire Courage, Inspire Competence, Soothing Performance, Frightening Tune, Deadly Performance,
+Inspire Heroics) — never wired to `classify()`, the same "group prefix can never equal `bard`"
+owner-resolution failure Domain Power / Weapon Training / Favored Enemy / Wizard Arcane School
+each already established. New `probe_bard_bardic_performance_wiring` (mirrors
+`probe_wizard_arcane_school_wiring`, simpler — no choice override needed) observes each
+sub-record's own explanation id against the real compute pipeline. This cycle also built the 3
+remaining formulas the engine did not yet have (Suggestion DC, Mass Suggestion DC, Inspire
+Greatness allies-count), each verified directly against this repo's own ingested corpus record's
+level-gate token (never from memory) — closing the entire cluster in one cycle.
+
+**10 of 277 closed this cycle** (bucket B, `core_rulebook`, 579 → 569 of 6,701 —
+`python3 scripts/completion_atlas.py --by-book`). `cargo test --locked --no-run` re-run at this
+cycle's own commit SHA, exit 0, workspace-wide; `cargo test --locked --lib` 2,891 passed / 0
+failed / 14 ignored; `cargo test --locked --bin v06_work_inventory` 397 passed / 0 failed (2 new
+tests). No instrument movement this cycle: `F1` stayed 5,401 (checked each of the 10 closed
+records' own formula shape directly — none is bare-literal). Re-derived and fixed 10 + 2 shifted
+`file:line` citations in `completion_atlas.py`/`missing_engine_tables.py` (`citation_failures=0`
+on both after). 267 remain, sub-cause partition re-derived fresh and sums exactly: `Domain Power`
+56, `Domain Base` 33, wizard-school cluster remainder 38, `Draconic Bloodline Choice` 10 (checked
+this cycle — genuinely different shape, no per-color numeric formula, not the Bardic Performance
+lever), `Secret Lore` 10 (not yet checked record-by-record), `New Arcana` 9 (ruled out by cycle
+3), small 2-3-unit per-class groups 22, long-tail singles 89. Flagged, not fixed (out of this
+mechanism's own scope, unchanged from cycles 3-4): the same pre-existing `cargo test --locked
+--test v06_work_inventory` failure on 3 `vacuous_placeholder_row_no_corpus_content_to_render`
+units — a different sibling mechanism's own fix. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt_5.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 5) — one of nine, `decisions.md §14` — partial
 
 Re-derived at this cycle's starting HEAD (`c4e6ac92f9`): still 344, unchanged from cycle 4's
