@@ -28,7 +28,7 @@ cycles is never `blocked-escalated`.**
 | 3 | `missing-tables-and-book-coverage` | 1 | AT-34-E1-003 | complete | `artifacts/epic-1-atlas/AT-34-E1-003_cycle_receipt.md`, re-verified at HEAD by `artifacts/epic-1-atlas/AT-34-E1-003_re-verification_receipt.md` |
 | 4 | `shape-engine-boundary-stated` | 1 | AT-34-E1-004 | complete | `artifacts/epic-1-atlas/AT-34-E1-004_cycle_receipt.md`, re-verified at HEAD by `artifacts/epic-1-atlas/AT-34-E1-004_re-verification_receipt.md` |
 | 5 | `rename-not-ingested-field` | 1 | AT-34-E1-005 | complete | `artifacts/epic-1-atlas/AT-34-E1-005_cycle_receipt.md`, re-verified at HEAD by `artifacts/epic-1-atlas/AT-34-E1-005_re-verification_receipt.md` |
-| 6 | `figure-provenance-gate` | 1 | AT-34-E1-006 | complete | `artifacts/epic-1-atlas/AT-34-E1-006_cycle_receipt.md` |
+| 6 | `figure-provenance-gate` | 1 | AT-34-E1-006 | complete | `artifacts/epic-1-atlas/AT-34-E1-006_cycle_receipt.md`, re-verified at HEAD by `artifacts/epic-1-atlas/AT-34-E1-006_re-verification_receipt.md` (found and fixed a real 14-violation regression in Epic 3's own receipts) |
 | 7 | `corpus-trap-audit-stage` | 1 | AT-34-E1-007 | complete | `artifacts/epic-1-atlas/AT-34-E1-007_cycle_receipt.md`, `artifacts/epic-1-atlas/AT-34-E1-007_re-verification_receipt.md` |
 | 8 | `wiring-class-mismatch-to-zero` | 1 | AT-34-E1-008 | complete | `artifacts/epic-1-atlas/AT-34-E1-008_G1_cycle_receipt.md` .. `_G4_cycle_receipt.md`, verified by `artifacts/epic-1-atlas/AT-34-E1-007_re-verification_receipt.md` |
 | 9 | `build-eight-tables` | 2 | AT-34-E2-001 | complete | `artifacts/epic-2-tables/AT-34-E2-001_cycle_receipt.md`, `artifacts/epic-2-tables/AT-34-E2-001_table_transcript.txt` |

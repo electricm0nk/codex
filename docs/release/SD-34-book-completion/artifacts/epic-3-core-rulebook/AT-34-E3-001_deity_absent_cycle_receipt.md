@@ -112,28 +112,16 @@ cycle's HEAD.
 
 ## Figures + their re-derive commands
 
-- **21 of 1,006** — this mechanism's share of `core_rulebook` bucket B, per
-  `decisions.md §14`'s enumeration. Command above; independently re-derived,
-  not transcribed.
+- **21 of 1,006** — this mechanism's share of `core_rulebook` bucket B, per `decisions.md §14`'s enumeration: `python3 -c "..."` (the deity-evidence filter shown above, run against `docs/work-inventory.json`); independently re-derived, not transcribed.
 - **21 units, 21 corpus JSON records** — one-to-one; verified:
   `find data/corpus/core_rulebook/deity -name '*.json' | wc -l` → `21`, and
   each carries a `rename.coordinate` of `core_rulebook:cr_deities.lst:<N>`
   for `N` in the same 21 source lines the 21 bucket-B units carry
   (`{7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,29}`) — checked
   by direct comparison, not assumed to match.
-- **995 → 974** — `core_rulebook`'s real atlas-partitioned bucket B
-  before/after this cycle (matching `progress.md`'s figure from the prior
-  `class_absent` cycle): `python3 scripts/completion_atlas.py --book
-  core_rulebook --check` → `B: 974` post-cycle (delta `-21`, exactly this
-  mechanism's population). A plain `status == "engine-does-not-hold"` filter
-  on `docs/work-inventory.json` over-counts (1,772 → 1,751, same `-21`
-  delta but the wrong base) because it also catches bucket-D
-  `*_pending_wiring_class_review` units the atlas's own `_B_MARKERS`
-  substring check correctly excludes — caught and corrected before this
-  figure was written down, not carried forward from the wrong filter.
-- **49,438** — corpus-wide unit population, unchanged by this cycle (no
-  units added or removed, only reclassified): `len(d['units'])` on the
-  regenerated `docs/work-inventory.json` → `49438`.
+- **995 → 974** — `core_rulebook`'s real atlas-partitioned bucket B before/after this cycle (matching `progress.md`'s figure from the prior `class_absent` cycle): `python3 scripts/completion_atlas.py --book core_rulebook --check` → `B: 974` post-cycle (delta `-21`, exactly this mechanism's population).
+- A plain `status == "engine-does-not-hold"` filter on `docs/work-inventory.json` over-counts (1,772 → 1,751, same `-21` delta but the wrong base) because it also catches bucket-D `*_pending_wiring_class_review` units the atlas's own `_B_MARKERS` substring check correctly excludes: `python3 -c "..."` (the plain-`status` filter shown above, re-run to demonstrate the over-count) — caught and corrected before this figure was written down, not carried forward from the wrong filter.
+- **49,438** — corpus-wide unit population, unchanged by this cycle (no units added or removed, only reclassified): `python3 -c "import json; print(len(json.load(open('docs/work-inventory.json'))['units']))"` on the regenerated `docs/work-inventory.json` → `49438`.
 
 ## Row-count command output
 

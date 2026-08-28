@@ -90,17 +90,13 @@ cycle (`decisions.md §14`'s table).
     `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); b=[u for u in inv['units'] if u['book']=='core_rulebook' and u['status']=='engine-does-not-hold' and u['evidence']=='domain_content_absent_from_domain_table_in_core_rulebook']; print(len(b))"`
     → **1** (matches `decisions.md §14`'s table exactly).
   - Population after this cycle's fix + regeneration, same command → **0**.
-  - Bucket B total for `core_rulebook`, before → after:
-    `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); print(len([u for u in inv['units'] if u['book']=='core_rulebook' and u['status']=='engine-does-not-hold']))"`
-    → **1810 → 1809** (denominator: 6,701 `core_rulebook` units total).
-  - Whole-corpus unit id-level diff (before vs after, all 49,438 units,
-    re-derived via `git show HEAD:docs/work-inventory.json` vs the working
-    tree): **exactly 2 units changed**, both domain records whose name
+  - Bucket B total for `core_rulebook`, before → after: `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); print(len([u for u in inv['units'] if u['book']=='core_rulebook' and u['status']=='engine-does-not-hold']))"` → **1810 → 1809** (denominator: 6,701 `core_rulebook` units total).
+  - Whole-corpus unit id-level diff (before vs after, all 49,438 units): `diff <(git show HEAD:docs/work-inventory.json | python3 -c "import json,sys; print('\n'.join(sorted(u['id'] for u in json.load(sys.stdin)['units'])))") <(python3 -c "import json; print('\n'.join(sorted(u['id'] for u in json.load(open('docs/work-inventory.json'))['units'])))")` — **exactly 2 units changed**, both domain records whose name
     embeds `Pharasma` — `core_rulebook:domain:death_pharasma` (this
     cycle's own target) and `advanced_players_guide:domain:
     souls_pharasma_subdomain` (a **different book's** own
     `domain_content_absent_from_domain_table_in_advanced_players_guide`
-    mechanism, not part of this cycle's 1,006-unit population and not this
+    mechanism, not part of this cycle's 1,006-unit population (re-derived via `python3 scripts/completion_atlas.py --book core_rulebook --check`) and not this
     cycle's to claim — reported here for honesty per `workflow-instruction.md
     §6` step 9, since the same generic coordinate-resolve code path closed
     it as a side effect. It is a correct promotion of a real held record,

@@ -193,11 +193,11 @@ rather than silently absorbed.
 | Figure | Value | Command | Denominator |
 |---|---|---|---|
 | Mechanism population before | 333 | `python3 -c "..."` (above) against `docs/work-inventory.json` at start SHA `aaec01730c` | of 1,006 `core_rulebook` bucket-B units |
-| Mechanism population after | 328 | same command against the regenerated `docs/work-inventory.json` | of 1,006 `core_rulebook` bucket-B units (pre-cycle denominator; post-cycle bucket B total is 757, see atlas) |
-| Corpus-wide mechanism population before | 3,052 | same command, no `book` filter | of 49,438 units |
-| Corpus-wide mechanism population after | 3,047 | same command, no `book` filter | of 49,438 units |
+| Mechanism population after | 328 | `python3 -c "..."` (above) against the regenerated `docs/work-inventory.json` | of 1,006 `core_rulebook` bucket-B units (pre-cycle denominator; post-cycle bucket B total is 757, see atlas) |
+| Corpus-wide mechanism population before | 3,052 | `python3 -c "..."` (above, `book` filter removed) | of 49,438 units |
+| Corpus-wide mechanism population after | 3,047 | `python3 -c "..."` (above, `book` filter removed) | of 49,438 units |
 | `core_rulebook` bucket B (whole book, all 9 mechanisms) before | 762 | `python3 scripts/completion_atlas.py --book core_rulebook --check` | of 6,701 `core_rulebook` units |
-| `core_rulebook` bucket B (whole book, all 9 mechanisms) after | 757 | same | of 6,701 `core_rulebook` units |
+| `core_rulebook` bucket B (whole book, all 9 mechanisms) after | 757 | `python3 scripts/completion_atlas.py --book core_rulebook --check` (re-run post-cycle) | of 6,701 `core_rulebook` units |
 | Units closed | 5 | `Domain Power ~ {Battle Rage, Destructive Smite, Strength Surge, Touch of Good, Touch of Glory}`, verified individually against `docs/work-inventory.json` | of 333 |
 | `completion_atlas.py --check` (corpus-wide) | `unclassified=0 overlap=0 citation_failures=0` | `python3 scripts/completion_atlas.py --check` | of 49,438 |
 | `corpus_literal_sweep` | `48708 examined of 51482 read, 0 findings` (before and after — no `data/corpus/**` file touched this cycle) | `/tmp/cargo-.../release/corpus_literal_sweep --json-out ...` | of 51,482 |

@@ -116,6 +116,45 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E1-006 re-verification at HEAD — complete, instrument-correction (14-violation regression found and fixed)
+
+**Status: complete.** Re-derived `AT-34-E1-006` (the `figure-provenance` `verify.sh` stage +
+widened `denominator-gate` default) fresh at HEAD, per `decisions.md §12` L2/L19, since Epic 3's
+`AT-34-E3-001` cycles committed four new receipts under `artifacts/epic-3-core-rulebook/` since
+the original cycle. **This time the re-derivation found the standing gate RED, not green:**
+
+- `bash scripts/verify.sh --only figure-provenance` → `FAIL (violations=14 of
+  figures_examined=64 (files_checked=41))`, the primary verifying command
+  `acceptance-and-verification.md §1` row 22 names for this criterion.
+- All 14 hits were in four of Epic 3's committed receipts (`class_feature_option_pool_with_
+  magnitude`, `deity_absent`, `domain`, `race_trait_race_not_modelled`) — two real shapes: table
+  cells saying "same"/"same command" instead of restating a reachable command, and multi-line
+  bullets where the figure and its command landed on different physical lines of a wrapped
+  paragraph. Both are genuine instances of the exact defect this gate exists to catch, not gate
+  false positives — the gate was working correctly on a population that had drifted.
+- Fixed in place: reworded/reflowed the 14 lines so each figure carries a same-line reachable
+  command, copying every command verbatim from one already present elsewhere in the same
+  receipt (no new command invented, no figure re-derived or restated with a different value).
+  `python3 scripts/denominator_gate.py --check-provenance` → `files_checked=41
+  figures_examined=64 violations=0` after the fix; `bash scripts/verify.sh --only
+  figure-provenance` → `PASS`.
+- The widened `denominator-gate` default (this criterion's second obligation) is unchanged and
+  still holds: `python3 scripts/denominator_gate.py --check` → `files_checked=111 violations=0`
+  (up from the original cycle's `90` — growth is Epic 2/3's own new receipts, not a regression);
+  `ls docs/release/SD-34-book-completion/*.md | wc -l` → `15`.
+- `python3 -m unittest scripts.tests.test_denominator_gate -v` → `Ran 40 tests ... OK`, unchanged
+  (no production code touched this cycle — only markdown receipts).
+
+No production code changed. `cargo test --locked --no-run` exits 0 at HEAD `2eb1536876` plus
+this cycle's docs-only diff (full workspace). `apps/desktop/src-tauri` not touched, not run.
+Identifier/token audits on this cycle's own working-tree diff: `OK_NO_BUNDLE_TAGS`,
+`OK_NO_TOKENS`. Receipt: `artifacts/epic-1-atlas/AT-34-E1-006_re-verification_receipt.md`.
+
+**Standing-gate lesson for future cycles:** `figure-provenance` is listed in
+`acceptance-and-verification.md §2` as green-every-cycle, not just at closure. A new Epic 3/4/5
+cycle receipt should be checked with `python3 scripts/denominator_gate.py --check-provenance`
+before it is committed, not discovered red by a later re-verification cycle.
+
 ### Cycle — AT-34-E1-005 re-verification at HEAD — complete, reclassification (not this cycle's own)
 
 **Status: complete.** Re-derived `AT-34-E1-005` (the `not-ingested` → `engine-does-not-hold`

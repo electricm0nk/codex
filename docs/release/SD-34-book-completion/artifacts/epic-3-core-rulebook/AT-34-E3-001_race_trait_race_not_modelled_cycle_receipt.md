@@ -213,30 +213,12 @@ before 132 after 0
 
 ## Figures + their re-derive commands
 
-- **132 of 1,006** — this cycle's own population, `core_rulebook` bucket B,
-  `race_trait_race_not_modelled` mechanism, re-derived above.
-- **0** — the same population after this cycle, re-derived above.
-- **1,413 of 1,413 → 90 of 1,413** — corpus-wide `race_trait_race_not_modelled` population,
-  before → after this cycle (a generic engine fix, not a `core_rulebook`-scoped one, so it moves
-  every book's population, not just this cycle's own): `python3 -c "import json; print(sum(1 for
-  u in json.load(open('docs/work-inventory.json'))['units'] if u['evidence']==
-  'race_trait_race_not_modelled'))"` → `90` (was `1413` at HEAD `a510cbfcf3`, re-derived the same
-  way against `git show a510cbfcf3:docs/work-inventory.json`). The 90 remaining are OTHER books'
-  residual shapes (not this mechanism's core_rulebook population, which is fully closed) — out of
-  this cycle's scope; named for whichever future cycle picks up that book's own bucket-B work.
-- **49,438** — total corpus population, unchanged before and after (`decisions.md §3`'s
-  denominator): `python3 -c "import json; print(len(json.load(open('docs/work-inventory.json'))
-  ['units']))"` → `49438`. `0` ids added, `0` ids removed
-  (`set(old_ids) ^ set(new_ids)` is empty) — pure reclassification, no fabricated or deleted
-  units.
-- **48,708 of 51,482** — `corpus_literal_sweep` examined population, unchanged from the
-  inherited baseline (this cycle added 0 `data/corpus` records — a pure engine-code fix, no
-  ingestion): `/tmp/cargo-sd34-at-34-e3-001/debug/corpus_literal_sweep --json-out
-  /tmp/corpus_literal_sweep_report.json` → `48708 records examined of 51482 read ... 0 findings
-  ... CLEAN`.
-- **1,839 unit(s) cleared over 2,580 fixture row(s); 0 failed** — `derived_evaluator_fixture_
-  check`, unchanged from the inherited baseline: `/tmp/cargo-sd34-at-34-e3-001/debug/
-  derived_evaluator_fixture_check --json-out /tmp/derived_fixture_check_report.json`.
+- **132 of 1,006** — this cycle's own population, `core_rulebook` bucket B, `race_trait_race_not_modelled` mechanism: `python3 -c "..."` (the `Counter`-over-`evidence` script shown above, run against `docs/work-inventory.json`) → `132`.
+- **0** — the same population after this cycle: `python3 -c "..."` (same script, re-run against the regenerated `docs/work-inventory.json`) → `0`.
+- **1,413 of 1,413 → 90 of 1,413** — corpus-wide `race_trait_race_not_modelled` population, before → after this cycle (a generic engine fix, not a `core_rulebook`-scoped one, so it moves every book's population, not just this cycle's own): `python3 -c "import json; print(sum(1 for u in json.load(open('docs/work-inventory.json'))['units'] if u['evidence']=='race_trait_race_not_modelled'))"` → `90` (was `1413` at HEAD `a510cbfcf3`, re-derived the same way against `git show a510cbfcf3:docs/work-inventory.json`). The 90 remaining are OTHER books' residual shapes (not this mechanism's core_rulebook population, which is fully closed) — out of this cycle's scope; named for whichever future cycle picks up that book's own bucket-B work.
+- **49,438** — total corpus population, unchanged before and after (`decisions.md §3`'s denominator): `python3 -c "import json; print(len(json.load(open('docs/work-inventory.json'))['units']))"` → `49438`. `0` ids added, `0` ids removed (`set(old_ids) ^ set(new_ids)` is empty) — pure reclassification, no fabricated or deleted units.
+- **48,708 of 51,482** — `corpus_literal_sweep` examined population, unchanged from the inherited baseline (this cycle added 0 `data/corpus` records — a pure engine-code fix, no ingestion): `/tmp/cargo-sd34-at-34-e3-001/debug/corpus_literal_sweep --json-out /tmp/corpus_literal_sweep_report.json` → `48708 records examined of 51482 read ... 0 findings ... CLEAN`.
+- **1,839 unit(s) cleared over 2,580 fixture row(s); 0 failed** — `derived_evaluator_fixture_check`, unchanged from the inherited baseline: `/tmp/cargo-sd34-at-34-e3-001/debug/derived_evaluator_fixture_check --json-out /tmp/derived_fixture_check_report.json`.
 
 ## Build scope verified
 
