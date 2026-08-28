@@ -342,7 +342,28 @@ content to at all** can ever be `held` — is still open and is genuinely a defi
 about the deliverable (`artifacts/epic-3-core-rulebook/atlas-defects.md` entries 1-3). §16 covers
 only records that *do* have content whose shape is a choice.
 
-**Enforced by:** AT-34-E3-001's own bar; AT-34-E6-001 re-deriving it at HEAD.
+**Amendment, same day, after the first cycle applied it.** §16 as first written said the record is
+*held* but never named the destination **status**. The cycle applied it and moved 93 units from
+bucket `B` to bucket `X` (`deferred-with-reason`), reporting that as *"Closure: 93"*. It is not
+closure: `B -> X` is **reclassification** under `§9`'s own four-bucket rule, and `X` must itself
+reach zero for AT-34-E3-005. Core Rulebook `DONE` rose only **1,369 -> 1,380 (+11)** while `X` rose
+**21 -> 116 (+95)**. The book advanced by 11 of 6,701, not 93.
+
+The ratified precedent does not settle the destination either — its own feat-pool units carry
+`text-complete`, `ingested-magnitude` and `engine-does-not-hold` across four records, so there is
+no consistent prior answer to copy.
+
+**What is settled and what is not.** Settled: grounding the count and naming the eligible set is
+the correct *engineering*, and no operator ruling is needed to do it. **Not settled:** whether a
+per-option row, whose option the engine deliberately does not model, is `DONE` or is a permanent
+resident of `X`. That is the same definitional question as the no-content shapes in
+`artifacts/epic-3-core-rulebook/atlas-defects.md`, and it decides whether *"every bucket to zero"*
+is reachable at all. **A cycle must not resolve it by choosing a destination status on its own
+authority** — report the movement honestly in the bucket it truly landed in, and leave the
+question open.
+
+**Enforced by:** AT-34-E3-001's own bar; AT-34-E6-001 re-deriving it at HEAD, and specifically
+re-checking that no cycle reported a `B -> X` move as closure.
 
 ---
 
