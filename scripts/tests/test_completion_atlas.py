@@ -319,9 +319,37 @@ class TestLiveInventoryCheck(unittest.TestCase):
         self.assertEqual(result["counts"].get("A", 0), 449)
 
     def test_bucket_u_matches_named_population(self):
+        # `AT-34-E3-003` (`decisions.md §17`, operator ruling): 110 of the
+        # corpus-wide 140 `equipment_modifier` `unmeasurable` units (58 of
+        # them `core_rulebook`) moved to `DONE` -- internal equipment-
+        # modifier plumbing codes (BANE, FLM_BRST, FRT_HVY, ...) that carry
+        # zero magnitude tokens and no real description in their token
+        # closure, per `classify()`'s new `Kind::EquipmentModifier` rung
+        # immediately above the pre-existing `unmeasurable` fallback
+        # (`src/bin/v06_work_inventory.rs`, `equipment_modifier_is_internal_
+        # plumbing_no_player_facing_content_per_decisions_17`). 321 - 110 =
+        # 211. The remaining 30 `equipment_modifier` units (18 of them
+        # `core_rulebook`, including the ruling's own named BANE/FLM_BRST/
+        # FRT_HVY examples) carry a REAL corpus description that the
+        # pre-existing leak guard (`corpus_json_description_leaks_pcgen_
+        # syntax`) refuses: 21 genuinely carry an unresolved PCGen
+        # substitution (`%CHOICE`, a player choice; `%d<N>`, an unresolved
+        # crit-multiplier dice reference) the engine does not model, and 9
+        # (`FRT_HVY`/`FRT_LGHT`/`FRT_MOD` and their prose siblings) trip a
+        # genuine, separate `render_pcgen_desc` defect (it drops a bare `%`
+        # even when immediately preceded by a digit, e.g. "75%", unlike
+        # `leaked_pcgen_syntax`'s own correct digit-preceded exemption) --
+        # named here, not fixed: out of this ruling's scope. Re-derive:
+        # `python3 -c "import json; from collections import Counter;
+        # inv=json.load(open('docs/work-inventory.json'));
+        # rem=[u for u in inv['units'] if u['status']=='unmeasurable' and
+        # u['kind']=='equipment_modifier']; print(len(rem),
+        # Counter(u['book'] for u in rem))"` -> `30
+        # Counter({'core_rulebook': 18, 'ultimate_psionics': 6,
+        # 'advanced_class_guide': 4, 'ultimate_equipment': 2})`.
         inv = CA._load_inventory()
         result = CA.partition(inv["units"])
-        self.assertEqual(result["counts"].get("U", 0), 321)
+        self.assertEqual(result["counts"].get("U", 0), 211)
 
 
 if __name__ == "__main__":

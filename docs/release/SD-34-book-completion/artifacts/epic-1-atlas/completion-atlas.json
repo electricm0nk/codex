@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10798,
+        "line": 10909,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,7 +14,7 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10478,
+        "line": 10589,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
@@ -25,7 +25,7 @@
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10703,
+        "line": 10814,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -36,7 +36,7 @@
     "D": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9039,
+        "line": 9112,
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
@@ -47,18 +47,18 @@
     "DONE": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9067,
+        "line": 9140,
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 14465,
+      "count": 14575,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
     "M": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8874,
+        "line": 8947,
         "must_contain": "ingested-magnitude"
       },
       "clears": "running the compute path (shape engine)",
@@ -69,18 +69,18 @@
     "U": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9126,
+        "line": 9199,
         "must_contain": "unmeasurable"
       },
       "clears": "instrument correction",
-      "count": 321,
+      "count": 211,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
       "meaning": "instrument cannot express a verdict"
     },
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 11449,
+        "line": 11560,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -91,7 +91,7 @@
     "X": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9086,
+        "line": 9159,
         "must_contain": "deferred-with-reason"
       },
       "clears": "revisiting the stated condition",
@@ -102,7 +102,7 @@
     "Z": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8947,
+        "line": 9020,
         "must_contain": "not-started"
       },
       "clears": "ordinary work",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "94705a4149e69092b1a30998a596c66c89d215a4",
+  "derived_at": "9c9f13f8c52d3c7fbd1575d71b5ad3b08f6a7aa0",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -209,7 +209,7 @@
     },
     "U": {
       "feat_served_description_is_a_placeholder_marker_not_prose": 51,
-      "text_only_but_corpus_record_carries_no_description_to_show_a_player": 270
+      "text_only_but_corpus_record_carries_no_description_to_show_a_player": 160
     }
   },
   "unclassified": 0

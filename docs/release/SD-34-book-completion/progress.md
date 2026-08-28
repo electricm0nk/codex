@@ -116,6 +116,43 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-003 (bucket `U` ruling, cycle 1, `decisions.md §17`) — partial, reclassification only
+
+Applied operator ruling `decisions.md §17` ("bucket `U` is DONE"): a `Kind::EquipmentModifier`
+record with zero magnitude tokens and no real description anywhere in its token closure is
+internal equipment-modifier plumbing (`BANE`, `FLM_BRST`, `FRT_HVY`, `Magical Enhancments
+(+1..+10)`) — a code that attaches an effect to a weapon/armor record, never a thing a player
+reads on its own. `classify()`'s `Kind::Equipment | Kind::EquipmentModifier` arm gains one new
+rung, `unit.kind == Kind::EquipmentModifier && !has_real_description`, returning `text-complete`
+with evidence `equipment_modifier_is_internal_plumbing_no_player_facing_content_per_decisions_17`
+— keyed on the pre-existing `has_real_description`/`magnitude_token_count` signals every sibling
+rung already trusts, never a name list. TDD: RED (`an_equipment_modifier_with_no_magnitude_and_
+no_description_reads_text_complete_per_decisions_17`) → GREEN; negative control
+(`an_equipment_item_with_the_same_zero_magnitude_shape_stays_unmeasurable`) proves `Kind::Equipment`
+is not swept in.
+
+**110 of the corpus-wide 140 `equipment_modifier` `unmeasurable` candidates moved** (unit-id set
+identical before/after, 49,438 units, whole-corpus diff by id confirms exactly 110 changed, all
+one kind, all one transition — `unmeasurable → text-complete`): `mythic_adventures` 52,
+`core_rulebook` 40, `bestiary_3` 4, `inner_sea_magic` 4, `monster_codex` 4, `horror_adventures` 2,
+`inner_sea_intrigue` 2, `adventurers_guide` 1, `ultimate_combat` 1. Corpus-wide `U` bucket
+321 → 211. `core_rulebook`'s own named 58 U units: 40 closed, **18 remain** — including the
+ruling's own worked examples `BANE`/`FLM_BRST`/`FRT_HVY` — because their corpus description IS
+real (not empty) and trips the pre-existing `corpus_json_description_leaks_pcgen_syntax` leak
+guard. Investigated all 30 remaining `equipment_modifier` unmeasurable units directly (temporary
+diagnostic test, reverted before commit) and split them into two named sub-causes: 21 carry a
+genuine unresolved PCGen substitution (`%CHOICE` = an unmodelled player choice; `%d<N>` = an
+unresolved crit-multiplier dice reference) — closer to `§17`'s own `X`-bucket discussion than to
+this ruling's "nothing to compute, nothing to show" shape; 9 (`FRT_HVY`/`FRT_LGHT`/`FRT_MOD` +
+6 prose siblings) trip a separate, confirmed `render_pcgen_desc` defect (it drops a bare `%` even
+when immediately preceded by a digit, e.g. a "chance" fraction quoted as a literal percent sign in prose, unlike `leaked_pcgen_syntax`'s own correct
+digit-preceded exemption) — a real renderer bug, out of this ruling's scope, filed as a `deferral`
+retro event. Fixed 10 + 2 shifted `file:line` citations in `completion_atlas.py`/
+`missing_engine_tables.py` (this cycle's own insertion shifted every one; `citation_failures=0`
+on both after) and re-pinned `test_completion_atlas.py`'s stale `U==321` assertion to `211`.
+`core_rulebook` U-bucket criterion: 40/58 closed, 18 remain, named. Movement: 0 closure, 110
+reclassification, 0 reachability, 0 instrument-correction.
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 7) — one of nine, `decisions.md §14` — partial
 
 Re-derived at this cycle's starting HEAD (`94705a4149`): still 44 of 564 `core_rulebook`

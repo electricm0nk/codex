@@ -1726,6 +1726,79 @@ mod equipment_verdict_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
     }
+
+    /// `decisions.md §17` ("bucket `U` is DONE"): a `Kind::EquipmentModifier`
+    /// record carrying zero magnitude tokens and no real description
+    /// anywhere in its token closure (`wc_class == "display"`) is internal
+    /// equipment-modifier plumbing (`BANE`, `FLM_BRST`, `FRT_HVY`,
+    /// `Magical Enhancments (+1..+10)`) -- a code that attaches an effect to
+    /// a weapon/armor row, never a thing a player reads on its own. The
+    /// ruling: 0 of the core_rulebook's 58 `unmeasurable` equipment-modifier
+    /// units carry a magnitude token, and this book's own precedent (186 of
+    /// 1,380 `DONE` units already `visible: false`) means invisibility has
+    /// never blocked `DONE` here either. This unit must now read
+    /// `text-complete`, not `unmeasurable`.
+    #[test]
+    fn an_equipment_modifier_with_no_magnitude_and_no_description_reads_text_complete_per_decisions_17()
+    {
+        let mut facts = EngineFacts::default();
+        facts
+            .equipment_keys
+            .entry("ultimate_equipment")
+            .or_default()
+            .insert("FLM_BRST".to_string());
+        let unit = equipment_modifier_unit("ue_equipmods.lst", 42, "FLM_BRST");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(
+            verdict.status, "text-complete",
+            "decisions.md §17 promotes a zero-magnitude, description-less \
+             EquipmentModifier to done -- it is internal plumbing, never \
+             player-facing content in its own right"
+        );
+        assert_eq!(
+            verdict.evidence,
+            "equipment_modifier_is_internal_plumbing_no_player_facing_content_per_decisions_17"
+        );
+    }
+
+    /// Negative control for the promotion above: an equipment *item*
+    /// (`Kind::Equipment`, not `Kind::EquipmentModifier`) with the exact
+    /// same zero-magnitude / no-description shape must STAY `unmeasurable`.
+    /// `decisions.md §17` names the equipment-modifier CODE as plumbing
+    /// specifically because a player reads the effect on the weapon/armor
+    /// record it attaches to -- an equipment item has no such host record
+    /// and is exactly the kind of neighbour the ruling must not sweep in.
+    #[test]
+    fn an_equipment_item_with_the_same_zero_magnitude_shape_stays_unmeasurable() {
+        let mut facts = EngineFacts::default();
+        facts
+            .equipment_keys
+            .entry("ultimate_equipment")
+            .or_default()
+            .insert("Bare Chassis Item".to_string());
+        let unit = CorpusUnit {
+            book: "ultimate_equipment".to_string(),
+            source_book: "ultimate_equipment".to_string(),
+            kind: Kind::Equipment,
+            key: "Bare Chassis Item".to_string(),
+            name: "Bare Chassis Item".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "ue_equip.lst".to_string(), line: 99 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(
+            verdict.status, "unmeasurable",
+            "decisions.md §17 scopes the promotion to Kind::EquipmentModifier only -- an \
+             equipment item with the same shape must not be swept in"
+        );
+        assert_eq!(
+            verdict.evidence,
+            "text_only_but_corpus_record_carries_no_description_to_show_a_player"
+        );
+    }
 }
 
 /// `"Fast Movement"` -> `"fast_movement"`. The engine's own explanation-id
@@ -9499,13 +9572,51 @@ fn classify(
                         engine_book: engine_book_field,
                     };
                 }
+                // `decisions.md §17` (operator ruling, 2026-08-28): a
+                // `Kind::EquipmentModifier` in this exact shape -- zero
+                // magnitude tokens, no real description anywhere in its
+                // token closure -- is internal equipment-modifier plumbing
+                // (`BANE`, `FLM_BRST`, `FRT_HVY`, `Magical Enhancments
+                // (+1..+10)`): a code that attaches an effect to a
+                // weapon/armor row, never a thing a player reads on its own.
+                // The player reads "+1 Flaming Burst Longsword" on the
+                // WEAPON record. The ruling is keyed on real checkable
+                // properties (kind, magnitude_token_count==0, no real
+                // description in the closure), never a name list, and is
+                // scoped to `Kind::EquipmentModifier` only -- a real
+                // equipment ITEM in this same shape (no host record to
+                // attach content to) stays `unmeasurable` immediately below.
+                if unit.kind == Kind::EquipmentModifier && !has_real_description {
+                    return Verdict {
+                        status: "text-complete",
+                        evidence:
+                            "equipment_modifier_is_internal_plumbing_no_player_facing_content_per_decisions_17"
+                                .to_string(),
+                        reason: Some(
+                            "the modifier code is in the engine's equipment tables, carries no \
+                             magnitude token and no real DESC: text anywhere in its token \
+                             closure -- it is plumbing that attaches an effect to a weapon/armor \
+                             record (BANE, FLM_BRST, FRT_HVY, Magical Enhancments (+1..+10) and \
+                             the like), never something a player reads on its own. \
+                             decisions.md §17: 0 of the core_rulebook's 58 unmeasurable \
+                             equipment-modifier units carry a magnitude token, and this book's \
+                             own precedent (186 of 1,380 DONE units already visible: false) means \
+                             invisibility never blocked DONE here either"
+                                .to_string(),
+                        ),
+                        engine_book: engine_book_field,
+                    };
+                }
                 // Decision 7's condition 3, re-derived 2026-08-16: 634 units
                 // of this exact shape (magnitude_token_count==0, corpus
                 // `description: null`) were already `done` on the live board
                 // -- `chassis_only`/`.COPY` equipment rows with no cost, no
                 // weight and no DESC: token anywhere in their closure.
                 // Renamed from `unknown` `AT-33-E4-002`, disposition
-                // unchanged -- see `unknown-rootcause.md` §3.
+                // unchanged -- see `unknown-rootcause.md` §3. `Kind::Equipment`
+                // only (`decisions.md §17` scopes the promotion above to
+                // `Kind::EquipmentModifier`) -- an equipment item has no host
+                // record to attach content to, so it stays unmeasurable.
                 return Verdict {
                     status: "unmeasurable",
                     evidence: "text_only_but_corpus_record_carries_no_description_to_show_a_player"

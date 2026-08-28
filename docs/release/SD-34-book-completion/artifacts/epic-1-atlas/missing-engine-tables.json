@@ -7,7 +7,7 @@
       "count": 28,
       "engine_surface": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10798,
+        "line": 10909,
         "must_contain": "companion_content_has_no_engine_table"
       },
       "zero_bucket_a_books": [
@@ -21,7 +21,7 @@
       "count": 421,
       "engine_surface": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10877,
+        "line": 10988,
         "must_contain": "power_content_has_no_engine_table"
       },
       "zero_bucket_a_books": [
