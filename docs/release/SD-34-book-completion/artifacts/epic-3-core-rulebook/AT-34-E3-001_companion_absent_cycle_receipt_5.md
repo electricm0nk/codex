@@ -23,7 +23,7 @@ print(len(cr))"
 
 Matches the fourth cycle's own after-figure exactly.
 
-- **Commit SHA:** `<PENDING — filled in a follow-up commit>`
+- **Commit SHA:** `385b049cfe482a375c90f4bd415c5c8bc0e00087`
 - **Files touched:**
   - `src/rules_core/rules_tables/companion_chassis.rs` — added `CompanionClassRecord` (a new
     record type: `key`, `output_name`, `hit_dice`, `max_level`, `type_segments`, `visible_no`,
