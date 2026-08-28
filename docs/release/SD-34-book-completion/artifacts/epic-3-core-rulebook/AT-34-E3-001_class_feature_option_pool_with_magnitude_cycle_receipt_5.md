@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 5)
 
-- **Commit SHA:** (set below at push time)
+- **Commit SHA:** `b4eadc9cbf`
 - **Files touched:** `src/rules_core/pilot_compute/mod.rs` (3 new constants
   `BARD_SUGGESTION_LEVEL`/`BARD_INSPIRE_GREATNESS_LEVEL`/
   `BARD_MASS_SUGGESTION_LEVEL`, 1 new constant
