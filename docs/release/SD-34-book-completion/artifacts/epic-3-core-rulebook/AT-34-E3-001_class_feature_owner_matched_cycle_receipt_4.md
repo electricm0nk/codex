@@ -4,7 +4,7 @@ This cycle owns **exactly one** of the nine mechanisms `decisions.md §14` decom
 `AT-34-E3-001` into. It does **not** close AT-34-E3-001 itself — other mechanisms remain,
 each its own cycle.
 
-- **Commit SHA:** (filled after commit — see the commit that follows this receipt)
+- **Commit SHA:** `0302b44ae8`
 - **Files touched:**
   - `src/rules_core/pilot_compute/mod.rs` — new `explain_base_class_weapon_and_armor_proficiency`
     (grant-only identity record, the same idiom `class_slayer.rs`'s
