@@ -116,6 +116,31 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E1-005 re-verification at HEAD — complete, reclassification (not this cycle's own)
+
+**Status: complete.** Re-derived `AT-34-E1-005` (the `not-ingested` → `engine-does-not-hold`
+rename) fresh at HEAD, per `decisions.md §12` L2, since Epic 2/3 and the `AT-34-E1-002/003/004`
+re-verification cycles all regenerated `docs/work-inventory.json` and touched
+`src/bin/v06_work_inventory.rs` extensively since the original cycle. Found fully intact:
+
+- Old-string live-use sweep across `tests/`, `src/`, `apps/`, `scripts/`:
+  `legacy_not_ingested_live_uses = 0` (the sweep test's own file is the sole `grep` hit, expected
+  and excluded by the test's `sweep()` function).
+- `docs/work-inventory.json`: `grep -c '"not-ingested"'` → `0`; `grep -c
+  '"engine-does-not-hold"'` → `20066` (moved from `26239` at the original cycle — a
+  reclassification from Epic 2/3's closure work, not a rename regression).
+- `src/bin/v06_work_inventory.rs`: `grep -c "not_ingested\b"` → `0`; `grep -c
+  "engine_does_not_hold"` → `39`.
+- Atlas D-bucket citation still resolves by content at line `9167` (unlike `AT-34-E1-004`'s
+  promotion-ladder citation, this one did not drift): `python3 scripts/completion_atlas.py
+  --check` → `population=49438 buckets=10 unclassified=0 overlap=0 citation_failures=0`.
+- Denominator gate on this package: `files_checked=15 violations=0`.
+
+No RED step was needed — nothing had drifted, unlike `AT-34-E1-004`'s citation which needed a
+line-number fix. No production code changed this cycle. `cargo test --locked --no-run` exits 0
+at HEAD `11a15ec7fc` plus this cycle's docs-only diff. `apps/desktop/src-tauri` not touched, not
+run. Receipt: `artifacts/epic-1-atlas/AT-34-E1-005_re-verification_receipt.md`.
+
 ### Cycle — AT-34-E1-004 re-verification at HEAD — complete, reclassification (not this cycle's own)
 
 Re-dispatched against `AT-34-E1-004` (already `complete` from an earlier cycle, commit
