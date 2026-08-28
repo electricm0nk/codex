@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-003 (bucket `U` ruling cycle 1)
 
-- **Commit SHA:** `<pending, filled at commit time>`
+- **Commit SHA:** `7e853c664d735d1bd6b37848a7656d019ed5b44e`
 - **Files touched:**
   - `src/bin/v06_work_inventory.rs` — `classify()`'s `Kind::Equipment |
     Kind::EquipmentModifier` arm gains one new rung, inserted immediately
@@ -122,7 +122,7 @@
     (`decisions.md §10`/`workflow-instruction.md §2.5`: scoped test runs
     name what they cover; this crate's own suite is only required when it
     is touched).
-  - Both runs at commit `<pending, filled at commit time>`, run **after**
+  - Both runs at commit `7e853c664d735d1bd6b37848a7656d019ed5b44e`, run **after**
     the last figure-moving commit in this cycle (there is only one
     figure-moving commit).
 
