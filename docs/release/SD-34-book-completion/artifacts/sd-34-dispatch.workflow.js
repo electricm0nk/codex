@@ -452,78 +452,166 @@ async function runRemediation() {
 
 const BT = String.fromCharCode(96)   // backtick, for inline code spans in prompt text
 
-const STOP = '**DESTINATION-STATUS RULE, decisions.md 16 amendment — read before you move any unit.** A prior cycle moved 93 units from bucket B to bucket X and reported it as closure. It is not: B->X is RECLASSIFICATION, and X must itself reach zero for this epic. Report every move in the bucket it truly landed in. **Do not move a unit into X or U on your own authority** - whether a row the engine deliberately does not model is DONE or a permanent X resident is an OPEN definitional question for the operator. If your only available disposition for some sub-population is X or U, leave those units in B, name them in your remainder, and say so. Close what genuinely reaches DONE and no more.\\n\\n**COLLISION HAZARD, found by cycle 5 the hard way.** v06_work_inventory.rs matches a diagnostic to a unit by SUBSTRING within an owner namespace, not by exact key. A batch of per-option diagnostics sharing one owner namespace silently misclassified 5 unrelated units with a FALSE stated reason. Inspection missed it; a before/after diff of the regenerated inventory against a pre-cycle snapshot caught it. **Take that snapshot and run that diff before every commit.**'
+// ---------------- wave shape, revised 2026-08-28 (operator: do 1 and 2) ----------------
+// 1. Lanes NO LONGER regenerate docs/work-inventory.json. A regeneration is three
+//    sequential full-corpus passes (corpus_literal_sweep -> derived_evaluator_fixture_check
+//    -> v06_work_inventory, the last refusing to run without the first two's reports), which
+//    is why a 1-unit cycle cost about the same as a 400-unit one. ONE regeneration now runs
+//    at wave end for every lane at once.
+// 2. Lanes therefore no longer conflict on that file and run in PARALLEL, each in its own
+//    worktree with its own CARGO_TARGET_DIR. 24 CPUs, 440G free -> 4 lanes.
 
-const BUCKET_B_MECHANISMS = [
-  // Re-derived after wave 6. Bucket B = 562 of 6,701 core_rulebook units.
-  { ev: 'class_feature_owner_matched_by_name_but_record_not_held_by_engine', units: 251,
-    note: 'FIVE cycles: 0, 0, 0, 2, then 93 (which went B->X, not to DONE - see the rule below). Cycle 5\'s own next-cycle plan says its 251-unit partition needs RE-DERIVING fresh rather than inheriting, because 10 withheld Sorcerer names plus cycle 4\'s long tail were never reconciled into one sum-exact total. Do that first. Then take the 15-unit engine_effect_token_present long tail cheapest-first - Cleric/Assassin/Shadowdancer Weapon-and-Armor-Proficiency has a proven precedent in class_slayer.rs to mirror, including its archetype-supersession handling. The 118 zero-description internal-bookkeeping units are the OPEN definitional question: leave them in B, do not reclassify. ' + STOP },
-  { ev: 'class_feature_option_pool_record_with_magnitude_not_held_by_engine', units: 267,
-    note: 'Moved 333 -> 324 -> 282 -> 277 -> 267 across four cycles. READ THE PRIOR RECEIPTS and continue from their named remainder. 3,052 units across 21 of 37 books corpus-wide - build generically; the measured difference is 345 units/hour for generic cycles against 20 for book-scoped ones (artifacts/epic-3-core-rulebook/step-cost-ledger.derived.json). ' + STOP },
-  { ev: 'class_feature_option_pool_record_not_held_by_engine', units: 44,
-    note: 'SIX cycles: 63 -> 57 -> 55 -> 52 -> 52 -> 49 -> 44. Named remainder is proficiency/grant possession-tracking, class-skill/companion-mount attribution, wizard opposition-school tracking - each a genuinely new engine subsystem. BUILD one of them properly this cycle, or return `partial` stating plainly that no narrow work remains and naming exactly what must be built. Do not run a seventh cycle that closes little and repeats the same remainder. ' + STOP },
+const LANE_RULES = [
+  'YOU DO NOT REGENERATE docs/work-inventory.json. Do not run v06_work_inventory, corpus_literal_sweep,',
+  'or derived_evaluator_fixture_check, and do not commit docs/work-inventory.json. A single regeneration',
+  'cycle runs after this wave and measures what every lane actually moved. If you regenerate, you will',
+  'conflict with three sibling lanes and waste the wave.',
+  '',
+  'VERIFY YOUR CHANGE WITH TESTS INSTEAD. Write unit/integration tests that assert your engine change',
+  'produces the explanation or verdict you intend, for named records. State in your report which units',
+  'you EXPECT to move and why; the regeneration cycle will confirm or refute it. An expectation that',
+  'turns out wrong is a useful finding, not a failure - say what you expected.',
+  '',
+  'You are in your OWN git worktree with three sibling lanes running concurrently. Touch only the files',
+  'your mechanism needs. Before every commit run git status --porcelain and stage your own paths',
+  'explicitly - never git add -A, never git stash (its bare form takes the whole checkout).',
+  'Push via: git fetch origin tranche/14 && git rebase origin/tranche/14 && git push origin HEAD:tranche/14,',
+  'retrying up to 5 times on non-fast-forward. If a sibling landed first, rebase and re-run your tests.',
+  '',
+  'BEFORE COMMITTING, RUN git diff --cached --numstat AND READ IT. A commit whose subject says "add X"',
+  'but whose body deletes shipping code is this repo`s recorded failure mode - it has shipped a revert',
+  'disguised as a docs change before. If you see deletions you did not intend, stop and re-stage.',
+].join('\n')
+
+const LANES = [
+  { id: 'gate-widening', label: 'section-18 anti-fabrication gate widening',
+    brief: 'Implement operator ruling ' + BT + 'decisions.md 18' + BT + ': widen the anti-fabrication gates BY CONSTRUCTION. '
+      + 'Read that section in full first, then ' + BT + 'src/rules_core/pilot_compute/class_feature_grant_consumer.rs' + BT + '`s '
+      + 'module doc (the section explaining the exclusions) and its ' + BT + 'ANTI_FABRICATION_GATE_EXCLUDED_CLASSES' + BT + ' constant. '
+      + '**161 of the 242 remaining owner_matched units are gated by that seven-class list** (Sorcerer, Cleric, Monk, Wizard, '
+      + 'Paladin, Bard, Druid) - re-derive that split yourself. '
+      + 'The ruling: a gate accepts an explanation WHEN IT CITES A REAL CORPUS RECORD, not when its id is on a hand-maintained '
+      + 'allowlist. The allowlist becomes a property. '
+      + 'THE BAR IS HIGH: OPEN-ISSUES row 338 records a prior attempt REJECTED AS GAMED for falsely claiming these gates needed '
+      + 'no widening. You may NOT weaken, delete, ignore, or narrow any of the nine acceptance tests. For EACH gate you change, '
+      + 'produce a RED->GREEN mutation proof: plant an explanation citing NO corpus record, confirm the gate catches it, remove '
+      + 'the probe, confirm the baseline returns clean. A gate never observed to fail is not a gate. '
+      + 'Run the FULL test suite against your draft, not a scoped subset - this exclusion list has already grown twice from '
+      + 'gates nobody knew existed (Cleric and Sorcerer were found live, not from OPEN-ISSUES). '
+      + 'Druid and Monk sit behind a SEPARATE closed id-prefix filter (is_druid_pillar_id / is_monk_pillar_id in '
+      + 'src/rules_core/level_up/) - the citation property alone will not clear them. If you do not also fix that filter, '
+      + 'say plainly that Druid and Monk remain and how many units that is.' },
+  { id: 'owner-matched', label: 'owner_matched, the 81 NOT gated by the seven-class list',
+    brief: 'Mechanism ' + BT + 'class_feature_owner_matched_by_name_but_record_not_held_by_engine' + BT + ', 242 units in core_rulebook. '
+      + '**A sibling lane owns the 161 blocked by ANTI_FABRICATION_GATE_EXCLUDED_CLASSES - do not touch those.** '
+      + 'You own the ~81 that are NOT gated by that list. Re-derive that split yourself first; do not trust this number. '
+      + 'Seven prior cycles ran this mechanism - READ their receipts in artifacts/epic-3-core-rulebook/ and continue from them. '
+      + 'Cycle 7 re-derived the inherited four-way sub-cause split and found it did NOT match (105/143/0 against the inherited '
+      + '118/15/67/48), so re-derive rather than inherit, and treat inherited REASONS as suspect too: cycle 7 also disproved '
+      + 'cycle 4`s stated reason for deferring three prestige classes. '
+      + 'The zero-description internal-bookkeeping units are the OPEN definitional question in atlas-defects.md - leave them '
+      + 'in bucket B and do not reclassify them into X or U on your own authority.' },
+  { id: 'with-magnitude', label: 'option_pool_record_with_magnitude',
+    brief: 'Mechanism ' + BT + 'class_feature_option_pool_record_with_magnitude_not_held_by_engine' + BT + ', 258 units in core_rulebook, '
+      + '3,052 across 21 of 37 books corpus-wide. Moved 333 -> 258 across six cycles; READ the prior receipts and continue from '
+      + 'their named remainder rather than re-deriving from scratch. BUILD GENERICALLY - the payoff is measured, not theoretical: '
+      + 'the bucket-U cycle wrote one generic predicate and moved 110 units corpus-wide where a book-scoped one would have moved 40.' },
+  { id: 'option-pool', label: 'option_pool_record_not_held_by_engine',
+    brief: 'Mechanism ' + BT + 'class_feature_option_pool_record_not_held_by_engine' + BT + ', 34 units in core_rulebook. '
+      + 'EIGHT cycles have run this: 63 -> 57 -> 55 -> 52 -> 52 -> 49 -> 44 -> 34 -> 34, and the last closed ZERO. '
+      + 'Its named remainder is proficiency/grant possession-tracking and wizard opposition-school tracking - genuinely new '
+      + 'engine subsystems, not narrow fixes. BUILD ONE OF THEM PROPERLY this cycle. If you cannot, return partial and state '
+      + 'plainly that no narrow work remains, naming exactly what must be built and its population. Do not run a tenth cycle '
+      + 'that closes zero and repeats the same remainder.' },
 ]
 
-function mechanismPrompt(m, idx) {
-  const extra = m.note ? ('\n\n## Mechanism-specific direction\n\n' + m.note) : ''
+function lanePrompt(lane) {
   return cycleProcedurePrompt({
     id: 'AT-34-E3-001',
     dir: 'epic-3-core-rulebook',
-    title: 'bucket B closes: records reach their tables — **mechanism ' + (idx + 1) + ' of 9: '
-      + BT + m.ev + BT + ', ' + m.units + ' of 1,006 remaining core_rulebook bucket-B units**.\n\n'
-      + 'Bucket B for ' + BT + 'core_rulebook' + BT + ' is nine distinct mechanisms, not one (' + BT + 'decisions.md' + BT + ' 14 lists all\n'
-      + 'nine with populations). **You own exactly this one.** Re-derive your own population first —\n'
-      + 'group ' + BT + 'core_rulebook' + BT + ' units whose status is ' + BT + 'engine-does-not-hold' + BT + ' by their ' + BT + 'evidence' + BT + '\n'
-      + 'string and take the ' + BT + m.ev + BT + ' group. State it with its denominator; do not\n'
-      + 'quote the number above without checking it.\n\n'
-      + 'Drive YOUR mechanism to zero. Other cycles own the other eight; do not fix theirs, and do\n'
-      + 'not report the criterion complete — the criterion closes when bucket B reaches 0 for the\n'
-      + 'whole book, which is the LAST mechanism cycle. Return ' + BT + 'status: "complete"' + BT + ' when YOUR\n'
-      + 'mechanism reaches zero, and put its before/after counts in ' + BT + 'row_count_command_output' + BT + '.\n\n'
-      + '**A unit leaving bucket B for D or M is a correct outcome, not a half-fix** — the record now\n'
-      + 'has a shelf and the engine holds it; whether it then computes or displays is another\n'
-      + 'bucket own mechanism (' + BT + 'decisions.md' + BT + ' 2a). Report movement in all four buckets honestly.\n\n'
-      + '**Beware line-number citation drift**: ' + BT + 'completion_atlas.py' + BT + ' hardcodes ten ' + BT + 'file:line' + BT + '\n'
-      + 'citations into ' + BT + 'BUCKET_DEFINITIONS' + BT + '. If you insert or remove lines in\n'
-      + BT + 'src/bin/v06_work_inventory.rs' + BT + ', AT-34-E1-002 condition 6 will fail closed with\n'
-      + BT + 'citation_failures > 0' + BT + '. That is the gate working. Re-derive each shifted line with grep and\n'
-      + 'fix the literals in the SAME cycle.' + extra,
+    title: lane.label + '\n\n' + lane.brief + '\n\n## WAVE RULES - this wave runs four lanes in parallel\n\n' + LANE_RULES,
   })
+}
+
+const REGEN_SCHEMA = {
+  type: 'object',
+  required: ['status', 'before', 'after', 'attribution'],
+  properties: {
+    status: { type: 'string', enum: ['complete', 'partial', 'blocked-escalated'] },
+    before: { type: 'string' }, after: { type: 'string' },
+    attribution: { type: 'string', description: 'which lane moved which units, derived from the diff' },
+    commit_sha: { type: 'string' }, unexpected: { type: 'string' },
+  },
+}
+
+function regenPrompt(laneSummaries) {
+  return 'You are the SINGLE regeneration-and-attribution cycle that closes this wave of bundle SD-34, in '
+    + '/home/ubuntu/workspace/repos/codex on branch ' + BT + 'tranche/14' + BT + '. Four lanes just landed engine changes and '
+    + 'DELIBERATELY did not regenerate ' + BT + 'docs/work-inventory.json' + BT + '. You do it once, for all of them.\n\n'
+    + '## What the lanes reported\n\n' + laneSummaries + '\n\n'
+    + '## Your job\n\n'
+    + '1. ' + BT + 'git fetch origin tranche/14 && git rebase origin/tranche/14' + BT + ' so you have every lane`s work.\n'
+    + '2. Snapshot the baseline: ' + BT + 'git show HEAD:docs/work-inventory.json > /tmp/wi-wave-before.json' + BT + '.\n'
+    + '3. Run the three-pass pipeline IN ORDER - the third refuses to run without the first two`s reports, and that guard '
+    + 'exists because a bare run would silently drop 9,516 verification stamps:\n'
+    + '   - ' + BT + 'cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep.json' + BT + '\n'
+    + '   - ' + BT + 'cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture.json' + BT + '\n'
+    + '   - ' + BT + 'CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture.json cargo run --locked --bin v06_work_inventory' + BT + '\n'
+    + '   NEVER pass --allow-stamp-loss.\n'
+    + '4. Whole-corpus before/after diff BY UNIT ID. Report: total changed, and per lane, which units moved and to which '
+    + 'bucket. Compare against what each lane EXPECTED. **A lane whose expectation did not match is the most valuable finding '
+    + 'in this wave - report it plainly, do not smooth it over.**\n'
+    + '5. Report movement in four buckets: closure (reached DONE) / reclassification (moved between non-DONE buckets) / '
+    + 'reachability / instrument-correction. A B->X move is RECLASSIFICATION, never closure.\n'
+    + '6. Run ' + BT + 'python3 scripts/completion_atlas.py --book core_rulebook --check' + BT + ' and ' + BT + '--check' + BT + ' corpus-wide; '
+    + 'if citation_failures is non-zero the lanes` line insertions shifted completion_atlas.py`s hardcoded file:line citations - '
+    + 're-derive each with grep and fix them in this same cycle.\n'
+    + '7. Verify at the widest build scope AFTER your regeneration commit: ' + BT + 'cargo test --locked --no-run' + BT + ' exits 0.\n'
+    + '8. Update ' + BT + 'kanban.md' + BT + ' and ' + BT + 'progress.md' + BT + ' with the REAL numbers, write a wave receipt to '
+    + BT + 'docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md' + BT + ', and '
+    + 'commit + push.\n\n'
+    + '**Also record the wave`s cost**: wall time of the three passes, so the retro has a measured number for what one '
+    + 'regeneration costs. That is the figure this whole wave shape was changed to reduce.\n\n'
+    + 'Shared-checkout rules: git status --porcelain before every git write, stage your own paths explicitly, never git add -A, '
+    + 'never git stash. ONE turn - foreground the long runs, commit and push before ending it.'
 }
 
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
   phase(title)
-  log('AT-34-E3-001 decomposed: 9 mechanisms, 1,006 of 1,006 remaining bucket-B units, cheapest-first')
-  const rows = []
-  for (let i = 0; i < BUCKET_B_MECHANISMS.length; i++) {
-    const m = BUCKET_B_MECHANISMS[i]
-    // isolation: 'worktree' is NOT optional here. On 2026-08-28 a lane dispatched into
-    // the shared checkout collided with a concurrent lane writing the same file and
-    // ~120 lines of finished work were destroyed uncommitted. AGENTS.md's rule is one
-    // writer per tree; a rebase protocol does not protect UNCOMMITTED work. Mechanisms
-    // within a wave run sequentially, but a wave can overlap a separately-dispatched lane.
-    const r = await agent(mechanismPrompt(m, i), {
-      model: 'sonnet', phase: title, label: 'E3-001 m' + (i + 1) + ' ' + m.ev.slice(0, 28),
-      schema: CYCLE_SCHEMA, isolation: 'worktree',
-    })
-    rows.push({ mechanism: m.ev, units: m.units, result: r })
-    log('mechanism ' + (i + 1) + '/9 ' + m.ev + ' (' + m.units + ' units) -> ' + (r ? r.status : 'null'))
-    if (halted(r)) {
-      log('HALT: mechanism ' + (i + 1) + ' requests an operator ruling')
-      return rows
-    }
-    if (r.status === 'partial') {
-      log('mechanism ' + (i + 1) + ' PARTIAL - remainder named, continuing: ' + String(r.remainder || '').slice(0, 160))
-    }
-  }
-  return rows
-}
+  log('wave 9: ' + LANES.length + ' lanes IN PARALLEL (own worktree + own target dir), code-only; ONE regeneration after')
 
-if (args && args.bucketB) {
-  const rows = await runBucketBMechanisms()
-  const short = rows.filter(r => !r.result || r.result.status !== 'complete')
-  return { criterion: 'AT-34-E3-001', mechanisms: rows, short: short.map(r => r.mechanism) }
+  // 1+2: parallel, worktree-isolated, and none of them regenerates the inventory.
+  const results = await parallel(LANES.map(lane => () =>
+    agent(lanePrompt(lane), {
+      model: 'sonnet',
+      phase: title,
+      label: 'lane:' + lane.id,
+      schema: CYCLE_SCHEMA,
+      isolation: 'worktree',
+    }).then(r => ({ lane: lane.id, result: r }))))
+
+  for (const r of results) {
+    log('lane ' + (r && r.lane) + ' -> ' + (r && r.result ? r.result.status : 'null'))
+  }
+
+  const escalated = results.filter(r => r && r.result && r.result.status === 'blocked-escalated')
+  if (escalated.length) {
+    log('HALT: ' + escalated.length + ' lane(s) request an operator ruling; no regeneration run.')
+    return { lanes: results, halted: escalated.map(r => r.lane) }
+  }
+
+  // One regeneration for the whole wave, with attribution back to each lane.
+  const summaries = results.map(r => {
+    const x = (r && r.result) || {}
+    return '- lane `' + (r && r.lane) + '` (' + (x.status || 'null') + '): '
+      + String(x.discoveries || x.remainder || 'no report').slice(0, 400)
+  }).join('\n')
+
+  const regen = await agent(regenPrompt(summaries), {
+    model: 'sonnet', phase: title, label: 'wave9 regen + attribution', schema: REGEN_SCHEMA,
+  })
+  return { lanes: results, regen }
 }
 
 // ---------------------------------------------------------------- run
