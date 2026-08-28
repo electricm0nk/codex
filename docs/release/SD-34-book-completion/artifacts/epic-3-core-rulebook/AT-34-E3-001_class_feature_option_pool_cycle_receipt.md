@@ -1,7 +1,7 @@
 # Cycle 7 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
 
-- **Commit SHA:** `PENDING` (filled by this cycle's own follow-up commit, matching every prior
-  cycle's own two-commit pattern on this receipt).
+- **Commit SHA:** `12c95c519c` (this cycle's own fix commit; filled by this immediate follow-up
+  commit, matching every prior cycle's own two-commit pattern on this receipt).
 - **Files touched:** `src/rules_core/rules_tables/crb/class_skill_tables.rs` (new),
   `src/rules_core/rules_tables/crb/mod.rs` (module registration), `src/rules_core/class_feature_pool_catalog.rs`,
   `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py`, `scripts/missing_engine_tables.py`,
