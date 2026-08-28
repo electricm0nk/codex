@@ -1,7 +1,7 @@
 # Cycle 8 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
 
-- **Commit SHA:** `<filled by this cycle's immediate follow-up commit, matching every prior
-  cycle's own two-commit pattern on this receipt>`
+- **Commit SHA:** `c71ce03874` (this cycle's own docs commit; filled by this immediate
+  follow-up commit, matching every prior cycle's own two-commit pattern on this receipt).
 - **Files touched:** this receipt, `docs/release/SD-34-book-completion/progress.md`,
   `docs/release/SD-34-book-completion/kanban.md`. No `src/` file touched this cycle — see
   "Why no code changed" below. `docs/work-inventory.json` is unchanged (byte-identical; no
