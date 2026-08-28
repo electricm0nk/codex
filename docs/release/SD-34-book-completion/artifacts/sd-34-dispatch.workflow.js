@@ -452,17 +452,16 @@ async function runRemediation() {
 
 const BT = String.fromCharCode(96)   // backtick, for inline code spans in prompt text
 
+const STOP = '**DESTINATION-STATUS RULE, decisions.md 16 amendment — read before you move any unit.** A prior cycle moved 93 units from bucket B to bucket X and reported it as closure. It is not: B->X is RECLASSIFICATION, and X must itself reach zero for this epic. Report every move in the bucket it truly landed in. **Do not move a unit into X or U on your own authority** - whether a row the engine deliberately does not model is DONE or a permanent X resident is an OPEN definitional question for the operator. If your only available disposition for some sub-population is X or U, leave those units in B, name them in your remainder, and say so. Close what genuinely reaches DONE and no more.\\n\\n**COLLISION HAZARD, found by cycle 5 the hard way.** v06_work_inventory.rs matches a diagnostic to a unit by SUBSTRING within an owner namespace, not by exact key. A batch of per-option diagnostics sharing one owner namespace silently misclassified 5 unrelated units with a FALSE stated reason. Inspection missed it; a before/after diff of the regenerated inventory against a pre-cycle snapshot caught it. **Take that snapshot and run that diff before every commit.**'
+
 const BUCKET_B_MECHANISMS = [
-  // Re-derived from docs/work-inventory.json after wave 2. Bucket B = 757 of 6,701.
-  // race_trait_race_not_modelled closed fully (132 -> 0) in wave 2.
-  { ev: 'companion_absent_from_core_rulebook_companion_tables', units: 28,
-    note: 'A PRIOR CYCLE took this from 100 to 28 and named the remainder. READ ITS RECEIPT FIRST in artifacts/epic-3-core-rulebook/ and continue from it - do not re-derive its investigation. 16 of your 28 are cross-book-owned rows (14 familiar ability-pool, 2 monster-class) that a prior cycle judged to need a new record type; re-derive that judgement rather than inheriting it - if a narrower fix closes them, take it. companion_chassis already exists from SD-29-era work; EXTEND it, never build a second table.' },
-  { ev: 'class_feature_option_pool_record_not_held_by_engine', units: 55,
-    note: 'Two prior cycles took this 63 -> 57 -> 55 and named all 55 across 5 sub-causes summing exactly: proficiency/grant possession-tracking 28, class-skill/companion-mount attribution 13, wizard opposition-school tracking 9, vacuous placeholder rows 3, Domain Power pool-registration 2. READ THE RECEIPT FIRST. Take the cheapest sub-causes you can genuinely finish. The 3 vacuous placeholder rows (Empty Selection ~ Standard) are an UNPREDICTED verdict shape - record them in artifacts/epic-3-core-rulebook/atlas-defects.md as an atlas defect before deciding what to do with them. A PRIOR CYCLE NEARLY SHIPPED A CORPUS-WIDE REGRESSION HERE by relaxing a refusal gate on record SHAPE alone; it was caught only by diffing the regenerated inventory against the committed baseline before commit. Do that diff before every commit you make.' },
-  { ev: 'class_feature_option_pool_record_with_magnitude_not_held_by_engine', units: 328,
-    note: 'Owns the Domain Power CLASS_FEATURE_POOLS registration gap. A prior cycle established that registering the entry alone will NOT close the sibling mechanism 2 Domain Power units without additional formula work - so verify what registration actually moves in YOUR population before assuming it is the lever. 3,052 units across 21 of 37 books corpus-wide; build generically. `partial` with a named remainder that sums exactly is an expected and acceptable outcome.' },
-  { ev: 'class_feature_owner_matched_by_name_but_record_not_held_by_engine', units: 346,
-    note: 'Largest remaining and untouched so far - 3,594 units across 21 of 37 books corpus-wide. Expect `partial`. Your named remainder, with sub-cause populations summing exactly, IS the deliverable if you cannot close it all; it is what makes the next cycle dispatchable.' },
+  // Re-derived after wave 6. Bucket B = 562 of 6,701 core_rulebook units.
+  { ev: 'class_feature_owner_matched_by_name_but_record_not_held_by_engine', units: 251,
+    note: 'FIVE cycles: 0, 0, 0, 2, then 93 (which went B->X, not to DONE - see the rule below). Cycle 5\'s own next-cycle plan says its 251-unit partition needs RE-DERIVING fresh rather than inheriting, because 10 withheld Sorcerer names plus cycle 4\'s long tail were never reconciled into one sum-exact total. Do that first. Then take the 15-unit engine_effect_token_present long tail cheapest-first - Cleric/Assassin/Shadowdancer Weapon-and-Armor-Proficiency has a proven precedent in class_slayer.rs to mirror, including its archetype-supersession handling. The 118 zero-description internal-bookkeeping units are the OPEN definitional question: leave them in B, do not reclassify. ' + STOP },
+  { ev: 'class_feature_option_pool_record_with_magnitude_not_held_by_engine', units: 267,
+    note: 'Moved 333 -> 324 -> 282 -> 277 -> 267 across four cycles. READ THE PRIOR RECEIPTS and continue from their named remainder. 3,052 units across 21 of 37 books corpus-wide - build generically; the measured difference is 345 units/hour for generic cycles against 20 for book-scoped ones (artifacts/epic-3-core-rulebook/step-cost-ledger.derived.json). ' + STOP },
+  { ev: 'class_feature_option_pool_record_not_held_by_engine', units: 44,
+    note: 'SIX cycles: 63 -> 57 -> 55 -> 52 -> 52 -> 49 -> 44. Named remainder is proficiency/grant possession-tracking, class-skill/companion-mount attribution, wizard opposition-school tracking - each a genuinely new engine subsystem. BUILD one of them properly this cycle, or return `partial` stating plainly that no narrow work remains and naming exactly what must be built. Do not run a seventh cycle that closes little and repeats the same remainder. ' + STOP },
 ]
 
 function mechanismPrompt(m, idx) {
@@ -499,8 +498,14 @@ async function runBucketBMechanisms() {
   const rows = []
   for (let i = 0; i < BUCKET_B_MECHANISMS.length; i++) {
     const m = BUCKET_B_MECHANISMS[i]
+    // isolation: 'worktree' is NOT optional here. On 2026-08-28 a lane dispatched into
+    // the shared checkout collided with a concurrent lane writing the same file and
+    // ~120 lines of finished work were destroyed uncommitted. AGENTS.md's rule is one
+    // writer per tree; a rebase protocol does not protect UNCOMMITTED work. Mechanisms
+    // within a wave run sequentially, but a wave can overlap a separately-dispatched lane.
     const r = await agent(mechanismPrompt(m, i), {
-      model: 'sonnet', phase: title, label: 'E3-001 m' + (i + 1) + ' ' + m.ev.slice(0, 28), schema: CYCLE_SCHEMA,
+      model: 'sonnet', phase: title, label: 'E3-001 m' + (i + 1) + ' ' + m.ev.slice(0, 28),
+      schema: CYCLE_SCHEMA, isolation: 'worktree',
     })
     rows.push({ mechanism: m.ev, units: m.units, result: r })
     log('mechanism ' + (i + 1) + '/9 ' + m.ev + ' (' + m.units + ' units) -> ' + (r ? r.status : 'null'))
