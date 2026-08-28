@@ -1,7 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 7)
 
-- **Commit SHA:** `PENDING` (re-pinned in a follow-up commit immediately after this one lands,
-  matching cycles 3-6's own convention)
+- **Commit SHA:** `6a87278d87`
 - **Files touched:** `src/rules_core/pilot_compute/mod.rs` (new
   `CONJURATION_SCHOOL_SELECTION` constant, new
   `wizard_has_canonical_conjuration_selection`, one new computation block
