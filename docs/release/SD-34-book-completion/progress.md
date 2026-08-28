@@ -116,6 +116,58 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism, cycle 5) — one of nine, `decisions.md §14` — complete, mechanism reaches 0
+
+Re-derived the mechanism population fresh at this cycle's starting HEAD (`50a5785592`): 2,
+matching cycle 4's own after-figure exactly. Cycle 4's own mandate: build a genuine
+level-progression record type for the 2 `cr_classes_companion.lst` monster-class rows
+(`Companion`, `Shadow Companion`) and verify it against the two named second/third consumers
+(`ultimate_magic` 3 rows, `book_of_the_damned_volume_1` 2 rows), or state precisely why not.
+SD-29's own companion-lane round 8 (`docs/release/SD-29-corpus-wide-catch-up-lanes/decisions.md
+§65.1`) had already found this shape, refused it for three rounds, then widened the refusal to
+DROP-AND-NAME and explicitly declared "modelling it is a new record type... this round does not
+take it" — this cycle takes it.
+
+Built `companion_chassis::CompanionClassRecord` (`key`, `output_name`, `hit_dice`, `max_level`,
+`type_segments`, `visible_no`, `source_page`, `ability_grants`, `fact_class_type`, `source_file`,
+`source_line` — computes nothing, mirrors `CompanionRecord::monster_class`'s own "never
+computed" discipline), a third `CompanionBook` table alongside `companions`/`companion_abilities`,
+and updated `scripts/transcribe_companion_tables.py` to actually build the shape instead of
+dropping it — run once per book for all 3 real consumers, producing 2/3/2 rows matching each
+book's raw `.lst` content exactly. Also modelled, uniformly with the same type, a second corpus
+shape the mandate did not anticipate: bare-numbered `###Block: Level Advancement` lines
+(`um_classes_companion.lst:13`, `botd1_classes_companion.lst:8`) that `v06_work_inventory`'s own
+directive screen treats as their own record because a first field with no `:` is never a
+directive. `v06_work_inventory.rs`'s `chassis_companion_keys` now folds `companion_classes` keys
+into the same lookup set `companions`/`companion_abilities` already share.
+
+Found and fixed a pre-existing determinism bug in the transcriber before trusting any of its
+output: running it twice on the SAME unmodified book produced a large spurious diff (every
+creature's `ability_keys` list reshuffled, same elements) because Shape 7's book-wide-grant loop
+walked an un-sorted Python `set`, whose iteration order CPython randomizes per process. Fixed
+with `sorted(...)`; verified deterministic across two further regenerations of all 3 target
+books.
+
+**2 of 2 closed — mechanism reaches 0.** 5 of the other 7 registered rows (`ultimate_magic` 3,
+`book_of_the_damned_volume_1` 2) also closed as an honestly-reported side effect of building the
+type generically — each belongs to that book's OWN `companion_absent_from_<book>_companion_
+tables` mechanism, not double-counted against this criterion. `completion_atlas.py --check`:
+population=49,438 buckets=10 unclassified=0 overlap=0, citation_failures=0 (all ten hardcoded
+`BUCKET_DEFINITIONS` citations shifted +8 lines by this cycle's own insertion, re-derived and
+fixed). Bucket B corpus-wide 12,002 → 11,995 (re-derived by temporarily swapping in the pre-cycle
+`docs/work-inventory.json`, then swapping back before commit); `core_rulebook`-scoped bucket B
+stays at 562 of 6,701, owned by the other 8 AT-34-E3-001 mechanisms. `cargo test --locked --no-run`
+re-run at this cycle's own commit SHA, exit 0, workspace-wide and `apps/desktop/src-tauri`
+(separate crate, tested explicitly); `cargo test --locked --lib` 2,896 passed / 0 failed / 14
+ignored; `cargo test --locked --bin v06_work_inventory` 397 passed / 0 failed. One real
+instrument-correction: `formula_interpreter_corpus_wide.rs`'s hardcoded F1-population assertion
+re-pinned 5,401 → 5,400 (`ultimate_magic` Black Blade's `BONUS:HP|CURRENTMAX|5` left the
+not-done population, F1-shaped), re-derived via `shape_ledger.py` and logged with a retro
+`correction` event. `corpus_literal_sweep` stayed 48,708 of 51,482 (0 `data/corpus` records
+added — only Rust static tables). AT-34-E3-001 itself remains open — the other eight mechanisms
+are owned by other cycles. Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_companion_absent_cycle_receipt_5.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 6) — one of nine, `decisions.md §14` — partial
 
 Re-derived the mechanism population fresh at this cycle's starting HEAD (`16aea9b4dd`): 49,

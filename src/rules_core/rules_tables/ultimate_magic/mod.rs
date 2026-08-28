@@ -46,9 +46,14 @@
 //!
 //! * **3 `*_classes_companion.lst` CLASS rows** -- `1`, `Black Blade` and
 //!   `Vermin Companion` (`decisions.md §65.1`). A PCGen monster class is a
-//!   hit-dice progression, not a creature and not an ability; the chassis drops
-//!   and names them rather than emitting a card whose every modelled field is
-//!   empty.
+//!   hit-dice progression, not a creature and not an ability; the chassis used
+//!   to drop and name them rather than emit a card whose every modelled field
+//!   is empty. **`AT-34-E3-001` (`decisions.md §17`) now models them** as
+//!   `CompanionClassRecord`s (`companion_classes_static()` below), verified
+//!   here as the second of the type's three real corpus-wide consumers. This
+//!   paragraph's "135 + 3 = 138 excluded" arithmetic predates that and is
+//!   historical; re-derive the live count from `docs/work-inventory.json`
+//!   rather than this comment (`decisions.md §12` L2).
 //!
 //! 135 + 3 = 138, and 138 is also the `distinct excluded rows (the UNION, not
 //! the sum)` the classifier prints -- sum and union agree for this book. They
@@ -58,7 +63,7 @@
 
 mod companion_data;
 
-pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionClassRecord, CompanionRecord};
 
 /// Every companion creature this book defines, in corpus row order.
 pub const fn companions_static() -> &'static [CompanionRecord] {
@@ -68,6 +73,12 @@ pub const fn companions_static() -> &'static [CompanionRecord] {
 /// Every companion ability record this book defines, in corpus row order.
 pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
     companion_data::COMPANION_ABILITIES
+}
+
+/// Every `*_classes_companion.lst` row this book defines, in corpus row
+/// order. See `companion_chassis::CompanionClassRecord`.
+pub const fn companion_classes_static() -> &'static [CompanionClassRecord] {
+    companion_data::COMPANION_CLASSES
 }
 
 /// Every companion creature this book defines, in corpus row order.

@@ -24,8 +24,11 @@
 //!   `monster` (`docs/release/corpus-work-channels.md §9.2`).
 //! * **class** rows — `*_classes_companion.lst`. The PCGen `Companion` /
 //!   `Familiar` monster *classes* that a creature row's `MONSTERCLASS:` token
-//!   names. Hit-dice progressions, neither creature nor ability; this chassis
-//!   does not model them and no registered book carries one.
+//!   names. Hit-dice progressions, neither creature nor ability — modelled as
+//!   [`CompanionClassRecord`] (`AT-34-E3-001`, `decisions.md §17`), the third
+//!   table [`CompanionBook`] carries. Three registered books carry rows of
+//!   this shape (`core_rulebook` 2, `ultimate_magic` 3, `book_of_the_damned_
+//!   volume_1` 2); every other registered book carries none.
 //!
 //! # Only ability rows WITH an owner are registered
 //!
@@ -367,7 +370,61 @@ pub struct CompanionRecord {
     pub source_line: u32,
 }
 
-/// One ingested companion book: its corpus directory id and its two tables.
+/// One `*_classes_companion.lst` row (`AT-34-E3-001`'s
+/// `companion_absent_from_<book>_companion_tables` mechanism, `decisions.md
+/// §17`): the PCGen monster CLASS a creature row's `MONSTERCLASS:` token
+/// names, or (for the bare-numbered `###Block: Level Advancement` lines this
+/// same file also carries, e.g. `um_classes_companion.lst:13`) a single
+/// per-level ability grant this chassis's own tokenizer treats as its own
+/// row — `v06_work_inventory::enumerate_file`'s directive screen only skips a
+/// first field shaped `TOKEN:` (all-caps/digits before a colon); a bare `1`
+/// has no colon, so it is never a directive and becomes a record in its own
+/// right rather than folding into the `CLASS:` row above it.
+///
+/// A hit-dice progression: not a creature (no `SIZE:`/`MOVE:`/natural
+/// attacks) and not an ability (no `DESC:`) — distinct from both
+/// [`CompanionRecord`] and [`CompanionAbilityRecord`], and deliberately not
+/// squeezed into either. `scripts/transcribe_companion_tables.py`'s own
+/// `decisions.md §65.1` screen named this shape and DROPPED it for three
+/// rounds precisely because forcing it into `CompanionRecord` would emit a
+/// card whose every modelled field is empty — this is that declared, later
+/// new record type, built and verified against its own three real corpus-wide
+/// consumers (`core_rulebook` 2, `ultimate_magic` 3, `book_of_the_damned_
+/// volume_1` 2 — 7 rows, all seven now held). Registering it computes
+/// nothing: `hit_dice`/`max_level` are carried verbatim, never fed into a BAB,
+/// save or hit-point formula, the same discipline `CompanionRecord::
+/// monster_class`'s own doc states for the creature side of this identical
+/// PCGen shape. It only proves the engine HOLDS the row — bucket B to bucket
+/// M/D/V is a different mechanism's job (`decisions.md §2a`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct CompanionClassRecord {
+    pub key: &'static str,
+    pub output_name: Option<&'static str>,
+    pub hit_dice: Option<u32>,
+    /// `MAXLEVEL:` verbatim — `"20"`, `"NOLIMIT"` and `"1"` all occur across
+    /// the three registered consumers, and none is a number this chassis
+    /// computes with.
+    pub max_level: Option<&'static str>,
+    pub type_segments: &'static [&'static str],
+    /// `VISIBLE:NO` is universal across every registered row (a companion
+    /// class never shows on a character sheet's own class list) but is read
+    /// from the row, never assumed.
+    pub visible_no: bool,
+    pub source_page: Option<&'static str>,
+    /// Every `ABILITY:` token's payload, verbatim and in row order — the same
+    /// discipline [`CompanionAbilityRecord::type_segments`] states for an
+    /// unmodelled shape: visible rather than lost. A bare level-advancement
+    /// row (key `"1"`) carries exactly one of these and nothing else.
+    pub ability_grants: &'static [&'static str],
+    pub fact_class_type: Option<&'static str>,
+    /// The classes-`.lst` basename this record was read from.
+    pub source_file: &'static str,
+    /// The 1-based line, within [`source_file`](Self::source_file), that this
+    /// record was read from.
+    pub source_line: u32,
+}
+
+/// One ingested companion book: its corpus directory id and its three tables.
 #[derive(Debug, Clone, Copy)]
 pub struct CompanionBook {
     /// The corpus directory this book's records file under, which is also the
@@ -376,6 +433,10 @@ pub struct CompanionBook {
     pub corpus_book: &'static str,
     pub companions: &'static [CompanionRecord],
     pub companion_abilities: &'static [CompanionAbilityRecord],
+    /// `*_classes_companion.lst` rows this book defines — see
+    /// [`CompanionClassRecord`]. Empty for every book that carries none
+    /// (every registered book but the three named on that type's own doc).
+    pub companion_classes: &'static [CompanionClassRecord],
 }
 
 impl CompanionBook {
@@ -387,6 +448,12 @@ impl CompanionBook {
     /// The ability record with this corpus key, if this book defines one.
     pub fn companion_ability_resolve(&self, key: &str) -> Option<&'static CompanionAbilityRecord> {
         self.companion_abilities.iter().find(|a| a.key == key)
+    }
+
+    /// The class row with this corpus key, if this book defines one. See
+    /// [`CompanionClassRecord`].
+    pub fn companion_class_resolve(&self, key: &str) -> Option<&'static CompanionClassRecord> {
+        self.companion_classes.iter().find(|c| c.key == key)
     }
 
     /// The abilities a creature holds, resolved through its own `ability_keys`.
@@ -429,36 +496,43 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "inner_sea_combat",
         companions: super::inner_sea_combat::companions_static(),
         companion_abilities: super::inner_sea_combat::companion_abilities_static(),
+        companion_classes: &[],
     },
     CompanionBook {
         corpus_book: "monster_codex",
         companions: super::monster_codex::companions_static(),
         companion_abilities: super::monster_codex::companion_abilities_static(),
+        companion_classes: &[],
     },
     CompanionBook {
         corpus_book: "inner_sea_intrigue",
         companions: super::inner_sea_intrigue::companions_static(),
         companion_abilities: super::inner_sea_intrigue::companion_abilities_static(),
+        companion_classes: &[],
     },
     CompanionBook {
         corpus_book: "horror_adventures",
         companions: super::horror_adventures::companions_static(),
         companion_abilities: super::horror_adventures::companion_abilities_static(),
+        companion_classes: &[],
     },
     CompanionBook {
         corpus_book: "bestiary_5",
         companions: super::bestiary_5::companions_static(),
         companion_abilities: super::bestiary_5::companion_abilities_static(),
+        companion_classes: &[],
     },
     CompanionBook {
         corpus_book: "bestiary_6",
         companions: super::bestiary_6::companions_static(),
         companion_abilities: super::bestiary_6::companion_abilities_static(),
+        companion_classes: &[],
     },
     CompanionBook {
         corpus_book: "bestiary_2",
         companions: super::bestiary_2::companions_static(),
         companion_abilities: super::bestiary_2::companion_abilities_static(),
+        companion_classes: &[],
     },
     // SD-29 Epic 7 round 3. Bestiary 1, and the first registered book whose
     // name is spelled THREE different ways by three different consumers
@@ -490,6 +564,7 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "beastiary",
         companions: super::beastiary1::companions_static(),
         companion_abilities: super::beastiary1::companion_abilities_static(),
+        companion_classes: &[],
     },
     // SD-29 Epic 7 round 4. Bestiary 3 — the first book with TWO source files
     // per shape (`_companion` and `_familiar`), which is what widened
@@ -511,6 +586,7 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "bestiary_3",
         companions: super::bestiary_3::companions_static(),
         companion_abilities: super::bestiary_3::companion_abilities_static(),
+        companion_classes: &[],
     },
     // SD-29 Epic 7 round 5. Bestiary 4 — the book that made ownership shape 6
     // unavoidable (`decisions.md §59.1`). Its `Familiar (Giant Flea)` names
@@ -527,6 +603,7 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "bestiary_4",
         companions: super::bestiary_4::companions_static(),
         companion_abilities: super::bestiary_4::companion_abilities_static(),
+        companion_classes: &[],
     },
     // SD-29 Epic 7 round 6 (`SD29-E7-F2-007`). Ultimate Wilderness — the
     // largest companion block in the corpus, and the first registered book
@@ -537,6 +614,7 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "ultimate_wilderness",
         companions: super::ultimate_wilderness::companions_static(),
         companion_abilities: super::ultimate_wilderness::companion_abilities_static(),
+        companion_classes: &[],
     },
     // SD-29 Epic 7 round 8 (`SD29-E7-F2-009`). Core Rulebook — the book the
     // lane's transcriber had been REFUSING by name since round 1
@@ -578,6 +656,7 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "core_rulebook",
         companions: super::crb::companions_static(),
         companion_abilities: super::crb::companion_abilities_static(),
+        companion_classes: super::crb::companion_classes_static(),
     },
     // SD-29 Epic 7 round 9 (`SD29-E7-F2-010`) — the lane's FINAL PASS, and the
     // four rows below land together because they are one finding, not four
@@ -600,11 +679,13 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "ultimate_magic",
         companions: super::ultimate_magic::companions_static(),
         companion_abilities: super::ultimate_magic::companion_abilities_static(),
+        companion_classes: super::ultimate_magic::companion_classes_static(),
     },
     CompanionBook {
         corpus_book: "advanced_race_guide",
         companions: super::advanced_race_guide::companions_static(),
         companion_abilities: super::advanced_race_guide::companion_abilities_static(),
+        companion_classes: &[],
     },
     // The corpus book is `advanced_players_guide`; the engine module is `apg`.
     // `MODULE_DIR` in the transcriber carries the mapping — added by round 8 for
@@ -614,12 +695,14 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "advanced_players_guide",
         companions: super::apg::companions_static(),
         companion_abilities: super::apg::companion_abilities_static(),
+        companion_classes: &[],
     },
     // The first book carrying BOTH the monster chassis and this one.
     CompanionBook {
         corpus_book: "book_of_the_damned_volume_1",
         companions: super::book_of_the_damned_volume_1::companions_static(),
         companion_abilities: super::book_of_the_damned_volume_1::companion_abilities_static(),
+        companion_classes: super::book_of_the_damned_volume_1::companion_classes_static(),
     },
 ];
 
@@ -1538,18 +1621,17 @@ mod tests {
     }
 
     /// `AT-34-E3-001`'s `companion_absent_from_core_rulebook_companion_tables`
-    /// mechanism (`decisions.md §14`): re-derives, from the live
-    /// `docs/work-inventory.json` and the live ingested corpus this module
-    /// already reads, WHY each of this cycle's 2-unit remainder is not
-    /// owned -- a committed, re-runnable proof rather than a one-off
-    /// investigation that decays.
-    ///
-    /// This cycle closed the 12 zero-content rows (`grant_token_only_rows_
-    /// dispatch_to_already_held_content` below proves the closure); only
-    /// the 2 `cr_classes_companion.lst` monster-class rows remain, named
-    /// here rather than folded into "the rest".
+    /// mechanism (`decisions.md §14`, `§17`): the FIFTH and closing cycle.
+    /// Four prior cycles ran this mechanism (100 -> 28, 28 -> 28, 28 -> 14,
+    /// 14 -> 2, all four receipts READ not repeated:
+    /// `AT-34-E3-001_companion_absent_cycle_receipt.md` .. `_4.md`) and named
+    /// the 2-unit remainder's single sub-cause: two `cr_classes_companion.lst`
+    /// monster-CLASS rows this chassis had no record type for. This cycle
+    /// built that type (`CompanionClassRecord`) and re-derives, from the live
+    /// `docs/work-inventory.json`, that the mechanism now reaches ZERO --
+    /// never transcribed from a prior receipt.
     #[test]
-    fn companion_absent_2_sub_causes_are_named_and_sum_exactly() {
+    fn companion_absent_from_core_rulebook_companion_tables_reaches_zero() {
         let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
         let inventory_text = std::fs::read_to_string(repo_root.join("docs/work-inventory.json"))
             .expect("docs/work-inventory.json is readable");
@@ -1568,47 +1650,84 @@ mod tests {
             .collect();
         assert_eq!(
             mechanism_keys.len(),
-            2,
-            "mechanism population drifted from 2 (this cycle closed the 12 zero-content \
-             grant-token-only rows via a verified dispatch-target predicate; only the 2 \
-             monster-class rows remain)"
+            0,
+            "companion_absent_from_core_rulebook_companion_tables must reach 0 -- remaining: \
+             {mechanism_keys:?}"
         );
 
-        const CLASS_ROWS: [&str; 2] = ["Companion", "Shadow Companion"];
+        // The proof that CLOSED it, not merely the count: both former
+        // remainder keys now resolve as real `CompanionClassRecord`s, read
+        // through the SAME `companion_book`/`companion_class_resolve` path
+        // `v06_work_inventory`'s `Kind::Companion` dispatch arm uses.
+        let book = companion_book("core_rulebook").expect("core_rulebook is a registered book");
+        let companion = book.companion_class_resolve("Companion").expect("Companion class row");
+        assert_eq!(companion.hit_dice, Some(8));
+        assert_eq!(companion.max_level, Some("20"));
+        assert_eq!(companion.source_file, "cr_classes_companion.lst");
+        assert_eq!(companion.source_line, 6);
+        let shadow = book
+            .companion_class_resolve("Shadow Companion")
+            .expect("Shadow Companion class row");
+        assert_eq!(shadow.hit_dice, Some(8));
+        assert_eq!(shadow.max_level, Some("NOLIMIT"));
+        assert_eq!(shadow.source_line, 15);
 
-        let companion_dir = repo_root.join("data/corpus/core_rulebook/companion");
-        let mut companion_docs: Vec<Value> = Vec::new();
-        for entry in std::fs::read_dir(&companion_dir)
-            .unwrap_or_else(|e| panic!("{}: {e}", companion_dir.display()))
-        {
-            let path = entry.expect("readable dir entry").path();
-            if path.extension().and_then(|e| e.to_str()) != Some("json") {
-                continue;
+        // RED half, mirroring `companions_resolve_by_key`'s own: a fabricated
+        // key must never resolve.
+        assert!(book.companion_class_resolve("___a_key_no_corpus_record_carries___").is_none());
+    }
+
+    /// `CompanionClassRecord`, built by `AT-34-E3-001` (`decisions.md §17`),
+    /// verified generically against its OWN three real corpus-wide consumers
+    /// -- not just `core_rulebook`'s 2 rows this cycle owns. `ultimate_magic`
+    /// (3 rows, one the bare-numbered level-advancement shape) and
+    /// `book_of_the_damned_volume_1` (2 rows, same bare-numbered shape) are
+    /// named by cycle 4's own receipt as the second and third consumers to
+    /// verify the type against before trusting it as more than a
+    /// `core_rulebook`-only special case. Neither book's own bucket-B mechanism
+    /// is this criterion's to close (`core_rulebook` only) -- this test proves
+    /// the TYPE generalizes, which is a different claim from either book's own
+    /// mechanism count.
+    #[test]
+    fn companion_class_record_generalizes_to_its_three_real_consumers() {
+        let um = companion_book("ultimate_magic").expect("ultimate_magic is registered");
+        assert_eq!(um.companion_classes.len(), 3);
+        let vermin = um.companion_class_resolve("Vermin Companion").expect("Vermin Companion");
+        assert_eq!(vermin.hit_dice, Some(8));
+        assert_eq!(vermin.ability_grants.len(), 2);
+        let black_blade = um.companion_class_resolve("Black Blade").expect("Black Blade");
+        assert_eq!(black_blade.hit_dice, None); // no HD: token on this row -- real corpus state
+        assert_eq!(black_blade.max_level, Some("1"));
+        // The bare-numbered level-advancement shape (`decisions.md §17`'s own
+        // doc): key is the level number, every field empty but the single
+        // `ABILITY:` grant it states.
+        let level_one = um.companion_class_resolve("1").expect("bare level-advancement row");
+        assert_eq!(level_one.output_name, None);
+        assert_eq!(level_one.hit_dice, None);
+        assert_eq!(level_one.ability_grants, &["FEAT|AUTOMATIC|CMB Output"]);
+
+        let botd1 =
+            companion_book("book_of_the_damned_volume_1").expect("book_of_the_damned_volume_1 is registered");
+        assert_eq!(botd1.companion_classes.len(), 2);
+        let imp = botd1.companion_class_resolve("Imp Companion").expect("Imp Companion");
+        assert_eq!(imp.hit_dice, Some(10));
+        assert_eq!(imp.ability_grants, &[] as &[&str]);
+        let botd1_level_one = botd1.companion_class_resolve("1").expect("bare level-advancement row");
+        assert_eq!(botd1_level_one.ability_grants, &["FEAT|AUTOMATIC|CMB Output"]);
+
+        // Every OTHER registered book carries none -- the type is additive,
+        // never assumed present.
+        for book in COMPANION_BOOKS {
+            if !["core_rulebook", "ultimate_magic", "book_of_the_damned_volume_1"]
+                .contains(&book.corpus_book)
+            {
+                assert!(
+                    book.companion_classes.is_empty(),
+                    "{}: expected no companion_classes rows outside the 3 named consumers",
+                    book.corpus_book
+                );
             }
-            let text = std::fs::read_to_string(&path).expect("readable json file");
-            let doc: Value = serde_json::from_str(&text).expect("valid json");
-            companion_docs.push(doc);
         }
-
-        let mut reasons: BTreeMap<&'static str, u32> = BTreeMap::new();
-        for key in &mechanism_keys {
-            if CLASS_ROWS.contains(&key.as_str()) {
-                *reasons.entry("monster_class_definition_not_a_creature_or_ability").or_default() += 1;
-            } else {
-                panic!("{key}: not accounted for by any named sub-cause -- 2 must equal 2");
-            }
-        }
-        let _ = &companion_docs; // class rows live under cr_classes_companion.lst, not this dir
-
-        for (reason, count) in &reasons {
-            eprintln!("AT-34-E3-001 companion_absent sub-cause: {count} | {reason}");
-        }
-        let total: u32 = reasons.values().sum();
-        assert_eq!(total, 2);
-        assert_eq!(
-            reasons.get("monster_class_definition_not_a_creature_or_ability").copied().unwrap_or(0),
-            2
-        );
     }
 
     /// This cycle's own build: proves `GRANT_TOKEN_ONLY_DISPATCH_ROWS`'

@@ -689,21 +689,46 @@ mod tests {
     /// 5402 - 1 = 5401, confirmed by re-running `python3 scripts/
     /// shape_ledger.py --inventory docs/work-inventory.json --corpus-root
     /// data/corpus` against the regenerated file: F1 = 5401 exactly.
+    ///
+    /// **5,401 -> 5,400, a REAL movement (SD-34 `AT-34-E3-001` mechanism-4
+    /// cycle 5, 2026-08-27).** This cycle built `companion_chassis::
+    /// CompanionClassRecord`, a genuine new record type for
+    /// `*_classes_companion.lst` rows, and registered it for its three real
+    /// corpus-wide consumers (`core_rulebook` 2, `ultimate_magic` 3,
+    /// `book_of_the_damned_volume_1` 2 — 7 rows, all closed this cycle). Of
+    /// those 7, exactly ONE (`ultimate_magic:companion:black_blade`,
+    /// `BONUS:HP|CURRENTMAX|5`) carries F1's own defining shape — a
+    /// bare-literal magnitude token, no per-level/ability/pool expression —
+    /// and moved from `engine-does-not-hold` to `literal-verified` (a
+    /// done-tier rung `shape_ledger.py`'s "not-done units considered"
+    /// population excludes). The other 6, read directly off the same
+    /// `*_classes_companion.lst` rows (`shape_ledger.py`'s own report
+    /// excludes done-tier units, so they cannot be re-checked through its
+    /// output once closed): `Companion`, `Shadow Companion`, `Vermin
+    /// Companion` and `Imp Companion` each carry a
+    /// `classlevel("APPLIEDAS=NONEPIC")`-derived `BONUS:COMBAT`/`BONUS:SAVE`
+    /// token (F6-shaped), and the two bare-numbered level-advancement rows
+    /// keyed `"1"` (`um_classes_companion.lst:13`,
+    /// `botd1_classes_companion.lst:8`) carry only an `ABILITY:` token, no
+    /// `DEFINE:`/`BONUS:` at all (F0-shaped) — none of the 6 was ever
+    /// F1-shaped. 5401 - 1 = 5400, confirmed by re-running `python3 scripts/
+    /// shape_ledger.py --inventory docs/work-inventory.json --corpus-root
+    /// data/corpus` against the regenerated file: F1 = 5400 exactly.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5401,
-            "F1 population must equal the CURRENT true formula-bearing count (5,401, re-derived \
+            f1.population, 5400,
+            "F1 population must equal the CURRENT true formula-bearing count (5,400, re-derived \
              2026-08-27 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
              `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
-             cycle's own true-at-the-time 5,402 (1 Abjuration School ~ Resistance unit left \
-             bucket B for DONE this cycle, F1-shaped -- see this test's own doc comment), \
-             not the previous cycle's own WRONG 5,563 re-pin (a bad re-derivation, not a stale \
-             one -- see this test's own doc comment and the \
+             cycle's own true-at-the-time 5,401 (1 `ultimate_magic` Black Blade companion-class \
+             row left bucket B for `literal-verified` this cycle, F1-shaped -- see this test's \
+             own doc comment), not the previous cycle's own WRONG 5,563 re-pin (a bad \
+             re-derivation, not a stale one -- see this test's own doc comment and the \
              `AT-34-E3-001-class_feature_owner_matched-cycle` \
              retro correction), not the stale 6,257 pin, not the pre-fold 6,260/6,278, not the \
              pre-regen 6,308 this test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 \

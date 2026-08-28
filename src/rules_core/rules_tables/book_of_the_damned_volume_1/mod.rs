@@ -78,10 +78,15 @@
 //! 2 `botd1_classes_companion.lst` CLASS rows (`1`, `Imp Companion`;
 //! `decisions.md §65.1`). Both groups are the same missing record type seen
 //! from two sides, exactly as `crb/mod.rs` records for Core Rulebook.
+//! **`AT-34-E3-001` (`decisions.md §17`) now models the 2 CLASS rows** as
+//! `CompanionClassRecord`s (`companion_classes_static()` below) -- verified
+//! here as the third of the type's three real corpus-wide consumers. The 27
+//! orphan ability rows are a SEPARATE finding (no creature or `PRERACE:` link,
+//! same as Core Rulebook's own orphan block) and are unaffected.
 //!
 //! Note the two identifier spaces this book now has on the companion side: the
 //! ability row's owner is `Companion (Imp)` (the creature row's `KEY:`), while
-//! the dropped class row is `Imp Companion`. They are different records with
+//! the class row is `Imp Companion`. They are different records with
 //! confusable names, and the `KEY:` token is what separates them.
 //! ---------------------------------------------------------------------------
 
@@ -92,7 +97,7 @@ mod monster_data;
 /// config-driven `src/bin/ingest_spells.rs` (`decisions.md §17`).
 pub mod spell_list;
 
-pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionClassRecord, CompanionRecord};
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
     NaturalAttack, Speed,
@@ -106,6 +111,12 @@ pub const fn companions_static() -> &'static [CompanionRecord] {
 /// Every companion ability record this book defines, in corpus row order.
 pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
     companion_data::COMPANION_ABILITIES
+}
+
+/// Every `*_classes_companion.lst` row this book defines, in corpus row
+/// order. See `companion_chassis::CompanionClassRecord`.
+pub const fn companion_classes_static() -> &'static [CompanionClassRecord] {
+    companion_data::COMPANION_CLASSES
 }
 
 /// Every companion creature this book defines, in corpus row order.

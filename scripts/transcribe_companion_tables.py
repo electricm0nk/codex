@@ -75,6 +75,7 @@ IMPORTABLE = (
     "CompanionAbilityDelivery",
     "CompanionAbilityFacet",
     "CompanionAbilityRecord",
+    "CompanionClassRecord",
     "CompanionDescriptionVariant",
     "CompanionRecord",
     "NaturalAttack",
@@ -422,6 +423,46 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str], list[tuple[str, l
     return text, variables, []
 
 
+def tokens_all(row: list[str], prefix: str) -> list[str]:
+    """Every field's payload starting with `prefix`, in row order.
+
+    `classify_companion_rows.token` returns only the FIRST match -- right for
+    every single-valued token this transcriber reads, wrong for `ABILITY:`,
+    which a `*_classes_companion.lst` row states more than once (`Vermin
+    Companion` carries two: `Special Ability|...` and `Internal|...`).
+    """
+    return [f[len(prefix) :] for f in row if f.startswith(prefix)]
+
+
+def parse_hit_dice(row: list[str]) -> int | None:
+    raw = token(row, "HD:")
+    return int(raw) if raw is not None and raw.isdigit() else None
+
+
+def parse_class_row(row: list[str]) -> dict:
+    """One `*_classes_companion.lst` row -> `CompanionClassRecord` fields.
+
+    Handles BOTH shapes this file carries: a `CLASS:<name>` header row (most
+    fields populated) and a bare `###Block: Level Advancement` line (`key` is
+    a level number, every field but `ability_grants` empty) -- see
+    `companion_chassis::CompanionClassRecord`'s own doc for why the tokenizer
+    treats the second as a record in its own right.
+    """
+    return {
+        "output_name": token(row, "OUTPUTNAME:"),
+        "hit_dice": parse_hit_dice(row),
+        "max_level": token(row, "MAXLEVEL:"),
+        "type_segments": parse_type_segments(row),
+        "visible_no": token(row, "VISIBLE:") == "NO",
+        "source_page": token(row, "SOURCEPAGE:"),
+        "ability_grants": tokens_all(row, "ABILITY:"),
+        "fact_class_type": next(
+            (f[len("FACT:ClassType|") :] for f in row if f.startswith("FACT:ClassType|")),
+            None,
+        ),
+    }
+
+
 def transcribe(book: str) -> str:
     directory = book_dirs()[book]
     inventory = json.load(open("docs/work-inventory.json", encoding="utf-8"))
@@ -447,39 +488,34 @@ def transcribe(book: str) -> str:
         (u for u in units if row_shape(u["source_file"]) == "ability"),
         key=lambda u: u["source_line"],
     )
-    # ---- class-row screen (`decisions.md §65.1`) ----
+    # ---- class-row build (`decisions.md §65.1`, `§17`) ----
     #
-    # Until round 8 this was a `raise SystemExit(... "Widen it deliberately.")`.
-    # It was written as a refusal so that the FIRST book carrying the shape could
-    # not be ingested by accident, and it did its job: three books
-    # (`core_rulebook` 2, `ultimate_magic` 3, `book_of_the_damned_volume_1` 2)
-    # stopped here rather than silently shipping something.
+    # Through `AT-34-E3-001` cycle 4 this was DROP-AND-NAME: a `raise
+    # SystemExit` until round 8, then a screen that named the rows and left
+    # them `engine-does-not-hold` rather than modelling them. Round 8's own
+    # comment (kept below, now historical) declared a genuine level-
+    # progression record type as the eventual fix and deliberately did not
+    # build it. This cycle builds it: `CompanionClassRecord` (`companion_
+    # chassis.rs`) is neither a creature (no `SIZE:`, no `MOVE:`, no natural
+    # attacks) nor an ability (no `DESC:`) — it carries `HD:`/`MAXLEVEL:`/
+    # `ABILITY:` grants verbatim and computes nothing, the same discipline
+    # `CompanionRecord::monster_class`'s own doc states for the identical
+    # shape read from the creature side.
     #
-    # Widened deliberately now, and the deliberate answer is DROP-AND-NAME, not
-    # "model them". A `*_classes_companion.lst` row is a PCGen monster CLASS --
-    # the hit-dice progression a creature row's `MONSTERCLASS:` token names. It
-    # has no `SIZE:`, no `MOVE:`, no natural attacks; it is not a creature and it
-    # is not an ability. Transcribing one into `CompanionRecord` would emit a
-    # card whose every modelled field is empty, which is precisely the stub class
-    # the `.COPY=` screens above exist to prevent. Modelling it properly is a NEW
-    # RECORD TYPE (a level progression table), which `§63`'s closing note said a
-    # round taking one "should declare up front" -- this round does not take it.
-    #
-    # This changes NO book's shipped output: `classify_companion_rows.py` has
-    # always counted these rows as excluded, so the lane's reachable remainder
-    # already assumed they do not ship. The screen makes the transcriber agree
-    # with the classifier instead of halting in front of it. No filtering of
-    # `units` is needed either -- `row_shape` sorts a `_classes_` file into
-    # neither `creatures` nor `abilities` above, so these rows were already out
-    # of both tables. The only thing that was missing was saying so.
-    classes = sorted(
-        u["corpus_key"] for u in units if row_shape(u["source_file"]) == "class"
+    # `row_shape` sorts a `_classes_` file into neither `creatures` nor
+    # `abilities` above, so these units were always out of both tables; they
+    # are gathered here into their own list instead, sorted by source line
+    # exactly like the two lists above.
+    class_units = sorted(
+        (u for u in units if row_shape(u["source_file"]) == "class"),
+        key=lambda u: u["source_line"],
     )
+    classes = [u["corpus_key"] for u in class_units]
     if classes:
         print(
-            f"{book}: {len(classes)} `*_classes_companion.lst` CLASS row(s) NOT transcribed "
-            "(a monster class is a hit-dice progression, not a creature and not an "
-            "ability): " + ", ".join(classes),
+            f"{book}: {len(classes)} `*_classes_companion.lst` CLASS row(s) transcribed as "
+            "CompanionClassRecord (a level progression -- not a creature, not an ability): "
+            + ", ".join(classes),
             file=sys.stderr,
         )
     if not creatures:
@@ -806,7 +842,16 @@ def transcribe(book: str) -> str:
         },
     }
     book_wide_applied = 0
-    for key in BOOK_WIDE_GRANTS.get(book, set()):
+    # `sorted(...)`, not raw `set` iteration: CPython randomizes `str` hash
+    # seeds per process, so an un-sorted set walk here made every `ability_keys`
+    # list this shape touches (and every `creature_ability_keys[creature]` list
+    # downstream) reorder run to run with no corpus reason -- found this cycle
+    # by diffing two back-to-back regenerations of the SAME unmodified book and
+    # getting a non-empty diff (`git diff` after a second run showed 76-element
+    # `ability_keys` lists reshuffled, same elements). `owners[key]` (assembled
+    # via `sorted(creature_keys)` two lines below) was already immune; this key
+    # loop was the one unsorted set walk left in the whole pass.
+    for key in sorted(BOOK_WIDE_GRANTS.get(book, set())):
         if key not in owners or owners[key]:
             continue
         for creature in sorted(creature_keys):
@@ -1130,7 +1175,7 @@ def transcribe(book: str) -> str:
     # first book with a `_companion` AND a `_familiar` file per shape, where the
     # old line claimed all 31 creature rows came from the 16-row file
     # (`decisions.md §56.2`).
-    for shape_name, rows in (("creature", creatures), ("ability", abilities)):
+    for shape_name, rows in (("creature", creatures), ("ability", abilities), ("class", class_units)):
         for source_file in sorted({u["source_file"] for u in rows}):
             n = sum(1 for u in rows if u["source_file"] == source_file)
             out.append(f"//!   * `{source_file}` -- {n} companion {shape_name} rows")
@@ -1282,24 +1327,21 @@ def transcribe(book: str) -> str:
     if classes:
         out.append("//!")
         out.append(
-            "//! NOT transcribed -- `*_classes_companion.lst` CLASS rows (`decisions.md"
+            "//! `*_classes_companion.lst` CLASS rows, transcribed as `CompanionClassRecord`"
         )
         out.append(
-            "//! §65.1`). A PCGen monster class is the hit-dice progression a creature"
+            "//! (`AT-34-E3-001`, `decisions.md §17`) rather than dropped. A PCGen monster"
         )
         out.append(
-            "//! row's `MONSTERCLASS:` token names -- it states no `SIZE:`, no `MOVE:` and"
+            "//! class is the hit-dice progression a creature row's `MONSTERCLASS:` token"
         )
         out.append(
-            "//! no natural attacks, so every field this chassis models transcribes empty."
+            "//! names -- it states no `SIZE:`, no `MOVE:` and no natural attacks, so it is"
         )
         out.append(
-            "//! Modelling it is a new record type (a level progression table), not a wider"
+            "//! neither a creature nor an ability; every field is carried verbatim and"
         )
-        out.append(
-            "//! predicate on this one. Left honestly `engine-does-not-hold`; the creature rows that"
-        )
-        out.append("//! name them ship, and carry the token verbatim:")
+        out.append("//! nothing is computed from it:")
         for key in classes:
             out.append(f"//!   * `{key}`")
     if gated:
@@ -1449,6 +1491,27 @@ def transcribe(book: str) -> str:
             "        cross_book_owners: "
             f"{rust_pair_slice(cross_book_owners.get(unit['corpus_key'], []))},"
         )
+        out.append(f"        source_file: {rust_str(unit['source_file'])},")
+        out.append(f"        source_line: {unit['source_line']},")
+        out.append("    },")
+    out.append("];")
+    out.append("")
+    out.append(f"/// Every {book} `*_classes_companion.lst` row ({len(class_units)} rows).")
+    out.append("pub(super) static COMPANION_CLASSES: &[CompanionClassRecord] = &[")
+    for unit in class_units:
+        row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
+        fields = parse_class_row(row)
+        out.append("    CompanionClassRecord {")
+        out.append(f"        key: {rust_str(unit['corpus_key'])},")
+        out.append(f"        output_name: {rust_opt(fields['output_name'])},")
+        hd = fields["hit_dice"]
+        out.append(f"        hit_dice: {'Some(' + str(hd) + ')' if hd is not None else 'None'},")
+        out.append(f"        max_level: {rust_opt(fields['max_level'])},")
+        out.append(f"        type_segments: {rust_slice(fields['type_segments'])},")
+        out.append(f"        visible_no: {'true' if fields['visible_no'] else 'false'},")
+        out.append(f"        source_page: {rust_opt(fields['source_page'])},")
+        out.append(f"        ability_grants: {rust_slice(fields['ability_grants'])},")
+        out.append(f"        fact_class_type: {rust_opt(fields['fact_class_type'])},")
         out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")

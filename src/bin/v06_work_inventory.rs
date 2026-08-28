@@ -7777,6 +7777,14 @@ fn gather_engine_facts(
         let mut keys: BTreeSet<String> =
             book.companions.iter().map(|c| c.key.to_lowercase()).collect();
         keys.extend(book.companion_abilities.iter().map(|a| a.key.to_lowercase()));
+        // `AT-34-E3-001` (`decisions.md §68`): `*_classes_companion.lst` rows
+        // are now a real, held record type (`CompanionClassRecord`), folded
+        // into the SAME per-book key set the two shapes above already share
+        // -- `Kind::Companion` is one kind (see this map's own doc above),
+        // and a class row's own hit-dice/max-level/ability-grant fields carry
+        // no `DESC:`, so it can never hit the `text_only` promotion arm below
+        // and always reports plain `grounded`, never `text-complete`.
+        keys.extend(book.companion_classes.iter().map(|c| c.key.to_lowercase()));
         let engine_book = engine_book_for_corpus_dir(book.corpus_book).unwrap_or_else(|| {
             panic!(
                 "companion book {:?} is registered in COMPANION_BOOKS but resolves to no rule \

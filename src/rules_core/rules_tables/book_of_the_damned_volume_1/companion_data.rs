@@ -9,6 +9,7 @@
 //! Sources, with the file AND line each record was read from carried per row:
 //!   * `botd1_races_companion.lst` -- 1 companion creature rows
 //!   * `botd1_abilities_companion.lst` -- 1 companion ability rows
+//!   * `botd1_classes_companion.lst` -- 2 companion class rows
 //!
 //! NOT transcribed -- ability rows no creature row of this book owns, so
 //! nothing could ever reach them on screen. Dropped rather than emitted
@@ -45,17 +46,16 @@
 //!   * `Imp Companion ~ Share Spells`
 //!   * `Imp Companion ~ Starting Shape Change`
 //!
-//! NOT transcribed -- `*_classes_companion.lst` CLASS rows (`decisions.md
-//! §65.1`). A PCGen monster class is the hit-dice progression a creature
-//! row's `MONSTERCLASS:` token names -- it states no `SIZE:`, no `MOVE:` and
-//! no natural attacks, so every field this chassis models transcribes empty.
-//! Modelling it is a new record type (a level progression table), not a wider
-//! predicate on this one. Left honestly `engine-does-not-hold`; the creature rows that
-//! name them ship, and carry the token verbatim:
-//!   * `1`
+//! `*_classes_companion.lst` CLASS rows, transcribed as `CompanionClassRecord`
+//! (`AT-34-E3-001`, `decisions.md §17`) rather than dropped. A PCGen monster
+//! class is the hit-dice progression a creature row's `MONSTERCLASS:` token
+//! names -- it states no `SIZE:`, no `MOVE:` and no natural attacks, so it is
+//! neither a creature nor an ability; every field is carried verbatim and
+//! nothing is computed from it:
 //!   * `Imp Companion`
+//!   * `1`
 
-use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionClassRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
 
 /// Every book_of_the_damned_volume_1 companion creature (1 rows).
 pub(super) static COMPANIONS: &[CompanionRecord] = &[
@@ -98,6 +98,36 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         owners: &["Companion (Imp)"],
         cross_book_owners: &[],
         source_file: "botd1_abilities_companion.lst",
+        source_line: 8,
+    },
+];
+
+/// Every book_of_the_damned_volume_1 `*_classes_companion.lst` row (2 rows).
+pub(super) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
+    CompanionClassRecord {
+        key: "Imp Companion",
+        output_name: Some("Imp Companion"),
+        hit_dice: Some(10),
+        max_level: Some("20"),
+        type_segments: &["Monster", "Companion"],
+        visible_no: true,
+        source_page: Some("p.44"),
+        ability_grants: &[],
+        fact_class_type: Some("Monster"),
+        source_file: "botd1_classes_companion.lst",
+        source_line: 5,
+    },
+    CompanionClassRecord {
+        key: "1",
+        output_name: None,
+        hit_dice: None,
+        max_level: None,
+        type_segments: &[],
+        visible_no: false,
+        source_page: None,
+        ability_grants: &["FEAT|AUTOMATIC|CMB Output"],
+        fact_class_type: None,
+        source_file: "botd1_classes_companion.lst",
         source_line: 8,
     },
 ];

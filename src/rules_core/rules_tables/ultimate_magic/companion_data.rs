@@ -11,6 +11,7 @@
 //!   * `um_races_companion.lst` -- 10 companion creature rows
 //!   * `ce_abilities_familiar_race_um.lst` -- 8 companion ability rows
 //!   * `um_abilities_companion.lst` -- 22 companion ability rows
+//!   * `um_classes_companion.lst` -- 3 companion class rows
 //!
 //! NOT transcribed -- ability rows no creature row of this book owns, so
 //! nothing could ever reach them on screen. Dropped rather than emitted
@@ -156,18 +157,17 @@
 //!   * `Temp Evolution ~ Undead Appearance`
 //!   * `Temp Evolution ~ Unnatural Aura`
 //!
-//! NOT transcribed -- `*_classes_companion.lst` CLASS rows (`decisions.md
-//! §65.1`). A PCGen monster class is the hit-dice progression a creature
-//! row's `MONSTERCLASS:` token names -- it states no `SIZE:`, no `MOVE:` and
-//! no natural attacks, so every field this chassis models transcribes empty.
-//! Modelling it is a new record type (a level progression table), not a wider
-//! predicate on this one. Left honestly `engine-does-not-hold`; the creature rows that
-//! name them ship, and carry the token verbatim:
+//! `*_classes_companion.lst` CLASS rows, transcribed as `CompanionClassRecord`
+//! (`AT-34-E3-001`, `decisions.md §17`) rather than dropped. A PCGen monster
+//! class is the hit-dice progression a creature row's `MONSTERCLASS:` token
+//! names -- it states no `SIZE:`, no `MOVE:` and no natural attacks, so it is
+//! neither a creature nor an ability; every field is carried verbatim and
+//! nothing is computed from it:
+//!   * `Vermin Companion`
 //!   * `1`
 //!   * `Black Blade`
-//!   * `Vermin Companion`
 
-use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionDescriptionVariant, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionClassRecord, CompanionDescriptionVariant, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every ultimate_magic companion creature (29 rows).
 pub(super) static COMPANIONS: &[CompanionRecord] = &[
@@ -1263,5 +1263,48 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         cross_book_owners: &[],
         source_file: "um_abilities_companion.lst",
         source_line: 56,
+    },
+];
+
+/// Every ultimate_magic `*_classes_companion.lst` row (3 rows).
+pub(super) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
+    CompanionClassRecord {
+        key: "Vermin Companion",
+        output_name: Some("Vermin"),
+        hit_dice: Some(8),
+        max_level: Some("20"),
+        type_segments: &["Monster", "Companion"],
+        visible_no: true,
+        source_page: Some("p.36"),
+        ability_grants: &["Special Ability|AUTOMATIC|Vermin Traits|PREVAREQ:NoTypeTraits,0", "Internal|AUTOMATIC|Mindless Companion|!PREABILITY:1,CATEGORY=Special Ability,Companion Stat ~ Mindless to 1 INT"],
+        fact_class_type: Some("Companion"),
+        source_file: "um_classes_companion.lst",
+        source_line: 9,
+    },
+    CompanionClassRecord {
+        key: "1",
+        output_name: None,
+        hit_dice: None,
+        max_level: None,
+        type_segments: &[],
+        visible_no: false,
+        source_page: None,
+        ability_grants: &["FEAT|AUTOMATIC|CMB Output"],
+        fact_class_type: None,
+        source_file: "um_classes_companion.lst",
+        source_line: 13,
+    },
+    CompanionClassRecord {
+        key: "Black Blade",
+        output_name: Some("Black Blade"),
+        hit_dice: None,
+        max_level: Some("1"),
+        type_segments: &["Monster", "Companion"],
+        visible_no: true,
+        source_page: Some("p.47"),
+        ability_grants: &[],
+        fact_class_type: Some("Companion"),
+        source_file: "um_classes_companion.lst",
+        source_line: 16,
     },
 ];

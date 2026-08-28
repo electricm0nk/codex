@@ -592,3 +592,41 @@ must equal the record delta. A gate whose population did not move over a corpus 
 examined it.
 
 ---
+
+## §17 — A declared-but-deferred record type gets built when a second and third real consumer are named, not left declared forever
+
+**Decision.** `companion_chassis::CompanionClassRecord` is built: `*_classes_companion.lst` rows
+(a PCGen monster CLASS — a hit-dice progression, neither a creature nor an ability) are now a
+third, real, held record type alongside `CompanionRecord` and `CompanionAbilityRecord`, verified
+against all three of its real corpus-wide consumers in one cycle: `core_rulebook` (2 rows,
+`AT-34-E3-001`'s own `companion_absent_from_core_rulebook_companion_tables` mechanism, closed
+0-of-2), `ultimate_magic` (3 rows) and `book_of_the_damned_volume_1` (2 rows).
+
+**Reasoning.** SD-29's own companion round 8 (`docs/release/SD-29-corpus-wide-catch-up-lanes/
+decisions.md §65.1`) named this shape, screened it as DROP-AND-NAME rather than modelled, and
+stated explicitly that modelling it is "a new record type... which a round taking one should
+declare up front — this round does not take it." Three later `AT-34-E3-001` cycles (this
+mechanism's own cycles 2-4) re-confirmed the same finding and, by cycle 4, had named all three
+real consumers precisely (not merely "a monster-class shape exists somewhere") — the exact
+condition SD-29 §65.1 set for taking the work. A record type declared against one consumer and
+never checked against the other two named ones is unverified generalization; this cycle's own
+`companion_class_record_generalizes_to_its_three_real_consumers` test proves the type against
+all three, including the corpus's own second row shape (a bare-numbered `###Block: Level
+Advancement` line — `um_classes_companion.lst:13`, `botd1_classes_companion.lst:8` — which
+`v06_work_inventory::enumerate_file`'s directive screen treats as its own record because a first
+field with no `:` is never a directive).
+
+**What this does NOT settle.** `CompanionClassRecord` computes nothing — `hit_dice`/`max_level`
+are carried verbatim, never fed into a BAB/save/hit-point formula, the same discipline
+`CompanionRecord::monster_class`'s own doc states for the identical shape read from the creature
+side. Reaching `grounded` (bucket B → D) settles nothing about bucket M (computed) or bucket V
+(verified) — that is a different mechanism's job (`§2a`). `core_rulebook`'s own 84 `Animal
+Companion ~ …` book-wide-grant ability rows were already attributed to creatures directly (Shape
+7, pre-existing) and are unaffected by this decision; they were never blocked on this record type.
+
+**Enforced by:** `companion_chassis.rs`'s `companion_absent_from_core_rulebook_companion_tables_
+reaches_zero` and `companion_class_record_generalizes_to_its_three_real_consumers` tests, both
+re-derived against the live corpus and `docs/work-inventory.json` rather than transcribed from a
+prior cycle's receipt.
+
+---

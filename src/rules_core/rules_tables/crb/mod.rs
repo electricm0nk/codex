@@ -45,7 +45,13 @@
 //!   the transcriber *refused outright* on any book carrying the shape; round 8
 //!   widened that refusal into the same drop-and-name screen the `.COPY=` rows
 //!   already used, which is what let this book be ingested at all. Modelling
-//!   them is a new record type, declared and NOT taken here.
+//!   them was a new record type, declared and not taken by round 8 --
+//!   **`AT-34-E3-001` (`decisions.md §17`) takes it**: both rows are now
+//!   `CompanionClassRecord`s (`companion_classes_static()` below), held rather
+//!   than excluded. This paragraph's own "84 + 2 = 86 excluded" arithmetic is
+//!   therefore historical (round-8-era); re-derive the live count from
+//!   `docs/work-inventory.json` rather than this comment
+//!   (`decisions.md §12` L2).
 //!
 //! 84 + 2 = 86, and 86 is also the `distinct excluded rows (the UNION, not the
 //! sum)` the classifier prints -- the sum and the union agree for this book.
@@ -55,7 +61,7 @@
 
 mod companion_data;
 
-pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionClassRecord, CompanionRecord};
 
 /// Every companion creature this book defines, in corpus row order.
 pub const fn companions_static() -> &'static [CompanionRecord] {
@@ -65,6 +71,12 @@ pub const fn companions_static() -> &'static [CompanionRecord] {
 /// Every companion ability record this book defines, in corpus row order.
 pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
     companion_data::COMPANION_ABILITIES
+}
+
+/// Every `*_classes_companion.lst` row this book defines, in corpus row
+/// order. See `companion_chassis::CompanionClassRecord`.
+pub const fn companion_classes_static() -> &'static [CompanionClassRecord] {
+    companion_data::COMPANION_CLASSES
 }
 
 /// Every companion creature this book defines, in corpus row order.
