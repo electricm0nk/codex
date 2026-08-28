@@ -43775,6 +43775,32 @@ fn wizard_has_canonical_abjuration_selection(input: &CharacterInput) -> bool {
         && opposed.contains(&TRANSMUTATION_SCHOOL_SELECTION)
 }
 
+/// `AT-34-E3-001` (mechanism 2 continuation, cycle 6): a third canonical
+/// deterministic school selection, alongside Evocation and Abjuration above.
+/// Transmutation specialized, with Necromancy and Evocation as the two
+/// opposed schools -- both already-existing selection constants, reused
+/// rather than duplicated (PF1's only opposition restriction is "not your
+/// own specialty school and not Divination", so any two non-Transmutation,
+/// non-Divination schools are legal; Necromancy/Evocation is picked simply
+/// because both constants already exist).
+fn wizard_has_canonical_transmutation_selection(input: &CharacterInput) -> bool {
+    if choice_selection(input, WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID)
+        != Some(TRANSMUTATION_SCHOOL_SELECTION)
+    {
+        return false;
+    }
+    let opposed: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == WIZARD_OPPOSED_SCHOOLS_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    opposed.len() == 2
+        && opposed.contains(&NECROMANCY_SCHOOL_SELECTION)
+        && opposed.contains(&EVOCATION_SCHOOL_SELECTION)
+}
+
 /// Surface direct SD13-E4-R3 runtime evidence for the deterministic Human Wizard
 /// level-1 prepared arcane spell-bearing baseline, while keeping it explicitly
 /// claim-blocked on its two still-missing burdens.
@@ -44493,6 +44519,120 @@ fn explain_wizard_level1_prepared_spell_baseline(
                      magnitude; it applies no reduction to any actual energy-damage roll, \
                      resolves no resistance-then-immunity-then-absorption ordering against a \
                      real damage instance, and tracks no daily pool depletion"
+                ),
+            });
+        }
+    }
+
+    // `AT-34-E3-001` (mechanism 2 continuation, cycle 6): Wizard's
+    // Transmutation arcane school, same shape as the Abjuration block above
+    // -- `TransmutationSchoolLVL` <- `ArcaneSchoolLVL` <- `WizardLVL`, and
+    // `TransmutationProgressionSchoolLVL` <- `ArcaneSchoolProgressionLVL` <-
+    // `WizardLVL`, verified directly against `cr_abilities_class.lst`'s
+    // `KEY:Transmutation School ~ *` records. Explanation ids live under the
+    // shared `class_feature.school.transmutation.*` namespace, matching the
+    // Abjuration precedent.
+    if wizard_has_canonical_transmutation_selection(input) {
+        let transmutation_school_lvl = wizard_level_value;
+        let transmutation_progression_school_lvl = wizard_level_value;
+
+        // Grounded for real: Telekinetic Fist (`KEY:Transmutation School ~
+        // Telekinetic Fist`) -- two flat, non-dice `BONUS:VAR` formulas,
+        // both unlocked from level 1
+        // (`PREVARGTEQ:TransmutationProgressionSchoolLVL,1` on the
+        // Transmutation School record's own `ABILITY:` grant line for
+        // Telekinetic Fist).
+        if transmutation_progression_school_lvl >= 1 {
+            // `TransmutationTelekineticFistBonus|TransmutationSchoolLVL/2`.
+            let telekinetic_fist_bonus = transmutation_school_lvl / 2;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.transmutation.telekinetic_fist_bonus".to_owned(),
+                value: telekinetic_fist_bonus,
+                detail: format!(
+                    "Wizard level {level} Transmutation School power Telekinetic Fist \
+                     bonus-damage magnitude (PF1 Core Rulebook Transmutation School): \
+                     TransmutationTelekineticFistBonus resolves to \
+                     TransmutationSchoolLVL/2 = {transmutation_school_lvl}/2 = \
+                     {telekinetic_fist_bonus}, added to the base 1d4 bludgeoning damage. \
+                     Grounds only the flat bonus-damage magnitude; it strikes no ranged \
+                     touch attack and applies no bonus to any actual damage roll"
+                ),
+            });
+
+            // `TransmutationTelekineticFistTimes|ArcaneSchoolPowerTimes` --
+            // the same shared "3 + Intelligence modifier" idiom the
+            // pre-existing Force Missile / Protective Ward groundings above
+            // already use.
+            let telekinetic_fist_times = (3 + ability_modifiers.intelligence).max(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.transmutation.telekinetic_fist_uses_per_day"
+                    .to_owned(),
+                value: telekinetic_fist_times,
+                detail: format!(
+                    "Wizard level {level} Transmutation School power Telekinetic Fist \
+                     uses-per-day pool (PF1 Core Rulebook Transmutation School): \
+                     TransmutationTelekineticFistTimes resolves to the shared \
+                     ArcaneSchoolPowerTimes counter, 3 + Intelligence modifier, floored at 0. \
+                     At Intelligence modifier {} this is max(3 + {}, 0) = \
+                     {telekinetic_fist_times}. Grounds only the flat daily-use count; it \
+                     tracks no action economy or per-use consumption",
+                    ability_modifiers.intelligence, ability_modifiers.intelligence
+                ),
+            });
+        }
+
+        // Grounded for real: Physical Enhancement (`KEY:Transmutation
+        // School ~ Physical Enhancement`) -- `TransmutationPhysicalEnhancementBonus|
+        // min(5,(TransmutationSchoolLVL/5)+1)`, unlocked from level 1
+        // (`PREVARGTEQ:TransmutationProgressionSchoolLVL,1` on the
+        // Transmutation School record's own `ABILITY:` grant line). The
+        // three sub-choice records this power auto-grants
+        // (`Physical Enhancement ~ Constitution` / `~ Dexterity` /
+        // `~ Strength`) each apply this SAME magnitude to whichever one
+        // physical ability score the player chose that day
+        // (`TEMPBONUS:PC|STAT|<ABL>|TransmutationPhysicalEnhancementBonus|
+        // TYPE=Enhancement`) -- the choice of WHICH stat is not modeled
+        // (the same "standalone, not wired into ability_modifiers" idiom
+        // Abjuration's Protective Ward deflection bonus above already
+        // uses), but the shared bonus magnitude genuinely is, so all three
+        // sub-choice records and the top-level power record ground on this
+        // one explanation id.
+        if transmutation_progression_school_lvl >= 1 {
+            let physical_enhancement_bonus = (5).min((transmutation_school_lvl / 5) + 1);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.transmutation.physical_enhancement_bonus".to_owned(),
+                value: physical_enhancement_bonus,
+                detail: format!(
+                    "Wizard level {level} Transmutation School power Physical Enhancement \
+                     flat magnitude (PF1 Core Rulebook Transmutation School): \
+                     TransmutationPhysicalEnhancementBonus resolves to \
+                     min(5,(TransmutationSchoolLVL/5)+1) = \
+                     min(5,({transmutation_school_lvl}/5)+1) = {physical_enhancement_bonus}. \
+                     Grounds only the flat enhancement-bonus magnitude, shared identically by \
+                     the three ability-score sub-choice records this power grants; it applies \
+                     no bonus to any actual ability score and tracks no daily \
+                     ability-score-of-choice reselection"
+                ),
+            });
+        }
+
+        // Grounded for real: Change Shape (`KEY:Transmutation School ~
+        // Change Shape`) -- `TransmutationChangeShapeRounds|
+        // TransmutationSchoolLVL`, gated on the power's own level-8 unlock
+        // (`PREVARLT:Wizard_CF_SchoolPower8,1` on the Change Shape record
+        // itself).
+        if transmutation_progression_school_lvl >= 8 {
+            let change_shape_rounds = transmutation_school_lvl;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.transmutation.change_shape_rounds".to_owned(),
+                value: change_shape_rounds,
+                detail: format!(
+                    "Wizard level {level} Transmutation School power Change Shape \
+                     rounds-per-day pool (PF1 Core Rulebook Transmutation School): \
+                     TransmutationChangeShapeRounds resolves to TransmutationSchoolLVL = \
+                     {change_shape_rounds}. Grounds only the flat rounds-per-day magnitude; \
+                     it changes no actual shape and implements no Beast Shape / Elemental \
+                     Body effect"
                 ),
             });
         }

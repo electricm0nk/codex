@@ -116,6 +116,54 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 6) — one of nine, `decisions.md §14` — partial
+
+Re-derived at this cycle's starting HEAD (`2829c89e18`): still 267, unchanged from cycle 5's
+own closing figure. Read cycle 5's own receipt and its "Next-cycle plan" before touching
+anything: `Secret Lore` (10) and one more wizard school, built end-to-end. Investigated Secret
+Lore first -- every one of its 10 Loremaster prestige-class sub-records carries a real formula,
+but the engine has zero Loremaster prestige-class chassis to hang them on, a materially bigger
+lift than a wizard school (which already has an existing base-class chassis). Took the wizard
+school lever instead: **Transmutation**, following the exact Evocation/Abjuration pattern
+(cycle 4) -- a new `wizard_has_canonical_transmutation_selection` gate, opposing Necromancy +
+Evocation, and three new formulas (Telekinetic Fist bonus damage + uses/day, Physical
+Enhancement flat bonus, Change Shape rounds/day).
+
+**Real defect found and fixed within this cycle's own work, before committing.** The first
+probe variant only swapped the specialization choice (mirroring Abjuration's own code shape),
+leaving the opposed-schools choice at its seeded default (Necromancy + Transmutation) --
+nonsensical once Transmutation is the specialty itself, so the probe's own precondition never
+matched and it silently observed nothing. A first full guarded regen confirmed the population
+held at 267, not the predicted 261 -- caught before committing by checking the six target
+`corpus_key`s directly, not by trusting the predicted delta. Fixed by also swapping the
+opposed-schools choice to Necromancy + Evocation, verified with a throwaway scratch test against
+the real probe and real fixture (deleted before committing), then re-run through the full regen.
+
+**9 of 267 closed this cycle** (6 `core_rulebook` -- Telekinetic Fist, Physical Enhancement, and
+the three ability-score sub-choice records it grants, Change Shape -- plus an honestly-reported
+3-unit `advanced_class_guide` side effect: Arcanist's own Transmutation exploit `ABILITY`-grants
+the identical shared corpus_key strings). `core_rulebook` bucket B (atlas-real) 562 -> 556 of
+6,701. `cargo test --locked --no-run` exit 0, workspace-wide and `apps/desktop/src-tauri`;
+`cargo test --locked --lib` 2,896 passed / 0 failed / 14 ignored; `cargo test --locked --bin
+v06_work_inventory` 400 passed / 0 failed (3 new tests). No instrument movement: `F1` stayed
+5,400 (none of this cycle's formulas are bare-literal). Re-derived and fixed 10 + 2 shifted
+`file:line` citations in `completion_atlas.py`/`missing_engine_tables.py`, TWICE (the probe fix
+and the scratch test's own later removal each shifted lines again) -- `citation_failures=0` on
+both after the final round. Also self-healed a pre-existing 8-line drift in
+`missing_engine_tables.py`'s own citations, present at this cycle's own start HEAD, unrelated to
+this cycle's edits. Shared-checkout note: this cycle's own start state found an unrelated
+concurrent lane's WIP already dirty in `src/bin/v06_work_inventory.rs` and
+`scripts/completion_atlas.py` (an operator-ruling U-bucket lever another session was actively
+building); backed it up, worked on a clean base, committed only this mechanism's own changes,
+and left the other lane's WIP untouched and uncommitted exactly as found. 261 remain, sub-cause
+partition re-derived fresh and sums exactly: `Domain Power` 56, `Domain Base` 33, wizard-school
+cluster remainder 35 (down from 38 -- Transmutation's own power records now closed, its
+top-level/opposition recognition records remain unclaimed like every other school's), `Draconic
+Bloodline Choice` 10, `Secret Lore` 10 (investigated, not closed -- needs a dedicated
+prestige-class-chassis cycle), `New Arcana` 9 (ruled out), small 2-3-unit groups 20, long tail
+88. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt_6.md`.
+
 ### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism, cycle 5) — one of nine, `decisions.md §14` — complete, mechanism reaches 0
 
 Re-derived the mechanism population fresh at this cycle's starting HEAD (`50a5785592`): 2,

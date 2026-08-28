@@ -7423,6 +7423,65 @@ fn probe_wizard_arcane_school_wiring(fixture: &CharacterInput) -> BTreeSet<Strin
                 wired.insert("Abjuration School ~ Energy Absorption".to_string());
             }
         }
+
+        // Transmutation (`AT-34-E3-001` mechanism 2 continuation, cycle 6):
+        // swap the specialization choice again, opposing Necromancy and
+        // Evocation (mirrors `wizard_has_canonical_transmutation_
+        // selection`'s own precondition exactly). UNLIKE the Abjuration
+        // swap above, the opposed-schools choice must ALSO be swapped
+        // here: `canonical_seeds_for("wizard")`'s own default opposed pair
+        // is Necromancy+Transmutation, which is nonsensical once
+        // Transmutation itself becomes the specialty (a school can never
+        // oppose itself), so the default pair would leave
+        // `wizard_has_canonical_transmutation_selection` permanently
+        // false -- caught by this cycle's own before/after regen diff,
+        // never assumed correct from the Abjuration precedent alone.
+        let mut transmutation_input = class_sweep_input(fixture, "wizard", level);
+        transmutation_input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:wizard_school_specialization");
+        transmutation_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_school_specialization".to_string(),
+            selection_id: "school:transmutation".to_string(),
+        });
+        transmutation_input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:wizard_opposed_schools");
+        transmutation_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_string(),
+            selection_id: "school:necromancy".to_string(),
+        });
+        transmutation_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_string(),
+            selection_id: "school:evocation".to_string(),
+        });
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&transmutation_input)
+        }));
+        if let Ok(computation) = outcome {
+            if computation.explanations.iter().any(|e| {
+                e.id.starts_with("class_feature.school.transmutation.telekinetic_fist")
+            }) {
+                wired.insert("Transmutation School ~ Telekinetic Fist".to_string());
+            }
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.school.transmutation.change_shape_rounds")
+            {
+                wired.insert("Transmutation School ~ Change Shape".to_string());
+            }
+            if computation.explanations.iter().any(|e| {
+                e.id == "class_feature.school.transmutation.physical_enhancement_bonus"
+            }) {
+                wired.insert("Transmutation School ~ Physical Enhancement".to_string());
+                wired.insert("Physical Enhancement ~ Constitution".to_string());
+                wired.insert("Physical Enhancement ~ Dexterity".to_string());
+                wired.insert("Physical Enhancement ~ Strength".to_string());
+            }
+        }
     }
 
     std::panic::set_hook(previous_hook);
@@ -10112,17 +10171,20 @@ fn classify(
                     };
                 }
             }
-            // `AT-34-E3-001` (mechanism 2 continuation, cycle 4): wizard
-            // arcane school sub-cause, same shape as Domain Power / Weapon
-            // Training / Favored Enemy above -- `group` here is `"Evocation
-            // School"` or `"Abjuration School"`, which can never equal
-            // `"wizard"`, so `class_feature_owner` and its two fallbacks can
-            // never resolve an owner. `probe_wizard_arcane_school_wiring` is
-            // the real, separate attribution path -- see its own doc comment
-            // for why it is bounded to exactly the two schools (Evocation,
-            // Abjuration) the engine has a real per-power formula for, never
-            // the other seven or either school's own top-level recognition
-            // record.
+            // `AT-34-E3-001` (mechanism 2 continuation, cycles 4 and 6):
+            // wizard arcane school sub-cause, same shape as Domain Power /
+            // Weapon Training / Favored Enemy above -- `group` here is
+            // `"Evocation School"` / `"Abjuration School"` /
+            // `"Transmutation School"` / `"Physical Enhancement"` (the last
+            // being Transmutation's own three ability-score sub-choice
+            // records), none of which can ever equal `"wizard"`, so
+            // `class_feature_owner` and its two fallbacks can never resolve
+            // an owner. `probe_wizard_arcane_school_wiring` is the real,
+            // separate attribution path -- see its own doc comment for why
+            // it is bounded to exactly the three schools (Evocation,
+            // Abjuration, Transmutation) the engine has a real per-power
+            // formula for, never the other six or any school's own
+            // top-level recognition record.
             if facts.wizard_arcane_school_wired.contains(&unit.key) {
                 return Verdict {
                     status: "grounded",
@@ -17292,6 +17354,88 @@ mod class_feature_text_complete_rung_tests {
             519,
             "Bardic Performance ~ Not A Real Performance",
             1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
+    /// held_by_engine` mechanism, cycle 6, wizard Transmutation school
+    /// sub-cause, proof case: `probe_wizard_arcane_school_wiring`'s new
+    /// Transmutation branch observed a real, live-computed Telekinetic
+    /// Fist bonus-damage magnitude for this exact corpus record on a
+    /// canonical Transmutation wizard, so it is `grounded` -- never routed
+    /// to the generic bucket-B evidence.
+    #[test]
+    fn a_wizard_transmutation_school_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .wizard_arcane_school_wired
+            .insert("Transmutation School ~ Telekinetic Fist".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2689,
+            "Transmutation School ~ Telekinetic Fist",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// The same proof, for one of the three ability-score sub-choice
+    /// records Transmutation's own Physical Enhancement power auto-grants
+    /// (`Physical Enhancement ~ Strength`) -- a DIFFERENT corpus_key group
+    /// prefix (`"Physical Enhancement"`, not `"Transmutation School"`),
+    /// grounded on the SAME shared magnitude explanation id.
+    #[test]
+    fn a_transmutation_physical_enhancement_stat_choice_record_the_probe_observed_reaches_grounded(
+    ) {
+        let mut facts = EngineFacts::default();
+        facts
+            .wizard_arcane_school_wired
+            .insert("Physical Enhancement ~ Strength".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2686,
+            "Physical Enhancement ~ Strength",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an UNPROBED wizard Transmutation school record
+    /// (the probe's own `EngineFacts` set is empty here) is completely
+    /// unaffected -- it still falls through to the pre-existing
+    /// `engine-does-not-hold` finding, unchanged, proving this cycle's fix
+    /// credits nothing it did not actually observe. Uses the top-level
+    /// `"Transmutation School"` recognition record itself, which this
+    /// cycle deliberately never claims (same "shared bookkeeping, no
+    /// per-record formula" exclusion the Evocation/Abjuration top-level
+    /// records already established).
+    #[test]
+    fn a_wizard_transmutation_school_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2604,
+            "Transmutation School",
+            2,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
