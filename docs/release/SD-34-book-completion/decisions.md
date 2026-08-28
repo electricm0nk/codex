@@ -313,6 +313,56 @@ with a named resolution point, not an unresolved placeholder.
 
 ---
 
+## §18 — Operator ruling, 2026-08-28: widen the anti-fabrication gates **by construction**
+
+**Operator ruling.** Presented with three options on
+`ANTI_FABRICATION_GATE_EXCLUDED_CLASSES` — the seven-class exclusion
+(`wizard, bard, paladin, cleric, sorcerer, druid, monk`) blocking **218 of 242** remaining
+`class_feature_owner_matched_by_name_but_record_not_held_by_engine` units in `core_rulebook`
+(Sorcerer 137, Cleric 39, Monk 25, Wizard 7, Paladin 5, Bard 4, Druid 1) — the operator chose
+**option A: widen by construction.**
+
+**The rule.** An anti-fabrication gate accepts an explanation **when that explanation cites a real
+corpus record**, instead of when its id appears on a hand-maintained allowlist. The allowlists
+become a *property* — *"every explanation must trace to a corpus record"* — rather than a list of
+known-good ids.
+
+**Why this is a strengthening, not a weakening.** The gates exist to stop the engine inventing
+rules that are not in the books, and that is the correct thing to guard. But their current
+**shape** does not test it. Five `bard_level4..8` tests allowlist the whole `class_feature.bard.`
+namespace, so **any new bard id fails regardless of correctness**, and a fabricated id already on
+the list would pass. *"Cites a real corpus record"* is the property the guard was always reaching
+for; the allowlist was a proxy for it. Replacing a proxy with the thing it approximates makes the
+guard stronger, and it is the only form that scales to the remaining books.
+
+**The bar this ruling must clear, and it is high.** `OPEN-ISSUES.md` row 338 records that wave
+22's reconciliation attempt was **REJECTED as GAMED** for falsely claiming these gates needed no
+widening. A cycle implementing §18 therefore may not:
+
+- weaken, delete, or `#[ignore]` any of the nine acceptance tests;
+- make a test pass by narrowing what it examines;
+- claim a gate needs no change without a live run proving it.
+
+It must instead show, per gate, that the **new** property is enforced and that a **fabricated
+explanation still fails it** — a RED→GREEN mutation proof per gate, planting an explanation citing
+no corpus record and confirming the catch. **A gate never observed to fail is not a gate.**
+
+**Druid and Monk are a separate, third mechanism** and are not covered by the corpus-citation
+property alone: `is_druid_pillar_id` / `is_monk_pillar_id` (`src/rules_core/level_up/`) are closed
+id-prefix allowlists on `LevelUpPlan`'s explanation filter. They need the same by-construction
+treatment applied to that filter, and a cycle that widens only the fabrication gates must say
+plainly that Druid (1) and Monk (25) remain.
+
+**Two of the seven were never documented.** Cleric and Sorcerer were found live by a lane running
+the full suite, not from `OPEN-ISSUES.md`. Any cycle here runs the **full** suite against its own
+draft rather than the scoped subset, because this exclusion list has already grown twice from
+gates nobody knew about.
+
+**Enforced by:** the nine acceptance tests, unweakened and re-run; a per-gate RED→GREEN mutation
+proof; AT-34-E3-001's own bar; AT-34-E6-001 re-deriving at HEAD.
+
+---
+
 ## §17 — Operator ruling, 2026-08-28: bucket `U` is DONE; bucket `X` needs the choice filter
 
 **Operator ruling.** Presented with three options on whether records the engine deliberately does
