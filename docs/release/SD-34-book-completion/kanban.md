@@ -25,7 +25,7 @@ cycles is never `blocked-escalated`.**
 |---|---|---|---|---|---|
 | 1 | `atlas-one-bucket-per-unit` | 1 | AT-34-E1-001 | complete | `artifacts/epic-1-atlas/AT-34-E1-001_cycle_receipt.md` |
 | 2 | `atlas-fails-closed` | 1 | AT-34-E1-002 | complete | `artifacts/epic-1-atlas/AT-34-E1-002_cycle_receipt.md`, re-verified at HEAD by `artifacts/epic-1-atlas/AT-34-E1-002_re-verification_receipt.md` |
-| 3 | `missing-tables-and-book-coverage` | 1 | AT-34-E1-003 | complete | `artifacts/epic-1-atlas/AT-34-E1-003_cycle_receipt.md` |
+| 3 | `missing-tables-and-book-coverage` | 1 | AT-34-E1-003 | complete | `artifacts/epic-1-atlas/AT-34-E1-003_cycle_receipt.md`, re-verified at HEAD by `artifacts/epic-1-atlas/AT-34-E1-003_re-verification_receipt.md` |
 | 4 | `shape-engine-boundary-stated` | 1 | AT-34-E1-004 | complete | `artifacts/epic-1-atlas/AT-34-E1-004_cycle_receipt.md` |
 | 5 | `rename-not-ingested-field` | 1 | AT-34-E1-005 | complete | `artifacts/epic-1-atlas/AT-34-E1-005_cycle_receipt.md` |
 | 6 | `figure-provenance-gate` | 1 | AT-34-E1-006 | complete | `artifacts/epic-1-atlas/AT-34-E1-006_cycle_receipt.md` |

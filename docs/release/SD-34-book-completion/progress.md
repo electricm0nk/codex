@@ -116,6 +116,31 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E1-003 re-verification at HEAD — complete, 0 units moved
+
+Re-dispatched against `AT-34-E1-003` (already `complete` from an earlier cycle, commit
+`2ec0462736`, receipt reporting `population=8463 kinds=9`) to re-derive rather than carry the
+original numbers forward (`decisions.md §12` L2). `HEAD` had moved far more than a couple of
+cycles since the original landing — Epic 2 built 8 of the 9 missing engine tables
+(`decisions.md §7`) and Epic 3 ran 13 further `docs/work-inventory.json` regeneration commits —
+so bucket A's live population is now `449` units across `2` kinds (`companion=28` in `bestiary`,
+`power=421` in `ultimate_psionics`), not the launch-time `8463`/`9`. That shrink is expected and
+correct: bucket A is Epic 2's own input, not a static invariant.
+
+Confirmed the committed `missing-engine-tables.json` already matches `missing_engine_tables.py
+--check`'s live output byte-for-byte — it was silently kept current by a prior Epic-3 commit
+(`6a87278d875f`, one of 13 that regenerate this file as a side effect of a `docs/work-inventory.json`
+regeneration), no uncommitted drift, no code change needed this cycle. Re-ran the full 12-test
+`scripts/tests/test_missing_engine_tables` suite (green); two of those tests
+(`test_live_remaining_population_is_power_and_bestiary_companion_only`,
+`test_live_core_rulebook_and_ultimate_campaign_have_zero_bucket_a`) directly assert the current
+post-Epic-2 state, confirming both AT-34-E2-004's target books reached bucket-A zero and that
+the book-coverage map's original claims (7 Core-Rulebook kinds + `trait` buildable, `power`
+costed-not-built) played out exactly as `decisions.md §7` records. `cargo test --locked --no-run`
+exits 0 at `688c6ae38756756bcfc19bc95781ef05d0f2ae92` (docs-only diff, no Rust touched).
+`kanban.md` row 3 stays `complete`. Receipt:
+`artifacts/epic-1-atlas/AT-34-E1-003_re-verification_receipt.md`.
+
 ### Cycle — AT-34-E1-002 re-verification at HEAD — complete, 0 units moved
 
 Re-dispatched against `AT-34-E1-002` (already `complete` from an earlier cycle, commit
