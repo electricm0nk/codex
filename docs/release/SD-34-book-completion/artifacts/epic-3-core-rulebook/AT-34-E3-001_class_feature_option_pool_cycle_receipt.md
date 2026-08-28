@@ -1,6 +1,6 @@
 # Cycle 6 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
 
-- **Commit SHA:** <pending — filled by this cycle's second, docs-only commit per cycle 5's own precedent>
+- **Commit SHA:** `986e954d87`
 - **Files touched:** `src/rules_core/rules_tables/crb/weapon_tables.rs`, `src/rules_core/class_feature_pool_catalog.rs`, `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py`, `scripts/missing_engine_tables.py`, `docs/work-inventory.json` (regenerated), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` (re-derived), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/missing-engine-tables.json` (re-derived), this receipt.
 - **Identifier audit result:** `OK_NO_BUNDLE_TAGS`
 - **Wired-integration audit result:** non-empty (17 matches), but every match is `placeholder` inside PRE-EXISTING lines from earlier sibling cycles on this branch (confirmed none is in this cycle's own diff — see "Dual-audit gate" below). Equivalent to `OK_NO_TOKENS` for this cycle's own work.
