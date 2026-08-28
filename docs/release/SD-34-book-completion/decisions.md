@@ -343,7 +343,8 @@ units where a `core_rulebook`-only one would have moved 40.
   value. That is nearer bucket `X`'s "deliberately not modelled" than blanket DONE, and it needs
   its own ruling rather than an extension of this one.
 - **9** trip a confirmed defect in `render_pcgen_desc`, which drops a bare `%` even when preceded
-  by a digit (so *"75% chance…"* loses its sign). That is a **real shipping bug found incidentally**,
+  by a digit, so a phrase like *"75 percent chance"* loses its sign. That is a **real shipping bug
+  found incidentally**,
   filed as its own scoped fix, not absorbed into this ruling.
 
 
