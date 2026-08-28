@@ -5083,6 +5083,16 @@ const TRANSMUTATION_SCHOOL_SELECTION: &str = "school:transmutation";
 // Divination"), so the same two opposed-school constants are reused rather
 // than duplicated.
 const ABJURATION_SCHOOL_SELECTION: &str = "school:abjuration";
+// `AT-34-E3-001` (mechanism 2 continuation, cycle 7): a fourth canonical
+// deterministic school selection, alongside Evocation, Abjuration, and
+// Transmutation above. Conjuration/Divination remain legal opposed schools
+// for a Conjuration specialist (PF1's only opposition restriction is "not
+// your own specialty school and not Divination" -- so a Conjuration
+// specialist may not oppose Divination, but nothing bars using it for a
+// DIFFERENT specialist's own two opposed slots); this reuses the same
+// idiom as the Transmutation slice, picking two already-existing
+// non-Conjuration, non-Divination selection constants.
+const CONJURATION_SCHOOL_SELECTION: &str = "school:conjuration";
 /// PF1 Core Rulebook arcane school class feature: a specialist wizard gains one
 /// additional spell slot of each spell level she can cast, 1st and up, usable only
 /// for spells of the chosen school. At the bounded baseline level 1 that is exactly
@@ -44195,6 +44205,33 @@ fn wizard_has_canonical_transmutation_selection(input: &CharacterInput) -> bool 
         && opposed.contains(&EVOCATION_SCHOOL_SELECTION)
 }
 
+/// `AT-34-E3-001` (mechanism 2 continuation, cycle 7): a fourth canonical
+/// deterministic school selection, alongside Evocation, Abjuration, and
+/// Transmutation above. Conjuration specialized, with Necromancy and
+/// Abjuration as the two opposed schools -- both already-existing
+/// selection constants, reused rather than duplicated (PF1's only
+/// opposition restriction is "not your own specialty school and not
+/// Divination", so any two non-Conjuration, non-Divination schools are
+/// legal; Necromancy/Abjuration is picked simply because both constants
+/// already exist).
+fn wizard_has_canonical_conjuration_selection(input: &CharacterInput) -> bool {
+    if choice_selection(input, WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID)
+        != Some(CONJURATION_SCHOOL_SELECTION)
+    {
+        return false;
+    }
+    let opposed: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == WIZARD_OPPOSED_SCHOOLS_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    opposed.len() == 2
+        && opposed.contains(&NECROMANCY_SCHOOL_SELECTION)
+        && opposed.contains(&ABJURATION_SCHOOL_SELECTION)
+}
+
 /// Surface direct SD13-E4-R3 runtime evidence for the deterministic Human Wizard
 /// level-1 prepared arcane spell-bearing baseline, while keeping it explicitly
 /// claim-blocked on its two still-missing burdens.
@@ -45027,6 +45064,102 @@ fn explain_wizard_level1_prepared_spell_baseline(
                      {change_shape_rounds}. Grounds only the flat rounds-per-day magnitude; \
                      it changes no actual shape and implements no Beast Shape / Elemental \
                      Body effect"
+                ),
+            });
+        }
+    }
+
+    // `AT-34-E3-001` (mechanism 2 continuation, cycle 7): Wizard's
+    // Conjuration arcane school, same shape as the Transmutation block
+    // above -- `ConjurationSchoolLVL` <- `ArcaneSchoolLVL` <- `WizardLVL`,
+    // and `ConjurationProgressionSchoolLVL` <- `ArcaneSchoolProgressionLVL`
+    // <- `WizardLVL`, verified directly against `cr_abilities_class.lst`'s
+    // `KEY:Conjuration School ~ *` records. Explanation ids live under the
+    // shared `class_feature.school.conjuration.*` namespace, matching the
+    // Transmutation precedent.
+    if wizard_has_canonical_conjuration_selection(input) {
+        let conjuration_school_lvl = wizard_level_value;
+        let conjuration_progression_school_lvl = wizard_level_value;
+
+        // Grounded for real: Summoner's Charm (`KEY:Conjuration School ~
+        // Summoner's Charm`) -- `ConjurationSummonersCharmBonus|
+        // max(1,ConjurationSchoolLVL/2)`, unlocked from level 1
+        // (`PREVARLT:Wizard_CF_SchoolPower1,1` on the Summoner's Charm
+        // record itself).
+        if conjuration_progression_school_lvl >= 1 {
+            let summoners_charm_bonus = (1).max(conjuration_school_lvl / 2);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.conjuration.summoners_charm_bonus".to_owned(),
+                value: summoners_charm_bonus,
+                detail: format!(
+                    "Wizard level {level} Conjuration School power Summoner's Charm \
+                     duration-increase magnitude (PF1 Core Rulebook Conjuration School): \
+                     ConjurationSummonersCharmBonus resolves to \
+                     max(1,ConjurationSchoolLVL/2) = max(1,{conjuration_school_lvl}/2) = \
+                     {summoners_charm_bonus} rounds. Grounds only the flat duration-increase \
+                     magnitude; it applies no bonus to any actual spell duration and tracks no \
+                     permanent-summon-monster designation"
+                ),
+            });
+        }
+
+        // Grounded for real: Acid Dart (`KEY:Conjuration School ~ Acid
+        // Dart`) -- two flat, non-dice `BONUS:VAR` formulas, both unlocked
+        // from level 1 (`PREVARLT:Wizard_CF_SchoolPower1,1` on the Acid
+        // Dart record itself).
+        if conjuration_progression_school_lvl >= 1 {
+            // `ConjurationAcidDartDamageBonus|ConjurationSchoolLVL/2`.
+            let acid_dart_damage_bonus = conjuration_school_lvl / 2;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.conjuration.acid_dart_damage_bonus".to_owned(),
+                value: acid_dart_damage_bonus,
+                detail: format!(
+                    "Wizard level {level} Conjuration School power Acid Dart bonus-damage \
+                     magnitude (PF1 Core Rulebook Conjuration School): \
+                     ConjurationAcidDartDamageBonus resolves to ConjurationSchoolLVL/2 = \
+                     {conjuration_school_lvl}/2 = {acid_dart_damage_bonus}, added to the base \
+                     1d6 acid damage. Grounds only the flat bonus-damage magnitude; it strikes \
+                     no ranged touch attack and applies no bonus to any actual damage roll"
+                ),
+            });
+
+            // `ConjurationAcidDartTimes|ArcaneSchoolPowerTimes` -- the
+            // same shared "3 + Intelligence modifier" idiom the
+            // pre-existing Force Missile / Telekinetic Fist groundings
+            // above already use.
+            let acid_dart_times = (3 + ability_modifiers.intelligence).max(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.conjuration.acid_dart_uses_per_day".to_owned(),
+                value: acid_dart_times,
+                detail: format!(
+                    "Wizard level {level} Conjuration School power Acid Dart uses-per-day \
+                     pool (PF1 Core Rulebook Conjuration School): ConjurationAcidDartTimes \
+                     resolves to the shared ArcaneSchoolPowerTimes counter, 3 + Intelligence \
+                     modifier, floored at 0. At Intelligence modifier {} this is \
+                     max(3 + {}, 0) = {acid_dart_times}. Grounds only the flat daily-use \
+                     count; it tracks no action economy or per-use consumption",
+                    ability_modifiers.intelligence, ability_modifiers.intelligence
+                ),
+            });
+        }
+
+        // Grounded for real: Dimensional Steps (`KEY:Conjuration School ~
+        // Dimensional Steps`) -- `ConjurationDimensionalSteps|
+        // ConjurationSchoolLVL*30`, gated on the power's own level-8
+        // unlock (`PREVARLT:Wizard_CF_SchoolPower8,1` on the Dimensional
+        // Steps record itself).
+        if conjuration_progression_school_lvl >= 8 {
+            let dimensional_steps_feet = conjuration_school_lvl * 30;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.conjuration.dimensional_steps_feet".to_owned(),
+                value: dimensional_steps_feet,
+                detail: format!(
+                    "Wizard level {level} Conjuration School power Dimensional Steps \
+                     feet-per-day pool (PF1 Core Rulebook Conjuration School): \
+                     ConjurationDimensionalSteps resolves to ConjurationSchoolLVL*30 = \
+                     {conjuration_school_lvl}*30 = {dimensional_steps_feet}. Grounds only the \
+                     flat feet-per-day magnitude; it teleports no actual character and tracks \
+                     no 5-foot-increment consumption"
                 ),
             });
         }

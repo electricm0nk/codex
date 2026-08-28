@@ -116,6 +116,42 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 7) — one of nine, `decisions.md §14` — partial
+
+Re-derived at this cycle's starting HEAD (`0827dcd59b`): still 261 of 562 `core_rulebook`
+bucket-B units in this mechanism, matching cycle 6's own closing figure exactly. Cycle 6's own
+next-cycle plan named two levers: `Secret Lore` (a materially bigger lift, no Loremaster
+prestige-class chassis exists yet) and "one more wizard school, built end-to-end." This cycle
+took the second lever again, building **Conjuration** -- the cheapest of the six remaining
+schools whose 3-power shape (two level-1 powers, one level-8 power) most closely matched the
+Transmutation precedent. Read `data/corpus/core_rulebook/class_feature/conjuration_school/*.json`
+directly and found the same shape cycles 4-6 already established: real `BONUS:VAR` formulas
+never wired to `classify()` because the record's `group` prefix can never equal `"wizard"`. New
+`CONJURATION_SCHOOL_SELECTION` constant and `wizard_has_canonical_conjuration_selection`
+(opposing Necromancy + Abjuration) gate one new compute block grounding Summoner's Charm
+(`max(1,ConjurationSchoolLVL/2)`, level 1), Acid Dart (bonus-damage `ConjurationSchoolLVL/2` +
+the shared `ArcaneSchoolPowerTimes` uses/day pool, level 1), and Dimensional Steps
+(`ConjurationSchoolLVL*30`, level 8) — all verified directly against the live corpus, never
+assumed. `probe_wizard_arcane_school_wiring` gained a fourth variant, swapping BOTH the
+specialization AND the opposed-schools choice from the start (cycle 6's own Discoveries had
+already named this exact hazard), so unlike cycle 6's own two-round probe-defect history, this
+cycle's first full guarded regen closed exactly the 3 records predicted with no correction
+round needed. TDD: RED (3 target records fell through the same owner-resolution path) → GREEN,
+3 new tests. **3/261 closed** (`Conjuration School ~ Summoner's Charm`, `~ Acid Dart`,
+`~ Dimensional Steps`, all `engine-does-not-hold` → `grounded`), verified by a whole-file
+before/after diff against the committed inventory: exactly 6 changed lines (the 3 records' own
+old+new versions), no cross-book side effect this time (Conjuration has no Arcanist-exploit
+counterpart in `advanced_class_guide`, unlike Transmutation's own 3-unit side effect), no
+collision-hazard misclassification. `core_rulebook` bucket B (atlas-real partition, all 9
+mechanisms) 556 → 553/6,701, this mechanism 261 → 258. Fixed 10 + 2 shifted `file:line`
+citations in `completion_atlas.py`/`missing_engine_tables.py` (this cycle's own probe/doc-comment
+insertion shifted every one; `citation_failures=0` on both after). 258 remain, named by
+sub-cause (Domain Power 56, Domain Base 33, wizard arcane-school cluster 32, Draconic Bloodline
+Choice 10, Secret Lore 10, New Arcana 9 [ruled out], small per-class groups 20, long tail 88 —
+sums exactly to 258). Movement: 3 closure, 0 reclassification, 0 reachability, 0
+instrument-correction. AT-34-E3-001 itself remains open (8 other mechanisms + this mechanism's
+own 258 remain).
+
 ### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 7) — one of nine, `decisions.md §14` — partial
 
 Re-derived at this cycle's starting HEAD (`2ae06fe4cd`): still 248 of 6,701 `core_rulebook`
