@@ -313,6 +313,39 @@ with a named resolution point, not an unresolved placeholder.
 
 ---
 
+## §16 — "Only the count grounds" is ratified precedent, not an open question
+
+**Decision.** A class-feature record whose content is *"pick N from this eligible set"* is
+**held** when the engine grounds the **count** and names the **eligible set**, without modelling
+which option a given character picked. This is not a new ruling and no operator ruling is needed
+to apply it: it is the treatment already shipped and described in the engine's own source as
+**"the ratified Fighter/Cavalier/Brawler treatment"**
+(`src/rules_core/pilot_compute/mod.rs`, `ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS` and
+`ground_sorcerer_arcane_bloodline_progression`): *"Only the COUNT of slots is grounded as a
+magnitude; which feat fills a slot is a player choice this seam deliberately does not model."*
+
+**Reasoning.** Cycles 2, 3 and 4 of `class_feature_owner_matched_by_name_but_record_not_held_by_engine`
+each named this as an *"operator-scoped classification ruling"* and each declined to act, so
+**103 of 344** units in the bundle's largest remaining mechanism (Sorcerer Bloodline Feat 87,
+Ranger Combat Style Feat 16) sat still across three cycles waiting for a decision the codebase had
+already made for four other classes. A question that precedent answers is not an escalation; it is
+research a cycle owes before it stops.
+
+**How to apply it.** Ground the slot count as a magnitude, name the real eligible set so the
+explanation cites something rather than gesturing at an unnamed pool, and emit a
+**non-claim-blocking diagnostic** stating what is deliberately not claimed — exactly the three-part
+shape the Arcane Bloodline seam already uses. Do not seed a default choice, and do not report a
+number the supersession rules would contradict.
+
+**What this does NOT settle.** The sibling question — whether a record the corpus gives **no
+content to at all** can ever be `held` — is still open and is genuinely a definitional question
+about the deliverable (`artifacts/epic-3-core-rulebook/atlas-defects.md` entries 1-3). §16 covers
+only records that *do* have content whose shape is a choice.
+
+**Enforced by:** AT-34-E3-001's own bar; AT-34-E6-001 re-deriving it at HEAD.
+
+---
+
 ## §15 — A cycle that closes part of its population and names the rest reports `partial`, not `blocked-escalated`
 
 **Decision.** A dispatched cycle has **three** terminal states, not two:
