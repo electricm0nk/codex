@@ -4,7 +4,7 @@ This cycle owns **exactly one** of the nine mechanisms `decisions.md §14` decom
 `AT-34-E3-001` into. It does **not** close AT-34-E3-001 itself — other mechanisms remain,
 each its own cycle.
 
-- **Commit SHA:** filled at commit time below
+- **Commit SHA:** `cb0ba2286e`
 - **Files touched:**
   - `src/rules_core/pilot_compute/mod.rs` — two new bloodline/style-agnostic pool-grounding
     functions (`ground_sorcerer_bloodline_feat_pool`, `ground_ranger_combat_style_feat_pool`),
