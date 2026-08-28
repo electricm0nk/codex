@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10583,
+        "line": 10601,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -18,7 +18,7 @@
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 12135,
+      "count": 12123,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 11234,
+        "line": 11252,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -95,7 +95,7 @@
         "must_contain": "deferred-with-reason"
       },
       "clears": "revisiting the stated condition",
-      "count": 49,
+      "count": 61,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
       "meaning": "deferred with a stated reason"
     },
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "1de361c8502c05652cce226909cf7348261e0c7a",
+  "derived_at": "dbf97940fddb5c1d2d56df7745e3df05f193262a",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],

@@ -82,7 +82,14 @@ token, an unpredicted verdict shape per `decisions.md §2`) before closing them 
 (`class_feature_pool_catalog::VACUOUS_PLACEHOLDER_CLASS_FEATURES`). `core_rulebook` bucket B now
 754 of 6,701. 0 units closed to DONE (correctly — there is no content to display); reported
 `partial`, 52 remaining named exactly by sub-cause. See the cycle log below; `## Open blockers`
-is empty.
+is empty. This cycle re-picked up `companion_absent_from_core_rulebook_companion_tables`
+(14 → 2): closed the 12 grant-token-only rows via a per-record, corpus-wide VERIFIED predicate
+(never a shape-only reclassification — a corpus-wide re-check of defect 3's own bare shape
+query found only 171 of 461 safe, proving shape alone unsafe) to `deferred-with-reason`
+(bucket X); the 2 monster-class rows remain, needing a genuine level-progression record type
+now verified against its 2 real second/third consumers (`ultimate_magic` 3 rows,
+`book_of_the_damned_volume_1` 2 rows) for a future cycle. Reported `partial`. See the cycle log
+below; `## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -100,6 +107,58 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism, cycle 4) — one of nine, `decisions.md §14` — partial
+
+Re-derived the mechanism population fresh at this cycle's starting HEAD (`dbf97940fd`): still
+14, unchanged from cycle 3's own closing figure. Cycle 3's own next-cycle plan named the 14/12/2
+split exactly and this cycle's own dispatch mandate named both remaining sub-causes explicitly:
+(a) close the 12 grant-token-only rows via a per-record, corpus-wide VERIFIED predicate, never a
+shape-only reclassification; (b) close the 2 monster-class rows via a genuine level-progression
+record type verified against two named consumers.
+
+**(a) closed, 12 of 12.** Cycle 3's own atlas defect 3 warned its bare shape query (`ABILITY`
+present, no `TYPE`/`DESC`/`BONUS`) matches 461 of 51,482 corpus-wide and that reclassifying by
+shape alone risks the exact 188-record near-miss defect 1 already recorded. Before building
+anything, re-checked that concern directly: applying the shape query corpus-wide and then
+testing "every `ABILITY:` target resolves in-book to a record carrying real content" against
+all 461 finds only **171 safe**, **104 whose target exists but carries no content**, and **280**
+whose target key cannot even be found in-book — confirming a shape-only rule would misclassify
+290 of 461 records. Built a narrower, stronger, individually-verified predicate instead: a
+closed 12-key list (`companion_chassis::GRANT_TOKEN_ONLY_DISPATCH_ROWS`), each key checked, per
+record, against the LIVE `docs/work-inventory.json` — every one of its `ABILITY:` grant tokens'
+targets is a `core_rulebook` companion row this engine ALREADY holds
+(`grounded`/`text-complete`/`literal-verified`, not merely "a corpus file exists"). All 12 pass
+with zero counter-examples (every target is one of the already-shipped `Animal Companion ~ *`
+ability rows). A new `classify()` rung moves a match from bucket B to bucket X
+(`deferred-with-reason`) — the correct "shelf, not half-fix" outcome for a row with no content
+of its own whose real job (dispatch to already-shipped content) is now the engine's own recorded
+reason. `companion_absent_2_sub_causes_are_named_and_sum_exactly` (replacing the prior
+`_14_` test) and a new `grant_token_only_rows_dispatch_to_already_held_content` test prove both
+the closure and the predicate against live corpus + live inventory.
+
+**(b) not closed, named honestly.** Re-confirmed the 2 `cr_classes_companion.lst` monster-class
+rows (`Companion`, `Shadow Companion`) need a level-progression record type this chassis
+genuinely has no fields for (`companion_chassis.rs`'s own module doc already states this third
+shape is unmodeled). Confirmed both named consumers this cycle: `ultimate_magic` (3 rows:
+`Vermin Companion`, `1`, `Black Blade`) and `book_of_the_damned_volume_1` (2 rows: `1`,
+`Imp Companion`) — real second/third consumers, already-registered `COMPANION_BOOKS` entries.
+Building and verifying a new record type against all 3 consumers inside the same cycle as the
+12-row predicate above was judged out of this cycle's safe scope; left `engine-does-not-hold`,
+named with its 7 total corpus-wide rows for a future cycle.
+
+Two shifted `completion_atlas.py` `BUCKET_DEFINITIONS` citations (bucket A `has_no_engine_table`
+10583→10601, bucket V `literal-verified` 11234→11252 — this cycle's own +18-line insertion
+shifted both) re-derived by `grep -n` and fixed in this same cycle; `citation_failures=0`.
+`core_rulebook` companion mechanism 14 → 2; `cargo test --locked --lib` 2,884 passed / 0 failed
+/ 14 ignored; `cargo test --locked --bin v06_work_inventory` 395 passed / 0 failed; `cargo test
+--locked --no-run` exit 0, workspace-wide; desktop crate (`apps/desktop/src-tauri`, separate
+cargo workspace) `cargo test --locked --no-run` exit 0. `corpus_literal_sweep` unchanged at
+48,708/51,482 examined, CLEAN (0 corpus records added/regenerated). Total corpus population
+unchanged at 49,438. Retro: one `resolution` event closing the 12-row portion of cycle 3's
+grant-token-only deferral, one `deferral` event for the 2-row class-row remainder, both naming
+the 2 consumer books. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_companion_absent_cycle_receipt_4.md`.
 
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 5) — one of nine, `decisions.md §14` — partial
 

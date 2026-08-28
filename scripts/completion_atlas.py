@@ -88,7 +88,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'has_no_engine_table')"
         ),
         # `Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table")`.
-        "citation": {"file": _ENGINE_SRC, "line": 10583, "must_contain": "has_no_engine_table"},
+        "citation": {"file": _ENGINE_SRC, "line": 10601, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -129,7 +129,7 @@ BUCKET_DEFINITIONS = {
         "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
         # `item.verdict.status = "literal-verified";` -- one of the two V statuses.
-        "citation": {"file": _ENGINE_SRC, "line": 11234, "must_contain": "literal-verified"},
+        "citation": {"file": _ENGINE_SRC, "line": 11252, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",

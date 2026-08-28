@@ -10552,6 +10552,24 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
+            // AT-34-E3-001 cycle 4, grant-token-only sub-cause named by
+            // cycle 3's own atlas defect 3 (`companion_chassis::
+            // GRANT_TOKEN_ONLY_DISPATCH_ROWS`'s own doc comment carries the
+            // full argument: a per-record, corpus-wide VERIFIED predicate --
+            // every ABILITY: target is an already engine-held record --
+            // never a shape-only reclassification, which cycle 3's own
+            // re-check proved unsafe for 290 of the 461 corpus-wide matches
+            // of the bare shape). A closed, named-key list, so it can only
+            // ever match these 12 exact keys.
+            if let Some(reason) = companion_chassis::grant_token_only_dispatch_reason(&unit.key) {
+                return Verdict {
+                    status: "deferred-with-reason",
+                    evidence: "grant_token_only_dispatch_row_routes_to_already_shipped_content"
+                        .to_string(),
+                    reason: Some(reason.to_string()),
+                    engine_book: engine_book_field,
+                };
+            }
             engine_does_not_hold_owned(format!("companion_absent_from_{engine_book}_companion_tables"))
         }
         // `AT-34-E2-004`: a companion record whose OWN engine_book (the

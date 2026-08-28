@@ -628,6 +628,116 @@ pub fn companion_book(corpus_book: &str) -> Option<&'static CompanionBook> {
     COMPANION_BOOKS.iter().find(|b| b.corpus_book == corpus_book)
 }
 
+/// `AT-34-E3-001` (`companion_absent_from_core_rulebook_companion_tables`
+/// mechanism), cycle 4, "grant-token-only" sub-cause named by cycle 3's own
+/// atlas defect 3 (`docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/atlas-defects.md`
+/// entry 3, 461 of 51,482 corpus-wide). `description: null` internal PCGen
+/// dispatch rows whose ENTIRE content is `KEY`, `CATEGORY`, and one-or-more
+/// `ABILITY:` grant tokens -- no `TYPE:`, `DESC:`, `BONUS:` -- fanning out to
+/// real, already-shipped ability rows of the SAME book.
+///
+/// **This is a per-record, corpus-wide VERIFIED predicate, never a
+/// shape-only reclassification.** Defect 3's own cycle already warned
+/// shape alone is unsafe corpus-wide; re-checking that exact concern before
+/// building this table confirmed it: applying defect 3's shape query
+/// (`ABILITY` present, no `TYPE`/`DESC`/`BONUS`) corpus-wide gives 461
+/// matches, and testing "every `ABILITY:` target resolves in-book to a
+/// content-bearing record" against all 461 finds only 171 safe, 104 whose
+/// target exists but carries no content, and 280 whose target key cannot
+/// even be found in-book -- a shape-only rule would silently misclassify
+/// 290 of 461 records. What IS verified here, per record, for exactly
+/// these 12 `core_rulebook` keys: every `ABILITY:` token's target key names
+/// a real `core_rulebook` companion row this engine ALREADY HOLDS (status
+/// `grounded`, `text-complete`, or `literal-verified` in the live
+/// `docs/work-inventory.json` -- not merely "a corpus file exists with some
+/// content"), proven against the live corpus AND the live work-inventory by
+/// `grant_token_only_rows_dispatch_to_already_held_content` below. A named,
+/// closed list -- never a shape predicate -- so it can only ever match
+/// these 12 exact keys, none of the other 449 the corpus-wide shape query
+/// also matches.
+pub const GRANT_TOKEN_ONLY_DISPATCH_ROWS: &[(&str, &str)] = &[
+    (
+        "Base Companion ~ Animal Companion",
+        "PCGen's own internal dispatch row for the Animal Companion class feature: 11 ABILITY: \
+         grant tokens, each routing to a real, already-engine-held Animal Companion ~ * ability \
+         row; no DESC/TYPE/BONUS token of its own.",
+    ),
+    (
+        "Base Companion ~ Special Mount",
+        "PCGen's own internal dispatch row for the Special Mount class feature: 11 ABILITY: grant \
+         tokens, each routing to a real, already-engine-held Animal Companion ~ * ability row; no \
+         DESC/TYPE/BONUS token of its own.",
+    ),
+    (
+        "Companion ~ Ability Score Increase",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Ability Score Increase row; no DESC/TYPE/BONUS \
+         token of its own.",
+    ),
+    (
+        "Companion ~ Bonus Tricks",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Bonus Tricks row; no DESC/TYPE/BONUS token of its \
+         own.",
+    ),
+    (
+        "Companion ~ Devotion",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Devotion row; no DESC/TYPE/BONUS token of its \
+         own.",
+    ),
+    (
+        "Companion ~ Evasion",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Evasion row; no DESC/TYPE/BONUS token of its own.",
+    ),
+    (
+        "Companion ~ Improved Evasion",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Improved Evasion row; no DESC/TYPE/BONUS token of \
+         its own.",
+    ),
+    (
+        "Companion ~ Link",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Link row; no DESC/TYPE/BONUS token of its own.",
+    ),
+    (
+        "Companion ~ Multiattack",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Multiattack row; no DESC/TYPE/BONUS token of its \
+         own.",
+    ),
+    (
+        "Companion ~ Share Spells",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Share Spells row; no DESC/TYPE/BONUS token of its \
+         own.",
+    ),
+    (
+        "Companion ~ Spell Resistance (AC)",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Spell Resistance row; no DESC/TYPE/BONUS token of \
+         its own.",
+    ),
+    (
+        "Companion ~ Spell Resistance (SM)",
+        "PCGen's own internal dispatch row: a single ABILITY: grant token routing to the real, \
+         already-engine-held Animal Companion ~ Spell Resistance row; no DESC/TYPE/BONUS token of \
+         its own.",
+    ),
+];
+
+/// Looks up [`GRANT_TOKEN_ONLY_DISPATCH_ROWS`] by key, returning the stated
+/// reason when it matches. `v06_work_inventory.rs`'s `Kind::Companion` arm
+/// consults this immediately before its final
+/// `companion_absent_from_<book>_companion_tables` fallback, mirroring
+/// `class_feature_pool_catalog::vacuous_placeholder_reason`'s established
+/// named-list pattern (never a live shape scan) for the identical reason.
+pub fn grant_token_only_dispatch_reason(key: &str) -> Option<&'static str> {
+    GRANT_TOKEN_ONLY_DISPATCH_ROWS.iter().find(|(k, _)| *k == key).map(|(_, reason)| *reason)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1430,28 +1540,16 @@ mod tests {
     /// `AT-34-E3-001`'s `companion_absent_from_core_rulebook_companion_tables`
     /// mechanism (`decisions.md §14`): re-derives, from the live
     /// `docs/work-inventory.json` and the live ingested corpus this module
-    /// already reads, WHY each of this cycle's 28-unit remainder is not
+    /// already reads, WHY each of this cycle's 2-unit remainder is not
     /// owned -- a committed, re-runnable proof rather than a one-off
     /// investigation that decays.
     ///
-    /// This cycle's own contribution (not inherited from the filing cycle's
-    /// receipt): the familiar-pool sub-cause is checked against the LIVE
-    /// corpus rather than asserted by name, and the test additionally PROVES
-    /// the true owner of each of those 14 rows -- one of 11 familiar
-    /// creatures PF1's own Familiar rules (CRB p.52-55) grant this identical
-    /// ability table to -- is a creature the corpus DOES register, just
-    /// under `beastiary` rather than `core_rulebook` (`ce_races_familiar_
-    /// cr.lst` declares `SOURCELONG:Bestiary`, so `decisions.md §9`
-    /// re-attribution correctly files it there, while `ce_abilities_
-    /// familiar_cr.lst`'s ability POOL declares `SOURCELONG:Core Rulebook`
-    /// and correctly files here — a genuine cross-book split baked into the
-    /// real books, not a reattribution bug). That is the corpus-backed
-    /// reason this needs Shape 8 (cross-book ownership) — a real widening
-    /// of the resolution invariant `the_chassis_link_resolves_in_both_
-    /// directions_for_every_book` enforces corpus-wide above — rather than
-    /// a narrower same-book fix this cycle could safely take instead.
+    /// This cycle closed the 12 zero-content rows (`grant_token_only_rows_
+    /// dispatch_to_already_held_content` below proves the closure); only
+    /// the 2 `cr_classes_companion.lst` monster-class rows remain, named
+    /// here rather than folded into "the rest".
     #[test]
-    fn companion_absent_14_sub_causes_are_named_and_sum_exactly() {
+    fn companion_absent_2_sub_causes_are_named_and_sum_exactly() {
         let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
         let inventory_text = std::fs::read_to_string(repo_root.join("docs/work-inventory.json"))
             .expect("docs/work-inventory.json is readable");
@@ -1470,26 +1568,80 @@ mod tests {
             .collect();
         assert_eq!(
             mechanism_keys.len(),
-            14,
-            "mechanism population drifted from 14 (this cycle closed the 14 familiar-pool \
-             rows via Shape 8 cross-book ownership; 12 zero-content + 2 class rows remain)"
+            2,
+            "mechanism population drifted from 2 (this cycle closed the 12 zero-content \
+             grant-token-only rows via a verified dispatch-target predicate; only the 2 \
+             monster-class rows remain)"
         );
 
-        const ZERO_CONTENT: [&str; 12] = [
-            "Base Companion ~ Animal Companion",
-            "Base Companion ~ Special Mount",
-            "Companion ~ Ability Score Increase",
-            "Companion ~ Bonus Tricks",
-            "Companion ~ Devotion",
-            "Companion ~ Evasion",
-            "Companion ~ Improved Evasion",
-            "Companion ~ Link",
-            "Companion ~ Multiattack",
-            "Companion ~ Share Spells",
-            "Companion ~ Spell Resistance (AC)",
-            "Companion ~ Spell Resistance (SM)",
-        ];
         const CLASS_ROWS: [&str; 2] = ["Companion", "Shadow Companion"];
+
+        let companion_dir = repo_root.join("data/corpus/core_rulebook/companion");
+        let mut companion_docs: Vec<Value> = Vec::new();
+        for entry in std::fs::read_dir(&companion_dir)
+            .unwrap_or_else(|e| panic!("{}: {e}", companion_dir.display()))
+        {
+            let path = entry.expect("readable dir entry").path();
+            if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            let text = std::fs::read_to_string(&path).expect("readable json file");
+            let doc: Value = serde_json::from_str(&text).expect("valid json");
+            companion_docs.push(doc);
+        }
+
+        let mut reasons: BTreeMap<&'static str, u32> = BTreeMap::new();
+        for key in &mechanism_keys {
+            if CLASS_ROWS.contains(&key.as_str()) {
+                *reasons.entry("monster_class_definition_not_a_creature_or_ability").or_default() += 1;
+            } else {
+                panic!("{key}: not accounted for by any named sub-cause -- 2 must equal 2");
+            }
+        }
+        let _ = &companion_docs; // class rows live under cr_classes_companion.lst, not this dir
+
+        for (reason, count) in &reasons {
+            eprintln!("AT-34-E3-001 companion_absent sub-cause: {count} | {reason}");
+        }
+        let total: u32 = reasons.values().sum();
+        assert_eq!(total, 2);
+        assert_eq!(
+            reasons.get("monster_class_definition_not_a_creature_or_ability").copied().unwrap_or(0),
+            2
+        );
+    }
+
+    /// This cycle's own build: proves `GRANT_TOKEN_ONLY_DISPATCH_ROWS`'
+    /// own claim, per record, against the live corpus AND the live
+    /// `docs/work-inventory.json` -- never merely asserted in a doc
+    /// comment. For each of the 12 named keys: (1) the corpus shape is
+    /// genuinely zero-content (no `TYPE`/`DESC`/`BONUS` token, `ABILITY:`
+    /// present), and (2) EVERY `ABILITY:` token's target key is a real
+    /// `core_rulebook` companion row whose live work-inventory status is
+    /// already `grounded`, `text-complete`, or `literal-verified` --
+    /// i.e. this row's only job is to fan out to content the engine
+    /// ALREADY holds, not to a dead pointer or an unheld row. RED if the
+    /// corpus ever adds real content to one of these 12 keys, or if any
+    /// target's engine status ever regresses out of the held set (exactly
+    /// when `decisions.md §2`'s "cleared by revisiting the stated
+    /// condition" fires).
+    #[test]
+    fn grant_token_only_rows_dispatch_to_already_held_content() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let inventory_text = std::fs::read_to_string(repo_root.join("docs/work-inventory.json"))
+            .expect("docs/work-inventory.json is readable");
+        let inventory: Value = serde_json::from_str(&inventory_text)
+            .expect("docs/work-inventory.json is valid JSON");
+        let units = inventory["units"].as_array().expect("units is an array");
+        let mut status_by_key: BTreeMap<&str, &str> = BTreeMap::new();
+        for u in units {
+            if u["book"].as_str() == Some("core_rulebook") && u["kind"].as_str() == Some("companion") {
+                if let (Some(k), Some(s)) = (u["corpus_key"].as_str(), u["status"].as_str()) {
+                    status_by_key.insert(k, s);
+                }
+            }
+        }
+        const HELD_STATUSES: [&str; 3] = ["grounded", "text-complete", "literal-verified"];
 
         let companion_dir = repo_root.join("data/corpus/core_rulebook/companion");
         let mut companion_docs: Vec<Value> = Vec::new();
@@ -1511,43 +1663,44 @@ mod tests {
                 .unwrap_or_else(|| panic!("{key}: no corpus record found under {}", companion_dir.display()))
         };
 
-        let mut reasons: BTreeMap<&'static str, u32> = BTreeMap::new();
-        for key in &mechanism_keys {
+        assert_eq!(GRANT_TOKEN_ONLY_DISPATCH_ROWS.len(), 12);
+        for (key, _reason) in GRANT_TOKEN_ONLY_DISPATCH_ROWS {
             let doc = find_by_key(key);
-            let data = &doc["data"];
-            if ZERO_CONTENT.contains(&key.as_str()) {
-                let raw = data["raw_tokens"].as_array().expect("raw_tokens is an array");
-                let has_modelled_token = raw.iter().any(|t| {
-                    matches!(t["key"].as_str(), Some("TYPE") | Some("DESC") | Some("BONUS"))
+            let raw = doc["data"]["raw_tokens"].as_array().expect("raw_tokens is an array");
+            let has_modelled_token = raw
+                .iter()
+                .any(|t| matches!(t["key"].as_str(), Some("TYPE") | Some("DESC") | Some("BONUS")));
+            assert!(
+                !has_modelled_token,
+                "{key}: expected zero-content (ABILITY grant only), but a modelled token is \
+                 present -- this row may now carry real content and no longer belong here"
+            );
+            let ability_targets: Vec<&str> = raw
+                .iter()
+                .filter(|t| t["key"].as_str() == Some("ABILITY"))
+                .map(|t| {
+                    let value = t["value"].as_str().expect("ABILITY token has a string value");
+                    // `Companion Class Feature|AUTOMATIC|<target key>|<optional PRE conditions>`
+                    value.split('|').nth(2).unwrap_or_else(|| {
+                        panic!("{key}: ABILITY token has no target key segment: {value}")
+                    })
+                })
+                .collect();
+            assert!(!ability_targets.is_empty(), "{key}: expected at least one ABILITY: token");
+            for target in ability_targets {
+                let status = status_by_key.get(target).unwrap_or_else(|| {
+                    panic!(
+                        "{key}: ABILITY: target {target:?} is not a core_rulebook companion unit \
+                         in docs/work-inventory.json at all"
+                    )
                 });
                 assert!(
-                    !has_modelled_token,
-                    "{key}: expected zero-content (ABILITY grant only), but a modelled \
-                     token is present -- this row may no longer belong in this sub-cause"
+                    HELD_STATUSES.contains(status),
+                    "{key}: ABILITY: target {target:?} has status {status:?}, not one of \
+                     {HELD_STATUSES:?} -- this dispatch row would be routing to unheld content"
                 );
-                *reasons.entry("zero_content_internal_plumbing").or_default() += 1;
-            } else if CLASS_ROWS.contains(&key.as_str()) {
-                let path = doc["source"]["path"].as_str().unwrap_or("");
-                assert!(
-                    path.ends_with("cr_classes_companion.lst"),
-                    "{key}: expected a `cr_classes_companion.lst` CLASS row, found {path:?}"
-                );
-                *reasons.entry("monster_class_definition_not_a_creature_or_ability").or_default() += 1;
-            } else {
-                panic!("{key}: not accounted for by any named sub-cause -- 14 must equal 12+2");
             }
         }
-
-        for (reason, count) in &reasons {
-            eprintln!("AT-34-E3-001 companion_absent sub-cause: {count} | {reason}");
-        }
-        let total: u32 = reasons.values().sum();
-        assert_eq!(total, 14);
-        assert_eq!(reasons.get("zero_content_internal_plumbing").copied().unwrap_or(0), 12);
-        assert_eq!(
-            reasons.get("monster_class_definition_not_a_creature_or_ability").copied().unwrap_or(0),
-            2
-        );
     }
 
     /// This cycle's own build: the 14 familiar-pool rows two prior cycles
