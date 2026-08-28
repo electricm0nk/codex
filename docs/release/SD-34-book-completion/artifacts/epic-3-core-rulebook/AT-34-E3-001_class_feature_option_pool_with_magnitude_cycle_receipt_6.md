@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 6)
 
-- **Commit SHA:** (set below at push time)
+- **Commit SHA:** `df94dd024c`
 - **Files touched:** `src/rules_core/pilot_compute/mod.rs` (new
   `wizard_has_canonical_transmutation_selection`, one new computation block
   gated on it -- Telekinetic Fist bonus-damage + uses-per-day, Physical
