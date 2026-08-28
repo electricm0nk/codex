@@ -78,7 +78,7 @@ use codex::rules_core::rules_tables::crb::{
     equipment_tables as crb_equipment_tables, paladin_spell_list as crb_paladin_spell_list,
     race_tables::{RaceId, race_traits},
     ranger_spell_list as crb_ranger_spell_list, sorcerer_spell_list as crb_sorcerer_spell_list,
-    spell_list as crb_spell_list, wizard_spell_list as crb_wizard_spell_list,
+    spell_list as crb_spell_list, weapon_tables, wizard_spell_list as crb_wizard_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
@@ -10252,7 +10252,32 @@ fn classify(
                         engine_book: engine_book_field,
                     };
                 }
+                // AT-34-E3-001 cycle 5, weapon-proficiency-grant shard of
+                // the proficiency/mechanical-grant possession-tracking
+                // sub-cause named by cycle 4's own next-cycle plan.
+                // `class_feature_pool_catalog::weapon_proficiency_grant_
+                // class_id`'s own doc comment carries the full argument
+                // (three keys, each individually verified as an EXACT set
+                // match against the already-shipped, already-tested
+                // `weapon_tables::CLASS_WEAPON_PROFICIENCIES` table combat
+                // already consults via `character_is_proficient_with` --
+                // not a new stub, a real fact the engine already computes).
+                // This still has `description: null` (nothing to display),
+                // so it deliberately does NOT return `text-complete` --
+                // only that the record's own content is now genuinely held
+                // by an engine table (bucket B -> D, `decisions.md §2`'s
+                // "a shelf, not a half-fix"), leaving the display gap for
+                // whichever mechanism owns `has_real_description`.
                 if text_only {
+                    if let Some(class_id) =
+                        class_feature_pool_catalog::weapon_proficiency_grant_class_id(&unit.key)
+                    {
+                        if weapon_tables::class_weapon_proficiency(class_id).is_some() {
+                            return engine_does_not_hold(
+                                "class_feature_weapon_proficiency_grant_held_by_class_weapon_proficiency_table",
+                            );
+                        }
+                    }
                     return engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine");
                 }
                 // AT-33-E4-002 (`unknown-rootcause.md` §1): before this
@@ -17438,6 +17463,61 @@ mod class_feature_text_complete_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), true, false, "computed", false);
         assert_ne!(verdict.status, "deferred-with-reason");
         assert_ne!(verdict.evidence, "vacuous_placeholder_row_no_corpus_content_to_render");
+    }
+
+    /// `AT-34-E3-001` cycle 5, weapon-proficiency-grant shard: a
+    /// `description: null` internal chassis row whose corpus key is one of
+    /// `class_feature_pool_catalog::WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_
+    /// MATCHES`' three verified members must leave bucket B for bucket D --
+    /// `engine-does-not-hold` status still (nothing displays yet), but
+    /// evidence naming a real held fact, never the mechanism's own generic
+    /// `class_feature_option_pool_record_not_held_by_engine` fallback.
+    /// Proves this FAILS before the fix (the intended-reason RED): before
+    /// `weapon_proficiency_grant_class_id` was consulted, this exact unit
+    /// fell all the way through to the generic fallback despite the engine
+    /// already computing this exact class's weapon proficiency for real
+    /// combat (`character_is_proficient_with`).
+    #[test]
+    fn a_weapon_proficiency_grant_verified_against_the_class_table_leaves_bucket_b() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            57,
+            "Weapon Proficiencies ~ Bard",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_weapon_proficiency_grant_held_by_class_weapon_proficiency_table"
+        );
+        assert!(
+            !verdict.evidence.contains("not_held_by_engine"),
+            "must NOT carry a bucket-B marker any more: evidence={}",
+            verdict.evidence
+        );
+    }
+
+    /// Control: the excluded Cleric sibling (deity-favored-weapon grant, a
+    /// different mechanism `CLASS_WEAPON_PROFICIENCIES` does not model)
+    /// must be UNAFFECTED and keep falling to the generic bucket-B
+    /// fallback -- the lookup is a closed, verified list, never a
+    /// `"Weapon Proficiencies ~ *"` shape predicate.
+    #[test]
+    fn the_excluded_cleric_deity_weapon_sibling_still_falls_to_the_generic_fallback() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            58,
+            "Weapon Proficiencies ~ Cleric",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_option_pool_record_not_held_by_engine");
     }
 }
 

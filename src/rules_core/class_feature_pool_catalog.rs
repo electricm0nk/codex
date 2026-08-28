@@ -706,6 +706,60 @@ pub fn vacuous_placeholder_reason(key: &str) -> Option<&'static str> {
     VACUOUS_PLACEHOLDER_CLASS_FEATURES.iter().find(|(k, _)| *k == key).map(|(_, reason)| *reason)
 }
 
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism, cycle 5, proficiency/grant-possession-tracking sub-cause,
+/// weapon-proficiency shard). `description: null` internal chassis rows
+/// ("Weapon Proficiencies ~ Bard", "~ Druid", "~ Rogue") whose sole content
+/// is an `AUTO:WEAPONPROF|<list>` token naming that class's proficient
+/// weapons.
+///
+/// **This is not a name-pattern guess.** Four prior cycles' own warning
+/// (Cycle 2's 188-record near-miss from gating on record SHAPE alone) means
+/// each entry below was read against the REAL corpus token AND the real,
+/// already-shipped, already-tested
+/// [`crate::rules_core::rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES`]
+/// table (built and cited independently, for combat's own
+/// `character_is_proficient_with`, long before this mechanism existed) —
+/// only kept when the corpus record's own named-weapon list is a BYTE-FOR-
+/// BYTE set match (verified below,
+/// `weapon_proficiency_grant_class_table_matches_are_exact` proves it
+/// against the live corpus, not merely asserted here) for that class's
+/// table row. Two superficially-identical siblings were read and REJECTED:
+///
+/// - `"Weapon Proficiencies ~ Cleric"` grants `AUTO:WEAPONPROF|DEITYWEAPONS`
+///   — Cleric's real weapon proficiency here is her deity's favored weapon,
+///   a selection-dependent fact `CLASS_WEAPON_PROFICIENCIES`'s Cleric row
+///   (`tiers: [Simple], named: []`) does not model at all. Not a match.
+/// - `"Weapon Proficiencies ~ Monk"` grants seventeen named entries, the
+///   last of which is literally `"Flurry of Blows"` (a class feature name,
+///   not a weapon — a PCGen data quirk) where the table's own Monk row
+///   substitutes `"Unarmed Strike"` in that slot. Sixteen of seventeen
+///   match; the set is NOT identical, so this is left unclosed rather than
+///   force a near-match.
+///
+/// A held record here still carries `description: null` (nothing to
+/// display — that is `Kind::ClassFeature`'s OTHER, unrelated
+/// `has_real_description` precondition, a display-bucket concern per
+/// `decisions.md §2a`, not this mechanism's). This only answers "does the
+/// engine hold a real fact for this record's own content" — yes, verified,
+/// via a table that already computes real combat proficiency checks today.
+pub const WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES: &[(&str, &str)] = &[
+    ("Weapon Proficiencies ~ Bard", "class:bard"),
+    ("Weapon Proficiencies ~ Druid", "class:druid"),
+    ("Weapon Proficiencies ~ Rogue", "class:rogue"),
+];
+
+/// Looks up [`WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`] by key,
+/// returning the class id the record's own weapon list was verified
+/// against. `v06_work_inventory.rs`'s `Kind::ClassFeature` arm consults
+/// this immediately before its final
+/// `class_feature_option_pool_record_not_held_by_engine` fallback, mirroring
+/// [`vacuous_placeholder_reason`]'s own named-list pattern (never a live
+/// shape scan) for the identical reason.
+pub fn weapon_proficiency_grant_class_id(key: &str) -> Option<&'static str> {
+    WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES.iter().find(|(k, _)| *k == key).map(|(_, c)| *c)
+}
+
 /// `(book, key) -> description` for every entry the catalog holds — the
 /// shape `v06_work_inventory.rs`'s `EngineFacts` (and `Kind::ClassFeature`'s
 /// classify arm) actually consults, mirroring `feat_served_descriptions`'
@@ -766,6 +820,74 @@ mod tests {
             "every key in VACUOUS_PLACEHOLDER_CLASS_FEATURES must have exactly one corpus file, \
              and vice versa"
         );
+    }
+
+    /// Proves `WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`'s own claim
+    /// against BOTH the live corpus AND the live
+    /// `weapon_tables::CLASS_WEAPON_PROFICIENCIES` table — not merely
+    /// asserted in a doc comment. RED if either side ever changes such
+    /// that the sets stop matching exactly (which is exactly when this
+    /// table must be revisited, `decisions.md §2`'s "cleared by revisiting
+    /// the stated condition").
+    #[test]
+    fn weapon_proficiency_grant_class_table_matches_are_exact() {
+        use crate::rules_core::rules_tables::crb::weapon_tables;
+        let dir = repo_root().join("data/corpus/core_rulebook/class_feature/weapon_proficiencies");
+        for (key, class_id) in WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES {
+            let file_stub = key
+                .rsplit(' ')
+                .next()
+                .expect("key has a class-name suffix")
+                .to_lowercase();
+            let path = dir.join(format!("weapon_proficiencies_{file_stub}.json"));
+            let text = std::fs::read_to_string(&path)
+                .unwrap_or_else(|e| panic!("readable corpus json at {path:?}: {e}"));
+            let json: Value = serde_json::from_str(&text).expect("valid corpus json");
+            assert_eq!(json["data"]["key"].as_str(), Some(*key), "corpus file's own key must match");
+            assert!(
+                json["data"]["description"].is_null(),
+                "{key} now carries a real description -- this record may now qualify for a \
+                 different, display-bearing rung; revisit this table"
+            );
+            let auto_token = json["data"]["raw_tokens"]
+                .as_array()
+                .expect("raw_tokens is an array")
+                .iter()
+                .find(|t| t["key"].as_str() == Some("AUTO"))
+                .unwrap_or_else(|| panic!("{key} carries no AUTO token"))["value"]
+                .as_str()
+                .expect("AUTO token has a string value")
+                .to_string();
+            let corpus_weapons: std::collections::BTreeSet<String> = auto_token
+                .strip_prefix("WEAPONPROF|")
+                .unwrap_or_else(|| panic!("{key}'s AUTO token is not a WEAPONPROF grant: {auto_token}"))
+                .split('|')
+                .filter(|w| *w != "TYPE=Auto")
+                .map(|w| w.to_string())
+                .collect();
+            let table_row = weapon_tables::class_weapon_proficiency(class_id)
+                .unwrap_or_else(|| panic!("{class_id} must be a real row in CLASS_WEAPON_PROFICIENCIES"));
+            let table_weapons: std::collections::BTreeSet<String> =
+                table_row.named.iter().map(|w| w.to_string()).collect();
+            assert_eq!(
+                corpus_weapons, table_weapons,
+                "{key}'s corpus AUTO:WEAPONPROF list must be an EXACT set match for \
+                 {class_id}'s named list in CLASS_WEAPON_PROFICIENCIES -- a near-match must stay \
+                 unclosed (Monk's own \"Flurry of Blows\"/\"Unarmed Strike\" mismatch is exactly \
+                 why this table only names Bard/Druid/Rogue)"
+            );
+        }
+    }
+
+    /// The two records that superficially resemble
+    /// `WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`'s members (same
+    /// `weapon_proficiencies/` directory) but were investigated and
+    /// correctly excluded must stay excluded — RED if a future edit widens
+    /// the lookup by name-pattern rather than by verified content.
+    #[test]
+    fn weapon_proficiency_grant_class_table_matches_excludes_cleric_and_monk() {
+        assert_eq!(weapon_proficiency_grant_class_id("Weapon Proficiencies ~ Cleric"), None);
+        assert_eq!(weapon_proficiency_grant_class_id("Weapon Proficiencies ~ Monk"), None);
     }
 
     #[test]

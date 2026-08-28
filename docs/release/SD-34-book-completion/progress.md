@@ -101,6 +101,57 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 5) — one of nine, `decisions.md §14` — partial
+
+Re-derived the mechanism population fresh at this cycle's starting HEAD (`1de361c850`): still
+52, unchanged from cycle 4's own closing figure (`core_rulebook` bucket B whole-book had moved
+736 → 687 between cycle 4's own receipt and this cycle's start — sibling mechanisms' cycles,
+not this one, landed in between). The task brief's own instruction was explicit: build one of
+cycle 4's four named subsystems, or stop reporting the same zero. Cycle 4's own grep for a
+proficiency-tracking probe (`grep -n "proficiency.*wired\|weapon_prof.*wired"
+src/bin/v06_work_inventory.rs`) had found nothing and concluded no such subsystem exists — that
+grep pattern was too narrow, not the underlying fact. A wider search
+(`grep -rln "proficien" src/rules_core/*.rs`) surfaced `weapon_tables::CLASS_WEAPON_
+PROFICIENCIES`: a real, already-shipped, already-tested class-based weapon-proficiency table,
+transcribed per-class from the real corpus, already consumed today by `pilot_compute/mod.rs`'s
+`character_is_proficient_with` for combat's own nonproficiency-penalty checks — never wired to
+the atlas.
+
+Read every one of the five `"Weapon Proficiencies ~ *"` corpus records' own `AUTO:WEAPONPROF`
+token against that table's real data for the matching class — a byte-for-byte SET match, not a
+name-shape guess (`decisions.md §14`'s own warning about the mechanism's Cycle 2 near-miss
+still governs). Bard, Druid, and Rogue matched exactly. Cleric's own token
+(`AUTO:WEAPONPROF|DEITYWEAPONS`) is a genuinely different, selection-dependent mechanism (the
+deity's favored weapon) the table does not model at all. Monk's 17-weapon list matched 16 of
+17 — its last entry is literally `"Flurry of Blows"` (a class-feature name, not a weapon, a
+PCGen data quirk) where the table substitutes `"Unarmed Strike"` — a near-match, correctly left
+unclosed rather than forced.
+
+**3 of 52 closed this cycle** (`Weapon Proficiencies ~ {Bard, Druid, Rogue}`) — a new
+`class_feature_pool_catalog::WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES` closed 3-entry
+list (mirroring `VACUOUS_PLACEHOLDER_CLASS_FEATURES`'s own established named-list pattern) plus
+a new `classify()` rung that moves a match from bucket B to bucket D — deliberately still
+`engine-does-not-hold`, not `text-complete`: these records carry `description: null` (nothing
+to display, a separate, unrelated concern), so this only certifies the engine genuinely holds
+the record's own content now, exactly `decisions.md §2`'s "a shelf, not a half-fix" outcome.
+Two new tests prove the byte-for-byte match against the live corpus AND the live weapon table
+(RED if either drifts), two more prove the `classify()` rung and its Cleric-exclusion control.
+`core_rulebook` bucket B (atlas-real partition) 687 → 684/6,701. `cargo test --locked --lib`
+2,883 passed / 0 failed / 14 ignored; `cargo test --locked --bin v06_work_inventory` 395 passed
+/ 0 failed (4 new tests); `cargo test --locked --no-run` exit 0, workspace-wide; desktop crate
+(`apps/desktop/src-tauri`, separate cargo workspace) `cargo test --locked --no-run` exit 0.
+Disk healthy this cycle (488G free), unlike cycle 4's own environmental block. Re-derived and
+fixed 6 shifted `file:line` citations in `completion_atlas.py`/`missing_engine_tables.py`
+(`citation_failures=0` on both after this cycle's own +26-line insertion). `corpus_literal_sweep`
+unchanged at 48,708/51,482 examined, CLEAN (0 corpus records added/regenerated, only 3 already-
+committed files READ by a new test). 49 remain, sub-cause partition re-derived fresh and sums
+exactly: weapon-flavored generic/combined/excluded records 15, armor/shield/other-grant records
+10, class-skill/companion-mount attribution 13 (unchanged from cycle 4), wizard opposition-
+school tracking 9 (unchanged), Domain Power registration gap 2 (unchanged). Next-cycle lever
+named: an armor-proficiency table, structurally identical to the weapon table this cycle just
+wired, transcribed the same way, likely closes most of the 10-unit armor/shield group. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 4) — one of nine, `decisions.md §14` — partial
 
 Re-derived the mechanism population fresh at this cycle's starting HEAD (`3e68073423`): still
