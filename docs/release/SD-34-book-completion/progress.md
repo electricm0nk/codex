@@ -13,6 +13,44 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E2-004 reconfirmation at HEAD — no drift
+
+`AT-34-E2-004` ("bucket A reaches zero for both vehicle books") was already `complete` on
+`kanban.md` row 12 from its original 2026-08-27 cycle (commit `0dd52ccb65`). Every sibling
+criterion in this epic (`AT-34-E2-001`/`002`/`003`) had already been re-dispatched and
+reconfirmed at HEAD after 97 intervening Epic 3 commits touched `src/rules_core/`,
+`src/bin/v06_work_inventory.rs`, and `docs/work-inventory.json` — the exact files this
+criterion's evidence is measured against. Re-derived both check commands at HEAD (`2fa209e25f`)
+rather than re-quoting the original receipt (`decisions.md §12` L2/L19). Result: **no drift.**
+`python3 scripts/completion_atlas.py --book core_rulebook --check` reports bucket A `0`
+(population `6,701`, unclassified `0`, overlap `0`) — every other bucket moved substantially
+from Epic 3's own closure work and the `decisions.md §17`/`§18` operator rulings (`DONE
+1165→1438`, `B 1035→534`, `C 370→414`, `D 412→382`, `M 921→1048`, `V 2734→2751`, `U 58→18`,
+`X 6→116`) but bucket A never left zero. `--book ultimate_campaign --check` reports bucket A `0`
+with every other bucket **byte-identical** to the original cycle's after-figures (`DONE=127
+A=0 B=5 C=0 D=4 M=88 V=18 U=21 X=2 Z=0`) — Epic 3 scopes `core_rulebook` only and Epic 4
+(Ultimate Campaign to zero) has not yet been dispatched, so this book is untouched since the
+original cycle. Corpus-wide bucket A also holds at `449`, identical to the original cycle's own
+recorded after-figure, entirely `power` (421, priced in Epic 5) and `companion` (28, unchanged
+split per `missing_engine_tables.py --check`). `cargo test --locked --no-run` exits 0 at the
+workspace root and in `apps/desktop/src-tauri` (separate cargo workspace, tested explicitly);
+`cargo test --locked --lib rules_core::rules_tables::simple_kind_tables` is 13 of 13 passing.
+Dual-audit gate on Epic 2's file-touch set: `OK_NO_BUNDLE_TAGS`; the 24 `placeholder` matches
+are all PCGen's own CHOOSE-menu "no-selection" domain term, reviewed and disposed of as the same
+self-healable false positive the sibling reconfirmations already found — no stub tokens.
+`denominator_gate.py --check` on this package: `files_checked=15 violations=0`.
+`corpus_literal_sweep`: `48708` examined, `0` findings, CLEAN — this cycle touched zero corpus
+records (`git status --porcelain data/corpus` empty both before and after); the population's
+growth from the original cycle's `48699` to `48708` is Epic 3's own later, unrelated
+regenerations, the same `+9` the sibling reconfirmations already attributed.
+`box_ledger.py --check` exits `1` (`uncovered=19861`) — flagged as pre-existing, growing drift
+from `THE-BOX.md` not being re-derived this bundle (inherited read-only per `decisions.md §2`,
+outside this criterion's file-touch set and evidence bar), a decrease from the original cycle's
+own recorded `21504`, reported plainly rather than silenced. No production code changed; no unit
+moved across any bucket. See `artifacts/epic-2-tables/AT-34-E2-004_reconfirmation_receipt.md`
+for the full re-derivation. Epic 2 (4 of 4 criteria) is now fully reconfirmed at HEAD with no
+drift found on any criterion.
+
 ### Cycle — AT-34-E2-003 reconfirmation at HEAD — no drift
 
 `AT-34-E2-003` ("the measured build rate is recorded") was already `complete` on `kanban.md`
