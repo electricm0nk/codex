@@ -13,6 +13,37 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-004 (per-bucket step-cost ledger, `core_rulebook`) — complete
+
+**Status: complete.** Builds the real evidence artifact
+`artifacts/epic-3-core-rulebook/step-cost-ledger.json`: for every bucket that has had a dedicated
+clearing cycle so far (B — 29 cycles/2432.3 wall-min, C — 1 cycle/61.0 wall-min, U — 2
+cycles/71.5 wall-min), units cleared, wall time, and dominant mechanism, **measured** by
+re-partitioning `docs/work-inventory.json` at every commit SHA since the `tranche/14` cut through
+the live `completion_atlas.partition(book='core_rulebook')` function, not estimated. Buckets D,
+M, V, X (no dedicated clearing cycle yet) are named, not omitted, in the same file's
+`buckets_not_yet_cleared` section with their current counts.
+
+Distinguishes closure from reclassification per bucket: bucket B's 503-unit net reduction is 235
+real closure + 268 reclassification (moved to another unfinished bucket, not DONE); bucket C's
+42-unit reduction is 0 closure + 42 reclassification (all moved to V); bucket U's 48-unit
+reduction is 48 closure + 0 reclassification.
+
+The prior `step-cost-ledger.derived.json` (an orchestrator-authored, explicitly PARTIAL,
+corpus-wide-by-shape input) is retained as a secondary cross-check, not this criterion's own
+evidence — its own embedded note already says it does not satisfy AT-34-E3-004.
+
+**Discovery, not caused by this cycle:** the denominator gate
+(`python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'`) is red
+at `violations=2` from an earlier, already-committed `AT-34-E3-003` receipt's prose (a literal
+"75% chance..." corpus quote in this file's own lines 22/28 as they stood before this cycle's
+prepend). Not self-healed here — outside this criterion's file-touch set and this file is a
+shared prepend-only log. Filed as a retro `incident`
+(`denominator-gate-percent-literal-false-positive`); named in the receipt's Notes for the next
+cycle or the closure scan to fix.
+
+Full detail: `artifacts/epic-3-core-rulebook/AT-34-E3-004_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-003 (bucket `U` cycle 2 — `render_pcgen_desc` bare-percent fix) — partial, closure
 
 **Status: partial.** Closes the `render_pcgen_desc` bare-percent-after-digit defect the prior
