@@ -13,6 +13,45 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E4-001 (23-unit non-A tail resolved) — complete
+
+**Status: complete.** Re-derived the tail at HEAD: `python3 scripts/completion_atlas.py --book
+ultimate_campaign --check` → `U: 21`, `X: 2` (23 of 265), unchanged before/after this cycle — the
+criterion's own Evidence clause allows resolution by proof, not only by bucket movement, and that
+is the disposition here.
+
+**21 `U` units (all `feat`, `category=Story`):** verified against the pinned PCGen oracle
+(`7f818006e371188e5717fd18d74d18a420747fc6`) that every one carries PCGen's own
+`DESC:[Not Implemented] ...` editorial marker plus real, substantial `.MOD BENEFIT:` mechanical
+text (Goal/Completion Benefit clauses) joined into the served description
+(`ultimate_campaign::feat_tables` + `feats_all::map_uca_entry`). Confirmed the atlas's
+`unmeasurable` verdict is not an instrument gap: `SD31-E2-F3-002`'s own test names this exact
+population while fixing a case-sensitivity bug, deliberately choosing uniform demotion (not
+promotion) corpus-wide (~392 marker occurrences project-wide, not just here). Added a new,
+mechanically-checked Rust test (`feats_all::tests::uca_u_bucket_records_still_carry_the_editorial_marker_in_served_form`)
+proving this for all 21 records against the real served catalog, and corrected a stale doc-comment
+claim in `ultimate_campaign::feat_tables` that had called these 21 "text-complete" — language that
+reads as the atlas bucket name but has not matched the live classifier's verdict since
+`SD31-E2-F3-002` landed. Filed the corpus-wide marker-stripping question as a named forward
+candidate for `AT-34-E5-002`'s capability register rather than deciding it unilaterally
+(`decisions.md §16`'s own precedent against resolving a bucket-destination definitional question
+on one cycle's authority).
+
+**2 `X` units** (`Fearless Zeal` uca_feats.lst:66, `Magnum Opus` uca_feats.lst:74): checked
+directly against the pinned oracle's raw `.lst` and confirmed both splice/truncation defects match
+exactly as stated — real, current, unrepairable without inventing text. `X` is the correct, final
+resting state for both; no further action clears them.
+
+Full detail, every figure with its re-derive command: `artifacts/epic-4-ultimate-campaign/AT-34-E4-001_cycle_receipt.md`.
+
+`cargo test --locked --no-run` (workspace) exits 0 at `72c9f6fec69371b43aebba12e28e0d0cd990e9b7`.
+Dual-audit gate on my own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`. `data/corpus/**` untouched
+this cycle — `corpus_literal_sweep` N/A. Retro events logged (see `scripts/retro.py` invocations in
+the cycle receipt).
+
+Next-cycle plan: `AT-34-E4-002` still needs `B`(5)/`D`(4)/`M`(88)/`V`(18) at zero for
+`ultimate_campaign` — none of those are this criterion's population and none were touched here.
+
 ### Cycle — AT-34-E3-006 (atlas defects recorded) — complete
 
 **Status: complete.** `atlas-defects.md` already existed with 3 entries (written incidentally
