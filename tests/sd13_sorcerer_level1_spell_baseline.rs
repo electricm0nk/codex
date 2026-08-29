@@ -217,6 +217,16 @@ fn sorcerer_level1_fabricates_no_spell_math() {
                 // ids for Sorcerer (previously wholesale-excluded); this shape carve-out
                 // admits them without weakening the substring check for anything else.
                 || explanation.id.starts_with("class_feature.sorcerer.corpus_record.")
+                // SD-34 bucket-B batch cycle: found stale, unrelated to this cycle's own
+                // three mechanisms -- the pre-existing (SD-32 T12 Epic 8, `decisions.md
+                // §17`) generic bloodline-power pass emits one real, citation-backed
+                // `class_feature.sorcerer.bloodline.generic.<bloodline>.<power>.<var>` id per
+                // corpus power the selected bloodline carries; several real PCGen var names
+                // (e.g. `SorcererBloodlineFeatImprovedCounterspell`) contain "spell" as a
+                // substring, tripping this stale substring catch-all. Scoped by prefix, same
+                // shape as the corpus_record carve-out above, admitting only this one
+                // namespace.
+                || explanation.id.starts_with("class_feature.sorcerer.bloodline.generic.")
                 || !explanation.id.contains("spell"),
             "no fabricated spell explanation is allowed beyond the +0 recognition and the \
              access-ladder record: {explanation:?}"

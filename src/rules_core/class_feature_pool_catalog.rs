@@ -1943,17 +1943,32 @@ mod tests {
     /// repurposed to `LEVEL_UP_PILLAR_FILTERED_CLASSES` (Druid/Monk only)
     /// by a sibling lane's SAME-wave, concurrently-landed `§18` fix
     /// (anti-fabrication is now enforced by corpus-citation, not a class
-    /// allowlist) -- rebased past that landing, importing the old constant
-    /// is no longer possible. `docs/work-inventory.json` is untouched this
-    /// wave (wave rule: no regeneration mid-wave), so the SAME 242-unit
-    /// snapshot every lane's dispatch was built from is still live here;
-    /// this test characterizes THAT frozen snapshot's split by the
-    /// ORIGINAL seven-class definition, exactly as `decisions.md §18`
-    /// states it ("218 of 242"). The split is re-verified once the shared
-    /// post-wave regeneration cycle runs.
+    /// allowlist), then REMOVED entirely by a later bucket-B batch cycle
+    /// (Druid/Monk widened the same way) -- importing either constant is
+    /// no longer possible, so this test keeps its own frozen, hand-written
+    /// copy of the ORIGINAL seven-class definition and characterizes THIS
+    /// mechanism's population split by that definition regardless of what
+    /// production code currently excludes.
+    ///
+    /// **242 -> 239 (SD-34 wave-9 shared regeneration, prior cycle):**
+    /// `docs/work-inventory.json` was regenerated once, after this
+    /// characterization was first written; 3 excluded-class units left
+    /// this mechanism's population (moved status by the SAME-wave
+    /// citation-gate widening for Wizard/Bard/Paladin/Cleric/Sorcerer, not
+    /// by this test's own lane) -- confirmed live, not merely inferred: a
+    /// fresh per-class re-group against the CURRENT `docs/work-
+    /// inventory.json` gives Sorcerer 137, Cleric 38 (was 39), Monk 25,
+    /// Wizard 5 (was 7), Paladin 5, Bard 4, Druid 1 -- **215**, not 218
+    /// (Monk and Druid are BYTE-FOR-BYTE unchanged, matching wave-9's own
+    /// "0 Druid/Monk movement confirmed" finding; only Cleric and Wizard
+    /// moved). The non-excluded 24 (below) are confirmed UNCHANGED by the
+    /// same re-group. This is an instrument-correction to a STALE pinned
+    /// count this test's own prior author never re-checked after the
+    /// regeneration landed -- re-derive again with the query in this
+    /// test's own body before trusting either number further.
     ///
     /// **This lane owns only the non-excluded remainder** (a sibling lane
-    /// owns the 218 excluded-class units, gated on an operator ruling on
+    /// owns the 215 excluded-class units, gated on an operator ruling on
     /// `OPEN-ISSUES.md` rows 330/338 this test does not decide). Of the 24
     /// non-excluded units: 18 carry no corpus description at all (the
     /// zero-description internal-bookkeeping sub-cause `atlas-defects.md`
@@ -2056,7 +2071,7 @@ mod tests {
              refuse -- this WOULD be a narrow catalog-widening closure, re-investigate: \
              {real_desc_unrefused_unexpected:?}"
         );
-        assert_eq!(excluded, 218, "excluded-class population (sibling lane's, do not touch)");
+        assert_eq!(excluded, 215, "excluded-class population (sibling lane's, do not touch)");
         assert_eq!(null_desc, 18, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
         assert_eq!(real_desc_refused, 6, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
         assert_eq!(excluded + null_desc + real_desc_refused, mechanism_units.len() as u32);

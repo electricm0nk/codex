@@ -13,6 +13,41 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle 10 — AT-34-E3-001 — bucket-B batch cycle: Druid/Monk widening + 8 pre-existing stale-gate fixes — partial
+
+**Status: partial.** Single-agent batch across all three of AT-34-E3-001's remaining
+`core_rulebook` mechanisms (owner_matched, option_pool_with_magnitude, option_pool), one build,
+per the operator's "make every edit, compile once, test once" cost argument.
+
+Re-derived: mechanism 1 (owner_matched) population is now 239, not 242 — a prior wave-9 shared
+regeneration already moved 3 units; cycle 9's own 218/24 excluded/non-excluded split is now
+215/24 (Monk/Druid byte-for-byte unchanged, only Cleric/Wizard moved). Mechanisms 2 and 3 stand
+unchanged at 208 and 25.
+
+**Real code movement, mechanism 1 only:** removed `class_feature_grant_consumer.rs`'s
+`LEVEL_UP_PILLAR_FILTERED_CLASSES` (the class-wide Druid/Monk exclusion) entirely. Direct
+re-reading of `is_druid_pillar_id`/`is_monk_pillar_id` found both already admit this module's
+own id shape by prefix, and `v06_work_inventory.rs`'s own `classify()` never reads
+`LevelUpPlan`/`level_up::` at all — the cited "SEPARATE, THIRD reason" for the exclusion was
+stale, conflating two different consumers of the same explanation id. Expected: 2 real closures
+this mechanism owns (`Monk ~ Flurry of Blows`, `Monk ~ Unarmed Strike`), plus 6 bonus closures
+in a different mechanism's own bucket (5 Monk + 1 Druid). Mechanisms 2 and 3: zero code change —
+re-derived and reported as genuinely NOT narrow work (a new wizard school needs real per-power
+formula engineering; the option-pool remainder needs a new possession-tracking subsystem or a
+Paladin Special Mount computation).
+
+**8 pre-existing, unrelated stale anti-fabrication gates found and fixed** while running the
+full `sd13_*`/`sd25_*` set (184 targets) together — apparently the first time in this bundle's
+history: 4 Bard progression files and 2 Sorcerer progression files missed additive carve-outs
+for real, already-landed magnitude groundings (mechanism-2's own earlier Suggestion/Inspire
+Greatness cycles, and an unrelated SD-32-era generic bloodline-power pass) their own tests were
+never updated to admit. All fixed additively, none weakened; full 184-target re-run green.
+Also found and fixed a stale pinned assertion in `class_feature_pool_catalog.rs`
+(`excluded, 218` → `215`), unrelated to this cycle's own code, from the same un-re-checked
+wave-9 regeneration.
+
+Full detail: `AT-34-E3-001_class_feature_owner_matched_cycle_receipt_10.md`.
+
 ### Cycle — AT-34-E3-001, `class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 9 (non-excluded remainder re-derived: 218/24, not 161/81) — partial
 
 **Status: partial.** This cycle owns only the NON-excluded-class remainder of the

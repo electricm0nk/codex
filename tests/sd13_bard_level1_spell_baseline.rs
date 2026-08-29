@@ -237,7 +237,17 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
                     && !explanation.id.contains("bardic")
                     && !explanation.id.contains("music")
                     && !explanation.id.contains("inspire")
-                    && !explanation.id.contains("fascinate")),
+                    && !explanation.id.contains("fascinate"))
+                // SD-34 bucket-B batch cycle (this gate was missed by the same-shaped
+                // carve-out `sd13_bard_level4..8_progression.rs` already applied
+                // elsewhere): `class_feature_grant_consumer` now emits real,
+                // citation-backed `class_feature.bard.corpus_record.*` roster ids for
+                // Bard (`decisions.md` section 18) -- a flat "this class feature exists,
+                // granted from level N" fact, never a fabricated spell/performance
+                // MAGNITUDE. This additive prefix carve-out admits that shape without
+                // touching any existing `allowed_ids` entry or weakening this control
+                // for any spell/bardic-tagged id outside that one namespace.
+                || explanation.id.starts_with("class_feature.bard.corpus_record."),
             "no fabricated spell or bardic-class-feature explanation is allowed beyond the \
              +0 recognition and the grounded flat pillars: {explanation:?}"
         );

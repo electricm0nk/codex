@@ -133,6 +133,30 @@ const FLAT_LEVEL_ONE_SPELL_MATH_IDS: [&str; 2] = [
     "class_chassis.druid.spell_save_dc.spell_level_1",
 ];
 
+/// SD-34 bucket-B batch cycle: `class_feature_grant_consumer.rs`'s own
+/// class-wide Druid exclusion (`LEVEL_UP_PILLAR_FILTERED_CLASSES`) was
+/// removed, so `push_generic_class_feature_grant_records` now emits three
+/// new `class_feature.druid.corpus_record.*` ids for real, citation-backed
+/// grant facts PCGen's own progression data grants Druid at level 1:
+/// Nature Bond, Orisons, Spontaneous Casting. All three are level-1-granted
+/// and flat (the module's own explanation value is the fixed `granted_at`
+/// level, never a per-level formula), so -- exactly like `FLAT_LEVEL_ONE_ID`
+/// and `FLAT_LEVEL_ONE_SPELL_MATH_IDS` above -- none can ever appear as a
+/// grant within this codebase's `from_level >= 1` sweep: the character
+/// already has each one at the very first level modeled, so there is no
+/// transition in which it goes from absent to present. Verified, not
+/// assumed, by
+/// `the_new_corpus_record_grant_facts_are_verified_constant_across_the_whole_range`
+/// below (this is `is_druid_pillar_id` correctly PASSING these ids
+/// through, same as every other real pillar -- they simply have no
+/// `from_level >= 1` transition to surface on, the identical structural
+/// shape `FLAT_LEVEL_ONE_ID` already established, not a filter defect).
+const NEW_CORPUS_RECORD_GRANT_FACT_IDS: [&str; 3] = [
+    "class_feature.druid.corpus_record.nature_bond",
+    "class_feature.druid.corpus_record.orisons",
+    "class_feature.druid.corpus_record.spontaneous_casting",
+];
+
 fn human_druid_input(level: u8) -> CharacterInput {
     CharacterInput {
         case_id: Some("sd25_druid_level_up_explanation_filter_audit".to_string()),
@@ -218,6 +242,7 @@ fn every_real_druid_explanation_id_survives_the_level_up_filter_except_the_docum
             id.as_str() != RECOGNITION_ONLY_ID
                 && id.as_str() != FLAT_LEVEL_ONE_ID
                 && !FLAT_LEVEL_ONE_SPELL_MATH_IDS.contains(&id.as_str())
+                && !NEW_CORPUS_RECORD_GRANT_FACT_IDS.contains(&id.as_str())
                 && !granted_ids.contains(id.as_str())
         })
         .collect();
@@ -369,5 +394,32 @@ fn the_unsupported_prepared_divine_spell_diagnostic_is_never_read_as_an_explanat
                 computation.diagnostics
             );
         }
+    }
+}
+
+/// SD-34 bucket-B batch cycle: confirms `NEW_CORPUS_RECORD_GRANT_FACT_IDS`'s exclusion above is
+/// legitimate the same way `FLAT_LEVEL_ONE_ID`'s own proof is -- each id is present at every
+/// level in the sweep (granted starting at level 1) and its value never changes, so its absence
+/// from `granted_ids` is a structural "no `from_level >= 1` transition can ever surface it"
+/// fact, not evidence the widened citation gate or `is_druid_pillar_id`'s filter dropped it.
+#[test]
+fn the_new_corpus_record_grant_facts_are_verified_constant_across_the_whole_range() {
+    for &id in NEW_CORPUS_RECORD_GRANT_FACT_IDS.iter() {
+        let mut values = Vec::new();
+        for level in 1..=MAX_SUPPORTED_DRUID_LEVEL {
+            let input = human_druid_input(level);
+            let computation = compute_pilot_base_chassis(&input);
+            let explanation = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected {id} present at every level, missing at level {level}"));
+            values.push(explanation.value);
+        }
+        assert!(
+            values.iter().all(|&v| v == values[0]),
+            "{id} must be constant across levels 1..={MAX_SUPPORTED_DRUID_LEVEL} to justify \
+             excluding it from the 'must eventually be granted' requirement above: {values:?}"
+        );
     }
 }

@@ -350,6 +350,11 @@ fn bard_level7_gains_no_new_bard_namespaced_explanation_id() {
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_2",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_3",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_4",
+        // SD-34 bucket-B batch cycle: `AT-34-E3-001` cycle 5 legitimately grounded
+        // Suggestion's flat Will-save DC at level 6, still present at level 7 -- a
+        // real "Special"-column class feature this test's own known-id list never
+        // listed.
+        "class_feature.bard.suggestion_dc",
     ];
     assert!(
         computation

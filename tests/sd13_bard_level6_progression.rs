@@ -258,16 +258,28 @@ fn bard_level6_does_not_fabricate_suggestion_or_versatile_performance() {
     let input = load(BARD_LEVEL6_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // SD-34 bucket-B batch cycle: `AT-34-E3-001` (`class_feature_option_pool_record_
+    // with_magnitude_not_held_by_engine` mechanism)'s own cycle 5 legitimately grounded
+    // Suggestion's flat Will-save DC (`class_feature.bard.suggestion_dc`, verified against
+    // this repo's own ingested corpus record and the identical formula shape as the
+    // already-grounded Fascinate DC -- see `pilot_compute.rs`'s own doc comment at that push
+    // site) BEFORE this test's own assertion was ever updated to admit it -- a stale-gate gap
+    // this cycle found and fixes here, not a new fabrication this cycle introduced. Only the
+    // ONE flat DC magnitude is admitted; any OTHER suggestion-tagged id (execution, targeting,
+    // resolution -- none of which is grounded) still fails this control exactly as before.
+    let suggestion_ids: Vec<&ComputationExplanation> = computation
+        .explanations
+        .iter()
+        .filter(|e| e.id.contains("suggestion"))
+        .collect();
     assert!(
-        !computation
-            .explanations
+        suggestion_ids
             .iter()
-            .any(|e| e.id.contains("suggestion")),
-        "Suggestion (the PF1 CRB's 6th-level Bard spell-like ability) requires a \
-         fascinated-target prerequisite and the \"suggestion\" spell's own effect-resolution \
-         engine, neither of which exists in this codebase; no explanation record must be \
-         fabricated for it: {:?}",
-        computation.explanations
+            .all(|e| e.id == "class_feature.bard.suggestion_dc"),
+        "only the flat, citation-backed Suggestion DC magnitude may appear; Suggestion's \
+         fascinated-target prerequisite and its own effect-resolution engine are still \
+         unimplemented, so no OTHER suggestion-tagged explanation record may be fabricated: \
+         {suggestion_ids:?}"
     );
     assert!(
         !computation
@@ -275,7 +287,7 @@ fn bard_level6_does_not_fabricate_suggestion_or_versatile_performance() {
             .iter()
             .any(|d| d.id.contains("suggestion")),
         "no diagnostic record should be fabricated for Suggestion either, since this slice \
-         deliberately declines to ground it: {:?}",
+         deliberately declines to ground its execution: {:?}",
         computation.diagnostics
     );
     assert!(
@@ -364,6 +376,10 @@ fn bard_level6_gains_no_new_bard_namespaced_explanation_id() {
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_2",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_3",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_4",
+        // SD-34 bucket-B batch cycle: `AT-34-E3-001` cycle 5 legitimately grounded
+        // Suggestion's flat Will-save DC at this exact level (level 6) -- a real
+        // "Special"-column class feature this test's own known-id list never listed.
+        "class_feature.bard.suggestion_dc",
     ];
     assert!(
         computation

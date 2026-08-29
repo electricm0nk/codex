@@ -202,15 +202,27 @@ fn bard_level9_does_not_fabricate_inspire_greatness() {
     let input = load(BARD_LEVEL9_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // SD-34 bucket-B batch cycle: `AT-34-E3-001`'s own cycle 5 legitimately grounded Inspire
+    // Greatness's flat affected-ally COUNT (`class_feature.bard.inspire_greatness_allies`,
+    // verified against this repo's own ingested corpus record and formula,
+    // `min((bard level - 6) / 3, 4)`) before this test's own assertion was ever updated to
+    // admit it -- a stale-gate gap this cycle found and fixes here, not a new fabrication.
+    // Only that one flat count is admitted; the feature's own bundled bonuses (extra Hit
+    // Dice, temporary hit points, competence bonuses) and their application to any ally are
+    // still unimplemented, so any OTHER greatness-tagged id still fails this control.
+    let greatness_ids: Vec<&ComputationExplanation> = computation
+        .explanations
+        .iter()
+        .filter(|e| e.id.to_lowercase().contains("greatness"))
+        .collect();
     assert!(
-        !computation
-            .explanations
+        greatness_ids
             .iter()
-            .any(|e| e.id.to_lowercase().contains("greatness")),
-        "level-9 Bard must not fabricate any inspire-greatness explanation record (the \
-         feature bundles bonus Hit Dice, temporary hit points, and competence bonuses behind \
-         the ungrounded performance-state engine): {:?}",
-        computation.explanations
+            .all(|e| e.id == "class_feature.bard.inspire_greatness_allies"),
+        "only the flat, citation-backed Inspire Greatness affected-ally COUNT may appear; the \
+         feature's own bundled bonus Hit Dice, temporary hit points, and competence bonuses \
+         are still behind the ungrounded performance-state engine, so no OTHER greatness- \
+         tagged explanation record may be fabricated: {greatness_ids:?}"
     );
     assert!(
         !computation

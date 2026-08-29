@@ -146,6 +146,30 @@ const CLASS_TABLE_COVERED_IDS: [&str; 4] = [
 const CLASS_TABLE_COLUMN_KEYS: [&str; 4] =
     ["base_attack_bonus", "fort_save", "ref_save", "will_save"];
 
+/// SD-34 bucket-B batch cycle: `class_feature_grant_consumer.rs`'s own
+/// class-wide Monk exclusion (`LEVEL_UP_PILLAR_FILTERED_CLASSES`) was
+/// removed, so `push_generic_class_feature_grant_records` now emits new
+/// `class_feature.monk.corpus_record.*` ids for real, citation-backed grant
+/// facts. Most (Abundant Step, Diamond Soul, Maneuver Training, Perfect
+/// Self, Quivering Palm) are granted above level 1 and correctly surface as
+/// real grants at their own granted-at transition (proven by this file's
+/// own exhaustiveness test needing no exclusion for them). These three are
+/// granted AT level 1 -- Flurry of Blows, Stunning Fist, Unarmed Strike --
+/// so the character already has each one at the very first level modeled,
+/// the identical structural shape `BOUNDED_PROGRESSION_RECOGNITION_ID`
+/// already established: `is_monk_pillar_id` correctly passes all three
+/// through (proven live, not merely by prefix, in
+/// `every_real_monk_explanation_id_survives_the_level_up_filter_except_the_documented_exclusions`'s
+/// own real-id set), they simply have no `from_level >= 1` transition to
+/// surface a grant on. Verified constant, not assumed, by
+/// `the_new_level_one_corpus_record_grant_facts_are_verified_constant_across_the_whole_range`
+/// below.
+const NEW_LEVEL_ONE_CORPUS_RECORD_GRANT_FACT_IDS: [&str; 3] = [
+    "class_feature.monk.corpus_record.flurry_of_blows",
+    "class_feature.monk.corpus_record.stunning_fist",
+    "class_feature.monk.corpus_record.unarmed_strike",
+];
+
 fn human_monk_input(level: u8) -> CharacterInput {
     CharacterInput {
         case_id: Some("sd25_monk_level_up_explanation_filter_audit".to_string()),
@@ -234,6 +258,7 @@ fn every_real_monk_explanation_id_survives_the_level_up_filter_except_the_docume
         .filter(|id| {
             id.as_str() != BOUNDED_PROGRESSION_RECOGNITION_ID
                 && !CLASS_TABLE_COVERED_IDS.contains(&id.as_str())
+                && !NEW_LEVEL_ONE_CORPUS_RECORD_GRANT_FACT_IDS.contains(&id.as_str())
                 && !surfaced_ids.contains(id.as_str())
         })
         .collect();
@@ -480,4 +505,32 @@ fn the_bonus_feat_unsupported_diagnostic_is_never_read_as_an_explanation() {
         "the bonus-feat-unsupported id must stay a claim-blocking diagnostic: {:?}",
         computation.diagnostics
     );
+}
+
+/// SD-34 bucket-B batch cycle: confirms `NEW_LEVEL_ONE_CORPUS_RECORD_GRANT_FACT_IDS`'s
+/// exclusion above is legitimate the same way `BOUNDED_PROGRESSION_RECOGNITION_ID`'s own proof
+/// is -- each id is present at every level in the sweep (granted starting at level 1) and its
+/// value never changes, so its absence from `surfaced_ids` is a structural "no `from_level >= 1`
+/// transition can ever surface it" fact, not evidence `is_monk_pillar_id` or the widened
+/// citation gate dropped it.
+#[test]
+fn the_new_level_one_corpus_record_grant_facts_are_verified_constant_across_the_whole_range() {
+    for &id in NEW_LEVEL_ONE_CORPUS_RECORD_GRANT_FACT_IDS.iter() {
+        let mut values = Vec::new();
+        for level in 1..=MAX_SUPPORTED_MONK_LEVEL {
+            let input = human_monk_input(level);
+            let computation = compute_pilot_base_chassis(&input);
+            let explanation = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected {id} present at every level, missing at level {level}"));
+            values.push(explanation.value);
+        }
+        assert!(
+            values.iter().all(|&v| v == values[0]),
+            "{id} must be constant across levels 1..={MAX_SUPPORTED_MONK_LEVEL} to justify \
+             excluding it from the 'must eventually be granted' requirement above: {values:?}"
+        );
+    }
 }

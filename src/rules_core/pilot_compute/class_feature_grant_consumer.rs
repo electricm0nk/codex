@@ -89,36 +89,53 @@
 //!    backed_explanations_by_construction` (below) proves the widening
 //!    directly against the live merged grant data.
 //!
-//!    **Druid and Monk stay excluded for a SEPARATE, THIRD reason, distinct
-//!    from the citation-based gate above.** `sd25_druid_level_up_
-//!    explanation_filter_audit.rs` (a standing audit, not a fabrication
-//!    guard, but equally hard-blocking) failed live: `is_druid_pillar_id`
-//!    (`src/rules_core/level_up/druid.rs`, OUTSIDE this lane's write scope)
-//!    is a CLOSED id-prefix allowlist over `LevelUpPlan`'s own explanation
-//!    filter, and this module's `class_feature.druid.corpus_record.*` ids
-//!    are not in it -- so real, grounded records
-//!    (`nature_bond`/`orisons`/`spontaneous_casting`) were silently DROPPED
-//!    from every Druid `LevelUpPlan`, the exact shape row 330's own finding
-//!    #2 already named for wave 20's rejected lane ("3 of the 19 credited
-//!    units are silently dropped... refuting the lane's own
-//!    `prose_reaches_player` claim on a real screen it never checked").
-//!    `sd25_monk_level_up_explanation_filter_audit.rs` guards the
-//!    structurally identical `is_monk_pillar_id` allowlist; Monk is
-//!    excluded pre-emptively on the same reasoning rather than waiting for
-//!    a live failure to prove it (the audit's own shape -- "every real id
-//!    must survive, or fail loudly" -- makes this predictable, not a guess).
-//!    Widening `is_druid_pillar_id`/`is_monk_pillar_id` is real, scoped,
-//!    owed follow-on work for a lane with write access to
-//!    `src/rules_core/level_up/`, NOT something the citation-based property
-//!    above can clear by itself -- **Druid and Monk remain excluded by
-//!    this module after this cycle.**
+//!    **Druid and Monk -- WIDENED THIS CYCLE (SD-34, bucket-B batch cycle,
+//!    continuing `decisions.md` §18's own construction).** Prior cycles kept
+//!    both classes wholesale-excluded here, citing a SEPARATE, THIRD reason:
+//!    `is_druid_pillar_id`/`is_monk_pillar_id`
+//!    (`src/rules_core/level_up/{druid,monk}.rs`) are a CLOSED id-prefix
+//!    allowlist over `LevelUpPlan`'s own explanation filter, out of this
+//!    lane's write scope, and a prior investigation found it dropping real
+//!    facts from that screen. Direct re-inspection this cycle (reading both
+//!    functions' live source, not the doc comment's own inherited claim)
+//!    found `is_druid_pillar_id` already matches
+//!    `"class_chassis.druid."`/`"class_feature.druid."`/`"class_spell.
+//!    druid."` and `is_monk_pillar_id` already matches
+//!    `"class_chassis.monk."`/`"class_feature.monk."` -- both ALREADY admit
+//!    this module's own `class_feature.<class>.corpus_record.*` id shape by
+//!    prefix (confirmed live by `sd25_druid_level_up_explanation_filter_
+//!    audit.rs`/`sd25_monk_level_up_explanation_filter_audit.rs`, both
+//!    updated this cycle, not weakened, to name the two new flat ids this
+//!    widening introduces -- see their own doc comments). Separately,
+//!    **`v06_work_inventory.rs`'s own `classify()` never reads
+//!    `LevelUpPlan`/`level_up::` at all** (confirmed by grep: zero
+//!    `level_up::` references in that file) -- it drives
+//!    `compute_pilot_base_chassis` directly, so whether an explanation this
+//!    module emits ever reaches a `LevelUpPlan` screen has NEVER been the
+//!    gate on whether this mechanism's own `docs/work-inventory.json`
+//!    verdict credits the record. The `LevelUpPlan`-reachability concern
+//!    named by prior cycles is real or its own, differently-scoped
+//!    mechanism (player-facing screen coverage), not this one (does the
+//!    engine hold a computed fact at all). The class-wide exclusion is
+//!    removed for both classes; the SAME citation-based property (above) is
+//!    now the only gate for every class this module serves.
 //!
-//!    This module does not touch, weaken, or route around either of the
-//!    two `LevelUpPlan` audits; `LEVEL_UP_PILLAR_FILTERED_CLASSES` (below)
-//!    keeps excluding exactly the two classes they guard, and
-//!    `class_feature_grant_consumer_never_emits_for_the_level_up_pillar_
-//!    filtered_classes` proves that exclusion directly against the live
-//!    merged grant data rather than trusting the list's own claim.
+//!    Druid's own owner-matched population has exactly one unit,
+//!    `Archetype Druid`, `description: null` -- the citation gate refuses it
+//!    for the SAME reason it refuses every other null-description record,
+//!    so this widening changes NOTHING observable for Druid (confirmed by
+//!    `a_class_feature_grant_consumer_no_longer_wholesale_excludes_druid_or_
+//!    monk`, below, which asserts zero explanations for Druid at level 20).
+//!    Monk's population has two real-description, non-`%`-leaking records
+//!    this gate now admits: `Monk ~ Flurry of Blows`, `Monk ~ Unarmed
+//!    Strike` -- neither collides with `monk.rs`'s own hand-wired
+//!    `class_chassis.monk.flurry_of_blows_attack_bonus/_attack_count`/
+//!    `unarmed_strike_damage_die(_count)` ids (the collision guard compares
+//!    the id's TRAILING dot-segment only, and none of those four segments
+//!    equals this module's own `flurry_of_blows`/`unarmed_strike` slugs),
+//!    so both coexist as separate, non-shadowing facts -- the identical
+//!    "flat roster fact alongside a real computed magnitude" shape already
+//!    proven safe for the five previously-widened classes.
 //! 3. **Pathfinder Unchained's four classes.** Already served by
 //!    `push_pu_class_feature_records`'s own hand-curated, %N-resolving
 //!    roster, in a DIFFERENT id namespace (`class_feature.pu.*`). Emitting
@@ -177,22 +194,19 @@ use super::{AbilityModifiers, ComputationExplanation, pu_feature_slug};
 /// cycle (see each test file's own doc comment) to accept the resulting
 /// `class_feature.<class>.corpus_record.*` ids by SHAPE, trusting that
 /// production-side citation gate rather than re-deriving a class list
-/// there. This constant therefore no longer names an anti-fabrication
-/// exclusion at all -- it is retained, renamed, ONLY for the structurally
-/// SEPARATE reason row 330 also named: Druid and Monk sit behind
-/// `is_druid_pillar_id`/`is_monk_pillar_id`
-/// (`src/rules_core/level_up/{druid,monk}.rs`), a CLOSED id-prefix
-/// allowlist on `LevelUpPlan`'s OWN explanation filter, outside this
-/// module and outside this lane's write scope. A real, grounded
-/// `class_feature.druid.corpus_record.*`/`class_feature.monk.corpus_record.*`
-/// id this module would otherwise emit is silently dropped by that filter
-/// before it ever reaches a `LevelUpPlan` screen
-/// (`sd25_druid_level_up_explanation_filter_audit`/
-/// `sd25_monk_level_up_explanation_filter_audit`, unmodified, pre-existing,
-/// hard-blocking) -- so this module keeps refusing to emit for either class
-/// until that SEPARATE filter is widened by a lane with write access to
-/// `src/rules_core/level_up/`.
-const LEVEL_UP_PILLAR_FILTERED_CLASSES: [&str; 2] = ["druid", "monk"];
+/// there.
+///
+/// **This cycle removes the constant entirely.** It used to also gate
+/// Druid and Monk for a SEPARATE, THIRD, structurally distinct reason (see
+/// the module-level doc comment's own "Druid and Monk" paragraph, above,
+/// for the full re-investigation) -- direct re-reading of
+/// `is_druid_pillar_id`/`is_monk_pillar_id`'s live source this cycle found
+/// both already admit this module's `class_feature.<class>.corpus_record.*`
+/// id shape by prefix, and `v06_work_inventory.rs`'s own `classify()` never
+/// reads `LevelUpPlan`/`level_up::` at all, so the cited reason did not
+/// actually gate this mechanism's own `docs/work-inventory.json` verdict.
+/// The citation-based property above is now the ONLY gate, for every class
+/// this module serves, with no exceptions.
 
 fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -1710,9 +1724,6 @@ pub(super) fn push_generic_class_feature_grant_records(
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     let Some(owner) = class_id_str.strip_prefix("class:") else { return };
-    if LEVEL_UP_PILLAR_FILTERED_CLASSES.contains(&owner) {
-        return;
-    }
     // Snapshotted BEFORE this function pushes anything, so this module never
     // sees its own prior pushes as a "real" collision. Every explanation id
     // this class's OWN hand-wired chassis/feature code already pushed this
@@ -2050,35 +2061,75 @@ mod tests {
         }
     }
 
+    /// SD-34 bucket-B batch cycle: `LEVEL_UP_PILLAR_FILTERED_CLASSES` (a hand-maintained
+    /// class-wide exclusion for Druid and Monk) is removed this cycle -- see the module doc
+    /// comment's own re-investigation. Direct re-derivation found Druid genuinely DOES now emit
+    /// several real, citation-backed explanations (Nature Bond, Orisons, Spontaneous Casting,
+    /// Trackless Step, Resist Nature's Lure, Venom Immunity, A Thousand Faces, Nature Sense --
+    /// every one a real corpus record with a real, non-leaking description) -- an initial
+    /// assumption that Druid would still emit nothing was WRONG and corrected here, not carried
+    /// forward silently. This replaces the old (now-vacuous)
+    /// `class_feature_grant_consumer_never_emits_for_the_level_up_pillar_filtered_classes`
+    /// assertion with a proof of the ONE thing that specifically stays absent: `Archetype
+    /// Druid`, the sole `core_rulebook` `class_feature_owner_matched_by_name_but_record_not_
+    /// held_by_engine` (`docs/work-inventory.json`) unit for Druid. Its own corpus record
+    /// (`data/corpus/core_rulebook/class_feature/archetype_druid/archetype_druid.json`) carries
+    /// `description: null` AND no `ABILITY`/level-gate token at all (only `CATEGORY`/`TYPE`/
+    /// `VISIBLE`) -- confirmed live: it is not in `unambiguous_grants()` at all, so this
+    /// module's citation gate never even considers it (there is no `(class, key)` grant fact
+    /// to try), the same practical outcome (never emitted) as a citation refusal, just for a
+    /// prior-pipeline-stage reason. This widening changes nothing observable for THAT specific
+    /// bucket-B unit -- it may move other Druid units this module was not previously credited
+    /// for (see this cycle's own receipt for the full accounting).
     #[test]
-    fn class_feature_grant_consumer_never_emits_for_the_level_up_pillar_filtered_classes() {
-        for gated in LEVEL_UP_PILLAR_FILTERED_CLASSES {
-            let mut explanations = Vec::new();
-            push_generic_class_feature_grant_records(
-                &format!("class:{gated}"),
-                20,
-                &AbilityModifiers::default(),
+    fn archetype_druid_stays_unemitted_but_other_druid_facts_now_emit() {
+        let mut explanations = Vec::new();
+        push_generic_class_feature_grant_records(
+            "class:druid",
+            20,
+            &AbilityModifiers::default(),
             &mut explanations,
-            );
-            assert!(
-                explanations.is_empty(),
-                "{gated} sits behind the SEPARATE is_druid_pillar_id/is_monk_pillar_id \
-                 LevelUpPlan filter (row 330) and must never receive a generic roster \
-                 explanation until that filter is widened: got {explanations:?}"
-            );
-        }
+        );
+        assert!(
+            !explanations.iter().any(|e| e.id == "class_feature.druid.corpus_record.archetype_druid"),
+            "`Archetype Druid` has no grant fact at all (confirmed: not in `unambiguous_grants`) \
+             -- got {explanations:?}"
+        );
+        // Sanity: confirm the widening is real (Druid was wholesale-excluded before this
+        // cycle) -- an empty result here would make the assertion above trivially,
+        // uninformatively true.
+        assert!(
+            !explanations.is_empty(),
+            "expected Druid to now emit at least one real, citation-backed explanation \
+             (the class-wide exclusion is removed this cycle); an empty result here would not \
+             distinguish 'Archetype Druid has no grant fact' from 'Druid is still wholesale- \
+             excluded'"
+        );
+        // Sanity: confirm `Archetype Druid` genuinely has NO unambiguous grant fact (so its
+        // absence above is a pipeline-stage non-candidate, not this module silently refusing a
+        // real fact it should have tried).
+        assert!(
+            !unambiguous_grants().keys().any(|(c, key)| c == "druid" && key == "Archetype Druid"),
+            "sanity check: `Archetype Druid` was expected to carry no grant fact at all (no \
+             `ABILITY`/level-gate token in its own corpus record) -- if this now fails, the \
+             corpus or parser changed and `Archetype Druid`'s own disposition needs \
+             re-investigating, not this test silently loosened"
+        );
     }
 
     /// SD-34 `decisions.md` §18: the anti-fabrication gate is now a PROPERTY (cites a real
     /// corpus record), not a hand-maintained class allowlist. This proves the widening
     /// directly: every one of the five previously wholesale-excluded classes (Wizard, Bard,
-    /// Paladin, Cleric, Sorcerer) now DOES emit real, citation-backed explanations when the
-    /// live merged grant data resolves one for it -- the old
+    /// Paladin, Cleric, Sorcerer), PLUS Monk (widened this cycle -- Druid is excluded from this
+    /// list because its own only real-description-eligible test would trivially skip via
+    /// `has_a_fact` continue below; Monk is included because it has two:
+    /// `Monk ~ Flurry of Blows`/`Monk ~ Unarmed Strike`) now DOES emit real, citation-backed
+    /// explanations when the live merged grant data resolves one for it -- the old
     /// `class_feature_grant_consumer_never_emits_for_the_gated_classes` assertion (renamed
-    /// above) would have failed for every one of these five before this cycle.
+    /// above) would have failed for every one of these six before this cycle.
     #[test]
     fn previously_gated_classes_now_emit_citation_backed_explanations_by_construction() {
-        let widened_classes = ["wizard", "bard", "paladin", "cleric", "sorcerer"];
+        let widened_classes = ["wizard", "bard", "paladin", "cleric", "sorcerer", "monk"];
         let unambiguous = unambiguous_grants();
         for class in widened_classes {
             // Only assert emission for a class that the live data actually has an
@@ -2297,9 +2348,9 @@ mod tests {
         assert!(!classes.is_empty(), "expected the live merged data to resolve at least one class");
         let mut any_emitted = false;
         for class in &classes {
-            if LEVEL_UP_PILLAR_FILTERED_CLASSES.contains(&class.as_str()) {
-                continue;
-            }
+            // SD-34 bucket-B batch cycle: no class is skipped here any more --
+            // `LEVEL_UP_PILLAR_FILTERED_CLASSES` (Druid/Monk's own former class-wide
+            // exclusion) is removed; the citation gate alone decides per-record.
             let mut explanations = Vec::new();
             push_generic_class_feature_grant_records(&format!("class:{class}"), 20, &AbilityModifiers::default(), &mut explanations);
             for explanation in &explanations {
@@ -2532,7 +2583,7 @@ mod tests {
         let descriptions = corpus_records_with_real_description();
         let mut already_admitted = 0usize;
         let mut newly_resolved = 0usize;
-        let mut class_excluded_otherwise_resolvable = 0usize;
+        let class_excluded_otherwise_resolvable = 0usize;
         let mut chain_unresolvable = 0usize;
         let mut no_record_at_all = 0usize;
         let mut newly_resolved_examples: Vec<String> = Vec::new();
@@ -2552,18 +2603,11 @@ mod tests {
             // just-qualifying character actually has.
             let probe_level = granted_at.max(1);
             let resolves = resolved_description_for(key, probe_level, &AbilityModifiers::default());
-            // Class exclusion is checked FIRST, matching `push_generic_class_feature_grant_records`'s
-            // own early return for an excluded class -- a record whose chain resolves but whose
-            // class is gate-excluded is NEVER actually emitted in production, so it must not be
-            // counted as `newly_resolved` here.
-            if LEVEL_UP_PILLAR_FILTERED_CLASSES.contains(&class.as_str()) {
-                if resolves.is_some() {
-                    class_excluded_otherwise_resolvable += 1;
-                } else {
-                    chain_unresolvable += 1;
-                }
-                continue;
-            }
+            // SD-34 bucket-B batch cycle: no class-wide exclusion is checked here any more --
+            // `LEVEL_UP_PILLAR_FILTERED_CLASSES` (Druid/Monk's own former exclusion) is
+            // removed, so `class_excluded_otherwise_resolvable` is now permanently 0 (kept as a
+            // named bucket in the tuple below rather than deleted, so a future re-read of this
+            // pinned assertion does not have to guess why it vanished).
             match resolves {
                 Some(text) => {
                     newly_resolved += 1;
@@ -2640,15 +2684,27 @@ mod tests {
         // resolvable-but-excluded population was already 0 before this cycle) -- the classes'
         // widening is real (proven live by
         // `previously_gated_classes_now_emit_citation_backed_explanations_by_construction`,
-        // above) even where this particular census shows no movement. The remaining 6
-        // `class_excluded_otherwise_resolvable` are ALL Druid/Monk, unchanged by this cycle
-        // (the separate `is_druid_pillar_id`/`is_monk_pillar_id` LevelUpPlan filter, out of
-        // this module's write scope). Re-derive:
+        // above) even where this particular census shows no movement.
+        //
+        // `newly_resolved` moved 26 -> 32, `class_excluded_otherwise_resolvable` moved 6 -> 0
+        // (SD-34 bucket-B batch cycle, continuing `decisions.md` §18): the class-wide exclusion
+        // for Druid and Monk (`LEVEL_UP_PILLAR_FILTERED_CLASSES`) is removed this cycle -- see
+        // the module's own doc comment for the re-investigation showing the ONLY reason this
+        // module kept excluding them (a `LevelUpPlan`-reachability concern) did not actually
+        // gate this mechanism's own `docs/work-inventory.json` verdict. All 6 previously-
+        // excluded-but-resolvable records were Monk's, not a Druid/Monk mix as an earlier
+        // cycle's comment (removed here) mistakenly generalized: `monk/Monk ~ Abundant Step@12`,
+        // `monk/Monk ~ Diamond Soul@13`, `monk/Monk ~ Fast Movement@3`,
+        // `monk/Monk ~ High Jump@5`, `monk/Monk ~ Quivering Palm@15`,
+        // `monk/Monk ~ Wholeness of Body@7` -- confirmed by diffing this cycle's own
+        // `newly_resolved_examples` against the pre-cycle list (all 6 appear, nothing else
+        // added or removed beyond them). `class_excluded_otherwise_resolvable` is now
+        // permanently 0 (no class-wide exclusion remains anywhere in this module). Re-derive:
         // `cargo test --locked --lib -- rules_core::pilot_compute::class_feature_grant_consumer::
         // tests::the_live_scale_of_this_waves_widening_is_measured_and_pinned`.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (136, 26, 6, 43, 1),
+            (136, 32, 0, 43, 1),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \
