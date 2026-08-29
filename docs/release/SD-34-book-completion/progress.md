@@ -809,6 +809,69 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle 8 — AT-34-E3-001 (`class_feature_owner_matched` mechanism) — anti-fabrication gates widened by construction (partial)
+
+**Status: partial.** Operator ruling `decisions.md §18` on the open question row 330 raised:
+`push_generic_class_feature_grant_records`'s wholesale `ANTI_FABRICATION_GATE_EXCLUDED_CLASSES`
+per-class refusal (Wizard, Bard, Paladin, Cleric, Sorcerer, Druid, Monk) is replaced by a
+citation-based property for five of the seven classes — an explanation is admitted when it
+cites a real, renderable corpus record (the existing, unchanged
+`corpus_records_with_real_description`/`resolved_description_for` gate), never because its
+class name sits on a hand-maintained allowlist. Druid and Monk keep a (renamed, honestly
+re-scoped) wholesale exclusion — `LEVEL_UP_PILLAR_FILTERED_CLASSES` — for the SEPARATE
+`is_druid_pillar_id`/`is_monk_pillar_id` `LevelUpPlan` filter reason, outside this lane's write
+scope.
+
+**Correction to this cycle's own dispatch brief:** stated "161 of 242" owner_matched units are
+gated by the seven-class list; cycle 7's own receipt had already verified **218** (Sorcerer 137,
+Cleric 39, Monk 25, Wizard 7, Paladin 5, Bard 4, Druid 1). Retro correction event emitted
+(`docs/retro/events/sd34-at-34-e3-001.jsonl`). The wrong count did not change this cycle's
+scope — all seven named classes matched.
+
+The nine `sd13_*`/`sd25_*` anti-fabrication acceptance tests (`OPEN-ISSUES.md` rows 330/338) are
+widened ADDITIVELY, never weakened: the five `sd13_bard_level4..8_progression` closed-namespace
+allowlists each gain one `class_feature.bard.corpus_record.` prefix carve-out; the wizard/
+cleric/sorcerer "no spell math" substring guards each gain the analogous carve-out;
+`sd13_paladin_level8_progression`'s `"resolve"` guard gains an exact-id carve-out for the one
+citation-backed grant fact it collides with (`aura_of_resolve`); the (non-"nine", but
+pre-existing) `divine_bond` guards in `sd13_paladin_level5/6/7_progression` receive the same
+exact-id treatment. Every existing assertion in all nine still fails on a genuinely fabricated
+id. RED→GREEN mutation proof: a synthetic corpus key with no real record is refused by the
+citation gate, then a real key is confirmed to still resolve cleanly (`mutation_proof_a_
+fabricated_key_is_never_treated_as_citation_backed`). New test
+`previously_gated_classes_now_emit_citation_backed_explanations_by_construction` proves all
+five widened classes now emit directly against the live merged grant data.
+
+The pinned live-scale census moved `newly_resolved 21->26`, `class_excluded_otherwise_
+resolvable 11->6` — a reclassification of five already-resolvable records the wholesale
+exclusion had been hiding (Bard Bardic Knowledge/Lore Master, Paladin Holy Champion/Lay on
+Hands, Sorcerer Spells), not a resolver change. `cargo test --locked --lib --
+rules_core::pilot_compute::class_feature_grant_consumer::` → 33/33 passed. Individually
+confirmed green: `sd13_cleric_level1_spell_baseline` (17/17), `sd13_paladin_level8_progression`
+(14/14), `sd13_bard_level4/5_progression` (14/14, 16/16). `sd13_sorcerer_level1_spell_baseline`
+completed 18/19 with one FAILED test confirmed unrelated (a different, pre-existing
+`mod.rs`-owned bloodline-feat-pool mechanism, id shape this cycle's file cannot produce; this
+cycle touches no file that mechanism owns). `sd13_bard_level6/7_progression`'s own
+`suggestion_dc`-related failures confirmed pre-existing and unrelated (verified via `git diff
+origin/tranche/14` touching neither test's assertion nor `mod.rs`'s `suggestion_dc` code).
+`sd13_wizard_level1_prepared_spell_baseline`, `sd13_bard_level2/3/8/9/10_progression`,
+`sd13_paladin_level5/6/7_progression`, and both `sd25_*` LevelUpPlan audits were not run to
+completion this cycle (sustained shared-machine disk/CPU contention — a `.reclaim-claim`-gated
+reclaim daemon deleted this cycle's own `CARGO_TARGET_DIR` mid-build once) — expected to pass
+(static per-file review found no other guard shape these classes' widening could collide with;
+Druid/Monk receive zero emissions regardless of this change), not confirmed. Full workspace
+`cargo test --locked --no-run` not confirmed to exit 0 this cycle for the same reason; the
+narrower `--lib` build DID succeed at this cycle's rebased HEAD.
+
+Zero units move for Druid (1) or Monk (25) — the separate `is_druid_pillar_id`/
+`is_monk_pillar_id` filter is unchanged, explicitly out of this lane's write scope. A floor of 5
+`docs/work-inventory.json` units are expected to move once the wave's shared regeneration runs;
+a larger, unconfirmed number is possible from the `already_admitted` citation population for the
+five widened classes, several of which will likely be suppressed by the pre-existing
+`already_computed_slugs` collision guard against real hand-wired explanations — say so plainly
+if the regen shows less movement than the raw citation count implies. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_8.md`.
+
 ### Cycle — AT-34-E4-002 — Ultimate Campaign bucket B closed via a missing PI-coordinate wire-up (partial)
 
 **Status: partial.** `python3 scripts/completion_atlas.py --book ultimate_campaign --check` at
