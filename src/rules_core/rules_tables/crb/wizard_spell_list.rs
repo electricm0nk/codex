@@ -661,6 +661,54 @@ pub fn wizard_spell_level(spell_key: &str) -> Option<u8> {
         .map(|(_, level)| *level)
 }
 
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism), wizard-opposition-school-spell-tracking sub-cause. Joins
+/// this table's own Wizard-specific spell levels against
+/// [`crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST`]'s
+/// `school` field: every 0th-level spell BOTH tables agree Wizard can
+/// prepare, filtered to one school.
+///
+/// This is a pure join of two already-shipped, already-tested tables --
+/// no new raw data is introduced, so there is no second place a Wizard
+/// spell-school fact could drift out of sync with either source table.
+/// Sorted for a deterministic, easily-diffed return value.
+///
+/// **Why this exists.** `cr_abilities_class.lst`'s own `"<School> Wizard
+/// Spells"` internal chassis records (`CATEGORY:Internal`,
+/// `SPELLKNOWN:CLASS|Wizard=0|<spells>`) partition every 0th-level Wizard
+/// spell by school -- the corpus's own encoding of which cantrips belong
+/// to which arcane school for a Wizard specifically (as opposed to any
+/// other class that spell might also appear on). Verified byte-for-byte
+/// against all 9 of those corpus records
+/// (`wizard_school_zero_level_spells_matches_the_real_corpus_records`,
+/// `class_feature_pool_catalog`'s own
+/// `wizard_school_spell_list_key_owner_matches_are_exact` test) --
+/// `WIZARD_SPELL_LIST`'s own level field (already isolated to
+/// Wizard specifically, unlike `SPELL_LIST`'s minimum-across-classes
+/// `level`, see this file's own module doc comment) is what makes this
+/// join exact rather than the near-miss a naive `SPELL_LIST`-only
+/// level-0 read would produce (that naive read includes Cleric/Druid-only
+/// 0-level spells like `Create Water`/`Guidance` that Wizard cannot
+/// prepare at all -- confirmed absent from every one of the 9 corpus
+/// records).
+pub fn wizard_school_zero_level_spells(
+    school: crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId,
+) -> Vec<&'static str> {
+    use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
+    let mut spells: Vec<&'static str> = WIZARD_SPELL_LIST
+        .iter()
+        .filter(|(_, level)| *level == 0)
+        .filter_map(|(key, _)| {
+            SPELL_LIST
+                .iter()
+                .find(|entry| entry.key == *key && entry.school == school)
+                .map(|entry| entry.key)
+        })
+        .collect();
+    spells.sort_unstable();
+    spells
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -668,10 +716,66 @@ mod tests {
     use crate::rules_core::rules_tables::apg::spell_list as apg_spell_list;
     use crate::rules_core::rules_tables::crb::sorcerer_spell_list::SORCERER_SPELL_LIST;
     use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
+    use std::path::PathBuf;
 
     #[test]
     fn wizard_spell_list_has_the_real_corpus_verified_count() {
         assert_eq!(WIZARD_SPELL_LIST.len(), 580);
+    }
+
+    /// `AT-34-E3-001` wizard-opposition-school-spell-tracking sub-cause:
+    /// proves [`wizard_school_zero_level_spells`] byte-for-byte against
+    /// the 9 real, committed `"<School> Wizard Spells"` corpus records
+    /// under `data/corpus/core_rulebook/class_feature/` -- not merely
+    /// asserted in a doc comment. RED if either source table (or the
+    /// corpus itself) ever drifts, which is exactly when this join must
+    /// be revisited.
+    #[test]
+    fn wizard_school_zero_level_spells_matches_the_real_corpus_records() {
+        use crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let cases: &[(&str, Pf1SchoolId)] = &[
+            ("abjuration_wizard_spells", Pf1SchoolId::Abjuration),
+            ("conjuration_wizard_spells", Pf1SchoolId::Conjuration),
+            ("divination_wizard_spells", Pf1SchoolId::Divination),
+            ("enchantment_wizard_spells", Pf1SchoolId::Enchantment),
+            ("evocation_wizard_spells", Pf1SchoolId::Evocation),
+            ("illusion_wizard_spells", Pf1SchoolId::Illusion),
+            ("necromancy_wizard_spells", Pf1SchoolId::Necromancy),
+            ("transmutation_wizard_spells", Pf1SchoolId::Transmutation),
+            ("universal_wizard_spells", Pf1SchoolId::Universal),
+        ];
+        for (dir, school) in cases {
+            let path = repo_root
+                .join("data/corpus/core_rulebook/class_feature")
+                .join(dir)
+                .join(format!("{dir}.json"));
+            let text = std::fs::read_to_string(&path)
+                .unwrap_or_else(|e| panic!("readable corpus json at {path:?}: {e}"));
+            let json: serde_json::Value =
+                serde_json::from_str(&text).expect("valid corpus json");
+            let raw_tokens = json["data"]["raw_tokens"].as_array().expect("raw_tokens array");
+            let spellknown = raw_tokens
+                .iter()
+                .find(|t| t["key"].as_str() == Some("SPELLKNOWN"))
+                .and_then(|t| t["value"].as_str())
+                .unwrap_or_else(|| panic!("{dir} carries a SPELLKNOWN token"));
+            // `CLASS|Wizard=0|Spell One,Spell Two`
+            let corpus_spells: Vec<&str> = spellknown
+                .split('|')
+                .nth(2)
+                .unwrap_or_else(|| panic!("{dir}'s SPELLKNOWN token has a spell-list segment"))
+                .split(',')
+                .map(str::trim)
+                .collect();
+            let mut expected = corpus_spells.clone();
+            expected.sort_unstable();
+            let actual = wizard_school_zero_level_spells(*school);
+            assert_eq!(
+                actual, expected,
+                "{dir}: engine join disagrees with the real corpus SPELLKNOWN token"
+            );
+        }
     }
 
     /// One anchor per ingested book, each a record where Wizard is NOT the

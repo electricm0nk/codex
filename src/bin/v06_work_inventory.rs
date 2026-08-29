@@ -10733,6 +10733,28 @@ fn classify(
                             "class_feature_class_skill_list_held_by_class_skill_list_table",
                         );
                     }
+                    // AT-34-E3-001 cycle 9, wizard-opposition-school-spell-
+                    // tracking sub-cause (cycle 8's own receipt named this a
+                    // "genuinely new, unbuilt engine subsystem" of 9 units).
+                    // `class_feature_pool_catalog::wizard_school_spell_list_
+                    // key_owner`'s own doc comment carries the full
+                    // argument: this is not a new subsystem at all, but a
+                    // join of two already-shipped, already-tested tables
+                    // (`crb::wizard_spell_list::WIZARD_SPELL_LIST` +
+                    // `crb::spell_list::SPELL_LIST`), verified byte-for-byte
+                    // against all 9 corpus records. Still `description:
+                    // null` -- this only certifies the record's own content
+                    // is now held by real engine tables (bucket B -> D,
+                    // same "a shelf, not a half-fix" outcome as cycles 5-7's
+                    // own rungs), leaving the display gap for whichever
+                    // mechanism owns `has_real_description`.
+                    if class_feature_pool_catalog::wizard_school_spell_list_key_owner(&unit.key)
+                        .is_some()
+                    {
+                        return engine_does_not_hold(
+                            "class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join",
+                        );
+                    }
                     return engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine");
                 }
                 // AT-33-E4-002 (`unknown-rootcause.md` §1): before this
@@ -18445,6 +18467,61 @@ mod class_feature_text_complete_rung_tests {
             "cr_abilities_class.lst",
             58,
             "Weapon Proficiencies ~ Cleric",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_option_pool_record_not_held_by_engine");
+    }
+
+    /// `AT-34-E3-001` cycle 9, wizard-opposition-school-spell-tracking
+    /// sub-cause: a `description: null` `"<School> Wizard Spells"` internal
+    /// chassis row whose corpus key is one of
+    /// `class_feature_pool_catalog::WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER`'s
+    /// nine verified members must leave bucket B for bucket D --
+    /// `engine-does-not-hold` status still (nothing displays yet), but
+    /// evidence naming a real held fact (the `wizard_spell_list`/
+    /// `spell_list` join), never the mechanism's own generic
+    /// `class_feature_option_pool_record_not_held_by_engine` fallback.
+    /// Proves this FAILS before the fix (the intended-reason RED): before
+    /// `wizard_school_spell_list_key_owner` was consulted, this exact unit
+    /// fell all the way through to the generic fallback despite the engine
+    /// already holding this exact school's 0-level Wizard spell list, for
+    /// real, via two already-shipped tables.
+    #[test]
+    fn a_wizard_school_spell_list_row_verified_against_the_join_leaves_bucket_b() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2624,
+            "Abjuration Wizard Spells",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join"
+        );
+        assert!(
+            !verdict.evidence.contains("not_held_by_engine"),
+            "must NOT carry a bucket-B marker any more: evidence={}",
+            verdict.evidence
+        );
+    }
+
+    /// Control: a key that merely shares the `"... Wizard Spells"` shape
+    /// but is NOT one of the 9 verified members must be UNAFFECTED -- the
+    /// lookup is a closed, verified list, never a shape predicate.
+    #[test]
+    fn an_unlisted_wizard_spells_shaped_key_still_falls_to_the_generic_fallback() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            9999,
+            "Nonexistent School Wizard Spells",
             0,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);

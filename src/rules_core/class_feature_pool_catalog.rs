@@ -854,6 +854,46 @@ pub fn class_skill_list_grant_owner_id(key: &str) -> Option<&'static str> {
     CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES.iter().find(|(k, _)| *k == key).map(|(_, o)| *o)
 }
 
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism), wizard-opposition-school-spell-tracking sub-cause (cycle 8's
+/// own receipt named this a "genuinely new, unbuilt engine subsystem" of
+/// 9 units: `"<School> Wizard Spells"`, `description: null`,
+/// `CATEGORY:Internal`, `SPELLKNOWN:CLASS|Wizard=0|<spells>`).
+///
+/// **Not a new, standalone subsystem after all — a join of two
+/// already-shipped, already-tested tables.**
+/// [`crate::rules_core::rules_tables::crb::wizard_spell_list::wizard_school_zero_level_spells`]
+/// combines `WIZARD_SPELL_LIST`'s own Wizard-specific spell level (already
+/// isolated from `SPELL_LIST`'s minimum-across-classes level, see that
+/// table's own module doc comment) with `SPELL_LIST`'s own `school` field
+/// to reproduce, byte-for-byte, every one of these 9 corpus records' own
+/// `SPELLKNOWN` spell list — verified directly against the live corpus in
+/// `wizard_school_spell_list_key_owner_matches_are_exact` below, mirroring
+/// [`WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`]'s own verification
+/// discipline (never a name-pattern guess). Owner is `"class:wizard"` for
+/// all 9 — Wizard is the only class either source table's own scope
+/// covers for these keys.
+pub const WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER: &[(&str, &str)] = &[
+    ("Abjuration Wizard Spells", "class:wizard"),
+    ("Conjuration Wizard Spells", "class:wizard"),
+    ("Divination Wizard Spells", "class:wizard"),
+    ("Enchantment Wizard Spells", "class:wizard"),
+    ("Evocation Wizard Spells", "class:wizard"),
+    ("Illusion Wizard Spells", "class:wizard"),
+    ("Necromancy Wizard Spells", "class:wizard"),
+    ("Transmutation Wizard Spells", "class:wizard"),
+    ("Universal Wizard Spells", "class:wizard"),
+];
+
+/// Looks up [`WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER`] by key, returning the
+/// owner id the record's own `SPELLKNOWN` spell list was verified against.
+/// `v06_work_inventory.rs`'s `Kind::ClassFeature` arm consults this
+/// immediately after [`class_skill_list_grant_owner_id`], mirroring its own
+/// named-list pattern (never a live shape scan) for the identical reason.
+pub fn wizard_school_spell_list_key_owner(key: &str) -> Option<&'static str> {
+    WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER.iter().find(|(k, _)| *k == key).map(|(_, o)| *o)
+}
+
 /// `(book, key) -> description` for every entry the catalog holds — the
 /// shape `v06_work_inventory.rs`'s `EngineFacts` (and `Kind::ClassFeature`'s
 /// classify arm) actually consults, mirroring `feat_served_descriptions`'
@@ -1818,6 +1858,71 @@ mod tests {
         );
         for (k, v) in &reasons {
             eprintln!("AT-34-E3-001 class_feature_owner_matched sub-cause: {v} | {k}");
+        }
+    }
+
+    /// Proves `WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER`'s own claim against BOTH
+    /// the live corpus AND the live
+    /// `wizard_spell_list::wizard_school_zero_level_spells` join — not
+    /// merely asserted in a doc comment. RED if either side ever changes
+    /// such that the sets stop matching exactly (`decisions.md §2`'s
+    /// "cleared by revisiting the stated condition").
+    #[test]
+    fn wizard_school_spell_list_key_owner_matches_are_exact() {
+        use crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
+        use crate::rules_core::rules_tables::crb::wizard_spell_list::wizard_school_zero_level_spells;
+        let dir = repo_root().join("data/corpus/core_rulebook/class_feature");
+        let schools: &[(&str, &str, Pf1SchoolId)] = &[
+            ("Abjuration Wizard Spells", "abjuration_wizard_spells", Pf1SchoolId::Abjuration),
+            ("Conjuration Wizard Spells", "conjuration_wizard_spells", Pf1SchoolId::Conjuration),
+            ("Divination Wizard Spells", "divination_wizard_spells", Pf1SchoolId::Divination),
+            ("Enchantment Wizard Spells", "enchantment_wizard_spells", Pf1SchoolId::Enchantment),
+            ("Evocation Wizard Spells", "evocation_wizard_spells", Pf1SchoolId::Evocation),
+            ("Illusion Wizard Spells", "illusion_wizard_spells", Pf1SchoolId::Illusion),
+            ("Necromancy Wizard Spells", "necromancy_wizard_spells", Pf1SchoolId::Necromancy),
+            ("Transmutation Wizard Spells", "transmutation_wizard_spells", Pf1SchoolId::Transmutation),
+            ("Universal Wizard Spells", "universal_wizard_spells", Pf1SchoolId::Universal),
+        ];
+        assert_eq!(
+            schools.len(),
+            WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER.len(),
+            "every WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER entry must be checked here, and vice versa"
+        );
+        for (key, dir_stub, school) in schools {
+            assert_eq!(wizard_school_spell_list_key_owner(key), Some("class:wizard"));
+            let path = dir.join(dir_stub).join(format!("{dir_stub}.json"));
+            let text = std::fs::read_to_string(&path)
+                .unwrap_or_else(|e| panic!("readable corpus json at {path:?}: {e}"));
+            let json: Value = serde_json::from_str(&text).expect("valid corpus json");
+            assert_eq!(json["data"]["key"].as_str(), Some(*key), "corpus file's own key must match");
+            assert!(
+                json["data"]["description"].is_null(),
+                "{key} now carries a real description -- this record may now qualify for a \
+                 different, display-bearing rung; revisit this table"
+            );
+            let spellknown = json["data"]["raw_tokens"]
+                .as_array()
+                .expect("raw_tokens is an array")
+                .iter()
+                .find(|t| t["key"].as_str() == Some("SPELLKNOWN"))
+                .unwrap_or_else(|| panic!("{key} carries no SPELLKNOWN token"))["value"]
+                .as_str()
+                .expect("SPELLKNOWN token has a string value")
+                .to_string();
+            let corpus_spells: std::collections::BTreeSet<String> = spellknown
+                .split('|')
+                .nth(2)
+                .unwrap_or_else(|| panic!("{key}'s SPELLKNOWN token has a spell-list segment"))
+                .split(',')
+                .map(|s| s.trim().to_string())
+                .collect();
+            let table_spells: std::collections::BTreeSet<String> =
+                wizard_school_zero_level_spells(*school).into_iter().map(|s| s.to_string()).collect();
+            assert_eq!(
+                table_spells, corpus_spells,
+                "{key}: the wizard_spell_list/spell_list join disagrees with the real corpus \
+                 SPELLKNOWN token"
+            );
         }
     }
 }

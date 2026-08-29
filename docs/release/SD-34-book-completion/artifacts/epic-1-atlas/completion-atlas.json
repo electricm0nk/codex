@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 11056,
+        "line": 11078,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,7 +14,7 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10736,
+        "line": 10758,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
@@ -25,7 +25,7 @@
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10961,
+        "line": 10983,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 11722,
+        "line": 11744,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "bc39ff9d56fd40d48ec286e9bb9bb5a7847fddf3",
+  "derived_at": "d2133b48bec61ba09cf21c7f37a5310a0158d2e0",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],

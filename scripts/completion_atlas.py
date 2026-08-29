@@ -88,7 +88,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'has_no_engine_table')"
         ),
         # `Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table")`.
-        "citation": {"file": _ENGINE_SRC, "line": 11056, "must_contain": "has_no_engine_table"},
+        "citation": {"file": _ENGINE_SRC, "line": 11078, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -98,7 +98,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')"
         ),
         # `engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine")`.
-        "citation": {"file": _ENGINE_SRC, "line": 10736, "must_contain": "not_held_by_engine"},
+        "citation": {"file": _ENGINE_SRC, "line": 10758, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -108,7 +108,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'explanation_id' / 'diagnostic')"
         ),
         # `engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")`.
-        "citation": {"file": _ENGINE_SRC, "line": 10961, "must_contain": "explanation_id"},
+        "citation": {"file": _ENGINE_SRC, "line": 10983, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -129,7 +129,7 @@ BUCKET_DEFINITIONS = {
         "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
         # `item.verdict.status = "literal-verified";` -- one of the two V statuses.
-        "citation": {"file": _ENGINE_SRC, "line": 11722, "must_contain": "literal-verified"},
+        "citation": {"file": _ENGINE_SRC, "line": 11744, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
