@@ -13,6 +13,28 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E2-003 reconfirmation at HEAD — no drift
+
+`AT-34-E2-003` ("the measured build rate is recorded") was already `complete` on `kanban.md`
+row 11 from its original 2026-08-27 cycle. Re-dispatched to re-derive the evidence at HEAD
+(`ac61ac1b89`) rather than re-quote the original receipt (`decisions.md §12` L2), matching the
+sibling reconfirmations already run on `AT-34-E2-001`/`AT-34-E2-002` after Epic 3's later commits
+touched `src/rules_core/`. Result: **no drift.** `table-build-rate.json` still holds 8 of 8 table
+entries (`ability`, `template`, `trait`, `deity`, `domain`, `skill`, `language`, `companion`);
+the two historical wall-time windows the artifact reports (`AT-34-E2-001` cycle 1,359s,
+`AT-34-E2-002` cycle 779s) are pinned to immutable commit timestamps and unchanged;
+`cargo test --locked --lib rules_core::rules_tables::simple_kind_tables` is 13 of 13 passing at
+HEAD, identical to the sibling `AT-34-E2-001` reconfirmation's result. `cargo test --locked
+--no-run` exits 0 at the workspace root and in `apps/desktop/src-tauri` (separate cargo
+workspace, tested explicitly). Dual-audit gate on Epic 2's file-touch set: `OK_NO_BUNDLE_TAGS`;
+the wired-integration grep's ~15 `placeholder` matches are all PCGen's own CHOOSE-menu
+"no-selection" domain term (Epic 3's `AT-34-E3-001` vacuous-placeholder sub-cause vocabulary),
+not stub tokens — reviewed and disposed of as a self-healable false positive, same category the
+sibling reconfirmations already found. `denominator_gate.py --check` on this package:
+`files_checked=15 violations=0`. No production code changed; no unit moved across any bucket.
+See `artifacts/epic-2-tables/AT-34-E2-003_reconfirmation_receipt.md` for the full re-derivation.
+Epic 2 (4 of 4 criteria) remains fully complete.
+
 `tranche/14` cut at `571307724f`, `0.14.0` stamped, launch checklist items 1-9, 11, 12 run.
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
