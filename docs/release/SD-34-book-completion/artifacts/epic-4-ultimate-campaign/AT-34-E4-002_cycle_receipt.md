@@ -1,6 +1,6 @@
 # Cycle AT-34-E4-002 — Epic 4 (Ultimate Campaign) / AT-34-E4-002
 
-- **Commit SHA:** `TBD` (filled by the follow-up commit in this same cycle)
+- **Commit SHA:** `4005925ae2f70777d3191a13f9895cdec91c4c6f`
 - **Files touched:** `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py`,
   `docs/work-inventory.json`,
   `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`,
@@ -143,8 +143,7 @@ met**. `kanban.md` row is marked `partial`, not `complete`, on the strength of t
 
 ## Build scope verified
 
-- `cargo test --locked --no-run`: exit 0, full workspace, run at this cycle's commit (see SHA
-  above, filled by the follow-up commit)
+- `cargo test --locked --no-run`: exit 0, full workspace, run at `4005925ae2f70777d3191a13f9895cdec91c4c6f`
 - `apps/desktop/src-tauri`: not touched, not run (no file in that crate's tree was changed)
 
 ## Sweep population
