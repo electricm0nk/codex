@@ -10377,6 +10377,58 @@ fn classify(
                     };
                 }
             }
+            // `AT-34-E3-002` (bucket C, "held and computed, never surfaced"):
+            // `"Favored Enemy ~ <type>"` is the DISPLAY-facing sibling of the
+            // `"Favored Enemy Bonus ~ <type>"` chassis record checked just
+            // above -- same `<type>` suffix, same corpus source line pair
+            // (`data/corpus/core_rulebook/class_feature/favored_enemy/*.json`
+            // vs `.../favored_enemy_bonus/*.json`), verified by reading both
+            // records directly. The Bonus record has `description: null` and
+            // carries the actual `BONUS:VAR|Favored<Type>|2` token the probe
+            // above already proved wired; THIS record has the real,
+            // player-facing rules text (`"You gain a +%1 bonus on Bluff,
+            // Knowledge, ... against aberrations..."`) with the identical
+            // magnitude substituted via the SAME `Favored<Type>` DEFINE the
+            // Bonus record's own probe observed -- so the engine has, in
+            // fact, already computed this exact record's magnitude; the gap
+            // was that this record's own classification never looked at its
+            // sibling's wiring. `group` is `"Favored Enemy"`, which -- same
+            // as every check above it -- can never equal `"ranger"`, so
+            // `class_feature_exact_suffix_grounded`'s `group == owner` guard
+            // could never ground this record even if owner resolution
+            // succeeded; the sibling probe is the only real attribution
+            // path. Reuses `facts.ranger_favored_enemy_bonus_wired` rather
+            // than a new probe -- the SAME 31 canonical types, since a
+            // wired Bonus record for a type is exactly what proves this
+            // display record's own magnitude is genuinely held.
+            if group == "Favored Enemy" {
+                let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
+                if facts.ranger_favored_enemy_bonus_wired.contains(feature) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "ranger_favored_enemy_bonus_probe_observed_a_real_computed_magnitude_for_the_display_record"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+            }
+            // `AT-34-E3-002` (bucket C continuation): `"Favored Terrain ~
+            // <type>"` sibling of the Favored Enemy display check
+            // immediately above, mirroring `"Favored Terrain Bonus ~
+            // <type>"`'s own probe the exact same way.
+            if group == "Favored Terrain" {
+                let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
+                if facts.ranger_favored_terrain_bonus_wired.contains(feature) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "ranger_favored_terrain_bonus_probe_observed_a_real_computed_magnitude_for_the_display_record"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+            }
             // `AT-34-E3-001` (mechanism 2 continuation, cycles 4, 6, and
             // 7): wizard arcane school sub-cause, same shape as Domain
             // Power / Weapon Training / Favored Enemy above -- `group`
@@ -17481,6 +17533,94 @@ mod class_feature_text_complete_rung_tests {
             2,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-002` (bucket C, "held and computed, never surfaced"),
+    /// proof case: the DISPLAY-facing `"Favored Enemy ~ <type>"` record
+    /// reaches `grounded` off its own sibling `"Favored Enemy Bonus ~
+    /// <type>"` record's ALREADY-PROVEN wiring -- reusing
+    /// `facts.ranger_favored_enemy_bonus_wired`, never a new probe.
+    #[test]
+    fn a_ranger_favored_enemy_display_record_reaches_grounded_off_its_sibling_bonus_records_wiring() {
+        let mut facts = EngineFacts::default();
+        facts.ranger_favored_enemy_bonus_wired.insert("Aberration".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1516,
+            "Favored Enemy ~ Aberration",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "ranger_favored_enemy_bonus_probe_observed_a_real_computed_magnitude_for_the_display_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an UNPROBED `"Favored Enemy ~ *"` type (the sibling
+    /// probe's own `EngineFacts` set is empty here) is completely
+    /// unaffected -- it still falls through to the pre-existing
+    /// `engine-does-not-hold` bucket-C finding this cycle is closing,
+    /// proving the fix credits nothing it did not actually observe.
+    #[test]
+    fn a_ranger_favored_enemy_display_record_the_sibling_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1516,
+            "Favored Enemy ~ Aberration",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-002` continuation: the Favored Terrain sibling of the
+    /// Favored Enemy display proof case immediately above.
+    #[test]
+    fn a_ranger_favored_terrain_display_record_reaches_grounded_off_its_sibling_bonus_records_wiring() {
+        let mut facts = EngineFacts::default();
+        facts.ranger_favored_terrain_bonus_wired.insert("Cold".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1650,
+            "Favored Terrain ~ Cold",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "ranger_favored_terrain_bonus_probe_observed_a_real_computed_magnitude_for_the_display_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: mirrors the Favored Enemy display negative control
+    /// immediately above, for Favored Terrain.
+    #[test]
+    fn a_ranger_favored_terrain_display_record_the_sibling_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1650,
+            "Favored Terrain ~ Cold",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(
             verdict.evidence,

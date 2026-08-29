@@ -13,6 +13,65 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-002 (bucket C, "held and computed, never surfaced") — Favored Enemy/Favored Terrain display records, `core_rulebook` 414 -> 372
+
+Re-derived `core_rulebook` bucket C fresh at start SHA `30fa0e6653` (never trusting
+`epic-breakdown.md`'s own stale "370" headline, `decisions.md §12` L2): **414**, all
+`class_feature` kind, single evidence string `no_explanation_id_and_no_diagnostic_names_this_feature`.
+Grouping by corpus-key group prefix found **152 distinct owners** — the large majority
+requiring genuinely new per-feature compute formulas (Sorcerer bloodline powers, Rage Powers,
+Rogue Talents, Monk abilities, ...), not a display-wiring fix.
+
+The two largest single-owner clusters, `Favored Enemy` (31) and `Favored Terrain` (11) = 42,
+had a real, closeable shape: reading `data/corpus/core_rulebook/class_feature/favored_enemy/`
+and `favored_enemy_bonus/` directly (never assumed) found each is the DISPLAY-facing sibling
+of an ALREADY-GROUNDED chassis record (`"Favored Enemy Bonus ~ <type>"`,
+`"Favored Terrain Bonus ~ <type>"`) — same `<type>` suffix, the engine's own
+`ranger_favored_enemy_bonus_wired` / `ranger_favored_terrain_bonus_wired` probes
+(`AT-34-E3-001` cycle 3) already prove the exact magnitude wired end-to-end. The display
+record's own real, player-facing description carries the SAME flat bonus via a `%1`
+placeholder; the gap was that `classify()` had no rung attributing the display record to its
+sibling's own proven wiring.
+
+Two new grounding rungs added to `classify()`'s `Kind::ClassFeature` arm (no new probe —
+reuses the two already-shipped `EngineFacts` sets). TDD: RED (temporarily removed the rungs,
+confirmed the two positive-proof tests fail with `"engine-does-not-hold"`, not for an
+unrelated reason) -> GREEN (4 new tests: 2 positive proofs, 2 negative controls; full
+`class_feature`-scoped suite 124/124 pass, no regression).
+
+**Correction to this cycle's own first assumption, caught by reading the regenerated artifact
+rather than trusting the fix's own `"grounded"` return value** (`decisions.md §12` L2/L3): the
+42 closed units landed in bucket **V** (`literal-verified`), not `DONE` — a pre-existing,
+unrelated mechanism (`apply_done_rung_stamps`) upgrades every `wiring_class: "static"`
+grounded record the corpus-literal-sweep independently byte-verifies, and both closed record
+types are `static`. Genuinely left bucket C (this criterion's own bar); genuinely still not
+`DONE` (bucket V needs the SD-33 oracle harness to fully clear). Reported as
+**Reclassification**, not **Closure**, in the four-bucket movement (see receipt).
+
+**Environment incident, resolved before verification could complete**: `cargo test --locked
+--no-run` hit a real `ld ... Bus error` (disk exhaustion, not a code defect) at 535M free of
+968G on this shared checkout. Found and removed 12 dead-PID `CARGO_TARGET_DIR`s belonging to
+already-`complete` Epic 1/Epic 2 cycles (~384G reclaimed, verified no live process held any of
+them first) — `AGENTS.md`'s own standing hygiene rule, not a workaround. Re-ran clean: exit 0.
+
+**Instrument hygiene**: the two new rungs shifted 4 downstream `file:line` citations in
+`scripts/completion_atlas.py` (buckets A/B/C/V) and 2 in `scripts/missing_engine_tables.py`
+(companion/power) — all re-derived by direct grep against the post-edit file, not assumed;
+both scripts' own `--check` now exit 0 again (`citation_failures=0`).
+
+**42/414 closed** (bucket C, `core_rulebook`), **372 remain**, named by 8 sub-cause categories
+summing exactly (`domain_power_display_record_not_wired` 96, `bloodline_power_or_bloodline_feat_not_computed`
+73, `other_named_group_or_standalone` 83 — largest single cluster within it is `Monk Unarmed
+Damage` at 54, named as the next-cycle lever — `base_class_standalone_feature_not_computed` 47,
+`prestige_class_standalone_feature_not_computed` 31, `rage_power_not_computed` 13,
+`rogue_talent_not_computed` 10, `npc_class_standalone_feature_not_computed` 10,
+`versatile_performance_not_computed` 9). **Status: partial**, per `decisions.md §15` — the
+kanban row stays `in-progress`, the dispatch continues, a later cycle takes the remainder.
+No cross-book side effect (`advanced_players_guide` 7, `ultimate_intrigue` 5 units sharing the
+same corpus-key group text, both unchanged, checked directly).
+
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-001 `class_feature_option_pool_record_with_magnitude_not_held_by_engine`, cycle 8 — Universal School grounded, 258 -> 256
 
 Re-derived at HEAD (`617c1d3b40`), still 258 of 553 `core_rulebook` bucket-B units on this
