@@ -1,6 +1,6 @@
 # Cycle AT-34-E5-002 — Epic 5 (Price the remaining 35 books) / AT-34-E5-002
 
-- **Commit SHA:** TBD (fixed in a same-cycle follow-up commit, per AT-34-E5-001's precedent — this receipt is written before its own commit exists)
+- **Commit SHA:** `5eda4d0864a1f7aa5f816c5e89ac43b38c193be7`
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_capability_register.py` (new)
   - `docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/verify_capability_register.py` (new)
