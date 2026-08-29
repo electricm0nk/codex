@@ -1,6 +1,6 @@
 # Cycle — Epic 4 (Ultimate Campaign to zero) / AT-34-E4-003
 
-- **Commit SHA:** (filled below after commit — see the "fill receipt's own commit SHA" pattern used by AT-34-E4-002/AT-34-E3-006)
+- **Commit SHA:** `16ab9ce58d`
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/epic-4-ultimate-campaign/step-cost-ledger.json` (new) — the criterion's own evidence artifact.
   - `docs/release/SD-34-book-completion/artifacts/epic-4-ultimate-campaign/step-cost-ledger-raw-commits.json` (new) — the commits the ledger derives from, committed for reproducibility.
