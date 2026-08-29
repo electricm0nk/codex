@@ -1926,12 +1926,12 @@ mod tests {
         }
     }
 
-    /// `AT-34-E3-001` cycle 8's own re-derivation: the dispatch's own
+    /// `AT-34-E3-001` cycle 9's own re-derivation: the dispatch's own
     /// inherited claim of a 161/81 excluded/non-excluded split against this
     /// mechanism's 242-unit `core_rulebook` population did NOT match a
     /// direct query against the live corpus (218 excluded / 24
     /// non-excluded, re-derived by `docs/release/SD-34-book-completion/
-    /// artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_8.md`).
+    /// artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_9.md`).
     /// This test proves that split mechanically, reusing this file's own
     /// sibling test's exact gate-walk (so it can never independently drift
     /// from what `load_pool_catalog` actually refuses each unit for).
