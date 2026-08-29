@@ -1,6 +1,6 @@
 # Cycle AT-34-E5-004 — Epic 5 (Price the remaining 35 books) / AT-34-E5-004
 
-- **Commit SHA:** PENDING (filled in after commit — see final line of this receipt's history)
+- **Commit SHA:** `c1053179b6` (the cycle's substantive commit; this SHA-fill-in follow-up commit is housekeeping only, matching `AT-34-E5-003`'s own precedent)
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_ordered_plan.py` (new)
   - `docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/verify_ordered_plan.py` (new)
