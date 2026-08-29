@@ -13,6 +13,32 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-001, `class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 9 (Weapon Training, built generically) — partial
+
+**Status: partial.** Continuing cycle 8's own 256-unit `core_rulebook` remainder
+(`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt_9.md`),
+this cycle took the Weapon Training sub-cause (48 units) and built it **generically** rather
+than one canonical group at a time: `WEAPON_TRAINING_GROUPS` names all 14 real PF1
+weapon-training groups, `weapon_training_group_name_for_selection` accepts any of them, and
+`explain_fighter_class_features`'s 4 tier blocks now compute the same real rank-based formula
+for whichever group a Fighter selects at each tier — the formula never depended on WHICH group,
+only the tier, so this is the closed-enumerable-set generalization `decisions.md §16` and the
+bucket-U cycle's own precedent already established as fair game. `fighter_weapon_training_
+attack_bonus` (the function that folds a bonus into the real total attack) is unchanged.
+
+Full detail, the RED→GREEN proof (4 layers, including two tests that directly exercise the
+real `compute_pilot_base_chassis` pipeline rather than only `classify()` with hand-fed facts),
+the cross-book scope check (confirms `ultimate_combat`/`ultimate_wilderness`/
+`advanced_players_guide`'s own differently-shaped "Weapon Training"-prefixed records are
+unaffected), and the CARGO_TARGET_DIR-corruption discovery mid-cycle, are in the receipt.
+`docs/work-inventory.json` was deliberately NOT regenerated this cycle (wave rule: one shared
+regeneration cycle runs after all four parallel lanes land). **Expected closure: 48
+`core_rulebook` units (256 → 208)** — an expectation for that regeneration to confirm or
+refute, not a measured count. This is a DIFFERENT mechanism (`_with_magnitude`) than the
+sibling cycle 9 entry immediately below (`class_feature_option_pool_record_not_held_by_engine`,
+no `_with_magnitude`), and both are named per `decisions.md §14`'s own nine-mechanism split of
+bucket B.
+
 ### Cycle 9 — AT-34-E3-001, `class_feature_option_pool_record_not_held_by_engine` mechanism (wizard-opposition-school-spell-tracking sub-cause) — partial
 
 **Status: partial.** Eight prior cycles on this exact mechanism ran `63 -> 57 -> 55 -> 52 -> 52 ->

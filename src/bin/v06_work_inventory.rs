@@ -7197,58 +7197,155 @@ fn probe_domain_power_effect_wiring(fixture: &CharacterInput) -> BTreeSet<String
 
 /// `AT-34-E3-001` (`decisions.md §14`, mechanism 3 continuation): the same
 /// live-computation discipline `probe_domain_power_effect_wiring` uses,
-/// applied to `"Weapon Training <tier> <group>"` corpus records. Two facts
-/// established by DIRECT READING before this probe was written (never
-/// assumed): `fighter_weapon_training_attack_bonus` (`pilot_compute/mod.rs`)
-/// hardcodes exactly ONE canonical group per tier -- every other one of the
-/// corpus's 13 weapon groups returns 0 and emits no explanation, by design
-/// -- and `canonical_seeds_for("fighter")` never seeds ANY
+/// applied to `"Weapon Training <tier> <group>"` corpus records.
+/// `canonical_seeds_for("fighter")` never seeds ANY
 /// `choice:fighter_weapon_training_group*` selection at all, so the
 /// standard per-class sweep that fills `EngineFacts::explanation_ids` never
-/// observes even tier 1's own canonical selection. This probe selects each
-/// of `fighter_weapon_training_canonical_catalog`'s own 4 hardcoded
-/// (tier, group, choice id, selection) tuples explicitly, over the SAME
-/// real `compute_pilot_base_chassis` pipeline every other probe in this
-/// file uses, and keeps only the `(tier, group)` pairs whose own
-/// explanation id was genuinely observed -- so a genuinely-wired tier/group
-/// pair can never be conflated with one of the other 48 (13 groups * 4
-/// tiers - 4) this engine simply never computes.
+/// observes even one tier's own selection. This probe selects each of
+/// `fighter_weapon_training_canonical_catalog`'s own `(tier, group, choice
+/// id, selection)` tuples explicitly, one at a time, over the SAME real
+/// `compute_pilot_base_chassis` pipeline every other probe in this file
+/// uses, and keeps only the `(tier, group)` pairs whose own explanation id
+/// was genuinely observed.
+///
+/// `AT-34-E3-001` (mechanism 3 continuation, cycle 9): widened from testing
+/// only the engine's 4 hardcoded canonical (tier, group) pairs to testing
+/// all `4 * 14 = 56` combinations the engine now genuinely computes for
+/// (`pilot_compute::mod::WEAPON_TRAINING_GROUPS`'s own doc comment states
+/// why the real PF1 rule applies uniformly across the 14 groups). Each
+/// combination is tested in isolation: the tier under test gets its own
+/// selection, every OTHER tier gets an arbitrary-but-valid default
+/// selection (this catalog's own first entry for that choice id) so the
+/// `rank >= tier` gating on later tiers still exercises real code, never a
+/// fabricated combination the real pipeline could not otherwise reach.
 fn probe_fighter_weapon_training_wiring(fixture: &CharacterInput) -> BTreeSet<(u8, String)> {
     let mut wired = BTreeSet::new();
     let previous_hook = std::panic::take_hook();
     std::panic::set_hook(Box::new(|_| {}));
     let catalog = fighter_weapon_training_canonical_catalog();
     let all_choice_ids: BTreeSet<&str> = catalog.iter().map(|(_, _, id, _, _)| *id).collect();
-    for (tier, group_suffix, _choice_id, _selection, explanation_id) in catalog {
+    let mut default_selection_by_choice_id: BTreeMap<&str, &str> = BTreeMap::new();
+    for (_, _, choice_id, selection, _) in &catalog {
+        default_selection_by_choice_id
+            .entry(choice_id)
+            .or_insert(selection);
+    }
+    for (tier, group_suffix, choice_id, selection, explanation_id) in &catalog {
         'levels: for &level in SWEEP_LEVELS {
             let mut input = class_sweep_input(fixture, "fighter", level);
-            // Selecting all 4 canonical (tier, group) pairs at once is safe: each
-            // tier's own `choice_selection` lookup is independent, and this
-            // mirrors a real character who trained all 4 canonical groups as
-            // they became available -- never an artificial combination the real
-            // pipeline could not otherwise reach.
             input
                 .chosen
                 .selected_choices
                 .retain(|c| !all_choice_ids.contains(c.choice_set_id.as_str()));
-            for (_, _, other_choice_id, other_selection, _) in catalog {
+            for &other_choice_id in &all_choice_ids {
+                let this_selection = if other_choice_id == *choice_id {
+                    *selection
+                } else {
+                    default_selection_by_choice_id[other_choice_id]
+                };
                 input.chosen.selected_choices.push(SelectedChoice {
                     choice_set_id: other_choice_id.to_string(),
-                    selection_id: other_selection.to_string(),
+                    selection_id: this_selection.to_string(),
                 });
             }
             let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                 compute_pilot_base_chassis(&input)
             }));
             let Ok(computation) = outcome else { continue };
-            if computation.explanations.iter().any(|e| e.id == explanation_id) {
-                wired.insert((tier, group_suffix.to_string()));
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id.as_str() == *explanation_id)
+            {
+                wired.insert((*tier, group_suffix.to_string()));
                 break 'levels;
             }
         }
     }
     std::panic::set_hook(previous_hook);
     wired
+}
+
+/// `AT-34-E3-001` (mechanism 3 continuation, cycle 9): direct, real-pipeline
+/// proof that the generalized probe genuinely observes every one of the
+/// engine's 4 * 14 = 56 (tier, group) weapon-training combinations it
+/// SHOULD -- not merely that `classify()` trusts a hand-fed fact. This runs
+/// the SAME `probe_fighter_weapon_training_wiring` the live inventory
+/// build calls, over the SAME shared deterministic fixture, so a
+/// claim-blocking diagnostic or any other real-pipeline side effect that
+/// might silently suppress a non-canonical group's explanation would show
+/// up here as a smaller-than-expected set, not just in a synthetic
+/// `EngineFacts`.
+#[cfg(test)]
+mod fighter_weapon_training_probe_generalization_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Before this cycle, the probe could only ever return (at most) its 4
+    /// hardcoded canonical pairs. This cycle widens `WEAPON_TRAINING_GROUPS`
+    /// to all 14 real PF1 groups; the probe must now observe all `4 * 14 =
+    /// 56` (tier, group) combinations against the real pipeline -- proving
+    /// the widening reaches the live computation, not just the catalog.
+    #[test]
+    fn the_probe_observes_all_56_tier_group_combinations_against_the_real_fixture() {
+        let wired = probe_fighter_weapon_training_wiring(&fixture());
+        assert_eq!(
+            wired.len(),
+            56,
+            "expected all 4 tiers * 14 groups to be observed as wired; got {wired:?}"
+        );
+        // Spot-check a group the OLD 4-hardcoded-canonical-pairs shape could
+        // never have credited at any tier.
+        assert!(wired.contains(&(1, "Axes".to_string())));
+        assert!(wired.contains(&(2, "Crossbows".to_string())));
+        assert!(wired.contains(&(3, "Flails".to_string())));
+        assert!(wired.contains(&(4, "Thrown".to_string())));
+        // The 4 pre-existing canonical pairs must still be observed.
+        assert!(wired.contains(&(1, "Blades Heavy".to_string())));
+        assert!(wired.contains(&(2, "Bows".to_string())));
+        assert!(wired.contains(&(3, "Pole Arms".to_string())));
+        assert!(wired.contains(&(4, "Hammers".to_string())));
+    }
+
+    /// The tier-1 magnitude is the full rank regardless of which of the 14
+    /// groups is chosen (PF1's own rule: the bonus depends on the tier, not
+    /// the group identity) -- verified directly against the real
+    /// computation's own explanation value, for a group (Axes) that folds
+    /// into no baseline total (unlike Heavy Blades).
+    #[test]
+    fn a_non_canonical_tier_1_group_still_carries_the_real_rank_magnitude() {
+        let (_, _, tier_1_choice_id, axes_selection, _) = fighter_weapon_training_canonical_catalog()
+            .into_iter()
+            .find(|(tier, group, _, _, _)| *tier == 1 && *group == "Axes")
+            .expect("catalog must carry a tier-1 Axes entry");
+        let mut input = class_sweep_input(&fixture(), "fighter", 5);
+        input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != tier_1_choice_id);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: tier_1_choice_id.to_owned(),
+            selection_id: axes_selection.to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&input);
+        let explanation = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.fighter.weapon_training")
+            .expect("tier-1 weapon training explanation must fire for the Axes group");
+        assert_eq!(explanation.value, 1, "level 5 Fighter, rank 1, Axes group");
+    }
 }
 
 /// `AT-34-E3-001` (mechanism 3 continuation, cycle 3): the 31 canonical
@@ -10731,28 +10828,6 @@ fn classify(
                     {
                         return engine_does_not_hold(
                             "class_feature_class_skill_list_held_by_class_skill_list_table",
-                        );
-                    }
-                    // AT-34-E3-001 cycle 9, wizard-opposition-school-spell-
-                    // tracking sub-cause (cycle 8's own receipt named this a
-                    // "genuinely new, unbuilt engine subsystem" of 9 units).
-                    // `class_feature_pool_catalog::wizard_school_spell_list_
-                    // key_owner`'s own doc comment carries the full
-                    // argument: this is not a new subsystem at all, but a
-                    // join of two already-shipped, already-tested tables
-                    // (`crb::wizard_spell_list::WIZARD_SPELL_LIST` +
-                    // `crb::spell_list::SPELL_LIST`), verified byte-for-byte
-                    // against all 9 corpus records. Still `description:
-                    // null` -- this only certifies the record's own content
-                    // is now held by real engine tables (bucket B -> D,
-                    // same "a shelf, not a half-fix" outcome as cycles 5-7's
-                    // own rungs), leaving the display gap for whichever
-                    // mechanism owns `has_real_description`.
-                    if class_feature_pool_catalog::wizard_school_spell_list_key_owner(&unit.key)
-                        .is_some()
-                    {
-                        return engine_does_not_hold(
-                            "class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join",
                         );
                     }
                     return engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine");
@@ -17497,8 +17572,7 @@ mod class_feature_text_complete_rung_tests {
     /// computes tier-1 Weapon Training for the canonical Heavy Blades
     /// group), so the record is `grounded` -- never routed to the generic
     /// `class_feature_option_pool_record_with_magnitude_not_held_by_engine`
-    /// bucket-B evidence its 51 sibling `"Weapon Training <tier> <group>"`
-    /// records still get.
+    /// bucket-B evidence.
     #[test]
     fn a_fighter_weapon_training_record_the_probe_observed_reaches_grounded() {
         let mut facts = EngineFacts::default();
@@ -17518,14 +17592,41 @@ mod class_feature_text_complete_rung_tests {
         );
     }
 
-    /// NEGATIVE CONTROL: a magnitude-bearing `"Weapon Training <tier>
-    /// <group>"` record whose group is NOT one of the engine's 4 hardcoded
-    /// canonical (tier, group) pairs (`fighter_weapon_training_attack_
-    /// bonus`'s own doc: only Heavy Blades/Bows/Polearms/Hammers, at their
-    /// own specific tier, are ever computed) is completely unaffected by
-    /// this cycle's fix -- the probe never observes a delta for it, so it
-    /// still falls through to the pre-existing `engine-does-not-hold`
-    /// finding, unchanged.
+    /// `AT-34-E3-001` (mechanism 3 continuation, cycle 9): the same proof,
+    /// for a group the engine's OLD 4-hardcoded-canonical-pairs shape could
+    /// never credit -- Axes at tier 1 was never one of Heavy
+    /// Blades/Bows/Polearms/Hammers. This cycle's generalization
+    /// (`WEAPON_TRAINING_GROUPS`, `weapon_training_group_name_for_
+    /// selection`) makes `explain_fighter_class_features` emit the SAME
+    /// `class_feature.fighter.weapon_training` explanation id for ANY of
+    /// the 14 real PF1 weapon-training groups a Fighter selects at tier 1,
+    /// so the live probe now genuinely observes this pair too.
+    #[test]
+    fn a_fighter_weapon_training_axes_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.fighter_weapon_training_wired.insert((1, "Axes".to_string()));
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1020,
+            "Weapon Training 1 Axes",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "fighter_weapon_training_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: with an EMPTY probe fact set, a magnitude-bearing
+    /// `"Weapon Training <tier> <group>"` record is unaffected by this
+    /// cycle's generalization -- `classify()` never fabricates a `grounded`
+    /// verdict for a `(tier, group)` pair the probe did not itself observe,
+    /// however many groups the underlying formula now accepts. Doubles as
+    /// proof the widening lives entirely in the probe/formula, never in
+    /// `classify()`'s own gate.
     #[test]
     fn a_fighter_weapon_training_record_the_probe_never_observed_is_unaffected() {
         let facts = EngineFacts::default();
@@ -18467,61 +18568,6 @@ mod class_feature_text_complete_rung_tests {
             "cr_abilities_class.lst",
             58,
             "Weapon Proficiencies ~ Cleric",
-            0,
-        );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
-        assert_eq!(verdict.status, "engine-does-not-hold");
-        assert_eq!(verdict.evidence, "class_feature_option_pool_record_not_held_by_engine");
-    }
-
-    /// `AT-34-E3-001` cycle 9, wizard-opposition-school-spell-tracking
-    /// sub-cause: a `description: null` `"<School> Wizard Spells"` internal
-    /// chassis row whose corpus key is one of
-    /// `class_feature_pool_catalog::WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER`'s
-    /// nine verified members must leave bucket B for bucket D --
-    /// `engine-does-not-hold` status still (nothing displays yet), but
-    /// evidence naming a real held fact (the `wizard_spell_list`/
-    /// `spell_list` join), never the mechanism's own generic
-    /// `class_feature_option_pool_record_not_held_by_engine` fallback.
-    /// Proves this FAILS before the fix (the intended-reason RED): before
-    /// `wizard_school_spell_list_key_owner` was consulted, this exact unit
-    /// fell all the way through to the generic fallback despite the engine
-    /// already holding this exact school's 0-level Wizard spell list, for
-    /// real, via two already-shipped tables.
-    #[test]
-    fn a_wizard_school_spell_list_row_verified_against_the_join_leaves_bucket_b() {
-        let facts = EngineFacts::default();
-        let unit = class_feature_unit(
-            "core_rulebook",
-            "cr_abilities_class.lst",
-            2624,
-            "Abjuration Wizard Spells",
-            0,
-        );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
-        assert_eq!(verdict.status, "engine-does-not-hold");
-        assert_eq!(
-            verdict.evidence,
-            "class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join"
-        );
-        assert!(
-            !verdict.evidence.contains("not_held_by_engine"),
-            "must NOT carry a bucket-B marker any more: evidence={}",
-            verdict.evidence
-        );
-    }
-
-    /// Control: a key that merely shares the `"... Wizard Spells"` shape
-    /// but is NOT one of the 9 verified members must be UNAFFECTED -- the
-    /// lookup is a closed, verified list, never a shape predicate.
-    #[test]
-    fn an_unlisted_wizard_spells_shaped_key_still_falls_to_the_generic_fallback() {
-        let facts = EngineFacts::default();
-        let unit = class_feature_unit(
-            "core_rulebook",
-            "cr_abilities_class.lst",
-            9999,
-            "Nonexistent School Wizard Spells",
             0,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);

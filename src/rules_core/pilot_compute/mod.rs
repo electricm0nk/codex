@@ -8523,53 +8523,109 @@ const POLEARMS_GROUP_SELECTION: &str = "group:polearms";
 const FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID: &str = "choice:fighter_weapon_training_group_4";
 const HAMMERS_GROUP_SELECTION: &str = "group:hammers";
 
+// `AT-34-E3-001` (mechanism 3 continuation, cycle 9): the full, closed
+// enumeration of the Fighter's 14 canonical weapon-training groups
+// (cr_abilities_class.lst's own "Weapon Training <tier> <group>" corpus
+// records, confirmed directly against `data/corpus/core_rulebook/
+// class_feature/weapon_training_*/`, never assumed). PF1's own Weapon
+// Training rule grants the bonus to WHICHEVER group a Fighter selects at
+// each tier -- the bonus magnitude (rank, rank-1, rank-2, rank-3 for tiers
+// 1-4) depends only on the tier and character level, never on which of
+// the 14 groups was picked. Unlike a Fighter's open-ended bonus-feat
+// choice (deliberately left un-generalized -- any feat is legal, an
+// unbounded set), the weapon-training group choice is a closed,
+// enumerable, rulebook-fixed set of exactly 14 values, the same shape
+// `FAVORED_ENEMY_TYPES` (cycle 3) and the wizard opposed-school constants
+// already generalize over. Widening the 4 canonical-only checks below to
+// accept any of these 14 selections is therefore not a relaxation of the
+// bounded-fixture discipline -- it is applying the SAME real, unconditional
+// PF1 rule this file already encodes, to every legal input instead of one
+// hardcoded one. `"Monk"` is included for rule-completeness (a real
+// Fighter may train the monk weapon group) even though its own corpus
+// record resolves through a different code path before ever reaching this
+// check (its `class` field is `"Monk"`, not `null`), so including it here
+// changes no observed unit's verdict.
+const WEAPON_TRAINING_GROUPS: [(&str, &str); 14] = [
+    ("Axes", "group:axes"),
+    ("Blades Heavy", HEAVY_BLADES_GROUP_SELECTION),
+    ("Blades Light", "group:blades_light"),
+    ("Bows", BOWS_GROUP_SELECTION),
+    ("Close", "group:close"),
+    ("Crossbows", "group:crossbows"),
+    ("Double", "group:double"),
+    ("Flails", "group:flails"),
+    ("Hammers", HAMMERS_GROUP_SELECTION),
+    ("Monk", "group:monk"),
+    ("Natural", "group:natural"),
+    ("Pole Arms", POLEARMS_GROUP_SELECTION),
+    ("Spears", "group:spears"),
+    ("Thrown", "group:thrown"),
+];
+
+/// Return the corpus group-name suffix (e.g. `"Axes"`, matching
+/// `"Weapon Training <tier> Axes"`) for a `choice:fighter_weapon_training_
+/// group*` selection literal, or `None` when the selection is absent or is
+/// not one of the 14 canonical PF1 weapon-training groups.
+fn weapon_training_group_name_for_selection(selection: &str) -> Option<&'static str> {
+    WEAPON_TRAINING_GROUPS
+        .iter()
+        .find(|(_, sel)| *sel == selection)
+        .map(|(name, _)| *name)
+}
+
 /// `AT-34-E3-001` (`decisions.md §14`, mechanism 3: `class_feature_option_pool_
 /// record_with_magnitude_not_held_by_engine`): read-only bridge exposing
-/// `fighter_weapon_training_attack_bonus`'s own 4 hardcoded canonical
-/// (tier, group) pairs to `v06_work_inventory`'s live-computation probe,
+/// every `(tier, group)` pair the weapon-training computation below can now
+/// genuinely ground to `v06_work_inventory`'s live-computation probe,
 /// mirroring `domain_power::domain_power_probe_catalog`'s own shape. No
 /// behavior change to the weapon-training computation itself -- every
-/// tuple's own choice id and selection literal is the SAME constant the
-/// real computation already reads above, never a re-typed copy.
+/// tuple's own choice id and selection literal is drawn from the SAME
+/// `WEAPON_TRAINING_GROUPS` constant the real computation reads below,
+/// never a re-typed copy.
 ///
-/// Each tuple is `(tier, corpus group-name suffix, choice id, canonical
-/// selection, explanation id)`. The corpus group-name suffix is the exact
-/// text following `"Weapon Training <tier> "` in this book's own corpus
-/// key (`"Weapon Training 1 Blades Heavy"`, `"Weapon Training 2 Bows"`,
-/// `"Weapon Training 3 Pole Arms"`, `"Weapon Training 4 Hammers"` --
+/// Each tuple is `(tier, corpus group-name suffix, choice id, selection,
+/// explanation id)`. The corpus group-name suffix is the exact text
+/// following `"Weapon Training <tier> "` in this book's own corpus key
+/// (`"Weapon Training 1 Blades Heavy"`, `"Weapon Training 2 Bows"`, ...,
 /// confirmed live against `docs/work-inventory.json`), never a guess.
+///
+/// `AT-34-E3-001` (mechanism 3 continuation, cycle 9): widened from 4
+/// hardcoded canonical tuples to all `4 * 14 = 56` (tier, group)
+/// combinations, mirroring the real computation's own generalization from
+/// "one canonical group per tier" to "any of the 14 canonical groups per
+/// tier" (see `WEAPON_TRAINING_GROUPS`'s own doc comment for why this is a
+/// closed enumerable set, not an open-ended relaxation).
 pub fn fighter_weapon_training_canonical_catalog()
--> [(u8, &'static str, &'static str, &'static str, &'static str); 4] {
-    [
+-> Vec<(u8, &'static str, &'static str, &'static str, &'static str)> {
+    const TIERS: [(u8, &str, &str); 4] = [
         (
             1,
-            "Blades Heavy",
             FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID,
-            HEAVY_BLADES_GROUP_SELECTION,
             "class_feature.fighter.weapon_training",
         ),
         (
             2,
-            "Bows",
             FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID,
-            BOWS_GROUP_SELECTION,
             "class_feature.fighter.weapon_training_group_2",
         ),
         (
             3,
-            "Pole Arms",
             FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID,
-            POLEARMS_GROUP_SELECTION,
             "class_feature.fighter.weapon_training_group_3",
         ),
         (
             4,
-            "Hammers",
             FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID,
-            HAMMERS_GROUP_SELECTION,
             "class_feature.fighter.weapon_training_group_4",
         ),
-    ]
+    ];
+    let mut catalog = Vec::with_capacity(TIERS.len() * WEAPON_TRAINING_GROUPS.len());
+    for (tier, choice_id, explanation_id) in TIERS {
+        for (group_suffix, selection) in WEAPON_TRAINING_GROUPS {
+            catalog.push((tier, group_suffix, choice_id, selection, explanation_id));
+        }
+    }
+    catalog
 }
 
 // Fighter armor training 1, gained at level 3. It reduces the worn armor's
@@ -32285,9 +32341,19 @@ fn explain_fighter_class_features(
         });
     }
 
-    let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
-    if weapon_training_bonus > 0 {
-        let rank = fighter_weapon_training_rank(level);
+    // `AT-34-E3-001` (mechanism 3 continuation, cycle 9): the four blocks
+    // below used to check `choice_selection(...) == Some(<one hardcoded
+    // canonical group>)` per tier. Generalized to
+    // `weapon_training_group_name_for_selection(...)`, which accepts any of
+    // the 14 real PF1 weapon-training groups (`WEAPON_TRAINING_GROUPS`'s
+    // own doc comment states why this is the real rule, not a relaxation).
+    // `fighter_weapon_training_attack_bonus` itself is UNCHANGED (still
+    // folds into the baseline total only for Heavy Blades, since only that
+    // group covers the deterministic Longsword) -- these explanation
+    // records are a separate, additive surface, exactly like the
+    // pre-existing tier 2-4 "explanation-only" idiom this cycle widens.
+    let rank = fighter_weapon_training_rank(level);
+    if rank > 0 {
         let rank_level = if rank >= 4 {
             FIGHTER_WEAPON_TRAINING_1_LEVEL + 3 * FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE
         } else if rank >= 3 {
@@ -32297,100 +32363,98 @@ fn explain_fighter_class_features(
         } else {
             FIGHTER_WEAPON_TRAINING_1_LEVEL
         };
-        explanations.push(ComputationExplanation {
-            id: "class_feature.fighter.weapon_training".to_owned(),
-            value: weapon_training_bonus,
-            detail: format!(
-                "Fighter level {rank_level} Weapon Training {rank} (weapon training, \
-                 cr_abilities_class.lst Fighter; rank = 1 + (level - 5) / 4): the first chosen \
-                 weapon group \
-                 ({FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID} -> {HEAVY_BLADES_GROUP_SELECTION}) \
-                 grants +{weapon_training_bonus} to attack rolls with weapons of that group, \
-                 which the deterministic Longsword falls under; this +{weapon_training_bonus} is \
-                 already folded into the baseline melee attack bonus. Weapon Training also grants \
-                 +{weapon_training_bonus} to damage rolls with weapons of that group, but no \
-                 damage total is computed anywhere in this codebase for any Fighter level, so the \
-                 damage-roll half stays explicitly unproven rather than silently omitted"
+
+        // Tier 1 (level 5): the first chosen weapon group. Folds into the
+        // baseline melee attack bonus only for Heavy Blades (the
+        // deterministic Longsword's own group); any other of the 14 groups
+        // is a real, non-fabricated +rank grant that this seam surfaces as
+        // explanation-only, since no other weapon is in the deterministic
+        // loadout for it to apply to.
+        if let Some(selection) = choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID) {
+            if let Some(group_name) = weapon_training_group_name_for_selection(selection) {
+                let first_group_bonus = rank;
+                let detail = if selection == HEAVY_BLADES_GROUP_SELECTION {
+                    format!(
+                        "Fighter level {rank_level} Weapon Training {rank} (weapon training, \
+                         cr_abilities_class.lst Fighter; rank = 1 + (level - 5) / 4): the first \
+                         chosen weapon group \
+                         ({FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID} -> {selection}) grants \
+                         +{first_group_bonus} to attack rolls with weapons of that group, which \
+                         the deterministic Longsword falls under; this +{first_group_bonus} is \
+                         already folded into the baseline melee attack bonus. Weapon Training \
+                         also grants +{first_group_bonus} to damage rolls with weapons of that \
+                         group, but no damage total is computed anywhere in this codebase for \
+                         any Fighter level, so the damage-roll half stays explicitly unproven \
+                         rather than silently omitted"
+                    )
+                } else {
+                    format!(
+                        "Fighter level {rank_level} Weapon Training {rank} (weapon training, \
+                         cr_abilities_class.lst Fighter; rank = 1 + (level - 5) / 4): the first \
+                         chosen weapon group \
+                         ({FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID} -> {selection}) grants \
+                         +{first_group_bonus} to attack and damage rolls with weapons of that \
+                         group. No {group_name} weapon is part of the deterministic Longsword \
+                         loadout, so this seam is explanation-only: the +{first_group_bonus} is \
+                         not folded into any computed total, and the baseline melee attack bonus \
+                         is computed independently of this tier's own group choice"
+                    )
+                };
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.fighter.weapon_training".to_owned(),
+                    value: first_group_bonus,
+                    detail,
+                });
+            }
+        }
+
+        // Tiers 2-4 (levels 9/13/17): each later-chosen group's bonus sits
+        // one point lower than the tier before it, regardless of which of
+        // the 14 groups was picked -- always explanation-only, since the
+        // deterministic loadout carries only one weapon (a Longsword,
+        // Heavy Blades, tier 1's own group).
+        const LATER_TIERS: [(u8, i16, &str, &str); 3] = [
+            (
+                2,
+                1,
+                FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID,
+                "class_feature.fighter.weapon_training_group_2",
             ),
-        });
-
-        // Weapon Training 2 (level 9) also grants a second chosen weapon group a
-        // bonus one point lower than the first group's. The canonical second group
-        // (Bows) covers no equipped weapon on the deterministic Longsword loadout,
-        // so this is an explanation-only record: its +1 is never folded into the
-        // Longsword baseline melee attack bonus, which uses the first-group rank.
-        if rank >= 2
-            && choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID)
-                == Some(BOWS_GROUP_SELECTION)
-        {
-            let second_group_bonus = rank - 1;
+            (
+                3,
+                2,
+                FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID,
+                "class_feature.fighter.weapon_training_group_3",
+            ),
+            (
+                4,
+                3,
+                FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID,
+                "class_feature.fighter.weapon_training_group_4",
+            ),
+        ];
+        for (tier, rank_offset, choice_id, explanation_id) in LATER_TIERS {
+            if rank < i16::from(tier) {
+                continue;
+            }
+            let Some(selection) = choice_selection(input, choice_id) else {
+                continue;
+            };
+            let Some(group_name) = weapon_training_group_name_for_selection(selection) else {
+                continue;
+            };
+            let later_group_bonus = rank - rank_offset;
             explanations.push(ComputationExplanation {
-                id: "class_feature.fighter.weapon_training_group_2".to_owned(),
-                value: second_group_bonus,
+                id: explanation_id.to_owned(),
+                value: later_group_bonus,
                 detail: format!(
-                    "Fighter level {rank_level} Weapon Training {rank} also grants a second \
-                     chosen weapon group \
-                     ({FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID} -> {BOWS_GROUP_SELECTION}) \
-                     +{second_group_bonus} to attack and damage rolls with weapons of that \
-                     group. No bow is part of the deterministic Longsword loadout, so this seam \
-                     is explanation-only: the +{second_group_bonus} is not folded into any \
-                     computed total, and the baseline melee attack bonus uses only the \
-                     first-group (Heavy Blades) rank"
-                ),
-            });
-        }
-
-        // Weapon Training 3 (level 13, SD18 widening) also grants a third chosen
-        // weapon group a bonus two points lower than the first group's. The
-        // canonical third group (Polearms) covers no equipped weapon on the
-        // deterministic Longsword loadout, so this is an explanation-only record:
-        // its +1 is never folded into the Longsword baseline melee attack bonus,
-        // which uses the first-group rank. Mirrors the second-group idiom exactly.
-        if rank >= 3
-            && choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID)
-                == Some(POLEARMS_GROUP_SELECTION)
-        {
-            let third_group_bonus = rank - 2;
-            explanations.push(ComputationExplanation {
-                id: "class_feature.fighter.weapon_training_group_3".to_owned(),
-                value: third_group_bonus,
-                detail: format!(
-                    "Fighter level {rank_level} Weapon Training {rank} also grants a third \
-                     chosen weapon group \
-                     ({FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID} -> {POLEARMS_GROUP_SELECTION}) \
-                     +{third_group_bonus} to attack and damage rolls with weapons of that \
-                     group. No polearm is part of the deterministic Longsword loadout, so this \
-                     seam is explanation-only: the +{third_group_bonus} is not folded into any \
-                     computed total, and the baseline melee attack bonus uses only the \
-                     first-group (Heavy Blades) rank"
-                ),
-            });
-        }
-
-        // Weapon Training 4 (level 17, SD18 widening) also grants a fourth
-        // chosen weapon group a bonus three points lower than the first
-        // group's. The canonical fourth group (Hammers) covers no equipped
-        // weapon on the deterministic Longsword loadout, so this is an
-        // explanation-only record: its +1 is never folded into the Longsword
-        // baseline melee attack bonus, which uses the first-group rank.
-        // Mirrors the second-group and third-group idiom exactly.
-        if rank >= 4
-            && choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID)
-                == Some(HAMMERS_GROUP_SELECTION)
-        {
-            let fourth_group_bonus = rank - 3;
-            explanations.push(ComputationExplanation {
-                id: "class_feature.fighter.weapon_training_group_4".to_owned(),
-                value: fourth_group_bonus,
-                detail: format!(
-                    "Fighter level {rank_level} Weapon Training {rank} also grants a fourth \
-                     chosen weapon group \
-                     ({FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID} -> {HAMMERS_GROUP_SELECTION}) \
-                     +{fourth_group_bonus} to attack and damage rolls with weapons of that \
-                     group. No hammer is part of the deterministic Longsword loadout, so this \
-                     seam is explanation-only: the +{fourth_group_bonus} is not folded into any \
-                     computed total, and the baseline melee attack bonus uses only the \
-                     first-group (Heavy Blades) rank"
+                    "Fighter level {rank_level} Weapon Training {rank} also grants a tier-{tier} \
+                     chosen weapon group ({choice_id} -> {selection}) +{later_group_bonus} to \
+                     attack and damage rolls with weapons of that group. No {group_name} weapon \
+                     is part of the deterministic Longsword loadout, so this seam is \
+                     explanation-only: the +{later_group_bonus} is not folded into any computed \
+                     total, and the baseline melee attack bonus uses only the first-group (Heavy \
+                     Blades) rank"
                 ),
             });
         }
