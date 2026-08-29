@@ -1,6 +1,6 @@
 # Cycle AT-34-E5-003 — Epic 5 (Price the remaining 35 books) / AT-34-E5-003
 
-- **Commit SHA:** PENDING (set at push time; see `git log -1` on `tranche/14` after this cycle's push)
+- **Commit SHA:** `a2600d3a29`
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_power_table_cost.py` (new)
   - `docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/verify_power_table_cost.py` (new)
