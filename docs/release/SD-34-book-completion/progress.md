@@ -506,6 +506,58 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E4-002 — Ultimate Campaign bucket B closed via a missing PI-coordinate wire-up (partial)
+
+**Status: partial.** `python3 scripts/completion_atlas.py --book ultimate_campaign --check` at
+the start of this cycle: `population=265 DONE=127 B=5 D=4 M=88 V=18 U=21 X=2` (`AT-34-E4-001`
+resolved `U`/`X` by proof without moving buckets; this cycle is the first to move population).
+
+All 5 `ultimate_campaign` bucket-B trait units are `NAMEISPI:YES` deity-linked traits
+(`uca_abilities_traits.lst:280-284`) — PI-masked at ingestion, so a plain key/name `resolve`
+never finds their real corpus record even though it physically exists
+(`data/corpus/ultimate_campaign/trait_generic/codex_named_unit_trait_ultimate_campaign_uca_abilities_traits_lst_280.json`,
+verified by direct read). `decisions.md §14` already built the fix — `simple_kind_verdict`'s
+`coordinate` fallback, wired for `Kind::Domain`/`Kind::Deity` — but `Kind::Trait`'s call site
+still passed `None`. Pure missing wire-up: added a `coordinate` build identical to the
+`Domain`/`Deity` arms.
+
+**TDD:** RED test proved failing for the intended reason (still bucket B) before the fix;
+`Kind::Trait`'s arm fixed to pass the coordinate; GREEN, plus a monotonicity sibling proving a
+genuinely-absent coordinate still refuses cleanly. Full `v06_work_inventory.rs` suite: 414/414
+passed, 0 regressions.
+
+`ultimate_campaign` after: `DONE=130 B=0 D=5 M=89 V=18 U=21 X=2` (`population=265` unchanged).
+The 5 closed units split honestly on real corpus shape: 3 zero-magnitude/real-description/
+display-class → `DONE` (`+3`); 1 carries a real `BONUS:SKILL` magnitude → `M` (this table is a
+lookup, not a compute path, `decisions.md §2a`); 1 (`Wrecking Wrath`) has genuine prose
+Strength-modifier-doubling scaling → `D`, correctly not display-promoted. Corpus-wide, the same
+mechanism (any book's PI-masked trait record) also closed: `B: 11921→11831` (`-90`) at HEAD.
+
+**Instrument correction:** the fix's line insertion shifted `completion_atlas.py`'s bucket-`V`
+citation off `11707`; `AT-34-E1-002` condition 6 caught it (`citation_failures=1`), re-derived to
+the real line (`11722`) and reverified `citation_failures=0`.
+
+**Remainder — 135 of 265 not yet `DONE`, named exactly:** `M:89` (magnitude ingested, needs the
+compute path run — real Epic-3-scale engine work), `V:18` (needs the SD-33 oracle harness),
+`D:5` (3 `ability` `ASPECT:`-only records `closure_has_real_description` doesn't read — root
+cause diagnosed this cycle, fix not attempted; 2 `trait` prose-scaling records needing a compute
+path, one of them, `Alchemical Intuition`, pre-existing and one, `Wrecking Wrath`, newly surfaced
+by this cycle's own fix), `U:21` and `X:2` (both already proven correct-and-final by
+`AT-34-E4-001`; neither matches `§17`'s 2026-08-28 ruling's targeted shapes, so deliberately not
+reopened). `89+18+5+21+2=135`; `130+135=265`.
+
+`corpus_literal_sweep`: `48708 examined of 51482 read, 0 findings` before and after (no
+`data/corpus/**` file touched). `derived_evaluator_fixture_check`: `1839 cleared over 2580
+rows, 0 failed`. `cargo test --locked --no-run` exits 0 at the widest workspace scope;
+`apps/desktop/src-tauri` not touched, not run. `docs/work-inventory.json` regenerated with
+`CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` set (no `--allow-stamp-loss`).
+Denominator gate against this package: run separately, see receipt. Receipt:
+`artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt.md`.
+
+**Next cycle:** widen `closure_has_real_description` for `ASPECT:`-only `ability` records (3
+units, root cause already diagnosed); build a compute path for the 2 `trait` prose-scaling
+records; measure per-unit cost on `M`/`V` samples before any population-scoped run.
+
 ### Cycle — AT-34-E2-002 reconfirmation at HEAD — complete, no drift found
 
 **Status: complete.** This lane was dispatched against `AT-34-E2-002` after the criterion had

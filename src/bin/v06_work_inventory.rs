@@ -11192,20 +11192,35 @@ fn classify(
         // `trait/` -- `simple_kind_tables::kind_dir_for` resolves that; the
         // evidence string keeps the `trait` kind name (`dir` argument is
         // display-only, for a receipt reader), never the directory.
-        Kind::Trait => simple_kind_verdict(
-            facts.simple_kind_tables.get("trait"),
-            "trait_content",
-            "trait_generic",
-            &engine_book,
-            &unit.key,
-            &unit.name,
-            text_only,
-            has_real_description,
-            wc_class,
-            universal_sheet_modifier,
-            engine_book_field.clone(),
-            None,
-        ),
+        //
+        // `AT-34-E4-002`'s extension of `decisions.md §14`'s PI-coordinate
+        // mechanism (already wired for `Kind::Domain`/`Kind::Deity`): every
+        // one of `ultimate_campaign`'s 5 bucket-B trait units is a
+        // `NAMEISPI:YES` deity-linked trait (`Corpse Cannibal (Urgathoa)`
+        // at `uca_abilities_traits.lst:280`), PI-masked at ingestion to
+        // `Codex-Named Unit (...)`, so a plain key/name `resolve` never
+        // finds the record even though it physically exists. The table's
+        // own `by_coordinate` index is built generically for every kind
+        // (`simple_kind_tables.rs`), so this fallback was only ever missing
+        // its wire-up here -- never the redacted real name in any evidence
+        // string.
+        Kind::Trait => {
+            let coordinate = format!("{engine_book}:{}:{}", unit.provenance.file, unit.provenance.line);
+            simple_kind_verdict(
+                facts.simple_kind_tables.get("trait"),
+                "trait_content",
+                "trait_generic",
+                &engine_book,
+                &unit.key,
+                &unit.name,
+                text_only,
+                has_real_description,
+                wc_class,
+                universal_sheet_modifier,
+                engine_book_field.clone(),
+                Some(&coordinate),
+            )
+        }
     }
 }
 
@@ -16867,6 +16882,66 @@ mod companion_text_complete_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "deity_content_absent_from_deity_table_in_core_rulebook");
+    }
+
+    /// `AT-34-E4-002` (`decisions.md §14`'s `deity`/`domain` PI-coordinate
+    /// mechanism, extended to `trait`): all 5 of `ultimate_campaign`'s
+    /// bucket-B trait units are `NAMEISPI:YES` deity-linked traits
+    /// (`Corpse Cannibal (Urgathoa)` at `uca_abilities_traits.lst:280`) --
+    /// PI-masked at ingestion to `Codex-Named Unit (...)`, so a plain
+    /// key/name `resolve` never finds the record even though it physically
+    /// exists (`data/corpus/ultimate_campaign/trait_generic/
+    /// codex_named_unit_trait_ultimate_campaign_uca_abilities_traits_lst_280.json`).
+    /// Unlike `Domain`/`Deity`, `Kind::Trait`'s call site passed `None` for
+    /// the coordinate parameter -- the table itself already indexes every
+    /// PI-renamed record `by_coordinate` (`simple_kind_tables.rs` builds
+    /// that map generically, not per-kind), so this is purely a missing
+    /// wire-up, proven RED here before the fix.
+    #[test]
+    fn a_pi_renamed_trait_record_resolves_by_coordinate_and_leaves_bucket_b() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            280,
+            "Trait ~ Corpse Cannibal",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_ne!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_table_resolve_returned_a_real_record_with_description"
+        );
+        assert!(!verdict.evidence.contains("absent_from_trait_generic_table"));
+        assert!(
+            !verdict.evidence.contains("Corpse Cannibal"),
+            "evidence must never carry the masked-away real name"
+        );
+    }
+
+    /// MONOTONICITY sibling: a genuinely absent coordinate (no corpus
+    /// record at all) must still refuse cleanly as bucket B, never panic
+    /// and never fabricate a hit.
+    #[test]
+    fn a_trait_record_absent_from_the_table_and_with_no_matching_coordinate_stays_bucket_b() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            999999,
+            "___a_trait_key_no_corpus_record_carries___",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_absent_from_trait_generic_table_in_ultimate_campaign"
+        );
     }
 
     /// `AT-34-E3-001` bucket B, mechanism 1: `holds_key_inner` has no arm
