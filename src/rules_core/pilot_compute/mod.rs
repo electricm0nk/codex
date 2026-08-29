@@ -5093,6 +5093,15 @@ const ABJURATION_SCHOOL_SELECTION: &str = "school:abjuration";
 // idiom as the Transmutation slice, picking two already-existing
 // non-Conjuration, non-Divination selection constants.
 const CONJURATION_SCHOOL_SELECTION: &str = "school:conjuration";
+// `AT-34-E3-001` (mechanism 2 continuation, cycle 8): the "no specialization"
+// arm, distinct in shape from every specialist selection above. A wizard who
+// declines to specialize gains the Universal School's own two powers
+// (`cr_abilities_class.lst`'s `KEY:Universal School ~ *` records) instead of
+// a specialist school's powers, and PF1's own rule is that a universalist
+// "need not select an opposition school" -- unlike every specialist arm
+// above, whose canonical fixture always carries exactly two opposed-school
+// selections, the canonical universalist fixture carries ZERO.
+const UNIVERSAL_SCHOOL_SELECTION: &str = "school:universal";
 /// PF1 Core Rulebook arcane school class feature: a specialist wizard gains one
 /// additional spell slot of each spell level she can cast, 1st and up, usable only
 /// for spells of the chosen school. At the bounded baseline level 1 that is exactly
@@ -44232,6 +44241,31 @@ fn wizard_has_canonical_conjuration_selection(input: &CharacterInput) -> bool {
         && opposed.contains(&ABJURATION_SCHOOL_SELECTION)
 }
 
+/// `AT-34-E3-001` (mechanism 2 continuation, cycle 8): the universalist
+/// (no-specialization) selection. Unlike every specialist gate above, PF1's
+/// own rule for a wizard who does not specialize is "need not select an
+/// opposition school" (`cr_abilities_class.lst`'s `Universal School` record
+/// carries only the shared, unconditional `BONUS:VAR|OppositionalSchool|-2`
+/// token, no per-school opposition choice at all) -- so the canonical
+/// universalist fixture is required to carry ZERO
+/// `WIZARD_OPPOSED_SCHOOLS_CHOICE_ID` selections, not exactly two. Anything
+/// else -- the specialization slot absent, any non-universal selection, or
+/// any opposed-school selection present at all -- returns `false`, so no
+/// Universal School power grounding is fabricated for a choice shape that
+/// contradicts the rule this gate exists to recognize.
+fn wizard_has_canonical_universal_selection(input: &CharacterInput) -> bool {
+    if choice_selection(input, WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID)
+        != Some(UNIVERSAL_SCHOOL_SELECTION)
+    {
+        return false;
+    }
+    !input
+        .chosen
+        .selected_choices
+        .iter()
+        .any(|c| c.choice_set_id == WIZARD_OPPOSED_SCHOOLS_CHOICE_ID)
+}
+
 /// Surface direct SD13-E4-R3 runtime evidence for the deterministic Human Wizard
 /// level-1 prepared arcane spell-bearing baseline, while keeping it explicitly
 /// claim-blocked on its two still-missing burdens.
@@ -45160,6 +45194,69 @@ fn explain_wizard_level1_prepared_spell_baseline(
                      {conjuration_school_lvl}*30 = {dimensional_steps_feet}. Grounds only the \
                      flat feet-per-day magnitude; it teleports no actual character and tracks \
                      no 5-foot-increment consumption"
+                ),
+            });
+        }
+    }
+
+    // `AT-34-E3-001` (mechanism 2 continuation, cycle 8): Wizard's Universal
+    // School (the "no specialization" arm) -- unlike every specialist block
+    // above, `UniversalSchoolLVL` <- `ArcaneSchoolLVL` <- `WizardLVL` still
+    // holds (`BONUS:VAR|UniversalSchoolLVL|ArcaneSchoolLVL` on the corpus's
+    // own `Universal School` record), so the two power records below share
+    // the same `wizard_level_value` chain every specialist school already
+    // uses. Verified directly against `cr_abilities_class.lst`'s `KEY:
+    // Universal School ~ *` records. Explanation ids live under the shared
+    // `class_feature.school.universal.*` namespace.
+    if wizard_has_canonical_universal_selection(input) {
+        let universal_school_lvl = wizard_level_value;
+        let universal_progression_school_lvl = wizard_level_value;
+
+        // Grounded for real: Hand of the Apprentice (`KEY:Universal School
+        // ~ Hand of the Apprentice`) -- `UniversalHandOfTheApprenticeTimes|
+        // ArcaneSchoolPowerTimes`, the same shared "3 + Intelligence
+        // modifier" idiom the pre-existing Force Missile / Telekinetic
+        // Fist / Acid Dart groundings above already use, unlocked from
+        // level 1 (`PREVARLT:Wizard_CF_SchoolPower1,1` on the Hand of the
+        // Apprentice record itself).
+        if universal_progression_school_lvl >= 1 {
+            let hand_of_the_apprentice_times = (3 + ability_modifiers.intelligence).max(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.universal.hand_of_the_apprentice_uses_per_day"
+                    .to_owned(),
+                value: hand_of_the_apprentice_times,
+                detail: format!(
+                    "Wizard level {level} Universal School power Hand of the Apprentice \
+                     uses-per-day pool (PF1 Core Rulebook Universal School): \
+                     UniversalHandOfTheApprenticeTimes resolves to the shared \
+                     ArcaneSchoolPowerTimes counter, 3 + Intelligence modifier, floored at 0. \
+                     At Intelligence modifier {} this is max(3 + {}, 0) = \
+                     {hand_of_the_apprentice_times}. Grounds only the flat daily-use count; \
+                     it makes no actual melee-weapon ranged attack and applies no bonus to \
+                     any actual attack or damage roll",
+                    ability_modifiers.intelligence, ability_modifiers.intelligence
+                ),
+            });
+        }
+
+        // Grounded for real: Metamagic Mastery (`KEY:Universal School ~
+        // Metamagic Mastery`) -- `UniversalMetamagicMasteryTimes|
+        // (UniversalSchoolLVL-8)/2+1`, gated on the power's own level-8
+        // unlock (`PREVARLT:Wizard_CF_SchoolPower8,1` on the Metamagic
+        // Mastery record itself).
+        if universal_progression_school_lvl >= 8 {
+            let metamagic_mastery_times = (universal_school_lvl - 8) / 2 + 1;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.universal.metamagic_mastery_uses_per_day".to_owned(),
+                value: metamagic_mastery_times,
+                detail: format!(
+                    "Wizard level {level} Universal School power Metamagic Mastery \
+                     uses-per-day pool (PF1 Core Rulebook Universal School): \
+                     UniversalMetamagicMasteryTimes resolves to (UniversalSchoolLVL-8)/2+1 = \
+                     ({universal_school_lvl}-8)/2+1 = {metamagic_mastery_times}. Grounds only \
+                     the flat daily-use count; it applies no actual metamagic feat to any \
+                     spell and tracks no additional-daily-usage cost for a feat that raises \
+                     the spell level by more than 1"
                 ),
             });
         }

@@ -7419,17 +7419,21 @@ fn probe_ranger_favored_terrain_bonus_wiring(fixture: &CharacterInput) -> BTreeS
 /// class.lst` formula tokens above this fn) and Abjuration
 /// (`wizard_has_canonical_abjuration_selection`'s own gate -- Resistance's
 /// stepped `5`/`10`, Protective Ward's three flat sub-magnitudes, and
-/// Energy Absorption's `AbjurationSchoolLVL*3`). Every OTHER school
-/// (Conjuration, Divination, Enchantment, Illusion, Necromancy,
-/// Transmutation, Universal) and both schools' own top-level `"<School>
-/// School"` / `"<School> Opposition School"` recognition records have no
-/// such formula built yet (only the shared, non-numeric `Pool_
-/// ArcaneOppositionSchool`/`OppositionalSchool` prohibited-school tokens),
-/// so this probe deliberately never claims them -- crediting a school with
-/// no real per-power formula, or a recognition record no explanation id
-/// exists for, would be exactly the "plausible-looking but not actually
-/// observed" shape the Sorcerer New Arcana finding (cycle 3's own receipt)
-/// already ruled out for this mechanism.
+/// Energy Absorption's `AbjurationSchoolLVL*3`). Cycles 6-8 each added one
+/// more school built end-to-end the same way: Transmutation (Telekinetic
+/// Fist, Physical Enhancement, Change Shape), Conjuration (Summoner's
+/// Charm, Acid Dart, Dimensional Steps), and Universal -- the
+/// "no specialization" arm -- (Hand of the Apprentice, Metamagic Mastery).
+/// Every OTHER school (Divination, Enchantment, Illusion, Necromancy) and
+/// every school's own top-level `"<School> School"` / `"<School>
+/// Opposition School"` recognition records have no such formula built yet
+/// (only the shared, non-numeric `Pool_ArcaneOppositionSchool`/
+/// `OppositionalSchool` prohibited-school tokens), so this probe
+/// deliberately never claims them -- crediting a school with no real
+/// per-power formula, or a recognition record no explanation id exists
+/// for, would be exactly the "plausible-looking but not actually observed"
+/// shape the Sorcerer New Arcana finding (cycle 3's own receipt) already
+/// ruled out for this mechanism.
 fn probe_wizard_arcane_school_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
     let mut wired = BTreeSet::new();
     let previous_hook = std::panic::take_hook();
@@ -7608,6 +7612,42 @@ fn probe_wizard_arcane_school_wiring(fixture: &CharacterInput) -> BTreeSet<Strin
                 .any(|e| e.id == "class_feature.school.conjuration.dimensional_steps_feet")
             {
                 wired.insert("Conjuration School ~ Dimensional Steps".to_string());
+            }
+        }
+
+        // Universal (`AT-34-E3-001` mechanism 2 continuation, cycle 8):
+        // swap the specialization choice to the "no specialization" arm and
+        // CLEAR the opposed-schools choice entirely -- `wizard_has_
+        // canonical_universal_selection`'s own precondition requires ZERO
+        // opposed-school selections (PF1's own rule: a universalist "need
+        // not select an opposition school"), unlike every specialist swap
+        // above which always pushes exactly two.
+        let mut universal_input = class_sweep_input(fixture, "wizard", level);
+        universal_input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:wizard_school_specialization");
+        universal_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_school_specialization".to_string(),
+            selection_id: "school:universal".to_string(),
+        });
+        universal_input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:wizard_opposed_schools");
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&universal_input)
+        }));
+        if let Ok(computation) = outcome {
+            if computation.explanations.iter().any(|e| {
+                e.id == "class_feature.school.universal.hand_of_the_apprentice_uses_per_day"
+            }) {
+                wired.insert("Universal School ~ Hand of the Apprentice".to_string());
+            }
+            if computation.explanations.iter().any(|e| {
+                e.id == "class_feature.school.universal.metamagic_mastery_uses_per_day"
+            }) {
+                wired.insert("Universal School ~ Metamagic Mastery".to_string());
             }
         }
     }
@@ -17707,6 +17747,86 @@ mod class_feature_text_complete_rung_tests {
             "cr_abilities_class.lst",
             2598,
             "Conjuration School",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
+    /// held_by_engine` mechanism, cycle 8, wizard Universal school
+    /// sub-cause, proof case: `probe_wizard_arcane_school_wiring`'s new
+    /// Universal branch observed a real, live-computed Hand of the
+    /// Apprentice uses-per-day magnitude for this exact corpus record on a
+    /// canonical universalist wizard (a NON-specialist selection, unlike
+    /// every prior school this mechanism grounded), so it is `grounded` --
+    /// never routed to the generic bucket-B evidence.
+    #[test]
+    fn a_wizard_universal_school_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .wizard_arcane_school_wired
+            .insert("Universal School ~ Hand of the Apprentice".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2694,
+            "Universal School ~ Hand of the Apprentice",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// The same proof, for Universal's own level-8 Metamagic Mastery power
+    /// -- a DIFFERENT record within the same `"Universal School"` group
+    /// prefix, grounded on its own distinct explanation id.
+    #[test]
+    fn a_wizard_universal_metamagic_mastery_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .wizard_arcane_school_wired
+            .insert("Universal School ~ Metamagic Mastery".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2695,
+            "Universal School ~ Metamagic Mastery",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an UNPROBED wizard Universal school record (the
+    /// probe's own `EngineFacts` set is empty here) is completely
+    /// unaffected -- it still falls through to the pre-existing
+    /// `engine-does-not-hold` finding, unchanged, proving this cycle's fix
+    /// credits nothing it did not actually observe. Uses the top-level
+    /// `"Universal School"` recognition record itself, which this cycle
+    /// deliberately never claims (same "shared bookkeeping, no per-record
+    /// formula" exclusion every prior school's top-level record already
+    /// established).
+    #[test]
+    fn a_wizard_universal_school_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2605,
+            "Universal School",
             2,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);

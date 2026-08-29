@@ -13,6 +13,59 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-001 `class_feature_option_pool_record_with_magnitude_not_held_by_engine`, cycle 8 — Universal School grounded, 258 -> 256
+
+Re-derived at HEAD (`617c1d3b40`), still 258 of 553 `core_rulebook` bucket-B units on this
+mechanism. Continued cycle 7's own next-cycle-plan lever ("one more wizard school, built
+end-to-end") and picked **Universal** — the "no specialization" arm, only 2 power records
+(`Hand of the Apprentice`, `Metamagic Mastery`), cheapest of the remaining schools. Reading
+`data/corpus/core_rulebook/class_feature/universal_school/*.json` directly (never assumed)
+found the same underlying shape every prior school grounding already established: real,
+non-fabricated `BONUS:VAR` formulas the engine had never wired, because the corpus record's
+`group` prefix can never equal `"wizard"`. Universal is genuinely different in *choice* shape
+from every specialist school this mechanism already grounded — PF1's own rule is that a
+universalist "need not select an opposition school," so the new
+`wizard_has_canonical_universal_selection` gate requires **zero** opposed-school selections,
+not the specialist gates' exactly-two — verified against the corpus's raw tokens before
+writing any code, avoiding a repeat of cycle 6's own probe-defect history.
+
+New computation block in `src/rules_core/pilot_compute/mod.rs` grounds Hand of the Apprentice
+(the shared `ArcaneSchoolPowerTimes` "3 + Intelligence modifier" idiom, unlocked level 1) and
+Metamagic Mastery (`(UniversalSchoolLVL-8)/2+1`, unlocked level 8). `probe_wizard_arcane_
+school_wiring` (`src/bin/v06_work_inventory.rs`) gained a fifth variant, swapping the
+specialization choice to `"school:universal"` and clearing the opposed-schools choice set
+entirely rather than replacing it — the first attempt closed exactly the 2 records predicted,
+no correction round needed. TDD: RED (both target records failed for the intended reason —
+live corpus data at cycle start, `docs/work-inventory.json`) -> GREEN (3 new tests: two
+positive proofs on the two distinct power records, one negative control on the never-claimed
+top-level `"Universal School"` recognition record).
+
+**2/258 closed** (`Universal School ~ Hand of the Apprentice`, `~ Metamagic Mastery`), both
+`core_rulebook`, **no cross-book side effect** (`advanced_class_guide` carries no `"Universal
+School"` record at all — checked directly, unlike Transmutation's own Arcanist-exploit
+counterpart). 256 remain. `core_rulebook` bucket B (atlas-real partition, all 9 mechanisms)
+553 -> 552/6,701; this mechanism 258 -> 256 of 553 (pre-cycle denominator).
+
+Fixed 10 + 2 shifted `file:line` citations in `scripts/completion_atlas.py` /
+`scripts/missing_engine_tables.py` (all +40, this cycle's own probe-variant/test insertion and
+doc-comment rewrite; `citation_failures=0` on both after). **Discovery, documented for the next
+cycle:** the guarded regen refused to run unguarded (`this run would drop 9516 of 9516
+verification stamp(s)`) until `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` were
+set to a freshly-run sweep's and fixture-check's own `--json-out` reports — no
+`--allow-stamp-loss` used. Corpus_literal_sweep unchanged before/after (48,708 of 51,482
+examined, 0 findings — no `data/corpus/**` file touched). `F1` unchanged at 5,400 (neither new
+formula is bare-literal). `cargo test --locked --no-run` exits 0 (workspace);
+`cargo test --locked --lib` 2,910/2,910; `cargo test --locked --bin v06_work_inventory`
+408/408 (3 new); `cargo test --locked --test v06_work_inventory` 15/16 (1 pre-existing,
+unrelated Barbarian-placeholder failure, unchanged since cycle 3). `denominator_gate.py --check`
+`files_checked=15 violations=0`.
+
+`AT-34-E3-001` itself remains **in-progress**: 8 other mechanisms plus this mechanism's own 256
+units (Domain Power 56, Domain Base 33, remaining wizard-school clusters ~34, Weapon Training
+remainder 48, small/long-tail ~85 — inherited from cycle 7's own partition, not re-derived
+fresh this cycle) still need engine wiring. Receipt:
+`docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt_8.md`.
+
 ### Cycle — AT-34-E2-004 reconfirmation at HEAD — no drift
 
 `AT-34-E2-004` ("bucket A reaches zero for both vehicle books") was already `complete` on
