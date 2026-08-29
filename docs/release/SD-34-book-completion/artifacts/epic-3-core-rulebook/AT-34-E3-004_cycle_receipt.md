@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-004
 
-- **Commit SHA:** PENDING (filled after commit, before push — see below)
+- **Commit SHA:** `6896a136d2`
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/step-cost-ledger.json` (new) — the criterion's own evidence artifact.
   - `docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/step-cost-ledger-raw-commits.json` (new) — the full per-commit derivation the ledger aggregates, committed for reproducibility.
