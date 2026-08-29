@@ -116,6 +116,45 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E2-002 reconfirmation at HEAD — complete, no drift found
+
+**Status: complete.** This lane was dispatched against `AT-34-E2-002` after the criterion had
+already landed (`AT-34-E2-002_cycle_receipt.md` + `fail-closed-proofs.md`, commit
+`afbe67a22f8`, kanban row 10 already `complete`). Per `decisions.md §12` L2/L19, every figure
+was re-derived from this lane's own shell against HEAD `c76e1f9455` rather than transcribed —
+immediately following `AT-34-E2-001`'s own reconfirmation cycle on this branch:
+
+- `cargo test --locked --lib rules_core::rules_tables::companion_chassis::tests` → `19
+  passed, 0 failed` (4 more than the `15` at the original commit — all Epic 1/3 work in the
+  same module; `companion_resolve_refuses_a_fabricated_key_it_never_defaults` (this
+  criterion's own 8th-table proof) still exists verbatim and still passes).
+- `cargo test --locked --lib rules_core::rules_tables::simple_kind_tables` → `13 passed, 0
+  failed`, matching `AT-34-E2-001`'s own independently re-derived figure exactly.
+- `v06_work_inventory --epic2-table-transcript`, regenerated fresh at HEAD, diffs
+  **byte-identical** against the committed
+  `artifacts/epic-2-tables/AT-34-E2-001_table_transcript.txt`. All 8 of the 8 tables this
+  criterion covers still report `HELD` on a named record and `REFUSED` on a fabricated key.
+- `grep -c '^| \`' fail-closed-proofs.md` → `8` — the per-table proof artifact itself is
+  unchanged and still names all 8 tables, cross-checked against the freshly-run transcript.
+- `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` →
+  `violations=0` (15 files).
+- `cargo test --locked --no-run` → exit 0 at HEAD (full root workspace). `apps/desktop/
+  src-tauri` not touched by this cycle's file-touch set, not run.
+- Dual audit re-run on Epic 2's §3 file-touch set: `OK_NO_BUNDLE_TAGS`; the wired-integration
+  pattern's 18 hits are the same already-reviewed false-positive class as `AT-34-E2-001`'s own
+  reconfirmation — Epic 3's real, correctly-spelled PCGen domain term "placeholder row",
+  confirmed against this criterion's own two files (`simple_kind_tables.rs`,
+  `companion_chassis.rs`), which carry zero hits.
+- `git status --porcelain -- data/corpus` empty throughout — this cycle wrote zero corpus
+  records, so `corpus_literal_sweep`'s examined population is unmoved by this cycle
+  specifically (not independently re-run this cycle; N/A per the receipt's own sweep row).
+
+Row-count command output: `grep -c '^| \`' …fail-closed-proofs.md` → `8`. No production code,
+`docs/work-inventory.json`, or `data/corpus/**` edit was needed — the criterion was already
+met and remains met at HEAD. `kanban.md` row 10 already read `complete`; a reconfirmation
+receipt path is now added to its Notes pointer.
+Receipt: `artifacts/epic-2-tables/AT-34-E2-002_reconfirmation_receipt.md`.
+
 ### Cycle — AT-34-E2-001 reconfirmation at HEAD — complete, no drift found
 
 **Status: complete.** This lane was dispatched against `AT-34-E2-001` after the criterion had
