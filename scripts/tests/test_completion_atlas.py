@@ -328,28 +328,28 @@ class TestLiveInventoryCheck(unittest.TestCase):
         # immediately above the pre-existing `unmeasurable` fallback
         # (`src/bin/v06_work_inventory.rs`, `equipment_modifier_is_internal_
         # plumbing_no_player_facing_content_per_decisions_17`). 321 - 110 =
-        # 211. The remaining 30 `equipment_modifier` units (18 of them
-        # `core_rulebook`, including the ruling's own named BANE/FLM_BRST/
-        # FRT_HVY examples) carry a REAL corpus description that the
-        # pre-existing leak guard (`corpus_json_description_leaks_pcgen_
-        # syntax`) refuses: 21 genuinely carry an unresolved PCGen
-        # substitution (`%CHOICE`, a player choice; `%d<N>`, an unresolved
-        # crit-multiplier dice reference) the engine does not model, and 9
-        # (`FRT_HVY`/`FRT_LGHT`/`FRT_MOD` and their prose siblings) trip a
-        # genuine, separate `render_pcgen_desc` defect (it drops a bare `%`
-        # even when immediately preceded by a digit, e.g. "75%", unlike
-        # `leaked_pcgen_syntax`'s own correct digit-preceded exemption) --
-        # named here, not fixed: out of this ruling's scope. Re-derive:
+        # 211.
+        #
+        # AT-34-E3-003 bucket-U cycle 2: the 9-of-30 `render_pcgen_desc`
+        # bare-percent-after-digit defect this ruling named but deferred is
+        # now fixed (`src/rules_core/pcgen_desc.rs`'s bare-`%` render branch
+        # gained the same digit-preceded exemption `leaked_pcgen_syntax`
+        # already had). 9 corpus-wide `equipment_modifier` units move
+        # `unmeasurable -> text-complete` on re-render alone, no reclassify
+        # rule change: 211 - 9 = 202. The remaining 21 (all `%CHOICE`/`%d<N>`
+        # unresolved-substitution units) are the OTHER named sub-cause --
+        # nearer bucket `X`'s "deliberately not modelled" shape, still
+        # awaiting its own ruling, untouched by this cycle. Re-derive:
         # `python3 -c "import json; from collections import Counter;
         # inv=json.load(open('docs/work-inventory.json'));
         # rem=[u for u in inv['units'] if u['status']=='unmeasurable' and
         # u['kind']=='equipment_modifier']; print(len(rem),
-        # Counter(u['book'] for u in rem))"` -> `30
-        # Counter({'core_rulebook': 18, 'ultimate_psionics': 6,
-        # 'advanced_class_guide': 4, 'ultimate_equipment': 2})`.
+        # Counter(u['book'] for u in rem))"` -> `21
+        # Counter({'core_rulebook': 10, 'ultimate_psionics': 6,
+        # 'advanced_class_guide': 4, 'ultimate_equipment': 1})`.
         inv = CA._load_inventory()
         result = CA.partition(inv["units"])
-        self.assertEqual(result["counts"].get("U", 0), 211)
+        self.assertEqual(result["counts"].get("U", 0), 202)
 
 
 if __name__ == "__main__":

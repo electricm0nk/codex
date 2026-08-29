@@ -13,6 +13,70 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-003 (bucket `U` cycle 2 — `render_pcgen_desc` bare-percent fix) — partial, closure
+
+**Status: partial.** Closes the `render_pcgen_desc` bare-percent-after-digit defect the prior
+`AT-34-E3-003` cycle (bucket `U` ruling cycle 1, `decisions.md §17`) named and explicitly
+deferred as "a real, narrow renderer bug... out of this cycle's scope." `render_pcgen_desc`'s
+bare-`%` render branch gained the same digit-preceded exemption `leaked_pcgen_syntax` already
+had, so a clean corpus sentence like `FRT_HVY`'s "75% chance to negate critical hits and sneak
+attacks" no longer loses its percent sign and no longer trips
+`corpus_json_description_leaks_pcgen_syntax`'s `dropped_args`-non-empty refusal.
+
+**RED→GREEN:** new test `a_digit_preceded_percent_sign_is_a_literal_sign_not_a_drop` in
+`src/rules_core/pcgen_desc.rs`, failed for the intended reason (`left: "75 chance..."` vs
+`right: "75% chance..."`) before the fix, green after; the sibling non-digit-preceded case
+(`"Cast % 1/day"`) still drops, proving the exemption is scoped.
+
+**Movement:** 10 units corpus-wide, `unmeasurable`/`ingested-magnitude` → `text-complete` — the
+9 named `equipment_modifier` units the prior cycle enumerated (`FRT_HVY`, `FRT_LGHT`, `FRT_MOD`
+and their 3 prose siblings, the 2 `Ghost Touch` records, `Deathless Armor`) plus 1 discovery
+(`advanced_class_guide:equipment_modifier:burdenless`, same defect shape, different starting
+status — not a new atlas category, reported per `decisions.md §12` L18). Corpus-wide
+`unmeasurable` **211 → 202**. `core_rulebook` bucket `U` **18 → 10**, `DONE` **1440 → 1448**.
+Whole-corpus before/after diff by unit id: 49,438-unit id set unchanged, exactly 10 changed, all
+one kind, both destined for `text-complete` — this is **closure** (a real defect fixed), not
+reclassification.
+
+**Remainder — every unit in `AT-34-E3-003`'s five buckets, named, at HEAD:**
+
+| Bucket | `core_rulebook` population (live) | Clearing mechanism | This cycle |
+|---|---:|---|---|
+| `M` | 1,048 | running the compute path | untouched |
+| `V` | 2,793 | the SD-33 oracle harness | untouched |
+| `D` | 382 | per named sub-cause (not yet enumerated) | untouched |
+| `U` | 10 | operator ruling on `%CHOICE`/`%d<N>` shape | closed 8 of 18; 10 remain, one sub-cause, awaiting ruling |
+| `X` | 116 | `decisions.md §17`'s new mechanism — per-character choice filter (not yet built) | untouched |
+
+Sum 1,048+2,793+382+10+116 = 4,349, matching `python3 scripts/completion_atlas.py --book
+core_rulebook --check`'s own live sum. `AT-34-E3-003` remains far from closed — `M` and `V` are
+the dominant remaining populations and neither has a per-unit-cost measurement yet under this
+epic's own scope.
+
+**Build scope:** `cargo test --locked --lib rules_core::pcgen_desc::` 36/36;
+`cargo test --locked --bin v06_work_inventory` 412/412; `python3 -m unittest
+scripts.tests.test_completion_atlas` 38/38; `cargo test --locked --no-run` (full workspace)
+exit 0. `apps/desktop/src-tauri` not touched, not run.
+
+**Sweep population:** no `data/corpus/**` records added or regenerated — only the shared
+renderer and the derived inventory changed. `corpus_literal_sweep`: 48708 examined of 51482
+read, 0 findings, unchanged before/after (delta 0, correctly matching 0 corpus records added).
+
+Retro: `correction` event `1787971197359-sd34-at-34-e3-003-c809cd`
+(`docs/retro/events/sd34-at-34-e3-003.jsonl`) — `render_pcgen_desc`'s bare-percent branch
+corrected against `leaked_pcgen_syntax`'s own already-correct exemption.
+
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-003_u_bucket_render_bug_cycle_receipt.md`.
+
+**Next-cycle plan:** (1) escalation candidate — whether the 10 remaining `core_rulebook` `U`
+units (`%CHOICE`/`%d<N>`) can read `DONE` or must move to `X`, a policy question the prior cycle
+already surfaced and this cycle found no new information to settle; (2) measure per-unit cost on
+a sample of `M` and `V` before any population-scoped run — neither has an established rate this
+epic; (3) enumerate `D`'s sub-causes before any clearing work starts; (4) `X`'s new clearing
+mechanism (the choice-filter join `decisions.md §17` names) does not exist in this codebase yet
+and is real, multi-file engineering — scope it as its own cycle or name it to `AT-34-E5-002`'s
+capability register.
+
 ### Cycle — AT-34-E3-002 (bucket C, "held and computed, never surfaced") — Favored Enemy/Favored Terrain display records, `core_rulebook` 414 -> 372
 
 Re-derived `core_rulebook` bucket C fresh at start SHA `30fa0e6653` (never trusting

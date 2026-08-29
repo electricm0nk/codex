@@ -672,7 +672,12 @@ pub fn render_pcgen_desc_with_values(raw: &str, values: &PcgenDisplayValues) -> 
         // (= d100) at a word boundary is a real, resolved shape and must
         // be preserved literally.
         if chars[i] == '%' {
-            if is_percentile_dice_notation(&chars, i) {
+            // AT-34-E3-003 (`decisions.md §17`): mirror `leaked_pcgen_syntax`'s
+            // own exemption exactly -- a `%` immediately preceded by a DIGIT
+            // is a literal percent sign ("75% chance..."), never an
+            // unresolved argument reference, and must not be dropped.
+            let preceded_by_digit = i > 0 && chars[i - 1].is_ascii_digit();
+            if is_percentile_dice_notation(&chars, i) || preceded_by_digit {
                 out.push('%');
                 i += 1;
                 continue;
@@ -1126,6 +1131,34 @@ mod tests {
         let rendered = render_pcgen_desc("Item has 10 ranks in %");
         assert_eq!(rendered.text, "Item has 10 ranks in");
         assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// AT-34-E3-003 (bucket `U`, `decisions.md §17`): a bare `%` immediately
+    /// PRECEDED BY A DIGIT is a literal percent SIGN, not an unresolved
+    /// argument reference -- exactly the exemption `leaked_pcgen_syntax`
+    /// already grants at its own bare-`%` check (`!(i > 0 &&
+    /// chars[i - 1].is_ascii_digit())`). This render-path block had no
+    /// matching exemption, so a clean corpus sentence like `core_rulebook:
+    /// equipment_modifier:FRT_HVY`'s real shipped SPROP/description "75%
+    /// chance to negate critical hits and sneak attacks" silently lost its
+    /// percent sign and populated `dropped_args`, which then tripped
+    /// `corpus_json_description_leaks_pcgen_syntax`'s `!dropped_args.
+    /// is_empty()` refusal on text that was never actually incomplete.
+    /// Confirmed against 9 real `equipment_modifier` corpus records this
+    /// way (`FRT_HVY`, `FRT_LGHT`, `FRT_MOD` and 6 siblings).
+    #[test]
+    fn a_digit_preceded_percent_sign_is_a_literal_sign_not_a_drop() {
+        let rendered = render_pcgen_desc("75% chance to negate critical hits and sneak attacks");
+        assert_eq!(rendered.text, "75% chance to negate critical hits and sneak attacks");
+        assert_eq!(rendered.dropped_args, Vec::<String>::new());
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+
+        // A `%` that is genuinely NOT preceded by a digit still drops, same
+        // as before -- this exemption must not swallow the real leak shapes
+        // the sibling tests above already pin.
+        let rendered = render_pcgen_desc("Cast % 1/day");
+        assert_eq!(rendered.text, "Cast 1/day");
+        assert_eq!(rendered.dropped_args, vec!["%".to_string()]);
     }
 
     /// SD31-W8-INTEGRATE-001, third correction: a `%%` escape whose

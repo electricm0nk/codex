@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 14586,
+      "count": 14596,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -62,7 +62,7 @@
         "must_contain": "ingested-magnitude"
       },
       "clears": "running the compute path (shape engine)",
-      "count": 5076,
+      "count": 5075,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
       "meaning": "magnitude ingested, never computed or applied"
     },
@@ -73,7 +73,7 @@
         "must_contain": "unmeasurable"
       },
       "clears": "instrument correction",
-      "count": 211,
+      "count": 202,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
       "meaning": "instrument cannot express a verdict"
     },
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "30fa0e6653ae3b23a8a1097c874e6011dedb87da",
+  "derived_at": "45c5aead1608f81914db55ccda8052262c18e7e6",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -209,7 +209,7 @@
     },
     "U": {
       "feat_served_description_is_a_placeholder_marker_not_prose": 51,
-      "text_only_but_corpus_record_carries_no_description_to_show_a_player": 160
+      "text_only_but_corpus_record_carries_no_description_to_show_a_player": 151
     }
   },
   "unclassified": 0
