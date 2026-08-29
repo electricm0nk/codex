@@ -1,0 +1,6 @@
+VAR.FavoredAberration=2
+VAR.FavoredAnimal=2
+VAR.FavoredConstruct=2
+VAR.FavoredTerrainCold=2
+VAR.FavoredBaseBonus=2
+VAR.FavoredTerrainBaseBonus=2

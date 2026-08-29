@@ -1,0 +1,34 @@
+PCGVERSION:2.0
+
+# System Information
+CAMPAIGN:Core Rulebook
+VERSION:6.09.08.RC1
+GAMEMODE:Pathfinder_RPG
+CHARACTERTYPE:PC
+PURCHASEPOINTS:N
+AUTOSPELLS:Y
+
+# Character Bio
+CHARACTERNAME:SD34 Bucket V Ranger FE
+PLAYERNAME:sd34-bucket-v
+
+# Character Attributes
+STAT:STR|SCORE:14
+STAT:DEX|SCORE:14
+STAT:CON|SCORE:14
+STAT:INT|SCORE:14
+STAT:WIS|SCORE:14
+STAT:CHA|SCORE:14
+ALIGN:LN
+RACE:Human
+
+# Character Class(es)
+CLASS:Ranger|LEVEL:20|SKILLPOOL:0
+ABILITY:Special Ability|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Favored Enemy ~ Aberration
+ABILITY:Special Ability|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Favored Enemy ~ Animal
+ABILITY:Special Ability|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Favored Enemy ~ Construct
+ABILITY:Special Ability|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Favored Terrain ~ Cold
+
+# Character Experience
+EXPERIENCE:0
+EXPERIENCETABLE:Medium
