@@ -661,6 +661,16 @@ if (args && args.remediation) {
   return { criterion: 'AT-34-E1-008', groups: rows, reverify: verify }
 }
 
+// args.bucketB runs ONLY the parallel bucket-B lanes + the single wave regeneration.
+// This entry point was accidentally deleted on 2026-08-28 during a two-step rewrite; the
+// script then fell through to the line below and ran all six epics -- 26 agents, ~8 hours,
+// mostly re-verifying already-complete criteria. The smoke test at the time exercised the
+// prompt builders but not the ROUTING, which is why it passed. Any future edit to this file
+// must assert that {bucketB:true} selects the lanes and does NOT reach the six-epic default.
+if (args && args.bucketB) {
+  return await runBucketBMechanisms()
+}
+
 const requested = (args && args.epics) ? args.epics : [1, 2, 3, 4, 5, 6]
 const completed = []
 
