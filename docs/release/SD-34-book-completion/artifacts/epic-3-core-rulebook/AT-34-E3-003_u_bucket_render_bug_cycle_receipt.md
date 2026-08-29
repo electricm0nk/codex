@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-003 (bucket `U` cycle 2 — render_pcgen_desc fix)
 
-- **Commit SHA:** `<filled after commit>`
+- **Commit SHA:** `36db23a053`
 - **Files touched:**
   - `src/rules_core/pcgen_desc.rs` — `render_pcgen_desc_with_values`'s bare-`%`
     branch gains the same digit-preceded exemption `leaked_pcgen_syntax`
@@ -49,9 +49,8 @@
   ruling, only corrected.
 
 - **Figures + their re-derive commands:**
-  - `core_rulebook` bucket `U` before this cycle: **10** were reachable
-    only after re-deriving at HEAD before starting — the atlas showed 18 at
-    the top of this cycle (`python3 scripts/completion_atlas.py --book
+  - `core_rulebook` bucket `U` before this cycle: **18** — re-derived at
+    HEAD before starting (`python3 scripts/completion_atlas.py --book
     core_rulebook --check`), matching the prior cycle's own closing figure.
   - Corpus-wide `unmeasurable` before: **211** —
     `git show HEAD~0:docs/work-inventory.json` (this cycle's own parent
@@ -157,7 +156,7 @@
     `src/rules_core/pcgen_desc.rs` nor `docs/work-inventory.json` is
     consumed by the desktop crate's own compiled test binaries in a way
     this cycle's scope reaches — no desktop-crate file was edited).
-  - All runs at commit `<filled after commit>`, run **after** the last
+  - All runs at commit `36db23a053`, run **after** the last
     figure-moving commit in this cycle (there is only one).
 
 - **Sweep population:** no `data/corpus/**` records were added or
