@@ -1,6 +1,6 @@
 # Cycle 9 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
 
-- **Commit SHA:** filled by this cycle's own commit (see git log; this receipt lands in it).
+- **Commit SHA:** `a183d70c760d4d8555d645e17ab089faa9d0b6c6`
 - **Files touched:**
   - `src/rules_core/rules_tables/crb/wizard_spell_list.rs` (new `wizard_school_zero_level_spells`
     join function + its own corpus-verification test)
