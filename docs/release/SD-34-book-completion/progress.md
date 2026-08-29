@@ -13,6 +13,48 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E5-001 (per-book, per-bucket forward plan) — complete
+
+**Status: complete.** Built `artifacts/epic-5-forward-plan/forward-plan.json` covering all 35
+non-vehicle books (37 inventory books minus `core_rulebook`/`ultimate_campaign`), 29,364
+non-DONE units, via `artifacts/epic-5-forward-plan/build_forward_plan.py` (re-derive command
+inside the artifact and the receipt). Every non-zero bucket row carries a unit count, its
+clearing mechanism, and either a measured rate + sample size or an explicit `UNMEASURED` note —
+never a silent absence.
+
+Dispatched ahead of Epics 3/4 reaching zero (`kanban.md` rows 13–17, 20 remain
+`in-progress`/`partial`); resolved by reading the criterion literally — it asks for pricing
+from **measured** rates, which already exist (Epic 2's table-build rate, both vehicle books'
+`step-cost-ledger.json`), not for those epics' full closure. Consequence stated plainly rather
+than smoothed: **three pricing tiers**, never blended — 11,919 of 29,364 units (buckets A, B, U)
+priced to DONE (1,952–6,782 projected hours, bucket B thin-sampled 3.5× range flagged per Epic
+4's own ledger conclusion); 3,981 units (bucket C) priced only to reach V, not DONE (96.4
+hours, n=1 cycle); **13,464 of 29,364 (45.9%) unpriced** — buckets D, M, V, X, Z have zero
+dedicated clearing cycles in either vehicle book, so no rate exists to project from. No single
+"hours to finish everything" figure is asserted.
+
+Found (not fixed, out of this criterion's scope): `bestiary`'s 28 `companion` units sit in
+bucket A even though a `companion` table already exists (SD-29) — the existing table doesn't
+cover this record shape. Flagged for AT-34-E5-002's capability register.
+
+**Self-caught correction:** the first draft of `build_forward_plan.py`'s summary aggregation
+mis-tallied bucket C's 3,981 units as "unpriced" (missed its distinctly-named
+`projected_cost_hours_to_reach_V_not_DONE` key), misreporting 17,445 of 29,364 units (59.4%) as
+unpriced instead of the correct 13,464 of 29,364 (45.9%). Caught before commit by hand-checking
+A+B+C+U against the printed total; fixed by adding
+an explicit third pricing tier. Logged via `scripts/retro.py correction`
+(`1787979364523-sd34-at-34-e5-001-e41423`).
+
+RED→GREEN: `verify_forward_plan.py` fails closed (exit 1, "does not exist") before the artifact
+is built, passes (exit 0, all 35 books' bucket counts match a live `completion_atlas.py`
+partition, every row carries a rate-or-note) after. `cargo test --locked --no-run` exits 0 at
+HEAD (this cycle touches no Rust; `apps/desktop/src-tauri` not re-run, not touched).
+Dual-audit (identifier + wired-integration greps) on the epic's file-touch set:
+`OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS`. No `data/corpus/**` records added — sweep population
+unchanged (N/A).
+
+Receipt: `artifacts/epic-5-forward-plan/AT-34-E5-001_cycle_receipt.md`.
+
 ### Cycle — AT-34-E4-003 (second, independent cost measurement) — complete
 
 **Status: complete.** Built `artifacts/epic-4-ultimate-campaign/step-cost-ledger.json` and

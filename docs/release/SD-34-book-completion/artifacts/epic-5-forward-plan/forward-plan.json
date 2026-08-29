@@ -1,0 +1,2292 @@
+{
+  "criterion": "AT-34-E5-001",
+  "generated_at_head": "9bb073402a93c067f395c6a4de69cf2a4a780f17",
+  "re_derive_command": "python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_forward_plan.py",
+  "population": {
+    "description": "35 non-vehicle books (37 total inventory books minus core_rulebook and ultimate_campaign)",
+    "books_count": 35,
+    "total_units_35_books": 42472,
+    "done_units_35_books": 13108,
+    "remaining_non_done_units_35_books": 29364,
+    "remaining_by_bucket": {
+      "B": 11299,
+      "C": 3981,
+      "D": 2668,
+      "M": 3977,
+      "V": 6747,
+      "U": 171,
+      "X": 53,
+      "Z": 19,
+      "A": 449
+    },
+    "re_derive_command": "python3 scripts/completion_atlas.py --by-book"
+  },
+  "measured_rates": {
+    "A": {
+      "metric": "seconds_per_table_build",
+      "value": 136.857,
+      "sample_size": 7,
+      "sample_description": "7 of Epic 2's 8 tables (ability/template/trait/deity/domain/skill/language); companion excluded (pre-existing SD-29 table, 0 build time this bundle)",
+      "source": "artifacts/epic-2-tables/table-build-rate.json .tables[].est_wall_time_seconds",
+      "thin_sample": false,
+      "caveat": "Epic 2's own figures are marked ESTIMATE: pro-rated from measured marginal lines against one shared-cycle wall time, not independently timed per table (table-build-rate.json measurement_note). This is a TABLE-BUILD cost, not a per-unit cost -- once built, the records inside still need their own bucket-clearing mechanism (usually B) unless the same generic loader both creates the table and ingests its records, as it did for Epic 2's 7 new kinds."
+    },
+    "B": {
+      "metric": "units_per_hour_reaching_DONE",
+      "range": [
+        1.667,
+        5.8
+      ],
+      "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+      "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B",
+      "thin_sample": true,
+      "caveat": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+    },
+    "C": {
+      "metric": "units_per_hour_net_reclassified",
+      "value": 41.3,
+      "units_per_hour_reaching_DONE": 0.0,
+      "sample_size": 1,
+      "sample_description": "1 cycle, core_rulebook only (42 units left bucket C in 61 minutes, ALL moved to bucket V, none reached DONE directly)",
+      "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C",
+      "thin_sample": true,
+      "caveat": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+    },
+    "U": {
+      "metric": "units_per_hour_reaching_DONE",
+      "value": 40.28,
+      "sample_size": 2,
+      "sample_description": "2 cycles, core_rulebook only (48 units, 71.5 wall minutes)",
+      "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U",
+      "thin_sample": true,
+      "caveat": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+    },
+    "D": {
+      "metric": null,
+      "sample_size": 0,
+      "caveat": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+    },
+    "M": {
+      "metric": null,
+      "sample_size": 0,
+      "caveat": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+    },
+    "V": {
+      "metric": null,
+      "sample_size": 0,
+      "caveat": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+    },
+    "X": {
+      "metric": null,
+      "sample_size": 0,
+      "caveat": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+    },
+    "Z": {
+      "metric": null,
+      "sample_size": 0,
+      "caveat": "UNMEASURED -- Z ('not started') has no dedicated SD-34 clearing cycle in either vehicle book (both vehicle books show Z=0). All 19 SD-34 Z units are in beginner_box; nothing in this bundle establishes a per-unit rate for taking a not-started unit to grounded."
+    }
+  },
+  "books": [
+    {
+      "book": "advanced_class_guide",
+      "total_units": 3520,
+      "done": 802,
+      "remaining_non_done": 2718,
+      "buckets": {
+        "B": {
+          "unit_count": 1325,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            228.448,
+            794.841
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 877,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 21.235,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 42,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 146,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 305,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 4,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.099,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        },
+        "X": {
+          "unit_count": 19,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    },
+    {
+      "book": "advanced_players_guide",
+      "total_units": 3829,
+      "done": 873,
+      "remaining_non_done": 2956,
+      "buckets": {
+        "B": {
+          "unit_count": 1256,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            216.552,
+            753.449
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 651,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 15.763,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 216,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 271,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 558,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 1,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.025,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        },
+        "X": {
+          "unit_count": 3,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    },
+    {
+      "book": "advanced_race_guide",
+      "total_units": 2037,
+      "done": 626,
+      "remaining_non_done": 1411,
+      "buckets": {
+        "B": {
+          "unit_count": 380,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            65.517,
+            227.954
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 102,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 2.47,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 107,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 430,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 387,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 3,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.074,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        },
+        "X": {
+          "unit_count": 2,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    },
+    {
+      "book": "adventurers_guide",
+      "total_units": 1176,
+      "done": 114,
+      "remaining_non_done": 1062,
+      "buckets": {
+        "B": {
+          "unit_count": 423,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            72.931,
+            253.749
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 140,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 3.39,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 261,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 215,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 13,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 9,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.223,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        },
+        "X": {
+          "unit_count": 1,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    },
+    {
+      "book": "beginner_box",
+      "total_units": 19,
+      "done": 0,
+      "remaining_non_done": 19,
+      "buckets": {
+        "Z": {
+          "unit_count": 19,
+          "mechanism": "ordinary ingestion-to-grounded work (no dedicated SD-34 cycle measured this bucket)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- Z ('not started') has no dedicated SD-34 clearing cycle in either vehicle book (both vehicle books show Z=0). All 19 SD-34 Z units are in beginner_box; nothing in this bundle establishes a per-unit rate for taking a not-started unit to grounded."
+        }
+      }
+    },
+    {
+      "book": "bestiary",
+      "total_units": 2737,
+      "done": 1102,
+      "remaining_non_done": 1635,
+      "buckets": {
+        "A": {
+          "unit_count": 28,
+          "mechanism": "build (or extend) the missing engine table for this kind",
+          "rate": {
+            "metric": "seconds_per_table_build",
+            "value": 136.857,
+            "source": "artifacts/epic-2-tables/table-build-rate.json .tables[].est_wall_time_seconds"
+          },
+          "sample_size": 7,
+          "projected_cost_hours": 0.038,
+          "note": "Epic 2's own figures are marked ESTIMATE: pro-rated from measured marginal lines against one shared-cycle wall time, not independently timed per table (table-build-rate.json measurement_note). This is a TABLE-BUILD cost, not a per-unit cost -- once built, the records inside still need their own bucket-clearing mechanism (usually B) unless the same generic loader both creates the table and ingests its records, as it did for Epic 2's 7 new kinds. Cost priced as ONE table build (Epic 2's per-table figure), not per-unit -- a table's cost does not scale with how many records fall into it."
+        },
+        "B": {
+          "unit_count": 1221,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            210.517,
+            732.454
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "M": {
+          "unit_count": 76,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 310,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "bestiary_2",
+      "total_units": 1439,
+      "done": 831,
+      "remaining_non_done": 608,
+      "buckets": {
+        "B": {
+          "unit_count": 8,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            1.379,
+            4.799
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 177,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 91,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 332,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "bestiary_3",
+      "total_units": 1378,
+      "done": 891,
+      "remaining_non_done": 487,
+      "buckets": {
+        "D": {
+          "unit_count": 93,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 93,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 301,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "bestiary_4",
+      "total_units": 1558,
+      "done": 851,
+      "remaining_non_done": 707,
+      "buckets": {
+        "B": {
+          "unit_count": 30,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            5.172,
+            17.996
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 159,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 97,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 421,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "bestiary_5",
+      "total_units": 278,
+      "done": 173,
+      "remaining_non_done": 105,
+      "buckets": {
+        "B": {
+          "unit_count": 6,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            1.034,
+            3.599
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 51,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 12,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 36,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "bestiary_6",
+      "total_units": 120,
+      "done": 85,
+      "remaining_non_done": 35,
+      "buckets": {
+        "B": {
+          "unit_count": 17,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            2.931,
+            10.198
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 12,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 3,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 3,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "bonus_bestiary",
+      "total_units": 34,
+      "done": 17,
+      "remaining_non_done": 17,
+      "buckets": {
+        "B": {
+          "unit_count": 3,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            0.517,
+            1.8
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "V": {
+          "unit_count": 14,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "book_of_the_damned_volume_1",
+      "total_units": 90,
+      "done": 36,
+      "remaining_non_done": 54,
+      "buckets": {
+        "B": {
+          "unit_count": 30,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            5.172,
+            17.996
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 10,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 4,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 10,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "book_of_the_damned_volume_2",
+      "total_units": 356,
+      "done": 83,
+      "remaining_non_done": 273,
+      "buckets": {
+        "B": {
+          "unit_count": 151,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            26.034,
+            90.582
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 63,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 51,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 8,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "horror_adventures",
+      "total_units": 1453,
+      "done": 458,
+      "remaining_non_done": 995,
+      "buckets": {
+        "B": {
+          "unit_count": 269,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            46.379,
+            161.368
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 143,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 3.462,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 10,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 378,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 195,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_bestiary",
+      "total_units": 242,
+      "done": 151,
+      "remaining_non_done": 91,
+      "buckets": {
+        "B": {
+          "unit_count": 9,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            1.552,
+            5.399
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 4,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 6,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 72,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_combat",
+      "total_units": 429,
+      "done": 102,
+      "remaining_non_done": 327,
+      "buckets": {
+        "B": {
+          "unit_count": 167,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            28.793,
+            100.18
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 49,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 1.186,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 25,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 1,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 33,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 38,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.943,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        },
+        "X": {
+          "unit_count": 14,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_faiths",
+      "total_units": 191,
+      "done": 86,
+      "remaining_non_done": 105,
+      "buckets": {
+        "B": {
+          "unit_count": 55,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            9.483,
+            32.993
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "M": {
+          "unit_count": 48,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 2,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_gods",
+      "total_units": 1385,
+      "done": 406,
+      "remaining_non_done": 979,
+      "buckets": {
+        "B": {
+          "unit_count": 301,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            51.897,
+            180.564
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 322,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 188,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 156,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 12,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.298,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_intrigue",
+      "total_units": 277,
+      "done": 50,
+      "remaining_non_done": 227,
+      "buckets": {
+        "B": {
+          "unit_count": 73,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            12.586,
+            43.791
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 64,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 1.55,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 31,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 25,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 34,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_magic",
+      "total_units": 493,
+      "done": 42,
+      "remaining_non_done": 451,
+      "buckets": {
+        "B": {
+          "unit_count": 133,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            22.931,
+            79.784
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 73,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 1.768,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 63,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 176,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 6,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_races",
+      "total_units": 432,
+      "done": 179,
+      "remaining_non_done": 253,
+      "buckets": {
+        "B": {
+          "unit_count": 42,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            7.241,
+            25.195
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 31,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 103,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 74,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 3,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.074,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_taverns",
+      "total_units": 20,
+      "done": 13,
+      "remaining_non_done": 7,
+      "buckets": {
+        "B": {
+          "unit_count": 2,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            0.345,
+            1.2
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 4,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 0.097,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "U": {
+          "unit_count": 1,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.025,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_temples",
+      "total_units": 65,
+      "done": 0,
+      "remaining_non_done": 65,
+      "buckets": {
+        "D": {
+          "unit_count": 1,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 56,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "U": {
+          "unit_count": 8,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.199,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "total_units": 643,
+      "done": 93,
+      "remaining_non_done": 550,
+      "buckets": {
+        "B": {
+          "unit_count": 311,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            53.621,
+            186.563
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 2,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 0.048,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 151,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 32,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 49,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 5,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.124,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "monster_codex",
+      "total_units": 215,
+      "done": 56,
+      "remaining_non_done": 159,
+      "buckets": {
+        "B": {
+          "unit_count": 12,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            2.069,
+            7.199
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 48,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 1.162,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 5,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 44,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 44,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 6,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.149,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "mythic_adventures",
+      "total_units": 1400,
+      "done": 558,
+      "remaining_non_done": 842,
+      "buckets": {
+        "B": {
+          "unit_count": 356,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            61.379,
+            213.557
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 36,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 324,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 111,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 15,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.372,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "occult_adventures",
+      "total_units": 1785,
+      "done": 473,
+      "remaining_non_done": 1312,
+      "buckets": {
+        "B": {
+          "unit_count": 715,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            123.276,
+            428.914
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 224,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 5.424,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 78,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 21,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 272,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "X": {
+          "unit_count": 2,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    },
+    {
+      "book": "pathfinder_unchained",
+      "total_units": 1232,
+      "done": 820,
+      "remaining_non_done": 412,
+      "buckets": {
+        "B": {
+          "unit_count": 172,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            29.655,
+            103.179
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 48,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 1.162,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 66,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 83,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 37,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "X": {
+          "unit_count": 6,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    },
+    {
+      "book": "ultimate_combat",
+      "total_units": 2196,
+      "done": 733,
+      "remaining_non_done": 1463,
+      "buckets": {
+        "B": {
+          "unit_count": 911,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            157.069,
+            546.491
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 146,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 3.535,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 17,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 60,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 326,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 2,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.05,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        },
+        "X": {
+          "unit_count": 1,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    },
+    {
+      "book": "ultimate_equipment",
+      "total_units": 1666,
+      "done": 189,
+      "remaining_non_done": 1477,
+      "buckets": {
+        "B": {
+          "unit_count": 1,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            0.172,
+            0.6
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "D": {
+          "unit_count": 46,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 144,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 1243,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 43,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 1.068,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "ultimate_intrigue",
+      "total_units": 1263,
+      "done": 315,
+      "remaining_non_done": 948,
+      "buckets": {
+        "B": {
+          "unit_count": 437,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            75.345,
+            262.148
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 271,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 6.562,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 32,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 27,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 179,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 2,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.05,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "ultimate_magic",
+      "total_units": 3012,
+      "done": 554,
+      "remaining_non_done": 2458,
+      "buckets": {
+        "B": {
+          "unit_count": 1220,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            210.345,
+            731.854
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 440,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 10.654,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 60,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 212,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 517,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 6,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.149,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        },
+        "X": {
+          "unit_count": 3,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    },
+    {
+      "book": "ultimate_psionics",
+      "total_units": 3498,
+      "done": 803,
+      "remaining_non_done": 2695,
+      "buckets": {
+        "A": {
+          "unit_count": 421,
+          "mechanism": "build (or extend) the missing engine table for this kind",
+          "rate": {
+            "metric": "seconds_per_table_build",
+            "value": 136.857,
+            "source": "artifacts/epic-2-tables/table-build-rate.json .tables[].est_wall_time_seconds"
+          },
+          "sample_size": 7,
+          "projected_cost_hours": 0.038,
+          "note": "Epic 2's own figures are marked ESTIMATE: pro-rated from measured marginal lines against one shared-cycle wall time, not independently timed per table (table-build-rate.json measurement_note). This is a TABLE-BUILD cost, not a per-unit cost -- once built, the records inside still need their own bucket-clearing mechanism (usually B) unless the same generic loader both creates the table and ingests its records, as it did for Epic 2's 7 new kinds. Cost priced as ONE table build (Epic 2's per-table figure), not per-unit -- a table's cost does not scale with how many records fall into it."
+        },
+        "B": {
+          "unit_count": 711,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            122.586,
+            426.515
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 289,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 6.998,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 465,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 427,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 372,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 10,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.248,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        }
+      }
+    },
+    {
+      "book": "ultimate_wilderness",
+      "total_units": 2004,
+      "done": 543,
+      "remaining_non_done": 1461,
+      "buckets": {
+        "B": {
+          "unit_count": 552,
+          "mechanism": "place the record in the existing table",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "range_units_per_hour": [
+              1.667,
+              5.8
+            ],
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.B; artifacts/epic-4-ultimate-campaign/step-cost-ledger.json .buckets_cleared_so_far.B"
+          },
+          "sample_size": "2 measurements: core_rulebook (29 cycles, 503 net units, 235 reached DONE) and ultimate_campaign (1 cycle, 5 units, 3 reached DONE)",
+          "projected_cost_hours_range": [
+            95.172,
+            331.134
+          ],
+          "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
+        },
+        "C": {
+          "unit_count": 410,
+          "mechanism": "wire the display/explanation path to the already-held, already-computed value",
+          "rate": {
+            "metric": "units_per_hour_net_reclassified",
+            "value": 41.3,
+            "units_per_hour_reaching_DONE": 0.0,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.C"
+          },
+          "sample_size": 1,
+          "projected_cost_hours_to_reach_V_not_DONE": 9.927,
+          "projected_cost_hours_to_reach_DONE": null,
+          "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
+        },
+        "D": {
+          "unit_count": 34,
+          "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- decisions.md \u00a72 defines D as cleared 'per named sub-cause', and zero dedicated D-clearing cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.D, both books). No rate exists to project from."
+        },
+        "M": {
+          "unit_count": 133,
+          "mechanism": "run the compute path against the ingested magnitude",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated M-clearing (compute-and-apply) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.M, both books). AT-34-E4-002's own receipt flags this bucket as requiring a sample measurement before any population run; that measurement has not yet happened."
+        },
+        "V": {
+          "unit_count": 327,
+          "mechanism": "SD-33 oracle harness verification (replace proxy-verification with oracle agreement)",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- zero dedicated V-clearing (oracle-harness) cycles have run in either vehicle book (step-cost-ledger.json buckets_not_yet_cleared.V, both books). The 42 units that reached V this bundle (core_rulebook bucket C cycle) arrived AS A SIDE EFFECT of a C-clearing cycle, not from a V-clearing cycle -- no bucket-V-clearing rate exists."
+        },
+        "U": {
+          "unit_count": 3,
+          "mechanism": "instrument correction (fixes a class of units at once, not per-record)",
+          "rate": {
+            "metric": "units_per_hour_reaching_DONE",
+            "value": 40.28,
+            "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json .buckets_cleared_so_far.U"
+          },
+          "sample_size": 2,
+          "projected_cost_hours": 0.074,
+          "note": "Both measured cycles were instrument corrections that each fixed a WHOLE CLASS of units at once (a rendering defect and a ruling), not per-record labor -- the 'units/hour' framing is a byproduct of how many units that particular class happened to contain, not a marginal per-unit cost. A book's bucket-U units may or may not share a fixable class with core_rulebook's; no per-book multiplier exists."
+        },
+        "X": {
+          "unit_count": 2,
+          "mechanism": "revisit the stated deferral condition",
+          "rate": null,
+          "sample_size": 0,
+          "projected_cost_hours": null,
+          "note": "UNMEASURED -- ultimate_campaign's 2 X units were resolved BY PROOF (AT-34-E4-001), which moves 0 units in the ledger's bucket-count sense and produces no rate (step-cost-ledger.json buckets_not_yet_cleared.X). No book has a rate-generating X-clearing cycle."
+        }
+      }
+    }
+  ],
+  "summary": {
+    "priced_to_done_units": 11919,
+    "priced_to_v_not_done_units": 3981,
+    "priced_to_v_not_done_hours": 96.39,
+    "unpriced_units": 13464,
+    "unpriced_units_pct_of_remaining": 45.9,
+    "priced_to_done_projected_hours_range": [
+      1952.42,
+      6782.37
+    ],
+    "note": "Three tiers, never blended into one number: (1) priced_to_done_units (buckets A, B, U) carry a measured rate reaching DONE; (2) priced_to_v_not_done_units (bucket C) carries a measured rate reaching V, its own separate endpoint, NOT DONE -- core_rulebook's only bucket-C cycle moved 42/42 units to V, zero to DONE; (3) unpriced_units (buckets D, M, V, X, Z) have ZERO dedicated clearing cycles in either vehicle book -- no measured rate exists to project from (decisions.md \u00a712 L11/L19: measure before projecting, never carry a number that was not derived). A confident population-wide total blending these three tiers, or asserted for the unpriced tier, would itself be the overconfident-thin-sample failure AGENTS.md rule 7 and this package's own Evidence text warn against."
+  }
+}
