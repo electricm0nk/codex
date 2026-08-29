@@ -1,8 +1,6 @@
 # Cycle 1 — Epic 3 Core Rulebook / AT-34-E3-005
 
-- **Commit SHA:** (filled in a follow-up commit in this same cycle, per precedent set by
-  AT-34-E3-001..004's own receipts — the receipt cannot cite its own commit's hash before it
-  exists)
+- **Commit SHA:** `3bb30a2a84a149342f6316533987d9672735ae52`
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/core-rulebook-completion-manifest.json` (new)
   - `docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/AT-34-E3-005_cycle_receipt.md` (new, this file)
