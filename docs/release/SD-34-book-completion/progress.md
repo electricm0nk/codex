@@ -13,6 +13,40 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-006 (atlas defects recorded) — complete
+
+**Status: complete.** `atlas-defects.md` already existed with 3 entries (written incidentally
+by AT-34-E3-001's cycles). This cycle verified it mechanically against the Evidence bar rather
+than by re-reading prose: built a scratch structural checker (RED→GREEN — module absent failed
+the intended way, then 8/8 tests pass including negative-case mutations: absent file, missing
+`**Retro event:**` line, a retro-event path that doesn't exist, a retro-event file with no
+correction/deferral event, and an entry recorded with a real retro event but no
+re-derivation/not-settled statement — the exact "absorbed, not recorded" shape
+`acceptance-and-verification.md §5` names). Ran against the live file: `entries=3 violations=0`.
+Cross-checked every later `AT-34-E3-*` cycle receipt (owner-matched 5/6/7, companion-absent 3/4)
+that references the same open no-content-record question; all correctly point back at the
+existing entries and decline to reclassify on their own authority (`decisions.md §16`'s ruling)
+rather than raising an unrecorded fourth defect. No absorbed discovery found. The checker itself
+is scratch tooling, not committed — `scripts/` outside `scripts/oracle_harness/` is not in Epic
+3's declared file-touch set (same precedent `AT-34-E3-005`'s own generator set). Full detail:
+`artifacts/epic-3-core-rulebook/AT-34-E3-006_cycle_receipt.md`.
+
+Standing gates re-checked, unaffected by this cycle (no bucket move, no corpus/inventory
+change): `python3 scripts/completion_atlas.py --check` → `population=49438 unclassified=0
+overlap=0`. Pre-existing, unrelated to this cycle: `denominator_gate.py --check` on this
+package reports `violations=3`, all inside `progress.md` lines quoting corpus prose ("75%
+chance...") from the already-merged `AT-34-E3-004` cycle — out of this criterion's file-touch
+set, not caused or fixed here. `box_ledger.py --check` (SD-33, inherited, read-only) reports
+`uncovered=19817` — pre-existing, SD-34 does not write to `THE-BOX.md`.
+
+`cargo test --locked --no-run` exits 0 at HEAD `2eabffa7a527ad10c6d13b37d8c2f04aab932fb8`; this
+cycle touched no Rust source so `--lib` and the desktop crate were not re-run (nothing in the
+diff can move either).
+
+Does not resolve `decisions.md §16`'s open definitional question (whether a no-content record
+can ever be `held`) — that remains an operator-ruling item named against `AT-34-E3-005`'s own
+kanban row, not this criterion's bar.
+
 ### Cycle — AT-34-E3-005 (Core Rulebook zero-remaining gate) — partial
 
 **Status: partial.** `AT-34-E3-005`'s bar is a whole-book gate: `python3
