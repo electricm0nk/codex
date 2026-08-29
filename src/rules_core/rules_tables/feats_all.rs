@@ -1616,6 +1616,57 @@ mod tests {
         assert_eq!(complete_count, 21, "21 of 23 UCA records are text-complete, not deferred");
     }
 
+    /// `AT-34-E4-001`: the atlas classifier (`v06_work_inventory::classify`,
+    /// via `feat_desc_leaks_pi_or_upstream_marker`) demotes all 21 of this
+    /// module's own "text-complete" UCA Story feats to `unmeasurable`,
+    /// because their SERVED (joined `DESC:`+`BENEFIT:`) description still
+    /// opens with PCGen's own `[Not Implemented]` editorial admission. This
+    /// re-runs the SAME detector the classifier calls
+    /// (`wiring_class::carries_editorial_not_implemented_marker`) against
+    /// the real joined catalog output -- not a synthesised string -- to
+    /// prove that verdict is a deliberate, corpus-wide-consistent product
+    /// decision (`SD31-E2-F3-002`, whose own test names these exact 21
+    /// records while fixing a case-sensitivity gap that let them
+    /// previously read `done`), never an instrument gap this book's own
+    /// work is free to reopen on its own authority. `desc.len() > 150`
+    /// mechanically re-confirms `twenty_one_are_text_complete_with_real_benefit_text`'s
+    /// claim from the served side: the marker's presence is never because
+    /// there is "nothing else to show" -- see this module's cousin
+    /// `ultimate_campaign::feat_tables`'s own doc comment, corrected
+    /// alongside this test, for why its prior "21 text-complete" target
+    /// was stale against the live atlas.
+    #[test]
+    fn uca_u_bucket_records_still_carry_the_editorial_marker_in_served_form() {
+        let uca_keys: Vec<&str> = uca_feats::feat_tables()
+            .iter()
+            .filter(|e| e.benefit.is_some())
+            .map(|e| e.key)
+            .collect();
+        assert_eq!(uca_keys.len(), 21, "the U-bucket population this proof covers must stay 21");
+
+        for key in uca_keys {
+            let record = all_feat_tables()
+                .iter()
+                .filter(|book| book.rule_set == RuleSetId::Uca)
+                .flat_map(|book| book.entries.iter())
+                .find(|entry| entry.key == key)
+                .unwrap_or_else(|| panic!("'{key}' must be in the UCA aggregate"));
+            let desc = record
+                .description
+                .unwrap_or_else(|| panic!("'{key}' must have a served description"));
+            assert!(
+                crate::rules_core::wiring_class::carries_editorial_not_implemented_marker(desc),
+                "'{key}'s served description no longer carries the editorial marker -- \
+                 the unmeasurable verdict may now be stale and worth re-litigating"
+            );
+            assert!(
+                desc.len() > 150,
+                "'{key}'s served description should carry substantial real BENEFIT content \
+                 beyond the marker, not just the flavor line"
+            );
+        }
+    }
+
     /// UI's 104 records all carry both `DESC:` and `BENEFIT:` (see
     /// `ultimate_intrigue::feat_tables`'s own module doc comment -- no
     /// upstream splice/truncation defect found), so every joined
