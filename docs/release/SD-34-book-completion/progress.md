@@ -13,6 +13,35 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E4-003 (second, independent cost measurement) — complete
+
+**Status: complete.** Built `artifacts/epic-4-ultimate-campaign/step-cost-ledger.json` and
+`step-cost-ledger-raw-commits.json` from the live commit log
+(`git log --reverse --format='%H|%ct|%s' ea2b3396f2..HEAD -- docs/work-inventory.json`) and the
+live `completion_atlas.partition(units, book='ultimate_campaign')` function, same method as
+Epic 3's ledger. Exactly one Epic-4 commit touches `docs/work-inventory.json`
+(`4005925ae2`, `AT-34-E4-002`, bucket B): 1 cycle, 108.0 wall-minutes, 5→0 units, 3 reached DONE,
+2 reclassified (1 M, 1 D), `units_per_hour_reaching_DONE`=1.667.
+`AT-34-E4-001`'s two commits touch no `docs/work-inventory.json` commit (its own receipt: "No
+bucket movement") and correctly contribute no rate row.
+
+**Comparison against Epic 3's bucket-B rate** (5.8 units/hr blended, 22.2–617.4 min/cycle
+per-mechanism range): Epic 4's single mechanism (108 min for 5 units) sits inside that range —
+agreement. Its blended rate (1.667/hr) is ~3.5x slower — divergence, explained explicitly as
+**sample-size noise** (n=1 cycle vs. Epic 3's 29), not book shape; the only shape-linked fact this
+data supports is mechanism count (1 vs. 29 to close bucket B), not per-unit wall-time cost.
+Epic 5 is warned in the ledger not to price Ultimate Campaign's remaining M/D/V buckets off this
+single bucket-B data point.
+
+Re-derived at HEAD: `python3 scripts/completion_atlas.py --book ultimate_campaign --check` →
+`population=265 unclassified=0 overlap=0 DONE=130 B=0 D=5 M=89 V=18 U=21 X=2` (exit 1, expected —
+bar for `AT-34-E4-002` not yet met, unrelated to this criterion). Row-count command output
+confirms `buckets_cleared_so_far=['B'] count=1`, `buckets_not_yet_cleared=['D','M','U','V','X']
+count=5`, schema check passes on every cleared bucket, comparison field present.
+
+No production code touched; `cargo test --locked --no-run` exit 0 at HEAD `c2805717af`. Full
+receipt: `artifacts/epic-4-ultimate-campaign/AT-34-E4-003_cycle_receipt.md`.
+
 ### Cycle — AT-34-E4-001 (23-unit non-A tail resolved) — complete
 
 **Status: complete.** Re-derived the tail at HEAD: `python3 scripts/completion_atlas.py --book

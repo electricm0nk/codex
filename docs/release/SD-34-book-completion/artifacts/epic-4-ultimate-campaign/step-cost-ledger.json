@@ -1,0 +1,67 @@
+{
+  "criterion": "AT-34-E4-003",
+  "population": "ultimate_campaign, 265 units total (docs/release/SD-34-book-completion/content-unit-inventory.md)",
+  "purpose": "This is the SECOND, independent cost measurement (decisions.md's Epic 5 pricing input). Core Rulebook (Epic 3, artifacts/epic-3-core-rulebook/step-cost-ledger.json) is deep and many-bucketed -- 970 starting bucket-B units across 29 distinct mechanisms. Ultimate Campaign is shallow and single-bucketed -- exactly one bucket-B mechanism (5 units) closed it. Two books of opposite shape give Epic 5 a range, not one blended number.",
+  "measurement_method": {
+    "wall_time": "commit-to-commit timestamp span between the immediately prior commit touching docs/work-inventory.json and this cycle's own commit, via `git log --reverse --format=%H|%ct|%s ea2b3396f2..HEAD -- docs/work-inventory.json` -- same instrument and same UPPER-BOUND caveat as step-cost-ledger.json for core_rulebook (the span also carries queue/dispatch overhead between cycles, including the intervening AT-34-E4-001 proof-only cycle which touched no docs/work-inventory.json commit).",
+    "units_cleared": "docs/work-inventory.json checked out at the commit before and at the commit itself (`git show <sha>:docs/work-inventory.json`), partitioned both times with the live `completion_atlas.partition(units, book='ultimate_campaign')` function -- the same code the standing gate runs, not a re-implementation.",
+    "bucket_attribution": "the one Epic-4 commit touching docs/work-inventory.json (4005925ae2) is self-tagged AT-34-E4-002 / bucket B in its own commit message and receipt.",
+    "redrive_command": "git log --reverse --format='%H|%ct|%s' ea2b3396f2..HEAD -- docs/work-inventory.json (full list in step-cost-ledger-raw-commits.json); python3 scripts/completion_atlas.py --book ultimate_campaign --check at HEAD for the current partition."
+  },
+  "buckets_cleared_so_far": {
+    "B": {
+      "cycles": 1,
+      "wall_minutes_total": 108.0,
+      "wall_hours_total": 1.8,
+      "net_bucket_count_reduction_ultimate_campaign": 5,
+      "units_reached_DONE_ultimate_campaign": 3,
+      "units_per_hour_reaching_DONE": 1.667,
+      "dominant_mechanism": {
+        "name": "AT-34-E4-002 PI-coordinate wire-up for Kind::Trait (reused decisions.md §14 mechanism, already built for Kind::Domain/Kind::Deity)",
+        "wall_minutes": 108.0,
+        "cycles": 1
+      },
+      "mechanism_breakdown": {
+        "AT-34-E4-002 PI-coordinate wire-up for Kind::Trait": {
+          "wall_minutes": 108.0,
+          "cycles": 1
+        }
+      },
+      "commit_shas": ["4005925ae2f70777d3191a13f9895cdec91c4c6f"],
+      "meaning": "table exists, record not in it (BUCKET_DEFINITIONS['B'])",
+      "starting_population_ultimate_campaign": 5,
+      "current_remaining_ultimate_campaign": 0,
+      "closure_vs_reclassification": "of the 5 units that left bucket B, 3 reached DONE (zero-magnitude display-class, real closure) and 2 moved to another unfinished bucket -- 1 to M (real BONUS:SKILL magnitude, a lookup not a compute path) and 1 to D (genuine prose ability-scaling, ambiguous wiring class pending review). Movement recorded per decisions.md §12 L10: a count that drops because measurement changed is not closure -- here 3/5 is real closure, 2/5 is reclassification, both counted honestly rather than the whole 5 claimed as closure."
+    }
+  },
+  "buckets_not_yet_cleared": {
+    "D": {"remaining_ultimate_campaign": 5, "note": "no dedicated D-clearing cycle has run; count moved only as a side effect of the bucket-B cycle above (AT-34-E4-002 reclassified 1 unit into it)."},
+    "M": {"remaining_ultimate_campaign": 89, "note": "no dedicated M-clearing (compute-and-apply) cycle has run; count grew by 1 as a side effect of the bucket-B cycle above. AT-34-E4-002's own receipt names this bucket's clearing mechanism as real engine work with unmeasured per-unit cost, requiring a sample measurement before any population run."},
+    "V": {"remaining_ultimate_campaign": 18, "note": "no dedicated V-clearing (oracle-harness) cycle has run for ultimate_campaign."},
+    "U": {"remaining_ultimate_campaign": 21, "note": "resolved BY PROOF, not by bucket movement -- AT-34-E4-001 mechanically proved the unmeasurable verdict is correct-and-final for all 21 (decisions.md's own class of legitimate zero-unit-moved deliverable, decisions.md §9). Not a clearing cost in this ledger's units-per-hour sense: 0 units moved, so no rate is defined. Its wall time is real (AT-34-E4-001's own receipt/commits) but produces no bucket-count denominator this ledger can divide by -- reported for completeness, excluded from the rate comparison below rather than forced into a rate of 0."},
+    "X": {"remaining_ultimate_campaign": 2, "note": "resolved BY PROOF as correct-and-final (AT-34-E4-001) -- same non-rate class as U above."}
+  },
+  "scaffolding_note": "AT-34-E4-001's two commits (72c9f6fec6, 68e9b353b9) touch no docs/work-inventory.json commit and so contribute no row to buckets_cleared_so_far -- see step-cost-ledger-raw-commits.json's note_on_AT-34-E4-001. This is not an omission: a cycle that moves zero units in the ledger's own denominator correctly produces no per-unit rate.",
+  "comparison_against_epic_3_rates": {
+    "epic_3_bucket_B": {
+      "source": "artifacts/epic-3-core-rulebook/step-cost-ledger.json, buckets_cleared_so_far.B",
+      "starting_population_core_rulebook": 970,
+      "cycles": 29,
+      "wall_minutes_total": 2432.3,
+      "units_reached_DONE": 235,
+      "units_per_hour_reaching_DONE_blended": 5.8,
+      "per_mechanism_minutes_range": "22.2 to 617.4 minutes per cycle (28x spread across 29 distinct mechanisms)"
+    },
+    "epic_4_bucket_B": {
+      "starting_population_ultimate_campaign": 5,
+      "cycles": 1,
+      "wall_minutes_total": 108.0,
+      "units_reached_DONE": 3,
+      "units_per_hour_reaching_DONE": 1.667
+    },
+    "where_they_agree": "Epic 4's single mechanism (108.0 min, 5 units, 21.6 min/unit-touched) falls squarely inside Epic 3's own per-mechanism range (22.2-617.4 min/cycle) -- it is not an outlier against Epic 3's population of mechanisms, it is a cheap-to-mid mechanism by that same yardstick. The closest size- and shape-matched Epic 3 comparator is 'AT-34-E3-001 domain mechanism' (1 unit, 40.3 min -> 1.49 units/hour DONE) and 'race_trait_race_not_modelled' (9 units, 70.0 min, but 132 net core_rulebook units cleared via a generic table fallback) -- both PI/coordinate-adjacent reattribution mechanisms of the same general kind as Epic 4's fix, and both land in the same 1-2 units/hour-for-DONE-only neighborhood once mixed-bucket destinations (M/D, not all-DONE) are accounted for the same way.",
+    "where_they_diverge": "Epic 4's blended units-per-hour-DONE (1.667) is roughly 3.5x SLOWER than Epic 3's blended bucket-B rate (5.8). Taken at face value this would say Ultimate Campaign is costlier per unit than Core Rulebook, which contradicts the book being 'shallow and single-bucketed.'",
+    "which_divergence_is_explained_by_book_shape_vs_noise": "NOT book shape -- this is a sample-size artifact, stated plainly rather than papered over. Epic 3's 5.8 units/hour is a BLEND across 29 cycles and 503 units, smoothing over its own 28x per-mechanism spread; Epic 4's 1.667 is a single cycle, a single mechanism, 5 units -- exactly the kind of small-n figure decisions.md §12 L11 (measure per-unit cost before a population-scoped run) warns cannot be extrapolated. A single 5-unit sample sitting inside Epic 3's per-mechanism range (as shown above) is fully consistent with Epic 3's own mechanism-level variance; it does not demonstrate Ultimate Campaign's book shape is intrinsically costlier. The one shape-linked (not noise-linked) fact this ledger CAN state: Ultimate Campaign's bucket B needed exactly ONE mechanism to reach zero (closed in a single cycle) where Core Rulebook's bucket B needed 29 -- consistent with the Evidence text's 'shallow and single-bucketed' framing for BUCKET COUNT and MECHANISM COUNT, even though this ledger cannot yet make the same claim for PER-UNIT WALL-TIME COST on a sample of one.",
+    "headline_finding_for_epic_5": "Do not price Ultimate Campaign's remaining buckets (M:89, D:5, V:18) off this single 1.667 units/hour figure -- it is one mechanism's cost, not a book-wide rate, and Epic 3's own ledger shows a single mechanism can be off a book's blended rate by an order of magnitude in either direction. Epic 5 should price Ultimate Campaign's M/D/V buckets from Epic 3's PER-MECHANISM-TYPE rates for the same bucket letter (M, D, V are compute-path / oracle-harness mechanisms, structurally different from bucket B's lookup-wiring mechanisms measured here) once at least one M/D/V-clearing cycle exists for either book, not from this ledger's single bucket-B data point."
+  }
+}
