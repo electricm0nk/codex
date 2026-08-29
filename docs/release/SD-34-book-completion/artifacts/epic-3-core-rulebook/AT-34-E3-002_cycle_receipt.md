@@ -1,7 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-002 (bucket C, "held and computed, never surfaced")
 
-- **Commit SHA:** PLACEHOLDER_SHA (filled from `git log -1` at commit time; this receipt is
-  committed in the same commit as the code)
+- **Commit SHA:** `6e09fcaf5a416f1372e4eaa8cef70cdb52ca2139`
 - **Files touched:** `src/bin/v06_work_inventory.rs` (two new grounding rungs in `classify()`'s
   `Kind::ClassFeature` arm -- `"Favored Enemy"` and `"Favored Terrain"` display records now
   ground off their own sibling `"Favored Enemy Bonus"` / `"Favored Terrain Bonus"` records'
