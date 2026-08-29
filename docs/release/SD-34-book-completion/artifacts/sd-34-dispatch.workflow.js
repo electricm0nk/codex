@@ -642,24 +642,91 @@ function batchEditPrompt() {
   ].join('\n')
 }
 
+function oracleLanePrompt() {
+  return [
+    'You are the bucket-V lane for bundle SD-34, in your own isolated git worktree on ' + BT + 'tranche/14' + BT + '.',
+    '',
+    '## Why you run in parallel with the engine lane',
+    '',
+    'Bucket V and bucket B share NO code. B is Rust engine work needing a ~38GB cold build of 543 test',
+    'targets. You are Python: ' + BT + 'scripts/oracle_harness/' + BT + ' driving a Java oracle. **You should not need a cargo',
+    'build at all** - if you find yourself starting one, stop and ask whether you actually need it. That is why',
+    'you cost almost nothing to run alongside the engine lane.',
+    '',
+    '## The work',
+    '',
+    'Bucket V is **2,793 of 6,701** core_rulebook units (9,558 corpus-wide): records verified by PROXY but never',
+    'checked against the real oracle. Clearing one means running it through the harness and recording a real',
+    'verdict. This is the single largest block standing between the Core Rulebook and zero.',
+    '',
+    '```bash',
+    'export RETRO_ACTOR="sd34-bucket-v"',
+    'export PCGEN_REPO_DIR="$HOME/workspace/repos/pcgen"   # the pinned oracle checkout, already present',
+    '```',
+    'Read ' + BT + 'scripts/pcgen-oracle-pin.env' + BT + ' and name ' + BT + 'PCGEN_ORACLE_SHA' + BT + ' in every figure you derive from the',
+    'pinned corpus. **' + BT + '~/workspace/repos/pcgen' + BT + ' is the correct path here** but ' + BT + 'fetch-pcgen-oracle.sh' + BT + '`s default',
+    '--dest also resolves there, and a preflight PASS against a wrong checkout fails silently - verify the SHA.',
+    '',
+    '## MEASURE BEFORE THE POPULATION RUN - this is the rule that matters most',
+    '',
+    'SD-33 reached 32 of 8,330 units by carrying a one-character-per-unit method into a population, and it cost',
+    'four remediation waves. Before running anything at scale:',
+    '1. Run a SAMPLE (say 20 units). Time it.',
+    '2. State measured per-unit cost, the population, and projected wall time for all 2,793.',
+    '3. Only then decide how much to run this cycle. Put the projection in your receipt BEFORE the full run.',
+    'SD-33`s own throughput lessons: amortise the JVM startup, and carry many computed variables per character',
+    'rather than one - read its retrospective and harness receipts before designing your run.',
+    '',
+    '## What counts as done',
+    '',
+    'A unit leaves V when the oracle gives a real verdict: agree, disagree, or a NAMED unverifiable reason.',
+    '**A disagreement is a finding, not a failure** - report it, do not paper over it. Do not mark a unit',
+    'verified because the harness errored or timed out; that is exactly the false-verification this bucket exists',
+    'to remove.',
+    '',
+    '## Rules',
+    '',
+    '**Do NOT regenerate ' + BT + 'docs/work-inventory.json' + BT + '** - a separate cycle does that for the whole wave. Do not touch',
+    BT + 'src/rules_core/' + BT + ' or ' + BT + 'src/bin/v06_work_inventory.rs' + BT + '; the engine lane owns those and a sibling lane already',
+    'silently deleted another`s work in this bundle by rebasing carelessly.',
+    'git status --porcelain before every git write; stage your own paths explicitly; never git add -A, never git',
+    'stash. **Run ' + BT + 'git diff --cached --numstat' + BT + ' and READ IT before committing** - a commit that says "add" while',
+    'deleting shipping code is this repo`s recorded failure mode and happened here yesterday.',
+    'Push via fetch + rebase + push, retrying up to 5 times.',
+    '',
+    'ONE turn. Foreground the long runs; poll a background job in a loop inside the turn rather than ending it.',
+    'Commit and push before ending, even for partial work. Report ' + BT + 'partial' + BT + ' with the remainder named by',
+    'sub-cause if you do not finish - that is expected for a population this size and is not a failure.',
+    '',
+    'Return: status, commit_sha, row_count_command_output, receipt_path, figures (each with its command AND',
+    'denominator, plus PCGEN_ORACLE_SHA), build_scope, movement (four buckets), remainder, discoveries,',
+    'next_cycle_plan.',
+  ].join('\n')
+}
+
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
   phase(title)
-  log('batch wave: ONE edit cycle across all three bucket-B mechanisms (one cold build, not four), then ONE regeneration')
+  log('two disjoint lanes in parallel: B (Rust, pays the 38GB build) and V (Python + oracle, no build)')
 
-  const edit = await agent(batchEditPrompt(), {
-    model: 'sonnet', phase: title, label: 'batch-edit: all bucket-B mechanisms',
-    schema: CYCLE_SCHEMA, isolation: 'worktree',
-  })
-  log('batch edit -> ' + (edit ? edit.status : 'null'))
-  if (halted(edit)) return { edit, halted: 'batch-edit' }
+  const [edit, oracle] = await parallel([
+    () => agent(batchEditPrompt(), {
+      model: 'sonnet', phase: title, label: 'B: batch edit, all 3 mechanisms',
+      schema: CYCLE_SCHEMA, isolation: 'worktree',
+    }),
+    () => agent(oracleLanePrompt(), {
+      model: 'sonnet', phase: title, label: 'V: oracle harness (2,793 units)',
+      schema: CYCLE_SCHEMA, isolation: 'worktree',
+    }),
+  ])
+  log('B -> ' + (edit ? edit.status : 'null') + ' | V -> ' + (oracle ? oracle.status : 'null'))
 
-  const summary = '- batch edit (' + (edit.status || '?') + '): '
-    + String(edit.discoveries || edit.remainder || 'no report').slice(0, 600)
+  const summary = ['- B batch (' + ((edit && edit.status) || '?') + '): ' + String((edit && (edit.discoveries || edit.remainder)) || 'no report').slice(0, 500),
+                   '- V oracle (' + ((oracle && oracle.status) || '?') + '): ' + String((oracle && (oracle.discoveries || oracle.remainder)) || 'no report').slice(0, 500)].join('\n')
   const regen = await agent(regenPrompt(summary), {
     model: 'sonnet', phase: title, label: 'regen + attribution', schema: REGEN_SCHEMA,
   })
-  return { edit, regen }
+  return { edit, oracle, regen }
 }
 
 // args.bucketB runs ONLY the parallel bucket-B lanes + the single wave regeneration.
