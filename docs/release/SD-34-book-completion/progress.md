@@ -867,6 +867,87 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 wave-9 shared regeneration — `docs/work-inventory.json`, paid once for four lanes
+
+**Why:** gate-widening, owner-matched, with-magnitude, and option-pool all landed engine
+changes on `tranche/14` without regenerating `docs/work-inventory.json` (the three-pass
+pipeline's own throughput cost, deliberately deferred to a single shared cycle per this
+wave's dispatch rule). This cycle pays that cost once and attributes the result.
+
+**Per-pass wall time** (fresh `CARGO_TARGET_DIR`, `CARGO_INCREMENTAL=0`):
+
+| Pass | Command | Wall time |
+|---|---|---|
+| 1 | `corpus_literal_sweep --json-out /tmp/sweep.json` | 3m24.9s |
+| 2 | `derived_evaluator_fixture_check --json-out /tmp/fixture.json` | 0m13.1s |
+| 3 | `v06_work_inventory` (with both reports set, no `--allow-stamp-loss`) | 11m00.1s |
+
+Total pipeline: **~14m38s**. A second, corrective run of pass 3 followed the restoration
+below (source changed after the first regen); its own wall time was not separately timed
+(warm target dir, well under 3 minutes).
+
+**Whole-corpus before/after diff by unit id:** `docs/work-inventory.json` snapshotted at
+`git show HEAD:docs/work-inventory.json` before any pass ran. After both regenerations:
+**49,438 ids before, 49,438 after, 0 added, 0 removed, 79 changed** (`status` or `evidence`),
+all 79 in `core_rulebook`.
+
+**A rebase regression found and fixed in this cycle, not merely reported.** The option-pool
+lane's commit `a183d760c76` wired `class_feature_pool_catalog::wizard_school_spell_list_key_
+owner` into `v06_work_inventory.rs`'s `classify()` (moving 9 `"<School> Wizard Spells"` units
+bucket B -> D) and added two dedicated tests. The very next commit on the mechanism,
+`534c9c2a61` (subject: "generalize Weapon Training to all 14 groups, 256->208"), silently
+**deleted** that entire wiring block and both tests while resolving its own rebase conflict —
+nothing in its commit message or receipt mentions removing anything. The first regeneration
+pass surfaced this directly: the 9-unit wizard-school-spell-list population showed **34 -> 34,
+unchanged**, contradicting the option-pool lane's own commit message. Diffing `534c9c2a61`
+against its parent confirmed the deletion. Restored verbatim (the `if class_feature_pool_
+catalog::wizard_school_spell_list_key_owner(&unit.key).is_some()` arm plus
+`a_wizard_school_spell_list_row_verified_against_the_join_leaves_bucket_b` and
+`an_unlisted_wizard_spells_shaped_key_still_falls_to_the_generic_fallback`), re-verified
+`cargo test --locked --bin v06_work_inventory` **419/419 passed** (was 416 before restoring;
++3, matching the 2 restored tests plus the with-magnitude lane's own net addition), re-ran
+`cargo test --locked --no-run` (workspace, exit 0) and `--manifest-path apps/desktop/src-tauri/
+Cargo.toml` (exit 0), then re-ran pass 3 to produce the final `docs/work-inventory.json`.
+
+**Attribution — expected vs actual, per lane:**
+
+| Lane | Expected | Actual | Verdict |
+|---|---|---|---|
+| **with-magnitude** | 256 -> 208 (48 closed, Weapon Training generalized to 14 groups); explicitly said the 4 "Monk"-weapon-group records would NOT move this cycle | 48 closed exactly as predicted (B -> `grounded`) **plus 4 more** — the 4 Fighter Weapon-Training "Monk" weapon-group records (a PF1 weapon category, not the Monk class) reached `grounded` via a different pre-existing `classify()` path the lane's own population check didn't count. 52 real closures, not 48. | **Confirmed, and better than predicted** |
+| **option-pool** | 34 -> 25 in one framing; the lane's own commit says "9 keys bucket B -> D" (reclassification, not closure) | 9 units B -> D (`class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join`), exactly as the commit describes — **but only after this cycle restored the wiring the with-magnitude lane's rebase had deleted.** Before the restoration, the true count was 34 -> 34, unchanged. | **Confirmed only after in-cycle repair; would otherwise have been silently refuted** |
+| **owner-matched** | 0 of its 24-unit non-excluded population (18 null-description + 6 gate-refused) moves | 0 moved, confirmed by direct re-check of all 6 named gate-refused units and the population count (24 -> 24, ids identical) | **Confirmed exactly** |
+| **gate-widening** | "A floor of 5 units move for certain": `Bard ~ Bardic Knowledge`, `Bard ~ Lore Master`, `Paladin ~ Holy Champion`, `Paladin ~ Lay on Hands`, `Sorcerer ~ Spells`; unconfirmed larger tail; 0 for Druid/Monk | **Refuted for 4 of 5 named units** — `bard_bardic_knowledge`, `bard_lore_master`, `paladin_holy_champion`, `paladin_lay_on_hands` were already `grounded`/`literal-verified`/`fixture-verified` BEFORE this wave even started (unaffected either way; the lane's own receipt flagged this exact possibility — "the collision guard correctly protecting a real hand-wired magnitude"). Only `sorcerer_spells` changed, reclassifying C -> D alongside 4 DIFFERENT, un-named units (`wizard_arcane_bond`, `cleric_aura`, `paladin_detect_evil`, `wizard_bonus_feats`) — 5 total reclassified, matching the predicted COUNT but not the predicted MEMBERSHIP. Separately, 2 units the lane did not name as moving DID close to DONE (`wizard_cantrips`, `cleric_spontaneous_casting`, B -> `text-complete`) — real closure beyond what the receipt claimed credit for. 0 Druid/Monk movement confirmed as predicted. Plus 1 unrelated reclassification (`bard_bardic_performance`, X -> D). | **Count coincidentally matched, membership did not; real closure the receipt didn't claim** |
+
+**Movement, four buckets (`decisions.md §9`):**
+- **Closure:** 54 (48 + 4 weapon-training-group closures to `grounded`; 2 owner-matched-widened closures to `text-complete`).
+- **Reclassification:** 16 (9 wizard-school-join B->D; 5 gate-widening C->D; 1 owner-matched B->D; 1 bard-performance X->D).
+- **Evidence-string churn, no bucket crossed:** 9 (already-`DONE`/`text-complete` units whose evidence id changed from a hand-wired path to the gate-widening lane's new citation-based path — same bucket before and after, reported separately per `decisions.md §9`'s own discipline that a non-movement is not smoothed into either closure or reclassification).
+- **Instrument-correction:** 0 (no wrong prior count found in the inventory itself this cycle; the option-pool discrepancy above is a code regression, not an instrument error).
+
+**`completion_atlas.py --check`** (corpus-wide): `population=49438 buckets=10 unclassified=0
+overlap=0`, `DONE=14740 A=449 B=11771 C=4344 D=3071 M=5114 V=9558 U=202 X=170 Z=19`,
+`citation_failures=0`. All 10 `BUCKET_DEFINITIONS` citations were re-derived by direct `grep`
+against `v06_work_inventory.rs`'s post-regen line numbers and fixed **twice** in this cycle —
+once after the shared regeneration (which shifted every citation past the with-magnitude
+lane's own insertion), again after this cycle's own 41-line restoration shifted four of them
+a second time (A, B, C, V). `--book core_rulebook --check`: `population=6701 DONE=1502 A=0
+B=472 C=363 D=398 M=1048 V=2793 U=10 X=115 Z=0` (exit 1 — book not yet closed, expected).
+`--book ultimate_campaign --check`: `population=265 DONE=130 A=0 B=0 C=0 D=5 M=89 V=18 U=21
+X=2 Z=0` (exit 1 for the same reason; zero of this book's units were touched by any of the
+four lanes).
+
+**`denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'`:** `files_checked=15
+violations=5`, all pre-existing verbatim-quoted corpus prose in `progress.md` ("75%
+chance..." from `FRT_HVY`'s own description), already flagged by the already-merged
+`AT-34-E3-004` cycle and every subsequent cycle that ran this check. Unchanged by this cycle.
+
+**Build scope, final HEAD (post-restoration):** `cargo test --locked --no-run` (workspace)
+exit 0; `cargo test --locked --no-run --manifest-path apps/desktop/src-tauri/Cargo.toml`
+exit 0 (explicit desktop-crate run, `decisions.md §10`); `cargo test --locked --bin v06_work_
+inventory` 419/419 passed.
+
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md`.
+
 ### Cycle 8 — AT-34-E3-001 (`class_feature_owner_matched` mechanism) — anti-fabrication gates widened by construction (partial)
 
 **Status: partial.** Operator ruling `decisions.md §18` on the open question row 330 raised:
