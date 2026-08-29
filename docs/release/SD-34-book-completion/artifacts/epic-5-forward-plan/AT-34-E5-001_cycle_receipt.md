@@ -1,7 +1,6 @@
 # Cycle AT-34-E5-001 — Epic 5 (Price the remaining 35 books) / AT-34-E5-001
 
-- **Commit SHA:** (this cycle's commit; see `git log -1` after commit, pasted into the pushed
-  receipt commit itself — see the structured return value's `commit_sha`)
+- **Commit SHA:** `cf4a60a7dd21b4842d642f9f1321763b21efaee0`
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_forward_plan.py` (new)
   - `docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/verify_forward_plan.py` (new)
