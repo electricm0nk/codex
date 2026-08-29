@@ -1,6 +1,6 @@
 # Cycle AT-34-E3-006 — Epic 3 (Core Rulebook to zero) / AT-34-E3-006
 
-- **Commit SHA:** (this commit — see push log)
+- **Commit SHA:** `0ab91f0c05` (this cycle's own commit, pushed to `tranche/14`)
 - **Files touched:** `docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/AT-34-E3-006_cycle_receipt.md` (new), `docs/release/SD-34-book-completion/kanban.md`, `docs/release/SD-34-book-completion/progress.md`. `atlas-defects.md` itself is unchanged this cycle — verified, not edited (see Notes).
 - **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (checked directly against the two scratch-tooling files this cycle wrote and did not commit — see Notes)
 - **Wired-integration audit result:** `OK_NO_TOKENS` (same files)
