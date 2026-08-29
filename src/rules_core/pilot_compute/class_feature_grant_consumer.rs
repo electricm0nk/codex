@@ -57,39 +57,42 @@
 //!    facts disagree on level -- the SAME "refuse rather than guess"
 //!    posture `class_feature_grants.rs`'s own module doc comment describes
 //!    for its own gate-resolution rules, applied one layer up.
-//! 2. **Wizard, Bard, Paladin, Cleric, Sorcerer.** `OPEN-ISSUES.md` rows
-//!    330/338 name nine pre-existing, shipped anti-fabrication acceptance
-//!    tests guarding Wizard/Bard/Paladin's own `compute_pilot_base_chassis`
-//!    output -- five `sd13_bard_level4..8_progression` tests are CLOSED
-//!    ALLOWLISTS over the WHOLE `class_feature.bard.` namespace (any new
-//!    bard-namespaced id fails them regardless of correctness), and
-//!    `sd13_wizard_level1_prepared_spell_baseline`/
-//!    `sd13_paladin_level8_progression` each assert an exhaustive property
-//!    over every explanation `compute_pilot_base_chassis` returns for a
-//!    fixed fixture. Wave 22's own reconciliation attempt for these nine
-//!    gates was REJECTED (`OPEN-ISSUES.md` row 338, GAMED) for claiming,
-//!    falsely, that they needed no widening -- the ruling question row 330
-//!    raised (widen the allowlists by construction, or per-feature) remains
-//!    OPEN and unanswered. **This lane found TWO more, previously-
-//!    undocumented gates of the identical shape while running the full
-//!    suite against successive drafts** (this module's own exclusion list
-//!    originally held only the three named classes): both
-//!    `sd13_cleric_level1_spell_baseline.rs::
-//!    cleric_level1_fabricates_no_spell_math` (tripped at level 1 by
-//!    `class_feature.cleric.corpus_record.diminished_spellcasting`) and
-//!    `sd13_sorcerer_level1_spell_baseline.rs::
-//!    sorcerer_level1_fabricates_no_spell_math` failed the instant this
-//!    module emitted a `"spell"`-substring id for that class, the identical
-//!    exhaustive-scan shape `sd13_wizard_level1_prepared_spell_baseline`
-//!    uses, just never named in `OPEN-ISSUES.md` because nothing had ever
-//!    emitted a Cleric- or Sorcerer-namespaced generic id before this lane.
-//!    See the wave-23 progress receipt for the full reproduction of both.
+//! 2. **Wizard, Bard, Paladin, Cleric, Sorcerer -- WIDENED BY CONSTRUCTION,
+//!    SD-34 `decisions.md` §18.** `OPEN-ISSUES.md` rows 330/338 named nine
+//!    pre-existing, shipped anti-fabrication acceptance tests guarding
+//!    Wizard/Bard/Paladin's own `compute_pilot_base_chassis` output (plus
+//!    two more of the identical shape this lane found live for Cleric and
+//!    Sorcerer, and two `LevelUpPlan` audits -- see the Druid/Monk
+//!    paragraph below). Wave 22's reconciliation attempt was REJECTED
+//!    (`OPEN-ISSUES.md` row 338, GAMED) for claiming, falsely, that these
+//!    gates needed no widening; row 330's own open ruling question --
+//!    "widen the allowlists by construction, or per-feature?" -- is
+//!    answered by `decisions.md` §18: **by construction.** An explanation
+//!    is admitted when it CITES A REAL CORPUS RECORD (the SAME
+//!    `corpus_records_with_real_description`/`resolved_description_for`
+//!    gate this module already applied, unweakened), never because its
+//!    class name sits on a hand-maintained allowlist. Concretely: the nine
+//!    `sd13_*`/`sd25_*` gates were widened, additively, to accept the
+//!    resulting `class_feature.<class>.corpus_record.*` ids by SHAPE
+//!    (the five `sd13_bard_level4..8_progression` closed-namespace
+//!    allowlists each gained one prefix carve-out; `sd13_wizard_level1_
+//!    prepared_spell_baseline`/`sd13_cleric_level1_spell_baseline`/
+//!    `sd13_sorcerer_level1_spell_baseline`'s `"spell"`-substring catches
+//!    each gained the same; `sd13_paladin_level8_progression`'s
+//!    `"resolve"`-substring catch gained an EXACT carve-out for
+//!    `class_feature.paladin.corpus_record.aura_of_resolve` alone, since
+//!    that test's remaining purpose -- no fabricated Aura of Resolve
+//!    MECHANICAL magnitude -- is orthogonal to this module's flat,
+//!    citation-backed grant-fact id). No existing assertion in any of the
+//!    nine was weakened, deleted, or narrowed; every one still fails on a
+//!    genuinely fabricated id. `previously_gated_classes_now_emit_citation_
+//!    backed_explanations_by_construction` (below) proves the widening
+//!    directly against the live merged grant data.
 //!
-//!    **Druid and Monk are excluded for a SEPARATE, THIRD reason, also
-//!    named by row 330 but not yet triggered until this lane emitted for
-//!    either class.** `sd25_druid_level_up_explanation_filter_audit.rs`
-//!    (a standing audit, not a fabrication guard, but equally hard-
-//!    blocking) failed live: `is_druid_pillar_id`
+//!    **Druid and Monk stay excluded for a SEPARATE, THIRD reason, distinct
+//!    from the citation-based gate above.** `sd25_druid_level_up_
+//!    explanation_filter_audit.rs` (a standing audit, not a fabrication
+//!    guard, but equally hard-blocking) failed live: `is_druid_pillar_id`
 //!    (`src/rules_core/level_up/druid.rs`, OUTSIDE this lane's write scope)
 //!    is a CLOSED id-prefix allowlist over `LevelUpPlan`'s own explanation
 //!    filter, and this module's `class_feature.druid.corpus_record.*` ids
@@ -106,14 +109,15 @@
 //!    must survive, or fail loudly" -- makes this predictable, not a guess).
 //!    Widening `is_druid_pillar_id`/`is_monk_pillar_id` is real, scoped,
 //!    owed follow-on work for a lane with write access to
-//!    `src/rules_core/level_up/`, not something this module may do itself.
+//!    `src/rules_core/level_up/`, NOT something the citation-based property
+//!    above can clear by itself -- **Druid and Monk remain excluded by
+//!    this module after this cycle.**
 //!
-//!    This module does not touch, weaken, or route around any of these
-//!    thirteen tests (nine named by rows 330/338, two found live by this
-//!    lane, two LevelUpPlan audits); it excludes the seven classes they
-//!    cover from its own emission entirely, so none of the thirteen can
-//!    regress. `class_feature_grant_consumer_never_emits_for_the_gated_
-//!    classes` (below) proves the exclusion directly against the live
+//!    This module does not touch, weaken, or route around either of the
+//!    two `LevelUpPlan` audits; `LEVEL_UP_PILLAR_FILTERED_CLASSES` (below)
+//!    keeps excluding exactly the two classes they guard, and
+//!    `class_feature_grant_consumer_never_emits_for_the_level_up_pillar_
+//!    filtered_classes` proves that exclusion directly against the live
 //!    merged grant data rather than trusting the list's own claim.
 //! 3. **Pathfinder Unchained's four classes.** Already served by
 //!    `push_pu_class_feature_records`'s own hand-curated, %N-resolving
@@ -163,15 +167,32 @@ use super::formula_interpreter::PcgenFormulaEvaluator;
 use super::formula_reproduction_harness::FormulaEvaluator as _;
 use super::{AbilityModifiers, ComputationExplanation, pu_feature_slug};
 
-/// The four classes this module refuses to emit for -- see this module's
-/// own doc comment, section 2, for the full citation (three named by
-/// `OPEN-ISSUES.md` rows 330/338; Cleric and Sorcerer found live by this
-/// lane running the full suite; Druid and Monk added for the SEPARATE
-/// `is_druid_pillar_id`/`is_monk_pillar_id` LevelUpPlan-filter reason row
-/// 330 itself named -- see this module's doc comment, section 2, final
-/// paragraph).
-const ANTI_FABRICATION_GATE_EXCLUDED_CLASSES: [&str; 7] =
-    ["wizard", "bard", "paladin", "cleric", "sorcerer", "druid", "monk"];
+/// SD-34 `decisions.md` §18 ruling: the anti-fabrication gates for
+/// Wizard/Bard/Paladin/Cleric/Sorcerer (`OPEN-ISSUES.md` rows 330/338's nine
+/// `sd13_*`/`sd25_*` tests) are widened BY CONSTRUCTION -- an explanation is
+/// admitted when it CITES A REAL CORPUS RECORD (this module's own
+/// `corpus_records_with_real_description`/`resolved_description_for` gate,
+/// unchanged), never because its class name sits on a hand-maintained
+/// allowlist. The nine `sd13_*`/`sd25_*` gates were widened in the SAME
+/// cycle (see each test file's own doc comment) to accept the resulting
+/// `class_feature.<class>.corpus_record.*` ids by SHAPE, trusting that
+/// production-side citation gate rather than re-deriving a class list
+/// there. This constant therefore no longer names an anti-fabrication
+/// exclusion at all -- it is retained, renamed, ONLY for the structurally
+/// SEPARATE reason row 330 also named: Druid and Monk sit behind
+/// `is_druid_pillar_id`/`is_monk_pillar_id`
+/// (`src/rules_core/level_up/{druid,monk}.rs`), a CLOSED id-prefix
+/// allowlist on `LevelUpPlan`'s OWN explanation filter, outside this
+/// module and outside this lane's write scope. A real, grounded
+/// `class_feature.druid.corpus_record.*`/`class_feature.monk.corpus_record.*`
+/// id this module would otherwise emit is silently dropped by that filter
+/// before it ever reaches a `LevelUpPlan` screen
+/// (`sd25_druid_level_up_explanation_filter_audit`/
+/// `sd25_monk_level_up_explanation_filter_audit`, unmodified, pre-existing,
+/// hard-blocking) -- so this module keeps refusing to emit for either class
+/// until that SEPARATE filter is widened by a lane with write access to
+/// `src/rules_core/level_up/`.
+const LEVEL_UP_PILLAR_FILTERED_CLASSES: [&str; 2] = ["druid", "monk"];
 
 fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -1689,7 +1710,7 @@ pub(super) fn push_generic_class_feature_grant_records(
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     let Some(owner) = class_id_str.strip_prefix("class:") else { return };
-    if ANTI_FABRICATION_GATE_EXCLUDED_CLASSES.contains(&owner) {
+    if LEVEL_UP_PILLAR_FILTERED_CLASSES.contains(&owner) {
         return;
     }
     // Snapshotted BEFORE this function pushes anything, so this module never
@@ -1728,6 +1749,22 @@ pub(super) fn push_generic_class_feature_grant_records(
             continue;
         }
         if level < granted_at {
+            continue;
+        }
+        // SD-34 decisions.md section 18: a NAMED, per-record refusal, not a per-class one --
+        // found live while widening Bard by construction. `Bard ~ Versatile Performance`
+        // cites a real corpus record (so the citation-based gate alone would admit it), but
+        // three dedicated, pre-existing, unmodified acceptance tests
+        // (`sd13_bard_level2_progression.rs`/`sd13_bard_level3_progression.rs`::
+        // `bard_levelN_does_not_fabricate_versatile_performance`,
+        // `sd13_bard_level10_progression.rs`'s own `contains("versatile")` guard) assert this
+        // module's real gap directly: Versatile Performance is a choice-gated skill-
+        // substitution engine that does not exist in this codebase, the SAME reasoning this
+        // module's own module-doc already applies to Rogue Talent-shaped option pools. This
+        // refusal is a PROPERTY of this one record (a real citation whose mechanical effect
+        // is provably unimplemented, evidenced by three independent, unrelated tests), never
+        // a class-wide exclusion -- every other Bard grant fact still emits normally.
+        if class == "bard" && key == "Bard ~ Versatile Performance" {
             continue;
         }
         // Two independent paths to a servable name for this record:
@@ -2014,8 +2051,8 @@ mod tests {
     }
 
     #[test]
-    fn class_feature_grant_consumer_never_emits_for_the_gated_classes() {
-        for gated in ANTI_FABRICATION_GATE_EXCLUDED_CLASSES {
+    fn class_feature_grant_consumer_never_emits_for_the_level_up_pillar_filtered_classes() {
+        for gated in LEVEL_UP_PILLAR_FILTERED_CLASSES {
             let mut explanations = Vec::new();
             push_generic_class_feature_grant_records(
                 &format!("class:{gated}"),
@@ -2025,10 +2062,108 @@ mod tests {
             );
             assert!(
                 explanations.is_empty(),
-                "{gated} is named by OPEN-ISSUES.md rows 330/338's anti-fabrication gates and \
-                 must never receive a generic roster explanation: got {explanations:?}"
+                "{gated} sits behind the SEPARATE is_druid_pillar_id/is_monk_pillar_id \
+                 LevelUpPlan filter (row 330) and must never receive a generic roster \
+                 explanation until that filter is widened: got {explanations:?}"
             );
         }
+    }
+
+    /// SD-34 `decisions.md` §18: the anti-fabrication gate is now a PROPERTY (cites a real
+    /// corpus record), not a hand-maintained class allowlist. This proves the widening
+    /// directly: every one of the five previously wholesale-excluded classes (Wizard, Bard,
+    /// Paladin, Cleric, Sorcerer) now DOES emit real, citation-backed explanations when the
+    /// live merged grant data resolves one for it -- the old
+    /// `class_feature_grant_consumer_never_emits_for_the_gated_classes` assertion (renamed
+    /// above) would have failed for every one of these five before this cycle.
+    #[test]
+    fn previously_gated_classes_now_emit_citation_backed_explanations_by_construction() {
+        let widened_classes = ["wizard", "bard", "paladin", "cleric", "sorcerer"];
+        let unambiguous = unambiguous_grants();
+        for class in widened_classes {
+            // Only assert emission for a class that the live data actually has an
+            // unambiguous, resolvable grant fact for -- a class with none would trivially
+            // "pass" with zero explanations, proving nothing.
+            let has_a_fact = unambiguous.keys().any(|(c, _)| c == class);
+            if !has_a_fact {
+                continue;
+            }
+            let mut explanations = Vec::new();
+            push_generic_class_feature_grant_records(
+                &format!("class:{class}"),
+                20,
+                &AbilityModifiers::default(),
+                &mut explanations,
+            );
+            assert!(
+                !explanations.is_empty(),
+                "{class} was wholesale-excluded before SD-34 decisions.md §18; the live merged \
+                 data resolves at least one unambiguous fact for it, so the widened, \
+                 citation-based gate must now emit for it: got zero explanations"
+            );
+            for explanation in &explanations {
+                assert!(
+                    explanation.id.starts_with(&format!("class_feature.{class}.corpus_record.")),
+                    "unexpected id shape for {class}: {}",
+                    explanation.id
+                );
+                // Every emitted explanation must, by construction, cite a corpus record this
+                // module independently proved real -- never a fabricated or unresolved one.
+                let slug = explanation.id.rsplit('.').next().unwrap();
+                let cited_key = unambiguous
+                    .keys()
+                    .find(|(c, key)| c == class && pu_feature_slug(key) == slug)
+                    .map(|(_, key)| key.clone())
+                    .unwrap_or_else(|| panic!("{}: no corpus grant key backs this id", explanation.id));
+                assert!(
+                    descriptions_or_resolved_for_test(&cited_key, explanation.value as u8),
+                    "{}: emitted with no real corpus citation -- exactly what the widened gate \
+                     must refuse",
+                    explanation.id
+                );
+            }
+        }
+    }
+
+    /// RED->GREEN mutation proof for the widened gate: a synthetic explanation whose id names
+    /// a corpus key that carries NO real, renderable description must never be treated as
+    /// citation-backed. This directly exercises `descriptions_or_resolved_for_test` (this
+    /// test's own probe of the SAME citation gate `push_generic_class_feature_grant_records`
+    /// applies in production) against a key manufactured to have no corpus record at all.
+    #[test]
+    fn mutation_proof_a_fabricated_key_is_never_treated_as_citation_backed() {
+        // RED: plant a key that cannot possibly exist in the real corpus.
+        let fabricated_key = "SD-34 Mutation Probe ~ Not A Real Corpus Record";
+        assert!(
+            !descriptions_or_resolved_for_test(fabricated_key, 1),
+            "the citation gate incorrectly accepted a fabricated key with no corpus record -- \
+             the gate is not catching what it must catch"
+        );
+        // GREEN (baseline restored): the probe used no shared state, so a real, known-good key
+        // still resolves exactly as before -- confirming this proof did not itself corrupt the
+        // gate for real records.
+        let (real_class, real_key) = unambiguous_grants()
+            .keys()
+            .next()
+            .expect("live merged data must resolve at least one real grant fact")
+            .clone();
+        let granted_at = *unambiguous_grants().get(&(real_class, real_key.clone())).unwrap();
+        assert!(
+            descriptions_or_resolved_for_test(&real_key, granted_at.max(1)),
+            "baseline citation check for a REAL corpus key must stay clean after the mutation \
+             probe above: {real_key}"
+        );
+    }
+
+    /// Shared probe for the two tests above: true iff `key` cites a real, renderable corpus
+    /// record either directly (`corpus_records_with_real_description`) or through the
+    /// per-character formula-resolution path (`resolved_description_for`) -- the SAME two
+    /// paths `push_generic_class_feature_grant_records` itself tries, in the same order.
+    fn descriptions_or_resolved_for_test(key: &str, level: u8) -> bool {
+        if corpus_records_with_real_description().contains_key(key) {
+            return true;
+        }
+        resolved_description_for(key, level, &AbilityModifiers::default()).is_some()
     }
 
     #[test]
@@ -2162,7 +2297,7 @@ mod tests {
         assert!(!classes.is_empty(), "expected the live merged data to resolve at least one class");
         let mut any_emitted = false;
         for class in &classes {
-            if ANTI_FABRICATION_GATE_EXCLUDED_CLASSES.contains(&class.as_str()) {
+            if LEVEL_UP_PILLAR_FILTERED_CLASSES.contains(&class.as_str()) {
                 continue;
             }
             let mut explanations = Vec::new();
@@ -2421,7 +2556,7 @@ mod tests {
             // own early return for an excluded class -- a record whose chain resolves but whose
             // class is gate-excluded is NEVER actually emitted in production, so it must not be
             // counted as `newly_resolved` here.
-            if ANTI_FABRICATION_GATE_EXCLUDED_CLASSES.contains(&class.as_str()) {
+            if LEVEL_UP_PILLAR_FILTERED_CLASSES.contains(&class.as_str()) {
                 if resolves.is_some() {
                     class_excluded_otherwise_resolvable += 1;
                 } else {
@@ -2490,9 +2625,30 @@ mod tests {
         // and `class_excluded_otherwise_resolvable` are UNCHANGED -- confirmed by diffing this
         // cycle's own `newly_resolved_examples` list against cycle 12's, identical. Exactly 1
         // genuinely absent key remains.
+        //
+        // `newly_resolved` moved 21 -> 26, `class_excluded_otherwise_resolvable` moved 11 -> 6
+        // (SD-34 AT-34-E3-001, `decisions.md` §18): the wholesale per-class exclusion for
+        // Wizard/Bard/Paladin/Cleric/Sorcerer was replaced by the citation-based property (see
+        // `LEVEL_UP_PILLAR_FILTERED_CLASSES`'s own doc comment) -- these five classes' own
+        // already-resolvable records (found by THIS SAME probe before this cycle, just bucketed
+        // as excluded rather than counted) now land in `newly_resolved` instead:
+        // `bard/Bard ~ Bardic Knowledge@1`, `bard/Bard ~ Lore Master@5`,
+        // `paladin/Paladin ~ Holy Champion@20`, `paladin/Paladin ~ Lay on Hands@2`,
+        // `sorcerer/Sorcerer ~ Spells@1` -- exactly 5, a RECLASSIFICATION of this cycle's own
+        // widening, not a resolver change (`resolved_description_for` itself is untouched this
+        // cycle). Wizard and Cleric contribute zero newly-resolved records here (their own
+        // resolvable-but-excluded population was already 0 before this cycle) -- the classes'
+        // widening is real (proven live by
+        // `previously_gated_classes_now_emit_citation_backed_explanations_by_construction`,
+        // above) even where this particular census shows no movement. The remaining 6
+        // `class_excluded_otherwise_resolvable` are ALL Druid/Monk, unchanged by this cycle
+        // (the separate `is_druid_pillar_id`/`is_monk_pillar_id` LevelUpPlan filter, out of
+        // this module's write scope). Re-derive:
+        // `cargo test --locked --lib -- rules_core::pilot_compute::class_feature_grant_consumer::
+        // tests::the_live_scale_of_this_waves_widening_is_measured_and_pinned`.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (136, 21, 11, 43, 1),
+            (136, 26, 6, 43, 1),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \

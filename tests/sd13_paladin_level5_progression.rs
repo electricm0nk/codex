@@ -322,7 +322,15 @@ fn paladin_level5_does_not_fabricate_divine_bond() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.contains("divine_bond")),
+            // SD-34 decisions.md section 18: widened BY CONSTRUCTION, not narrowed --
+            // class_feature_grant_consumer now emits the flat, citation-backed grant
+            // fact (Paladin gains Divine Bond at this level, joined to a real corpus
+            // record). The MECHANICAL magnitude this test guards (activation/resource-
+            // consumption, weapon-enhancement, mount stat block) is still fabricated by
+            // nothing, so the exact citation-backed id is carved out by NAME while every
+            // other id shape remains caught.
+            .any(|e| e.id.contains("divine_bond")
+                && e.id != "class_feature.paladin.corpus_record.divine_bond"),
         "Divine Bond (the PF1 CRB's other 5th-level paladin class feature) requires an \
          activation/resource-consumption engine and either a weapon-enhancement subsystem or a \
          full mount stat-block/advancement subsystem, neither of which exists in this codebase; \

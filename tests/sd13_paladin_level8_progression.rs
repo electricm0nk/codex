@@ -333,14 +333,26 @@ fn paladin_level8_does_not_fabricate_aura_of_resolve() {
     // keeps guarding against Aura of Resolve (still named-but-unproven,
     // unaffected by SD18's unrelated Aura of Justice grounding) without
     // colliding with the new, distinct, legitimately-grounded record.
+    // SD-34 decisions.md section 18: widened BY CONSTRUCTION, not narrowed --
+    // class_feature_grant_consumer now emits `class_feature.paladin.corpus_record.
+    // aura_of_resolve`, a flat, citation-backed GRANT FACT (Paladin gains this
+    // feature at level 8, joined to a real, non-fabricated corpus record). This is
+    // NOT the mechanical magnitude this test guards against -- no condition-immunity
+    // engine or ally-aura/positional engine exists here, and this module's own grant
+    // record carries no such computation, only the level-gate fact. The exact id is
+    // carved out below by NAME, not by prefix or substring, so this assertion keeps
+    // catching any OTHER fabricated Aura of Resolve record (a mechanical value, a
+    // different id shape) exactly as before.
     assert!(
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.to_lowercase().contains("resolve")),
+            .any(|e| e.id.to_lowercase().contains("resolve")
+                && e.id != "class_feature.paladin.corpus_record.aura_of_resolve"),
         "level-8 Paladin must not fabricate any Aura of Resolve explanation record (Aura of \
          Resolve needs a condition-immunity engine and an ally-aura/positional engine, \
-         neither of which exists in this codebase): {:?}",
+         neither of which exists in this codebase) beyond the flat, citation-backed grant \
+         fact: {:?}",
         computation.explanations
     );
     assert!(

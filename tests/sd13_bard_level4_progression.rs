@@ -321,7 +321,13 @@ fn bard_level4_does_not_fabricate_a_new_class_feature() {
             .filter(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard")
-            .all(|e| known_bard_ids.contains(&e.id.as_str())),
+            .all(|e| known_bard_ids.contains(&e.id.as_str())
+                // SD-34 decisions.md section 18: widened BY CONSTRUCTION, not narrowed --
+                // class_feature_grant_consumer now emits real, citation-backed
+                // corpus_record ids for Bard (previously wholesale-excluded); this shape
+                // carve-out admits them without touching any existing known_bard_ids
+                // entry or weakening the exhaustive check for anything else.
+                || e.id.starts_with("class_feature.bard.corpus_record.")),
         "Bard level 4 must not gain any bard-namespaced explanation id beyond the \
          already-grounded pillars (PF1 CRB level-4 Special column is blank): {:?}",
         computation.explanations

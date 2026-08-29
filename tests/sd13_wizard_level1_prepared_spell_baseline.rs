@@ -199,6 +199,11 @@ fn wizard_level1_fabricates_no_spell_math() {
             explanation.id == RECOGNITION_ID
                 || explanation.id == SPECIALIST_BONUS_SLOT_EXPLANATION_ID
                 || explanation.id.starts_with("class_chassis.wizard.spell_save_dc.")
+                // SD-34 decisions.md section 18: widened BY CONSTRUCTION, not narrowed --
+                // class_feature_grant_consumer now emits real, citation-backed corpus_record
+                // ids for Wizard (previously wholesale-excluded); this shape carve-out admits
+                // them without weakening the substring check for anything else.
+                || explanation.id.starts_with("class_feature.wizard.corpus_record.")
                 || !explanation.id.contains("spell"),
             "no fabricated spell explanation is allowed beyond the +0 recognition, the flat \
              specialist bonus slot count, and the real spell-save-DC records: {explanation:?}"
