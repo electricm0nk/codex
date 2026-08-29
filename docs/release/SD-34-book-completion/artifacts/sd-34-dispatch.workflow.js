@@ -576,89 +576,90 @@ function regenPrompt(laneSummaries) {
     + 'never git stash. ONE turn - foreground the long runs, commit and push before ending it.'
 }
 
+function batchEditPrompt() {
+  return [
+    'You are the SINGLE batch-edit cycle for bundle SD-34, in your own isolated git worktree on ' + BT + 'tranche/14' + BT + '.',
+    '',
+    '## Why you are one agent and not four',
+    '',
+    'This workspace has 543 integration test targets. A cold build is ~38GB of compilation. Four parallel',
+    'lanes each paid that separately, so a 2-unit change and a 400-unit change cost the same. You make ALL',
+    'the changes first, then compile ONCE, then test ONCE, then iterate on what the tests actually say.',
+    'Every iteration after the first build is warm and cheap.',
+    '',
+    '## Environment',
+    '',
+    '```bash',
+    'export RETRO_ACTOR="sd34-batch-b"',
+    'export CARGO_TARGET_DIR="/tmp/cargo-sd34-batch"   # ONE dir, reused across your iterations',
+    'export CARGO_INCREMENTAL=0',
+    'mkdir -p "$CARGO_TARGET_DIR" && echo $$ > "$CARGO_TARGET_DIR/.reclaim-claim"',
+    '```',
+    '',
+    '## The work: bucket B for core_rulebook, 532 units across three mechanisms',
+    '',
+    'Re-derive each population yourself before starting; do not trust these numbers.',
+    '',
+    '1. ' + BT + 'class_feature_owner_matched_by_name_but_record_not_held_by_engine' + BT + ' (~242). §18`s gate widening landed,',
+    '   so Wizard/Bard/Paladin/Cleric/Sorcerer now reach the citation gate. Monk (25) + Druid (1) stay blocked',
+    '   behind ' + BT + 'is_druid_pillar_id' + BT + '/' + BT + 'is_monk_pillar_id' + BT + ' in ' + BT + 'src/rules_core/level_up/' + BT + ' - widening THAT filter',
+    '   by the same citation property is in scope for you. ~18 zero-description units are the OPEN definitional',
+    '   question in atlas-defects.md: leave them in B, do not reclassify.',
+    '2. ' + BT + 'class_feature_option_pool_record_with_magnitude_not_held_by_engine' + BT + ' (~208). Weapon Training was just',
+    '   generalized to all 14 groups; continue from that receipt`s named remainder.',
+    '3. ' + BT + 'class_feature_option_pool_record_not_held_by_engine' + BT + ' (~34). Nine cycles, last few closed almost nothing.',
+    '   Its remainder needs real subsystems: proficiency/grant possession-tracking, wizard opposition-school',
+    '   tracking. Build one properly or say plainly it is not narrow work.',
+    '',
+    '## How to work',
+    '',
+    '1. **Read the prior receipts first** in ' + BT + 'artifacts/epic-3-core-rulebook/' + BT + '. Roughly 35 cycles have run these',
+    '   mechanisms and their named remainders are sound. Continue from them; do not re-derive their investigations.',
+    '   But DO re-derive their NUMBERS and their stated REASONS - both have been wrong before, and a cycle',
+    '   already disproved another`s reason for deferring three classes.',
+    '2. **Make every edit you intend, across all three mechanisms, BEFORE your first build.** Write the tests',
+    '   too. Do not build between edits.',
+    '3. Then ' + BT + 'cargo test --locked --no-run' + BT + ' once. Fix compile errors, rebuild (now warm).',
+    '4. Then run the scoped suites plus the nine ' + BT + 'sd13_*' + BT + '/' + BT + 'sd25_*' + BT + ' anti-fabrication gates. Fix what fails,',
+    '   re-run. **Never weaken, ignore, or narrow a gate to make it pass** - a prior attempt here was rejected',
+    '   as GAMED for that. A gate accepts an explanation because it CITES A REAL CORPUS RECORD (decisions.md §18).',
+    '5. **Do NOT regenerate ' + BT + 'docs/work-inventory.json' + BT + '** and do not run corpus_literal_sweep or',
+    '   derived_evaluator_fixture_check. A separate regeneration cycle measures what you moved. State what you',
+    '   EXPECT to move, per mechanism, and why. A wrong expectation is a finding worth reporting, not a failure.',
+    '',
+    '## Rules',
+    '',
+    'git status --porcelain before every git write. Stage your own paths explicitly - never git add -A, never',
+    'git stash. **Before committing run ' + BT + 'git diff --cached --numstat' + BT + ' and read it**: a commit whose subject says',
+    '"add" while its body deletes shipping code is this repo`s recorded failure mode and has happened here.',
+    'Push via fetch + rebase + push, retrying up to 5 times.',
+    '',
+    'ONE turn. Foreground the builds - do not end your turn waiting on a background job; lanes have lost work',
+    'that way. Commit and push before ending, even for partial work.',
+    '',
+    'Return the structured object: status, commit_sha, row_count_command_output, receipt_path, figures,',
+    'build_scope, movement, remainder, discoveries, next_cycle_plan.',
+  ].join('\n')
+}
+
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
   phase(title)
-  log('wave 9: ' + LANES.length + ' lanes IN PARALLEL (own worktree + own target dir), code-only; ONE regeneration after')
+  log('batch wave: ONE edit cycle across all three bucket-B mechanisms (one cold build, not four), then ONE regeneration')
 
-  // 1+2: parallel, worktree-isolated, and none of them regenerates the inventory.
-  const results = await parallel(LANES.map(lane => () =>
-    agent(lanePrompt(lane), {
-      model: 'sonnet',
-      phase: title,
-      label: 'lane:' + lane.id,
-      schema: CYCLE_SCHEMA,
-      isolation: 'worktree',
-    }).then(r => ({ lane: lane.id, result: r }))))
-
-  for (const r of results) {
-    log('lane ' + (r && r.lane) + ' -> ' + (r && r.result ? r.result.status : 'null'))
-  }
-
-  const escalated = results.filter(r => r && r.result && r.result.status === 'blocked-escalated')
-  if (escalated.length) {
-    log('HALT: ' + escalated.length + ' lane(s) request an operator ruling; no regeneration run.')
-    return { lanes: results, halted: escalated.map(r => r.lane) }
-  }
-
-  // One regeneration for the whole wave, with attribution back to each lane.
-  const summaries = results.map(r => {
-    const x = (r && r.result) || {}
-    return '- lane `' + (r && r.lane) + '` (' + (x.status || 'null') + '): '
-      + String(x.discoveries || x.remainder || 'no report').slice(0, 400)
-  }).join('\n')
-
-  const regen = await agent(regenPrompt(summaries), {
-    model: 'sonnet', phase: title, label: 'wave9 regen + attribution', schema: REGEN_SCHEMA,
+  const edit = await agent(batchEditPrompt(), {
+    model: 'sonnet', phase: title, label: 'batch-edit: all bucket-B mechanisms',
+    schema: CYCLE_SCHEMA, isolation: 'worktree',
   })
-  return { lanes: results, regen }
-}
+  log('batch edit -> ' + (edit ? edit.status : 'null'))
+  if (halted(edit)) return { edit, halted: 'batch-edit' }
 
-// ---------------------------------------------------------------- run
-
-async function runEpic(n) {
-  const e = EPICS[n]
-  phase(e.title)
-  log(`${e.title} — ${e.criteria.length} criteria, sequential`)
-  const results = []
-  for (const c of e.criteria) {
-    const r = await agent(cycleProcedurePrompt(c), {
-      model: 'sonnet',
-      phase: e.title,
-      label: c.id,
-      schema: CYCLE_SCHEMA,
-    })
-    results.push({ id: c.id, result: r })
-    if (halted(r)) {
-      log(`HALT at ${c.id} — status ${r ? r.status : 'null'}. A blocked card pauses the bundle (§8).`)
-      return { halted: c.id, result: r, done: results }
-    }
-    log(`${c.id} complete — ${r.commit_sha}`)
-  }
-  return { done: results }
-}
-
-// args.remediation === true runs ONLY the AT-34-E1-008 fan-out, then the
-// AT-34-E1-007 re-verify that closes the criterion it was blocked on.
-if (args && args.remediation) {
-  const rows = await runRemediation()
-  const short = rows.filter(r => !r.result || r.result.status !== 'complete')
-  if (short.length) {
-    log(`${short.length} of ${rows.length} groups did not report complete - AT-34-E1-007 stays open.`)
-    return { criterion: 'AT-34-E1-008', groups: rows, short: short.map(r => r.group) }
-  }
-  const verifyTitle = 're-verify that `scripts/verify.sh --only corpus-trap-audit` now exits 0. '
-    + 'AT-34-E1-008 drove `wiring-class-mismatch` to zero across all 34 books. Re-run the stage; '
-    + 'confirm `wiring-class-mismatch=0`; confirm the other four inherited trap kinds '
-    + '(`mod-record` 2,117, `key-differs-from-name` 650, `shared-name-distinct-records` 249, '
-    + '`disabled-line` 165 at launch) are still reported at their own counts and NOT absorbed; '
-    + 'and flip kanban rows 7 and 8 to `complete` only if the numbers say so. Re-derive every '
-    + 'figure yourself - do not transcribe the remediation lanes reports (`decisions.md` L3).'
-  const verify = await agent(
-    cycleProcedurePrompt({ id: 'AT-34-E1-007', title: verifyTitle, dir: 'epic-1-atlas' }),
-    { model: 'opus', phase: 'Epic 1 - Completion Atlas', label: 'AT-34-E1-007 re-verify', schema: CYCLE_SCHEMA },
-  )
-  return { criterion: 'AT-34-E1-008', groups: rows, reverify: verify }
+  const summary = '- batch edit (' + (edit.status || '?') + '): '
+    + String(edit.discoveries || edit.remainder || 'no report').slice(0, 600)
+  const regen = await agent(regenPrompt(summary), {
+    model: 'sonnet', phase: title, label: 'regen + attribution', schema: REGEN_SCHEMA,
+  })
+  return { edit, regen }
 }
 
 // args.bucketB runs ONLY the parallel bucket-B lanes + the single wave regeneration.
