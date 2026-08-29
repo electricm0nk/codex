@@ -13,6 +13,57 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E5-003 (the `power` table is costed) — complete
+
+**Status: complete.** Built `artifacts/epic-5-forward-plan/power-table-cost.json` via
+`build_power_table_cost.py`, re-derived at HEAD every run. Read-only against the rest of the
+repo (`workflow-instruction.md §3`): prices `power`, builds nothing.
+
+**Population (421 units, `ultimate_psionics`), cross-checked four independent ways, all
+agreeing:** live `docs/work-inventory.json` query, `missing-engine-tables.json`'s own count, a
+live directory listing (`data/corpus/ultimate_psionics/power/*.json`), and
+`capability-register.json`'s (AT-34-E5-002) `power_engine_table` row.
+
+**Rate derivation.** `table-build-rate.json`'s own finding is that per-kind marginal build cost
+is dominated by whether the kind's corpus directory name matches its kind name, not record
+count. `power`'s directory (`data/corpus/ultimate_psionics/power/`) matches exactly, so it is
+priced against the **6 matched-directory kinds** (`ability`, `template`, `deity`, `domain`,
+`skill`, `language`) — **2–7 marginal lines, 49–172 seconds (ESTIMATE)** — explicitly **not**
+against `trait`'s dearer, mismatched-directory tier (12 lines / 295s). Reported as a range, not
+collapsed to a point estimate — a DOUBLE-ESTIMATE per AGENTS.md rule 9, since the underlying
+per-table wall times were themselves pro-rated, never independently stopwatched.
+
+**Reason not built (`decisions.md §7`):** the 421 units all sit inside a 3,498-unit book that
+occupies 6 other non-DONE buckets besides A — building the table clears bucket A but banks no
+closed book inside SD-34's own two-book scope, so it is priced for the successor bundle instead.
+
+**What `ultimate_psionics` still needs after `power` exists:** live re-derivation shows the book
+occupies 7 non-DONE buckets today (A, B, C, D, M, U, V — neither X nor Z has any unit here).
+Building `power` clears bucket A to 0; **6 non-DONE buckets remain** (B, C, D, M, U, V) — the
+table alone does not close the book, matching the criterion's own bar.
+
+**Instrument-correction:** `decisions.md §7`'s cited bucket split for this book
+(`A=852, B=769, C=304, D=356, M=168, V=322, U=10`, summing to 2,781) does not match the live
+re-derivation (book total 3,498; live counts `DONE=803 A=421 B=711 C=289 D=465 M=427 U=10
+V=372`). The book's total and `power`'s own population have not moved — only the internal split
+has, between §7's authoring and this cycle's HEAD. Named here per `decisions.md §9`; not
+corrected in `decisions.md` itself since that file is outside this epic's file-touch set.
+
+RED confirmed for the intended reason (8 planted-defect violations: wrong population, an
+illegal `trait` comparator, and a false "book closes with no remaining buckets" claim — none a
+crash), GREEN restored by re-running the build script. `cargo test --locked --no-run` exit 0
+(workspace + `apps/desktop/src-tauri` explicitly). No Rust source touched; no corpus record
+added or regenerated (`corpus_literal_sweep` unaffected). Denominator gate against this package:
+`files_checked=15 violations=4`, all 4 pre-existing (`AT-34-E3-004`'s already-flagged quoted
+corpus prose), none introduced this cycle.
+
+Receipt: `artifacts/epic-5-forward-plan/AT-34-E5-003_cycle_receipt.md`.
+
+**Next-cycle plan:** `AT-34-E5-004` can cite `power-table-cost.json` directly for
+`ultimate_psionics`'s remaining-after-power shape. A future bundle that actually builds `power`
+should re-time the build for real and replace this cycle's DOUBLE-ESTIMATE range with one
+measured figure.
+
 ### Cycle — AT-34-E5-002 (capability register — every capability that must still be built is named) — complete
 
 **Status: complete.** Built `artifacts/epic-5-forward-plan/capability-register.json` (10 named
