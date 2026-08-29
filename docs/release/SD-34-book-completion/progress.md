@@ -13,6 +13,56 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-005 (Core Rulebook zero-remaining gate) — partial
+
+**Status: partial.** `AT-34-E3-005`'s bar is a whole-book gate: `python3
+scripts/completion_atlas.py --book core_rulebook --check` → `DONE=6701 of 6701`, every other
+bucket zero, exit 0. Re-derived fresh at this cycle's HEAD: `population=6701 unclassified=0
+overlap=0`, `DONE=1448 A=0 B=532 C=372 D=382 M=1048 V=2793 U=10 X=116 Z=0`, exit **1** — 5,253 of
+6,701 units remain outside `DONE`. Every one of those 5,253 belongs to a sibling criterion this
+one is gated on (`workflow-instruction.md §3`, sequential within Epic 3): `AT-34-E3-001` owns
+bucket B (532 remain, 9 named mechanisms, kanban row 13 `in-progress`), `AT-34-E3-002` owns
+bucket C (372 remain, 8 named sub-causes, row 14 `in-progress`), `AT-34-E3-003` owns buckets
+M/V/D/U/X (1048+2793+382+10+116 = 4,349 remain, row 15 `in-progress`). Sum check:
+532+372+382+1048+2793+10+116 = 5,253; 1,448+5,253 = 6,701 — matches the atlas's own printed
+counts exactly.
+
+This cycle did **not** duplicate that bucket-closing work (it belongs to those three criteria's
+own dispatched cycles and would collide with their kanban-row bookkeeping). Instead it built
+`AT-34-E3-005`'s own named evidence artifact ahead of the gate closing:
+`artifacts/epic-3-core-rulebook/core-rulebook-completion-manifest.json` — one row per
+`core_rulebook` unit (id, kind, bucket, status, evidence, source_file, source_line), a
+`current_state` summary, and a `complete` flag (currently `false`). The generator (kept as
+scratch tooling, not committed — Epic 3's declared file-touch set names `scripts/oracle_harness/`
+specifically, not a general `scripts/` path) imports `scripts/completion_atlas.py`'s own
+`_bucket_of` classifier rather than reimplementing it, after a first draft that reimplemented the
+bucket markers independently produced a wrong split (`C=17`/`D=737` instead of the real
+`C=372`/`D=382`) — caught by cross-checking against `completion_atlas.py --book core_rulebook
+--check`'s own printed counts before shipping the artifact, not after. Row count verified: the
+manifest's `units` array has exactly 6,701 entries, matching `population`.
+
+Also observed, out of this criterion's own scope: `python3 scripts/denominator_gate.py --check
+'docs/release/SD-34-book-completion/*.md'` → `violations=2`, both pre-existing quoted-corpus-text
+matches (`FRT_HVY`'s "75% chance...") inside lines the already-merged `AT-34-E3-004` cycle
+committed to `progress.md` — not introduced this cycle, not fixed here (out of this criterion's
+own file-touch set and not my prose to silently rewrite); flagged rather than silently accepted.
+
+**Discoveries:** the manifest-generator's own first-draft bucket classifier (reimplementing
+`_A_MARKER`/`_B_MARKERS`/`_C_MARKERS` from memory instead of importing them) is exactly the
+`field-name-is-not-field-meaning`/proxy-validation hazard the standing lessons warn about — caught
+before the artifact shipped by cross-checking against the atlas's own live counts, but it is a
+reminder that any manifest/report generator built alongside `completion_atlas.py` must import its
+classifier, never restate it.
+
+**Movement:** closure 0 / reclassification 0 / reachability 0 / instrument-correction 0 — no
+`core_rulebook` unit moved bucket this cycle; this cycle built evidence tooling only.
+
+**Receipt:** `artifacts/epic-3-core-rulebook/AT-34-E3-005_cycle_receipt.md`.
+
+**Next-cycle plan:** re-run the manifest generator after each future AT-34-E3-001/002/003 cycle so
+it never drifts far from HEAD; once those three land at zero, one more run flips `complete` to
+`true` and closes this row.
+
 ### Cycle — AT-34-E3-004 (per-bucket step-cost ledger, `core_rulebook`) — complete
 
 **Status: complete.** Builds the real evidence artifact
