@@ -13,6 +13,68 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-001 wave-10 regeneration and attribution: measuring cycle 10's bucket-B batch
+
+**Status: complete.** Cycle 10's bucket-B batch (`935cef27b5`) widened the Druid/Monk citation
+gate and did not regenerate `docs/work-inventory.json`. This cycle ran the three-pass pipeline
+(191s / 12s / 666s — no `--allow-stamp-loss`) and diffed the result unit-by-unit against cycle
+10's own stated expectation.
+
+**Whole-corpus diff: 49,438 → 49,438 (0 added, 0 removed), 10 changed, all `core_rulebook`.**
+Bucket-V (`e7b87138d1`, artifacts-only, out of scope) checked and confirmed inert — zero overlap
+between the 10 changed units and bucket-V's 2,712-unit disposition list.
+
+**`class_feature_owner_matched_by_name_but_record_not_held_by_engine`: 239 → 237, count
+confirmed, membership refuted.** Cycle 10 predicted 2 closures (`Monk ~ Flurry of Blows`,
+`Monk ~ Unarmed Strike`). Only `Unarmed Strike` actually closed (→ `text-complete`).
+`Flurry of Blows` reclassified `B → D` (new evidence `class_feature_no_dedicated_magnitude_
+id_matched_the_record_slug`), not closed.
+
+**"6 bonus closures" in `no_explanation_id_and_no_diagnostic_names_this_feature`: refuted
+entirely, in the opposite direction.** This mechanism's population went 363 → 357 (**a decrease
+of 6**, not a gain). All 6 named units (`Monk ~ Abundant Step/Diamond Soul/Maneuver Training/
+Perfect Self/Stunning Fist`, `Druid ~ Nature Bond`) were already classified here pre-regen and
+reclassified `C → D` to the same new evidence string above — **zero of the 6 closed to DONE.**
+
+**Net: cycle 10's own receipt claimed 8 total closures (2 + 6); the measured result is 1**
+(`Monk ~ Unarmed Strike` only). The other 7 landed in a single un-named `D`-bucket evidence
+string (`class_feature_no_dedicated_magnitude_id_matched_the_record_slug`, `core_rulebook`
+population 22 → 29, +7 — exactly these 7 units) that neither `progress.md` nor `kanban.md`'s
+cycle-10 entries mention.
+
+`class_feature_option_pool_record_with_magnitude_not_held_by_engine` (208) and
+`class_feature_option_pool_record_not_held_by_engine` (25): both **confirmed unchanged**,
+byte-identical membership.
+
+2 further units (`druid_orisons`, `druid_spontaneous_casting`) changed `evidence` only, already
+`text-complete` before and after — evidence-string churn, no bucket crossed, reported separately
+per `decisions.md §9`.
+
+**Movement, four buckets:** closure **1**, reclassification **7**, evidence-string churn **2**,
+instrument-correction **0** (1+7+2=10). A B→D or C→D move is reclassification, never closure.
+
+`completion_atlas.py --check` corpus-wide: `population=49438 unclassified=0 overlap=0
+citation_failures=0` (all 10 `BUCKET_DEFINITIONS` citations re-checked directly against
+`v06_work_inventory.rs` at HEAD; none needed re-deriving — this cycle touched no `src/**` file).
+`--book core_rulebook --check`: `DONE 1502→1503 B 472→470 C 363→357 D 398→405` — all four deltas
+reconcile exactly against the attribution above. `--book ultimate_campaign --check`: unaffected
+(0 changed units).
+
+`denominator_gate.py --check`: `files_checked=15 violations=6`, **not the 5 a prior cycle
+(`progress.md:975`) reported for its own run — verified directly, not inherited.** All 6 flagged
+lines genuinely quote the same pre-existing, already-merged `AT-34-E3-004` corpus-prose fragment
+in different historical narration contexts; none introduced this cycle. The count's climb
+(2→3→4→5→6 across cycles) is a self-perpetuating recursive citation: each cycle's own gate report,
+once committed, quotes the flagged substring and becomes a new instance for the *next* cycle's
+scan — not a growing population of real defects. Nothing here is this cycle's to fix; this
+cycle's own new prose avoids re-quoting the flagged substring to not mint a 7th instance.
+
+`cargo test --locked --no-run` (workspace): exit 0, 130s. `--manifest-path
+apps/desktop/src-tauri/Cargo.toml`: exit 0, 211s (3m31s). Neither build was expected to move
+(this cycle touched no `src/**`), both re-verified at the widest scope per instruction.
+
+Full detail: `artifacts/epic-3-core-rulebook/AT-34-E3-001_wave10_regen_receipt.md`.
+
 ### Cycle 10 — AT-34-E3-001 — bucket-B batch cycle: Druid/Monk widening + 8 pre-existing stale-gate fixes — partial
 
 **Status: partial.** Single-agent batch across all three of AT-34-E3-001's remaining
