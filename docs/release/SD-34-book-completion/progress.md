@@ -13,6 +13,68 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E5-002 (capability register — every capability that must still be built is named) — complete
+
+**Status: complete.** Built `artifacts/epic-5-forward-plan/capability-register.json` (10 named
+capabilities, `built_by_sd34: false` on every row — this register names what still must be
+built, it does not build any of it; `epic-5-forward-plan`'s file-touch set is read-only against
+the rest of the repo) via `artifacts/epic-5-forward-plan/build_capability_register.py`,
+re-derived at HEAD every run.
+
+**8 of 10 capabilities carry a live, mechanically re-derived population, cross-checked two
+independent ways:** `power_engine_table` (421, `ultimate_psionics`, bucket A — the one table
+Epic 2 left for Epic 5), `companion_table_shape_widening` (28, `bestiary`, bucket A — the
+`companion_chassis` table from SD-29 exists but does not cover this record shape),
+`per_character_choice_filter` (113, bucket X, 5 books — decisions.md §17's operator ruling: the
+backend must filter class-feature option pools against a specific character, and the query
+joining `list_class_feature_pool_options()` with `evaluate_feat_prerequisites`/
+`character_prereq_facts` does not exist), `companion_mount_advancement_table` (9, bucket X, 8
+books — level-based companion/mount stat progression, distinct from whether the companion record
+exists at all), `class_feature_deep_subsystem_modelling` (32, bucket X, 8 books, 18 named
+sub-mechanisms — bardic performance variants, eidolon evolutions, mystery revelations, spirit
+powers, Improved Uncanny Dodge's corpus-cited shape, and more, each real and distinct). The
+bucket-X reconciliation is total: these three (113+9+32=154) plus two shapes atlas-defects.md
+already correctly resolved into `X` with no further capability needed
+(`grant_token_only_dispatch_row`, 12; `vacuous_placeholder_row`, 3) plus 2 `ultimate_campaign`
+marker-shaped `X` units sum to exactly **171 of 171**, proven by `verify_capability_register.py`
+against a live `completion_atlas.py` partition.
+
+**2 capabilities are cited, not live-re-derived, and say so:** `monster_class_hit_dice_progression_modelling`
+(2, `core_rulebook`) and `master_side_ability_pool_record_type_or_cross_book_ownership` (14,
+`core_rulebook`), both sourced from `AT-34-E3-001_companion_absent_cycle_receipt.md` — their
+current live evidence keys did not resolve by a direct grep this cycle, flagged plainly in the
+register's own `verification_note` field rather than presented with the same confidence as the
+live-derived rows.
+
+**2 capabilities are named with an explicitly unsized population, not guessed:**
+`corpus_content_extraction_for_uncaptured_records` and `cross_record_content_ownership_resolution`
+(both from `atlas-defects.md` #2's two unresolved "no description, structural tokens only"
+meanings) — both proved required by that defect entry, neither sized, and the register states
+"UNMEASURED" rather than blending a made-up number in.
+
+**One marker-stripping capability, both bucket-U-confirmed and project-wide-candidate figures
+kept separate:** `marker_stripping_for_pcgen_editorial_markers` — 21 confirmed
+(`ultimate_campaign` bucket U, AT-34-E4-001's own test), ~392 project-wide is quoted as an
+ESTIMATE from that receipt, not re-run or blended into the 21.
+
+**Deliberately excluded, and said so:** the 634 corpus-wide `companion_absent_from_<book>_companion_tables`
+bucket-B units. They need an *existing* table's ordinary placement mechanism (already named and
+priced generically by `AT-34-E5-001`), not new engine machinery — the acceptance bar's own
+"anything ... does not exist" language does not cover an existing table's unused rows.
+
+RED→GREEN: mutated the committed artifact (`power_engine_table.population` to `999`,
+`master_side_ability_pool_record_type_or_cross_book_ownership.built_by_sd34` to `true`) —
+`verify_capability_register.py` failed with exactly those two violations, for the intended
+reason, not an unrelated crash. Reverted by re-running `build_capability_register.py`.
+
+Denominator gate against this package: `files_checked=15 violations=4` — all 4 pre-existing in
+`progress.md` (already-flagged verbatim corpus-prose quotes from `AT-34-E3-004`), none
+introduced by this cycle. `cargo test --locked --no-run` exits 0 at `0be7d54a8d2c6c0b879744a2ed3325acbba1f594`
+(Python/JSON-only change; no Rust source touched); `apps/desktop/src-tauri` not touched, not run.
+`docs/work-inventory.json` untouched — zero movement across all four buckets; this cycle is a
+naming artifact, not clearing work. Receipt:
+`artifacts/epic-5-forward-plan/AT-34-E5-002_cycle_receipt.md`.
+
 ### Cycle — AT-34-E5-001 (per-book, per-bucket forward plan) — complete
 
 **Status: complete.** Built `artifacts/epic-5-forward-plan/forward-plan.json` covering all 35
