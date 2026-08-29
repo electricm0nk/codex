@@ -1925,5 +1925,142 @@ mod tests {
             );
         }
     }
+
+    /// `AT-34-E3-001` cycle 8's own re-derivation: the dispatch's own
+    /// inherited claim of a 161/81 excluded/non-excluded split against this
+    /// mechanism's 242-unit `core_rulebook` population did NOT match a
+    /// direct query against the live corpus (218 excluded / 24
+    /// non-excluded, re-derived by `docs/release/SD-34-book-completion/
+    /// artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_8.md`).
+    /// This test proves that split mechanically, reusing this file's own
+    /// sibling test's exact gate-walk (so it can never independently drift
+    /// from what `load_pool_catalog` actually refuses each unit for).
+    ///
+    /// **The excluded-class literal below is a frozen snapshot, not a live
+    /// import.** `class_feature_grant_consumer`'s own
+    /// `ANTI_FABRICATION_GATE_EXCLUDED_CLASSES` (the gate this cycle's
+    /// dispatch brief and `decisions.md §18` both name) was renamed and
+    /// repurposed to `LEVEL_UP_PILLAR_FILTERED_CLASSES` (Druid/Monk only)
+    /// by a sibling lane's SAME-wave, concurrently-landed `§18` fix
+    /// (anti-fabrication is now enforced by corpus-citation, not a class
+    /// allowlist) -- rebased past that landing, importing the old constant
+    /// is no longer possible. `docs/work-inventory.json` is untouched this
+    /// wave (wave rule: no regeneration mid-wave), so the SAME 242-unit
+    /// snapshot every lane's dispatch was built from is still live here;
+    /// this test characterizes THAT frozen snapshot's split by the
+    /// ORIGINAL seven-class definition, exactly as `decisions.md §18`
+    /// states it ("218 of 242"). The split is re-verified once the shared
+    /// post-wave regeneration cycle runs.
+    ///
+    /// **This lane owns only the non-excluded remainder** (a sibling lane
+    /// owns the 218 excluded-class units, gated on an operator ruling on
+    /// `OPEN-ISSUES.md` rows 330/338 this test does not decide). Of the 24
+    /// non-excluded units: 18 carry no corpus description at all (the
+    /// zero-description internal-bookkeeping sub-cause `atlas-defects.md`
+    /// already names as the OPEN definitional question -- left in bucket B,
+    /// never reclassified into X or U by this test or this cycle); the
+    /// remaining 6 carry a REAL description but are correctly refused by
+    /// one of this catalog's own pre-existing, independently-tested safety
+    /// gates (an unresolvable `%N` argument, a class-level-scaled phrase,
+    /// or a genuine mechanical token such as `ABILITY`/`SELECT`) -- each of
+    /// those 6 already has its own dedicated live-corpus regression test in
+    /// this module (`bleeding_attack_is_refused_for_an_unresolvable_
+    /// percent_argument`, the Knockback/Finesse-Rogue/Skill-Mastery/
+    /// Improved-Evasion cases this file's doc comments cite). None of the
+    /// 24 is a narrow catalog-widening bug this cycle can close: every one
+    /// needs either real per-character grant/formula wiring (a talent pick
+    /// actually consumed by `pilot_compute`, a sneak-attack-dice-scaled
+    /// damage formula) or new ingest work no engine change can supply.
+    #[test]
+    fn class_feature_owner_matched_non_excluded_remainder_is_24_and_named_by_subcause() {
+        // Frozen snapshot of `class_feature_grant_consumer::ANTI_FABRICATION_GATE_EXCLUDED_
+        // CLASSES` as it stood for the whole of this wave's `docs/work-inventory.json` (see
+        // this fn's own doc comment for why a live import is no longer possible).
+        const ANTI_FABRICATION_GATE_EXCLUDED_CLASSES: [&str; 7] =
+            ["wizard", "bard", "paladin", "cleric", "sorcerer", "druid", "monk"];
+
+        let repo_root = repo_root();
+        let inventory_text = std::fs::read_to_string(repo_root.join("docs/work-inventory.json"))
+            .expect("docs/work-inventory.json is readable");
+        let inventory: Value =
+            serde_json::from_str(&inventory_text).expect("docs/work-inventory.json is valid JSON");
+        let units = inventory["units"].as_array().expect("units is an array");
+        let mechanism_units: Vec<String> = units
+            .iter()
+            .filter(|u| {
+                u["book"].as_str() == Some("core_rulebook")
+                    && u["status"].as_str() == Some("engine-does-not-hold")
+                    && u["evidence"].as_str()
+                        == Some("class_feature_owner_matched_by_name_but_record_not_held_by_engine")
+            })
+            .map(|u| u["corpus_key"].as_str().unwrap_or_default().to_string())
+            .collect();
+
+        let corpus_root = repo_root.join("data/corpus/core_rulebook/class_feature");
+        let mut files = Vec::new();
+        walk_json_files(&corpus_root, &mut files);
+        let mut by_key: BTreeMap<String, Value> = BTreeMap::new();
+        for file in &files {
+            let Ok(text) = std::fs::read_to_string(file) else { continue };
+            let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+            if let Some(k) = doc["data"]["key"].as_str() {
+                by_key.insert(k.to_string(), doc);
+            }
+        }
+
+        let mut excluded = 0u32;
+        let mut null_desc = 0u32;
+        let mut real_desc_refused = 0u32;
+        let mut real_desc_unrefused_unexpected: Vec<String> = Vec::new();
+
+        for key in &mechanism_units {
+            let doc = by_key.get(key).unwrap_or_else(|| panic!("no corpus record for {key}"));
+            let data = &doc["data"];
+            let owner = data["class"].as_str().unwrap_or_default().to_ascii_lowercase();
+            if ANTI_FABRICATION_GATE_EXCLUDED_CLASSES.contains(&owner.as_str()) {
+                excluded += 1;
+                continue;
+            }
+            let Some(raw_desc) = data["description"].as_str() else {
+                null_desc += 1;
+                continue;
+            };
+            // Non-excluded, real-description unit: it must be refused by
+            // one of the catalog's own gates, never silently unaccounted
+            // for -- the same gate walk the sibling 346-population test
+            // above runs, restricted to just this record.
+            let owning_class = data["class"].as_str().unwrap_or("");
+            let refused = !is_real_description_value(raw_desc)
+                || carries_unimplemented_marker(raw_desc)
+                || carries_class_specific_level_phrase(raw_desc, owning_class)
+                || !has_no_engine_effect_token(&data["raw_tokens"])
+                || is_archetype_locked(&data["raw_tokens"])
+                || (raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"])
+                    && !shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+                        &data["raw_tokens"],
+                        raw_desc,
+                    ))
+                || raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc)
+                || !render_pcgen_desc(raw_desc).dropped_args.is_empty()
+                || leaked_pcgen_syntax(&render_pcgen_desc(raw_desc).text).is_some();
+            if refused {
+                real_desc_refused += 1;
+            } else {
+                real_desc_unrefused_unexpected.push(key.clone());
+            }
+        }
+
+        assert!(
+            real_desc_unrefused_unexpected.is_empty(),
+            "found a non-excluded, real-description unit this cycle's gate walk does NOT \
+             refuse -- this WOULD be a narrow catalog-widening closure, re-investigate: \
+             {real_desc_unrefused_unexpected:?}"
+        );
+        assert_eq!(excluded, 218, "excluded-class population (sibling lane's, do not touch)");
+        assert_eq!(null_desc, 18, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
+        assert_eq!(real_desc_refused, 6, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
+        assert_eq!(excluded + null_desc + real_desc_refused, mechanism_units.len() as u32);
+        assert_eq!(null_desc + real_desc_refused, 24, "this lane's own owned population");
+    }
 }
 
