@@ -13,6 +13,38 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-001, `class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 9 (non-excluded remainder re-derived: 218/24, not 161/81) — partial
+
+**Status: partial.** This cycle owns only the NON-excluded-class remainder of the
+`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism (a sibling lane
+owns the 218-unit excluded-class majority under `decisions.md §18`'s operator ruling — see its
+own `AT-34-E3-001_class_feature_owner_matched_cycle_receipt_8.md`, landed the same wave).
+
+Re-derived the dispatch's own claimed 161/81 excluded/non-excluded split directly against the
+live corpus and found it did NOT match: **218 excluded / 24 non-excluded** of the 242-unit
+`core_rulebook` population — matching both `decisions.md §18` and the sibling `§18`-fix
+cycle's own independent re-derivation. Of this lane's own 24: **18** carry no corpus
+description at all (the bundle's OPEN zero-description definitional question,
+`atlas-defects.md` — left in bucket B, not reclassified); **6** carry a real description but
+are correctly refused by `class_feature_pool_catalog`'s own pre-existing, independently-tested
+safety gates (`Rogue Talent ~ {Bleeding Attack, Finesse Rogue, Improved Evasion, Skill
+Mastery}`, `Rage Power ~ Knockback`, `Arcane Trickster ~ Invisible Thief` — each needs real
+per-character grant/formula wiring, not a catalog-widening fix, to close). Zero units closed
+this cycle; a new characterization test
+(`class_feature_owner_matched_non_excluded_remainder_is_24_and_named_by_subcause`) pins the
+24-unit split and its sub-cause breakdown mechanically, RED-confirmed against the dispatch's
+stale 161 figure before GREEN against the re-derived 218.
+
+Full detail — the per-record gate-walk for all 6 real-description units, the TDD proof, the
+concurrent-write hazard this cycle hit and fixed (a `git rebase`'s "ours"/"theirs" polarity is
+the OPPOSITE of a merge's; resolving a same-wave filename collision with `checkout --ours`
+at every conflict step discarded the sibling's landed receipt instead of preserving this
+cycle's own, caught by re-diffing before push and fixed by restoring the sibling's file
+verbatim plus re-authoring this cycle's own) — is in the receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_9.md`.
+`docs/work-inventory.json` was deliberately NOT regenerated this cycle (wave rule: one shared
+regeneration cycle runs after all four parallel lanes land).
+
 ### Cycle — AT-34-E3-001, `class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 9 (Weapon Training, built generically) — partial
 
 **Status: partial.** Continuing cycle 8's own 256-unit `core_rulebook` remainder
