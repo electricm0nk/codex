@@ -13,6 +13,79 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E5-004 (the plan is ordered by real cost, cheapest-first, and single-bucket books are flagged) — complete
+
+**Status: complete.** Built `artifacts/epic-5-forward-plan/ordered-plan.json` via
+`build_ordered_plan.py`, re-derived at HEAD every run from `forward-plan.json` (AT-34-E5-001) —
+read-only against the rest of the repo (`workflow-instruction.md §3`).
+
+**Ordering basis (stated in the artifact's own `ordering_basis` field, quoted here):** only
+buckets A, B and U carry a measured rate reaching DONE (bucket C's only measured rate reaches
+V, a different endpoint; buckets D, M, V, X, Z carry no rate at all — zero dedicated clearing
+cycles ran in either vehicle book, per `forward-plan.json`'s own `measured_rates`). "Real cost,
+cheapest-first" is therefore computed over each book's **priced-to-DONE slice** only (its A+B+U
+units), ranked ascending by the **midpoint** of that slice's projected-cost-hours range (bucket
+B carries a measured range, never a point estimate). Blending priced and unpriced units into one
+number per book would fabricate precision the underlying data does not carry — the exact failure
+`AGENTS.md` rule 9 and this bundle's own Evidence text warn against. Every ranked row states what
+fraction of that book's remaining population the priced slice covers, so a low rank is never
+misread as "this book finishes soonest."
+
+**Population, cross-checked by the RED→GREEN structural check against a live re-derivation from
+`forward-plan.json`:** all 35 non-vehicle books partition exactly into two lists — **19** books
+carry at least one priced-to-DONE unit (ranked ascending by cost midpoint) and **16** books carry
+zero (listed alphabetically, each naming which unpriced buckets make up its entire remaining
+population). Cheapest-ranked: `advanced_players_guide` (1 unit, `U`, 0.025h) and
+`inner_sea_taverns` (1 unit, `U`, 0.025h, tied); most expensive of the 19 ranked:
+`ultimate_equipment` (1.068h across 44 priced units of 1,477 remaining — 97.0% of that book is
+unpriced, `V`-heavy).
+
+**Single-bucket books flagged by name:** exactly **1** of 35 — `beginner_box` (19 units, all
+bucket `Z`, unpriced — zero measured Z-clearing rate exists anywhere in this bundle). This is the
+same shape-finding mechanism that surfaced `ultimate_campaign` for Epic 4, applied to the
+remaining 35; `single_bucket_books` is intentionally independent of pricing (a single remaining
+bucket is a book-**shape** property — one mechanism clears the whole book — not a pricing
+property), so it can and does include a book that also appears in the unrankable-by-cost list.
+Live cross-check confirms no other of the 34 non-flagged books has exactly one non-DONE bucket
+occupying its full remaining population.
+
+**RED → GREEN.** RED (missing artifact): `verify_ordered_plan.py` before the artifact existed →
+`FAIL: .../ordered-plan.json does not exist`, exit 1. Mutation RED (planted defects on the
+generated artifact): forced `advanced_players_guide`'s stated midpoint to `99999` (breaking
+both its own live-agreement check and the ascending-sort check against the next row) and emptied
+`single_bucket_books` (dropping the one true flag) →
+`FAIL: 3 violation(s)` naming all three planted defects exactly, no crash. Regenerated via
+`build_ordered_plan.py` (discards the mutation, re-derives from `forward-plan.json` at HEAD) →
+`PASS: 19 ranked + 16 unrankable = 35 books, sorted ascending by priced_to_done_hours_midpoint,
+1 single-bucket book(s) flagged and confirmed live`, exit 0.
+
+**Figures + re-derive commands:**
+- 35 books / 19 ranked / 16 unrankable — `python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_ordered_plan.py` then read `ordered-plan.json`'s `population` object.
+- 1 single-bucket book (`beginner_box`, bucket `Z`, 19 units) — same artifact, `single_bucket_books`.
+- Cheapest/priciest ranked rows quoted above — same artifact, `ranked_by_priced_to_done_cost[0]` and `[-1]`.
+- Denominator gate against this package: `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` → `files_checked=15 violations=4` — all 4 pre-existing in `progress.md` (verbatim-quoted corpus prose, "75% chance..."), already flagged by the already-merged `AT-34-E3-004` cycle; this cycle added no new `.md` prose containing a bare percentage (its own new files are `.py`/`.json`, and this progress entry + the `kanban.md` row contain no bare percentage outside the pre-existing quoted lines).
+
+**Row-count command output:**
+```
+$ python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/verify_ordered_plan.py
+PASS: 19 ranked + 16 unrankable = 35 books, sorted ascending by priced_to_done_hours_midpoint, 1 single-bucket book(s) flagged and confirmed live
+```
+
+**Build scope verified:** `cargo test --locked --no-run` exit 0 (workspace, run at this cycle's
+commit SHA). `apps/desktop/src-tauri` explicitly run: `cargo test --locked --no-run` exit 0. No
+Rust source touched — Python/JSON-only change.
+
+**Sweep population:** N/A — no corpus records added or regenerated (`git status --porcelain --
+data/corpus/` empty for this cycle).
+
+**Movement, four buckets:** none — this cycle moves no unit on any bucket board
+(`docs/work-inventory.json` untouched). It is a naming/ordering artifact over an already-priced
+plan, matching the criterion's own bar exactly.
+
+**Next-cycle plan:** Epic 5 is now complete (AT-34-E5-001..004 all `complete`). Next up is
+Epic 6's closure epilogue (AT-34-E6-001 final-acceptance scan), gated on Epics 1–5 all
+`complete`.
+
 ### Cycle — AT-34-E5-003 (the `power` table is costed) — complete
 
 **Status: complete.** Built `artifacts/epic-5-forward-plan/power-table-cost.json` via
