@@ -5409,6 +5409,23 @@ struct EngineFacts {
     /// Performance sub-records: 7 whose formula already existed and 3
     /// (Suggestion, Mass Suggestion, Inspire Greatness) this cycle added.
     bard_bardic_performance_wired: BTreeSet<String>,
+    /// `AT-34-E3-002` (bucket C, "held and computed, never surfaced"):
+    /// monk levels (`1, 4, 8, 12, 16, 20`) whose `"class_chassis.monk.
+    /// unarmed_strike_damage_die"` explanation was OBSERVED to report the
+    /// exact die face `"Monk Unarmed Damage LVL <level> (Medium)"`'s own
+    /// corpus `UDAM:` token names, via
+    /// [`probe_monk_unarmed_damage_medium_wiring`]. The same explanation id
+    /// fires at every monk level with a DIFFERENT value (the die steps up
+    /// through the PF1 Core Rulebook Monk table), so mere id-presence
+    /// cannot tell one corpus `LVL <N>` record's own claimed face from
+    /// another's the way a per-type id (Favored Enemy) or a per-tier id
+    /// (Weapon Training) can -- this set only ever contains a level when
+    /// the observed VALUE at that level, not merely the id, was confirmed.
+    /// Medium-only by construction: `explain_monk_level1_chassis` never
+    /// branches on race size at all (confirmed by reading it directly), so
+    /// the Small/Large/... corpus columns have no engine-computed value
+    /// behind them regardless of this probe.
+    monk_unarmed_damage_medium_wired: BTreeSet<u8>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -7914,6 +7931,58 @@ fn probe_bard_bardic_performance_wiring(fixture: &CharacterInput) -> BTreeSet<St
     wired
 }
 
+/// `AT-34-E3-002` (bucket C continuation): `"Monk Unarmed Damage LVL <N>
+/// (Medium)"` sub-cause. `explain_monk_level1_chassis` genuinely computes
+/// and emits `"class_chassis.monk.unarmed_strike_damage_die"` for every
+/// monk, but the SAME id fires at every level with a DIFFERENT value (the
+/// die face steps up through the PF1 Core Rulebook Monk table), so unlike
+/// `probe_domain_power_effect_wiring`'s per-power ids or `probe_ranger_
+/// favored_enemy_bonus_wiring`'s per-type ids, mere id-presence cannot tell
+/// one corpus `LVL <N>` record's own claimed face from another's. This
+/// probe checks the OBSERVED VALUE at each of the six canonical monk
+/// levels against the exact face this codebase's own
+/// `monk_unarmed_strike_damage_die` doc comment already states the table
+/// names, independently re-verified directly against the SAME six corpus
+/// records' own `UDAM:` tokens (`data/corpus/core_rulebook/class_feature/
+/// monk_unarmed_damage_lvl_{1,4,8,12,16,20}_medium/*.json`) rather than
+/// assumed from the comment, and only credits a level when the two agree.
+///
+/// Deliberately Medium-only: `monk_unarmed_strike_damage_die_for_size`'s own
+/// doc comment states the main chassis path this probe exercises never
+/// branches on race size at all (only `ground_unchained_monk_unarmed_
+/// strike_damage`, an Unchained-Monk-specific path with its own, DIFFERENT
+/// corpus records, ever calls the size-aware helper) -- so the Small and
+/// every other size column genuinely has no engine-computed value behind
+/// it, and this probe never credits them.
+fn probe_monk_unarmed_damage_medium_wiring(fixture: &CharacterInput) -> BTreeSet<u8> {
+    // (level, expected die face) -- transcribed from the SAME six corpus
+    // records' own `UDAM:` tokens, not assumed from the compute function's
+    // doc comment: LVL 1 `1d6` (face 6), LVL 4 `1d8` (8), LVL 8 `1d10` (10),
+    // LVL 12 `2d6` (6), LVL 16 `2d8` (8), LVL 20 `2d10` (10).
+    const EXPECTED_FACE_BY_LEVEL: &[(u8, i16)] =
+        &[(1, 6), (4, 8), (8, 10), (12, 6), (16, 8), (20, 10)];
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for &(level, expected_face) in EXPECTED_FACE_BY_LEVEL {
+        let input = class_sweep_input(fixture, "monk", level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        let observed_face = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.monk.unarmed_strike_damage_die")
+            .map(|e| e.value);
+        if observed_face == Some(expected_face) {
+            wired.insert(level);
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -8310,6 +8379,7 @@ fn gather_engine_facts(
         ranger_favored_terrain_bonus_wired: probe_ranger_favored_terrain_bonus_wiring(fixture),
         wizard_arcane_school_wired: probe_wizard_arcane_school_wiring(fixture),
         bard_bardic_performance_wired: probe_bard_bardic_performance_wiring(fixture),
+        monk_unarmed_damage_medium_wired: probe_monk_unarmed_damage_medium_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -8769,7 +8839,7 @@ fn class_feature_owner_via_pool_catalog(
 const CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES: &[&str] = &[
     "bonus", "count", "dc", "dice", "per_day", "uses", "penalty", "modifier", "total", "value",
     "amount", "die", "damage", "save", "resistance", "reduction", "range", "duration", "radius",
-    "limit",
+    "limit", "size",
 ];
 
 /// Retries a failed `id.ends_with(&feature_slug)` check by stripping exactly
@@ -10692,6 +10762,71 @@ fn classify(
                         reason: None,
                         engine_book: engine_book_field,
                     };
+                }
+            }
+            // `AT-34-E3-002` (bucket C continuation): `"<Domain> Domain ~
+            // <granted power name>"` sub-cause -- the per-domain DISPLAY
+            // record (e.g. `"Strength Domain ~ Strength Surge"`), a
+            // DIFFERENT corpus record from the `"Domain Power ~ <granted
+            // power name>"` pool/chassis record the `group == "Domain
+            // Power"` check far above already grounds off
+            // `domain_power_effect_wired`. Verified by reading both files
+            // directly: `data/corpus/core_rulebook/class_feature/<domain>/
+            // *.json` (this record, real player-facing `description`) vs
+            // `.../domain_power/*.json` (the chassis record `probe_domain_
+            // power_effect_wiring` already proves wired for exactly the
+            // five domains -- Good/War/Strength/Destruction/Glory --
+            // `domain_power::DOMAIN_POWER_CATALOG` carries a real formula
+            // for), same paired-record shape `"Favored Enemy"` grounds off
+            // `"Favored Enemy Bonus"` two checks above. `group` here is
+            // `"<Domain Name> Domain"`, which can never equal `"cleric"`,
+            // so `class_feature_owner`'s guard could never ground this
+            // record even if owner resolution succeeded -- the sibling
+            // chassis record's own wiring is the only real attribution
+            // path. Reuses `domain_power_effect_wired` rather than a new
+            // probe, exactly mirroring the Favored Enemy display fix: a
+            // wired `"Domain Power ~ <X>"` chassis record for a granted
+            // power name is exactly what proves this sibling display
+            // record's own magnitude is genuinely held. `group != "Domain
+            // Power"` itself (that corpus key does not end in `" Domain"`),
+            // so this cannot double-count the check above.
+            if group.ends_with(" Domain") && unit.key.contains(" ~ ") {
+                let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
+                if facts.domain_power_effect_wired.contains(feature) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence:
+                            "domain_power_probe_observed_a_real_computed_magnitude_for_the_domain_display_record"
+                                .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+            }
+            // `AT-34-E3-002` (bucket C continuation): `"Monk Unarmed Damage
+            // LVL <N> (Medium)"` sub-cause -- same "no `" ~ "` separator,
+            // `group` is the WHOLE key" shape `"Weapon Training <tier>
+            // <group>"` above has, so `class_feature_owner` can never
+            // resolve an owner for it either. `probe_monk_unarmed_damage_
+            // medium_wiring` is the real, separate, per-level-VERIFIED
+            // attribution path -- see its own doc comment for why mere
+            // id-presence is not enough here (one shared id, six different
+            // per-level values) and why only the Medium column is ever
+            // credited.
+            if let Some(rest) = unit.key.strip_prefix("Monk Unarmed Damage LVL ") {
+                if let Some(level_str) = rest.strip_suffix(" (Medium)") {
+                    if let Ok(level) = level_str.parse::<u8>() {
+                        if facts.monk_unarmed_damage_medium_wired.contains(&level) {
+                            return Verdict {
+                                status: "grounded",
+                                evidence:
+                                    "monk_unarmed_damage_medium_probe_observed_the_expected_die_face_at_this_level"
+                                        .to_string(),
+                                reason: None,
+                                engine_book: engine_book_field,
+                            };
+                        }
+                    }
                 }
             }
             // `AT-34-E3-001` (mechanism 2 continuation, cycles 4, 6, and
@@ -18465,6 +18600,160 @@ mod class_feature_text_complete_rung_tests {
         );
     }
 
+    /// `AT-34-E3-002` continuation: the per-domain DISPLAY record
+    /// (`"<Domain> Domain ~ <granted power name>"`) reaches `grounded` off
+    /// its sibling `"Domain Power ~ <granted power name>"` chassis
+    /// record's ALREADY-PROVEN wiring -- reusing `domain_power_effect_
+    /// wired`, never a new probe, mirroring the Favored Enemy/Terrain
+    /// display fixes above exactly.
+    #[test]
+    fn a_domain_display_record_reaches_grounded_off_its_sibling_domain_power_records_wiring() {
+        let mut facts = EngineFacts::default();
+        facts.domain_power_effect_wired.insert("Strength Surge".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            700,
+            "Strength Domain ~ Strength Surge",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "domain_power_probe_observed_a_real_computed_magnitude_for_the_domain_display_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an UNPROBED domain power display record is
+    /// completely unaffected, falling through to the SAME bucket-C evidence
+    /// this cycle is closing -- proving the fix credits nothing it did not
+    /// actually observe (`"Destruction Domain ~ Destructive Aura"` is a
+    /// REAL corpus record whose sibling `"Domain Power ~ Destructive Aura"`
+    /// the engine genuinely never computes -- only `Destructive Smite` is
+    /// in `DOMAIN_POWER_CATALOG`).
+    #[test]
+    fn a_domain_display_record_the_sibling_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            700,
+            "Destruction Domain ~ Destructive Aura",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// NEGATIVE CONTROL: the base domain-selection record itself
+    /// (`"<Domain> Domain"`, no `" ~ "` suffix at all) is never touched by
+    /// this rung -- `unit.key.contains(" ~ ")` guards it, since
+    /// `unit.key.split(" ~ ").nth(1)` would otherwise silently fall back to
+    /// `unit.name` (the bare domain name, e.g. `"Strength"`), which could
+    /// spuriously equal an unrelated granted-power name.
+    #[test]
+    fn a_bare_domain_selection_record_is_never_touched_by_the_display_rung() {
+        let mut facts = EngineFacts::default();
+        facts.domain_power_effect_wired.insert("Strength".to_string());
+        let unit =
+            class_feature_unit("core_rulebook", "cr_abilities_class.lst", 654, "Strength Domain", 2);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-002` continuation: `"Monk Unarmed Damage LVL <N> (Medium)"`
+    /// reaches `grounded` once the per-level probe confirms the engine's
+    /// own `class_chassis.monk.unarmed_strike_damage_die` reports the exact
+    /// face this level's corpus record claims.
+    #[test]
+    fn a_monk_unarmed_damage_medium_record_the_probe_verified_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.monk_unarmed_damage_medium_wired.insert(12);
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1327,
+            "Monk Unarmed Damage LVL 12 (Medium)",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "monk_unarmed_damage_medium_probe_observed_the_expected_die_face_at_this_level"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a level the probe never verified (its own observed
+    /// value disagreed with the corpus record's claimed face, or the probe
+    /// simply never ran) is completely unaffected.
+    #[test]
+    fn a_monk_unarmed_damage_medium_record_the_probe_never_verified_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1327,
+            "Monk Unarmed Damage LVL 12 (Medium)",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// NEGATIVE CONTROL: the Small-size sibling of a verified Medium level
+    /// is never touched -- verifying level 12 Medium never credits level 12
+    /// Small, proving the fix is bounded to the exact `"(Medium)"` suffix.
+    #[test]
+    fn a_monk_unarmed_damage_small_record_is_never_touched_by_the_medium_only_rung() {
+        let mut facts = EngineFacts::default();
+        facts.monk_unarmed_damage_medium_wired.insert(12);
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1326,
+            "Monk Unarmed Damage LVL 12 (Small)",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-002` continuation: `"size"`, this cycle's own addition to
+    /// `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES`, lets the pre-existing generic
+    /// `explanation_id_observed` path (not a new rung) credit `"Monk ~ Ki
+    /// Pool"` off the engine's own real, already-computed
+    /// `"class_chassis.monk.ki_pool_size"` explanation -- a genuine PF1
+    /// Core Rulebook formula (`level/2 + Wisdom modifier`), not a relabel.
+    #[test]
+    fn a_monk_ki_pool_record_grounds_via_the_new_size_suffix_word() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("monk".to_string(), "core_rulebook");
+        facts.explanation_ids.insert("class_chassis.monk.ki_pool_size".to_string());
+        let unit =
+            class_feature_unit("core_rulebook", "cr_abilities_class.lst", 467, "Monk ~ Ki Pool", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "explanation_id_observed_after_known_magnitude_suffix_strip");
+    }
+
     /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
     /// held_by_engine` mechanism, cycle 4, wizard arcane school sub-cause,
     /// proof case: `probe_wizard_arcane_school_wiring` observed a real,
@@ -19516,6 +19805,19 @@ mod class_feature_id_magnitude_suffix_strip_tests {
         assert!(!id_matches_feature_slug_after_known_magnitude_suffix_strip(
             "class_feature.acg.slayer.swift_tracker_grant",
             "swift_tracker"
+        ));
+    }
+
+    /// `AT-34-E3-002`: `"size"` is this cycle's own addition to
+    /// `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` -- proves it strips and
+    /// matches exactly like every pre-existing suffix word, against the
+    /// real id this cycle's fix credits (`class_chassis.monk.ki_pool_size`
+    /// -> `"ki_pool"`).
+    #[test]
+    fn strips_the_new_size_suffix_word_and_matches() {
+        assert!(id_matches_feature_slug_after_known_magnitude_suffix_strip(
+            "class_chassis.monk.ki_pool_size",
+            "ki_pool"
         ));
     }
 
