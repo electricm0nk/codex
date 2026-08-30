@@ -13,6 +13,72 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle 4 — AT-34-E4-002 — widen the trait/drawback spine to the 5 fixed-choice `%LIST` traits, land the desktop picker end to end — partial
+
+**Status: partial.** Started from real HEAD (`58521a54ef`, wave 16) — cycle 3's capability build (`e8ac310280`) had already landed and merged; the dispatch prompt's stated `HEAD 651966b83e`/`DONE 151` was stale by two whole cycles, re-verified rather than trusted. Re-derived split: `DONE=182, M=58, U=21, D=2, X=2` of 265.
+
+Took the next cheapest named sub-cause from cycle 3's own "what is left" list: 5 of the 28
+remaining `trait_content` records carry a `BONUS:SKILL|%LIST` token constrained to a **fixed,
+closed list of concrete named skills** (`trait_criminal`, `trait_fiend_blood`,
+`trait_harvester`, `trait_influence`, `trait_style_sage`) — distinct from the 4 records whose
+`%LIST` names an **open subtype family** (`TYPE=Craft/Perform/Profession`), which stay out of
+scope (a genuinely different, open-text-entry input shape, named not built). Reused the
+generic `SelectedChoice { choice_set_id, selection_id }` channel `archetype_resolver.rs`
+already established for pool choices — not a new mechanism: `trait_effects::
+skill_choice_bonuses_from_traits` reads a per-trait `choice_set_id` and honors only a
+choice actually inside that trait's own `skill_options`, never a first-guessed default.
+
+**End-to-end, no stub.** The compute path (`skill_choice_bonuses_from_traits`, folded into
+`skill_allocation.rs`'s existing `misc_modifier` map) is fixture-executed and verified
+(`every_choice_entry_is_genuinely_grounded_by_fixture_execution`), and the desktop surface
+reaches it for real: `trait_picker.rs`'s `list_available_character_traits` now returns the 5
+choice-based options with their `skillOptions`/`choiceSetId`, `CreateCharacterRequest` gained
+`trait_skill_choices` (threaded into `compose_character_input`'s `selected_choices`), and
+`CreateCharacterForm.tsx` renders a real `<select>` for a checked choice-based trait and
+submits the player's actual pick.
+
+**Figures.** `ultimate_campaign`: `DONE 182→187 (+5), M 58→53 (-5)`; `U:21 D:2 X:2 V:0`
+untouched. All 5 closures are `ingested-magnitude → grounded`, id-set stable
+(`0 added, 0 removed` in `docs/work-inventory.json`'s before/after diff) — no shared-corpus-`KEY`
+payoff in another book this time (checked directly, not assumed). Corpus-wide, after this cycle's own regen (identical before and after both mid-cycle
+rebases onto `AT-34-E3-002`'s own concurrently-landed WIP cycle, which had not yet
+regenerated `docs/work-inventory.json` itself at either rebase point):
+`population=49438 unclassified=0 overlap=0 citation_failures=0`, `DONE:24314 A:449 B:11769
+C:4332 D:2955 M:4966 V:262 U:202 X:170 Z:19`.
+
+**Instrument-correction, not content movement.** Rebasing this cycle's work onto
+`AT-34-E3-002`'s own concurrently-landed WIP cycle (Cleric Domain) shifted every line in
+`src/bin/v06_work_inventory.rs` a second time (this cycle's own doc-comment edit had already
+shifted one pin once, fixed before the first rebase). `completion_atlas.py --check` caught it
+immediately: `citation_failures=10`. All 10 `BUCKET_DEFINITIONS` citation pins re-derived
+fresh against the post-rebase file in the same cycle — `A/B/C/D` at the exact literal call
+site each comment already names, `DONE/M/U/X/Z` at the first `status: "<value>"`
+construction-site occurrence, the same convention `DONE`'s own comment documents. No bucket
+population moved by this correction.
+
+**Verification.** `cargo test --locked --lib -- trait_effects`: 20/20 (9 new). `cargo test
+--locked --bin v06_work_inventory`: 446/446. `cargo test --locked --manifest-path
+apps/desktop/src-tauri/Cargo.toml -- trait_picker`: 3 new + 2 updated, all passing; the one
+pre-existing `race_trait_picker` failure in the same run reproduced identically against the
+pre-cycle-3 inventory content, confirmed unrelated. `apps/desktop`: `npx tsc --noEmit` clean;
+`npm test` 96/100 files, both touched test files pass, the 4 failures confirmed pre-existing
+corpus/version-triple drift by reading each one's own message. `cargo test --locked --no-run`
+(full workspace, run after the last figure-moving commit): see this cycle's own receipt for
+the literal exit/result. `corpus_literal_sweep`: unchanged, `48708` examined (no corpus file
+touched). `denominator_gate.py --check`: `files_checked=15 violations=7` — pre-existing
+`FRT_HVY`/quoted-corpus-prose baseline (was 6 at cycle 3, grown by intervening merged cycles'
+own `progress.md` prose, none of them this cycle's).
+
+**Remainder, named by sub-cause** (`M:53` of the original 58, unchanged from cycle 3's own
+naming except the 5 now closed): 4 open-subtype `%LIST` traits (need a free-text
+Craft/Perform/Profession chooser), 3 ability-score-difference-formula traits (need a formula
+evaluator), 15 mixed-non-`SKILL`-bonus-type traits (different pillars), 1 corpus data gap
+(`trait_shadow_whispers`), 17 narrative + 1 cross-skill-guarded Drawback, 12 `Retrain` records
+(different mechanic). `U(21)/D(2)/X(2)` not touched, reopened, or reclassified — verified by
+the inventory diff.
+
+Receipt: `artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_4.md`.
+
 ### Cycle — wave-15 shared `docs/work-inventory.json` regeneration and attribution — complete
 
 **Status: complete.** The single mandatory regeneration-and-attribution cycle closing wave
