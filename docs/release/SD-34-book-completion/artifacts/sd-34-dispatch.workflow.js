@@ -576,7 +576,26 @@ function regenPrompt(laneSummaries) {
     + 'never git stash. ONE turn - foreground the long runs, commit and push before ending it.'
 }
 
-const COMMIT_RULE = '## COMMIT EARLY - this is the rule six lanes have now broken\\n\\nSix consecutive lanes ended their turn holding finished work uncommitted, and three wrote "complete" into progress.md while their evidence sat in an uncommitted worktree that later vanished. **Commit your code as soon as it compiles and its scoped tests pass. Verify AFTER.** The pipeline takes ~30 minutes; a commit takes seconds. If you stall or the session dies mid-verification, a committed change costs nothing and an uncommitted one is gone.\\n\\n**Never write a claim into progress.md or kanban.md whose artifact you have not committed in the same cycle.** A salvage lane just dropped 2,000+ claimed units because the ledger behind them was never captured. If you produce a data file your numbers depend on, `git add` it explicitly - an untracked file is not evidence.\\n\\nForeground the long passes; nothing wakes you. `git status --porcelain` before every git write; stage your own paths; never `git add -A`; never `git stash`. Run `git diff --cached --numstat` and READ IT before committing.'
+// 2026-08-30: the box this runs on is a KVM guest its host hard-kills roughly every 3 hours
+// (boots 04:00:00->07:02:01, 07:27:43->10:38:11; journal ends mid-line, no shutdown, 5.5 GB used
+// of 167 GB and load 4 on 24 CPUs -- an idle guest killed from outside, unfixable from in here).
+// Wave 13's three lanes each died ~38 minutes in holding EVERYTHING uncommitted. So the rule is no
+// longer "commit early", it is "checkpoint on a clock" -- a reset must cost minutes, never hours.
+const COMMIT_RULE = '## CHECKPOINT ON A CLOCK - the machine WILL be killed under you\\n\\n**This host hard-kills this box roughly every 3 hours, with no warning and no shutdown.** It is not load and not memory; it is the hypervisor, and nothing you do can prevent it. Wave 13\'s three lanes each died ~38 minutes in holding every byte of their work uncommitted. Assume you will be killed mid-sentence.\\n\\n**Commit and push AT LEAST every 20 minutes, whatever state you are in.** Not at the end. Not when it is tidy. A checkpoint commit of half-finished work is worth infinitely more than a perfect uncommitted one, because the uncommitted one does not exist after the reset. Say `wip:` in the subject and note what is unverified -- an honest checkpoint is never an overclaim. Then `git push` it: a commit that lives only in a worktree on this box dies with the box.\\n\\n**Commit as soon as it compiles and its scoped tests pass, then verify AFTER.** The pipeline takes ~30 minutes; a commit takes seconds.\\n\\n**Never write a claim into progress.md or kanban.md whose artifact you have not committed in the same cycle.** A salvage lane once dropped 2,000+ claimed units because the ledger behind them was never captured. If you produce a data file your numbers depend on, `git add` it explicitly - an untracked file is not evidence, and a `git diff` patch never captures it.\\n\\nForeground the long passes; nothing wakes you. `git status --porcelain` before every git write; stage your own paths; never `git add -A`; never `git stash`. Run `git diff --cached --numstat` and READ IT before committing.'
+
+// Wave 13 fenced lanes by BUCKET and they still collided: lanes 2 and 3 both edited
+// scripts/completion_atlas.py, src/bin/v06_work_inventory.rs, docs/work-inventory.json and
+// completion-atlas.json. A bucket is not a file list -- any lane closing units must touch the
+// instrument regardless of which bucket it owns. Two of those four are GENERATED, so no lane may
+// write them at all; the other two are serialized by running the classifier lanes back to back.
+const GENERATED_FILE_BAN = '\\n\\n## Files you must NOT write\\n\\n`docs/work-inventory.json` and `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` are GENERATED, and the single regeneration cycle at the end of this wave owns them. Do not hand-edit them and do not commit them -- if your work changes what they should contain, that is the regeneration\'s job, not yours. Running `completion_atlas.py --check` rewrites the atlas timestamp as a side effect: `git restore` it before you commit. Wave 13 lost a lane to exactly this collision.'
+
+// Wave 13's lanes died holding real work. It was committed in place and pushed to
+// origin/salvage/wave13-lane{1,2,3} -- unreviewed, unverified checkpoints, but a genuine head
+// start. Each lane is pointed at its own predecessor so the wave does not redo 38 lost minutes.
+function salvageNote(branch, what) {
+  return '\\n\\n## Start from the rescued work, do not redo it\\n\\n**`origin/' + branch + '` holds your predecessor\'s uncommitted work**, rescued after the host killed the box mid-run: ' + what + '. Read it FIRST — `git diff 1ea93e99ce origin/' + branch + '` — and build on whatever is sound.\\n\\n**It is an unreviewed checkpoint, not a result.** Nothing in it was verified, tested, or measured, and its author never got to check it. Treat every line as a claim to confirm, not a fact to inherit: keep what survives your own review, fix what does not, and say in your receipt which parts you kept and which you discarded and why. Do not cite it as evidence and do not carry any figure out of it un-re-derived.';
+}
 
 function ucLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E4-002', dir: 'epic-4-ultimate-campaign',
@@ -606,7 +625,8 @@ function ucLanePrompt() {
       + 'EQUIPMENT sub-causes and another owns the explanation-id wiring — do not touch either.\n\n'
       + 'U(21), D(2), X(2) were re-checked last cycle and are NOT yours to reopen. A unit leaves M only when its value is '
       + 'genuinely computed and applied, never relabelled. M→D is reclassification; say which is which. A cycle here once '
-      + 'claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE })
+      + 'claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN
+      + salvageNote('salvage/wave13-lane1','the trait-capability build -- 95 files, including three NEW files `src/rules_core/trait_effects.rs`, `apps/desktop/src-tauri/src/trait_picker.rs` and `apps/desktop/src/boundary/loadCharacterTraits.ts`, plus +81 lines in `character_input.rs` and +111 in `CreateCharacterForm.tsx`') })
 }
 
 // Wave 13 replaces the bucket-V ledger lane: AT-34-E3-005's ledger landed at cfd9c6d3d9 and its
@@ -632,7 +652,8 @@ function cLanePrompt() {
       + '**Territory:** you own the explanation-id / diagnostic-naming wiring. A sibling lane owns the EQUIPMENT '
       + 'magnitude sub-causes and another owns trait/ability compute + ' + BT + 'CharacterInput' + BT + ' — do not touch either.\n\n'
       + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 357.** Return ' + BT + 'partial' + BT + ' with '
-      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE })
+      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN
+      + salvageNote('salvage/wave13-lane2','bucket-C work -- +303 lines in `src/bin/v06_work_inventory.rs`, edits to `scripts/completion_atlas.py`, and a substantially rewritten `AT-34-E3-002_cycle_receipt.md`') })
 }
 
 function mLanePrompt() {
@@ -663,18 +684,31 @@ function mLanePrompt() {
       + 'KINDS, so a fix keyed on the kind\'s compute path is corpus-wide by construction. Report corpus-wide movement, '
       + 'not just this book\'s.\n\n'
       + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 423.** Return ' + BT + 'partial' + BT + ' with '
-      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE })
+      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN
+      + salvageNote('salvage/wave13-lane3','equipment bucket-M work -- +128 lines in `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py` edits, and a NEW receipt `AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`') })
 }
 
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
   phase(title)
-  log('wave 13: 3 lanes in parallel (own worktree + own target dir), then ONE regeneration')
+  // Wave 14 shape. Wave 13 ran all three in parallel and lanes C and M collided on four files --
+  // completion_atlas.py, v06_work_inventory.rs and the two generated JSONs -- because both are
+  // classifier work and a BUCKET fence cannot separate lanes that share the instrument. Two of
+  // those files are now banned outright (GENERATED_FILE_BAN); the other two are made safe by
+  // running C and M back to back instead of together. UC touches neither (it is a capability
+  // build in src/rules_core + apps/desktop) and was disjoint from both in wave 13's own diff,
+  // so it still runs alongside. Serializing costs wall-clock, which no longer matters: the
+  // 20-minute checkpoint rule means a host reset costs minutes regardless of how long a wave is.
+  log('wave 14: UC in parallel with (C then M, serialized on the classifier), then ONE regeneration')
 
-  const [uc, vled, m] = await parallel([
-    () => agent(ucLanePrompt(),     { model: 'sonnet', phase: title, label: 'UC: build trait capability', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
-    () => agent(cLanePrompt(),      { model: 'sonnet', phase: title, label: 'C: core_rulebook 357',       schema: CYCLE_SCHEMA, isolation: 'worktree' }),
-    () => agent(mLanePrompt(),      { model: 'sonnet', phase: title, label: 'M: equipment 423',           schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+  const [uc, [vled, m]] = await parallel([
+    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'UC: build trait capability', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    async () => {
+      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'C: core_rulebook 357', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      log('C -> ' + (c && c.status) + '; starting M (classifier now free)')
+      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'M: equipment 423', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      return [c, mm]
+    },
   ])
   log('UC -> ' + (uc && uc.status) + ' | C -> ' + (vled && vled.status) + ' | M -> ' + (m && m.status))
 
