@@ -26,6 +26,18 @@
   three files, same command). The wider epic-scoped diff surfaces pre-existing `placeholder`
   matches from earlier committed cycles (a real PCGen domain term, not a stub marker), none from
   this cycle's own diff.
+- **Rebase note:** mid-cycle, `AT-34-E4-002` cycle 3 (a sibling lane, trait/drawback capability,
+  `CharacterInput`/desktop territory — this cycle's own territory boundary explicitly excludes
+  it) landed on `origin/tranche/14` and touched `docs/work-inventory.json` and
+  `src/bin/v06_work_inventory.rs` (different region of the file — no textual overlap with this
+  cycle's own rung/probe, confirmed by grep after rebase). The rebase conflicted only on
+  `docs/work-inventory.json` (a generated data file, not source); resolved by taking the
+  upstream tip as the fresh base and re-running this cycle's own regen on top of it (not by
+  hand-editing JSON) — re-verified isolated to the same 6 unit ids by a second whole-inventory
+  id-keyed diff (see Live regen). `completion_atlas.py`/`missing_engine_tables.py` citations
+  shifted by one more line each (the sibling lane's own insertions) and were re-derived a second
+  time, same exact-content-match method, post-rebase — `citation_failures=0` confirmed at the
+  final SHA.
 - **Acceptance criterion (verbatim, `epic-breakdown.md`):** "**370** units the engine holds
   and computes but never surfaces. **Evidence:** per unit, the explanation or display path
   that now carries it. A unit the player still cannot see is not cleared, whatever the engine
@@ -246,7 +258,7 @@ matches in any other book) — nothing this fix's `group` match could ever reach
 | `completion_atlas.py --check` (corpus-wide) | `population=49438 unclassified=0 overlap=0`; `citation_failures=0` (post re-pin) | `python3 scripts/completion_atlas.py --check` | of 49,438 |
 | `corpus_literal_sweep` | `48,708` records examined, `clean=True`, 0 findings (before and after — no `data/corpus/**` file touched this cycle) | `corpus_literal_sweep --json-out <path>` | of ~51,482 read |
 | `derived_evaluator_fixture_check` | `2,580` fixture rows, `1,839` cleared, `0` failed, `0` engine-does-not-hold | `derived_evaluator_fixture_check --json-out <path>` | of 2,580 fixture rows |
-| `cargo test --locked --bin v06_work_inventory` (full) | `440 passed; 0 failed` (435 pre-existing + 5 new) | `cargo test --locked --bin v06_work_inventory` | of 440 |
+| `cargo test --locked --bin v06_work_inventory` (full, at final post-rebase SHA) | `442 passed; 0 failed` (437 pre-existing/sibling-added + 5 new this cycle) | `cargo test --locked --bin v06_work_inventory` | of 442 |
 | `cargo test --locked --bin v06_work_inventory class_feature` | `131 passed; 0 failed` (127 pre-existing + 4 new; the 5th new test lives in its own probe-test module outside this name filter) | `cargo test --locked --bin v06_work_inventory class_feature` | of 131 |
 | `cargo test --locked --no-run` (workspace) | exit 0, all test binaries built (see Build scope) | `cargo test --locked --no-run` | -- |
 | `denominator_gate.py --check` | `files_checked=15 violations=6` — all 6 pre-existing in `progress.md` (verbatim-quoted corpus prose containing "75% chance...", each already self-flagged inline by the cycle that introduced it, e.g. `AT-34-E3-004`); this cycle's own new content (`.py`/`.json`/this receipt) adds zero bare-percentage prose. **Correction from the prior AT-34-E3-002 receipt's own `violations=0`**: 6 other cycles' `progress.md` entries landed between then and now, each correctly self-documenting its own pre-existing quote — re-derived fresh here per `decisions.md §12` L2, not carried forward. | `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` | of 15 files |
@@ -272,16 +284,20 @@ exactly to 351).
 
 ## Build scope verified
 
-`cargo test --locked --no-run` (workspace) exits **0** at this cycle's closing SHA (below) —
-all test binaries, including `v06_work_inventory`, `corpus_literal_sweep`,
-`derived_evaluator_fixture_check`, built successfully, no compile errors. Run in the
-`release` profile separately for speed on the three binaries this cycle actually invokes
-(`v06_work_inventory`, `corpus_literal_sweep`, `derived_evaluator_fixture_check`) — the
-workspace `--no-run` build itself is the default `debug` profile, per the schema's own command.
-`cargo test --locked --bin v06_work_inventory` 440/440 pass, `cargo test --locked --bin
-v06_work_inventory class_feature` 131/131 pass — both run post-regen, same SHA. Desktop crate
-(`apps/desktop/src-tauri`) not tested this cycle: no file under that tree was touched, confirmed
-by `git diff --name-only` against this cycle's own commits.
+`cargo test --locked --no-run` (workspace) exits **0**, run TWICE: once before the mid-cycle
+rebase (all binaries built clean) and once AFTER, at this cycle's own closing SHA (below), per
+`decisions.md §12` L7 ("run this after the last commit in the cycle that can move a figure an
+assertion depends on" — the rebase re-derived `docs/work-inventory.json`, so the post-rebase run
+is the one that counts). All test binaries, including `v06_work_inventory`,
+`corpus_literal_sweep`, `derived_evaluator_fixture_check`, built successfully, no compile
+errors. Run in the `release` profile separately for speed on the three binaries this cycle
+actually invokes — the workspace `--no-run` build itself is the default `debug` profile, per the
+schema's own command. `cargo test --locked --bin v06_work_inventory` 442/442 pass (post-rebase),
+`cargo test --locked --bin v06_work_inventory class_feature` 131/131 pass (post-rebase) — both
+run after the final regen, same closing SHA. Desktop crate (`apps/desktop/src-tauri`) not tested
+this cycle: no file under that tree was touched by THIS cycle's own commits (the sibling
+`AT-34-E4-002` lane's own commit did touch it, merged in by the rebase, out of this cycle's
+territory and already covered by that lane's own receipt).
 
 ## Sweep population
 

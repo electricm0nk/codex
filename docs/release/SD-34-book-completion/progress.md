@@ -13,6 +13,71 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-002 (bucket C continuation): Monk Unarmed Damage Medium closes 6, core_rulebook bucket C 357->351
+
+**Status: partial.** Re-derived at start SHA `b939abcd4b`: `core_rulebook` bucket C is **357**
+(the criterion's own headline "370" is stale, `decisions.md §12` L2). Confirmed the prior
+`AT-34-E3-002` cycle's named remainder still holds (population drifted 372 -> 357 between then
+and now purely from OTHER cycles' unrelated classifier work — `AT-34-E3-003` bucket-M
+`skill_content`, `AT-34-E3-005` bucket-V-apply, and the wave-13/14/15 salvage folds).
+
+**Mechanism closed:** the prior cycle's own next-cycle plan named `Monk Unarmed Damage` (54
+units, largest named cluster) as unverified. This cycle verified it directly and found it
+decomposes into three genuinely different populations, not one: **Medium** (6 band-start
+levels — real formula in the SAME book's own Monk chassis, `class_chassis.monk.unarmed_strike_
+damage_die[_count]`, already proven live for a Human/Medium character), **Small** (6 levels —
+real formula exists, but reachable ONLY through the Pathfinder Unchained book's own Unchained
+Monk class path — a cross-book attribution question this cycle deliberately left open, not
+force-closed), and the **other 7 creature sizes** (42 units — no formula anywhere in the
+engine, a genuine gap confirmed by reading `monk_unarmed_strike_damage_die_for_size` directly).
+
+One new `classify()` rung + one new probe (`probe_monk_unarmed_damage_die_wiring`, run at
+exactly each record's own band-start level, not `SWEEP_LEVELS`, which has no member inside the
+level-16 band) close the 6 Medium units, same paired display/chassis-record shape as the prior
+cycle's Favored Enemy/Terrain fix. RED->GREEN: 5 new tests (2 positive, 2 negative controls
+including a non-Medium scoping proof, 1 live-fixture probe proof observing exactly the 6 wired
+pairs against the real pipeline). `class_feature`-scoped suite 131/131 pass; full bin suite
+442/442 pass (post-rebase); `cargo test --locked --no-run` (workspace) exits 0.
+
+**Live regen, isolation confirmed by whole-inventory id-keyed diff (not sampled):** 0 added, 0
+removed, exactly 6 changed — the 6 targeted Medium units, `engine-does-not-hold ->
+literal-verified` (the same static/sweep-verification upgrade the prior cycle's own fix went
+through — landed in bucket **V**, not `DONE`, reported honestly). `corpus_literal_sweep`:
+48,708 examined, CLEAN, unchanged (no `data/corpus/**` file touched). `core_rulebook` bucket C:
+357 -> **351**. Corpus-wide bucket C: 4,338 -> **4,332** (delta -6, no cross-book side effect —
+`"Monk Unarmed Damage LVL"` exists only under `core_rulebook` across all 37 books).
+
+**Mid-cycle rebase**: `AT-34-E4-002` cycle 3 (sibling territory — trait/drawback,
+`CharacterInput`, desktop) landed on `tranche/14` while this cycle ran, regenerating
+`docs/work-inventory.json` for its own 31 `ultimate_campaign` units. Resolved by taking the
+upstream tip as the fresh base and re-running this cycle's own regen on top of it (never
+hand-editing the JSON) — re-verified isolated to the same 6 unit ids by a second id-keyed diff.
+`completion_atlas.py`/`missing_engine_tables.py` citations re-derived twice (once for this
+cycle's own insertions, once more for the sibling lane's) — `citation_failures=0` at the final
+SHA both times.
+
+**Remainder — 351 of 357, named by sub-cause, populations sum exactly** (re-derived fresh, not
+carried forward): `domain_power_display_record_not_wired` 96 (unchanged, largest sub-cause),
+`bloodline_power_or_bloodline_feat_not_computed` 77, `prestige_class_standalone_feature_not_
+computed` 31, `monk_unarmed_damage_no_formula_in_engine` 42 (the other 7 sizes, genuine gap),
+`base_class_standalone_feature_not_computed` 36, `rage_power_not_computed` 13, `rogue_talent_
+not_computed` 10, `npc_class_standalone_feature_not_computed` 10, `versatile_performance_not_
+computed` 9, `monk_unarmed_damage_small_cross_book_attribution_undecided` 6 (deliberately not
+decided this cycle), `other_named_group_or_standalone` 21 (next-cheapest candidate:
+`Basic Favored Enemy`/`Basic Favored Terrain`, whose root DEFINE the prior cycle's own probes
+already proved wired — unverified this cycle, named for the next one). Sum: 96+77+31+42+36+13+
+10+10+9+6+21 = 351.
+
+**Denominator gate against this package**: `python3 scripts/denominator_gate.py --check
+'docs/release/SD-34-book-completion/*.md'` -> `files_checked=15 violations=6` — all 6
+pre-existing in `progress.md` (verbatim-quoted corpus prose, "75% chance..."), each already
+self-flagged inline by the cycle that introduced it (`AT-34-E3-004` and others). This cycle
+added no new bare-percentage `.md` prose. **Correction to the prior `AT-34-E3-002` receipt's own
+`violations=0`**: 6 other cycles' `progress.md` entries landed between then and now, each
+correctly self-documenting its own quote — re-derived fresh here per `decisions.md §12` L2.
+
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-001 wave-9 regeneration and attribution: 0 units moved, the wave's own premise did not hold for 2 of 4 lanes
 
 **Status: complete.** Single mandatory `docs/work-inventory.json` regeneration closing wave 9's
