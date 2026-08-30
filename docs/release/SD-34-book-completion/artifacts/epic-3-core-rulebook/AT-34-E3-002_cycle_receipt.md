@@ -1,8 +1,9 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-002 (bucket C, "held and computed, never surfaced")
 
-- **Commit SHA:** `48e9a7b1c4` (source/tests/citations, this cycle's own commit), plus the
-  regen/receipt/progress/kanban follow-up commit landed in the same cycle (SHA filled in below
-  at push time)
+- **Commit SHA:** `48e9a7b1c4` (source/tests/citations, this cycle's own first commit,
+  pre-rebase), `8c6e8aa2b7` (regen + receipt figures, post-rebase onto `AT-34-E4-002`'s own
+  landing), `50790d6bf9` (this receipt's own finalization + `progress.md`/`kanban.md` + retro
+  events — the closing SHA all figures in this receipt are re-verified at)
 - **Files touched:** `src/bin/v06_work_inventory.rs` (one new `EngineFacts` field
   `monk_unarmed_damage_die_wired: BTreeSet<(u8, String)>`; a new probe
   `probe_monk_unarmed_damage_die_wiring`, plus its own live-fixture proof test module; one new
