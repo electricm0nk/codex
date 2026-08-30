@@ -596,6 +596,12 @@ const COMMIT_RULE = '## CHECKPOINT ON A CLOCK - the machine WILL be killed under
 // completion-atlas.json. A bucket is not a file list -- any lane closing units must touch the
 // instrument regardless of which bucket it owns. Two of those four are GENERATED, so no lane may
 // write them at all; the other two are serialized by running the classifier lanes back to back.
+// Wave 15's bucket-C lane moved 6 Monk Unarmed Damage units from C to V and its commit message
+// said it "closes 6". It closed nothing: C and V are both non-DONE buckets, so that was a
+// reclassification wearing a closure's words. Derived by bucket-diffing the inventory across the
+// wave, which is the only way it shows up -- the lane's own report read like progress.
+const NO_RELABEL_RULE = '\\n\\n## A bucket change is not a closure\\n\\nOnly `-> DONE` is closure. Every other bucket move is a RECLASSIFICATION and must be reported as one, under `movement`, separately from anything you closed. Last wave a lane moved 6 units from bucket C to bucket V and wrote that it "closes 6" -- both are non-DONE buckets, so the real closure count was zero and the wave`s headline was wrong until it was re-derived.\\n\\n**Before you report, bucket-diff the inventory yourself** and state each move as `FROM -> TO: n`. If your number for "closed" is not exactly the size of your `-> DONE` set, it is wrong. A reclassification can be honest and useful work -- say so plainly and it counts; dress it as closure and it will be caught and reversed.'
+
 const GENERATED_FILE_BAN = '\\n\\n## Files you must NOT write\\n\\n`docs/work-inventory.json` and `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` are GENERATED, and the single regeneration cycle at the end of this wave owns them. Do not hand-edit them and do not commit them -- if your work changes what they should contain, that is the regeneration\'s job, not yours. Running `completion_atlas.py --check` rewrites the atlas timestamp as a side effect: `git restore` it before you commit. Wave 13 lost a lane to exactly this collision.'
 
 // Wave 13's lanes died holding real work. It was committed in place and pushed to
@@ -633,7 +639,7 @@ function ucLanePrompt() {
       + 'EQUIPMENT sub-causes and another owns the explanation-id wiring — do not touch either.\n\n'
       + 'U(21), D(2), X(2) were re-checked last cycle and are NOT yours to reopen. A unit leaves M only when its value is '
       + 'genuinely computed and applied, never relabelled. M→D is reclassification; say which is which. A cycle here once '
-      + 'claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN
+      + 'claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE
       + salvageNote('salvage/wave14-lane1','the trait-capability build, TWICE rescued and now the furthest-along version -- it already contains `salvage/wave13-lane1` (three NEW files `src/rules_core/trait_effects.rs`, `apps/desktop/src-tauri/src/trait_picker.rs`, `apps/desktop/src/boundary/loadCharacterTraits.ts`, plus +81 lines in `character_input.rs` and +111 in `CreateCharacterForm.tsx`) MERGED and reviewed by your immediate predecessor, who then extended it before an operator-requested restart cut it short. Start here, NOT from `salvage/wave13-lane1`, which this supersedes') })
 }
 
@@ -643,7 +649,7 @@ function ucLanePrompt() {
 // at ab65a090ef, so the slot moves to bucket C — the largest single-mechanism block left in the book.
 function cLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-002', dir: 'epic-3-core-rulebook',
-    title: 'bucket C for the Core Rulebook — 357 of 6,701, and every one is the SAME mechanism.\n\n'
+    title: 'bucket C for the Core Rulebook — 351 of 6,701, and every one is the SAME mechanism.\n\n'
       + 'Re-derive first; measured at HEAD 651966b83e: ' + BT + 'core_rulebook' + BT + ' bucket C = 357, and all 357 carry one '
       + 'single evidence string — ' + BT + 'no_explanation_id_and_no_diagnostic_names_this_feature' + BT + '. That uniformity is '
       + 'the opportunity: this is not 357 problems, it is one wiring gap repeated 357 times.\n\n'
@@ -660,13 +666,13 @@ function cLanePrompt() {
       + '**Territory:** you own the explanation-id / diagnostic-naming wiring. A sibling lane owns the EQUIPMENT '
       + 'magnitude sub-causes and another owns trait/ability compute + ' + BT + 'CharacterInput' + BT + ' — do not touch either.\n\n'
       + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 357.** Return ' + BT + 'partial' + BT + ' with '
-      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN
+      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE
       + salvageNote('salvage/wave13-lane2','bucket-C work -- +303 lines in `src/bin/v06_work_inventory.rs`, edits to `scripts/completion_atlas.py`, and a substantially rewritten `AT-34-E3-002_cycle_receipt.md`') })
 }
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-003', dir: 'epic-3-core-rulebook',
-    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, 423 of the 972 left.\n\n'
+    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 958 left.\n\n'
       + 'Definition: magnitude ingested, never computed or applied. **The instrument already exists** — that is what '
       + 'separates this from bucket B, whose remainder needs new subsystems built.\n\n'
       + 'Re-derive the sub-causes; do not trust inherited figures OR inherited reasons — this bundle has had a cycle '
@@ -692,7 +698,7 @@ function mLanePrompt() {
       + 'KINDS, so a fix keyed on the kind\'s compute path is corpus-wide by construction. Report corpus-wide movement, '
       + 'not just this book\'s.\n\n'
       + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 423.** Return ' + BT + 'partial' + BT + ' with '
-      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN
+      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE
       + salvageNote('salvage/wave13-lane3','equipment bucket-M work -- +128 lines in `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py` edits, and a NEW receipt `AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`') })
 }
 
