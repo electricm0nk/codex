@@ -76,7 +76,12 @@ export function toCharacterMutationRefresh(
   // Same reasoning as `chosenFeatTargets`: no mutation command changes a
   // racial-trait choice, so every existing call site carries its current list
   // through unchanged and the default is the empty one.
-  selectedAlternateTraitKeys: string[] = []
+  selectedAlternateTraitKeys: string[] = [],
+  // AT-34-E4-002: same reasoning as `selectedAlternateTraitKeys` -- no
+  // mutation command changes a character's trait selections, so every
+  // existing call site carries its current list through unchanged and the
+  // default is the empty one.
+  selectedTraits: string[] = []
 ): CharacterMutationRefresh {
   if (outcome.kind === 'Blocked') {
     return { kind: 'blocked', message: blockedMessageFromDiagnostics(outcome.diagnostics) };
@@ -93,6 +98,7 @@ export function toCharacterMutationRefresh(
       // racial-trait choice, and dropping them here would make the sheet
       // forget a swap the saved character still has.
       selectedAlternateTraitKeys,
+      selectedTraits,
       selectedFeats,
       spellsSelected,
       chosenFeatTargets,

@@ -1238,6 +1238,70 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E4-002 (cycle 3) — the trait/drawback selection capability is BUILT, 31 units genuinely closed
+
+**Why:** the criterion's first two cycles diagnosed (no trait/drawback selection capability
+existed anywhere in the crate) and closed an unrelated 3-unit `D`-bucket sliver. This cycle is
+the build the diagnosis named: real `CharacterInput` selection state, a real compute-and-apply
+path, and a real desktop selection surface — for the pure `BONUS:SKILL` trait spine.
+
+**Provenance.** Started from `origin/salvage/wave14-lane1` (an unreviewed, twice-rescued
+checkpoint), read in full via `git diff 1ea93e99ce origin/salvage/wave14-lane1` before trusting
+any of it. Applied with `git merge --no-ff --no-commit` (zero conflicts against tranche/14 HEAD
+`b939abcd4b`), then `git restore`d the two files this cycle must not hand-commit
+(`apps/desktop/package-lock.json`'s stray version edit, and the salvage's own regenerated copy
+of `completion-atlas.json`, which is GENERATED). Kept everything else after reading it: the new
+`src/rules_core/trait_effects.rs` (31 hand-transcribed flat `BONUS:SKILL` trait records, each
+individually re-verified by an EXECUTED fixture character run through
+`allocate_skill_ranks` — not asserted, run), the new `CharacterInput.chosen.selected_traits`
+field, the `skill_allocation.rs` wire folding real trait bonuses into `misc_modifier`, the
+`v06_work_inventory.rs` classifier wire (`Kind::Trait` now calls the fixture-grounding check),
+and full desktop plumbing: `trait_picker.rs`'s `list_available_character_traits` command, a
+real checkbox picker in `CreateCharacterForm.tsx`, and save/load round-tripping in
+`saved_character/local_store.rs`. See `artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_3.md`
+for the full kept/discarded accounting.
+
+**What changed, corpus-wide (kind-keyed, not book-scoped):** `docs/work-inventory.json`
+regenerated (three-pass pipeline, `corpus_literal_sweep` unchanged at `records_examined:48708`
+— no corpus records touched). `0 added, 0 removed` units; **36 units** moved
+`ingested-magnitude → grounded`: **31 in `ultimate_campaign`**, plus **5 in
+`advanced_players_guide`** that happen to share the identical corpus `KEY` (e.g.
+`Trait ~ Caretaker`) — a real, unplanned corpus-wide payoff from keying the classifier fix on
+`unit.key` rather than the book, exactly as this criterion's own brief predicted.
+`ultimate_campaign`: `DONE 151→182, M 89→58`, all other buckets (`U:21 D:2 X:2 V:0`)
+untouched — not reopened, not reclassified.
+
+**Correction of this criterion's own dispatch brief:** the brief stated "44 of the 59 traits
+are pure `BONUS:SKILL`"; a direct read of every `trait_generic/*.json` record found the real,
+compute-path-coverable figure is **31 of 59** flat, unconditional, no-`%LIST` records. The
+other ~28 split into 12 `%LIST` player-choice placeholders (needs a chosen-skill slot), 3
+ability-difference formulas (needs a formula evaluator), 15 mixed non-`SKILL` bonus types
+(saves/combat/concentration/ability-pool — different pillars), and 1 corpus data gap
+(`trait_shadow_whispers` — a real inventory unit with no matching file under `trait_generic/`
+by any name tried, pre-existing, unrelated to this cycle). Retro `correction` logged.
+
+**Also named, not silently absorbed:** `ultimate_campaign`'s `ability_content` M-bucket (30
+units) is **not** all "drawback" — 18 are real PF1 Drawbacks (17 pure narrative/GM-adjudicated
+with no `BONUS` token at all, 1 — `drawback_meticulous` — a cross-skill `PRESKILL`-guarded
+penalty, a different shape than this cycle's flat spine) and **12 are `Retrain` records**, a
+different mechanic entirely (character-progression rebuild rules), arguably mis-keyed under
+this criterion's `ability_content` population rather than trait/drawback selection at all —
+flagged for a future atlas-defect note, not chased here.
+
+**Verification:** `cargo build --locked --lib` clean. `trait_effects` unit tests 11/11
+(including the fixture-executed grounding proof for all 31 entries).
+`character_input`/`skill_allocation`/`local_store` targeted tests 36/36.
+`v06_work_inventory` bin tests 437/437 (new positive + negative-control promotion tests both
+pass). `cargo test --locked --no-run`: full workspace exit 0. `apps/desktop/src-tauri` tested
+explicitly: 524 passed / 28 failed, every failure in a file (`companion_catalog.rs`,
+`reach_gate.rs`, `feat_catalog.rs`, `race_trait_picker.rs`) this cycle never touched —
+attributed pre-existing, not independently re-baselined at this SHA (no established
+desktop-crate baseline exists in this criterion's brief).
+
+**Status: partial.** `ultimate_campaign` bar (`DONE=265 of 265`) not met:
+`DONE=182 of 265`, remainder `M:58 U:21 X:2 D:2` = 83, all named by sub-cause above. Receipt:
+`artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_3.md`.
+
 ### Cycle — AT-34-E3-005 (bucket-v-apply) — `decisions.md §19` wired into the classifier
 
 **Why:** the prior bucket-v-consolidation cycle changed no engine status — it only wrote

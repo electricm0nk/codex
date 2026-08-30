@@ -71,6 +71,7 @@ fn fighter_with_real_and_garbage_feats() -> CharacterInput {
         case_id: Some("sd20_contract_feat_wiring_fighter".to_string()),
         source_package_id: "sd20_contract_feat_wiring_fighter".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "class:fighter".to_string(),

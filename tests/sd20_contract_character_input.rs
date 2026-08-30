@@ -26,6 +26,7 @@ fn empty_input(class_levels: Vec<CharacterClassLevel>) -> CharacterInput {
         case_id: Some("sd20_contract_character_input".to_string()),
         source_package_id: "sd20_contract_character_input".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             class_levels,
             ability_scores: AbilityScores {

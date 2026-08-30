@@ -548,9 +548,13 @@ pub struct SkillTotal {
     pub ranks: u8,
     pub ability_modifier: i8,
     pub class_skill_bonus: i8,
-    /// Not yet populated by this cycle (armor-check-penalty and similar
-    /// contributions are Epic 5's territory; a future integration cycle
-    /// composes them in). Always `0` until then.
+    /// **AT-34-E4-002**: now carries the real, computed trait bonus for
+    /// this skill (`trait_effects::skill_bonuses_from_traits`), when the
+    /// character selected a recognized flat-`BONUS:SKILL` trait targeting
+    /// it. Armor-check-penalty and other non-trait `misc_modifier`
+    /// contributions remain Epic 5's territory and are not yet composed
+    /// in; `0` for any character with no trait bonus on this skill,
+    /// exactly the prior behavior.
     pub misc_modifier: i8,
     pub total_modifier: i8,
 }
@@ -749,6 +753,15 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     // philosophy `class_skill_set` already follows.
     let has_grounded_class_skill_posture = has_grounded_class_skill_posture(input);
 
+    // **AT-34-E4-002**: the character's real, computed trait skill bonuses
+    // (the 31-of-59 `ultimate_campaign` flat `BONUS:SKILL` traits --
+    // `trait_effects`'s own doc comment names the exact shape and what is
+    // deliberately not yet covered). Empty for any character with no
+    // `selected_traits` or none this module recognizes -- byte-identical
+    // to pre-cycle behavior for every existing fixture.
+    let trait_skill_bonuses =
+        crate::rules_core::trait_effects::skill_bonuses_from_traits(&input.chosen.selected_traits);
+
     let mut totals = BTreeMap::new();
     let mut untrained_use = BTreeMap::new();
     let mut diagnostics = Vec::new();
@@ -825,7 +838,8 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         };
 
         let ability_modifier = ability_mod as i8;
-        let misc_modifier = 0;
+        let misc_modifier =
+            trait_skill_bonuses.get(&allocation.skill_id).copied().unwrap_or(0);
         let total_modifier = ranks as i8 + ability_modifier + class_skill_bonus + misc_modifier;
 
         if ranks == 0 {
@@ -844,6 +858,48 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
                 ability_modifier,
                 class_skill_bonus,
                 misc_modifier,
+                total_modifier,
+            },
+        );
+    }
+
+    // **AT-34-E4-002**: a trait's flat skill bonus applies whether or not
+    // the character has invested any ranks in the skill (PF1 traits are
+    // not rank-gated the way class-skill/cross-class caps are) -- a
+    // character who took Acrobat but has 0 Acrobatics ranks must still
+    // see the +1, not silently lose it because no `skill_allocations`
+    // entry exists for it yet. Mirrors the untrained-use rule immediately
+    // above: a trained-only skill (`is_trained_only_skill`) with no ranks
+    // still cannot be attempted at all, trait bonus or not, so it is
+    // correctly omitted here too -- never a fabricated total for a skill
+    // the character cannot use.
+    for (skill_id, bonus) in &trait_skill_bonuses {
+        if totals.contains_key(skill_id) {
+            // Already handled by the allocation loop above (which already
+            // folded this same `trait_skill_bonuses` value into its own
+            // `misc_modifier`) -- do not double-count.
+            continue;
+        }
+        if is_trained_only_skill(skill_id) {
+            continue;
+        }
+        let Some(ability_mod) = skill_key_ability_modifier(skill_id, &chassis.ability_modifiers)
+        else {
+            // Outside the bounded, cited skill universe: no known
+            // ability-key mapping. Omit rather than fabricate, same as
+            // the allocation loop above.
+            continue;
+        };
+        let ability_modifier = ability_mod as i8;
+        let total_modifier = ability_modifier + bonus;
+        untrained_use.insert(skill_id.clone(), ability_modifier);
+        totals.insert(
+            skill_id.clone(),
+            SkillTotal {
+                ranks: 0,
+                ability_modifier,
+                class_skill_bonus: 0,
+                misc_modifier: *bonus,
                 total_modifier,
             },
         );
@@ -910,6 +966,7 @@ pub fn class_skill_bonus_is_grounded(class_id: &str, skill_id: &str) -> Option<i
             skill_allocations: vec![SkillAllocation { skill_id: skill_id.to_owned(), ranks: 1 }],
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
+            selected_traits: Vec::new(),
             spells_selected: Vec::new(),
             class_ability_activations: Vec::new(),
         },
@@ -982,6 +1039,7 @@ mod wizard_and_rogue_class_skill_grounding_tests {
                 }],
                 equipment_selections: Vec::new(),
                 selected_choices: Vec::new(),
+                selected_traits: Vec::new(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
             },
@@ -1112,6 +1170,7 @@ mod at_34_e3_003_full_class_skill_list_tests {
                 skill_allocations: vec![SkillAllocation { skill_id: skill_id.to_owned(), ranks }],
                 equipment_selections: Vec::new(),
                 selected_choices: Vec::new(),
+                selected_traits: Vec::new(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
             },

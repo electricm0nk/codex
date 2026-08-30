@@ -301,6 +301,7 @@ fn character_input_from_fixture(character_json: &Json) -> CharacterInput {
         case_id: Some("sd20_level_up_parity".to_string()),
         source_package_id: "sd20_level_up_parity".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: character_json.get("race_id").as_str().to_owned(),
             class_levels,
             ability_scores,

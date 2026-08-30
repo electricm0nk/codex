@@ -86,6 +86,14 @@ export interface CreateCharacterFormFields {
    * placeholder.
    */
   selectedAlternateTraitKeys?: readonly string[];
+  /**
+   * Character trait/drawback ids the player picked
+   * (`"trait:trait_acrobat"`, from `loadCharacterTraits`). Optional so
+   * every existing caller and test composes unchanged; an absent field
+   * means "took none", the real and common answer for a form the picker
+   * has not been wired into yet.
+   */
+  selectedTraits?: readonly string[];
 }
 
 export interface ComposeCreateCharacterRequestDependencies {
@@ -112,5 +120,6 @@ export function composeCreateCharacterRequest(
     abilityBonusTarget: fields.abilityBonusTarget,
     savedAt: deps.now(),
     selectedAlternateTraitKeys: [...(fields.selectedAlternateTraitKeys ?? [])],
+    selectedTraits: [...(fields.selectedTraits ?? [])],
   };
 }
