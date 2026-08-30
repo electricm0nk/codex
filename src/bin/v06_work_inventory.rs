@@ -6627,15 +6627,35 @@ fn equipment_key_is_wired(
             applied_modifiers: Vec::new(),
         }];
     let effects = compute_equipment_effects(&selection, corpus);
-    let Some(item) = effects.per_item.first() else { return false };
-    item.armor_class_bonus.is_some()
-        || item.max_dex.is_some()
-        || item.spell_failure.is_some()
-        || item.armor_check_penalty.is_some()
-        || item.skill_bonus.is_some()
-        || item.ability_bonus.is_some()
-        || item.weapon_enhancement_bonus.is_some()
-        || item.spell_resistance_bonus.is_some()
+    let stat_effect_wired = effects.per_item.first().is_some_and(|item| {
+        item.armor_class_bonus.is_some()
+            || item.max_dex.is_some()
+            || item.spell_failure.is_some()
+            || item.armor_check_penalty.is_some()
+            || item.skill_bonus.is_some()
+            || item.ability_bonus.is_some()
+            || item.weapon_enhancement_bonus.is_some()
+            || item.spell_resistance_bonus.is_some()
+    });
+    if stat_effect_wired {
+        return true;
+    }
+    // AT-34-E3-003 (bucket `M`, equipment sub-causes): `compute_equipment_
+    // effects`'s eight fields above cover armor, skill items, magic items
+    // and enhancement equipmods, but no field on `ResolvedEquipmentEffect`
+    // ever carries a weapon's own base damage dice -- a real, ingested
+    // `DAMAGE:` magnitude a mundane weapon's own corpus row states was
+    // never consulted by this probe at all. `damage_total::
+    // resolve_base_damage_dice` is not a new compute path: it already
+    // reads that exact token (`equipment_id_resolve` -> the record's
+    // `DAMAGE:` token -> a structured `DiceExpression`) and is already the
+    // entry gate `resolve_weapon_damage_breakdown` uses to build the
+    // `WeaponDamageBreakdown` the desktop app's `character_hub.rs` renders
+    // on the real character sheet -- an already-wired consumer, not a
+    // probe-only computation. Consulting it here is a widening of what
+    // this probe OBSERVES, exactly the shape `skill_allocation::
+    // skill_bonus_is_grounded_for_display_name` widened for `Kind::Skill`.
+    codex::rules_core::damage_total::resolve_base_damage_dice(key, corpus).is_some()
 }
 
 // ---------------------------------------------------------------------------
@@ -15800,6 +15820,102 @@ mod e14_harness_tests {
         let text = "Spell Resistance 13\tFORMATCAT:FRONT\tNAMEOPT:NORMAL\tKEY:Special Ability ~ Spell Resistance / 13 ~ Armor\tTYPE:Armor.Bracer.ArmorLike\tPLUS:2\tVISIBLE:QUALIFY\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]\tSR:13\tSPROP:grants spell resistance 13\n";
         let corpus = equipment_corpus_from(text);
         assert!(equipment_key_is_wired("Special Ability ~ Spell Resistance / 13 ~ Armor", &corpus));
+    }
+
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-causes): a real CRB weapon
+    /// carries its base damage on its OWN row (`DAMAGE:1d10`) -- a real,
+    /// already-wired compute path (`damage_total::resolve_base_damage_dice`,
+    /// consumed by `resolve_weapon_damage_breakdown` ->
+    /// `character_hub.rs`'s `WeaponDamageBreakdown`, the desktop app's own
+    /// weapon-damage stat tile) already turns that token into a structured,
+    /// player-visible value. The equipment probe's `equipment_key_is_wired`
+    /// never asked it: `compute_equipment_effects`'s eight checked fields
+    /// (AC/max-dex/spell-failure/ACP/skill/ability/weapon-enhancement/SR)
+    /// cover armor, skill items, magic items and enhancement equipmods, but
+    /// no field on `ResolvedEquipmentEffect` ever carries a weapon's own
+    /// base damage dice -- so a mundane weapon's real, ingested `DAMAGE:`
+    /// magnitude was never consulted at all, only "does this key resolve
+    /// AND does one of eight OTHER fields populate." `Bastard Sword (Base)`
+    /// (`core_rulebook/cr_equip_arms_armor.lst`, real on-disk record,
+    /// `DAMAGE:1d10`) is the live instance.
+    #[test]
+    fn equipment_probe_promotes_a_real_weapon_with_a_real_damage_token() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_equipment_corpus(&roots);
+        assert!(
+            equipment_key_is_wired("Bastard Sword (Base)", &corpus),
+            "a real base-dice compute path already exists and is already \
+             wired to a real consumer (character_hub.rs's WeaponDamageBreakdown) \
+             -- the probe must consult it"
+        );
+    }
+
+    /// Same shape, hand-built fixture so the assertion does not depend on
+    /// the on-disk corpus staying byte-identical, and pins the SPECIFIC
+    /// mechanism (a `DAMAGE:` token, not a coincidental match on some other
+    /// field this record happens to also carry).
+    #[test]
+    fn equipment_probe_promotes_a_hand_built_weapon_with_only_a_damage_token() {
+        let text = "Test Sword\tKEY:Test Sword ~ Diagnostic\tTYPE:Weapon.Martial.Melee\tDAMAGE:1d8\tCRITRANGE:2\tCRITMULT:x2\tWIELD:OneHanded\tCOST:15\n";
+        let corpus = equipment_corpus_from(text);
+        assert!(
+            equipment_key_is_wired("Test Sword ~ Diagnostic", &corpus),
+            "carries a real DAMAGE: token and nothing else -- must ground on that alone"
+        );
+    }
+
+    /// Negative control: an otherwise-identical hand-built record with NO
+    /// `DAMAGE:` token (armor-shaped, no AC/max-dex/spell-failure token
+    /// either) must stay unwired -- the damage-dice check is carried by the
+    /// real token, not by resolving at all.
+    #[test]
+    fn equipment_probe_does_not_promote_a_record_with_no_damage_token_and_no_other_effect() {
+        let text = "Test Trinket\tKEY:Test Trinket ~ Diagnostic\tTYPE:Wondrous\tCOST:15\n";
+        let corpus = equipment_corpus_from(text);
+        assert!(
+            !equipment_key_is_wired("Test Trinket ~ Diagnostic", &corpus),
+            "no DAMAGE: token and no other checked field -- must stay unwired"
+        );
+    }
+
+    /// Full `classify()`-level proof, same shape as
+    /// `an_observed_computed_delta_outranks_the_text_complete_rung` above:
+    /// a `Kind::Equipment` unit whose own corpus row carries a real
+    /// `DAMAGE:` token and nothing `simple_kind_verdict`'s other rungs
+    /// would already catch promotes all the way to `grounded` with the
+    /// SAME `equipment_effect_probe_observed_computed_delta` evidence the
+    /// probe's other observed-delta promotions already use -- this is a
+    /// widening of what the probe OBSERVES, not a new evidence rung.
+    #[test]
+    fn a_real_damage_token_promotes_the_equipment_unit_to_grounded_end_to_end() {
+        let mut facts = EngineFacts::default();
+        facts.equipment_keys.entry("core_rulebook").or_default().insert("Test Sword ~ Classify".to_string());
+        let mut wired = BTreeSet::new();
+        // Simulates what `probe_equipment_effect_wiring` now observes for
+        // this key once `equipment_key_is_wired` consults
+        // `resolve_base_damage_dice` -- see the two tests above for the
+        // probe-level proof; this test proves the classify()-level wiring
+        // consumes that observation correctly.
+        wired.insert(("core_rulebook".to_string(), "Test Sword ~ Classify".to_string()));
+        facts.equipment_effect_wired = wired;
+        let unit = CorpusUnit {
+            book: "core_rulebook".to_string(),
+            source_book: "core_rulebook".to_string(),
+            kind: Kind::Equipment,
+            key: "Test Sword ~ Classify".to_string(),
+            name: "Test Sword ~ Classify".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "cr_equip_arms_armor.lst".to_string(), line: 999 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "equipment_effect_probe_observed_computed_delta");
     }
 
     /// Negative (F3's anti-gaming binding): a real corpus record that
