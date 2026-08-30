@@ -13,6 +13,108 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-003 (bucket M, `skill_content` sub-cause) — partial, closure
+
+**Status: partial.** Re-derived bucket `M` fresh at cycle start (never trusting the dispatch
+brief's own inherited figures): corpus-wide 5,114, `core_rulebook` 1,048 — matching the brief's
+top-line number exactly, but the brief named only 5 of `core_rulebook` `M`'s 10 real sub-causes
+(`equipment_table_entry_with_corpus_magnitude` 276, `ability_content...` 217,
+`equipment_own_line...` 147, `race_trait_generic...` 119, `template_content...` 96 — all
+confirmed correct); this cycle's own full re-derive surfaced the other 5
+(`skill_content` 95, `in_catalog_with_corpus_magnitude_but_no_observed_consumer` 47,
+`domain_content...` 34, `spell_list_entry...` 15, `race_trait_states_a_universal_sheet_
+modifier_pending_compute` 2), summing with the named five to exactly 1,048.
+
+Took the `skill_content` sub-cause (95) as the largest one completable end-to-end this cycle.
+A prior, real but unreported commit (`c5c4a1b788`, "AT-34-E3-003 bucket-M skill widening") had
+already widened `skill_allocation.rs`'s class-skill lists to Fighter's and Wizard's real, full
+corpus rosters — 13/13 tests passing, genuinely committed — but never wired the classifier to
+consume it; its own doc comment named the exact missing piece and deferred it as "the next
+cycle's work." No `progress.md`/`kanban.md` entry existed for that commit before this one.
+
+**What changed:** `simple_kind_verdict()` — the shared classifier function all nine
+`Template`/`Domain`/`Deity`/`Language`/`Ability`/`Trait`/`Skill`/`RaceTrait`-generic (×2) `Kind`
+arms route through — had **no path to `grounded` at all** before this cycle: every held,
+non-`text_only` record fell through to `ingested-magnitude` unconditionally, regardless of
+whether a real compute path for that record's magnitude existed. It gains one new trailing
+parameter, `grounded_magnitude: Option<i8>` — the caller's own, already-executed fixture proof.
+`Kind::Skill` is the only call site passing a real value, via a new
+`skill_allocation::skill_bonus_is_grounded_for_display_name(&unit.name)` entry point that
+normalizes the corpus record's display name and actually runs `allocate_skill_ranks` against a
+level-1 fixture character for Fighter, Rogue, and Wizard (the three classes this module has
+real, cited data for), returning the genuinely-computed class-skill bonus or `None` — never an
+assumed `3`. The other 8 call sites pass `None` and are byte-identical to their pre-cycle
+behaviour: **a pure widening, corpus-wide by construction**, not a `core_rulebook`-scoped patch.
+
+**RED→GREEN:** new test `skill_bonus_is_grounded_for_display_name_normalizes_and_checks_every_
+recognized_class` in `skill_allocation.rs` (14/14 pass in that module); two new `classify()`-level
+tests in `v06_work_inventory.rs` —
+`a_fighter_class_skill_bonus_promotes_a_held_skill_record_to_grounded` (positive: `Handle
+Animal` now reads `grounded`) and `a_skill_no_recognized_class_grounds_stays_ingested_magnitude`
+(negative control: `Perform (Sing)`, a real held record no recognized class treats as a class
+skill, proven to stay exactly where it was) — 435/435 pass in that binary's own test suite.
+
+**Movement:** whole-corpus before/after diff by unit id (49,438 before, 49,438 after, 0
+added/removed): **exactly 76 changed, all `core_rulebook`, all `kind == "skill"`, one status
+transition (`ingested-magnitude → grounded`)**. `core_rulebook` bucket `M` **1,048 → 972**;
+corpus-wide `M` **5,114 → 5,038**. `core_rulebook` DONE **4,254 → 4,330**; corpus-wide DONE
+**24,166 → 24,242**. `skill_content`'s own sub-cause **95 → 19** — the remaining 19 are class
+skills only for classes this module has no grounded data for (Bard's `Perform` family and
+similar), honestly left `ingested-magnitude`, never silently promoted. No other book's `skill`
+units moved: the fix applies identically everywhere, but no other book happens to carry a
+`skill` record matching Fighter/Rogue/Wizard's lists while sitting in `ingested-magnitude`
+(149 `skill`-kind units exist corpus-wide, 110 in `core_rulebook`).
+
+**Remainder — `AT-34-E3-003`'s five buckets, `core_rulebook`, named at HEAD:** `M` 972 (named by
+sub-cause below), `V` 81 (untouched), `D` 366 (untouched by this cycle — a correction of the
+prior cycle's own receipt, which cited 382; re-derived fresh at this cycle's own start and
+confirmed unmoved by this cycle's own diff, retro `correction` filed), `U` 10 (untouched,
+awaiting the operator ruling the prior cycle already flagged), `X` 115 (untouched, awaiting
+`decisions.md §17`'s new choice-filter mechanism). Sum 972+81+366+10+115 = 1,544, matching
+`completion_atlas.py --book core_rulebook --check`'s own live sum.
+
+**`M`'s own 972, named by sub-cause (sums exactly):** `equipment_table_entry_with_corpus_
+magnitude` 276, `ability_content_table_holds_record_magnitude_not_yet_computed` 217,
+`equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` 147,
+`race_trait_generic_table_holds_record_magnitude_not_yet_computed` 119,
+`template_content_table_holds_record_magnitude_not_yet_computed` 96,
+`in_catalog_with_corpus_magnitude_but_no_observed_consumer` 47,
+`domain_content_table_holds_record_magnitude_not_yet_computed` 34,
+`skill_content_table_holds_record_magnitude_not_yet_computed` 19,
+`spell_list_entry_with_resolved_level` 15,
+`race_trait_states_a_universal_sheet_modifier_pending_compute` 2. Sum = 972.
+
+**Build scope:** `cargo test --locked --lib rules_core::skill_allocation::` 14/14;
+`cargo test --locked --bin v06_work_inventory` 435/435; `python3 -m unittest
+scripts.tests.test_completion_atlas` 38/38; `cargo test --locked --no-run` (full workspace)
+exit 0; `apps/desktop/src-tauri` tested explicitly (`cargo test --locked --no-run
+--manifest-path apps/desktop/src-tauri/Cargo.toml`, exit 0 — the desktop crate depends on
+`codex` as a path dependency and this cycle's lib change is additive-only, confirmed).
+
+**Discoveries, out of this criterion's own scope, not fixed here:** `cargo test --locked --lib`
+(run mid-cycle, only this cycle's own two Rust files modified) showed **5 pre-existing
+failures**, confirmed unrelated to this cycle's diff and traced via `git log -S"oracle-agree"`
+to `AT-34-E3-005`'s own already-landed bucket-V oracle-disposition cycle (`fef202a566`): its new
+`oracle-agree`/`oracle-unverifiable` statuses trip an unmapped `(wiring_class="derived",
+status="oracle-agree")` pair in `scripts/observer/pf1e_dashboard_producer.py`'s
+`_doneness_verdict_uncapped`. This is a genuine regression against the tranche cut's registered
+baseline, landed after that baseline was measured — belongs to `AT-34-E3-005`'s own file-touch
+set, not `M`'s; retro `incident` filed rather than self-healed inline (would collide with that
+criterion's own bookkeeping, same posture the already-merged `AT-34-E3-004` cycle took toward
+an out-of-scope denominator-gate finding it also declined to silently fix).
+
+This cycle's own citation upkeep: `scripts/completion_atlas.py`'s 10 `BUCKET_DEFINITIONS` and
+`scripts/missing_engine_tables.py`'s 2 `ENGINE_SURFACE_CITATIONS` `file:line` citations shifted
+by this cycle's own insertion and were re-derived against real line content (never computed by
+offset alone) — `citation_failures=0` after, for both.
+
+Denominator gate against this package: `files_checked=15 violations=6`, all 6 pre-existing
+(`FRT_HVY`'s quoted corpus prose, already flagged by the already-merged `AT-34-E3-004` cycle),
+unchanged before/after this cycle's own edits.
+
+Full detail, remainder table, and next-cycle plan: `artifacts/epic-3-core-rulebook/
+AT-34-E3-003_m_bucket_skill_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-005 (bucket-v-widen): independent re-verification, second dispatched lane
 
 **Status: complete** (confirms the cycle immediately below; no new commit needed). This lane was
