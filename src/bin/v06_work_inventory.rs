@@ -5405,6 +5405,28 @@ struct EngineFacts {
     /// other creature-size column (Small included) is deliberately left
     /// unobserved rather than assumed.
     monk_unarmed_damage_die_wired: BTreeSet<(u8, String)>,
+    /// `AT-34-E3-002` (bucket C continuation, cycle 3): full corpus `"<Domain>
+    /// Domain ~ <Power>"` keys (`"Air Domain ~ Lightning Arc"`, ...) whose own
+    /// generic pool-group-selection magnitude explanation
+    /// (`push_generic_pool_group_selection_magnitude`, id prefix
+    /// `"class_feature.cleric.domain.generic."`) was genuinely emitted on a
+    /// real cleric who selected that exact domain, via
+    /// [`probe_cleric_domain_generic_member_wiring`]. **Not** a static
+    /// reflection of the resolver's own theoretical reach (the census in
+    /// `pool_group_closure_census_across_all_six_pools` measures GROUPS, not
+    /// individual corpus records) -- each key here was read off a real
+    /// `ComputationExplanation`'s own `detail` field
+    /// (`generic_pool_group_selection_observed_keys`), never guessed from a
+    /// slug. Good/Healing/War/Strength/Destruction/Glory (the pre-existing
+    /// `DOMAIN_POWER_CATALOG` domains) are deliberately included in the same
+    /// sweep -- Good is excluded from the generic pass itself (avoiding
+    /// double-grounding, see that pass's own doc comment) so it can never
+    /// appear here, but the other four's `"<Domain> Domain ~ <Power>"`
+    /// SIBLING records (a different corpus key from their own
+    /// `"Domain Power ~ <Power>"` records `domain_power_effect_wired` already
+    /// covers) are real, separate corpus units this set can legitimately
+    /// close too.
+    cleric_domain_generic_member_wired: BTreeSet<String>,
     /// `AT-34-E3-001` (mechanism 2 continuation, cycle 4): full corpus_key
     /// strings (`"Evocation School ~ Intense Spells"`, ...) whose own
     /// per-power explanation id was genuinely observed via
@@ -7297,6 +7319,69 @@ fn class_effect_wired_from_outcomes(
         .collect()
 }
 
+/// The 33 real Core Rulebook Cleric Domain adjectives (`data/corpus/
+/// core_rulebook/class_feature/<name>/<name>.json`'s own bare `"<Adjective>
+/// Domain"` header records -- confirmed by direct corpus scan, not assumed
+/// from a rulebook table: `find data/corpus/core_rulebook/class_feature -name
+/// '*.json' | xargs grep -l '"key": "[A-Za-z]* Domain"'`). Every one is a
+/// single lowercase word, so `format!("domain:{}", a.to_lowercase())`
+/// reproduces `real_pool_group_for_selection_slug`'s own `class_feature_id_
+/// slug` output exactly for this set -- verified against the five
+/// `DOMAIN_POWER_CATALOG` members already in this list (good, war, strength,
+/// destruction, glory) whose `selection_id` constants this file already
+/// pins elsewhere.
+const CORE_RULEBOOK_CLERIC_DOMAIN_ADJECTIVES: &[&str] = &[
+    "air", "animal", "artifice", "chaos", "charm", "community", "darkness", "death",
+    "destruction", "earth", "evil", "fire", "glory", "good", "healing", "knowledge", "law",
+    "liberation", "luck", "madness", "magic", "nobility", "plant", "protection", "repose",
+    "rune", "strength", "sun", "travel", "trickery", "war", "water", "weather",
+];
+
+/// `AT-34-E3-002` (bucket C continuation, cycle 3; `decisions.md §12` L1):
+/// verifies, by REAL computation and never by trusting the generic
+/// pool-group resolver's own theoretical reach, which real corpus
+/// `"<Domain> Domain ~ <Power>"` records the engine's PRE-EXISTING generic
+/// pool-group-selection pass (`push_generic_pool_group_selection_magnitude`,
+/// wired at Cleric Domain since SD-32 T12 Epic 8) genuinely grounds. The
+/// canonical per-class sweep that fills `EngineFacts::explanation_ids` only
+/// ever selects Good's own domain for cleric (`canonical_seeds_for`'s single
+/// `"domain:good"` seed), so it alone could never observe any other domain's
+/// own generic-pass explanations -- this probe selects EACH real Core
+/// Rulebook domain in turn, over the SAME real `compute_pilot_base_chassis`
+/// pipeline every other probe in this file uses, and reads the exact corpus
+/// keys the engine genuinely emitted off each explanation's own `detail`
+/// field (`generic_pool_group_selection_observed_keys` -- never a slug
+/// reconstruction), so a genuinely-wired record is never conflated with one
+/// the resolver merely lists as theoretically reachable.
+fn probe_cleric_domain_generic_member_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for adjective in CORE_RULEBOOK_CLERIC_DOMAIN_ADJECTIVES {
+        let selection_id = format!("domain:{adjective}");
+        for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "cleric", level);
+            input.chosen.selected_choices.retain(|c| c.choice_set_id != "choice:cleric_domain");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:cleric_domain".to_string(),
+                selection_id: selection_id.clone(),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            wired.extend(
+                codex::rules_core::pilot_compute::generic_pool_group_selection_observed_keys(
+                    &computation.explanations,
+                    "class_feature.cleric.domain.generic.",
+                ),
+            );
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// `AT-34-E3-001` (`decisions.md §14`): verifies, by REAL computation and
 /// never by trusting `domain_power::DOMAIN_POWER_CATALOG`'s own membership,
 /// which `"Domain Power ~ <granted power name>"` corpus records the engine
@@ -7752,6 +7837,88 @@ mod monk_unarmed_damage_die_probe_tests {
                 (20, "Medium".to_string()),
             ]),
             "expected exactly the 6 Medium band-start levels; got {wired:?}"
+        );
+    }
+}
+
+#[cfg(test)]
+mod cleric_domain_generic_member_probe_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Print, don't assume: dumps the real probe's real observed set against
+    /// the real fixture, for THIS cycle's own re-derivation
+    /// (`decisions.md §12` L2) -- run with `--nocapture` to read it.
+    #[test]
+    fn print_the_real_observed_set_for_this_cycles_own_receipt() {
+        let wired = probe_cleric_domain_generic_member_wiring(&fixture());
+        eprintln!("cleric_domain_generic_member_wired ({} keys):", wired.len());
+        for key in &wired {
+            eprintln!("  {key}");
+        }
+        assert!(!wired.is_empty(), "expected at least one real domain member to resolve");
+    }
+
+    /// Against the REAL fixture and the REAL compute pipeline, Air Domain's
+    /// Lightning Arc genuinely resolves (its own `BONUS:VAR|LightningArcTimes
+    /// |DomainAirTimes` chains through the SAME real header `BONUS:VAR|
+    /// DomainAirTimes|DomainPowerTimes|TYPE=Domain` -> `BONUS:VAR|
+    /// DomainPowerTimes|3+WIS` chain Strength Surge's own already-shipped
+    /// path uses) -- one concrete, individually-verified proof point, not an
+    /// assumption drawn from the group-level census alone.
+    #[test]
+    fn the_probe_observes_air_domain_lightning_arc_against_the_real_fixture() {
+        let wired = probe_cleric_domain_generic_member_wiring(&fixture());
+        assert!(
+            wired.contains("Air Domain ~ Lightning Arc"),
+            "expected Air Domain ~ Lightning Arc to resolve through the real generic pool-group \
+             pass; observed set: {wired:?}"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a real corpus record from a completely unrelated
+    /// class-feature group (Rogue's Sneak Attack, no relationship whatsoever
+    /// to Cleric Domain) is never in the observed set -- confirming the
+    /// probe's own key-extraction reads only the real corpus keys the
+    /// generic pass genuinely emitted, never every key in the corpus.
+    #[test]
+    fn the_probe_does_not_credit_an_unrelated_class_feature_record() {
+        let wired = probe_cleric_domain_generic_member_wiring(&fixture());
+        assert!(
+            !wired.contains("Rogue ~ Sneak Attack"),
+            "an unrelated Rogue class feature must never appear in a Cleric-domain-scoped \
+             probe's own observed set: {wired:?}"
+        );
+    }
+
+    /// A dice-notation-only facet (Rebuke Death's own heal amount) does NOT
+    /// block this record from appearing here -- `resolve_pool_member_all_
+    /// magnitudes` resolves whichever INDEPENDENT terminal is reachable
+    /// (Rebuke Death's real `RebukeDeathTimes` uses-per-day `BONUS:VAR`
+    /// chain, the same `DomainPowerTimes|3+WIS` chain every other domain
+    /// power's own uses-per-day resolves through), even when a SEPARATE
+    /// DESC-embedded dice formula on the same record stays out of reach.
+    /// Confirmed live rather than assumed from `domain_power.rs`'s own
+    /// module doc (which describes only the DIFFERENT, narrower bespoke
+    /// catalog's grammar, not this generic resolver's).
+    #[test]
+    fn the_probe_credits_healing_domain_rebuke_death_off_its_real_uses_per_day_chain() {
+        let wired = probe_cleric_domain_generic_member_wiring(&fixture());
+        assert!(
+            wired.contains("Healing Domain ~ Rebuke Death"),
+            "Rebuke Death's real uses-per-day BONUS:VAR chain must resolve even though its \
+             separate dice-notation heal amount does not: {wired:?}"
         );
     }
 }
@@ -8457,6 +8624,7 @@ fn gather_engine_facts(
         ranger_favored_enemy_bonus_wired: probe_ranger_favored_enemy_bonus_wiring(fixture),
         ranger_favored_terrain_bonus_wired: probe_ranger_favored_terrain_bonus_wiring(fixture),
         monk_unarmed_damage_die_wired: probe_monk_unarmed_damage_die_wiring(fixture),
+        cleric_domain_generic_member_wired: probe_cleric_domain_generic_member_wiring(fixture),
         wizard_arcane_school_wired: probe_wizard_arcane_school_wiring(fixture),
         bard_bardic_performance_wired: probe_bard_bardic_performance_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
@@ -10714,6 +10882,33 @@ fn classify(
                         engine_book: engine_book_field,
                     };
                 }
+            }
+            // `AT-34-E3-002` (bucket C continuation, cycle 3): the SIBLING
+            // corpus shape to the `"Domain Power ~ <Power>"` check just
+            // above -- the SAME granted power ingested a second time under
+            // its own domain's key, `"<Domain> Domain ~ <Power>"` (e.g.
+            // `"Air Domain ~ Lightning Arc"`, a real, separate `.lst` line
+            // from `"Domain Power ~ Lightning Arc"`, confirmed by direct
+            // corpus read -- not a duplicate to collapse). `group` here is
+            // literally the domain's own display name (`"Air Domain"`), not
+            // `"Domain Power"`, so it falls straight through the check
+            // above unmatched. `probe_cleric_domain_generic_member_wiring`
+            // is the real, separate attribution path: it selects each real
+            // Core Rulebook domain in turn on a real cleric and keeps only
+            // the exact corpus keys the engine's own PRE-EXISTING generic
+            // pool-group-selection pass genuinely emitted, so this can only
+            // ever credit a record that pass truly resolves -- every
+            // domain member the pass refuses (a dice-notation heal amount,
+            // a multi-terminal record with an unreachable chain, ...) falls
+            // through unaffected.
+            if facts.cleric_domain_generic_member_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "generic_pool_group_selection_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
             }
             // `AT-34-E3-001` (mechanism 3 continuation): `"Weapon Training
             // <tier> <group>"` sub-cause, same shape as the Domain Power
@@ -18902,6 +19097,66 @@ mod class_feature_text_complete_rung_tests {
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-002` (bucket C continuation, cycle 3): a real Cleric Domain
+    /// power record reaches `grounded` off
+    /// `probe_cleric_domain_generic_member_wiring`'s real, observed generic
+    /// pool-group-selection explanation -- the SIBLING corpus shape to the
+    /// pre-existing `"Domain Power ~ <Power>"` check, keyed under the
+    /// domain's own display name instead.
+    #[test]
+    fn an_air_domain_power_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .cleric_domain_generic_member_wired
+            .insert("Air Domain ~ Lightning Arc".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            3181,
+            "Air Domain ~ Lightning Arc",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "generic_pool_group_selection_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a domain-power record the probe never observed (its
+    /// own `EngineFacts` set is empty here) is completely unaffected -- it
+    /// still falls through to the pre-existing `engine-does-not-hold`
+    /// bucket-C finding this cycle is closing, proving the fix credits
+    /// nothing it did not actually observe.
+    #[test]
+    fn an_air_domain_power_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            3181,
+            "Air Domain ~ Lightning Arc",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        // The real corpus record's own `type_facet`
+        // (`"ClericClassFeatures.SpecialAttack.SpellLike.DomainPower"`) feeds
+        // `class_feature_owner_via_type_facet`'s own extraction, which this
+        // synthetic fixture (`type_facet: None`, matching every sibling
+        // negative-control test's own convention above) does not reproduce
+        // -- the live corpus record itself reads
+        // `no_explanation_id_and_no_diagnostic_names_this_feature` instead
+        // (confirmed live, `docs/work-inventory.json`), a different but
+        // still `engine-does-not-hold` fallback shaped by that unrelated
+        // owner-extraction difference, not by this cycle's own fix.
         assert_eq!(
             verdict.evidence,
             "class_feature_option_pool_record_with_magnitude_not_held_by_engine"

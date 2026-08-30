@@ -41195,6 +41195,44 @@ fn push_generic_pool_group_selection_magnitude(
     }
 }
 
+/// `AT-34-E3-002` bridge for `v06_work_inventory`'s completion-atlas classifier
+/// (`decisions.md §2` bucket C, "held and computed, never surfaced";
+/// `decisions.md §12` L1 -- read the code that writes a verdict field before
+/// quoting it). [`push_generic_pool_group_selection_magnitude`] has, since
+/// SD-32 T12 Epic 8, already computed and explained real corpus
+/// `"<group> ~ <member>"` records for six real pools (Cleric Domain,
+/// Sorcerer Bloodline, Bloodrager Bloodline, Oracle Mystery, Warpriest
+/// Blessing, Shaman Spirit) -- but nothing in `v06_work_inventory`'s
+/// classifier has ever asked it a question, so every one of those records
+/// reads `engine-does-not-hold` regardless of whether the engine holds it.
+///
+/// This returns, from a REAL character's own real `ComputationExplanation`s
+/// (produced by a real `compute_pilot_base_chassis`/`build_pilot_headless_receipt`
+/// run, never a static reflection of which groups the resolver COULD in
+/// principle reach), the exact set of real corpus keys
+/// (`"<group> ~ <member>"`) whose generic pool-group magnitude was genuinely
+/// emitted this run. Read directly from each matching explanation's own
+/// `detail` field, which embeds `` corpus key `<key>` `` verbatim
+/// (`push_generic_pool_group_selection_magnitude`'s own format string,
+/// literally quoted above) -- never reconstructed by guessing the id's own
+/// slug scheme, so a future change to that slug format cannot silently
+/// desync this bridge from what the engine actually emitted.
+pub fn generic_pool_group_selection_observed_keys(
+    explanations: &[ComputationExplanation],
+    id_prefix: &str,
+) -> std::collections::BTreeSet<String> {
+    const MARKER: &str = "corpus key `";
+    explanations
+        .iter()
+        .filter(|e| e.id.starts_with(id_prefix))
+        .filter_map(|e| {
+            let start = e.detail.find(MARKER)? + MARKER.len();
+            let end = e.detail[start..].find('`')?;
+            Some(e.detail[start..start + end].to_string())
+        })
+        .collect()
+}
+
 /// The sibling of [`push_generic_pool_group_selection_magnitude`] for the DIFFERENT corpus shape
 /// cycle 14's own `§16` finding named and refused to force through the wrong resolver (SD-32 T12
 /// Epic 8 row 18 cycle 15): a pool member with an EMPTY `bonus_vars` (so `resolve_pool_member_
