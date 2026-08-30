@@ -576,157 +576,82 @@ function regenPrompt(laneSummaries) {
     + 'never git stash. ONE turn - foreground the long runs, commit and push before ending it.'
 }
 
-function batchEditPrompt() {
-  return [
-    'You are the SINGLE batch-edit cycle for bundle SD-34, in your own isolated git worktree on ' + BT + 'tranche/14' + BT + '.',
-    '',
-    '## Why you are one agent and not four',
-    '',
-    'This workspace has 543 integration test targets. A cold build is ~38GB of compilation. Four parallel',
-    'lanes each paid that separately, so a 2-unit change and a 400-unit change cost the same. You make ALL',
-    'the changes first, then compile ONCE, then test ONCE, then iterate on what the tests actually say.',
-    'Every iteration after the first build is warm and cheap.',
-    '',
-    '## Environment',
-    '',
-    '```bash',
-    'export RETRO_ACTOR="sd34-batch-b"',
-    'export CARGO_TARGET_DIR="/tmp/cargo-sd34-batch"   # ONE dir, reused across your iterations',
-    'export CARGO_INCREMENTAL=0',
-    'mkdir -p "$CARGO_TARGET_DIR" && echo $$ > "$CARGO_TARGET_DIR/.reclaim-claim"',
-    '```',
-    '',
-    '## The work: bucket B for core_rulebook, 532 units across three mechanisms',
-    '',
-    'Re-derive each population yourself before starting; do not trust these numbers.',
-    '',
-    '1. ' + BT + 'class_feature_owner_matched_by_name_but_record_not_held_by_engine' + BT + ' (~242). §18`s gate widening landed,',
-    '   so Wizard/Bard/Paladin/Cleric/Sorcerer now reach the citation gate. Monk (25) + Druid (1) stay blocked',
-    '   behind ' + BT + 'is_druid_pillar_id' + BT + '/' + BT + 'is_monk_pillar_id' + BT + ' in ' + BT + 'src/rules_core/level_up/' + BT + ' - widening THAT filter',
-    '   by the same citation property is in scope for you. ~18 zero-description units are the OPEN definitional',
-    '   question in atlas-defects.md: leave them in B, do not reclassify.',
-    '2. ' + BT + 'class_feature_option_pool_record_with_magnitude_not_held_by_engine' + BT + ' (~208). Weapon Training was just',
-    '   generalized to all 14 groups; continue from that receipt`s named remainder.',
-    '3. ' + BT + 'class_feature_option_pool_record_not_held_by_engine' + BT + ' (~34). Nine cycles, last few closed almost nothing.',
-    '   Its remainder needs real subsystems: proficiency/grant possession-tracking, wizard opposition-school',
-    '   tracking. Build one properly or say plainly it is not narrow work.',
-    '',
-    '## How to work',
-    '',
-    '1. **Read the prior receipts first** in ' + BT + 'artifacts/epic-3-core-rulebook/' + BT + '. Roughly 35 cycles have run these',
-    '   mechanisms and their named remainders are sound. Continue from them; do not re-derive their investigations.',
-    '   But DO re-derive their NUMBERS and their stated REASONS - both have been wrong before, and a cycle',
-    '   already disproved another`s reason for deferring three classes.',
-    '2. **Make every edit you intend, across all three mechanisms, BEFORE your first build.** Write the tests',
-    '   too. Do not build between edits.',
-    '3. Then ' + BT + 'cargo test --locked --no-run' + BT + ' once. Fix compile errors, rebuild (now warm).',
-    '4. Then run the scoped suites plus the nine ' + BT + 'sd13_*' + BT + '/' + BT + 'sd25_*' + BT + ' anti-fabrication gates. Fix what fails,',
-    '   re-run. **Never weaken, ignore, or narrow a gate to make it pass** - a prior attempt here was rejected',
-    '   as GAMED for that. A gate accepts an explanation because it CITES A REAL CORPUS RECORD (decisions.md §18).',
-    '5. **Do NOT regenerate ' + BT + 'docs/work-inventory.json' + BT + '** and do not run corpus_literal_sweep or',
-    '   derived_evaluator_fixture_check. A separate regeneration cycle measures what you moved. State what you',
-    '   EXPECT to move, per mechanism, and why. A wrong expectation is a finding worth reporting, not a failure.',
-    '',
-    '## Rules',
-    '',
-    'git status --porcelain before every git write. Stage your own paths explicitly - never git add -A, never',
-    'git stash. **Before committing run ' + BT + 'git diff --cached --numstat' + BT + ' and read it**: a commit whose subject says',
-    '"add" while its body deletes shipping code is this repo`s recorded failure mode and has happened here.',
-    'Push via fetch + rebase + push, retrying up to 5 times.',
-    '',
-    'ONE turn. Foreground the builds - do not end your turn waiting on a background job; lanes have lost work',
-    'that way. Commit and push before ending, even for partial work.',
-    '',
-    'Return the structured object: status, commit_sha, row_count_command_output, receipt_path, figures,',
-    'build_scope, movement, remainder, discoveries, next_cycle_plan.',
-  ].join('\n')
+const COMMIT_RULE = '## COMMIT EARLY - this is the rule six lanes have now broken\\n\\nSix consecutive lanes ended their turn holding finished work uncommitted, and three wrote "complete" into progress.md while their evidence sat in an uncommitted worktree that later vanished. **Commit your code as soon as it compiles and its scoped tests pass. Verify AFTER.** The pipeline takes ~30 minutes; a commit takes seconds. If you stall or the session dies mid-verification, a committed change costs nothing and an uncommitted one is gone.\\n\\n**Never write a claim into progress.md or kanban.md whose artifact you have not committed in the same cycle.** A salvage lane just dropped 2,000+ claimed units because the ledger behind them was never captured. If you produce a data file your numbers depend on, `git add` it explicitly - an untracked file is not evidence.\\n\\nForeground the long passes; nothing wakes you. `git status --porcelain` before every git write; stage your own paths; never `git add -A`; never `git stash`. Run `git diff --cached --numstat` and READ IT before committing.'
+
+function ucLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E4-002', dir: 'epic-4-ultimate-campaign',
+    title: 'drive Ultimate Campaign to zero — 132 of 265 remain, and 23 of them may already be answered.\n\n'
+      + 'Bar: ' + BT + 'DONE = 265 of 265' + BT + '. Re-derive the split yourself; last measured: 89 '
+      + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 ' + BT + 'unmeasurable' + BT + ', 18 ' + BT + 'literal-verified' + BT + ' (bucket V), '
+      + '2 ' + BT + 'deferred-with-reason' + BT + ', 2 ' + BT + 'engine-does-not-hold' + BT + '.\n\n'
+      + '**Start with the 23 that rulings may already cover.** ' + BT + 'decisions.md §19' + BT + ' dispositions bucket-V units '
+      + 'carrying a real named oracle verdict — check whether SD-33 ledgers cover your 18 before engineering anything. '
+      + BT + '§17' + BT + ' ruled bucket U done for internal plumbing carrying nothing a player is owed — but your 21 are '
+      + BT + 'feat_served_description_is_a_placeholder_marker_not_prose' + BT + ', a DIFFERENT shape. **Do not assume the ruling '
+      + 'extends.** Read the actual records: if they are real feats whose description was lost, that is a content gap for '
+      + BT + 'atlas-defects.md' + BT + ', not a quiet disposition.\n\n'
+      + 'Then the 89 M units (' + BT + 'trait_content' + BT + ' ~59, ' + BT + 'ability_content' + BT + ' ~30): the table holds the record and its '
+      + 'magnitude and the compute path has never been run over it. Build keyed on the KIND\'s compute path, not on this '
+      + 'book — ' + BT + 'ability_content_...' + BT + ' is far larger elsewhere and a generic fix pays corpus-wide.\n\n'
+      + 'A unit leaves M when its value is genuinely computed and applied, not relabelled. M→D is reclassification; say '
+      + 'which is which. A cycle here claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE })
 }
 
-function oracleLanePrompt() {
-  return [
-    'You are the bucket-V lane for bundle SD-34, in your own isolated git worktree on ' + BT + 'tranche/14' + BT + '.',
-    '',
-    '## Why you run in parallel with the engine lane',
-    '',
-    'Bucket V and bucket B share NO code. B is Rust engine work needing a ~38GB cold build of 543 test',
-    'targets. You are Python: ' + BT + 'scripts/oracle_harness/' + BT + ' driving a Java oracle. **You should not need a cargo',
-    'build at all** - if you find yourself starting one, stop and ask whether you actually need it. That is why',
-    'you cost almost nothing to run alongside the engine lane.',
-    '',
-    '## The work',
-    '',
-    'Bucket V is **2,793 of 6,701** core_rulebook units (9,558 corpus-wide): records verified by PROXY but never',
-    'checked against the real oracle. Clearing one means running it through the harness and recording a real',
-    'verdict. This is the single largest block standing between the Core Rulebook and zero.',
-    '',
-    '```bash',
-    'export RETRO_ACTOR="sd34-bucket-v"',
-    'export PCGEN_REPO_DIR="$HOME/workspace/repos/pcgen"   # the pinned oracle checkout, already present',
-    '```',
-    'Read ' + BT + 'scripts/pcgen-oracle-pin.env' + BT + ' and name ' + BT + 'PCGEN_ORACLE_SHA' + BT + ' in every figure you derive from the',
-    'pinned corpus. **' + BT + '~/workspace/repos/pcgen' + BT + ' is the correct path here** but ' + BT + 'fetch-pcgen-oracle.sh' + BT + '`s default',
-    '--dest also resolves there, and a preflight PASS against a wrong checkout fails silently - verify the SHA.',
-    '',
-    '## MEASURE BEFORE THE POPULATION RUN - this is the rule that matters most',
-    '',
-    'SD-33 reached 32 of 8,330 units by carrying a one-character-per-unit method into a population, and it cost',
-    'four remediation waves. Before running anything at scale:',
-    '1. Run a SAMPLE (say 20 units). Time it.',
-    '2. State measured per-unit cost, the population, and projected wall time for all 2,793.',
-    '3. Only then decide how much to run this cycle. Put the projection in your receipt BEFORE the full run.',
-    'SD-33`s own throughput lessons: amortise the JVM startup, and carry many computed variables per character',
-    'rather than one - read its retrospective and harness receipts before designing your run.',
-    '',
-    '## What counts as done',
-    '',
-    'A unit leaves V when the oracle gives a real verdict: agree, disagree, or a NAMED unverifiable reason.',
-    '**A disagreement is a finding, not a failure** - report it, do not paper over it. Do not mark a unit',
-    'verified because the harness errored or timed out; that is exactly the false-verification this bucket exists',
-    'to remove.',
-    '',
-    '## Rules',
-    '',
-    '**Do NOT regenerate ' + BT + 'docs/work-inventory.json' + BT + '** - a separate cycle does that for the whole wave. Do not touch',
-    BT + 'src/rules_core/' + BT + ' or ' + BT + 'src/bin/v06_work_inventory.rs' + BT + '; the engine lane owns those and a sibling lane already',
-    'silently deleted another`s work in this bundle by rebasing carelessly.',
-    'git status --porcelain before every git write; stage your own paths explicitly; never git add -A, never git',
-    'stash. **Run ' + BT + 'git diff --cached --numstat' + BT + ' and READ IT before committing** - a commit that says "add" while',
-    'deleting shipping code is this repo`s recorded failure mode and happened here yesterday.',
-    'Push via fetch + rebase + push, retrying up to 5 times.',
-    '',
-    'ONE turn. Foreground the long runs; poll a background job in a loop inside the turn rather than ending it.',
-    'Commit and push before ending, even for partial work. Report ' + BT + 'partial' + BT + ' with the remainder named by',
-    'sub-cause if you do not finish - that is expected for a population this size and is not a failure.',
-    '',
-    'Return: status, commit_sha, row_count_command_output, receipt_path, figures (each with its command AND',
-    'denominator, plus PCGEN_ORACLE_SHA), build_scope, movement (four buckets), remainder, discoveries,',
-    'next_cycle_plan.',
-  ].join('\n')
+function vLedgerPrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E3-005', dir: 'epic-3-core-rulebook',
+    title: 'rebuild the corpus-wide bucket-V ledger AND COMMIT THE DATA FILE.\n\n'
+      + '**This work was done once and lost.** A lane built a 6,590-row corpus-wide consolidated ledger, wrote '
+      + '"complete" into the board, and left the data file UNTRACKED. Its session died; the claim survived, the '
+      + 'evidence did not. A salvage lane correctly refused to land 2,000+ units with no artifact behind them. '
+      + '**The single most important thing you do is `git add` the ledger file in the same commit as any number '
+      + 'that depends on it.**\n\n'
+      + 'The loader is already widened and landed: ' + BT + 'load_bucket_v_oracle_dispositions' + BT + ' merges a LIST of ledger '
+      + 'paths. It is a verified no-op without data. Your job is the data.\n\n'
+      + 'Cross-reference the **6,846** still-open bucket-V units corpus-wide against SD-33\'s own committed '
+      + BT + 'oracle-results.json' + BT + ' files, exactly as the ' + BT + 'core_rulebook' + BT + ' pass did (2,793 → 81, zero new oracle runs). '
+      + 'Read ' + BT + 'artifacts/epic-3-core-rulebook/bucket-v/' + BT + ' for the proven shape.\n\n'
+      + 'Per ' + BT + 'decisions.md §19' + BT + ': only reuse verdicts SD-33 actually produced — never infer one for a unit the '
+      + 'ledger does not cover. **A ' + BT + 'disagree' + BT + ' is never dispositioned**; if any book has one, that unit stays '
+      + 'outstanding and you report it prominently — it is the most valuable thing you could return. Freshness-check '
+      + 'a sample and state its size. Prove the remainder by SET, not count. Name ' + BT + 'PCGEN_ORACLE_SHA' + BT + ' on every '
+      + 'corpus-derived figure.\n\n' + COMMIT_RULE })
+}
+
+function mLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E3-003', dir: 'epic-3-core-rulebook',
+    title: 'bucket M for the Core Rulebook — 1,048 of 6,701, the largest remaining block.\n\n'
+      + 'Definition: magnitude ingested, never computed or applied. **The instrument already exists** — that is what '
+      + 'separates this from bucket B, whose remainder needs new subsystems built.\n\n'
+      + 'Re-derive the sub-causes; do not trust inherited figures OR inherited reasons — this bundle has had a cycle '
+      + 'disprove another\'s stated reason. Last measured: ' + BT + 'equipment_table_entry_with_corpus_magnitude' + BT + ' ~276, '
+      + BT + 'ability_content_table_holds_record_magnitude_not_yet_computed' + BT + ' ~217, '
+      + BT + 'equipment_own_line_has_no_magnitude_but_closure_wiring_class_does' + BT + ' ~147, '
+      + BT + 'race_trait_generic_...' + BT + ' ~119, ' + BT + 'template_content_...' + BT + ' ~96.\n\n'
+      + '**Build generically — the payoff is measured.** A recent generic fix closed 123 units across 6 books from one '
+      + 'change; the ledger records ~345 units/hour for generic work against ~20 for book-scoped. These sub-causes are '
+      + 'KINDS, so a fix keyed on the kind\'s compute path is corpus-wide by construction.\n\n'
+      + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 1,048.** Return ' + BT + 'partial' + BT + ' with '
+      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE })
 }
 
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
   phase(title)
-  log('two disjoint lanes in parallel: B (Rust, pays the 38GB build) and V (Python + oracle, no build)')
+  log('wave 11: 3 lanes in parallel (own worktree + own target dir), then ONE regeneration')
 
-  const [edit, oracle] = await parallel([
-    () => agent(batchEditPrompt(), {
-      model: 'sonnet', phase: title, label: 'B: batch edit, all 3 mechanisms',
-      schema: CYCLE_SCHEMA, isolation: 'worktree',
-    }),
-    () => agent(oracleLanePrompt(), {
-      model: 'sonnet', phase: title, label: 'V: oracle harness (2,793 units)',
-      schema: CYCLE_SCHEMA, isolation: 'worktree',
-    }),
+  const [uc, vled, m] = await parallel([
+    () => agent(ucLanePrompt(),     { model: 'sonnet', phase: title, label: 'UC: 132 to zero',        schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(vLedgerPrompt(),    { model: 'sonnet', phase: title, label: 'V: rebuild+commit ledger', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(mLanePrompt(),      { model: 'sonnet', phase: title, label: 'M: core_rulebook 1,048',  schema: CYCLE_SCHEMA, isolation: 'worktree' }),
   ])
-  log('B -> ' + (edit ? edit.status : 'null') + ' | V -> ' + (oracle ? oracle.status : 'null'))
+  log('UC -> ' + (uc && uc.status) + ' | V -> ' + (vled && vled.status) + ' | M -> ' + (m && m.status))
 
-  const summary = ['- B batch (' + ((edit && edit.status) || '?') + '): ' + String((edit && (edit.discoveries || edit.remainder)) || 'no report').slice(0, 500),
-                   '- V oracle (' + ((oracle && oracle.status) || '?') + '): ' + String((oracle && (oracle.discoveries || oracle.remainder)) || 'no report').slice(0, 500)].join('\n')
+  const summary = [['UC', uc], ['V-ledger', vled], ['M', m]].map(([n, r]) =>
+    '- ' + n + ' (' + ((r && r.status) || '?') + '): ' + String((r && (r.discoveries || r.remainder)) || 'no report').slice(0, 400)).join('\n')
   const regen = await agent(regenPrompt(summary), {
     model: 'sonnet', phase: title, label: 'regen + attribution', schema: REGEN_SCHEMA,
   })
-  return { edit, oracle, regen }
+  return { uc, vled, m, regen }
 }
 
 // args.bucketB runs ONLY the parallel bucket-B lanes + the single wave regeneration.
