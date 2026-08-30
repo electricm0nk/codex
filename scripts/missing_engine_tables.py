@@ -69,8 +69,8 @@ _A_MARKER = "has_no_engine_table"
 ENGINE_SURFACE_CITATIONS = {
     # Re-derived by AT-34-E3-003's bucket-M skill widening cycle, whose own
     # edit shifted every citation below its insertion point.
-    "companion": {"line": 11504, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 11604, "must_contain": "power_content_has_no_engine_table"},
+    "companion": {"line": 11524, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 11624, "must_contain": "power_content_has_no_engine_table"},
 }
 
 
