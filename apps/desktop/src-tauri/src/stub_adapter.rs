@@ -168,6 +168,7 @@ mod tests {
             selected_alternate_trait_keys: Vec::new(),
             companion_species: None,
             selected_traits: Vec::new(),
+            trait_skill_choices: Vec::new(),
             saved_at: "2026-07-21T00:00:00Z".to_owned(),
         })
     }

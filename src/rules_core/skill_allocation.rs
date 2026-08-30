@@ -759,8 +759,19 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     // deliberately not yet covered). Empty for any character with no
     // `selected_traits` or none this module recognizes -- byte-identical
     // to pre-cycle behavior for every existing fixture.
-    let trait_skill_bonuses =
+    let mut trait_skill_bonuses =
         crate::rules_core::trait_effects::skill_bonuses_from_traits(&input.chosen.selected_traits);
+    // Second slice: fixed-choice `%LIST` traits (`trait_effects`'s own
+    // "Second slice" doc-comment section) -- summed into the same map, not
+    // double-applied, because `no_trait_id_appears_in_both_tables` proves
+    // no trait id is ever a member of both tables.
+    for (skill_id, bonus) in crate::rules_core::trait_effects::skill_choice_bonuses_from_traits(
+        &input.chosen.selected_traits,
+        &input.chosen.selected_choices,
+    ) {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
 
     let mut totals = BTreeMap::new();
     let mut untrained_use = BTreeMap::new();

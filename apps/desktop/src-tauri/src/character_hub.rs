@@ -458,6 +458,24 @@ pub struct CreateCharacterRequest {
     /// caller that sends none) keeps working unchanged.
     #[serde(default)]
     pub selected_traits: Vec<String>,
+    /// **AT-34-E4-002 (second slice)**: the player's resolved choice for
+    /// each *fixed-choice* `%LIST` trait named in `selected_traits`
+    /// (`trait_effects::SKILL_CHOICE_TRAIT_BONUSES`) -- one
+    /// `SelectedChoiceDto { choice_set_id, selection_id }` per such trait,
+    /// with `choice_set_id` exactly `list_available_character_traits`'s
+    /// own `choiceSetId` for that option and `selection_id` one of its
+    /// `skillOptions`. Appended to `chosen.selected_choices` verbatim --
+    /// the same generic `SelectedChoice` channel `LevelUpCharacterRequest
+    /// ::additional_choices` already uses, not a new mechanism. A flat
+    /// trait needs no entry here (`choice_set_id` is `None` for it).
+    /// `#[serde(default)]` so every pre-existing caller (every flat-only
+    /// trait selection, and every payload predating this field) keeps
+    /// working unchanged. An entry whose `choice_set_id`/`selection_id`
+    /// pair is not a real, corpus-declared option for that trait is
+    /// simply inert (`skill_choice_bonuses_from_traits`'s own "omit
+    /// rather than fabricate" discipline), never a blocked save.
+    #[serde(default)]
+    pub trait_skill_choices: Vec<SelectedChoiceDto>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1531,6 +1549,7 @@ pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), St
         // fabricated default" reasoning as the alternate-trait comment
         // immediately above.
         selected_traits: Vec::new(),
+        trait_skill_choices: Vec::new(),
     };
 
     let character_input = compose_character_input(&request);
@@ -4977,6 +4996,7 @@ mod tests {
             selected_alternate_trait_keys: Vec::new(),
             companion_species: None,
             selected_traits: Vec::new(),
+            trait_skill_choices: Vec::new(),
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }

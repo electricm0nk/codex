@@ -11893,18 +11893,22 @@ fn classify(
         // string.
         //
         // `AT-34-E4-002` (bucket M): the same `grounded_magnitude` wiring
-        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by
-        // `trait_effects::flat_skill_trait_magnitude_is_grounded_for_corpus_key`
-        // -- an ACTUALLY-EXECUTED fixture character run through
-        // `allocate_skill_ranks`, never an assumed value. Covers only the
-        // 31-of-59 `ultimate_campaign` `trait_content` records whose corpus
-        // `BONUS` token is a flat, named-skill `SKILL` bonus with no
-        // `%LIST`/formula shape (see that module's own doc comment for the
-        // exact filter); every other held `trait` record's `unit.key`
-        // resolves to `None` here and falls through to
+        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by two
+        // `trait_effects` entry points tried in order -- both an
+        // ACTUALLY-EXECUTED fixture character run through
+        // `allocate_skill_ranks`, never an assumed value:
+        // `flat_skill_trait_magnitude_is_grounded_for_corpus_key` (31-of-59
+        // records whose corpus `BONUS` token is a flat, named-skill
+        // `SKILL` bonus), then, only if that returns `None`,
+        // `skill_choice_trait_magnitude_is_grounded_for_corpus_key`
+        // (5-of-59 more records whose `BONUS:SKILL|%LIST` is constrained
+        // to a fixed, closed list of concrete named skills -- see that
+        // module's own doc comment for the exact filters and what stays
+        // out of scope for each). Every other held `trait` record's
+        // `unit.key` resolves to `None` from both and falls through to
         // `simple_kind_verdict`'s unchanged `ingested-magnitude` fallback --
-        // a pure widening, never a regression for a trait this module does
-        // not yet cover.
+        // a pure widening, never a regression for a trait neither module
+        // yet covers.
         Kind::Trait => {
             let coordinate = format!("{engine_book}:{}:{}", unit.provenance.file, unit.provenance.line);
             simple_kind_verdict(
@@ -11924,6 +11928,11 @@ fn classify(
                     None
                 } else {
                     trait_effects::flat_skill_trait_magnitude_is_grounded_for_corpus_key(&unit.key)
+                        .or_else(|| {
+                            trait_effects::skill_choice_trait_magnitude_is_grounded_for_corpus_key(
+                                &unit.key,
+                            )
+                        })
                 },
             )
         }
@@ -18070,12 +18079,45 @@ mod companion_text_complete_rung_tests {
         );
     }
 
+    /// `AT-34-E4-002` (bucket M, `trait_content`, second slice): `Trait ~
+    /// Criminal`'s own `BONUS:SKILL|%LIST|1|TYPE=Trait` token, constrained
+    /// to a fixed, closed `CHOOSE:SKILL|Disable Device|Intimidate|Sleight
+    /// of Hand` list, is a real, fixture-verified choice-based trait skill
+    /// bonus (`trait_effects::
+    /// skill_choice_trait_magnitude_is_grounded_for_corpus_key`, which
+    /// actually runs `allocate_skill_ranks` against a fixture character who
+    /// selected exactly this trait AND recorded a choice, and agrees).
+    /// This must reach `grounded` via the `.or_else` fallback onto the
+    /// choice-based entry point, since the flat entry point honestly
+    /// returns `None` for a `%LIST`-shaped record.
+    #[test]
+    fn a_fixed_choice_skill_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            194,
+            "Trait ~ Criminal",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_1"
+        );
+    }
+
     /// NEGATIVE CONTROL: `Trait ~ Artisan` is a real, held `trait` record
-    /// (`BONUS:SKILL|%LIST|1`, a player-chosen-Craft-skill placeholder this
-    /// cycle's compute path deliberately does not cover -- see
-    /// `trait_effects`'s own module doc comment) --
-    /// `flat_skill_trait_magnitude_is_grounded_for_corpus_key` honestly
-    /// returns `None`, and this record must stay exactly where it was
+    /// (`BONUS:SKILL|%LIST|2`, a player-chosen-*open-subtype*-Craft-skill
+    /// placeholder -- `CHOOSE:SKILL|TYPE=Craft` names a family, not a
+    /// fixed list of concrete skills, so neither this cycle's flat nor
+    /// fixed-choice compute path deliberately covers it -- see
+    /// `trait_effects`'s own module doc comment) -- both
+    /// `flat_skill_trait_magnitude_is_grounded_for_corpus_key` and
+    /// `skill_choice_trait_magnitude_is_grounded_for_corpus_key` honestly
+    /// return `None`, and this record must stay exactly where it was
     /// before this cycle: `ingested-magnitude`, never silently promoted.
     #[test]
     fn a_trait_outside_the_flat_slice_stays_ingested_magnitude() {

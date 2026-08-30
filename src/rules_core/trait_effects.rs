@@ -35,13 +35,37 @@
 //! single cleanest, most generalizable shape end-to-end rather than a
 //! half-wired attempt at all 59.
 //!
-//! ## What this cycle deliberately does NOT cover
+//! ## Second slice: fixed-choice `BONUS:SKILL|%LIST` traits
 //!
-//! - **12 more `trait_content` records** carry a single `BONUS:SKILL`
-//!   token but with a `%LIST` player-chosen-target placeholder (e.g.
-//!   `trait_artisan`: "choose a Craft skill") -- PCGen's own marker for a
-//!   per-character choice `CharacterInput` has no slot to record yet (the
-//!   same gap `feat_effects.rs`'s own doc comment names for Skill Focus).
+//! A second cycle widened the spine to cover the `%LIST` player-chosen-
+//! target shape -- but only where the corpus's own `CHOOSE:SKILL` token
+//! enumerates a **fixed, closed list of concrete named skills** (e.g.
+//! `trait_criminal`: `CHOOSE:SKILL|Disable Device|Intimidate|Sleight of
+//! Hand`). The character's choice is recorded the same general way
+//! `archetype_resolver.rs` already records an archetype pick -- a
+//! [`SelectedChoice`] with `choice_set_id` = [`trait_skill_choice_id`] of
+//! the trait's own `trait_id`, and `selection_id` = the chosen `skill:`
+//! wire id -- not a new parallel selection mechanism. See
+//! [`SKILL_CHOICE_TRAIT_BONUSES`] for the exact 5-record table and
+//! [`skill_choice_bonuses_from_traits`] for the compute path. An untrusted
+//! or stale `selection_id` outside the trait's own `skill_options` is
+//! never honored (same "omit rather than fabricate" posture as the flat
+//! table).
+//!
+//! ## What this module deliberately does NOT cover
+//!
+//! - **4 more `trait_content` records** (`trait_artisan`, `trait_mentored`,
+//!   `trait_simple_disciple`, `trait_talented`) carry a `BONUS:SKILL|
+//!   %LIST` token whose `CHOOSE:SKILL` names an **open subtype family**
+//!   (`TYPE=Craft`, `TYPE=Perform`, `TYPE=Profession`) rather than a fixed
+//!   list of concrete skills -- the player may name *any* Craft/Perform/
+//!   Profession subtype (including ones with no existing `skill:` id in
+//!   this crate's catalog, e.g. "Craft (Poison)"), which is a genuinely
+//!   open-ended text-entry chooser, not an enumerable list picker. A
+//!   materially different UI/input shape than [`SKILL_CHOICE_TRAIT_
+//!   BONUSES`]'s closed-list case; building it as a same-shaped closed
+//!   list here would silently drop legal player choices, so it is named,
+//!   not built, this cycle.
 //! - **3 records** carry an ability-score-difference formula magnitude
 //!   (`max(INT,CHA)-CHA` etc, e.g. `trait_bruising_intellect`) -- no
 //!   formula evaluator exists in this crate for that shape.
@@ -55,9 +79,9 @@
 //!   GM-adjudicated narrative penalties with no clean formulaic trigger,
 //!   per the prior cycle's own direct reading of that corpus.
 //!
-//! Widening past this flat slice is future work, gated on either a
-//! `%LIST` player-choice mechanism generalizing `SelectedChoice`, or a
-//! formula evaluator for ability-score-difference magnitudes -- neither
+//! Widening past these two slices is future work, gated on either an
+//! open-subtype chooser (Craft/Perform/Profession family text entry), or
+//! a formula evaluator for ability-score-difference magnitudes -- neither
 //! exists yet, and building either as a rushed half-measure here would
 //! risk the same "8 closures where measurement found 1" failure this
 //! bundle's own doctrine warns against.
@@ -65,7 +89,7 @@
 use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::{
-    AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState,
+    AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SelectedChoice,
 };
 
 /// One flat, named-skill `BONUS:SKILL` trait -- see the module doc
@@ -237,6 +261,204 @@ pub fn flat_skill_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str) -
     }
 }
 
+/// One fixed-choice `BONUS:SKILL|%LIST` trait -- see the module doc
+/// comment's "Second slice" section for the exact filter and what stays
+/// out of scope.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitSkillChoiceBonus {
+    /// The wire id `CharacterInput.chosen.selected_traits` carries for
+    /// this trait -- same `"trait:" + corpus filename slug` idiom as
+    /// [`TraitSkillBonus::trait_id`].
+    pub trait_id: &'static str,
+    /// The record's own corpus `KEY` token, as transcribed from
+    /// `data.key`.
+    pub corpus_key: &'static str,
+    /// The trait's display name, transcribed from the corpus record's own
+    /// `name` field.
+    pub name: &'static str,
+    /// Every `skill:` wire id the corpus's own `CHOOSE:SKILL` token
+    /// enumerates, normalized the same way `skill_allocation.rs`'s own
+    /// `normalize_skill_display_name` would. A character's recorded
+    /// choice outside this list is never honored -- see
+    /// [`skill_choice_bonuses_from_traits`].
+    pub skill_options: &'static [&'static str],
+    /// The flat integer bonus applied to whichever `skill_options` entry
+    /// the character actually chose. Transcribed from the record's own
+    /// `BONUS:SKILL|%LIST|<n>|...` token (or, where the corpus token
+    /// omits the magnitude entirely, from that same record's own
+    /// description text, which states it in prose -- `trait_harvester`
+    /// and `trait_simple_disciple` both do this; never invented).
+    pub bonus: i8,
+    /// The trait's own corpus `description` field, verbatim.
+    pub description: &'static str,
+}
+
+/// The 5-of-59 `ultimate_campaign` `trait_content` records whose corpus
+/// `BONUS` token is a `%LIST` player choice constrained to a fixed,
+/// closed list of concrete named skills (never an open `TYPE=<Family>`
+/// subtype chooser -- see the module doc comment for what that excludes).
+pub static SKILL_CHOICE_TRAIT_BONUSES: &[TraitSkillChoiceBonus] = &[
+    TraitSkillChoiceBonus {
+        trait_id: "trait:trait_criminal",
+        corpus_key: "Trait ~ Criminal",
+        name: "Criminal",
+        skill_options: &["skill:disable_device", "skill:intimidate", "skill:sleight_of_hand"],
+        bonus: 1,
+        description: "You spent your early life robbing and stealing to get by. Select one of the following skills: Disable Device, Intimidate, or Sleight of Hand. You gain a +1 trait bonus on that skill, and it is always a class skill for you.",
+    },
+    TraitSkillChoiceBonus {
+        trait_id: "trait:trait_fiend_blood",
+        corpus_key: "Trait ~ Fiend Blood",
+        name: "Fiend Blood",
+        skill_options: &["skill:bluff", "skill:intimidate", "skill:knowledge_planes"],
+        bonus: 1,
+        description: "The blood of fiends taints your line, manifesting physically, though it may be barely noticeable. Choose one of the following skills: Bluff, Intimidate, or Knowledge (planes). You gain a +1 trait bonus on checks with that skill, and it is always a class skill for you.",
+    },
+    TraitSkillChoiceBonus {
+        trait_id: "trait:trait_harvester",
+        corpus_key: "Trait ~ Harvester",
+        name: "Harvester",
+        skill_options: &["skill:profession_tanner", "skill:profession_trapper"],
+        bonus: 1,
+        description: "You were trained to harvest all parts of an animal with care and precision. You gain a +1 trait bonus on Profession (tanner) or Profession (trapper) checks, and you may make these checks as if you were trained in the skill even if you have no ranks. Additionally, you do not risk poisoning yourself whenever you handle or apply poison taken from a venomous creature.",
+    },
+    TraitSkillChoiceBonus {
+        trait_id: "trait:trait_influence",
+        corpus_key: "Trait ~ Influence",
+        name: "Influence",
+        skill_options: &["skill:diplomacy", "skill:intimidate", "skill:sense_motive"],
+        bonus: 1,
+        description: "Your position in society grants you special insight into others, and special consideration or outright awe from others.Choose one of the following skills: Diplomacy, Intimidate, or Sense Motive. You gain a +1 trait bonus on that skill, and it is always a class skill for you.",
+    },
+    TraitSkillChoiceBonus {
+        trait_id: "trait:trait_style_sage",
+        corpus_key: "Trait ~ Style Sage",
+        name: "Style Sage",
+        skill_options: &["skill:knowledge_history", "skill:knowledge_local"],
+        bonus: 1,
+        description: "You have a passion for history and news concerning monastic disciplines. You gain a +1 trait bonus on checks with your choice of either Knowledge (local) or Knowledge (history), and the one you choose is always a class skill for you. In addition, you gain a +1 trait bonus on Diplomacy checks made to gather information about any person with levels in monk.",
+    },
+];
+
+/// Looks up one [`SKILL_CHOICE_TRAIT_BONUSES`] entry by its wire
+/// `trait_id`.
+fn find_choice_by_trait_id(trait_id: &str) -> Option<&'static TraitSkillChoiceBonus> {
+    SKILL_CHOICE_TRAIT_BONUSES.iter().find(|entry| entry.trait_id == trait_id)
+}
+
+/// The `choice_set_id` a character's chosen skill for one
+/// [`SKILL_CHOICE_TRAIT_BONUSES`] trait is recorded under -- one
+/// `SelectedChoice` per trait, the same "one choice-set id per
+/// independent decision" convention `archetype_resolver::ARCHETYPE_
+/// CHOICE_ID` already establishes, scoped per-trait (not a single shared
+/// id) so a character who somehow selected two `%LIST` traits records
+/// each one's choice independently rather than colliding on one slot.
+pub fn trait_skill_choice_id(trait_id: &str) -> String {
+    format!("trait_choice:{trait_id}")
+}
+
+/// The real, computed skill bonus contribution of every
+/// [`SKILL_CHOICE_TRAIT_BONUSES`] trait in `selected_traits` **that also
+/// carries a genuine, corpus-legal recorded choice** in
+/// `selected_choices` -- a trait selected without its matching choice
+/// recorded yet (character-creation-in-progress) or with a `selection_id`
+/// outside that trait's own `skill_options` (untrusted/stale data)
+/// contributes nothing, never a fabricated or first-guessed default.
+/// Mirrors [`skill_bonuses_from_traits`]'s "omit rather than fabricate"
+/// discipline exactly; the two are summed together by
+/// `skill_allocation::allocate_skill_ranks`, never double-applied against
+/// each other because a trait id can only ever appear in one of the two
+/// tables (enforced by [`no_trait_id_appears_in_both_tables`]).
+pub fn skill_choice_bonuses_from_traits(
+    selected_traits: &[String],
+    selected_choices: &[SelectedChoice],
+) -> BTreeMap<String, i8> {
+    let mut totals: BTreeMap<String, i8> = BTreeMap::new();
+    for trait_id in selected_traits {
+        let Some(entry) = find_choice_by_trait_id(trait_id) else {
+            continue;
+        };
+        let choice_set_id = trait_skill_choice_id(trait_id);
+        let Some(chosen) = selected_choices
+            .iter()
+            .find(|choice| choice.choice_set_id == choice_set_id)
+        else {
+            continue;
+        };
+        if !entry.skill_options.contains(&chosen.selection_id.as_str()) {
+            // An untrusted or stale selection outside this trait's own
+            // corpus-declared options -- never honored, same discipline
+            // `archetype_resolver::chooser_option_selected` already
+            // established for a pool choice.
+            continue;
+        }
+        let slot = totals.entry(chosen.selection_id.clone()).or_insert(0);
+        *slot = slot.saturating_add(entry.bonus);
+    }
+    totals
+}
+
+/// **AT-34-E4-002's classifier-facing entry point for the choice-based
+/// slice**, the same shape as [`flat_skill_trait_magnitude_is_grounded_
+/// for_corpus_key`]: takes a corpus trait record's own `KEY` token, ACTUALLY
+/// BUILDS a minimal fixture character who selected exactly that trait
+/// *and* recorded a choice for its first-listed `skill_options` entry,
+/// runs it through the real [`crate::rules_core::skill_allocation::
+/// allocate_skill_ranks`] engine, and returns the genuine, computed
+/// `misc_modifier` -- never an assumed value. Returns `None` for any
+/// corpus key outside the 5-record choice slice, or in the unreachable
+/// case the fixture-executed value ever disagreed with the transcribed
+/// table.
+pub fn skill_choice_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str) -> Option<i8> {
+    let entry = SKILL_CHOICE_TRAIT_BONUSES
+        .iter()
+        .find(|entry| entry.corpus_key == corpus_key)?;
+    let chosen_skill = entry.skill_options.first()?;
+
+    let input = CharacterInput {
+        case_id: None,
+        source_package_id: "at_34_e4_002_fixture".to_owned(),
+        chosen: ChosenCharacterState {
+            race_id: "race:human".to_owned(),
+            class_levels: vec![CharacterClassLevel {
+                class_id: "class:fighter".to_owned(),
+                level: 1,
+            }],
+            ability_scores: AbilityScores {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 10,
+                wisdom: 10,
+                charisma: 10,
+            },
+            selected_feats: Vec::new(),
+            skill_allocations: vec![crate::rules_core::character_input::SkillAllocation {
+                skill_id: (*chosen_skill).to_owned(),
+                ranks: 1,
+            }],
+            equipment_selections: Vec::new(),
+            selected_choices: vec![SelectedChoice {
+                choice_set_id: trait_skill_choice_id(entry.trait_id),
+                selection_id: (*chosen_skill).to_owned(),
+            }],
+            selected_traits: vec![entry.trait_id.to_owned()],
+            spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
+        },
+        selection_provenance: Vec::new(),
+    };
+
+    let totals = crate::rules_core::skill_allocation::allocate_skill_ranks(&input);
+    let computed = totals.totals.get(*chosen_skill).map(|total| total.misc_modifier)?;
+
+    if computed == entry.bonus {
+        Some(computed)
+    } else {
+        None
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -355,9 +577,9 @@ mod tests {
         }
     }
 
-    /// A corpus key outside the flat slice (one of the 12 `%LIST`/formula
-    /// records, or any unrelated string) is honestly `None`, never a
-    /// fabricated grounding.
+    /// A corpus key outside the flat slice (one of the choice-based,
+    /// open-subtype, or formula records, or any unrelated string) is
+    /// honestly `None`, never a fabricated grounding.
     #[test]
     fn an_ungrounded_corpus_key_returns_none() {
         assert_eq!(
@@ -366,6 +588,136 @@ mod tests {
         );
         assert_eq!(
             flat_skill_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
+            None
+        );
+    }
+
+    // -- Second slice: fixed-choice `BONUS:SKILL|%LIST` traits --------
+
+    /// Every entry has at least two `skill_options` (a one-option "choice"
+    /// would not be a real choice) and every skill id is well-formed.
+    #[test]
+    fn every_choice_table_entry_has_at_least_two_skill_options() {
+        for entry in SKILL_CHOICE_TRAIT_BONUSES {
+            assert!(
+                entry.skill_options.len() >= 2,
+                "{} has fewer than two skill options",
+                entry.trait_id
+            );
+            for skill_id in entry.skill_options {
+                assert!(
+                    skill_id.starts_with("skill:"),
+                    "{} has malformed skill id {skill_id}",
+                    entry.trait_id
+                );
+            }
+        }
+    }
+
+    /// The choice table carries exactly 5 entries -- re-derive from the
+    /// corpus filter in the module doc comment's "Second slice" section if
+    /// this ever needs to change.
+    #[test]
+    fn choice_table_has_exactly_five_entries() {
+        assert_eq!(SKILL_CHOICE_TRAIT_BONUSES.len(), 5);
+    }
+
+    /// No `trait_id` is shared between the flat table and the choice
+    /// table -- the two compute paths must never both claim the same
+    /// trait (that would double-apply the bonus once
+    /// `skill_allocation.rs` sums both maps together).
+    #[test]
+    fn no_trait_id_appears_in_both_tables() {
+        for choice_entry in SKILL_CHOICE_TRAIT_BONUSES {
+            assert!(
+                find_by_trait_id(choice_entry.trait_id).is_none(),
+                "{} appears in both the flat and choice tables",
+                choice_entry.trait_id
+            );
+        }
+    }
+
+    /// With no recorded choice yet, a selected `%LIST` trait contributes
+    /// nothing -- never a first-guessed default skill.
+    #[test]
+    fn a_choice_trait_with_no_recorded_choice_contributes_nothing() {
+        let bonuses = skill_choice_bonuses_from_traits(
+            &["trait:trait_criminal".to_string()],
+            &[],
+        );
+        assert!(bonuses.is_empty());
+    }
+
+    /// The core case: a selected `%LIST` trait with a genuine, in-list
+    /// recorded choice contributes its bonus to exactly that skill.
+    #[test]
+    fn a_choice_trait_with_a_recorded_choice_contributes_to_that_skill() {
+        let bonuses = skill_choice_bonuses_from_traits(
+            &["trait:trait_criminal".to_string()],
+            &[SelectedChoice {
+                choice_set_id: trait_skill_choice_id("trait:trait_criminal"),
+                selection_id: "skill:intimidate".to_string(),
+            }],
+        );
+        assert_eq!(bonuses.get("skill:intimidate"), Some(&1));
+        assert_eq!(bonuses.len(), 1);
+    }
+
+    /// A recorded choice outside the trait's own `skill_options` (stale
+    /// or untrusted data) is never honored.
+    #[test]
+    fn a_choice_trait_with_an_out_of_list_choice_contributes_nothing() {
+        let bonuses = skill_choice_bonuses_from_traits(
+            &["trait:trait_criminal".to_string()],
+            &[SelectedChoice {
+                choice_set_id: trait_skill_choice_id("trait:trait_criminal"),
+                selection_id: "skill:acrobatics".to_string(),
+            }],
+        );
+        assert!(bonuses.is_empty());
+    }
+
+    /// A recorded choice under a DIFFERENT trait's choice-set id is not
+    /// mistaken for this trait's own choice (per-trait scoping, not one
+    /// shared slot).
+    #[test]
+    fn a_choice_recorded_under_a_different_traits_choice_set_is_ignored() {
+        let bonuses = skill_choice_bonuses_from_traits(
+            &["trait:trait_criminal".to_string()],
+            &[SelectedChoice {
+                choice_set_id: trait_skill_choice_id("trait:trait_influence"),
+                selection_id: "skill:intimidate".to_string(),
+            }],
+        );
+        assert!(bonuses.is_empty());
+    }
+
+    /// **The choice-slice classifier-facing entry point, executed, not
+    /// asserted.** Must genuinely run the fixture and agree with the
+    /// transcribed table for every one of the 5 entries.
+    #[test]
+    fn every_choice_entry_is_genuinely_grounded_by_fixture_execution() {
+        for entry in SKILL_CHOICE_TRAIT_BONUSES {
+            let grounded = skill_choice_trait_magnitude_is_grounded_for_corpus_key(entry.corpus_key);
+            assert_eq!(
+                grounded,
+                Some(entry.bonus),
+                "{} ({}) did not ground to its transcribed bonus via real fixture execution",
+                entry.trait_id,
+                entry.corpus_key
+            );
+        }
+    }
+
+    /// A corpus key outside the choice slice is honestly `None`.
+    #[test]
+    fn an_ungrounded_choice_corpus_key_returns_none() {
+        assert_eq!(
+            skill_choice_trait_magnitude_is_grounded_for_corpus_key("Trait ~ Acrobat"),
+            None
+        );
+        assert_eq!(
+            skill_choice_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
             None
         );
     }

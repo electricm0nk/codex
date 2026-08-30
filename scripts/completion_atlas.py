@@ -134,7 +134,7 @@ BUCKET_DEFINITIONS = {
         "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
         # `item.verdict.status = "literal-verified";` -- one of the two V statuses.
-        "citation": {"file": _ENGINE_SRC, "line": 12233, "must_contain": "literal-verified"},
+        "citation": {"file": _ENGINE_SRC, "line": 12242, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
