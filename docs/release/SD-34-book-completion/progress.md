@@ -52,6 +52,67 @@ before and after — nothing to commit. Filed to make the duplicate-dispatch exp
 record: a later reader should trust `cfd9c6d3d9`/`3cc878de05` as the landing commits and this
 entry as a second, independent confirmation, not evidence of a third rebuild.
 
+### Cycle — AT-34-E4-002 (cycle 3): manifest produced, `V` re-derived closed, `M`/`D` diagnosed as a missing capability, `U`/`X` correctly not reopened
+
+**Status: partial.** Re-derived at HEAD before touching anything (`decisions.md §12` L2): the
+dispatch brief's own figures were stale. `V` is already **0**, not 18 — `AT-34-E3-005`'s
+corpus-wide bucket-V widening (a sibling cycle, commit `cfd9c6d3d9`/`3cc878de05`) already closed
+`ultimate_campaign`'s 18 `V` units to `DONE` as a side effect of its non-`core_rulebook` pass.
+Current state: `population=265 DONE=151 D=2 M=89 U=21 X=2` (`python3 scripts/completion_atlas.py
+--book ultimate_campaign --check`).
+
+**Produced this cycle:** `artifacts/epic-4-ultimate-campaign/ultimate-campaign-completion-manifest.json`
+— the criterion's own missing evidence artifact, built from `docs/work-inventory.json` via
+`completion_atlas.py`'s own `_bucket_of`/`_head_sha`, in the same shape as
+`core-rulebook-completion-manifest.json`. `population=265 done=151 remaining_total=114 buckets=
+{D:2, M:89, U:21, X:2}`, 265 `units` entries — 114 = 2+89+21+2, matches the atlas exactly.
+
+**`U`(21)/`X`(2) — re-read `AT-34-E4-001`'s already-`complete` finding in full, did not reopen.**
+The brief warned not to assume `§17`'s equipment-modifier ruling extends to this book's
+editorial-marker feats. `AT-34-E4-001` (a separate, prior, `complete` criterion) already asked
+and answered exactly this: the 21 `U` records' content is **not lost** (real, substantial,
+mechanically complete descriptions are served — 2 still-passing regression tests re-run this
+cycle confirm it), and the classifier's demotion is a deliberate, corpus-wide (~370-occurrence)
+policy applied by `SD31-E2-F3-002`, not an instrument bug — `§16`'s own precedent forbids one
+cycle from picking a bucket destination for that definitional question. Nothing new was found
+that would reopen it.
+
+**`M`(89) diagnosed, not closed.** Read every one of the 59 `trait` + 30 `ability` records' real
+corpus JSON directly (not inferred from evidence-string names). 44 of 59 traits are pure
+`BONUS:SKILL` (e.g. `Trait ~ Acrobat`: `BONUS:SKILL|Acrobatics|1`), the rest a mix of
+`VAR`/`SAVE`/`SITUATION`/`ABILITYPOOL`/`COMBAT`/`CONCENTRATION`; the 30 `ability` units are
+Ultimate Campaign's Drawback/character-retraining sub-mechanics. **Clearing `M` needs a character
+trait/drawback selection surface that does not exist anywhere in the engine** — confirmed by a
+whole-tree grep (`grep -rln "selected_traits\|character_traits\|CharacterTrait\b" src/
+apps/desktop/src-tauri/src/` → zero matches); the one existing PF1e Trait module,
+`trait_pool.rs`, only feeds an *Adopted Race* selector's option list and explicitly computes
+nothing (own doc comment: "Nothing is computed"). This shape totals **1,665 of 49,438 units
+corpus-wide** (`trait_content`/`ability_content` `M`-bucket evidence, all books) — a fix keyed on
+the kind, not the book, as the brief itself asked. Building it (a `CharacterInput` schema change
+across 4+ construction sites, a generic `BONUS:` interpreter, and real desktop UI so it is not a
+stub) is genuine multi-cycle engineering; attempting it in the time remaining risked an
+uncommitted or half-wired result, so it was **not attempted** — named as a capability finding
+instead (`AT-34-E5-002`'s territory), with a `deferral` retro event recorded.
+
+**`D`(2) — read directly, genuinely unmodelled.** Both (`Alchemical Intuition`,
+`Wrecking Wrath (Rovagug)`) carry zero `BONUS:` tokens; their prose states a real numeric
+scaling rule (equal to Charisma modifier, applied *after* a die roll) PCGen's own data never
+captured mechanically. Same missing-mechanic shape as `M`'s Drawback sub-cases, not separately
+tractable this cycle.
+
+**Remainder, named exactly, summing to 114 of 265:** `M:89` (missing trait/drawback capability,
+1,665-unit corpus-wide shape) + `U:21` (proven-terminal pending a corpus-wide product-policy
+ruling) + `X:2` (proven-terminal, unrepairable) + `D:2` (same missing-mechanic shape as `M`'s
+Drawback cases). Movement, four buckets: closure 0, reclassification 0, reachability 0,
+instrument-correction 0 — this cycle's contribution is measurement (a legitimate deliverable,
+`decisions.md §12` L9 / lesson 6), not fabricated closure.
+
+**Zero Rust source changed.** `cargo test --locked --lib` on the two `AT-34-E4-001` regression
+tests: `2 passed; 0 failed`. `cargo test --locked --no-run` (full workspace): see receipt for
+the exit code and SHA it ran at.
+
+**Receipt:** `artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_3.md`.
+
 ### Cycle — AT-34-E3-005 (bucket-v-widen): the corpus-wide bucket-V ledger, rebuilt and committed
 
 **Status: complete** (this sub-lane's own scope — the whole-book `AT-34-E3-005` criterion stays
