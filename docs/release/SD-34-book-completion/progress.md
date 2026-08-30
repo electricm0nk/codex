@@ -13,6 +13,103 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-003 (bucket M, EQUIPMENT sub-causes) — partial, closure
+
+**Status: partial.** Territory: the two EQUIPMENT sub-causes of `core_rulebook` bucket `M`
+(`equipment_table_entry_with_corpus_magnitude` 276,
+`equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` 147, sum 423 of `M`'s 972),
+a sibling lane holding `ability_content`/`race_trait`/`template` off limits by the dispatch
+brief's own no-collision rule. Re-derived `M`'s full 10-sub-cause split fresh at this cycle's
+rebased start (`f2c13e12b90e6dc0eed033cd447fb730629ccb91`, 9 commits ahead of an unreviewed
+salvage checkpoint on `origin/salvage/wave13-lane3` claiming the same work): matched the
+dispatch brief's own figures exactly, 972 = 276+217+147+119+96+47+34+19+15+2.
+
+**What changed:** `equipment_key_is_wired` (the shared probe every book's `Kind::Equipment`/
+`Kind::EquipmentModifier` classification routes through) gains a second, independent check
+after its existing eight `compute_equipment_effects` stat fields all return `None`: it now also
+consults `damage_total::resolve_base_damage_dice(key, corpus)`. Not a new compute path — that
+function already reads a weapon's real `DAMAGE:` corpus token into a structured
+`DiceExpression` and is already the entry gate `resolve_weapon_damage_breakdown` uses to build
+the `WeaponDamageBreakdown` the desktop app's `character_hub.rs` renders on the real character
+sheet. Widens what the probe OBSERVES, exactly the shape the prior `skill_content` cycle
+widened for `Kind::Skill`. 4 new tests (positive on the real on-disk `Bastard Sword (Base)`,
+positive on a hand-built fixture, a negative control, and a `classify()`-level end-to-end
+proof).
+
+**Both equipment shapes were checked separately, not assumed to share a fix — they don't.**
+`equipment_table_entry_with_corpus_magnitude` (magnitude on the unit's own row): **276 → 262**
+(14 real closures, `core_rulebook`). `equipment_own_line_has_no_magnitude_but_closure_wiring_
+class_does` (closure-only alias rows, classified by their closure wiring class): **147 → 147**
+(0 closures) — none of the 147 alias rows in this population resolve to a base record carrying
+a `DAMAGE:` token. One fix did not cover both shapes, exactly as the dispatch brief warned to
+check for.
+
+**Generic by construction, movement corpus-wide, not book-scoped:** whole-corpus before/after
+diff by unit id (comparing the last committed `docs/work-inventory.json`, `50790d6bf9`, against
+this cycle's own local three-pass regen): 49,438 before, 49,438 after, 0 added/removed, **37
+changed** — 31 real `ingested-magnitude → grounded` closures across **9 books**
+(`core_rulebook` 14, `ultimate_equipment` 5, `bestiary_3` 4, `inner_sea_races` 2,
+`ultimate_psionics` 2, `advanced_class_guide` 1, `advanced_players_guide` 1, `bestiary_2` 1,
+`ultimate_combat` 1), plus 6 evidence-only reclassifications (all `ultimate_equipment`, already
+`literal-verified` both before and after — bucket `V`, not `M`, named per `decisions.md §12`
+L1). `core_rulebook` M **972 → 958**; corpus-wide M **5002 → 4971**; corpus-wide DONE
+**24278 → 24309** (+31, matching the 31 closures exactly).
+
+**Generated-artifact scope discipline, new this wave.** `docs/work-inventory.json` and
+`completion-atlas.json` were regenerated LOCALLY (guarded three-pass pipeline:
+`corpus_literal_sweep --json-out` → `derived_evaluator_fixture_check --json-out` →
+`v06_work_inventory` with both report env vars) to derive every figure above, then
+`git restore`-d before each commit rather than shipped — this cycle's dispatch brief reserves
+committing those two files to a single shared end-of-wave regeneration cycle (a direct answer
+to the wave-13 collision the same brief names). The committed `docs/work-inventory.json` at
+this cycle's own HEAD still reads the pre-cycle 972/276/147 until that shared cycle runs; every
+figure above ships with the command that reproduces it.
+
+**Not inherited from the unreviewed salvage checkpoint — independently re-derived and it
+agreed.** `origin/salvage/wave13-lane3` held an uncommitted checkpoint making the same claims,
+rescued after a host kill mid-run. This cycle rebased past it, re-derived the starting figures
+fresh, re-applied the code by hand against the rebased file (not a merge), reran the regen
+pipeline itself, and independently re-derived the whole-corpus diff. The independently-derived
+14/31/6 figures matched the salvage checkpoint's own claims exactly — confirmed, not assumed.
+
+**Build scope:** `cargo test --locked --bin v06_work_inventory` 446/446;
+`cargo test --locked --lib rules_core::damage_total::` 30/30; `python3
+scripts/completion_atlas.py --check` (local regen) exit 0, `citation_failures=0`; `python3
+scripts/missing_engine_tables.py --check` exit 0, `citation_failures=0`; `cargo test --locked
+--no-run` (full workspace) exit 0 at `d2cd685ced`; `apps/desktop/src-tauri` tested explicitly
+(`--manifest-path apps/desktop/src-tauri/Cargo.toml`, separate `CARGO_TARGET_DIR`) because the
+changed function calls `damage_total::resolve_base_damage_dice`, which the desktop crate also
+reaches transitively.
+
+**This cycle's own citation upkeep:** `completion_atlas.py`'s 10 `BUCKET_DEFINITIONS` and
+`missing_engine_tables.py`'s 2 `ENGINE_SURFACE_CITATIONS` shifted by this cycle's own +20-line
+insertion, re-derived against real line content, `citation_failures=0` after both.
+
+**Discovered, out of scope, not fixed here:** `python3 scripts/shape_engine_boundary.py --check`
+reports `STALE_CITATION` on its `PROMOTION_LADDER_ANCHOR_LINE` — confirmed already stale at this
+cycle's own rebase base (`f2c13e12b9`), pre-dating this cycle's touch, not in Epic 3's declared
+file-touch set. Named per AT-34-E3-006's posture, left for its owning cycle.
+
+Denominator gate against this package: `files_checked=15 violations=7`, all 7 pre-existing
+(`FRT_HVY`'s quoted corpus prose), unchanged by this cycle's own new prose.
+
+**Remainder — this cycle's own 423, named:** `equipment_table_entry_with_corpus_magnitude`
+262 (per real sub-shape: AC-bonus equipmods need a new bucket-B-shaped compute path;
+`%CHOICE`-gated modifiers are a sibling lane's scope; internal-plumbing VAR/ITEMCOST tokens
+await a `decisions.md §17`-shaped ruling; named artifacts need a description-linked probe not
+built this cycle) + `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` 147
+(same four sub-shapes, applied to the closure-only population) = 409. 14 + 409 = 423 exactly.
+
+**Every other `M` sub-cause and buckets V/D/U/X are untouched by this cycle** (sibling-lane or
+out-of-territory by design): `ability_content` 217, `race_trait_generic` 119, `template_content`
+96, `in_catalog_with_corpus_magnitude_but_no_observed_consumer` 47, `domain_content` 34,
+`skill_content` 19, `spell_list_entry_with_resolved_level` 15,
+`race_trait_states_a_universal_sheet_modifier_pending_compute` 2, `V` 87, `D` 366, `U` 10,
+`X` 115.
+
+Full detail, remainder table, and next-cycle plan: `artifacts/epic-3-core-rulebook/
+AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-002 (bucket C continuation): Monk Unarmed Damage Medium closes 6, core_rulebook bucket C 357->351
 
 **Status: partial.** Re-derived at start SHA `b939abcd4b`: `core_rulebook` bucket C is **357**
