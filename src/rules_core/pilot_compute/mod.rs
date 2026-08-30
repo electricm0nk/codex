@@ -49886,9 +49886,11 @@ fn compute_total_saves(
 /// diagnostic to flag it. Multiclass characters get the class-skill bonus
 /// if ANY of their classes grants it (PF1's real union rule, matching
 /// `skill_allocation.rs`'s own `class_skill_set` framing) -- this is
-/// hardcoded per-class fact data, the same "bounded, cited" shape as
-/// `skill_allocation.rs`'s `GROUNDED_FIGHTER_CLASS_SKILLS`; no corpus
-/// access needed. Applying the same boolean uniformly across all three
+/// hardcoded per-class fact data, the same "bounded, cited" shape
+/// `skill_allocation.rs`'s own class-skill lists use (as of AT-34-E3-003,
+/// `full_fighter_class_skills`/`FULL_WIZARD_CLASS_SKILLS`, superseding the
+/// old `GROUNDED_FIGHTER_CLASS_SKILLS`/`GROUNDED_WIZARD_CLASS_SKILLS`
+/// consts this comment used to name); no corpus access needed. Applying the same boolean uniformly across all three
 /// skills is correct only because this function's own scope is already
 /// hardcoded to exactly these three skills -- not a general "all class
 /// skills match across the board" assumption to rely on if the class set
