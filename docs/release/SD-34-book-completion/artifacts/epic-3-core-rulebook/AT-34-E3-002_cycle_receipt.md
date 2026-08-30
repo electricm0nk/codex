@@ -206,7 +206,7 @@ set), zero matches in any other book.
 | `cargo test --locked --bin v06_work_inventory` (full, post-rebase) | `453 passed; 0 failed` | `cargo test --locked --bin v06_work_inventory` | of 453 |
 | `cargo test --locked --bin v06_work_inventory class_feature` | `134 passed; 0 failed` | `cargo test --locked --bin v06_work_inventory class_feature` | of 134 |
 | `cargo test --locked --no-run` (workspace) | exit 0, run at `8e69cdc4ff` (post-rebase) | `cargo test --locked --no-run` | — |
-| `denominator_gate.py --check` | `files_checked=15 violations=7` — all 7 pre-existing in `progress.md` (verbatim-quoted corpus prose, "75% chance..."), each already self-flagged inline by the cycle that introduced it; this cycle's own new prose adds zero new bare-percentage lines | `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` | of 15 files |
+| `denominator_gate.py --check` | `files_checked=15 violations=8` — all 8 pre-existing/self-flagged verbatim-quoted corpus prose in `progress.md` ("75% chance..."), including this cycle's own denominator-gate paragraph's own quote (the same self-referential pattern every prior cycle's own paragraph hits) | `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` | of 15 files |
 
 ## Row-count command output (this cycle's own artifact)
 

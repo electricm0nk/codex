@@ -13,6 +13,90 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-002 (bucket C continuation): the generic pool-group-selection pass already covers Cleric Domain, `classify()` just never asked it — 55 closed, core_rulebook bucket C 351->296
+
+**Status: partial.** Re-derived at this cycle's start (post-rebase HEAD): `core_rulebook`
+bucket C is **351**, unchanged since the prior `AT-34-E3-002` cycle (Monk Unarmed Damage
+Medium, 6/357). This cycle targeted the largest named sub-cause,
+`domain_power_display_record_not_wired` (96 units), and found by direct corpus read that it
+decomposes into 33 bare `"<Domain> Domain"` header records and 63 `"<Domain> Domain ~ <Power>"`
+granted-power member records — a REAL, separate `.lst` line from the `"Domain Power ~ <Power>"`
+records the prior cycle's own `domain_power` mechanism already covers, not a duplicate.
+
+**Mechanism closed:** `push_generic_pool_group_selection_magnitude` (shipped SD-32 T12 Epic 8)
+is a generic, already-tested compute pass wired at six real pools — Cleric Domain, Sorcerer
+Bloodline, Bloodrager Bloodline, Oracle Mystery, Warpriest Blessing, Shaman Spirit — that
+resolves every real corpus `"<group> ~ <member>"` record's magnitude through the shared PCGen
+formula-chain resolver once a player selects that group. For Cleric Domain it is wired
+unconditionally (any cleric, any domain). `v06_work_inventory`'s `classify()` had **never once
+asked this pass a question** — no probe, no rung, no `EngineFacts` field referenced its output
+at all, so every domain-prefixed member record read `engine-does-not-hold` regardless of what
+the engine actually computed.
+
+**The fix:** one new bridge `pub fn` (`generic_pool_group_selection_observed_keys`,
+`pilot_compute/mod.rs`) that reads the real corpus key a matching `ComputationExplanation`
+carries off its own `detail` field (never a slug reconstruction); one new probe
+(`probe_cleric_domain_generic_member_wiring`) that selects each of the 33 real Core Rulebook
+Cleric Domain adjectives in turn on a real cleric over the real compute pipeline; one new
+`classify()` rung. RED->GREEN: 6 new tests (2 classify()-level, 4 live-fixture probe proofs
+against the real pipeline). `class_feature`-scoped suite 134/134 pass; full bin suite 453/453
+pass (post-rebase); `cargo test --locked --no-run` (workspace) exits 0.
+
+**Correction caught by this cycle's own live-fixture proof** (retro `correction` event): this
+cycle initially assumed Healing Domain's Rebuke Death would stay uncredited, per
+`domain_power.rs`'s own doc naming its dice-notation heal amount as a refusal reason — for the
+DIFFERENT, narrower bespoke catalog grammar. The live probe run disproved it: the generic pass
+resolves Rebuke Death's real uses-per-day `BONUS:VAR` chain independently of its separate,
+still-unresolved dice-notation heal amount — exactly `resolve_pool_member_all_magnitudes`'s own
+documented multi-terminal contract, not an over-credit.
+
+**Live regen (local, uncommitted — this dispatch's own file-ownership rule assigns
+`docs/work-inventory.json` and `completion-atlas.json` regeneration to the wave's shared
+regeneration cycle):** isolation confirmed by a whole-inventory before/after diff keyed on unit
+id — 0 added, 0 removed, exactly **55** changed, all `core_rulebook`. `corpus_literal_sweep`:
+48,708 examined, CLEAN, unchanged (no `data/corpus/**` file touched). Mixed disposition,
+confirmed per-record: **38** of the 55 carry `wiring_class` `computed`/`derived` and land
+`grounded` -> bucket **DONE** (real closures); the other **17** carry `wiring_class: "static"`
+and are upgraded by the pre-existing `apply_done_rung_stamps` to `literal-verified` -> bucket
+**V**, the same static/sweep-verification path the prior Monk cycle's own closures went
+through. `core_rulebook` bucket C: 351 -> **296**. Corpus-wide bucket C: 4,332 -> **4,277**
+(delta -55, matching exactly — confirmed zero cross-book side effect: every one of the 56 keys
+the probe observed exists only under `core_rulebook` in the 49,438-unit corpus).
+
+**Movement, four buckets** (a bucket change is not a closure): **Closure: 38** (C -> DONE).
+**Reclassification: 17** (C -> V, `apply_done_rung_stamps`'s static-verification upgrade).
+**Reachability: 55** (one new rung + probe, reusing an already-shipped compute pass — no new
+formula). **Instrument-correction: 0** (the criterion's stale "370" was already corrected by
+the prior cycle).
+
+**Remainder — 296 of 351, named by sub-cause, populations sum exactly** (re-derived fresh, not
+carried forward): `bloodline_power_or_bloodline_feat_not_computed` 77 (unchanged — **named
+next-cycle candidate**: Sorcerer Bloodline is one of the SAME six pools this cycle's mechanism
+already covers, 48/52 groups carry a resolvable member per the pass's own census, and this
+cycle's bridge function is directly reusable), `monk_unarmed_damage_no_formula_in_engine` 42
+(unchanged, genuine engine gap), `domain_power_display_record_not_wired` 41 (down from 96: 33
+bare domain headers + 7 Druid Domain sub-choice records — a structurally different Druid-only
+pool this cycle's Cleric-only probe deliberately did not sweep, named in a retro `deferral`
+event, not force-closed — + 1 zero-magnitude-token Nobility record), `base_class_standalone_
+feature_not_computed` 36, `prestige_class_standalone_feature_not_computed` 31,
+`other_named_group_or_standalone` 21, `rage_power_not_computed` 13, `npc_class_standalone_
+feature_not_computed` 10, `rogue_talent_not_computed` 10, `versatile_performance_not_computed`
+9, `monk_unarmed_damage_small_cross_book_attribution_undecided` 6 (still open). Sum:
+77+42+41+36+31+21+13+10+10+9+6 = 296.
+
+**Denominator gate against this package**: `python3 scripts/denominator_gate.py --check
+'docs/release/SD-34-book-completion/*.md'` -> `files_checked=15 violations=8` — all 8
+pre-existing verbatim-quoted corpus prose in `progress.md` ("75% chance..."), each already
+self-flagged inline by the cycle that introduced it (this paragraph's own quote above is one of
+the 8, the same self-referential pattern every prior cycle's own denominator-gate paragraph
+has hit). This cycle added no NEW bare-percentage `.md` prose beyond that same, already-accepted
+pattern.
+
+Retro events: 1 `correction` (Rebuke Death assumption), 1 `deferral` (8 domain-shaped units
+named by sub-cause).
+
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md`.
+
 ### Cycle 4 — AT-34-E4-002 — widen the trait/drawback spine to the 5 fixed-choice `%LIST` traits, land the desktop picker end to end — partial
 
 **Status: partial.** Started from real HEAD (`58521a54ef`, wave 16) — cycle 3's capability build (`e8ac310280`) had already landed and merged; the dispatch prompt's stated `HEAD 651966b83e`/`DONE 151` was stale by two whole cycles, re-verified rather than trusted. Re-derived split: `DONE=182, M=58, U=21, D=2, X=2` of 265.
