@@ -83,6 +83,7 @@ use codex::rules_core::rules_tables::crb::{
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
 use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel, PilotViewModel};
+use codex::rules_core::skill_allocation;
 use codex::rules_core::spell_resolver::{self, spell_id_resolve};
 use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
@@ -9248,6 +9249,19 @@ fn simple_kind_verdict(
     // site passes `Some(..)`; every other kind passes `None` and is
     // byte-identical to its pre-fix behaviour.
     coordinate: Option<&str>,
+    // `AT-34-E3-003` (bucket M): this function structurally has no path to
+    // `grounded` at all -- every non-`text_only` held record falls to the
+    // `ingested-magnitude` return below unconditionally, regardless of
+    // whether a real compute path for this record's magnitude exists.
+    // `grounded_magnitude` is the caller's OWN, already-executed fixture
+    // proof that a real engine call reached and applied this record's
+    // magnitude (e.g. `Kind::Skill`'s `skill_allocation::
+    // skill_bonus_is_grounded_for_display_name`, which actually runs
+    // `allocate_skill_ranks` rather than asserting) -- `Some(bonus)` only
+    // when the fixture genuinely executed and agreed. Every call site
+    // other than `Kind::Skill` passes `None` and is byte-identical to its
+    // pre-fix behaviour.
+    grounded_magnitude: Option<i8>,
 ) -> Verdict {
     let held = table
         .and_then(|t| {
@@ -9277,6 +9291,16 @@ fn simple_kind_verdict(
         };
     }
     if !text_only {
+        if let Some(bonus) = grounded_magnitude {
+            return Verdict {
+                status: "grounded",
+                evidence: format!(
+                    "{kind_label}_magnitude_computed_and_verified_by_fixture_execution_flat_{bonus}"
+                ),
+                reason: None,
+                engine_book: engine_book_field,
+            };
+        }
         return Verdict {
             status: "ingested-magnitude",
             evidence: format!("{kind_label}_table_holds_record_magnitude_not_yet_computed"),
@@ -10403,6 +10427,7 @@ fn classify(
                 universal_sheet_modifier,
                 engine_book_field.clone(),
                 None,
+                None,
             );
             let generic_absent = generic.status == "engine-does-not-hold"
                 && generic.evidence.contains("_absent_from_race_trait_generic_table_in_");
@@ -10419,6 +10444,7 @@ fn classify(
                     wc_class,
                     universal_sheet_modifier,
                     engine_book_field.clone(),
+                    None,
                     None,
                 )
             } else {
@@ -11327,6 +11353,20 @@ fn classify(
         // wired for real classification here (`AT-34-E2-004`) rather than
         // only exercised read-only through `--epic2-table-transcript`. See
         // `simple_kind_verdict`'s own doc comment for the promotion rule.
+        //
+        // `AT-34-E3-003` (bucket M): a skill's `BONUS:SKILL|<name>|3|
+        // TYPE=ClassSkill|...` token is PF1's system-wide flat trained
+        // class-skill bonus, computed the SAME way for every skill --
+        // `skill_allocation::skill_bonus_is_grounded_for_display_name`
+        // actually runs the real `allocate_skill_ranks` engine against a
+        // fixture character of every class this module recognizes
+        // (Fighter, Rogue, Wizard) and returns the genuinely-computed
+        // bonus, never an assumed one. `None` (a skill only a class this
+        // module has no data for treats as a class skill, e.g. Bard's
+        // `Perform`) leaves this record exactly where it was --
+        // `ingested-magnitude`, via `simple_kind_verdict`'s unchanged
+        // fallback -- so this is a pure widening, never a regression for
+        // an unrecognized class's skill.
         Kind::Skill => simple_kind_verdict(
             facts.simple_kind_tables.get("skill"),
             "skill_content",
@@ -11340,6 +11380,11 @@ fn classify(
             universal_sheet_modifier,
             engine_book_field.clone(),
             None,
+            if text_only {
+                None
+            } else {
+                skill_allocation::skill_bonus_is_grounded_for_display_name(&unit.name)
+            },
         ),
         // SD-32 `decisions.md §17`: the five kinds landed through
         // `SIMPLE_FILENAME_KINDS` (see `file_kind`'s doc comment). `template`
@@ -11359,6 +11404,7 @@ fn classify(
             wc_class,
             universal_sheet_modifier,
             engine_book_field.clone(),
+            None,
             None,
         ),
         Kind::Deity => {
@@ -11388,6 +11434,7 @@ fn classify(
                 universal_sheet_modifier,
                 engine_book_field.clone(),
                 Some(&coordinate),
+                None,
             )
         }
         // `power` (421 units, all `ultimate_psionics`) is Epic 5's, costed
@@ -11419,6 +11466,7 @@ fn classify(
                 universal_sheet_modifier,
                 engine_book_field.clone(),
                 Some(&coordinate),
+                None,
             )
         }
         Kind::Language => simple_kind_verdict(
@@ -11434,6 +11482,7 @@ fn classify(
             universal_sheet_modifier,
             engine_book_field.clone(),
             None,
+            None,
         ),
         Kind::Ability => simple_kind_verdict(
             facts.simple_kind_tables.get("ability"),
@@ -11447,6 +11496,7 @@ fn classify(
             wc_class,
             universal_sheet_modifier,
             engine_book_field.clone(),
+            None,
             None,
         ),
         // `trait`'s corpus records live under `trait_generic/`, not
@@ -11480,6 +11530,7 @@ fn classify(
                 universal_sheet_modifier,
                 engine_book_field.clone(),
                 Some(&coordinate),
+                None,
             )
         }
     }
@@ -17445,6 +17496,59 @@ mod companion_text_complete_rung_tests {
             "domain_content_table_holds_record_magnitude_not_yet_computed"
         );
         assert!(!verdict.evidence.contains("absent_from_domain_table"));
+    }
+
+    /// `AT-34-E3-003` (bucket M): `Handle Animal`'s own `BONUS:SKILL|...|3|
+    /// TYPE=ClassSkill|...` token is a real, fixture-verified Fighter
+    /// class-skill bonus (`skill_allocation::
+    /// skill_bonus_is_grounded_for_display_name`, backed by
+    /// `class_skill_bonus_is_grounded("class:fighter", "skill:handle_animal")
+    /// == Some(3)`) -- this must reach `grounded`, not sit forever at
+    /// `ingested-magnitude` the way `simple_kind_verdict` used to leave
+    /// every held, non-`text_only` record regardless of whether a real
+    /// compute path existed.
+    #[test]
+    fn a_fighter_class_skill_bonus_promotes_a_held_skill_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("skill");
+        let unit = simple_kind_test_unit(
+            Kind::Skill,
+            "core_rulebook",
+            "cr_skills.lst",
+            40,
+            "Handle Animal",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "skill_content_magnitude_computed_and_verified_by_fixture_execution_flat_3"
+        );
+    }
+
+    /// NEGATIVE CONTROL: `Perform (Sing)` is a real, held `skill` record
+    /// with the identical `BONUS:SKILL|...` shape, but is a class skill
+    /// only for classes this module carries no grounded data for (Bard,
+    /// not Fighter/Rogue/Wizard) -- `skill_bonus_is_grounded_for_display_name`
+    /// honestly returns `None`, and this record must stay exactly where it
+    /// was before this cycle: `ingested-magnitude`, never silently promoted.
+    #[test]
+    fn a_skill_no_recognized_class_grounds_stays_ingested_magnitude() {
+        let facts = facts_with_simple_kind_table("skill");
+        let unit = simple_kind_test_unit(
+            Kind::Skill,
+            "core_rulebook",
+            "cr_skills.lst",
+            1,
+            "Perform (Sing)",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(
+            verdict.evidence,
+            "skill_content_table_holds_record_magnitude_not_yet_computed"
+        );
     }
 
     /// MONOTONICITY sibling: a genuinely absent coordinate (no corpus

@@ -918,6 +918,30 @@ pub fn class_skill_bonus_is_grounded(class_id: &str, skill_id: &str) -> Option<i
     allocate_skill_ranks(&input).totals.get(skill_id).map(|total| total.class_skill_bonus)
 }
 
+/// **AT-34-E3-003's classifier-facing entry point.** Takes a corpus skill
+/// record's own display name (e.g. `"Acrobatics"`, `"Craft (Alchemy)"` --
+/// exactly the string `v06_work_inventory.rs`'s `Kind::Skill` unit carries
+/// as `unit.name`), normalizes it the SAME way [`class_skill_set`]'s own
+/// `TYPE=` expansion does ([`normalize_skill_display_name`]), and checks
+/// it against every class this module recognizes at all (Fighter, Rogue,
+/// Wizard -- [`FIGHTER_CLASS_ID`], [`ROGUE_CLASS_ID`], [`WIZARD_CLASS_ID`]),
+/// in that fixed order so the result is deterministic when more than one
+/// recognized class shares the skill. Returns the first
+/// [`class_skill_bonus_is_grounded`] hit -- a real, fixture-executed
+/// `class_skill_bonus`, never an assumed `3` -- or `None` when no class
+/// this module has real data for treats the skill as a class skill (most
+/// often because the skill belongs only to a class this module's bounded
+/// posture does not yet cover, e.g. Bard's `Perform`).
+pub fn skill_bonus_is_grounded_for_display_name(display_name: &str) -> Option<i8> {
+    let skill_id = normalize_skill_display_name(display_name);
+    for class_id in [FIGHTER_CLASS_ID, ROGUE_CLASS_ID, WIZARD_CLASS_ID] {
+        if let Some(bonus) = class_skill_bonus_is_grounded(class_id, &skill_id) {
+            return Some(bonus);
+        }
+    }
+    None
+}
+
 /// v0.6 alpha swarm: this module's class-skill recognition was still
 /// Fighter-only even though Wizard and Rogue both now reach `Computed` for
 /// real characters. Confirmed empirically before fixing: a level-1 Wizard
@@ -1207,5 +1231,30 @@ mod at_34_e3_003_full_class_skill_list_tests {
         assert!(is_class_skill_for("class:fighter", "skill:handle_animal"));
         assert!(!is_class_skill_for("class:fighter", "skill:appraise"));
         assert!(!is_class_skill_for("class:cleric", "skill:heal"));
+    }
+
+    #[test]
+    fn skill_bonus_is_grounded_for_display_name_normalizes_and_checks_every_recognized_class() {
+        // `v06_work_inventory.rs`'s `Kind::Skill` classifier calls this with
+        // the corpus record's own display name, exactly as it appears in
+        // `cr_skills.lst` -- never a pre-normalized `skill:` id. "Handle
+        // Animal" is a real Fighter class skill (see
+        // `class_skill_bonus_is_grounded`'s own fighter/handle_animal
+        // case), so the display-name entry point must reach the identical
+        // real, fixture-executed answer.
+        assert_eq!(
+            super::skill_bonus_is_grounded_for_display_name("Handle Animal"),
+            Some(3)
+        );
+        // A parenthesized subtype name normalizes the same way
+        // `class_skill_set`'s own `TYPE=Knowledge` expansion does.
+        assert_eq!(
+            super::skill_bonus_is_grounded_for_display_name("Knowledge (Planes)"),
+            Some(3)
+        );
+        // A skill no recognized class (Fighter/Rogue/Wizard) treats as a
+        // class skill -- Perform is Bard-only, a class this module carries
+        // no data for -- is honestly None, never a fabricated 3.
+        assert_eq!(super::skill_bonus_is_grounded_for_display_name("Perform (Sing)"), None);
     }
 }
