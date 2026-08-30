@@ -111,8 +111,19 @@
       "meaning": "not started"
     }
   },
-  "citation_failures": [],
-  "derived_at": "782584b4b3b8d75b1a89fe508c83b262753cf224",
+  "citation_failures": [
+    "DONE: src/bin/v06_work_inventory.rs:9498 no longer contains 'grounded'",
+    "A: src/bin/v06_work_inventory.rs:11343 no longer contains 'has_no_engine_table'",
+    "B: src/bin/v06_work_inventory.rs:11023 no longer contains 'not_held_by_engine'",
+    "C: src/bin/v06_work_inventory.rs:11248 no longer contains 'explanation_id'",
+    "D: src/bin/v06_work_inventory.rs:9470 no longer contains 'engine-does-not-hold'",
+    "M: src/bin/v06_work_inventory.rs:9305 no longer contains 'ingested-magnitude'",
+    "V: src/bin/v06_work_inventory.rs:12034 no longer contains 'literal-verified'",
+    "U: src/bin/v06_work_inventory.rs:9557 no longer contains 'unmeasurable'",
+    "X: src/bin/v06_work_inventory.rs:9517 no longer contains 'deferred-with-reason'",
+    "Z: src/bin/v06_work_inventory.rs:9378 no longer contains 'not-started'"
+  ],
+  "derived_at": "dda6c975fce1d9b5a93759362092cf4f9a53406b",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],

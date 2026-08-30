@@ -84,6 +84,7 @@ use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
 use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel, PilotViewModel};
 use codex::rules_core::skill_allocation;
+use codex::rules_core::trait_effects;
 use codex::rules_core::spell_resolver::{self, spell_id_resolve};
 use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
@@ -11515,6 +11516,20 @@ fn classify(
         // (`simple_kind_tables.rs`), so this fallback was only ever missing
         // its wire-up here -- never the redacted real name in any evidence
         // string.
+        //
+        // `AT-34-E4-002` (bucket M): the same `grounded_magnitude` wiring
+        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by
+        // `trait_effects::flat_skill_trait_magnitude_is_grounded_for_corpus_key`
+        // -- an ACTUALLY-EXECUTED fixture character run through
+        // `allocate_skill_ranks`, never an assumed value. Covers only the
+        // 31-of-59 `ultimate_campaign` `trait_content` records whose corpus
+        // `BONUS` token is a flat, named-skill `SKILL` bonus with no
+        // `%LIST`/formula shape (see that module's own doc comment for the
+        // exact filter); every other held `trait` record's `unit.key`
+        // resolves to `None` here and falls through to
+        // `simple_kind_verdict`'s unchanged `ingested-magnitude` fallback --
+        // a pure widening, never a regression for a trait this module does
+        // not yet cover.
         Kind::Trait => {
             let coordinate = format!("{engine_book}:{}:{}", unit.provenance.file, unit.provenance.line);
             simple_kind_verdict(
@@ -11530,7 +11545,11 @@ fn classify(
                 universal_sheet_modifier,
                 engine_book_field.clone(),
                 Some(&coordinate),
-                None,
+                if text_only {
+                    None
+                } else {
+                    trait_effects::flat_skill_trait_magnitude_is_grounded_for_corpus_key(&unit.key)
+                },
             )
         }
     }
@@ -17548,6 +17567,61 @@ mod companion_text_complete_rung_tests {
         assert_eq!(
             verdict.evidence,
             "skill_content_table_holds_record_magnitude_not_yet_computed"
+        );
+    }
+
+    /// `AT-34-E4-002` (bucket M, `trait_content`): `Trait ~ Acrobat`'s own
+    /// `BONUS:SKILL|Acrobatics|1` token is a real, fixture-verified flat
+    /// trait skill bonus (`trait_effects::
+    /// flat_skill_trait_magnitude_is_grounded_for_corpus_key`, which
+    /// actually runs `allocate_skill_ranks` against a fixture character who
+    /// selected exactly this trait and agrees). This must reach `grounded`,
+    /// not sit forever at `ingested-magnitude` the way `simple_kind_verdict`
+    /// left every held, non-`text_only` `trait` record before this cycle
+    /// wired the grounding check in (the same shape `AT-34-E3-003` proved
+    /// for `Kind::Skill`).
+    #[test]
+    fn a_flat_skill_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            187,
+            "Trait ~ Acrobat",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_1"
+        );
+    }
+
+    /// NEGATIVE CONTROL: `Trait ~ Artisan` is a real, held `trait` record
+    /// (`BONUS:SKILL|%LIST|1`, a player-chosen-Craft-skill placeholder this
+    /// cycle's compute path deliberately does not cover -- see
+    /// `trait_effects`'s own module doc comment) --
+    /// `flat_skill_trait_magnitude_is_grounded_for_corpus_key` honestly
+    /// returns `None`, and this record must stay exactly where it was
+    /// before this cycle: `ingested-magnitude`, never silently promoted.
+    #[test]
+    fn a_trait_outside_the_flat_slice_stays_ingested_magnitude() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            1,
+            "Trait ~ Artisan",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_table_holds_record_magnitude_not_yet_computed"
         );
     }
 
