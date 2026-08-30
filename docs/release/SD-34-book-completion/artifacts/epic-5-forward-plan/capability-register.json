@@ -1,6 +1,6 @@
 {
   "criterion": "AT-34-E5-002",
-  "generated_at_head": "fef202a5668519a37185998ea8835fc8841db808",
+  "generated_at_head": "837dbbcf6be3fcacd8b136f64b49e4892b771d97",
   "re_derive_command": "python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_capability_register.py",
   "scope_note": "Evidence bar (epic-breakdown.md): 'Beyond the power table: anything Epics 3 or 4 proved is required and does not exist.' Ordinary bucket-B content-placement work (place a record in an EXISTING table) is already named and priced generically by AT-34-E5-001's forward-plan.json and is NOT repeated here -- this register is capabilities: new engine machinery, not yet built, that a bucket's ordinary clearing mechanism cannot supply.",
   "capabilities": [
@@ -275,13 +275,44 @@
         "V"
       ],
       "books_unblocked": [
-        "core_rulebook"
+        "advanced_class_guide",
+        "advanced_players_guide",
+        "advanced_race_guide",
+        "adventurers_guide",
+        "bestiary",
+        "bestiary_2",
+        "bestiary_3",
+        "bestiary_4",
+        "bestiary_5",
+        "bonus_bestiary",
+        "book_of_the_damned_volume_1",
+        "book_of_the_damned_volume_2",
+        "core_rulebook",
+        "horror_adventures",
+        "inner_sea_bestiary",
+        "inner_sea_combat",
+        "inner_sea_faiths",
+        "inner_sea_gods",
+        "inner_sea_intrigue",
+        "inner_sea_magic",
+        "inner_sea_world_guide",
+        "monster_codex",
+        "mythic_adventures",
+        "occult_adventures",
+        "pathfinder_unchained",
+        "ultimate_campaign",
+        "ultimate_equipment",
+        "ultimate_magic",
+        "ultimate_psionics",
+        "ultimate_wilderness"
       ],
-      "population": 130,
+      "population": 2062,
       "population_by_kind": {
-        "ability": 90,
-        "companion": 4,
-        "template": 36
+        "ability": 745,
+        "companion": 104,
+        "monster": 843,
+        "monster_ability": 244,
+        "template": 126
       },
       "population_source": "live",
       "re_derive_command": "status=='oracle-unverifiable' AND reason contains 'AT-33-E1-003 probe-surface census', over docs/work-inventory.json",
@@ -293,7 +324,7 @@
     "capability_count": 11,
     "sized_capability_count": 9,
     "unsized_capability_count": 2,
-    "total_population_named_sized_only": 769,
+    "total_population_named_sized_only": 2701,
     "built_by_sd34_count": 0,
     "not_built_count": 11,
     "note": "11 of 11 capabilities named here are NOT built by SD-34 -- this register's whole purpose is naming what still must be built, not building it (epic-5-forward-plan's file-touch set is read-only against the rest of the repo)."

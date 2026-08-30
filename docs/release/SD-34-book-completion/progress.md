@@ -13,6 +13,76 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-005 (bucket-v-widen): the corpus-wide bucket-V ledger, rebuilt and committed
+
+**Status: complete** (this sub-lane's own scope — the whole-book `AT-34-E3-005` criterion stays
+`in-progress`, see `kanban.md` row 17). **This work was done once and lost**: the prior
+`salvage-2026-08-30` cycle landed the bucket-V oracle-ledger loader's multi-path widening
+(tested, generic, safe) but the corpus-wide ledger data file a session had built alongside it was
+never committed — an untracked file, lost when that session exited. That cycle correctly refused
+to claim the 2,000+ units the lost file would have justified, per `decisions.md §4`/§9. This
+cycle rebuilds the ledger from scratch, independent of the lost file's numbers (which were never
+readable, so never trusted as a starting point), and **commits the data file in this same
+commit**.
+
+**Method, identical in kind to the `core_rulebook` pass (`decisions.md §19`), applied to the
+rest of the corpus.** Population: 6,765 non-`core_rulebook` units still in bucket V
+(`literal-verified`/`fixture-verified`) — `core_rulebook`'s own 81-unit V population is untouched
+by construction (checked, not assumed). Cross-referenced against SD-33's own final,
+fully complete (8,330 of 8,330 rows), 0-disagree combined oracle ledger
+(`docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json`,
+8,330 of 8,330 rows, 415 agree / 6,174 unverifiable / 0 disagree per that bundle's own closed
+`kanban.md` row) — **5,748 of 6,765 matched directly** (426 `agree`, 5,322 `unverifiable`, 0
+`disagree`). The remaining 1,017 were cross-referenced against `AT-33-E1-003`'s probe-surface
+census (11 kinds proven corpus-wide to carry no engine compute table at all) — **842 more**
+(`ability` 655, `template` 90, `monster_ability` 96, `companion` 1) dispositioned
+`unverifiable`/`no_probe_surface` by the same structural reasoning the `core_rulebook` lane
+applied to its own `ability`/`template`/`companion` units. **6,590 of 6,765 (97.4%) dispositioned,
+zero new oracle runs.** **175 remain, named by book:kind sub-cause, not "the rest"** —
+dominated by `race_trait` (142, mostly bestiary/ARG racial special-ability entries, same shape as
+`core_rulebook`'s own Ranger favored-enemy remainder at corpus scale), plus `equipment` 23,
+`class_feature` 3, `equipment_modifier` 3, `spell` 3, `feat` 1. **A `disagree` is never
+dispositioned** — zero appear anywhere in this cycle's output (checked, not assumed: the source
+ledger carries none, and a direct verdict-count scan of the 6,590-row output confirms it).
+**Freshness-checked**: 30 of 6,590 (0.5%), deterministic-seeded sample — each row's `unit_id`
+still resolves in the current `docs/work-inventory.json` to the same `kind` and is still in
+bucket V; **30 of 30 passed, 0 drift.**
+
+**Wired in — zero Rust source changed.** The loader (`load_bucket_v_oracle_dispositions`) and the
+apply rung (`apply_bucket_v_oracle_disposition_stamps`) were already landed by the prior
+`salvage-2026-08-30` cycle and were a verified no-op without data; this cycle supplies only the
+data file at the exact path the loader was already reading
+(`artifacts/bucket-v-widen/bucket-v-corpus-wide-consolidated.oracle-results.json`), then ran the
+three-pass regen (`corpus_literal_sweep` → `derived_evaluator_fixture_check` →
+`v06_work_inventory`, no `--allow-stamp-loss`) to make the disposition visible to the atlas.
+
+**Whole-corpus before/after diff, by unit id:** 49,438 → 49,438, 0 added/removed. **6,590
+changed, 0 of them `core_rulebook`** (byte-identical before/after). Bucket transition: `V → DONE`:
+6,590 (nothing else moved). Corpus-wide V: **6,846 → 256** (81 `core_rulebook`, unchanged, + 175
+this cycle's own named remainder — SET-verified equal, not just counted). Corpus-wide DONE:
+**17,576 → 24,166**. `core_rulebook` V unchanged at 81. `oracle_probe_surface_for_no_table_kinds`
+capability (re-derived live, zero code change): population 130 → **2,062**, `books_unblocked` 1
+→ **30 books**.
+
+**Verification:** `cargo test --locked --bin v06_work_inventory -- bucket_v_oracle_dispositions
+apply_bucket_v_oracle_disposition_stamps stamped_ids` → 8 passed, 0 failed (pre-existing tests,
+re-run against this cycle's data). `cargo test --locked --no-run` (full workspace) and, separately,
+`apps/desktop/src-tauri` (explicitly tested, separate cargo workspace): both exit 0, run at
+`837dbbcf6b` (no Rust source changed by this cycle). `completion_atlas.py --check` (corpus-wide):
+`population=49438 unclassified=0 overlap=0 citation_failures=0`. `denominator_gate.py --check`:
+`violations=6`, unchanged pre-existing `FRT_HVY` baseline, no 7th added.
+`verify_capability_register.py`: `PASS: 11 capabilities named, X-bucket reconciliation sums to
+live population (170), 0 flagged built_by_sd34=true`. `corpus_literal_sweep`: `records_examined:
+48708`, unchanged (this cycle touches zero `data/corpus/**` records — sweep population delta N/A
+per `decisions.md §12` L8).
+
+**Movement, four buckets (`decisions.md §9`):** closure 0, **reclassification 6,590** (every
+verdict reused from SD-33's own already-produced work, never newly computed — an `agree` unit's
+value was not re-verified by this cycle either), reachability 0 (the `no_probe_surface` finding
+is `AT-33-E1-003`'s, not this cycle's), instrument-correction 0.
+
+**Receipt:** `artifacts/bucket-v-widen/AT-34-E3-005_bucket_v_widen_cycle_receipt.md`.
+
 ### Cycle — salvage-2026-08-30: recovering two isolated worktrees' uncommitted diffs (partial)
 
 **Status: partial.** Three lanes exited without committing; their work survived only as
