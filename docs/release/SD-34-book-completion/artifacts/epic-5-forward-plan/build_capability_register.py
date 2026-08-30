@@ -306,12 +306,19 @@ capabilities.append({
 
 # decisions.md §19 (operator ruling, 2026-08-29): §17's disposition principle extended to
 # bucket V. AT-34-E3-005's consolidated bucket-V oracle ledger dispositioned 2,712 of
-# core_rulebook's 2,793 bucket-V units; 130 of those carry the WEAKEST of the two dispositions
+# core_rulebook's 2,793 bucket-V units; 130 of those carried the WEAKEST of the two dispositions
 # ("unverifiable" -- AT-33-E1-003's own probe-surface census already proved `ability`/
 # `template`/`companion` carry no engine compute table at all, so there is nothing for the
 # oracle harness to compare against). §19 requires this be carried here as a named capability
 # ("build those probes") rather than a closed question -- it is dispositioned, but it is not the
-# same as verified-correct.
+# same as verified-correct. `src/bin/v06_work_inventory.rs`'s `load_bucket_v_oracle_dispositions`
+# already reads a *list* of ledger paths, not just core_rulebook's, so this population is computed
+# live against the WHOLE corpus and will grow automatically the day a second book's ledger lands
+# at one of those paths -- no code change needed here when that happens. As of this cycle no
+# second ledger has landed (a salvaged corpus-wide ledger claim did not survive its own session
+# uncommitted, `bucket_v_widen_infra_cycle_receipt.md`), so this population is core_rulebook-only
+# today; the kind list in "what" is descriptive prose, re-checked against `population_by_kind`
+# each run, not itself the gate.
 bucket_v_no_probe_surface_units = [
     u for u in units
     if u.get("status") == "oracle-unverifiable"
@@ -322,14 +329,18 @@ bucket_v_no_probe_surface_by_book = collections.Counter(u["book"] for u in bucke
 
 capabilities.append({
     "id": "oracle_probe_surface_for_no_table_kinds",
-    "what": "decisions.md §19: bucket-V units dispositioned this bundle as `unverifiable` "
-            "because AT-33-E1-003's probe-surface census already proved these three kinds "
-            "(`ability`, `template`, `companion`) carry no engine compute table at all -- there "
-            "is no formula-evaluator probe on the engine side to compare against any PCGen "
-            "oracle export, structurally, not from a harness timeout or gap. This is the "
-            "WEAKEST of the two oracle dispositions §19 makes (the ruling's own words): it says "
-            "the instrument was never built, not that the oracle cannot express the value. "
-            "Building a probe for these three kinds is a named forward capability, not a "
+    "what": "decisions.md §19: bucket-V units dispositioned as `unverifiable` because "
+            "AT-33-E1-003's probe-surface census already proved certain kinds carry no engine "
+            "compute table at all -- there is no formula-evaluator probe on the engine side to "
+            "compare against any PCGen oracle export, structurally, not from a harness timeout "
+            "or gap. The kinds actually observed in this population are named in "
+            "`population_by_kind` below -- re-check that field each run rather than trusting "
+            "this prose list. Infrastructure exists (`load_bucket_v_oracle_dispositions`) to "
+            "merge a second, corpus-wide ledger alongside core_rulebook's own once one is built "
+            "and landed; none has landed yet, so this population is core_rulebook-only today. "
+            "This is the WEAKEST of the two oracle dispositions §19 makes (the ruling's own "
+            "words): it says the instrument was never built, not that the oracle cannot express "
+            "the value. Building a probe for these kinds is a named forward capability, not a "
             "closed question.",
     "buckets_unblocked": ["V"],
     "books_unblocked": sorted(bucket_v_no_probe_surface_by_book.keys()),

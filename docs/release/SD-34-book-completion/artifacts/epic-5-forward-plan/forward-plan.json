@@ -1,17 +1,17 @@
 {
   "criterion": "AT-34-E5-001",
-  "generated_at_head": "9bb073402a93c067f395c6a4de69cf2a4a780f17",
+  "generated_at_head": "fef202a5668519a37185998ea8835fc8841db808",
   "re_derive_command": "python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_forward_plan.py",
   "population": {
     "description": "35 non-vehicle books (37 total inventory books minus core_rulebook and ultimate_campaign)",
     "books_count": 35,
     "total_units_35_books": 42472,
-    "done_units_35_books": 13108,
-    "remaining_non_done_units_35_books": 29364,
+    "done_units_35_books": 13189,
+    "remaining_non_done_units_35_books": 29283,
     "remaining_by_bucket": {
       "B": 11299,
       "C": 3981,
-      "D": 2668,
+      "D": 2587,
       "M": 3977,
       "V": 6747,
       "U": 171,
@@ -175,8 +175,8 @@
     {
       "book": "advanced_players_guide",
       "total_units": 3829,
-      "done": 873,
-      "remaining_non_done": 2956,
+      "done": 875,
+      "remaining_non_done": 2954,
       "buckets": {
         "B": {
           "unit_count": 1256,
@@ -211,7 +211,7 @@
           "note": "This is the only bucket-C cycle SD-34 has run. It measures wiring-to-V, not wiring-to-DONE (this book's Favored Enemy/Terrain mechanism grounds the compute path but the result still needs the oracle harness). A book whose bucket-C mechanism wires straight to a player-facing surface (not through V) would have a different, unmeasured rate. n=1 mechanism -- do not extrapolate to a book-wide bucket-C rate."
         },
         "D": {
-          "unit_count": 216,
+          "unit_count": 214,
           "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
           "rate": null,
           "sample_size": 0,
@@ -497,8 +497,8 @@
     {
       "book": "bestiary_2",
       "total_units": 1439,
-      "done": 831,
-      "remaining_non_done": 608,
+      "done": 850,
+      "remaining_non_done": 589,
       "buckets": {
         "B": {
           "unit_count": 8,
@@ -519,7 +519,7 @@
           "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
         },
         "D": {
-          "unit_count": 177,
+          "unit_count": 158,
           "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
           "rate": null,
           "sample_size": 0,
@@ -547,11 +547,11 @@
     {
       "book": "bestiary_3",
       "total_units": 1378,
-      "done": 891,
-      "remaining_non_done": 487,
+      "done": 892,
+      "remaining_non_done": 486,
       "buckets": {
         "D": {
-          "unit_count": 93,
+          "unit_count": 92,
           "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
           "rate": null,
           "sample_size": 0,
@@ -579,8 +579,8 @@
     {
       "book": "bestiary_4",
       "total_units": 1558,
-      "done": 851,
-      "remaining_non_done": 707,
+      "done": 867,
+      "remaining_non_done": 691,
       "buckets": {
         "B": {
           "unit_count": 30,
@@ -601,7 +601,7 @@
           "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
         },
         "D": {
-          "unit_count": 159,
+          "unit_count": 143,
           "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
           "rate": null,
           "sample_size": 0,
@@ -629,8 +629,8 @@
     {
       "book": "bestiary_5",
       "total_units": 278,
-      "done": 173,
-      "remaining_non_done": 105,
+      "done": 175,
+      "remaining_non_done": 103,
       "buckets": {
         "B": {
           "unit_count": 6,
@@ -651,7 +651,7 @@
           "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
         },
         "D": {
-          "unit_count": 51,
+          "unit_count": 49,
           "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
           "rate": null,
           "sample_size": 0,
@@ -1293,8 +1293,8 @@
     {
       "book": "inner_sea_races",
       "total_units": 432,
-      "done": 179,
-      "remaining_non_done": 253,
+      "done": 180,
+      "remaining_non_done": 252,
       "buckets": {
         "B": {
           "unit_count": 42,
@@ -1315,7 +1315,7 @@
           "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
         },
         "D": {
-          "unit_count": 31,
+          "unit_count": 30,
           "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
           "rate": null,
           "sample_size": 0,
@@ -1885,8 +1885,8 @@
     {
       "book": "ultimate_equipment",
       "total_units": 1666,
-      "done": 189,
-      "remaining_non_done": 1477,
+      "done": 229,
+      "remaining_non_done": 1437,
       "buckets": {
         "B": {
           "unit_count": 1,
@@ -1907,7 +1907,7 @@
           "note": "artifacts/epic-4-ultimate-campaign/step-cost-ledger.json's own comparison concludes the 3.5x divergence between the two rates is a SAMPLE-SIZE artifact (Epic 4's n=1 cycle/5 units), not a book-shape effect, and that Core Rulebook's own per-mechanism spread is 22.2-617.4 min/cycle (28x) -- a single blended units/hour figure materially misrepresents any individual book's true cost. Use the range, never a point estimate."
         },
         "D": {
-          "unit_count": 46,
+          "unit_count": 6,
           "mechanism": "per named sub-cause (not yet enumerated outside the two vehicle books)",
           "rate": null,
           "sample_size": 0,
@@ -2281,8 +2281,8 @@
     "priced_to_done_units": 11919,
     "priced_to_v_not_done_units": 3981,
     "priced_to_v_not_done_hours": 96.39,
-    "unpriced_units": 13464,
-    "unpriced_units_pct_of_remaining": 45.9,
+    "unpriced_units": 13383,
+    "unpriced_units_pct_of_remaining": 45.7,
     "priced_to_done_projected_hours_range": [
       1952.42,
       6782.37

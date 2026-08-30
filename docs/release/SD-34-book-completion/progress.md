@@ -13,6 +13,56 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — salvage-2026-08-30: recovering two isolated worktrees' uncommitted diffs (partial)
+
+**Status: partial.** Three lanes exited without committing; their work survived only as
+uncommitted-diff patches saved outside the repo. This cycle read both substantive patches before
+applying either (they both touch `src/bin/v06_work_inventory.rs`), hand-merged them (no true
+conflict — they touch disjoint regions of the file), and verified the merged result, not just
+that it compiled.
+
+**Landed:** (1) `closure_has_real_aspect_description` — a corpus-wide widening of
+`has_real_description` recognizing real prose on an `ASPECT:`-only tooltip token (refusing
+leaked-syntax/template/bare-number text with the same discipline as every sibling signal).
+Closed 123 of 49,438 units corpus-wide (`D`→`DONE`), 3 of them the exact `ultimate_campaign`
+units `AT-34-E4-002`'s own first cycle named as its next-cycle plan item 1. 8 further units
+(already `DONE`) relabeled `grounded`→`text-complete` — evidence-string churn, no bucket
+crossed. (2) The bucket-V oracle-ledger loader widened to merge multiple ledger files
+(`load_bucket_v_oracle_dispositions`, 2 new tests) — safe, generic, tested infrastructure that
+is a no-op today because the corpus-wide ledger data it would read was never captured by its
+own salvage patch (an untracked file, lost with the session). Full detail and every figure's
+re-derive command: `artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_2.md`,
+`artifacts/epic-5-forward-plan/bucket_v_widen_infra_cycle_receipt.md`.
+
+**Dropped, not landed:** the widened bucket-V ledger's claimed population/movement numbers
+(`core_rulebook` V unchanged at 6,846 corpus-wide, `81` for `core_rulebook` itself — no
+disposition happened outside what `AT-34-E3-005` already applied); a third salvaged patch
+(docs-only, a "bucket M first cycle" narrative) that cited a receipt and a retro event neither of
+which exist in the repo. In both cases the missing artifact is the same failure shape: a
+`git diff`-based patch never captures untracked new files, and an uncommitted session's new data
+files are lost when it exits.
+
+**Whole-corpus diff, by unit id:** `49,438 → 49,438`, 0 added/removed. 131 units changed
+status/evidence (123 closure, 8 evidence-string churn) — see the epic-4 receipt for the
+per-book breakdown. Movement, four buckets: **closure 123, reclassification 0, reachability 0,
+instrument-correction 0** (plus 8 same-bucket evidence-string churn, not counted in any of the
+four).
+
+**Verification:** three-pass regen in order, never `--allow-stamp-loss`
+(`corpus_literal_sweep` 48,708 examined, clean; `derived_evaluator_fixture_check` 1,839/2,580, 0
+failed; `v06_work_inventory` with both report env vars, exit 0, `2m26s`).
+`completion_atlas.py --check` corpus-wide: `population=49438 unclassified=0 overlap=0
+citation_failures=0`. `--book ultimate_campaign --check`: `DONE=133 of 265` (criterion's own
+`265 of 265` bar not met — 132 remain, all real M/V/U/X work, unchanged scope from
+`AT-34-E4-002`'s first cycle). `--book core_rulebook --check`: `DONE 4215→4254`.
+`denominator_gate.py --check`: `violations=6`, unchanged pre-existing `FRT_HVY` baseline, no 7th
+added. `box_ledger.py --check`: pre-existing failure unchanged in kind (`exit 1`,
+`oracle_disagreement=0`; `uncovered` 22,346→22,223, an improvement, not a regression).
+`cargo test --locked --no-run`: full workspace and `apps/desktop/src-tauri` (tested explicitly)
+both exit 0. `cargo test --bin v06_work_inventory`: 433/433. Full 184-target `sd13_*`/`sd25_*`
+gate set, run together: 184/184, 0 failed. `forward-plan.json`/`capability-register.json`
+re-derived live against the regenerated inventory; both verifiers pass.
+
 ### Cycle — AT-34-E3-001 wave-10 regeneration and attribution: measuring cycle 10's bucket-B batch
 
 **Status: complete.** Cycle 10's bucket-B batch (`935cef27b5`) widened the Druid/Monk citation

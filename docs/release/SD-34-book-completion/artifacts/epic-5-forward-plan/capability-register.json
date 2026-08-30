@@ -1,6 +1,6 @@
 {
   "criterion": "AT-34-E5-002",
-  "generated_at_head": "5855c42bf345f3398338d3baf538b0afdcb5e180",
+  "generated_at_head": "fef202a5668519a37185998ea8835fc8841db808",
   "re_derive_command": "python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_capability_register.py",
   "scope_note": "Evidence bar (epic-breakdown.md): 'Beyond the power table: anything Epics 3 or 4 proved is required and does not exist.' Ordinary bucket-B content-placement work (place a record in an EXISTING table) is already named and priced generically by AT-34-E5-001's forward-plan.json and is NOT repeated here -- this register is capabilities: new engine machinery, not yet built, that a bucket's ordinary clearing mechanism cannot supply.",
   "capabilities": [
@@ -270,7 +270,7 @@
     },
     {
       "id": "oracle_probe_surface_for_no_table_kinds",
-      "what": "decisions.md \u00a719: bucket-V units dispositioned this bundle as `unverifiable` because AT-33-E1-003's probe-surface census already proved these three kinds (`ability`, `template`, `companion`) carry no engine compute table at all -- there is no formula-evaluator probe on the engine side to compare against any PCGen oracle export, structurally, not from a harness timeout or gap. This is the WEAKEST of the two oracle dispositions \u00a719 makes (the ruling's own words): it says the instrument was never built, not that the oracle cannot express the value. Building a probe for these three kinds is a named forward capability, not a closed question.",
+      "what": "decisions.md \u00a719: bucket-V units dispositioned as `unverifiable` because AT-33-E1-003's probe-surface census already proved certain kinds carry no engine compute table at all -- there is no formula-evaluator probe on the engine side to compare against any PCGen oracle export, structurally, not from a harness timeout or gap. The kinds actually observed in this population are named in `population_by_kind` below -- re-check that field each run rather than trusting this prose list. Infrastructure exists (`load_bucket_v_oracle_dispositions`) to merge a second, corpus-wide ledger alongside core_rulebook's own once one is built and landed; none has landed yet, so this population is core_rulebook-only today. This is the WEAKEST of the two oracle dispositions \u00a719 makes (the ruling's own words): it says the instrument was never built, not that the oracle cannot express the value. Building a probe for these kinds is a named forward capability, not a closed question.",
       "buckets_unblocked": [
         "V"
       ],

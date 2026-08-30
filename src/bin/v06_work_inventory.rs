@@ -1215,6 +1215,53 @@ fn closure_has_real_description(row_refs: &[Option<&str>]) -> bool {
     })
 }
 
+/// AT-34-E4-002's own diagnosed root cause, deferred at the time to a future
+/// cycle after a corpus-wide audit: a unit can carry `description: null`
+/// (no `DESC:`/`SPROP:`/`BENEFIT:` token anywhere in its closure) while its
+/// entire real mechanical text lives on an `ASPECT:` tooltip token instead
+/// -- 3 `ultimate_campaign` `ability` records (`Blood of Dragons ~ Saving
+/// Throw`, `Deathtouched ~ Mind-Affecting`, `Loyalty across Lifetimes ~
+/// Eidolon Bonus`) read `engine-does-not-hold` for exactly this reason.
+///
+/// `ASPECT:` is PCGen's pipe-delimited tooltip token, `<Label>|<display
+/// text>[|<extra>]` -- the label (`SaveBonus`, `CombatBonus`, ...) is a
+/// category tag, never itself the text a player reads. A corpus-wide audit
+/// (321 `description: null` records whose only content is an `ASPECT:`
+/// token, across 22 books) found 39 whose display-text segment is not real
+/// prose: a UI display-name template (`NAME|Str +%1|ABP_LegendaryAbility_
+/// STRInherent`), a bare number (`Racial Points|1`), or an unsubstituted
+/// PCGen argument reference the equipment render path's own
+/// `leaked_pcgen_syntax` guard already exists to catch on every other path.
+/// Reusing that guard here, plus a real-word-content floor, recovers the 3
+/// genuine records without promoting that 39-record tail.
+fn closure_has_real_aspect_description(row_refs: &[Option<&str>]) -> bool {
+    row_refs.iter().flatten().any(|line| {
+        tab_fields(line)
+            .iter()
+            .filter_map(|f| f.strip_prefix("ASPECT:"))
+            .any(|value| aspect_display_text_is_real_description(value))
+    })
+}
+
+/// Whether an `ASPECT:` token's value carries real, player-facing prose in
+/// its display-text segment. See [`closure_has_real_aspect_description`]'s
+/// doc comment for the corpus-wide audit this refusal set is built from.
+fn aspect_display_text_is_real_description(value: &str) -> bool {
+    let trimmed = value.trim();
+    if trimmed.is_empty() {
+        return false;
+    }
+    // `<Label>|<display text>[|<extra>]` -- a value with no `|` at all has
+    // no separate label, so the whole value is checked as the display text.
+    let text = trimmed.split('|').nth(1).unwrap_or(trimmed).trim();
+    if text.is_empty() || leaked_pcgen_syntax(text).is_some() {
+        return false;
+    }
+    // At least one real word of substance -- excludes a bare number
+    // (`Racial Points|1`) or symbol-only text.
+    text.split(|c: char| !c.is_alphabetic()).any(|word| word.len() >= 3)
+}
+
 /// SD31-D7-PROSE-002 (Decision 7's condition 3, `OPEN-ISSUES.md` row 70):
 /// the SECOND source for "this unit's corpus record carries a real
 /// description", alongside [`closure_has_real_description`]'s raw `.lst`
@@ -1337,6 +1384,71 @@ mod closure_has_real_description_tests {
     #[test]
     fn a_missing_row_is_skipped_not_treated_as_a_hit() {
         assert!(!closure_has_real_description(&[None, None]));
+    }
+}
+
+#[cfg(test)]
+mod closure_has_real_aspect_description_tests {
+    use super::*;
+
+    /// AT-34-E4-002's own diagnosed shape: `description: null`, no `DESC:`/
+    /// `SPROP:`/`BENEFIT:` anywhere, but a real `ASPECT:` tooltip carries the
+    /// entire mechanical text (`ultimate_campaign`'s `Blood of Dragons ~
+    /// Saving Throw`, verbatim).
+    #[test]
+    fn finds_real_prose_on_an_aspect_only_row() {
+        let row = Some(
+            "Blood of Dragons ~ Saving Throw\tCATEGORY:Internal\tTYPE:Blood of Dragons\t\
+             ASPECT:SaveBonus|+2 trait bonus on saving throws against effects that cause sleep or paralysis",
+        );
+        assert!(closure_has_real_aspect_description(&[row]));
+    }
+
+    /// A `.MOD` continuation row can be where the real `ASPECT:` lives.
+    #[test]
+    fn finds_a_real_aspect_on_a_mod_row_when_the_base_row_has_none() {
+        let base = Some("Foo\tTYPE:General");
+        let mod_row = Some("Foo.MOD\tASPECT:SaveBonus|+1 trait bonus on Will saves.");
+        assert!(closure_has_real_aspect_description(&[base, mod_row]));
+    }
+
+    /// No `ASPECT:` token anywhere in the closure.
+    #[test]
+    fn refuses_a_closure_with_no_aspect_token_at_all() {
+        let row = Some("Foo\tTYPE:General\tSOURCEPAGE:p.1");
+        assert!(!closure_has_real_aspect_description(&[row]));
+    }
+
+    /// Corpus-wide audit finding (321 ASPECT-only records, 22 books): a
+    /// `NAME|`-labelled aspect is a UI display-name template, not prose, and
+    /// several carry an unsubstituted `%N` argument reference that would
+    /// leak to the player verbatim (`pathfinder_unchained`'s ABP entries,
+    /// e.g. `NAME|Str +%1|ABP_LegendaryAbility_STRInherent`).
+    #[test]
+    fn refuses_an_unsubstituted_pcgen_argument_reference() {
+        let row = Some("Foo\tASPECT:NAME|Str +%1|ABP_LegendaryAbility_STRInherent");
+        assert!(!closure_has_real_aspect_description(&[row]));
+    }
+
+    /// A bare number with no real word (`Racial Points|1`) is not prose a
+    /// player reads as a description.
+    #[test]
+    fn refuses_a_bare_number_display_text() {
+        let row = Some("Foo\tASPECT:Racial Points|1");
+        assert!(!closure_has_real_aspect_description(&[row]));
+    }
+
+    /// An empty `ASPECT:` value contributes nothing.
+    #[test]
+    fn refuses_a_blank_aspect_value() {
+        assert!(!closure_has_real_aspect_description(&[Some("Foo\tASPECT:   ")]));
+    }
+
+    /// A `None` row (no corpus line resolved at all) contributes nothing and
+    /// must not panic.
+    #[test]
+    fn a_missing_row_is_skipped_not_treated_as_a_hit() {
+        assert!(!closure_has_real_aspect_description(&[None, None]));
     }
 }
 
@@ -12028,22 +12140,48 @@ mod apply_done_rung_stamps_tests {
     }
 }
 
-/// `decisions.md §19`'s consolidated bucket-V oracle-clearing ledger for
-/// `core_rulebook` (`AT-34-E3-005`, `docs/release/SD-34-book-completion/
-/// artifacts/epic-3-core-rulebook/bucket-v/bucket-v-consolidated.oracle-
-/// results.json`): `{"results": [{"unit_id", "verdict", "reason"?, ...}]}`.
-/// Returns an empty map on any read/parse failure -- a missing or
-/// unreadable ledger must never be misread as evidence, same discipline as
-/// `load_sweep_verified`/`load_derived_fixture_verified`. Keyed on
-/// `unit_id` directly: every id in this file already carries its own
+/// `decisions.md §19`'s consolidated bucket-V oracle-clearing ledgers.
+/// Originally a single `core_rulebook`-only file (`AT-34-E3-005`); widened
+/// (the bucket-V-widen lane, `docs/release/SD-34-book-completion/
+/// artifacts/bucket-v-widen/`) to a second, corpus-wide ledger covering
+/// every other book's bucket-V population. Each file has the same shape --
+/// `{"results": [{"unit_id", "verdict", "reason"?, ...}]}` -- and is keyed
+/// on `unit_id` directly: every id already carries its own
 /// `<book>:<kind>:<key>` identity, so no book/file/line reconstruction is
-/// needed the way the sweep's triples require.
+/// needed the way the sweep's triples require. The two files' populations
+/// are disjoint by construction (one book vs. every other book), so a
+/// later path's entry never has occasion to overwrite an earlier path's for
+/// the same id; `load_bucket_v_oracle_dispositions`'s merge is a plain
+/// insert per path for that reason, not a conflict-resolution policy.
 const BUCKET_V_ORACLE_RESULTS_RELATIVE_PATH: &str = "docs/release/SD-34-book-completion/artifacts/\
     epic-3-core-rulebook/bucket-v/bucket-v-consolidated.oracle-results.json";
 
-fn load_bucket_v_oracle_dispositions(repo_root: &Path) -> BTreeMap<String, (String, Option<String>)> {
-    let path = repo_root.join(BUCKET_V_ORACLE_RESULTS_RELATIVE_PATH);
-    let Ok(text) = std::fs::read_to_string(&path) else {
+/// `decisions.md §19`, widened beyond `core_rulebook`: the bucket-V-widen
+/// lane's corpus-wide consolidated ledger (every book except
+/// `core_rulebook`, which keeps its own file above). Built the same way --
+/// cross-referencing each book's bucket-V population against SD-33's own
+/// committed oracle verdicts (`AT-33-E5-003.combined-oracle-results.json`,
+/// the harness's own final de-duplicated ledger, not a fresh re-union of
+/// its raw per-wave files) plus AT-33-E1-003's probe-surface census for the
+/// kinds that structurally carry no engine table at all.
+const BUCKET_V_ORACLE_RESULTS_WIDEN_RELATIVE_PATH: &str = "docs/release/SD-34-book-completion/artifacts/\
+    bucket-v-widen/bucket-v-corpus-wide-consolidated.oracle-results.json";
+
+/// All bucket-V oracle-disposition ledger paths, relative to the repo
+/// root. `load_bucket_v_oracle_dispositions` reads every one of these and
+/// merges them into a single `unit_id -> (verdict, reason)` map; a book's
+/// ledger lives in exactly one of these files, so the merge order does not
+/// matter for any id today. Widen bucket V to a further population by
+/// adding another path here, not by editing either function below.
+const BUCKET_V_ORACLE_RESULTS_ALL_RELATIVE_PATHS: &[&str] =
+    &[BUCKET_V_ORACLE_RESULTS_RELATIVE_PATH, BUCKET_V_ORACLE_RESULTS_WIDEN_RELATIVE_PATH];
+
+/// Reads one bucket-V oracle-disposition ledger file. Returns an empty map
+/// on any read/parse failure -- a missing or unreadable ledger must never
+/// be misread as evidence, same discipline as
+/// `load_sweep_verified`/`load_derived_fixture_verified`.
+fn load_oracle_dispositions_from_path(path: &Path) -> BTreeMap<String, (String, Option<String>)> {
+    let Ok(text) = std::fs::read_to_string(path) else {
         return BTreeMap::new();
     };
     let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&text) else {
@@ -12057,6 +12195,20 @@ fn load_bucket_v_oracle_dispositions(repo_root: &Path) -> BTreeMap<String, (Stri
         };
         let reason = row["reason"].as_str().map(|s| s.to_string());
         out.insert(unit_id.to_string(), (verdict.to_string(), reason));
+    }
+    out
+}
+
+/// Loads and merges every ledger in `BUCKET_V_ORACLE_RESULTS_ALL_RELATIVE_PATHS`
+/// under `repo_root`. A missing/unreadable file contributes an empty map
+/// (via `load_oracle_dispositions_from_path`) rather than failing the
+/// whole load -- one book's ledger going missing must never blind the
+/// disposition rung to every other book's.
+fn load_bucket_v_oracle_dispositions(repo_root: &Path) -> BTreeMap<String, (String, Option<String>)> {
+    let mut out = BTreeMap::new();
+    for relative_path in BUCKET_V_ORACLE_RESULTS_ALL_RELATIVE_PATHS {
+        let path = repo_root.join(relative_path);
+        out.extend(load_oracle_dispositions_from_path(&path));
     }
     out
 }
@@ -12240,6 +12392,95 @@ mod apply_bucket_v_oracle_disposition_stamps_tests {
         apply_bucket_v_oracle_disposition_stamps(&mut inventory, &dispositions);
 
         assert_eq!(inventory[0].verdict.status, "grounded");
+    }
+}
+
+#[cfg(test)]
+mod load_bucket_v_oracle_dispositions_tests {
+    use super::*;
+
+    /// The bucket-V-widen lane's own reason this rung needed widening: the
+    /// widened loader must merge BOTH ledger files -- `core_rulebook`'s
+    /// original (`AT-34-E3-005`) and the corpus-wide widen ledger -- into
+    /// one map, not read only the first path it finds. A real temp repo
+    /// root with both files present, same `std::env::temp_dir()` +
+    /// pid-suffixed scratch-dir pattern used elsewhere in this repo
+    /// (`derived_evaluator_fixture_check.rs`).
+    #[test]
+    fn merges_core_rulebook_and_widen_ledgers_from_disk() {
+        let root = std::env::temp_dir()
+            .join(format!("codex_bucket_v_widen_ledger_test_{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+
+        let core_dir = root.join("docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/bucket-v");
+        std::fs::create_dir_all(&core_dir).unwrap();
+        std::fs::write(
+            core_dir.join("bucket-v-consolidated.oracle-results.json"),
+            r#"{"results":[{"unit_id":"core_rulebook:feat:power_attack","verdict":"agree"}]}"#,
+        )
+        .unwrap();
+
+        let widen_dir = root.join("docs/release/SD-34-book-completion/artifacts/bucket-v-widen");
+        std::fs::create_dir_all(&widen_dir).unwrap();
+        std::fs::write(
+            widen_dir.join("bucket-v-corpus-wide-consolidated.oracle-results.json"),
+            r#"{"results":[{"unit_id":"ultimate_equipment:equipment:belt_of_giant_strength_2","verdict":"agree"},
+                {"unit_id":"ultimate_magic:ability:some_ability","verdict":"unverifiable","reason":"no_probe_surface: kind 'ability' carries no engine table"}]}"#,
+        )
+        .unwrap();
+
+        let merged = load_bucket_v_oracle_dispositions(&root);
+
+        assert_eq!(merged.len(), 3, "must contain rows from BOTH ledger files, not just one");
+        assert_eq!(
+            merged.get("core_rulebook:feat:power_attack"),
+            Some(&("agree".to_string(), None))
+        );
+        assert_eq!(
+            merged.get("ultimate_equipment:equipment:belt_of_giant_strength_2"),
+            Some(&("agree".to_string(), None))
+        );
+        assert_eq!(
+            merged.get("ultimate_magic:ability:some_ability"),
+            Some(&(
+                "unverifiable".to_string(),
+                Some("no_probe_surface: kind 'ability' carries no engine table".to_string())
+            ))
+        );
+
+        let _ = std::fs::remove_dir_all(&root);
+    }
+
+    /// A missing widen ledger (e.g. before this lane's file has landed)
+    /// must never blind the loader to the `core_rulebook` ledger that IS
+    /// present -- each path's failure is independent, per
+    /// `load_oracle_dispositions_from_path`'s own contract.
+    #[test]
+    fn missing_widen_ledger_does_not_blind_the_core_rulebook_ledger() {
+        let root = std::env::temp_dir().join(format!(
+            "codex_bucket_v_widen_ledger_missing_test_{}",
+            std::process::id()
+        ));
+        let _ = std::fs::remove_dir_all(&root);
+
+        let core_dir = root.join("docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/bucket-v");
+        std::fs::create_dir_all(&core_dir).unwrap();
+        std::fs::write(
+            core_dir.join("bucket-v-consolidated.oracle-results.json"),
+            r#"{"results":[{"unit_id":"core_rulebook:feat:power_attack","verdict":"agree"}]}"#,
+        )
+        .unwrap();
+        // Deliberately do not create the widen ledger file/dir at all.
+
+        let merged = load_bucket_v_oracle_dispositions(&root);
+
+        assert_eq!(merged.len(), 1);
+        assert_eq!(
+            merged.get("core_rulebook:feat:power_attack"),
+            Some(&("agree".to_string(), None))
+        );
+
+        let _ = std::fs::remove_dir_all(&root);
     }
 }
 
@@ -13998,7 +14239,8 @@ fn main() {
                     &unit.provenance.file,
                     unit.provenance.line,
                     &unit.key,
-                );
+                )
+                || closure_has_real_aspect_description(&row_refs);
             // SD31-D7-PROSE-004 (Decision 7 REFINED): the real universal-
             // vs-conditional discriminator, over the SAME `row_refs` closure
             // every other signal on this line already reads.
