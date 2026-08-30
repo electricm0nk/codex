@@ -13,6 +13,45 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-005 (bucket-v-widen): independent re-verification, second dispatched lane
+
+**Status: complete** (confirms the cycle immediately below; no new commit needed). This lane was
+dispatched the identical criterion text ("rebuild the corpus-wide bucket-V ledger AND COMMIT THE
+DATA FILE") against a worktree cut before `cfd9c6d3d9`/`3cc878de05` existed on `tranche/14`. On
+`git fetch origin tranche/14 && git rebase origin/tranche/14`, both commits were already present
+— the ledger and remainder files are tracked (`git ls-files` confirms), and no working-tree
+deletion of them exists in this worktree. Rather than rebuild a second, competing ledger (which
+would either duplicate work or collide with the committed one), this cycle independently
+re-derived every headline figure from the already-committed artifacts, with fresh commands run at
+this cycle's own HEAD (`3cc878de05`):
+
+- `bucket-v-corpus-wide-consolidated.oracle-results.json`: 6,590 rows, `Counter({'unverifiable':
+  6164, 'agree': 426})`, **0 `disagree` keys present** (full scan, not sampled).
+- `epic-3-core-rulebook/bucket-v/bucket-v-consolidated.oracle-results.json` (the sibling
+  `core_rulebook`-only ledger): 2,712 rows, `Counter({'unverifiable': 2327, 'agree': 385})`, 0
+  `disagree`.
+- Disjointness of the two ledgers' `unit_id` sets: `a=6590 b=2712 overlap=0` — confirmed, not
+  assumed.
+- `python3 scripts/completion_atlas.py --check` → `population=49438 unclassified=0 overlap=0`,
+  `V: 256` (81 `core_rulebook` + 175 widen remainder), `DONE: 24166` — matches the committed
+  receipt's own after-figures exactly.
+- `python3 scripts/completion_atlas.py --book core_rulebook --check` → `V: 81`, unchanged.
+- Independent freshness re-sample, **different seed (42), n=50** (the committed receipt's own
+  sample was seed 20260830, n=30): every sampled `unit_id` resolves in current
+  `docs/work-inventory.json` with `status` in `{oracle-agree, oracle-unverifiable}` — 0 drift, 0
+  missing.
+- `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` →
+  `files_checked=15 violations=6` — unchanged from the pre-existing `FRT_HVY` baseline this
+  cycle did not add to.
+- `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`) —
+  named because every reused verdict traces back to a `.pcg`/oracle-export round-trip run against
+  this pin; zero new oracle runs this cycle (verification only).
+
+No Rust source or corpus record touched. `git status --porcelain` in this worktree is clean
+before and after — nothing to commit. Filed to make the duplicate-dispatch explicit in the
+record: a later reader should trust `cfd9c6d3d9`/`3cc878de05` as the landing commits and this
+entry as a second, independent confirmation, not evidence of a third rebuild.
+
 ### Cycle — AT-34-E3-005 (bucket-v-widen): the corpus-wide bucket-V ledger, rebuilt and committed
 
 **Status: complete** (this sub-lane's own scope — the whole-book `AT-34-E3-005` criterion stays
