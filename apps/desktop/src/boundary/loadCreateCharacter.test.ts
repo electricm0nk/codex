@@ -19,6 +19,7 @@ async function testNoRuntimeThrowsDescriptiveError() {
       abilityBonusTarget: 'strength',
       savedAt: '2026-07-24T00:00:00Z',
       selectedAlternateTraitKeys: [],
+      selectedTraits: [],
     });
   } catch (cause) {
     thrown = cause;

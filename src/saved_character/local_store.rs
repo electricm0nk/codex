@@ -232,6 +232,9 @@ fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacter
     for feat in &input.chosen.selected_feats {
         single_line("selected feat", feat)?;
     }
+    for character_trait in &input.chosen.selected_traits {
+        single_line("selected trait", character_trait)?;
+    }
     for skill in &input.chosen.skill_allocations {
         single_line("skill allocation skill_id", &skill.skill_id)?;
     }
@@ -341,6 +344,9 @@ fn render_character_input(input: &CharacterInput) -> String {
     );
     for feat in &input.chosen.selected_feats {
         let _ = writeln!(out, "feat={feat}");
+    }
+    for character_trait in &input.chosen.selected_traits {
+        let _ = writeln!(out, "trait={character_trait}");
     }
     for skill in &input.chosen.skill_allocations {
         let _ = writeln!(out, "skill={}:{}", skill.skill_id, skill.ranks);
@@ -610,6 +616,7 @@ mod tests {
                     skill_allocations: Vec::new(),
                     equipment_selections,
                     selected_choices: Vec::new(),
+                    selected_traits: Vec::new(),
                     spells_selected: Vec::new(),
                     class_ability_activations: Vec::new(),
                 },
@@ -671,6 +678,48 @@ mod tests {
         let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
 
         assert!(reloaded.character_input.chosen.equipment_selections[0].applied_modifiers.is_empty());
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// **AT-34-E4-002**: `selected_traits` must survive a real save/load
+    /// round-trip through this store, the same discipline
+    /// `save_and_load_round_trips_applied_modifiers`' own doc comment
+    /// records finding missing for `applied_modifiers` -- the parser
+    /// (`load_character_input_fixture`) and the writer
+    /// (`render_character_input`) must agree on the `trait=` line, or a
+    /// player's trait selection silently vanishes on save.
+    #[test]
+    fn save_and_load_round_trips_selected_traits() {
+        let root = tempdir("selected-traits-round-trip");
+        let mut envelope = envelope_with(Vec::new());
+        envelope.character_input.chosen.selected_traits = vec![
+            "trait:trait_acrobat".to_owned(),
+            "trait:trait_ease_of_faith".to_owned(),
+        ];
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert_eq!(
+            reloaded.character_input.chosen.selected_traits,
+            vec!["trait:trait_acrobat".to_owned(), "trait:trait_ease_of_faith".to_owned()]
+        );
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// No trait selections at all must round-trip to a real empty list --
+    /// the common case for every character created before this cycle.
+    #[test]
+    fn save_and_load_round_trips_an_empty_selected_traits_list() {
+        let root = tempdir("selected-traits-empty-round-trip");
+        let envelope = envelope_with(Vec::new());
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert!(reloaded.character_input.chosen.selected_traits.is_empty());
 
         fs::remove_dir_all(&root).ok();
     }

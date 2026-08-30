@@ -57,6 +57,7 @@ fn build(
         case_id: None,
         source_package_id: "sd27-feat-prereqs".to_owned(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: race_id.to_owned(),
             class_levels: vec![CharacterClassLevel { class_id: class_id.to_owned(), level }],
             ability_scores: scores,

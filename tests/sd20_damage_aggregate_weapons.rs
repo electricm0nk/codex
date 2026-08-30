@@ -83,6 +83,7 @@ fn character_with(
         case_id: Some("sd20_damage_aggregate_weapons".to_string()),
         source_package_id: "sd20_damage_aggregate_weapons".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "fighter".to_string(),

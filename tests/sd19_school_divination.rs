@@ -52,6 +52,7 @@ fn base_input() -> CharacterInput {
         case_id: Some("sd19_school_divination".to_string()),
         source_package_id: "sd19_school_divination".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "wizard".to_string(),

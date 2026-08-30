@@ -442,6 +442,22 @@ pub struct CreateCharacterRequest {
     /// rather than guessing.
     #[serde(default)]
     pub companion_species: Option<String>,
+    /// **AT-34-E4-002**: the character's chosen trait/drawback selections,
+    /// as `trait_effects`' own wire ids (`"trait:trait_acrobat"`) --
+    /// exactly what `list_available_character_traits`'s response carries
+    /// as each option's `id`, so the picker round-trips its own
+    /// identifiers unchanged (the same shape
+    /// `selected_alternate_trait_keys` already established). Passed
+    /// through verbatim into `ChosenCharacterState.selected_traits`, the
+    /// same "trusted, unvalidated wire list" precedent `selected_feats`
+    /// already follows for creation-time selections -- an id this crate
+    /// does not recognize is simply inert everywhere it is read
+    /// (`trait_effects::skill_bonuses_from_traits`'s own "omit rather than
+    /// fabricate" discipline), never a blocked save. `#[serde(default)]`
+    /// so an omitted field (every pre-existing saved payload, and every
+    /// caller that sends none) keeps working unchanged.
+    #[serde(default)]
+    pub selected_traits: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -549,6 +565,13 @@ pub struct LoadSavedCharacterResponse {
     /// character's racial-trait choices, so the picker would reopen empty and
     /// the sheet would show a Dwarf with darkvision 90 and no reason why.
     pub selected_alternate_trait_keys: Vec<String>,
+    /// **AT-34-E4-002**: the character's full persisted
+    /// `chosen.selected_traits`, verbatim — not just traits added this
+    /// session. Same shape of gap, and same fix, as `selected_feats`:
+    /// without it the trait picker would reopen with no selections
+    /// checked, and a mutation refresh that omitted it would silently
+    /// clear a saved character's trait choices on the next round trip.
+    pub selected_traits: Vec<String>,
     /// **This character's racial traits, resolved and rendered for *it*.**
     ///
     /// [`selected_alternate_trait_keys`](Self::selected_alternate_trait_keys)
@@ -1504,6 +1527,10 @@ pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), St
         // fabricated-default this file's other seeds are each argued down to.
         selected_alternate_trait_keys: Vec::new(),
         companion_species: None,
+        // The starter character takes no traits either: same "no
+        // fabricated default" reasoning as the alternate-trait comment
+        // immediately above.
+        selected_traits: Vec::new(),
     };
 
     let character_input = compose_character_input(&request);
@@ -1599,6 +1626,7 @@ pub(crate) fn load_saved_character_at_root(
         explanations,
         weapon_damage,
         selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
+        selected_traits: envelope.character_input.chosen.selected_traits.clone(),
         resolved_racial_traits: resolve_racial_traits_for_character(&envelope.character_input),
     })
 }
@@ -3599,6 +3627,11 @@ pub struct ChosenCharacterStateDto {
     pub equipment_selections: Vec<EquipmentSelectionImportDto>,
     #[serde(default)]
     pub selected_choices: Vec<SelectedChoiceDto>,
+    /// **AT-34-E4-002**: `trait_effects` wire ids
+    /// (`"trait:trait_acrobat"`). `#[serde(default)]` so an import file
+    /// exported before this field existed keeps importing unchanged.
+    #[serde(default)]
+    pub selected_traits: Vec<String>,
     #[serde(default)]
     pub spells_selected: Vec<SpellSelectionImportDto>,
 }
@@ -3684,6 +3717,7 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
                     selection_id: choice.selection_id,
                 })
                 .collect(),
+            selected_traits: dto.chosen.selected_traits,
             spells_selected: dto
                 .chosen
                 .spells_selected
@@ -3761,6 +3795,7 @@ fn character_input_to_dto(input: &CharacterInput) -> CharacterInputDto {
                     selection_id: choice.selection_id.clone(),
                 })
                 .collect(),
+            selected_traits: input.chosen.selected_traits.clone(),
             spells_selected: input
                 .chosen
                 .spells_selected
@@ -4941,6 +4976,7 @@ mod tests {
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
             companion_species: None,
+            selected_traits: Vec::new(),
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }

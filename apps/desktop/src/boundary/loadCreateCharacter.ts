@@ -42,6 +42,16 @@ export interface CreateCharacterRequest {
    * exclusion guard.
    */
   selectedAlternateTraitKeys: string[];
+  /**
+   * Character trait/drawback selections (AT-34-E4-002), as the wire ids
+   * `loadCharacterTraits` serves and `skill_bonuses_from_traits` reads --
+   * `"trait:trait_acrobat"`, the same flat compound-string idiom
+   * `selected_feats`' `"feat:weapon_focus"` uses. Passed through verbatim
+   * into the character's `selected_traits`; an id the backend does not
+   * recognize is simply inert (see `CreateCharacterRequest::
+   * selected_traits`'s own Rust doc comment), never a blocked save.
+   */
+  selectedTraits: string[];
 }
 
 export interface BaseSavesDto {

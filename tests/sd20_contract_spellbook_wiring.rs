@@ -82,6 +82,7 @@ fn wizard_with_shield_prepared() -> (CharacterInput, SourcePackageContent<'stati
         case_id: Some("sd20_contract_spellbook_wiring".to_string()),
         source_package_id: "sd20_contract_spellbook_wiring".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "class:wizard".to_string(),
@@ -118,6 +119,7 @@ fn fighter_with_no_spells() -> CharacterInput {
         case_id: Some("sd20_contract_spellbook_wiring_fighter".to_string()),
         source_package_id: "sd20_contract_spellbook_wiring_fighter".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "class:fighter".to_string(),

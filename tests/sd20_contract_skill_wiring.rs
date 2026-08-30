@@ -54,6 +54,7 @@ fn fighter_with_rank_1_skills() -> CharacterInput {
         case_id: Some("sd20_contract_skill_wiring".to_string()),
         source_package_id: "sd20_contract_skill_wiring".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "class:fighter".to_string(),

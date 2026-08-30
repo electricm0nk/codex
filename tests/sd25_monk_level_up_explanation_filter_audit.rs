@@ -175,6 +175,7 @@ fn human_monk_input(level: u8) -> CharacterInput {
         case_id: Some("sd25_monk_level_up_explanation_filter_audit".to_string()),
         source_package_id: "sd25_monk_level_up_explanation_filter_audit".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "race:human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "class:monk".to_string(),
