@@ -545,6 +545,7 @@ fn character_input_from_fixture(input: &Json) -> CharacterInput {
         case_id: Some(input.get("case_id").as_str().to_owned()),
         source_package_id: input.get("source_package_id").as_str().to_owned(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: input.get("race_id").as_str().to_owned(),
             class_levels,
             ability_scores,

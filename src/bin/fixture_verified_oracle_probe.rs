@@ -249,6 +249,7 @@ fn try_real_spell_save_dc(
             skill_allocations: Vec::new(),
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
+            selected_traits: Vec::new(),
             spells_selected: vec![SpellSelection {
                 spell_id: name.to_string(),
                 source_class_id: class_key.to_string(),
@@ -663,6 +664,7 @@ fn main() {
                         skill_allocations: Vec::new(),
                         equipment_selections: Vec::new(),
                         selected_choices: Vec::new(),
+                        selected_traits: Vec::new(),
                         spells_selected: vec![SpellSelection {
                             spell_id: name.clone(),
                             source_class_id: class_key.to_string(),

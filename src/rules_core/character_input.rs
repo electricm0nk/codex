@@ -22,6 +22,26 @@ pub struct ChosenCharacterState {
     pub skill_allocations: Vec<SkillAllocation>,
     pub equipment_selections: Vec<EquipmentSelection>,
     pub selected_choices: Vec<SelectedChoice>,
+    /// Character trait/drawback selections (AT-34-E4-002). A flat compound-
+    /// string id (`"trait:trait_acrobat"`, matching the corpus filename
+    /// slug -- the same idiom `selected_feats`' `"feat:weapon_focus"` uses),
+    /// never a per-book enum. Before this field existed, no character
+    /// trait/drawback selection surface existed anywhere in this crate --
+    /// confirmed by a whole-tree grep for
+    /// `selected_traits|character_traits|CharacterTrait\b` returning zero
+    /// matches (`AT-34-E4-002_cycle_receipt_3.md`, folded at `782584b4b3`).
+    /// `trait_pool.rs`'s existing `RaceTrait` machinery is a different
+    /// mechanic entirely (an Adopted-Race option list; "nothing is
+    /// computed... this loader only indexes them", its own doc comment) and
+    /// is untouched by this field. Real effects are read through
+    /// `trait_effects::skill_bonuses_from_traits`, currently covering the
+    /// 31-of-59 `ultimate_campaign` `trait_content` records whose corpus
+    /// `BONUS` token is a flat, named-skill `SKILL` bonus (see that
+    /// module's own doc comment for the exact shape and what is
+    /// deliberately not yet covered). Defaults to empty via every fixture
+    /// that omits `trait=` lines and every pre-existing construction site --
+    /// no pre-existing fixture or call site is broken by this addition.
+    pub selected_traits: Vec<String>,
     /// Spells this character knows, has prepared, or has been granted.
     /// NEW (SD-19). Defaults to empty via fixtures that omit `spell=`
     /// lines — every pre-SD-19 fixture and construction site keeps
@@ -193,6 +213,7 @@ struct ParsedFixture {
     skill_allocations: Vec<SkillAllocation>,
     equipment_selections: Vec<EquipmentSelection>,
     selected_choices: Vec<SelectedChoice>,
+    selected_traits: Vec<String>,
     spells_selected: Vec<SpellSelection>,
     class_ability_activations: Vec<ClassAbilityActivation>,
     selection_provenance: Vec<SelectionProvenance>,
@@ -245,6 +266,7 @@ pub fn load_character_input_fixture(input: &str) -> CharacterInputLoadResult {
                     skill_allocations: parsed.skill_allocations,
                     equipment_selections: parsed.equipment_selections,
                     selected_choices: parsed.selected_choices,
+                    selected_traits: parsed.selected_traits,
                     spells_selected: parsed.spells_selected,
                     class_ability_activations: parsed.class_ability_activations,
                 },
@@ -268,6 +290,7 @@ fn apply_fixture_field(key: &str, value: &str, parsed: &mut ParsedFixture) {
         "class_level" => apply_class_level(value, parsed),
         "ability" => apply_ability_score(value, parsed),
         "feat" => parsed.selected_feats.push(value.to_owned()),
+        "trait" => parsed.selected_traits.push(value.to_owned()),
         "skill" => apply_skill_allocation(value, parsed),
         "equipment" => apply_equipment_selection(value, parsed),
         "equipment_modifier" => apply_equipment_modifier(value, parsed),
@@ -723,6 +746,64 @@ equipment_modifier=item:longsword:Special Ability ~ Flaming ~ Weapon\n"
                 .any(|d| d.subject_ref == "equipment_selections"),
             "expected a diagnostic for the unmatched equipment_modifier line: {:?}",
             result.diagnostics
+        );
+    }
+}
+
+#[cfg(test)]
+mod selected_traits_tests {
+    use super::*;
+
+    const FIXTURE: &str = "\
+case_id=case:test
+source_package_id=ultimate_campaign
+race_id=race:human
+class_level=class:fighter:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+";
+
+    /// A fixture with no `trait=` lines at all must default to a real,
+    /// empty `selected_traits` -- not an absent field, since the type has
+    /// no `Option` to be absent from. Proves every pre-existing fixture
+    /// keeps compiling and passing unmodified (AT-34-E4-002).
+    #[test]
+    fn fixture_with_no_trait_lines_defaults_to_empty() {
+        let result = load_character_input_fixture(FIXTURE);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert!(input.chosen.selected_traits.is_empty());
+    }
+
+    /// The core case: `trait=trait:trait_acrobat` parses to a real entry in
+    /// `selected_traits`, verbatim.
+    #[test]
+    fn trait_line_parses_into_selected_traits() {
+        let fixture = format!("{FIXTURE}trait=trait:trait_acrobat\n");
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(input.chosen.selected_traits, vec!["trait:trait_acrobat".to_string()]);
+    }
+
+    /// Two `trait=` lines both land, in order -- proves the field is a real
+    /// accumulating list, not a single slot (a PF1 character normally takes
+    /// two traits at creation).
+    #[test]
+    fn multiple_trait_lines_all_land_in_order() {
+        let fixture = format!(
+            "{FIXTURE}trait=trait:trait_acrobat\ntrait=trait:trait_ease_of_faith\n"
+        );
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(
+            input.chosen.selected_traits,
+            vec!["trait:trait_acrobat".to_string(), "trait:trait_ease_of_faith".to_string()]
         );
     }
 }

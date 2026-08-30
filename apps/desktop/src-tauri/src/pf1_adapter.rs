@@ -1136,6 +1136,12 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                 },
             ],
             selected_choices,
+            // **AT-34-E4-002**: passed through verbatim from the request,
+            // the same "trusted wire list" precedent `selected_feats`
+            // (above) already follows -- see `CreateCharacterRequest::
+            // selected_traits`'s own doc comment for why no validation
+            // blocks the save here.
+            selected_traits: request.selected_traits.clone(),
             spells_selected,
             class_ability_activations: Vec::new(),
         },
@@ -1884,6 +1890,7 @@ mod tests {
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
             companion_species: None,
+            selected_traits: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         }
     }

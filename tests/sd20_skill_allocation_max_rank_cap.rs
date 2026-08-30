@@ -48,6 +48,7 @@ fn input_for(
         case_id: Some("sd20_skill_allocation_max_rank_cap".to_string()),
         source_package_id: "sd20_skill_allocation_max_rank_cap".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             class_levels,
             ability_scores: base_ability_scores(),

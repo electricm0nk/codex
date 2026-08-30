@@ -41,6 +41,7 @@ import type {
   AlternateRacialTraitsResponse,
   RaceSelectionResponse,
 } from '../boundary/loadAlternateRacialTraits';
+import { loadCharacterTraits, type CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
 import type { CreateCharacterOutcomeSurface } from './buildCreateCharacterOutcomeSurface';
 import {
   ABILITY_SCORE_METHOD_OPTIONS,
@@ -289,6 +290,14 @@ function CreateCharacterFields(props: {
   const [alternateMenuError, setAlternateMenuError] = useState<string | null>(null);
   const [selectedAlternateTraitKeys, setSelectedAlternateTraitKeys] = useState<string[]>([]);
   const [alternateResolution, setAlternateResolution] = useState<RaceSelectionResponse | null>(null);
+  // AT-34-E4-002: character traits/drawbacks, taken at creation. Real, real
+  // computed skill bonuses (`trait_effects::skill_bonuses_from_traits`), for
+  // exactly the `ultimate_campaign` traits `list_available_character_traits`
+  // returns -- no other trait shape is offered here, because no other shape
+  // computes anything yet.
+  const [traitOptions, setTraitOptions] = useState<CharacterTraitOptionDto[] | null>(null);
+  const [traitOptionsError, setTraitOptionsError] = useState<string | null>(null);
+  const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
 
   const selectedClass = CLASS_OPTIONS.find((option) => option.id === classId) ?? CLASS_OPTIONS[0];
   const selectedRace = races.find((option) => option.id === raceId) ?? races[0];
@@ -427,6 +436,34 @@ function CreateCharacterFields(props: {
     };
   }, [raceId, selectedAlternateTraitKeys]);
 
+  // The character trait/drawback menu, loaded once, the same shape the
+  // alternate-racial-trait menu above uses. A failure is shown rather than
+  // swallowed: the rest of the form still works, and the player is told why
+  // the trait list is absent instead of concluding none exist.
+  useEffect(() => {
+    let live = true;
+    loadCharacterTraits()
+      .then((options) => {
+        if (live) {
+          setTraitOptions(options);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setTraitOptionsError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  function toggleTrait(id: string) {
+    setSelectedTraits((current) =>
+      current.includes(id) ? current.filter((existing) => existing !== id) : [...current, id]
+    );
+  }
+
   const alternateTraitRows = buildAlternateTraitRows(
     alternateMenu,
     raceId,
@@ -523,6 +560,7 @@ function CreateCharacterFields(props: {
           abilityScores: finalAbilityScores,
           abilityBonusTarget: deriveAbilityBonusTarget(),
           selectedAlternateTraitKeys,
+          selectedTraits,
         },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
       );
@@ -831,6 +869,79 @@ function CreateCharacterFields(props: {
                 </p>
               ))}
             </>
+          )}
+
+          {/* AT-34-E4-002: character traits/drawbacks. Every option here
+              genuinely computes -- `list_available_character_traits` returns
+              only the 31 `ultimate_campaign` traits whose flat `BONUS:SKILL`
+              this cycle's `trait_effects::skill_bonuses_from_traits` really
+              applies to the character's skill totals. No wider trait roster
+              is offered, because no wider roster computes anything yet. */}
+          <p
+            style={{
+              ...LABEL_STYLE,
+              borderTop: '1px solid var(--color-border)',
+              color: 'var(--color-text)',
+              fontSize: '0.95rem',
+              marginTop: '0.5rem',
+              paddingTop: '1rem',
+            }}
+          >
+            Traits
+          </p>
+          {traitOptionsError !== null ? (
+            <p style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.78rem', margin: 0 }}>
+              Traits are unavailable: {traitOptionsError}
+            </p>
+          ) : traitOptions === null ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>Loading traits…</p>
+          ) : (
+            <div
+              style={{
+                border: '1px solid var(--color-border)',
+                borderRadius: 8,
+                maxHeight: 320,
+                overflowY: 'auto',
+                padding: '0.35rem 0.5rem',
+              }}
+            >
+              {traitOptions.map((option) => (
+                <label
+                  key={option.id}
+                  style={{
+                    alignItems: 'flex-start',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    gap: '0.5rem',
+                    padding: '0.3rem 0',
+                  }}
+                  title={option.description}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedTraits.includes(option.id)}
+                    onChange={() => toggleTrait(option.id)}
+                    style={{ marginTop: '0.2rem' }}
+                  />
+                  <span style={{ minWidth: 0 }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{option.name}</span>
+                    <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
+                      {' '}
+                      · {option.bonus >= 0 ? `+${option.bonus}` : option.bonus} {option.skills.join(', ')}
+                    </span>
+                    <span
+                      style={{
+                        color: 'var(--color-text-secondary)',
+                        display: 'block',
+                        fontSize: '0.72rem',
+                      }}
+                    >
+                      {option.description}
+                    </span>
+                  </span>
+                </label>
+              ))}
+            </div>
           )}
         </div>
 

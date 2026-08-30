@@ -366,6 +366,7 @@ mod tests {
                     corpus_receipt.base.ability_modifiers.strength,
                 )),
                 selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
+                selected_traits: envelope.character_input.chosen.selected_traits.clone(),
                 resolved_racial_traits: resolve_racial_traits_for_character(
                     &envelope.character_input,
                 ),
@@ -406,6 +407,7 @@ mod tests {
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
             companion_species: None,
+            selected_traits: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         };
         let character_input = compose_character_input(&request);
