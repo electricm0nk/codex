@@ -48,6 +48,8 @@ KNOWN_WAVES = {
     "wf_2dcca902-e6d": ("14", "UC parallel with (C then M serialized), checkpoint rule; "
                               "stopped at operator request for a clean restart, lane 1 saved "
                               "to salvage/wave14-lane1"),
+    "wf_894155bf-d58": ("15", "wave 14 relaunched clean for live ledger visibility; lane 1 "
+                              "resumes from salvage/wave14-lane1, which supersedes the wave-13 one"),
 }
 
 
