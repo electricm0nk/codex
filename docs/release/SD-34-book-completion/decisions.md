@@ -325,11 +325,11 @@ answer that happens to be "this cannot be checked, and here is why."
 
 | Verdict | Units | of 2,793 |
 |---|---:|---:|
-| `agree` — real oracle round-trip, matched | 385 | 13.8% |
-| `unverifiable`, SD-33's named reasons (`no_bonus_chain`, `oracle_export_no_spellname_line`, …) | 2,197 | 78.7% |
-| `unverifiable` — `no_probe_surface` (AT-33-E1-003's census, 11 kinds) | 130 | 4.7% |
-| **Dispositioned under this ruling** | **2,712** | **97.1%** |
-| Not dispositioned — needs a probe built, out of that lane's scope | 81 | 2.9% |
+| `agree` — real oracle round-trip, matched | 385 of 2,793 | 13.8% of 2,793 |
+| `unverifiable`, SD-33's named reasons (`no_bonus_chain`, `oracle_export_no_spellname_line`, …) | 2,197 of 2,793 | 78.7% of 2,793 |
+| `unverifiable` — `no_probe_surface` (AT-33-E1-003's census, 11 kinds) | 130 of 2,793 | 4.7% of 2,793 |
+| **Dispositioned under this ruling** | **2,712 of 2,793** | **97.1% of 2,793** |
+| Not dispositioned — needs a probe built, out of that lane's scope | 81 of 2,793 | 2.9% of 2,793 |
 | **Disagreements** | **0** | — |
 
 **What made this reusable rather than a shortcut.** SD-33's harness genuinely produced these
