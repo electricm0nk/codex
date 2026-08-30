@@ -358,3 +358,130 @@ turns out wrong is a useful finding, not a failure").
    remaining wizard-opposition-school clusters, Domain Power/Domain Base) — unchanged in scope
    from prior cycles' own next-cycle plans, only the live counts shift with this cycle's
    regeneration.
+
+---
+
+# Cycle — wave-9 regeneration and attribution, second dispatch (2026-08-30, later same day)
+
+**This filename was dispatched a second time**, against a different set of four lanes (M
+`skill_content`, V-ledger corpus-wide bucket-V rebuild, UC `AT-34-E4-002` cycle 3, and this
+cycle itself) than the ones the section above documents (gate-widening/owner-matched/with-
+magnitude/option-pool). Rather than overwrite that prior, already-committed and unrelated
+receipt, this section is appended below it — the two document genuinely different cycles that
+happen to share a `wave9` filename; the section above is preserved verbatim.
+
+**Status: complete.** Single mandatory regeneration-and-attribution cycle closing this wave's
+four dispatched lanes — `docs/work-inventory.json` regenerated exactly once via the required
+three-pass pipeline, for all of them, per `workflow-instruction.md`'s shared-regen protocol.
+
+## 0. Pre-work: folded two lanes' uncommitted duplicate-dispatch cleanup
+
+Before touching anything, `git status --porcelain` in this shared checkout showed staged-but-
+uncommitted deletions/edits left by the UC and V-ledger lanes (their own duplicate-dispatch
+fold: removing a superseded `AT-34-E3-005` second-lane confirmation receipt/kanban row/retro
+event, and a superseded `AT-34-E4-002` cycle-3 manifest/receipt/retro event, both already fully
+captured by earlier landing commits). Rather than discard or stash this work (forbidden by the
+shared-checkout rules), it was committed on its own first (`fbc37abaed`, later rebased to
+`782584b4b3`) so it could not be lost, before rebasing onto `origin/tranche/14`.
+
+`git fetch origin tranche/14 && git rebase origin/tranche/14` then pulled in two commits not yet
+in this worktree: `4d27d70551` and `409ada6cda` (the M lane's classifier-wiring engine change and
+its own doc/atlas update). The rebase produced two real conflicts — `completion-atlas.json`
+(`derived_at` only, resolved to the newer SHA, moot once regenerated below) and `progress.md`
+(the M lane's new cycle section needed reinserting alongside this cycle's own fold-deletion of
+the two superseded sections) — both resolved by hand, verified line-by-line against both sides.
+
+## 1. Baseline
+
+Snapshot taken at `HEAD` (`782584b4b3`, post-rebase, pre-pipeline): `docs/work-inventory.json`,
+49,438 units.
+
+## 2. Three-pass pipeline, in order, timed
+
+| Pass | Command | Result |
+|---|---|---|
+| 1 | `cargo run --locked --bin corpus_literal_sweep -- --json-out sweep.json` | CLEAN — 48,708 records examined of 51,482 read, 413,336 tokens compared, 51,469 digests checked, **0 findings** |
+| 2 | `cargo run --locked --bin derived_evaluator_fixture_check -- --json-out fixture.json` | **0 failed, 0 not-ingested** — 1,839 units cleared over 2,580 fixture rows |
+| 3 | `CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory` | ran to completion, `docs/work-inventory.json` rewritten, 49,438 units |
+
+`--allow-stamp-loss` never passed; both upstream reports existed before pass 3 ran, so the guard
+never had cause to refuse it.
+
+**Wall time, this cycle's own measurement (the figure this wave shape exists to produce):**
+pass 1 start `09:18:14` to pass 3 completion `09:42:45` — **1,471 seconds (24m 31s)** for the full
+three-pass pipeline, corpus-wide (49,438 units), on this box. (One earlier attempt at pass 3 hit
+the 10-minute foreground command cap with zero output and was killed with no side effect —
+re-run in the background; the timed figure above is the successful run only.)
+
+## 3. Whole-corpus before/after diff, by unit id — the headline finding
+
+```
+before: 49438 units    after: 49438 units    added: 0    removed: 0
+changed (status or evidence, any field): 0
+raw docs/work-inventory.json diff: 1 line (generated_at commit SHA only)
+```
+
+**Zero units moved.** This is not a null result from a broken pipeline — pass 1 and pass 2 both
+ran clean and fresh, and pass 3 executed the full regeneration end-to-end; the diff against the
+pre-pipeline baseline is a single metadata line (`generated_at`). Every one of the 49,438 unit
+records — `status`, `evidence`, `wiring_class`, and every other field — is byte-identical
+before and after.
+
+**The reason, traced by commit:** two of this wave's lanes had already regenerated and
+committed `docs/work-inventory.json` themselves, correctly, before this cycle ever ran:
+
+- `cfd9c6d3d9` (V-ledger, "rebuild the lost corpus-wide bucket-V ledger and commit it") —
+  `docs/work-inventory.json` changed by itself, 13,406 lines, in that same commit.
+- `4d27d70551` (M, "wire the classifier's grounding check, 76 core_rulebook units closed") —
+  `docs/work-inventory.json` changed by itself, 160 lines, in that same commit.
+
+Only the UC lane (`0007792438`, `AT-34-E4-002` cycle 3) made zero Rust/corpus changes and
+correctly left the file untouched.
+
+**This is the mismatch this wave's own dispatch brief asked to be reported plainly, not smoothed
+over: the brief's premise — "four lanes just landed engine changes and deliberately did not
+regenerate `docs/work-inventory.json`" — did not hold for two of the four.** The V-ledger and M
+lanes each ran their own regeneration and committed it inline with their engine/data change,
+correctly and (per this cycle's independent full pipeline re-run) exactly right — 0 drift, 0
+disagreement, byte-identical. This cycle's actual, real contribution for those two lanes is
+**verification, not correction**: an independent, from-scratch three-pass pipeline run confirming
+their self-regeneration was not a hand-patch or a partial update that happened to look plausible,
+but the genuine article. The wave-shape's own premise (a single shared regen absorbing four
+lanes' deferred work) was correct in spirit and remains the right shared-checkout discipline
+going forward, but this specific wave had less deferred regeneration debt than dispatched.
+
+## 4. Movement, four buckets (against the wave's own true baseline)
+
+| Bucket | Count | Detail |
+|---|---|---|
+| Closure (reached DONE) | 0, this cycle | 76 `skill_content` units and the bucket-V corpus-wide widening (256 units net across two commits) reached DONE in `4d27d70551`/`cfd9c6d3d9` themselves, already reflected in this cycle's baseline snapshot — not movement attributable to this cycle's own pipeline run |
+| Reclassification (moved between non-DONE buckets) | 0 | — |
+| Reachability | 0 | — |
+| Instrument-correction | 0 | `completion_atlas.py --check` (corpus-wide): `citation_failures=0`, `done_evidence_violations=0`, `missing_clearing_mechanisms=0`, `stale_derived_at=False` — no citation drift from this wave's line insertions |
+
+A `B`→`X` move is reclassification, never closure; none occurred this cycle (0 movement of any
+kind this cycle's own pipeline run produced).
+
+## 5. Atlas checks
+
+`python3 scripts/completion_atlas.py --book core_rulebook --check`:
+`population=6701 unclassified=0 overlap=0` — `DONE:4330 B:470 C:357 D:366 M:972 V:81 U:10 X:115`.
+
+`python3 scripts/completion_atlas.py --check` (corpus-wide):
+`population=49438 buckets=10 unclassified=0 overlap=0` —
+`DONE:24242 A:449 B:11769 C:4338 D:2955 M:5038 V:256 U:202 X:170 Z:19`.
+`citation_failures=0` both scopes — no `scripts/completion_atlas.py` `file:line` citation
+re-derivation was needed this cycle.
+
+## 6. Build verification
+
+`cargo test --locked --no-run` (full workspace): exit 0, 160s.
+`cargo test --locked --no-run --manifest-path apps/desktop/src-tauri/Cargo.toml` (desktop crate,
+separate cargo workspace, tested explicitly): exit 0, 148s. Both run **after** this cycle's own
+regeneration commit, per protocol.
+
+## 7. Commit
+
+Fold-first commit `782584b4b3` (UC/V-ledger duplicate-dispatch cleanup, pre-existing staged
+work), rebase onto `origin/tranche/14` (M lane's `4d27d70551`/`409ada6cda`), then this cycle's own
+regeneration + atlas restamp + kanban/progress update, committed and pushed together.

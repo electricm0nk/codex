@@ -13,6 +13,58 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-001 wave-9 regeneration and attribution: 0 units moved, the wave's own premise did not hold for 2 of 4 lanes
+
+**Status: complete.** Single mandatory `docs/work-inventory.json` regeneration closing wave 9's
+four dispatched lanes (M `skill_content`, V-ledger corpus-wide bucket-V rebuild, UC
+`AT-34-E4-002` cycle 3, and this cycle). Before touching anything, folded two lanes' staged-but-
+uncommitted duplicate-dispatch cleanup already sitting in this shared checkout (superseded
+`AT-34-E3-005` second-lane-confirmation and `AT-34-E4-002` cycle-3 entries, both already fully
+captured by earlier landing commits) into its own commit rather than discard or stash it, then
+`git fetch origin tranche/14 && git rebase origin/tranche/14` pulled in the M lane's
+`4d27d70551`/`409ada6cda`, producing two real conflicts (`completion-atlas.json` `derived_at`;
+`progress.md`'s new M-lane section colliding with this cycle's own section removals) — both
+resolved by hand.
+
+**Three-pass pipeline, in order, timed:** `corpus_literal_sweep` (CLEAN — 48,708/51,482 records,
+413,336 tokens, 0 findings) → `derived_evaluator_fixture_check` (0 failed, 0 not-ingested — 1,839
+units over 2,580 fixture rows) → `v06_work_inventory` regenerated corpus-wide (49,438 units).
+`--allow-stamp-loss` never passed. **Wall time: 1,471s (24m 31s)** for the full three-pass run —
+the figure this wave shape exists to measure.
+
+**Whole-corpus before/after diff by unit id: 0 changed, 0 added, 0 removed.** The raw
+`docs/work-inventory.json` diff is one line (`generated_at` SHA only) — every one of 49,438
+records is byte-identical before and after this cycle's own pipeline run.
+
+**The mismatch, reported plainly per this wave's own instruction, not smoothed over: the
+dispatch brief's premise — "four lanes just landed engine changes and deliberately did not
+regenerate `docs/work-inventory.json`" — did not hold for 2 of the 4.** `cfd9c6d3d9` (V-ledger)
+and `4d27d70551` (M) each regenerated and committed `docs/work-inventory.json` themselves, inline
+with their own engine/data change (13,406 and 160 lines respectively) — and this cycle's
+independent, from-scratch three-pass re-run confirms both were done correctly: 0 drift, 0
+disagreement, byte-identical. Only the UC lane (`0007792438`, zero Rust/corpus change) correctly
+left the file untouched. This cycle's real contribution for the V-ledger/M lanes is
+**verification, not correction**.
+
+**Movement, four buckets (this cycle's own pipeline run):** closure 0, reclassification 0,
+reachability 0, instrument-correction 0. (The 76-unit `skill_content` closure and the bucket-V
+corpus-wide widening both happened inside `4d27d70551`/`cfd9c6d3d9` themselves, already present
+in this cycle's baseline snapshot — not movement this cycle's own run produced.)
+
+**Atlas checks:** `python3 scripts/completion_atlas.py --book core_rulebook --check` →
+`population=6701 unclassified=0 overlap=0`, `DONE:4330 B:470 C:357 D:366 M:972 V:81 U:10 X:115`.
+`python3 scripts/completion_atlas.py --check` (corpus-wide) →
+`population=49438 buckets=10 unclassified=0 overlap=0`,
+`DONE:24242 A:449 B:11769 C:4338 D:2955 M:5038 V:256 U:202 X:170 Z:19`, **`citation_failures=0`**
+both scopes — no `scripts/completion_atlas.py` `file:line` re-derivation needed this cycle
+(the M lane's own insertions had already been re-pinned correctly in `4d27d70551`).
+
+**Build scope, run after this cycle's own regeneration commit:** `cargo test --locked --no-run`
+(full workspace) exit 0, 160s; `cargo test --locked --no-run --manifest-path
+apps/desktop/src-tauri/Cargo.toml` (separate cargo workspace, tested explicitly) exit 0, 148s.
+
+**Receipt:** `artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md`.
+
 ### Cycle — AT-34-E3-003 (bucket M, `skill_content` sub-cause) — partial, closure
 
 **Status: partial.** Re-derived bucket `M` fresh at cycle start (never trusting the dispatch
