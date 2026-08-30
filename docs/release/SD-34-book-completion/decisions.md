@@ -313,6 +313,49 @@ with a named resolution point, not an unresolved placeholder.
 
 ---
 
+## §19 — Operator ruling, 2026-08-29: `§17`'s disposition principle extends to bucket `V`
+
+**Operator ruling:** *"assume the correctness of previous ruling and continue."* `§17`'s reasoning
+governs bucket `V` as it governs `U`: **a unit carrying a real, named reason why no verdict can be
+reached is dispositioned, not outstanding.** It is not a gap waiting on work; it is a checked
+answer that happens to be "this cannot be checked, and here is why."
+
+**The population, re-derived by the bucket-V lane against SD-33's own committed oracle results**
+(`artifacts/epic-3-core-rulebook/bucket-v/`), with **zero new oracle runs**:
+
+| Verdict | Units | of 2,793 |
+|---|---:|---:|
+| `agree` — real oracle round-trip, matched | 385 | 13.8% |
+| `unverifiable`, SD-33's named reasons (`no_bonus_chain`, `oracle_export_no_spellname_line`, …) | 2,197 | 78.7% |
+| `unverifiable` — `no_probe_surface` (AT-33-E1-003's census, 11 kinds) | 130 | 4.7% |
+| **Dispositioned under this ruling** | **2,712** | **97.1%** |
+| Not dispositioned — needs a probe built, out of that lane's scope | 81 | 2.9% |
+| **Disagreements** | **0** | — |
+
+**What made this reusable rather than a shortcut.** SD-33's harness genuinely produced these
+verdicts and they were never fed back into SD-34's atlas — a reconciliation gap, not a missing
+measurement. The lane freshness-checked a 20-row sample against the live corpus and found no
+drift. **Zero disagreements**: nothing was found wrong, only unreachable.
+
+**Two limits this ruling does NOT relax.**
+
+1. **The 81 remainder is not covered.** Those need a probe built, and building it is work, not a
+   disposition. They stay outstanding and named.
+2. **`no_probe_surface` is a weaker claim than the rest** — it says *we never built the
+   instrument*, not *the oracle cannot express it*. The 130 are dispositioned under this ruling,
+   but they are the first thing to revisit if a future bundle builds those probes, and
+   AT-34-E5-002's capability register carries them as a named capability rather than a closed
+   question.
+
+**A disagreement is never dispositioned.** If any later oracle run returns `disagree`, that unit
+re-opens. There are none today, and that fact is what makes 2,712 reusable rather than assumed.
+
+**Enforced by:** the consolidated results file, which cites the verdict and reason per unit;
+AT-34-E6-001 re-deriving the atlas at HEAD; `PCGEN_ORACLE_SHA` named in every figure drawn from
+the pinned corpus.
+
+---
+
 ## §18 — Operator ruling, 2026-08-28: widen the anti-fabrication gates **by construction**
 
 **Operator ruling.** Presented with three options on
