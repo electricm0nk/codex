@@ -16057,6 +16057,35 @@ mod e14_harness_tests {
         );
     }
 
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-cause
+    /// `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does`):
+    /// the real, on-disk `Crossbow (Light)` record
+    /// (`core_rulebook/cr_equip_arms_armor.lst`) carries no `DAMAGE:` token
+    /// on its own row — only `BASEITEM:Light Crossbow (Base)` — confirmed
+    /// unwired before this cycle by this book's own live
+    /// `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does`
+    /// sub-cause count. `damage_total::resolve_base_damage_dice`'s new
+    /// `BASEITEM:` chase (one hop through the same `equipment_id_resolve`
+    /// call this file's probe already used for the same-line shape) reads
+    /// the real `DAMAGE:1d8` off `Light Crossbow (Base)` and the probe
+    /// promotes it — the same generic `equipment_key_is_wired` widening,
+    /// now covering the closure-only alias shape too.
+    #[test]
+    fn equipment_probe_promotes_a_baseitem_alias_via_its_bases_damage_token() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_equipment_corpus(&roots);
+        assert!(
+            equipment_key_is_wired("Crossbow (Light)", &corpus),
+            "Crossbow (Light) carries no DAMAGE: token on its own row, only \
+             BASEITEM:Light Crossbow (Base) -- the probe must chase that \
+             BASEITEM hop through the already-existing resolver to reach the \
+             base record's real DAMAGE:1d8 token"
+        );
+    }
+
     /// Same shape, hand-built fixture so the assertion does not depend on
     /// the on-disk corpus staying byte-identical, and pins the SPECIFIC
     /// mechanism (a `DAMAGE:` token, not a coincidental match on some other
