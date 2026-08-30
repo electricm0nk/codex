@@ -580,73 +580,105 @@ const COMMIT_RULE = '## COMMIT EARLY - this is the rule six lanes have now broke
 
 function ucLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E4-002', dir: 'epic-4-ultimate-campaign',
-    title: 'drive Ultimate Campaign to zero — 132 of 265 remain, and 23 of them may already be answered.\n\n'
-      + 'Bar: ' + BT + 'DONE = 265 of 265' + BT + '. Re-derive the split yourself; last measured: 89 '
-      + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 ' + BT + 'unmeasurable' + BT + ', 18 ' + BT + 'literal-verified' + BT + ' (bucket V), '
-      + '2 ' + BT + 'deferred-with-reason' + BT + ', 2 ' + BT + 'engine-does-not-hold' + BT + '.\n\n'
-      + '**Start with the 23 that rulings may already cover.** ' + BT + 'decisions.md §19' + BT + ' dispositions bucket-V units '
-      + 'carrying a real named oracle verdict — check whether SD-33 ledgers cover your 18 before engineering anything. '
-      + BT + '§17' + BT + ' ruled bucket U done for internal plumbing carrying nothing a player is owed — but your 21 are '
-      + BT + 'feat_served_description_is_a_placeholder_marker_not_prose' + BT + ', a DIFFERENT shape. **Do not assume the ruling '
-      + 'extends.** Read the actual records: if they are real feats whose description was lost, that is a content gap for '
-      + BT + 'atlas-defects.md' + BT + ', not a quiet disposition.\n\n'
-      + 'Then the 89 M units (' + BT + 'trait_content' + BT + ' ~59, ' + BT + 'ability_content' + BT + ' ~30): the table holds the record and its '
-      + 'magnitude and the compute path has never been run over it. Build keyed on the KIND\'s compute path, not on this '
-      + 'book — ' + BT + 'ability_content_...' + BT + ' is far larger elsewhere and a generic fix pays corpus-wide.\n\n'
-      + 'A unit leaves M when its value is genuinely computed and applied, not relabelled. M→D is reclassification; say '
-      + 'which is which. A cycle here claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE })
+    title: 'drive Ultimate Campaign to zero — BUILD the character trait/drawback capability.\n\n'
+      + 'Bar: ' + BT + 'DONE = 265 of 265' + BT + '. Re-derive the split yourself before anything else; measured at '
+      + 'HEAD 651966b83e: ' + BT + 'DONE 151' + BT + ', 89 ' + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 '
+      + BT + 'unmeasurable' + BT + ' (U), 2 ' + BT + 'deferred-with-reason' + BT + ' (D), 2 ' + BT + 'engine-does-not-hold' + BT + ' (X). '
+      + 'Bucket V is **0** — it was closed corpus-wide by AT-34-E3-005, not by you; do not re-open or re-claim it.\n\n'
+      + '**The diagnosis phase is OVER. This cycle builds.** The previous cycle '
+      + '(' + BT + 'artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_3.md' + BT + ' — READ IT FIRST) proved by '
+      + 'whole-tree grep that no character trait/drawback selection capability exists anywhere in ' + BT + 'src/' + BT + ' or '
+      + BT + 'apps/desktop/src-tauri/src/' + BT + ', and that ' + BT + 'trait_pool.rs' + BT + ' computes nothing (its own doc comment '
+      + 'says so) and covers only the ' + BT + 'RaceTrait' + BT + ' subtype. It named the build and deliberately did not start it. '
+      + 'You start it. Do NOT spend this cycle re-deriving that finding — verify it still holds at HEAD in one grep, cite '
+      + 'the receipt, and move to code.\n\n'
+      + 'Scope: the 89 M units are ' + BT + 'trait_content' + BT + ' (59) + ' + BT + 'ability_content' + BT + ' (30). 44 of the 59 '
+      + 'traits are pure ' + BT + 'BONUS:SKILL' + BT + '; the rest mix VAR/SAVE/SITUATION/ABILITYPOOL/COMBAT/CONCENTRATION. '
+      + '**Take the pure ' + BT + 'BONUS:SKILL' + BT + ' spine end-to-end and land it** — selection state on '
+      + BT + 'CharacterInput' + BT + ', a real compute-and-apply path, and a real desktop selection surface. **No stubs** '
+      + '(' + BT + 'docs/governance/no-stub-mvp-doctrine.md' + BT + '): a selector that renders but grants nothing is a '
+      + 'doctrine violation, and so is a compute path with no UI reaching it. Ship a narrow slice that genuinely works '
+      + 'rather than a wide one that does not.\n\n'
+      + '**Key on the KIND, not the book.** This same evidence shape is 1,665 of 49,438 units corpus-wide, so a '
+      + 'kind-keyed fix pays far beyond ' + BT + 'ultimate_campaign' + BT + '. Report the corpus-wide movement, not just this '
+      + 'book\'s.\n\n'
+      + '**Territory:** you own the trait/ability compute paths and ' + BT + 'CharacterInput' + BT + '. A sibling lane owns the '
+      + 'EQUIPMENT sub-causes and another owns the explanation-id wiring — do not touch either.\n\n'
+      + 'U(21), D(2), X(2) were re-checked last cycle and are NOT yours to reopen. A unit leaves M only when its value is '
+      + 'genuinely computed and applied, never relabelled. M→D is reclassification; say which is which. A cycle here once '
+      + 'claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE })
 }
 
-function vLedgerPrompt() {
-  return cycleProcedurePrompt({ id: 'AT-34-E3-005', dir: 'epic-3-core-rulebook',
-    title: 'rebuild the corpus-wide bucket-V ledger AND COMMIT THE DATA FILE.\n\n'
-      + '**This work was done once and lost.** A lane built a 6,590-row corpus-wide consolidated ledger, wrote '
-      + '"complete" into the board, and left the data file UNTRACKED. Its session died; the claim survived, the '
-      + 'evidence did not. A salvage lane correctly refused to land 2,000+ units with no artifact behind them. '
-      + '**The single most important thing you do is `git add` the ledger file in the same commit as any number '
-      + 'that depends on it.**\n\n'
-      + 'The loader is already widened and landed: ' + BT + 'load_bucket_v_oracle_dispositions' + BT + ' merges a LIST of ledger '
-      + 'paths. It is a verified no-op without data. Your job is the data.\n\n'
-      + 'Cross-reference the **6,846** still-open bucket-V units corpus-wide against SD-33\'s own committed '
-      + BT + 'oracle-results.json' + BT + ' files, exactly as the ' + BT + 'core_rulebook' + BT + ' pass did (2,793 → 81, zero new oracle runs). '
-      + 'Read ' + BT + 'artifacts/epic-3-core-rulebook/bucket-v/' + BT + ' for the proven shape.\n\n'
-      + 'Per ' + BT + 'decisions.md §19' + BT + ': only reuse verdicts SD-33 actually produced — never infer one for a unit the '
-      + 'ledger does not cover. **A ' + BT + 'disagree' + BT + ' is never dispositioned**; if any book has one, that unit stays '
-      + 'outstanding and you report it prominently — it is the most valuable thing you could return. Freshness-check '
-      + 'a sample and state its size. Prove the remainder by SET, not count. Name ' + BT + 'PCGEN_ORACLE_SHA' + BT + ' on every '
-      + 'corpus-derived figure.\n\n' + COMMIT_RULE })
+// Wave 13 replaces the bucket-V ledger lane: AT-34-E3-005's ledger landed at cfd9c6d3d9 and its
+// re-verification at 68117a505f, and `--book core_rulebook --check` now reports V=81 (was 2,793).
+// Re-dispatching a criterion whose work is done is exactly the duplicate-dispatch incident logged
+// at ab65a090ef, so the slot moves to bucket C — the largest single-mechanism block left in the book.
+function cLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E3-002', dir: 'epic-3-core-rulebook',
+    title: 'bucket C for the Core Rulebook — 357 of 6,701, and every one is the SAME mechanism.\n\n'
+      + 'Re-derive first; measured at HEAD 651966b83e: ' + BT + 'core_rulebook' + BT + ' bucket C = 357, and all 357 carry one '
+      + 'single evidence string — ' + BT + 'no_explanation_id_and_no_diagnostic_names_this_feature' + BT + '. That uniformity is '
+      + 'the opportunity: this is not 357 problems, it is one wiring gap repeated 357 times.\n\n'
+      + 'The prior cycle (' + BT + 'artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md' + BT + ' — READ IT FIRST) closed '
+      + '42 of 414 via the paired display/chassis record mechanism (Favored Enemy + Favored Terrain) and named 8 '
+      + 'sub-causes. Start from its named remainder; do not re-derive it from scratch, but DO confirm its stated reasons '
+      + 'still hold — this bundle has had one cycle disprove another\'s stated reason.\n\n'
+      + '**A unit leaves C when the feature genuinely gains an explanation id or a diagnostic that names it** — a real '
+      + 'wire-up a player or a developer can actually see, never a relabel and never a broadened matcher that merely '
+      + 'stops the check firing. If the honest answer for a sub-cause is "the explanation surface does not exist yet", '
+      + 'that is bucket B/M work and belongs in the remainder with its mechanism named, not force-closed here.\n\n'
+      + '**Build generically.** These are KINDS. A recent generic fix closed 123 units across 6 books from one change; '
+      + 'the ledger records ~345 units/hour for generic work against ~20 for book-scoped. Report corpus-wide movement.\n\n'
+      + '**Territory:** you own the explanation-id / diagnostic-naming wiring. A sibling lane owns the EQUIPMENT '
+      + 'magnitude sub-causes and another owns trait/ability compute + ' + BT + 'CharacterInput' + BT + ' — do not touch either.\n\n'
+      + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 357.** Return ' + BT + 'partial' + BT + ' with '
+      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE })
 }
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-003', dir: 'epic-3-core-rulebook',
-    title: 'bucket M for the Core Rulebook — 1,048 of 6,701, the largest remaining block.\n\n'
+    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, 423 of the 972 left.\n\n'
       + 'Definition: magnitude ingested, never computed or applied. **The instrument already exists** — that is what '
       + 'separates this from bucket B, whose remainder needs new subsystems built.\n\n'
       + 'Re-derive the sub-causes; do not trust inherited figures OR inherited reasons — this bundle has had a cycle '
-      + 'disprove another\'s stated reason. Last measured: ' + BT + 'equipment_table_entry_with_corpus_magnitude' + BT + ' ~276, '
-      + BT + 'ability_content_table_holds_record_magnitude_not_yet_computed' + BT + ' ~217, '
-      + BT + 'equipment_own_line_has_no_magnitude_but_closure_wiring_class_does' + BT + ' ~147, '
-      + BT + 'race_trait_generic_...' + BT + ' ~119, ' + BT + 'template_content_...' + BT + ' ~96.\n\n'
+      + 'disprove another\'s stated reason. Measured at HEAD 651966b83e, ' + BT + 'core_rulebook' + BT + ' bucket M = **972** '
+      + '(down from 1,048; the last cycle closed 76 via ' + BT + 'skill_content' + BT + ', see '
+      + BT + 'artifacts/epic-3-core-rulebook/' + BT + '\'s AT-34-E3-003 receipts and commit 4d27d70551). Split: '
+      + BT + 'equipment_table_entry_with_corpus_magnitude' + BT + ' 276, '
+      + BT + 'ability_content_table_holds_record_magnitude_not_yet_computed' + BT + ' 217, '
+      + BT + 'equipment_own_line_has_no_magnitude_but_closure_wiring_class_does' + BT + ' 147, '
+      + BT + 'race_trait_generic_table_holds_record_magnitude_not_yet_computed' + BT + ' 119, '
+      + BT + 'template_content_table_holds_record_magnitude_not_yet_computed' + BT + ' 96, '
+      + BT + 'in_catalog_with_corpus_magnitude_but_no_observed_consumer' + BT + ' 47.\n\n'
+      + '**Your territory this wave is the two EQUIPMENT sub-causes (276 + 147 = 423).** A sibling lane owns '
+      + 'trait/ability compute and ' + BT + 'CharacterInput' + BT + ', and another owns explanation-id wiring — so '
+      + BT + 'ability_content' + BT + ', ' + BT + 'race_trait_generic' + BT + ' and ' + BT + 'template_content' + BT + ' are OFF LIMITS '
+      + 'this cycle even though they are bucket M. Two lanes editing one compute path has cost this bundle a full cycle '
+      + 'before.\n\n'
+      + 'Note the two equipment shapes are genuinely different: 276 have a magnitude on their own line, 147 do NOT and '
+      + 'are classified by their closure wiring class instead. Read real corpus records for both before assuming one fix '
+      + 'covers them, and say in your receipt whether it did.\n\n'
       + '**Build generically — the payoff is measured.** A recent generic fix closed 123 units across 6 books from one '
       + 'change; the ledger records ~345 units/hour for generic work against ~20 for book-scoped. These sub-causes are '
-      + 'KINDS, so a fix keyed on the kind\'s compute path is corpus-wide by construction.\n\n'
-      + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 1,048.** Return ' + BT + 'partial' + BT + ' with '
+      + 'KINDS, so a fix keyed on the kind\'s compute path is corpus-wide by construction. Report corpus-wide movement, '
+      + 'not just this book\'s.\n\n'
+      + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 423.** Return ' + BT + 'partial' + BT + ' with '
       + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE })
 }
 
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
   phase(title)
-  log('wave 11: 3 lanes in parallel (own worktree + own target dir), then ONE regeneration')
+  log('wave 13: 3 lanes in parallel (own worktree + own target dir), then ONE regeneration')
 
   const [uc, vled, m] = await parallel([
-    () => agent(ucLanePrompt(),     { model: 'sonnet', phase: title, label: 'UC: 132 to zero',        schema: CYCLE_SCHEMA, isolation: 'worktree' }),
-    () => agent(vLedgerPrompt(),    { model: 'sonnet', phase: title, label: 'V: rebuild+commit ledger', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
-    () => agent(mLanePrompt(),      { model: 'sonnet', phase: title, label: 'M: core_rulebook 1,048',  schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(ucLanePrompt(),     { model: 'sonnet', phase: title, label: 'UC: build trait capability', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(cLanePrompt(),      { model: 'sonnet', phase: title, label: 'C: core_rulebook 357',       schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(mLanePrompt(),      { model: 'sonnet', phase: title, label: 'M: equipment 423',           schema: CYCLE_SCHEMA, isolation: 'worktree' }),
   ])
-  log('UC -> ' + (uc && uc.status) + ' | V -> ' + (vled && vled.status) + ' | M -> ' + (m && m.status))
+  log('UC -> ' + (uc && uc.status) + ' | C -> ' + (vled && vled.status) + ' | M -> ' + (m && m.status))
 
-  const summary = [['UC', uc], ['V-ledger', vled], ['M', m]].map(([n, r]) =>
+  const summary = [['UC', uc], ['C', vled], ['M', m]].map(([n, r]) =>
     '- ' + n + ' (' + ((r && r.status) || '?') + '): ' + String((r && (r.discoveries || r.remainder)) || 'no report').slice(0, 400)).join('\n')
   const regen = await agent(regenPrompt(summary), {
     model: 'sonnet', phase: title, label: 'regen + attribution', schema: REGEN_SCHEMA,
@@ -666,6 +698,20 @@ if (args && args.bucketB) {
 
 const requested = (args && args.epics) ? args.epics : [1, 2, 3, 4, 5, 6]
 const completed = []
+
+function runEpicExists() { return typeof runEpic === 'function' }
+
+// `runEpic` was removed on 2026-08-28 when this script moved to wave-shaped dispatch, but this
+// call site survived as dead code. On 2026-08-30 a restart passed {epics:[3,4]} and the run died
+// instantly with `ReferenceError: runEpic is not defined` -- a confusing failure for a caller who
+// had no way to know the per-epic mode no longer exists. Fail with an instruction instead.
+if (!runEpicExists()) {
+  throw new Error(
+    'The per-epic entry point (args.epics) no longer exists -- `runEpic` was removed on 2026-08-28 '
+    + 'when this script moved to wave-shaped dispatch. Epics 1, 2 and 5 are complete; the open work '
+    + 'is epics 3, 4 and 6. Run the lanes with args {bucketB: true}, or add an explicit Epic 6 '
+    + 'closure entry point. Requested was: ' + JSON.stringify(requested))
+}
 
 for (const n of requested) {
   if (n === 6) continue
