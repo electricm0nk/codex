@@ -45,7 +45,9 @@ KNOWN_WAVES = {
     "wf_d510aba2-144": ("11", "three lanes: UC / V-ledger / M"),
     "wf_5ba78e03-272": ("12", "same three lanes, relaunched after the crash restart"),
     "wf_e2fc3f32-68a": ("13", "UC / C / M in parallel -- killed by the host reset at 10:38"),
-    "wf_2dcca902-e6d": ("14", "UC parallel with (C then M serialized), checkpoint rule"),
+    "wf_2dcca902-e6d": ("14", "UC parallel with (C then M serialized), checkpoint rule; "
+                              "stopped at operator request for a clean restart, lane 1 saved "
+                              "to salvage/wave14-lane1"),
 }
 
 

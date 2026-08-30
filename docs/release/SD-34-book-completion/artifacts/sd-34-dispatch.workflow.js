@@ -634,7 +634,7 @@ function ucLanePrompt() {
       + 'U(21), D(2), X(2) were re-checked last cycle and are NOT yours to reopen. A unit leaves M only when its value is '
       + 'genuinely computed and applied, never relabelled. M→D is reclassification; say which is which. A cycle here once '
       + 'claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN
-      + salvageNote('salvage/wave13-lane1','the trait-capability build -- 95 files, including three NEW files `src/rules_core/trait_effects.rs`, `apps/desktop/src-tauri/src/trait_picker.rs` and `apps/desktop/src/boundary/loadCharacterTraits.ts`, plus +81 lines in `character_input.rs` and +111 in `CreateCharacterForm.tsx`') })
+      + salvageNote('salvage/wave14-lane1','the trait-capability build, TWICE rescued and now the furthest-along version -- it already contains `salvage/wave13-lane1` (three NEW files `src/rules_core/trait_effects.rs`, `apps/desktop/src-tauri/src/trait_picker.rs`, `apps/desktop/src/boundary/loadCharacterTraits.ts`, plus +81 lines in `character_input.rs` and +111 in `CreateCharacterForm.tsx`) MERGED and reviewed by your immediate predecessor, who then extended it before an operator-requested restart cut it short. Start here, NOT from `salvage/wave13-lane1`, which this supersedes') })
 }
 
 // Wave 13 replaces the bucket-V ledger lane: AT-34-E3-005's ledger landed at cfd9c6d3d9 and its
