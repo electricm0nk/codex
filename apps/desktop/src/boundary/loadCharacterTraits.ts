@@ -7,23 +7,37 @@ import { formatError, hasTauriRuntime } from './runtime';
  *
  * A single command: `list_available_character_traits` returns the real,
  * corpus-derived roster of traits this cycle's compute path genuinely
- * supports (`ultimate_campaign`'s 31 flat `BONUS:SKILL` traits) — every
- * option returned really does grant its stated skill bonus once selected
- * and submitted on `CreateCharacterRequest.selectedTraits`
- * (`trait_effects::skill_bonuses_from_traits`). No "resolve" step exists
- * yet (unlike `loadAlternateRacialTraits`'s pair): a flat skill trait has
- * no alternate-swap exclusivity or per-character rendered prose to
+ * supports — `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits, plus 5
+ * fixed-choice `BONUS:SKILL|%LIST` traits (second slice) — every option
+ * returned really does grant its stated skill bonus once selected (and,
+ * for a choice-based option, a valid `skillOptions` choice recorded) and
+ * submitted on `CreateCharacterRequest.selectedTraits`/
+ * `.traitSkillChoices` (`trait_effects::skill_bonuses_from_traits` +
+ * `trait_effects::skill_choice_bonuses_from_traits`). No "resolve" step
+ * exists (unlike `loadAlternateRacialTraits`'s pair): neither trait shape
+ * has alternate-swap exclusivity or per-character rendered prose to
  * compute ahead of submission.
  */
+
+/** One skill a choice-based trait's `%LIST` can resolve to. */
+export interface TraitSkillOptionDto {
+  /** Echoed back as `TraitSkillChoiceDto.selectionId`. */
+  skillId: string;
+  name: string;
+}
 
 export interface CharacterTraitOptionDto {
   /** Echoes back on `CreateCharacterRequest.selectedTraits` verbatim. */
   id: string;
   name: string;
   description: string;
-  /** Display-name skill(s) this trait's bonus applies to, e.g. `['Acrobatics']`. */
+  /** Display-name skill(s) this trait's bonus applies to, e.g. `['Acrobatics']`. Empty for a choice-based trait (`skillOptions` non-empty instead). */
   skills: string[];
   bonus: number;
+  /** Non-empty only for a fixed-choice `%LIST` trait: the concrete skills the player may pick between. */
+  skillOptions: TraitSkillOptionDto[];
+  /** `choiceSetId` to echo back (paired with the picked `skillOptions` entry) on `CreateCharacterRequest.traitSkillChoices`. `null` for a flat trait. */
+  choiceSetId: string | null;
 }
 
 export async function loadCharacterTraits(): Promise<CharacterTraitOptionDto[]> {

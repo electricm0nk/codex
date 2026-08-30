@@ -298,6 +298,13 @@ function CreateCharacterFields(props: {
   const [traitOptions, setTraitOptions] = useState<CharacterTraitOptionDto[] | null>(null);
   const [traitOptionsError, setTraitOptionsError] = useState<string | null>(null);
   const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
+  // AT-34-E4-002 (second slice): the player's resolved skill choice for
+  // each selected fixed-choice `%LIST` trait, keyed by trait id. A trait
+  // with no entry here yet (just checked, choice not made) submits no
+  // `traitSkillChoices` entry for it -- `skill_choice_bonuses_from_traits`
+  // honestly contributes nothing for a trait with no recorded choice,
+  // never a first-guessed default (see that function's own doc comment).
+  const [traitSkillChoices, setTraitSkillChoices] = useState<Record<string, string>>({});
 
   const selectedClass = CLASS_OPTIONS.find((option) => option.id === classId) ?? CLASS_OPTIONS[0];
   const selectedRace = races.find((option) => option.id === raceId) ?? races[0];
@@ -459,9 +466,33 @@ function CreateCharacterFields(props: {
   }, []);
 
   function toggleTrait(id: string) {
+    const wasSelected = selectedTraits.includes(id);
     setSelectedTraits((current) =>
-      current.includes(id) ? current.filter((existing) => existing !== id) : [...current, id]
+      wasSelected ? current.filter((existing) => existing !== id) : [...current, id]
     );
+    if (wasSelected) {
+      // Unchecking a choice-based trait drops its recorded skill choice too
+      // -- an unselected trait must never leave a stale choice behind that
+      // a later re-check could silently pick back up.
+      setTraitSkillChoices((current) => {
+        const { [id]: _removed, ...rest } = current;
+        return rest;
+      });
+    } else {
+      // Checking a choice-based trait defaults its choice to the first
+      // `skillOptions` entry, so a submit before the player touches the
+      // dropdown still records a real, in-list choice rather than none at
+      // all -- the option is still visibly a `<select>` the player can
+      // change, this only avoids an accidentally-empty submission.
+      const option = traitOptions?.find((candidate) => candidate.id === id);
+      if (option !== undefined && option.skillOptions.length > 0) {
+        setTraitSkillChoices((current) => ({ ...current, [id]: option.skillOptions[0]!.skillId }));
+      }
+    }
+  }
+
+  function setTraitSkillChoice(traitId: string, skillId: string) {
+    setTraitSkillChoices((current) => ({ ...current, [traitId]: skillId }));
   }
 
   const alternateTraitRows = buildAlternateTraitRows(
@@ -551,6 +582,20 @@ function CreateCharacterFields(props: {
       // `applyFloatingAbilityAllocation` — this is the seam that was missing
       // entirely, which cost Half-Elf and Half-Orc their +2.
       const finalAbilityScores = applyFloatingAbilityAllocation(adjustedAbilityScores, allocation, raceId);
+      // AT-34-E4-002 (second slice): one `traitSkillChoices` entry per
+      // selected trait that both is choice-based (`choiceSetId !== null`)
+      // and has a recorded skill choice. A choice-based trait somehow
+      // selected with no recorded choice yet (should not happen --
+      // `toggleTrait` seeds a default the moment it is checked) is simply
+      // omitted rather than sent with a fabricated skill.
+      const resolvedTraitSkillChoices = selectedTraits.flatMap((traitId) => {
+        const option = traitOptions?.find((candidate) => candidate.id === traitId);
+        const skillId = traitSkillChoices[traitId];
+        if (option?.choiceSetId == null || skillId === undefined) {
+          return [];
+        }
+        return [{ choiceSetId: option.choiceSetId, selectionId: skillId }];
+      });
       const request = composeCreateCharacterRequest(
         {
           displayLabel,
@@ -561,6 +606,7 @@ function CreateCharacterFields(props: {
           abilityBonusTarget: deriveAbilityBonusTarget(),
           selectedAlternateTraitKeys,
           selectedTraits,
+          traitSkillChoices: resolvedTraitSkillChoices,
         },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
       );
@@ -905,42 +951,63 @@ function CreateCharacterFields(props: {
                 padding: '0.35rem 0.5rem',
               }}
             >
-              {traitOptions.map((option) => (
-                <label
-                  key={option.id}
-                  style={{
-                    alignItems: 'flex-start',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    gap: '0.5rem',
-                    padding: '0.3rem 0',
-                  }}
-                  title={option.description}
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedTraits.includes(option.id)}
-                    onChange={() => toggleTrait(option.id)}
-                    style={{ marginTop: '0.2rem' }}
-                  />
-                  <span style={{ minWidth: 0 }}>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{option.name}</span>
-                    <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
-                      {' '}
-                      · {option.bonus >= 0 ? `+${option.bonus}` : option.bonus} {option.skills.join(', ')}
-                    </span>
-                    <span
+              {traitOptions.map((option) => {
+                const isChoiceBased = option.skillOptions.length > 0;
+                const isSelected = selectedTraits.includes(option.id);
+                return (
+                  <div key={option.id} style={{ padding: '0.3rem 0' }}>
+                    <label
                       style={{
-                        color: 'var(--color-text-secondary)',
-                        display: 'block',
-                        fontSize: '0.72rem',
+                        alignItems: 'flex-start',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        gap: '0.5rem',
                       }}
+                      title={option.description}
                     >
-                      {option.description}
-                    </span>
-                  </span>
-                </label>
-              ))}
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleTrait(option.id)}
+                        style={{ marginTop: '0.2rem' }}
+                      />
+                      <span style={{ minWidth: 0 }}>
+                        <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{option.name}</span>
+                        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
+                          {' '}
+                          · {option.bonus >= 0 ? `+${option.bonus}` : option.bonus}{' '}
+                          {isChoiceBased
+                            ? `choice of ${option.skillOptions.map((choice) => choice.name).join(', ')}`
+                            : option.skills.join(', ')}
+                        </span>
+                        <span
+                          style={{
+                            color: 'var(--color-text-secondary)',
+                            display: 'block',
+                            fontSize: '0.72rem',
+                          }}
+                        >
+                          {option.description}
+                        </span>
+                      </span>
+                    </label>
+                    {isChoiceBased && isSelected ? (
+                      <select
+                        aria-label={`${option.name} skill choice`}
+                        value={traitSkillChoices[option.id] ?? option.skillOptions[0]!.skillId}
+                        onChange={(event) => setTraitSkillChoice(option.id, event.target.value)}
+                        style={{ fontSize: '0.78rem', marginLeft: '1.6rem', marginTop: '0.25rem' }}
+                      >
+                        {option.skillOptions.map((choice) => (
+                          <option key={choice.skillId} value={choice.skillId}>
+                            {choice.name}
+                          </option>
+                        ))}
+                      </select>
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

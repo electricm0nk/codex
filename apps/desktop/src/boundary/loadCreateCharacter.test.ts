@@ -20,6 +20,7 @@ async function testNoRuntimeThrowsDescriptiveError() {
       savedAt: '2026-07-24T00:00:00Z',
       selectedAlternateTraitKeys: [],
       selectedTraits: [],
+      traitSkillChoices: [],
     });
   } catch (cause) {
     thrown = cause;

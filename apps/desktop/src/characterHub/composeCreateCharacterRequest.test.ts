@@ -14,6 +14,7 @@ async function main() {
   verifiesHalflingAdjustmentsAreBakedIntoSubmittedScores();
   verifiesTheFloatingAbilityAllocationReachesTheSubmittedScoresForNonHumanRaces();
   verifiesHumansFloatingAllocationIsLeftToTheBackendSoItIsNotAppliedTwice();
+  verifiesTraitSkillChoicesDefaultsToEmptyAndPassesThroughWhenProvided();
 }
 
 const ZERO_ALLOCATION = { strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0 };
@@ -104,6 +105,46 @@ function verifiesRequestShapeFromFormFields() {
   assertEqual(request.abilityScores.strength, 16, 'ability strength');
   assertEqual(request.abilityScores.charisma, 8, 'ability charisma');
   assertEqual(request.abilityBonusTarget, 'dexterity', 'abilityBonusTarget');
+}
+
+/**
+ * AT-34-E4-002 (second slice): an omitted `traitSkillChoices` composes to
+ * an empty array (every pre-existing caller keeps working unchanged), and
+ * a provided one passes through verbatim -- the same "trusted wire list"
+ * shape `selectedTraits` already follows.
+ */
+function verifiesTraitSkillChoicesDefaultsToEmptyAndPassesThroughWhenProvided() {
+  const baseFields = {
+    displayLabel: 'Aldric',
+    raceId: 'race:human',
+    classId: 'class:fighter',
+    level: 1,
+    abilityScores: {
+      strength: 16,
+      dexterity: 14,
+      constitution: 14,
+      intelligence: 10,
+      wisdom: 12,
+      charisma: 8,
+    },
+    abilityBonusTarget: 'dexterity',
+  };
+  const deps = { generateId: () => 'char-fixed-id', now: () => '2026-07-08T00:00:00Z' };
+
+  const withoutChoices = composeCreateCharacterRequest(baseFields, deps);
+  assertEqual(withoutChoices.traitSkillChoices.length, 0, 'omitted traitSkillChoices composes empty');
+
+  const withChoices = composeCreateCharacterRequest(
+    {
+      ...baseFields,
+      selectedTraits: ['trait:trait_criminal'],
+      traitSkillChoices: [{ choiceSetId: 'trait_choice:trait:trait_criminal', selectionId: 'skill:intimidate' }],
+    },
+    deps
+  );
+  assertEqual(withChoices.traitSkillChoices.length, 1, 'provided traitSkillChoices passes through');
+  assertEqual(withChoices.traitSkillChoices[0]!.choiceSetId, 'trait_choice:trait:trait_criminal', 'choiceSetId');
+  assertEqual(withChoices.traitSkillChoices[0]!.selectionId, 'skill:intimidate', 'selectionId');
 }
 
 /**

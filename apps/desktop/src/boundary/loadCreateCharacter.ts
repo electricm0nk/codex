@@ -52,6 +52,25 @@ export interface CreateCharacterRequest {
    * selected_traits`'s own Rust doc comment), never a blocked save.
    */
   selectedTraits: string[];
+  /**
+   * Character trait/drawback selections (AT-34-E4-002, second slice): the
+   * player's resolved skill choice for each *fixed-choice* `%LIST` trait
+   * named in `selectedTraits` — one entry per such trait, with
+   * `choiceSetId` exactly `loadCharacterTraits`'s own `choiceSetId` for
+   * that option and `selectionId` one of its `skillOptions`. Mirrors
+   * `LevelUpCharacterRequest.additionalChoices`'s own `SelectedChoiceEntryDto`
+   * shape — appended to `chosen.selected_choices` verbatim, never a
+   * blocked save for an id this crate does not recognize (see
+   * `CreateCharacterRequest::trait_skill_choices`'s own Rust doc comment).
+   * A flat trait needs no entry here.
+   */
+  traitSkillChoices: TraitSkillChoiceDto[];
+}
+
+/** One player-resolved skill choice for a fixed-choice `%LIST` trait. Mirrors `SelectedChoiceDto` in `character_hub.rs`. */
+export interface TraitSkillChoiceDto {
+  choiceSetId: string;
+  selectionId: string;
 }
 
 export interface BaseSavesDto {
