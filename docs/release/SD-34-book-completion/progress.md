@@ -13,6 +13,78 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — AT-34-E3-003 (bucket M, EQUIPMENT sub-causes, cycle 2): a `BASEITEM:` chase closes 1 more real unit, plus an exhaustive 9-shape census of the 408-unit remainder
+
+**Status: partial.** Continuation of the already-merged `AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`
+(commit `7147fd86ab`), which closed 14 units via a `DAMAGE:`-token widening and confirmed 0 of the
+147 closure-only alias units resolved further. Re-derived fresh at this cycle's rebase base
+(`b38a8a399c`): `core_rulebook` M = 958, split unchanged from that receipt's own stated remainder
+(`equipment_table_entry_with_corpus_magnitude` 262, `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does`
+147 — this cycle's 409-unit territory, confirmed exactly, not carried forward unchecked).
+
+**Main deliverable: an exhaustive, real-corpus classification of all 409 units into 9 named
+mechanisms, summing exactly.** Every unit's own on-disk JSON was read (not assumed) and grouped
+by real shape: `CHOICE_GATED` (99, sibling lane's choice-wiring scope — genuinely off limits);
+`VAR` bonus chain (121 — several ARE real player-facing effects, e.g. Phylactery of Negative
+Channeling genuinely widens a Cleric's Channel Energy dice pool, correcting the prior receipt's
+"not player-facing" framing; what they actually lack is cross-subsystem equipment↔class-feature
+wiring, new bucket-B-shaped engineering); no-bonus-no-prose chassis/plumbing (100); no-bonus
+real-prose-magnitude named artifacts/potions (71, needs a new description-linked probe);
+`ITEMCOST`-only cost plumbing (9); `EQM` weight/hands fields with no compute-path slot (3);
+`EQMWEAPON` range/crit-double fields with no compute-path slot (3, checked against
+`damage_total.rs`'s `resolve_critical_threat_range`/`resolve_critical_multiplier` — neither is
+called for an equipmod's own amplifier token); `ITEMCOST,WEAPON` (2); `WEAPON` fixed-effect no
+slot (1). 99+121+100+71+9+3+3+2+1 = 409 exactly.
+
+**The real closure, found by re-testing (not re-quoting) the prior cycle's stated reason:** the
+prior receipt's claim ("0 of 147 resolve to a `DAMAGE:`-bearing base") was true under
+`equipment_id_resolve`'s THEN-current behavior — it never chased a record's `BASEITEM:` token, a
+real PCGen "inherit this record's stats" convention already parsed into a token but never
+consulted. `Crossbow (Light)` (`cr_equip_arms_armor.lst` line 321) carries `BASEITEM:Light
+Crossbow (Base)` and no `DAMAGE:` token on its own row; the real base record carries
+`DAMAGE:1d8`. Widened `damage_total::resolve_base_damage_dice` with a one-hop `BASEITEM:` chase
+through the SAME `equipment_id_resolve` call it already makes (not a second resolution
+mechanism) — this closes a genuine player-facing gap too: before this fix, a player who selected
+`Crossbow (Light)` got `resolve_weapon_damage_breakdown` → `None`, no `WeaponDamageBreakdown` at
+all, for a real, ordinary CRB weapon. Logged as a `correction` retro event (the prior stated
+reason was an instrument limitation, not a genuine absence).
+
+**Side effect found and reported, not claimed as a closure:** the SAME widening also corrects
+the evidence string on **16** already-`literal-verified` (bucket `V`) weapons that were carrying
+the SAME stale M-shaped reason despite already being verified by an unrelated mechanism —
+`Axe (Throwing)`, `Battleaxe`, `Club`, `Dart`, `Falchion`, `Greataxe`, `Greatclub`, `Hammer
+(Light)`, `Handaxe`, `Pick (Heavy)`, `Pick (Light)`, `Sap`, `Scimitar`, `Scythe`, `Sickle`,
+`Warhammer` — each a real `BASEITEM:` alias resolving to a real `DAMAGE:`-bearing base. Bucket
+unchanged (`V` before, `V` after); reported as a reclassification, not a closure.
+
+**RED→GREEN:** 4 new tests in `damage_total.rs` (fixture-pinned mechanism, negative control, a
+record's-own-token-wins precedence), 1 new test in `v06_work_inventory.rs` against the real
+on-disk `core_rulebook` corpus. `cargo test --locked --lib rules_core::damage_total::` 33/33;
+`--bin v06_work_inventory` 454/454; `cargo test --locked --no-run` (workspace) exit 0; desktop
+crate `--no-run` exit 0 (tested explicitly — `resolve_base_damage_dice` is transitively
+reachable from `character_hub.rs`, widened return only, no signature change).
+
+**Live regen (local, uncommitted — this wave's shared end-of-wave cycle owns
+`docs/work-inventory.json`/`completion-atlas.json`; ran the guarded three-pass pipeline with
+both `--json-out` reports supplied after the plain regen refused to write over 9,564 verification
+stamps, then `git restore`-d both files before commit).** This same local regen also picked up
+the ALREADY-COMMITTED `AT-34-E3-002` Cleric Domain fix (`b38a8a399c`/`50c10d5cc3`, C 351→296, 55
+units), which this cycle did **not** author — attribution isolated by id: all 55 `class_feature`
+changes are Cleric-Domain keys, cleanly separable from this cycle's 17 `equipment` changes (1
+closure + 16 reclassifications). Whole-corpus id-diff: 49,438→49,438, 0 added/removed, **72**
+changed = 55 (Cleric Domain) + 17 (this cycle). This cycle's own isolated deltas: `core_rulebook`
+M 958→957, `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` 147→146,
+corpus-wide M 4,966→4,965 (re-derived against the pre-regen file directly to strip out the
+co-mingled Cleric Domain delta). `corpus_literal_sweep`: 48,708 examined of 51,482 read, CLEAN,
+unchanged (no `data/corpus/**` touched).
+
+**Remainder, named exactly:** 408 units (262 + 146), same 9-shape census above — every remaining
+unit needs either the sibling choice-wiring lane, new cross-subsystem engineering, a new
+description-linked probe, or a new `ResolvedEquipmentEffect` field/subsystem. No unit in this
+territory has an existing, already-wired compute path left uncalled. This cycle does not
+implement AT-34-E3-003's other M sub-causes (sibling lanes' territory) or buckets V/D/U/X.
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-003_m_bucket_equipment_cycle_receipt_2.md`.
+
 ### Cycle — AT-34-E3-002 (bucket C continuation): the generic pool-group-selection pass already covers Cleric Domain, `classify()` just never asked it — 55 closed, core_rulebook bucket C 351->296
 
 **Status: partial.** Re-derived at this cycle's start (post-rebase HEAD): `core_rulebook`
