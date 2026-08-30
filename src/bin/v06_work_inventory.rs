@@ -5394,6 +5394,16 @@ struct EngineFacts {
     /// `ranger_favored_enemy_bonus_wired` above, gated at ranger level 3
     /// (Favored Terrain's own real class-table gate) rather than level 1.
     ranger_favored_terrain_bonus_wired: BTreeSet<String>,
+    /// `AT-34-E3-002` (bucket C continuation): `(band-start level, size
+    /// label)` pairs -- `(1, "Medium")`, `(4, "Medium")`, ... -- whose own
+    /// `"class_chassis.monk.unarmed_strike_damage_die"` (and, from level 12,
+    /// `"..._count"`) explanation was genuinely observed, at EXACTLY that
+    /// corpus record's own band-start level, via
+    /// [`probe_monk_unarmed_damage_die_wiring`]. Scoped to the Medium column
+    /// only this cycle -- see that probe's own doc comment for why every
+    /// other creature-size column (Small included) is deliberately left
+    /// unobserved rather than assumed.
+    monk_unarmed_damage_die_wired: BTreeSet<(u8, String)>,
     /// `AT-34-E3-001` (mechanism 2 continuation, cycle 4): full corpus_key
     /// strings (`"Evocation School ~ Intense Spells"`, ...) whose own
     /// per-power explanation id was genuinely observed via
@@ -7608,6 +7618,123 @@ fn probe_ranger_favored_terrain_bonus_wiring(fixture: &CharacterInput) -> BTreeS
     wired
 }
 
+/// `AT-34-E3-002` (bucket C continuation): the six PF1 Core Rulebook
+/// Medium-monk unarmed-strike-damage band levels (`"Monk Unarmed Damage LVL
+/// 1/4/8/12/16/20 (Medium)"`) whose own
+/// `"class_chassis.monk.unarmed_strike_damage_die"` explanation -- and, from
+/// level 12, its `"..._count"` sibling -- was genuinely observed against the
+/// real pipeline.
+///
+/// Run at EXACTLY the corpus record's own band-start level
+/// (`BAND_START_LEVELS`), never `SWEEP_LEVELS`: `SWEEP_LEVELS` (`[1, 5, 10,
+/// 15, 20]`) has no member inside the level-16 band (16-19), so it could
+/// never observe the `"LVL 16"` record at all -- confirmed by reading
+/// `monk_unarmed_strike_damage_die`'s own `min(5, level / 4)` band index
+/// directly rather than assumed. The fixture's own race is Human (Medium
+/// size, `FIXTURE_RELATIVE_PATH`), which is exactly `explain_monk_level1_
+/// chassis`'s own gate (`input.chosen.race_id != HUMAN_RACE_ID` returns
+/// early) -- no race override needed for this column.
+///
+/// The expected `(die face, die count)` pair per level is hardcoded from PF1
+/// Core Rulebook's own Monk class table (the SAME progression `monk_unarmed_
+/// strike_damage_die`'s own doc comment cites and this cycle's receipt
+/// independently re-verified against every one of the six Medium corpus
+/// records' own literal `UDAM`/`BONUS:VAR|PrimaryAttackDamage{Dice,Size}`
+/// tokens directly) -- not read from the private engine function, mirroring
+/// `probe_ranger_favored_enemy_bonus_wiring`'s own `value == 2` hardcoded
+/// check rather than reaching into `pilot_compute`'s private surface.
+///
+/// **Scoped to Medium only.** The Small column has a real formula too
+/// (`small_monk_unarmed_strike_damage_die`), but it is reachable ONLY through
+/// the Pathfinder Unchained book's own Unchained Monk class path
+/// (`ground_unchained_monk_unarmed_strike_damage`, explanation id
+/// `class_feature.pu.unchained_monk.unarmed_strike_damage_die`) -- a
+/// cross-book attribution this cycle deliberately does not decide, named in
+/// the remainder instead. The other seven creature-size columns (Colossal,
+/// Diminutive, Fine, Gargantuan, Huge, Large, Tiny) have NO formula anywhere
+/// in the engine (`monk_unarmed_strike_damage_die_for_size` returns `None`
+/// for every size but Small and Medium, confirmed by reading it directly) --
+/// a real gap, not merely an unattributed one, so this probe does not and
+/// must not credit them.
+fn probe_monk_unarmed_damage_die_wiring(fixture: &CharacterInput) -> BTreeSet<(u8, String)> {
+    const BAND_START_LEVELS_AND_EXPECTED_MEDIUM_DIE: &[(u8, i16, i16)] = &[
+        (1, 6, 1),
+        (4, 8, 1),
+        (8, 10, 1),
+        (12, 6, 2),
+        (16, 8, 2),
+        (20, 10, 2),
+    ];
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for &(level, expected_face, expected_count) in BAND_START_LEVELS_AND_EXPECTED_MEDIUM_DIE {
+        let input = class_sweep_input(fixture, "monk", level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        let face_observed = computation.explanations.iter().any(|e| {
+            e.id == "class_chassis.monk.unarmed_strike_damage_die" && e.value == expected_face
+        });
+        // Below level 12 the die count is implicitly 1 and the engine emits
+        // no standalone count explanation at all (confirmed by reading
+        // `explain_monk_level1_chassis` directly: the count row is gated
+        // `level >= MONK_UNARMED_DAMAGE_DIE_THIRD_STEP_UP_LEVEL`) -- requiring
+        // one below that level would make this probe refuse every band it
+        // could otherwise honestly credit.
+        let count_observed = expected_count == 1
+            || computation.explanations.iter().any(|e| {
+                e.id == "class_chassis.monk.unarmed_strike_damage_die_count"
+                    && e.value == expected_count
+            });
+        if face_observed && count_observed {
+            wired.insert((level, "Medium".to_string()));
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+#[cfg(test)]
+mod monk_unarmed_damage_die_probe_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Against the REAL fixture (Human -> Medium size) and the REAL compute
+    /// pipeline, the probe observes exactly the 6 Medium band-start levels --
+    /// no more (the 7 unmodelled sizes and the cross-book-only Small column
+    /// are deliberately never populated) and no fewer (every one of the 6
+    /// bands genuinely fires).
+    #[test]
+    fn the_probe_observes_exactly_the_six_medium_band_start_levels_against_the_real_fixture() {
+        let wired = probe_monk_unarmed_damage_die_wiring(&fixture());
+        assert_eq!(
+            wired,
+            BTreeSet::from([
+                (1, "Medium".to_string()),
+                (4, "Medium".to_string()),
+                (8, "Medium".to_string()),
+                (12, "Medium".to_string()),
+                (16, "Medium".to_string()),
+                (20, "Medium".to_string()),
+            ]),
+            "expected exactly the 6 Medium band-start levels; got {wired:?}"
+        );
+    }
+}
+
 /// `AT-34-E3-001` (mechanism 2 continuation, cycle 4): the wizard arcane
 /// school sub-cause, same shape as Domain Power / Weapon Training / Favored
 /// Enemy above -- `"Evocation School ~ Intense Spells"`'s own `group` is
@@ -8308,6 +8435,7 @@ fn gather_engine_facts(
         fighter_weapon_training_wired: probe_fighter_weapon_training_wiring(fixture),
         ranger_favored_enemy_bonus_wired: probe_ranger_favored_enemy_bonus_wiring(fixture),
         ranger_favored_terrain_bonus_wired: probe_ranger_favored_terrain_bonus_wiring(fixture),
+        monk_unarmed_damage_die_wired: probe_monk_unarmed_damage_die_wiring(fixture),
         wizard_arcane_school_wired: probe_wizard_arcane_school_wiring(fixture),
         bard_bardic_performance_wired: probe_bard_bardic_performance_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
@@ -10692,6 +10820,38 @@ fn classify(
                         reason: None,
                         engine_book: engine_book_field,
                     };
+                }
+            }
+            // `AT-34-E3-002` (bucket C continuation): `"Monk Unarmed Damage
+            // LVL <N> (<Size>)"` -- this key has no `" ~ "` separator at all,
+            // so `group` above is the WHOLE key (same shape as `"Weapon
+            // Training <tier> <group>"`), and `class_feature_owner` and its
+            // fallbacks can never resolve `"monk"` from it even before
+            // `class_feature_exact_suffix_grounded`'s `group == owner` guard
+            // is reached. `probe_monk_unarmed_damage_die_wiring` is the real,
+            // separate attribution path -- see its own doc comment for why it
+            // is scoped to exactly the six Medium-size band-start levels: the
+            // Small column is a real but cross-book-only attribution left
+            // undecided, and the other seven sizes have no formula anywhere
+            // in the engine.
+            if let Some(rest) = unit.key.strip_prefix("Monk Unarmed Damage LVL ") {
+                if let Some((level_str, size_paren)) = rest.split_once(' ') {
+                    if let Ok(level) = level_str.parse::<u8>() {
+                        let size = size_paren.trim_start_matches('(').trim_end_matches(')');
+                        if facts
+                            .monk_unarmed_damage_die_wired
+                            .contains(&(level, size.to_string()))
+                        {
+                            return Verdict {
+                                status: "grounded",
+                                evidence:
+                                    "monk_unarmed_damage_die_probe_observed_a_real_computed_magnitude"
+                                        .to_string(),
+                                reason: None,
+                                engine_book: engine_book_field,
+                            };
+                        }
+                    }
                 }
             }
             // `AT-34-E3-001` (mechanism 2 continuation, cycles 4, 6, and
@@ -18456,6 +18616,99 @@ mod class_feature_text_complete_rung_tests {
             1650,
             "Favored Terrain ~ Cold",
             2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-002` continuation: the Medium Monk unarmed-strike-damage
+    /// band-level records reach `grounded` off
+    /// `probe_monk_unarmed_damage_die_wiring`'s real, observed
+    /// `class_chassis.monk.unarmed_strike_damage_die` explanation. LVL 1 is a
+    /// levels-1-11 band, where the die COUNT facet (implicitly 1) is never
+    /// separately explained by the engine.
+    #[test]
+    fn a_monk_unarmed_damage_medium_lvl_1_record_reaches_grounded_off_the_probes_wiring() {
+        let mut facts = EngineFacts::default();
+        facts.monk_unarmed_damage_die_wired.insert((1, "Medium".to_string()));
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1301,
+            "Monk Unarmed Damage LVL 1 (Medium)",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "monk_unarmed_damage_die_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// `AT-34-E3-002` continuation: LVL 12 is the first band where the die
+    /// COUNT facet itself rises (to 2) and the engine emits a standalone
+    /// `"..._count"` explanation for it -- the probe's own second condition.
+    #[test]
+    fn a_monk_unarmed_damage_medium_lvl_12_record_reaches_grounded_off_the_probes_wiring() {
+        let mut facts = EngineFacts::default();
+        facts.monk_unarmed_damage_die_wired.insert((12, "Medium".to_string()));
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1301,
+            "Monk Unarmed Damage LVL 12 (Medium)",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "monk_unarmed_damage_die_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an UNPROBED Medium band level (the probe's own
+    /// `EngineFacts` set is empty here) is completely unaffected -- it still
+    /// falls through to the pre-existing `engine-does-not-hold` bucket-C
+    /// finding this cycle is closing, proving the fix credits nothing it did
+    /// not actually observe.
+    #[test]
+    fn a_monk_unarmed_damage_medium_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1301,
+            "Monk Unarmed Damage LVL 1 (Medium)",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// NEGATIVE CONTROL, the scoping proof: a size the probe deliberately
+    /// never populates (Small, Colossal, ...) is unaffected EVEN when the
+    /// SAME band-start level is wired for Medium -- proving this fix does
+    /// not widen past the exact `(level, size)` pair it actually observed.
+    #[test]
+    fn a_monk_unarmed_damage_non_medium_record_at_a_wired_level_is_unaffected() {
+        let mut facts = EngineFacts::default();
+        facts.monk_unarmed_damage_die_wired.insert((1, "Medium".to_string()));
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1300,
+            "Monk Unarmed Damage LVL 1 (Small)",
+            1,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
