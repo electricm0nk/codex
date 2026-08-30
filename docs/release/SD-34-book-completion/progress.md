@@ -13,6 +13,91 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — wave-15 shared `docs/work-inventory.json` regeneration and attribution — complete
+
+**Status: complete.** The single mandatory regeneration-and-attribution cycle closing wave
+15's three dispatched lanes (UC `AT-34-E4-002` cycle 3, C `AT-34-E3-002` Monk Unarmed Damage
+Medium, M `AT-34-E3-003` equipment `DAMAGE:`-token widening) — `docs/work-inventory.json`
+regenerated exactly once via the required three-pass pipeline, for all of them. The dispatch
+brief's own boilerplate said "four lanes"; re-derived from `git log b939abcd4b..HEAD` and the
+dispatch script's own wave-14/15 lane list (`sd-34-dispatch.workflow.js`), this wave actually
+ran **three** — the "four" is stale template text carried over from an earlier wave shape and
+is named here, not smoothed over.
+
+**Procedure:** `git fetch origin tranche/14 && git rebase origin/tranche/14` (fast-forward, no
+conflicts) landing at `7147fd86ab`; baseline snapshot taken from that already-rebased HEAD
+(`docs/work-inventory.json`, 49,438 units) per this cycle's own instruction order.
+
+| Pass | Command | Wall time |
+|---|---|---|
+| 1 | `corpus_literal_sweep` | **4m9.446s** — CLEAN, 48,708/51,482 examined, 0 findings |
+| 2 | `derived_evaluator_fixture_check` | **0m19.484s** — 1,839 cleared over 2,580 fixture rows, 0 failed |
+| 3 | `v06_work_inventory` (no `--allow-stamp-loss`) | **13m32.058s** — regenerated, 49,438 units |
+
+**Total pipeline wall time: 1,080.988s (18m00.988s)** — the cost figure this wave shape exists
+to measure.
+
+**Whole-corpus before/after diff by unit id:** 49,438 before, 49,438 after, 0 added, 0 removed,
+**37 changed**. Because the baseline snapshot was taken *after* rebasing, it already includes
+two lanes' own inline self-regenerations (`50790d6bf9` for C, `e8ac310280` for UC) — this
+cycle's independent pipeline re-run reproduces both **byte-for-byte, 0 drift**: the 6
+Monk-Unarmed-Damage-Medium `grounded` units and the 36 corpus-wide flat-`BONUS:SKILL` trait
+`grounded` units are unchanged before vs. after. Only the M lane (which deliberately did not
+self-regenerate, per the dispatch brief) produced real movement in this cycle's own diff.
+
+**Every one of M's own stated expectations was independently confirmed exactly** — the
+strongest possible outcome for this wave's "an expectation that turns out wrong is the most
+valuable finding" instruction is that here there was no mismatch to report:
+
+- Corpus-wide, 31 closures across exactly the 9 books M's own receipt named, unit for unit:
+  `core_rulebook` 14, `ultimate_equipment` 5, `bestiary_3` 4, `inner_sea_races` 2,
+  `ultimate_psionics` 2, `advanced_class_guide` 1, `advanced_players_guide` 1, `bestiary_2` 1,
+  `ultimate_combat` 1 (sum 31), all `ingested-magnitude → grounded`.
+- All 14 `core_rulebook` closures carry the `equipment_table_entry_with_corpus_magnitude`
+  evidence (the own-line-magnitude shape) — **zero** from
+  `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` (the closure-only shape)
+  in that book, exactly as M's receipt said: "one fix did not cover both shapes."
+- 6 further changed units, all `ultimate_equipment`, all already `literal-verified` (bucket V)
+  both before and after — evidence-string churn only, reported separately per `decisions.md
+  §9`, not folded into closure or reclassification.
+- `core_rulebook` M: 972 → 958 (−14). `core_rulebook` DONE: 4330 → 4344 (+14). Corpus-wide M:
+  5002 → 4971 (−31). Corpus-wide DONE: 24278 → 24309 (+31). All match M's own receipt exactly.
+
+**Movement, four buckets (`decisions.md §9`):**
+
+- **Closure (reached DONE):** 31 — all `M → DONE`, real compute-and-apply via
+  `equipment_key_is_wired`'s `damage_total::resolve_base_damage_dice` consultation (an
+  already-wired path, not a new subsystem).
+- **Reclassification (moved between non-DONE buckets):** 0.
+- **Evidence-string churn, no bucket crossed:** 6 (see above) — reported separately.
+- **Reachability:** 0.
+- **Instrument-correction:** 0 — no prior wrong count was found; M's own local-regen figures,
+  committed as prose only (per the `GENERATED_FILE_BAN`), were exactly right.
+
+**Atlas checks:** `python3 scripts/completion_atlas.py --check` (corpus-wide):
+`population=49438 unclassified=0 overlap=0` — `DONE:24309 A:449 B:11769 C:4332 D:2955 M:4971
+V:262 U:202 X:170 Z:19`, `citation_failures=0`, `done_evidence_violations=0`,
+`missing_clearing_mechanisms=0`. `--book core_rulebook --check`: `population=6701
+unclassified=0 overlap=0` — `DONE:4344 B:470 C:351 D:366 M:958 V:87 U:10 X:115`,
+`citation_failures=0` (M's own two citation re-pin commits, `d2cd685ced`, already correct — no
+further re-derivation needed this cycle). `python3 scripts/missing_engine_tables.py --check`:
+`citation_failures=0`.
+
+**Build verification (after this cycle's own regeneration commit):** `cargo test --locked
+--no-run` (full workspace): exit 0 (~4m43s cold, ~1m20s warm). `cargo test --locked --no-run
+--manifest-path apps/desktop/src-tauri/Cargo.toml` (desktop crate, separate cargo workspace,
+tested explicitly per `decisions.md §10`): exit 0 (~1m20s).
+
+`kanban.md` rows 14 (C), 15 (M), 29 (UC) each get a one-line confirmation pointer to this
+cycle's own receipt — no story added to the Notes column, per this file's own row-hygiene
+rule. Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md` (third
+section, appended below the two unrelated prior cycles that happen to share this filename).
+
+**This cycle implements no `epic-breakdown.md` criterion directly** — it is the wave's own
+shared regeneration cycle, paid once for three parallel lanes that deliberately deferred (M)
+or, unusually, did not need to defer (UC, C, whose own inline regens are now independently
+verified correct) regenerating `docs/work-inventory.json`.
+
 ### Cycle — AT-34-E3-003 (bucket M, EQUIPMENT sub-causes) — partial, closure
 
 **Status: partial.** Territory: the two EQUIPMENT sub-causes of `core_rulebook` bucket `M`

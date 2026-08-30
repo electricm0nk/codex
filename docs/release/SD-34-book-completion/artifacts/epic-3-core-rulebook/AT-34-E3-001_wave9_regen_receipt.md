@@ -485,3 +485,177 @@ regeneration commit, per protocol.
 Fold-first commit `782584b4b3` (UC/V-ledger duplicate-dispatch cleanup, pre-existing staged
 work), rebase onto `origin/tranche/14` (M lane's `4d27d70551`/`409ada6cda`), then this cycle's own
 regeneration + atlas restamp + kanban/progress update, committed and pushed together.
+
+---
+
+# Cycle — wave-15 regeneration and attribution, third dispatch (2026-08-30, later same day)
+
+**This filename was dispatched a third time**, against a different set of dispatched lanes
+(UC `AT-34-E4-002` cycle 3, C `AT-34-E3-002` Monk Unarmed Damage Medium, M `AT-34-E3-003`
+equipment `DAMAGE:`-token widening) than either of the two sections above. Per the same
+precedent the second dispatch set, that section is preserved verbatim and this one is appended
+below it rather than overwriting anything.
+
+**Status: complete.** Single mandatory regeneration-and-attribution cycle closing this wave's
+dispatched lanes — `docs/work-inventory.json` regenerated exactly once via the required
+three-pass pipeline, per `workflow-instruction.md`'s shared-regen protocol.
+
+## 0. "Four lanes" — the dispatch brief's own boilerplate, corrected
+
+The dispatch prompt's fixed template text says "Four lanes just landed engine changes." Only
+**three** lane summaries were actually supplied (UC, C, M), and `git log b939abcd4b..HEAD`
+together with `sd-34-dispatch.workflow.js`'s own wave-14/15 lane list confirms only three ran
+this wave — the wording is stale boilerplate carried over from an earlier four-lane wave shape
+(the same script's own comment block documents the shape change), not a fourth lane whose
+report went missing. Named here per this wave's own "an unpredicted step is a defect" rule so
+a future cycle does not waste time hunting for a phantom fourth lane.
+
+## 1. Rebase and baseline
+
+`git fetch origin tranche/14 && git rebase origin/tranche/14`: fast-forward, no conflicts,
+landing at `7147fd86ab` (10 commits ahead of this cycle's dispatch-time HEAD `b939abcd4b`).
+Baseline snapshot taken from that **already-rebased** HEAD per this cycle's own instruction
+order (fetch/rebase first, snapshot second) — `docs/work-inventory.json`, 49,438 units. This
+matters below: two lanes' own inline self-regenerations are already inside this baseline.
+
+## 2. Three-pass pipeline, in order, timed
+
+| Pass | Command | Result |
+|---|---|---|
+| 1 | `corpus_literal_sweep --json-out /tmp/sweep.json` | CLEAN — 48,708 of 51,482 examined, 413,336 tokens compared, 51,469 digests checked, **0 findings**. `real 4m9.446s` |
+| 2 | `derived_evaluator_fixture_check --json-out /tmp/fixture.json` | **0 failed, 0 not-ingested** — 1,839 units cleared over 2,580 fixture rows. `real 0m19.484s` |
+| 3 | `v06_work_inventory` (both report env vars set, no `--allow-stamp-loss`) | ran to completion, `docs/work-inventory.json` rewritten, 49,438 units. `real 13m32.058s` |
+
+`--allow-stamp-loss` never passed; both upstream reports existed before pass 3 ran.
+
+**Total wall time for the three-pass pipeline: 1,080.988s (18m00.988s)** — the figure this wave
+shape exists to produce, run foreground/backgrounded-and-monitored, not estimated.
+
+## 3. Whole-corpus before/after diff, by unit id
+
+```
+before: 49438 units    after: 49438 units    added: 0    removed: 0
+changed (status or evidence, any field): 37
+```
+
+**Two lanes' movement is already inside the baseline, and this cycle's independent re-run
+reproduces both exactly, 0 drift:**
+
+- **C** (`50790d6bf9`, Monk Unarmed Damage Medium): the 6 targeted units, byte-identical
+  `status`/`evidence` before vs. after this cycle's own pipeline run. `core_rulebook` bucket C:
+  351 before this cycle, 351 after.
+- **UC** (`e8ac310280`, flat `BONUS:SKILL` trait capability): the 36 corpus-wide `grounded`
+  trait units (31 `ultimate_campaign` + 5 `advanced_players_guide`), byte-identical before vs.
+  after. `kind=trait, status=grounded` count: 36 before, 36 after.
+
+**Only the M lane (equipment `DAMAGE:`-token widening, deliberately un-self-regenerated per
+the dispatch brief) produced real movement.** All 37 changed units trace to it.
+
+## 4. M's own stated expectations, checked against the live regen — confirmed exactly
+
+M's own receipt (`AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`) predicted, from a local
+regen it ran and then `git restore`d before committing: 31 corpus-wide closures across 9 named
+books, 0 closures in `core_rulebook` from the closure-only equipment shape, and 6
+`ultimate_equipment` bucket-V evidence-string reclassifications. This cycle's own independent,
+from-scratch pipeline run reproduces every one of those figures exactly:
+
+- **31 closures**, unit for unit the same 9-book split M named: `core_rulebook` 14,
+  `ultimate_equipment` 5, `bestiary_3` 4, `inner_sea_races` 2, `ultimate_psionics` 2,
+  `advanced_class_guide` 1, `advanced_players_guide` 1, `bestiary_2` 1, `ultimate_combat` 1
+  (sum 31), every one `ingested-magnitude → grounded`.
+- All 14 `core_rulebook` closures carry evidence
+  `equipment_table_entry_with_corpus_magnitude` (the own-line-magnitude shape). **Zero** carry
+  `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` (the closure-only shape)
+  — confirming M's own finding that "the two equipment shapes are genuinely different... one
+  fix did not cover both."
+- **6 further changed units**, all `ultimate_equipment`, all `literal-verified` (bucket V) both
+  before and after: `pistol_of_the_infinite_sky`, `pistol_firedrake`, `hammer_polarity`,
+  `sword_ten_ring`, `spirit_caller`, `lash_of_the_howler` — evidence string only,
+  `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` →
+  `equipment_effect_probe_observed_computed_delta`. No bucket crossed; reported separately
+  per `decisions.md §9`, not folded into either closure or reclassification.
+- `core_rulebook` M: **972 → 958** (−14). `core_rulebook` DONE: **4330 → 4344** (+14).
+  Corpus-wide M: **5002 → 4971** (−31). Corpus-wide DONE: **24278 → 24309** (+31).
+
+**14 + 5 + 4 + 2 + 2 + 1 + 1 + 1 + 1 = 31 closures, + 6 churn = 37, the full changed-unit
+count.** Every figure M's own receipt stated is reproduced exactly by this independent
+pipeline run — **the lane whose expectation was checked against the live regen matched it
+completely; there is no mismatch to report this cycle**, which is itself the finding worth
+recording (per `decisions.md §9`, a wave that confirms rather than corrects is still a
+legitimate, valuable deliverable).
+
+Note two of the two `ultimate_equipment` closures that are NOT part of the 6-unit churn set
+(`blade_of_the_rising_sun`, `blade_of_the_sword_saint`) carry the closure-only evidence string
+in a book OTHER than `core_rulebook` and DID close to DONE — consistent with, not
+contradicting, M's own claim: that claim was scoped explicitly to `core_rulebook`'s own 147-
+unit closure-only population, which this diff confirms stayed at 147 (0 closed) exactly as
+stated.
+
+## 5. Movement, four buckets (`decisions.md §9`)
+
+| Bucket | Count | Detail |
+|---|---|---|
+| Closure (reached DONE) | **31** | all `M → DONE`, real compute-and-apply via `equipment_key_is_wired`'s `damage_total::resolve_base_damage_dice` consultation (an already-wired path the desktop app's `character_hub.rs` already renders from — not a new subsystem) |
+| Reclassification (moved between non-DONE buckets) | **0** | — |
+| Evidence-string churn, no bucket crossed | **6** | all `ultimate_equipment`, already bucket V before and after (see §4) |
+| Reachability | **0** | — |
+| Instrument-correction | **0** | `completion_atlas.py --check` (corpus-wide): `citation_failures=0`, `done_evidence_violations=0`, `missing_clearing_mechanisms=0`, `stale_derived_at=False` — no citation drift; M's own two re-pin commits (`d2cd685ced`) already had every `file:line` citation correct |
+
+A `B`→`X` move is reclassification, never closure; none occurred this cycle.
+
+## 6. Atlas checks
+
+`python3 scripts/completion_atlas.py --book core_rulebook --check`:
+`population=6701 unclassified=0 overlap=0` — `DONE:4344 B:470 C:351 D:366 M:958 V:87 U:10
+X:115`, `citation_failures=0`.
+
+`python3 scripts/completion_atlas.py --check` (corpus-wide):
+`population=49438 buckets=10 unclassified=0 overlap=0` —
+`DONE:24309 A:449 B:11769 C:4332 D:2955 M:4971 V:262 U:202 X:170 Z:19`.
+`citation_failures=0` both scopes.
+
+`python3 scripts/missing_engine_tables.py --check`: `population=449 kinds=2` (`companion`
+28, `power` 421), `citation_failures=0`.
+
+## 7. Build verification
+
+`cargo test --locked --no-run` (full workspace): exit 0 (4m43s cold-cache run; re-confirmed
+exit 0 on a second, warm-cache run, 1m20s). `cargo test --locked --no-run --manifest-path
+apps/desktop/src-tauri/Cargo.toml` (desktop crate, separate cargo workspace, tested explicitly
+per `decisions.md §10`): exit 0, 1m20s. Both run **after** this cycle's own regeneration
+commit, per protocol.
+
+## 8. Wave ledger
+
+`python3 scripts/wave_ledger.py` at report time shows this wave already labelled (wave 15,
+`wf_894155bf-d58`, `KNOWN_WAVES` already carries its note) — no missing-number case to add.
+This cycle's own work is itself part of that same run's transcript (its "last activity"
+timestamp advances as this cycle proceeds), so the ledger still marks it `RUNNING` as of this
+receipt's writing; it resolves to a fixed duration once the run's transcript goes quiet after
+this commit lands. As of this section being written the wave had run **~2h (13:34:32 start to
+~15:34 and counting)** — longer than wave 14 (0:14:58, stopped early for an operator-requested
+restart) or wave 13 (0:38:54, `KILLED?` — host reset), and comparable to wave 12 (1:50:25,
+the last wave that ran three lanes to a clean finish without an interruption). The three-lane-
+parallel-plus-shared-regen shape (adopted `revised 2026-08-28`, per the dispatch script's own
+comment) continues to run longer per wave than the eight-plus-lane waves of 2026-08-27 (typically
+1:45–4:00) took per-lane-normalized, but with zero of this wave's lanes lost to a mid-run kill —
+the tradeoff the shape was adopted for.
+
+## 9. Denominator gate (informational only, not part of this cycle's own instruction)
+
+`python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'`:
+`files_checked=15 violations=7`, up from the 5 the wave-9 second dispatch reported. All 7 are
+inside `progress.md`, and re-reading each: none is new corpus-figure prose without a
+denominator — every one is a prior cycle's own narrative *quoting* an earlier
+`denominator_gate.py` run's output (e.g. this file's own report of "`violations=5`... `75%
+chance...`"), a meta-reference the gate's substring match cannot distinguish from a live
+violation. Not this cycle's regression, not touched by this cycle's own two-line prepend; named
+here for whichever future cycle owns `AT-34-E3-004`'s remainder so the drift is visible rather
+than silently climbing one self-quotation at a time.
+
+## Status
+
+**complete** — the shared regeneration ran, every dispatched lane's own stated expectation
+was checked against the live post-regen inventory and confirmed exactly (a genuinely
+boring, high-confidence outcome, not a shortcut), and the "four lanes" boilerplate mismatch is
+named rather than smoothed over.
