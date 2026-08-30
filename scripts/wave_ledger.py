@@ -50,6 +50,8 @@ KNOWN_WAVES = {
                               "to salvage/wave14-lane1"),
     "wf_894155bf-d58": ("15", "wave 14 relaunched clean for live ledger visibility; lane 1 "
                               "resumes from salvage/wave14-lane1, which supersedes the wave-13 one"),
+    "wf_d6622487-007": ("16", "same three lanes; adds the no-relabel rule after wave 15 reported "
+                              "a C->V move as a closure"),
 }
 
 
