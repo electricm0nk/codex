@@ -72,6 +72,22 @@ if "companion_table_shape_widening" in by_id:
     if stated != live:
         errors.append(f"companion_table_shape_widening: register says {stated}, live re-derivation says {live}")
 
+# `decisions.md §19`: the bucket-V oracle-disposition capability's population must match a
+# fresh, independent re-derivation against docs/work-inventory.json's live `status`/`reason`
+# fields, same discipline as the two bucket-A capabilities above.
+if "oracle_probe_surface_for_no_table_kinds" in by_id:
+    live_no_probe_surface = len([
+        u for u in units
+        if u.get("status") == "oracle-unverifiable"
+        and "AT-33-E1-003 probe-surface census" in (u.get("reason") or "")
+    ])
+    stated = by_id["oracle_probe_surface_for_no_table_kinds"]["population"]
+    if stated != live_no_probe_surface:
+        errors.append(
+            f"oracle_probe_surface_for_no_table_kinds: register says {stated}, live "
+            f"re-derivation says {live_no_probe_surface}"
+        )
+
 # Independent re-derivation of the X-bucket capabilities.
 pres = ca.partition(units)
 if pres["unclassified_ids"] or pres["overlap_ids"]:

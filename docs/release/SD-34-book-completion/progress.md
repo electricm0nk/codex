@@ -964,6 +964,67 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-005 (bucket-v-apply) — `decisions.md §19` wired into the classifier
+
+**Why:** the prior bucket-v-consolidation cycle changed no engine status — it only wrote
+`bucket-v-consolidated.oracle-results.json` (2,712 of `core_rulebook`'s 2,793 bucket-V units
+dispositioned, 385 `agree` / 2,327 `unverifiable`, 81 named remainder) and said plainly its own
+kanban row's `V` count would stay 2,793 "until a later status-promotion pass consumes this
+ledger." This cycle is that pass.
+
+**What changed:** `v06_work_inventory.rs` gained `apply_bucket_v_oracle_disposition_stamps`, a
+new rung run right after `apply_done_rung_stamps`, keyed strictly on the consolidated ledger's
+own per-unit `verdict` (never a shape predicate or a name list). Two new statuses,
+`oracle-agree`/`oracle-unverifiable`, both mapped to `completion_atlas.py`'s `DONE` bucket
+(`decisions.md §19` extending `§17`'s disposition principle from bucket `U` to bucket `V`). A
+`disagree` verdict is never dispositioned by construction — proven by a dedicated test; there
+are zero `disagree` rows in the committed ledger today.
+
+**Three-pass regen** (`corpus_literal_sweep` → `derived_evaluator_fixture_check` →
+`v06_work_inventory`, both report env vars set, no `--allow-stamp-loss`):
+`corpus_literal_sweep` reported `clean:true, records_examined:48708` (no corpus records touched
+this cycle, so no before/after delta to report — `decisions.md §12` L8 does not apply here).
+`derived_evaluator_fixture_check`: `1839 cleared over 2580 fixture rows; 0 failed`.
+`v06_work_inventory` wrote `docs/work-inventory.json` cleanly — the stamp-loss guard's own
+notion of "stamped" was widened to include the two new statuses precisely so a
+`literal-verified/fixture-verified → oracle-agree/oracle-unverifiable` promotion is never
+misread as a loss.
+
+**Whole-corpus before/after diff by unit id:** 49,438 before, 49,438 after, 0 added/removed,
+**2,712 changed, all in `core_rulebook`, 0 in any other book.** Bucket transition: `V → DONE`:
+2,712 (nothing else moved). `core_rulebook` V: 2,793 → 81; DONE: 1,503 → 4,215. Corpus-wide V:
+9,558 → 6,846; DONE: 14,741 → 17,453. The 81 remaining `core_rulebook` V units are SET-equal
+to `bucket-v-remainder.json`'s own 81 named ids (verified, not merely counted).
+
+**A citation regression, caught and fixed in the same cycle, same shape as `AT-34-E1-002`
+condition 6's first live catch (Cycle 1's own progress-log entry above):** this cycle's own
+~230-line insertion in `v06_work_inventory.rs` shifted all ten of `completion_atlas.py`'s
+`BUCKET_DEFINITIONS` `file:line` citations. `--check` caught all 10 (`citation_failures=10`);
+each was re-derived against the live file and corrected in this same cycle
+(`citation_failures=0` after).
+
+**Capability register:** `no_probe_surface`'s 130 units (the weaker of the two dispositions —
+"the instrument was never built", not "the oracle cannot express it") were carried into
+`artifacts/epic-5-forward-plan/capability-register.json` as a new named capability,
+`oracle_probe_surface_for_no_table_kinds` (130 of 2,793: `ability` 90, `template` 36,
+`companion` 4), rather than left a closed question. 10 → 11 capabilities;
+`verify_capability_register.py` still passes, `built_by_sd34: false` on every row.
+
+**Test scope:** 5 new unit tests (the new rung) + 1 widened pre-existing test (the stamp-loss
+guard's "stamped" statuses, 2 → 4) — 14/14 green in `v06_work_inventory.rs`'s stamp/rung test
+modules. `sd13_*`/`sd25_*` gate run together, 184 targets (175 + 9), not a scoped subset:
+2,000 passed, 0 failed. `cargo test --locked --no-run` exit 0 (full workspace); same, exit 0,
+in `apps/desktop/src-tauri` (separate cargo workspace, tested explicitly). Denominator gate
+against this package: `files_checked=15 violations=6`, unchanged from the pre-cycle baseline
+(all 6 the pre-existing `FRT_HVY` corpus-prose quote).
+
+**Movement (`decisions.md §9`):** closure 0, reclassification 2,712 (a V→DONE move under a
+disposition ruling is not the same as engineering a record to completion — none of these 2,712
+values were newly computed or newly verified by this cycle), reachability 0 (established by the
+prior consolidation cycle, not this one), instrument-correction 0.
+
+Receipt: `artifacts/epic-3-core-rulebook/bucket-v/AT-34-E3-005_bucket_v_apply_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-001 wave-9 shared regeneration — `docs/work-inventory.json`, paid once for four lanes
 
 **Why:** gate-widening, owner-matched, with-magnitude, and option-pool all landed engine

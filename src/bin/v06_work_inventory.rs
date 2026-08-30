@@ -8399,6 +8399,36 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
          missing or ambiguous -- an honest unmeasurable beats a confident wrong entry, and is \
          never a stand-in for work not yet attempted.",
     ),
+    (
+        // `decisions.md §19`, extending `§17`'s disposition principle from
+        // bucket U to bucket V: a real oracle round-trip that MATCHED. This
+        // is the strongest of the two oracle dispositions and strictly
+        // supersedes `literal-verified`/`fixture-verified` for the unit it
+        // covers -- the proxy verification those statuses record has now
+        // been confirmed against the real PCGen oracle, not merely against
+        // a static corpus byte-compare or a pinned fixture.
+        "oracle-agree",
+        "A `literal-verified`/`fixture-verified` unit whose id carries a real `agree` verdict in \
+         AT-34-E3-005's consolidated bucket-V oracle ledger (`docs/release/SD-34-book-completion/\
+         artifacts/epic-3-core-rulebook/bucket-v/bucket-v-consolidated.oracle-results.json`) -- a \
+         genuine PCGen oracle round-trip, this run's or a reused, freshness-confirmed prior one, \
+         matched the engine's own computed value exactly.",
+    ),
+    (
+        // Same ruling, the other disposition: a real, NAMED reason why no
+        // oracle verdict can be reached at all. `decisions.md §19`: "a unit
+        // carrying a real, named reason why no verdict can be reached is
+        // dispositioned, not outstanding." Never assigned from a shape
+        // predicate or a name list -- only from the ledger's own per-unit
+        // `verdict`/`reason` fields.
+        "oracle-unverifiable",
+        "A `literal-verified`/`fixture-verified` unit whose id carries a real `unverifiable` \
+         verdict in AT-34-E3-005's consolidated bucket-V oracle ledger. `reason` carries that \
+         ledger row's own reason text VERBATIM (e.g. `no_bonus_chain`, \
+         `oracle_export_no_spellname_line`, or AT-33-E1-003's `no_probe_surface` census finding) \
+         -- never re-narrated. A `disagree` verdict is NEVER mapped here or to `oracle-agree`; it \
+         leaves the unit's status untouched so it stays outstanding in bucket V.",
+    ),
 ];
 
 /// One unit's resolved status.
@@ -11998,14 +12028,243 @@ mod apply_done_rung_stamps_tests {
     }
 }
 
-/// The set of unit `id`s carrying a done-rung stamp (`literal-verified` or
-/// `fixture-verified`) in a `work-inventory.json` document. Shared by the
-/// regenerator's own stamp-loss guard (see [`stamp_loss`]) and its tests, so
-/// the guard's notion of "stamped" can never drift from what it protects.
-/// Returns an empty set on any parse failure -- an unreadable document proves
-/// nothing about what it used to carry, and the guard below treats an empty
-/// "previously stamped" set as "nothing to lose", never as an error, so a
-/// malformed existing file cannot itself block a regeneration.
+/// `decisions.md §19`'s consolidated bucket-V oracle-clearing ledger for
+/// `core_rulebook` (`AT-34-E3-005`, `docs/release/SD-34-book-completion/
+/// artifacts/epic-3-core-rulebook/bucket-v/bucket-v-consolidated.oracle-
+/// results.json`): `{"results": [{"unit_id", "verdict", "reason"?, ...}]}`.
+/// Returns an empty map on any read/parse failure -- a missing or
+/// unreadable ledger must never be misread as evidence, same discipline as
+/// `load_sweep_verified`/`load_derived_fixture_verified`. Keyed on
+/// `unit_id` directly: every id in this file already carries its own
+/// `<book>:<kind>:<key>` identity, so no book/file/line reconstruction is
+/// needed the way the sweep's triples require.
+const BUCKET_V_ORACLE_RESULTS_RELATIVE_PATH: &str = "docs/release/SD-34-book-completion/artifacts/\
+    epic-3-core-rulebook/bucket-v/bucket-v-consolidated.oracle-results.json";
+
+fn load_bucket_v_oracle_dispositions(repo_root: &Path) -> BTreeMap<String, (String, Option<String>)> {
+    let path = repo_root.join(BUCKET_V_ORACLE_RESULTS_RELATIVE_PATH);
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        return BTreeMap::new();
+    };
+    let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&text) else {
+        return BTreeMap::new();
+    };
+    let mut out = BTreeMap::new();
+    for row in parsed["results"].as_array().into_iter().flatten() {
+        let (Some(unit_id), Some(verdict)) = (row["unit_id"].as_str(), row["verdict"].as_str())
+        else {
+            continue;
+        };
+        let reason = row["reason"].as_str().map(|s| s.to_string());
+        out.insert(unit_id.to_string(), (verdict.to_string(), reason));
+    }
+    out
+}
+
+/// `decisions.md §19`: applies AT-34-E3-005's consolidated bucket-V oracle
+/// verdicts, per unit, to the units that ledger actually covers. This is
+/// the wiring the ruling requires -- the consolidation lane changed no
+/// engine status and no `docs/work-inventory.json` row; this function is
+/// what makes those dispositions visible to `scripts/completion_atlas.py`.
+///
+/// Keys **only** on the consolidated ledger's own per-unit `verdict` --
+/// never on a shape predicate or a name list (the exact hazard this
+/// bundle already caught once, pre-commit, when a shape-only gate promoted
+/// 188 unrelated records). A unit currently NOT in bucket V (its status is
+/// neither `literal-verified` nor `fixture-verified`) is left untouched
+/// even if its id happens to appear in the ledger -- this rung only ever
+/// narrows bucket V, it never reaches into any other bucket. A bucket-V
+/// unit whose id is absent from the ledger (the 81-unit remainder,
+/// `bucket-v-remainder.json`) is also left untouched, so it stays in `V`.
+///
+/// Three real verdicts, three dispositions:
+/// - `"agree"` -- a real oracle round-trip matched. Status becomes
+///   `oracle-agree`; nothing more to explain, so `reason` stays `None`.
+/// - `"unverifiable"` -- SD-33's own named reason (or AT-33-E1-003's
+///   `no_probe_surface` census finding) says why no verdict can be
+///   reached. Status becomes `oracle-unverifiable`; `reason` carries the
+///   ledger's own reason text VERBATIM, never re-narrated (same discipline
+///   `deferred-with-reason` already holds itself to).
+/// - anything else (in particular `"disagree"`) -- **never dispositioned**
+///   (decisions.md §19's hard constraint). The unit's status is left
+///   exactly as it was, so it stays outstanding in bucket `V` and a real
+///   defect stays visible rather than being silently closed. There are
+///   zero `disagree` verdicts in the committed ledger today; this arm
+///   exists so a future regen that DOES see one reopens the unit rather
+///   than closing it by omission.
+fn apply_bucket_v_oracle_disposition_stamps(
+    inventory: &mut [InventoryUnit],
+    oracle_dispositions: &BTreeMap<String, (String, Option<String>)>,
+) {
+    for item in inventory.iter_mut() {
+        if !matches!(item.verdict.status, "literal-verified" | "fixture-verified") {
+            continue;
+        }
+        let Some((verdict, reason)) = oracle_dispositions.get(&item.id) else {
+            continue;
+        };
+        match verdict.as_str() {
+            "agree" => {
+                item.verdict.status = "oracle-agree";
+                item.verdict.evidence =
+                    "oracle_verdict_agree_bucket_v_consolidated_at34_e3_005".to_string();
+                item.verdict.reason = None;
+            }
+            "unverifiable" => {
+                item.verdict.status = "oracle-unverifiable";
+                item.verdict.evidence =
+                    "oracle_verdict_unverifiable_bucket_v_consolidated_at34_e3_005".to_string();
+                item.verdict.reason = reason.clone();
+            }
+            _ => {
+                // "disagree" (or any other/unknown verdict string): never
+                // dispositioned. Leave status/evidence/reason exactly as
+                // they were.
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod apply_bucket_v_oracle_disposition_stamps_tests {
+    use super::*;
+
+    fn v_unit(id: &str, status: &'static str) -> InventoryUnit {
+        InventoryUnit {
+            id: id.to_string(),
+            unit: CorpusUnit {
+                book: "core_rulebook".to_string(),
+                source_book: "core_rulebook".to_string(),
+                kind: Kind::Feat,
+                key: id.to_string(),
+                name: id.to_string(),
+                origin: Origin::Declared,
+                provenance: Provenance { file: "test.lst".to_string(), line: 1 },
+                magnitude_token_count: 0,
+                type_facet: None,
+                visible: true,
+            },
+            verdict: Verdict { status, evidence: "test".to_string(), reason: None, engine_book: None },
+            wiring_class: wiring_class::WiringClass::Static,
+            wiring_class_reason: "test".to_string(),
+            wiring_class_signals: BTreeSet::new(),
+        }
+    }
+
+    /// The core positive case: a bucket-V unit (`literal-verified`) whose id
+    /// carries a real `agree` verdict in the consolidated ledger is
+    /// dispositioned to `oracle-agree` and leaves bucket V.
+    #[test]
+    fn agree_verdict_moves_status_to_oracle_agree() {
+        let mut inventory = vec![v_unit("core_rulebook:feat:power_attack", "literal-verified")];
+        let dispositions: BTreeMap<String, (String, Option<String>)> =
+            [("core_rulebook:feat:power_attack".to_string(), ("agree".to_string(), None))]
+                .into_iter()
+                .collect();
+
+        apply_bucket_v_oracle_disposition_stamps(&mut inventory, &dispositions);
+
+        assert_eq!(inventory[0].verdict.status, "oracle-agree");
+        assert_eq!(inventory[0].verdict.reason, None);
+    }
+
+    /// A named, real reason a verdict cannot be reached is a disposition,
+    /// not a gap -- `decisions.md §19`, extending `§17`. The ledger's own
+    /// reason text is carried VERBATIM into `Verdict::reason`.
+    #[test]
+    fn unverifiable_verdict_moves_status_to_oracle_unverifiable_and_carries_reason_verbatim() {
+        let mut inventory = vec![v_unit("core_rulebook:ability:some_ability", "fixture-verified")];
+        let reason_text = "no_probe_surface: kind 'ability' carries no engine table".to_string();
+        let dispositions: BTreeMap<String, (String, Option<String>)> = [(
+            "core_rulebook:ability:some_ability".to_string(),
+            ("unverifiable".to_string(), Some(reason_text.clone())),
+        )]
+        .into_iter()
+        .collect();
+
+        apply_bucket_v_oracle_disposition_stamps(&mut inventory, &dispositions);
+
+        assert_eq!(inventory[0].verdict.status, "oracle-unverifiable");
+        assert_eq!(inventory[0].verdict.reason, Some(reason_text));
+    }
+
+    /// Hard constraint, `decisions.md §19`: "A `disagree` is NEVER
+    /// dispositioned." There are zero `disagree` verdicts in the committed
+    /// ledger today, but a future regen that sees one must leave the unit
+    /// outstanding in bucket V, not close it.
+    #[test]
+    fn disagree_verdict_is_never_dispositioned_and_stays_outstanding() {
+        let mut inventory = vec![v_unit("core_rulebook:equipment:some_item", "literal-verified")];
+        let dispositions: BTreeMap<String, (String, Option<String>)> = [(
+            "core_rulebook:equipment:some_item".to_string(),
+            ("disagree".to_string(), Some("computed value does not match the oracle export".to_string())),
+        )]
+        .into_iter()
+        .collect();
+
+        apply_bucket_v_oracle_disposition_stamps(&mut inventory, &dispositions);
+
+        assert_eq!(
+            inventory[0].verdict.status, "literal-verified",
+            "a disagree verdict must never move a unit out of bucket V"
+        );
+        assert_eq!(inventory[0].verdict.reason, None, "a disagree must not fabricate a reason either");
+    }
+
+    /// The 81-unit remainder (`bucket-v-remainder.json`): a bucket-V unit
+    /// whose id is simply absent from the ledger stays exactly where it
+    /// was -- this rung must never guess a disposition for a unit the
+    /// ledger does not name.
+    #[test]
+    fn unit_absent_from_ledger_stays_unchanged() {
+        let mut inventory = vec![v_unit("core_rulebook:class_feature:not_yet_measured", "fixture-verified")];
+        let dispositions: BTreeMap<String, (String, Option<String>)> = BTreeMap::new();
+
+        apply_bucket_v_oracle_disposition_stamps(&mut inventory, &dispositions);
+
+        assert_eq!(inventory[0].verdict.status, "fixture-verified");
+    }
+
+    /// This rung only ever narrows bucket V. A unit whose status is
+    /// something else entirely (e.g. `grounded`) must be left untouched
+    /// even if its id happens to appear in the ledger -- the gate is
+    /// `item.verdict.status`, not id membership alone.
+    #[test]
+    fn unit_outside_bucket_v_is_never_touched_even_if_its_id_is_in_the_ledger() {
+        let mut inventory = vec![v_unit("core_rulebook:feat:already_done", "grounded")];
+        let dispositions: BTreeMap<String, (String, Option<String>)> =
+            [("core_rulebook:feat:already_done".to_string(), ("agree".to_string(), None))]
+                .into_iter()
+                .collect();
+
+        apply_bucket_v_oracle_disposition_stamps(&mut inventory, &dispositions);
+
+        assert_eq!(inventory[0].verdict.status, "grounded");
+    }
+}
+
+/// Every status this generator treats as a "done-rung stamp" for the
+/// stamp-loss guard's purposes: `literal-verified`/`fixture-verified` (the
+/// static/derived rungs, operator directive 2026-08-13) and, since
+/// `decisions.md §19`, `oracle-agree`/`oracle-unverifiable` (the bucket-V
+/// oracle disposition rung, `apply_bucket_v_oracle_disposition_stamps`).
+/// The oracle rung stamps units OVER an existing `literal-verified`/
+/// `fixture-verified` stamp -- a plain status-string diff would read that
+/// promotion as a loss of the first pair, exactly the silent hazard this
+/// guard exists to catch, so both pairs share one shared, single notion of
+/// "stamped" rather than drifting into two separate lists.
+const DONE_RUNG_STAMP_STATUSES: &[&str] =
+    &["literal-verified", "fixture-verified", "oracle-agree", "oracle-unverifiable"];
+
+/// The set of unit `id`s carrying a done-rung stamp (any status in
+/// [`DONE_RUNG_STAMP_STATUSES`]) in a `work-inventory.json` document. Shared
+/// by the regenerator's own stamp-loss guard (see [`stamp_loss`]) and its
+/// tests, so the guard's notion of "stamped" can never drift from what it
+/// protects. Returns an empty set on any parse failure -- an unreadable
+/// document proves nothing about what it used to carry, and the guard below
+/// treats an empty "previously stamped" set as "nothing to lose", never as
+/// an error, so a malformed existing file cannot itself block a
+/// regeneration.
 fn stamped_ids(inventory_json: &str) -> BTreeSet<String> {
     let Ok(parsed) = serde_json::from_str::<serde_json::Value>(inventory_json) else {
         return BTreeSet::new();
@@ -12014,7 +12273,7 @@ fn stamped_ids(inventory_json: &str) -> BTreeSet<String> {
         .as_array()
         .into_iter()
         .flatten()
-        .filter(|u| matches!(u["status"].as_str(), Some("literal-verified") | Some("fixture-verified")))
+        .filter(|u| u["status"].as_str().is_some_and(|s| DONE_RUNG_STAMP_STATUSES.contains(&s)))
         .filter_map(|u| u["id"].as_str().map(|s| s.to_string()))
         .collect()
 }
@@ -13847,6 +14106,18 @@ fn main() {
     // idempotence contract before it ever reached the dashboard).
     apply_done_rung_stamps(&mut inventory, &sweep_verified, &derived_fixture_verified);
 
+    // `decisions.md §19`: AT-34-E3-005's consolidated bucket-V oracle
+    // ledger, wired in so `scripts/completion_atlas.py`'s bucket V actually
+    // reflects the disposition the operator ruled on -- a prior lane
+    // consolidated the results into that ledger but changed no engine
+    // status. Applied after the static/derived done rungs (a unit must
+    // already be `literal-verified`/`fixture-verified` -- i.e. in bucket V
+    // -- before this rung can move it) and before aggregation, for the same
+    // reason as the comment above: every rollup must agree with the final
+    // per-unit `status`.
+    let bucket_v_oracle_dispositions = load_bucket_v_oracle_dispositions(&repo_root);
+    apply_bucket_v_oracle_disposition_stamps(&mut inventory, &bucket_v_oracle_dispositions);
+
     // --- aggregate ---------------------------------------------------------
     let mut by_kind: BTreeMap<&str, usize> = BTreeMap::new();
     let mut by_status: BTreeMap<&str, usize> = BTreeMap::new();
@@ -14169,7 +14440,7 @@ fn main() {
     if let Ok(existing) = std::fs::read_to_string(&output_path) {
         let incoming_stamped: BTreeSet<String> = inventory
             .iter()
-            .filter(|item| matches!(item.verdict.status, "literal-verified" | "fixture-verified"))
+            .filter(|item| DONE_RUNG_STAMP_STATUSES.contains(&item.verdict.status))
             .map(|item| item.id.clone())
             .collect();
         let lost = stamp_loss(&existing, &incoming_stamped);
@@ -21599,18 +21870,30 @@ mod stamp_loss_guard_tests {
         format!("{{\"units\": [{}]}}", rows.join(", "))
     }
 
-    /// `stamped_ids` picks out exactly the two done-rung statuses, ignoring
+    /// `stamped_ids` picks out exactly the four done-rung statuses
+    /// (`decisions.md §19` added `oracle-agree`/`oracle-unverifiable` to
+    /// the original `literal-verified`/`fixture-verified` pair), ignoring
     /// every ordinary status a unit might otherwise carry.
     #[test]
-    fn stamped_ids_finds_only_the_two_done_rung_statuses() {
+    fn stamped_ids_finds_only_the_done_rung_statuses() {
         let doc = inventory_json(&[
             ("a", "literal-verified"),
             ("b", "fixture-verified"),
             ("c", "grounded"),
             ("d", "engine-does-not-hold"),
+            ("e", "oracle-agree"),
+            ("f", "oracle-unverifiable"),
         ]);
         let ids = stamped_ids(&doc);
-        assert_eq!(ids, BTreeSet::from(["a".to_string(), "b".to_string()]));
+        assert_eq!(
+            ids,
+            BTreeSet::from([
+                "a".to_string(),
+                "b".to_string(),
+                "e".to_string(),
+                "f".to_string(),
+            ])
+        );
     }
 
     /// The defect this guard exists to catch: a plain regen (no sweep/fixture

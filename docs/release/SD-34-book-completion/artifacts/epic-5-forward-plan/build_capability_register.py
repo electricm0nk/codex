@@ -304,6 +304,43 @@ capabilities.append({
     "built_by_sd34": False,
 })
 
+# decisions.md §19 (operator ruling, 2026-08-29): §17's disposition principle extended to
+# bucket V. AT-34-E3-005's consolidated bucket-V oracle ledger dispositioned 2,712 of
+# core_rulebook's 2,793 bucket-V units; 130 of those carry the WEAKEST of the two dispositions
+# ("unverifiable" -- AT-33-E1-003's own probe-surface census already proved `ability`/
+# `template`/`companion` carry no engine compute table at all, so there is nothing for the
+# oracle harness to compare against). §19 requires this be carried here as a named capability
+# ("build those probes") rather than a closed question -- it is dispositioned, but it is not the
+# same as verified-correct.
+bucket_v_no_probe_surface_units = [
+    u for u in units
+    if u.get("status") == "oracle-unverifiable"
+    and "AT-33-E1-003 probe-surface census" in (u.get("reason") or "")
+]
+bucket_v_no_probe_surface_by_kind = collections.Counter(u["kind"] for u in bucket_v_no_probe_surface_units)
+bucket_v_no_probe_surface_by_book = collections.Counter(u["book"] for u in bucket_v_no_probe_surface_units)
+
+capabilities.append({
+    "id": "oracle_probe_surface_for_no_table_kinds",
+    "what": "decisions.md §19: bucket-V units dispositioned this bundle as `unverifiable` "
+            "because AT-33-E1-003's probe-surface census already proved these three kinds "
+            "(`ability`, `template`, `companion`) carry no engine compute table at all -- there "
+            "is no formula-evaluator probe on the engine side to compare against any PCGen "
+            "oracle export, structurally, not from a harness timeout or gap. This is the "
+            "WEAKEST of the two oracle dispositions §19 makes (the ruling's own words): it says "
+            "the instrument was never built, not that the oracle cannot express the value. "
+            "Building a probe for these three kinds is a named forward capability, not a "
+            "closed question.",
+    "buckets_unblocked": ["V"],
+    "books_unblocked": sorted(bucket_v_no_probe_surface_by_book.keys()),
+    "population": len(bucket_v_no_probe_surface_units),
+    "population_by_kind": dict(sorted(bucket_v_no_probe_surface_by_kind.items())),
+    "population_source": "live",
+    "re_derive_command": "status=='oracle-unverifiable' AND reason contains 'AT-33-E1-003 probe-surface census', over docs/work-inventory.json",
+    "cited_from": "artifacts/epic-3-core-rulebook/bucket-v/AT-34-E3-005_bucket_v_consolidation_cycle_receipt.md; decisions.md §19",
+    "built_by_sd34": False,
+})
+
 sized = [c for c in capabilities if isinstance(c.get("population"), int)]
 unsized = [c for c in capabilities if c.get("population") is None]
 

@@ -1,6 +1,6 @@
 {
   "criterion": "AT-34-E5-002",
-  "generated_at_head": "0be7d54a8d2c6c0b879744a2ed3325acbba1f594",
+  "generated_at_head": "5855c42bf345f3398338d3baf538b0afdcb5e180",
   "re_derive_command": "python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_capability_register.py",
   "scope_note": "Evidence bar (epic-breakdown.md): 'Beyond the power table: anything Epics 3 or 4 proved is required and does not exist.' Ordinary bucket-B content-placement work (place a record in an EXISTING table) is already named and priced generically by AT-34-E5-001's forward-plan.json and is NOT repeated here -- this register is capabilities: new engine machinery, not yet built, that a bucket's ordinary clearing mechanism cannot supply.",
   "capabilities": [
@@ -104,12 +104,12 @@
         "ultimate_combat",
         "ultimate_magic"
       ],
-      "population": 32,
+      "population": 31,
       "population_by_book": {
         "advanced_class_guide": 16,
         "advanced_players_guide": 2,
         "advanced_race_guide": 1,
-        "core_rulebook": 3,
+        "core_rulebook": 2,
         "occult_adventures": 2,
         "pathfinder_unchained": 6,
         "ultimate_combat": 1,
@@ -117,15 +117,15 @@
       },
       "sub_mechanisms": [
         {
-          "name": "bardic_performance_execution",
-          "count": 4
-        },
-        {
           "name": "bloodrager",
           "count": 3
         },
         {
           "name": "shaman",
+          "count": 3
+        },
+        {
+          "name": "bardic_performance_execution",
           "count": 3
         },
         {
@@ -267,26 +267,46 @@
       "population_source": "cited",
       "cited_from": "artifacts/epic-3-core-rulebook/atlas-defects.md #2",
       "built_by_sd34": false
+    },
+    {
+      "id": "oracle_probe_surface_for_no_table_kinds",
+      "what": "decisions.md \u00a719: bucket-V units dispositioned this bundle as `unverifiable` because AT-33-E1-003's probe-surface census already proved these three kinds (`ability`, `template`, `companion`) carry no engine compute table at all -- there is no formula-evaluator probe on the engine side to compare against any PCGen oracle export, structurally, not from a harness timeout or gap. This is the WEAKEST of the two oracle dispositions \u00a719 makes (the ruling's own words): it says the instrument was never built, not that the oracle cannot express the value. Building a probe for these three kinds is a named forward capability, not a closed question.",
+      "buckets_unblocked": [
+        "V"
+      ],
+      "books_unblocked": [
+        "core_rulebook"
+      ],
+      "population": 130,
+      "population_by_kind": {
+        "ability": 90,
+        "companion": 4,
+        "template": 36
+      },
+      "population_source": "live",
+      "re_derive_command": "status=='oracle-unverifiable' AND reason contains 'AT-33-E1-003 probe-surface census', over docs/work-inventory.json",
+      "cited_from": "artifacts/epic-3-core-rulebook/bucket-v/AT-34-E3-005_bucket_v_consolidation_cycle_receipt.md; decisions.md \u00a719",
+      "built_by_sd34": false
     }
   ],
   "summary": {
-    "capability_count": 10,
-    "sized_capability_count": 8,
+    "capability_count": 11,
+    "sized_capability_count": 9,
     "unsized_capability_count": 2,
-    "total_population_named_sized_only": 640,
+    "total_population_named_sized_only": 769,
     "built_by_sd34_count": 0,
-    "not_built_count": 10,
-    "note": "10 of 10 capabilities named here are NOT built by SD-34 -- this register's whole purpose is naming what still must be built, not building it (epic-5-forward-plan's file-touch set is read-only against the rest of the repo)."
+    "not_built_count": 11,
+    "note": "11 of 11 capabilities named here are NOT built by SD-34 -- this register's whole purpose is naming what still must be built, not building it (epic-5-forward-plan's file-touch set is read-only against the rest of the repo)."
   },
   "x_bucket_reconciliation": {
-    "live_bucket_X_population": 171,
+    "live_bucket_X_population": 170,
     "per_character_choice_filter": 113,
     "companion_mount_advancement_table": 9,
-    "class_feature_deep_subsystem_modelling": 32,
+    "class_feature_deep_subsystem_modelling": 31,
     "no_capability_needed_dispatch_only_row": 12,
     "no_capability_needed_vacuous_placeholder": 3,
     "marker_stripping_x_units": 2,
-    "sum_check": 171,
+    "sum_check": 170,
     "note": "Every live bucket-X unit is accounted for by exactly one row above -- the two 'no_capability_needed' rows are atlas-defects.md's own dispatch-only-row and vacuous-placeholder shapes, already correctly resting in X with no further engine capability required (named here so the reconciliation is total, not because they belong in the capability list)."
   }
 }
