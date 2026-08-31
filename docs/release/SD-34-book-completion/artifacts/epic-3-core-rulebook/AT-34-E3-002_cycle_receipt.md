@@ -1,255 +1,263 @@
-# Cycle 5 — Epic 3 (Core Rulebook to zero) / AT-34-E3-002 (bucket C, "held and computed, never surfaced")
+# Cycle 6 — Epic 3 (Core Rulebook to zero) / AT-34-E3-002 (bucket C, "held and computed, never surfaced")
 
-- **Commit SHA:** this cycle's own commit, on `tranche/14` tip `f918018170` (wave 18) at cycle
-  start, no rebase needed.
-- **Files touched:** `src/bin/v06_work_inventory.rs` (one new `EngineFacts` field
-  `bard_versatile_performance_generic_member_wired: BTreeSet<String>`, one new const
-  `CORE_RULEBOOK_BARD_VERSATILE_PERFORMANCE_MEMBERS` (9 real Perform types, each mapped to its
-  real engine selection slug and detail-name substring), one new probe
-  `probe_bard_versatile_performance_generic_member_wiring`, one new `classify()` rung
-  book-scoped to `core_rulebook`, 8 new tests (5 probe + 3 classify(), RED confirmed then
-  GREEN), `scripts/completion_atlas.py` (10 citation line pins re-derived after this cycle's
-  own insertion hunks shifted every one — exact-line-content grep against `git show HEAD:...`,
-  never guessed), this receipt, `docs/release/SD-34-book-completion/progress.md`,
+- **Commit SHA:** `9519106f17` (this cycle's own `classify()` fix + 4 tests, a 20-minute
+  checkpoint commit made mid-cycle per the dispatch's clock discipline, pushed to `tranche/14`
+  before this cycle's own live regen ran) plus this cycle's own follow-up commit (this receipt,
+  `progress.md`, `kanban.md`, and `scripts/completion_atlas.py`'s citation re-pins) — both on
+  `tranche/14` tip `07678e0601` (wave 19) at cycle start, no rebase needed for either.
+- **Files touched:** `src/bin/v06_work_inventory.rs` (one new `classify()` rung for the bare
+  `"<Domain> Domain"` HEADER shape — 73 lines, zero new `EngineFacts` fields, zero new probes,
+  reusing two already-shipped fact sets; plus 4 new tests, RED confirmed then GREEN),
+  `scripts/completion_atlas.py` (4 citation line pins re-derived after this cycle's own
+  73-line insertion shifted every one below it — exact-line-content grep against
+  `git show HEAD~1:...`, never guessed), this receipt,
+  `docs/release/SD-34-book-completion/progress.md`,
   `docs/release/SD-34-book-completion/kanban.md`. **`docs/work-inventory.json` and
   `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` are
   deliberately NOT committed this cycle** — this dispatch's own file-ownership rule assigns
   their regeneration to the wave's single shared regeneration cycle. Every figure below comes
-  from a real, local, uncommitted regen run of this cycle's own committed source, restored
-  (`git restore`) before this commit.
-- **Identifier audit result:** OK_NO_BUNDLE_TAGS (`git diff --unified=0 HEAD -- src/bin/v06_work_inventory.rs
-  scripts/completion_atlas.py | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})'` —
-  zero matches, run against this cycle's own working-tree diff. Also re-run against the full
-  `merge-base(HEAD, origin/develop)...HEAD` range on the same two files per the dispatch's own
-  audit template — zero matches there too, across every prior cycle's own history on these
-  files).
-- **Wired-integration audit result:** OK_NO_TOKENS (same two diffs, same
-  `grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b'` — zero matches
-  on this cycle's own diff; the wide-range diff surfaces 14 pre-existing `placeholder`
-  mentions, all from prior cycles' own already-audited "%N-placeholder" / "vacuous-placeholder"
-  corpus vocabulary — a real PF1 corpus concept, not a code stub, and none inside this cycle's
-  own hunks).
+  from a real, local, uncommitted, FULL three-stage regen (`corpus_literal_sweep` →
+  `derived_evaluator_fixture_check` → `v06_work_inventory`, `--allow-stamp-loss` never passed)
+  of this cycle's own committed source, restored (`git restore`) before this commit.
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS (`git diff --unified=0 -- src/bin/v06_work_inventory.rs
+  | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})'` — zero matches, run against this
+  cycle's own working-tree diff before the checkpoint commit. Also re-run against the full
+  `merge-base(HEAD, origin/develop)...HEAD` range on the same file per the dispatch's own audit
+  template — zero matches there too).
+- **Wired-integration audit result:** OK_NO_TOKENS (same diffs, same
+  `grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b'` — zero matches on
+  this cycle's own diff; the wide-range diff surfaces 16 pre-existing `placeholder` mentions,
+  all from prior cycles' own already-audited "%N-placeholder" / "vacuous-placeholder" corpus
+  vocabulary — a real PF1 corpus concept, not a code stub, and none inside this cycle's own
+  hunks).
 - **Acceptance criterion (verbatim, `epic-breakdown.md` §AT-34-E3-002):** "**370** units the
   engine holds and computes but never surfaces. **Evidence:** per unit, the explanation or
-  display path that now carries it. A unit the player still cannot see is not cleared,
-  whatever the engine holds." (370 is `epic-breakdown.md`'s own stale figure, already retired
-  by wave 16/17 — re-derived fresh at this cycle's start, `core_rulebook` bucket C was **296**
-  committed / **242** true-reachable once cycle 4's own already-shipped, not-yet-regenerated
-  source is applied, `decisions.md §12` L2.)
+  display path that now carries it. A unit the player still cannot see is not cleared, whatever
+  the engine holds." (370 is stale, already retired by wave 16/17; re-derived fresh at this
+  cycle's start, `core_rulebook` bucket C was **233**, matching this dispatch's own brief
+  exactly — the committed inventory already carried cycles 4 and 5's own folded-in fixes via
+  the wave-18 shared regen, so no unregenerated-source gap existed at this cycle's start,
+  unlike cycle 5's.)
 - **Status:** partial
 
 ## Population, re-derived (not quoted)
 
 At this cycle's start, the **committed** `docs/work-inventory.json` (last regenerated at
-wave-16, `dda3438857`) reads `core_rulebook` bucket C = **296**
-(`python3 scripts/completion_atlas.py --book core_rulebook --check`). The prior
-`AT-34-E3-002` cycle (cycle 4, commit `d97420888e`, Sorcerer Bloodline generic-pool-group
-reuse) landed its own source fix on `tranche/14` but — per this dispatch's own
-file-ownership rule — never committed the regenerated inventory, so the committed figure is
-stale by that cycle's own **54** closures. A live, local, uncommitted regen against this
-cycle's *starting* source (before this cycle's own edit) reproduces cycle 4's own reported
-**242** exactly, confirming its receipt's own claim rather than trusting it. **Not
-re-deriving the whole 242-unit remainder from scratch** — this cycle's own whole-inventory
-before/after diff (below) independently re-confirms all ten of cycle 4's named sub-causes are
-UNCHANGED except the one this cycle targets, so restating cycle 4's own figures for the other
-nine is evidence-backed by this cycle's own proof, not carried forward on trust.
+wave-18, `accb12b14d`) reads `core_rulebook` bucket C = **233**
+(`python3 scripts/completion_atlas.py --book core_rulebook --check`) — matching cycle 5's own
+receipt exactly, confirmed live rather than trusted on citation.
 
-This cycle targeted cycle 4's own named sub-cause `versatile_performance_not_computed`
-(**9** units), re-confirmed by direct corpus read before building anything: the real PF1 Core
-Rulebook Bard class feature "Versatile Performance" grants three choice slots (levels 2/6/10)
-letting a Bard substitute a chosen Perform skill's bonus for two other named skills. The
-corpus carries one non-`~` header record (`"Bard ~ Versatile Performance"`, `visible: false`
-— **not** targeted this cycle, a different corpus shape, named in the remainder below) plus
-**9** real `"Versatile Performance ~ <Type>"` member records, one per PF1's own canonical
-Perform subtype (Act, Comedy, Dance, Keyboard Instruments, Oratory, Percussion Instruments,
-Sing, String Instruments, Wind Instruments) — confirmed by direct
-`docs/work-inventory.json` read, all 9 unique to `core_rulebook`, zero cross-book collisions.
+This cycle re-derived cycle 5's own remainder table fresh, by direct corpus read against
+`docs/work-inventory.json`: all 11 named sub-causes reproduce cycle 5's own stated populations
+exactly (23 + 42 + 41 + 36 + 31 + 21 + 13 + 10 + 10 + 0 + 6 = 233). Cycle 5's own next-cycle
+plan named `domain_power_display_record_not_wired` (41) as the next-cheapest CANDIDATE within
+this territory's own naming-only shape — this cycle confirmed that framing by direct corpus
+read before building anything, and found it decomposes into exactly three real,
+independently-attributable shapes (matching cycle 5's own receipt text verbatim):
 
-## Mechanism: a DIFFERENT pre-existing engine pass than cycles 3/4 reused, not a re-run of theirs
+- **33** bare `"<Domain> Domain"` HEADER records (e.g. `"Air Domain"`, `"Good Domain"` — the
+  domain SELECTION feature itself, `type_facet ClericClassFeatures.Domain.ClericDomain`,
+  confirmed by direct corpus read).
+- **7** `"Druid Domain ~ <X>"` records (the Druid Nature Bond domain sub-choice, `type_facet
+  DruidDomainSelection.SpecialQuality`).
+- **1** `"Nobility Domain ~ Inspiring Word"` record, `magnitude_token_count: 0`.
 
-`pilot_compute::mod.rs`'s Versatile Performance slot loop (SD13-E5, already shipped) is wired
-unconditionally for any Bard at level ≥2: it already emits a real
-`class_chassis.bard.versatile_performance_choice` recognition-record explanation whose own
-`detail` text names the specific selected Perform type verbatim (`"...selection names {name},
-whose verified associated skills are {pair}"`), gated at the level-2/6/10 slots. This is a
-DIFFERENT engine mechanism from the generic pool-group-selection pass
-(`push_generic_pool_group_selection_magnitude`) cycles 3 and 4 reused for Cleric Domain and
-Sorcerer Bloodline: its explanation `id` is FIXED per slot (not per-member — every one of the
-nine members produces the same `class_chassis.bard.versatile_performance_choice` id), so
-member identity can only be read from the `detail` text, never from `id` alone. The value is
-a genuine `+0` for every member — PF1's Versatile Performance is a skill-SUBSTITUTION rule,
-not an additive bonus, and the substitution engine itself (using the Perform bonus in place of
-the associated skills' bonuses) is a separate, larger burden this cycle does not build (the
-same "closes the naming gap only" disposition the acceptance criterion's own evidence bar
-requires — "the explanation ... path that now carries it", never a magnitude that was not
-actually computed).
+33 + 7 + 1 = 41, matching cycle 5's own figure exactly.
 
-`v06_work_inventory`'s `classify()` had never once asked this pass a question, for the same
-reason cycles 3/4's own receipts named: `canonical_seeds_for("bard")` seeds no Versatile
-Performance selection at all, so the canonical per-class sweep that fills
-`EngineFacts::explanation_ids` alone can never observe it.
+## Mechanism: the SAME paired display/chassis pattern the Favored Enemy/Favored Terrain checks
+## establish, spanning TWO already-wired sibling shapes
 
-**The fix**, a new probe + rung, NOT a reuse of the generic pool-group bridge (that bridge's
-own `generic_pool_group_selection_observed_keys` function parses a literal
-`` corpus key `<key>` `` marker `push_generic_pool_group_selection_magnitude`'s own format
-string writes — the Bard mechanism's `detail` text carries no such marker, so it cannot be
-reused as-is; a small, probe-local, single-purpose bridge was written instead):
+This cycle targets ONLY the 33 bare domain-header records. The 7 Druid sub-choices and the 1
+zero-token record have **no existing compute path at all** to reuse — genuine engine gaps, not
+naming-only fixes — confirmed unchanged by this cycle's own live regen and named in the
+remainder below rather than force-closed.
 
-1. `probe_bard_versatile_performance_generic_member_wiring` (new): selects each of the 9 real
-   Perform types in turn on a real Bard (level ≥2), over the same real
-   `compute_pilot_base_chassis` pipeline every other probe in this file uses, and credits a
-   corpus key ONLY when the resulting explanation's own `detail` text genuinely names that
-   exact type (`detail.contains("names {name},")`) — never a slug reconstruction.
-2. A genuine finding this cycle's own scan caught: THREE of the nine real corpus names
-   (`"Percussion Instruments"`, `"String Instruments"`, `"Wind Instruments"` — PF1's own
-   canonical Perform subtype names, matching the corpus verbatim) do NOT match the engine's
-   own shorter display name for the same type (`"Percussion"`, `"String"`, `"Wind"` —
-   `pilot_compute::mod.rs`'s own `BARD_VERSATILE_PERFORMANCE_TYPES` table, confirmed by
-   reading it directly, not assumed). Fixed with a probe-local mapping table
-   (`CORE_RULEBOOK_BARD_VERSATILE_PERFORMANCE_MEMBERS`, corpus name → engine selection slug →
-   engine detail-name substring) entirely inside `v06_work_inventory.rs` — `pilot_compute.rs`
-   itself was NOT touched, so this stays a probe-local correspondence, never a change to the
-   engine's own display strings (in territory: explanation-id/diagnostic-naming wiring only).
-3. One new `classify()` rung checking
-   `facts.bard_versatile_performance_generic_member_wired.contains(&unit.key)` —
-   **book-scoped to `core_rulebook`**, matching cycles 3/4's own precedent. A direct corpus
-   scan (this cycle's own) found ZERO cross-book collisions for these nine exact keys (unlike
-   cycle 4's three), but the guard costs nothing and is tested regardless
-   (`a_versatile_performance_key_in_a_different_book_is_not_credited`).
+**Why the header records are bucket C, not something else:** a bare `"<Domain> Domain"` record
+(e.g. `"Air Domain"`) carries no magnitude formula of its own — it represents choosing that
+domain, not the granted power. `group = unit.key.split(" ~ ").next()` for this key returns the
+WHOLE key (no `" ~ "` present), so it can never equal `"Domain Power"` or match any owner
+resolution path. The engine has, in fact, already computed a real explanation for the SAME
+domain's granted power — the gap is purely that `classify()` never asked the header record's
+own sibling group a question, the identical "gap" shape the Favored Enemy/Favored Terrain
+display checks close for Ranger.
+
+**The corpus carries the granted power under one of TWO different key shapes, confirmed by
+direct read, not assumed:**
+
+1. **Most domains:** `"<Domain> Domain ~ <Power>"` (e.g. `"Air Domain ~ Lightning Arc"`), the
+   SAME sibling shape cycle 3's `cleric_domain_generic_member_wired` already observes for real.
+   `group` for both the bare header AND its tilde'd sibling is identical (`"Air Domain"`), so a
+   simple prefix check (`facts.cleric_domain_generic_member_wired.iter()
+   .any(|k| k.starts_with(&format!("{} ~ ", unit.key)))`) reuses that fact set directly — no new
+   probe. **This path's own reach turned out wider than a naive JSON-status read suggested**:
+   the LIVE probe re-derives wiring by executing the real compute pipeline, so it credits a
+   sibling regardless of whether the corpus's currently-committed JSON shows that sibling as
+   `grounded` or already restamped to `literal-verified` (bucket V, `apply_done_rung_stamps`'s
+   static-wiring-class stamp) — a unit's OWN static/derived restamping never touches whether the
+   ENGINE computes it, only which bucket the atlas files it under. This path alone reaches 30 of
+   the 33 headers, including `Glory Domain` (whose own two `"Glory Domain ~ *"` siblings both
+   sit at `literal-verified`, not `grounded`, in the currently-committed JSON — still a real,
+   live-observed wiring, still credited).
+2. **Good, War (2 of 33):** the corpus carries NO `"<Domain> Domain ~ *"` record at all for
+   these two — zero `"Good Domain ~ *"` or `"War Domain ~ *"` unit exists, confirmed by direct
+   `docs/work-inventory.json` read. Their granted power is ingested ONLY as
+   `"Domain Power ~ <Power>"`, already grounded via `domain_power_effect_wired` (AT-34-E3-001's
+   own probe). This cycle derives the catalog's own `"domain:<slug>"` selection id losslessly
+   from the header's own name text (every real PF1 Core Rulebook domain name is a single word,
+   confirmed by reading all 33 header keys), looks it up in
+   `domain_power::domain_power_probe_catalog()` (a static lookup, no live compute of its own),
+   and checks `facts.domain_power_effect_wired` for the resolved `granted_power_name` — the SAME
+   real, live-probed fact set `"Domain Power ~ *"` records already reuse; a static catalog
+   lookup never fabricates a credit on its own.
+
+`Strength`, `Destruction`, and `Glory` also carry `DOMAIN_POWER_CATALOG` entries, but all three
+are reached by path 1 first (they DO carry `"<Domain> Domain ~ *"` siblings the generic
+pool-group pass grounds), so path 2's own net-new contribution is exactly the 2 domains path 1
+cannot reach at all: **Good, War**.
+
+**30 (path 1) + 2 (path 2, net-new) = 32 of 33 headers close.** The remaining **1**
+(`Nobility Domain`) has NEITHER a live-wired `"Nobility Domain ~ *"` sibling (both real corpus
+members — `"~ Inspiring Word"`, a genuine zero-magnitude gap, and `"~ Leadership"`, bucket B,
+a different sub-cause entirely — stay `engine-does-not-hold`, confirmed unchanged by this
+cycle's own live regen) NOR a `domain_power::DOMAIN_POWER_CATALOG` entry — genuinely no
+existing engine mechanism computes anything for it. Confirmed by direct read of both fact sets
+and the catalog's own 5-entry membership, not assumed; named in the remainder below.
+
+**Territory respected:** zero changes to `pilot_compute::mod.rs` or `domain_power.rs` — both
+already-shipped probes and the catalog are reused exactly as they already compute; this cycle
+only teaches the CLASSIFIER to consult explanations that already existed. Book-scoped to
+`core_rulebook`: a direct corpus scan found exactly one same-shaped `"* Domain"` bare key
+elsewhere (`ultimate_psionics:ability:psionics_domain`, `kind: "ability"`, a completely
+different corpus shape/bucket already at `ingested-magnitude`), a different mechanism this
+territory does not touch, guarded by `unit.book == "core_rulebook"`.
 
 ## RED → GREEN
 
-RED (confirmed for the intended reason): temporarily changed the new rung's containment check
-to look up a key no probe could ever produce
-(`facts.bard_versatile_performance_generic_member_wired.contains(&format!("RED-CHECK-{}", &unit.key))`)
-and re-ran `an_act_versatile_performance_record_the_probe_observed_reaches_grounded` — failed
-with `left: "engine-does-not-hold", right: "grounded"` (the pre-existing fallthrough this
-cycle closes), confirming the test fails because the fix is absent, not for an unrelated
-reason. Restored the rung; the test (and all others) passes.
+RED (confirmed for the intended reason): temporarily changed the new rung's own key match from
+`unit.key.ends_with(" Domain")` to `unit.key.ends_with("RED-CHECK-NEVER-MATCHES")` and re-ran the
+two positive proof tests — both failed with `left: "engine-does-not-hold", right: "grounded"`
+(the pre-existing fallthrough this cycle closes), confirming the tests fail because the fix is
+absent, not for an unrelated reason. Restored the match; all four tests pass.
 
 ```
-$ cargo test --locked --bin v06_work_inventory an_act_versatile_performance_record_the_probe_observed_reaches_grounded
-running 1 test
-test class_feature_text_complete_rung_tests::an_act_versatile_performance_record_the_probe_observed_reaches_grounded ... FAILED
+$ cargo test --locked --bin v06_work_inventory a_domain_header_record
+running 4 tests
+test class_feature_text_complete_rung_tests::a_domain_header_record_reaches_grounded_off_its_generic_pool_sibling_wiring ... FAILED
+left: "engine-does-not-hold"
+right: "grounded"
+test class_feature_text_complete_rung_tests::a_domain_header_record_reaches_grounded_off_its_domain_power_catalog_sibling_wiring ... FAILED
 left: "engine-does-not-hold"
 right: "grounded"
 ```
 
-After restoring the rung:
+After restoring the match:
 
 ```
-$ cargo test --locked --bin v06_work_inventory versatile_performance -- --nocapture
-running 8 tests
-test class_feature_text_complete_rung_tests::an_act_versatile_performance_record_the_probe_never_observed_is_unaffected ... ok
-test class_feature_text_complete_rung_tests::a_versatile_performance_key_in_a_different_book_is_not_credited ... ok
-test class_feature_text_complete_rung_tests::an_act_versatile_performance_record_the_probe_observed_reaches_grounded ... ok
-test bard_versatile_performance_generic_member_probe_tests::the_probe_does_not_credit_an_unrelated_class_feature_record ... ok
-test bard_versatile_performance_generic_member_probe_tests::the_probe_resolves_all_three_shortened_display_name_members ... ok
-bard_versatile_performance_generic_member_wired (9 keys):
-  Versatile Performance ~ Act
-  Versatile Performance ~ Comedy
-  Versatile Performance ~ Dance
-  Versatile Performance ~ Keyboard Instruments
-  Versatile Performance ~ Oratory
-  Versatile Performance ~ Percussion Instruments
-  Versatile Performance ~ Sing
-  Versatile Performance ~ String Instruments
-  Versatile Performance ~ Wind Instruments
-test bard_versatile_performance_generic_member_probe_tests::print_the_real_observed_set_for_this_cycles_own_receipt ... ok
-test bard_versatile_performance_generic_member_probe_tests::the_probe_resolves_all_nine_real_perform_types ... ok
-test bard_versatile_performance_generic_member_probe_tests::the_probe_observes_a_real_act_versatile_performance_member ... ok
+$ cargo test --locked --bin v06_work_inventory a_domain_header_record
+running 4 tests
+test class_feature_text_complete_rung_tests::a_domain_header_record_reaches_grounded_off_its_generic_pool_sibling_wiring ... ok
+test class_feature_text_complete_rung_tests::a_domain_header_record_in_a_different_book_is_not_credited ... ok
+test class_feature_text_complete_rung_tests::a_domain_header_record_reaches_grounded_off_its_domain_power_catalog_sibling_wiring ... ok
+test class_feature_text_complete_rung_tests::a_domain_header_record_with_neither_sibling_wired_is_unaffected ... ok
 
-test result: ok. 8 passed; 0 failed
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 473 filtered out; finished in 0.00s
 ```
 
 Full `class_feature`-scoped suite: `cargo test --locked --bin v06_work_inventory class_feature`
-— **142 passed, 0 failed**. Full bin suite: **470 passed, 0 failed** (this cycle's own net-new
-count is exactly 8 tests, confirmed by `git diff` hunk count on this cycle's own two-file
-diff; the pre-cycle absolute count already carried one test added by a concurrent sibling
-lane's own commit between cycle 4 and this cycle's start, so the pre/post absolute-count delta
-is not a clean 8 — the 8-test claim is proven by this cycle's own diff, not by subtracting
-stale absolute counts).
+— **146 passed, 0 failed** (142 pre-existing + this cycle's own 4). Full bin suite: **477
+passed, 0 failed** (473 + 4).
 
 ## Live regen (local, uncommitted — see file-ownership note above)
 
-Same guard cycles 3/4's own receipts document. Ran `corpus_literal_sweep --json-out` (CLEAN,
-`48,708` records examined, `0` findings — matching the unchanged baseline exactly, since this
-cycle touches no `data/corpus/**` file) and `derived_evaluator_fixture_check --json-out`
-(`2,580` fixture rows, `1,839` cleared, `0` failed — same unchanged baseline) first, then
-pointed `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` at the two reports and
-regenerated (`--allow-stamp-loss` never passed).
+**Full three-stage pipeline run, in order, `--allow-stamp-loss` never passed** (a first attempt
+running `v06_work_inventory` alone was correctly REFUSED by its own stamp-loss guard — it would
+have dropped 9,591 of 9,591 pre-existing `literal-verified`/`fixture-verified` stamps, since
+neither report was pointed at; the guard worked exactly as designed):
+
+```
+$ corpus_literal_sweep --json-out /tmp/sweep-report.json
+corpus-literal-sweep: 48708 records examined of 51482 read, 413336 tokens compared (9 synthesized),
+51469 digests checked, 0 findings
+corpus-literal-sweep: 3138 tokens exempted under decisions.md §24 redaction across 1058
+codex_generated_name records
+corpus-literal-sweep: CLEAN
+
+$ derived_evaluator_fixture_check --json-out /tmp/fixture-report.json
+derived-evaluator-fixture-check: 1839 unit(s) cleared over 2580 fixture row(s); 0 failed; 0 not ingested
+
+$ CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-report.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-report.json \
+  v06_work_inventory
+(writes docs/work-inventory.json; exit 0)
+```
+
+Both reports match wave-18's own baseline exactly — unchanged, since this cycle touches no
+`data/corpus/**` file (48,708 examined both before and after; 1,839/2,580 fixture rows cleared
+both before and after).
 
 **Isolation confirmed by a whole-inventory before/after diff keyed on unit id** (not sampled —
 a real Python diff over both full 49,438-unit JSON documents, before = the COMMITTED HEAD
-inventory via `git show HEAD:docs/work-inventory.json`, after = this cycle's own local regen
-against HEAD's committed source plus this cycle's own edit):
+inventory, after = this cycle's own local regen against HEAD's committed source plus this
+cycle's own edit):
 
 ```
 before count: 49438 after count: 49438
 added: 0 removed: 0
-changed: 67
-changed by book: {'core_rulebook': 63, 'ultimate_campaign': 4}
+changed: 32
+changed by book: {'core_rulebook': 32}
+changed by new evidence: {
+  'generic_pool_group_selection_probe_observed_a_real_computed_magnitude_for_the_display_record': 30,
+  'domain_power_probe_observed_a_real_computed_magnitude_for_the_display_record': 2
+}
 ```
 
-The 67 changes decompose into exactly three independently-attributable groups, distinguished
-by their own evidence strings (never conflated):
+All 32 changes carry one of this cycle's own two new evidence strings — **zero changes outside
+this cycle's own 32 domain-header ids**, and zero changes from any other concurrently-committed
+lane between this cycle's checkpoint push and this regen (confirmed: `origin/tranche/14` had
+not moved). The 32 closed ids, individually:
 
-- **54** `core_rulebook` changes carrying evidence
-  `generic_pool_group_selection_probe_observed_a_real_computed_magnitude` — cycle 4's own
-  ALREADY-COMMITTED Sorcerer Bloodline fix (44 to DONE, 10 to V), landed on `tranche/14`
-  before this cycle started, simply never regenerated into the committed JSON until now. **Not
-  this cycle's work.**
-- **4** `ultimate_campaign` changes carrying evidence
-  `trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_{1,2}` — a sibling
-  lane's own already-committed trait/ability-compute fix (AT-34-E4-002), outside this cycle's
-  territory and outside `core_rulebook`. **Not this cycle's work; not touched.**
-- **9** `core_rulebook` changes carrying evidence
-  `bard_versatile_performance_choice_probe_observed_a_real_named_recognition_record` — **this
-  cycle's own closure**, all nine `Versatile Performance ~ <Type>` records, all
-  `engine-does-not-hold` → `grounded` (bucket **DONE** directly — every one of the nine carries
-  `wiring_class: "computed"`, confirmed by direct `docs/work-inventory.json` read before this
-  cycle began, so none are eligible for the static-record V-reclassification path
-  `apply_done_rung_stamps` used for 10 of cycle 4's own 54).
+`air_domain, animal_domain, artifice_domain, chaos_domain, charm_domain, community_domain,
+darkness_domain, death_domain, destruction_domain, earth_domain, evil_domain, fire_domain,
+glory_domain, good_domain, healing_domain, knowledge_domain, law_domain, liberation_domain,
+luck_domain, madness_domain, magic_domain, plant_domain, protection_domain, repose_domain,
+rune_domain, strength_domain, sun_domain, travel_domain, trickery_domain, war_domain,
+water_domain, weather_domain` (all `core_rulebook:class_feature:*`).
 
-54 + 4 + 9 = 67, matching the whole-inventory diff exactly. This cycle's own contribution is
-isolated to precisely 9 ids, named individually:
-`core_rulebook:class_feature:versatile_performance_{act,comedy,dance,
-keyboard_instruments,oratory,percussion_instruments,sing,string_instruments,
-wind_instruments}`.
+`good_domain` and `war_domain` carry the `domain_power_probe_observed_...` evidence (path 2);
+the other 30 carry the `generic_pool_group_selection_probe_observed_...` evidence (path 1).
+Every one of the 32 moved `engine-does-not-hold` (bucket C) → `grounded` (bucket **DONE**)
+directly, confirmed by direct post-regen read: all 32 carry `status: "grounded"`,
+`wiring_class: "computed"` — none eligible for the static/derived V-reclassification
+`apply_done_rung_stamps` applies, so none were restamped away from DONE.
 
 **Corpus-wide isolation** (same regen, same before/after documents):
 
 ```
-before: DONE=24353 A=449 B=11769 C=4277 D=2955 M=4965 U=202 V=279 X=170 Z=19
-after:  DONE=24410 A=449 B=11769 C=4214 D=2955 M=4961 U=202 V=289 X=170 Z=19
+before: DONE=24433 A=449 B=11769 C=4214 D=2955 M=4938 U=202 V=289 X=170 Z=19
+after:  DONE=24465 A=449 B=11769 C=4182 D=2955 M=4938 U=202 V=289 X=170 Z=19
 ```
 
-DONE +57 (44 bloodline + 4 trait + 9 mine), C −63 (54 bloodline + 9 mine — trait's own M→DONE
-move does not touch C), M −4 (the sibling trait lane's own M→DONE move, not mine), V +10
-(bloodline's own static reclassification, not mine) — every figure accounted for by the three
-named groups above, none unexplained.
+DONE +32, C −32, every other bucket unchanged — exactly this cycle's own 32 closures, nothing
+else moved corpus-wide.
 
 ## Figures + their re-derive commands
 
 | Figure | Value | Command | Denominator |
 |---|---:|---|---|
-| `core_rulebook` bucket C, committed at cycle start | 296 | `python3 scripts/completion_atlas.py --book core_rulebook --check` against HEAD's committed `docs/work-inventory.json` | of 6,701 |
-| `core_rulebook` bucket C, true-reachable at cycle start (cycle 4's already-shipped source, live regen) | 242 | same command, live regen of pre-this-cycle source | of 6,701 |
-| `core_rulebook` bucket C after this cycle's own fix | **233** | same command, live regen including this cycle's edit | of 6,701 (delta −9 vs. 242, this cycle's own isolated contribution) |
-| `core_rulebook` bucket DONE after this cycle | **4,436** | same command | of 6,701 |
-| `core_rulebook` buckets A/B/D/M/V/U/X/Z after this cycle | unchanged from cycle 4's own post-state (0/470/366/957/114/10/115/0) | same command | of 6,701 — confirms isolation: nothing outside C/DONE moved for this cycle's own 9 |
-| Corpus-wide bucket C before/after this cycle's own regen | 4,277 / **4,214** | `python3 scripts/completion_atlas.py --check` | of 49,438 (delta −63 = 54 cycle-4 + 9 this cycle, not conflated) |
-| Corpus-wide bucket DONE before/after | 24,353 / **24,410** | same command | of 49,438 (delta +57 = 44 + 4 + 9, three independently-named groups) |
-| Whole-inventory before/after diff, keyed on unit `id` | 0 added, 0 removed, exactly 67 changed (63 `core_rulebook`, 4 `ultimate_campaign`) | (Live regen section) | of 49,438 |
-| This cycle's own isolated closures | **9**, all `core_rulebook`, all `Versatile Performance ~ <Type>` | whole-inventory diff filtered on this cycle's own evidence string | of 9 (100% of the targeted sub-cause) |
-| `versatile_performance_not_computed` sub-cause, cycle 4's own re-confirmed membership | 9 (all 9 targeted, all 9 closed) | direct `docs/work-inventory.json` read, bucket-C units matching corpus key prefix `"Versatile Performance ~ "` | of 296 |
-| Probe's own real observed set (live-fixture test) | 9 of 9 | `cargo test --locked --bin v06_work_inventory bard_versatile_performance_generic_member_probe_tests::the_probe_resolves_all_nine_real_perform_types` | of 9 real Perform types |
+| `core_rulebook` bucket C at cycle start | 233 | `python3 scripts/completion_atlas.py --book core_rulebook --check` against the committed `docs/work-inventory.json` | of 6,701 |
+| `core_rulebook` bucket C after this cycle's own fix | **201** | same command, live regen including this cycle's edit | of 6,701 (delta −32) |
+| `core_rulebook` bucket DONE after this cycle | **4,481** | same command | of 6,701 |
+| `core_rulebook` buckets A/B/D/M/V/U/X/Z after this cycle | unchanged (0/470/366/944/114/10/115/0) | same command | of 6,701 — confirms isolation |
+| Corpus-wide bucket C before/after this cycle's own regen | 4,214 / **4,182** | `python3 scripts/completion_atlas.py --check` | of 49,438 (delta −32) |
+| Corpus-wide bucket DONE before/after | 24,433 / **24,465** | same command | of 49,438 (delta +32) |
+| Whole-inventory before/after diff, keyed on unit `id` | 0 added, 0 removed, exactly 32 changed, all `core_rulebook` | (Live regen section) | of 49,438 |
+| This cycle's own isolated closures | **32**, all `core_rulebook`, all bare `"<Domain> Domain"` headers | whole-inventory diff filtered on this cycle's own two evidence strings | of 33 (targeted population) |
+| `domain_power_display_record_not_wired` sub-cause, header component | 33 targeted, 32 closed, 1 remains (`Nobility Domain`) | direct `docs/work-inventory.json` read, bucket-C units ending `" Domain"` with no `" ~ "` | of 41 |
 | `corpus_literal_sweep` (before/after, unchanged) | 48,708 examined, 0 findings | `corpus_literal_sweep --json-out` | of 51,482 read |
 | `derived_evaluator_fixture_check` (before/after, unchanged) | 1,839 cleared of 2,580 rows, 0 failed | `derived_evaluator_fixture_check --json-out` | of 2,580 |
 | `completion_atlas.py --check` (corpus-wide, post-regen) | `population=49438 unclassified=0 overlap=0` | `python3 scripts/completion_atlas.py --check` | of 49,438 |
-| `completion_atlas.py --check` `citation_failures` | 0 (10→0, re-derived this cycle after this cycle's own insertion hunks shifted every pin) | `python3 scripts/completion_atlas.py --check` | of 10 citations |
-| `cargo test --locked --bin v06_work_inventory` (full) | `470 passed; 0 failed` | `cargo test --locked --bin v06_work_inventory` | of 470 |
-| `cargo test --locked --bin v06_work_inventory class_feature` | `142 passed; 0 failed` | `cargo test --locked --bin v06_work_inventory class_feature` | of 142 |
+| `completion_atlas.py --check` `citation_failures` | 0 (4→0, re-derived this cycle after this cycle's own 73-line insertion shifted 4 pins by exactly +73 each) | `python3 scripts/completion_atlas.py --check` | of 10 citations |
+| `cargo test --locked --bin v06_work_inventory` (full) | `477 passed; 0 failed` | `cargo test --locked --bin v06_work_inventory` | of 477 |
+| `cargo test --locked --bin v06_work_inventory class_feature` | `146 passed; 0 failed` | `cargo test --locked --bin v06_work_inventory class_feature` | of 146 |
 | `cargo test --locked --no-run` (workspace) | exit 0 | `cargo test --locked --no-run` | — |
 
 ## Row-count command output (this cycle's own live artifact, uncommitted per file-ownership rule)
@@ -257,33 +265,34 @@ named groups above, none unexplained.
 ```
 $ python3 scripts/completion_atlas.py --book core_rulebook --check
 book=core_rulebook population=6701 unclassified=0 overlap=0
-  DONE: 4436
+  DONE: 4481
   A: 0
   B: 470
-  C: 233
+  C: 201
   D: 366
-  M: 957
+  M: 944
   V: 114
   U: 10
   X: 115
   Z: 0
 ```
 
-Bucket C: **233**, not zero. **Status: partial**, remainder named below (populations sum
-exactly to 233). This live command output was produced by the local, uncommitted regen and is
+Bucket C: **201**, not zero. **Status: partial**, remainder named below (populations sum
+exactly to 201). This live command output was produced by the local, uncommitted regen and is
 NOT reflected in the currently-committed `docs/work-inventory.json` (restored via
-`git restore` before this commit, per the file-ownership rule) — the committed inventory
-still reads C=296 until the wave's shared regeneration cycle re-runs the pipeline against
-this cycle's own committed source (and cycle 4's, and the sibling trait lane's).
+`git restore` before this commit, per the file-ownership rule) — the committed inventory still
+reads C=233 until the wave's shared regeneration cycle re-runs the pipeline against this
+cycle's own committed source.
 
 ## Build scope verified
 
-`cargo test --locked --no-run` (workspace) exits **0**, run at this cycle's own tip.
-`cargo test --locked --bin v06_work_inventory` 470/470 pass. Desktop crate
-(`apps/desktop/src-tauri`) not tested this cycle: no file under that tree, nor any file it
-depends on, was touched by this cycle's own two-file diff (confirmed:
-`grep -rl "bard_versatile_performance_generic_member|CORE_RULEBOOK_BARD_VERSATILE_PERFORMANCE" apps/`
-— zero matches).
+`cargo test --locked --no-run` (workspace) exits **0**, run at commit `9519106f17` — this
+cycle's own last commit that can move a figure a test assertion depends on
+(`decisions.md §12` L7; the local regen that follows is never committed, so it cannot un-verify
+this run). Desktop crate (`apps/desktop/src-tauri`) not tested this cycle: no file under that
+tree, nor any file it depends on, was touched by this cycle's own diff (confirmed:
+`grep -rl "domain_header\|domain_power_probe_catalog_sibling\|for_the_display_record" apps/` —
+zero matches).
 
 ## Sweep population
 
@@ -296,96 +305,99 @@ N/A — no figure in this receipt came from the pinned PCGen oracle corpus.
 
 ## Movement, four buckets
 
-- **Closure:** **9** — the 9 `Versatile Performance ~ <Type>` units, all carrying
+- **Closure:** **32** — 32 of the 33 bare `"<Domain> Domain"` header units, all carrying
   `wiring_class: "computed"`, moved `engine-does-not-hold` (bucket C) → `grounded` (bucket
-  **DONE**) directly. Nothing remains for these; all 9 are `+0` recognition records (a
-  genuine PF1 rule, not an unfinished formula), so no further magnitude work is owed by this
-  sub-cause — the real remaining engine burden (the skill-substitution rule itself) is a
-  SEPARATE feature, not part of this bucket's own naming-gap acceptance bar.
-- **Reclassification:** 0 this cycle (cycle 4's own 10 static→V reclassifications are cycle
-  4's, not this cycle's — see the isolation section above).
-- **Reachability:** **9** (one new grounding rung + one new probe now answer `grounded` for
-  these exact corpus keys, reusing a real, already-shipped, already-tested engine explanation
-  — no new compute path, no new formula).
-- **Instrument-correction:** 0 this cycle (the 10 `completion_atlas.py` citation re-pins are a
-  bookkeeping side effect of this cycle's own insertions, not a correction of a wrong prior
-  figure).
+  **DONE**) directly. Nothing remains for these; each is a genuine `+0` choice-selection
+  record (choosing a domain is itself a real, real-cost-free game action) whose real granted
+  power is already grounded on the sibling record the corresponding compute pass emits — no
+  further magnitude work is owed by the header record itself.
+- **Reclassification:** 0 this cycle (no unit moved between two non-DONE buckets).
+- **Reachability:** **32** (one new `classify()` rung now answers `grounded` for these exact
+  corpus keys, reusing two real, already-shipped, already-tested engine fact sets — no new
+  compute path, no new formula, no engine change).
+- **Instrument-correction:** 0 this cycle (the 4 `completion_atlas.py` citation re-pins are a
+  bookkeeping side effect of this cycle's own insertion shifting line numbers, not a correction
+  of a wrong prior figure).
 
-**Bucket C's own delta (242 → 233, −9, measured against the true-reachable baseline that
-already includes cycle 4's own unregenerated fix) equals this cycle's own Closure exactly** —
-the row-count command's own output above is the ground truth this movement report is checked
-against, not the other way around. Against the COMMITTED baseline (296), the combined delta
-of −63 (54 cycle-4 + 9 this cycle) is reported above but is NOT this cycle's own closure claim
-— only the 9 is.
+**Bucket C's own delta (233 → 201, −32) equals this cycle's own Closure exactly** — the
+row-count command's own output above is the ground truth this movement report is checked
+against, not the other way around.
 
-## Remainder — 233 of 296 (242 true-reachable), named by sub-cause, populations sum exactly
+## Remainder — 201 of 233, named by sub-cause, populations sum exactly
 
-Re-derived fresh at this cycle's own close (`decisions.md §12` L2) — every sub-cause this
-cycle did not touch is confirmed UNCHANGED by direct proof (the whole-inventory diff above
-shows the ONLY `core_rulebook` changes outside cycle 4's own 54 are this cycle's own 9, so
-restating cycle 4's other nine sub-cause figures is evidence-backed, not carried forward by
-assumption):
+Re-derived fresh at this cycle's own close (`decisions.md §12` L2) — the whole-inventory diff
+above proves the ONLY `core_rulebook` changes this cycle made are its own 32, so restating cycle
+5's other ten sub-cause figures unchanged is evidence-backed by this cycle's own proof, not
+carried forward by assumption. The former `domain_power_display_record_not_wired` (41) is
+decomposed into two real, differently-shaped remainders — a genuinely-uncomputable header/power
+pair, and a genuinely-uncomputed Druid sub-choice mechanism — rather than restated as one row:
 
 | Sub-cause | Population | Status / next step |
 |---|---:|---|
-| `bloodline_power_or_bloodline_feat_not_computed` | 23 | Unchanged (confirmed by this cycle's own isolation diff — zero bloodline records changed this cycle beyond cycle 4's own 54). Cycle 4's own named next-candidate: the 16-unit generic-pass-formula-chain residue (why `Elemental Movement (Air)` resolved but Earth/Fire/Water did not). |
-| `monk_unarmed_damage_no_formula_in_engine` | 42 | Unchanged (confirmed). Genuine engine gap — needs a new formula, not a naming-only fix; largest remaining named sub-cause. |
-| `domain_power_display_record_not_wired` | 41 | Unchanged (confirmed). 33 bare domain headers + 7 Druid sub-choices + 1 zero-token record. |
+| `bloodline_power_or_bloodline_feat_not_computed` | 23 | Unchanged (confirmed by this cycle's own isolation diff). |
+| `monk_unarmed_damage_no_formula_in_engine` | 42 | Unchanged (confirmed). Genuine engine gap — needs a new formula, not a naming-only fix; now the largest remaining named sub-cause. |
 | `base_class_standalone_feature_not_computed` | 36 | Unchanged (confirmed). Unstarted. |
 | `prestige_class_standalone_feature_not_computed` | 31 | Unchanged (confirmed). Unstarted. |
 | `other_named_group_or_standalone` | 21 | Unchanged (confirmed). Unstarted. |
 | `rage_power_not_computed` | 13 | Unchanged (confirmed). Unstarted. |
 | `npc_class_standalone_feature_not_computed` | 10 | Unchanged (confirmed). Unstarted. |
 | `rogue_talent_not_computed` | 10 | Unchanged (confirmed). Unstarted. |
-| `versatile_performance_not_computed` | **0** (was 9) | **CLOSED this cycle — all 9 members reached `grounded`.** The one remaining artifact in this corpus group, `"Bard ~ Versatile Performance"` (the top-level header record, `visible: false`, a different `" ~ "` shape — class-name-first, not the sub-pool's own group prefix), was deliberately NOT targeted this cycle and is folded into `other_named_group_or_standalone` for the next cycle's own re-derivation (not this receipt's remainder count, since it was already excluded from cycle 4's own 9-unit `versatile_performance_not_computed` figure — confirmed by re-reading cycle 4's own receipt, which named exactly 9, matching this cycle's own corpus scan). |
 | `monk_unarmed_damage_small_cross_book_attribution_undecided` | 6 | Unchanged (confirmed). Still open, cross-book attribution question. |
+| `druid_nature_bond_domain_selection_not_computed` (**new**, split out of `domain_power_display_record_not_wired`) | 7 | The 7 `"Druid Domain ~ <X>"` sub-choice records. Confirmed genuine engine gap by direct read of `pilot_compute::mod.rs`: Task #64's own comment states plainly that Nature Bond's domain option carries NO `DRUID_DOMAIN_CHOICE_ID` seam at all — the engine has never modelled this selection, in either direction (Good-domain wiring was explicitly checked and refused for a real rules reason: Good is not a legal Nature Bond domain). Real new engine work, not a naming-only fix — out of this territory's bar. |
+| `domain_power_display_record_not_wired` (**narrowed** 41→2) | 2 | The last bare header this cycle could not reach (`"Nobility Domain"`) plus its own zero-token granted-power record (`"Nobility Domain ~ Inspiring Word"`). Neither has a live-wired sibling of either reusable shape, and Nobility carries no `domain_power::DOMAIN_POWER_CATALOG` entry — genuinely no existing engine mechanism to reuse; would need a new catalog entry (M-shaped engine work), not a naming-only fix. |
+| `versatile_performance_not_computed` | 0 | Closed cycle 5; unchanged. |
 
-**Sum check:** 23 + 42 + 41 + 36 + 31 + 21 + 13 + 10 + 10 + 0 + 6 = **233**, matching the
-row-count command's own remainder exactly (242 true-reachable − 9 closed = 233).
+**Sum check:** 23 + 42 + 36 + 31 + 21 + 13 + 10 + 10 + 6 + 7 + 2 + 0 = **201**, matching the
+row-count command's own remainder exactly (233 − 32 = 201).
 
 ## Notes
 
-- **This cycle's fix is deliberately minimal and additive**: one new `EngineFacts` field, one
-  new probe, one new `classify()` rung, one probe-local mapping table. Zero changes to
-  `pilot_compute::mod.rs` or any other production compute path — the engine's own Versatile
-  Performance mechanism, display-name strings included, is completely untouched; this cycle
-  only teaches the CLASSIFIER to consult an explanation that already existed.
-- **A different pre-existing mechanism than cycles 3/4's own generic pool-group pass, proven
-  rather than assumed to be the same shape**: this cycle's own bridge is new, purpose-built
-  for the Bard's fixed-id/detail-named recognition record, because `generic_pool_group_
-  selection_observed_keys`'s own literal marker format does not appear in this mechanism's
-  `detail` text. Reuse was checked first and genuinely does not apply here — not skipped by
-  assumption.
-- **A genuine display-name mismatch this cycle's own scan caught**: three of the nine real
-  corpus names (`Percussion Instruments`, `String Instruments`, `Wind Instruments`) do not
-  match the engine's own shorter display names (`Percussion`, `String`, `Wind`). Handled with
-  a probe-local mapping table, proven by a dedicated test
-  (`the_probe_resolves_all_three_shortened_display_name_members`) rather than assumed safe.
+- **This cycle's fix is deliberately minimal and additive**: one new `classify()` rung, zero new
+  `EngineFacts` fields, zero new probes. It reuses TWO already-existing, already-tested probes'
+  own fact sets (`cleric_domain_generic_member_wired`, `domain_power_effect_wired`) plus one
+  already-existing static catalog (`domain_power::domain_power_probe_catalog()`) — the SAME
+  paired display/chassis pattern the Favored Enemy/Favored Terrain checks establish, generalized
+  across a book-wide 33-unit population in one change (the "generic pass" ROI shape this
+  dispatch's own brief asks for): **32 real closures from 73 new lines**.
+- **A genuine discovery, not assumed**: the FIRST attempt at this cycle's own live regen ran
+  `v06_work_inventory` alone (no sweep/fixture reports pointed at it) and was correctly REFUSED
+  by the tool's own stamp-loss guard (would have dropped 9,591 of 9,591 pre-existing
+  `literal-verified`/`fixture-verified` stamps). The guard is doing exactly its job; the fix was
+  to run the real three-stage pipeline, not to pass `--allow-stamp-loss` (never done).
+- **A second genuine discovery this cycle's own live regen caught, that a naive JSON-status
+  read would have missed**: an exploratory pre-check that filtered candidate siblings by
+  `status == "grounded"` undercounted this rung's own real reach (predicted 29 closures,
+  0 for `Glory`, `Charm`, `Liberation`, `Sun`). The REAL `classify()` rung does not read the
+  JSON's status field at all — it consults the live probe's own fact set, which credits a
+  sibling regardless of whether that sibling has since been restamped to `literal-verified`
+  (bucket V). Trusting the live regen's own real output over the pre-check's own proxy is what
+  caught 3 of the 32 real closures (`Charm`, `Liberation`, `Sun`) a proxy-based estimate would
+  have wrongly left in the remainder, and correctly attributed `Glory`'s own closure to path 1
+  (not path 2, as the pre-check predicted).
 - **Territory respected:** no `CharacterInput` field was added or changed; no trait/ability
-  compute path was touched (this cycle's own touched files are `src/bin/v06_work_inventory.rs`
-  and `scripts/completion_atlas.py` only, confirmed by `git status --porcelain` before this
-  commit); the EQUIPMENT magnitude sub-causes (owned by a sibling lane) were not touched; the
-  `ultimate_campaign` trait-content closures found in this cycle's own live regen belong to a
-  DIFFERENT, already-committed sibling-lane cycle and were correctly attributed to it, not
-  claimed here.
-- **Not attempted this cycle**: every other named sub-cause in the 233-unit remainder table.
-  `monk_unarmed_damage_no_formula_in_engine` (42) is the largest remaining named sub-cause and
-  is a genuine engine-formula gap, not a naming-only fix like this cycle's — a materially
-  different shape of work.
+  compute path was touched; the EQUIPMENT magnitude sub-causes (owned by a sibling lane) were
+  not touched; `pilot_compute::mod.rs` and `domain_power.rs` are completely untouched —
+  confirmed by `git status --porcelain` before this commit showing only
+  `src/bin/v06_work_inventory.rs` under this territory.
+- **Not attempted this cycle**: every other named sub-cause in the 201-unit remainder table.
+  `monk_unarmed_damage_no_formula_in_engine` (42) is now the largest, a genuine engine-formula
+  gap, not a naming-only fix like this cycle's.
 
 ## Next-cycle plan
 
 1. `monk_unarmed_damage_no_formula_in_engine` (42, largest remaining named sub-cause) needs a
-   real new formula in the engine, not a classifier-naming fix — a different shape of work
-   than this cycle's and cycles 3/4's own reuse. Out of this territory's "naming-only" bar
-   unless the engine-side formula work is dispatched separately first.
-2. `domain_power_display_record_not_wired` (41) is the next-cheapest CANDIDATE within this
-   territory's own shape (a display/header record whose sibling magnitude record may already
-   be wired, the same "paired display/chassis" pattern the original Favored Enemy/Terrain
-   cycle established) — worth checking whether Domain Power's own header records have a
-   sibling `Domain Power ~ <Power>` magnitude record already grounded, the same reuse this
-   cycle proved out for a completely different mechanism.
-3. Re-derive the remainder partition fresh before picking (`decisions.md §12` L2) — this
+   real new formula in the engine, not a classifier-naming fix — out of this territory's
+   "naming-only" bar unless the engine-side formula work is dispatched separately first.
+2. `base_class_standalone_feature_not_computed` (36) and `prestige_class_standalone_feature_
+   not_computed` (31) are both unstarted and worth a direct corpus scan first — either could
+   decompose into the same paired display/chassis shape this cycle and the Favored Enemy/
+   Terrain cycle both proved out, or could be a genuinely different shape; re-derive before
+   picking, do not assume.
+3. `druid_nature_bond_domain_selection_not_computed` (7, new) and the narrowed
+   `domain_power_display_record_not_wired` (2, new) are both genuine ENGINE gaps (a new
+   `DRUID_DOMAIN_CHOICE_ID` seam; a new `DOMAIN_POWER_CATALOG` entry for Nobility), not
+   naming-only fixes — out of this territory's bar as currently scoped.
+4. Re-derive the remainder partition fresh before picking (`decisions.md §12` L2) — this
    receipt's own table is this cycle's fresh derivation, but the NEXT cycle must re-run it
    fresh again rather than trust this one, especially since the wave's shared regeneration
    cycle has not yet run against this cycle's own commit.

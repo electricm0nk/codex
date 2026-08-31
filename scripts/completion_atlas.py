@@ -111,7 +111,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'has_no_engine_table')"
         ),
         # `Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table")`.
-        "citation": {"file": _ENGINE_SRC, "line": 12179, "must_contain": "has_no_engine_table"},
+        "citation": {"file": _ENGINE_SRC, "line": 12252, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -121,7 +121,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')"
         ),
         # `engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine")`.
-        "citation": {"file": _ENGINE_SRC, "line": 11859, "must_contain": "not_held_by_engine"},
+        "citation": {"file": _ENGINE_SRC, "line": 11932, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -131,7 +131,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'explanation_id' / 'diagnostic')"
         ),
         # `engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")`.
-        "citation": {"file": _ENGINE_SRC, "line": 12084, "must_contain": "explanation_id"},
+        "citation": {"file": _ENGINE_SRC, "line": 12157, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -158,7 +158,7 @@ BUCKET_DEFINITIONS = {
         # concurrently-landed AT-34-E4-002 cycle 6's own fourth-slice save-bonus
         # insertions into v06_work_inventory.rs): fresh `grep -n` against the real
         # merged post-rebase file content, not either side's pre-rebase number.
-        "citation": {"file": _ENGINE_SRC, "line": 12924, "must_contain": "literal-verified"},
+        "citation": {"file": _ENGINE_SRC, "line": 12997, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
