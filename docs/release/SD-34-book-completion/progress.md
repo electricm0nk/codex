@@ -71,6 +71,120 @@ disposition path — named in the remainder, logged as a `deferral` retro event
 Remainder now **192** (193 − 1), 13 sub-causes, sum re-verified exactly. Full detail:
 `artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md`.
 
+### Cycle — AT-34-E4-002 (cycle 10) — picker gap fix + eighth trait slice (caster-level+skill) — partial
+
+**Status: partial.** Worktree opened at the stale `ea2b3396f2` tranche cut; `git fetch origin &&
+git reset --hard origin/tranche/14` onto wave 22's `15485e5197` before touching anything.
+Re-derived the split fresh: `python3 scripts/completion_atlas.py --book ultimate_campaign
+--check` read `DONE=203 M=37 D=2 U=21 X=2`, matching the dispatch brief's own stated baseline
+exactly — wave 21's shared regen had already folded cycle 9 in. Read
+`AT-34-E4-002_cycle_receipt_9.md` as newest per the dispatch brief; wave 22's own dispatch
+(`9ae5a08fd4`) named the picker gap cycle 9 found as this cycle's explicit first task.
+
+**Fixed the picker gap first, exactly as required.** `apps/desktop/src-tauri/src/trait_picker.rs`'s
+`list_available_character_traits` chained only 5 of `trait_effects`' 7 tables (cycle 9's own
+seventh slice was already in; the fifth/sixth slices' 3 tables — `INITIATIVE_TRAIT_BONUSES`,
+`CONCENTRATION_TRAIT_BONUSES`, `ABILITY_DIFF_SKILL_TRAIT_BONUSES` — were not). Chained the
+remaining 2, merging `INITIATIVE_TRAIT_BONUSES`/`CONCENTRATION_TRAIT_BONUSES` by `trait_id` into
+a new `otherPillars` DTO field (so `Trait ~ Arcane Temper`, which carries both tokens on one
+record, reports as ONE selectable option with two pillar entries, never two rows) and
+`ABILITY_DIFF_SKILL_TRAIT_BONUSES` into a new `abilitySubstitution` field (carrying the real
+formula text rather than a misleading static "+0"). Tactician, Arcane Temper, Desperate Resolve,
+Bruising Intellect, Planar Savant, Pragmatic Activator, and Precise Treatment are now genuinely
+selectable in the character creator for the first time. **This corrects cycles 7/8's own false
+claim** ("the existing trait picker already surfaces every selected trait generically") — true
+only for a trait selected some other way (e.g. a saved-character round-trip), never for a
+brand-new character choosing among the picker's own rendered options. Retro-logged as a
+`resolution` against cycle 9's own `incident` (`1788207553252-sd34-at-34-e4-002-cf2950`). This
+moves **0** `DONE`-bucket units — all 7 traits were already `grounded` at the `classify()` level
+since cycle 8 (`initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key`/
+`ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key` were already classifier rungs) —
+a live no-stub-doctrine fix (a compute path with no UI reaching it), reported separately from any
+bucket closure per this dispatch's own "never conflate a diagnostic fix with a closure" rule.
+
+**Then took the next slice**, after re-checking cycle 9's own next-cycle characterization rather
+than carrying it forward (`decisions.md §12` L2): cycle 9 lumped the remaining 7 `trait_content`
+records as needing "a bonus-pool/DC-variable pillar," "a bonus trait-slot pool mechanic," and "a
+per-subschool caster-level pillar this crate does not have." Direct reads of the live corpus JSON
+and the engine's own existing DC/caster-level machinery found this **true for 6 of 7, false for
+1**: `trait_eldritch_delver`'s `BONUS:CASTERLEVEL|SUBSCHOOL.Teleportation|1` is the identical
+shape `feat_effects::spell_focus_facts_from_choices` already grounds for Spell Focus's own
+per-school spell-save-DC bonus (a standalone fact, deliberately never folded into any integrated
+total this crate has none of). Built the eighth trait-capability slice: new
+`trait_effects::CASTER_LEVEL_SKILL_TRAIT_BONUSES` (1 record) + `caster_level_subschool_facts_
+from_traits` (standalone fact via `pilot_compute::ground_orphan_trait_facts`, the same idiom
+initiative/concentration/situational already use) + `caster_level_skill_bonuses_from_traits`
+(the record's separate flat two-skill token, folded into the SAME `skill_allocation::allocate_
+skill_ranks` consumer the first three slices established). **Kept the record OUT of
+`FLAT_SKILL_TRAIT_BONUSES` deliberately** — `Kind::Trait`'s `classify()` rung is an `.or_else`
+chain that stops at the first `Some`, so a record present in that table would report grounded on
+its skill half alone, before its caster-level half is ever checked, exactly the "8 closures where
+measurement found 1" part-credit failure this bundle's doctrine warns against. Verified by a
+dedicated test that the record is absent from `FLAT_SKILL_TRAIT_BONUSES`, and by
+`caster_level_skill_trait_magnitude_is_grounded_for_corpus_key` requiring BOTH pillars to
+fixture-execute before reporting grounded (mirroring Arcane Temper's/Trustworthy's two-pillar
+discipline). Chained the new table into the desktop picker too (reusing `otherPillars` for the
+caster-level half), so this cycle's own new record does not become an 8th instance of the exact
+gap this cycle just fixed for the other 7. Retro-logged as a `correction`
+(`1788218048649-sd34-at-34-e4-002-aa7a9f`) against receipt 9's own characterization.
+
+`ultimate_campaign`: functional `DONE 203→204, M 37→36` (`trait` M `7→6`; `ability` M unchanged
+`30`), all other buckets unchanged (`D:2 U:21 X:2 V:0`) — per classify()-level bin tests, NOT yet
+baked into the committed `docs/work-inventory.json` (this cycle's regeneration is
+local/uncommitted only, per this dispatch's file-ownership rule assigning it to the wave's shared
+regeneration cycle, same as every prior cycle in this module). `DONE=204 of 265` (functional) —
+bar not met.
+
+No shared-corpus-`KEY` payoff elsewhere this cycle: `grep -rl "Trait ~ Eldritch Delver"
+data/corpus/` finds it only under `ultimate_campaign/trait_generic/`.
+
+Build scope: `cargo build --locked --lib` exit 0; `cargo test --locked --lib -- trait_effects
+skill_allocation` 84/84 (9 new, on top of cycle 9's own 75/75); `cargo test --locked --bin
+v06_work_inventory` 502/502 (1 new, re-run twice for stability); `cargo test --locked --no-run`
+(full workspace) exits 0 at this cycle's final HEAD `7714a6a5ef`; `apps/desktop/src-tauri`
+(separate cargo workspace, tested explicitly, own `CARGO_TARGET_DIR`): `cargo test --locked
+--manifest-path apps/desktop/src-tauri/Cargo.toml --bin codex-desktop --no-run` exits 0, and
+`-- trait_picker` gives 42 passed/1 failed (`trait_picker`'s own 23/23 pass — 18 new/updated;
+`race_trait_picker`'s own 19/20 pass, the 1 failure the identical pre-existing adopted-race-count
+failure every prior `AT-34-E4-002` cycle (3/4/5/6/9) has already attributed as unrelated —
+`race_trait_picker.rs` was never touched this cycle). TypeScript: `npx tsc --noEmit` exits clean.
+Frontend: `node scripts/run-tests.mjs` 96/100 test files pass (4 pre-existing failures — a
+race-corpus-count fixture off by 9, and three `Cargo.toml`-vs-`package.json` version-stamp
+fixtures reading `0.11.0` vs `0.14.0` — a release-lane concern, none touching this cycle's 3
+changed frontend/desktop files, unchanged before/after this cycle's own edits).
+
+`corpus_literal_sweep --json-out` → `clean:true records_examined:48708` (unchanged, no
+`data/corpus/**` touched). `derived_evaluator_fixture_check --json-out` → `1839/2580 cleared, 0
+failed` (unchanged). `completion_atlas.py --check` corpus-wide (committed inventory, unchanged by
+this cycle): `population=49438 unclassified=0`. Denominator gate against this package:
+`python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` →
+`files_checked=15 violations=11` — all 11 pre-existing verbatim-quoted-corpus-prose false
+positives in `progress.md` (the "75% chance..." pattern `AT-34-E3-004` already flagged, growing
+by one as each cycle's own progress entry re-cites it; no new bare-percentage violation).
+
+RED→GREEN evidence (TDD): temporarily changed `ground_orphan_trait_facts`'s new caster-level loop
+to iterate an always-empty slice instead of the real `selected_traits`; the two most load-bearing
+new tests FAILED for the intended reason (`left: None, right: Some(1)` /
+`left: None, right: Some(2)` — the standalone fact genuinely not reaching the explanations
+vector); reverted the one line, both GREEN again (confirmed by a second full `trait_effects` run,
+70/70 filtered to that module).
+
+Remainder named by sub-cause, corrected from cycle 9's lumped characterization (`decisions.md
+§12` L2 — never carry a prior cycle's own number forward unverified): `M:36 U:21 X:2 D:2` = 61
+non-DONE, 6 in `trait_content` (3 `VAR`-only — genuinely THREE different problems, not one group:
+a cross-cutting "every luck bonus in play +1" modifier this crate has no bonus-type ledger to
+hook into, an EIDOLON companion-creature modifier this crate does not model at all, and a
+channel-energy-DC record needing SIX new DC totals built from scratch since this crate grounds a
+total for only 1 of its 7 named variables; 2 `ABILITYPOOL`-only needing a genuinely new
+heterogeneous player-choice mechanism, not the closed same-shape-option pattern already
+established; 1 corpus data gap, not chased), 30 `ability_content` records (house-rule bookkeeping,
+out of scope per cycle 3's own direct reading, unchanged). `U(21) D(2) X(2)` re-checked and
+confirmed untouched. `kanban.md` row 36 updated to `in-progress` (not `complete` — the row-count
+says `DONE=204 of 265`, the acceptance bar is `265 of 265`). Committed and pushed
+(`c1cbfa0698` picker-gap fix, `7714a6a5ef` eighth slice, both rebased cleanly onto a concurrent
+`AT-34-E3-002` cycle 9 push mid-cycle). Receipt:
+`artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_10.md`.
+
 ### Cycle — AT-34-E3-001 — wave-21 shared `docs/work-inventory.json` regeneration and attribution — complete
 
 **Status: complete.** The mandatory closing regeneration cycle for wave 21 (`decisions.md §9`'s
