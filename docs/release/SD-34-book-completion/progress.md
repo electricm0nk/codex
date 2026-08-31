@@ -11,6 +11,67 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-001 — wave-19 shared `docs/work-inventory.json` regeneration and attribution — complete
+
+**Status: complete.** The mandatory closing regeneration cycle for wave 19 (`decisions.md §9`'s
+file-ownership rule: dispatched lanes defer `docs/work-inventory.json` regeneration to one
+shared, end-of-wave cycle). Ran in the assigned shared main checkout — one commit behind
+`origin/tranche/14`, a plain `git rebase` fast-forwarded cleanly, no worktree needed this time
+(contrast wave-18's contended checkout). The dispatch's own "four lanes" is resolved, not a
+mystery: `python3 scripts/wave_ledger.py` + the wave's own workflow transcript directory show
+four spawned agents — three code lanes (UC/C/M), each in its own worktree, and a fourth with no
+worktree at all, running directly in the main checkout — this regeneration cycle itself.
+
+Three-pass pipeline run in order (`corpus_literal_sweep` CLEAN 3m13.338s, `derived_evaluator_
+fixture_check` 0 failed 0m13.386s, `v06_work_inventory` regenerated 12m15s) — no
+`--allow-stamp-loss`. Total pipeline wall time **941.7s (15m41.7s)**, the figure this wave shape
+exists to measure (wave 16: 927s, wave 18: 953.664s — this cycle sits inside that same band).
+
+**Whole-corpus before/after diff by unit id: 0 added, 0 removed, 337 changed.** A genuinely clean
+wave — every lane's own local-regen prediction reproduced exactly, digit for digit:
+
+| Cycle | Own claim | Measured | Match |
+|---|---|---:|---|
+| C cycle 6 — domain-header display-record wiring | 32, `core_rulebook` C 233→201 | 32 | exact |
+| UC cycle 7 — initiative/concentration traits | 3, `ultimate_campaign` | 3 | exact |
+| M cycle 4 — `compute_var_effect`/`apply_eqmod_var_bonus` wiring | 337 total (256 own + 46 side effect + 32 + 3 co-mingled) | 337 | exact |
+
+`core_rulebook` DONE 4449→4613, C 233→201, M 944→812; corpus-wide DONE 24433→24724, C 4214→4182,
+M 4938→4679; `ultimate_campaign` DONE 193→196, M 47→44 — every bucket-level delta independently
+re-derived via `completion_atlas.py` against both snapshots, not read from any lane's own prose.
+`core_rulebook` V is **114 in both snapshots** (unchanged this wave) — a prior recollection of
+"81" was simply a stale figure from earlier in the bundle's history, caught by re-deriving live.
+
+**Movement, four buckets (`decisions.md §9`):** Closure **291** (259 `ingested-magnitude`→
+`grounded` [256 M + 3 UC] + 32 `engine-does-not-hold`→`grounded` [C]), Reclassification **0**,
+Reachability **0**, Instrument-correction **46** (`text-complete`→`grounded`, both statuses map
+to bucket DONE — no boundary crossed, a stronger evidence stamp on an already-DONE record).
+
+**This wave's one real finding is a bucket-label correction, not a numeric one:** M cycle 4's own
+receipt grouped its 46 side-effect units *and* C's 32 co-mingled closures together under
+"reclassification." Neither fits: C's 32 moved a non-DONE bucket (C) into DONE, which is
+*closure* by `decisions.md §9`'s own definition (this wave's own instruction: "a B→X move is
+RECLASSIFICATION, never closure" — describing movement *between two non-DONE buckets*, not into
+DONE); the 46 moved DONE→DONE, which is neither closure nor reclassification —
+instrument-correction is the only one of the four buckets that shape fits. The raw counts in M
+cycle 4's own receipt are exact; only the bucket label on 78 of the 337 units is corrected, in
+the shared receipt, not silently rewritten into that cycle's own already-committed text.
+
+`completion_atlas.py --check`: corpus-wide clean (`unclassified=0 overlap=0
+done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False
+citation_failures=0`, exit 0). `--book core_rulebook --check` exits 1 — expected: that flag
+combination exits 0 only when a book is 100% done, and `core_rulebook` still carries 6 non-DONE
+buckets. `cargo test --locked --no-run` exits 0, full workspace (307s) and `apps/desktop/
+src-tauri` tested explicitly as its own workspace. No `src/**` file touched — all three folded-in
+cycles' own code was already committed.
+
+`python3 scripts/wave_ledger.py`: `wf_195c6a9e-931` already carried `"19"` in `KNOWN_WAVES` — no
+script edit needed. Wave 19 ran **at least 2:09** through this cycle's own last check (`RUNNING`
+because this cycle's own activity is the wave's most recent — settles to `done` once this commit
+lands), in the same range as wave 18 (2:09:58) and shorter than wave 16 (2:27:56). Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md` (sixth section, "wave-19
+regeneration and attribution").
+
 ### Cycle — AT-34-E3-003 (bucket M, EQUIPMENT sub-causes, cycle 4) — `BONUS:VAR` wiring closes both shapes — partial
 
 **Status: partial.** Re-derived cycle 3's own 395-unit territory (249 same-line + 146
