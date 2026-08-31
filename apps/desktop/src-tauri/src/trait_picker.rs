@@ -19,7 +19,8 @@
 //! primitive already established, not a new mechanism.
 use codex::rules_core::trait_effects::{
     family_choice_skill_options, trait_skill_choice_id, FAMILY_CHOICE_TRAIT_BONUSES,
-    FLAT_SKILL_TRAIT_BONUSES, SAVE_TRAIT_BONUSES, SKILL_CHOICE_TRAIT_BONUSES,
+    FLAT_SKILL_TRAIT_BONUSES, SAVE_TRAIT_BONUSES, SITUATIONAL_SKILL_TRAIT_BONUSES,
+    SKILL_CHOICE_TRAIT_BONUSES,
 };
 use serde::Serialize;
 
@@ -93,15 +94,24 @@ fn skill_display_name(skill_id: &str) -> String {
 /// The full roster of traits this cycle's real compute-and-apply path
 /// supports -- `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits, its 5
 /// fixed-choice `BONUS:SKILL|%LIST` traits, its 4 open-family
-/// `BONUS:SKILL|%LIST` traits, and its 2 flat `BONUS:SAVE` traits --
-/// every option returned genuinely grants its stated bonus when selected
-/// (and, for a choice-based option, a valid `skill_options` choice
-/// recorded) and passed through `create_character`/
+/// `BONUS:SKILL|%LIST` traits, its 2 flat `BONUS:SAVE` traits, and its 3
+/// `BONUS:SITUATION` traits -- every option returned genuinely grants its
+/// stated bonus when selected (and, for a choice-based option, a valid
+/// `skill_options` choice recorded) and passed through `create_character`/
 /// `compose_character_input` (`trait_effects::skill_bonuses_from_traits`
 /// + `trait_effects::skill_choice_bonuses_from_traits` +
 /// `trait_effects::family_choice_bonuses_from_traits` +
-/// `trait_effects::save_bonuses_from_traits`), never a rendered option
-/// with no compute path behind it.
+/// `trait_effects::save_bonuses_from_traits` +
+/// `pilot_compute::ground_orphan_trait_facts`'s situational-fact channel +
+/// `trait_effects::situational_flat_skill_bonuses_from_traits`), never a
+/// rendered option with no compute path behind it.
+///
+/// **Note**: the fifth and sixth slices' traits (`INITIATIVE_TRAIT_
+/// BONUSES`, `CONCENTRATION_TRAIT_BONUSES`, `ABILITY_DIFF_SKILL_TRAIT_
+/// BONUSES` -- Tactician, Arcane Temper, Desperate Resolve, Bruising
+/// Intellect, Planar Savant, Pragmatic Activator, Precise Treatment) are
+/// NOT in this roster yet, a pre-existing gap this cycle found but did not
+/// introduce and does not own fixing (see this cycle's own receipt).
 #[tauri::command]
 pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
     let flat = FLAT_SKILL_TRAIT_BONUSES.iter().map(|entry| CharacterTraitOptionDto {
@@ -169,7 +179,42 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         choice_set_id: None,
         save: Some(entry.save.to_owned()),
     });
-    flat.chain(choice).chain(family_choice).chain(save_bonus).collect()
+    // Seventh slice (`AT-34-E4-002`): the 3 `BONUS:SITUATION` traits.
+    // Reuses the SAME `skills`/`bonus` fields the flat slice already
+    // established -- every clause on these 3 records happens to share one
+    // identical bonus magnitude (proven by
+    // `every_situational_option_has_a_uniform_bonus_across_its_clauses`
+    // below), so no new DTO field is needed: `skills` lists every skill a
+    // clause names (Trustworthy's separate flat Diplomacy token included),
+    // and the option's own `description` states each clause's real
+    // circumstance in full prose, exactly as it already does for every
+    // earlier slice's non-uniform prose detail.
+    let situational = SITUATIONAL_SKILL_TRAIT_BONUSES.iter().map(|entry| {
+        let mut skills: Vec<String> =
+            entry.situational.iter().map(|&(skill_name, _, _)| skill_name.to_owned()).collect();
+        let mut bonus = entry.situational.first().map(|&(_, _, bonus)| bonus).unwrap_or(0);
+        if let Some((skill_id, flat_bonus)) = entry.flat_skill {
+            skills.push(skill_display_name(skill_id));
+            if entry.situational.is_empty() {
+                bonus = i16::from(flat_bonus);
+            }
+        }
+        CharacterTraitOptionDto {
+            id: entry.trait_id.to_owned(),
+            name: entry.name.to_owned(),
+            description: entry.description.to_owned(),
+            skills,
+            bonus: bonus as i8,
+            skill_options: Vec::new(),
+            choice_set_id: None,
+            save: None,
+        }
+    });
+    flat.chain(choice)
+        .chain(family_choice)
+        .chain(save_bonus)
+        .chain(situational)
+        .collect()
 }
 
 #[cfg(test)]
@@ -178,9 +223,9 @@ mod tests {
 
     /// The command must return exactly the 31 flat-slice traits plus the 5
     /// fixed-choice-slice traits plus the 4 family-choice-slice traits
-    /// plus the 2 flat-save-slice traits (42 total), never a subset or a
-    /// hand-typed duplicate that could drift from `trait_effects`' own
-    /// tables.
+    /// plus the 2 flat-save-slice traits plus the 3 situational-slice
+    /// traits (45 total), never a subset or a hand-typed duplicate that
+    /// could drift from `trait_effects`' own tables.
     #[test]
     fn returns_every_flat_and_choice_skill_trait() {
         let options = list_available_character_traits();
@@ -190,8 +235,87 @@ mod tests {
                 + SKILL_CHOICE_TRAIT_BONUSES.len()
                 + FAMILY_CHOICE_TRAIT_BONUSES.len()
                 + SAVE_TRAIT_BONUSES.len()
+                + SITUATIONAL_SKILL_TRAIT_BONUSES.len()
         );
-        assert_eq!(options.len(), 42);
+        assert_eq!(options.len(), 45);
+    }
+
+    /// Every situational-slice option's `skills` list is a real, non-empty
+    /// set of skill display names, and every clause on the SAME record
+    /// shares one identical bonus magnitude -- the precondition that lets
+    /// this DTO reuse the flat `bonus: i8` field instead of needing a
+    /// per-clause shape.
+    #[test]
+    fn every_situational_option_has_a_uniform_bonus_across_its_clauses() {
+        for entry in SITUATIONAL_SKILL_TRAIT_BONUSES {
+            let mut magnitudes: Vec<i16> =
+                entry.situational.iter().map(|&(_, _, bonus)| bonus).collect();
+            if let Some((_, flat_bonus)) = entry.flat_skill {
+                magnitudes.push(i16::from(flat_bonus));
+            }
+            assert!(!magnitudes.is_empty(), "{} has no bonus clauses at all", entry.corpus_key);
+            assert!(
+                magnitudes.iter().all(|&m| m == magnitudes[0]),
+                "{} carries non-uniform bonus magnitudes {:?} -- the picker's single `bonus` \
+                 field would misreport at least one clause",
+                entry.corpus_key,
+                magnitudes
+            );
+        }
+    }
+
+    /// Every situational-slice option's id round-trips through the real
+    /// `trait_effects::situational_skill_trait_magnitude_is_grounded_for_
+    /// corpus_key` compute path (looked up via the option's OWN table
+    /// entry, since the DTO itself carries no `corpus_key` field) --
+    /// never a rendered option with no compute path behind it.
+    #[test]
+    fn every_situational_option_id_is_recognized_by_the_compute_path() {
+        for option in list_available_character_traits() {
+            let Some(entry) =
+                SITUATIONAL_SKILL_TRAIT_BONUSES.iter().find(|e| e.trait_id == option.id)
+            else {
+                continue; // not a situational-slice option
+            };
+            assert!(
+                codex::rules_core::trait_effects::situational_skill_trait_magnitude_is_grounded_for_corpus_key(
+                    entry.corpus_key
+                )
+                .is_some(),
+                "{} was returned by the picker but did not ground via real fixture execution",
+                option.id
+            );
+        }
+    }
+
+    /// The Almost Human trait (seventh slice: single `BONUS:SITUATION`
+    /// clause) reaches the DTO with its real corpus data verbatim.
+    #[test]
+    fn almost_human_option_carries_its_real_corpus_situational_data() {
+        let almost_human = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_almost_human")
+            .expect("Almost Human must be in the roster");
+        assert_eq!(almost_human.name, "Almost Human");
+        assert_eq!(almost_human.bonus, 4);
+        assert_eq!(almost_human.skills, vec!["Disguise".to_string()]);
+        assert!(almost_human.description.contains("appear human"));
+        assert!(almost_human.skill_options.is_empty());
+        assert_eq!(almost_human.choice_set_id, None);
+        assert_eq!(almost_human.save, None);
+    }
+
+    /// The Trustworthy trait (seventh slice: a situational clause PLUS a
+    /// separate flat token) reaches the DTO listing BOTH skills its two
+    /// tokens name, never just one.
+    #[test]
+    fn trustworthy_option_lists_both_its_situational_and_flat_skills() {
+        let trustworthy = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_trustworthy")
+            .expect("Trustworthy must be in the roster");
+        assert_eq!(trustworthy.bonus, 1);
+        assert_eq!(trustworthy.skills, vec!["Bluff".to_string(), "Diplomacy".to_string()]);
     }
 
     /// Every flat-skill-slice option's id round-trips: it is exactly what
@@ -206,6 +330,15 @@ mod tests {
                 // covered by the choice-slice and save-slice tests
                 // instead -- neither shape reaches
                 // `skill_bonuses_from_traits`.
+                continue;
+            }
+            if SITUATIONAL_SKILL_TRAIT_BONUSES.iter().any(|entry| entry.trait_id == option.id) {
+                // covered by `every_situational_option_id_is_recognized_by_
+                // the_compute_path` instead -- a situational option's
+                // standalone-fact half never reaches
+                // `skill_bonuses_from_traits` (only its optional separate
+                // flat-skill half might, and that is a different table:
+                // `situational_flat_skill_bonuses_from_traits`).
                 continue;
             }
             let bonuses = codex::rules_core::trait_effects::skill_bonuses_from_traits(&[

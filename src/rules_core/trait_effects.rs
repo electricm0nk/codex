@@ -146,26 +146,52 @@
 //! consumer the first three slices already established (reusing an
 //! existing consumer, not inventing a new one).
 //!
+//! ## Seventh slice: `BONUS:SITUATION` traits
+//!
+//! A seventh cycle widened the spine into a `BONUS:SITUATION` pillar this
+//! crate already models -- not a new shape, `feat_effects.rs`'s own
+//! `ARG_SITUATIONAL_SKILL_FACTS` established it first for the Advanced
+//! Race Guide's Echoes of Stone/Carrion Feeder, grounding a situational
+//! bonus as a standalone fact carrying its own circumstance text, never
+//! folded into a general skill total (which would report a specific,
+//! checkable, wrong number on the ordinary check). The 3 records
+//! (`trait_almost_human`, `trait_self_taught_scholar`,
+//! `trait_trustworthy`) ground through
+//! `pilot_compute::ground_orphan_trait_facts`, the same standalone-fact
+//! channel the fifth slice's initiative/concentration facts already use.
+//! `Trait ~ Trustworthy` ALSO carries a second, different-skill flat
+//! `BONUS:SKILL|Diplomacy|1` token -- the same "every BONUS token, not
+//! just one" discipline `Trait ~ Arcane Temper` established requires BOTH
+//! its situational Bluff clause AND its flat Diplomacy clause to
+//! fixture-execute before the record is reported grounded. See
+//! [`SITUATIONAL_SKILL_TRAIT_BONUSES`] for the 3-record table,
+//! [`situational_skill_facts_from_traits`] for the standalone-fact
+//! producer, [`situational_flat_skill_bonuses_from_traits`] for
+//! Trustworthy's separate flat-skill producer (folded into the same
+//! `skill_allocation::allocate_skill_ranks` consumer the first three
+//! slices established), and
+//! [`situational_skill_trait_magnitude_is_grounded_for_corpus_key`] for
+//! the combined classifier-facing check.
+//!
 //! ## What this module deliberately does NOT cover
 //!
-//! - **The remaining 10 `trait_content` records** mix `BONUS:VAR`,
-//!   `BONUS:SITUATION`, `BONUS:ABILITYPOOL`, and `BONUS:CASTERLEVEL`
-//!   tokens -- different pillars entirely (a bonus trait-slot pool,
-//!   conditional situational checks, spellcasting-subschool caster
-//!   level, and engine-internal variables with no consuming pillar), out
-//!   of this module's scope. One further record
-//!   (`ultimate_campaign:trait:trait_shadow_whispers`) is a pre-existing
-//!   corpus data gap -- a real `ingested-magnitude` inventory unit with
-//!   no matching file under `data/corpus/ultimate_campaign/
-//!   trait_generic/` by any name/key search tried, unrelated to any
-//!   cycle's compute path and not chased here.
+//! - **The remaining 7 `trait_content` records** mix `BONUS:VAR`,
+//!   `BONUS:ABILITYPOOL`, and `BONUS:CASTERLEVEL` tokens -- different
+//!   pillars entirely (a bonus-pool/DC variable, a bonus trait-slot pool,
+//!   and spellcasting-subschool caster level), out of this module's
+//!   scope. One further record (`ultimate_campaign:trait:trait_shadow_
+//!   whispers`) is a pre-existing corpus data gap -- a real
+//!   `ingested-magnitude` inventory unit with no matching file under
+//!   `data/corpus/ultimate_campaign/trait_generic/` by any name/key
+//!   search tried, unrelated to any cycle's compute path and not chased
+//!   here.
 //! - **All 30 `ability_content` units** (`ultimate_campaign`'s
 //!   Drawback/Retraining sub-mechanics) -- house-rule bookkeeping and
 //!   GM-adjudicated narrative penalties with no clean formulaic trigger,
 //!   per the prior cycle's own direct reading of that corpus.
 //!
-//! Widening past these six slices is future work, gated on genuinely
-//! separate per-pillar compute paths for the mixed `BONUS:VAR/SITUATION/
+//! Widening past these seven slices is future work, gated on genuinely
+//! separate per-pillar compute paths for the mixed `BONUS:VAR/
 //! ABILITYPOOL/CASTERLEVEL` records -- none exist yet, and building one as
 //! a rushed half-measure here would risk the same "8 closures where
 //! measurement found 1" failure this bundle's own doctrine warns against.
@@ -1397,6 +1423,245 @@ pub fn ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(
     }
 }
 
+/// One `ultimate_campaign` `trait_content` record whose corpus `BONUS`
+/// token set includes a `BONUS:SITUATION|<skill>=<circumstance>|N` clause
+/// -- see the module doc comment's "Seventh slice" section. `situational`
+/// carries every `(skill_name, circumstance, bonus)` clause the record's
+/// own `BONUS:SITUATION` token(s) state (`Self-Taught Scholar`'s single
+/// token names two skills, so it has two entries here). `flat_skill`
+/// carries a SEPARATE, DIFFERENT-skill `BONUS:SKILL` token the same
+/// record ALSO carries (`Trustworthy`'s flat Diplomacy token, alongside
+/// its situational Bluff clause) -- `None` for the two records with no
+/// such second token.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitSituationalSkillBonus {
+    /// The wire id `CharacterInput.chosen.selected_traits` carries for
+    /// this trait -- same `"trait:" + corpus filename slug` idiom as
+    /// [`TraitSkillBonus::trait_id`].
+    pub trait_id: &'static str,
+    /// The record's own corpus `KEY` token, as transcribed from
+    /// `data.key`.
+    pub corpus_key: &'static str,
+    /// The trait's display name, transcribed from the corpus record's own
+    /// `name` field.
+    pub name: &'static str,
+    /// Every `BONUS:SITUATION` clause this record's corpus token(s) state,
+    /// as `(skill display name, circumstance prose, bonus)`.
+    pub situational: &'static [(&'static str, &'static str, i16)],
+    /// A separate, different-skill flat `BONUS:SKILL` token the SAME
+    /// record also carries, as `(skill: wire id, bonus)` -- `None` when
+    /// the record carries only situational tokens.
+    pub flat_skill: Option<(&'static str, i8)>,
+    /// The trait's own corpus `description` field, verbatim.
+    pub description: &'static str,
+}
+
+/// The 3-of-59 `ultimate_campaign` `trait_content` records whose corpus
+/// `BONUS` token set includes a `BONUS:SITUATION` clause -- see the
+/// module doc comment's "Seventh slice" section for the exact filter and
+/// this cycle's re-derivation against the live corpus JSON.
+pub static SITUATIONAL_SKILL_TRAIT_BONUSES: &[TraitSituationalSkillBonus] = &[
+    TraitSituationalSkillBonus {
+        trait_id: "trait:trait_almost_human",
+        corpus_key: "Trait ~ Almost Human",
+        name: "Almost Human",
+        situational: &[("Disguise", "to appear human", 4)],
+        flat_skill: None,
+        description: "You have enough human features that it's easy for you to pass for a pureblooded human. You gain a +4 trait bonus on Disguise checks to pass as human, and Disguise is always a class skill for you.",
+    },
+    TraitSituationalSkillBonus {
+        trait_id: "trait:trait_self_taught_scholar",
+        corpus_key: "Trait ~ Self-Taught Scholar",
+        name: "Self-Taught Scholar",
+        situational: &[
+            ("Linguistics", "to decipher unfamiliar languages", 1),
+            ("Spellcraft", "to decipher the writing on a scroll", 1),
+        ],
+        flat_skill: None,
+        description: "Being self-taught has made it necessary for you to scour all documentation you can get your hands on. You gain a +1 trait bonus on Linguistics checks to decipher unfamiliar languages, and Linguistics is always a class skill for you. In addition, you gain a +1 trait bonus on Spellcraft checks made to decipher the writing on a scroll.",
+    },
+    TraitSituationalSkillBonus {
+        trait_id: "trait:trait_trustworthy",
+        corpus_key: "Trait ~ Trustworthy",
+        name: "Trustworthy",
+        situational: &[("Bluff", "to fool someone", 1)],
+        flat_skill: Some(("skill:diplomacy", 1)),
+        description: "People find it easy to put their faith in you. You gain a +1 trait bonus on Bluff checks made to fool someone. You also gain a +1 trait bonus on Diplomacy checks, and Diplomacy is always a class skill for you.",
+    },
+];
+
+/// Looks up one [`SITUATIONAL_SKILL_TRAIT_BONUSES`] entry by its wire
+/// `trait_id`.
+fn find_situational_by_trait_id(trait_id: &str) -> Option<&'static TraitSituationalSkillBonus> {
+    SITUATIONAL_SKILL_TRAIT_BONUSES.iter().find(|entry| entry.trait_id == trait_id)
+}
+
+/// One grounded `BONUS:SITUATION` fact for a trait actually selected --
+/// mirrors `feat_effects::ArgSituationalSkillFact` exactly, the same
+/// "circumstance carried in the record's own text, never folded into a
+/// total" shape that module already established for the Advanced Race
+/// Guide's own three `BONUS:SITUATION` feat tokens.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitSituationalSkillFact {
+    pub trait_id: &'static str,
+    pub trait_name: &'static str,
+    pub skill_name: &'static str,
+    pub circumstance: &'static str,
+    pub bonus: i16,
+}
+
+/// Every grounded situational-skill fact for the traits actually
+/// selected, in [`SITUATIONAL_SKILL_TRAIT_BONUSES`]'s own stable order --
+/// consumed by `pilot_compute::ground_orphan_trait_facts` to push one
+/// standalone [`crate::rules_core::pilot_compute::ComputationExplanation`]
+/// per clause, the same standalone-fact channel initiative/concentration
+/// already use. **Deliberately NOT folded into any skill total**: a
+/// situational bonus applies only in the stated circumstance, and adding
+/// it to the general modifier would report a specific, checkable, wrong
+/// number on every ordinary check of that skill.
+pub fn situational_skill_facts_from_traits(
+    selected_traits: &[String],
+) -> Vec<TraitSituationalSkillFact> {
+    let mut facts = Vec::new();
+    for entry in SITUATIONAL_SKILL_TRAIT_BONUSES {
+        if !selected_traits.iter().any(|id| id == entry.trait_id) {
+            continue;
+        }
+        for &(skill_name, circumstance, bonus) in entry.situational {
+            facts.push(TraitSituationalSkillFact {
+                trait_id: entry.trait_id,
+                trait_name: entry.name,
+                skill_name,
+                circumstance,
+                bonus,
+            });
+        }
+    }
+    facts
+}
+
+/// The stable id one [`TraitSituationalSkillFact`] grounds under in
+/// `pilot_compute::ground_orphan_trait_facts`'s own `explanations` vector
+/// -- shared with [`situational_skill_trait_magnitude_is_grounded_for_
+/// corpus_key`] so the two never drift out of step (a single source of
+/// truth for the id format, not two hand-typed copies).
+pub fn situational_skill_fact_explanation_id(trait_id: &str, skill_name: &str) -> String {
+    let trait_slug = trait_id.trim_start_matches("trait:");
+    let skill_slug = skill_name.to_ascii_lowercase().replace(' ', "_");
+    format!("trait.situational_skill_bonus.{trait_slug}.{skill_slug}")
+}
+
+/// The real, computed skill bonus contribution of every
+/// [`SITUATIONAL_SKILL_TRAIT_BONUSES`] trait's SEPARATE flat-skill token
+/// (`Trustworthy`'s Diplomacy half) -- folded into `skill_allocation.rs`'s
+/// same running skill-bonus map every earlier slice already established.
+/// The situational half of each record is deliberately NOT included here
+/// (see [`situational_skill_facts_from_traits`]): the two halves are
+/// different dimensions (a general skill total vs. a circumstance-scoped
+/// standalone fact) and are verified independently by
+/// [`situational_skill_trait_magnitude_is_grounded_for_corpus_key`].
+pub fn situational_flat_skill_bonuses_from_traits(selected_traits: &[String]) -> BTreeMap<String, i8> {
+    let mut totals: BTreeMap<String, i8> = BTreeMap::new();
+    for trait_id in selected_traits {
+        let Some(entry) = find_situational_by_trait_id(trait_id) else {
+            continue;
+        };
+        let Some((skill_id, bonus)) = entry.flat_skill else {
+            continue;
+        };
+        let slot = totals.entry(skill_id.to_owned()).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
+    totals
+}
+
+/// **AT-34-E4-002's classifier-facing entry point for the seventh,
+/// situational-skill slice.** `Trait ~ Trustworthy` carries TWO
+/// independently-pillared tokens on DIFFERENT skills (a situational Bluff
+/// clause and a flat Diplomacy clause) -- mirroring
+/// `initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key`'s
+/// "check every applicable pillar, report grounded only when ALL of them
+/// fixture-execute" discipline, never partial credit on one half. ACTUALLY
+/// BUILDS a fixture character (with the flat skill allocated a rank when
+/// the record carries one), runs it through the real
+/// [`crate::rules_core::pilot_compute::compute_pilot_base_chassis`] (for
+/// the situational standalone facts) and, when the record also carries a
+/// flat-skill token, the real
+/// [`crate::rules_core::skill_allocation::allocate_skill_ranks`] consumer
+/// too. Returns `None` for any corpus key outside the table, or in the
+/// unreachable case any applicable pillar's fixture-executed value ever
+/// disagreed with the transcribed table.
+pub fn situational_skill_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str) -> Option<i8> {
+    let entry = SITUATIONAL_SKILL_TRAIT_BONUSES
+        .iter()
+        .find(|entry| entry.corpus_key == corpus_key)?;
+
+    let mut skill_allocations = Vec::new();
+    if let Some((skill_id, _)) = entry.flat_skill {
+        skill_allocations.push(crate::rules_core::character_input::SkillAllocation {
+            skill_id: skill_id.to_owned(),
+            ranks: 1,
+        });
+    }
+    let input = CharacterInput {
+        case_id: None,
+        source_package_id: "at_34_e4_002_fixture".to_owned(),
+        chosen: ChosenCharacterState {
+            race_id: "race:human".to_owned(),
+            class_levels: vec![CharacterClassLevel {
+                class_id: "class:fighter".to_owned(),
+                level: 1,
+            }],
+            ability_scores: AbilityScores {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 10,
+                wisdom: 10,
+                charisma: 10,
+            },
+            selected_feats: Vec::new(),
+            skill_allocations,
+            equipment_selections: Vec::new(),
+            selected_choices: Vec::new(),
+            selected_traits: vec![entry.trait_id.to_owned()],
+            spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
+        },
+        selection_provenance: Vec::new(),
+    };
+
+    let mut total: i8 = 0;
+
+    if !entry.situational.is_empty() {
+        let result = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        for &(skill_name, _circumstance, bonus) in entry.situational {
+            let id = situational_skill_fact_explanation_id(entry.trait_id, skill_name);
+            let found = result.explanations.iter().find(|e| e.id == id).map(|e| e.value);
+            if found != Some(bonus) {
+                // The engine genuinely disagreed with (or omitted) the
+                // transcribed table -- a real defect, never papered over.
+                return None;
+            }
+            let Ok(bonus_i8) = i8::try_from(bonus) else {
+                return None;
+            };
+            total = total.saturating_add(bonus_i8);
+        }
+    }
+
+    if let Some((skill_id, flat_bonus)) = entry.flat_skill {
+        let totals = crate::rules_core::skill_allocation::allocate_skill_ranks(&input);
+        let computed = totals.totals.get(skill_id).map(|total| total.misc_modifier);
+        if computed != Some(flat_bonus) {
+            return None;
+        }
+        total = total.saturating_add(flat_bonus);
+    }
+
+    Some(total)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -2255,6 +2520,205 @@ mod tests {
         );
         assert_eq!(
             ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
+            None
+        );
+    }
+
+    // -- Seventh slice: BONUS:SITUATION traits ------------------------
+
+    #[test]
+    fn situational_table_has_exactly_three_entries() {
+        assert_eq!(SITUATIONAL_SKILL_TRAIT_BONUSES.len(), 3);
+    }
+
+    /// No trait id in this table also appears in any earlier skill-shaped
+    /// table -- the compute paths would otherwise double-apply or the
+    /// classifier chain would part-credit on the wrong pillar.
+    #[test]
+    fn no_situational_trait_id_appears_in_any_other_skill_table() {
+        for entry in SITUATIONAL_SKILL_TRAIT_BONUSES {
+            assert!(
+                find_by_trait_id(entry.trait_id).is_none(),
+                "{} appears in both the flat and situational tables",
+                entry.trait_id
+            );
+            assert!(
+                find_choice_by_trait_id(entry.trait_id).is_none(),
+                "{} appears in both the fixed-choice and situational tables",
+                entry.trait_id
+            );
+            assert!(
+                ABILITY_DIFF_SKILL_TRAIT_BONUSES
+                    .iter()
+                    .all(|e| e.trait_id != entry.trait_id),
+                "{} appears in both the ability-diff and situational tables",
+                entry.trait_id
+            );
+        }
+    }
+
+    /// No selected traits contributes nothing -- never a fabricated
+    /// default fact.
+    #[test]
+    fn no_selected_traits_yields_no_situational_facts() {
+        assert!(situational_skill_facts_from_traits(&[]).is_empty());
+    }
+
+    /// Almost Human's single situational clause grounds as one standalone
+    /// fact carrying its own circumstance text, not folded into any
+    /// Disguise total.
+    #[test]
+    fn almost_human_grounds_one_standalone_situational_fact() {
+        let facts =
+            situational_skill_facts_from_traits(&["trait:trait_almost_human".to_string()]);
+        assert_eq!(facts.len(), 1);
+        assert_eq!(facts[0].skill_name, "Disguise");
+        assert_eq!(facts[0].circumstance, "to appear human");
+        assert_eq!(facts[0].bonus, 4);
+    }
+
+    /// Self-Taught Scholar's single corpus token names TWO skills -- both
+    /// must ground as separate facts, not just one.
+    #[test]
+    fn self_taught_scholar_grounds_both_of_its_situational_clauses() {
+        let facts = situational_skill_facts_from_traits(&[
+            "trait:trait_self_taught_scholar".to_string(),
+        ]);
+        assert_eq!(facts.len(), 2);
+        assert!(facts.iter().any(|f| f.skill_name == "Linguistics" && f.bonus == 1));
+        assert!(facts.iter().any(|f| f.skill_name == "Spellcraft" && f.bonus == 1));
+    }
+
+    /// Trustworthy's situational Bluff clause is a standalone fact; its
+    /// SEPARATE flat Diplomacy token is NOT among the situational facts
+    /// (it grounds through `situational_flat_skill_bonuses_from_traits`
+    /// instead, a different dimension entirely).
+    #[test]
+    fn trustworthy_grounds_its_situational_bluff_fact_only() {
+        let facts =
+            situational_skill_facts_from_traits(&["trait:trait_trustworthy".to_string()]);
+        assert_eq!(facts.len(), 1);
+        assert_eq!(facts[0].skill_name, "Bluff");
+        assert_eq!(facts[0].circumstance, "to fool someone");
+        assert_eq!(facts[0].bonus, 1);
+    }
+
+    /// An unrecognized trait id contributes no situational facts.
+    #[test]
+    fn an_unrecognized_trait_id_yields_no_situational_facts() {
+        assert!(
+            situational_skill_facts_from_traits(&["trait:not_a_real_trait".to_string()])
+                .is_empty()
+        );
+    }
+
+    /// Trustworthy's flat Diplomacy half sums into the running skill-bonus
+    /// map, the same shape every earlier flat-skill slice already
+    /// established -- and Almost Human/Self-Taught Scholar (no `flat_skill`
+    /// entry) contribute nothing to it.
+    #[test]
+    fn trustworthy_flat_diplomacy_bonus_sums_into_the_skill_map() {
+        let bonuses = situational_flat_skill_bonuses_from_traits(&[
+            "trait:trait_trustworthy".to_string(),
+        ]);
+        assert_eq!(bonuses.get("skill:diplomacy"), Some(&1));
+        assert_eq!(bonuses.len(), 1);
+
+        let none_for_almost_human = situational_flat_skill_bonuses_from_traits(&[
+            "trait:trait_almost_human".to_string(),
+        ]);
+        assert!(none_for_almost_human.is_empty());
+    }
+
+    /// The explanation-id formula is a single source of truth: the same
+    /// call from the producer side and the checker side must agree.
+    #[test]
+    fn situational_skill_fact_explanation_id_is_stable() {
+        assert_eq!(
+            situational_skill_fact_explanation_id("trait:trait_almost_human", "Disguise"),
+            "trait.situational_skill_bonus.trait_almost_human.disguise"
+        );
+    }
+
+    /// **RED->GREEN load-bearing check**: Almost Human's situational fact
+    /// genuinely reaches `pilot_compute::compute_pilot_base_chassis`'s own
+    /// `explanations` vector -- an ACTUALLY BUILT fixture character run
+    /// through the real engine, never an assumption that the standalone-
+    /// fact producer "should" be wired in.
+    #[test]
+    fn almost_human_situational_fact_reaches_the_real_explanations_vector() {
+        let input = CharacterInput {
+            case_id: None,
+            source_package_id: "at_34_e4_002_fixture".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel { class_id: "class:fighter".to_owned(), level: 1 }],
+                ability_scores: AbilityScores {
+                    strength: 10,
+                    dexterity: 10,
+                    constitution: 10,
+                    intelligence: 10,
+                    wisdom: 10,
+                    charisma: 10,
+                },
+                selected_feats: Vec::new(),
+                skill_allocations: Vec::new(),
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                selected_traits: vec!["trait:trait_almost_human".to_string()],
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        };
+        let result = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let id = situational_skill_fact_explanation_id("trait:trait_almost_human", "Disguise");
+        let found = result.explanations.iter().find(|e| e.id == id);
+        assert_eq!(found.map(|e| e.value), Some(4));
+    }
+
+    /// The classifier-facing entry point: every situational-slice trait,
+    /// fixture-executed and diffed against its transcribed table.
+    /// Trustworthy is the load-bearing case -- it must genuinely check
+    /// BOTH its situational Bluff clause and its flat Diplomacy token, not
+    /// just one.
+    #[test]
+    fn every_situational_entry_is_genuinely_grounded_by_fixture_execution() {
+        for entry in SITUATIONAL_SKILL_TRAIT_BONUSES {
+            assert!(
+                situational_skill_trait_magnitude_is_grounded_for_corpus_key(entry.corpus_key)
+                    .is_some(),
+                "{} did not ground via real fixture execution",
+                entry.corpus_key
+            );
+        }
+        assert_eq!(
+            situational_skill_trait_magnitude_is_grounded_for_corpus_key("Trait ~ Almost Human"),
+            Some(4)
+        );
+        assert_eq!(
+            situational_skill_trait_magnitude_is_grounded_for_corpus_key(
+                "Trait ~ Self-Taught Scholar"
+            ),
+            Some(2)
+        );
+        // Bluff situational (+1) plus flat Diplomacy (+1) -- BOTH tokens,
+        // never just one.
+        assert_eq!(
+            situational_skill_trait_magnitude_is_grounded_for_corpus_key("Trait ~ Trustworthy"),
+            Some(2)
+        );
+    }
+
+    /// A corpus key outside the table is honestly `None`.
+    #[test]
+    fn an_ungrounded_situational_corpus_key_returns_none() {
+        assert_eq!(
+            situational_skill_trait_magnitude_is_grounded_for_corpus_key("Trait ~ Acrobat"),
+            None
+        );
+        assert_eq!(
+            situational_skill_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
             None
         );
     }

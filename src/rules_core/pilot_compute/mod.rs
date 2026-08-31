@@ -50939,6 +50939,37 @@ fn ground_orphan_trait_facts(input: &CharacterInput, explanations: &mut Vec<Comp
             ),
         });
     }
+
+    // AT-34-E4-002's seventh trait-capability slice: `BONUS:SITUATION`
+    // traits. Mirrors `feat_effects::arg_situational_skill_facts_from_feats`
+    // exactly -- the circumstance is carried in the record's own text
+    // rather than folded into a skill total, which would report a
+    // specific, checkable, wrong number on the ordinary check.
+    for fact in trait_effects::situational_skill_facts_from_traits(selected_traits) {
+        explanations.push(ComputationExplanation {
+            id: trait_effects::situational_skill_fact_explanation_id(
+                fact.trait_id,
+                fact.skill_name,
+            ),
+            value: fact.bonus,
+            detail: format!(
+                "{} grants a {:+} bonus on {} checks {} \
+                 (BONUS:SITUATION|{}=...|{}), transcribed from its corpus token. This is a \
+                 SITUATIONAL bonus and is deliberately NOT added to any skill total: it applies \
+                 only in the circumstance named here, and folding it into a general modifier \
+                 would report a specific, checkable, wrong number on every ordinary {} check. \
+                 Same treatment the ARG feat situational records and the Dwarf Stonecunning/\
+                 Greed situational records already receive",
+                fact.trait_name,
+                fact.bonus,
+                fact.skill_name,
+                fact.circumstance,
+                fact.skill_name,
+                fact.bonus,
+                fact.skill_name
+            ),
+        });
+    }
 }
 
 /// SD-27 (`decisions.md` §24/§28, 2026-07-31): the Advanced Race Guide's and

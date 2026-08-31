@@ -12634,13 +12634,13 @@ fn classify(
         // string.
         //
         // `AT-34-E4-002` (bucket M): the same `grounded_magnitude` wiring
-        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by SIX
+        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by SEVEN
         // `trait_effects` entry points tried in order -- each an
         // ACTUALLY-EXECUTED fixture character run through a real consumer
         // (`allocate_skill_ranks` for the first three and the sixth,
         // `pilot_compute::compute_total_saves`/`compute_pilot_base_
-        // chassis`'s own `explanations` for the fourth and fifth), never
-        // an assumed value:
+        // chassis`'s own `explanations` for the fourth, fifth, and
+        // seventh), never an assumed value:
         // `flat_skill_trait_magnitude_is_grounded_for_corpus_key` (31-of-59
         // records whose corpus `BONUS` token is a flat, named-skill
         // `SKILL` bonus), then `skill_choice_trait_magnitude_is_grounded_
@@ -12665,11 +12665,18 @@ fn classify(
         // evaluated via `formula_interpreter::PcgenFormulaEvaluator`
         // against the fixture's real computed ability modifiers -- one
         // record, Precise Treatment, carries a second flat `BONUS:SKILL`
-        // token on the SAME skill, summed rather than dropped). Every
-        // other held `trait` record's `unit.key` resolves to `None` from
-        // all six and falls through to `simple_kind_verdict`'s unchanged
-        // `ingested-magnitude` fallback -- a pure widening, never a
-        // regression for a trait no module yet covers.
+        // token on the SAME skill, summed rather than dropped), then
+        // `situational_skill_trait_magnitude_is_grounded_for_corpus_key`
+        // (3-of-59 more records carrying a `BONUS:SITUATION` clause,
+        // grounded as a standalone fact carrying its own circumstance
+        // text, never folded into a skill total -- one record,
+        // Trustworthy, ALSO carries a separate flat Diplomacy `SKILL`
+        // token and is only reported grounded once BOTH pillars
+        // fixture-execute correctly). Every other held `trait` record's
+        // `unit.key` resolves to `None` from all seven and falls through
+        // to `simple_kind_verdict`'s unchanged `ingested-magnitude`
+        // fallback -- a pure widening, never a regression for a trait no
+        // module yet covers.
         Kind::Trait => {
             let coordinate = format!("{engine_book}:{}:{}", unit.provenance.file, unit.provenance.line);
             simple_kind_verdict(
@@ -12711,6 +12718,11 @@ fn classify(
                         })
                         .or_else(|| {
                             trait_effects::ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(
+                                &unit.key,
+                            )
+                        })
+                        .or_else(|| {
+                            trait_effects::situational_skill_trait_magnitude_is_grounded_for_corpus_key(
                                 &unit.key,
                             )
                         })
@@ -19146,15 +19158,16 @@ mod companion_text_complete_rung_tests {
     /// NEGATIVE CONTROL: `Trait ~ Fate's Favored` is a real, held `trait`
     /// record (`BONUS:VAR` tokens only, all channel-energy-DC-shaped
     /// variables), one of `trait_effects`'s own module doc comment's "the
-    /// remaining 10 `trait_content` records" that stay out of scope, so
-    /// none of this module's six compute-path entry points
+    /// remaining 7 `trait_content` records" that stay out of scope, so
+    /// none of this module's seven compute-path entry points
     /// (`flat_skill_trait_magnitude_is_grounded_for_corpus_key`,
     /// `skill_choice_trait_magnitude_is_grounded_for_corpus_key`,
     /// `family_choice_trait_magnitude_is_grounded_for_corpus_key`,
     /// `save_trait_magnitude_is_grounded_for_corpus_key`,
     /// `initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key`,
-    /// `ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key`)
-    /// deliberately covers it, all six honestly return `None`, and this
+    /// `ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key`,
+    /// `situational_skill_trait_magnitude_is_grounded_for_corpus_key`)
+    /// deliberately covers it, all seven honestly return `None`, and this
     /// record must stay exactly where it was: `ingested-magnitude`, never
     /// silently promoted.
     ///
@@ -19238,6 +19251,84 @@ mod companion_text_complete_rung_tests {
         assert_eq!(
             verdict.evidence,
             "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_5"
+        );
+    }
+
+    /// **AT-34-E4-002 seventh slice**: `Trait ~ Almost Human`
+    /// (`BONUS:SITUATION|Disguise=to appear human|4`) reaches `grounded`
+    /// via the seventh `.or_else` fallback,
+    /// `situational_skill_trait_magnitude_is_grounded_for_corpus_key`,
+    /// since all six earlier entry points honestly return `None` for this
+    /// record's shape -- a situational bonus grounded as a standalone
+    /// fact, never folded into a Disguise total.
+    #[test]
+    fn a_situational_skill_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            214,
+            "Trait ~ Almost Human",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_4"
+        );
+    }
+
+    /// **AT-34-E4-002 seventh slice, two-clause-one-token case**: `Trait ~
+    /// Self-Taught Scholar`'s single `BONUS:SITUATION` corpus token names
+    /// TWO skills (Linguistics and Spellcraft) -- both clauses must ground
+    /// as separate standalone facts, summing to `1 + 1 = 2`, never just
+    /// one.
+    #[test]
+    fn a_two_clause_situational_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            215,
+            "Trait ~ Self-Taught Scholar",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_2"
+        );
+    }
+
+    /// **AT-34-E4-002 seventh slice, two-pillar (different-skill) case**:
+    /// `Trait ~ Trustworthy` carries a situational `BONUS:SITUATION|
+    /// Bluff=to fool someone|1` clause AND a SEPARATE flat
+    /// `BONUS:SKILL|Diplomacy|1` token -- unlike Precise Treatment's
+    /// same-skill sum, these are two genuinely different dimensions (a
+    /// standalone fact vs. a general skill total), and this record is
+    /// only reported grounded once BOTH fixture-execute correctly, the
+    /// same "never part-credit on one token" discipline Arcane Temper's
+    /// two-pillar case already established.
+    #[test]
+    fn a_two_pillar_situational_and_flat_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            216,
+            "Trait ~ Trustworthy",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_2"
         );
     }
 

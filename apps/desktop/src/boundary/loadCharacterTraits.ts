@@ -9,18 +9,21 @@ import { formatError, hasTauriRuntime } from './runtime';
  * corpus-derived roster of traits this cycle's compute path genuinely
  * supports — `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits, 5
  * fixed-choice `BONUS:SKILL|%LIST` traits (second slice), 4 open-family
- * `BONUS:SKILL|%LIST` traits (third slice), and 2 flat `BONUS:SAVE`
- * traits (fourth slice) — every option returned really does grant its
- * stated bonus once selected (and, for a choice-based option, a valid
- * `skillOptions` choice recorded) and submitted on
+ * `BONUS:SKILL|%LIST` traits (third slice), 2 flat `BONUS:SAVE`
+ * traits (fourth slice), and 3 `BONUS:SITUATION` traits (seventh slice)
+ * — every option returned really does grant its stated bonus once
+ * selected (and, for a choice-based option, a valid `skillOptions` choice
+ * recorded) and submitted on
  * `CreateCharacterRequest.selectedTraits`/`.traitSkillChoices`
  * (`trait_effects::skill_bonuses_from_traits` +
  * `trait_effects::skill_choice_bonuses_from_traits` +
  * `trait_effects::family_choice_bonuses_from_traits` +
- * `trait_effects::save_bonuses_from_traits`). No "resolve" step exists
- * (unlike `loadAlternateRacialTraits`'s pair): no trait shape here has
- * alternate-swap exclusivity or per-character rendered prose to compute
- * ahead of submission.
+ * `trait_effects::save_bonuses_from_traits` +
+ * `pilot_compute::ground_orphan_trait_facts`'s situational-fact channel +
+ * `trait_effects::situational_flat_skill_bonuses_from_traits`). No
+ * "resolve" step exists (unlike `loadAlternateRacialTraits`'s pair): no
+ * trait shape here has alternate-swap exclusivity or per-character
+ * rendered prose to compute ahead of submission.
  */
 
 /** One skill a choice-based trait's `%LIST` can resolve to. */

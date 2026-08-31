@@ -811,6 +811,22 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
         *slot = slot.saturating_add(bonus);
     }
+    // Seventh slice (`AT-34-E4-002`): `Trait ~ Trustworthy`'s SEPARATE,
+    // different-skill flat `BONUS:SKILL|Diplomacy|1` token -- its own
+    // situational Bluff clause grounds through a different channel
+    // entirely (`pilot_compute::ground_orphan_trait_facts`'s standalone-
+    // fact vector, never a skill total). Folded into the same map, never
+    // double-applied, because a trait id can only ever appear in one of
+    // the five tables (enforced by
+    // `no_situational_trait_id_appears_in_any_other_skill_table`).
+    for (skill_id, bonus) in
+        crate::rules_core::trait_effects::situational_flat_skill_bonuses_from_traits(
+            &input.chosen.selected_traits,
+        )
+    {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
 
     let mut totals = BTreeMap::new();
     let mut untrained_use = BTreeMap::new();
