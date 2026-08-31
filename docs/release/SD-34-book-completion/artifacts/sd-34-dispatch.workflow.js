@@ -549,6 +549,13 @@ function regenPrompt(laneSummaries) {
     + '/home/ubuntu/workspace/repos/codex on branch ' + BT + 'tranche/14' + BT + '. Four lanes just landed engine changes and '
     + 'DELIBERATELY did not regenerate ' + BT + 'docs/work-inventory.json' + BT + '. You do it once, for all of them.\n\n'
     + '## What the lanes reported\n\n' + laneSummaries + '\n\n'
+    + '## A red test is waiting on your regeneration\n\n'
+    + 'Commit ' + BT + '38e10d066b' + BT + ' prefixed two deferral evidence strings with '
+    + BT + 'engine_diagnostic:' + BT + ' (15 of 170 deferrals lacked it, from two classifier sites). The code is landed '
+    + 'and its unit tests pass, but ' + BT + 'docs/work-inventory.json' + BT + ' still carries the old strings, so '
+    + BT + 'tests/v06_work_inventory.rs::the_committed_inventory_is_well_formed_and_uses_only_declared_statuses' + BT + '\n'
+    + 'is RED until your regeneration bakes them in. **Run that test after regenerating and report its result.** '
+    + 'Do NOT hand-edit the inventory to make it pass — the regeneration is the only legitimate route.\n\n'
     + '## Record this wave in the wave ledger\n\n'
     + 'Run ' + BT + 'python3 scripts/wave_ledger.py' + BT + ' and paste its table into your receipt, then state in one '
     + 'line how long THIS wave ran and how that compares to the last three. The ledger reads wave timings off the '
@@ -626,11 +633,11 @@ function ucLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E4-002', dir: 'epic-4-ultimate-campaign',
     title: 'drive Ultimate Campaign to zero — extend the trait/drawback capability, pillar by pillar.\n\n'
       + 'Bar: ' + BT + 'DONE = 265 of 265' + BT + '. Re-derive the split yourself before anything else; measured at '
-      + 'HEAD 07678e0601: ' + BT + 'DONE 196' + BT + ', 44 ' + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 '
+      + 'HEAD 38e10d066b: ' + BT + 'DONE 200' + BT + ', 40 ' + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 '
       + BT + 'unmeasurable' + BT + ' (U), 2 ' + BT + 'deferred-with-reason' + BT + ' (D), 2 ' + BT + 'engine-does-not-hold' + BT + ' (X). '
       + 'Bucket V is **0** — closed corpus-wide by AT-34-E3-005, not by you; do not re-open or re-claim it.\n\n'
       + '**The capability EXISTS and is seven cycles old. You are extending it, not starting it.** Read '
-      + BT + 'artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_7.md' + BT + ' FIRST — it is the newest, and its '
+      + BT + 'artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_8.md' + BT + ' FIRST — it is the newest, and its '
       + '"next cycle" section names your work. Do NOT read receipt_3 as current: it describes a repo state seven cycles '
       + 'gone, and a lane already lost time to that. `src/rules_core/trait_effects.rs` now holds real tables, real '
       + 'producers, and a real desktop picker in `apps/desktop/src-tauri/src/trait_picker.rs`.\n\n'
@@ -661,8 +668,8 @@ function ucLanePrompt() {
 // at ab65a090ef, so the slot moves to bucket C — the largest single-mechanism block left in the book.
 function cLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-002', dir: 'epic-3-core-rulebook',
-    title: 'bucket C for the Core Rulebook — 201 of 6,701, fourth pass on the pool-group seam.\n\n'
-      + 'Re-derive first; measured at HEAD 5e0ba466a5: ' + BT + 'core_rulebook' + BT + ' bucket C = **201** (351 -> 296 -> 233 -> 201). '
+    title: 'bucket C for the Core Rulebook — 199 of 6,701, fifth pass on the pool-group seam.\n\n'
+      + 'Re-derive first; measured at HEAD 5e0ba466a5: ' + BT + 'core_rulebook' + BT + ' bucket C = **199** (351 -> 296 -> 233 -> 201 -> 199; the seam is nearly mined out, so expect small yields and say so rather than forcing one). '
       + '**Do not inherit the old "all one evidence string" framing — wave 16 disproved it.** That wave closed 38 C '
       + 'units for real (Electricity Resistance and siblings, via the already-shipped generic pool-group compute pass '
       + 'the classifier had simply never consulted) and moved 17 more C→V. Both numbers are corpus-derived, not '
@@ -688,7 +695,7 @@ function cLanePrompt() {
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-003', dir: 'epic-3-core-rulebook',
-    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 812 left.\n\n'
+    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 811 left.\n\n'
       + 'Definition: magnitude ingested, never computed or applied. **The instrument already exists** — that is what '
       + 'separates this from bucket B, whose remainder needs new subsystems built.\n\n'
       + 'Re-derive the sub-causes; do not trust inherited figures OR inherited reasons — this bundle has had a cycle '
