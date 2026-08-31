@@ -60,6 +60,8 @@ KNOWN_WAVES = {
     "wf_195c6a9e-931": ("19", "first wave with the page-cache guard on root cron; C 233, M 944"),
     "wf_75aaf9fb-a7d": ("20", "UC brief retired after 7 cycles of staleness; fresh-base rule "
                               "added after a lane opened at the tranche cut point"),
+    "wf_e22a7b7d-419": ("21", "pool-group seam nearly mined out; regen must bake in 38e10d066b "
+                              "and turn the committed-inventory test green"),
 }
 
 
