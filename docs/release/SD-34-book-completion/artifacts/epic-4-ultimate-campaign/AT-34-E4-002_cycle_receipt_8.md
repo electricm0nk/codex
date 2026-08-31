@@ -1,6 +1,6 @@
 # Cycle 8 — Epic 4 (Ultimate Campaign to zero) / AT-34-E4-002
 
-- **Commit SHA:** `<filled after commit, see below>`
+- **Commit SHA:** `9b0f287698` (code + this receipt); progress/kanban update follows in a second commit per §5
 - **Provenance.** Dispatch brief (wave 20) named `AT-34-E4-002_cycle_receipt_7.md` as the newest
   receipt and instructed re-deriving the split fresh rather than trusting any quoted baseline.
   Worktree opened at a stale base (`ea2b3396f2`, the tranche cut) and was rebased onto
