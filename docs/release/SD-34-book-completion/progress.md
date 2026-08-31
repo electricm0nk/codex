@@ -13,6 +13,88 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle — wave-16 shared `docs/work-inventory.json` regeneration and attribution — complete
+
+**Status: complete.** The single mandatory regeneration-and-attribution cycle closing wave
+16's three dispatched lanes (UC `AT-34-E4-002` cycle 4, C `AT-34-E3-002` Cleric Domain generic
+pool-group closure, M `AT-34-E3-003` bucket-M equipment cycle 2, `BASEITEM:` chase) —
+`docs/work-inventory.json` regenerated exactly once via the required three-pass pipeline, for
+all of them. The dispatch brief's own boilerplate again said "four lanes"; again only three
+lanes' work exists on `tranche/14` since the wave-15 receipt's own closing HEAD — the same
+stale-template-text finding wave-15's own receipt already named, now confirmed a second time.
+
+**Procedure:** `git fetch origin tranche/14 && git rebase origin/tranche/14` (fast-forward, no
+conflicts — local `HEAD` was already an ancestor of `origin/tranche/14`) landing at
+`3ffa80cc20`; baseline snapshot taken from that already-rebased HEAD (`docs/work-inventory.json`,
+49,438 units) per this cycle's own instruction order.
+
+| Pass | Command | Result |
+|---|---|---|
+| 1 | `corpus_literal_sweep` | CLEAN — 48,708/51,482 examined, 413,336 tokens compared, 0 findings |
+| 2 | `derived_evaluator_fixture_check` | 1,839 cleared over 2,580 fixture rows, 0 failed |
+| 3 | `v06_work_inventory` (no `--allow-stamp-loss`) | regenerated, 49,438 units, exit 0 |
+
+**Total pipeline wall time: 927s (15m27s)** — the cost figure this wave shape exists to
+measure; the fastest of the four measured shared-regen runs so far (wave-9 first ~14m38s,
+wave-9 second 1,471s/24m31s, wave-15 1,081s/18m01s), consistent with no lane adding or changing
+any `data/corpus/**` record this wave.
+
+**Whole-corpus before/after diff by unit id:** 49,438 before, 49,438 after, 0 added, 0 removed,
+**72 changed** (55 `class_feature`, 17 `equipment`, all `core_rulebook`). Because the baseline
+was taken after rebasing, it already includes UC's own inline self-regeneration (`4da3693d51`)
+— this cycle's independent re-run reproduces it **byte-for-byte, 0 drift** (`ultimate_campaign`
+identical both sides). C and M each deliberately deferred regeneration to this cycle; both
+lanes' own stated expectations are **confirmed exactly, no mismatch to report**:
+
+- **C** (Cleric Domain): all 55 `class_feature` units moved `engine-does-not-hold` → `grounded`
+  (38) / `literal-verified` (17), exactly as predicted. `core_rulebook` C: 351 → 296 (−55).
+  DONE +38, V +17.
+- **M** (`BASEITEM:` chase): 1 closure (`crossbow_light`, `ingested-magnitude` → `grounded`) +
+  16 evidence-string reclassifications (already-`literal-verified` weapons, bucket unchanged),
+  exactly as predicted. `core_rulebook` M: 958 → 957 (−1).
+
+**Movement, four buckets (`decisions.md §9`):**
+
+- **Closure (reached DONE):** 39 — 38 Cleric Domain `computed`/`derived` members + 1
+  `crossbow_light`.
+- **Reclassification (moved between non-DONE buckets):** 17 — the 17 Cleric Domain `static`
+  members, upgraded `grounded` → `literal-verified` by `apply_done_rung_stamps`.
+- **Evidence-string churn, no bucket crossed:** 16 — the 16 already-`literal-verified` weapons
+  (M), reported separately per `decisions.md §9`.
+- **Reachability:** 0.
+- **Instrument-correction:** 0 in `docs/work-inventory.json` itself, but see below — a second,
+  un-named citation instrument was found broken and fixed this cycle.
+
+**A second instrument found broken by this cycle's own check, not named in the dispatch
+brief:** `completion_atlas.py --check` came back clean (`citation_failures=0`, both scopes),
+but `missing_engine_tables.py --check` (the same citation-pin doctrine, a sibling script) did
+not — both of its `ENGINE_SURFACE_CITATIONS` pins (`companion`, `power`) had shifted +195 lines
+each from this wave's own three lanes' insertions into `v06_work_inventory.rs`. Re-derived by
+`grep`ping the real construction sites (lines 11719/11819) and fixed in
+`scripts/missing_engine_tables.py`; re-run confirms `citation_failures=0`. No bucket-A
+population moved (`companion:28`, `power:421`, unchanged) — instrument upkeep only.
+
+**Atlas checks:** `python3 scripts/completion_atlas.py --check` (corpus-wide):
+`population=49438 unclassified=0 overlap=0` — `DONE:24353 A:449 B:11769 C:4277 D:2955 M:4965
+V:279 U:202 X:170 Z:19`, `citation_failures=0`. `--book core_rulebook --check`: `population=6701
+unclassified=0 overlap=0` — `DONE:4383 B:470 C:296 D:366 M:957 V:104 U:10 X:115`,
+`citation_failures=0`. `python3 scripts/missing_engine_tables.py --check` (post-fix):
+`citation_failures=0`.
+
+**Build verification (after this cycle's own regeneration commit):** `cargo test --locked
+--no-run` (full workspace): exit 0. `cargo test --locked --no-run --manifest-path
+apps/desktop/src-tauri/Cargo.toml` (desktop crate, separate cargo workspace, tested explicitly
+per `decisions.md §10`): exit 0. No Rust source file was touched this cycle.
+
+`kanban.md` rows 14 (C), 15 (M), 30 (UC) each get a one-line confirmation pointer to this
+cycle's own receipt — no story added to the Notes column, per this file's own row-hygiene rule.
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md` (fourth section,
+appended below the three unrelated prior cycles that happen to share this filename).
+
+**This cycle implements no `epic-breakdown.md` criterion directly** — it is the wave's own
+shared regeneration cycle, paid once for three parallel lanes, two of which deliberately
+deferred regeneration and one of which self-regenerated correctly, now independently confirmed.
+
 ### Cycle — AT-34-E3-003 (bucket M, EQUIPMENT sub-causes, cycle 2): a `BASEITEM:` chase closes 1 more real unit, plus an exhaustive 9-shape census of the 408-unit remainder
 
 **Status: partial.** Continuation of the already-merged `AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`
