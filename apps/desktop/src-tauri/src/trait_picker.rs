@@ -299,7 +299,13 @@ mod tests {
         assert_eq!(almost_human.name, "Almost Human");
         assert_eq!(almost_human.bonus, 4);
         assert_eq!(almost_human.skills, vec!["Disguise".to_string()]);
-        assert!(almost_human.description.contains("appear human"));
+        // The corpus DESC prose reads "pass as human"; the corpus BONUS
+        // token's own circumstance text (transcribed verbatim into this
+        // trait's table entry and this cycle's `standalone` fact) reads
+        // "to appear human" -- the two differ in wording, and the
+        // description assertion here checks the DESC field's own words,
+        // not the token's.
+        assert!(almost_human.description.contains("pass as human"));
         assert!(almost_human.skill_options.is_empty());
         assert_eq!(almost_human.choice_set_id, None);
         assert_eq!(almost_human.save, None);
