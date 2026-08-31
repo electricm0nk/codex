@@ -11,6 +11,69 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle 7 — AT-34-E4-002 — fifth trait/drawback slice: flat `BONUS:COMBAT|INITIATIVE` and `BONUS:CONCENTRATION` traits — partial
+
+**Status: partial.** This cycle's own worktree started at a stale base commit (`ea2b3396f2`, the
+`tranche/14` cut point, not the branch tip) and had to be reset onto `origin/tranche/14` before
+any work began. Re-derived the split fresh at the real HEAD (`07678e0601`) rather than trusting
+the dispatch brief's stale baseline (`DONE=151`, measured at `651966b83e`): live `ultimate_
+campaign` was already `DONE=193 M=47 D=2 U=21 X=2` — six prior `AT-34-E4-002` cycles had already
+built and progressively widened the trait/drawback selection capability the dispatch brief's own
+"previous cycle" claimed had "deliberately not started." That claim does not match what
+`AT-34-E4-002_cycle_receipt_3.md` actually says on disk (it already built the capability and
+landed 31 units); the real immediately-prior cycle is `_cycle_receipt_6.md` (fourth slice, flat
+`BONUS:SAVE` traits).
+
+Widened the compute path to two genuinely new pillars at once — initiative checks and
+concentration checks, neither computed anywhere in this engine before this cycle — via the same
+standalone-fact idiom `ground_orphan_feat_facts` already established for Improved Initiative /
+Endurance / Fleet (this engine has no integrated initiative or concentration-check total to layer
+onto, so both ground as their own explanation records rather than being folded into a total that
+does not exist). New `ground_orphan_trait_facts` in `pilot_compute/mod.rs`, called alongside the
+existing feat one, reads `input.chosen.selected_traits` directly (traits carry no
+automatic-grant concept, unlike feats). `ultimate_campaign`'s 2 remaining flat
+`BONUS:COMBAT|INITIATIVE` trait records (`Trait ~ Tactician`, `Trait ~ Arcane Temper`) and 2 flat
+`BONUS:CONCENTRATION|ALLSPELLS` records (`Trait ~ Arcane Temper` again — its corpus record
+carries both tokens — and `Trait ~ Desperate Resolve`) close, **3 distinct records** total.
+
+**New design point**: `Trait ~ Arcane Temper` is the first record in this module's history to
+carry two independently-pillared `BONUS` tokens. `initiative_or_concentration_trait_magnitude_
+is_grounded_for_corpus_key` requires **every applicable pillar** to fixture-execute correctly
+before reporting a record grounded — never on the strength of just one of several declared
+magnitudes, the same "don't over-claim a partial cover" discipline `trait_precise_treatment`'s
+continued exclusion already demonstrates.
+
+**Retro-logged correction of cycle 6's own remainder census**: cycle 6's "3 ability-formula
+traits, 13 mixed-bonus-type traits" enumeration (16 items) silently omitted `trait_precise_
+treatment` (a 17th `trait_content` M-record) — its corpus record mixes a flat `SKILL|Heal|1`
+token with a second, formula-shaped `SKILL|Heal|max(INT,WIS)-WIS` token, so it belongs with the
+ability-formula group (now correctly 4, not 3) but was named in neither prior list. `docs/
+work-inventory.json` itself was never wrong (all 17 records were always held correctly); only the
+prose census undercounted by one. `python3 scripts/retro.py correction` filed.
+
+`ultimate_campaign` (functional, local regen, not committed): `DONE 193→196, M 47→44`; `U:21 D:2
+X:2 V:0` untouched — verified by inventory id-diff, 0 added/removed, exactly 3 changed, all
+`ultimate_campaign trait_content`, `ingested-magnitude → grounded`. No corpus-wide payoff in
+another book this time (checked, no other book carries these exact corpus `KEY`s). `DONE=196 of
+265` (functional) — bar not met. Instrument-correction: `completion_atlas.py`'s bucket-V citation
+line pin re-derived after this cycle's own insertions shifted it (`12914→12924`, `citation_
+failures` 1→0, no bucket population moved). `docs/work-inventory.json`/`completion-atlas.json`
+deliberately NOT committed this cycle (shared end-of-wave regen owns them); figures from a local
+regen, `git restore`-d before commit.
+
+`cargo test --locked --lib -- trait_effects`: 40/40 (8 new). `cargo test --locked --bin
+v06_work_inventory`: 475/475 (2 new positive classifier tests, single-pillar and dual-pillar).
+`cargo test --locked --no-run`: full workspace exit 0, re-verified after this cycle's own rebase
+onto `origin/tranche/14`'s concurrent `AT-34-E3-002` cycle 6 commit (different territory, no
+conflict). `apps/desktop/src-tauri` not run this cycle — no file under `apps/desktop/` touched,
+honestly reported skipped rather than run for no reason. Remainder named by sub-cause, unchanged
+from cycle 6 except the 3 now closed: 4 ability-score-difference-formula records (corrected
+count), 10 further mixed `VAR`/`SITUATION`/`ABILITYPOOL`/`CASTERLEVEL` records (each its own
+future pillar — none shares a mechanism with any other), 1 corpus data gap
+(`trait_shadow_whispers`), 30 `ability_content` records (Drawback/Retrain, out of scope per
+cycle 3's own reading) = 44+21+2+2=69 non-DONE. Full receipt:
+`artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_7.md`.
+
 ### Cycle — AT-34-E3-001 — wave-18 shared `docs/work-inventory.json` regeneration and attribution — complete
 
 **Status: complete.** The mandatory closing regeneration cycle for wave 18 (`decisions.md §9`'s
