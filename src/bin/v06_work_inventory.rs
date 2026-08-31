@@ -12532,12 +12532,13 @@ fn classify(
         // string.
         //
         // `AT-34-E4-002` (bucket M): the same `grounded_magnitude` wiring
-        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by FIVE
+        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by SIX
         // `trait_effects` entry points tried in order -- each an
         // ACTUALLY-EXECUTED fixture character run through a real consumer
-        // (`allocate_skill_ranks` for the first three, `pilot_compute::
-        // compute_total_saves`/`compute_pilot_base_chassis`'s own
-        // `explanations` for the fourth and fifth), never an assumed value:
+        // (`allocate_skill_ranks` for the first three and the sixth,
+        // `pilot_compute::compute_total_saves`/`compute_pilot_base_
+        // chassis`'s own `explanations` for the fourth and fifth), never
+        // an assumed value:
         // `flat_skill_trait_magnitude_is_grounded_for_corpus_key` (31-of-59
         // records whose corpus `BONUS` token is a flat, named-skill
         // `SKILL` bonus), then `skill_choice_trait_magnitude_is_grounded_
@@ -12555,9 +12556,16 @@ fn classify(
         // corpus_key` (2-of-59 more records carrying a flat `COMBAT|
         // INITIATIVE` and/or `CONCENTRATION|ALLSPELLS` token -- one record,
         // Arcane Temper, carries both and is only reported grounded once
-        // BOTH pillars fixture-execute correctly). Every other held
-        // `trait` record's `unit.key` resolves to `None` from all five and
-        // falls through to `simple_kind_verdict`'s unchanged
+        // BOTH pillars fixture-execute correctly), then `ability_diff_
+        // skill_trait_magnitude_is_grounded_for_corpus_key` (4-of-59 more
+        // records whose `BONUS:SKILL` magnitude is an ability-score-
+        // difference formula of PCGen's `max(A,B)-B` shape, genuinely
+        // evaluated via `formula_interpreter::PcgenFormulaEvaluator`
+        // against the fixture's real computed ability modifiers -- one
+        // record, Precise Treatment, carries a second flat `BONUS:SKILL`
+        // token on the SAME skill, summed rather than dropped). Every
+        // other held `trait` record's `unit.key` resolves to `None` from
+        // all six and falls through to `simple_kind_verdict`'s unchanged
         // `ingested-magnitude` fallback -- a pure widening, never a
         // regression for a trait no module yet covers.
         Kind::Trait => {
@@ -12596,6 +12604,11 @@ fn classify(
                         })
                         .or_else(|| {
                             trait_effects::initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+                                &unit.key,
+                            )
+                        })
+                        .or_else(|| {
+                            trait_effects::ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(
                                 &unit.key,
                             )
                         })
@@ -19028,30 +19041,30 @@ mod companion_text_complete_rung_tests {
         );
     }
 
-    /// NEGATIVE CONTROL: `Trait ~ Bruising Intellect` is a real, held
-    /// `trait` record (`BONUS:SKILL|Intimidate|max(INT,CHA)-CHA`, an
-    /// ability-score-difference formula magnitude) -- one of the 4
-    /// records `trait_effects`'s own module doc comment names as still
-    /// out of scope (no formula evaluator exists yet), so none of this
-    /// module's five compute-path entry points
+    /// NEGATIVE CONTROL: `Trait ~ Fate's Favored` is a real, held `trait`
+    /// record (`BONUS:VAR` tokens only, all channel-energy-DC-shaped
+    /// variables), one of `trait_effects`'s own module doc comment's "the
+    /// remaining 10 `trait_content` records" that stay out of scope, so
+    /// none of this module's six compute-path entry points
     /// (`flat_skill_trait_magnitude_is_grounded_for_corpus_key`,
     /// `skill_choice_trait_magnitude_is_grounded_for_corpus_key`,
     /// `family_choice_trait_magnitude_is_grounded_for_corpus_key`,
     /// `save_trait_magnitude_is_grounded_for_corpus_key`,
-    /// `initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key`)
-    /// deliberately covers it, all five honestly return `None`, and this
-    /// record must stay exactly where it was before this cycle:
-    /// `ingested-magnitude`, never silently promoted.
+    /// `initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key`,
+    /// `ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key`)
+    /// deliberately covers it, all six honestly return `None`, and this
+    /// record must stay exactly where it was: `ingested-magnitude`, never
+    /// silently promoted.
     ///
-    /// **Retro-logged correction:** this fixture used `Trait ~ Artisan`
-    /// before this cycle -- a record this cycle's own third (family-
-    /// choice) slice now genuinely covers. A negative control built on a
-    /// record that later gets covered fails loudly (as this one did,
-    /// caught immediately by this cycle's own test run) rather than
-    /// silently asserting the wrong thing, which is exactly the failure
-    /// mode a negative control exists to catch; `Trait ~ Bruising
-    /// Intellect`'s ability-formula shape has no existing or
-    /// near-term-planned compute path, so it is a durable control.
+    /// **Retro-logged correction:** this fixture used `Trait ~ Bruising
+    /// Intellect` before this cycle -- a record this cycle's own sixth
+    /// (ability-score-difference formula) slice now genuinely covers, the
+    /// same "a negative control built on a record that later gets
+    /// covered fails loudly" pattern the prior cycle's own correction
+    /// (below, `Trait ~ Artisan` -> `Trait ~ Bruising Intellect`)
+    /// already established. `Trait ~ Fate's Favored`'s `BONUS:VAR` shape
+    /// has no existing or near-term-planned compute path, so it is a
+    /// durable control.
     #[test]
     fn a_trait_outside_the_flat_slice_stays_ingested_magnitude() {
         let facts = facts_with_simple_kind_table("trait");
@@ -19060,7 +19073,7 @@ mod companion_text_complete_rung_tests {
             "ultimate_campaign",
             "uca_abilities_traits.lst",
             1,
-            "Trait ~ Bruising Intellect",
+            "Trait ~ Fate's Favored",
             1,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
@@ -19068,6 +19081,61 @@ mod companion_text_complete_rung_tests {
         assert_eq!(
             verdict.evidence,
             "trait_content_table_holds_record_magnitude_not_yet_computed"
+        );
+    }
+
+    /// **AT-34-E4-002 sixth slice**: `Trait ~ Bruising Intellect`
+    /// (`BONUS:SKILL|Intimidate|max(INT,CHA)-CHA` -- an ability-score-
+    /// difference formula, a genuinely new magnitude shape, never a flat
+    /// literal) reaches `grounded` via the sixth `.or_else` fallback,
+    /// `ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key`,
+    /// since all five earlier entry points honestly return `None` for
+    /// this record's shape. The fixture-executed value (`4`, from the
+    /// classifier's own hand-derived fixture ability scores INT+3/CHA-1)
+    /// proves the formula genuinely ran, not merely that the table has an
+    /// entry.
+    #[test]
+    fn an_ability_score_difference_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            212,
+            "Trait ~ Bruising Intellect",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_4"
+        );
+    }
+
+    /// **AT-34-E4-002 sixth slice, two-token-same-pillar case**: `Trait ~
+    /// Precise Treatment` carries a flat `BONUS:SKILL|Heal|1` token AND a
+    /// formula `BONUS:SKILL|Heal|max(INT,WIS)-WIS` token, both on the
+    /// SAME skill -- unlike Arcane Temper's two-pillar case, these two
+    /// tokens share one pillar and sum (`4 + 1 = 5`), so grounding this
+    /// record genuinely applies BOTH tokens, never just the formula half.
+    #[test]
+    fn a_two_token_same_skill_ability_score_difference_trait_bonus_promotes_a_held_trait_record_to_grounded()
+    {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            213,
+            "Trait ~ Precise Treatment",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_5"
         );
     }
 

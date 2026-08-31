@@ -157,12 +157,12 @@ BUCKET_DEFINITIONS = {
         "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
         # `item.verdict.status = "literal-verified";` -- one of the two V statuses.
-        # Re-derived a fifth time post-rebase (this cycle's own AT-34-E3-002 cycle 5
-        # insertions -- Bard Versatile Performance -- rebased onto the
-        # concurrently-landed AT-34-E4-002 cycle 6's own fourth-slice save-bonus
-        # insertions into v06_work_inventory.rs): fresh `grep -n` against the real
-        # merged post-rebase file content, not either side's pre-rebase number.
-        "citation": {"file": _ENGINE_SRC, "line": 13103, "must_contain": "literal-verified"},
+        # Re-derived post-rebase (this cycle's own AT-34-E4-002 cycle 8 sixth-slice
+        # ability-score-difference formula insertions rebased onto the
+        # concurrently-landed AT-34-E3-002 cycle 7 wave-21 insertions, both into
+        # v06_work_inventory.rs): fresh `grep -n` against the real merged
+        # post-rebase file content, not either side's pre-rebase number.
+        "citation": {"file": _ENGINE_SRC, "line": 13116, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",

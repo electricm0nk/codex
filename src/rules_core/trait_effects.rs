@@ -118,14 +118,36 @@
 //! `BONUS` tokens -- requires BOTH pillars to fixture-execute correctly
 //! before reporting that record grounded, never just one of the two.
 //!
+//! ## Sixth slice: ability-score-difference formula `BONUS:SKILL` traits
+//!
+//! A sixth cycle re-checked the fifth cycle's own "no formula evaluator
+//! exists in this crate for that shape" finding before carrying it
+//! forward (`decisions.md §12` L2, "never carry your own number
+//! forward") and found it stale: `formula_interpreter::
+//! PcgenFormulaEvaluator` is a real, already-proven recursive-descent
+//! evaluator for exactly PCGen's `max`/`min`/arithmetic formula grammar,
+//! already wired crate-wide (`race_trait_formula_binding`,
+//! `crb_untabled_class_chassis`, `generic_class_chassis`,
+//! `class_feature_grant_consumer`, and `mod.rs`'s own Undine racial-trait
+//! formulas all call it) -- it was simply never reached from this
+//! module. The 4 records whose `BONUS:SKILL` magnitude is an
+//! ability-score-difference formula of PCGen's `max(A,B)-B` shape
+//! (`trait_bruising_intellect`, `trait_planar_savant`,
+//! `trait_pragmatic_activator`, and `trait_precise_treatment`, which
+//! ALSO carries a second, flat `SKILL|Heal|1` token on the same skill --
+//! both tokens are applied and summed, never just the formula half) now
+//! ground by evaluating that formula, verbatim, against the character's
+//! real computed ability modifiers, through the SAME real
+//! `PcgenFormulaEvaluator` every other consumer in this crate uses --
+//! never a hand-reimplemented `max`/subtract. See
+//! [`ABILITY_DIFF_SKILL_TRAIT_BONUSES`] for the 4-record table and
+//! [`ability_diff_skill_bonuses_from_traits`] for the compute path,
+//! folded into the SAME `skill_allocation::allocate_skill_ranks`
+//! consumer the first three slices already established (reusing an
+//! existing consumer, not inventing a new one).
+//!
 //! ## What this module deliberately does NOT cover
 //!
-//! - **4 records** carry an ability-score-difference formula magnitude
-//!   (`max(INT,CHA)-CHA` etc, e.g. `trait_bruising_intellect`; a 4th,
-//!   `trait_precise_treatment`, mixes a flat `SKILL|Heal|1` token with a
-//!   second formula-shaped `SKILL|Heal` token, so covering only its flat
-//!   half would understate it) -- no formula evaluator exists in this
-//!   crate for that shape.
 //! - **The remaining 10 `trait_content` records** mix `BONUS:VAR`,
 //!   `BONUS:SITUATION`, `BONUS:ABILITYPOOL`, and `BONUS:CASTERLEVEL`
 //!   tokens -- different pillars entirely (a bonus trait-slot pool,
@@ -142,13 +164,11 @@
 //!   GM-adjudicated narrative penalties with no clean formulaic trigger,
 //!   per the prior cycle's own direct reading of that corpus.
 //!
-//! Widening past these five slices is future work, gated on either a
-//! formula evaluator for ability-score-difference magnitudes, or genuinely
+//! Widening past these six slices is future work, gated on genuinely
 //! separate per-pillar compute paths for the mixed `BONUS:VAR/SITUATION/
-//! ABILITYPOOL/CASTERLEVEL` records -- neither exists yet, and building
-//! either as a rushed half-measure here would risk the same "8 closures
-//! where measurement found 1" failure this bundle's own doctrine warns
-//! against.
+//! ABILITYPOOL/CASTERLEVEL` records -- none exist yet, and building one as
+//! a rushed half-measure here would risk the same "8 closures where
+//! measurement found 1" failure this bundle's own doctrine warns against.
 
 use std::collections::BTreeMap;
 
@@ -1115,6 +1135,268 @@ pub fn save_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str) -> Opti
     }
 }
 
+/// One `BONUS:SKILL` trait whose magnitude is an ability-score-difference
+/// formula of PCGen's `max(A,B)-B` shape -- see the module doc comment's
+/// "Sixth slice" section. Unlike every earlier table, the magnitude here
+/// is not a corpus-transcribed literal: it is the record's own formula
+/// text, evaluated verbatim by the crate's real, already-proven
+/// `formula_interpreter::PcgenFormulaEvaluator` (the same evaluator
+/// `race_trait_formula_binding`/`crb_untabled_class_chassis`/
+/// `generic_class_chassis`/`class_feature_grant_consumer` already use
+/// crate-wide) against the character's real computed ability modifiers,
+/// never a hand-reimplemented `max`/subtract.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitAbilityDiffSkillBonus {
+    /// The wire id `CharacterInput.chosen.selected_traits` carries for
+    /// this trait -- same `"trait:" + corpus filename slug` idiom as
+    /// [`TraitSkillBonus::trait_id`].
+    pub trait_id: &'static str,
+    /// The record's own corpus `KEY` token, as transcribed from
+    /// `data.key`.
+    pub corpus_key: &'static str,
+    /// The trait's display name, transcribed from the corpus record's own
+    /// `name` field.
+    pub name: &'static str,
+    /// The single `skill:` wire id this formula's result applies to.
+    pub skill: &'static str,
+    /// The formula's own literal text, transcribed verbatim from the
+    /// corpus `BONUS:SKILL|<skill>|<formula>` token -- evaluated as-is by
+    /// [`PcgenFormulaEvaluator`], never re-derived by hand.
+    pub formula: &'static str,
+    /// Every ability-modifier variable name `formula` references (e.g.
+    /// `["INT", "CHA"]`), bound from the character's real computed
+    /// [`crate::rules_core::pilot_compute::AbilityModifiers`] before
+    /// evaluation -- an unbound variable (a name outside this list, or a
+    /// formula that names one this crate does not recognize) makes
+    /// [`PcgenFormulaEvaluator::evaluate`] refuse rather than guess.
+    pub ability_vars: &'static [&'static str],
+    /// A second, flat `BONUS:SKILL|<same skill>|<n>` token this record
+    /// ALSO carries (`0` for the three single-token records;
+    /// `trait_precise_treatment`'s own `+1` flat Heal token for the
+    /// fourth) -- added to the formula's result so BOTH of that record's
+    /// tokens are genuinely applied, never just the formula half (the
+    /// same "every BONUS token, not just one" discipline
+    /// `initiative_or_concentration_trait_magnitude_is_grounded_for_
+    /// corpus_key` established for `Trait ~ Arcane Temper`'s two
+    /// independently-pillared tokens -- here both tokens share ONE
+    /// pillar, the same skill, so they sum rather than needing separate
+    /// pillar checks).
+    pub flat_bonus: i8,
+    /// The trait's own corpus `description` field, verbatim.
+    pub description: &'static str,
+}
+
+/// The 4-of-59 `ultimate_campaign` `trait_content` records whose corpus
+/// `BONUS` token(s) resolve to an ability-score-difference formula of
+/// PCGen's `max(A,B)-B` shape -- see the module doc comment's "Sixth
+/// slice" section for the exact filter and the receipt for this cycle's
+/// re-derivation of every field against the live corpus JSON.
+pub static ABILITY_DIFF_SKILL_TRAIT_BONUSES: &[TraitAbilityDiffSkillBonus] = &[
+    TraitAbilityDiffSkillBonus {
+        trait_id: "trait:trait_bruising_intellect",
+        corpus_key: "Trait ~ Bruising Intellect",
+        name: "Bruising Intellect",
+        skill: "skill:intimidate",
+        formula: "max(INT,CHA)-CHA",
+        ability_vars: &["INT", "CHA"],
+        flat_bonus: 0,
+        description: "Your sharp intellect and rapierlike wit bruise egos. Intimidate is always a class skill for you, and you may use your Intelligence modifier when making Intimidate checks instead of your Charisma modifier.",
+    },
+    TraitAbilityDiffSkillBonus {
+        trait_id: "trait:trait_planar_savant",
+        corpus_key: "Trait ~ Planar Savant",
+        name: "Planar Savant",
+        skill: "skill:knowledge_planes",
+        formula: "max(INT,CHA)-INT",
+        ability_vars: &["INT", "CHA"],
+        flat_bonus: 0,
+        description: "You have always had an innate sense of the workings of the planes and their denizens. You may use your Charisma modifier when making Knowledge (planes) checks instead of your Intelligence modifier.",
+    },
+    TraitAbilityDiffSkillBonus {
+        trait_id: "trait:trait_pragmatic_activator",
+        corpus_key: "Trait ~ Pragmatic Activator",
+        name: "Pragmatic Activator",
+        skill: "skill:use_magic_device",
+        formula: "max(INT,CHA)-CHA",
+        ability_vars: &["INT", "CHA"],
+        flat_bonus: 0,
+        description: "While some figure out how to use magical devices with stubborn resolve, your approach is more pragmatic. You may use your Intelligence modifier when making Use Magic Device checks instead of your Charisma modifier.",
+    },
+    TraitAbilityDiffSkillBonus {
+        trait_id: "trait:trait_precise_treatment",
+        corpus_key: "Trait ~ Precise Treatment",
+        name: "Precise Treatment",
+        skill: "skill:heal",
+        formula: "max(INT,WIS)-WIS",
+        ability_vars: &["INT", "WIS"],
+        flat_bonus: 1,
+        description: "You treat others with a clear and calculating intellect. You gain a +1 trait bonus on all Heal checks, and you may use your Intelligence modifier when making Heal checks instead of your Wisdom modifier.",
+    },
+];
+
+/// Binds `entry.ability_vars` against the character's real computed
+/// ability modifiers and evaluates `entry.formula` via the crate's real
+/// `PcgenFormulaEvaluator` -- returns `None` (never a fabricated value)
+/// for any variable name this module does not recognize or any formula
+/// the evaluator itself refuses.
+fn evaluate_ability_diff_formula(
+    entry: &TraitAbilityDiffSkillBonus,
+    ability_modifiers: &crate::rules_core::pilot_compute::AbilityModifiers,
+) -> Option<i64> {
+    use crate::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvaluator as _;
+    use crate::rules_core::pilot_compute::formula_interpreter::PcgenFormulaEvaluator;
+
+    let mut vars: BTreeMap<String, i64> = BTreeMap::new();
+    for &name in entry.ability_vars {
+        let value = match name {
+            "STR" => ability_modifiers.strength,
+            "DEX" => ability_modifiers.dexterity,
+            "CON" => ability_modifiers.constitution,
+            "INT" => ability_modifiers.intelligence,
+            "WIS" => ability_modifiers.wisdom,
+            "CHA" => ability_modifiers.charisma,
+            _ => return None,
+        };
+        vars.insert(name.to_owned(), i64::from(value));
+    }
+    PcgenFormulaEvaluator.evaluate(entry.formula, &vars).ok()
+}
+
+/// The real, computed skill bonus contribution of every
+/// [`ABILITY_DIFF_SKILL_TRAIT_BONUSES`] trait in `selected_traits`,
+/// summed the same "omit rather than fabricate" way every earlier slice
+/// in this module does -- a trait id this table does not recognize, or
+/// whose formula evaluation fails, contributes nothing. `ability_modifiers`
+/// is the character's real computed
+/// [`crate::rules_core::pilot_compute::AbilityModifiers`], threaded in by
+/// `skill_allocation::allocate_skill_ranks` exactly as it already threads
+/// `chassis.ability_modifiers` into `skill_key_ability_modifier`.
+pub fn ability_diff_skill_bonuses_from_traits(
+    selected_traits: &[String],
+    ability_modifiers: &crate::rules_core::pilot_compute::AbilityModifiers,
+) -> BTreeMap<String, i8> {
+    let mut totals: BTreeMap<String, i8> = BTreeMap::new();
+    for trait_id in selected_traits {
+        let Some(entry) =
+            ABILITY_DIFF_SKILL_TRAIT_BONUSES.iter().find(|e| &e.trait_id == trait_id)
+        else {
+            continue;
+        };
+        let Some(formula_value) = evaluate_ability_diff_formula(entry, ability_modifiers) else {
+            continue;
+        };
+        let total = formula_value.saturating_add(i64::from(entry.flat_bonus));
+        let Ok(total_i8) = i8::try_from(total) else {
+            continue;
+        };
+        let slot = totals.entry(entry.skill.to_owned()).or_insert(0);
+        *slot = slot.saturating_add(total_i8);
+    }
+    totals
+}
+
+/// **AT-34-E4-002's classifier-facing entry point for the sixth,
+/// ability-score-difference-formula slice.** ACTUALLY BUILDS a fixture
+/// character, runs it through the real
+/// [`crate::rules_core::skill_allocation::allocate_skill_ranks`]
+/// consumer, and diffs the genuinely computed `misc_modifier` against a
+/// value this cycle hand-derived from the fixture's own ability scores
+/// (transcribed independently of the evaluator under test -- never
+/// re-derived by calling the same code path, the same discipline
+/// [`race_trait_formula_binding`]'s Halfling test already established).
+/// Fixture ability scores are deliberately asymmetric (never all-equal)
+/// so a broken evaluator that always returned zero could not silently
+/// pass. Returns `None` for any corpus key outside the table, or if the
+/// fixture-executed value ever disagreed with the hand-derived one.
+pub fn ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(
+    corpus_key: &str,
+) -> Option<i8> {
+    let entry = ABILITY_DIFF_SKILL_TRAIT_BONUSES
+        .iter()
+        .find(|entry| entry.corpus_key == corpus_key)?;
+
+    // Fixture ability scores and their hand-derived expected result, per
+    // record (PF1 modifier = floor((score-10)/2), so 16 -> +3, 8 -> -1):
+    let (ability_scores, expected): (AbilityScores, i8) = match entry.trait_id {
+        // max(INT,CHA)-CHA with INT +3 / CHA -1 -> 3-(-1) = 4.
+        "trait:trait_bruising_intellect" | "trait:trait_pragmatic_activator" => (
+            AbilityScores {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 16,
+                wisdom: 10,
+                charisma: 8,
+            },
+            4,
+        ),
+        // max(INT,CHA)-INT with CHA +3 / INT -1 -> 3-(-1) = 4 (the OTHER
+        // side of the same shape -- proves the `-INT` variant is
+        // genuinely evaluated too, not just `-CHA`).
+        "trait:trait_planar_savant" => (
+            AbilityScores {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 8,
+                wisdom: 10,
+                charisma: 16,
+            },
+            4,
+        ),
+        // max(INT,WIS)-WIS with INT +3 / WIS -1 -> 4, plus this record's
+        // own flat +1 Heal token -> 5.
+        "trait:trait_precise_treatment" => (
+            AbilityScores {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 16,
+                wisdom: 8,
+                charisma: 10,
+            },
+            5,
+        ),
+        _ => return None,
+    };
+
+    let input = CharacterInput {
+        case_id: None,
+        source_package_id: "at_34_e4_002_fixture".to_owned(),
+        chosen: ChosenCharacterState {
+            race_id: "race:human".to_owned(),
+            class_levels: vec![CharacterClassLevel {
+                class_id: "class:fighter".to_owned(),
+                level: 1,
+            }],
+            ability_scores,
+            selected_feats: Vec::new(),
+            skill_allocations: vec![crate::rules_core::character_input::SkillAllocation {
+                skill_id: entry.skill.to_owned(),
+                ranks: 1,
+            }],
+            equipment_selections: Vec::new(),
+            selected_choices: Vec::new(),
+            selected_traits: vec![entry.trait_id.to_owned()],
+            spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
+        },
+        selection_provenance: Vec::new(),
+    };
+
+    let totals = crate::rules_core::skill_allocation::allocate_skill_ranks(&input);
+    let computed = totals.totals.get(entry.skill).map(|total| total.misc_modifier)?;
+
+    if computed == expected {
+        Some(computed)
+    } else {
+        // The engine genuinely disagreed with this cycle's own
+        // independently hand-derived expected value -- a real defect,
+        // never papered over.
+        None
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1771,6 +2053,208 @@ mod tests {
             initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
                 "not a real trait key"
             ),
+            None
+        );
+    }
+
+    // ---- Sixth slice: ability-score-difference formula traits ----
+
+    /// The table carries exactly the 4 records this cycle's own fresh
+    /// census named -- a silent shrink or growth here is a real defect.
+    #[test]
+    fn ability_diff_table_has_exactly_four_entries() {
+        assert_eq!(ABILITY_DIFF_SKILL_TRAIT_BONUSES.len(), 4);
+    }
+
+    /// No trait id in this table also appears in the flat-skill, skill-
+    /// choice, or family-choice tables -- the compute paths would
+    /// otherwise double-apply.
+    #[test]
+    fn no_ability_diff_trait_id_appears_in_any_other_skill_table() {
+        for entry in ABILITY_DIFF_SKILL_TRAIT_BONUSES {
+            assert!(
+                find_by_trait_id(entry.trait_id).is_none(),
+                "{} appears in both the flat and ability-diff tables",
+                entry.trait_id
+            );
+            assert!(
+                find_choice_by_trait_id(entry.trait_id).is_none(),
+                "{} appears in both the fixed-choice and ability-diff tables",
+                entry.trait_id
+            );
+        }
+    }
+
+    fn ability_modifiers_for(scores: AbilityScores) -> crate::rules_core::pilot_compute::AbilityModifiers {
+        let input = CharacterInput {
+            case_id: None,
+            source_package_id: "at_34_e4_002_fixture".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel { class_id: "class:fighter".to_owned(), level: 1 }],
+                ability_scores: scores,
+                selected_feats: Vec::new(),
+                skill_allocations: Vec::new(),
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                selected_traits: Vec::new(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        };
+        crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input).ability_modifiers
+    }
+
+    /// No selected traits contributes nothing -- never a fabricated
+    /// default value from an ability score alone.
+    #[test]
+    fn no_selected_traits_contributes_nothing_for_ability_diff() {
+        let mods = ability_modifiers_for(AbilityScores {
+            strength: 10,
+            dexterity: 10,
+            constitution: 10,
+            intelligence: 16,
+            wisdom: 10,
+            charisma: 8,
+        });
+        assert!(ability_diff_skill_bonuses_from_traits(&[], &mods).is_empty());
+    }
+
+    /// The core case: a real formula, genuinely evaluated against real
+    /// ability modifiers -- `max(INT,CHA)-CHA` with INT +3 / CHA -1
+    /// yields `3-(-1) = 4`, not `0` and not the raw modifier.
+    #[test]
+    fn bruising_intellect_evaluates_the_real_formula_against_real_ability_modifiers() {
+        let mods = ability_modifiers_for(AbilityScores {
+            strength: 10,
+            dexterity: 10,
+            constitution: 10,
+            intelligence: 16,
+            wisdom: 10,
+            charisma: 8,
+        });
+        let bonuses = ability_diff_skill_bonuses_from_traits(
+            &["trait:trait_bruising_intellect".to_string()],
+            &mods,
+        );
+        assert_eq!(bonuses.get("skill:intimidate"), Some(&4));
+        assert_eq!(bonuses.len(), 1);
+    }
+
+    /// When the two ability modifiers are equal, the formula's own
+    /// correct answer is zero -- an evaluator that instead returned the
+    /// raw modifier (a plausible-looking bug) would fail this.
+    #[test]
+    fn ability_diff_is_genuinely_zero_when_the_two_modifiers_are_equal() {
+        let mods = ability_modifiers_for(AbilityScores {
+            strength: 10,
+            dexterity: 10,
+            constitution: 10,
+            intelligence: 10,
+            wisdom: 10,
+            charisma: 10,
+        });
+        let bonuses = ability_diff_skill_bonuses_from_traits(
+            &["trait:trait_bruising_intellect".to_string()],
+            &mods,
+        );
+        // A trait that contributes exactly 0 still gets an entry (the
+        // formula genuinely ran and produced 0), consistent with every
+        // other producer in this module summing rather than omitting a
+        // computed zero.
+        assert_eq!(bonuses.get("skill:intimidate"), Some(&0));
+    }
+
+    /// `Trait ~ Precise Treatment` carries TWO `BONUS:SKILL|Heal` tokens
+    /// on the SAME skill -- the flat `+1` and the `max(INT,WIS)-WIS`
+    /// formula. Both must be applied and summed, never just one.
+    #[test]
+    fn precise_treatment_sums_its_flat_token_and_its_formula_token() {
+        let mods = ability_modifiers_for(AbilityScores {
+            strength: 10,
+            dexterity: 10,
+            constitution: 10,
+            intelligence: 16,
+            wisdom: 8,
+            charisma: 10,
+        });
+        let bonuses = ability_diff_skill_bonuses_from_traits(
+            &["trait:trait_precise_treatment".to_string()],
+            &mods,
+        );
+        // max(INT,WIS)-WIS = 3-(-1) = 4, plus the flat +1 Heal token = 5.
+        assert_eq!(bonuses.get("skill:heal"), Some(&5));
+    }
+
+    /// An unrecognized trait id contributes nothing.
+    #[test]
+    fn an_unrecognized_trait_id_contributes_nothing_for_ability_diff() {
+        let mods = ability_modifiers_for(AbilityScores {
+            strength: 10,
+            dexterity: 10,
+            constitution: 10,
+            intelligence: 10,
+            wisdom: 10,
+            charisma: 10,
+        });
+        let bonuses = ability_diff_skill_bonuses_from_traits(
+            &["trait:not_a_real_trait".to_string()],
+            &mods,
+        );
+        assert!(bonuses.is_empty());
+    }
+
+    /// Every entry in [`ABILITY_DIFF_SKILL_TRAIT_BONUSES`] genuinely
+    /// grounds via real fixture execution through the real
+    /// `skill_allocation::allocate_skill_ranks` consumer -- the
+    /// classifier-facing entry point `v06_work_inventory.rs` wires as its
+    /// sixth `.or_else` fallback.
+    #[test]
+    fn every_ability_diff_entry_is_genuinely_grounded_by_fixture_execution() {
+        for entry in ABILITY_DIFF_SKILL_TRAIT_BONUSES {
+            let grounded =
+                ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(entry.corpus_key);
+            assert!(
+                grounded.is_some(),
+                "{} ({}) did not ground via real fixture execution",
+                entry.trait_id,
+                entry.corpus_key
+            );
+        }
+        assert_eq!(
+            ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(
+                "Trait ~ Bruising Intellect"
+            ),
+            Some(4)
+        );
+        assert_eq!(
+            ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key("Trait ~ Planar Savant"),
+            Some(4)
+        );
+        assert_eq!(
+            ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(
+                "Trait ~ Pragmatic Activator"
+            ),
+            Some(4)
+        );
+        assert_eq!(
+            ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(
+                "Trait ~ Precise Treatment"
+            ),
+            Some(5)
+        );
+    }
+
+    /// A corpus key outside the table is honestly `None`.
+    #[test]
+    fn an_ungrounded_ability_diff_corpus_key_returns_none() {
+        assert_eq!(
+            ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key("Trait ~ Acrobat"),
+            None
+        );
+        assert_eq!(
+            ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
             None
         );
     }

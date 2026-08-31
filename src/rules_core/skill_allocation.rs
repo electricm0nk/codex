@@ -797,6 +797,20 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
         *slot = slot.saturating_add(bonus);
     }
+    // Sixth slice (`AT-34-E4-002`): `BONUS:SKILL` traits whose magnitude
+    // is an ability-score-difference formula (`max(A,B)-B`), evaluated
+    // via the crate's real `formula_interpreter::PcgenFormulaEvaluator`
+    // against `chassis.ability_modifiers` -- folded into the same map,
+    // never double-applied, because a trait id can only ever appear in
+    // one of the four tables (enforced by
+    // `no_ability_diff_trait_id_appears_in_any_other_skill_table`).
+    for (skill_id, bonus) in crate::rules_core::trait_effects::ability_diff_skill_bonuses_from_traits(
+        &input.chosen.selected_traits,
+        &chassis.ability_modifiers,
+    ) {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
 
     let mut totals = BTreeMap::new();
     let mut untrained_use = BTreeMap::new();
