@@ -11,6 +11,50 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle 7 — AT-34-E3-003 — EQUIPMENT sub-causes, exhaustive remainder census — partial
+
+**Status: partial.** Territory: the two EQUIPMENT `M` sub-causes
+(`equipment_table_entry_with_corpus_magnitude` + `equipment_own_line_has_no_magnitude_but_
+closure_wiring_class_does`). Worktree opened stale at the tranche cut; rebased onto
+`origin/tranche/14` (`e5d4598f2a`) before anything else — the wave-21 shared regen, two
+`AT-34-E4-002` UC cycles, and one `AT-34-E3-002` cycle had landed since the dispatch brief was
+authored. Re-derived fresh (not inherited): `core_rulebook` M = **778**, equipment split
+**130 + 99 = 229** (corpus-wide **347 + 195 = 542**) — matches cycle 6's own predicted
+post-regen remainder (262−33) exactly, confirming wave-21's regen applied cycle 6's fix
+correctly. Retro `correction` logged against the dispatch brief's own stale 276+147=423 split.
+
+Per the wave's own instruction to disprove a stated reason where warranted, re-derived cycle
+6's next-cycle-plan claim about the remainder's shape from scratch: read every one of the 229
+`core_rulebook` units' real on-disk corpus record against every candidate compute-path
+consumer (`arms_armor.rs`, `general.rs`, `magic_items.rs`, `equipmods.rs`,
+`intelligent_item.rs`, `encumbrance.rs`, `equipment_resolver.rs`) before writing any code.
+**Finding: cycle 6's characterization holds and is now exact rather than approximate.** The
+229 decompose into 7 named mechanisms, summing exactly: `choice_gated_needs_selection_
+plumbing` 104, `cost_only_no_weight_deliberately_excluded` 44 (a correct exclusion, not a
+gap), `no_magnitude_no_wt_no_cost_untraced_closure` 28 (real follow-up, closure-tracing not
+completed this cycle), `var_formula_reference_needs_evaluator` 18,
+`thin_no_raw_tokens` 17 (corpus data loss, needs a guarded regen), `itemcost_pricing_
+formula_no_consumer` 9 (needs a new pricing-formula subsystem — confirmed by grep, zero
+consumer anywhere reads `BONUS:ITEMCOST`), `real_type_but_excluded_shape_or_new_mechanic` 9
+(deliberate exclusions + genuinely new small mechanics, e.g. `WEIGHTADD` applied-modifier
+weight deltas — confirmed zero consumer via `grep -rln WEIGHTADD src/`). None of the seven has
+an already-wired consumer the probe is merely blind to (the shape cycles 3/4/6 each found and
+fixed) — every one needs new selection-level state, a formula evaluator, or corpus data this
+cycle has no write scope to recover. No code was written this cycle rather than force a fix
+into a shape that would misrepresent the real boundary (`decisions.md §16`, `§12` L6:
+"measurement waves that bank zero units are legitimate deliverables").
+
+Movement: Closure 0, Reclassification 0, Reachability 0 (a precision refinement of an
+already-known remainder, not a bucket move), Instrument-correction 0 (the retro correction
+targets the dispatch brief's own stale figure, not a measured count this cycle produced). No
+`src/`, `scripts/`, or `data/corpus/` file touched. Build scope verified anyway (no code
+change depended on it, but confirms the tree this receipt reasons about is genuinely green):
+`cargo test --locked --no-run` exit 0 full workspace + desktop crate (separate cargo
+workspace), both at `e5d4598f2a`. `equipment_table_entry_with_corpus_magnitude`/`equipment_
+own_line_has_no_magnitude_but_closure_wiring_class_does` unchanged at 130/99 (`core_rulebook`
+M unchanged at 778) — no closure this cycle, reported honestly. Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-003_m_bucket_equipment_cycle_receipt_7.md`.
+
 ### Cycle 9 — AT-34-E3-002 — Ranger Favored Enemy exact-slug identity record — partial
 
 **Status: partial.** Sixth pass on the pool-group seam, re-derived fresh at cycle start:
