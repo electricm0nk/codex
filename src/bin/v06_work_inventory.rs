@@ -6757,7 +6757,27 @@ fn equipment_key_is_wired(
     // probe-only computation. Consulting it here is a widening of what
     // this probe OBSERVES, exactly the shape `skill_allocation::
     // skill_bonus_is_grounded_for_display_name` widened for `Kind::Skill`.
-    codex::rules_core::damage_total::resolve_base_damage_dice(key, corpus).is_some()
+    if codex::rules_core::damage_total::resolve_base_damage_dice(key, corpus).is_some() {
+        return true;
+    }
+    // AT-34-E3-003 (bucket `M`, EQUIPMENT sub-causes, cycle 6): the checks
+    // above cover armor/skill/ability/weapon/damage magnitudes, but none
+    // ever consulted `encumbrance::compute_encumbrance` -- a real,
+    // already-wired consumer (called by `pilot_compute_corpus`/
+    // `contract`, rendered on the real character sheet via
+    // `character_hub.rs`'s `CarriedItem`/`EncumbranceComputation`) that
+    // resolves a record's own `WT:`/`COST:` tokens, the two fields
+    // `wiring_class::MAGNITUDE_TOKENS` has always counted as real
+    // magnitude. A record whose own corpus line carries ONLY `COST:`/
+    // `WT:` (no `BONUS:`/`TEMPBONUS:`/`DAMAGE:`/... chain) was invisible
+    // to every check above and could only ever report
+    // `equipment_table_entry_with_corpus_magnitude` or `equipment_own_
+    // line_has_no_magnitude_but_closure_wiring_class_does`. See
+    // `encumbrance::equipment_key_resolves_a_carried_weight`'s own doc
+    // comment for why this widens what the probe OBSERVES without
+    // changing what counts as an answer (`compute_encumbrance`'s own
+    // weight-is-required gate is unchanged and untouched here).
+    codex::rules_core::encumbrance::equipment_key_resolves_a_carried_weight(key, corpus)
 }
 
 // ---------------------------------------------------------------------------
@@ -16940,6 +16960,59 @@ mod e14_harness_tests {
             "Cloak of the Manta Ray carries no BONUS:COMBAT|AC chain, only \
              TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor -- the probe must \
              read that token via compute_arms_armor_effect's new fallback"
+        );
+    }
+
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 6): a real,
+    /// on-disk record whose own corpus line carries ONLY `COST:`/`WT:` as
+    /// its magnitude tokens -- no `BONUS:`/`TEMPBONUS:`/`DAMAGE:`/... chain
+    /// of any kind. `Horn of Valhalla (Brass)`
+    /// (`data/corpus/core_rulebook/equipment/magic_items/
+    /// horn_of_valhalla_brass.json`) is exactly this shape. A real,
+    /// already-wired consumer (`encumbrance::compute_encumbrance`) resolves
+    /// its weight and renders it on the character sheet; the probe must
+    /// now observe that.
+    #[test]
+    fn equipment_probe_promotes_a_real_item_via_its_weight_token_alone() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_equipment_corpus(&roots);
+        assert!(
+            equipment_key_is_wired("Horn of Valhalla (Brass)", &corpus),
+            "Horn of Valhalla (Brass) carries no BONUS/TEMPBONUS/DAMAGE chain, only \
+             COST:50000 and WT:2 -- the probe must read the weight token via \
+             encumbrance::equipment_key_resolves_a_carried_weight"
+        );
+    }
+
+    /// Same shape, hand-built fixture so the assertion does not depend on
+    /// the on-disk corpus staying byte-identical, and pins the SPECIFIC
+    /// mechanism (a `WT:` token, not a coincidental match on some other
+    /// field).
+    #[test]
+    fn equipment_probe_promotes_a_hand_built_item_with_only_a_weight_token() {
+        let text = "Test Trinket\tKEY:Test Trinket ~ Weight Only\tTYPE:Wondrous\tCOST:5\tWT:2\n";
+        let corpus = equipment_corpus_from(text);
+        assert!(
+            equipment_key_is_wired("Test Trinket ~ Weight Only", &corpus),
+            "carries a real WT: token and nothing else mechanical -- must ground on that alone"
+        );
+    }
+
+    /// Negative control: `COST:` alone, with no `WT:` token, must NOT be
+    /// promoted -- `compute_encumbrance` itself requires weight before
+    /// counting an item as carried (cost alone is supplementary), so this
+    /// widening must not diverge from that real consumer's own gate.
+    #[test]
+    fn equipment_probe_does_not_promote_a_record_with_cost_but_no_weight_token() {
+        let text = "Test Coupon\tKEY:Test Coupon ~ Cost Only\tTYPE:Wondrous\tCOST:5\n";
+        let corpus = equipment_corpus_from(text);
+        assert!(
+            !equipment_key_is_wired("Test Coupon ~ Cost Only", &corpus),
+            "COST: alone, with no WT:, must stay unwired -- compute_encumbrance itself \
+             requires weight before counting an item as carried"
         );
     }
 

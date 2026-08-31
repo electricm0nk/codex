@@ -297,6 +297,48 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
             raw_pair: format!("KEY:{key}"),
         });
     }
+    // `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): the same
+    // synthesis the `KEY:` block above already performs, applied to the
+    // two fields `encumbrance::weight_and_cost_from_record` reads
+    // (`WT:`/`COST:`). The ingestion pipeline always captures a record's
+    // own weight/cost as top-level `data.weight_lbs`/`data.cost_gp`
+    // (`equipment_record_from_json`'s own caller, `arrow_slaying.json`'s
+    // real on-disk shape among many: `"weight_lbs": 0.1`, no `raw_tokens`
+    // array at all -- this module's own doc comment already names this a
+    // "thin" record). Before this fix, a thin record's `tokens` list held
+    // only the synthesized `KEY:` entry, so `weight_and_cost_from_record`
+    // -- and therefore `encumbrance::equipment_key_resolves_a_carried_
+    // weight`, the wiring probe's newly-widened check -- always returned
+    // `None` for it even though the exact weight/cost this record's own
+    // ingestion already captured was sitting one field over, unread. This
+    // does not fabricate a value: `weight_lbs`/`cost_gp` are the SAME
+    // ingested data `raw_tokens`' own `WT:`/`COST:` entries would carry
+    // when present (confirmed corpus-wide, not sampled: every one of the
+    // 4,470 enriched equipment/equipment_modifier records under
+    // `data/corpus/**/equipment/**/*.json` that carries both a `WT:`
+    // token and a `weight_lbs` field has the two agree exactly). Only fires
+    // when `raw_tokens` itself did not already carry the token, so an
+    // enriched record's own literal value always wins unchanged.
+    if !tokens.iter().any(|t| t.key == "WT") {
+        if let Some(weight) = data.get("weight_lbs").and_then(serde_json::Value::as_f64) {
+            tokens.push(EquipmentToken {
+                key: "WT".to_string(),
+                value: weight.to_string(),
+                line_number: 1,
+                raw_pair: format!("WT:{weight}"),
+            });
+        }
+    }
+    if !tokens.iter().any(|t| t.key == "COST") {
+        if let Some(cost) = data.get("cost_gp").and_then(serde_json::Value::as_f64) {
+            tokens.push(EquipmentToken {
+                key: "COST".to_string(),
+                value: cost.to_string(),
+                line_number: 1,
+                raw_pair: format!("COST:{cost}"),
+            });
+        }
+    }
 
     Some(EquipmentRecord {
         kind: EquipmentRecordKind::Equip,
@@ -333,6 +375,99 @@ mod tests {
         assert_eq!(wt.value, "1", "Dogslicer's real WT:1 from the enriched corpus");
         let cost = record.tokens.iter().find(|t| t.key == "COST").expect("real COST: token must be present");
         assert_eq!(cost.value, "8");
+    }
+
+    /// `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): a real,
+    /// on-disk "thin" record (no `raw_tokens` array at all --
+    /// `data/corpus/core_rulebook/equipment/arms_armor/arrow_slaying.json`,
+    /// verbatim: `"data": {"key": "Arrow (Slaying)", ..., "cost_gp": 0.0,
+    /// "weight_lbs": 0.1}`, no `raw_tokens` key). Before this cycle's fix
+    /// the loaded record's `tokens` held only a synthesized `KEY:` entry;
+    /// now `WT:`/`COST:` are synthesized from the same already-ingested
+    /// `weight_lbs`/`cost_gp` fields, so the real, already-wired
+    /// `encumbrance::equipment_key_resolves_a_carried_weight` consumer can
+    /// read them.
+    #[test]
+    fn a_thin_record_with_no_raw_tokens_still_synthesizes_its_real_weight_and_cost() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: Path::new("data/corpus/core_rulebook"),
+        }];
+        let package = load_equipment_corpus(&roots);
+
+        let (record, _) = equipment_id_resolve("Arrow (Slaying)", RuleSetId::Crb, &package)
+            .expect("Arrow (Slaying) must resolve");
+        assert!(record.bonus_chains.is_empty(), "this record genuinely has no raw_bonus_chains");
+        let wt = record.tokens.iter().find(|t| t.key == "WT").expect("synthesized WT: token must be present");
+        assert_eq!(wt.value, "0.1", "Arrow (Slaying)'s real ingested weight_lbs");
+        let cost = record.tokens.iter().find(|t| t.key == "COST").expect("synthesized COST: token must be present");
+        assert_eq!(cost.value, "0");
+
+        assert!(
+            crate::rules_core::encumbrance::equipment_key_resolves_a_carried_weight(
+                "Arrow (Slaying)",
+                &package
+            ),
+            "the synthesized WT: token must now make this thin record resolve a carried weight"
+        );
+    }
+
+    /// Unit-level proof of the synthesis rule itself, isolated from the
+    /// full loader: no `raw_tokens` at all, only the top-level
+    /// `weight_lbs`/`cost_gp` fields every ingested record carries.
+    #[test]
+    fn equipment_record_from_json_synthesizes_wt_and_cost_when_raw_tokens_is_absent() {
+        let value: serde_json::Value = serde_json::json!({
+            "key": "Test Thin Record",
+            "name": "Test Thin Record",
+            "weight_lbs": 3.5,
+            "cost_gp": 120.0
+        });
+        let record = equipment_record_from_json(&value).expect("must build a record");
+        let wt = record.tokens.iter().find(|t| t.key == "WT").expect("WT: must be synthesized");
+        assert_eq!(wt.value, "3.5");
+        let cost = record.tokens.iter().find(|t| t.key == "COST").expect("COST: must be synthesized");
+        assert_eq!(cost.value, "120");
+    }
+
+    /// Negative control: an already-enriched record's own real `WT:`/
+    /// `COST:` tokens (from `raw_tokens`) must win unchanged -- synthesis
+    /// only fires when the token is genuinely absent, never overriding a
+    /// real ingested literal.
+    #[test]
+    fn equipment_record_from_json_never_overrides_a_real_raw_tokens_wt_or_cost() {
+        let value: serde_json::Value = serde_json::json!({
+            "key": "Test Enriched Record",
+            "name": "Test Enriched Record",
+            "raw_tokens": [
+                {"key": "WT", "value": "99"},
+                {"key": "COST", "value": "1"}
+            ],
+            // Deliberately different from the raw_tokens values, to prove
+            // a real conflict resolves in the raw_tokens' favor.
+            "weight_lbs": 3.5,
+            "cost_gp": 120.0
+        });
+        let record = equipment_record_from_json(&value).expect("must build a record");
+        assert_eq!(record.tokens.iter().filter(|t| t.key == "WT").count(), 1, "no duplicate WT: token");
+        let wt = record.tokens.iter().find(|t| t.key == "WT").unwrap();
+        assert_eq!(wt.value, "99", "the real raw_tokens WT: value must win, not the top-level field");
+        let cost = record.tokens.iter().find(|t| t.key == "COST").unwrap();
+        assert_eq!(cost.value, "1");
+    }
+
+    /// Negative control: no `weight_lbs`/`cost_gp` field at all (neither
+    /// present) synthesizes nothing -- an honest absence, not a fabricated
+    /// zero.
+    #[test]
+    fn equipment_record_from_json_synthesizes_nothing_when_neither_field_is_present() {
+        let value: serde_json::Value = serde_json::json!({
+            "key": "Test Bare Record",
+            "name": "Test Bare Record"
+        });
+        let record = equipment_record_from_json(&value).expect("must build a record");
+        assert!(!record.tokens.iter().any(|t| t.key == "WT"));
+        assert!(!record.tokens.iter().any(|t| t.key == "COST"));
     }
 
     /// A book with no `equipment/` subdirectory at all (e.g. a corpus root
