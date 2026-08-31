@@ -62,6 +62,8 @@ KNOWN_WAVES = {
                               "added after a lane opened at the tranche cut point"),
     "wf_e22a7b7d-419": ("21", "pool-group seam nearly mined out; regen must bake in 38e10d066b "
                               "and turn the committed-inventory test green"),
+    "wf_56c5bcae-8f5": ("22", "UC lane's first task is the trait-picker no-stub gap it found "
+                              "(4 of 7 tables chained); first wave after the 104 GB worktree sweep"),
 }
 
 
