@@ -101,7 +101,7 @@ BUCKET_DEFINITIONS = {
         # first real construction-site occurrence from later test
         # assertions by full-line, full-indentation string match (never a
         # guessed offset).
-        "citation": {"file": _ENGINE_SRC, "line": 9994, "must_contain": "grounded"},
+        "citation": {"file": _ENGINE_SRC, "line": 10001, "must_contain": "grounded"},
     },
     "A": {
         "meaning": "engine has no table for this kind",
@@ -111,7 +111,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'has_no_engine_table')"
         ),
         # `Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table")`.
-        "citation": {"file": _ENGINE_SRC, "line": 12252, "must_contain": "has_no_engine_table"},
+        "citation": {"file": _ENGINE_SRC, "line": 12259, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -121,7 +121,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')"
         ),
         # `engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine")`.
-        "citation": {"file": _ENGINE_SRC, "line": 11932, "must_contain": "not_held_by_engine"},
+        "citation": {"file": _ENGINE_SRC, "line": 11939, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -131,7 +131,7 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'explanation_id' / 'diagnostic')"
         ),
         # `engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")`.
-        "citation": {"file": _ENGINE_SRC, "line": 12157, "must_contain": "explanation_id"},
+        "citation": {"file": _ENGINE_SRC, "line": 12164, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -140,13 +140,13 @@ BUCKET_DEFINITIONS = {
         # The shared `engine_does_not_hold` closure that stamps `status: "engine-does-not-hold"`
         # for every arm that falls through A/B/C -- this IS the D fallthrough
         # (the closure's own definition line immediately precedes this one).
-        "citation": {"file": _ENGINE_SRC, "line": 10010, "must_contain": "engine-does-not-hold"},
+        "citation": {"file": _ENGINE_SRC, "line": 10017, "must_contain": "engine-does-not-hold"},
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
         "clears": "running the compute path (shape engine)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
-        "citation": {"file": _ENGINE_SRC, "line": 10003, "must_contain": "ingested-magnitude"},
+        "citation": {"file": _ENGINE_SRC, "line": 10010, "must_contain": "ingested-magnitude"},
     },
     "V": {
         "meaning": "verified by proxy, never by the oracle",
@@ -158,25 +158,25 @@ BUCKET_DEFINITIONS = {
         # concurrently-landed AT-34-E4-002 cycle 6's own fourth-slice save-bonus
         # insertions into v06_work_inventory.rs): fresh `grep -n` against the real
         # merged post-rebase file content, not either side's pre-rebase number.
-        "citation": {"file": _ENGINE_SRC, "line": 12997, "must_contain": "literal-verified"},
+        "citation": {"file": _ENGINE_SRC, "line": 13004, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
         "clears": "instrument correction",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
-        "citation": {"file": _ENGINE_SRC, "line": 10255, "must_contain": "unmeasurable"},
+        "citation": {"file": _ENGINE_SRC, "line": 10262, "must_contain": "unmeasurable"},
     },
     "X": {
         "meaning": "deferred with a stated reason",
         "clears": "revisiting the stated condition",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
-        "citation": {"file": _ENGINE_SRC, "line": 10215, "must_contain": "deferred-with-reason"},
+        "citation": {"file": _ENGINE_SRC, "line": 10222, "must_contain": "deferred-with-reason"},
     },
     "Z": {
         "meaning": "not started",
         "clears": "ordinary work",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == not-started)",
-        "citation": {"file": _ENGINE_SRC, "line": 10076, "must_contain": "not-started"},
+        "citation": {"file": _ENGINE_SRC, "line": 10083, "must_contain": "not-started"},
     },
 }
 

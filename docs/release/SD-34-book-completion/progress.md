@@ -11,6 +11,64 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-003 (bucket M, EQUIPMENT sub-causes, cycle 4) — `BONUS:VAR` wiring closes both shapes — partial
+
+**Status: partial.** Re-derived cycle 3's own 395-unit territory (249 same-line + 146
+closure-shape) fresh at the real rebase base (`adcbbc8695`) — confirmed exactly, not trusting
+the dispatch brief's stale 972/423 figures.
+
+**Found that `general::compute_var_effect`/`general::apply_eqmod_var_bonus` already existed —
+fully unit-tested and already oracle-validated by SD-33's own `e5_var_shape_ours.rs`
+round-trip comparison — but were never called from `compute_equipment_effects`, the real
+dispatcher.** Reachable only from four SD-33 oracle-comparison bin tools. Cycle 2's own 9-shape
+census had classified this population as "`VAR` cross-subsystem, new engineering" — that
+classification is corrected here: same shape as cycles 1/3's `BASEITEM:`/`TEMPBONUS:`
+widening, a real compute path that only needed to be consulted.
+
+Wired `compute_var_effect` + `apply_eqmod_var_bonus` into `compute_equipment_effects` (new
+`ResolvedEquipmentEffect::var_bonus` field, reusing the already-resolved EQMOD-referenced
+records), widened `equipment_key_is_wired`'s probe. 3 new tests (real on-disk same-line
+positive, hand-built EQMOD-referenced positive, negative control), RED confirmed (temporarily
+reverted the wiring, saw the real-corpus test fail for the stated reason) then GREEN.
+`rules_core::equipment_effects::` 83/83, `v06_work_inventory` bin 482/482, full lib suite
+2,977/5-pre-existing-failed (same signature cycle 3 already named as an out-of-scope
+`incident`), workspace `--no-run` and the desktop crate both exit 0.
+
+**`core_rulebook` bucket M: 944 → 812 (−132).** `equipment_table_entry_with_corpus_magnitude`
+249→164 (−85), `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` 146→99
+(−47) — **unlike cycles 2/3, this fix reaches BOTH shapes**: every one of the 47 closure-shape
+closures carries a `BONUS:VAR` chain the classifier's own narrower `text_only`/
+`magnitude_token_count` check never recognised as a magnitude, which `wiring_class`'s fuller
+signal aggregation had already correctly flagged `computed`. This retires cycles 2/3's
+repeated "one fix does not cover both shapes" finding for the `VAR` token family specifically
+(it still holds for `BASEITEM:`/`TEMPBONUS:`).
+
+Whole-corpus id-diff (local regen, not committed): 49,438→49,438, 0 added/removed, 337 changed
+— **256 this cycle's own closure** (`ingested-magnitude→grounded`, equipment/equipment_modifier
+kind, 9 books: 132 `core_rulebook` + 124 other-book), **46 this cycle's own DONE→DONE
+reclassification** (`text-complete→grounded`, same fix's side effect on already-done records),
+**32 NOT this cycle's own** (`class_feature engine-does-not-hold→grounded`, co-mingled
+already-committed `AT-34-E3-002` cycle 6's own domain-header closure, exactly matching that
+cycle's own stated 32), **3 NOT this cycle's own** (`trait ingested-magnitude→grounded`,
+`ultimate_campaign`, a `DERIVED_FIXTURE_CHECK_REPORT` pass side effect, unrelated to
+`equipment_effects.rs`). 256+46+32+3=337, reconciled exactly. `docs/work-inventory.json`/
+`completion-atlas.json` deliberately NOT committed (shared regen owns them); figures from a
+local regen, restored before commit.
+
+**Real correctness boundary respected, not worked around:** 18 units (9 same-line + 9
+closure-shape, the `Intelligent Item ~ Alignment / *` chassis family) carry a formula-valued,
+`PRE`-gated `BONUS:VAR|NegLevels|1+var("IntItemNegativeLevel")|!PREALIGN:<code>` chain —
+correctly declined (`.parse::<i16>()` fails on the non-literal string), genuinely
+character-alignment-conditional, not a flat item property.
+
+`core_rulebook` remainder: 164+99=**263** (`equipment_table_entry_with_corpus_magnitude` 164,
+`equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` 99), named by a fresh
+13-row qualifier-shape census in the receipt (largest un-investigated shapes:
+`SAVE`/`SKILLRANK` — no wired resolver at all, 16 units; `COMBAT`/`STAT`/`SKILL` — already-wired
+token families that still aren't closing, 20 units, worth a follow-up read before assuming new
+engineering). Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-003_m_bucket_equipment_cycle_receipt_4.md`.
+
 ### Cycle — AT-34-E3-002 (cycle 6) — Core Rulebook bucket C, domain-header display-record wiring — partial
 
 **Status: partial.** Re-derived cycle 5's own 233-unit remainder fresh (all 11 sub-causes
