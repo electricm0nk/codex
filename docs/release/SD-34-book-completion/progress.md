@@ -11,6 +11,84 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-001 — wave-21 shared `docs/work-inventory.json` regeneration and attribution — complete
+
+**Status: complete.** The mandatory closing regeneration cycle for wave 21 (`decisions.md §9`'s
+file-ownership rule: dispatched lanes defer `docs/work-inventory.json` regeneration to one
+shared, end-of-wave cycle). Three code lanes landed this wave: C (`AT-34-E3-002` cycle 8,
+Favored Class Bonus generalized from Fighter to five sibling classes), M (`AT-34-E3-003`
+bucket-M equipment cycle 6, `encumbrance`'s `WT:`/`COST:` read wired into the probe), UC
+(`AT-34-E4-002` cycle 9, `BONUS:SITUATION` trait slice). UC's own named reachability finding
+(the desktop trait picker chaining only 4 of 7 tables) moves no inventory bucket — orthogonal to
+this cycle's job. Also folded in: `38e10d066b`, a standalone classifier fix landed ahead of the
+three lanes, prefixing 15 of 170 deferral evidence strings with `engine_diagnostic:`; its own
+committed-inventory test was RED until this regeneration baked the effect in (§ below). Ran in
+the assigned shared main checkout — `git fetch origin tranche/14 && git rebase origin/tranche/14`
+fast-forwarded cleanly onto `ea61100552`, no conflict, no worktree needed.
+
+Three-pass pipeline run in order (`corpus_literal_sweep` CLEAN, ~3m20.5s [48,708 examined, 0
+findings], `derived_evaluator_fixture_check` ~13s [1,839 units cleared over 2,580 fixture rows, 0
+failed], `v06_work_inventory` regenerated ~12m7s) — no `--allow-stamp-loss`. Total pipeline wall
+time **~940.5s (~15m40.5s)**, timed off binary-build/report-write mtimes rather than a `time`
+wrapper this cycle — in the same ~920–955s band as wave 16 (927s), wave 18 (953.664s), wave 19
+(941.7s), and wave 20 (919.5s).
+
+**Whole-corpus before/after diff by unit id: 0 added, 0 removed, 247 changed** — 230 real
+bucket-boundary transitions plus 17 evidence-only same-status churn. Every lane's own stated
+figure reproduced exactly, digit for digit:
+
+| Cycle | Own claim | Measured | Match |
+|---|---|---:|---|
+| C cycle 8 — Favored Class Bonus, Fighter generalized to 5 siblings | 6, `core_rulebook` C 199→193 | 6 | exact |
+| M cycle 6 — encumbrance `WT:`/`COST:` wired into the equipment probe | 221 corpus-wide (33 `core_rulebook`) | 221, 33 `core_rulebook` (per-book match too) | exact |
+| UC cycle 9 — `BONUS:SITUATION` trait slice | 3, `ultimate_campaign` DONE 200→203, M 40→37 | 3 | exact |
+
+6 + 221 + 3 = 230, matching the whole-corpus diff's own real-transition total exactly. Re-derived
+independently via `completion_atlas.py` before/after both snapshots, not read from any lane's own
+prose: `core_rulebook` DONE 4616→4655 (+39), C 199→193 (−6), M 811→778 (−33), B/D/V/U/X/Z
+unchanged (470/366/114/10/115/0); corpus-wide DONE 24731→24961 (+230), C 4180→4174 (−6), M
+4674→4450 (−224), every other bucket unchanged (A 449, B 11769, D 2955, V 289, U 202, X 170, Z
+19); `ultimate_campaign` DONE 200→203 (+3), M 40→37 (−3), D/U/X unchanged (2/21/2). **No lane's
+expectation mismatched this wave.**
+
+A real side-finding claimed by nobody: 2 `mythic_adventures` equipment records
+(`black_iron_axe`, `aegis`) shifted evidence text at unchanged DONE status
+(`equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` →
+`equipment_effect_probe_observed_computed_delta`), a byproduct of M's widened probe now firing
+more specifically on two already-DONE records. No bucket boundary crossed — instrument-
+correction, not closure, and not claimed by M's own cycle-6 receipt (which scoped its own
+measurement to status transitions only).
+
+**Movement, four buckets (`decisions.md §9`):** Closure **230** (224 `ingested-magnitude`→
+`grounded` [221 M + 3 UC] + 6 `engine-does-not-hold`→`grounded` [C]), Reclassification **0**,
+Reachability **0**, Instrument-correction **17** (15 `deferred-with-reason` evidence-string
+fixes from `38e10d066b`'s red-test fix + 2 `mythic_adventures` DONE-DONE evidence corrections
+above).
+
+`completion_atlas.py --check`: corpus-wide clean (`unclassified=0 overlap=0
+done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False
+citation_failures=0`, exit 0). `--book core_rulebook --check` exits 1 — expected, book not yet
+100% (`B:470 C:193 D:366 M:778 V:114 U:10 X:115`). `citation_failures=0` — none of this wave's
+three lane-cycles' own line insertions broke a citation this time, no re-derivation needed.
+`cargo test --locked --no-run` exits 0, full workspace and `apps/desktop/src-tauri` tested
+explicitly as its own separate cargo workspace. No `src/**` file touched by this cycle itself.
+
+**Red test confirmed GREEN.**
+`tests/v06_work_inventory.rs::the_committed_inventory_is_well_formed_and_uses_only_declared_
+statuses` — RED against the pre-regen committed inventory (15 deferral strings missing
+`38e10d066b`'s own `engine_diagnostic:` prefix), GREEN after this regeneration bakes the fix in
+(`cargo test --locked --test v06_work_inventory the_committed_inventory_is_well_formed_and_
+uses_only_declared_statuses` → `1 passed; 0 failed`, 2.96s). No hand-edit — the fix came
+exclusively from the guarded three-pass regeneration, as required.
+
+`python3 scripts/wave_ledger.py`: `wf_e22a7b7d-419` already carried `"21"` in `KNOWN_WAVES` — no
+script edit needed. Wave 21 ran **at least 2:10:19** through this cycle's own last check
+(`RUNNING` because this cycle's own activity is the wave's most recent — settles to `done` once
+this commit lands and three minutes pass with no further writes), inside the same ~2-hour band as
+the last three full waves (wave 18: 2:09:58, wave 19: 2:19:04, wave 20: 1:57:52). Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md` (ninth section, "wave-21
+regeneration and attribution").
+
 ### Cycle — AT-34-E3-003 (bucket M, EQUIPMENT sub-causes, cycle 6) — disproves cycle 5's "generically exhausted" premise: `encumbrance`'s WT:/COST: read was never wired into the probe — partial
 
 **Status: partial.** Worktree opened stale (tranche cut `ea2b3396f2`); `git fetch origin &&

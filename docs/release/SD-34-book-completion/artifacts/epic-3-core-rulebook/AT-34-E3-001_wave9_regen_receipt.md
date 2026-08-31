@@ -1427,3 +1427,209 @@ exit 1 is the expected "not yet 100%" signal, not a failure); full workspace and
    920–955s band regardless of how many units the wave actually moved (72, 90, 337, 7
    respectively) — the pipeline's cost is dominated by the fixed cost of walking the full
    49,438-unit corpus three times, not by the size of any one wave's own movement.
+
+# Cycle — wave-21 regeneration and attribution, ninth dispatch (2026-08-31, later same day)
+
+- **Commit SHA:** this receipt is committed in the same commit as the `docs/work-inventory.json`
+  regeneration and `completion-atlas.json` it describes; `git log -1` at the time of reading
+  resolves it. Base: `origin/tranche/14` tip at dispatch time, `ea61100552` (fast-forwarded
+  cleanly from local `HEAD`, no conflict, no worktree needed).
+
+## 0. Four lanes named, three code lanes measured here
+
+The dispatch brief named "UC (partial) / C (partial) / M (partial)" plus this cycle itself — the
+same "fourth is this cycle itself" shape wave 19/20's own receipts already resolved. UC's own
+named finding (the desktop trait picker's `list_available_character_traits` chaining only 4 of 7
+tables, leaving Tactician/Arcane Temper/Desperate Resolve/Bruising Intellect/Planar
+Savant/Pragmatic Activator/Precise Treatment unselectable for a brand-new character) is a UI
+reachability gap on ALREADY-`grounded` records — it moves no `docs/work-inventory.json` bucket by
+construction, and correctly moves none below. The commit that actually landed engine-classifier
+movement for UC this wave is `AT-34-E4-002` cycle 9 (`af2c8ae1d7`, `ultimate_campaign`
+`BONUS:SITUATION` trait slice), not the picker finding itself. Three code lanes measured: C
+`AT-34-E3-002` cycle 8 (Favored Class Bonus generalized to five sibling classes, `2d9ae34f89`), M
+`AT-34-E3-003` bucket-M equipment cycle 6 (encumbrance `WT:`/`COST:` wiring, `acd6a6a5e3`), UC
+`AT-34-E4-002` cycle 9 (`af2c8ae1d7`). Also folded in: `38e10d066b`, a standalone classifier fix
+(landed ahead of all three lanes' own commits) prefixing 15 of 170 deferral evidence strings with
+`engine_diagnostic:` — its own committed-inventory test (`the_committed_inventory_is_well_formed_
+and_uses_only_declared_statuses`) was RED against the stale committed inventory until this
+regeneration baked its effect in; see §7 below.
+
+## 1. Rebase and baseline
+
+`git fetch origin tranche/14 && git rebase origin/tranche/14` — fast-forwarded cleanly onto
+`ea61100552`, no conflict, no worktree needed. `git show HEAD:docs/work-inventory.json` at
+`ea61100552` is the before-snapshot for every figure below.
+
+## 2. Three-pass pipeline, in order, timed
+
+```
+corpus_literal_sweep            --json-out /tmp/sweep.json      ~3m20.5s   CLEAN (48,708 examined, 0 findings)
+derived_evaluator_fixture_check --json-out /tmp/fixture.json    ~13s       1,839 units cleared, 0 failed
+v06_work_inventory (CORPUS_LITERAL_SWEEP_REPORT + DERIVED_FIXTURE_CHECK_REPORT set, no --allow-stamp-loss)
+                                                                 ~12m7s
+```
+
+**Total pipeline wall time: ~940.5s (~15m40.5s)** — timed from binary-build and report-write file
+mtimes (no `time` wrapper on this cycle's own invocations, unlike prior cycles' receipts; the
+per-pass split is therefore approximate, the total is accurate to within a few seconds). Sits
+inside the same ~920–955s band as the four prior measured shared-regen runs (wave 16: 927s, wave
+18: 953.664s, wave 19: 941.7s, wave 20: 919.5s) — not an outlier, confirming the fixed-cost-of-
+walking-the-corpus finding a fifth time.
+
+## 3. Whole-corpus before/after diff, by unit id — the headline finding
+
+```
+before: 49438 units    after: 49438 units    added: 0    removed: 0
+changed (status or evidence, any field): 247
+
+  Real bucket-boundary transitions: 230
+    ingested-magnitude -> grounded : 224  (221 equipment + 3 trait)
+    engine-does-not-hold -> grounded :  6  (6 class_feature)
+
+  Evidence-only, same-status churn: 17
+    deferred-with-reason -> deferred-with-reason : 15  (38e10d066b's own engine_diagnostic: prefix)
+    literal-verified -> literal-verified          :  2  (mythic_adventures equipment, see §4)
+```
+
+**Every lane's own stated figure reproduced exactly — no lane mismatch this wave.**
+
+| Cycle | Commit | Own claim | Measured | Match |
+|---|---|---|---:|---|
+| C cycle 8 — Favored Class Bonus generalized to 5 sibling classes | `2d9ae34f89` | 6, `core_rulebook` C 199→193 | **6** (`engine-does-not-hold`→`grounded`: `barbarian`, `fighter`, `monk`, `paladin`, `rogue`, `wizard` class_feature) | **exact** |
+| M cycle 6 — encumbrance `WT:`/`COST:` wired into the equipment probe | `acd6a6a5e3` | 221 corpus-wide (33 `core_rulebook`), pending the next regen | **221** (`ingested-magnitude`→`grounded`, equipment, by book: `adventurers_guide` 61, `advanced_class_guide` 41, `core_rulebook` 33, `inner_sea_temples` 32, `ultimate_equipment` 15, `inner_sea_gods` 14, `inner_sea_magic` 6, `ultimate_psionics` 5, `advanced_players_guide` 4, `bestiary` 3, `advanced_race_guide` 3, `occult_adventures` 2, `ultimate_intrigue` 1, `ultimate_wilderness` 1) | **exact**, per-book too |
+| UC cycle 9 — `BONUS:SITUATION` trait slice | `af2c8ae1d7` | 3, `ultimate_campaign` DONE 200→203, M 40→37 | **3** (`ingested-magnitude`→`grounded`: `trait_almost_human`, `trait_self_taught_scholar`, `trait_trustworthy`) | **exact** |
+
+6 + 221 + 3 = 230, matching the whole-corpus diff's own real-transition total exactly. Re-derived
+independently by `completion_atlas.py` before/after both snapshots (not read from any lane's own
+prose): `core_rulebook` DONE 4616→4655 (+39 = 33 equipment + 6 class_feature), C 199→193 (−6), M
+811→778 (−33), B/D/V/U/X/Z all unchanged (470/366/114/10/115/0); `ultimate_campaign` DONE
+200→203 (+3), M 40→37 (−3), D/U/X unchanged (2/21/2); corpus-wide DONE 24731→24961 (+230), C
+4180→4174 (−6), M 4674→4450 (−224), every other bucket unchanged (A 449, B 11769, D 2955, V 289,
+U 202, X 170, Z 19). **No lane's expectation mismatched this wave.**
+
+## 4. A real side-finding this cycle's own regen surfaced, claimed by nobody
+
+The 2 `literal-verified`→`literal-verified` evidence-only entries are `mythic_adventures`
+equipment (`black_iron_axe`, `aegis`) — DONE-bucket both before and after, evidence text shifting
+from `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` to
+`equipment_effect_probe_observed_computed_delta`. Neither M's cycle-6 receipt nor any other
+lane's receipt claims these two; M's own cycle-6 receipt scoped its measurement to status
+transitions only (the 221/33 figures above) and did not report this evidence-string side effect
+of widening `equipment_key_is_wired`. No bucket boundary crossed — instrument-correction, not
+closure, not this cycle's own work either (a byproduct of M's widened probe now firing on two
+already-DONE records with a more specific reason). Logged here since it was found by this
+regeneration, not by any lane's own inspection.
+
+## 5. Movement, four buckets (`decisions.md §9`)
+
+**Closure: 230** (224 `ingested-magnitude`→`grounded` [221 equipment M's own + 3 trait UC's own]
++ 6 `engine-does-not-hold`→`grounded` [class_feature, C's own] — every one of these units left a
+non-DONE bucket and landed in DONE).
+
+**Reclassification: 0** (no unit moved between two non-DONE buckets this wave).
+
+**Reachability: 0** (no lane widened a display/explanation wire onto an already-computed value
+without also computing something genuinely new this wave).
+
+**Instrument-correction: 17** (15 `deferred-with-reason`→`deferred-with-reason` evidence-string
+fixes, `38e10d066b`'s own two-classifier-site `engine_diagnostic:` prefix, folded in by this
+regeneration for the first time — this is the red test's own fix; plus the 2 `mythic_adventures`
+DONE-DONE evidence-string corrections in §4).
+
+This wave carries no bucket-LABEL correction of its own — all three lanes' own receipts already
+used the correct labels (C: "6 closed, all straight to DONE"; M: "221 proven closure-eligible
+pending the next regen"; UC: "3 [...] `ingested-magnitude`→`grounded`"), and the measured
+movement confirms every one.
+
+## 6. Atlas checks
+
+`python3 scripts/completion_atlas.py --book core_rulebook --check`: `population=6701
+unclassified=0 overlap=0` (exit 1 — **expected and correct**, `core_rulebook` still carries
+`B:470 C:193 D:366 M:778 V:114 U:10 X:115`, book-not-finished, not an instrument failure).
+`python3 scripts/completion_atlas.py --check` (corpus-wide): `population=49438 unclassified=0
+overlap=0 done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False
+citation_failures=0`, exit 0. Both scopes clean — `citation_failures=0` means none of this wave's
+three lane-cycles' own line insertions shifted `completion_atlas.py`'s hardcoded
+`BUCKET_DEFINITIONS` citations enough to break a `must_contain` match this time (each lane's own
+receipt already re-derived its own citation pins after its own insertion, including resolving one
+rebase conflict between C cycle 8 and UC cycle 9's concurrent insertions into the same file) — no
+re-derivation needed this cycle.
+
+## 7. The red test
+
+`38e10d066b` landed ahead of this wave's three code lanes, prefixing 15 of 170 deferral evidence
+strings (two `classify()` sites) with `engine_diagnostic:`, but the committed
+`docs/work-inventory.json` at that commit still carried the old strings, so
+`tests/v06_work_inventory.rs::the_committed_inventory_is_well_formed_and_uses_only_declared_
+statuses` was RED. This regeneration bakes the fix in (the 15 `deferred-with-reason`→
+`deferred-with-reason` evidence-only changes in §3 above are exactly those 15 strings, all
+`core_rulebook`, all `companion`/`class_feature` kind). Re-run after committing:
+
+```
+$ cargo test --locked --test v06_work_inventory the_committed_inventory_is_well_formed_and_uses_only_declared_statuses -- --nocapture
+running 1 test
+test the_committed_inventory_is_well_formed_and_uses_only_declared_statuses ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 2.96s
+```
+
+**GREEN.** No hand-edit — the fix came exclusively from the guarded three-pass regeneration.
+
+## 8. Build verification
+
+`cargo test --locked --no-run` (full workspace): exits 0. `apps/desktop/src-tauri`, tested
+explicitly as its own separate cargo workspace: `cargo test --locked --no-run --manifest-path
+apps/desktop/src-tauri/Cargo.toml` — exits 0. Both run after this commit's own regeneration. No
+`src/**` file touched by this cycle itself — all three lanes' own code was already committed by
+their respective cycles; this cycle only measures.
+
+## 9. Wave ledger
+
+```
+WAVE         RUN               STARTED         LAST ACTIVITY     RAN FOR   LANES  STATE
+wave 18      wf_47422ae1-5ea   08-31 09:02:26  08-31 11:12:24    2:09:58       4  done
+wave 19      wf_195c6a9e-931   08-31 11:14:32  08-31 13:33:36    2:19:04       4  done
+wave 20      wf_75aaf9fb-a7d   08-31 13:36:08  08-31 15:34:01    1:57:52       4  done
+wave 21      wf_e22a7b7d-419   08-31 15:39:11  08-31 17:49+      2:10:19+      4  RUNNING (this cycle)
+```
+
+Wave 21 ran (through this cycle's own last check) **at least 2:10:19** — the longest of the last
+four full waves (wave 18: 2:09:58, wave 19: 2:19:04 is still the longest overall, wave 20:
+1:57:52), still inside the same rough 2-hour band the last several full (non-host-killed) waves
+have settled into. `wf_e22a7b7d-419` already carried `"21"` in `KNOWN_WAVES` (added by an earlier
+commit this same wave, `6f67df49c7`) — no script edit needed this cycle. Still `RUNNING` because
+this cycle's own activity is the wave's most recent lane activity (§0 above), settling to `done`
+once this commit lands and three minutes pass with no further writes.
+
+## Status
+
+**complete** — the shared regeneration ran in the assigned main checkout (clean rebase, no
+worktree needed); all three code lanes' own stated figures reproduced exactly (6 / 221 / 3, per-
+book too for M), zero numeric discrepancies at the cycle level, zero bucket-label corrections
+needed. The red test (`the_committed_inventory_is_well_formed_and_uses_only_declared_statuses`)
+is confirmed GREEN post-regeneration, closed exclusively through the guarded pipeline, no hand-
+edit. `completion_atlas.py --check` clean both scopes (book-scoped exit 1 is the expected
+"not yet 100%" signal, not a failure); full workspace and desktop-crate `cargo test --locked
+--no-run` both exit 0. One real side-finding surfaced and logged, claimed by nobody (§4).
+
+## Next-cycle plan
+
+1. **C's own remainder** (193, 13 sub-causes): `class_chassis_internal_tracker` 16 +
+   `prestige_class_chassis_internal_tracker` 10 (internal PCGen bookkeeping, no player-facing
+   surface) + `favored_class_bonus_choice_no_seam__npc_classes` 5 (Adept, Aristocrat, Commoner,
+   Expert, Warrior — genuine engine gap, no bounded chassis seam exists) + 10 further named sub-
+   causes, full table in `AT-34-E3-002_cycle_receipt.md`.
+2. **M's own remainder** (`core_rulebook` 229 of 262−33): 34 `%CHOICE`-gated + 18 `VAR`/`PRE`-
+   gated = 52 correctness boundaries (correctly declined); 182 `COST`/`WT`-only (nothing to
+   compute, now genuinely re-confirmed by this wave's own encumbrance fix reaching every record
+   that HAS a `WT:` token); 31 scattered new-subsystem shapes each too small alone.
+3. **UC's own remainder** (62 non-DONE of 265: `M:37 D:2 U:21 X:2`): 3 `VAR`-only `trait_content`
+   records (now the largest single group), 2 `ABILITYPOOL`-only, 1 mixed `CASTERLEVEL`+`SKILL`,
+   1 corpus data gap, 30 `ability_content` (Drawback/Retrain) records declared out of scope. Also
+   the desktop trait picker's own named gap (7 `grounded` traits across two slices unselectable
+   for a new character) — a UI reachability finding, not a `docs/work-inventory.json` bucket, and
+   not this cycle's territory to close.
+4. **Wave shape cost, measured across five runs**: 927s (wave 16), 953.664s (wave 18), 941.7s
+   (wave 19), 919.5s (wave 20), ~940.5s (wave 21 — this cycle, approximate). All five sit inside
+   the same ~920–955s band regardless of how many units the wave actually moved (72, 90, 337, 7,
+   230 respectively) — the pipeline's cost is dominated by the fixed cost of walking the full
+   49,438-unit corpus three times, not by the size of any one wave's own movement.
