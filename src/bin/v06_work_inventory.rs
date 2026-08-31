@@ -16796,6 +16796,26 @@ mod e14_harness_tests {
         );
     }
 
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 5): the
+    /// third `TEMPBONUS` target family, `arms_armor`'s (AC), the same
+    /// shape as the two siblings above. The real, on-disk `Cloak of the
+    /// Manta Ray` record carries no `BONUS:COMBAT|AC` chain, only
+    /// `TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor`.
+    #[test]
+    fn equipment_probe_promotes_a_real_cloak_via_its_tempbonus_combat_ac_token() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_equipment_corpus(&roots);
+        assert!(
+            equipment_key_is_wired("Cloak of the Manta Ray", &corpus),
+            "Cloak of the Manta Ray carries no BONUS:COMBAT|AC chain, only \
+             TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor -- the probe must \
+             read that token via compute_arms_armor_effect's new fallback"
+        );
+    }
+
     /// Same shape, hand-built fixture so the assertion does not depend on
     /// the on-disk corpus staying byte-identical, and pins the SPECIFIC
     /// mechanism (a `DAMAGE:` token, not a coincidental match on some other

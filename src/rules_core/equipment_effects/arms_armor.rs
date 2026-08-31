@@ -65,7 +65,8 @@ use crate::rules_core::equipment_effects::EquipmentStatEffect;
 /// carry that field, not that the field's value is zero.
 pub fn compute_arms_armor_effect(record: &EquipmentRecord) -> EquipmentStatEffect {
     EquipmentStatEffect {
-        armor_class_bonus: armor_class_bonus_from_bonus_chains(record),
+        armor_class_bonus: armor_class_bonus_from_bonus_chains(record)
+            .or_else(|| tempbonus_combat_ac_fallback(record)),
         max_dex: token_i16(record, "MAXDEX").or_else(|| eqmarmor_chain_value(record, "MAXDEX")),
         spell_failure: token_value(record, "SPELLFAILURE")
             .and_then(|value| value.parse().ok())
@@ -142,6 +143,44 @@ fn armor_class_bonus_from_bonus_chains(record: &EquipmentRecord) -> Option<i16> 
         } else {
             None
         }
+    })
+}
+
+/// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 5): a
+/// `TEMPBONUS:<target>|COMBAT|AC|<n>|...` corpus token is PCGen's
+/// temporary/consumable-triggered sibling of `BONUS:COMBAT|AC|<n>|...` --
+/// the same shape `general.rs`'s `tempbonus_skill_fallback` (cycle 3) and
+/// `magic_items.rs`'s `TEMPBONUS|STAT` fallback (cycle 3) already read for
+/// their own fields. This is the third and, per a corpus-wide sweep this
+/// cycle ran (`grep -rl '"TEMPBONUS"' data/corpus/*/equipment/*/*.json |
+/// xargs grep -l COMBAT`), only unhandled `TEMPBONUS` target family:
+/// `COMBAT|AC`. Exactly 1 corpus-wide record carries this shape,
+/// `core_rulebook:equipment:cloak_of_the_manta_ray`'s real verbatim
+/// `TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor` (the item's real +3
+/// natural armor bonus, confirmed against `cr_equip_magic_items.lst:109`)
+/// -- carries no `BONUS:COMBAT|AC` chain of its own at all (`raw_bonus_
+/// chains` is empty), which is why the `wiring_class` classifier already
+/// tagged it `computed:tempbonus` while this compute path had nothing to
+/// answer with. Only fires when no explicit `BONUS:COMBAT|AC` chain
+/// exists (checked by the caller's `.or_else`), and only for target
+/// `PC`/`ANYPC` -- the same discipline `tempbonus_skill_fallback` applies
+/// for the identical reason: an `EQ`-targeted `TEMPBONUS` is a different,
+/// equipment-side effect (no such `COMBAT|AC` record exists in the corpus
+/// today; this guard simply never reads one as a character AC bonus).
+fn tempbonus_combat_ac_fallback(record: &EquipmentRecord) -> Option<i16> {
+    record.tokens.iter().find_map(|token| {
+        if token.key != "TEMPBONUS" {
+            return None;
+        }
+        let parts: Vec<&str> = token.value.split('|').collect();
+        if parts.len() < 4
+            || (parts[0] != "PC" && parts[0] != "ANYPC")
+            || parts[1] != "COMBAT"
+            || parts[2] != "AC"
+        {
+            return None;
+        }
+        parts[3].parse::<i16>().ok()
     })
 }
 
@@ -442,6 +481,72 @@ mod tests {
             effect.armor_class_bonus,
             Some(7),
             "the EQMOD-referenced +1 Armor modifier's own separate chain must sum in; Spikes contributes 0"
+        );
+    }
+
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 5): real
+    /// verbatim tokens copied from the committed corpus record
+    /// (`data/corpus/core_rulebook/equipment/magic_items/
+    /// cloak_of_the_manta_ray.json`, itself sourced from
+    /// `cr_equip_magic_items.lst:109`). This record carries NO
+    /// `BONUS:COMBAT|AC` chain at all (`raw_bonus_chains` is empty) — its
+    /// real +3 natural armor bonus is stated only as
+    /// `TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor`, which
+    /// `armor_class_bonus_from_bonus_chains` alone cannot see (it reads
+    /// `bonus_chains`, never `TEMPBONUS`).
+    #[test]
+    fn tempbonus_combat_ac_token_resolves_when_no_bonus_chain_exists() {
+        let text = "Cloak of the Manta Ray\tKEY:Cloak of the Manta Ray\tTYPE:Magic.Wondrous.Shoulders.Cloak\tCOST:7200\tWT:1\tEQMOD:Material ~ Cloth\tTEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor\n";
+        let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        let effect = compute_arms_armor_effect(record);
+        assert_eq!(
+            effect.armor_class_bonus,
+            Some(3),
+            "TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor is the item's real, literal +3 natural armor bonus"
+        );
+    }
+
+    /// A base record's own real `BONUS:COMBAT|AC` chain still wins over a
+    /// `TEMPBONUS:...|COMBAT|AC` fallback on the SAME record — the same
+    /// `.or_else` discipline every other fallback in this file follows
+    /// (`eqmarmor_chain_value`, `tempbonus_skill_fallback` in
+    /// `general.rs`). No real corpus record carries both today; this is a
+    /// negative control proving the ordering, not a shape this cycle
+    /// found.
+    #[test]
+    fn a_records_own_bonus_combat_ac_chain_outranks_the_tempbonus_fallback() {
+        let text = "Leather Armor\tKEY:Leather Armor (Base)\tTYPE:Armor.Light\tCOST:10\tWT:15\tBONUS:COMBAT|AC|2|TYPE=Armor\tTEMPBONUS:PC|COMBAT|AC|99|TYPE=NaturalArmor\n";
+        let result = parse_equipment_entries("cr_equip_arms_armor.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_arms_armor_effect(record);
+        assert_eq!(
+            effect.armor_class_bonus,
+            Some(2),
+            "the record's own real BONUS:COMBAT|AC chain must win over the TEMPBONUS fallback"
+        );
+    }
+
+    /// `TEMPBONUS:EQ|...` is a structurally different, equipment-side
+    /// effect (the same distinction `general.rs`'s `tempbonus_skill_
+    /// fallback` already draws for `SKILL`) — never read as a character
+    /// AC bonus. No real corpus record carries this shape for `COMBAT|AC`
+    /// today; this negative control proves the guard, matching this
+    /// file's existing style of proving absence as deliberately as
+    /// presence.
+    #[test]
+    fn an_eq_targeted_tempbonus_is_never_read_as_a_character_ac_bonus() {
+        let text = "Fake EQ-Targeted Item\tKEY:Fake EQ-Targeted Item\tTYPE:Magic.Wondrous\tCOST:1\tWT:0\tTEMPBONUS:EQ|COMBAT|AC|5|TYPE=NaturalArmor\n";
+        let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_arms_armor_effect(record);
+        assert_eq!(
+            effect.armor_class_bonus, None,
+            "an EQ-targeted TEMPBONUS is equipment-side, never a character AC bonus"
         );
     }
 }
