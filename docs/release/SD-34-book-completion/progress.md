@@ -73,6 +73,97 @@ records, 3 `SITUATION`-only records, 2 `ABILITYPOOL`-only records, 1 mixed
 30 `ability_content` records (Drawback/Retrain, out of scope per cycle 3's own reading) =
 40+21+2+2=65 non-DONE. Full receipt:
 `artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_8.md`.
+### Cycle — AT-34-E3-003 (bucket M, EQUIPMENT sub-causes, cycle 5) — third `TEMPBONUS` target, `COMBAT|AC` — partial
+
+**Status: partial.** Worktree opened stale (tranche cut, `ea2b3396f2`); `git fetch origin &&
+git rebase origin/tranche/14` moved HEAD to the real tip, `0b87ef300c` — six prior
+`AT-34-E3-003` cycles and three shared regen waves (16/18/19) had landed since this wave's
+own dispatch brief was written. The brief's own figures (`core_rulebook` M = 972, split
+276+147 = 423) were stale by construction. Re-derived at cycle start:
+`python3 scripts/completion_atlas.py --book core_rulebook --check` → `core_rulebook` M =
+**812** (matches cycle 4's own post-fix figure and the wave-19 shared regen exactly). Split,
+read directly off `docs/work-inventory.json`:
+`equipment_table_entry_with_corpus_magnitude` **164**,
+`equipment_own_line_has_no_magnitude_but_closure_wiring_class_does` **99** — sum 263,
+cycle 4's own closing remainder, independently reproduced.
+
+**Fresh qualifier-shape census, re-derived by script against real corpus JSON (not inherited
+from cycle 4's table).** Matches cycle 4's own 13-row breakdown exactly — no drift across the
+wave-19 shared regen. **Investigated cycle 4's own next-cycle-plan item 1**, which named
+`COMBAT`/`STAT`/`SKILL` (20 units) as "the single highest-value next investigation,"
+suspecting a resolver bug. Read every one of those 16+2+2 real corpus records by hand:
+**every one carries a `%CHOICE` magnitude** (`BONUS:COMBAT|AC|%CHOICE|TYPE=...` and siblings
+under `STAT`/`SKILL`/`SAVE`/`SPELLCAST`, 34 units total across this territory) — a
+player-chosen value with no fixed literal, the SAME correctness boundary cycle 4's own `VAR`/
+`PRE`-gated finding already named and correctly declined, not a resolver bug. `str::parse`
+fails on the literal string `"%CHOICE"` and correctly returns `None` rather than fabricating
+a number. **Correction, not confirmation, of cycle 4's plan item** — retro `correction` event
+logged (`docs/retro/events/sd34-at-34-e3-003.jsonl`), `--verified-by` naming the direct corpus
+read this cycle ran.
+
+Also re-swept the "(no chain)" 189-unit shape (the largest single group) against every
+`MAGNITUDE_TOKENS` prefix, not just `COST`/`WT`: 182 of 189 carry only `COST`/`WT` — nothing
+beyond price/weight to compute, confirming cycles 2/3's own "nothing to compute" disposition a
+third time. The remaining 7: 3 `SPELLS` (spell-like-ability grants — corpus-wide, only 7 of 41
+`SPELLS`-bearing equipment records anywhere are even in bucket `M`, the rest already `V`/
+`text-complete` — too small to justify a new subsystem this cycle), 2 `SR`/`%CHOICE` (same
+boundary as above), 1 `DR`+`PLUS` (`Special Ability ~ Invulnerability ~ Armor` — no `DR` field
+exists anywhere in `ResolvedEquipmentEffect`; new subsystem, too small alone), and 1
+`TEMPBONUS|COMBAT|AC` — **this cycle's one real, closable, generic gap.**
+
+**This cycle closes 1 of the 263** via the same idiom cycle 3 established for
+`TEMPBONUS:`-token widening: `compute_arms_armor_effect`/`armor_class_bonus_from_bonus_chains`
+read only `BONUS:COMBAT|AC` chains, never `TEMPBONUS:<target>|COMBAT|AC|<n>|...` — cycle 3
+already fixed this exact shape for `general.rs`'s `SKILL` field and `magic_items.rs`'s `STAT`
+field but never extended it to `arms_armor`'s `AC` field, the third and (per this cycle's own
+corpus-wide sweep) last unhandled `TEMPBONUS` target family. `Cloak of the Manta Ray` carries
+no `BONUS:COMBAT|AC` chain at all — its real +3 natural armor bonus (worn in salt water) is
+stated only as `TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor`, which `wiring_class` already
+correctly tags `computed:tempbonus` while the compute path had nothing to answer with. New
+`tempbonus_combat_ac_fallback` (`arms_armor.rs`), consulted via `.or_else` only when no
+explicit `BONUS:COMBAT|AC` chain wins, gated to target `PC`/`ANYPC` only (an `EQ`-targeted
+`TEMPBONUS` is a different, equipment-side effect). `compute_arms_armor_effect` is already
+called unconditionally on every equipped item, so the fix reaches every book with no dispatch
+change; `equipment_key_is_wired` already checks `armor_class_bonus.is_some()`, no probe
+change needed. RED confirmed (reverted the `.or_else`, re-ran the new test, got
+`left: None, right: Some(3)`), then GREEN. 3 new unit tests (`arms_armor.rs`) + 1 new
+integration test (`v06_work_inventory.rs`, mirroring the existing `..._tempbonus_skill_token`/
+`..._tempbonus_stat_token` precedents). 89/89 `equipment_effects` pass (was 86), 30/30
+`v06_work_inventory` equipment-scoped tests pass (was 29). `cargo test --locked --no-run`
+exits 0, full workspace; `apps/desktop/src-tauri` tested explicitly, exits 0 (both run at
+`6574786ca1`).
+
+`core_rulebook` M: **812 → 811**. `equipment_table_entry_with_corpus_magnitude`:
+**164 → 163**; `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does`
+unchanged at **99** (the fix reaches only the same-line shape — Cloak of the Manta Ray is
+`Kind::Equipment`, not `Kind::EquipmentModifier`). Whole-inventory id-diff: **0 added, 0
+removed, 3 changed** — this cycle's own 1 (`cloak_of_the_manta_ray`, `ingested-magnitude` →
+`grounded`) plus 2 co-mingled, NOT this cycle's own: `AT-34-E3-002` cycle 7's own
+already-committed, already-verified `ranger_combat_style_archery`/`..._two_weapon_combat` fix
+(`engine-does-not-hold` → `grounded`, its own receipt `4ff99d62b5` already states `core_rulebook`
+C 201→199 — deferred its own inventory write per this wave's file-ownership rule, picked up
+here since this cycle ran the regen). `corpus_literal_sweep`: **48,708 examined of 51,482
+read, CLEAN, 0 findings** (unchanged from cycle 4's own baseline — no corpus records touched
+this cycle). `derived_evaluator_fixture_check`: **1,839 units cleared over 2,580 fixture rows,
+0 failed, 0 not ingested**.
+
+**Remainder: 262 (163+99), same 13-shape census, no closable-by-existing-instrument units
+left in this territory** — independently re-confirmed, not just cycle 4's own claim carried
+forward. Every remaining shape is a real correctness boundary (34 `%CHOICE`-gated + 18
+`VAR`/`PRE`-gated = 52), genuinely nothing to compute (182 `COST`/`WT`-only), or a
+new-subsystem shape too small to justify alone (`EQM` 3, `EQMWEAPON` 3, `ITEMCOST` 12,
+`SKILLRANK` 4, `SPELLS` 6, `WEAPON` 1, `SPELLCAST` 1, `DR` 1 = 31). NOT closed.
+
+`docs/work-inventory.json`/`completion-atlas.json` deliberately **NOT committed this cycle**
+(shared end-of-wave regen owns them, cycles 1–4's own established pattern); every figure above
+comes from this cycle's own local regen, both files `git restore`d before this commit — the
+regen also carries 2 co-mingled units from `AT-34-E3-002` cycle 7's own already-committed fix
+(named above, not claimed as this cycle's own; the next shared regen will pick both up
+together). `completion_atlas.py --check` (whole corpus, pre-restore): `unclassified=0`,
+`citation_failures=0`. `box_ledger.py --check`: 7 pre-existing stale-count WARNINGs against
+`THE-BOX.md` (inherited SD-33 artifact, unowned by this mechanism, already documented by prior
+SD-34 cycles) — not a new defect this cycle introduced. Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-003_m_bucket_equipment_cycle_receipt_5.md`.
 
 ### Cycle — AT-34-E3-002 — cycle 7 — Ranger Combat Style choice-recognition wiring — partial
 
