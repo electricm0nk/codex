@@ -55,6 +55,8 @@ KNOWN_WAVES = {
     "wf_850b57b3-2ed": ("17", "bucket-C premise retired; killed by the host at 22:12 when the "
                               "guest ran out of memory, but both lanes had pushed first -- "
                               "nothing lost, and .cargo/config.toml jobs=6 landed because of it"),
+    "wf_47422ae1-5ea": ("18", "first wave under .cargo/config.toml jobs=6 -- watch free memory, "
+                              "it is the run that proves whether the cap stops the host kills"),
 }
 
 
