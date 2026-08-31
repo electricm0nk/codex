@@ -605,6 +605,12 @@ const COMMIT_RULE = '## CHECKPOINT ON A CLOCK - the machine WILL be killed under
 // said it "closes 6". It closed nothing: C and V are both non-DONE buckets, so that was a
 // reclassification wearing a closure's words. Derived by bucket-diffing the inventory across the
 // wave, which is the only way it shows up -- the lane's own report read like progress.
+// Wave 19's UC lane opened in a worktree sitting at ea2b3396f2 -- the tranche/14 CUT point, not
+// the branch tip -- and had to reset onto origin/tranche/14 before it could do anything. By then
+// seven cycles of its own criterion had landed past that base. Telling every lane to fix it first
+// costs one command; discovering it costs a lane half a cycle.
+const FRESH_BASE_RULE = '\\n\\n## Your worktree may be at a stale base -- fix it before anything else\\n\\nYour worktree can open at the tranche CUT commit rather than the branch tip, which means work you are about to duplicate may already be landed. **First command, before reading anything: `git fetch origin && git log --oneline -1 origin/tranche/14`, and if your HEAD is not that commit, `git rebase origin/tranche/14` (or reset onto it if your worktree is clean).** Then re-derive every population at that tip. A lane lost half a cycle to this.\\n\\nThe same staleness applies to THIS brief. Its figures were measured when the wave was dispatched and cycles may have landed since. Where the repo and this brief disagree, **the repo wins** -- say so in your receipt rather than quietly following either one.'
+
 const NO_RELABEL_RULE = '\\n\\n## A bucket change is not a closure\\n\\nOnly `-> DONE` is closure. Every other bucket move is a RECLASSIFICATION and must be reported as one, under `movement`, separately from anything you closed. Last wave a lane moved 6 units from bucket C to bucket V and wrote that it "closes 6" -- both are non-DONE buckets, so the real closure count was zero and the wave`s headline was wrong until it was re-derived.\\n\\n**Before you report, bucket-diff the inventory yourself** and state each move as `FROM -> TO: n`. If your number for "closed" is not exactly the size of your `-> DONE` set, it is wrong. A reclassification can be honest and useful work -- say so plainly and it counts; dress it as closure and it will be caught and reversed.'
 
 const GENERATED_FILE_BAN = '\\n\\n## Files you must NOT write\\n\\n`docs/work-inventory.json` and `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` are GENERATED, and the single regeneration cycle at the end of this wave owns them. Do not hand-edit them and do not commit them -- if your work changes what they should contain, that is the regeneration\'s job, not yours. Running `completion_atlas.py --check` rewrites the atlas timestamp as a side effect: `git restore` it before you commit. Wave 13 lost a lane to exactly this collision.'
@@ -618,33 +624,34 @@ function salvageNote(branch, what) {
 
 function ucLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E4-002', dir: 'epic-4-ultimate-campaign',
-    title: 'drive Ultimate Campaign to zero — BUILD the character trait/drawback capability.\n\n'
+    title: 'drive Ultimate Campaign to zero — extend the trait/drawback capability, pillar by pillar.\n\n'
       + 'Bar: ' + BT + 'DONE = 265 of 265' + BT + '. Re-derive the split yourself before anything else; measured at '
-      + 'HEAD 651966b83e: ' + BT + 'DONE 151' + BT + ', 89 ' + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 '
+      + 'HEAD 07678e0601: ' + BT + 'DONE 196' + BT + ', 44 ' + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 '
       + BT + 'unmeasurable' + BT + ' (U), 2 ' + BT + 'deferred-with-reason' + BT + ' (D), 2 ' + BT + 'engine-does-not-hold' + BT + ' (X). '
-      + 'Bucket V is **0** — it was closed corpus-wide by AT-34-E3-005, not by you; do not re-open or re-claim it.\n\n'
-      + '**The diagnosis phase is OVER. This cycle builds.** The previous cycle '
-      + '(' + BT + 'artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_3.md' + BT + ' — READ IT FIRST) proved by '
-      + 'whole-tree grep that no character trait/drawback selection capability exists anywhere in ' + BT + 'src/' + BT + ' or '
-      + BT + 'apps/desktop/src-tauri/src/' + BT + ', and that ' + BT + 'trait_pool.rs' + BT + ' computes nothing (its own doc comment '
-      + 'says so) and covers only the ' + BT + 'RaceTrait' + BT + ' subtype. It named the build and deliberately did not start it. '
-      + 'You start it. Do NOT spend this cycle re-deriving that finding — verify it still holds at HEAD in one grep, cite '
-      + 'the receipt, and move to code.\n\n'
-      + 'Scope: the 89 M units are ' + BT + 'trait_content' + BT + ' (59) + ' + BT + 'ability_content' + BT + ' (30). 44 of the 59 '
-      + 'traits are pure ' + BT + 'BONUS:SKILL' + BT + '; the rest mix VAR/SAVE/SITUATION/ABILITYPOOL/COMBAT/CONCENTRATION. '
-      + '**Take the pure ' + BT + 'BONUS:SKILL' + BT + ' spine end-to-end and land it** — selection state on '
-      + BT + 'CharacterInput' + BT + ', a real compute-and-apply path, and a real desktop selection surface. **No stubs** '
-      + '(' + BT + 'docs/governance/no-stub-mvp-doctrine.md' + BT + '): a selector that renders but grants nothing is a '
-      + 'doctrine violation, and so is a compute path with no UI reaching it. Ship a narrow slice that genuinely works '
-      + 'rather than a wide one that does not.\n\n'
+      + 'Bucket V is **0** — closed corpus-wide by AT-34-E3-005, not by you; do not re-open or re-claim it.\n\n'
+      + '**The capability EXISTS and is seven cycles old. You are extending it, not starting it.** Read '
+      + BT + 'artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_7.md' + BT + ' FIRST — it is the newest, and its '
+      + '"next cycle" section names your work. Do NOT read receipt_3 as current: it describes a repo state seven cycles '
+      + 'gone, and a lane already lost time to that. `src/rules_core/trait_effects.rs` now holds real tables, real '
+      + 'producers, and a real desktop picker in `apps/desktop/src-tauri/src/trait_picker.rs`.\n\n'
+      + '**The proven idiom is: one BONUS token shape at a time, reusing an existing consumer.** Four pillars are done '
+      + 'this way — skills, saves, initiative, concentration — each a small table plus a producer feeding a consumer that '
+      + 'already existed (`ground_orphan_feat_facts` is the pattern). Take the next cheapest shape from receipt_7`s '
+      + 'remainder and do the same.\n\n'
+      + '**A record leaves M only when EVERY one of its BONUS tokens computes.** `Trait ~ Arcane Temper` carries two '
+      + 'independently-pillared tokens and only went DONE once both fixture-executed. Never part-credit a record on one '
+      + 'of its tokens.\n\n'
+      + '**No stubs** (' + BT + 'docs/governance/no-stub-mvp-doctrine.md' + BT + '): a selector that renders but grants '
+      + 'nothing is a doctrine violation, and so is a compute path with no UI reaching it. Ship a narrow slice that '
+      + 'genuinely works rather than a wide one that does not.\n\n'
       + '**Key on the KIND, not the book.** This same evidence shape is 1,665 of 49,438 units corpus-wide, so a '
-      + 'kind-keyed fix pays far beyond ' + BT + 'ultimate_campaign' + BT + '. Report the corpus-wide movement, not just this '
+      + 'kind-keyed fix pays beyond ' + BT + 'ultimate_campaign' + BT + ' when the corpus KEY is shared — check, do not assume; the last two cycles found 3 shared and 0 shared. Report the corpus-wide movement, not just this '
       + 'book\'s.\n\n'
       + '**Territory:** you own the trait/ability compute paths and ' + BT + 'CharacterInput' + BT + '. A sibling lane owns the '
       + 'EQUIPMENT sub-causes and another owns the explanation-id wiring — do not touch either.\n\n'
       + 'U(21), D(2), X(2) were re-checked last cycle and are NOT yours to reopen. A unit leaves M only when its value is '
       + 'genuinely computed and applied, never relabelled. M→D is reclassification; say which is which. A cycle here once '
-      + 'claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE
+      + 'claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE + FRESH_BASE_RULE
       + salvageNote('salvage/wave14-lane1','the trait-capability build, TWICE rescued and now the furthest-along version -- it already contains `salvage/wave13-lane1` (three NEW files `src/rules_core/trait_effects.rs`, `apps/desktop/src-tauri/src/trait_picker.rs`, `apps/desktop/src/boundary/loadCharacterTraits.ts`, plus +81 lines in `character_input.rs` and +111 in `CreateCharacterForm.tsx`) MERGED and reviewed by your immediate predecessor, who then extended it before an operator-requested restart cut it short. Start here, NOT from `salvage/wave13-lane1`, which this supersedes') })
 }
 
@@ -654,8 +661,8 @@ function ucLanePrompt() {
 // at ab65a090ef, so the slot moves to bucket C — the largest single-mechanism block left in the book.
 function cLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-002', dir: 'epic-3-core-rulebook',
-    title: 'bucket C for the Core Rulebook — 233 of 6,701, third pass on the pool-group seam.\n\n'
-      + 'Re-derive first; measured at HEAD 5e0ba466a5: ' + BT + 'core_rulebook' + BT + ' bucket C = **233** (351 -> 296 -> 233). '
+    title: 'bucket C for the Core Rulebook — 201 of 6,701, fourth pass on the pool-group seam.\n\n'
+      + 'Re-derive first; measured at HEAD 5e0ba466a5: ' + BT + 'core_rulebook' + BT + ' bucket C = **201** (351 -> 296 -> 233 -> 201). '
       + '**Do not inherit the old "all one evidence string" framing — wave 16 disproved it.** That wave closed 38 C '
       + 'units for real (Electricity Resistance and siblings, via the already-shipped generic pool-group compute pass '
       + 'the classifier had simply never consulted) and moved 17 more C→V. Both numbers are corpus-derived, not '
@@ -675,13 +682,13 @@ function cLanePrompt() {
       + '**Territory:** you own the explanation-id / diagnostic-naming wiring. A sibling lane owns the EQUIPMENT '
       + 'magnitude sub-causes and another owns trait/ability compute + ' + BT + 'CharacterInput' + BT + ' — do not touch either.\n\n'
       + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 357.** Return ' + BT + 'partial' + BT + ' with '
-      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE
+      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE + FRESH_BASE_RULE
       + salvageNote('salvage/wave13-lane2','bucket-C work -- +303 lines in `src/bin/v06_work_inventory.rs`, edits to `scripts/completion_atlas.py`, and a substantially rewritten `AT-34-E3-002_cycle_receipt.md`') })
 }
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-003', dir: 'epic-3-core-rulebook',
-    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 944 left.\n\n'
+    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 812 left.\n\n'
       + 'Definition: magnitude ingested, never computed or applied. **The instrument already exists** — that is what '
       + 'separates this from bucket B, whose remainder needs new subsystems built.\n\n'
       + 'Re-derive the sub-causes; do not trust inherited figures OR inherited reasons — this bundle has had a cycle '
@@ -707,7 +714,7 @@ function mLanePrompt() {
       + 'KINDS, so a fix keyed on the kind\'s compute path is corpus-wide by construction. Report corpus-wide movement, '
       + 'not just this book\'s.\n\n'
       + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 423.** Return ' + BT + 'partial' + BT + ' with '
-      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE
+      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE + FRESH_BASE_RULE
       + salvageNote('salvage/wave13-lane3','equipment bucket-M work -- +128 lines in `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py` edits, and a NEW receipt `AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`') })
 }
 
