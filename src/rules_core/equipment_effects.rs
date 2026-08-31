@@ -51,7 +51,7 @@ pub mod magic_items;
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::character_input::EquipmentSelection;
 use crate::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
-use crate::rules_core::equipment_effects::general::SkillCheckBonus;
+use crate::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use crate::rules_core::equipment_effects::intelligent_item::IntelligentItemContribution;
 use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
@@ -182,6 +182,19 @@ pub struct ResolvedEquipmentEffect {
     /// for an `equipmods` record that carries no literal-integer `SR:`
     /// token.
     pub spell_resistance_bonus: Option<i16>,
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 4): every
+    /// `BONUS:VAR|<name(s)>|<value>` chain on the record's own line, plus
+    /// any referenced `EQMOD:` modifier's own `VAR` chains summed in by
+    /// name (see `general::compute_var_effect` / `general::
+    /// apply_eqmod_var_bonus`). Unlike `skill_bonus`/`ability_bonus`
+    /// (each scoped to exactly one category's one named field), `VAR`
+    /// chains appear across every category — a magic item's ki-pool
+    /// counter, an armor material's ACP adjustment, a weapon's combat
+    /// maneuver bonus — so this is a `Vec`, not a single `Option`, in the
+    /// SAME zero-vs-honest-absence convention every other field here
+    /// already uses: empty means the record's own closure carries no
+    /// `VAR` chain at all, never a fabricated zero.
+    pub var_bonus: Vec<VarBonus>,
     /// v0.6 alpha swarm items 1+27 sub-task 2: the real, per-weapon
     /// TOHIT-affecting bonus resolved from *this specific* selection's own
     /// `applied_modifiers` (see `character_input::EquipmentSelection`'s doc
@@ -320,6 +333,22 @@ pub fn compute_equipment_effects(
         let weapon_eqmod_records = eqmod_referenced_records(record, RuleSetId::Crb, corpus);
         equipmods::apply_eqmod_weapon_enhancement_bonus(&mut weapon_enhancement_bonus, &weapon_eqmod_records);
         let spell_resistance_bonus = equipmods::resolve_spell_resistance_bonus(record);
+        // `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 4):
+        // `general::compute_var_effect` already reads every `BONUS:VAR|...`
+        // chain on a record -- it existed since the SD-20 `general`
+        // category cycle but was never called from this, the real
+        // dispatcher every category resolver above is called from (only
+        // from the SD-33 oracle-comparison `src/bin/e5_*.rs` tools). Wiring
+        // it here reaches every book's corpus by construction, same as
+        // every resolver above. `weapon_eqmod_records` (despite its name)
+        // is `eqmod_referenced_records`'s generic, category-agnostic
+        // result -- already reused by this exact record for the weapon
+        // dimension above -- so no second EQMOD resolution pass is needed;
+        // `apply_eqmod_var_bonus`'s own doc comment names the real
+        // `panoply_of_the_fierani_knight` case this reuse now closes (an
+        // armor item, not a weapon).
+        let mut var_bonus = general::compute_var_effect(record);
+        general::apply_eqmod_var_bonus(&mut var_bonus, &weapon_eqmod_records);
         let has_arms_armor_effect = effect.armor_class_bonus.is_some()
             || effect.max_dex.is_some()
             || effect.spell_failure.is_some()
@@ -379,6 +408,7 @@ pub fn compute_equipment_effects(
             ability_bonus,
             weapon_enhancement_bonus,
             spell_resistance_bonus,
+            var_bonus,
             to_hit_bonus,
             intelligent_item: intelligent_item_contribution,
             table_cell,

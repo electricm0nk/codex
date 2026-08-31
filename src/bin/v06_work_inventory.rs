@@ -6697,6 +6697,13 @@ fn equipment_key_is_wired(
             || item.ability_bonus.is_some()
             || item.weapon_enhancement_bonus.is_some()
             || item.spell_resistance_bonus.is_some()
+            // `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 4):
+            // `compute_equipment_effects` now also resolves every
+            // `BONUS:VAR|...` chain (`general::compute_var_effect`,
+            // wired into the main dispatcher this cycle) -- this probe
+            // must observe that field too, or the newly-computed value
+            // would never be counted as a real consumer delta.
+            || !item.var_bonus.is_empty()
     });
     if stat_effect_wired {
         return true;
@@ -16715,6 +16722,65 @@ mod e14_harness_tests {
         assert!(
             !equipment_key_is_wired("Test Trinket ~ Diagnostic", &corpus),
             "no DAMAGE: token and no other checked field -- must stay unwired"
+        );
+    }
+
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 4): the
+    /// real, on-disk `Amulet of Mighty Fists` record carries a
+    /// `BONUS:VAR|MightyFistValue|5` chain -- a magnitude on its own
+    /// corpus line -- but none of `equipment_key_is_wired`'s eight
+    /// pre-cycle-4 checked fields ever read `VAR` chains at all
+    /// (`general::compute_var_effect` existed but was called only from
+    /// the SD-33 oracle-comparison `src/bin/e5_*.rs` tools, never from
+    /// `compute_equipment_effects`, confirmed before this cycle's fix by
+    /// this book's own live `equipment_table_entry_with_corpus_magnitude`
+    /// count including this exact unit). Wiring `compute_var_effect` into
+    /// the main dispatcher and checking `var_bonus` here promotes it.
+    #[test]
+    fn equipment_probe_promotes_a_real_magic_item_via_its_bonus_var_token() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_equipment_corpus(&roots);
+        assert!(
+            equipment_key_is_wired("Amulet of Mighty Fists", &corpus),
+            "Amulet of Mighty Fists carries BONUS:VAR|MightyFistValue|5 on \
+             its own line -- the probe must read that chain via \
+             compute_var_effect, now wired into compute_equipment_effects"
+        );
+    }
+
+    /// The `EQMOD:`-referenced sibling shape `apply_eqmod_var_bonus`'s own
+    /// doc comment names (`panoply_of_the_fierani_knight`'s real
+    /// disagreement, SD-33 remediation wave 4): a base item's own `VAR`
+    /// chain plus an attached modifier's own `VAR` chain, summed by name.
+    /// Hand-built so the assertion pins the SPECIFIC mechanism (two
+    /// separate records' `VAR` chains, resolved through `EQMOD:` and
+    /// summed) rather than depending on the on-disk corpus staying
+    /// byte-identical.
+    #[test]
+    fn equipment_probe_promotes_a_hand_built_item_via_an_eqmod_referenced_var_chain() {
+        let text = "Test Cloak\tKEY:Test Cloak ~ Diagnostic\tTYPE:Wondrous\tBONUS:VAR|ArmorCheckPenalty|-1\tEQMOD:Test Material ~ Diagnostic\tCOST:15\nTest Material ~ Diagnostic\tKEY:Test Material ~ Diagnostic\tTYPE:EqMod.Material\tBONUS:VAR|ArmorCheckPenalty|-2\tCOST:0\n";
+        let corpus = equipment_corpus_from(text);
+        assert!(
+            equipment_key_is_wired("Test Cloak ~ Diagnostic", &corpus),
+            "carries a real BONUS:VAR chain (plus an EQMOD:-referenced \
+             modifier's own VAR chain) -- must ground on that alone"
+        );
+    }
+
+    /// Negative control: an otherwise-identical hand-built record with NO
+    /// `VAR` chain (and no other checked field) must stay unwired -- the
+    /// `VAR`-chain check is carried by the real token, not by resolving
+    /// at all.
+    #[test]
+    fn equipment_probe_does_not_promote_a_record_with_no_var_chain_and_no_other_effect() {
+        let text = "Test Charm\tKEY:Test Charm ~ Diagnostic\tTYPE:Wondrous\tCOST:15\n";
+        let corpus = equipment_corpus_from(text);
+        assert!(
+            !equipment_key_is_wired("Test Charm ~ Diagnostic", &corpus),
+            "no VAR chain and no other checked field -- must stay unwired"
         );
     }
 
