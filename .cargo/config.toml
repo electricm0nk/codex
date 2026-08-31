@@ -1,9 +1,16 @@
 # Build parallelism is capped because this repo is built on a Proxmox guest whose host
-# STOPS THE VM when the guest exhausts its memory. That is not a theory: sysstat for
-# 2026-08-30 shows free memory falling 64.0G -> 57.2G -> 18.4G -> 1.7G between 20:00 and
-# 21:00 with page cache flat at ~1G the whole way (so it was anonymous memory, not
-# reclaimable cache), and the box was stopped at 22:12. The same shape preceded the kills
-# at 07:02, 10:38 and 12:31 that day.
+# STOPS THE VM when it believes the guest has consumed its whole RAM allocation.
+#
+# CORRECTION to an earlier version of this comment, which claimed the guest ran out of
+# anonymous memory: it did not, and the claim came from reading the wrong sysstat column.
+# On 2026-08-30 MemFree fell 64.0G -> 1.3G between 20:00 and 21:00, but MemAvailable never
+# moved off 160.7G -- the whole drop was page cache growing 93G -> 155G. Reclaimable to
+# Linux; still guest-physical pages the host never gets back without ballooning. The box
+# was stopped at 22:12.
+#
+# Page cache is therefore the primary cause, and /usr/local/sbin/pagecache-guard.sh (root
+# cron, every 5 min) is the primary fix. This `jobs` cap is the secondary one: it bounds
+# concurrent rustc memory and slows the rate at which build artifacts fill the cache.
 #
 # The cause is build fan-out, not any one build. Dispatch waves run up to three lanes at
 # once, each invoking `cargo test` over a ~600-target workspace. Cargo defaults `jobs` to
