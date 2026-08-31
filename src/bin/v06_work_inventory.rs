@@ -5395,6 +5395,25 @@ struct EngineFacts {
     /// `ranger_favored_enemy_bonus_wired` above, gated at ranger level 3
     /// (Favored Terrain's own real class-table gate) rather than level 1.
     ranger_favored_terrain_bonus_wired: BTreeSet<String>,
+    /// `AT-34-E3-002` (bucket C, wave-21 continuation): the two PF1 Core
+    /// Rulebook Ranger combat style names (`"Archery"`, `"Two-Weapon
+    /// Combat"`) whose own `"class_chassis.ranger.combat_style_choice"`
+    /// recognition explanation was genuinely observed, via
+    /// [`probe_ranger_combat_style_wiring`], naming that exact style. Unlike
+    /// Favored Enemy/Terrain, the style choice itself grants no separate
+    /// numeric magnitude (`explain_ranger_level1_chassis_and_class_feature_
+    /// separation` pushes it as a bounded +0 recognition record, read
+    /// directly before this probe was written) -- the corpus's own `"Ranger
+    /// Combat Style ~ Archery"` / `"~ Two-Weapon Combat"` records are
+    /// themselves `description: null` chooser-eligibility markers (their
+    /// `BONUS:VAR|Ranger_Combat_Style_Feat_*` tokens feed the SEPARATE
+    /// bonus-feat choice's own `PRE` gates, not a player-facing value of
+    /// their own), so a genuinely-observed +0 recognition naming the exact
+    /// style is the real, non-fabricated ceiling here -- the same "+0
+    /// identity record, never a fabricated magnitude" idiom the domain
+    /// header closure (`cleric_domain_generic_member_wired`) already
+    /// established for this bundle.
+    ranger_combat_style_choice_wired: BTreeSet<String>,
     /// `AT-34-E3-002` (bucket C continuation): `(band-start level, size
     /// label)` pairs -- `(1, "Medium")`, `(4, "Medium")`, ... -- whose own
     /// `"class_chassis.monk.unarmed_strike_damage_die"` (and, from level 12,
@@ -8024,6 +8043,62 @@ fn probe_ranger_favored_terrain_bonus_wiring(fixture: &CharacterInput) -> BTreeS
     wired
 }
 
+/// `AT-34-E3-002` (bucket C, wave-21 continuation): the two PF1 Core
+/// Rulebook Ranger combat style names (`"Archery"`, `"Two-Weapon Combat"`)
+/// whose own `"class_chassis.ranger.combat_style_choice"` recognition
+/// explanation is genuinely observed once the corresponding
+/// `choice:ranger_combat_style` selection round-trips through the real
+/// `compute_pilot_base_chassis` pipeline. `canonical_seeds_for("ranger")`
+/// never seeds `choice:ranger_combat_style` (confirmed by grep, same
+/// discipline `probe_ranger_favored_enemy_bonus_wiring`'s own doc comment
+/// applies), so the standard sweep below never observes either style on its
+/// own -- this probe injects each of the two legal `style:*` selection ids
+/// in turn, mirroring `probe_ranger_favored_enemy_bonus_wiring`/`probe_
+/// ranger_favored_terrain_bonus_wiring` exactly, with one honest
+/// difference: there is no separate numeric-magnitude explanation to
+/// cross-check (`explain_ranger_level1_chassis_and_class_feature_
+/// separation`'s own combat-style recognition record is a bounded +0
+/// identity record, read directly -- the style choice does not itself
+/// grant a flat bonus the way Favored Enemy/Terrain do), so `choice_
+/// observed` alone -- the explanation firing AND its own detail naming the
+/// exact `style:*` selection id, never assumed -- is this probe's whole
+/// bar, the same "+0, but genuinely observed and naming this exact record"
+/// idiom the domain header closure already established for this bundle.
+fn probe_ranger_combat_style_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    const CANONICAL_COMBAT_STYLES: &[(&str, &str)] =
+        &[("Archery", "style:archery"), ("Two-Weapon Combat", "style:two_weapon_combat")];
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for &(display_name, selection_id) in CANONICAL_COMBAT_STYLES {
+        'levels: for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "ranger", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:ranger_combat_style");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:ranger_combat_style".to_string(),
+                selection_id: selection_id.to_string(),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            let choice_observed = computation.explanations.iter().any(|e| {
+                e.id == "class_chassis.ranger.combat_style_choice"
+                    && e.detail.contains(&format!("-> {selection_id}"))
+            });
+            if choice_observed {
+                wired.insert(display_name.to_string());
+                break 'levels;
+            }
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// `AT-34-E3-002` (bucket C continuation): the six PF1 Core Rulebook
 /// Medium-monk unarmed-strike-damage band levels (`"Monk Unarmed Damage LVL
 /// 1/4/8/12/16/20 (Medium)"`) whose own
@@ -9006,6 +9081,7 @@ fn gather_engine_facts(
         fighter_weapon_training_wired: probe_fighter_weapon_training_wiring(fixture),
         ranger_favored_enemy_bonus_wired: probe_ranger_favored_enemy_bonus_wiring(fixture),
         ranger_favored_terrain_bonus_wired: probe_ranger_favored_terrain_bonus_wiring(fixture),
+        ranger_combat_style_choice_wired: probe_ranger_combat_style_wiring(fixture),
         monk_unarmed_damage_die_wired: probe_monk_unarmed_damage_die_wiring(fixture),
         cleric_domain_generic_member_wired: probe_cleric_domain_generic_member_wiring(fixture),
         sorcerer_bloodline_generic_member_wired: probe_sorcerer_bloodline_generic_member_wiring(
@@ -11572,6 +11648,29 @@ fn classify(
                     return Verdict {
                         status: "grounded",
                         evidence: "ranger_favored_terrain_bonus_probe_observed_a_real_computed_magnitude_for_the_display_record"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+            }
+            // `AT-34-E3-002` (bucket C, wave-21 continuation): `"Ranger
+            // Combat Style ~ Archery"` / `"~ Two-Weapon Combat"` -- `group`
+            // is `"Ranger Combat Style"`, which -- same as every check
+            // above it -- can never equal `"ranger"`, so `class_feature_
+            // owner` and its fallbacks can never resolve an owner and
+            // `class_feature_exact_suffix_grounded`'s `group == owner` guard
+            // could never ground this record even if one resolved.
+            // `probe_ranger_combat_style_wiring` is the real, separate
+            // attribution path -- see its own doc comment for why a bare
+            // `choice_observed` (no companion magnitude check) is the
+            // honest bar here, unlike Favored Enemy/Terrain.
+            if group == "Ranger Combat Style" {
+                let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
+                if facts.ranger_combat_style_choice_wired.contains(feature) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "ranger_combat_style_choice_probe_observed_a_real_computed_recognition_for_the_display_record"
                             .to_string(),
                         reason: None,
                         engine_book: engine_book_field,
@@ -19939,6 +20038,93 @@ mod class_feature_text_complete_rung_tests {
         assert_eq!(
             verdict.evidence,
             "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-002` (bucket C, wave-21 continuation): the Ranger Combat
+    /// Style display record reaches `grounded` off
+    /// `probe_ranger_combat_style_wiring`'s real, observed
+    /// `class_chassis.ranger.combat_style_choice` recognition -- proof case
+    /// for the Archery style.
+    #[test]
+    fn a_ranger_combat_style_archery_record_reaches_grounded_off_the_probes_wiring() {
+        let mut facts = EngineFacts::default();
+        facts.ranger_combat_style_choice_wired.insert("Archery".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1490,
+            "Ranger Combat Style ~ Archery",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "ranger_combat_style_choice_probe_observed_a_real_computed_recognition_for_the_display_record"
+        );
+    }
+
+    /// Same proof, for the Two-Weapon Combat style sibling.
+    #[test]
+    fn a_ranger_combat_style_two_weapon_combat_record_reaches_grounded_off_the_probes_wiring() {
+        let mut facts = EngineFacts::default();
+        facts
+            .ranger_combat_style_choice_wired
+            .insert("Two-Weapon Combat".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1510,
+            "Ranger Combat Style ~ Two-Weapon Combat",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "ranger_combat_style_choice_probe_observed_a_real_computed_recognition_for_the_display_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: the probe never observed either style, so this
+    /// record must fall through to its pre-existing verdict, unaffected.
+    #[test]
+    fn a_ranger_combat_style_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1490,
+            "Ranger Combat Style ~ Archery",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_ne!(
+            verdict.evidence,
+            "ranger_combat_style_choice_probe_observed_a_real_computed_recognition_for_the_display_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: Archery's own wiring must never bleed onto the
+    /// Two-Weapon Combat sibling record.
+    #[test]
+    fn a_ranger_combat_style_record_at_a_wired_sibling_style_is_unaffected() {
+        let mut facts = EngineFacts::default();
+        facts.ranger_combat_style_choice_wired.insert("Archery".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1510,
+            "Ranger Combat Style ~ Two-Weapon Combat",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_ne!(
+            verdict.evidence,
+            "ranger_combat_style_choice_probe_observed_a_real_computed_recognition_for_the_display_record"
         );
     }
 
