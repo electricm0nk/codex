@@ -18,8 +18,9 @@
 //! `SelectedChoice` channel `archetype_resolver.rs`'s own pool-choice
 //! primitive already established, not a new mechanism.
 use codex::rules_core::trait_effects::{
-    family_choice_skill_options, trait_skill_choice_id, FAMILY_CHOICE_TRAIT_BONUSES,
-    FLAT_SKILL_TRAIT_BONUSES, SAVE_TRAIT_BONUSES, SITUATIONAL_SKILL_TRAIT_BONUSES,
+    family_choice_skill_options, trait_skill_choice_id, ABILITY_DIFF_SKILL_TRAIT_BONUSES,
+    CONCENTRATION_TRAIT_BONUSES, FAMILY_CHOICE_TRAIT_BONUSES, FLAT_SKILL_TRAIT_BONUSES,
+    INITIATIVE_TRAIT_BONUSES, SAVE_TRAIT_BONUSES, SITUATIONAL_SKILL_TRAIT_BONUSES,
     SKILL_CHOICE_TRAIT_BONUSES,
 };
 use serde::Serialize;
@@ -74,6 +75,51 @@ pub struct CharacterTraitOptionDto {
     /// skill trait -- only which pillar it targets differs.
     #[serde(default)]
     pub save: Option<String>,
+    /// Non-empty **only** for a fifth-slice flat `BONUS:COMBAT|INITIATIVE`
+    /// and/or `BONUS:CONCENTRATION|ALLSPELLS` trait
+    /// (`trait_effects::INITIATIVE_TRAIT_BONUSES` /
+    /// `trait_effects::CONCENTRATION_TRAIT_BONUSES`) -- one entry per
+    /// pillar the record's corpus tokens carry, so `Trait ~ Arcane Temper`
+    /// (both pillars on one record) reports two entries on ONE option, not
+    /// two separate options. Empty for every other slice.
+    #[serde(default)]
+    pub other_pillars: Vec<TraitOtherPillarBonusDto>,
+    /// `Some(...)` only for a sixth-slice ability-score-difference-formula
+    /// trait (`trait_effects::ABILITY_DIFF_SKILL_TRAIT_BONUSES`). `None`
+    /// for every other slice.
+    #[serde(default)]
+    pub ability_substitution: Option<TraitAbilitySubstitutionDto>,
+}
+
+/// One non-skill, non-save pillar bonus this option grants -- see
+/// [`CharacterTraitOptionDto::other_pillars`].
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TraitOtherPillarBonusDto {
+    /// Human-readable pillar name (`"Initiative checks"`,
+    /// `"Concentration checks"`).
+    pub label: String,
+    pub bonus: i16,
+}
+
+/// An ability-score-substitution formula this option applies to one skill
+/// -- see [`CharacterTraitOptionDto::ability_substitution`]. The real
+/// numeric result depends on the character's own computed ability
+/// modifiers (evaluated by `skill_allocation::allocate_skill_ranks` via
+/// `trait_effects::ability_diff_skill_bonuses_from_traits`, never by this
+/// DTO), so this carries the formula text itself plus any additional flat
+/// component rather than a single pre-computed number.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TraitAbilitySubstitutionDto {
+    /// The formula's own literal text (`"max(INT,CHA)-CHA"`), transcribed
+    /// verbatim from the corpus token -- same string
+    /// `PcgenFormulaEvaluator` evaluates server-side.
+    pub formula: String,
+    /// A second, flat bonus on the SAME skill this record also carries
+    /// (`0` for three of the four records; Precise Treatment's own `+1`
+    /// flat Heal token).
+    pub flat_bonus: i8,
 }
 
 fn skill_display_name(skill_id: &str) -> String {
@@ -91,27 +137,38 @@ fn skill_display_name(skill_id: &str) -> String {
         .join(" ")
 }
 
-/// The full roster of traits this cycle's real compute-and-apply path
+/// The full roster of traits this crate's real compute-and-apply path
 /// supports -- `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits, its 5
 /// fixed-choice `BONUS:SKILL|%LIST` traits, its 4 open-family
-/// `BONUS:SKILL|%LIST` traits, its 2 flat `BONUS:SAVE` traits, and its 3
-/// `BONUS:SITUATION` traits -- every option returned genuinely grants its
-/// stated bonus when selected (and, for a choice-based option, a valid
-/// `skill_options` choice recorded) and passed through `create_character`/
-/// `compose_character_input` (`trait_effects::skill_bonuses_from_traits`
-/// + `trait_effects::skill_choice_bonuses_from_traits` +
+/// `BONUS:SKILL|%LIST` traits, its 2 flat `BONUS:SAVE` traits, its 3
+/// `BONUS:SITUATION` traits, its 3 flat `BONUS:COMBAT|INITIATIVE`/
+/// `BONUS:CONCENTRATION|ALLSPELLS` traits, and its 4 ability-score-
+/// difference-formula traits (52 total) -- every option returned
+/// genuinely grants its stated bonus when selected (and, for a
+/// choice-based option, a valid `skill_options` choice recorded) and
+/// passed through `create_character`/`compose_character_input`
+/// (`trait_effects::skill_bonuses_from_traits` +
+/// `trait_effects::skill_choice_bonuses_from_traits` +
 /// `trait_effects::family_choice_bonuses_from_traits` +
 /// `trait_effects::save_bonuses_from_traits` +
 /// `pilot_compute::ground_orphan_trait_facts`'s situational-fact channel +
-/// `trait_effects::situational_flat_skill_bonuses_from_traits`), never a
-/// rendered option with no compute path behind it.
+/// `trait_effects::situational_flat_skill_bonuses_from_traits` +
+/// `pilot_compute::ground_orphan_trait_facts`'s initiative/concentration
+/// standalone-fact channel + `skill_allocation::allocate_skill_ranks`'s
+/// `trait_effects::ability_diff_skill_bonuses_from_traits` fold-in), never
+/// a rendered option with no compute path behind it.
 ///
-/// **Note**: the fifth and sixth slices' traits (`INITIATIVE_TRAIT_
-/// BONUSES`, `CONCENTRATION_TRAIT_BONUSES`, `ABILITY_DIFF_SKILL_TRAIT_
-/// BONUSES` -- Tactician, Arcane Temper, Desperate Resolve, Bruising
-/// Intellect, Planar Savant, Pragmatic Activator, Precise Treatment) are
-/// NOT in this roster yet, a pre-existing gap this cycle found but did not
-/// introduce and does not own fixing (see this cycle's own receipt).
+/// **Corrected note (this cycle):** cycles 7 and 8's own receipts claimed
+/// "the existing trait picker already surfaces every selected trait
+/// generically" -- cycle 9 found and logged this as false for a NEW
+/// selection: the command chained only 4 of 7 tables, so the fifth and
+/// sixth slices' 7 traits (Tactician, Arcane Temper, Desperate Resolve,
+/// Bruising Intellect, Planar Savant, Pragmatic Activator, Precise
+/// Treatment) were genuinely computed but unreachable through this
+/// command. This cycle chains the two remaining tables
+/// (`INITIATIVE_TRAIT_BONUSES`/`CONCENTRATION_TRAIT_BONUSES` merged into
+/// `other_pillars`, `ABILITY_DIFF_SKILL_TRAIT_BONUSES` into
+/// `ability_substitution`), closing the gap for all 7.
 #[tauri::command]
 pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
     let flat = FLAT_SKILL_TRAIT_BONUSES.iter().map(|entry| CharacterTraitOptionDto {
@@ -123,6 +180,8 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         skill_options: Vec::new(),
         choice_set_id: None,
         save: None,
+        other_pillars: Vec::new(),
+        ability_substitution: None,
     });
     let choice = SKILL_CHOICE_TRAIT_BONUSES.iter().map(|entry| CharacterTraitOptionDto {
         id: entry.trait_id.to_owned(),
@@ -140,6 +199,8 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             .collect(),
         choice_set_id: Some(trait_skill_choice_id(entry.trait_id)),
         save: None,
+        other_pillars: Vec::new(),
+        ability_substitution: None,
     });
     // Third slice (`AT-34-E4-002`): the 4 open-subtype-family `%LIST`
     // traits -- `skill_options` here is the resolved Craft/Perform/
@@ -162,6 +223,8 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             .collect(),
         choice_set_id: Some(trait_skill_choice_id(entry.trait_id)),
         save: None,
+        other_pillars: Vec::new(),
+        ability_substitution: None,
     });
     // Fourth slice (`AT-34-E4-002`): the 2 flat `BONUS:SAVE` traits --
     // needs no `choice_set_id` (no player choice, same as a flat skill
@@ -178,6 +241,8 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         skill_options: Vec::new(),
         choice_set_id: None,
         save: Some(entry.save.to_owned()),
+        other_pillars: Vec::new(),
+        ability_substitution: None,
     });
     // Seventh slice (`AT-34-E4-002`): the 3 `BONUS:SITUATION` traits.
     // Reuses the SAME `skills`/`bonus` fields the flat slice already
@@ -208,12 +273,101 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             skill_options: Vec::new(),
             choice_set_id: None,
             save: None,
+            other_pillars: Vec::new(),
+            ability_substitution: None,
+        }
+    });
+    // Fifth slice (`AT-34-E4-002`): the 3 flat `BONUS:COMBAT|INITIATIVE`
+    // and/or `BONUS:CONCENTRATION|ALLSPELLS` traits. A single record
+    // (`Trait ~ Arcane Temper`) can carry BOTH tokens, so this merges by
+    // `trait_id` into ONE option with up to two `other_pillars` entries --
+    // never two separate selectable rows for one trait, which would let a
+    // player select it twice or select only one pillar of a record whose
+    // corpus data grants both. Reusing `INITIATIVE_TRAIT_BONUSES` for the
+    // pass and folding any matching `CONCENTRATION_TRAIT_BONUSES` entry in
+    // covers Tactician (initiative-only) and Arcane Temper (both) in one
+    // loop; a second pass over `CONCENTRATION_TRAIT_BONUSES` alone then
+    // covers Desperate Resolve (concentration-only), the one entry the
+    // first pass cannot reach.
+    let mut pillar_options: Vec<CharacterTraitOptionDto> = Vec::new();
+    for entry in INITIATIVE_TRAIT_BONUSES {
+        let mut other_pillars = vec![TraitOtherPillarBonusDto {
+            label: "Initiative checks".to_owned(),
+            bonus: entry.bonus,
+        }];
+        if let Some(concentration_entry) =
+            CONCENTRATION_TRAIT_BONUSES.iter().find(|c| c.trait_id == entry.trait_id)
+        {
+            other_pillars.push(TraitOtherPillarBonusDto {
+                label: "Concentration checks".to_owned(),
+                bonus: concentration_entry.bonus,
+            });
+        }
+        pillar_options.push(CharacterTraitOptionDto {
+            id: entry.trait_id.to_owned(),
+            name: entry.name.to_owned(),
+            description: entry.description.to_owned(),
+            skills: Vec::new(),
+            bonus: 0,
+            skill_options: Vec::new(),
+            choice_set_id: None,
+            save: None,
+            other_pillars,
+            ability_substitution: None,
+        });
+    }
+    for entry in CONCENTRATION_TRAIT_BONUSES {
+        if pillar_options.iter().any(|option| option.id == entry.trait_id) {
+            continue; // already merged in via the initiative pass above
+        }
+        pillar_options.push(CharacterTraitOptionDto {
+            id: entry.trait_id.to_owned(),
+            name: entry.name.to_owned(),
+            description: entry.description.to_owned(),
+            skills: Vec::new(),
+            bonus: 0,
+            skill_options: Vec::new(),
+            choice_set_id: None,
+            save: None,
+            other_pillars: vec![TraitOtherPillarBonusDto {
+                label: "Concentration checks".to_owned(),
+                bonus: entry.bonus,
+            }],
+            ability_substitution: None,
+        });
+    }
+    // Sixth slice (`AT-34-E4-002`): the 4 ability-score-difference-formula
+    // traits. `skills` carries the single skill this formula's result
+    // applies to (the same shape a flat trait already uses), `bonus`
+    // carries only the record's own separate FLAT token (`0` for three of
+    // the four -- never fabricated as the formula's own dynamic result,
+    // which this DTO cannot know ahead of the character's real ability
+    // scores), and `ability_substitution` carries the formula text itself
+    // so the frontend states the real mechanism rather than a
+    // misleadingly-static "+0".
+    let ability_diff = ABILITY_DIFF_SKILL_TRAIT_BONUSES.iter().map(|entry| {
+        CharacterTraitOptionDto {
+            id: entry.trait_id.to_owned(),
+            name: entry.name.to_owned(),
+            description: entry.description.to_owned(),
+            skills: vec![skill_display_name(entry.skill)],
+            bonus: entry.flat_bonus,
+            skill_options: Vec::new(),
+            choice_set_id: None,
+            save: None,
+            other_pillars: Vec::new(),
+            ability_substitution: Some(TraitAbilitySubstitutionDto {
+                formula: entry.formula.to_owned(),
+                flat_bonus: entry.flat_bonus,
+            }),
         }
     });
     flat.chain(choice)
         .chain(family_choice)
         .chain(save_bonus)
         .chain(situational)
+        .chain(pillar_options)
+        .chain(ability_diff)
         .collect()
 }
 
@@ -224,11 +378,19 @@ mod tests {
     /// The command must return exactly the 31 flat-slice traits plus the 5
     /// fixed-choice-slice traits plus the 4 family-choice-slice traits
     /// plus the 2 flat-save-slice traits plus the 3 situational-slice
-    /// traits (45 total), never a subset or a hand-typed duplicate that
-    /// could drift from `trait_effects`' own tables.
+    /// traits plus the fifth-slice initiative/concentration traits
+    /// (merged by `trait_id`, so `Trait ~ Arcane Temper` counts once, not
+    /// twice) plus the 4 sixth-slice ability-diff traits (52 total), never
+    /// a subset or a hand-typed duplicate that could drift from
+    /// `trait_effects`' own tables.
     #[test]
     fn returns_every_flat_and_choice_skill_trait() {
         let options = list_available_character_traits();
+        let unique_pillar_trait_ids: std::collections::BTreeSet<&str> = INITIATIVE_TRAIT_BONUSES
+            .iter()
+            .map(|entry| entry.trait_id)
+            .chain(CONCENTRATION_TRAIT_BONUSES.iter().map(|entry| entry.trait_id))
+            .collect();
         assert_eq!(
             options.len(),
             FLAT_SKILL_TRAIT_BONUSES.len()
@@ -236,8 +398,158 @@ mod tests {
                 + FAMILY_CHOICE_TRAIT_BONUSES.len()
                 + SAVE_TRAIT_BONUSES.len()
                 + SITUATIONAL_SKILL_TRAIT_BONUSES.len()
+                + unique_pillar_trait_ids.len()
+                + ABILITY_DIFF_SKILL_TRAIT_BONUSES.len()
         );
-        assert_eq!(options.len(), 45);
+        assert_eq!(options.len(), 52);
+    }
+
+    /// Tactician (initiative-only) reaches the DTO with exactly one
+    /// `other_pillars` entry, never a fabricated second pillar it does not
+    /// carry.
+    #[test]
+    fn tactician_option_carries_only_the_initiative_pillar() {
+        let tactician = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_tactician")
+            .expect("Tactician must be in the roster");
+        assert_eq!(
+            tactician.other_pillars.iter().map(|p| (p.label.as_str(), p.bonus)).collect::<Vec<_>>(),
+            vec![("Initiative checks", 1)]
+        );
+        assert!(tactician.skills.is_empty());
+        assert_eq!(tactician.save, None);
+        assert_eq!(tactician.ability_substitution, None);
+    }
+
+    /// Arcane Temper carries BOTH pillars on the SAME option -- the
+    /// merge case this slice exists to prove, never two separate rows for
+    /// one record.
+    #[test]
+    fn arcane_temper_option_carries_both_pillars_on_one_option() {
+        let options = list_available_character_traits();
+        let arcane_tempers: Vec<_> =
+            options.iter().filter(|o| o.id == "trait:trait_arcane_temper").collect();
+        assert_eq!(arcane_tempers.len(), 1, "Arcane Temper must appear exactly once");
+        let arcane_temper = arcane_tempers[0];
+        assert_eq!(
+            arcane_temper
+                .other_pillars
+                .iter()
+                .map(|p| (p.label.as_str(), p.bonus))
+                .collect::<Vec<_>>(),
+            vec![("Initiative checks", 1), ("Concentration checks", 1)]
+        );
+    }
+
+    /// Desperate Resolve (concentration-only) reaches the DTO via the
+    /// second pass -- the one entry the first (initiative-anchored) pass
+    /// cannot reach on its own.
+    #[test]
+    fn desperate_resolve_option_carries_only_the_concentration_pillar() {
+        let desperate_resolve = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_desperate_resolve")
+            .expect("Desperate Resolve must be in the roster");
+        assert_eq!(
+            desperate_resolve
+                .other_pillars
+                .iter()
+                .map(|p| (p.label.as_str(), p.bonus))
+                .collect::<Vec<_>>(),
+            vec![("Concentration checks", 1)]
+        );
+    }
+
+    /// Every fifth-slice (`other_pillars`) option's id round-trips through
+    /// the real `trait_effects::initiative_or_concentration_trait_
+    /// magnitude_is_grounded_for_corpus_key` compute path, looked up via
+    /// whichever table's `corpus_key` matches -- never a rendered option
+    /// with no compute path behind it.
+    #[test]
+    fn every_pillar_option_id_is_recognized_by_the_compute_path() {
+        for option in list_available_character_traits() {
+            if option.other_pillars.is_empty() {
+                continue; // not a fifth-slice option
+            }
+            let corpus_key = INITIATIVE_TRAIT_BONUSES
+                .iter()
+                .find(|e| e.trait_id == option.id)
+                .map(|e| e.corpus_key)
+                .or_else(|| {
+                    CONCENTRATION_TRAIT_BONUSES
+                        .iter()
+                        .find(|e| e.trait_id == option.id)
+                        .map(|e| e.corpus_key)
+                })
+                .expect("a pillar option's id must be in one of the two tables");
+            assert!(
+                codex::rules_core::trait_effects::initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+                    corpus_key
+                )
+                .is_some(),
+                "{} was returned by the picker but did not ground via real fixture execution",
+                option.id
+            );
+        }
+    }
+
+    /// Bruising Intellect (sixth slice: `max(INT,CHA)-CHA`, no separate
+    /// flat token) reaches the DTO with its real corpus formula verbatim.
+    #[test]
+    fn bruising_intellect_option_carries_its_real_corpus_formula() {
+        let bruising_intellect = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_bruising_intellect")
+            .expect("Bruising Intellect must be in the roster");
+        assert_eq!(bruising_intellect.skills, vec!["Intimidate".to_string()]);
+        assert_eq!(bruising_intellect.bonus, 0);
+        let substitution = bruising_intellect
+            .ability_substitution
+            .expect("Bruising Intellect must carry an ability_substitution");
+        assert_eq!(substitution.formula, "max(INT,CHA)-CHA");
+        assert_eq!(substitution.flat_bonus, 0);
+    }
+
+    /// Precise Treatment (sixth slice: formula PLUS a separate flat +1
+    /// Heal token) reaches the DTO with BOTH its formula and its flat
+    /// component, never just one.
+    #[test]
+    fn precise_treatment_option_carries_both_its_formula_and_its_flat_token() {
+        let precise_treatment = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_precise_treatment")
+            .expect("Precise Treatment must be in the roster");
+        assert_eq!(precise_treatment.skills, vec!["Heal".to_string()]);
+        assert_eq!(precise_treatment.bonus, 1);
+        let substitution = precise_treatment
+            .ability_substitution
+            .expect("Precise Treatment must carry an ability_substitution");
+        assert_eq!(substitution.formula, "max(INT,WIS)-WIS");
+        assert_eq!(substitution.flat_bonus, 1);
+    }
+
+    /// Every sixth-slice (`ability_substitution`) option's id round-trips
+    /// through the real `trait_effects::ability_diff_skill_trait_
+    /// magnitude_is_grounded_for_corpus_key` compute path -- never a
+    /// rendered option with no compute path behind it.
+    #[test]
+    fn every_ability_diff_option_id_is_recognized_by_the_compute_path() {
+        for option in list_available_character_traits() {
+            let Some(entry) =
+                ABILITY_DIFF_SKILL_TRAIT_BONUSES.iter().find(|e| e.trait_id == option.id)
+            else {
+                continue; // not a sixth-slice option
+            };
+            assert!(
+                codex::rules_core::trait_effects::ability_diff_skill_trait_magnitude_is_grounded_for_corpus_key(
+                    entry.corpus_key
+                )
+                .is_some(),
+                "{} was returned by the picker but did not ground via real fixture execution",
+                option.id
+            );
+        }
     }
 
     /// Every situational-slice option's `skills` list is a real, non-empty
@@ -345,6 +657,25 @@ mod tests {
                 // `skill_bonuses_from_traits` (only its optional separate
                 // flat-skill half might, and that is a different table:
                 // `situational_flat_skill_bonuses_from_traits`).
+                continue;
+            }
+            if !option.other_pillars.is_empty() {
+                // covered by `every_pillar_option_id_is_recognized_by_the_
+                // compute_path` instead -- a fifth-slice option's bonus
+                // reaches `initiative_bonus_from_traits`/
+                // `concentration_bonus_from_traits`, not
+                // `skill_bonuses_from_traits`.
+                continue;
+            }
+            if option.ability_substitution.is_some() {
+                // covered by
+                // `every_ability_diff_option_id_is_recognized_by_the_
+                // compute_path` instead -- a sixth-slice option's real
+                // bonus reaches `ability_diff_skill_bonuses_from_traits`,
+                // not `skill_bonuses_from_traits` (which would only ever
+                // see its optional separate flat component, and Bruising
+                // Intellect/Planar Savant/Pragmatic Activator have none at
+                // all).
                 continue;
             }
             let bonuses = codex::rules_core::trait_effects::skill_bonuses_from_traits(&[

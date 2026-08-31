@@ -919,12 +919,14 @@ function CreateCharacterFields(props: {
 
           {/* AT-34-E4-002: character traits/drawbacks. Every option here
               genuinely computes -- `list_available_character_traits` returns
-              only the 45 `ultimate_campaign` traits whose `BONUS:SKILL`,
-              `BONUS:SAVE`, or `BONUS:SITUATION` this cycle's `trait_effects`
-              compute paths really apply (31 flat skill + 5 fixed-choice
-              skill + 4 open-family skill + 2 flat save + 3 situational). No
-              wider trait roster is offered, because no wider roster
-              computes anything yet. */}
+              only the 52 `ultimate_campaign` traits whose `BONUS:SKILL`,
+              `BONUS:SAVE`, `BONUS:SITUATION`, `BONUS:COMBAT|INITIATIVE`/
+              `BONUS:CONCENTRATION|ALLSPELLS`, or ability-score-difference
+              formula this crate's `trait_effects` compute paths really
+              apply (31 flat skill + 5 fixed-choice skill + 4 open-family
+              skill + 2 flat save + 3 situational + 3 initiative/
+              concentration + 4 ability-substitution). No wider trait roster
+              is offered, because no wider roster computes anything yet. */}
           <p
             style={{
               ...LABEL_STYLE,
@@ -977,12 +979,24 @@ function CreateCharacterFields(props: {
                         <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{option.name}</span>
                         <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
                           {' '}
-                          · {option.bonus >= 0 ? `+${option.bonus}` : option.bonus}{' '}
-                          {isChoiceBased
-                            ? `choice of ${option.skillOptions.map((choice) => choice.name).join(', ')}`
-                            : option.save !== null
-                              ? `${option.save} save`
-                              : option.skills.join(', ')}
+                          ·{' '}
+                          {option.otherPillars.length > 0
+                            ? option.otherPillars
+                                .map((pillar) => `${pillar.bonus >= 0 ? `+${pillar.bonus}` : pillar.bonus} ${pillar.label}`)
+                                .join(', ')
+                            : option.abilitySubstitution !== null
+                              ? `${option.skills.join(', ')} (ability-based${
+                                  option.abilitySubstitution.flatBonus !== 0
+                                    ? `, +${option.abilitySubstitution.flatBonus} flat`
+                                    : ''
+                                })`
+                              : `${option.bonus >= 0 ? `+${option.bonus}` : option.bonus} ${
+                                  isChoiceBased
+                                    ? `choice of ${option.skillOptions.map((choice) => choice.name).join(', ')}`
+                                    : option.save !== null
+                                      ? `${option.save} save`
+                                      : option.skills.join(', ')
+                                }`}
                         </span>
                         <span
                           style={{
