@@ -12111,10 +12111,12 @@ fn classify(
         // string.
         //
         // `AT-34-E4-002` (bucket M): the same `grounded_magnitude` wiring
-        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by three
+        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by FOUR
         // `trait_effects` entry points tried in order -- each an
-        // ACTUALLY-EXECUTED fixture character run through
-        // `allocate_skill_ranks`, never an assumed value:
+        // ACTUALLY-EXECUTED fixture character run through a real consumer
+        // (`allocate_skill_ranks` for the first three, `pilot_compute::
+        // compute_total_saves` via `compute_pilot_base_chassis` for the
+        // fourth), never an assumed value:
         // `flat_skill_trait_magnitude_is_grounded_for_corpus_key` (31-of-59
         // records whose corpus `BONUS` token is a flat, named-skill
         // `SKILL` bonus), then `skill_choice_trait_magnitude_is_grounded_
@@ -12125,11 +12127,13 @@ fn classify(
         // `TYPE=<Family>` subtype family, resolved via `skill_allocation`'s
         // own closed Craft/Perform/Profession rosters -- see that
         // module's own doc comment for the exact filters and what stays
-        // out of scope for each slice). Every other held `trait` record's
-        // `unit.key` resolves to `None` from all three and falls through
-        // to `simple_kind_verdict`'s unchanged `ingested-magnitude`
-        // fallback -- a pure widening, never a regression for a trait no
-        // module yet covers.
+        // out of scope for each slice), then `save_trait_magnitude_is_
+        // grounded_for_corpus_key` (2-of-59 more records whose corpus
+        // `BONUS` token is a flat, named-save `SAVE` bonus). Every other
+        // held `trait` record's `unit.key` resolves to `None` from all
+        // four and falls through to `simple_kind_verdict`'s unchanged
+        // `ingested-magnitude` fallback -- a pure widening, never a
+        // regression for a trait no module yet covers.
         Kind::Trait => {
             let coordinate = format!("{engine_book}:{}:{}", unit.provenance.file, unit.provenance.line);
             simple_kind_verdict(
@@ -12156,6 +12160,11 @@ fn classify(
                         })
                         .or_else(|| {
                             trait_effects::family_choice_trait_magnitude_is_grounded_for_corpus_key(
+                                &unit.key,
+                            )
+                        })
+                        .or_else(|| {
+                            trait_effects::save_trait_magnitude_is_grounded_for_corpus_key(
                                 &unit.key,
                             )
                         })
@@ -18389,16 +18398,42 @@ mod companion_text_complete_rung_tests {
         );
     }
 
+    /// **AT-34-E4-002 fourth slice**: `Trait ~ Life of Toil`
+    /// (`BONUS:SAVE|Fortitude|1` -- a different pillar entirely, not
+    /// `BONUS:SKILL`) reaches `grounded` via the fourth `.or_else`
+    /// fallback, `save_trait_magnitude_is_grounded_for_corpus_key`, since
+    /// all three skill-pillar entry points honestly return `None` for a
+    /// save-shaped record.
+    #[test]
+    fn a_flat_save_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            202,
+            "Trait ~ Life of Toil",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_1"
+        );
+    }
+
     /// NEGATIVE CONTROL: `Trait ~ Bruising Intellect` is a real, held
     /// `trait` record (`BONUS:SKILL|Intimidate|max(INT,CHA)-CHA`, an
     /// ability-score-difference formula magnitude) -- one of the 3
     /// records `trait_effects`'s own module doc comment names as still
     /// out of scope (no formula evaluator exists yet), so none of this
-    /// module's three compute-path entry points
+    /// module's four compute-path entry points
     /// (`flat_skill_trait_magnitude_is_grounded_for_corpus_key`,
     /// `skill_choice_trait_magnitude_is_grounded_for_corpus_key`,
-    /// `family_choice_trait_magnitude_is_grounded_for_corpus_key`)
-    /// deliberately covers it, all three honestly return `None`, and this
+    /// `family_choice_trait_magnitude_is_grounded_for_corpus_key`,
+    /// `save_trait_magnitude_is_grounded_for_corpus_key`)
+    /// deliberately covers it, all four honestly return `None`, and this
     /// record must stay exactly where it was before this cycle:
     /// `ingested-magnitude`, never silently promoted.
     ///

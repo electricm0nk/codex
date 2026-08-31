@@ -919,10 +919,12 @@ function CreateCharacterFields(props: {
 
           {/* AT-34-E4-002: character traits/drawbacks. Every option here
               genuinely computes -- `list_available_character_traits` returns
-              only the 31 `ultimate_campaign` traits whose flat `BONUS:SKILL`
-              this cycle's `trait_effects::skill_bonuses_from_traits` really
-              applies to the character's skill totals. No wider trait roster
-              is offered, because no wider roster computes anything yet. */}
+              only the 42 `ultimate_campaign` traits whose `BONUS:SKILL` or
+              `BONUS:SAVE` this cycle's `trait_effects` compute paths really
+              apply to the character's skill/save totals (31 flat skill + 5
+              fixed-choice skill + 4 open-family skill + 2 flat save). No
+              wider trait roster is offered, because no wider roster
+              computes anything yet. */}
           <p
             style={{
               ...LABEL_STYLE,
@@ -978,7 +980,9 @@ function CreateCharacterFields(props: {
                           · {option.bonus >= 0 ? `+${option.bonus}` : option.bonus}{' '}
                           {isChoiceBased
                             ? `choice of ${option.skillOptions.map((choice) => choice.name).join(', ')}`
-                            : option.skills.join(', ')}
+                            : option.save !== null
+                              ? `${option.save} save`
+                              : option.skills.join(', ')}
                         </span>
                         <span
                           style={{

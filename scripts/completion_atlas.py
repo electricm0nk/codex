@@ -148,9 +148,10 @@ BUCKET_DEFINITIONS = {
         # `item.verdict.status = "literal-verified";` -- one of the two V statuses.
         # Re-derived a fourth time post-rebase (this cycle's own six insertion hunks
         # stacked on top of the concurrently-landed AT-34-E4-002 cycle 4/5's own
-        # insertions): fresh `grep -n` against the real post-rebase file content,
-        # not either side's pre-rebase number.
-        "citation": {"file": _ENGINE_SRC, "line": 12663, "must_contain": "literal-verified"},
+        # insertions, then AT-34-E4-002 cycle 6's own fourth-slice save-bonus
+        # insertions into v06_work_inventory.rs): fresh `grep -n` against the
+        # real post-rebase file content, not either side's pre-rebase number.
+        "citation": {"file": _ENGINE_SRC, "line": 12672, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",

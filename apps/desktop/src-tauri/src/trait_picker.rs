@@ -19,7 +19,7 @@
 //! primitive already established, not a new mechanism.
 use codex::rules_core::trait_effects::{
     family_choice_skill_options, trait_skill_choice_id, FAMILY_CHOICE_TRAIT_BONUSES,
-    FLAT_SKILL_TRAIT_BONUSES, SKILL_CHOICE_TRAIT_BONUSES,
+    FLAT_SKILL_TRAIT_BONUSES, SAVE_TRAIT_BONUSES, SKILL_CHOICE_TRAIT_BONUSES,
 };
 use serde::Serialize;
 
@@ -64,6 +64,15 @@ pub struct CharacterTraitOptionDto {
     /// trait, which needs no such echo.
     #[serde(default)]
     pub choice_set_id: Option<String>,
+    /// `Some(<save name>)` (`"Fortitude"`, `"Reflex"`, or `"Will"`) only
+    /// for a flat `BONUS:SAVE` trait (`trait_effects::SAVE_TRAIT_
+    /// BONUSES`) -- fourth slice, `AT-34-E4-002`. `None` for every
+    /// skill-pillar trait, whose `skills`/`skill_options` above already
+    /// say what it affects. A save-bonus option's `skills` is always
+    /// empty and `bonus` still carries the flat integer, same as a flat
+    /// skill trait -- only which pillar it targets differs.
+    #[serde(default)]
+    pub save: Option<String>,
 }
 
 fn skill_display_name(skill_id: &str) -> String {
@@ -82,14 +91,17 @@ fn skill_display_name(skill_id: &str) -> String {
 }
 
 /// The full roster of traits this cycle's real compute-and-apply path
-/// supports -- `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits plus its
-/// 5 fixed-choice `BONUS:SKILL|%LIST` traits -- every option returned
-/// genuinely grants its stated bonus when selected (and, for a
-/// choice-based option, a valid `skill_options` choice recorded) and
-/// passed through `create_character`/`compose_character_input`
-/// (`trait_effects::skill_bonuses_from_traits` +
-/// `trait_effects::skill_choice_bonuses_from_traits`), never a rendered
-/// option with no compute path behind it.
+/// supports -- `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits, its 5
+/// fixed-choice `BONUS:SKILL|%LIST` traits, its 4 open-family
+/// `BONUS:SKILL|%LIST` traits, and its 2 flat `BONUS:SAVE` traits --
+/// every option returned genuinely grants its stated bonus when selected
+/// (and, for a choice-based option, a valid `skill_options` choice
+/// recorded) and passed through `create_character`/
+/// `compose_character_input` (`trait_effects::skill_bonuses_from_traits`
+/// + `trait_effects::skill_choice_bonuses_from_traits` +
+/// `trait_effects::family_choice_bonuses_from_traits` +
+/// `trait_effects::save_bonuses_from_traits`), never a rendered option
+/// with no compute path behind it.
 #[tauri::command]
 pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
     let flat = FLAT_SKILL_TRAIT_BONUSES.iter().map(|entry| CharacterTraitOptionDto {
@@ -100,6 +112,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         bonus: entry.bonus,
         skill_options: Vec::new(),
         choice_set_id: None,
+        save: None,
     });
     let choice = SKILL_CHOICE_TRAIT_BONUSES.iter().map(|entry| CharacterTraitOptionDto {
         id: entry.trait_id.to_owned(),
@@ -116,6 +129,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             })
             .collect(),
         choice_set_id: Some(trait_skill_choice_id(entry.trait_id)),
+        save: None,
     });
     // Third slice (`AT-34-E4-002`): the 4 open-subtype-family `%LIST`
     // traits -- `skill_options` here is the resolved Craft/Perform/
@@ -137,8 +151,25 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             })
             .collect(),
         choice_set_id: Some(trait_skill_choice_id(entry.trait_id)),
+        save: None,
     });
-    flat.chain(choice).chain(family_choice).collect()
+    // Fourth slice (`AT-34-E4-002`): the 2 flat `BONUS:SAVE` traits --
+    // needs no `choice_set_id` (no player choice, same as a flat skill
+    // trait) and no `skills` (the frontend's generic display logic checks
+    // `save` for this shape instead, the same "one new field, zero new
+    // mechanism" pattern the family-choice slice established for
+    // `skill_options`).
+    let save_bonus = SAVE_TRAIT_BONUSES.iter().map(|entry| CharacterTraitOptionDto {
+        id: entry.trait_id.to_owned(),
+        name: entry.name.to_owned(),
+        description: entry.description.to_owned(),
+        skills: Vec::new(),
+        bonus: entry.bonus,
+        skill_options: Vec::new(),
+        choice_set_id: None,
+        save: Some(entry.save.to_owned()),
+    });
+    flat.chain(choice).chain(family_choice).chain(save_bonus).collect()
 }
 
 #[cfg(test)]
@@ -146,9 +177,10 @@ mod tests {
     use super::*;
 
     /// The command must return exactly the 31 flat-slice traits plus the 5
-    /// fixed-choice-slice traits plus the 4 family-choice-slice traits (40
-    /// total), never a subset or a hand-typed duplicate that could drift
-    /// from `trait_effects`' own tables.
+    /// fixed-choice-slice traits plus the 4 family-choice-slice traits
+    /// plus the 2 flat-save-slice traits (42 total), never a subset or a
+    /// hand-typed duplicate that could drift from `trait_effects`' own
+    /// tables.
     #[test]
     fn returns_every_flat_and_choice_skill_trait() {
         let options = list_available_character_traits();
@@ -157,11 +189,12 @@ mod tests {
             FLAT_SKILL_TRAIT_BONUSES.len()
                 + SKILL_CHOICE_TRAIT_BONUSES.len()
                 + FAMILY_CHOICE_TRAIT_BONUSES.len()
+                + SAVE_TRAIT_BONUSES.len()
         );
-        assert_eq!(options.len(), 40);
+        assert_eq!(options.len(), 42);
     }
 
-    /// Every flat-slice option's id round-trips: it is exactly what
+    /// Every flat-skill-slice option's id round-trips: it is exactly what
     /// `trait_effects::skill_bonuses_from_traits` recognizes with no
     /// choice recorded, so a frontend that echoes it back on
     /// `selected_traits` gets a real, computed bonus, not a
@@ -169,8 +202,11 @@ mod tests {
     #[test]
     fn every_flat_option_id_is_recognized_by_the_compute_path() {
         for option in list_available_character_traits() {
-            if option.choice_set_id.is_some() {
-                continue; // covered by the choice-slice test below instead
+            if option.choice_set_id.is_some() || option.save.is_some() {
+                // covered by the choice-slice and save-slice tests
+                // instead -- neither shape reaches
+                // `skill_bonuses_from_traits`.
+                continue;
             }
             let bonuses = codex::rules_core::trait_effects::skill_bonuses_from_traits(&[
                 option.id.clone(),
@@ -180,6 +216,34 @@ mod tests {
                 "{} was returned by the picker but is not recognized by \
                  skill_bonuses_from_traits -- a selectable option with no real effect",
                 option.id
+            );
+        }
+    }
+
+    /// Every save-slice option's id round-trips through the real
+    /// `trait_effects::save_bonuses_from_traits` compute path, landing on
+    /// exactly the save it declares -- never a rendered option with no
+    /// compute path behind it.
+    #[test]
+    fn every_save_option_id_is_recognized_by_the_compute_path() {
+        for option in list_available_character_traits() {
+            let Some(save) = option.save.clone() else {
+                continue; // not a save-slice option
+            };
+            let bonuses = codex::rules_core::trait_effects::save_bonuses_from_traits(&[
+                option.id.clone(),
+            ]);
+            let landed = match save.as_str() {
+                "Fortitude" => bonuses.fortitude,
+                "Reflex" => bonuses.reflex,
+                "Will" => bonuses.will,
+                other => panic!("{other} is not a real save name"),
+            };
+            assert_eq!(
+                landed, option.bonus as i16,
+                "{} declares a {save} save bonus of {} but \
+                 save_bonuses_from_traits landed {landed}",
+                option.id, option.bonus
             );
         }
     }
@@ -311,5 +375,37 @@ mod tests {
         assert!(mentored.skill_options.iter().any(|o| o.skill_id == "skill:craft_alchemy"));
         assert!(mentored.skill_options.iter().any(|o| o.skill_id == "skill:perform_sing"));
         assert!(mentored.skill_options.iter().any(|o| o.skill_id == "skill:profession_scribe"));
+    }
+
+    /// The Life of Toil trait (fourth slice: flat `BONUS:SAVE`) reaches
+    /// the DTO with its real corpus data verbatim, as a save-bonus
+    /// option: no `skills`, no `skill_options`, no `choice_set_id`, but a
+    /// real `save` naming Fortitude.
+    #[test]
+    fn life_of_toil_option_carries_its_real_corpus_save_data() {
+        let life_of_toil = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_life_of_toil")
+            .expect("Life of Toil must be in the roster");
+        assert_eq!(life_of_toil.name, "Life of Toil");
+        assert_eq!(life_of_toil.bonus, 1);
+        assert_eq!(life_of_toil.save.as_deref(), Some("Fortitude"));
+        assert!(life_of_toil.skills.is_empty());
+        assert!(life_of_toil.skill_options.is_empty());
+        assert_eq!(life_of_toil.choice_set_id, None);
+        assert!(life_of_toil.description.contains("Fortitude"));
+    }
+
+    /// The Indomitable Faith trait reaches the DTO with a real `save`
+    /// naming Will, not Fortitude -- proves the two save-slice entries
+    /// are not accidentally aliased to the same save.
+    #[test]
+    fn indomitable_faith_option_carries_its_real_corpus_save_data() {
+        let indomitable_faith = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_indomitable_faith")
+            .expect("Indomitable Faith must be in the roster");
+        assert_eq!(indomitable_faith.save.as_deref(), Some("Will"));
+        assert_eq!(indomitable_faith.bonus, 1);
     }
 }

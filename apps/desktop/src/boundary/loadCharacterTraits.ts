@@ -7,16 +7,20 @@ import { formatError, hasTauriRuntime } from './runtime';
  *
  * A single command: `list_available_character_traits` returns the real,
  * corpus-derived roster of traits this cycle's compute path genuinely
- * supports — `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits, plus 5
- * fixed-choice `BONUS:SKILL|%LIST` traits (second slice) — every option
- * returned really does grant its stated skill bonus once selected (and,
- * for a choice-based option, a valid `skillOptions` choice recorded) and
- * submitted on `CreateCharacterRequest.selectedTraits`/
- * `.traitSkillChoices` (`trait_effects::skill_bonuses_from_traits` +
- * `trait_effects::skill_choice_bonuses_from_traits`). No "resolve" step
- * exists (unlike `loadAlternateRacialTraits`'s pair): neither trait shape
- * has alternate-swap exclusivity or per-character rendered prose to
- * compute ahead of submission.
+ * supports — `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits, 5
+ * fixed-choice `BONUS:SKILL|%LIST` traits (second slice), 4 open-family
+ * `BONUS:SKILL|%LIST` traits (third slice), and 2 flat `BONUS:SAVE`
+ * traits (fourth slice) — every option returned really does grant its
+ * stated bonus once selected (and, for a choice-based option, a valid
+ * `skillOptions` choice recorded) and submitted on
+ * `CreateCharacterRequest.selectedTraits`/`.traitSkillChoices`
+ * (`trait_effects::skill_bonuses_from_traits` +
+ * `trait_effects::skill_choice_bonuses_from_traits` +
+ * `trait_effects::family_choice_bonuses_from_traits` +
+ * `trait_effects::save_bonuses_from_traits`). No "resolve" step exists
+ * (unlike `loadAlternateRacialTraits`'s pair): no trait shape here has
+ * alternate-swap exclusivity or per-character rendered prose to compute
+ * ahead of submission.
  */
 
 /** One skill a choice-based trait's `%LIST` can resolve to. */
@@ -38,6 +42,8 @@ export interface CharacterTraitOptionDto {
   skillOptions: TraitSkillOptionDto[];
   /** `choiceSetId` to echo back (paired with the picked `skillOptions` entry) on `CreateCharacterRequest.traitSkillChoices`. `null` for a flat trait. */
   choiceSetId: string | null;
+  /** `'Fortitude' | 'Reflex' | 'Will'` only for a fourth-slice flat `BONUS:SAVE` trait; `null` for every skill-pillar trait. */
+  save: string | null;
 }
 
 export async function loadCharacterTraits(): Promise<CharacterTraitOptionDto[]> {

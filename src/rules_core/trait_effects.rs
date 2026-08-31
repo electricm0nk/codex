@@ -78,28 +78,44 @@
 //! [`FAMILY_CHOICE_TRAIT_BONUSES`] for the 4-record table and
 //! [`family_choice_bonuses_from_traits`] for the compute path.
 //!
+//! ## Fourth slice: flat `BONUS:SAVE` traits
+//!
+//! A fourth cycle widened the spine past `BONUS:SKILL` entirely, into a
+//! **different pillar** -- total saving throws. `ultimate_campaign`'s two
+//! `BONUS:SAVE` trait records (`trait_life_of_toil`: `SAVE|Fortitude|1`,
+//! `trait_indomitable_faith`: `SAVE|Will|1`) are both a single flat token
+//! with no `%LIST` choice, the exact shape `feat_effects::save_bonuses_
+//! from_feats` already grounds for Great Fortitude/Iron Will/Lightning
+//! Reflexes -- reusing that same real consumer,
+//! `pilot_compute::compute_total_saves`, rather than inventing a second
+//! save-bonus pathway. See [`SAVE_TRAIT_BONUSES`] for the 2-record table
+//! and [`save_bonuses_from_traits`] for the compute path; the classifier-
+//! facing grounding check is [`save_trait_magnitude_is_grounded_for_
+//! corpus_key`].
+//!
 //! ## What this module deliberately does NOT cover
 //!
 //! - **3 records** carry an ability-score-difference formula magnitude
 //!   (`max(INT,CHA)-CHA` etc, e.g. `trait_bruising_intellect`) -- no
 //!   formula evaluator exists in this crate for that shape.
-//! - **The remaining 15 `trait_content` records** mix `BONUS:VAR`,
-//!   `BONUS:SAVE`, `BONUS:SITUATION`, `BONUS:ABILITYPOOL`,
-//!   `BONUS:COMBAT`, and `BONUS:CONCENTRATION` tokens -- different pillars
-//!   entirely (saves, combat maneuvers, concentration checks, a bonus
-//!   trait-slot pool), out of this module's scope.
+//! - **The remaining 13 `trait_content` records** mix `BONUS:VAR`,
+//!   `BONUS:SITUATION`, `BONUS:ABILITYPOOL`, `BONUS:COMBAT`, and
+//!   `BONUS:CONCENTRATION` tokens -- different pillars entirely (combat
+//!   maneuvers, concentration checks, a bonus trait-slot pool, and
+//!   engine-internal variables with no consuming pillar), out of this
+//!   module's scope.
 //! - **All 30 `ability_content` units** (`ultimate_campaign`'s
 //!   Drawback/Retraining sub-mechanics) -- house-rule bookkeeping and
 //!   GM-adjudicated narrative penalties with no clean formulaic trigger,
 //!   per the prior cycle's own direct reading of that corpus.
 //!
-//! Widening past these three slices is future work, gated on either a
+//! Widening past these four slices is future work, gated on either a
 //! formula evaluator for ability-score-difference magnitudes, or genuinely
-//! separate per-pillar compute paths for the mixed `BONUS:VAR/SAVE/
-//! SITUATION/ABILITYPOOL/COMBAT/CONCENTRATION` records -- neither exists
-//! yet, and building either as a rushed half-measure here would risk the
-//! same "8 closures where measurement found 1" failure this bundle's own
-//! doctrine warns against.
+//! separate per-pillar compute paths for the mixed `BONUS:VAR/SITUATION/
+//! ABILITYPOOL/COMBAT/CONCENTRATION` records -- neither exists yet, and
+//! building either as a rushed half-measure here would risk the same "8
+//! closures where measurement found 1" failure this bundle's own doctrine
+//! warns against.
 
 use std::collections::BTreeMap;
 
@@ -677,6 +693,165 @@ pub fn family_choice_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str
     }
 }
 
+/// One flat `BONUS:SAVE` trait -- see the module doc comment's "Fourth
+/// slice" section for the exact filter.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitSaveBonus {
+    /// The wire id `CharacterInput.chosen.selected_traits` carries for
+    /// this trait -- same `"trait:" + corpus filename slug` idiom as
+    /// [`TraitSkillBonus::trait_id`].
+    pub trait_id: &'static str,
+    /// The record's own corpus `KEY` token, as transcribed from
+    /// `data.key`.
+    pub corpus_key: &'static str,
+    /// The trait's display name, transcribed from the corpus record's own
+    /// `name` field.
+    pub name: &'static str,
+    /// Which of the three saves this trait's `BONUS:SAVE` token targets
+    /// -- exactly `"Fortitude"`, `"Reflex"`, or `"Will"`, transcribed
+    /// verbatim from the token's own second field.
+    pub save: &'static str,
+    /// The flat integer bonus, transcribed from the record's own
+    /// `BONUS:SAVE|<Save>|<n>|...` token.
+    pub bonus: i8,
+    /// The trait's own corpus `description` field, verbatim.
+    pub description: &'static str,
+}
+
+/// The 2-of-59 `ultimate_campaign` `trait_content` records whose corpus
+/// `BONUS` token is a single, flat, named-save `SAVE` bonus with no
+/// `%LIST` choice -- see the module doc comment's "Fourth slice" section.
+pub static SAVE_TRAIT_BONUSES: &[TraitSaveBonus] = &[
+    TraitSaveBonus {
+        trait_id: "trait:trait_life_of_toil",
+        corpus_key: "Trait ~ Life of Toil",
+        name: "Life of Toil",
+        save: "Fortitude",
+        bonus: 1,
+        description: "You have lived a physically taxing life, working long hours for a master or to support a trade. Hard physical labor has toughened your body and mind. You gain a +1 trait bonus on Fortitude saves.",
+    },
+    TraitSaveBonus {
+        trait_id: "trait:trait_indomitable_faith",
+        corpus_key: "Trait ~ Indomitable Faith",
+        name: "Indomitable Faith",
+        save: "Will",
+        bonus: 1,
+        description: "You were born in a region where your faith was not popular, but you still have never abandoned it. Your constant struggle to maintain your own faith has bolstered your drive. You gain a +1 trait bonus on Will saves.",
+    },
+];
+
+/// Looks up one [`SAVE_TRAIT_BONUSES`] entry by its wire `trait_id`.
+fn find_save_by_trait_id(trait_id: &str) -> Option<&'static TraitSaveBonus> {
+    SAVE_TRAIT_BONUSES.iter().find(|entry| entry.trait_id == trait_id)
+}
+
+/// Three-save total, the same shape `feat_effects::SaveBonusesFromFeats`
+/// already established for feats -- summed by
+/// `pilot_compute::compute_total_saves` alongside every other save-bonus
+/// source (ability modifier, feats, class/race features).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct SaveBonusesFromTraits {
+    pub fortitude: i16,
+    pub reflex: i16,
+    pub will: i16,
+}
+
+/// Sums the real, computed save bonus from every [`SAVE_TRAIT_BONUSES`]
+/// trait in `selected_traits`. A trait id this module does not recognize
+/// (outside the 2-record flat-save slice) contributes nothing -- never a
+/// fabricated bonus, the same "omit rather than fabricate" discipline
+/// every other entry point in this module follows. A character who
+/// somehow selected both traits gets both (PF1 core rules do not forbid
+/// stacking two traits that target different saves, and these two do:
+/// Fortitude and Will).
+pub fn save_bonuses_from_traits(selected_traits: &[String]) -> SaveBonusesFromTraits {
+    let mut total = SaveBonusesFromTraits::default();
+    for trait_id in selected_traits {
+        let Some(entry) = find_save_by_trait_id(trait_id) else {
+            continue;
+        };
+        match entry.save {
+            "Fortitude" => total.fortitude = total.fortitude.saturating_add(entry.bonus as i16),
+            "Reflex" => total.reflex = total.reflex.saturating_add(entry.bonus as i16),
+            "Will" => total.will = total.will.saturating_add(entry.bonus as i16),
+            // Unreachable for the two transcribed entries above; omitted
+            // rather than fabricated if this table ever grows a malformed
+            // entry.
+            _ => {}
+        }
+    }
+    total
+}
+
+/// **AT-34-E4-002's classifier-facing entry point for the fourth,
+/// flat-save slice.** Unlike the three skill-pillar checks above (which
+/// call `skill_allocation::allocate_skill_ranks` directly), a save bonus
+/// is only observable through the real consumer,
+/// `pilot_compute::compute_total_saves` -- so this ACTUALLY BUILDS a
+/// minimal Fighter level-1 fixture character twice (once with the trait
+/// selected, once without) and diffs the real computed total for the
+/// specific save this entry targets, the identical pattern
+/// `save_boosting_feats_widen_total_saves_tests` already proved for
+/// Great Fortitude/Iron Will/Lightning Reflexes. Returns `None` for any
+/// corpus key outside the 2-record flat-save slice, or in the
+/// unreachable case the fixture-executed delta ever disagreed with the
+/// transcribed table.
+pub fn save_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str) -> Option<i8> {
+    let entry = SAVE_TRAIT_BONUSES.iter().find(|entry| entry.corpus_key == corpus_key)?;
+
+    fn fixture_input() -> CharacterInput {
+        CharacterInput {
+            case_id: None,
+            source_package_id: "at_34_e4_002_fixture".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel {
+                    class_id: "class:fighter".to_owned(),
+                    level: 1,
+                }],
+                ability_scores: AbilityScores {
+                    strength: 10,
+                    dexterity: 10,
+                    constitution: 10,
+                    intelligence: 10,
+                    wisdom: 10,
+                    charisma: 10,
+                },
+                selected_feats: Vec::new(),
+                skill_allocations: Vec::new(),
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                selected_traits: Vec::new(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    let baseline = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&fixture_input());
+    let mut with_trait_input = fixture_input();
+    with_trait_input.chosen.selected_traits.push(entry.trait_id.to_owned());
+    let with_trait = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&with_trait_input);
+
+    let (base_value, new_value) = match entry.save {
+        "Fortitude" => (baseline.total_saves.fortitude, with_trait.total_saves.fortitude),
+        "Reflex" => (baseline.total_saves.reflex, with_trait.total_saves.reflex),
+        "Will" => (baseline.total_saves.will, with_trait.total_saves.will),
+        _ => return None,
+    };
+    let computed_delta = (new_value - base_value) as i8;
+
+    if computed_delta == entry.bonus {
+        Some(computed_delta)
+    } else {
+        // The engine genuinely disagreed with the transcribed table --
+        // this is a real defect, never something to paper over by
+        // returning the table's own value instead of the fixture's.
+        None
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1075,6 +1250,117 @@ mod tests {
         );
         assert_eq!(
             family_choice_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
+            None
+        );
+    }
+
+    /// Both `SAVE_TRAIT_BONUSES` entries target one of the three real save
+    /// names, and neither collides with the other's save (a stacking bug
+    /// would be invisible if both entries happened to target the same
+    /// save).
+    #[test]
+    fn save_table_entries_target_distinct_real_saves() {
+        let saves: Vec<&str> = SAVE_TRAIT_BONUSES.iter().map(|entry| entry.save).collect();
+        for save in &saves {
+            assert!(
+                ["Fortitude", "Reflex", "Will"].contains(save),
+                "{save} is not a real save name"
+            );
+        }
+        let mut deduped = saves.clone();
+        deduped.sort_unstable();
+        deduped.dedup();
+        assert_eq!(deduped.len(), saves.len(), "two entries target the same save");
+    }
+
+    /// No `trait_id` in `SAVE_TRAIT_BONUSES` collides with either of the
+    /// two skill-pillar tables -- proves the three summed maps
+    /// `skill_allocation::allocate_skill_ranks` sums, plus this module's
+    /// own save path, never double-apply a single selected trait.
+    #[test]
+    fn no_save_trait_id_collides_with_a_skill_pillar_trait_id() {
+        for entry in SAVE_TRAIT_BONUSES {
+            assert!(
+                find_by_trait_id(entry.trait_id).is_none(),
+                "{} appears in both the save and flat-skill tables",
+                entry.trait_id
+            );
+            assert!(
+                find_choice_by_trait_id(entry.trait_id).is_none(),
+                "{} appears in both the save and skill-choice tables",
+                entry.trait_id
+            );
+            assert!(
+                find_family_choice_by_trait_id(entry.trait_id).is_none(),
+                "{} appears in both the save and family-choice tables",
+                entry.trait_id
+            );
+        }
+    }
+
+    /// An unselected save trait contributes nothing.
+    #[test]
+    fn no_selected_save_traits_contribute_nothing() {
+        assert_eq!(save_bonuses_from_traits(&[]), SaveBonusesFromTraits::default());
+        assert_eq!(
+            save_bonuses_from_traits(&["trait:trait_reckless".to_string()]),
+            SaveBonusesFromTraits::default()
+        );
+    }
+
+    /// The core case: selecting Life of Toil contributes +1 Fortitude and
+    /// nothing else; selecting Indomitable Faith contributes +1 Will and
+    /// nothing else; selecting both sums independently onto their own
+    /// saves.
+    #[test]
+    fn selected_save_traits_contribute_to_exactly_their_own_save() {
+        let life_of_toil = save_bonuses_from_traits(&["trait:trait_life_of_toil".to_string()]);
+        assert_eq!(
+            life_of_toil,
+            SaveBonusesFromTraits { fortitude: 1, reflex: 0, will: 0 }
+        );
+
+        let indomitable_faith =
+            save_bonuses_from_traits(&["trait:trait_indomitable_faith".to_string()]);
+        assert_eq!(
+            indomitable_faith,
+            SaveBonusesFromTraits { fortitude: 0, reflex: 0, will: 1 }
+        );
+
+        let both = save_bonuses_from_traits(&[
+            "trait:trait_life_of_toil".to_string(),
+            "trait:trait_indomitable_faith".to_string(),
+        ]);
+        assert_eq!(both, SaveBonusesFromTraits { fortitude: 1, reflex: 0, will: 1 });
+    }
+
+    /// **The flat-save-slice classifier-facing entry point, executed, not
+    /// asserted.** Must genuinely run the fixture through the real
+    /// `pilot_compute::compute_total_saves` consumer and agree with the
+    /// transcribed table for both entries.
+    #[test]
+    fn every_save_entry_is_genuinely_grounded_by_fixture_execution() {
+        for entry in SAVE_TRAIT_BONUSES {
+            let grounded = save_trait_magnitude_is_grounded_for_corpus_key(entry.corpus_key);
+            assert_eq!(
+                grounded,
+                Some(entry.bonus),
+                "{} ({}) did not ground to its transcribed bonus via real fixture execution",
+                entry.trait_id,
+                entry.corpus_key
+            );
+        }
+    }
+
+    /// A corpus key outside the flat-save slice is honestly `None`.
+    #[test]
+    fn an_ungrounded_save_corpus_key_returns_none() {
+        assert_eq!(
+            save_trait_magnitude_is_grounded_for_corpus_key("Trait ~ Acrobat"),
+            None
+        );
+        assert_eq!(
+            save_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
             None
         );
     }

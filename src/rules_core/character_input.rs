@@ -33,12 +33,16 @@ pub struct ChosenCharacterState {
     /// `trait_pool.rs`'s existing `RaceTrait` machinery is a different
     /// mechanic entirely (an Adopted-Race option list; "nothing is
     /// computed... this loader only indexes them", its own doc comment) and
-    /// is untouched by this field. Real effects are read through
-    /// `trait_effects::skill_bonuses_from_traits`, currently covering the
-    /// 31-of-59 `ultimate_campaign` `trait_content` records whose corpus
-    /// `BONUS` token is a flat, named-skill `SKILL` bonus (see that
-    /// module's own doc comment for the exact shape and what is
-    /// deliberately not yet covered). Defaults to empty via every fixture
+    /// is untouched by this field. Real effects are read through four
+    /// `trait_effects` compute paths (`skill_bonuses_from_traits`,
+    /// `skill_choice_bonuses_from_traits`,
+    /// `family_choice_bonuses_from_traits`, `save_bonuses_from_traits`),
+    /// currently covering 42-of-59 `ultimate_campaign` `trait_content`
+    /// records: 40 whose corpus `BONUS` token is a flat, fixed-choice, or
+    /// open-family-choice named-skill `SKILL` bonus, plus 2 whose token
+    /// is a flat, named-save `SAVE` bonus (see that module's own doc
+    /// comment for the exact shapes and what is deliberately not yet
+    /// covered). Defaults to empty via every fixture
     /// that omits `trait=` lines and every pre-existing construction site --
     /// no pre-existing fixture or call site is broken by this addition.
     pub selected_traits: Vec<String>,
