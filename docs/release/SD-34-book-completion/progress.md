@@ -76,6 +76,52 @@ Tactician`'s clean single `COMBAT|INITIATIVE` token, reusing `feat_effects::
 initiative_bonus_from_feats`'s already-shipped consumer the same way this cycle reused the save
 consumer. Full receipt: `artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_6.md`.
 
+### Cycle — AT-34-E3-002 (bucket C) cycle 5 — Bard Versatile Performance naming closure — partial
+
+**Status: partial.** Closed the prior cycle's own named `versatile_performance_not_computed`
+sub-cause end to end: **9 of 9** real `"Versatile Performance ~ <Type>"` corpus records now
+reach `grounded`. This is a DIFFERENT pre-existing engine mechanism than cycles 3/4's own
+generic pool-group-selection pass — the Bard's own Versatile Performance slot loop
+(`pilot_compute::mod.rs`, SD13-E5) already emits a real `class_chassis.bard.
+versatile_performance_choice` recognition record whose `detail` text names the selected
+Perform type, but its explanation `id` is FIXED per slot (not per-member, unlike Cleric
+Domain/Sorcerer Bloodline's per-member ids), so member identity can only be read from
+`detail` text — the existing `generic_pool_group_selection_observed_keys` bridge's own
+literal-marker format does not appear there, so a new, purpose-built, probe-local bridge was
+written instead of reused. Re-checked reuse first; it genuinely does not apply here.
+
+A real finding this cycle's own scan caught: **3** of the 9 real corpus Perform-type names
+(`Percussion Instruments`, `String Instruments`, `Wind Instruments` — PF1's own canonical
+names, matching the corpus verbatim) do not match the engine's own shorter internal display
+names (`Percussion`, `String`, `Wind`) for the same three types. Fixed with a probe-local
+mapping table entirely inside `v06_work_inventory.rs`; `pilot_compute.rs` and its own display
+strings were not touched.
+
+**Live regen (local, uncommitted — file-ownership rule), whole-inventory before/after diff
+keyed on unit id**, against the COMMITTED HEAD inventory: 0 added, 0 removed, exactly **67**
+changed, cleanly decomposing into three independently-attributed groups by evidence string —
+**54** `core_rulebook` (cycle 4's own already-committed Sorcerer Bloodline fix, not this
+cycle's), **4** `ultimate_campaign` (a sibling `AT-34-E4-002` trait-compute closure, not this
+cycle's, outside `core_rulebook` and outside territory), and **9** `core_rulebook` carrying
+this cycle's own evidence string
+(`bard_versatile_performance_choice_probe_observed_a_real_named_recognition_record`) — this
+cycle's own isolated closure, all 9 `engine-does-not-hold` → `grounded` (bucket **DONE**
+directly, every member `wiring_class: computed`, none reclassified to V). `core_rulebook` C:
+242 (true-reachable, i.e. cycle 4's fix applied) → **233** (−9). Against the committed
+baseline (296), the combined visible delta is −63 (54 + 9, two separately-attributed,
+already-shipped cycles), but this cycle's own closure claim is exactly 9. Every other named
+sub-cause in the 233-unit remainder is confirmed UNCHANGED by this cycle's own diff.
+
+8 new tests (5 probe + 3 `classify()`, RED confirmed for the intended reason then GREEN),
+`class_feature`-scoped suite 142/142, full bin suite 470/470, `cargo test --locked --no-run`
+exits 0 at the widest workspace scope (run at this cycle's own tip); desktop crate not
+touched, not run (confirmed by grep, zero references). `scripts/completion_atlas.py`
+citation pins re-derived a fifth time (`citation_failures` 10→0, exact-line-content grep
+against `git show HEAD:...`, never guessed). `docs/work-inventory.json` and
+`completion-atlas.json` deliberately NOT committed this cycle, per file-ownership rule;
+restored via `git restore` before this commit. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-002 (bucket C) cycle 4 — Sorcerer Bloodline generic pool-group reuse — partial
 
 **Status: partial.** Reused the same already-shipped generic pool-group-selection pass

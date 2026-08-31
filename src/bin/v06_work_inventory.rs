@@ -5448,6 +5448,24 @@ struct EngineFacts {
     /// generic-pass-resolved magnitude, not a duplicate of the hand-modelled
     /// one (confirmed by this cycle's own live-fixture proof, not assumed).
     sorcerer_bloodline_generic_member_wired: BTreeSet<String>,
+    /// `AT-34-E3-002` (bucket C continuation, cycle 5): full corpus
+    /// `"Versatile Performance ~ <Type>"` keys (`"Versatile Performance ~
+    /// Act"`, ...) whose own real, already-shipped `class_chassis.bard.
+    /// versatile_performance_choice` recognition-record explanation
+    /// (`pilot_compute::mod.rs`'s Versatile Performance slot loop, SD13-E5)
+    /// was genuinely observed, on a real Bard who selected that exact
+    /// Perform type, to name that specific type in its own `detail` text
+    /// via [`probe_bard_versatile_performance_generic_member_wiring`]. A
+    /// DIFFERENT engine mechanism from the generic pool-group-selection
+    /// pass above (this one's explanation `id` is fixed per slot, not
+    /// per-member, so member identity is read from `detail`'s own `names
+    /// <Type>` text, never from `id`) -- the value is a genuine `+0`
+    /// (PF1's Versatile Performance is a skill-SUBSTITUTION rule, not an
+    /// additive bonus; the substitution engine itself is a separate, larger
+    /// burden this cycle does not build), but the record is a real,
+    /// developer-and-player-visible naming of the specific Perform type the
+    /// player picked, not a relabel.
+    bard_versatile_performance_generic_member_wired: BTreeSet<String>,
     /// `AT-34-E3-001` (mechanism 2 continuation, cycle 4): full corpus_key
     /// strings (`"Evocation School ~ Intense Spells"`, ...) whose own
     /// per-power explanation id was genuinely observed via
@@ -7473,6 +7491,190 @@ fn probe_sorcerer_bloodline_generic_member_wiring(fixture: &CharacterInput) -> B
     wired
 }
 
+/// `AT-34-E3-002` (bucket C continuation, cycle 5): the nine real PF1 Core
+/// Rulebook Versatile Performance types, verified by direct corpus scan
+/// (`data/corpus/core_rulebook/class_feature/*.json`'s own `"Versatile
+/// Performance ~ <Type>"` keys) against `pilot_compute::mod.rs`'s own
+/// `BARD_VERSATILE_PERFORMANCE_TYPES` table. Three real corpus names
+/// (`"Percussion Instruments"`, `"String Instruments"`, `"Wind
+/// Instruments"` -- PF1's own canonical Perform subtype names, matching the
+/// corpus verbatim) do NOT match the engine's own shorter display name for
+/// the same type (`"Percussion"`, `"String"`, `"Wind"` --
+/// `pilot_compute::mod.rs`'s own table, confirmed by reading it directly);
+/// this table is this probe's OWN mapping from the real corpus name to (a)
+/// the real engine selection slug and (b) the exact substring the engine's
+/// own `detail` text names the type by, so the probe can tell the two
+/// apart without touching `pilot_compute` at all -- a probe-local
+/// correspondence, never a change to the engine's own display strings.
+const CORE_RULEBOOK_BARD_VERSATILE_PERFORMANCE_MEMBERS: &[(&str, &str, &str)] = &[
+    ("Act", "perform:act", "Act"),
+    ("Comedy", "perform:comedy", "Comedy"),
+    ("Dance", "perform:dance", "Dance"),
+    ("Keyboard Instruments", "perform:keyboard_instruments", "Keyboard Instruments"),
+    ("Oratory", "perform:oratory", "Oratory"),
+    ("Percussion Instruments", "perform:percussion", "Percussion"),
+    ("Sing", "perform:sing", "Sing"),
+    ("String Instruments", "perform:string", "String"),
+    ("Wind Instruments", "perform:wind", "Wind"),
+];
+
+/// `AT-34-E3-002` (bucket C continuation, cycle 5): verifies, by REAL
+/// computation, which real corpus `"Versatile Performance ~ <Type>"`
+/// records the engine's PRE-EXISTING Versatile Performance slot loop
+/// (`pilot_compute::mod.rs`, SD13-E5) genuinely names. That loop already
+/// emits a real `class_chassis.bard.versatile_performance_choice`
+/// explanation (slot 1, gated at Bard level 2) whose own `detail` text
+/// names the selected Perform type verbatim (`"...selection names {name},
+/// whose verified associated skills are {pair}"`) -- but
+/// `v06_work_inventory`'s classifier has never once asked it a question,
+/// for the same reason the Cleric Domain/Sorcerer Bloodline cycles' own
+/// receipts named: the canonical per-class sweep that fills
+/// `EngineFacts::explanation_ids` never selects a Versatile Performance
+/// type at all (`canonical_seeds_for("bard")` seeds no
+/// `choice:bard_versatile_performance` selection), so it alone could never
+/// observe this real, already-computed naming. This probe selects EACH of
+/// the nine real Perform types in turn on a real Bard, over the SAME real
+/// `compute_pilot_base_chassis` pipeline every other probe in this file
+/// uses, and credits a corpus key ONLY when the resulting explanation's own
+/// `detail` text genuinely names that exact type -- never a slug
+/// reconstruction, so a genuinely-wired record is never conflated with one
+/// merely assumed reachable. Unlike the generic pool-group pass reused for
+/// Cleric Domain/Sorcerer Bloodline, this is a DIFFERENT, pre-existing
+/// engine mechanism (a fixed-id, detail-named recognition record, not a
+/// per-member magnitude formula) -- the value stays `+0` for every member;
+/// the real PF1 skill-substitution rule this feature grants is a separate,
+/// larger engine burden this cycle does not build (see the field's own doc
+/// comment on `EngineFacts`).
+fn probe_bard_versatile_performance_generic_member_wiring(
+    fixture: &CharacterInput,
+) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for (corpus_suffix, selection_slug, detail_name) in CORE_RULEBOOK_BARD_VERSATILE_PERFORMANCE_MEMBERS
+    {
+        let needle = format!("names {detail_name},");
+        for &level in SWEEP_LEVELS {
+            if level < 2 {
+                continue;
+            }
+            let mut input = class_sweep_input(fixture, "bard", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:bard_versatile_performance");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:bard_versatile_performance".to_string(),
+                selection_id: (*selection_slug).to_string(),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            if computation.explanations.iter().any(|e| {
+                e.id == "class_chassis.bard.versatile_performance_choice"
+                    && e.detail.contains(&needle)
+            }) {
+                wired.insert(format!("Versatile Performance ~ {corpus_suffix}"));
+            }
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+#[cfg(test)]
+mod bard_versatile_performance_generic_member_probe_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Print, don't assume: dumps the real probe's real observed set against
+    /// the real fixture, for THIS cycle's own re-derivation
+    /// (`decisions.md §12` L2) -- run with `--nocapture` to read it.
+    #[test]
+    fn print_the_real_observed_set_for_this_cycles_own_receipt() {
+        let wired = probe_bard_versatile_performance_generic_member_wiring(&fixture());
+        eprintln!("bard_versatile_performance_generic_member_wired ({} keys):", wired.len());
+        for key in &wired {
+            eprintln!("  {key}");
+        }
+        assert!(!wired.is_empty(), "expected at least one real Perform type to resolve");
+    }
+
+    /// Against the REAL fixture and the REAL compute pipeline, Act (the
+    /// first of the nine real Perform types, and the only one whose own
+    /// corpus name and engine selection slug already agree naively)
+    /// genuinely resolves.
+    #[test]
+    fn the_probe_observes_a_real_act_versatile_performance_member() {
+        let wired = probe_bard_versatile_performance_generic_member_wiring(&fixture());
+        assert!(
+            wired.contains("Versatile Performance ~ Act"),
+            "expected Versatile Performance ~ Act to resolve through the real Bard slot loop; \
+             observed set: {wired:?}"
+        );
+    }
+
+    /// The three real corpus names whose OWN engine display name is
+    /// shorter (`"Percussion"` not `"Percussion Instruments"`, `"String"`
+    /// not `"String Instruments"`, `"Wind"` not `"Wind Instruments"`) are
+    /// this probe's own reason for existing -- a naive slug match would
+    /// silently miss all three. Proven live, not assumed from the mapping
+    /// table alone.
+    #[test]
+    fn the_probe_resolves_all_three_shortened_display_name_members() {
+        let wired = probe_bard_versatile_performance_generic_member_wiring(&fixture());
+        for suffix in ["Percussion Instruments", "String Instruments", "Wind Instruments"] {
+            assert!(
+                wired.contains(&format!("Versatile Performance ~ {suffix}")),
+                "expected Versatile Performance ~ {suffix} to resolve despite the engine's own \
+                 shorter display name; observed set: {wired:?}"
+            );
+        }
+    }
+
+    /// The probe resolves all nine real Core Rulebook Perform types, not a
+    /// subset -- confirming every entry in
+    /// `CORE_RULEBOOK_BARD_VERSATILE_PERFORMANCE_MEMBERS` genuinely
+    /// resolves through the real pipeline, never merely listed as
+    /// theoretically reachable.
+    #[test]
+    fn the_probe_resolves_all_nine_real_perform_types() {
+        let wired = probe_bard_versatile_performance_generic_member_wiring(&fixture());
+        assert_eq!(
+            wired.len(),
+            9,
+            "expected exactly the nine real Core Rulebook Perform types to resolve; observed \
+             set: {wired:?}"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a real corpus record from a completely unrelated
+    /// class-feature group (Rogue's Sneak Attack) is never in the observed
+    /// set -- confirming the probe's own key construction is scoped to the
+    /// nine real Perform types, never every key in the corpus.
+    #[test]
+    fn the_probe_does_not_credit_an_unrelated_class_feature_record() {
+        let wired = probe_bard_versatile_performance_generic_member_wiring(&fixture());
+        assert!(
+            !wired.contains("Rogue ~ Sneak Attack"),
+            "an unrelated Rogue class feature must never appear in a Bard-Versatile-\
+             Performance-scoped probe's own observed set: {wired:?}"
+        );
+    }
+}
+
 /// `AT-34-E3-001` (`decisions.md §14`): verifies, by REAL computation and
 /// never by trusting `domain_power::DOMAIN_POWER_CATALOG`'s own membership,
 /// which `"Domain Power ~ <granted power name>"` corpus records the engine
@@ -8802,6 +9004,8 @@ fn gather_engine_facts(
         sorcerer_bloodline_generic_member_wired: probe_sorcerer_bloodline_generic_member_wiring(
             fixture,
         ),
+        bard_versatile_performance_generic_member_wired:
+            probe_bard_versatile_performance_generic_member_wiring(fixture),
         wizard_arcane_school_wired: probe_wizard_arcane_school_wiring(fixture),
         bard_bardic_performance_wired: probe_bard_bardic_performance_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
@@ -11123,6 +11327,44 @@ fn classify(
                 return Verdict {
                     status: "grounded",
                     evidence: "generic_pool_group_selection_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // `AT-34-E3-002` (bucket C continuation, cycle 5): `"Versatile
+            // Performance ~ <Type>"` (e.g. `"Versatile Performance ~
+            // Act"`), a DIFFERENT engine mechanism from the generic
+            // pool-group pass above -- `pilot_compute::mod.rs`'s own
+            // Versatile Performance slot loop already emits a real
+            // `class_chassis.bard.versatile_performance_choice`
+            // recognition record whose `detail` genuinely names the
+            // selected Perform type, but `v06_work_inventory`'s classifier
+            // had never once asked it a question (`canonical_seeds_for
+            // ("bard")` seeds no Versatile Performance selection at all, so
+            // the canonical sweep alone can never observe it).
+            // `probe_bard_versatile_performance_generic_member_wiring` is
+            // the real, separate attribution path: it selects each of the
+            // nine real Perform types on a real Bard and keeps only the
+            // exact corpus keys the engine's own `detail` text genuinely
+            // names. **Book-scoped to `core_rulebook`**, matching the
+            // Sorcerer Bloodline guard's own precedent -- a direct corpus
+            // scan (this cycle's own) found zero cross-book collisions for
+            // these nine exact keys, but the guard costs nothing and keeps
+            // this cycle's closure claim provably isolated regardless. The
+            // value stays `+0` for every member (Versatile Performance is a
+            // skill-SUBSTITUTION rule, not an additive bonus; the
+            // substitution engine itself is a separate, larger burden this
+            // cycle does not build) -- this closes the NAMING gap only, the
+            // real bar this bucket's own acceptance criterion sets ("the
+            // explanation or display path that now carries it"), never a
+            // magnitude that was not actually computed.
+            if unit.book == "core_rulebook"
+                && facts.bard_versatile_performance_generic_member_wired.contains(&unit.key)
+            {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "bard_versatile_performance_choice_probe_observed_a_real_named_recognition_record"
                         .to_string(),
                     reason: None,
                     engine_book: engine_book_field,
@@ -19601,6 +19843,83 @@ mod class_feature_text_complete_rung_tests {
         assert_ne!(
             verdict.evidence,
             "generic_pool_group_selection_probe_observed_a_real_computed_magnitude",
+            "a different book's same-named record must never ride this cycle's core_rulebook-\
+             scoped closure"
+        );
+    }
+
+    /// `AT-34-E3-002` (bucket C continuation, cycle 5): a real Bard
+    /// Versatile Performance member the probe observed reaches `grounded`
+    /// off `probe_bard_versatile_performance_generic_member_wiring`'s own
+    /// real, observed named-recognition-record explanation -- a DIFFERENT
+    /// engine mechanism from the generic pool-group pass the Cleric
+    /// Domain/Sorcerer Bloodline cycles reused, so this is its own rung and
+    /// its own proof, not a re-run of theirs.
+    #[test]
+    fn an_act_versatile_performance_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .bard_versatile_performance_generic_member_wired
+            .insert("Versatile Performance ~ Act".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            549,
+            "Versatile Performance ~ Act",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "bard_versatile_performance_choice_probe_observed_a_real_named_recognition_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a Versatile Performance member record the probe
+    /// never observed (its own `EngineFacts` set is empty here) is
+    /// completely unaffected -- it still falls through to the pre-existing
+    /// `engine-does-not-hold` bucket-C finding this cycle is closing,
+    /// proving the fix credits nothing it did not actually observe.
+    #[test]
+    fn an_act_versatile_performance_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            549,
+            "Versatile Performance ~ Act",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+    }
+
+    /// The book-scope guard, proven the same way the Sorcerer Bloodline
+    /// cycle proved its own: a corpus key the probe's own observed set
+    /// genuinely contains is NOT credited when the unit's own `book` is not
+    /// `core_rulebook`, even though the set contains its exact key string
+    /// -- proving this cycle's closure claim stays isolated to its own
+    /// named `core_rulebook` population, even though this cycle's own scan
+    /// found zero real cross-book collisions for these nine exact keys
+    /// (unlike the Sorcerer Bloodline cycle's three).
+    #[test]
+    fn a_versatile_performance_key_in_a_different_book_is_not_credited() {
+        let mut facts = EngineFacts::default();
+        facts
+            .bard_versatile_performance_generic_member_wired
+            .insert("Versatile Performance ~ Act".to_string());
+        let unit = class_feature_unit(
+            "advanced_class_guide",
+            "acg_abilities_class.lst",
+            1,
+            "Versatile Performance ~ Act",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(
+            verdict.evidence,
+            "bard_versatile_performance_choice_probe_observed_a_real_named_recognition_record",
             "a different book's same-named record must never ride this cycle's core_rulebook-\
              scoped closure"
         );
