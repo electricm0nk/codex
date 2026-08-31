@@ -11,6 +11,71 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-003 (bucket M, EQUIPMENT sub-causes, cycle 6) — disproves cycle 5's "generically exhausted" premise: `encumbrance`'s WT:/COST: read was never wired into the probe — partial
+
+**Status: partial.** Worktree opened stale (tranche cut `ea2b3396f2`); `git fetch origin &&
+git rebase origin/tranche/14` moved HEAD to the real tip, `4744c55bd0` — one more
+`AT-34-E3-003` cycle, two shared regen waves (20/21), and `AT-34-E4-002` cycle 9 had landed
+since this wave's dispatch brief was written. Re-derived at cycle start:
+`core_rulebook` M = **811**, territory (`equipment_table_entry_with_corpus_magnitude` +
+`equipment_own_line_has_no_magnitude_but_closure_wiring_class_does`) = **163 + 99 = 262**,
+matching cycle 5's own closing figures exactly.
+
+**Cycle 5's own next-cycle plan stated the remaining 262-unit territory was "generically
+exhausted... no existing compute path left to consult." That premise is wrong.**
+`src/rules_core/encumbrance.rs`'s `compute_encumbrance` already reads a resolved equipment
+record's own `WT:`/`COST:` tokens and is already a real, wired consumer — called by
+`pilot_compute_corpus`/`contract`, rendered on the desktop character sheet's Gear tab
+(`character_hub.rs`'s `CarriedItemDto`). `equipment_key_is_wired` (the wiring probe) simply
+never consulted it — the SAME probe-blind-spot shape cycles 3/4/5 already found and fixed for
+`TEMPBONUS:`/`damage_total`, not a genuine absence of a compute path. Retro `correction` event
+logged against cycles 2/3/5's shared "COST/WT-only means nothing to compute" disposition.
+
+Two composable fixes, both real-corpus TDD (RED confirmed for the intended reason, then
+GREEN): (1) `encumbrance::equipment_key_resolves_a_carried_weight` (new), wired into
+`equipment_key_is_wired` as a third check, gated on `WT:`/weight specifically (matching
+`compute_encumbrance`'s own "weight required, cost supplementary" rule exactly — `COST:`
+alone is deliberately not sufficient). (2) `corpus_loader::equipment_record_from_json`
+synthesizes `WT:`/`COST:` tokens from the already-ingested `weight_lbs`/`cost_gp` top-level
+JSON fields for "thin" records (no `raw_tokens` array at all) — the same idiom this function
+already uses for `KEY:` synthesis, confirmed corpus-wide (4,470 enriched records checked, 0
+mismatches between `WT:` tokens and `weight_lbs`) not to fabricate data.
+
+**The full `v06_work_inventory` regen genuinely did not finish inside this cycle's turn
+budget** — killed after ~13 minutes CPU (`docs/work-inventory.json` confirmed
+byte-identical to its pre-run state, no partial-write risk), the same wall this wave's own
+`AT-34-E4-002` cycle 9 already hit and named (see that row below: "the regen pipeline was
+still running after 6+ minutes and was killed... Not yet confirmed by a shared regen"). In
+its place, this cycle measured the SAME function `classify()`'s equipment arm consults
+first, unconditionally — `equipment_key_is_wired` — directly against the real on-disk
+corpus, one book at a time (not a classify()-level approximation with hand-built facts; the
+literal probe, the literal corpus). Result: **221 of 763 territory units corpus-wide now
+resolve wired (33 of 262 `core_rulebook`)**, split by fix: fix 1 alone (already-enriched
+records) = 109 corpus-wide (23 `core_rulebook`); fix 2's own marginal reach (thin records) =
++112 corpus-wide (+10 `core_rulebook`). Full per-book breakdown and the measurement's
+reproduction method are in the receipt. Retro `deferral` event logged for the incomplete
+regen, revisit condition named.
+
+3 new tests (`encumbrance.rs`) + 3 new tests (`v06_work_inventory.rs`) + 4 new tests
+(`corpus_loader.rs`), all RED→GREEN against real corpus fixtures. Scoped suites:
+`rules_core::encumbrance::` 9/9 (was 6), `rules_core::corpus_loader::` 10/10 (was 6), `--bin
+v06_work_inventory equipment` 33/33 (was 30), `rules_core::equipment_effects::` 86/86
+(unchanged). `cargo test --locked --no-run` exits 0, full workspace; `apps/desktop/src-tauri`
+tested explicitly, exits 0 (both at `acd6a6a5e3`). Own-diff dual-audit gate:
+`OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+
+**This cycle's 221-unit (33 `core_rulebook`) closure is real and proven but NOT YET reflected
+in the committed `docs/work-inventory.json`** — `core_rulebook` M stays reported at **811**
+until a full regen completes and applies it. Movement this cycle: closure 0 committed / 221
+proven closure-eligible pending the next regen; reclassification 0; reachability 0;
+instrument-correction 0. `docs/work-inventory.json`/`completion-atlas.json` untouched (no
+local regen completed to produce a new version). Remainder after the fix applies:
+`core_rulebook` 262 − 33 = 229, dominated by the already-declined `%CHOICE`-gated (34) and
+`VAR`/`PRE`-gated (18) families plus `COST:`-only-no-`WT:` records and small new-subsystem
+shapes cycle 5's own census named — a future cycle should re-derive this fresh once the
+regen has actually applied this cycle's own closures, not inherit 229. `ability_content`
+(217, sibling lane) remains the largest overall `core_rulebook` M sub-cause, out of territory.
+
 ### Cycle 8 — AT-34-E3-002 — Favored Class Bonus choice, generalized from Fighter to five siblings — partial
 
 **Status: partial.** Re-derived cycle 7's own 13-row remainder table from scratch, by exhaustive
