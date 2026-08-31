@@ -11,6 +11,69 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle 8 — AT-34-E4-002 — sixth trait/drawback slice: ability-score-difference formula `BONUS:SKILL` traits — partial
+
+**Status: partial.** Dispatch brief (wave 20) named `AT-34-E4-002_cycle_receipt_7.md` as current
+and pointed at its next-cycle plan. Worktree opened at a stale base (`ea2b3396f2`, the tranche
+cut) and was rebased onto `origin/tranche/14` before any work began; the real HEAD's split matched
+the dispatch brief exactly this time (`DONE=196 M=44 D=2 U=21 X=2` of 265, wave 19's shared regen
+having already folded cycle 7's own 3 closures in).
+
+Closed the ENTIRE "4 ability-score-difference-formula records" sub-cause receipt_7's own
+next-cycle plan named as future work "gated on... a formula evaluator this crate does not have."
+**That gate did not actually exist**: `formula_interpreter::PcgenFormulaEvaluator` is a real,
+already-proven recursive-descent evaluator for PCGen's `max`/`min`/arithmetic formula grammar,
+already wired into five other consumers crate-wide (`race_trait_formula_binding`,
+`crb_untabled_class_chassis`, `generic_class_chassis`, `class_feature_grant_consumer`,
+`pilot_compute/mod.rs`'s own Undine racial-trait formulas) — it was simply never reached from
+`trait_effects.rs`. Re-checked receipt_7's own finding before carrying it forward
+(`decisions.md §12` L2) rather than treating "no evaluator" as settled fact. `python3
+scripts/retro.py correction` filed.
+
+New `TraitAbilityDiffSkillBonus` table (4 entries: `trait_bruising_intellect`, `trait_planar_
+savant`, `trait_pragmatic_activator`, `trait_precise_treatment`), evaluating each record's
+transcribed `max(A,B)-B` formula verbatim against the character's real computed ability
+modifiers (confirmed against `pilot_compute/mod.rs`'s own Undine formula binding that bare
+ability abbreviations bind to the modifier, not raw score), folded into the SAME
+`skill_allocation::allocate_skill_ranks` consumer the first three slices already established —
+no new wiring shape. `Trait ~ Precise Treatment` carries TWO `BONUS:SKILL|Heal` tokens on the
+SAME skill (a flat `+1` and the formula); both are summed and genuinely applied, never just the
+formula half — the fixture-executed expected value (`5`) proves it.
+
+`ultimate_campaign` (functional, local regen, not committed): `DONE 196→200, M 44→40` (`trait`
+M `14→10`, `ability` M unchanged `30`); `U:21 D:2 X:2 V:0` untouched — verified by inventory
+id-diff, 0 added/removed, exactly 4 changed, all `ultimate_campaign trait_content`,
+`ingested-magnitude → grounded`. No corpus-wide payoff elsewhere (checked: all 4 corpus `KEY`s
+exist nowhere outside `ultimate_campaign`, in either `trait_generic/` or the duplicate `ability/`
+directory — the latter is a DIFFERENT inventory `Kind`, already `text-complete`, untouched by this
+cycle). `DONE=200 of 265` (functional) — bar not met. Instrument-correction:
+`completion_atlas.py`'s bucket-V citation line pin re-derived twice (once for this cycle's own
+insertions, `13004→13017`; again after rebasing onto `AT-34-E3-002` cycle 7 wave-21's concurrent
+insertions, `13017→13116` — the one real rebase conflict this cycle hit, resolved by a fresh
+`grep -n` against the real post-merge file, `citation_failures` 0 both times after the fix).
+`docs/work-inventory.json`/`completion-atlas.json` deliberately NOT committed this cycle (shared
+end-of-wave regen owns them); figures from a local regen, `git restore`-d before commit.
+
+`cargo test --locked --lib -- trait_effects skill_allocation`: 63/63 (9 new `trait_effects`
+tests; `skill_allocation`'s 14 unchanged). `cargo test --locked --bin v06_work_inventory`: 488/488
+post-rebase (2 new positive classifier tests — single-token and two-token-same-skill; negative
+control corrected off `Trait ~ Bruising Intellect`, now covered, onto `Trait ~ Fate's Favored`,
+still genuinely uncovered). `cargo test --locked --no-run`: full workspace exit 0, re-verified
+after this cycle's own rebase onto `AT-34-E3-002` cycle 7 wave-21's commit (different territory,
+one instrument-file conflict, no code conflict). `apps/desktop/src-tauri` not run this cycle — no
+file under `apps/desktop/` touched. **Out-of-territory finding, not fixed:** the workspace
+integration suite's `the_committed_inventory_is_well_formed_and_uses_only_declared_statuses` fails
+against the COMMITTED `docs/work-inventory.json` (unmodified by this cycle) on a
+`core_rulebook:class_feature:empty_selection_standard_barbarian` deferral-naming issue — outside
+this cycle's trait/ability territory, reported not fixed.
+
+Remainder named by sub-cause, unchanged from cycle 7 except the 4 now closed: 3 `VAR`-only
+records, 3 `SITUATION`-only records, 2 `ABILITYPOOL`-only records, 1 mixed
+`CASTERLEVEL`+`SKILL` record, 1 corpus data gap (`trait_shadow_whispers`) = 10 `trait_content`,
+30 `ability_content` records (Drawback/Retrain, out of scope per cycle 3's own reading) =
+40+21+2+2=65 non-DONE. Full receipt:
+`artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_8.md`.
+
 ### Cycle — AT-34-E3-002 — cycle 7 — Ranger Combat Style choice-recognition wiring — partial
 
 **Status: partial.** Re-derived `core_rulebook` bucket C fresh at cycle start (not inherited):
