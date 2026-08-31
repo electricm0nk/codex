@@ -5424,6 +5424,21 @@ struct EngineFacts {
     /// other creature-size column (Small included) is deliberately left
     /// unobserved rather than assumed.
     monk_unarmed_damage_die_wired: BTreeSet<(u8, String)>,
+    /// `AT-34-E3-002` (bucket C, cycle 8): the bare `"<Class>"` display
+    /// names (`"Fighter"`, `"Barbarian"`, `"Monk"`, `"Paladin"`, `"Rogue"`,
+    /// `"Wizard"`) whose own `"class_chassis.<class>.favored_class_bonus_
+    /// choice"` recognition explanation was genuinely observed, via
+    /// [`probe_favored_class_bonus_choice_wiring`], naming that exact class.
+    /// Fighter's own explanation shipped SD13-E5
+    /// (`explain_fighter_favored_class_bonus_choice`); the other five reuse
+    /// the SAME rule and choice id via this cycle's own
+    /// `explain_other_classes_favored_class_bonus_choice`
+    /// (`pilot_compute::mod`). The five NPC classes that ALSO carry this
+    /// same bare-key `TYPE:FavoredClass` shape (Adept, Aristocrat,
+    /// Commoner, Expert, Warrior) are deliberately excluded -- none has a
+    /// `supported_<class>_level` bounded chassis seam at all, so no
+    /// explanation surface exists for the probe to observe.
+    favored_class_bonus_choice_wired: BTreeSet<String>,
     /// `AT-34-E3-002` (bucket C continuation, cycle 3): full corpus `"<Domain>
     /// Domain ~ <Power>"` keys (`"Air Domain ~ Lightning Arc"`, ...) whose own
     /// generic pool-group-selection magnitude explanation
@@ -8099,6 +8114,65 @@ fn probe_ranger_combat_style_wiring(fixture: &CharacterInput) -> BTreeSet<String
     wired
 }
 
+/// `AT-34-E3-002` (bucket C, cycle 8): the six PF1 Core Rulebook base
+/// classes (Fighter, Barbarian, Monk, Paladin, Rogue, Wizard) whose bare
+/// `"<Class>"` `TYPE:FavoredClass` bookkeeping record carries the real
+/// Favored Class Bonus CHOICE (PF1 Core Rulebook pg. 31: +1 hit point or +1
+/// skill rank) among its raw tokens. Fighter's own
+/// `"class_chassis.fighter.favored_class_bonus_choice"` recognition shipped
+/// SD13-E5 (`explain_fighter_favored_class_bonus_choice`); the other five
+/// reuse the identical rule via this cycle's own `explain_other_classes_
+/// favored_class_bonus_choice` (`pilot_compute::mod`), gated on each
+/// class's own already-existing bounded level-1 chassis seam
+/// (`supported_barbarian_level`, `supported_monk_level`,
+/// `supported_paladin_level`, `supported_rogue_level`,
+/// `supported_wizard_level`). Probes at exactly level 1 (the rule's own
+/// gate on every one of the six explain functions), injecting the
+/// `"choice:favored_class_bonus"` selection directly -- mirrors
+/// `probe_ranger_combat_style_wiring`'s own shape exactly. The five NPC
+/// classes sharing this same bare-key `TYPE:FavoredClass` corpus shape
+/// (Adept, Aristocrat, Commoner, Expert, Warrior) are deliberately never
+/// probed: none has a `supported_<class>_level` seam, so no explanation
+/// could ever fire for them -- a real engine gap, not an unprobed one.
+fn probe_favored_class_bonus_choice_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    const CANONICAL_CLASSES: &[(&str, &str)] = &[
+        ("fighter", "Fighter"),
+        ("barbarian", "Barbarian"),
+        ("monk", "Monk"),
+        ("paladin", "Paladin"),
+        ("rogue", "Rogue"),
+        ("wizard", "Wizard"),
+    ];
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for &(class_key, display_name) in CANONICAL_CLASSES {
+        let mut input = class_sweep_input(fixture, class_key, 1);
+        input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:favored_class_bonus");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:favored_class_bonus".to_string(),
+            selection_id: "bonus:hp".to_string(),
+        });
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        let expected_id = format!("class_chassis.{class_key}.favored_class_bonus_choice");
+        let choice_observed = computation
+            .explanations
+            .iter()
+            .any(|e| e.id == expected_id && e.detail.contains("-> bonus:hp"));
+        if choice_observed {
+            wired.insert(display_name.to_string());
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// `AT-34-E3-002` (bucket C continuation): the six PF1 Core Rulebook
 /// Medium-monk unarmed-strike-damage band levels (`"Monk Unarmed Damage LVL
 /// 1/4/8/12/16/20 (Medium)"`) whose own
@@ -9083,6 +9157,7 @@ fn gather_engine_facts(
         ranger_favored_terrain_bonus_wired: probe_ranger_favored_terrain_bonus_wiring(fixture),
         ranger_combat_style_choice_wired: probe_ranger_combat_style_wiring(fixture),
         monk_unarmed_damage_die_wired: probe_monk_unarmed_damage_die_wiring(fixture),
+        favored_class_bonus_choice_wired: probe_favored_class_bonus_choice_wiring(fixture),
         cleric_domain_generic_member_wired: probe_cleric_domain_generic_member_wiring(fixture),
         sorcerer_bloodline_generic_member_wired: probe_sorcerer_bloodline_generic_member_wiring(
             fixture,
@@ -11708,6 +11783,33 @@ fn classify(
                         }
                     }
                 }
+            }
+            // `AT-34-E3-002` (bucket C, cycle 8): the bare `"<Class>"`
+            // `TYPE:FavoredClass` bookkeeping record for six base classes
+            // (Fighter, Barbarian, Monk, Paladin, Rogue, Wizard) -- `group`
+            // here equals the WHOLE key (no `" ~ "` separator, same shape
+            // as `"Monk Unarmed Damage LVL <N> (<Size>)"` above), so
+            // `class_feature_owner` and its fallbacks can never resolve an
+            // owner via the generic suffix-matching path.
+            // `probe_favored_class_bonus_choice_wiring` is the real,
+            // separate attribution path -- exercising the actual pipeline
+            // for each of the six classes' own already-existing or
+            // this-cycle-generalized recognition function. No cross-book
+            // collision: a corpus-wide scan confirmed each of these six
+            // bare keys is declared exactly once, only in `core_rulebook`
+            // (`docs/work-inventory.json`, `kind == "class_feature"`,
+            // `corpus_key` in the six names, one hit each), so this rung is
+            // deliberately left unguarded, matching the Favored Enemy /
+            // Terrain / Ranger Combat Style precedent above.
+            if facts.favored_class_bonus_choice_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence:
+                        "favored_class_bonus_choice_probe_observed_a_real_computed_recognition_for_the_bookkeeping_record"
+                            .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
             }
             // `AT-34-E3-001` (mechanism 2 continuation, cycles 4, 6, and
             // 7): wizard arcane school sub-cause, same shape as Domain
@@ -20213,6 +20315,80 @@ mod class_feature_text_complete_rung_tests {
         assert_ne!(
             verdict.evidence,
             "ranger_combat_style_choice_probe_observed_a_real_computed_recognition_for_the_display_record"
+        );
+    }
+
+    /// `AT-34-E3-002` (bucket C, cycle 8): the bare `"Fighter"`
+    /// `TYPE:FavoredClass` bookkeeping record reaches `grounded` off
+    /// `probe_favored_class_bonus_choice_wiring`'s real, observed
+    /// `class_chassis.fighter.favored_class_bonus_choice` recognition --
+    /// proof case for Fighter, whose own explanation function shipped
+    /// SD13-E5 but was never before consulted by `classify()`.
+    #[test]
+    fn a_fighter_favored_class_bonus_record_reaches_grounded_off_the_probes_wiring() {
+        let mut facts = EngineFacts::default();
+        facts.favored_class_bonus_choice_wired.insert("Fighter".to_string());
+        let unit = class_feature_unit("core_rulebook", "cr_abilities_class.lst", 72, "Fighter", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "favored_class_bonus_choice_probe_observed_a_real_computed_recognition_for_the_bookkeeping_record"
+        );
+    }
+
+    /// Same proof, for each of the five generalized siblings
+    /// (`explain_other_classes_favored_class_bonus_choice`).
+    #[test]
+    fn each_generalized_sibling_favored_class_bonus_record_reaches_grounded_off_the_probes_wiring()
+    {
+        let cases: &[(&str, &str, usize)] = &[
+            ("Barbarian", "cr_abilities_class.lst", 68),
+            ("Monk", "cr_abilities_class.lst", 73),
+            ("Paladin", "cr_abilities_class.lst", 74),
+            ("Rogue", "cr_abilities_class.lst", 76),
+            ("Wizard", "cr_abilities_class.lst", 78),
+        ];
+        for &(display_name, file, line) in cases {
+            let mut facts = EngineFacts::default();
+            facts.favored_class_bonus_choice_wired.insert(display_name.to_string());
+            let unit = class_feature_unit("core_rulebook", file, line, display_name, 1);
+            let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+            assert_eq!(verdict.status, "grounded", "class: {display_name}");
+            assert_eq!(
+                verdict.evidence,
+                "favored_class_bonus_choice_probe_observed_a_real_computed_recognition_for_the_bookkeeping_record",
+                "class: {display_name}"
+            );
+        }
+    }
+
+    /// NEGATIVE CONTROL: the probe never observed any class, so every
+    /// record must fall through to its pre-existing verdict, unaffected.
+    #[test]
+    fn a_favored_class_bonus_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit("core_rulebook", "cr_abilities_class.lst", 72, "Fighter", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_ne!(
+            verdict.evidence,
+            "favored_class_bonus_choice_probe_observed_a_real_computed_recognition_for_the_bookkeeping_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: Fighter's own wiring must never bleed onto a
+    /// different class's own bare-name record.
+    #[test]
+    fn a_favored_class_bonus_record_at_a_wired_sibling_class_is_unaffected() {
+        let mut facts = EngineFacts::default();
+        facts.favored_class_bonus_choice_wired.insert("Fighter".to_string());
+        let unit = class_feature_unit("core_rulebook", "cr_abilities_class.lst", 68, "Barbarian", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_ne!(
+            verdict.evidence,
+            "favored_class_bonus_choice_probe_observed_a_real_computed_recognition_for_the_bookkeeping_record"
         );
     }
 
