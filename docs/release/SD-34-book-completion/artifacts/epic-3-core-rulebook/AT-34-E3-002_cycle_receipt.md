@@ -2,9 +2,14 @@
 
 - **Commit SHA:** `9519106f17` (this cycle's own `classify()` fix + 4 tests, a 20-minute
   checkpoint commit made mid-cycle per the dispatch's clock discipline, pushed to `tranche/14`
-  before this cycle's own live regen ran) plus this cycle's own follow-up commit (this receipt,
-  `progress.md`, `kanban.md`, and `scripts/completion_atlas.py`'s citation re-pins) — both on
-  `tranche/14` tip `07678e0601` (wave 19) at cycle start, no rebase needed for either.
+  before this cycle's own live regen ran; `tranche/14` tip `07678e0601` — wave 19 — at cycle
+  start, no rebase needed) plus this cycle's own follow-up commit `41918cccb7` (this receipt and
+  `scripts/completion_atlas.py`'s citation re-pins — rebased once, onto `AT-34-E4-002` cycle 7's
+  own concurrently-landed fifth trait/drawback slice, which touched the SAME file; the rebase
+  produced exactly one real conflict, on the `V`-bucket citation's own line pin, resolved by
+  re-deriving that one line fresh against the real merged file content — never guessed, same
+  discipline every prior citation re-pin in this file documents) plus this cycle's own
+  progress/kanban commit (SHA filled below once pushed).
 - **Files touched:** `src/bin/v06_work_inventory.rs` (one new `classify()` rung for the bare
   `"<Domain> Domain"` HEADER shape — 73 lines, zero new `EngineFacts` fields, zero new probes,
   reusing two already-shipped fact sets; plus 4 new tests, RED confirmed then GREEN),

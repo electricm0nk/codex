@@ -11,6 +11,65 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-002 (cycle 6) — Core Rulebook bucket C, domain-header display-record wiring — partial
+
+**Status: partial.** Re-derived cycle 5's own 233-unit remainder fresh (all 11 sub-causes
+reproduce exactly). Targeted cycle 5's own next-cycle-plan candidate,
+`domain_power_display_record_not_wired` (41 units, decomposed by direct corpus read into 3 real
+shapes: 33 bare `"<Domain> Domain"` HEADER records, 7 `"Druid Domain ~ <X>"` sub-choices, 1
+zero-token `"Nobility Domain ~ Inspiring Word"` record — matching cycle 5's own receipt text
+exactly).
+
+Closed **32 of the 33** bare header records via the SAME paired display/chassis pattern the
+Favored Enemy/Favored Terrain checks establish — a bare header ("Air Domain") carries no
+magnitude of its own; the engine has already computed a real explanation for the SAME domain's
+granted power, and `classify()` had never once asked the header's own sibling group a question.
+The corpus carries that sibling under TWO different key shapes: 30 domains as `"<Domain> Domain
+~ <Power>"` (reusing `cleric_domain_generic_member_wired`'s own already-wired fact set via a
+prefix match — the live probe credits a sibling regardless of whether it has since been
+restamped to `literal-verified`, which is why this path reached wider than a naive JSON-status
+proxy predicted); 2 more (Good, War — net-new; Strength/Destruction/Glory already covered by
+the first path) via `domain_power::domain_power_probe_catalog()`'s own `"domain:<slug>"`
+selection-id lookup into `domain_power_effect_wired`. Zero new probes, zero new `EngineFacts`
+fields, zero changes to `pilot_compute::mod.rs` or `domain_power.rs` — one new `classify()`
+rung (73 lines) reusing two already-shipped, already-tested fact sets.
+
+The one remaining header (`Nobility Domain`) has NEITHER sibling shape wired — confirmed by
+direct read of both fact sets and the 5-entry `DOMAIN_POWER_CATALOG`'s own membership, genuinely
+no existing engine mechanism to reuse. The 7 Druid sub-choices are confirmed a genuine engine
+gap: `pilot_compute::mod.rs` explicitly states (Task #64's own comment) that Nature Bond's
+domain option carries NO `DRUID_DOMAIN_CHOICE_ID` seam at all — real engine work, not a
+naming-only fix, out of this territory's bar. The 1 zero-token Nobility record stays unwired for
+the same reason as its own header.
+
+`core_rulebook` bucket C 233→**201** (32 closed, all straight to DONE — every one of the 32 is
+`wiring_class: "computed"`, confirmed by direct `docs/work-inventory.json` read before this
+cycle, so none are eligible for the static/derived V-reclassification `apply_done_rung_stamps`
+applies). Whole-inventory id-diff: 0 added, 0 removed, exactly 32 changed, all `core_rulebook`.
+4 new tests (2 proof + 2 negative control, RED confirmed then GREEN), `class_feature` suite
+146/146, full bin suite 477/477, `cargo test --locked --no-run` (workspace) exits 0. A first
+regen attempt (`v06_work_inventory` alone, no sweep/fixture reports pointed at it) was correctly
+REFUSED by its own stamp-loss guard (would have dropped 9,591 of 9,591 pre-existing
+`literal-verified`/`fixture-verified` stamps) — the real fix was running the full three-stage
+pipeline (`corpus_literal_sweep` → `derived_evaluator_fixture_check` → `v06_work_inventory`),
+`--allow-stamp-loss` never passed. `docs/work-inventory.json` regen local/uncommitted only, per
+file-ownership rule. NOT closed.
+
+Remainder **201** of 233, 12 sub-causes summing exactly — cycle 5's own 9 unchanged sub-causes
+(confirmed by this cycle's own isolation diff, zero drift outside this cycle's own 32) plus the
+former `domain_power_display_record_not_wired` (41) decomposed into 2: itself narrowed to **2**
+(the last genuinely-unwired header plus its own zero-token record), and a new
+`druid_nature_bond_domain_selection_not_computed` (**7**). Full table and re-derive commands in
+`artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md`.
+
+**Movement, four buckets:** Closure **32**, Reclassification **0**, Reachability **32** (one new
+`classify()` rung now answers `grounded` for these exact corpus keys, reusing two real,
+already-shipped, already-tested engine fact sets — no new compute path), Instrument-correction
+**0** (`scripts/completion_atlas.py`'s 4 citation re-pins are a bookkeeping side effect of this
+cycle's own 73-line insertion shifting line numbers, not a correction of a wrong prior figure;
+one of the 4, the `V`-bucket pin, needed a second re-derivation after a rebase onto
+`AT-34-E4-002` cycle 7's own concurrent insertion into the same file shifted it again).
+
 ### Cycle 7 — AT-34-E4-002 — fifth trait/drawback slice: flat `BONUS:COMBAT|INITIATIVE` and `BONUS:CONCENTRATION` traits — partial
 
 **Status: partial.** This cycle's own worktree started at a stale base commit (`ea2b3396f2`, the
