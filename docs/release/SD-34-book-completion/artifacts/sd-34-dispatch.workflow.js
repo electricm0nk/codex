@@ -649,10 +649,14 @@ function ucLanePrompt() {
 // at ab65a090ef, so the slot moves to bucket C — the largest single-mechanism block left in the book.
 function cLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-002', dir: 'epic-3-core-rulebook',
-    title: 'bucket C for the Core Rulebook — 351 of 6,701, and every one is the SAME mechanism.\n\n'
-      + 'Re-derive first; measured at HEAD 651966b83e: ' + BT + 'core_rulebook' + BT + ' bucket C = 357, and all 357 carry one '
-      + 'single evidence string — ' + BT + 'no_explanation_id_and_no_diagnostic_names_this_feature' + BT + '. That uniformity is '
-      + 'the opportunity: this is not 357 problems, it is one wiring gap repeated 357 times.\n\n'
+    title: 'bucket C for the Core Rulebook — 296 of 6,701, and the one-mechanism story is now FALSE.\n\n'
+      + 'Re-derive first; measured at HEAD e887a12fce: ' + BT + 'core_rulebook' + BT + ' bucket C = **296** (was 351). '
+      + '**Do not inherit the old "all one evidence string" framing — wave 16 disproved it.** That wave closed 38 C '
+      + 'units for real (Electricity Resistance and siblings, via the already-shipped generic pool-group compute pass '
+      + 'the classifier had simply never consulted) and moved 17 more C→V. Both numbers are corpus-derived, not '
+      + 'reported: bucket-diff the inventory yourself and you will see them.\n\n'
+      + 'So your 296 are the RESIDUE after the easy uniform slice was taken. Expect several distinct shapes, not one. '
+      + 'Enumerate them before you build anything, and name each with its own population.\n\n'
       + 'The prior cycle (' + BT + 'artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md' + BT + ' — READ IT FIRST) closed '
       + '42 of 414 via the paired display/chassis record mechanism (Favored Enemy + Favored Terrain) and named 8 '
       + 'sub-causes. Start from its named remainder; do not re-derive it from scratch, but DO confirm its stated reasons '
@@ -672,7 +676,7 @@ function cLanePrompt() {
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-003', dir: 'epic-3-core-rulebook',
-    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 958 left.\n\n'
+    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 957 left.\n\n'
       + 'Definition: magnitude ingested, never computed or applied. **The instrument already exists** — that is what '
       + 'separates this from bucket B, whose remainder needs new subsystems built.\n\n'
       + 'Re-derive the sub-causes; do not trust inherited figures OR inherited reasons — this bundle has had a cycle '
