@@ -901,3 +901,192 @@ over, now with two independent occurrences on record.
    magnitude probe as the better ROI candidate) both remain open, unchanged by this cycle.
 3. **`missing_engine_tables.py`'s citation pins** should be re-verified by whichever future cycle
    next edits `v06_work_inventory.rs` above line 11719 — the same class of drift will recur.
+
+# Cycle — wave-18 regeneration and attribution, fifth dispatch (2026-08-31)
+
+- **Commit SHA:** this receipt is committed in the same commit as the `docs/work-inventory.json`
+  regeneration and `completion-atlas.json` it describes; `git log -1` at the time of reading
+  resolves it. Base forked directly from `origin/tranche/14` at `dca580a6b9` (no rebase needed —
+  the dispatched execution environment's own shared main checkout was mid-conflict from a
+  concurrent, unrelated in-flight process; this cycle used an isolated `git worktree add` off
+  `origin/tranche/14` instead of touching it — see "0" below).
+
+## 0. The shared main checkout was not usable this cycle — isolated worktree used instead
+
+Before any pass ran, `git status` on the assigned working directory
+(`/home/ubuntu/workspace/repos/codex`) showed a detached `HEAD`, `UU` (unmerged) entries on
+`progress.md` and `scripts/completion_atlas.py`, and a large staged diff that was the apparent
+*inverse* of the just-landed `AT-34-E4-002` cycle-6 commit (`464960aa2a`) — deleting its own
+receipt file and removing most of its `trait_effects.rs`/`trait_picker.rs` code. No
+`.git/rebase-merge` or `.git/rebase-apply` directory existed, so this was not `git rebase`'s own
+porcelain state; `HEAD` itself was observed to move between consecutive read-only `git log -1`
+calls (`464960aa2a` → `dca580a6b9` → detached, across three checks a few seconds apart) with no
+command of this cycle's own issued in between. `python3 scripts/wave_ledger.py` explained why:
+wave 18 (`wf_47422ae1-5ea`) was still `RUNNING` at dispatch time, and its own worker worktrees
+(`wf_47422ae1-5ea-1/2/3`) share the literal `tranche/14` branch name with the main checkout —
+this cycle's assigned directory was live, contended ground, not an idle handoff.
+
+Per this repo's own shared-checkout discipline (never `git stash`, never discard another
+process's uncommitted state, `git status` before every write), this cycle did not touch that
+directory at all — no commit, no `checkout`, no `reset`. Instead: `git worktree add
+.worktrees/sd34-wave-regen -b sd34-wave-regen-scratch origin/tranche/14`, a clean, isolated
+checkout at `dca580a6b9` untouched by the concurrent process, used for every pass, every check,
+and this commit. The contended main checkout's own eventual resolution (by whatever process owns
+it) is outside this cycle's scope and was left exactly as found.
+
+## 1. Baseline
+
+`git show HEAD:docs/work-inventory.json` at `dca580a6b9` (this base already carries every commit
+through `AT-34-E3-003` cycle 3's own receipt-SHA fill — the tip of `origin/tranche/14` at
+dispatch time, so no rebase was needed after the worktree fork).
+
+## 2. Three-pass pipeline, in order, timed
+
+```
+corpus_literal_sweep     --json-out /tmp/sweep.json     3m42.837s   CLEAN (48,708 examined, 0 findings)
+derived_evaluator_fixture_check --json-out /tmp/fixture.json  0m14.211s   1,839 units cleared, 0 failed
+v06_work_inventory (CORPUS_LITERAL_SWEEP_REPORT + DERIVED_FIXTURE_CHECK_REPORT set, no --allow-stamp-loss)
+                                                          11m55.616s
+```
+
+**Total pipeline wall time: 953.664s (15m53.664s)** — the figure this wave shape exists to
+measure, comparable to wave-15's 1,080.988s and wave-16's 927s (this cycle's number sits between
+the two, not an outlier).
+
+## 3. Whole-corpus before/after diff, by unit id — the headline finding
+
+```
+before: 49438 units    after: 49438 units    added: 0    removed: 0
+changed (status or evidence, any field): 90
+  by book:  core_rulebook: 76   ultimate_campaign: 6   advanced_class_guide: 5
+            advanced_race_guide: 2   advanced_players_guide: 1
+  by kind:  class_feature: 63   equipment: 20   trait: 7
+  all 90 are status transitions (0 evidence-only churn; wiring_class unchanged in every case)
+```
+
+**This wave's own dispatch brief undercounted by 58 units, and the reason is structural, not a
+bad estimate: wave 17 (`wf_850b57b3-2ed`) was killed by the host at 22:12 on 2026-08-30 before it
+could run its own closing shared-regeneration cycle** (`python3 scripts/wave_ledger.py` — no
+"wave-17 shared regeneration" commit exists anywhere in history, unlike every other wave since
+15). Wave 17's own two lanes had already pushed their code (`d97420888e` C-lane cycle 4,
+`5e3c000c8e`/`c9c57f13b2` UC-lane cycle 5) — both deliberately deferred `docs/work-inventory.json`
+regeneration to the wave's own shared cycle, per this bundle's file-ownership rule, and that
+cycle never ran. Their effects sat unmeasured in the committed inventory for a full day, until
+this cycle's pipeline run — the first to actually execute since wave 16's — swept them in
+alongside wave 18's own three lanes. **Five lane-cycles are folded into this single 90-unit
+diff, not three:**
+
+| Cycle | Wave | Commit | Own claim | Measured | Match |
+|---|---|---|---|---:|---|
+| C cycle 4 — Sorcerer Bloodline generic pool-group reuse | 17 | `d97420888e` | 54 (44 DONE + 10 V), `core_rulebook` C 296→242 | **54** (44 `engine-does-not-hold`→`grounded`, 10 `engine-does-not-hold`→`literal-verified`) | **exact** — reproduces cycle 4's own local, uncommitted regen prediction (`progress.md`) byte-for-byte |
+| UC cycle 5 — open-subtype-family `BONUS:SKILL\|%LIST` traits | 17 | `5e3c000c8e` | 4 (`trait_artisan`, `trait_mentored`, `trait_simple_disciple`, `trait_talented`), `ultimate_campaign`-only | **4**, all `ingested-magnitude`→`grounded`, all `ultimate_campaign` | **exact** |
+| C cycle 5 — Bard Versatile Performance naming gap | 18 | `9dfd4a5ebe` | 9, all straight to DONE, `core_rulebook` C 242→233 | **9**, all `engine-does-not-hold`→`grounded` | **exact** |
+| UC cycle 6 — flat `BONUS:SAVE` traits | 18 | `f74db48f38` | 3 (`trait_life_of_toil` + `trait_indomitable_faith` in both `ultimate_campaign` and `advanced_players_guide`, shared corpus `KEY`) | **3**, all `ingested-magnitude`→`grounded` | **exact** |
+| M cycle 3 — `TEMPBONUS:` token wiring | 18 | `ac1cd80dfc` | 20 units corpus-wide (13 `core_rulebook` + 5 `advanced_class_guide` + 2 `advanced_race_guide`) | **20**, all `ingested-magnitude`→`grounded`, identical book split | **exact** |
+
+**54 + 4 + 9 + 3 + 20 = 90.** Every individual cycle's own stated figure is reproduced exactly —
+**zero numeric discrepancies at the cycle level.** But the wave-18 dispatch brief's own summary
+(the "lane reports" this cycle was launched with) named only three lanes' *most recent* cycles
+(UC cycle 6, C cycle 5, M cycle 3 — 3 + 9 + 20 = 32 units) and said nothing about wave 17's two
+stranded cycles (58 units) still awaiting their first-ever regeneration. Read at the dispatch-
+brief level, expected ≈32, actual 90 — **a 58-unit, 2.8x gap, entirely explained by one wave's
+missing closing cycle, not by any lane being wrong.** This is the mismatch this wave's own
+instruction most wanted surfaced, and it is not smoothed over here: **the dispatch brief under-
+scoped this cycle by omitting wave 17's own unclosed regeneration debt.**
+
+**A secondary, smaller misattribution, found in the M-lane's own already-committed `kanban.md`
+row 15 (cycle 3) prose** (written before any real regen ran this wave, from M's own local,
+reverted trial run): it correctly forecasts the full 90-unit total and the 20/70 split, but
+labels the 63 `class_feature` units "`AT-34-E3-002` cycle 5 Bard fix" (only 9 of the 63 are
+cycle 5's own; 54 belong to cycle 4) and the 7 `trait` units "`AT-34-E4-002` cycle 6 trait fix"
+(only 3 of the 7 are cycle 6's own; 4 belong to cycle 5). The row's own top-line total (90) and
+book-level splits are exactly right — only the two aggregate sub-labels conflate two cycles each.
+Not corrected in that row's own text (it is committed, attributed prose from another lane's
+cycle, not this cycle's to rewrite); named here instead, and the correct per-cycle table above is
+the citable source going forward.
+
+`completion_atlas.py`'s own before/after book breakdowns (independently re-derived by
+temporarily swapping in the pre-regen snapshot, not read from any lane's prose) corroborate every
+cell: `core_rulebook` DONE 4383→4449 (+66 = 44+9+13), C 296→233 (−63 = 54+9), M 957→944 (−13);
+`ultimate_campaign` DONE 187→193 (+6), M 53→47 (−6); `advanced_class_guide` M 145→140 (−5);
+`advanced_race_guide` M 430→428 (−2); `advanced_players_guide` M 265→264 (−1). Every sub-total
+reconciles exactly with the id-keyed diff above.
+
+## 4. Movement, four buckets (`decisions.md §9`)
+
+| Bucket | Count | Detail |
+|---|---:|---|
+| Closure (reached DONE) | **80** | 44+9 Cleric-generic-pass Sorcerer Bloodline + Bard Versatile Performance (C, `engine-does-not-hold`→`grounded`) + 13 `core_rulebook`/5 `advanced_class_guide`/2 `advanced_race_guide` `TEMPBONUS:` equipment (M, `ingested-magnitude`→`grounded`) + 4 open-subtype-family + 3 flat-`BONUS:SAVE` traits (UC, `ingested-magnitude`→`grounded`) |
+| Reclassification (moved between non-DONE buckets) | **10** | Sorcerer Bloodline `static` members (C cycle 4, `engine-does-not-hold`(B) → `literal-verified`(V), `apply_done_rung_stamps`'s static-wiring-class guard) |
+| Reachability | **0** | no lane this wave widened a display/explanation wire onto an already-computed value without also computing something genuinely new |
+| Instrument-correction | **0** | no evidence-string-only change found (0 of the 90 changed units kept the same `status`); `completion_atlas.py --check` citation pins unshifted (below) |
+
+**80 + 10 = 90**, the full changed-unit count. A `B`→`X` move is reclassification, never closure;
+none occurred this cycle.
+
+## 5. Atlas checks
+
+`python3 scripts/completion_atlas.py --book core_rulebook --check`: `population=6701
+unclassified=0 overlap=0`, `citation_failures=0`. `python3 scripts/completion_atlas.py --check`
+(corpus-wide): `population=49438 unclassified=0 overlap=0 done_evidence_violations=0
+missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`. Both scopes clean —
+no lane's line insertions this wave shifted any of `completion_atlas.py`'s 10
+`BUCKET_DEFINITIONS` `file:line` citations; no re-derivation needed.
+
+## 6. Build verification
+
+`cargo test --locked --no-run` (full workspace): exits 0 (3m18.931s). `apps/desktop/src-tauri`,
+tested explicitly as its own separate cargo workspace: `cargo test --locked --no-run` exits 0
+(3m56.835s). Both run after this commit's own regeneration. No `src/**` file was touched by this
+cycle itself (all five folded-in cycles' own code was already committed by their respective
+lanes) — this cycle only measures.
+
+## 7. Wave ledger
+
+```
+WAVE         RUN               STARTED         LAST ACTIVITY     RAN FOR  LANES  STATE
+wave 15      wf_894155bf-d58   08-30 13:34:32  08-30 15:38:19    2:03:47      4  done
+wave 16      wf_d6622487-007   08-30 17:57:14  08-30 20:25:11    2:27:56      4  done
+wave 17      wf_850b57b3-2ed   08-30 20:26:39  08-30 21:18:12    0:51:32      3  done (killed by host at 22:12, no closing regen — see §3 above)
+wave 18      wf_47422ae1-5ea   08-31 09:02:26  08-31 11:07:03    2:04:38+     4  RUNNING (this cycle)
+```
+
+Wave 18 ran (through this cycle's own last check) **2:04:38**, still in progress at write time —
+already longer than wave 17 (0:51:32, cut short by the host kill, not a fair comparison) and in
+the same range as waves 15 (2:03:47) and 16 (2:27:56). Wave 18's own row was not missing a
+number — `wf_47422ae1-5ea` → `"18"` was already present in `KNOWN_WAVES`; no script edit needed
+this cycle. The dispatch brief's own "Four lanes" figure (this cycle's launch prompt) matches the
+ledger's `lanes: 4` count for wave 18, but only three lanes' commits (UC/C/M) reached
+`origin/tranche/14` by the time this cycle ran its pipeline — the fourth is, on the evidence in
+§0, the still-in-flight process contending for the shared main checkout, never merged, and
+therefore not measured or claimed by this cycle.
+
+## Status
+
+**complete** — the shared regeneration ran (isolated in a dedicated worktree after the assigned
+directory proved to be live, contended ground); all five folded-in lane-cycles' own stated
+figures (two from wave 17's stranded, never-regenerated debt; three from wave 18's own dispatch)
+are reproduced exactly, zero numeric discrepancies at the cycle level; the wave-level mismatch
+between the dispatch brief's implied ≈32-unit scope and the true 90-unit scope is named plainly,
+not smoothed over, and traced to a specific, verifiable cause (wave 17's missing closing cycle);
+a smaller pre-existing sub-attribution imprecision in `kanban.md` row 15 is also named, not
+silently fixed in place. `completion_atlas.py --check` clean both scopes; full workspace and
+desktop-crate `cargo test --locked --no-run` both exit 0.
+
+## Next-cycle plan
+
+1. **The still-in-flight process observed in the shared main checkout (§0)** — a detached HEAD
+   with unmerged `progress.md`/`completion_atlas.py` and an apparent partial revert of
+   `AT-34-E4-002` cycle 6 — was left untouched and unmeasured. Whichever process owns it should
+   resolve it explicitly (commit or discard on its own authority); if it lands a genuine fourth
+   wave-18 lane, that lane's own effects will need a follow-up regeneration, since this cycle's
+   90-unit diff does not include it.
+2. **Wave orchestration should not treat a host-killed wave as fully closed** until its own
+   shared regeneration cycle actually runs — wave 17's case shows a killed wave can silently
+   leave real, already-pushed code unmeasured for a full day. A future dispatch script change
+   could check for this (a wave whose own "shared regeneration" commit never landed) before
+   registering the next wave's ledger row.
+3. **C's own next-cycle plan** (`bloodline_power_or_bloodline_feat_not_computed`, 23 units
+   remaining after cycle 4) and **M's own next-cycle plan** (the 121-unit `VAR` cross-subsystem
+   shape, or the 71-unit prose-only named-artifact magnitude probe) both remain open, unchanged
+   by this cycle.

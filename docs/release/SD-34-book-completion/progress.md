@@ -11,6 +11,62 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-001 — wave-18 shared `docs/work-inventory.json` regeneration and attribution — complete
+
+**Status: complete.** The mandatory closing regeneration cycle for wave 18 (`decisions.md §9`'s
+own file-ownership rule: dispatched lanes defer `docs/work-inventory.json` regeneration to one
+shared, end-of-wave cycle rather than paying the three-pass pipeline once per lane). Forked an
+isolated `git worktree` off `origin/tranche/14` at `dca580a6b9` rather than using the assigned
+shared main checkout, which was found mid-conflict from a concurrent, unrelated in-flight
+process (detached `HEAD`, `UU` entries, `HEAD` observed moving between consecutive read-only
+checks) — left untouched per this repo's own shared-checkout discipline.
+
+Three-pass pipeline run in order (`corpus_literal_sweep` CLEAN 3m42.837s, `derived_evaluator_
+fixture_check` 0 failed 0m14.211s, `v06_work_inventory` regenerated 11m55.616s) — no
+`--allow-stamp-loss`. Total pipeline wall time **953.664s (15m53.664s)**, the figure this wave
+shape exists to measure (wave 15: 1,080.988s, wave 16: 927s — this cycle sits between the two).
+
+**Whole-corpus before/after diff by unit id: 0 added, 0 removed, 90 changed** (0 evidence-only
+churn; every change is a real status transition). **The dispatch brief's own "lane reports"
+implied ≈32 units (this wave's own three lanes' most recent cycles); the true figure is 90 — a
+58-unit gap fully explained by one specific, verifiable cause: wave 17 (`wf_850b57b3-2ed`) was
+killed by the host on 2026-08-30 before it could run its own closing shared-regeneration cycle**,
+leaving its own two lanes' already-pushed, already-deferred code (C-lane cycle 4, Sorcerer
+Bloodline reuse, `d97420888e`; UC-lane cycle 5, open-subtype-family trait skills, `5e3c000c8e`)
+unmeasured for a full day. This cycle's pipeline run is the first to actually execute since wave
+16's, so it swept in five lane-cycles' worth of deferred work, not three:
+
+| Cycle | Wave | Own claim | Measured | Match |
+|---|---|---|---:|---|
+| C cycle 4 — Sorcerer Bloodline | 17 | 54 (44 DONE + 10 V) | 54 | exact |
+| UC cycle 5 — open-subtype-family trait skills | 17 | 4, `ultimate_campaign` | 4 | exact |
+| C cycle 5 — Bard Versatile Performance | 18 | 9, all DONE | 9 | exact |
+| UC cycle 6 — flat `BONUS:SAVE` traits | 18 | 3 (2 books, shared `KEY`) | 3 | exact |
+| M cycle 3 — `TEMPBONUS:` equipment | 18 | 20 (3 books) | 20 | exact |
+
+Every individual cycle's own stated figure reproduces exactly — **zero numeric discrepancies at
+the cycle level.** The mismatch is at the wave-dispatch level: this wave's brief did not account
+for wave 17's own unclosed regeneration debt. Full attribution, book-level deltas
+(`core_rulebook` DONE 4383→4449, C 296→233, M 957→944; `ultimate_campaign` DONE 187→193, M
+53→47; `advanced_class_guide` M 145→140; `advanced_race_guide` M 430→428; `advanced_players_
+guide` M 265→264), and a smaller pre-existing `kanban.md` row-15 sub-attribution conflation
+(named, not silently fixed): `artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md`
+(fifth section, "wave-18 regeneration and attribution").
+
+**Movement, four buckets (`decisions.md §9`):** Closure **80**, Reclassification **10**,
+Reachability **0**, Instrument-correction **0**. 80 + 10 = 90.
+
+`completion_atlas.py --check`: `core_rulebook` and corpus-wide both `citation_failures=0`,
+`unclassified=0`, `overlap=0`. `cargo test --locked --no-run` exits 0, full workspace (3m18.931s)
+and `apps/desktop/src-tauri` tested explicitly as its own workspace (3m56.835s). No `src/**` file
+touched by this cycle — all five folded-in cycles' own code was already committed.
+
+`python3 scripts/wave_ledger.py`: wave 18 (`wf_47422ae1-5ea`) already carried `"18"` in
+`KNOWN_WAVES` — no script edit needed. Wave 18 ran **2:04:38** through this cycle's own last
+check (still `RUNNING`), in the same range as waves 15 (2:03:47) and 16 (2:27:56), longer than
+wave 17's host-truncated 0:51:32 (not a fair comparison). Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md`.
+
 ### Cycle 7 — AT-34-E3-003 — bucket `M` equipment cycle 3: `TEMPBONUS:` widening — partial
 
 **Status: partial.** Re-derived HEAD first (the dispatch brief's own snapshot carried the
