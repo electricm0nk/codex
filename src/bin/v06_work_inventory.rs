@@ -11927,7 +11927,7 @@ fn classify(
                 {
                     return Verdict {
                         status: "deferred-with-reason",
-                        evidence: "vacuous_placeholder_row_no_corpus_content_to_render"
+                        evidence: "engine_diagnostic:vacuous_placeholder_row_no_corpus_content_to_render"
                             .to_string(),
                         reason: Some(reason.to_string()),
                         engine_book: engine_book_field,
@@ -12321,7 +12321,7 @@ fn classify(
             if let Some(reason) = companion_chassis::grant_token_only_dispatch_reason(&unit.key) {
                 return Verdict {
                     status: "deferred-with-reason",
-                    evidence: "grant_token_only_dispatch_row_routes_to_already_shipped_content"
+                    evidence: "engine_diagnostic:grant_token_only_dispatch_row_routes_to_already_shipped_content"
                         .to_string(),
                     reason: Some(reason.to_string()),
                     engine_book: engine_book_field,
@@ -21189,7 +21189,10 @@ mod class_feature_text_complete_rung_tests {
             "expected the vacuous-placeholder rung, got status={} evidence={}",
             verdict.status, verdict.evidence
         );
-        assert_eq!(verdict.evidence, "vacuous_placeholder_row_no_corpus_content_to_render");
+        assert_eq!(
+            verdict.evidence,
+            "engine_diagnostic:vacuous_placeholder_row_no_corpus_content_to_render"
+        );
         assert!(verdict.reason.is_some(), "deferred-with-reason must carry a stated reason");
     }
 
@@ -21211,7 +21214,10 @@ mod class_feature_text_complete_rung_tests {
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), true, false, "computed", false);
         assert_ne!(verdict.status, "deferred-with-reason");
-        assert_ne!(verdict.evidence, "vacuous_placeholder_row_no_corpus_content_to_render");
+        assert_ne!(
+            verdict.evidence,
+            "engine_diagnostic:vacuous_placeholder_row_no_corpus_content_to_render"
+        );
     }
 
     /// `AT-34-E3-001` cycle 5, weapon-proficiency-grant shard: a
