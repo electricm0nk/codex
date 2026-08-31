@@ -52,6 +52,8 @@ KNOWN_WAVES = {
                               "resumes from salvage/wave14-lane1, which supersedes the wave-13 one"),
     "wf_d6622487-007": ("16", "same three lanes; adds the no-relabel rule after wave 15 reported "
                               "a C->V move as a closure"),
+    "wf_850b57b3-2ed": ("17", "bucket-C premise retired -- wave 16 closed the uniform slice, "
+                              "so the 296 left are residue and must be enumerated by shape"),
 }
 
 
