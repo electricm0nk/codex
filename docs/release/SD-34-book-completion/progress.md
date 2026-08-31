@@ -11,6 +11,59 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle 8 — AT-34-E3-002 — Favored Class Bonus choice, generalized from Fighter to five siblings — partial
+
+**Status: partial.** Re-derived cycle 7's own 13-row remainder table from scratch, by exhaustive
+per-key categorization against the live corpus (`decisions.md §12` L2) — every one of the 199
+live bucket-C `core_rulebook` corpus keys assigned to exactly one named sub-cause by script, zero
+left uncategorized, sum verified to equal 199 exactly. This found and corrected two real errors
+in cycle 7's own table, each logged as a `correction` retro event: (1) cycle 7's own 13 listed
+values sum to **208**, not the 199 it claimed — a real arithmetic error, not stale prose; (2)
+`base_class_standalone_feature_not_computed` was stated 35, exhaustive corpus categorization gives
+**25**; (3) `versatile_performance_not_computed` was stated 0 ("closed cycle 5, unchanged"), but
+`"Bard ~ Versatile Performance"`'s bare header record is still live in bucket C right now —
+corrected to **1**. `prestige_class_standalone_feature_not_computed` (26) and
+`bloodline_power_or_bloodline_feat_not_computed` (25) both confirmed exactly as stated.
+
+Closed the 11-unit `favored_class_bonus_choice_not_wired` sub-cause's 6 closable members. Fighter's
+own `class_chassis.fighter.favored_class_bonus_choice` explanation shipped SD13-E5
+(`explain_fighter_favored_class_bonus_choice`), but `classify()` had never been taught to consult
+it. The PF1 Core Rulebook Favored Class rule (pg. 31) is genuinely class-agnostic — a Human's
+favored class is Any — so this cycle generalizes the SAME rule, choice id, and rule-verified +1
+magnitude to the five other base classes whose own bounded level-1 chassis seam already exists
+(`supported_barbarian_level`, `supported_monk_level`, `supported_paladin_level`,
+`supported_rogue_level`, `supported_wizard_level`), via one new function
+(`explain_other_classes_favored_class_bonus_choice`) rather than five near-duplicates of Fighter's
+own — Fighter's own already-shipped function untouched. New `probe_favored_class_bonus_choice_wiring`
++ one new `classify()` rung exercise the real compute pipeline for all six classes. The remaining 5
+(Adept, Aristocrat, Commoner, Expert, Warrior) have no `supported_<class>_level` seam at all —
+confirmed by direct search, zero matches — a genuine engine gap, named in the remainder, not
+force-closed.
+
+`core_rulebook` C 199→**193** (6 closed, all straight to DONE, `wiring_class: "computed"`, none
+reclassified to V). Whole-inventory id-diff: 0 added/removed, 21 changed total, cleanly
+decomposed into this cycle's own 6 (isolated by evidence string) plus 15 unrelated `X`→`X`
+evidence-string-only fixes from an already-landed wave-21 classifier fix (`38e10d066b`) this
+cycle's regen was simply the first to fold in — not this cycle's own closure. Corpus-wide C
+4180→4174, DONE 24731→24737. Cross-book collision check performed before shipping: each of the
+six bare class-name keys is declared exactly once, only in `core_rulebook`, across the full
+49,438-unit corpus — this rung is deliberately left unguarded. RED (temporarily set the new
+rung's membership check to a sentinel that never matches, both new proof tests failed for the
+intended reason) then GREEN. 4 new tests (2 proof + 2 negative control), `class_feature` suite
+154/154, full bin suite 493/493 (pre-rebase) / 496/496 (post-rebase, after a concurrently-landed
+sibling `AT-34-E4-002` cycle 9 landed), `cargo test --locked --no-run` exit 0 both times.
+`cargo test --locked --lib` (run for the first time this cycle beyond cycles 1–7's bin-scoped
+suites) surfaces 5 pre-existing failures, none caused by this cycle's diff — a stale hardcoded
+count in another lane's own test (`class_feature_pool_catalog`, last touched `AT-34-E3-001`
+cycle 10) and a Python dashboard-producer doneness-mapping gap (`formula_interpreter_corpus_wide`,
+`companion_chassis`); confirmed unrelated by `git status --porcelain` showing this cycle's own
+writes touch exactly two source files, neither imported by any of the three failing test modules.
+`scripts/completion_atlas.py` citation pins re-derived (10→0 failures), resolved through one
+rebase conflict against a concurrently-landed `AT-34-E4-002` cycle 9 citation re-pin (their
+post-rebase-derived values taken, verified 0 failures after). `docs/work-inventory.json` regen
+local/uncommitted only, per file-ownership rule. NOT closed. Remainder 193, 13 sub-causes summing
+exactly (48+26+25+25+16+13+10+10+7+5+5+2+1). Full detail in `AT-34-E3-002_cycle_receipt.md`.
+
 ### Cycle 9 — AT-34-E4-002 — seventh trait/drawback slice: `BONUS:SITUATION` traits — partial
 
 **Status: partial.** Worktree opened at the tranche cut (`ea2b3396f2`) and was rebased onto
