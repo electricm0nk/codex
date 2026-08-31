@@ -34,20 +34,68 @@ pub struct SkillCheckBonus {
 /// means this record's raw tokens do not carry the field, not that its
 /// value is zero.
 pub fn compute_general_effect(record: &EquipmentRecord) -> Option<SkillCheckBonus> {
-    let explicit = record.bonus_chains.iter().find_map(|bonus| {
-        let qualifiers = &bonus.qualifiers;
-        let is_skill_bonus = qualifiers.len() >= 3 && qualifiers[0] == "SKILL";
-        if !is_skill_bonus {
-            return None;
-        }
-        qualifiers[2].parse::<i16>().ok().map(|bonus_value| SkillCheckBonus {
-            skill: qualifiers[1].clone(),
-            bonus: bonus_value,
+    let explicit = record
+        .bonus_chains
+        .iter()
+        .find_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            let is_skill_bonus = qualifiers.len() >= 3 && qualifiers[0] == "SKILL";
+            if !is_skill_bonus {
+                return None;
+            }
+            qualifiers[2].parse::<i16>().ok().map(|bonus_value| SkillCheckBonus {
+                skill: qualifiers[1].clone(),
+                bonus: bonus_value,
+            })
         })
-    })?;
+        .or_else(|| tempbonus_skill_fallback(record))?;
     Some(SkillCheckBonus {
         bonus: explicit.bonus + swim_speed_racial_bonus(record, &explicit.skill),
         ..explicit
+    })
+}
+
+/// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 3): a
+/// `TEMPBONUS:<target>|SKILL|<skill>|<n>|...` corpus token is PCGen's
+/// temporary/consumable-triggered sibling of `BONUS:SKILL|<skill>|<n>|...`
+/// — the real, load-bearing mechanical effect on every potion/elixir in
+/// this population (`Elixir of Swimming`, `Elixir of Vision`, `Dust of
+/// Appearance`, ...), none of which carry a `BONUS:` chain at all
+/// (confirmed against the live corpus: `raw_bonus_chains` is empty on
+/// every one). Only fires when no explicit `BONUS:SKILL` chain exists
+/// (checked by the caller's `.or_else`), and only for a `<target>` of
+/// `PC`/`ANYPC` (a character-side skill bonus) — a `TEMPBONUS:EQ|...`
+/// (the `Lead Blades` shape: an equipment-side weapon-damage buff) is a
+/// structurally different effect this function must never read as a skill
+/// bonus. Only a literal, single-skill, integer-valued token is read: a
+/// comma-joined skill list or a `TYPE.<Group>` wildcard is a different,
+/// wider shape this fallback deliberately does not attempt (an honest
+/// `None`, not a guessed value).
+fn tempbonus_skill_fallback(record: &EquipmentRecord) -> Option<SkillCheckBonus> {
+    record.tokens.iter().find_map(|token| {
+        if token.key != "TEMPBONUS" {
+            return None;
+        }
+        let parts: Vec<&str> = token.value.split('|').collect();
+        if parts.len() < 4 || (parts[0] != "PC" && parts[0] != "ANYPC") || parts[1] != "SKILL" {
+            return None;
+        }
+        let skill = parts[2];
+        // `ALL` is PCGen's real wildcard meaning "every skill" (confirmed
+        // live: `Setting Stone (Invigoration)`, `TEMPBONUS:PC|SKILL|ALL|2|
+        // TYPE=Morale`) -- a blanket bonus, not a bonus to one skill
+        // literally named "ALL". Reading it as a single-skill `SkillCheck
+        // Bonus{skill:"ALL"}` would be a fabricated, wrong value (this
+        // struct has no field for "every skill"), so it is excluded here
+        // the same way a comma-joined list and a `TYPE.<Group>` wildcard
+        // are: an honest `None`, not a guessed shape.
+        if skill.is_empty() || skill.contains(',') || skill.starts_with("TYPE.") || skill.eq_ignore_ascii_case("ALL") {
+            return None;
+        }
+        parts[3].parse::<i16>().ok().map(|bonus_value| SkillCheckBonus {
+            skill: skill.to_string(),
+            bonus: bonus_value,
+        })
     })
 }
 
@@ -207,6 +255,106 @@ mod tests {
                 bonus: 2,
             })
         );
+    }
+
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 3): real
+    /// verbatim tokens copied from `KEY:Elixir of Swimming` in
+    /// `core_rulebook/cr_equip_magic_items.lst` — a `magic_items`-category
+    /// consumable whose real, load-bearing mechanical effect is a
+    /// `TEMPBONUS:ANYPC|SKILL|Swim|10|TYPE=Competence` token, never a
+    /// `BONUS:SKILL` chain (`raw_bonus_chains` is empty on this record —
+    /// confirmed against the live corpus). `TEMPBONUS` is PCGen's
+    /// temporary/consumable-triggered sibling of `BONUS` and carries the
+    /// identical `SKILL|<skill>|<n>|TYPE=...` shape one segment further in
+    /// (`ANYPC|SKILL|...` vs `SKILL|...`) — the same widening shape
+    /// `damage_total::resolve_base_damage_dice`'s `BASEITEM:` chase used
+    /// for the sibling equipment-M cycle: consulting a real, already-typed
+    /// token this resolver did not yet read, not a new resolution
+    /// mechanism.
+    #[test]
+    fn elixir_of_swimming_yields_a_real_swim_skill_bonus_from_tempbonus() {
+        let text = "Elixir of Swimming\tKEY:Elixir of Swimming\tTYPE:Magic.Wondrous.Elixir.Consumable\tCOST:250\tWT:0\tTEMPBONUS:ANYPC|SKILL|Swim|10|TYPE=Competence\n";
+        let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        let effect = compute_general_effect(record);
+        assert_eq!(
+            effect,
+            Some(SkillCheckBonus {
+                skill: "Swim".to_string(),
+                bonus: 10,
+            })
+        );
+    }
+
+    /// `Dust of Appearance` — real verbatim token, a NEGATIVE `TEMPBONUS`
+    /// (a Stealth penalty, not a bonus): proves the fallback reads the
+    /// literal signed integer rather than assuming a positive value.
+    #[test]
+    fn dust_of_appearance_yields_a_real_negative_stealth_tempbonus() {
+        let text = "Dust of Appearance\tKEY:Dust of Appearance\tTYPE:Magic.Wondrous.Consumable\tCOST:1500\tWT:0\tTEMPBONUS:ANYPC|SKILL|Stealth|-30\n";
+        let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_general_effect(record);
+        assert_eq!(
+            effect,
+            Some(SkillCheckBonus {
+                skill: "Stealth".to_string(),
+                bonus: -30,
+            })
+        );
+    }
+
+    /// A record's own explicit `BONUS:SKILL` chain always wins over a
+    /// `TEMPBONUS` fallback — negative control proving the fallback only
+    /// fires when the explicit chain is absent, mirroring
+    /// `damage_total.rs`'s `a_records_own_damage_token_wins_over_its_
+    /// baseitem` negative control.
+    #[test]
+    fn explicit_bonus_skill_wins_over_a_tempbonus_on_the_same_record() {
+        let text = "Hybrid\tKEY:Hybrid\tTYPE:Goods.Tools\tCOST:1\tWT:1\tBONUS:SKILL|Climb|2|TYPE=Circumstance\tTEMPBONUS:ANYPC|SKILL|Swim|99|TYPE=Competence\n";
+        let result = parse_equipment_entries("cr_equip_general.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_general_effect(record);
+        assert_eq!(
+            effect,
+            Some(SkillCheckBonus {
+                skill: "Climb".to_string(),
+                bonus: 2,
+            })
+        );
+    }
+
+    /// `Setting Stone (Invigoration)` (`ultimate_psionics`) — real verbatim
+    /// token: `TEMPBONUS:PC|SKILL|ALL|2|TYPE=Morale`. `ALL` is PCGen's
+    /// wildcard for "every skill", never a skill literally named `ALL` —
+    /// negative control proving the fallback refuses this shape rather
+    /// than fabricating a `SkillCheckBonus{skill:"ALL"}` this struct has
+    /// no way to represent correctly.
+    #[test]
+    fn tempbonus_skill_all_wildcard_is_never_read_as_a_single_skill() {
+        let text = "Setting Stone (Invigoration)\tKEY:Setting Stone (Invigoration)\tTYPE:Wondrous\tCOST:1\tWT:0\tTEMPBONUS:PC|SKILL|ALL|2|TYPE=Morale\n";
+        let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
+        let record = &result.entries[0];
+
+        assert_eq!(compute_general_effect(record), None);
+    }
+
+    /// A `TEMPBONUS` targeting `EQ` (an equipment-side effect, e.g. a
+    /// weapon-damage-size buff — the real `Lead Blades` shape) rather than
+    /// `PC`/`ANYPC` (a character-side skill bonus) is never read as a skill
+    /// bonus — negative control proving the fallback is anchored on the
+    /// real PC/ANYPC selector, not any `TEMPBONUS:...SKILL...` substring.
+    #[test]
+    fn tempbonus_targeting_eq_not_pc_is_never_read_as_a_skill_bonus() {
+        let text = "Lead Blades\tKEY:Lead Blades\tTYPE:Magic.Wondrous\tCOST:1\tWT:0\tTEMPBONUS:EQ|Weapon,Melee|SKILL|Fake|5|TYPE=Temporary\n";
+        let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
+        let record = &result.entries[0];
+
+        assert_eq!(compute_general_effect(record), None);
     }
 
     /// Real verbatim line copied from `ue_equip_magic_items.lst:200`

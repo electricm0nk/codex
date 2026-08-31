@@ -16563,6 +16563,50 @@ mod e14_harness_tests {
         );
     }
 
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-cause
+    /// `equipment_table_entry_with_corpus_magnitude`, cycle 3): the real,
+    /// on-disk `Potion of Bull's Strength` record
+    /// (`core_rulebook/cr_equip_magic_items.lst`) carries no `BONUS:STAT`
+    /// chain at all -- only `TEMPBONUS:ANYPC|STAT|STR|4|TYPE=Enhancement`,
+    /// confirmed unwired before this cycle by this book's own live
+    /// `equipment_table_entry_with_corpus_magnitude` count.
+    /// `magic_items::compute_magic_items_effect`'s new `TEMPBONUS:STAT`
+    /// fallback reads it and the probe promotes it -- no change to
+    /// `equipment_key_is_wired` itself was needed, since it already checks
+    /// `ability_bonus.is_some()`.
+    #[test]
+    fn equipment_probe_promotes_a_real_potion_via_its_tempbonus_stat_token() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_equipment_corpus(&roots);
+        assert!(
+            equipment_key_is_wired("Potion of Bull's Strength", &corpus),
+            "Potion of Bull's Strength carries no BONUS:STAT chain, only \
+             TEMPBONUS:ANYPC|STAT|STR|4|TYPE=Enhancement -- the probe must \
+             read that token via compute_magic_items_effect's new fallback"
+        );
+    }
+
+    /// Same sub-cause, the `general`-category (skill-bonus) sibling: the
+    /// real, on-disk `Elixir of Swimming` record carries no `BONUS:SKILL`
+    /// chain, only `TEMPBONUS:ANYPC|SKILL|Swim|10|TYPE=Competence`.
+    #[test]
+    fn equipment_probe_promotes_a_real_elixir_via_its_tempbonus_skill_token() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_equipment_corpus(&roots);
+        assert!(
+            equipment_key_is_wired("Elixir of Swimming", &corpus),
+            "Elixir of Swimming carries no BONUS:SKILL chain, only \
+             TEMPBONUS:ANYPC|SKILL|Swim|10|TYPE=Competence -- the probe must \
+             read that token via compute_general_effect's new fallback"
+        );
+    }
+
     /// Same shape, hand-built fixture so the assertion does not depend on
     /// the on-disk corpus staying byte-identical, and pins the SPECIFIC
     /// mechanism (a `DAMAGE:` token, not a coincidental match on some other

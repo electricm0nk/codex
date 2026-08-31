@@ -37,14 +37,50 @@ pub struct AbilityScoreBonus {
 /// ...) yields `None`: that means this record's raw tokens do not carry
 /// the field, not that its value is zero.
 pub fn compute_magic_items_effect(record: &EquipmentRecord) -> Option<AbilityScoreBonus> {
-    record.bonus_chains.iter().find_map(|bonus| {
-        let qualifiers = &bonus.qualifiers;
-        let is_stat_bonus = qualifiers.len() >= 3 && qualifiers[0] == "STAT";
-        if !is_stat_bonus {
+    record
+        .bonus_chains
+        .iter()
+        .find_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            let is_stat_bonus = qualifiers.len() >= 3 && qualifiers[0] == "STAT";
+            if !is_stat_bonus {
+                return None;
+            }
+            qualifiers[2].parse::<i16>().ok().map(|bonus_value| AbilityScoreBonus {
+                ability: qualifiers[1].clone(),
+                bonus: bonus_value,
+            })
+        })
+        .or_else(|| tempbonus_stat_fallback(record))
+}
+
+/// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 3): the
+/// `magic_items`-category sibling of `general.rs`'s own
+/// `tempbonus_skill_fallback` — the CRB ability-score potions (`Potion of
+/// Bull's Strength`, `Potion of Cat's Grace`, `Potion of Owl's Wisdom`,
+/// `Potion of Eagle's Splendor`, `Potion of Fox's Cunning`, `Potion of
+/// Bear's Endurance`) carry their real `+4 enhancement bonus to <Ability>`
+/// effect as `TEMPBONUS:ANYPC|STAT|<Ability>|4|TYPE=Enhancement`, never a
+/// `BONUS:STAT` chain (confirmed against the live corpus: `raw_bonus_
+/// chains` is empty on every one of the six). Only fires when no explicit
+/// `BONUS:STAT` chain exists, and only for a `PC`/`ANYPC` target — same
+/// discipline as the skill-side fallback, see its own doc comment for the
+/// `TEMPBONUS:EQ|...` negative case this excludes.
+fn tempbonus_stat_fallback(record: &EquipmentRecord) -> Option<AbilityScoreBonus> {
+    record.tokens.iter().find_map(|token| {
+        if token.key != "TEMPBONUS" {
             return None;
         }
-        qualifiers[2].parse::<i16>().ok().map(|bonus_value| AbilityScoreBonus {
-            ability: qualifiers[1].clone(),
+        let parts: Vec<&str> = token.value.split('|').collect();
+        if parts.len() < 4 || (parts[0] != "PC" && parts[0] != "ANYPC") || parts[1] != "STAT" {
+            return None;
+        }
+        let ability = parts[2];
+        if ability.is_empty() || ability.contains(',') {
+            return None;
+        }
+        parts[3].parse::<i16>().ok().map(|bonus_value| AbilityScoreBonus {
+            ability: ability.to_string(),
             bonus: bonus_value,
         })
     })
@@ -88,6 +124,46 @@ mod tests {
             effect,
             Some(AbilityScoreBonus {
                 ability: "DEX".to_string(),
+                bonus: 2,
+            })
+        );
+    }
+
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 3): real
+    /// verbatim tokens copied from `KEY:Potion of Bull's Strength` in
+    /// `core_rulebook/cr_equip_magic_items.lst` — carries no `BONUS:STAT`
+    /// chain at all, only `TEMPBONUS:ANYPC|STAT|STR|4|TYPE=Enhancement`.
+    #[test]
+    fn potion_of_bulls_strength_yields_a_real_str_bonus_from_tempbonus() {
+        let text = "Potion of Bull's Strength\tKEY:Potion of Bull's Strength\tTYPE:Magic.Potion.Consumable.Combat Gear\tCOST:300\tWT:0\tTEMPBONUS:ANYPC|STAT|STR|4|TYPE=Enhancement\n";
+        let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        let effect = compute_magic_items_effect(record);
+        assert_eq!(
+            effect,
+            Some(AbilityScoreBonus {
+                ability: "STR".to_string(),
+                bonus: 4,
+            })
+        );
+    }
+
+    /// A record's own explicit `BONUS:STAT` chain always wins over a
+    /// `TEMPBONUS` fallback — negative control mirroring `general.rs`'s
+    /// `explicit_bonus_skill_wins_over_a_tempbonus_on_the_same_record`.
+    #[test]
+    fn explicit_bonus_stat_wins_over_a_tempbonus_on_the_same_record() {
+        let text = "Hybrid\tKEY:Hybrid\tTYPE:Magic.Wondrous.Belt\tCOST:1\tWT:1\tBONUS:STAT|STR|2|TYPE=Enhancement\tTEMPBONUS:ANYPC|STAT|DEX|99|TYPE=Enhancement\n";
+        let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_magic_items_effect(record);
+        assert_eq!(
+            effect,
+            Some(AbilityScoreBonus {
+                ability: "STR".to_string(),
                 bonus: 2,
             })
         );

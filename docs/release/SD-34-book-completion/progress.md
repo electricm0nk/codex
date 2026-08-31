@@ -11,6 +11,65 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle 7 — AT-34-E3-003 — bucket `M` equipment cycle 3: `TEMPBONUS:` widening — partial
+
+**Status: partial.** Re-derived HEAD first (the dispatch brief's own snapshot carried the
+pre-cycle-1 972/276+147 figures; live `core_rulebook` M was already **957**, split
+`equipment_table_entry_with_corpus_magnitude` 262 / `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does`
+146, after cycles 1 and 2's own already-committed closures). Read cycles 1 and 2's own receipts
+first and confirmed both cycles' claims live against the real corpus before writing any code, per
+this cycle's own dispatch instruction.
+
+**Found a whole real mechanism neither prior cycle's classification surfaced.** Cycle 2's
+exhaustive 9-shape census grouped every unit by its `raw_bonus_chains` (`BONUS:`) shape and
+correctly found none on the same-line 262. It never inspected `TEMPBONUS:` — PCGen's
+temporary/consumable-triggered sibling of `BONUS:`, structurally identical one segment further in
+(`TEMPBONUS:<target>|<shape>` vs `BONUS:<shape>`), never read by
+`compute_general_effect`/`compute_magic_items_effect`. Real example: `Potion of Bull's Strength`
+carries no `BONUS:STAT` chain at all — only `TEMPBONUS:ANYPC|STAT|STR|4|TYPE=Enhancement`, its
+entire mechanical effect.
+
+Widened both per-category resolvers (`general.rs`'s `compute_general_effect`,
+`magic_items.rs`'s `compute_magic_items_effect`) with a `TEMPBONUS:` fallback, consulted only
+when no explicit `BONUS:` chain wins — same shape as cycle 2's `BASEITEM:` chase (consult a real
+token the compute path did not yet read, not a new mechanism). `compute_equipment_effects`
+already calls both resolvers unconditionally on every record regardless of the corpus record's
+own nominal category, so this reaches every book by construction — no new probe or dispatch
+change needed, and the closure is genuinely corpus-wide: **20 units**, 13 `core_rulebook` + 5
+`advanced_class_guide` + 2 `advanced_race_guide`, every one `ingested-magnitude → grounded`, 0
+reclassification.
+
+**Caught a real correctness trap before shipping**: PCGen's `ALL` skill wildcard
+(`Setting Stone (Invigoration)`, `ultimate_psionics`, `TEMPBONUS:PC|SKILL|ALL|2|TYPE=Morale`)
+found during the corpus-wide census would have been silently misread as a bonus to one skill
+literally named "ALL" without an explicit guard — excluded, correctly staying `M`. 10 new tests
+(4 explicit negative controls, 6 positive/edge-case fixtures) against real corpus records, RED
+confirmed for the intended reason then GREEN.
+
+**Same "two shapes stay different" finding as cycle 2, confirmed a third time**: the fix reaches
+only the same-line shape (262 → 249) — every `TEMPBONUS`-bearing unit already carries its
+magnitude on its own row (a potion IS the record stating its own effect, unlike `Crossbow
+(Light)`'s alias indirection); the closure-only shape (146) is unaffected.
+
+`core_rulebook` M: 957 → 944 (−13). `equipment_table_entry_with_corpus_magnitude`: 262 → 249.
+Corpus-wide whole-id-diff (local three-pass regen, not committed): 49,438 → 49,438, 0 added/
+removed, 90 changed — **20 this cycle's own** (equipment, isolated by kind), **70 co-mingled
+from already-committed sibling cycles** (63 `core_rulebook` `class_feature` from `AT-34-E3-002`
+cycle 5's Bard fix, 7 trait from `AT-34-E4-002` cycle 6), named and not claimed as this cycle's
+own. `cargo test --locked --lib rules_core::equipment_effects::` 82/82; `cargo test --locked
+--bin v06_work_inventory` 473/473; `cargo test --locked --no-run` (full workspace) and the
+desktop crate's own `--no-run` both exit 0; `cargo test --locked --lib` shows 5 pre-existing
+failures, confirmed unrelated (an already-named `AT-34-E3-005` regression, none in this cycle's
+own modules). `docs/work-inventory.json`/`completion-atlas.json` deliberately NOT committed this
+cycle (shared end-of-wave regen owns them); figures from a local regen, `git restore`-d before
+commit. Remainder: `equipment_table_entry_with_corpus_magnitude` 249 + `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does`
+146 = **395** (`core_rulebook`-scoped), plus the 7 other-book `TEMPBONUS`-bearing closures'
+siblings; every remaining unit named by mechanism in the receipt's 9-row table (choice-gated 99 =
+sibling scope, `VAR` cross-subsystem 121, `TEMPBONUS` compound/wildcard shapes 7 [discovered this
+cycle], chassis/plumbing 99, prose-only named-artifact 71 [cycle 2's own best-ROI candidate for
+the next cycle], `ITEMCOST`/`EQM`/`EQMWEAPON`/`WEAPON` no-field shapes 9+3+3+2+1). NOT closed.
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-003_m_bucket_equipment_cycle_receipt_3.md`.
+
 ### Cycle 6 — AT-34-E4-002 — fourth trait/drawback slice: flat `BONUS:SAVE` traits — partial
 
 **Status: partial.** Re-derived HEAD first (the dispatch brief's own snapshot was five real
