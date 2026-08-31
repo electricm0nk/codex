@@ -5,9 +5,9 @@
   cycle's own live regen ran; `tranche/14` tip `c320c61c4f` — wave 20 — at cycle start, no rebase
   needed) plus this cycle's own follow-up commit `5259f4458f` (`scripts/completion_atlas.py`'s 10
   citation re-pins, this cycle's own 186-line insertion having shifted every one) plus this
-  cycle's own final receipt/progress/kanban/retro commit (this commit itself — see `git log -1`
-  on `tranche/14` immediately after this receipt lands for its own SHA, the same convention a
-  commit uses for its own hash).
+  cycle's own final receipt/progress/kanban/retro commit `4ff99d62b5` (this cycle's own
+  documentation of itself — this line was fixed up in a small follow-up commit, since a commit
+  cannot cite its own hash before it exists).
 - **Files touched:** `src/bin/v06_work_inventory.rs` (one new `EngineFacts` field
   `ranger_combat_style_choice_wired: BTreeSet<String>`, one new probe function
   `probe_ranger_combat_style_wiring`, one new `classify()` rung for `group == "Ranger Combat
