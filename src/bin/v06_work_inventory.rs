@@ -11291,6 +11291,79 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
+            // `AT-34-E3-002` (bucket C continuation, cycle 6): the bare
+            // `"<Domain> Domain"` HEADER record (the domain SELECTION
+            // feature itself, e.g. `"Good Domain"`, `"Air Domain"` -- the
+            // real corpus record for CHOOSING that domain, `type_facet
+            // ClericClassFeatures.Domain.ClericDomain`, confirmed by direct
+            // corpus read) is the DISPLAY-facing sibling of the domain's own
+            // granted-power record(s) -- the SAME paired display/chassis
+            // pattern the Favored Enemy/Favored Terrain checks below
+            // establish, but spanning TWO already-wired sibling shapes
+            // rather than one, because a direct corpus scan (this cycle's
+            // own) found the granted power ingested under one of two
+            // DIFFERENT key shapes depending on domain: most domains carry
+            // it as `"<Domain> Domain ~ <Power>"` (the sibling the
+            // `cleric_domain_generic_member_wired` check just above already
+            // grounds for cycle 3's generic pool-group reuse); Good, War,
+            // Strength, Destruction, and Glory instead carry it ONLY as
+            // `"Domain Power ~ <Power>"` (the `domain_power_effect_wired`
+            // check above) -- zero `core_rulebook` unit named `"Good Domain
+            // ~ *"` or `"War Domain ~ *"` exists at all, confirmed by direct
+            // `docs/work-inventory.json` read, so the first shape can never
+            // credit those five. Book-scoped to `core_rulebook`: a direct
+            // corpus scan found exactly one same-shaped key elsewhere
+            // (`ultimate_psionics`), a different mechanism this territory
+            // does not touch.
+            if unit.book == "core_rulebook"
+                && unit.key.ends_with(" Domain")
+                && !unit.key.contains(" ~ ")
+            {
+                let sibling_prefix = format!("{} ~ ", unit.key);
+                let sibling_via_generic_pool = facts
+                    .cleric_domain_generic_member_wired
+                    .iter()
+                    .any(|k| k.starts_with(&sibling_prefix));
+                if sibling_via_generic_pool {
+                    return Verdict {
+                        status: "grounded",
+                        evidence:
+                            "generic_pool_group_selection_probe_observed_a_real_computed_magnitude_for_the_display_record"
+                                .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+                // Second sibling shape: the five domains
+                // `domain_power::DOMAIN_POWER_CATALOG` grounds directly.
+                // Every real PF1 Core Rulebook domain name is a single word
+                // (confirmed by direct corpus read of all 33 bare header
+                // keys, none contain a space before " Domain"), so the
+                // catalog's own `"domain:<slug>"` selection id is derived
+                // losslessly from this header's own name text -- never
+                // guessed, only used to look up a selection id the catalog
+                // itself owns, and the credit itself still comes from
+                // `domain_power_effect_wired`'s real, live-probed
+                // observation, not from static catalog membership alone.
+                let domain_name = unit.key.trim_end_matches(" Domain");
+                let selection_id = format!("domain:{}", domain_name.to_lowercase());
+                let granted_power_name = domain_power::domain_power_probe_catalog()
+                    .into_iter()
+                    .find(|(sel_id, _, _)| *sel_id == selection_id)
+                    .map(|(_, granted_power_name, _)| granted_power_name.to_string());
+                if let Some(granted_power_name) = granted_power_name {
+                    if facts.domain_power_effect_wired.contains(&granted_power_name) {
+                        return Verdict {
+                            status: "grounded",
+                            evidence:
+                                "domain_power_probe_observed_a_real_computed_magnitude_for_the_display_record"
+                                    .to_string(),
+                            reason: None,
+                            engine_book: engine_book_field,
+                        };
+                    }
+                }
+            }
             // `AT-34-E3-002` (bucket C continuation, cycle 4): the SAME
             // reuse for the SECOND real pool -- `"<Bloodline> Bloodline ~
             // <Power>"` (e.g. `"Aberrant Bloodline ~ Acidic Ray"`), a real,
@@ -19402,6 +19475,82 @@ mod class_feature_text_complete_rung_tests {
             verdict.evidence,
             "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
         );
+    }
+
+    /// `AT-34-E3-002` (bucket C continuation, cycle 6), proof case 1: the
+    /// bare `"Air Domain"` HEADER record reaches `grounded` off its own
+    /// SIBLING's wiring -- `"Air Domain ~ Lightning Arc"` is the exact real
+    /// corpus record `cleric_domain_generic_member_wired` observes for real
+    /// (cycle 3's own generic pool-group reuse); the header record itself
+    /// carries no magnitude formula of its own, so this is a real
+    /// display/chassis pairing, never a new probe.
+    #[test]
+    fn a_domain_header_record_reaches_grounded_off_its_generic_pool_sibling_wiring() {
+        let mut facts = EngineFacts::default();
+        facts
+            .cleric_domain_generic_member_wired
+            .insert("Air Domain ~ Lightning Arc".to_string());
+        let unit = class_feature_unit("core_rulebook", "cr_abilities_class.lst", 651, "Air Domain", 2);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "generic_pool_group_selection_probe_observed_a_real_computed_magnitude_for_the_display_record"
+        );
+    }
+
+    /// `AT-34-E3-002` (cycle 6), proof case 2: the bare `"Good Domain"`
+    /// HEADER record has NO `"Good Domain ~ *"` sibling in the corpus at all
+    /// (confirmed by direct corpus read -- Good's granted power is ingested
+    /// only as `"Domain Power ~ Touch of Good"`), so the FIRST sibling shape
+    /// can never credit it; this proves the SECOND lookup path
+    /// (`domain_power::domain_power_probe_catalog`'s own `"domain:good"`
+    /// selection id, resolved from the header's own name text) reaches
+    /// `grounded` off `domain_power_effect_wired`'s real, live-probed
+    /// observation.
+    #[test]
+    fn a_domain_header_record_reaches_grounded_off_its_domain_power_catalog_sibling_wiring() {
+        let mut facts = EngineFacts::default();
+        facts.domain_power_effect_wired.insert("Touch of Good".to_string());
+        let unit = class_feature_unit("core_rulebook", "cr_abilities_class.lst", 713, "Good Domain", 2);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "domain_power_probe_observed_a_real_computed_magnitude_for_the_display_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: `"Charm Domain"` is a real bucket-C domain header
+    /// with NEITHER sibling shape wired -- no `"Charm Domain ~ *"` member the
+    /// generic pool-group pass resolves, and Charm carries no
+    /// `domain_power::DOMAIN_POWER_CATALOG` entry at all (only Good, War,
+    /// Strength, Destruction, and Glory do). With an EMPTY probe fact set
+    /// this cycle's fix must not fabricate a `grounded` verdict for it --
+    /// it stays exactly the pre-existing `engine-does-not-hold` finding.
+    #[test]
+    fn a_domain_header_record_with_neither_sibling_wired_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit("core_rulebook", "cr_abilities_class.lst", 660, "Charm Domain", 2);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+    }
+
+    /// NEGATIVE CONTROL: a same-shaped `"* Domain"` header key in a
+    /// DIFFERENT book (this territory's own book-scope guard, `unit.book ==
+    /// "core_rulebook"`) is never credited by this cycle's fix even when
+    /// both sibling fact sets would otherwise match -- proves the guard is
+    /// real, not merely documented.
+    #[test]
+    fn a_domain_header_record_in_a_different_book_is_not_credited() {
+        let mut facts = EngineFacts::default();
+        facts
+            .cleric_domain_generic_member_wired
+            .insert("Air Domain ~ Lightning Arc".to_string());
+        facts.domain_power_effect_wired.insert("Touch of Good".to_string());
+        let unit = class_feature_unit("ultimate_psionics", "some_file.lst", 1, "Air Domain", 2);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(verdict.status, "grounded");
     }
 
     /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
