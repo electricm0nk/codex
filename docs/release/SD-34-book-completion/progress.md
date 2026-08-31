@@ -11,6 +11,91 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle 9 — AT-34-E4-002 — seventh trait/drawback slice: `BONUS:SITUATION` traits — partial
+
+**Status: partial.** Worktree opened at the tranche cut (`ea2b3396f2`) and was rebased onto
+`origin/tranche/14` `6f67df49c7` before any work began. Re-derived the split fresh:
+`python3 scripts/completion_atlas.py --book ultimate_campaign --check` read `DONE=200 M=40 D=2
+U=21 X=2`, population 265, unclassified 0 — exactly the dispatch brief's own stated baseline
+(wave 20's shared regen had already folded cycle 8's own 4-unit closure in, confirmed by the
+prior log entry above). Read `AT-34-E4-002_cycle_receipt_8.md` as the newest receipt; its own
+next-cycle plan named the `SITUATION`-only shape (3 records) and the `VAR`-only shape (3
+records) as the two cheapest remaining same-shape groups. Chose `SITUATION`: this crate already
+models the exact shape (`feat_effects::ARG_SITUATIONAL_SKILL_FACTS`, grounding the Core
+Rulebook dwarf's own `BONUS:SITUATION` tokens as standalone facts) — reusing a proven idiom
+rather than opening a wholly new pillar (`VAR`-only needs a bonus-pool/DC-variable pillar this
+crate does not have at all).
+
+Widens the trait/drawback compute-and-apply spine to a seventh pillar: the 3 remaining
+`ultimate_campaign` `trait_content` records whose corpus `BONUS` token set includes a
+`BONUS:SITUATION` clause (`trait_almost_human`, `trait_self_taught_scholar`,
+`trait_trustworthy`), via new `trait_effects::SITUATIONAL_SKILL_TRAIT_BONUSES` +
+`situational_skill_facts_from_traits` (standalone-fact producer, folded into
+`pilot_compute::ground_orphan_trait_facts` — the SAME idiom initiative/concentration already
+established) + `situational_flat_skill_bonuses_from_traits` (Trustworthy's separate flat
+Diplomacy token, folded into the SAME `skill_allocation::allocate_skill_ranks` consumer the
+first three slices established). `Trait ~ Trustworthy` carries two independently-pillared
+tokens on DIFFERENT skills (situational Bluff + flat Diplomacy) and is only reported grounded
+once BOTH fixture-execute — the same "never part-credit on one token" discipline `Trait ~
+Arcane Temper` established.
+
+**Landed the desktop UI wiring too, not just the compute path.** Reading `trait_picker.rs`
+before writing any code found that `list_available_character_traits` chains only 4 of the 7
+tables this module now has — the fifth/sixth slices' 7 traits (Tactician, Arcane Temper,
+Desperate Resolve, Bruising Intellect, Planar Savant, Pragmatic Activator, Precise Treatment)
+are genuinely computed but **cannot be selected through the desktop picker at all** for a
+brand-new character, despite prior cycles' own receipts claiming the picker "surfaces every
+selected trait generically." That claim only holds for a trait already selected via some other
+path (e.g. a saved-character round-trip). This is a pre-existing gap this cycle found but does
+not own fixing (retro-logged as an `incident`, flagged for the next cycle that touches
+`trait_picker.rs`) — but this cycle's own 3 new traits WERE chained into the picker (reusing the
+existing `skills`/`bonus`/`description` DTO shape, zero new fields, zero new frontend branches)
+specifically so this cycle does not add a fourth instance of the same gap.
+
+`ultimate_campaign`: functional `DONE 200→203, M 40→37` (`trait` M `10→7`; `ability` M unchanged
+`30`); `U:21 D:2 X:2 V:0` untouched; no shared-corpus-`KEY` payoff elsewhere (checked: all 3
+corpus `KEY`s appear only under `ultimate_campaign/trait_generic/` and `ultimate_campaign/
+ability/` — the latter a different `Kind`, already `text-complete`). `DONE=203 of 265`
+(functional) — bar not met. **This cycle's local `docs/work-inventory.json` regeneration did
+not complete within the turn** — the pipeline was still running after 6+ minutes (the wave-20
+shared regen log above records this exact pipeline taking 12 minutes for its own
+`v06_work_inventory` pass alone, so this was not anomalous), and this cycle killed it to free
+the shared cargo build slot the required desktop-crate verification also needed, rather than
+risk holding two concurrent cargo processes. The `DONE 200→203` figure above is instead derived
+from `cargo test --locked --bin v06_work_inventory`'s own classify()-level tests, each of which
+ACTUALLY BUILDS the real `unit` and asserts `classify()` returns `"grounded"` with the exact
+evidence string for the record's real corpus key — a real but weaker confirmation than a
+whole-corpus regen diff, honestly reported as such. The wave's shared closing regeneration cycle
+is the one that will produce the authoritative, committed diff for this cycle's claimed 3 units.
+
+Instrument-correction: `completion_atlas.py`'s ten `BUCKET_DEFINITIONS` citation line pins
+re-derived (`citation_failures` 10→0) — a concurrently-landed `AT-34-E3-002` cycle 8 commit
+(`2d9ae34f89`) picked up by this cycle's own rebase had already shifted every citation by its
+own insertions (not re-derived by that lane), and this cycle's own insertions shifted the ones
+at or past its own edit point a second time; fresh `grep -n` for each marker's own unique
+construction-site literal against the real post-rebase file, never either side's pre-rebase
+number. `completion-atlas.json`'s regenerated timestamp `git restore`d before commit.
+
+`cargo test --locked --lib -- trait_effects skill_allocation`: 75/75 (13 new). `cargo test
+--locked --bin v06_work_inventory`: 492/492 (3 new positive-classifier tests; the `Trait ~
+Fate's Favored` negative control unchanged, still `ingested-magnitude`). `cargo test --locked
+--no-run`: full workspace exit 0, run at this cycle's final HEAD `ab5008c2d8` after the last
+commit that can move a figure an assertion depends on. `apps/desktop/src-tauri` (separate cargo
+workspace, own `CARGO_TARGET_DIR`, tested explicitly): `cargo test --locked --manifest-path
+apps/desktop/src-tauri/Cargo.toml --bin codex-desktop -- trait_picker`: 33 passed / 1 failed —
+this cycle's own 34/34 tests pass; the 1 failure is the identical `race_trait_picker`
+adopted-race-count failure every prior `AT-34-E4-002` cycle (3/4/5/6) has already attributed as
+pre-existing and unrelated (a file this cycle never touched). One retro `correction` logged:
+this cycle's own first desktop test asserted Almost Human's description contains the corpus
+BONUS token's own circumstance text ("appear human") rather than the DESC field's own wording
+("pass as human") — caught immediately by the scoped test run, fixed.
+
+Remainder named by sub-cause, unchanged from cycle 8 except the 3 now closed: 3 `VAR`-only
+records (now the largest same-shape group), 2 `ABILITYPOOL`-only records, 1 mixed
+`CASTERLEVEL`+`SKILL` record, 1 corpus data gap = 7 `trait_content`, 30 `ability_content`
+records (out of scope, unchanged) = 37+21+2+2=62 non-DONE. Receipt:
+`artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_9.md`.
+
 ### Cycle — AT-34-E3-001 — wave-20 shared `docs/work-inventory.json` regeneration and attribution — complete
 
 **Status: complete.** The mandatory closing regeneration cycle for wave 20 (`decisions.md §9`'s
