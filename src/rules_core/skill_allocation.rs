@@ -827,6 +827,24 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
         *slot = slot.saturating_add(bonus);
     }
+    // Eighth slice (`AT-34-E4-002`): `Trait ~ Eldritch Delver`'s separate
+    // flat multi-skill `BONUS:SKILL|Knowledge (dungeoneering),Knowledge
+    // (history)|1` token -- its own `BONUS:CASTERLEVEL|SUBSCHOOL` half
+    // grounds through a different channel entirely
+    // (`pilot_compute::ground_orphan_trait_facts`'s standalone-fact
+    // vector, never a skill total). Folded into the same map, never
+    // double-applied, because a trait id can only ever appear in one of
+    // the six tables (kept in its own dedicated table specifically so it
+    // is never a member of `FLAT_SKILL_TRAIT_BONUSES` -- see that table's
+    // own doc comment).
+    for (skill_id, bonus) in
+        crate::rules_core::trait_effects::caster_level_skill_bonuses_from_traits(
+            &input.chosen.selected_traits,
+        )
+    {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
 
     let mut totals = BTreeMap::new();
     let mut untrained_use = BTreeMap::new();

@@ -173,28 +173,79 @@
 //! [`situational_skill_trait_magnitude_is_grounded_for_corpus_key`] for
 //! the combined classifier-facing check.
 //!
+//! ## Eighth slice: mixed `BONUS:CASTERLEVEL|SUBSCHOOL` + `BONUS:SKILL`
+//!
+//! An eighth cycle re-checked the prior cycle's own "needs a per-subschool
+//! caster-level pillar this crate does not have" characterization before
+//! carrying it forward (`decisions.md §12` L2) and found the actual cost
+//! much smaller than that phrasing implied: this crate already grounds an
+//! exactly analogous shape -- `feat_effects::spell_focus_facts_from_
+//! choices`'s own per-SCHOOL spell-save-DC bonus, deliberately NOT folded
+//! into any integrated DC total because "those are keyed by spell LEVEL
+//! while Spell Focus is keyed by SCHOOL" (see that function's own doc
+//! comment). `trait_eldritch_delver`'s `BONUS:CASTERLEVEL|
+//! SUBSCHOOL.Teleportation|1` is the identical "no integrated total this
+//! crate could fold into without misreporting every OTHER subschool's
+//! spells" situation, so it grounds the same way: a standalone fact
+//! through `pilot_compute::ground_orphan_trait_facts`. Its SEPARATE
+//! `BONUS:SKILL|Knowledge (dungeoneering),Knowledge (history)|1` token is
+//! the SAME flat multi-skill shape the first slice already established,
+//! folded into `skill_allocation::allocate_skill_ranks`'s SAME running map
+//! -- but transcribed into a NEW, dedicated table
+//! ([`CASTER_LEVEL_SKILL_TRAIT_BONUSES`]) rather than added to
+//! [`FLAT_SKILL_TRAIT_BONUSES`] itself: `Kind::Trait`'s classify() rung is
+//! an `.or_else` chain that stops at the first `Some`, so a record present
+//! in `FLAT_SKILL_TRAIT_BONUSES` would report grounded on its skill half
+//! ALONE, before the caster-level half is ever checked -- exactly the
+//! "8 closures where measurement found 1" part-credit failure this
+//! bundle's own doctrine warns against. Keeping the two tokens in one
+//! dedicated table lets [`caster_level_skill_trait_magnitude_is_grounded_
+//! for_corpus_key`] require BOTH pillars to fixture-execute, mirroring
+//! `Trait ~ Arcane Temper`'s and `Trait ~ Trustworthy`'s own two-pillar
+//! discipline. See [`caster_level_skill_bonuses_from_traits`] for the
+//! skill-half producer and [`caster_level_subschool_facts_from_traits`]
+//! for the caster-level standalone-fact producer.
+//!
 //! ## What this module deliberately does NOT cover
 //!
-//! - **The remaining 7 `trait_content` records** mix `BONUS:VAR`,
-//!   `BONUS:ABILITYPOOL`, and `BONUS:CASTERLEVEL` tokens -- different
-//!   pillars entirely (a bonus-pool/DC variable, a bonus trait-slot pool,
-//!   and spellcasting-subschool caster level), out of this module's
-//!   scope. One further record (`ultimate_campaign:trait:trait_shadow_
-//!   whispers`) is a pre-existing corpus data gap -- a real
-//!   `ingested-magnitude` inventory unit with no matching file under
-//!   `data/corpus/ultimate_campaign/trait_generic/` by any name/key
-//!   search tried, unrelated to any cycle's compute path and not chased
-//!   here.
+//! - **5 of the remaining 6 `trait_content` records** (the 6th is the
+//!   corpus data gap named below) mix `BONUS:VAR` and `BONUS:ABILITYPOOL`
+//!   tokens -- different pillars
+//!   entirely, and NOT the small lift their group label suggests on a
+//!   closer read of the live corpus (this cycle's own correction of the
+//!   prior cycle's characterization, `decisions.md §12` L2): the 3
+//!   `BONUS:VAR` records name SEVEN distinct engine variables across them
+//!   (`Global_LuckBonus`, `L_A_L_Eidolon`, and Sacred Conduit's own five
+//!   channel-energy-DC variables plus `OracleChannelDC`), of which this
+//!   crate grounds a total for exactly ONE (`OracleChannelDC`, via
+//!   `pilot_compute::oracle_channel_dc`) -- `Fate's Favored` needs a
+//!   general "every luck bonus in play increases by 1" cross-cutting
+//!   modifier this crate has no concept of, `Loyalty across Lifetimes`
+//!   modifies an EIDOLON (a companion creature this crate does not model
+//!   at all), and `Sacred Conduit` needs six new DC totals built from
+//!   scratch, not one. The 2 `BONUS:ABILITYPOOL` records
+//!   (`trait_blood_of_dragons`, `trait_deathtouched`) need a genuinely new
+//!   heterogeneous player-choice mechanism (a skill bonus, a boolean
+//!   racial-sense fact, and a situational save bonus, as three
+//!   DIFFERENT-shaped options under ONE choice) that neither
+//!   [`SKILL_CHOICE_TRAIT_BONUSES`]'s nor [`FAMILY_CHOICE_TRAIT_BONUSES`]'s
+//!   same-shape-option pattern covers. Both groups are real future
+//!   pillars, not rushed here. One further record
+//!   (`ultimate_campaign:trait:trait_shadow_whispers`) is a pre-existing
+//!   corpus data gap -- a real `ingested-magnitude` inventory unit with no
+//!   matching file under `data/corpus/ultimate_campaign/trait_generic/` by
+//!   any name/key search tried, unrelated to any cycle's compute path and
+//!   not chased here.
 //! - **All 30 `ability_content` units** (`ultimate_campaign`'s
 //!   Drawback/Retraining sub-mechanics) -- house-rule bookkeeping and
 //!   GM-adjudicated narrative penalties with no clean formulaic trigger,
 //!   per the prior cycle's own direct reading of that corpus.
 //!
-//! Widening past these seven slices is future work, gated on genuinely
+//! Widening past these eight slices is future work, gated on genuinely
 //! separate per-pillar compute paths for the mixed `BONUS:VAR/
-//! ABILITYPOOL/CASTERLEVEL` records -- none exist yet, and building one as
-//! a rushed half-measure here would risk the same "8 closures where
-//! measurement found 1" failure this bundle's own doctrine warns against.
+//! ABILITYPOOL` records -- none exist yet, and building one as a rushed
+//! half-measure here would risk the same "8 closures where measurement
+//! found 1" failure this bundle's own doctrine warns against.
 
 use std::collections::BTreeMap;
 
@@ -1662,6 +1713,217 @@ pub fn situational_skill_trait_magnitude_is_grounded_for_corpus_key(corpus_key: 
     Some(total)
 }
 
+/// One `ultimate_campaign` `trait_content` record whose corpus `BONUS`
+/// token set mixes a flat, named-skill `SKILL` bonus with a
+/// `CASTERLEVEL|SUBSCHOOL.<X>` bonus -- see the module doc comment's
+/// "Eighth slice" section. Kept in a dedicated table rather than folded
+/// into [`FLAT_SKILL_TRAIT_BONUSES`] so the classifier's `.or_else` chain
+/// cannot report this record grounded on its skill half alone -- see
+/// [`caster_level_skill_trait_magnitude_is_grounded_for_corpus_key`].
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitCasterLevelSkillBonus {
+    /// The wire id `CharacterInput.chosen.selected_traits` carries for
+    /// this trait -- same `"trait:" + corpus filename slug` idiom as
+    /// [`TraitSkillBonus::trait_id`].
+    pub trait_id: &'static str,
+    /// The record's own corpus `KEY` token, as transcribed from
+    /// `data.key`.
+    pub corpus_key: &'static str,
+    /// The trait's display name, transcribed from the corpus record's own
+    /// `name` field.
+    pub name: &'static str,
+    /// The `skill:` wire id(s) the record's separate flat `SKILL` token
+    /// applies to, transcribed the same way [`TraitSkillBonus::skills`]
+    /// is.
+    pub skills: &'static [&'static str],
+    /// The flat integer bonus, applied identically to every skill in
+    /// `skills`.
+    pub skill_bonus: i8,
+    /// The subschool name the record's `CASTERLEVEL|SUBSCHOOL.<X>` token
+    /// names, transcribed verbatim (`"Teleportation"`).
+    pub subschool: &'static str,
+    /// The flat caster-level bonus the record's `CASTERLEVEL` token
+    /// grants for that subschool's spells.
+    pub caster_level_bonus: i16,
+    /// The trait's own corpus `description` field, verbatim.
+    pub description: &'static str,
+}
+
+/// The 1-of-59 `ultimate_campaign` `trait_content` record whose corpus
+/// `BONUS` token set mixes a flat multi-skill `SKILL` bonus with a
+/// `CASTERLEVEL|SUBSCHOOL` bonus -- see the module doc comment's "Eighth
+/// slice" section for this cycle's re-derivation against the live corpus
+/// JSON.
+pub static CASTER_LEVEL_SKILL_TRAIT_BONUSES: &[TraitCasterLevelSkillBonus] = &[
+    TraitCasterLevelSkillBonus {
+        trait_id: "trait:trait_eldritch_delver",
+        corpus_key: "Trait ~ Eldritch Delver",
+        name: "Eldritch Delver",
+        skills: &["skill:knowledge_dungeoneering", "skill:knowledge_history"],
+        skill_bonus: 1,
+        subschool: "Teleportation",
+        caster_level_bonus: 1,
+        description: "You have an unquenchable thirst for knowledge about the world and desire to obtain it firsthand. You gain a +1 trait bonus on all Knowledge (dungeoneering) and Knowledge (history) checks, and you may treat your caster level as 1 level higher for all conjuration spells of the teleportation subschool.",
+    },
+];
+
+/// Looks up one [`CASTER_LEVEL_SKILL_TRAIT_BONUSES`] entry by its wire
+/// `trait_id`.
+fn find_caster_level_skill_by_trait_id(
+    trait_id: &str,
+) -> Option<&'static TraitCasterLevelSkillBonus> {
+    CASTER_LEVEL_SKILL_TRAIT_BONUSES.iter().find(|entry| entry.trait_id == trait_id)
+}
+
+/// The real, computed skill bonus contribution of every
+/// [`CASTER_LEVEL_SKILL_TRAIT_BONUSES`] trait's flat-skill half, folded
+/// into `skill_allocation.rs`'s SAME running skill-bonus map every
+/// earlier slice already established. The caster-level half is
+/// deliberately NOT included here -- see
+/// [`caster_level_subschool_facts_from_traits`] -- the two halves are
+/// different dimensions (a general skill total vs. a per-subschool
+/// standalone fact) and are verified independently by
+/// [`caster_level_skill_trait_magnitude_is_grounded_for_corpus_key`].
+pub fn caster_level_skill_bonuses_from_traits(selected_traits: &[String]) -> BTreeMap<String, i8> {
+    let mut totals: BTreeMap<String, i8> = BTreeMap::new();
+    for trait_id in selected_traits {
+        let Some(entry) = find_caster_level_skill_by_trait_id(trait_id) else {
+            continue;
+        };
+        for &skill_id in entry.skills {
+            let slot = totals.entry(skill_id.to_owned()).or_insert(0);
+            *slot = slot.saturating_add(entry.skill_bonus);
+        }
+    }
+    totals
+}
+
+/// One grounded caster-level-by-subschool fact for a
+/// [`CASTER_LEVEL_SKILL_TRAIT_BONUSES`] trait actually selected -- mirrors
+/// `feat_effects::spell_focus_facts_from_choices`'s own per-school DC-bonus
+/// shape: a standalone record, never folded into a general caster-level
+/// total that would misreport every OTHER school/subschool's spells.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitCasterLevelFact {
+    pub trait_id: &'static str,
+    pub trait_name: &'static str,
+    pub subschool: &'static str,
+    pub bonus: i16,
+}
+
+/// Every grounded caster-level-by-subschool fact for the traits actually
+/// selected, in [`CASTER_LEVEL_SKILL_TRAIT_BONUSES`]'s own stable order --
+/// consumed by `pilot_compute::ground_orphan_trait_facts` to push one
+/// standalone [`crate::rules_core::pilot_compute::ComputationExplanation`]
+/// per trait, the same standalone-fact channel initiative/concentration
+/// and the situational-skill slice already use. This engine computes no
+/// integrated per-subschool caster level total anywhere.
+pub fn caster_level_subschool_facts_from_traits(
+    selected_traits: &[String],
+) -> Vec<TraitCasterLevelFact> {
+    let mut facts = Vec::new();
+    for entry in CASTER_LEVEL_SKILL_TRAIT_BONUSES {
+        if !selected_traits.iter().any(|id| id == entry.trait_id) {
+            continue;
+        }
+        facts.push(TraitCasterLevelFact {
+            trait_id: entry.trait_id,
+            trait_name: entry.name,
+            subschool: entry.subschool,
+            bonus: entry.caster_level_bonus,
+        });
+    }
+    facts
+}
+
+/// The stable id one [`TraitCasterLevelFact`] grounds under in
+/// `pilot_compute::ground_orphan_trait_facts`'s own `explanations` vector
+/// -- shared with [`caster_level_skill_trait_magnitude_is_grounded_for_
+/// corpus_key`] so the two never drift out of step.
+pub fn caster_level_subschool_fact_explanation_id(trait_id: &str) -> String {
+    let slug = trait_id.trim_start_matches("trait:");
+    format!("trait.standalone.caster_level_subschool.{slug}")
+}
+
+/// **AT-34-E4-002's classifier-facing entry point for the eighth,
+/// caster-level+skill mixed slice.** `Trait ~ Eldritch Delver` carries TWO
+/// independently-pillared tokens (a flat multi-skill Knowledge bonus and a
+/// per-subschool caster-level bonus) -- mirrors
+/// `initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key`'s
+/// "check every applicable pillar, report grounded only when ALL of them
+/// fixture-execute" discipline, never partial credit on one half. ACTUALLY
+/// BUILDS a fixture character (with both Knowledge skills allocated a
+/// rank), runs it through the real
+/// [`crate::rules_core::skill_allocation::allocate_skill_ranks`] consumer
+/// (for the skill half) and the real
+/// [`crate::rules_core::pilot_compute::compute_pilot_base_chassis`] (for
+/// the caster-level standalone fact half), and diffs BOTH against the
+/// transcribed table. Returns `None` for any corpus key outside the
+/// table, or in the unreachable case either pillar's fixture-executed
+/// value ever disagreed with the transcribed table.
+pub fn caster_level_skill_trait_magnitude_is_grounded_for_corpus_key(
+    corpus_key: &str,
+) -> Option<i8> {
+    let entry =
+        CASTER_LEVEL_SKILL_TRAIT_BONUSES.iter().find(|entry| entry.corpus_key == corpus_key)?;
+
+    let input = CharacterInput {
+        case_id: None,
+        source_package_id: "at_34_e4_002_fixture".to_owned(),
+        chosen: ChosenCharacterState {
+            race_id: "race:human".to_owned(),
+            class_levels: vec![CharacterClassLevel { class_id: "class:fighter".to_owned(), level: 1 }],
+            ability_scores: AbilityScores {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 10,
+                wisdom: 10,
+                charisma: 10,
+            },
+            selected_feats: Vec::new(),
+            skill_allocations: entry
+                .skills
+                .iter()
+                .map(|&skill_id| crate::rules_core::character_input::SkillAllocation {
+                    skill_id: skill_id.to_owned(),
+                    ranks: 1,
+                })
+                .collect(),
+            equipment_selections: Vec::new(),
+            selected_choices: Vec::new(),
+            selected_traits: vec![entry.trait_id.to_owned()],
+            spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
+        },
+        selection_provenance: Vec::new(),
+    };
+
+    // Skill half.
+    let totals = crate::rules_core::skill_allocation::allocate_skill_ranks(&input);
+    for &skill_id in entry.skills {
+        let computed = totals.totals.get(skill_id).map(|total| total.misc_modifier);
+        if computed != Some(entry.skill_bonus) {
+            // The engine genuinely disagreed with (or omitted) the
+            // transcribed table -- a real defect, never papered over.
+            return None;
+        }
+    }
+
+    // Caster-level standalone-fact half.
+    let result = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+    let id = caster_level_subschool_fact_explanation_id(entry.trait_id);
+    let found = result.explanations.iter().find(|e| e.id == id).map(|e| e.value);
+    if found != Some(entry.caster_level_bonus) {
+        return None;
+    }
+
+    let Ok(caster_level_bonus_i8) = i8::try_from(entry.caster_level_bonus) else {
+        return None;
+    };
+    Some(entry.skill_bonus.saturating_add(caster_level_bonus_i8))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -2720,6 +2982,153 @@ mod tests {
         assert_eq!(
             situational_skill_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
             None
+        );
+    }
+
+    // -- Eighth slice: mixed CASTERLEVEL + SKILL (Eldritch Delver) --
+
+    /// The table's one entry carries both skills and both non-zero
+    /// magnitudes -- a transcription-shape sanity check.
+    #[test]
+    fn caster_level_skill_table_has_exactly_one_real_entry() {
+        assert_eq!(CASTER_LEVEL_SKILL_TRAIT_BONUSES.len(), 1);
+        let entry = &CASTER_LEVEL_SKILL_TRAIT_BONUSES[0];
+        assert_eq!(entry.trait_id, "trait:trait_eldritch_delver");
+        assert_eq!(
+            entry.skills,
+            &["skill:knowledge_dungeoneering", "skill:knowledge_history"]
+        );
+        assert_eq!(entry.skill_bonus, 1);
+        assert_eq!(entry.subschool, "Teleportation");
+        assert_eq!(entry.caster_level_bonus, 1);
+    }
+
+    /// No selected traits contributes nothing on either half -- never a
+    /// fabricated default.
+    #[test]
+    fn no_selected_traits_yields_no_caster_level_skill_contribution() {
+        assert!(caster_level_skill_bonuses_from_traits(&[]).is_empty());
+        assert!(caster_level_subschool_facts_from_traits(&[]).is_empty());
+    }
+
+    /// Selecting Eldritch Delver grants the SAME `+1` on BOTH Knowledge
+    /// skills, folded into the SAME running skill-bonus map every earlier
+    /// slice already established.
+    #[test]
+    fn eldritch_delver_grants_the_same_flat_bonus_on_both_knowledge_skills() {
+        let bonuses = caster_level_skill_bonuses_from_traits(&[
+            "trait:trait_eldritch_delver".to_string(),
+        ]);
+        assert_eq!(bonuses.get("skill:knowledge_dungeoneering"), Some(&1));
+        assert_eq!(bonuses.get("skill:knowledge_history"), Some(&1));
+        assert_eq!(bonuses.len(), 2);
+    }
+
+    /// Eldritch Delver's caster-level half grounds as one standalone fact
+    /// carrying its own subschool, not folded into any integrated caster
+    /// level total.
+    #[test]
+    fn eldritch_delver_grounds_one_standalone_caster_level_fact() {
+        let facts = caster_level_subschool_facts_from_traits(&[
+            "trait:trait_eldritch_delver".to_string(),
+        ]);
+        assert_eq!(facts.len(), 1);
+        assert_eq!(facts[0].subschool, "Teleportation");
+        assert_eq!(facts[0].bonus, 1);
+        assert_eq!(facts[0].trait_name, "Eldritch Delver");
+    }
+
+    /// An unrecognized trait id contributes nothing on either half.
+    #[test]
+    fn an_unrecognized_trait_id_grounds_no_caster_level_skill_contribution() {
+        assert!(caster_level_skill_bonuses_from_traits(&["trait:not_a_real_trait".to_string()])
+            .is_empty());
+        assert!(caster_level_subschool_facts_from_traits(&[
+            "trait:not_a_real_trait".to_string()
+        ])
+        .is_empty());
+    }
+
+    /// The standalone caster-level fact ACTUALLY reaches the real
+    /// `explanations` vector via `compute_pilot_base_chassis` -- fixture-
+    /// executed, not merely unit-tested against the producer function in
+    /// isolation.
+    #[test]
+    fn eldritch_delver_caster_level_fact_reaches_the_real_explanations_vector() {
+        let input = CharacterInput {
+            case_id: None,
+            source_package_id: "test".to_string(),
+            chosen: ChosenCharacterState {
+                race_id: "race:human".to_string(),
+                class_levels: vec![CharacterClassLevel {
+                    class_id: "class:fighter".to_string(),
+                    level: 1,
+                }],
+                ability_scores: AbilityScores {
+                    strength: 10,
+                    dexterity: 10,
+                    constitution: 10,
+                    intelligence: 10,
+                    wisdom: 10,
+                    charisma: 10,
+                },
+                selected_feats: Vec::new(),
+                skill_allocations: Vec::new(),
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                selected_traits: vec!["trait:trait_eldritch_delver".to_string()],
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        };
+        let result = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let id = caster_level_subschool_fact_explanation_id("trait:trait_eldritch_delver");
+        let found = result.explanations.iter().find(|e| e.id == id);
+        assert_eq!(found.map(|e| e.value), Some(1));
+    }
+
+    /// The classifier-facing entry point: Eldritch Delver, fixture-
+    /// executed and diffed against its transcribed table on BOTH pillars
+    /// -- the skill half via the real `allocate_skill_ranks` consumer, the
+    /// caster-level half via the real `compute_pilot_base_chassis`
+    /// standalone-fact channel.
+    #[test]
+    fn eldritch_delver_is_genuinely_grounded_by_fixture_execution_on_both_pillars() {
+        assert_eq!(
+            caster_level_skill_trait_magnitude_is_grounded_for_corpus_key(
+                "Trait ~ Eldritch Delver"
+            ),
+            Some(2) // skill_bonus (1) + caster_level_bonus (1)
+        );
+    }
+
+    /// A corpus key outside the table is honestly `None`.
+    #[test]
+    fn an_ungrounded_caster_level_skill_corpus_key_returns_none() {
+        assert_eq!(
+            caster_level_skill_trait_magnitude_is_grounded_for_corpus_key("Trait ~ Acrobat"),
+            None
+        );
+        assert_eq!(
+            caster_level_skill_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
+            None
+        );
+    }
+
+    /// Eldritch Delver's own `trait_id` is not ALSO a member of
+    /// [`FLAT_SKILL_TRAIT_BONUSES`] -- the exact premature-short-circuit
+    /// failure this slice's own table separation exists to prevent (see
+    /// the module doc comment's "Eighth slice" section).
+    #[test]
+    fn eldritch_delver_is_not_also_a_member_of_flat_skill_trait_bonuses() {
+        assert!(
+            !FLAT_SKILL_TRAIT_BONUSES
+                .iter()
+                .any(|entry| entry.trait_id == "trait:trait_eldritch_delver"),
+            "Eldritch Delver must stay OUT of FLAT_SKILL_TRAIT_BONUSES, or classify()'s \
+             `.or_else` chain would report it grounded on its skill half alone, before its \
+             caster-level half is ever checked"
         );
     }
 }

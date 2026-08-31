@@ -919,14 +919,16 @@ function CreateCharacterFields(props: {
 
           {/* AT-34-E4-002: character traits/drawbacks. Every option here
               genuinely computes -- `list_available_character_traits` returns
-              only the 52 `ultimate_campaign` traits whose `BONUS:SKILL`,
+              only the 53 `ultimate_campaign` traits whose `BONUS:SKILL`,
               `BONUS:SAVE`, `BONUS:SITUATION`, `BONUS:COMBAT|INITIATIVE`/
-              `BONUS:CONCENTRATION|ALLSPELLS`, or ability-score-difference
-              formula this crate's `trait_effects` compute paths really
-              apply (31 flat skill + 5 fixed-choice skill + 4 open-family
-              skill + 2 flat save + 3 situational + 3 initiative/
-              concentration + 4 ability-substitution). No wider trait roster
-              is offered, because no wider roster computes anything yet. */}
+              `BONUS:CONCENTRATION|ALLSPELLS`, ability-score-difference
+              formula, or mixed caster-level+skill this crate's
+              `trait_effects` compute paths really apply (31 flat skill + 5
+              fixed-choice skill + 4 open-family skill + 2 flat save + 3
+              situational + 3 initiative/concentration + 4
+              ability-substitution + 1 caster-level+skill). No wider trait
+              roster is offered, because no wider roster computes anything
+              yet. */}
           <p
             style={{
               ...LABEL_STYLE,
@@ -980,23 +982,39 @@ function CreateCharacterFields(props: {
                         <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
                           {' '}
                           ·{' '}
-                          {option.otherPillars.length > 0
-                            ? option.otherPillars
-                                .map((pillar) => `${pillar.bonus >= 0 ? `+${pillar.bonus}` : pillar.bonus} ${pillar.label}`)
-                                .join(', ')
-                            : option.abilitySubstitution !== null
+                          {[
+                            // The primary half: a skill/save/choice bonus
+                            // (also covers the eighth slice's flat-skill
+                            // half, which additionally carries an
+                            // `otherPillars` entry below rather than
+                            // dropping one half to fit the other).
+                            option.abilitySubstitution !== null
                               ? `${option.skills.join(', ')} (ability-based${
                                   option.abilitySubstitution.flatBonus !== 0
                                     ? `, +${option.abilitySubstitution.flatBonus} flat`
                                     : ''
                                 })`
-                              : `${option.bonus >= 0 ? `+${option.bonus}` : option.bonus} ${
-                                  isChoiceBased
-                                    ? `choice of ${option.skillOptions.map((choice) => choice.name).join(', ')}`
-                                    : option.save !== null
-                                      ? `${option.save} save`
-                                      : option.skills.join(', ')
-                                }`}
+                              : option.skills.length > 0 || option.save !== null || isChoiceBased
+                                ? `${option.bonus >= 0 ? `+${option.bonus}` : option.bonus} ${
+                                    isChoiceBased
+                                      ? `choice of ${option.skillOptions.map((choice) => choice.name).join(', ')}`
+                                      : option.save !== null
+                                        ? `${option.save} save`
+                                        : option.skills.join(', ')
+                                  }`
+                                : null,
+                            // Any additional non-skill, non-save pillar
+                            // (fifth-slice initiative/concentration
+                            // options, and the eighth slice's
+                            // caster-level half).
+                            option.otherPillars.length > 0
+                              ? option.otherPillars
+                                  .map((pillar) => `${pillar.bonus >= 0 ? `+${pillar.bonus}` : pillar.bonus} ${pillar.label}`)
+                                  .join(', ')
+                              : null,
+                          ]
+                            .filter((part): part is string => part !== null)
+                            .join('; ')}
                         </span>
                         <span
                           style={{

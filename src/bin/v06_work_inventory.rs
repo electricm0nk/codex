@@ -12692,11 +12692,18 @@ fn classify(
         // text, never folded into a skill total -- one record,
         // Trustworthy, ALSO carries a separate flat Diplomacy `SKILL`
         // token and is only reported grounded once BOTH pillars
-        // fixture-execute correctly). Every other held `trait` record's
-        // `unit.key` resolves to `None` from all seven and falls through
-        // to `simple_kind_verdict`'s unchanged `ingested-magnitude`
-        // fallback -- a pure widening, never a regression for a trait no
-        // module yet covers.
+        // fixture-execute correctly), then `caster_level_skill_trait_
+        // magnitude_is_grounded_for_corpus_key` (1-of-59 more record,
+        // Eldritch Delver, mixing a flat multi-skill `SKILL` bonus with a
+        // `CASTERLEVEL|SUBSCHOOL` bonus -- kept in its own dedicated
+        // table, never `FLAT_SKILL_TRAIT_BONUSES`, specifically so this
+        // `.or_else` chain cannot report it grounded on its skill half
+        // alone; only reported grounded once BOTH pillars fixture-execute
+        // correctly). Every other held `trait` record's `unit.key`
+        // resolves to `None` from all eight and falls through to
+        // `simple_kind_verdict`'s unchanged `ingested-magnitude` fallback
+        // -- a pure widening, never a regression for a trait no module yet
+        // covers.
         Kind::Trait => {
             let coordinate = format!("{engine_book}:{}:{}", unit.provenance.file, unit.provenance.line);
             simple_kind_verdict(
@@ -12743,6 +12750,11 @@ fn classify(
                         })
                         .or_else(|| {
                             trait_effects::situational_skill_trait_magnitude_is_grounded_for_corpus_key(
+                                &unit.key,
+                            )
+                        })
+                        .or_else(|| {
+                            trait_effects::caster_level_skill_trait_magnitude_is_grounded_for_corpus_key(
                                 &unit.key,
                             )
                         })
@@ -19395,6 +19407,36 @@ mod companion_text_complete_rung_tests {
             "uca_abilities_traits.lst",
             216,
             "Trait ~ Trustworthy",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_2"
+        );
+    }
+
+    /// **AT-34-E4-002 eighth slice**: `Trait ~ Eldritch Delver`
+    /// (`BONUS:SKILL|Knowledge (dungeoneering),Knowledge (history)|1` +
+    /// `BONUS:CASTERLEVEL|SUBSCHOOL.Teleportation|1`) reaches `grounded`
+    /// via the eighth `.or_else` fallback,
+    /// `caster_level_skill_trait_magnitude_is_grounded_for_corpus_key`,
+    /// since all seven earlier entry points honestly return `None` for
+    /// this record's shape (it is deliberately absent from
+    /// `FLAT_SKILL_TRAIT_BONUSES`, so the first rung cannot short-circuit
+    /// on the skill half alone) -- reported grounded only once BOTH the
+    /// skill total AND the caster-level standalone fact fixture-execute
+    /// correctly, summing to `1 + 1 = 2`.
+    #[test]
+    fn a_caster_level_and_skill_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            217,
+            "Trait ~ Eldritch Delver",
             2,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);

@@ -19,9 +19,9 @@
 //! primitive already established, not a new mechanism.
 use codex::rules_core::trait_effects::{
     family_choice_skill_options, trait_skill_choice_id, ABILITY_DIFF_SKILL_TRAIT_BONUSES,
-    CONCENTRATION_TRAIT_BONUSES, FAMILY_CHOICE_TRAIT_BONUSES, FLAT_SKILL_TRAIT_BONUSES,
-    INITIATIVE_TRAIT_BONUSES, SAVE_TRAIT_BONUSES, SITUATIONAL_SKILL_TRAIT_BONUSES,
-    SKILL_CHOICE_TRAIT_BONUSES,
+    CASTER_LEVEL_SKILL_TRAIT_BONUSES, CONCENTRATION_TRAIT_BONUSES, FAMILY_CHOICE_TRAIT_BONUSES,
+    FLAT_SKILL_TRAIT_BONUSES, INITIATIVE_TRAIT_BONUSES, SAVE_TRAIT_BONUSES,
+    SITUATIONAL_SKILL_TRAIT_BONUSES, SKILL_CHOICE_TRAIT_BONUSES,
 };
 use serde::Serialize;
 
@@ -362,12 +362,37 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             }),
         }
     });
+    // Eighth slice (`AT-34-E4-002`): the 1 mixed `BONUS:CASTERLEVEL|
+    // SUBSCHOOL` + `BONUS:SKILL` trait (Eldritch Delver). Reuses the flat
+    // `skills`/`bonus` fields for the skill half (same shape the first
+    // slice already established) and `other_pillars` for the
+    // caster-level half (same shape the fifth slice already established
+    // for a non-skill, non-save pillar bonus) -- one option genuinely
+    // carrying BOTH halves, never dropping one to fit the other.
+    let caster_level_skill = CASTER_LEVEL_SKILL_TRAIT_BONUSES.iter().map(|entry| {
+        CharacterTraitOptionDto {
+            id: entry.trait_id.to_owned(),
+            name: entry.name.to_owned(),
+            description: entry.description.to_owned(),
+            skills: entry.skills.iter().map(|skill_id| skill_display_name(skill_id)).collect(),
+            bonus: entry.skill_bonus,
+            skill_options: Vec::new(),
+            choice_set_id: None,
+            save: None,
+            other_pillars: vec![TraitOtherPillarBonusDto {
+                label: format!("Caster level ({} subschool spells)", entry.subschool),
+                bonus: entry.caster_level_bonus,
+            }],
+            ability_substitution: None,
+        }
+    });
     flat.chain(choice)
         .chain(family_choice)
         .chain(save_bonus)
         .chain(situational)
         .chain(pillar_options)
         .chain(ability_diff)
+        .chain(caster_level_skill)
         .collect()
 }
 
@@ -380,9 +405,10 @@ mod tests {
     /// plus the 2 flat-save-slice traits plus the 3 situational-slice
     /// traits plus the fifth-slice initiative/concentration traits
     /// (merged by `trait_id`, so `Trait ~ Arcane Temper` counts once, not
-    /// twice) plus the 4 sixth-slice ability-diff traits (52 total), never
-    /// a subset or a hand-typed duplicate that could drift from
-    /// `trait_effects`' own tables.
+    /// twice) plus the 4 sixth-slice ability-diff traits plus the 1
+    /// eighth-slice caster-level+skill trait (53 total), never a subset
+    /// or a hand-typed duplicate that could drift from `trait_effects`'
+    /// own tables.
     #[test]
     fn returns_every_flat_and_choice_skill_trait() {
         let options = list_available_character_traits();
@@ -400,8 +426,55 @@ mod tests {
                 + SITUATIONAL_SKILL_TRAIT_BONUSES.len()
                 + unique_pillar_trait_ids.len()
                 + ABILITY_DIFF_SKILL_TRAIT_BONUSES.len()
+                + CASTER_LEVEL_SKILL_TRAIT_BONUSES.len()
         );
-        assert_eq!(options.len(), 52);
+        assert_eq!(options.len(), 53);
+    }
+
+    /// Eldritch Delver (eighth slice: mixed skill + caster-level) reaches
+    /// the DTO with BOTH halves -- the flat multi-skill bonus in
+    /// `skills`/`bonus` AND the caster-level pillar in `other_pillars`,
+    /// never dropping one to fit the other.
+    #[test]
+    fn eldritch_delver_option_carries_both_its_skill_and_caster_level_halves() {
+        let eldritch_delver = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_eldritch_delver")
+            .expect("Eldritch Delver must be in the roster");
+        assert_eq!(eldritch_delver.bonus, 1);
+        assert_eq!(
+            eldritch_delver.skills,
+            vec!["Knowledge Dungeoneering".to_string(), "Knowledge History".to_string()]
+        );
+        assert_eq!(
+            eldritch_delver
+                .other_pillars
+                .iter()
+                .map(|p| (p.label.as_str(), p.bonus))
+                .collect::<Vec<_>>(),
+            vec![("Caster level (Teleportation subschool spells)", 1)]
+        );
+        assert_eq!(eldritch_delver.ability_substitution, None);
+        assert_eq!(eldritch_delver.choice_set_id, None);
+        assert_eq!(eldritch_delver.save, None);
+    }
+
+    /// Eldritch Delver's id round-trips through the real
+    /// `trait_effects::caster_level_skill_trait_magnitude_is_grounded_for_
+    /// corpus_key` compute path -- never a rendered option with no
+    /// compute path behind it.
+    #[test]
+    fn eldritch_delver_option_id_is_recognized_by_the_compute_path() {
+        for entry in CASTER_LEVEL_SKILL_TRAIT_BONUSES {
+            assert!(
+                codex::rules_core::trait_effects::caster_level_skill_trait_magnitude_is_grounded_for_corpus_key(
+                    entry.corpus_key
+                )
+                .is_some(),
+                "{} was returned by the picker but did not ground via real fixture execution",
+                entry.trait_id
+            );
+        }
     }
 
     /// Tactician (initiative-only) reaches the DTO with exactly one
@@ -471,6 +544,16 @@ mod tests {
         for option in list_available_character_traits() {
             if option.other_pillars.is_empty() {
                 continue; // not a fifth-slice option
+            }
+            if CASTER_LEVEL_SKILL_TRAIT_BONUSES.iter().any(|e| e.trait_id == option.id) {
+                // covered by `eldritch_delver_option_id_is_recognized_by_
+                // the_compute_path` instead -- an eighth-slice option's
+                // `other_pillars` entry is its caster-level half, checked
+                // via `caster_level_skill_trait_magnitude_is_grounded_for_
+                // corpus_key`, not
+                // `initiative_or_concentration_trait_magnitude_is_
+                // grounded_for_corpus_key`.
+                continue;
             }
             let corpus_key = INITIATIVE_TRAIT_BONUSES
                 .iter()
@@ -661,9 +744,12 @@ mod tests {
             }
             if !option.other_pillars.is_empty() {
                 // covered by `every_pillar_option_id_is_recognized_by_the_
-                // compute_path` instead -- a fifth-slice option's bonus
-                // reaches `initiative_bonus_from_traits`/
-                // `concentration_bonus_from_traits`, not
+                // compute_path`/`eldritch_delver_option_id_is_recognized_
+                // by_the_compute_path` instead -- a fifth-slice option's
+                // bonus reaches `initiative_bonus_from_traits`/
+                // `concentration_bonus_from_traits`, and Eldritch Delver's
+                // own skill half reaches
+                // `caster_level_skill_bonuses_from_traits`, not
                 // `skill_bonuses_from_traits`.
                 continue;
             }

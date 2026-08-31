@@ -51000,6 +51000,27 @@ fn ground_orphan_trait_facts(input: &CharacterInput, explanations: &mut Vec<Comp
             ),
         });
     }
+
+    // AT-34-E4-002's eighth trait-capability slice: a `BONUS:CASTERLEVEL|
+    // SUBSCHOOL` token, deliberately NOT folded into any integrated
+    // caster-level total (this crate has none, and one keyed by class
+    // level would misreport every OTHER subschool's spells) -- mirrors
+    // `feat_effects::spell_focus_facts_from_choices`'s own per-school
+    // spell-save-DC standalone treatment.
+    for fact in trait_effects::caster_level_subschool_facts_from_traits(selected_traits) {
+        explanations.push(ComputationExplanation {
+            id: trait_effects::caster_level_subschool_fact_explanation_id(fact.trait_id),
+            value: fact.bonus,
+            detail: format!(
+                "{} lets you treat your caster level as {:+} for spells of the {} subschool \
+                 (BONUS:CASTERLEVEL|SUBSCHOOL.{}|{}), transcribed from its corpus token. This \
+                 engine computes no integrated per-subschool caster level total anywhere, so \
+                 this grounds as a standalone flat record rather than folding into a total that \
+                 would misstate every other subschool's spells",
+                fact.trait_name, fact.bonus, fact.subschool, fact.subschool, fact.bonus
+            ),
+        });
+    }
 }
 
 /// SD-27 (`decisions.md` §24/§28, 2026-07-31): the Advanced Race Guide's and
