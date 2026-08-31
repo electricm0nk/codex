@@ -1,6 +1,12 @@
 # Cycle 8 — Epic 4 (Ultimate Campaign to zero) / AT-34-E4-002
 
-- **Commit SHA:** `9b0f287698` (code + this receipt); progress/kanban update follows in a second commit per §5
+- **Commit SHA:** `ecf7d7a436` (code + receipt, rebased onto `origin/tranche/14`'s concurrently
+  landed `AT-34-E3-002` cycle 7 wave-21; the rebase produced one real conflict in
+  `scripts/completion_atlas.py`'s bucket-V citation pin, both sides having independently
+  re-derived it against their own pre-rebase `v06_work_inventory.rs` line count — resolved by a
+  fresh `grep -n` against the real POST-MERGE file, `13004/13103 → 13116`, neither side's own
+  pre-rebase number). `549c166b2f` is this SHA-fixup commit itself. progress/kanban update
+  follows in a further commit per §5
 - **Provenance.** Dispatch brief (wave 20) named `AT-34-E4-002_cycle_receipt_7.md` as the newest
   receipt and instructed re-deriving the split fresh rather than trusting any quoted baseline.
   Worktree opened at a stale base (`ea2b3396f2`, the tranche cut) and was rebased onto
@@ -20,9 +26,11 @@
   positive-classifier tests — single-token Bruising Intellect and two-token-same-skill Precise
   Treatment — negative-control fixture corrected from `Trait ~ Bruising Intellect` (now covered)
   to `Trait ~ Fate's Favored`, a genuinely still-uncovered `BONUS:VAR`-only record), `scripts/
-  completion_atlas.py` (+3/-4: instrument-correction, the bucket-V citation line pin re-derived
-  after this cycle's own insertions into `v06_work_inventory.rs` shifted it, `13004 → 13017`, same
-  precedent cycle 7 itself set for `12914 → 12924`).
+  completion_atlas.py` (instrument-correction, the bucket-V citation line pin re-derived twice —
+  once for this cycle's own insertions alone (`13004 → 13017`), then again after the rebase onto
+  `AT-34-E3-002` cycle 7 wave-21's own concurrent insertions merged in (`13017 → 13116`, resolving
+  the one real rebase conflict this cycle hit) — same precedent cycle 7 itself set for
+  `12914 → 12924`).
 - **Identifier audit result:** `OK_NO_BUNDLE_TAGS` on this cycle's own diff (against this cycle's
   own starting HEAD `c320c61c4f`, scoped to the 4 files above — zero hits). Re-run at the
   workflow-instruction's own literal §6 formula (`BASE_BRANCH=$(git merge-base HEAD
@@ -54,7 +62,7 @@
 | The 4 `ultimate_campaign` `trait_content` records whose remaining `BONUS:SKILL` magnitude is an ability-score-difference formula, re-confirmed against the live corpus JSON | `trait_bruising_intellect` (`SKILL\|Intimidate\|max(INT,CHA)-CHA`), `trait_planar_savant` (`SKILL\|Knowledge (Planes)\|max(INT,CHA)-INT`), `trait_pragmatic_activator` (`SKILL\|Use Magic Device\|max(INT,CHA)-CHA`), `trait_precise_treatment` (TWO tokens on the SAME skill: `SKILL\|Heal\|1\|TYPE=Trait` AND `SKILL\|Heal\|max(INT,WIS)-WIS`) | direct read of `data/corpus/ultimate_campaign/trait_generic/{trait_bruising_intellect,trait_planar_savant,trait_pragmatic_activator,trait_precise_treatment}.json`'s own `data.raw_tokens` |
 | Units genuinely promoted M → DONE (`grounded`), this cycle | **4** in `ultimate_campaign` (`Trait ~ Bruising Intellect`, `Trait ~ Planar Savant`, `Trait ~ Pragmatic Activator`, `Trait ~ Precise Treatment`); 0 corpus-wide payoff elsewhere (checked: `grep -rl` for all 4 corpus `KEY` strings across `data/corpus/` finds them ONLY under `ultimate_campaign/trait_generic/` and `ultimate_campaign/ability/` — the latter is a DIFFERENT inventory `Kind` (`ability`, not `trait`), already `text-complete` before this cycle and untouched by this cycle's code, confirmed by `docs/work-inventory.json`'s own per-kind status breakdown, no other book carries these 4 `KEY`s at all) | id-set diff of `docs/work-inventory.json` before (committed HEAD) vs. after (this cycle's own local regen): `0 added, 0 removed` units; 4 changed `status`/`evidence`, all `ingested-magnitude → grounded`, `trait` kind only, zero `ability`-kind units touched |
 | `ultimate_campaign` bucket state after this cycle (functional, local regen) | `DONE 196→200, M 44→40` (`trait` M `14→10`; `ability` M unchanged `30`), all other buckets unchanged (`D:2 U:21 X:2 V:0`) | `python3 scripts/completion_atlas.py --book ultimate_campaign --check` (post local regen, then `docs/work-inventory.json` restored to committed HEAD before this commit — regeneration is the wave's shared step) |
-| `completion_atlas.py --check` corpus-wide (after this cycle's own local regen, before restore) | `population=49438 unclassified=0 overlap=0 done_evidence_violations=0 missing_clearing_mechanisms=0 citation_failures=0` (re-derived after fixing the shifted V-bucket pin, `13004→13017`) | `python3 scripts/completion_atlas.py --check` |
+| `completion_atlas.py --check` corpus-wide (after this cycle's own local regen, before restore, post-rebase) | `population=49438 unclassified=0 overlap=0 done_evidence_violations=0 missing_clearing_mechanisms=0 citation_failures=0` (re-derived after fixing the V-bucket pin post-rebase, `13004/13103→13116`) | `python3 scripts/completion_atlas.py --check` |
 | `corpus_literal_sweep --json-out` | `clean:true records_examined:48708` — unchanged from cycle 7's own baseline, no `data/corpus/**` file touched this cycle | `corpus_literal_sweep --json-out <report>` |
 | `derived_evaluator_fixture_check --json-out` | `1839 unit(s) cleared over 2580 fixture row(s); 0 failed; 0 not ingested` — unchanged | `derived_evaluator_fixture_check --json-out <report>` |
 | Row-count command output (see below) | `4` distinct trait ids in the new table | see next section |
@@ -80,20 +88,24 @@ one record, not two).
 
 ## Build scope verified
 
-`cargo build --locked --lib`: exit 0 (only pre-existing warnings, no new ones from this cycle's
-code). `cargo test --locked --lib -- trait_effects`: **49/49 passed** (9 new: table-shape checks,
-no-selected-traits, the equal-modifiers-genuinely-zero case, the core single-token formula case,
-the two-token-same-skill sum case, an unrecognized-trait-id case, the fixture-executed grounding
-check for every entry including Precise Treatment's two-token case, the ungrounded-key negative
-case, plus a cross-table collision check against all earlier pillar tables). `cargo test --locked
---lib -- skill_allocation`: **14/14 passed** (unchanged, confirms the fourth fold-in loop is
-byte-identical for every existing fixture). `cargo test --locked --bin v06_work_inventory`:
-**484/484 passed** (2 new positive classifier tests — single-token Bruising Intellect, two-token
-Precise Treatment — plus the negative control corrected onto a genuinely still-uncovered fixture,
-still green). `cargo test --locked --no-run`: full workspace **exit 0**, run at HEAD (post this
-cycle's own commits, before any inventory regeneration — `decisions.md §12` L7). `apps/desktop/
-src-tauri` (separate cargo workspace) **not run this cycle** — this cycle touched no file under
-`apps/desktop/`, so per §2.5 it is honestly reported skipped.
+Verified twice: once pre-rebase (against this cycle's own starting HEAD `c320c61c4f`), once
+post-rebase (against `ecf7d7a436`, after `AT-34-E3-002` cycle 7 wave-21's own concurrent
+insertions merged in) — the second run is the one that gates this receipt (`decisions.md §12`
+L7). `cargo build --locked --lib`: exit 0 both times (only pre-existing warnings, no new ones from
+this cycle's code). `cargo test --locked --lib -- trait_effects skill_allocation`: **63/63
+passed** post-rebase (9 new `trait_effects` tests: table-shape checks, no-selected-traits, the
+equal-modifiers-genuinely-zero case, the core single-token formula case, the two-token-same-skill
+sum case, an unrecognized-trait-id case, the fixture-executed grounding check for every entry
+including Precise Treatment's two-token case, the ungrounded-key negative case, plus a cross-table
+collision check against all earlier pillar tables; `skill_allocation`'s 14 unchanged, confirming
+the fourth fold-in loop is byte-identical for every existing fixture). `cargo test --locked --bin
+v06_work_inventory`: **488/488 passed** post-rebase (484 pre-rebase + 4 more from the concurrently
+merged-in `AT-34-E3-002` cycle 7 wave-21 work; this cycle's own 2 new positive classifier tests —
+single-token Bruising Intellect, two-token Precise Treatment — plus the negative control corrected
+onto a genuinely still-uncovered fixture, still green post-merge). `cargo test --locked --no-run`:
+full workspace **exit 0** both pre- and post-rebase, the post-rebase run at SHA `ecf7d7a436`.
+`apps/desktop/src-tauri` (separate cargo workspace) **not run this cycle** — this cycle touched no
+file under `apps/desktop/`, so per §2.5 it is honestly reported skipped.
 
 **RED→GREEN evidence (TDD, §6 step 3).** Temporarily replaced `evaluate_ability_diff_formula`'s
 real evaluator call with a hardcoded `None` and re-ran the two most load-bearing new tests:
@@ -156,8 +168,10 @@ through the real `skill_allocation::allocate_skill_ranks` consumer).
   producer, folded into an existing consumer — not a display/explanation wire onto an
   already-computed value).
 - **Instrument-correction:** 1 (`completion_atlas.py`'s bucket-V citation line pin, shifted by
-  this cycle's own insertions into `v06_work_inventory.rs`, `13004 → 13017`; no bucket population
-  moved by this correction — same shape as cycle 7's own `12914 → 12924` correction).
+  this cycle's own insertions into `v06_work_inventory.rs` and then again by the post-rebase
+  merge with `AT-34-E3-002` cycle 7 wave-21's own concurrent insertions, final value `13116`; no
+  bucket population moved by this correction — same shape as cycle 7's own `12914 → 12924`
+  correction).
 
 ## Notes
 
