@@ -52,20 +52,34 @@
 //! never honored (same "omit rather than fabricate" posture as the flat
 //! table).
 //!
+//! ## Third slice: open-subtype-family `BONUS:SKILL|%LIST` traits
+//!
+//! **Correction of the prior cycle's own doc comment** (retro-logged): the
+//! prior cycle's receipt characterized the 4 remaining `%LIST` traits
+//! whose `CHOOSE:SKILL` names a `TYPE=<Family>` subtype family
+//! (`TYPE=Craft`, `TYPE=Perform`, `TYPE=Profession`) as needing "a genuinely
+//! open-ended text-entry chooser... a materially different UI/input shape"
+//! than the closed-list case, and named it out of scope. That is not
+//! actually true of this app: `skill_allocation.rs` already carries a
+//! closed, corpus-derived enumeration of every `Craft`/`Perform`/
+//! `Profession` subtype this crate recognizes (`CRAFT_SKILL_IDS` (23),
+//! `PERFORM_SKILL_IDS` (9), `PROFESSION_SKILL_IDS` (31), transcribed from
+//! `data/corpus/core_rulebook/skill/*.json`) and already treats
+//! `TYPE=<Family>` as exactly that closed universe for its own
+//! class-skill-wildcard expansion ([`skill_allocation::skill_family_
+//! member_ids`]). A second, independent open-text chooser for the same
+//! three families would silently disagree with what this crate itself
+//! already considers a legal skill. So the union of the relevant
+//! families' member ids IS this crate's own closed list for these traits
+//! too -- the identical [`SelectedChoice`]-backed closed-list mechanism
+//! [`SKILL_CHOICE_TRAIT_BONUSES`] already established, just with the
+//! option list computed from [`skill_allocation::skill_family_member_
+//! ids`] instead of hand-transcribed per trait. See
+//! [`FAMILY_CHOICE_TRAIT_BONUSES`] for the 4-record table and
+//! [`family_choice_bonuses_from_traits`] for the compute path.
+//!
 //! ## What this module deliberately does NOT cover
 //!
-//! - **4 more `trait_content` records** (`trait_artisan`, `trait_mentored`,
-//!   `trait_simple_disciple`, `trait_talented`) carry a `BONUS:SKILL|
-//!   %LIST` token whose `CHOOSE:SKILL` names an **open subtype family**
-//!   (`TYPE=Craft`, `TYPE=Perform`, `TYPE=Profession`) rather than a fixed
-//!   list of concrete skills -- the player may name *any* Craft/Perform/
-//!   Profession subtype (including ones with no existing `skill:` id in
-//!   this crate's catalog, e.g. "Craft (Poison)"), which is a genuinely
-//!   open-ended text-entry chooser, not an enumerable list picker. A
-//!   materially different UI/input shape than [`SKILL_CHOICE_TRAIT_
-//!   BONUSES`]'s closed-list case; building it as a same-shaped closed
-//!   list here would silently drop legal player choices, so it is named,
-//!   not built, this cycle.
 //! - **3 records** carry an ability-score-difference formula magnitude
 //!   (`max(INT,CHA)-CHA` etc, e.g. `trait_bruising_intellect`) -- no
 //!   formula evaluator exists in this crate for that shape.
@@ -79,12 +93,13 @@
 //!   GM-adjudicated narrative penalties with no clean formulaic trigger,
 //!   per the prior cycle's own direct reading of that corpus.
 //!
-//! Widening past these two slices is future work, gated on either an
-//! open-subtype chooser (Craft/Perform/Profession family text entry), or
-//! a formula evaluator for ability-score-difference magnitudes -- neither
-//! exists yet, and building either as a rushed half-measure here would
-//! risk the same "8 closures where measurement found 1" failure this
-//! bundle's own doctrine warns against.
+//! Widening past these three slices is future work, gated on either a
+//! formula evaluator for ability-score-difference magnitudes, or genuinely
+//! separate per-pillar compute paths for the mixed `BONUS:VAR/SAVE/
+//! SITUATION/ABILITYPOOL/COMBAT/CONCENTRATION` records -- neither exists
+//! yet, and building either as a rushed half-measure here would risk the
+//! same "8 closures where measurement found 1" failure this bundle's own
+//! doctrine warns against.
 
 use std::collections::BTreeMap;
 
@@ -459,6 +474,209 @@ pub fn skill_choice_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str)
     }
 }
 
+/// One open-subtype-family `BONUS:SKILL|%LIST` trait -- see the module
+/// doc comment's "Third slice" section for the exact filter and the
+/// correction of the prior cycle's own "text entry" characterization.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitSkillFamilyChoiceBonus {
+    /// The wire id `CharacterInput.chosen.selected_traits` carries for
+    /// this trait -- same `"trait:" + corpus filename slug` idiom as
+    /// [`TraitSkillBonus::trait_id`].
+    pub trait_id: &'static str,
+    /// The record's own corpus `KEY` token, as transcribed from
+    /// `data.key`.
+    pub corpus_key: &'static str,
+    /// The trait's display name, transcribed from the corpus record's own
+    /// `name` field.
+    pub name: &'static str,
+    /// Every `TYPE=<Family>` name the corpus's own `CHOOSE:SKILL` token
+    /// enumerates (e.g. `&["Craft"]`, or `&["Craft", "Perform",
+    /// "Profession"]` for `trait_mentored`'s three-family choice) -- each
+    /// resolved at call time via [`skill_allocation::skill_family_member_
+    /// ids`], never hand-duplicated here.
+    pub skill_families: &'static [&'static str],
+    /// The flat integer bonus applied to whichever resolved skill id the
+    /// character actually chose. Transcribed from the record's own
+    /// `BONUS:SKILL|%LIST|<n>|...` token (or, where the token omits the
+    /// magnitude, from that record's own description text -- never
+    /// invented).
+    pub bonus: i8,
+    /// The trait's own corpus `description` field, verbatim.
+    pub description: &'static str,
+}
+
+/// The 4-of-59 `ultimate_campaign` `trait_content` records whose corpus
+/// `BONUS` token is a `%LIST` player choice constrained to an open
+/// `TYPE=<Family>` subtype family rather than a fixed list of concrete
+/// named skills. Every family named here already has a closed,
+/// corpus-derived member roster in `skill_allocation.rs`
+/// (`CRAFT_SKILL_IDS`/`PERFORM_SKILL_IDS`/`PROFESSION_SKILL_IDS`), so this
+/// is a closed-list choice, not an open text field -- see the module doc
+/// comment's "Third slice" section.
+pub static FAMILY_CHOICE_TRAIT_BONUSES: &[TraitSkillFamilyChoiceBonus] = &[
+    TraitSkillFamilyChoiceBonus {
+        trait_id: "trait:trait_artisan",
+        corpus_key: "Trait ~ Artisan",
+        name: "Artisan",
+        skill_families: &["Craft"],
+        bonus: 2,
+        description: "You spent time working under artisans, or your parents were artisans who were particularly skilled at their trade. You gain a +2 trait bonus on a single Craft skill (your choice).",
+    },
+    TraitSkillFamilyChoiceBonus {
+        trait_id: "trait:trait_mentored",
+        corpus_key: "Trait ~ Mentored",
+        name: "Mentored",
+        skill_families: &["Craft", "Perform", "Profession"],
+        bonus: 1,
+        description: "A tutor or private instructor guided you in learning your art, profession, or trade, and through your education, you became capable of teaching and guiding others. Choose a single Craft, Perform, or Profession skill. You gain a +1 trait bonus on checks with that skill. You also gain a +1 trait bonus when you aid another's skill check with any skill.",
+    },
+    TraitSkillFamilyChoiceBonus {
+        trait_id: "trait:trait_simple_disciple",
+        corpus_key: "Trait ~ Simple Disciple",
+        name: "Simple Disciple",
+        skill_families: &["Craft", "Profession"],
+        bonus: 1,
+        description: "You picked up skill in a craft or a profession during your time at a monastery. You gain a +1 trait bonus on checks with a Profession or Craft skill of your choice.",
+    },
+    TraitSkillFamilyChoiceBonus {
+        trait_id: "trait:trait_talented",
+        corpus_key: "Trait ~ Talented",
+        name: "Talented",
+        skill_families: &["Perform"],
+        bonus: 1,
+        description: "You are a virtuoso musician, actor, or storyteller. You gain a +1 trait bonus on checks with a single Perform skill (your choice), and all Perform skills are always class skills for you.",
+    },
+];
+
+/// Looks up one [`FAMILY_CHOICE_TRAIT_BONUSES`] entry by its wire
+/// `trait_id`.
+fn find_family_choice_by_trait_id(trait_id: &str) -> Option<&'static TraitSkillFamilyChoiceBonus> {
+    FAMILY_CHOICE_TRAIT_BONUSES.iter().find(|entry| entry.trait_id == trait_id)
+}
+
+/// The full, deduplicated union of every `skill:` id belonging to any of
+/// `entry.skill_families`, in family-then-member order -- resolved live
+/// via [`skill_allocation::skill_family_member_ids`], the same closed
+/// roster that module's own `TYPE=<Family>` class-skill-wildcard
+/// expansion already uses, never a second hand-duplicated list. A family
+/// name this crate does not (yet) carry a roster for (`skill_family_
+/// member_ids` returns `None`) contributes no options -- omit rather than
+/// fabricate, same discipline as every other entry point in this module.
+pub fn family_choice_skill_options(
+    entry: &TraitSkillFamilyChoiceBonus,
+) -> Vec<&'static str> {
+    let mut options: Vec<&'static str> = Vec::new();
+    for family in entry.skill_families {
+        let Some(members) = crate::rules_core::skill_allocation::skill_family_member_ids(family)
+        else {
+            continue;
+        };
+        for skill_id in members {
+            if !options.contains(skill_id) {
+                options.push(skill_id);
+            }
+        }
+    }
+    options
+}
+
+/// The real, computed skill bonus contribution of every
+/// [`FAMILY_CHOICE_TRAIT_BONUSES`] trait in `selected_traits` **that also
+/// carries a genuine, corpus-legal recorded choice** in
+/// `selected_choices` -- identical "omit rather than fabricate" discipline
+/// as [`skill_choice_bonuses_from_traits`], just checking membership
+/// against [`family_choice_skill_options`]'s resolved union instead of a
+/// hand-transcribed literal list.
+pub fn family_choice_bonuses_from_traits(
+    selected_traits: &[String],
+    selected_choices: &[SelectedChoice],
+) -> BTreeMap<String, i8> {
+    let mut totals: BTreeMap<String, i8> = BTreeMap::new();
+    for trait_id in selected_traits {
+        let Some(entry) = find_family_choice_by_trait_id(trait_id) else {
+            continue;
+        };
+        let choice_set_id = trait_skill_choice_id(trait_id);
+        let Some(chosen) = selected_choices
+            .iter()
+            .find(|choice| choice.choice_set_id == choice_set_id)
+        else {
+            continue;
+        };
+        let options = family_choice_skill_options(entry);
+        if !options.contains(&chosen.selection_id.as_str()) {
+            // An untrusted or stale selection outside this trait's own
+            // resolved family union -- never honored.
+            continue;
+        }
+        let slot = totals.entry(chosen.selection_id.clone()).or_insert(0);
+        *slot = slot.saturating_add(entry.bonus);
+    }
+    totals
+}
+
+/// **AT-34-E4-002's classifier-facing entry point for the third,
+/// family-choice slice**, the same shape as [`skill_choice_trait_
+/// magnitude_is_grounded_for_corpus_key`]: takes a corpus trait record's
+/// own `KEY` token, ACTUALLY BUILDS a minimal fixture character who
+/// selected exactly that trait *and* recorded a choice for its resolved
+/// family union's first entry, runs it through the real
+/// [`crate::rules_core::skill_allocation::allocate_skill_ranks`] engine,
+/// and returns the genuine, computed `misc_modifier` -- never an assumed
+/// value. Returns `None` for any corpus key outside the 4-record
+/// family-choice slice, or in the unreachable case the fixture-executed
+/// value ever disagreed with the transcribed table.
+pub fn family_choice_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str) -> Option<i8> {
+    let entry = FAMILY_CHOICE_TRAIT_BONUSES
+        .iter()
+        .find(|entry| entry.corpus_key == corpus_key)?;
+    let options = family_choice_skill_options(entry);
+    let chosen_skill = *options.first()?;
+
+    let input = CharacterInput {
+        case_id: None,
+        source_package_id: "at_34_e4_002_fixture".to_owned(),
+        chosen: ChosenCharacterState {
+            race_id: "race:human".to_owned(),
+            class_levels: vec![CharacterClassLevel {
+                class_id: "class:fighter".to_owned(),
+                level: 1,
+            }],
+            ability_scores: AbilityScores {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 10,
+                wisdom: 10,
+                charisma: 10,
+            },
+            selected_feats: Vec::new(),
+            skill_allocations: vec![crate::rules_core::character_input::SkillAllocation {
+                skill_id: chosen_skill.to_owned(),
+                ranks: 1,
+            }],
+            equipment_selections: Vec::new(),
+            selected_choices: vec![SelectedChoice {
+                choice_set_id: trait_skill_choice_id(entry.trait_id),
+                selection_id: chosen_skill.to_owned(),
+            }],
+            selected_traits: vec![entry.trait_id.to_owned()],
+            spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
+        },
+        selection_provenance: Vec::new(),
+    };
+
+    let totals = crate::rules_core::skill_allocation::allocate_skill_ranks(&input);
+    let computed = totals.totals.get(chosen_skill).map(|total| total.misc_modifier)?;
+
+    if computed == entry.bonus {
+        Some(computed)
+    } else {
+        None
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -718,6 +936,145 @@ mod tests {
         );
         assert_eq!(
             skill_choice_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
+            None
+        );
+    }
+
+    // -- Third slice: FAMILY_CHOICE_TRAIT_BONUSES ---------------------------
+
+    /// The family-choice table carries exactly 4 entries -- re-derive from
+    /// the module doc comment's "Third slice" section if this ever needs
+    /// to change.
+    #[test]
+    fn family_choice_table_has_exactly_four_entries() {
+        assert_eq!(FAMILY_CHOICE_TRAIT_BONUSES.len(), 4);
+    }
+
+    /// No `trait_id` is shared across any two of the three tables -- each
+    /// of the three compute paths must claim a disjoint trait set, or
+    /// `skill_allocation.rs` would double-apply a bonus when it sums all
+    /// three maps together.
+    #[test]
+    fn no_trait_id_appears_in_more_than_one_table() {
+        for family_entry in FAMILY_CHOICE_TRAIT_BONUSES {
+            assert!(
+                find_by_trait_id(family_entry.trait_id).is_none(),
+                "{} appears in both the flat and family-choice tables",
+                family_entry.trait_id
+            );
+            assert!(
+                find_choice_by_trait_id(family_entry.trait_id).is_none(),
+                "{} appears in both the fixed-choice and family-choice tables",
+                family_entry.trait_id
+            );
+        }
+    }
+
+    /// Every family-choice entry resolves to a non-empty, deduplicated
+    /// option list -- a family this crate does not recognize would
+    /// silently produce zero options, which this catches immediately.
+    #[test]
+    fn every_family_choice_entry_resolves_to_a_nonempty_deduplicated_option_list() {
+        for entry in FAMILY_CHOICE_TRAIT_BONUSES {
+            let options = family_choice_skill_options(entry);
+            assert!(
+                !options.is_empty(),
+                "{} resolved to zero skill options -- check its skill_families against \
+                 skill_allocation::skill_family_member_ids",
+                entry.trait_id
+            );
+            let mut deduped = options.clone();
+            deduped.sort_unstable();
+            deduped.dedup();
+            assert_eq!(
+                deduped.len(),
+                options.len(),
+                "{} resolved to a non-deduplicated option list",
+                entry.trait_id
+            );
+        }
+    }
+
+    /// `trait_mentored`'s three-family union carries a Craft, a Perform,
+    /// and a Profession id -- not just the first family's members.
+    #[test]
+    fn mentored_option_list_unions_all_three_named_families() {
+        let mentored = FAMILY_CHOICE_TRAIT_BONUSES
+            .iter()
+            .find(|e| e.trait_id == "trait:trait_mentored")
+            .expect("trait_mentored must be in the family-choice table");
+        let options = family_choice_skill_options(mentored);
+        assert!(options.contains(&"skill:craft_alchemy"));
+        assert!(options.contains(&"skill:perform_sing"));
+        assert!(options.contains(&"skill:profession_scribe"));
+    }
+
+    /// With no recorded choice yet, a selected family-choice trait
+    /// contributes nothing -- never a first-guessed default skill.
+    #[test]
+    fn a_family_choice_trait_with_no_recorded_choice_contributes_nothing() {
+        let bonuses = family_choice_bonuses_from_traits(&["trait:trait_artisan".to_string()], &[]);
+        assert!(bonuses.is_empty());
+    }
+
+    /// The core case: a selected family-choice trait with a genuine,
+    /// in-union recorded choice contributes its bonus to exactly that
+    /// skill.
+    #[test]
+    fn a_family_choice_trait_with_a_recorded_choice_contributes_to_that_skill() {
+        let bonuses = family_choice_bonuses_from_traits(
+            &["trait:trait_artisan".to_string()],
+            &[SelectedChoice {
+                choice_set_id: trait_skill_choice_id("trait:trait_artisan"),
+                selection_id: "skill:craft_weapons".to_string(),
+            }],
+        );
+        assert_eq!(bonuses.get("skill:craft_weapons"), Some(&2));
+        assert_eq!(bonuses.len(), 1);
+    }
+
+    /// A recorded choice outside the trait's resolved family union (stale
+    /// or untrusted data, or a skill from an un-named family) is never
+    /// honored.
+    #[test]
+    fn a_family_choice_trait_with_an_out_of_union_choice_contributes_nothing() {
+        let bonuses = family_choice_bonuses_from_traits(
+            &["trait:trait_artisan".to_string()],
+            &[SelectedChoice {
+                choice_set_id: trait_skill_choice_id("trait:trait_artisan"),
+                // Perform, not Craft -- trait_artisan only names TYPE=Craft.
+                selection_id: "skill:perform_sing".to_string(),
+            }],
+        );
+        assert!(bonuses.is_empty());
+    }
+
+    /// **The family-choice-slice classifier-facing entry point, executed,
+    /// not asserted.** Must genuinely run the fixture and agree with the
+    /// transcribed table for every one of the 4 entries.
+    #[test]
+    fn every_family_choice_entry_is_genuinely_grounded_by_fixture_execution() {
+        for entry in FAMILY_CHOICE_TRAIT_BONUSES {
+            let grounded = family_choice_trait_magnitude_is_grounded_for_corpus_key(entry.corpus_key);
+            assert_eq!(
+                grounded,
+                Some(entry.bonus),
+                "{} ({}) did not ground to its transcribed bonus via real fixture execution",
+                entry.trait_id,
+                entry.corpus_key
+            );
+        }
+    }
+
+    /// A corpus key outside the family-choice slice is honestly `None`.
+    #[test]
+    fn an_ungrounded_family_choice_corpus_key_returns_none() {
+        assert_eq!(
+            family_choice_trait_magnitude_is_grounded_for_corpus_key("Trait ~ Acrobat"),
+            None
+        );
+        assert_eq!(
+            family_choice_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
             None
         );
     }

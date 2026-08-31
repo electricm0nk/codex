@@ -18,7 +18,8 @@
 //! `SelectedChoice` channel `archetype_resolver.rs`'s own pool-choice
 //! primitive already established, not a new mechanism.
 use codex::rules_core::trait_effects::{
-    trait_skill_choice_id, FLAT_SKILL_TRAIT_BONUSES, SKILL_CHOICE_TRAIT_BONUSES,
+    family_choice_skill_options, trait_skill_choice_id, FAMILY_CHOICE_TRAIT_BONUSES,
+    FLAT_SKILL_TRAIT_BONUSES, SKILL_CHOICE_TRAIT_BONUSES,
 };
 use serde::Serialize;
 
@@ -116,7 +117,28 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             .collect(),
         choice_set_id: Some(trait_skill_choice_id(entry.trait_id)),
     });
-    flat.chain(choice).collect()
+    // Third slice (`AT-34-E4-002`): the 4 open-subtype-family `%LIST`
+    // traits -- `skill_options` here is the resolved Craft/Perform/
+    // Profession family UNION (`family_choice_skill_options`), not a
+    // hand-typed literal, so the frontend's own generic
+    // `skillOptions.length > 0` picker rendering (`CreateCharacterForm.
+    // tsx`) needs no change at all to support this new shape.
+    let family_choice = FAMILY_CHOICE_TRAIT_BONUSES.iter().map(|entry| CharacterTraitOptionDto {
+        id: entry.trait_id.to_owned(),
+        name: entry.name.to_owned(),
+        description: entry.description.to_owned(),
+        skills: Vec::new(),
+        bonus: entry.bonus,
+        skill_options: family_choice_skill_options(entry)
+            .iter()
+            .map(|skill_id| TraitSkillOptionDto {
+                skill_id: (*skill_id).to_owned(),
+                name: skill_display_name(skill_id),
+            })
+            .collect(),
+        choice_set_id: Some(trait_skill_choice_id(entry.trait_id)),
+    });
+    flat.chain(choice).chain(family_choice).collect()
 }
 
 #[cfg(test)]
@@ -124,16 +146,19 @@ mod tests {
     use super::*;
 
     /// The command must return exactly the 31 flat-slice traits plus the 5
-    /// choice-slice traits (36 total), never a subset or a hand-typed
-    /// duplicate that could drift from `trait_effects`' own tables.
+    /// fixed-choice-slice traits plus the 4 family-choice-slice traits (40
+    /// total), never a subset or a hand-typed duplicate that could drift
+    /// from `trait_effects`' own tables.
     #[test]
     fn returns_every_flat_and_choice_skill_trait() {
         let options = list_available_character_traits();
         assert_eq!(
             options.len(),
-            FLAT_SKILL_TRAIT_BONUSES.len() + SKILL_CHOICE_TRAIT_BONUSES.len()
+            FLAT_SKILL_TRAIT_BONUSES.len()
+                + SKILL_CHOICE_TRAIT_BONUSES.len()
+                + FAMILY_CHOICE_TRAIT_BONUSES.len()
         );
-        assert_eq!(options.len(), 36);
+        assert_eq!(options.len(), 40);
     }
 
     /// Every flat-slice option's id round-trips: it is exactly what
@@ -159,10 +184,14 @@ mod tests {
         }
     }
 
-    /// Every choice-slice option carries a non-empty `skill_options`, a
+    /// Every choice-slice option (both the fixed-list second slice and
+    /// the open-family third slice) carries a non-empty `skill_options`, a
     /// real `choice_set_id`, and -- once the player's echoed choice is
-    /// recorded exactly the way `create_character` will record it --
-    /// `skill_choice_bonuses_from_traits` genuinely grants a bonus. Never a
+    /// recorded exactly the way `create_character` will record it --- one
+    /// of the two choice-based compute paths genuinely grants a bonus
+    /// (each trait id is a member of exactly one, per
+    /// `no_trait_id_appears_in_more_than_one_table`, so summing both
+    /// paths' results is always safe and never double-applies). Never a
     /// rendered picker with no compute path behind the choice it offers.
     #[test]
     fn every_choice_option_round_trips_through_the_compute_path() {
@@ -176,17 +205,24 @@ mod tests {
                 option.id
             );
             let picked = &option.skill_options[0];
-            let bonuses = codex::rules_core::trait_effects::skill_choice_bonuses_from_traits(
+            let selected_choice = codex::rules_core::character_input::SelectedChoice {
+                choice_set_id,
+                selection_id: picked.skill_id.clone(),
+            };
+            let mut bonuses = codex::rules_core::trait_effects::skill_choice_bonuses_from_traits(
                 &[option.id.clone()],
-                &[codex::rules_core::character_input::SelectedChoice {
-                    choice_set_id,
-                    selection_id: picked.skill_id.clone(),
-                }],
+                &[selected_choice.clone()],
             );
+            for (skill_id, bonus) in codex::rules_core::trait_effects::family_choice_bonuses_from_traits(
+                &[option.id.clone()],
+                &[selected_choice],
+            ) {
+                *bonuses.entry(skill_id).or_insert(0) += bonus;
+            }
             assert_eq!(
                 bonuses.get(&picked.skill_id),
                 Some(&option.bonus),
-                "{} (choice {}) did not ground a bonus via skill_choice_bonuses_from_traits",
+                "{} (choice {}) did not ground a bonus via either choice-based compute path",
                 option.id,
                 picked.skill_id
             );
@@ -238,5 +274,42 @@ mod tests {
             vec!["skill:disable_device", "skill:intimidate", "skill:sleight_of_hand"]
         );
         assert_eq!(criminal.skill_options[0].name, "Disable Device");
+    }
+
+    /// The Artisan trait (third slice: `TYPE=Craft` open-subtype family)
+    /// reaches the DTO with a real, corpus-derived multi-entry
+    /// `skill_options` list (all 23 `Craft (<subtype>)` ids), not a
+    /// hand-typed stand-in and not an empty "not built yet" list.
+    #[test]
+    fn artisan_option_carries_the_full_craft_family_as_skill_options() {
+        let artisan = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_artisan")
+            .expect("Artisan must be in the roster");
+        assert_eq!(artisan.name, "Artisan");
+        assert_eq!(artisan.bonus, 2);
+        assert!(artisan.skills.is_empty());
+        assert_eq!(
+            artisan.choice_set_id.as_deref(),
+            Some("trait_choice:trait:trait_artisan")
+        );
+        assert_eq!(artisan.skill_options.len(), 23);
+        assert!(artisan.skill_options.iter().any(|o| o.skill_id == "skill:craft_weapons"));
+        assert!(!artisan.skill_options.iter().any(|o| o.skill_id.starts_with("skill:perform")));
+    }
+
+    /// The Mentored trait (three-family union: Craft + Perform +
+    /// Profession) reaches the DTO with every one of the three families'
+    /// members, not just the first-listed family.
+    #[test]
+    fn mentored_option_carries_the_union_of_all_three_named_families() {
+        let mentored = list_available_character_traits()
+            .into_iter()
+            .find(|o| o.id == "trait:trait_mentored")
+            .expect("Mentored must be in the roster");
+        assert_eq!(mentored.skill_options.len(), 23 + 9 + 31);
+        assert!(mentored.skill_options.iter().any(|o| o.skill_id == "skill:craft_alchemy"));
+        assert!(mentored.skill_options.iter().any(|o| o.skill_id == "skill:perform_sing"));
+        assert!(mentored.skill_options.iter().any(|o| o.skill_id == "skill:profession_scribe"));
     }
 }

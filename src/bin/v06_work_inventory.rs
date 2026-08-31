@@ -11893,22 +11893,25 @@ fn classify(
         // string.
         //
         // `AT-34-E4-002` (bucket M): the same `grounded_magnitude` wiring
-        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by two
-        // `trait_effects` entry points tried in order -- both an
+        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by three
+        // `trait_effects` entry points tried in order -- each an
         // ACTUALLY-EXECUTED fixture character run through
         // `allocate_skill_ranks`, never an assumed value:
         // `flat_skill_trait_magnitude_is_grounded_for_corpus_key` (31-of-59
         // records whose corpus `BONUS` token is a flat, named-skill
-        // `SKILL` bonus), then, only if that returns `None`,
-        // `skill_choice_trait_magnitude_is_grounded_for_corpus_key`
-        // (5-of-59 more records whose `BONUS:SKILL|%LIST` is constrained
-        // to a fixed, closed list of concrete named skills -- see that
+        // `SKILL` bonus), then `skill_choice_trait_magnitude_is_grounded_
+        // for_corpus_key` (5-of-59 more records whose `BONUS:SKILL|%LIST`
+        // is constrained to a fixed, closed list of concrete named
+        // skills), then `family_choice_trait_magnitude_is_grounded_for_
+        // corpus_key` (4-of-59 more records whose `%LIST` names an open
+        // `TYPE=<Family>` subtype family, resolved via `skill_allocation`'s
+        // own closed Craft/Perform/Profession rosters -- see that
         // module's own doc comment for the exact filters and what stays
-        // out of scope for each). Every other held `trait` record's
-        // `unit.key` resolves to `None` from both and falls through to
-        // `simple_kind_verdict`'s unchanged `ingested-magnitude` fallback --
-        // a pure widening, never a regression for a trait neither module
-        // yet covers.
+        // out of scope for each slice). Every other held `trait` record's
+        // `unit.key` resolves to `None` from all three and falls through
+        // to `simple_kind_verdict`'s unchanged `ingested-magnitude`
+        // fallback -- a pure widening, never a regression for a trait no
+        // module yet covers.
         Kind::Trait => {
             let coordinate = format!("{engine_book}:{}:{}", unit.provenance.file, unit.provenance.line);
             simple_kind_verdict(
@@ -11930,6 +11933,11 @@ fn classify(
                     trait_effects::flat_skill_trait_magnitude_is_grounded_for_corpus_key(&unit.key)
                         .or_else(|| {
                             trait_effects::skill_choice_trait_magnitude_is_grounded_for_corpus_key(
+                                &unit.key,
+                            )
+                        })
+                        .or_else(|| {
+                            trait_effects::family_choice_trait_magnitude_is_grounded_for_corpus_key(
                                 &unit.key,
                             )
                         })
@@ -18138,16 +18146,53 @@ mod companion_text_complete_rung_tests {
         );
     }
 
-    /// NEGATIVE CONTROL: `Trait ~ Artisan` is a real, held `trait` record
-    /// (`BONUS:SKILL|%LIST|2`, a player-chosen-*open-subtype*-Craft-skill
-    /// placeholder -- `CHOOSE:SKILL|TYPE=Craft` names a family, not a
-    /// fixed list of concrete skills, so neither this cycle's flat nor
-    /// fixed-choice compute path deliberately covers it -- see
-    /// `trait_effects`'s own module doc comment) -- both
-    /// `flat_skill_trait_magnitude_is_grounded_for_corpus_key` and
-    /// `skill_choice_trait_magnitude_is_grounded_for_corpus_key` honestly
-    /// return `None`, and this record must stay exactly where it was
-    /// before this cycle: `ingested-magnitude`, never silently promoted.
+    /// **AT-34-E4-002 third slice**: `Trait ~ Artisan` (`BONUS:SKILL|
+    /// %LIST|2`, `CHOOSE:SKILL|TYPE=Craft` -- an open subtype family, not
+    /// a fixed skill list) reaches `grounded` via the third `.or_else`
+    /// fallback, `family_choice_trait_magnitude_is_grounded_for_corpus_
+    /// key`, since both the flat and fixed-choice entry points honestly
+    /// return `None` for a family-shaped `%LIST` record.
+    #[test]
+    fn a_family_choice_skill_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            189,
+            "Trait ~ Artisan",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_2"
+        );
+    }
+
+    /// NEGATIVE CONTROL: `Trait ~ Bruising Intellect` is a real, held
+    /// `trait` record (`BONUS:SKILL|Intimidate|max(INT,CHA)-CHA`, an
+    /// ability-score-difference formula magnitude) -- one of the 3
+    /// records `trait_effects`'s own module doc comment names as still
+    /// out of scope (no formula evaluator exists yet), so none of this
+    /// module's three compute-path entry points
+    /// (`flat_skill_trait_magnitude_is_grounded_for_corpus_key`,
+    /// `skill_choice_trait_magnitude_is_grounded_for_corpus_key`,
+    /// `family_choice_trait_magnitude_is_grounded_for_corpus_key`)
+    /// deliberately covers it, all three honestly return `None`, and this
+    /// record must stay exactly where it was before this cycle:
+    /// `ingested-magnitude`, never silently promoted.
+    ///
+    /// **Retro-logged correction:** this fixture used `Trait ~ Artisan`
+    /// before this cycle -- a record this cycle's own third (family-
+    /// choice) slice now genuinely covers. A negative control built on a
+    /// record that later gets covered fails loudly (as this one did,
+    /// caught immediately by this cycle's own test run) rather than
+    /// silently asserting the wrong thing, which is exactly the failure
+    /// mode a negative control exists to catch; `Trait ~ Bruising
+    /// Intellect`'s ability-formula shape has no existing or
+    /// near-term-planned compute path, so it is a durable control.
     #[test]
     fn a_trait_outside_the_flat_slice_stays_ingested_magnitude() {
         let facts = facts_with_simple_kind_table("trait");
@@ -18156,7 +18201,7 @@ mod companion_text_complete_rung_tests {
             "ultimate_campaign",
             "uca_abilities_traits.lst",
             1,
-            "Trait ~ Artisan",
+            "Trait ~ Bruising Intellect",
             1,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);

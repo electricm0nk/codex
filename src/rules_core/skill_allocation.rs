@@ -462,7 +462,19 @@ fn normalized_skill_id_matches(name: &str, skill_id: &str) -> bool {
 /// The family member-id list a `TYPE=<Family>` corpus wildcard token
 /// expands to, or `None` for a family this module does not (yet) carry an
 /// enumerated roster for.
-fn skill_family_member_ids(family: &str) -> Option<&'static [&'static str]> {
+///
+/// `pub(crate)` (AT-34-E4-002, third slice): `trait_effects.rs`'s
+/// `FAMILY_CHOICE_TRAIT_BONUSES` reuses this exact same corpus-backed
+/// enumeration as the closed, legal option set for a trait whose
+/// `CHOOSE:SKILL` token names a `TYPE=<Family>` subtype family
+/// (`trait_artisan`, `trait_mentored`, `trait_simple_disciple`,
+/// `trait_talented`) rather than a fixed list of concrete skill names --
+/// this module already treats `TYPE=Craft`/`TYPE=Perform`/`TYPE=Profession`
+/// as closed, corpus-enumerated universes for class-skill-wildcard
+/// purposes, so a second, independent "open text entry" chooser for the
+/// same three families would silently disagree with what this module
+/// itself already considers legal.
+pub(crate) fn skill_family_member_ids(family: &str) -> Option<&'static [&'static str]> {
     match family {
         "Craft" => Some(CRAFT_SKILL_IDS),
         "Knowledge" => Some(KNOWLEDGE_SKILL_IDS),
@@ -766,6 +778,19 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     // double-applied, because `no_trait_id_appears_in_both_tables` proves
     // no trait id is ever a member of both tables.
     for (skill_id, bonus) in crate::rules_core::trait_effects::skill_choice_bonuses_from_traits(
+        &input.chosen.selected_traits,
+        &input.chosen.selected_choices,
+    ) {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
+    // Third slice (`AT-34-E4-002`): `%LIST` traits whose `CHOOSE:SKILL`
+    // names an open `TYPE=<Family>` subtype family (Craft/Perform/
+    // Profession) rather than a fixed list of concrete skills -- folded
+    // into the same map, not double-applied, because a trait id can only
+    // ever be a member of one of the three tables (enforced by
+    // `no_trait_id_appears_in_more_than_one_table`).
+    for (skill_id, bonus) in crate::rules_core::trait_effects::family_choice_bonuses_from_traits(
         &input.chosen.selected_traits,
         &input.chosen.selected_choices,
     ) {
