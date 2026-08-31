@@ -11,6 +11,72 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-001 — wave-20 shared `docs/work-inventory.json` regeneration and attribution — complete
+
+**Status: complete.** The mandatory closing regeneration cycle for wave 20 (`decisions.md §9`'s
+file-ownership rule: dispatched lanes defer `docs/work-inventory.json` regeneration to one
+shared, end-of-wave cycle). Three dispatched lanes this wave, none of which touched
+`docs/work-inventory.json`: C (`AT-34-E3-002` cycle 7, Ranger Combat Style choice-recognition
+wiring), M (`AT-34-E3-003` bucket-M equipment cycle 5, `TEMPBONUS:<target>|COMBAT|AC` fallback),
+UC (`AT-34-E4-002` cycle 8, ability-score-difference formula `BONUS:SKILL` traits). Ran in the
+assigned shared main checkout — `git fetch origin tranche/14 && git rebase origin/tranche/14`
+fast-forwarded cleanly onto `78304212bb`, no conflict, no worktree needed.
+
+Three-pass pipeline run in order (`corpus_literal_sweep` CLEAN 3m5.812s [48,708 examined, 0
+findings], `derived_evaluator_fixture_check` 0m13.627s [1,839 units cleared over 2,580 fixture
+rows, 0 failed], `v06_work_inventory` regenerated 12m0.061s) — no `--allow-stamp-loss`. Total
+pipeline wall time **919.5s (15m19.5s)**, the figure this wave shape exists to measure — in the
+same band as wave 16 (927s), wave 18 (953.664s), and wave 19 (941.7s); this is the fastest of the
+four measured shared-regen runs.
+
+**Whole-corpus before/after diff by unit id: 0 added, 0 removed, 7 changed.** A genuinely clean
+wave — every lane's own local-regen prediction reproduced exactly, digit for digit:
+
+| Cycle | Own claim | Measured | Match |
+|---|---|---:|---|
+| C cycle 7 — Ranger Combat Style choice-recognition wiring | 2, `core_rulebook` C 201→199, corpus-wide C 4182→4180, DONE 24724→24726 | 2 | exact |
+| M cycle 5 — `TEMPBONUS:<target>\|COMBAT\|AC` fallback (`Cloak of the Manta Ray`) | 1 own closure, `core_rulebook` M 812→811 | 1 | exact |
+| UC cycle 8 — ability-score-difference formula `BONUS:SKILL` traits | 4, `ultimate_campaign` DONE 196→200, M 44→40 | 4 | exact |
+
+2 + 1 + 4 = 7, matching the whole-corpus diff's own total exactly. All 7 are `class_feature`
+(2, `core_rulebook`, `ranger_combat_style_archery`/`ranger_combat_style_two_weapon_combat`),
+`equipment` (1, `core_rulebook`, `cloak_of_the_manta_ray`), and `trait` (4, `ultimate_campaign`,
+`trait_bruising_intellect`/`trait_planar_savant`/`trait_pragmatic_activator`/
+`trait_precise_treatment`) — re-derived independently via `completion_atlas.py` before/after both
+snapshots, not read from any lane's own prose: `core_rulebook` DONE 4613→4616 (+3), C 201→199
+(−2), M 812→811 (−1), B/D/V/U/X unchanged (470/366/114/10/115); corpus-wide DONE 24724→24731
+(+7), C 4182→4180 (−2), M 4679→4674 (−5), every other bucket unchanged (A 449, B 11769, D 2955,
+V 289, U 202, X 170, Z 19); `ultimate_campaign` DONE 196→200 (+4), M 44→40 (−4), D/U/X unchanged
+(2/21/2) — every bucket-level delta independently confirms both the id-diff and every lane's own
+stated figure.
+
+**Movement, four buckets (`decisions.md §9`):** Closure **7** (5 `ingested-magnitude`→`grounded`
+[1 M + 4 UC] + 2 `engine-does-not-hold`→`grounded` [C]), Reclassification **0**, Reachability
+**0**, Instrument-correction **0**. Every one of the 7 units left a non-DONE bucket and landed in
+DONE — no B→X move, no DONE→DONE evidence-only churn this wave. **No lane's expectation
+mismatched this wave** — all three reproduced exactly, digit for digit, the cleanest wave yet
+measured under this shape.
+
+`completion_atlas.py --check`: corpus-wide clean (`unclassified=0 overlap=0
+done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False
+citation_failures=0`, exit 0). `--book core_rulebook --check` exits 1 — expected: that flag
+combination exits 0 only when a book is 100% done, and `core_rulebook` still carries 6 non-DONE
+buckets (`B:470 C:199 D:366 M:811 V:114 U:10 X:115`). `citation_failures=0` in the live run means
+none of the three lane-cycles' own line insertions shifted `completion_atlas.py`'s hardcoded
+citations enough to break them — no re-derivation needed this cycle. `cargo test --locked
+--no-run` exits 0, full workspace (5m58.348s) and `apps/desktop/src-tauri` tested explicitly as
+its own separate cargo workspace (1m51.475s). No `src/**` file touched by this cycle itself — all
+three lanes' own code was already committed by their respective cycles.
+
+`python3 scripts/wave_ledger.py`: `wf_75aaf9fb-a7d` already carried `"20"` in `KNOWN_WAVES` — no
+script edit needed. Wave 20 ran **at least 1:54** through this cycle's own last check (`RUNNING`
+because this cycle's own activity is the wave's most recent — settles to `done` once this commit
+lands and three minutes pass with no further writes), shorter than both wave 18 (2:09:58) and
+wave 19 (2:19:04), the immediately preceding two full waves, and longer than wave 17's own
+0:51:32 (which was cut short by a host kill, not a fair comparison). Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md` (seventh section, "wave-20
+regeneration and attribution").
+
 ### Cycle 8 — AT-34-E4-002 — sixth trait/drawback slice: ability-score-difference formula `BONUS:SKILL` traits — partial
 
 **Status: partial.** Dispatch brief (wave 20) named `AT-34-E4-002_cycle_receipt_7.md` as current
