@@ -11,6 +11,71 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle 6 — AT-34-E4-002 — fourth trait/drawback slice: flat `BONUS:SAVE` traits — partial
+
+**Status: partial.** Re-derived HEAD first (the dispatch brief's own snapshot was five real
+cycles stale — `origin/tranche/14` already carried `AT-34-E4-002_cycle_receipt_5.md`, last
+claiming `DONE 191 of 265`) and picked up its own named next-cheapest sub-cause instead of
+restarting the build. Widens the trait/drawback compute path to a **new pillar** — saving
+throws, not skills: `ultimate_campaign`'s 2 remaining flat `BONUS:SAVE` trait records
+(`Trait ~ Life of Toil`/Fortitude, `Trait ~ Indomitable Faith`/Will), each a single clean
+`SAVE|<Save>|1|TYPE=Trait` token with no `%LIST` choice.
+
+Reused the real, already-shipped consumer rather than inventing a second save-bonus pathway:
+`feat_effects::save_bonuses_from_feats` + `pilot_compute::compute_total_saves` already ground
+the identical shape for Great Fortitude/Iron Will/Lightning Reflexes, so the new
+`trait_effects::save_bonuses_from_traits` layers into the same three-save sum
+`compute_total_saves` already folds `feat_save_bonuses`/`alternate_trait_saves` into (mirroring
+`alternate_trait_save_bonuses`'s own precedent, but keyed on the generic, any-race
+`selected_traits` list rather than the race-locked alternate-trait mechanism). Fixture-verified
+by actually computing the real Fighter-level-1 chassis with and without each trait and diffing
+the real total, through the real production consumer — never asserted.
+
+**A genuinely new desktop UI surface, unlike cycle 5's zero-frontend-change claim**:
+`CharacterTraitOptionDto` gained a real `save: Option<String>` field (not overloaded onto
+`skills`, which would have been a naming lie) — `loadCharacterTraits.ts`'s TypeScript interface
+and `CreateCharacterForm.tsx`'s existing generic trait-row display both widened to render
+`"<Save> save"` for a save-bonus option. Confirmed the compute path already reaches the
+character sheet with no further wiring: `total_saves` already flows through `pf1_adapter.rs`
+into `CharacterSheet.tsx`.
+
+`ultimate_campaign`: functional (fixture-verified, not yet baked into the committed,
+regeneration-owned `docs/work-inventory.json`) `DONE 191->193, M 49->47`, stacked on cycle 5's
+own last-claimed running total; `U:21 D:2 X:2 V:0` untouched (verified: neither trait was in
+those buckets before this cycle). **Corpus-wide, kind-keyed payoff**: `Trait ~ Indomitable
+Faith` shares its corpus `KEY` with `advanced_players_guide:trait:trait_indomitable_faith`
+(currently `ingested-magnitude`), so this cycle's table closes **3 units total**, not 2 — the
+classifier keys purely on `unit.key`, book-agnostic. The **committed** atlas, honestly reported
+unchanged this cycle: `python3 scripts/completion_atlas.py --book ultimate_campaign --check` →
+`DONE=187 M=53 D=2 U=21 X=2`, population 265 — `DONE=187 of 265` (or `193` functional) — bar
+not met.
+
+37/37 `trait_effects` unit tests green (10 new). 59/59 `v06_work_inventory` bin trait tests
+green (1 new classifier-level positive test; the `Trait ~ Bruising Intellect` negative control
+re-confirmed unaffected). Desktop crate: 30/30 scoped `trait_picker` tests green (5 new/widened);
+full desktop-crate run 531/28 pass/fail, the identical pre-existing 28-name failure set cycles
+3/4/5 already recorded (+3 vs. cycle 5's 528, exactly this cycle's own 3 new tests), none in a
+file this cycle touched. `cargo test --locked --no-run` (full workspace)
+exits 0. Dual-audit gate, this cycle's own diff: `OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS`; the
+workflow-instruction's own literal whole-epic-scope formula surfaces pre-existing noise from
+concurrent Epic-3 work and cycles 1-5's own prose, traced hunk-by-hunk to confirm none of it is
+this cycle's.
+
+Instrument hygiene: `completion_atlas.py`'s bucket-V citation line pin re-derived after this
+cycle's own insertions into `v06_work_inventory.rs` shifted it (`citation_failures` 1->0, no
+bucket population moved); the regenerated `completion-atlas.json` timestamp side-effect was
+`git restore`d before committing.
+
+Remainder named by sub-cause, unchanged from cycle 5 except the 2 now closed: 3
+ability-score-difference-formula traits, 13 mixed-bonus-type traits split by real corpus shape
+(re-derived this cycle by direct read of every record: 1 `COMBAT|INITIATIVE`-only, 1
+`COMBAT`+`CONCENTRATION`, 1 `CONCENTRATION`-only, 3 `VAR`-only, 1 `CASTERLEVEL`-only, 3
+`SITUATION`-only, 2 `ABILITYPOOL`-only, 1 corpus data gap), 17 narrative + 1 cross-skill-guarded
+Drawback, 12 `Retrain` records = 47+21+2+2=72 non-DONE. Next-cheapest named: `Trait ~
+Tactician`'s clean single `COMBAT|INITIATIVE` token, reusing `feat_effects::
+initiative_bonus_from_feats`'s already-shipped consumer the same way this cycle reused the save
+consumer. Full receipt: `artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_6.md`.
+
 ### Cycle — AT-34-E3-002 (bucket C) cycle 4 — Sorcerer Bloodline generic pool-group reuse — partial
 
 **Status: partial.** Reused the same already-shipped generic pool-group-selection pass
