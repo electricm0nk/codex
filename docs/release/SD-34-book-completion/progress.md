@@ -13,6 +13,67 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
+### Cycle 5 — AT-34-E4-002 — third trait/drawback slice: open-subtype-family `BONUS:SKILL|%LIST` traits — partial
+
+**Status: partial.** Widens the character trait/drawback compute path (cycles 3 and 4) to a
+third slice: the 4 remaining `trait_content` records whose `CHOOSE:SKILL` names an open
+`TYPE=Craft/Perform/Profession` subtype family rather than a fixed list of concrete skills
+(`trait_artisan`, `trait_mentored`, `trait_simple_disciple`, `trait_talented`).
+
+**Corrects cycle 4's own doc comment**, retro-logged: it characterized this shape as needing "a
+genuinely open-ended text-entry chooser... a materially different UI/input shape" and named it
+out of scope. That is not true of this app — `skill_allocation.rs` already carries a closed,
+corpus-derived enumeration of every Craft/Perform/Profession subtype this crate recognizes
+(`CRAFT_SKILL_IDS` 23, `PERFORM_SKILL_IDS` 9, `PROFESSION_SKILL_IDS` 31), already used for its
+own `TYPE=<Family>` class-skill-wildcard expansion. The same closed list is the legal option set
+for these 4 traits too — a same-shaped closed-list choice, not an open text field. Landed via
+`trait_effects::FAMILY_CHOICE_TRAIT_BONUSES` + `family_choice_bonuses_from_traits` (folded into
+`allocate_skill_ranks` alongside the flat and fixed-choice maps) + `family_choice_trait_
+magnitude_is_grounded_for_corpus_key` (`v06_work_inventory.rs`'s third `Kind::Trait` fallback),
+every entry fixture-executed through the real engine, never asserted.
+
+**No frontend change was needed at all**: `CreateCharacterForm.tsx`'s picker already renders any
+trait option generically off `skillOptions.length > 0`/`choiceSetId` (built in cycle 4), so the
+third slice's larger, family-resolved option list reaches the desktop UI with zero `.tsx`/`.ts`
+changes — `trait_picker.rs` gets a third `.chain()` using the same `CharacterTraitOptionDto`
+shape, `skill_options` built from the resolved family union.
+
+Also repoints a `v06_work_inventory.rs` negative-control fixture that used `Trait ~ Artisan` (now
+genuinely covered by this cycle) to `Trait ~ Bruising Intellect` (a real ability-formula shape
+still out of scope) — caught by the test suite the moment the new fallback was wired in, not
+silently left green (retro-logged, second correction this cycle). Re-derives
+`completion_atlas.py`'s `V`-bucket citation line pin after this cycle's own line-count shift
+(`citation_failures` 1→0, no bucket population moved by the fix itself).
+
+`ultimate_campaign`: `DONE 187→191, M 53→49` (`trait_content` 23→19); `U:21 D:2 X:2 V:0`
+untouched. Corpus-wide, kind-keyed check: no other book shares one of these 4 records' corpus
+`KEY` this time (checked, not assumed) — corpus-wide payoff is 4 of 49,438 (`M` 4965→4961), via a
+local, uncommitted `docs/work-inventory.json` regen whose figures were captured then the file
+`git restore`d (this wave's `GENERATED_FILE_BAN` — Epic 4 does not own that file this cycle).
+`DONE=191 of 265` — bar not met.
+
+Row-count command on this cycle's own artifact (`decisions.md §4`):
+```
+$ awk '/pub static FAMILY_CHOICE_TRAIT_BONUSES/,/^\];/' src/rules_core/trait_effects.rs | grep -c 'trait_id:'
+4
+```
+— exactly this cycle's `DONE`-bucket delta.
+
+Remainder named by sub-cause, unchanged from cycle 4 except the 4 now closed: 3
+ability-score-difference-formula traits (need a formula evaluator this crate does not have), 15
+mixed-bonus-type traits (`BONUS:VAR/SAVE/SITUATION/ABILITYPOOL/COMBAT/CONCENTRATION`), 1 corpus
+data gap, 17 narrative + 1 cross-skill-guarded Drawback, 12 `Retrain` records = 49+21+2+2=74
+non-`DONE`.
+
+`cargo test --locked --lib -- trait_effects skill_allocation`: 43/43 green. `cargo test --locked
+--bin v06_work_inventory -- trait`: 58/58 green. `cargo test --locked --manifest-path
+apps/desktop/src-tauri/Cargo.toml -- trait_picker`: 8/8 green; full desktop-crate run: 528
+passed, 28 failed (identical pre-existing set cycles 3/4 already recorded, +2 vs. cycle 4's 526
+= exactly this cycle's own 2 new tests). `cargo test --locked --no-run` (full workspace): exit 0
+at `5e3c000c8e`. Denominator gate against this package: `files_checked=22 violations=8`, all 8
+pre-existing `FRT_HVY` quotes; this cycle's own new prose adds none. Receipt:
+`artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_5.md`.
+
 ### Cycle — wave-16 shared `docs/work-inventory.json` regeneration and attribution — complete
 
 **Status: complete.** The single mandatory regeneration-and-attribution cycle closing wave
