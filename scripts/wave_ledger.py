@@ -58,6 +58,8 @@ KNOWN_WAVES = {
     "wf_47422ae1-5ea": ("18", "first wave under .cargo/config.toml jobs=6 -- watch free memory, "
                               "it is the run that proves whether the cap stops the host kills"),
     "wf_195c6a9e-931": ("19", "first wave with the page-cache guard on root cron; C 233, M 944"),
+    "wf_75aaf9fb-a7d": ("20", "UC brief retired after 7 cycles of staleness; fresh-base rule "
+                              "added after a lane opened at the tranche cut point"),
 }
 
 
