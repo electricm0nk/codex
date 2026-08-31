@@ -633,11 +633,11 @@ function ucLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E4-002', dir: 'epic-4-ultimate-campaign',
     title: 'drive Ultimate Campaign to zero — extend the trait/drawback capability, pillar by pillar.\n\n'
       + 'Bar: ' + BT + 'DONE = 265 of 265' + BT + '. Re-derive the split yourself before anything else; measured at '
-      + 'HEAD 38e10d066b: ' + BT + 'DONE 200' + BT + ', 40 ' + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 '
+      + 'HEAD a0cbc2388a: ' + BT + 'DONE 203' + BT + ', 37 ' + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 '
       + BT + 'unmeasurable' + BT + ' (U), 2 ' + BT + 'deferred-with-reason' + BT + ' (D), 2 ' + BT + 'engine-does-not-hold' + BT + ' (X). '
       + 'Bucket V is **0** — closed corpus-wide by AT-34-E3-005, not by you; do not re-open or re-claim it.\n\n'
       + '**The capability EXISTS and is seven cycles old. You are extending it, not starting it.** Read '
-      + BT + 'artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_8.md' + BT + ' FIRST — it is the newest, and its '
+      + BT + 'artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_9.md' + BT + ' FIRST — it is the newest, and its '
       + '"next cycle" section names your work. Do NOT read receipt_3 as current: it describes a repo state seven cycles '
       + 'gone, and a lane already lost time to that. `src/rules_core/trait_effects.rs` now holds real tables, real '
       + 'producers, and a real desktop picker in `apps/desktop/src-tauri/src/trait_picker.rs`.\n\n'
@@ -648,6 +648,14 @@ function ucLanePrompt() {
       + '**A record leaves M only when EVERY one of its BONUS tokens computes.** `Trait ~ Arcane Temper` carries two '
       + 'independently-pillared tokens and only went DONE once both fixture-executed. Never part-credit a record on one '
       + 'of its tokens.\n\n'
+      + '**FIX THE PICKER GAP FIRST — it is a live no-stub violation.** '
+      + BT + 'apps/desktop/src-tauri/src/trait_picker.rs' + BT + '`s ' + BT + 'list_available_character_traits' + BT + ' chains only '
+      + '4 of the module`s 7 tables, so 7 already-computed traits (Tactician, Arcane Temper, Desperate Resolve, '
+      + 'Bruising Intellect, Planar Savant, Pragmatic Activator, Precise Treatment) **cannot be selected in the '
+      + 'character creator at all**. Cycle 9 found this and logged it; cycles 7 and 8 had claimed the picker '
+      + '"surfaces every selected trait generically", which only holds for a trait already selected some other way. '
+      + 'Chain all 7 tables, prove each option is reachable AND grants its bonus, and say in your receipt that the '
+      + 'earlier claim was wrong. Then take your next slice.\n\n'
       + '**No stubs** (' + BT + 'docs/governance/no-stub-mvp-doctrine.md' + BT + '): a selector that renders but grants '
       + 'nothing is a doctrine violation, and so is a compute path with no UI reaching it. Ship a narrow slice that '
       + 'genuinely works rather than a wide one that does not.\n\n'
@@ -668,8 +676,8 @@ function ucLanePrompt() {
 // at ab65a090ef, so the slot moves to bucket C — the largest single-mechanism block left in the book.
 function cLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-002', dir: 'epic-3-core-rulebook',
-    title: 'bucket C for the Core Rulebook — 199 of 6,701, fifth pass on the pool-group seam.\n\n'
-      + 'Re-derive first; measured at HEAD 5e0ba466a5: ' + BT + 'core_rulebook' + BT + ' bucket C = **199** (351 -> 296 -> 233 -> 201 -> 199; the seam is nearly mined out, so expect small yields and say so rather than forcing one). '
+    title: 'bucket C for the Core Rulebook — 193 of 6,701, sixth pass on the pool-group seam.\n\n'
+      + 'Re-derive first; measured at HEAD 5e0ba466a5: ' + BT + 'core_rulebook' + BT + ' bucket C = **193** (351 -> 296 -> 233 -> 201 -> 199 -> 193; the seam is nearly mined out, so expect small yields and say so rather than forcing one). '
       + '**Do not inherit the old "all one evidence string" framing — wave 16 disproved it.** That wave closed 38 C '
       + 'units for real (Electricity Resistance and siblings, via the already-shipped generic pool-group compute pass '
       + 'the classifier had simply never consulted) and moved 17 more C→V. Both numbers are corpus-derived, not '
@@ -695,7 +703,7 @@ function cLanePrompt() {
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-003', dir: 'epic-3-core-rulebook',
-    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 811 left.\n\n'
+    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 778 left.\n\n'
       + 'Definition: magnitude ingested, never computed or applied. **The instrument already exists** — that is what '
       + 'separates this from bucket B, whose remainder needs new subsystems built.\n\n'
       + 'Re-derive the sub-causes; do not trust inherited figures OR inherited reasons — this bundle has had a cycle '
