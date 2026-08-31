@@ -93,29 +93,62 @@
 //! facing grounding check is [`save_trait_magnitude_is_grounded_for_
 //! corpus_key`].
 //!
+//! ## Fifth slice: flat `BONUS:COMBAT|INITIATIVE` / `BONUS:CONCENTRATION`
+//! traits
+//!
+//! A fifth cycle widened the spine into two more new pillars at once:
+//! initiative checks and concentration checks. Both are genuinely new --
+//! no prior producer existed for either anywhere in this crate -- but
+//! neither needed a new wiring shape: this engine already computes NO
+//! integrated initiative total (confirmed by
+//! `feat_effects::initiative_bonus_from_feats`'s own doc comment, which
+//! grounds Improved Initiative the same standalone-fact way), so the two
+//! flat `COMBAT|INITIATIVE` trait records (`trait_tactician`,
+//! `trait_arcane_temper`) and the one flat `CONCENTRATION|ALLSPELLS`
+//! record it shares with (`trait_desperate_resolve`, and
+//! `trait_arcane_temper` again -- its corpus record carries both tokens)
+//! ground as standalone facts through
+//! `pilot_compute::ground_orphan_trait_facts`, the identical idiom
+//! `ground_orphan_feat_facts` already established for Improved
+//! Initiative/Endurance/Fleet/etc. See [`INITIATIVE_TRAIT_BONUSES`] and
+//! [`CONCENTRATION_TRAIT_BONUSES`] for the two small tables and
+//! [`initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key`]
+//! for the compute path, which -- because `Trait ~ Arcane Temper` is the
+//! first record in this module to carry two independently-pillared
+//! `BONUS` tokens -- requires BOTH pillars to fixture-execute correctly
+//! before reporting that record grounded, never just one of the two.
+//!
 //! ## What this module deliberately does NOT cover
 //!
-//! - **3 records** carry an ability-score-difference formula magnitude
-//!   (`max(INT,CHA)-CHA` etc, e.g. `trait_bruising_intellect`) -- no
-//!   formula evaluator exists in this crate for that shape.
-//! - **The remaining 13 `trait_content` records** mix `BONUS:VAR`,
-//!   `BONUS:SITUATION`, `BONUS:ABILITYPOOL`, `BONUS:COMBAT`, and
-//!   `BONUS:CONCENTRATION` tokens -- different pillars entirely (combat
-//!   maneuvers, concentration checks, a bonus trait-slot pool, and
-//!   engine-internal variables with no consuming pillar), out of this
-//!   module's scope.
+//! - **4 records** carry an ability-score-difference formula magnitude
+//!   (`max(INT,CHA)-CHA` etc, e.g. `trait_bruising_intellect`; a 4th,
+//!   `trait_precise_treatment`, mixes a flat `SKILL|Heal|1` token with a
+//!   second formula-shaped `SKILL|Heal` token, so covering only its flat
+//!   half would understate it) -- no formula evaluator exists in this
+//!   crate for that shape.
+//! - **The remaining 10 `trait_content` records** mix `BONUS:VAR`,
+//!   `BONUS:SITUATION`, `BONUS:ABILITYPOOL`, and `BONUS:CASTERLEVEL`
+//!   tokens -- different pillars entirely (a bonus trait-slot pool,
+//!   conditional situational checks, spellcasting-subschool caster
+//!   level, and engine-internal variables with no consuming pillar), out
+//!   of this module's scope. One further record
+//!   (`ultimate_campaign:trait:trait_shadow_whispers`) is a pre-existing
+//!   corpus data gap -- a real `ingested-magnitude` inventory unit with
+//!   no matching file under `data/corpus/ultimate_campaign/
+//!   trait_generic/` by any name/key search tried, unrelated to any
+//!   cycle's compute path and not chased here.
 //! - **All 30 `ability_content` units** (`ultimate_campaign`'s
 //!   Drawback/Retraining sub-mechanics) -- house-rule bookkeeping and
 //!   GM-adjudicated narrative penalties with no clean formulaic trigger,
 //!   per the prior cycle's own direct reading of that corpus.
 //!
-//! Widening past these four slices is future work, gated on either a
+//! Widening past these five slices is future work, gated on either a
 //! formula evaluator for ability-score-difference magnitudes, or genuinely
 //! separate per-pillar compute paths for the mixed `BONUS:VAR/SITUATION/
-//! ABILITYPOOL/COMBAT/CONCENTRATION` records -- neither exists yet, and
-//! building either as a rushed half-measure here would risk the same "8
-//! closures where measurement found 1" failure this bundle's own doctrine
-//! warns against.
+//! ABILITYPOOL/CASTERLEVEL` records -- neither exists yet, and building
+//! either as a rushed half-measure here would risk the same "8 closures
+//! where measurement found 1" failure this bundle's own doctrine warns
+//! against.
 
 use std::collections::BTreeMap;
 
@@ -783,6 +816,236 @@ pub fn save_bonuses_from_traits(selected_traits: &[String]) -> SaveBonusesFromTr
     total
 }
 
+/// One flat `BONUS:COMBAT|INITIATIVE` trait -- see the module doc
+/// comment's "Fifth slice" section for the exact filter.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitInitiativeBonus {
+    /// The wire id `CharacterInput.chosen.selected_traits` carries for
+    /// this trait -- same `"trait:" + corpus filename slug` idiom as
+    /// [`TraitSkillBonus::trait_id`].
+    pub trait_id: &'static str,
+    /// The record's own corpus `KEY` token, as transcribed from
+    /// `data.key`.
+    pub corpus_key: &'static str,
+    /// The trait's display name, transcribed from the corpus record's own
+    /// `name` field.
+    pub name: &'static str,
+    /// The flat integer bonus, transcribed from the record's own
+    /// `BONUS:COMBAT|INITIATIVE|<n>|...` token. Neither entry's own
+    /// further conditional prose clause (Tactician's once-per-day
+    /// attack-of-opportunity bonus) carries a `BONUS` token of its own,
+    /// so it is not modeled here -- the same "the token is the bar, not
+    /// the prose" discipline every other table in this module follows.
+    pub bonus: i16,
+    /// The trait's own corpus `description` field, verbatim.
+    pub description: &'static str,
+}
+
+/// The 2-of-59 `ultimate_campaign` `trait_content` records whose corpus
+/// `BONUS` token set includes a flat, unconditional `COMBAT|INITIATIVE`
+/// bonus -- see the module doc comment's "Fifth slice" section.
+/// `Trait ~ Arcane Temper` also appears in
+/// [`CONCENTRATION_TRAIT_BONUSES`] below (its corpus record carries
+/// both tokens); `Trait ~ Tactician` carries only this one.
+pub static INITIATIVE_TRAIT_BONUSES: &[TraitInitiativeBonus] = &[
+    TraitInitiativeBonus {
+        trait_id: "trait:trait_tactician",
+        corpus_key: "Trait ~ Tactician",
+        name: "Tactician",
+        bonus: 1,
+        description: "You know how to take advantage of enemies who are unprepared for your assault. You gain a +1 trait bonus on initiative checks. In addition, once per day when you make an attack of opportunity, you gain a +2 trait bonus on the attack roll.",
+    },
+    TraitInitiativeBonus {
+        trait_id: "trait:trait_arcane_temper",
+        corpus_key: "Trait ~ Arcane Temper",
+        name: "Arcane Temper",
+        bonus: 1,
+        description: "You have quick reactions and fierce concentration. You gain a +1 trait bonus on concentration and initiative checks.",
+    },
+];
+
+/// Looks up one [`INITIATIVE_TRAIT_BONUSES`] entry by its wire
+/// `trait_id`.
+fn find_initiative_by_trait_id(trait_id: &str) -> Option<&'static TraitInitiativeBonus> {
+    INITIATIVE_TRAIT_BONUSES.iter().find(|entry| entry.trait_id == trait_id)
+}
+
+/// The real, computed initiative-check bonus from every
+/// [`INITIATIVE_TRAIT_BONUSES`] trait in `selected_traits`, summed. This
+/// engine computes no integrated initiative total anywhere (confirmed by
+/// `feat_effects::initiative_bonus_from_feats`'s own doc comment), so
+/// this grounds as a standalone fact the same way Improved Initiative's
+/// feat bonus already does -- see
+/// `pilot_compute::ground_orphan_trait_facts`.
+pub fn initiative_bonus_from_traits(selected_traits: &[String]) -> i16 {
+    let mut total: i16 = 0;
+    for trait_id in selected_traits {
+        if let Some(entry) = find_initiative_by_trait_id(trait_id) {
+            total = total.saturating_add(entry.bonus);
+        }
+    }
+    total
+}
+
+/// One flat `BONUS:CONCENTRATION|ALLSPELLS` trait -- see the module doc
+/// comment's "Fifth slice" section for the exact filter.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct TraitConcentrationBonus {
+    /// The wire id `CharacterInput.chosen.selected_traits` carries for
+    /// this trait -- same `"trait:" + corpus filename slug` idiom as
+    /// [`TraitSkillBonus::trait_id`].
+    pub trait_id: &'static str,
+    /// The record's own corpus `KEY` token, as transcribed from
+    /// `data.key`.
+    pub corpus_key: &'static str,
+    /// The trait's display name, transcribed from the corpus record's own
+    /// `name` field.
+    pub name: &'static str,
+    /// The flat integer bonus, transcribed from the record's own
+    /// `BONUS:CONCENTRATION|ALLSPELLS|<n>|...` token. Desperate Resolve's
+    /// own further conditional prose clause (a +4 increase while
+    /// grappled/pinned/entangled/in violent weather) carries no `BONUS`
+    /// token of its own, so it is not modeled -- only the flat,
+    /// unconditional token value.
+    pub bonus: i16,
+    /// The trait's own corpus `description` field, verbatim.
+    pub description: &'static str,
+}
+
+/// The 2-of-59 `ultimate_campaign` `trait_content` records whose corpus
+/// `BONUS` token set includes a flat, unconditional
+/// `CONCENTRATION|ALLSPELLS` bonus -- see the module doc comment's
+/// "Fifth slice" section. `Trait ~ Arcane Temper` also appears in
+/// [`INITIATIVE_TRAIT_BONUSES`] above; `Trait ~ Desperate Resolve`
+/// carries only this one.
+pub static CONCENTRATION_TRAIT_BONUSES: &[TraitConcentrationBonus] = &[
+    TraitConcentrationBonus {
+        trait_id: "trait:trait_arcane_temper",
+        corpus_key: "Trait ~ Arcane Temper",
+        name: "Arcane Temper",
+        bonus: 1,
+        description: "You have quick reactions and fierce concentration. You gain a +1 trait bonus on concentration and initiative checks.",
+    },
+    TraitConcentrationBonus {
+        trait_id: "trait:trait_desperate_resolve",
+        corpus_key: "Trait ~ Desperate Resolve",
+        name: "Desperate Resolve",
+        bonus: 1,
+        description: "You are adept at casting spells even in the most precarious situations. You gain a +1 trait bonus on concentration checks. This trait bonus increases to +4 when you are grappled, pinned, in violent weather, or entangled.",
+    },
+];
+
+/// Looks up one [`CONCENTRATION_TRAIT_BONUSES`] entry by its wire
+/// `trait_id`.
+fn find_concentration_by_trait_id(trait_id: &str) -> Option<&'static TraitConcentrationBonus> {
+    CONCENTRATION_TRAIT_BONUSES.iter().find(|entry| entry.trait_id == trait_id)
+}
+
+/// The real, computed concentration-check bonus from every
+/// [`CONCENTRATION_TRAIT_BONUSES`] trait in `selected_traits`, summed.
+/// This engine computes no concentration-check total anywhere (no prior
+/// producer of any kind existed for this pillar before this slice), so
+/// this grounds as a standalone fact -- see
+/// `pilot_compute::ground_orphan_trait_facts`.
+pub fn concentration_bonus_from_traits(selected_traits: &[String]) -> i16 {
+    let mut total: i16 = 0;
+    for trait_id in selected_traits {
+        if let Some(entry) = find_concentration_by_trait_id(trait_id) {
+            total = total.saturating_add(entry.bonus);
+        }
+    }
+    total
+}
+
+/// **AT-34-E4-002's classifier-facing entry point for the fifth,
+/// initiative/concentration slice.** Unlike every prior slice, a single
+/// corpus record here can carry BOTH a `COMBAT|INITIATIVE` token and a
+/// `CONCENTRATION|ALLSPELLS` token (`Trait ~ Arcane Temper` does) -- so
+/// this checks EVERY pillar the record's `corpus_key` appears under and
+/// only reports it grounded when ALL of them fixture-execute to their
+/// transcribed value; a record with only one applicable pillar (Tactician,
+/// Desperate Resolve) is grounded by that pillar alone. This mirrors
+/// `save_trait_magnitude_is_grounded_for_corpus_key`'s ACTUALLY BUILDS a
+/// fixture / runs the real engine / diffs the value discipline, reading
+/// the result from `pilot_compute::compute_pilot_base_chassis`'s own
+/// `explanations` (the standalone-fact channel), not from a total this
+/// engine does not have. Returns `None` for any corpus key outside both
+/// tables, or if the record appears in neither, or in the unreachable
+/// case any applicable pillar's fixture-executed value ever disagreed
+/// with its transcribed table.
+pub fn initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+    corpus_key: &str,
+) -> Option<i8> {
+    let initiative_entry = INITIATIVE_TRAIT_BONUSES
+        .iter()
+        .find(|entry| entry.corpus_key == corpus_key);
+    let concentration_entry = CONCENTRATION_TRAIT_BONUSES
+        .iter()
+        .find(|entry| entry.corpus_key == corpus_key);
+    if initiative_entry.is_none() && concentration_entry.is_none() {
+        return None;
+    }
+    let trait_id = initiative_entry
+        .map(|e| e.trait_id)
+        .or_else(|| concentration_entry.map(|e| e.trait_id))?;
+
+    let input = CharacterInput {
+        case_id: None,
+        source_package_id: "at_34_e4_002_fixture".to_owned(),
+        chosen: ChosenCharacterState {
+            race_id: "race:human".to_owned(),
+            class_levels: vec![CharacterClassLevel {
+                class_id: "class:fighter".to_owned(),
+                level: 1,
+            }],
+            ability_scores: AbilityScores {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 10,
+                wisdom: 10,
+                charisma: 10,
+            },
+            selected_feats: Vec::new(),
+            skill_allocations: Vec::new(),
+            equipment_selections: Vec::new(),
+            selected_choices: Vec::new(),
+            selected_traits: vec![trait_id.to_owned()],
+            spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
+        },
+        selection_provenance: Vec::new(),
+    };
+    let result = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+
+    let mut total: i8 = 0;
+    if let Some(entry) = initiative_entry {
+        let found = result
+            .explanations
+            .iter()
+            .find(|e| e.id == "trait.standalone.initiative_bonus")
+            .map(|e| e.value as i8);
+        if found != Some(entry.bonus as i8) {
+            // The engine genuinely disagreed with (or omitted) the
+            // transcribed table -- a real defect, never papered over.
+            return None;
+        }
+        total = total.saturating_add(entry.bonus as i8);
+    }
+    if let Some(entry) = concentration_entry {
+        let found = result
+            .explanations
+            .iter()
+            .find(|e| e.id == "trait.standalone.concentration_bonus")
+            .map(|e| e.value as i8);
+        if found != Some(entry.bonus as i8) {
+            return None;
+        }
+        total = total.saturating_add(entry.bonus as i8);
+    }
+    Some(total)
+}
+
 /// **AT-34-E4-002's classifier-facing entry point for the fourth,
 /// flat-save slice.** Unlike the three skill-pillar checks above (which
 /// call `skill_allocation::allocate_skill_ranks` directly), a save bonus
@@ -1361,6 +1624,153 @@ mod tests {
         );
         assert_eq!(
             save_trait_magnitude_is_grounded_for_corpus_key("not a real trait key"),
+            None
+        );
+    }
+
+    /// No trait id in either the initiative or concentration table
+    /// collides with any of the four earlier pillar tables -- proves the
+    /// per-pillar sums this module's compute paths produce never
+    /// double-apply a single selected trait.
+    #[test]
+    fn no_initiative_or_concentration_trait_id_collides_with_an_earlier_pillar_trait_id() {
+        for entry in INITIATIVE_TRAIT_BONUSES {
+            assert!(find_by_trait_id(entry.trait_id).is_none());
+            assert!(find_choice_by_trait_id(entry.trait_id).is_none());
+            assert!(find_family_choice_by_trait_id(entry.trait_id).is_none());
+        }
+        for entry in CONCENTRATION_TRAIT_BONUSES {
+            assert!(find_by_trait_id(entry.trait_id).is_none());
+            assert!(find_choice_by_trait_id(entry.trait_id).is_none());
+            assert!(find_family_choice_by_trait_id(entry.trait_id).is_none());
+        }
+    }
+
+    /// An unselected trait contributes nothing to either pillar.
+    #[test]
+    fn no_selected_initiative_or_concentration_traits_contribute_nothing() {
+        assert_eq!(initiative_bonus_from_traits(&[]), 0);
+        assert_eq!(concentration_bonus_from_traits(&[]), 0);
+        assert_eq!(
+            initiative_bonus_from_traits(&["trait:trait_reckless".to_string()]),
+            0
+        );
+        assert_eq!(
+            concentration_bonus_from_traits(&["trait:trait_reckless".to_string()]),
+            0
+        );
+    }
+
+    /// The core case: Tactician contributes +1 initiative and nothing to
+    /// concentration; Desperate Resolve contributes +1 concentration and
+    /// nothing to initiative; Arcane Temper contributes +1 to BOTH
+    /// (its corpus record carries both tokens); selecting all three sums
+    /// each pillar independently.
+    #[test]
+    fn selected_traits_contribute_to_exactly_their_own_pillars() {
+        assert_eq!(
+            initiative_bonus_from_traits(&["trait:trait_tactician".to_string()]),
+            1
+        );
+        assert_eq!(
+            concentration_bonus_from_traits(&["trait:trait_tactician".to_string()]),
+            0
+        );
+
+        assert_eq!(
+            initiative_bonus_from_traits(&["trait:trait_desperate_resolve".to_string()]),
+            0
+        );
+        assert_eq!(
+            concentration_bonus_from_traits(&["trait:trait_desperate_resolve".to_string()]),
+            1
+        );
+
+        assert_eq!(
+            initiative_bonus_from_traits(&["trait:trait_arcane_temper".to_string()]),
+            1
+        );
+        assert_eq!(
+            concentration_bonus_from_traits(&["trait:trait_arcane_temper".to_string()]),
+            1
+        );
+
+        let all = vec![
+            "trait:trait_tactician".to_string(),
+            "trait:trait_desperate_resolve".to_string(),
+            "trait:trait_arcane_temper".to_string(),
+        ];
+        assert_eq!(initiative_bonus_from_traits(&all), 2);
+        assert_eq!(concentration_bonus_from_traits(&all), 2);
+    }
+
+    /// **The initiative/concentration-slice classifier-facing entry
+    /// point, executed, not asserted.** Must genuinely run the fixture
+    /// through the real `pilot_compute::compute_pilot_base_chassis`
+    /// standalone-fact channel and agree with the transcribed table for
+    /// every entry in both tables, including Arcane Temper's dual-pillar
+    /// record.
+    #[test]
+    fn every_initiative_and_concentration_entry_is_genuinely_grounded_by_fixture_execution() {
+        for entry in INITIATIVE_TRAIT_BONUSES {
+            let grounded = initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+                entry.corpus_key,
+            );
+            assert!(
+                grounded.is_some(),
+                "{} ({}) did not ground via real fixture execution",
+                entry.trait_id,
+                entry.corpus_key
+            );
+        }
+        for entry in CONCENTRATION_TRAIT_BONUSES {
+            let grounded = initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+                entry.corpus_key,
+            );
+            assert!(
+                grounded.is_some(),
+                "{} ({}) did not ground via real fixture execution",
+                entry.trait_id,
+                entry.corpus_key
+            );
+        }
+        // Arcane Temper specifically: BOTH pillars must have fired for the
+        // fixture-selected-alone character, so the combined magnitude is
+        // the sum of both transcribed bonuses (1 + 1 = 2), not just one.
+        assert_eq!(
+            initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+                "Trait ~ Arcane Temper"
+            ),
+            Some(2)
+        );
+        assert_eq!(
+            initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+                "Trait ~ Tactician"
+            ),
+            Some(1)
+        );
+        assert_eq!(
+            initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+                "Trait ~ Desperate Resolve"
+            ),
+            Some(1)
+        );
+    }
+
+    /// A corpus key outside both the initiative and concentration tables
+    /// is honestly `None`.
+    #[test]
+    fn an_ungrounded_initiative_or_concentration_corpus_key_returns_none() {
+        assert_eq!(
+            initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+                "Trait ~ Acrobat"
+            ),
+            None
+        );
+        assert_eq!(
+            initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
+                "not a real trait key"
+            ),
             None
         );
     }

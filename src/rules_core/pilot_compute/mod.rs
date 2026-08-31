@@ -8899,6 +8899,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &ability_modifiers,
         &mut explanations,
     );
+    ground_orphan_trait_facts(input, &mut explanations);
 
     explain_fighter_class_features(input, &mut explanations);
 
@@ -50806,6 +50807,48 @@ fn ground_orphan_feat_facts(
         ability_modifiers,
         explanations,
     );
+}
+
+/// AT-34-E4-002's fifth trait-capability slice: standalone orphan facts
+/// derived from a character's SELECTED traits (unlike feats, traits carry
+/// no automatic-grant concept, so this reads `input.chosen.selected_traits`
+/// directly rather than an "effective" set). Mirrors
+/// `ground_orphan_feat_facts` exactly -- this engine computes no
+/// integrated initiative total and no concentration-check total anywhere,
+/// so both pillars ground as standalone facts rather than being folded
+/// into any total. Unconditional on class ownership/posture, the same as
+/// every other orphan-fact producer: these are general trait effects, not
+/// class-specific.
+fn ground_orphan_trait_facts(input: &CharacterInput, explanations: &mut Vec<ComputationExplanation>) {
+    use crate::rules_core::trait_effects;
+    let selected_traits = &input.chosen.selected_traits;
+
+    let initiative = trait_effects::initiative_bonus_from_traits(selected_traits);
+    if initiative != 0 {
+        explanations.push(ComputationExplanation {
+            id: "trait.standalone.initiative_bonus".to_owned(),
+            value: initiative,
+            detail: format!(
+                "A selected trait (Tactician and/or Arcane Temper) grants a +{initiative} bonus \
+                 on initiative checks. This engine computes no initiative total anywhere, so \
+                 this grounds as a standalone flat record -- the same shape as Improved \
+                 Initiative's own already-grounded standalone record"
+            ),
+        });
+    }
+
+    let concentration = trait_effects::concentration_bonus_from_traits(selected_traits);
+    if concentration != 0 {
+        explanations.push(ComputationExplanation {
+            id: "trait.standalone.concentration_bonus".to_owned(),
+            value: concentration,
+            detail: format!(
+                "A selected trait (Arcane Temper and/or Desperate Resolve) grants a +{concentration} \
+                 bonus on concentration checks. This engine computes no concentration-check total \
+                 anywhere, so this grounds as a standalone flat record"
+            ),
+        });
+    }
 }
 
 /// SD-27 (`decisions.md` §24/§28, 2026-07-31): the Advanced Race Guide's and

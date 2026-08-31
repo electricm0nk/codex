@@ -158,7 +158,7 @@ BUCKET_DEFINITIONS = {
         # concurrently-landed AT-34-E4-002 cycle 6's own fourth-slice save-bonus
         # insertions into v06_work_inventory.rs): fresh `grep -n` against the real
         # merged post-rebase file content, not either side's pre-rebase number.
-        "citation": {"file": _ENGINE_SRC, "line": 12914, "must_contain": "literal-verified"},
+        "citation": {"file": _ENGINE_SRC, "line": 12924, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",

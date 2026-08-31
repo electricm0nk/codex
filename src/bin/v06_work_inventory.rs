@@ -12426,12 +12426,12 @@ fn classify(
         // string.
         //
         // `AT-34-E4-002` (bucket M): the same `grounded_magnitude` wiring
-        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by FOUR
+        // `AT-34-E3-003` proved for `Kind::Skill`, here backed by FIVE
         // `trait_effects` entry points tried in order -- each an
         // ACTUALLY-EXECUTED fixture character run through a real consumer
         // (`allocate_skill_ranks` for the first three, `pilot_compute::
-        // compute_total_saves` via `compute_pilot_base_chassis` for the
-        // fourth), never an assumed value:
+        // compute_total_saves`/`compute_pilot_base_chassis`'s own
+        // `explanations` for the fourth and fifth), never an assumed value:
         // `flat_skill_trait_magnitude_is_grounded_for_corpus_key` (31-of-59
         // records whose corpus `BONUS` token is a flat, named-skill
         // `SKILL` bonus), then `skill_choice_trait_magnitude_is_grounded_
@@ -12444,9 +12444,14 @@ fn classify(
         // module's own doc comment for the exact filters and what stays
         // out of scope for each slice), then `save_trait_magnitude_is_
         // grounded_for_corpus_key` (2-of-59 more records whose corpus
-        // `BONUS` token is a flat, named-save `SAVE` bonus). Every other
-        // held `trait` record's `unit.key` resolves to `None` from all
-        // four and falls through to `simple_kind_verdict`'s unchanged
+        // `BONUS` token is a flat, named-save `SAVE` bonus), then
+        // `initiative_or_concentration_trait_magnitude_is_grounded_for_
+        // corpus_key` (2-of-59 more records carrying a flat `COMBAT|
+        // INITIATIVE` and/or `CONCENTRATION|ALLSPELLS` token -- one record,
+        // Arcane Temper, carries both and is only reported grounded once
+        // BOTH pillars fixture-execute correctly). Every other held
+        // `trait` record's `unit.key` resolves to `None` from all five and
+        // falls through to `simple_kind_verdict`'s unchanged
         // `ingested-magnitude` fallback -- a pure widening, never a
         // regression for a trait no module yet covers.
         Kind::Trait => {
@@ -12480,6 +12485,11 @@ fn classify(
                         })
                         .or_else(|| {
                             trait_effects::save_trait_magnitude_is_grounded_for_corpus_key(
+                                &unit.key,
+                            )
+                        })
+                        .or_else(|| {
+                            trait_effects::initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key(
                                 &unit.key,
                             )
                         })
@@ -18782,17 +18792,69 @@ mod companion_text_complete_rung_tests {
         );
     }
 
+    /// **AT-34-E4-002 fifth slice**: `Trait ~ Tactician`
+    /// (`BONUS:COMBAT|INITIATIVE|1` -- a genuinely new pillar, standalone
+    /// initiative checks) reaches `grounded` via the fifth `.or_else`
+    /// fallback, `initiative_or_concentration_trait_magnitude_is_grounded_
+    /// for_corpus_key`, since all four earlier entry points honestly
+    /// return `None` for this record's shape.
+    #[test]
+    fn a_flat_initiative_trait_bonus_promotes_a_held_trait_record_to_grounded() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            210,
+            "Trait ~ Tactician",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_1"
+        );
+    }
+
+    /// **AT-34-E4-002 fifth slice, dual-pillar case**: `Trait ~ Arcane
+    /// Temper` carries BOTH `BONUS:COMBAT|INITIATIVE|1` and
+    /// `BONUS:CONCENTRATION|ALLSPELLS|1` -- the first record in this
+    /// module with two independently-pillared tokens. Must reach
+    /// `grounded` only because BOTH pillars fixture-execute correctly
+    /// (the combined magnitude, 2, proves both fired, not just one).
+    #[test]
+    fn a_dual_pillar_initiative_and_concentration_trait_bonus_promotes_a_held_trait_record_to_grounded()
+    {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "ultimate_campaign",
+            "uca_abilities_traits.lst",
+            211,
+            "Trait ~ Arcane Temper",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_2"
+        );
+    }
+
     /// NEGATIVE CONTROL: `Trait ~ Bruising Intellect` is a real, held
     /// `trait` record (`BONUS:SKILL|Intimidate|max(INT,CHA)-CHA`, an
-    /// ability-score-difference formula magnitude) -- one of the 3
+    /// ability-score-difference formula magnitude) -- one of the 4
     /// records `trait_effects`'s own module doc comment names as still
     /// out of scope (no formula evaluator exists yet), so none of this
-    /// module's four compute-path entry points
+    /// module's five compute-path entry points
     /// (`flat_skill_trait_magnitude_is_grounded_for_corpus_key`,
     /// `skill_choice_trait_magnitude_is_grounded_for_corpus_key`,
     /// `family_choice_trait_magnitude_is_grounded_for_corpus_key`,
-    /// `save_trait_magnitude_is_grounded_for_corpus_key`)
-    /// deliberately covers it, all four honestly return `None`, and this
+    /// `save_trait_magnitude_is_grounded_for_corpus_key`,
+    /// `initiative_or_concentration_trait_magnitude_is_grounded_for_corpus_key`)
+    /// deliberately covers it, all five honestly return `None`, and this
     /// record must stay exactly where it was before this cycle:
     /// `ingested-magnitude`, never silently promoted.
     ///
