@@ -5427,6 +5427,27 @@ struct EngineFacts {
     /// covers) are real, separate corpus units this set can legitimately
     /// close too.
     cleric_domain_generic_member_wired: BTreeSet<String>,
+    /// `AT-34-E3-002` (bucket C continuation, cycle 4): the SAME generic
+    /// pool-group-selection pass, reused rather than re-derived, for the
+    /// SECOND of the six real pools it already covers
+    /// (`push_generic_pool_group_selection_magnitude`'s own Sorcerer
+    /// Bloodline call site, `class_feature.sorcerer.bloodline.generic` id
+    /// prefix, wired unconditionally for any sorcerer since SD-32 T12 Epic
+    /// 8). Full corpus `"<Bloodline> Bloodline ~ <Power>"` keys
+    /// (`"Aberrant Bloodline ~ Acidic Ray"`, ...) whose own magnitude
+    /// explanation was genuinely emitted on a real sorcerer who selected
+    /// that exact bloodline, via
+    /// [`probe_sorcerer_bloodline_generic_member_wiring`]. Read directly off
+    /// each matching `ComputationExplanation`'s own `detail` field
+    /// (`generic_pool_group_selection_observed_keys`), never guessed from a
+    /// slug -- Arcane (the one hand-modelled bloodline,
+    /// `ground_sorcerer_arcane_bloodline_progression`) is included in the
+    /// same sweep on equal footing with the other nine: this generic pass
+    /// runs purely additively alongside the hand-modelled branch, so an
+    /// Arcane member this set credits is a real, independent, genuinely
+    /// generic-pass-resolved magnitude, not a duplicate of the hand-modelled
+    /// one (confirmed by this cycle's own live-fixture proof, not assumed).
+    sorcerer_bloodline_generic_member_wired: BTreeSet<String>,
     /// `AT-34-E3-001` (mechanism 2 continuation, cycle 4): full corpus_key
     /// strings (`"Evocation School ~ Intense Spells"`, ...) whose own
     /// per-power explanation id was genuinely observed via
@@ -7382,6 +7403,76 @@ fn probe_cleric_domain_generic_member_wiring(fixture: &CharacterInput) -> BTreeS
     wired
 }
 
+/// `AT-34-E3-002` (bucket C continuation, cycle 4): the ten real PF1 Core
+/// Rulebook Sorcerer bloodline adjectives (verified by direct corpus scan:
+/// `find data/corpus/core_rulebook/class_feature -name '*.json' | xargs
+/// grep -l '"key": "[A-Za-z]* Bloodline ~ '` groups into exactly these ten
+/// `"<Adjective> Bloodline"` headers, majority-owned by `class: "Sorcerer"`
+/// -- Bloodrager's own sibling `"<Adjective> Bloodrager Bloodline"` groups
+/// are a different corpus shape `real_pool_group_for_selection_slug`'s own
+/// class-majority-ownership check already keeps separate). Every one is a
+/// single lowercase word, so `format!("bloodline:{}", a)` reproduces the
+/// real recorded `choice:sorcerer_bloodline` selection ids this codebase
+/// already uses elsewhere (e.g. `canonical_seeds_for`'s own
+/// `"bloodline:arcane"`).
+const CORE_RULEBOOK_SORCERER_BLOODLINE_ADJECTIVES: &[&str] = &[
+    "aberrant", "abyssal", "arcane", "celestial", "destined", "draconic", "elemental", "fey",
+    "infernal", "undead",
+];
+
+/// `AT-34-E3-002` (bucket C continuation, cycle 4): verifies, by REAL
+/// computation and never by trusting the generic pool-group resolver's own
+/// theoretical reach, which real corpus `"<Bloodline> Bloodline ~ <Power>"`
+/// records the engine's PRE-EXISTING generic pool-group-selection pass
+/// (`push_generic_pool_group_selection_magnitude`, wired unconditionally
+/// for Sorcerer Bloodline since SD-32 T12 Epic 8) genuinely grounds. The
+/// canonical per-class sweep that fills `EngineFacts::explanation_ids` only
+/// ever selects Arcane's own bloodline for sorcerer (`canonical_seeds_for`'s
+/// single `"bloodline:arcane"` seed), so it alone could never observe any
+/// other bloodline's own generic-pass explanations -- this probe selects
+/// EACH real Core Rulebook bloodline in turn, over the SAME real
+/// `compute_pilot_base_chassis` pipeline every other probe in this file
+/// uses, and reads the exact corpus keys the engine genuinely emitted off
+/// each explanation's own `detail` field
+/// (`generic_pool_group_selection_observed_keys` -- never a slug
+/// reconstruction), so a genuinely-wired record is never conflated with one
+/// the resolver merely lists as theoretically reachable. This is this
+/// cycle's own reuse of the Cleric Domain bridge
+/// (`probe_cleric_domain_generic_member_wiring`) the prior cycle's own
+/// receipt named as the next-cheapest candidate: same bridge function, same
+/// pipeline, a different pool's own adjective/slug list.
+fn probe_sorcerer_bloodline_generic_member_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for adjective in CORE_RULEBOOK_SORCERER_BLOODLINE_ADJECTIVES {
+        let selection_id = format!("bloodline:{adjective}");
+        for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "sorcerer", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:sorcerer_bloodline");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:sorcerer_bloodline".to_string(),
+                selection_id: selection_id.clone(),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            wired.extend(
+                codex::rules_core::pilot_compute::generic_pool_group_selection_observed_keys(
+                    &computation.explanations,
+                    "class_feature.sorcerer.bloodline.generic.",
+                ),
+            );
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// `AT-34-E3-001` (`decisions.md §14`): verifies, by REAL computation and
 /// never by trusting `domain_power::DOMAIN_POWER_CATALOG`'s own membership,
 /// which `"Domain Power ~ <granted power name>"` corpus records the engine
@@ -7919,6 +8010,89 @@ mod cleric_domain_generic_member_probe_tests {
             wired.contains("Healing Domain ~ Rebuke Death"),
             "Rebuke Death's real uses-per-day BONUS:VAR chain must resolve even though its \
              separate dice-notation heal amount does not: {wired:?}"
+        );
+    }
+}
+
+#[cfg(test)]
+mod sorcerer_bloodline_generic_member_probe_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Print, don't assume: dumps the real probe's real observed set against
+    /// the real fixture, for THIS cycle's own re-derivation
+    /// (`decisions.md §12` L2) -- run with `--nocapture` to read it.
+    #[test]
+    fn print_the_real_observed_set_for_this_cycles_own_receipt() {
+        let wired = probe_sorcerer_bloodline_generic_member_wiring(&fixture());
+        eprintln!("sorcerer_bloodline_generic_member_wired ({} keys):", wired.len());
+        for key in &wired {
+            eprintln!("  {key}");
+        }
+        assert!(!wired.is_empty(), "expected at least one real bloodline member to resolve");
+    }
+
+    /// Against the REAL fixture and the REAL compute pipeline, Aberrant
+    /// Bloodline's Acidic Ray genuinely resolves (its own
+    /// `BONUS:VAR|Sorcerer_AcidicRay_DamageBonus|Sorcerer_Aberrant_
+    /// BloodlinePower1LVL/2` chains through the SAME real header
+    /// `BONUS:VAR|Sorcerer_Aberrant_BloodlinePower1LVL|Sorcerer_Aberrant_
+    /// BloodlineLVL+BloodlinePower1LVLBonus` every other Aberrant power's
+    /// own level-gated magnitude resolves through) -- one concrete,
+    /// individually-verified proof point, not an assumption drawn from the
+    /// group-level census alone.
+    #[test]
+    fn the_probe_observes_aberrant_bloodline_acidic_ray_against_the_real_fixture() {
+        let wired = probe_sorcerer_bloodline_generic_member_wiring(&fixture());
+        assert!(
+            wired.contains("Aberrant Bloodline ~ Acidic Ray"),
+            "expected Aberrant Bloodline ~ Acidic Ray to resolve through the real generic \
+             pool-group pass; observed set: {wired:?}"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a real corpus record from a completely unrelated
+    /// class-feature group (Rogue's Sneak Attack, no relationship whatsoever
+    /// to Sorcerer Bloodline) is never in the observed set -- confirming the
+    /// probe's own key-extraction reads only the real corpus keys the
+    /// generic pass genuinely emitted, never every key in the corpus.
+    #[test]
+    fn the_probe_does_not_credit_an_unrelated_class_feature_record() {
+        let wired = probe_sorcerer_bloodline_generic_member_wiring(&fixture());
+        assert!(
+            !wired.contains("Rogue ~ Sneak Attack"),
+            "an unrelated Rogue class feature must never appear in a Sorcerer-bloodline-scoped \
+             probe's own observed set: {wired:?}"
+        );
+    }
+
+    /// Arcane (the one hand-modelled bloodline) is included in the same
+    /// sweep on equal footing with the other nine -- this generic pass runs
+    /// purely additively alongside `ground_sorcerer_arcane_bloodline_
+    /// progression`'s own hand-modelled branch, so an Arcane member this
+    /// probe credits is a real, independently-resolved magnitude, not a
+    /// double-count. Arcane Bond is a real, representable choice this
+    /// engine already models separately (not this generic pass), so it is
+    /// deliberately excluded from this assertion -- Arcane Apotheosis is a
+    /// genuine generic-pass member instead (confirmed live).
+    #[test]
+    fn the_probe_observes_a_real_arcane_bloodline_member_alongside_the_other_nine() {
+        let wired = probe_sorcerer_bloodline_generic_member_wiring(&fixture());
+        assert!(
+            wired.iter().any(|k| k.starts_with("Arcane Bloodline ~ ")),
+            "expected at least one Arcane Bloodline member to resolve through the generic \
+             pass alongside the nine other bloodlines: {wired:?}"
         );
     }
 }
@@ -8625,6 +8799,9 @@ fn gather_engine_facts(
         ranger_favored_terrain_bonus_wired: probe_ranger_favored_terrain_bonus_wiring(fixture),
         monk_unarmed_damage_die_wired: probe_monk_unarmed_damage_die_wiring(fixture),
         cleric_domain_generic_member_wired: probe_cleric_domain_generic_member_wiring(fixture),
+        sorcerer_bloodline_generic_member_wired: probe_sorcerer_bloodline_generic_member_wiring(
+            fixture,
+        ),
         wizard_arcane_school_wired: probe_wizard_arcane_school_wiring(fixture),
         bard_bardic_performance_wired: probe_bard_bardic_performance_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
@@ -10902,6 +11079,47 @@ fn classify(
             // a multi-terminal record with an unreachable chain, ...) falls
             // through unaffected.
             if facts.cleric_domain_generic_member_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "generic_pool_group_selection_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // `AT-34-E3-002` (bucket C continuation, cycle 4): the SAME
+            // reuse for the SECOND real pool -- `"<Bloodline> Bloodline ~
+            // <Power>"` (e.g. `"Aberrant Bloodline ~ Acidic Ray"`), a real,
+            // separate `.lst` record the engine's PRE-EXISTING generic
+            // pool-group-selection pass already resolves once a sorcerer
+            // selects that bloodline (`class_feature.sorcerer.bloodline.
+            // generic`, unconditional). `probe_sorcerer_bloodline_generic_
+            // member_wiring` is the real, separate attribution path: it
+            // selects each real Core Rulebook bloodline in turn on a real
+            // sorcerer and keeps only the exact corpus keys the engine's
+            // own generic pass genuinely emitted, so this can only ever
+            // credit a record that pass truly resolves -- every bloodline
+            // member the pass refuses (an unreachable formula chain, ...)
+            // falls through unaffected, exactly as the Cleric Domain check
+            // above. **Book-scoped to `core_rulebook`, unlike the Cleric
+            // Domain check above**: a direct corpus scan (this cycle's own,
+            // not assumed from the Cleric Domain precedent) found three real
+            // corpus-key COLLISIONS this pool's probe observes --
+            // `"Draconic Bloodline ~ Bloodrager"` / `"~ Crossblooded"` /
+            // `"~ Crossblooded Rager"` exist ONLY under
+            // `advanced_class_guide` / `ultimate_magic` (Bloodrager/
+            // crossblood-archetype records, a genuinely different mechanism
+            // sharing a string, not a duplicate to collapse -- confirmed by
+            // direct `docs/work-inventory.json` read, zero `core_rulebook`
+            // unit carries either key) -- this guard keeps this cycle's own
+            // closure claim provably isolated to its own named 77-unit
+            // `core_rulebook` population, the same isolation bar the Cleric
+            // Domain cycle's own receipt proved by scan rather than gated in
+            // code (its own observed set happened to have zero collisions;
+            // this one does not, so the gate is explicit here).
+            if unit.book == "core_rulebook"
+                && facts.sorcerer_bloodline_generic_member_wired.contains(&unit.key)
+            {
                 return Verdict {
                     status: "grounded",
                     evidence: "generic_pool_group_selection_probe_observed_a_real_computed_magnitude"
@@ -19276,6 +19494,80 @@ mod class_feature_text_complete_rung_tests {
         assert_eq!(
             verdict.evidence,
             "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-002` (bucket C continuation, cycle 4): the SAME reuse for
+    /// Sorcerer Bloodline -- a real Aberrant Bloodline power record reaches
+    /// `grounded` off `probe_sorcerer_bloodline_generic_member_wiring`'s
+    /// real, observed generic pool-group-selection explanation.
+    #[test]
+    fn an_aberrant_bloodline_power_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .sorcerer_bloodline_generic_member_wired
+            .insert("Aberrant Bloodline ~ Acidic Ray".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2343,
+            "Aberrant Bloodline ~ Acidic Ray",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "generic_pool_group_selection_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a bloodline-power record the probe never observed
+    /// (its own `EngineFacts` set is empty here) is completely unaffected --
+    /// it still falls through to the pre-existing `engine-does-not-hold`
+    /// bucket-C finding this cycle is closing, proving the fix credits
+    /// nothing it did not actually observe.
+    #[test]
+    fn an_aberrant_bloodline_power_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2343,
+            "Aberrant Bloodline ~ Acidic Ray",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+    }
+
+    /// The collision guard, proven rather than assumed: a corpus key the
+    /// probe's own observed set genuinely contains (`"Draconic Bloodline ~
+    /// Crossblooded"`, a REAL corpus-key collision this cycle's own scan
+    /// found -- `advanced_class_guide`'s own crossblood-archetype record,
+    /// not a `core_rulebook` Sorcerer Bloodline power) is NOT credited when
+    /// the unit's own `book` is not `core_rulebook`, even though the set
+    /// contains its exact key string. Proves this cycle's closure claim
+    /// stays isolated to its own named `core_rulebook` population.
+    #[test]
+    fn a_same_named_record_in_a_different_book_is_not_credited() {
+        let mut facts = EngineFacts::default();
+        facts
+            .sorcerer_bloodline_generic_member_wired
+            .insert("Draconic Bloodline ~ Crossblooded".to_string());
+        let unit = class_feature_unit(
+            "ultimate_magic",
+            "um_abilities_class.lst",
+            1,
+            "Draconic Bloodline ~ Crossblooded",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(
+            verdict.evidence,
+            "generic_pool_group_selection_probe_observed_a_real_computed_magnitude",
+            "a different book's same-named record must never ride this cycle's core_rulebook-\
+             scoped closure"
         );
     }
 

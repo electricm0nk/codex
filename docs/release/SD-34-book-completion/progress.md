@@ -11,6 +11,56 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-002 (bucket C) cycle 4 — Sorcerer Bloodline generic pool-group reuse — partial
+
+**Status: partial.** Reused the same already-shipped generic pool-group-selection pass
+(`push_generic_pool_group_selection_magnitude`) the prior `AT-34-E3-002` cycle wired into
+`classify()` for Cleric Domain, this time for its SECOND real pool, Sorcerer Bloodline — exactly
+the reuse that cycle's own receipt named as the next-cheapest candidate. New probe
+`probe_sorcerer_bloodline_generic_member_wiring` + one new `classify()` rung, the same bridge
+function (`generic_pool_group_selection_observed_keys`) unmodified.
+
+Re-derived fresh at this cycle's start: `core_rulebook` bucket C was **296**, unchanged since
+the prior cycle closed. Re-confirmed the prior cycle's own named 77-unit
+`bloodline_power_or_bloodline_feat_not_computed` sub-cause membership by direct corpus read
+(70 pool-member records + 3 feat-pool-catalog stragglers + 4 elemental-choice-flag records).
+
+The probe's real observed set carried 57 keys. A genuine finding this cycle's own scan caught
+(the Cleric Domain cycle's scan did not encounter this): **3** of those 57 keys are real
+corpus-key collisions with `advanced_class_guide`/`ultimate_magic`'s own unrelated
+Bloodrager/crossblood-archetype records — the new `classify()` rung is explicitly gated on
+`unit.book == "core_rulebook"` (tested: `a_same_named_record_in_a_different_book_is_not_
+credited`) so this cycle's closure claim stays provably isolated to its own population.
+
+**Live regen (local, uncommitted — file-ownership rule assigns `docs/work-inventory.json`
+regen to the wave's shared cycle), whole-inventory before/after diff keyed on unit id**: 0
+added, 0 removed, exactly **54** changed, all `core_rulebook`, all `bloodline_power_or_
+bloodline_feat_not_computed` members — **44** `computed`/`derived` -> `grounded` (bucket
+**DONE**), **10** `static` -> `literal-verified` (bucket **V**, `apply_done_rung_stamps`).
+`core_rulebook` C: 296 -> **242** (−54). DONE 4,383 -> 4,427 (+44). V 104 -> 114 (+10). Every
+other `core_rulebook` bucket unchanged; corpus-wide the same three deltas apply and nothing
+else moves anywhere in the 49,438-unit corpus.
+
+**Movement (`decisions.md §9`):** Closure 44, Reclassification 10, Reachability 54 (both, same
+mechanism reuse), Instrument-correction 0. 44 + 10 = 54 = the bucket's own delta exactly.
+
+4 new probe tests + 3 new classify()-level tests (RED confirmed via a `RED-CHECK-` sentinel
+key, then restored to GREEN). `class_feature`-scoped suite: 138/138 (up from 134). Full bin
+suite: 461/461 (up from 453). `cargo test --locked --no-run` (workspace) exits 0. Desktop
+crate not touched, not tested (confirmed: zero references to this cycle's new symbols under
+`apps/`).
+
+Instrument hygiene: `scripts/completion_atlas.py`'s 10 citation line pins re-derived after this
+cycle's own six pure-insertion hunks shifted every one (`diff -u0` hunk headers, cumulative
+sum, confirmed by reading each new line's real content) — `citation_failures` 10 -> 0, no
+bucket population moved by this.
+
+Remainder: 242 of 296, 11 sub-causes named and summed exactly (`bloodline_power_or_bloodline_
+feat_not_computed` shrinks 77 -> 23, itself split into three further named shapes: 16
+generic-pass-formula-chain refusals, 3 feat-pool-catalog-scope stragglers, 4 elemental-choice-
+flag records of a different corpus shape — none force-closed). Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md`.
+
 ## Status
 
 ### Cycle 5 — AT-34-E4-002 — third trait/drawback slice: open-subtype-family `BONUS:SKILL|%LIST` traits — partial
