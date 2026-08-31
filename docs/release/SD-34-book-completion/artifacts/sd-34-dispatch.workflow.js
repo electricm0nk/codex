@@ -654,8 +654,8 @@ function ucLanePrompt() {
 // at ab65a090ef, so the slot moves to bucket C — the largest single-mechanism block left in the book.
 function cLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-002', dir: 'epic-3-core-rulebook',
-    title: 'bucket C for the Core Rulebook — 296 of 6,701, and the one-mechanism story is now FALSE.\n\n'
-      + 'Re-derive first; measured at HEAD e887a12fce: ' + BT + 'core_rulebook' + BT + ' bucket C = **296** (was 351). '
+    title: 'bucket C for the Core Rulebook — 233 of 6,701, third pass on the pool-group seam.\n\n'
+      + 'Re-derive first; measured at HEAD 5e0ba466a5: ' + BT + 'core_rulebook' + BT + ' bucket C = **233** (351 -> 296 -> 233). '
       + '**Do not inherit the old "all one evidence string" framing — wave 16 disproved it.** That wave closed 38 C '
       + 'units for real (Electricity Resistance and siblings, via the already-shipped generic pool-group compute pass '
       + 'the classifier had simply never consulted) and moved 17 more C→V. Both numbers are corpus-derived, not '
@@ -681,7 +681,7 @@ function cLanePrompt() {
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E3-003', dir: 'epic-3-core-rulebook',
-    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 957 left.\n\n'
+    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 944 left.\n\n'
       + 'Definition: magnitude ingested, never computed or applied. **The instrument already exists** — that is what '
       + 'separates this from bucket B, whose remainder needs new subsystems built.\n\n'
       + 'Re-derive the sub-causes; do not trust inherited figures OR inherited reasons — this bundle has had a cycle '
