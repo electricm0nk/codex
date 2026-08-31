@@ -1,6 +1,7 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-003 (bucket `M` — EQUIPMENT sub-causes, cycle 3)
 
-- **Commit SHA:** filled after commit, below.
+- **Commit SHA:** `ac1cd80dfc` (checkpoint of the code+tests+docs; this receipt's own SHA-fill
+  follows on top of it, same pattern cycle 2's own receipt used).
 
 - **Continuation of, not a duplicate of,** `AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`
   (cycle 1, landed `7147fd86ab`) and `AT-34-E3-003_m_bucket_equipment_cycle_receipt_2.md` (cycle
