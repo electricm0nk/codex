@@ -1,7 +1,8 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-003 (bucket `M` — EQUIPMENT sub-causes, cycle 7)
 
-- **Commit SHA:** filled after commit (this file's own commit is the cycle's only commit —
-  no production code changed this cycle; see below).
+- **Commit SHA:** `7e59387d9f` (this file's own commit — no production code changed this
+  cycle, so it is the cycle's only commit; SHA filled in this follow-up commit, matching cycle
+  3's own established pattern for this receipt-cites-its-own-SHA case).
 
 - **Continuation of, not a duplicate of,** `AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`
   through `_6.md`, all already merged into `tranche/14` before this cycle started, plus the
