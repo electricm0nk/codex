@@ -11,6 +11,120 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-002 — cycle 7 — Ranger Combat Style choice-recognition wiring — partial
+
+**Status: partial.** Re-derived `core_rulebook` bucket C fresh at cycle start (not inherited):
+201, matching cycle 6's own closing figure exactly and confirming no drift since the wave-19
+shared regen. Re-derived cycle 6's own 12-sub-cause remainder table fresh, by direct corpus read
+against `docs/work-inventory.json`, before writing any code (`decisions.md §12` L2) — found and
+corrected one real count error in that table: `monk_unarmed_damage_no_formula_in_engine` was
+stated as 42; the live corpus carries **48** (all 8 non-Medium creature-size columns × 6 levels
+each), not 42 — the 6 `(Small)` records were missing from that sub-cause's own population.
+Logged as a `correction` retro event, verified by a direct categorization script against the
+committed inventory. Confirmed the remaining ten of cycle 6's named sub-causes still hold their
+stated populations and, separately, confirmed by direct `pilot_compute` read that the Small-size
+gap is real: a transcribed formula exists (`small_monk_unarmed_strike_damage_die`), but it is
+wired ONLY into the Pathfinder Unchained Monk's own compute path
+(`ground_unchained_monk_unarmed_strike_damage`), explicitly and deliberately NOT reused for the
+Core Rulebook Monk's own Human-only chassis seam (a byte-identical guard test protects that
+boundary) — so all 48 records stay a genuine engine gap, not a naming-only fix, for two different
+reasons rather than one.
+
+**This cycle closes 2 of the 201** via the SAME paired display/chassis pattern the Favored
+Enemy/Favored Terrain and Domain header closures already established: `"Ranger Combat Style ~
+Archery"` and `"~ Two-Weapon Combat"` are chooser-eligibility marker records
+(`description: null`, `BONUS:VAR|Ranger_Combat_Style_Feat_*` tokens that feed the SEPARATE bonus-
+feat choice's own `PRE` gates) whose own group (`"Ranger Combat Style"`) can never resolve to
+class owner `"ranger"`, so `class_feature_owner`'s generic suffix-matching path could never
+ground them even though the engine already computes and explains exactly this: which combat
+style the character chose. `explain_ranger_level1_chassis_and_class_feature_separation`'s own
+`class_chassis.ranger.combat_style_choice` explanation is a genuinely-computed, non-fabricated +0
+recognition record that names the chosen style in its own `detail` text — the classifier had
+simply never been taught to consult it for these two records. New probe
+`probe_ranger_combat_style_wiring` mirrors `probe_ranger_favored_enemy_bonus_wiring` /
+`probe_ranger_favored_terrain_bonus_wiring` exactly (injects each of the two legal
+`choice:ranger_combat_style` selections into a real `class_sweep_input` fixture and observes the
+real `compute_pilot_base_chassis` output), with one honest difference stated in its own doc
+comment: there is no companion numeric magnitude to cross-check, since the style choice itself
+grants no flat bonus (only the later-gated bonus feat does, already separately recognized) — a
+genuinely-observed `choice_observed` naming the exact selection is the whole, honest bar here,
+the same "+0 but genuinely observed and naming this exact record" idiom the domain header closure
+already established for this bundle. Checked for cross-book key collision before shipping (the
+hazard the domain header closure's own book guard exists for): no other book declares either
+exact key — a false-positive hit inside `advanced_class_guide`'s Hooded Champion record is only a
+`SERVESAS`-style reference INTO the Ranger's own record, not a second declared unit with the same
+key — confirmed by `grep -rn '"key": "Ranger Combat Style'` across `data/corpus/`.
+
+`core_rulebook` bucket C: 201 → **199** (this cycle's own 2). Whole-inventory id-diff: 0 added, 0
+removed, exactly 2 changed, both `core_rulebook:class_feature:ranger_combat_style_*`, both
+`engine-does-not-hold` → `grounded` directly (`wiring_class: "computed"`, no `V`-bucket
+static/derived restamp). Corpus-wide bucket C: 4,182 → 4,180 (delta −2), DONE 24,724 → 24,726
+(delta +2), every other bucket unchanged.
+
+4 new tests (2 positive proof + 2 negative controls), RED confirmed then GREEN. `class_feature`
+suite 150/150 (146 + 4). Full bin suite 486/486 passed, 0 failed. `cargo test
+--locked --no-run` (workspace) exits 0. Identifier and wired-integration audits both clean on
+this cycle's own diff (`OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`); the wide-range audit against
+`merge-base(HEAD, origin/develop)` surfaces pre-existing matches from earlier, already-audited
+cycles only, none inside this cycle's own hunks. `docs/work-inventory.json` regen local/
+uncommitted only, per the wave's file-ownership rule; restored via `git restore` before this
+commit.
+
+**Remainder — 199 of 201, named by mechanism, populations summing exactly** (re-derived fresh at
+this cycle's own close by direct categorization of the current corpus, not carried forward from
+cycle 6's differently-shaped table):
+
+| Sub-cause | Population | Status / next step |
+|---|---:|---|
+| `monk_unarmed_damage_no_formula_in_engine` | 48 (corrected from cycle 6's stated 42) | Genuine engine gap, TWO reasons: the 42 non-Small/Medium band records have no transcribed formula anywhere (no playable race reaches those 7 sizes, per `monk_unarmed_strike_damage_die_for_size`'s own doc comment); the 6 `(Small)` records DO have a real transcribed formula, but it lives only in the Pathfinder Unchained Monk's compute path, deliberately never reused for the Core Rulebook Monk's Human-only chassis (byte-identical guard test). Largest remaining named sub-cause. |
+| `base_class_standalone_feature_not_computed` | 35 | Unstarted this cycle. Real, distinct base-class mechanics with no shared compute path yet (Rage/Greater Rage/Mighty Rage, Wild Shape, Channel Energy, Divine Bond, Smite Evil, Arcane School, internal trackers, ...) — checked a representative sample directly against `pilot_compute`, confirmed genuinely uncomputed, not merely unwired. |
+| `prestige_class_standalone_feature_not_computed` | 26 | Unstarted this cycle. Named prestige-class features (Arcane Archer's arrow abilities, Dragon Disciple's draconic features, Eldritch Knight/Loremaster/Mystic Theurge/Pathfinder Chronicler/Shadowdancer features) — no shared compute path exists for these; each is a genuinely distinct mechanic. |
+| `bloodline_power_or_bloodline_feat_not_computed` | 25 | Unstarted this cycle. The residue after cycles 3/4's generic Sorcerer-Bloodline pool-group closure already took the reusable-formula slice; what remains (Elemental Movement/Body, Familiar bonding, bloodline feats, Elemental sub-bloodlines) is each a genuinely distinct mechanic with no shared formula. |
+| `class_chassis_internal_tracker` | 16 | Confirmed genuine engine gap, not naming-only: the 16 `"<Class> ~ Class"` records (Barbarian/Bard/Cleric/Commoner/Druid/Fighter/Monk/Paladin/Ranger/Rogue/Sorcerer/Warrior/Wizard/Adept/Aristocrat/Expert) are `completeness: "chassis_only"` internal PCGen `DEFINE`/pool-tracker bookkeeping records (checked directly against the raw corpus: `Barbarian ~ Class`'s own tokens are `DEFINE:Barbarian_CFP_Level\|0` and sibling internal counters, never a player-facing value) — no explanation surface exists or should exist for these; out of this territory's wiring-only bar, and arguably not player-facing content at all. |
+| `rage_power_not_computed` | 13 | Confirmed genuine engine gap (re-verified this cycle, not carried forward): `CORE_RULEBOOK_RAGE_POWER_POOL` is a real, already-registered 28-member pool, but only ONE representative power (`Superstition`) has a real magnitude compute — a deliberate, already-shipped "ground one representative option per pool honestly" ruling, the same idiom Battle Mystery/Ward Hex/Life Spirit already follow. Each of the other 27 rage powers (13 in this book's bucket C) is a mechanically distinct effect with no shared formula; closing any one is real per-power engine work, not wiring. |
+| `favored_class_bonus_choice_not_wired` | 11 | Confirmed genuine engine gap, mostly: the 11 `FavoredClass`-facet bare-name records (Adept/Aristocrat/Barbarian/Commoner/Expert/Fighter/Monk/Paladin/Rogue/Warrior/Wizard) mark "this class is your favored class." Only ONE class (`explain_fighter_favored_class_bonus_choice`, `class_chassis.fighter.favored_class_bonus_choice`) has a real recognition function today, narrowly gated to a Human Fighter at level 1 — the other 10 classes have no such function at all. Fighter's own 1 unit is a real, closable "wiring-only" candidate (an already-computed explanation the classifier has never been taught to consult) but was not attempted this cycle to keep this cycle's own diff to one verified mechanism; named here for the next cycle rather than folded into the larger, harder 10. |
+| `prestige_class_chassis_internal_tracker` | 10 | Same shape as `class_chassis_internal_tracker` above, for the 10 prestige classes' own bare-name chooser records (Arcane Archer, Arcane Trickster, Assassin, Dragon Disciple, Duelist, Eldritch Knight, Loremaster, Mystic Theurge, Pathfinder Chronicler, Shadowdancer) — `completeness: "chassis_only"`, internal `<Class>_CFP_Level` DEFINE/BONUS:VAR tracker tokens feeding sibling `PRE` gates, never a player-facing value of their own. Confirmed by direct corpus read (`Arcane Archer`'s own raw tokens). Out of this territory's wiring-only bar. |
+| `rogue_talent_not_computed` | 10 | Confirmed genuine engine gap (re-verified this cycle): the SAME "one representative per pool" idiom as Rage Power — only `Resiliency` has a real magnitude compute (`ROGUE_TALENT_GRANT_LEVEL`'s own choice-recognition code, read directly), explicitly documented "no talent-effect engine exists in this codebase" at every other numbered slot. Each of the 10 remaining named talents in this bucket is a mechanically distinct effect. |
+| `ranger_favored_x_chassis_or_wild_empathy` | 5 (was `ranger_combat_style_or_favored_x_chassis_tracker`: 7; this cycle closed the 2 Combat Style members) | `Basic Favored Enemy`, `Basic Favored Terrain`, `Common Favored Terrain` (internal chooser/pool-definition trackers, same `chassis_only` shape as the class-chassis trackers above — distinct from the ALREADY-CLOSED per-type `"Favored Enemy ~ <type>"` / `"Favored Terrain ~ <type>"` display records), `Ranger ~ Favored Enemy`, `Ranger ~ Wild Empathy` (each its own distinct un-computed magnitude, not the chooser-tracker shape). Not attempted this cycle. |
+| `druid_nature_bond_domain_selection_not_computed` | 7 | Unchanged from cycle 6. Genuine engine gap: no `DRUID_DOMAIN_CHOICE_ID` seam exists at all. |
+| `domain_power_display_record_not_wired` | 2 | Unchanged from cycle 6. The last bare header (`Nobility Domain`) plus its own zero-token granted-power record. |
+| `versatile_performance_not_computed` | 0 | Closed cycle 5; unchanged. |
+
+**Sum check:** 48 + 35 + 26 + 25 + 16 + 13 + 11 + 10 + 10 + 5 + 7 + 2 + 0 = **199**, matching
+`core_rulebook` bucket C's own post-cycle count exactly (201 − 2 = 199).
+
+**Movement, four buckets:** Closure **2** (`engine-does-not-hold` → `grounded`, `core_rulebook`
+only). Reclassification **0**. Reachability **2** (one new `classify()` rung + one new probe now
+answer `grounded` for these two exact corpus keys, reusing an already-shipped, already-tested
+explanation — no new compute path, no new formula). Instrument-correction: **1**
+(`monk_unarmed_damage_no_formula_in_engine`'s own stated population corrected 42 → 48, a count
+error in a prior cycle's own table, not a bucket-boundary move — logged as a `correction` retro
+event).
+
+**A genuine environment discovery, corrected before it could cause damage:** this cycle's shell
+environment carried a PRE-SET `RETRO_ACTOR=sd31-transcribe` (a sibling lane's own actor name,
+inherited from the process environment rather than set by this cycle — the dispatch's own
+`export RETRO_ACTOR=...` instruction does not persist across separate tool calls). The first
+`retro.py correction` call therefore wrote to `docs/retro/events/sd31-transcribe.jsonl` — a file
+this dispatch explicitly names as another lane's dirty file, never to be touched. Caught
+immediately via `git status --porcelain` before the next git write; the file was `git restore`d
+before anything was staged, and the correction was re-emitted with an explicit `--actor
+sd34-at-34-e3-002` flag to `docs/retro/events/sd34-at-34-e3-002.jsonl` instead. No forbidden file
+was ever staged or committed.
+
+**Next-cycle plan:** (1) the Fighter favored-class-bonus-choice unit (1 of the 11
+`favored_class_bonus_choice_not_wired` records) is a real, already-computed, wiring-only
+candidate — extend the classifier for the bare `"Fighter"` `FavoredClass`-facet record
+specifically; (2) `class_chassis_internal_tracker` (16) and `prestige_class_chassis_internal_
+tracker` (10) — 26 total — are internal PCGen bookkeeping with no player-facing explanation
+surface; worth an operator ruling or an `atlas-defects.md` entry on whether bucket C's own
+definition should exclude these by construction; (3) `monk_unarmed_damage_no_formula_in_engine`
+(48) needs either real new formula work or an operator-scoped ADR on the Small-size
+cross-subsystem reuse question; (4) `base_class_standalone_feature_not_computed` (35) and
+`prestige_class_standalone_feature_not_computed` (26) are both unstarted and need per-feature
+verification before any is attempted. Full detail in
+`artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-001 — wave-19 shared `docs/work-inventory.json` regeneration and attribution — complete
 
 **Status: complete.** The mandatory closing regeneration cycle for wave 19 (`decisions.md §9`'s
