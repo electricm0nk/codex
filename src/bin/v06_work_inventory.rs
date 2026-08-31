@@ -21320,6 +21320,73 @@ mod class_feature_text_complete_rung_tests {
         assert_eq!(verdict.evidence, "explanation_id_observed_in_a_real_computation");
     }
 
+    /// `AT-34-E3-002` (bucket C, cycle 9): the bare `"Ranger ~ Favored
+    /// Enemy"` bookkeeping header record (`VISIBLE:NO`, `data/corpus/
+    /// core_rulebook/class_feature/ranger/ranger_favored_enemy.json`)
+    /// reaches `grounded` off `pilot_compute::mod`'s own NEW
+    /// `"class_feature.ranger.favored_enemy"` explanation -- the same
+    /// exact-slug identity idiom `"class_feature.ranger.favored_terrain"`
+    /// already established for this record's own sibling (Favored Terrain),
+    /// which this file's own `class_feature_owner`/`class_feature_exact_
+    /// suffix_grounded` GENERIC path already grounds unaided (no special
+    /// `classify()` rung needed, unlike the bare `"<Class>"` Favored Class
+    /// Bonus shape cycle 8 closed -- `group` here is `"Ranger"`, which DOES
+    /// equal the class's own name text, so owner resolution and the exact
+    /// trailing-dot-segment match both succeed once the id exists).
+    /// Favored Enemy's own PRE-EXISTING explanations
+    /// (`class_chassis.ranger.favored_enemy_choice`,
+    /// `..._skill_bonus`, `..._attack_damage_bonus`) all carry a magnitude-
+    /// descriptor suffix the classifier's own `CLASS_FEATURE_ID_MAGNITUDE_
+    /// SUFFIXES` list does not include (`"choice"`), so none of them --
+    /// alone or via the suffix-strip fallback -- was ever reachable from
+    /// this exact bare header's own `feature_slug` ("favored_enemy"); this
+    /// is a genuine, real gap, not a broadened matcher, closed the same way
+    /// this file's own generic exact-slug idiom already closes it for
+    /// Favored Terrain.
+    #[test]
+    fn a_ranger_favored_enemy_display_record_reaches_grounded_via_the_new_exact_slug_explanation()
+    {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("ranger".to_string(), "core_rulebook");
+        facts.explanation_ids.insert("class_feature.ranger.favored_enemy".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1444,
+            "Ranger ~ Favored Enemy",
+            3,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "explanation_id_observed_in_a_real_computation");
+    }
+
+    /// NEGATIVE CONTROL: without the new explanation id in `facts.
+    /// explanation_ids`, the pre-existing `_choice`/`_skill_bonus`/
+    /// `_attack_damage_bonus` ids alone must NOT ground this bare header --
+    /// proves the fix is additive (a genuinely new id), never a relaxed
+    /// matcher over the ids that already existed.
+    #[test]
+    fn a_ranger_favored_enemy_display_record_is_unaffected_by_its_pre_existing_choice_and_bonus_ids_alone()
+    {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("ranger".to_string(), "core_rulebook");
+        facts.explanation_ids.insert("class_chassis.ranger.favored_enemy_choice".to_string());
+        facts.explanation_ids.insert("class_chassis.ranger.favored_enemy_skill_bonus".to_string());
+        facts
+            .explanation_ids
+            .insert("class_chassis.ranger.favored_enemy_attack_damage_bonus".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1444,
+            "Ranger ~ Favored Enemy",
+            3,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_ne!(verdict.status, "grounded");
+    }
+
     /// PROVE THE GUARD CAN FAIL, case 1 (`decisions.md §10` AMENDMENT): an
     /// archetype/variant-qualified group must NEVER borrow the base class's
     /// explanation id, even when the stripped slug would otherwise match --

@@ -35232,6 +35232,36 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         ),
     });
 
+    // `AT-34-E3-002` (bucket C, cycle 9): an exact-slug identity record for
+    // this feature -- mirrors `"class_feature.ranger.favored_terrain"`'s own
+    // already-shipped idiom (pushed a few lines below this function's own
+    // Favored Terrain block) for this record's sibling. The two records
+    // above (`favored_enemy_skill_bonus` / `favored_enemy_attack_damage_bonus`)
+    // both carry a magnitude-descriptor suffix `v06_work_inventory.rs`'s own
+    // `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` list does not include ("skill_
+    // bonus"/"attack_damage_bonus" do not end in a listed word), and the
+    // choice-recognition record above ends in "_choice" (also unlisted), so
+    // NONE of the three is reachable from the corpus's own bare `"Ranger ~
+    // Favored Enemy"` header record's exact `feature_slug`
+    // ("favored_enemy") through that file's generic `class_feature_exact_
+    // suffix_grounded` check -- a real, disclosed gap, not a broadened
+    // matcher. This record carries the SAME `favored_enemy_bonus` value
+    // already verified above; it computes no new magnitude.
+    explanations.push(ComputationExplanation {
+        id: "class_feature.ranger.favored_enemy".to_owned(),
+        value: favored_enemy_bonus,
+        detail: format!(
+            "Ranger Favored Enemy at ranger level {level} (PF1 Core Rulebook, 1st-level ranger \
+             class feature): the same flat +{favored_enemy_bonus} magnitude already grounded \
+             separately above for the skill-check bonus (class_chassis.ranger.\
+             favored_enemy_skill_bonus) and the weapon attack/damage bonus (class_chassis.\
+             ranger.favored_enemy_attack_damage_bonus). This record exists to give the exact \
+             corpus key `\"Ranger ~ Favored Enemy\"` its own exact-slug explanation id, \
+             mirroring Favored Terrain's own `class_feature.ranger.favored_terrain` idiom; no \
+             new magnitude is computed here"
+        ),
+    });
+
     // SD13-E5 ranger level 5: recognize the SECOND favored-enemy selection, the
     // rule's other 5th-level interval grant. Mirrors the first favored enemy's
     // own choice-recognition idiom exactly (open-ended, raw string

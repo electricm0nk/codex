@@ -68,6 +68,17 @@ const RANGER_FAVORED_ENEMY_CHOICE_ID: &str = "class_chassis.ranger.favored_enemy
 const RANGER_FAVORED_ENEMY_SKILL_BONUS_ID: &str = "class_chassis.ranger.favored_enemy_skill_bonus";
 const RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID: &str =
     "class_chassis.ranger.favored_enemy_attack_damage_bonus";
+// `AT-34-E3-002` (bucket C, cycle 9): the exact-slug identity record that
+// gives the corpus's own bare `"Ranger ~ Favored Enemy"` bookkeeping header
+// record (`VISIBLE:NO`) an explanation id `v06_work_inventory.rs`'s own
+// GENERIC `class_feature_exact_suffix_grounded` path can attribute this
+// record to (`feature_slug` == `"favored_enemy"`, and none of the three ids
+// above ends in exactly that slug -- each carries its own magnitude-
+// descriptor or `_choice` suffix instead). Mirrors `"class_feature.ranger.
+// favored_terrain"`'s own already-shipped idiom for this record's sibling
+// (Favored Terrain) exactly: same value as the skill/attack-damage bonus
+// above, no new magnitude computed.
+const RANGER_FAVORED_ENEMY_ID: &str = "class_feature.ranger.favored_enemy";
 
 // Grounded combat-style level-gate absence record (later SD13-E5 slice): PF1
 // grants the style choice and its first bonus feat together at 2nd level, so
@@ -76,7 +87,7 @@ const RANGER_COMBAT_STYLE_LEVEL_GATE_ID: &str = "class_chassis.ranger.level_gate
 
 // Every Ranger-only per-pillar record id — used by the negative controls to
 // prove none of them leak onto sibling classes, level 2+, or multiclass.
-const RANGER_PER_PILLAR_RECORD_IDS: [&str; 7] = [
+const RANGER_PER_PILLAR_RECORD_IDS: [&str; 8] = [
     RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID,
     RANGER_COMBAT_STYLE_RETIRED_BLOCKER_ID,
     RANGER_TRACK_ID,
@@ -84,6 +95,7 @@ const RANGER_PER_PILLAR_RECORD_IDS: [&str; 7] = [
     RANGER_FAVORED_ENEMY_SKILL_BONUS_ID,
     RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID,
     RANGER_COMBAT_STYLE_LEVEL_GATE_ID,
+    RANGER_FAVORED_ENEMY_ID,
 ];
 
 // F6 hybrid blockers are accepted truth and must still be claim-blocking for
@@ -239,6 +251,39 @@ fn ranger_favored_enemy_attack_damage_bonus_is_grounded_at_plus_two() {
         attack_damage.detail.contains("conditional-application"),
         "favored-enemy attack/damage bonus must disclaim the conditional-application engine: {}",
         attack_damage.detail
+    );
+}
+
+// `AT-34-E3-002` (bucket C, cycle 9): the exact-slug identity record that
+// lets the corpus's own bare `"Ranger ~ Favored Enemy"` bookkeeping header
+// (VISIBLE:NO) be attributed via `v06_work_inventory.rs`'s own GENERIC
+// `class_feature_exact_suffix_grounded` path -- no special `classify()`
+// rung needed, the same way `"class_feature.ranger.favored_terrain"`
+// already grounds this record's own sibling (Favored Terrain) unaided.
+#[test]
+fn ranger_favored_enemy_exact_slug_identity_record_carries_the_same_plus_two_magnitude() {
+    let input = load(RANGER_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let identity = explanation(&computation, RANGER_FAVORED_ENEMY_ID);
+    assert_eq!(
+        identity.value, 2,
+        "the exact-slug identity record must carry the SAME flat +2 magnitude already \
+         grounded separately for the skill and attack/damage bonuses, not a new or \
+         fabricated value, got {}",
+        identity.value
+    );
+    // Must be the SAME magnitude as the two pre-existing sibling records, not an
+    // independently (re-)derived number that could silently drift from them.
+    let skill = explanation(&computation, RANGER_FAVORED_ENEMY_SKILL_BONUS_ID);
+    let attack_damage = explanation(&computation, RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID);
+    assert_eq!(
+        identity.value, skill.value,
+        "identity record and skill-bonus record must agree exactly"
+    );
+    assert_eq!(
+        identity.value, attack_damage.value,
+        "identity record and attack/damage-bonus record must agree exactly"
     );
 }
 
