@@ -11,6 +11,66 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle 9 — AT-34-E3-002 — Ranger Favored Enemy exact-slug identity record — partial
+
+**Status: partial.** Sixth pass on the pool-group seam, re-derived fresh at cycle start:
+`core_rulebook` bucket C = **193** (`python3 scripts/completion_atlas.py --book
+core_rulebook --check`), matching the dispatch brief's own quoted sequence
+(351→296→233→201→199→193) exactly. Re-checked cycle 8's own 13-row remainder table rather
+than inheriting it blind — this bundle has had one cycle disprove another's stated reason.
+Two of the smallest named sub-causes were re-verified directly against the live code
+(`versatile_performance_not_computed`: `class_feature_grant_consumer.rs`'s own named,
+three-test-backed refusal confirms the choice-gated skill-substitution engine genuinely does
+not exist; `domain_power_display_record_not_wired`: `"Nobility Domain"` confirmed to carry no
+`domain_power::DOMAIN_POWER_CATALOG` entry by direct grep) — both held, no correction needed
+this cycle.
+
+Found and closed one real, distinct case inside `ranger_favored_x_chassis_or_wild_empathy`
+(5): the bare `"Ranger ~ Favored Enemy"` bookkeeping header record (`VISIBLE:NO`,
+`wiring_class: "computed"`) had no exact-slug explanation id, unlike its own sibling record
+Favored Terrain (`class_feature.ranger.favored_terrain`, already shipped and already
+grounded via the classifier's GENERIC path). None of Favored Enemy's three pre-existing
+explanations (`class_chassis.ranger.favored_enemy_choice`, `..._skill_bonus`,
+`..._attack_damage_bonus`) ends in exactly `favored_enemy`, the corpus record's own
+`feature_slug`, and `v06_work_inventory.rs`'s known-magnitude-suffix fallback list does not
+include `"choice"` either — a real, disclosed asymmetry, not a broadened matcher. Added ONE
+new explanation, `class_feature.ranger.favored_enemy`, in `pilot_compute::mod.rs`, carrying
+the SAME already-triple-verified `favored_enemy_bonus` magnitude — no new formula, no new
+`classify()` rung needed (the generic path grounds it unaided once the id exists, confirmed
+live by the regen's own before/after diff reproducing `"Ranger ~ Favored Terrain"`'s own
+evidence string exactly).
+
+`core_rulebook` C 193 → **192** (1 closed, straight to DONE). Whole-inventory id-diff:
+0 added, 0 removed, **exactly 1 changed**, corpus-wide (`core_rulebook:class_feature:
+ranger_favored_enemy`, `engine-does-not-hold`→`grounded`). Corpus-wide C 4174→**4173**, DONE
+24961→**24962**; every other bucket byte-identical before/after at both scopes.
+
+RED→GREEN: new integration test (`ranger_favored_enemy_exact_slug_identity_record_carries_
+the_same_plus_two_magnitude`) in `tests/sd13_ranger_level1_chassis_and_class_feature_
+separation.rs`, confirmed failing for the intended reason (missing explanation id, full
+explanation list printed, id genuinely absent) before the fix landed. Widened
+`RANGER_PER_PILLAR_RECORD_IDS` 7→8, extending every existing leakage-guard test for free.
+Plus 2 new `classify()`-level unit tests (a proof + an additive-not-relaxed-matcher negative
+control) in `v06_work_inventory.rs`. `cargo test --locked --test sd13_ranger_level1_
+chassis_and_class_feature_separation`: 19/19. `cargo test --locked --bin v06_work_inventory`:
+501/501 (497+4). `class_feature`-scoped: 156/156 (154+2). `cargo test --locked --no-run`
+(workspace): exit 0.
+
+**Investigated and deferred, in-territory but out of reach this cycle**: `Ranger ~ Wild
+Empathy` (the other named member of the same 5-unit sub-cause) has no compute at all. Its
+formula would genuinely mirror the already-shipped `class_chassis.druid.wild_empathy`
+(level + Charisma modifier; PF1 CRB: Ranger Wild Empathy "functions...like the druid ability
+of the same name") — but the corpus record is `wiring_class: "static"`, not
+`computed`/`derived`; confirmed live that Druid's own already-computed Wild Empathy sibling
+reaches doneness only via a completely separate `oracle-agree`/bucket-V mechanism
+(`AT-34-E3-005`'s territory), never via `grounded`. Building the compute would not move
+bucket C through this criterion's own mechanism and would cross into a sibling epic's owned
+disposition path — named in the remainder, logged as a `deferral` retro event
+(`docs/retro/events/sd34-at-34-e3-002.jsonl`), not force-closed.
+
+Remainder now **192** (193 − 1), 13 sub-causes, sum re-verified exactly. Full detail:
+`artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-001 — wave-21 shared `docs/work-inventory.json` regeneration and attribution — complete
 
 **Status: complete.** The mandatory closing regeneration cycle for wave 21 (`decisions.md §9`'s
