@@ -11,6 +11,44 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 24, Gate Lane A (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — the 124-row PI item closed by test correction, 3 more root-full functions fixed — partial
+
+**Status: partial.** Assigned: `root-full` (the 13-test remainder wave-23's Lane A named) plus
+the 124-row Product-Identity item. Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave24_cycle_receipt.md`.
+
+**The PI item closed with zero `data/corpus/**` writes — the brief's own "corrected" finding
+still needed a second correction.** It said `inner_sea_magic`, 124 records, masked-not-leaked.
+Re-derived: the 124 span **6 books** (`adventurers_guide` 49, `inner_sea_world_guide` 29,
+`inner_sea_magic` 20, `inner_sea_intrigue` 11, `inner_sea_combat` 8, `book_of_the_damned_volume_2`
+7), and "masked-not-leaked" reproduced exactly. The deeper find: this was never a policy
+violation needing a regeneration. `SD-32-compute-library-and-cause-closure/decisions.md §24`
+(operator ruling, 2026-08-23) explicitly authorizes exactly this shape for `class_feature`
+(named alongside `ability`/`deity`, population 144) — ingest under a Codex-generated neutral
+name rather than dropping the row — and `c1505f6497` already implements it, with its own
+independent test suite proving no PI leak. `tests/sd30_declared_product_identity_in_shipped_
+class_features.rs` (2026-08-14) predates `§24` by 9 days and never got updated. Fixed the test's
+`name_leak()` to enforce `§24b`'s binding conditions instead of flagging every declaration —
+the corpus needed no change.
+
+**root-full: 3 of 13 named test functions closed** (`sd27_known_spells_must_be_on_the_class_
+spell_list.rs` 1 — desktop spell-picker catalog re-derived 2113→2127; `sd27_ability_automatic_
+granted_race_traits.rs` 2 — 12 new Adoptive-Parentage grant edges added, and the file's
+"unclassified must be empty" premise retired in favor of asserting the exact, already-documented
+CHOOSE-pool residue `race_resolver.rs` itself names). **10 remain**, across 5 files, every one
+diagnosed to an exact cause and population this cycle (not left as "the rest") — all require a
+`data/corpus/**` write outside this cycle's PI-only territory: `sd27_book_license_record_
+counts.rs` (2 — 21+19 books' LICENSE.json counts), `sd27_equipment_modifier_price_matches_
+corpus_cost_token.rs` (2 — 4 PU duplicate keys), `sd31_class_feature_corpus_key_uniqueness.rs`
+(1 — one stale pre-fix leftover file), `v06_corpus_trap_report.rs` (4 — 3,181 findings across
+four traps, the same population `decisions.md §13`'s `AT-34-E1-007`/`AT-34-E1-008` epic already
+tracks).
+
+`cargo test --locked --no-run` (whole workspace): exit 0. `cargo test --locked --lib`: 3,022
+passed / 0 failed (unchanged). This cycle's own 4 targeted binaries (including the sibling
+race-trait test, unregressed): 17 passed / 0 failed. `apps/desktop/src-tauri`: not touched, not
+run. `corpus_literal_sweep`: unmoved (no `data/corpus/**` write this cycle).
+
 ### Cycle — Wave 23, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — `denominator-gate` and `figure-provenance`, both GREEN — complete
 
 **Status: complete.** Both assigned `verify.sh` stages closed GREEN: `denominator-gate`
