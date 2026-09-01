@@ -3625,6 +3625,63 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E6-001 gate-lane-a (wave 26) — root-full's last 3 of 4 named mechanisms closed
+
+**Why:** wave-24's lane A fully diagnosed the last 4 `root-full` data/corpus mechanisms but
+withheld the fixes because its own territory was PI-only. This cycle carries the corpus grant
+wave-24 lacked and closes 3 of the 4.
+
+**1. `sd27_book_license_record_counts.rs` (guarded LICENSE-only regen, 23 books).** Restated
+`records_processed`/`records_redacted` from the live corpus on 23 books (21 + 19 mismatches,
+17-book overlap) — no `data/corpus/**` content record touched, only `LICENSE.json`. A cross-item
+interaction (item 2 below deleting 4 `pathfinder_unchained` equipment records after this item's
+regen already ran) briefly un-fixed PU's own restatement; caught by re-running the combined
+target-test suite and fixed the same cycle (`retro.py correction` logged).
+
+**2. `sd27_equipment_modifier_price_matches_corpus_cost_token.rs` (generator defect, fixed at
+the source).** `b34bf2b4f0` ("git mv, kind-misclassified by directory") had relocated PU's 4
+`ABP +0` equipmods records to the categorized `equipment/equipmods/` layout, but
+`gen_book_cache.rs`'s write guard only ever checked the flat layout for existence — so the very
+next regen silently recreated 4 flat duplicates. New `existing_equipment_record_path()` helper
+checks both layouts (TDD: RED for the right reason — `E0425`, then GREEN; 3 new unit tests, full
+suite 8/8). Corpus: the 4 stale flat duplicates deleted after independent per-record
+verification. Also resolved the sibling price-classification mismatch wave-24 had flagged
+"plausibly the same 4, unconfirmed" — confirmed exactly, no further edit needed.
+
+**3. `sd31_class_feature_corpus_key_uniqueness.rs` (2 stale files, not 1).** Wave-24 diagnosed
+one stale leftover (`adventurers_guide/bloodline_feat-2.json`). Deleting it surfaced a SECOND,
+previously-undiscovered duplicate the test's own first-collision-panics design had been hiding
+(`core_rulebook/draconic_bloodline-2.json`, same defect shape, same source line/sha256, stale
+pre-`a08973ae35` `class` value). A standalone full-corpus python scan confirmed **zero**
+remaining `(book, key)` duplicates after both deletions.
+
+**4. `v06_corpus_trap_report.rs` (3,181 findings, routed not fixed).** Re-derived live, exactly
+reproducing wave-24's counts (249/650/2,117/165). Confirmed against `decisions.md §13`
+(pre-existing): this is the SAME population that decision already rules out-of-DoD, registered
+to `forward-scope-register.md D1.1` and tracked by `AT-34-E1-007`/`AT-34-E1-008` (both already
+`complete` in `kanban.md`, correctly so — neither was ever scoped to these 4 trap kinds). No
+code or corpus change; the test was not weakened.
+
+**Verification:** `cargo test --locked --test sd27_book_license_record_counts --test
+sd27_equipment_modifier_price_matches_corpus_cost_token --test
+sd31_class_feature_corpus_key_uniqueness`: **11 passed / 0 failed** (all 3 mechanisms). `cargo
+test --locked --bin gen_book_cache`: 8/8. `cargo test --locked --no-run` (whole workspace, at
+this cycle's last commit `5d7c985bf2`): exit 0. `cargo test --locked --lib`: 3,019 passed / 0
+failed / 14 ignored (0 failures; the delta from wave-24's 3,022 is other lanes' commits, not
+this cycle's — `--lib` excludes `src/bin/*` unit tests). `corpus_literal_sweep`: 48,708 → 48,706
+(exactly the 2 class_feature deletions; the 4 equipment deletions move it by 0, confirmed
+empirically — those records carry no literal `COST:` token to byte-compare; `LICENSE.json` is
+excluded from the walk entirely).
+
+Full receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave26_cycle_receipt.md`.
+
+**Status: partial** on this criterion overall (item 4 is not this criterion's to close — it is
+`AT-34-E1-007`/`AT-34-E1-008`'s, already `complete`). All 4 of this cycle's named mechanisms are
+now disposed of: 3 closed, 1 correctly routed. `kanban.md` row 26 (the canonical
+final-acceptance scan) left untouched — this cycle's own gate-remediation work does not satisfy
+that criterion either.
+
 ### Cycle — AT-34-E4-002 (cycle 3) — the trait/drawback selection capability is BUILT, 31 units genuinely closed
 
 **Why:** the criterion's first two cycles diagnosed (no trait/drawback selection capability
