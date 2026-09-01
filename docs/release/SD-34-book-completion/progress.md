@@ -11,6 +11,76 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — AT-34-E3-001 — wave-22 shared `docs/work-inventory.json` regeneration and attribution — complete
+
+**Status: complete.** The mandatory closing regeneration cycle for wave 22 (`decisions.md §9`'s
+file-ownership rule: dispatched lanes defer `docs/work-inventory.json` regeneration to one
+shared, end-of-wave cycle). The dispatch brief again named "four lanes"; only three
+code-bearing commits landed since wave 21's own shared regen — C (`AT-34-E3-002` cycle 9,
+`2c81e4bfce`, Ranger Favored Enemy exact-slug identity record), UC (`AT-34-E4-002` cycle 10,
+`c1cbfa0698` picker-gap fix + `7714a6a5ef` eighth trait slice for Eldritch Delver), M
+(`AT-34-E3-003` bucket-M equipment cycle 7, `7e59387d9f`, exhaustive remainder census,
+explicitly **0 code change**). Same "fourth is this cycle itself" stale-boilerplate shape prior
+waves already resolved. UC's own picker-gap fix (chaining the three remaining `trait_effects`
+tables into `list_available_character_traits`) moves no inventory bucket by construction — it
+makes seven already-`grounded` traits selectable in the desktop character creator, a UI
+reachability fix, not a new engine computation. Ran in the assigned shared main checkout —
+`git fetch origin tranche/14 && git rebase origin/tranche/14` fast-forwarded cleanly onto
+`451a5d6837`, no conflict, no worktree needed.
+
+Three-pass pipeline run in order (`corpus_literal_sweep` CLEAN, 194s [48,708 examined, 0
+findings], `derived_evaluator_fixture_check` 14s [1,839 units cleared over 2,580 fixture rows, 0
+failed], `v06_work_inventory` regenerated 729s) — no `--allow-stamp-loss`. Total pipeline wall
+time **937s (~15m37s)**, timed with `date -u +%s` markers bracketing each pass — inside the same
+~920–955s band as waves 16/18/19/20/21.
+
+**Whole-corpus before/after diff by unit id: 0 added, 0 removed, 2 changed, both real
+bucket-boundary transitions, zero evidence-only churn.** Every lane's own stated figure
+reproduced exactly, digit for digit:
+
+| Cycle | Own claim | Measured | Match |
+|---|---|---:|---|
+| C cycle 9 — Ranger Favored Enemy exact-slug identity record | 1, `core_rulebook` C 193→192 | 1 | exact |
+| UC cycle 10 — eighth trait slice, Eldritch Delver | 1, `ultimate_campaign` DONE 203→204, M 37→36 | 1 | exact |
+| M cycle 7 — exhaustive remainder census | 0 (explicit) | 0 | exact |
+
+**No lane's expectation mismatched this wave** — the first wave since 21 where every figure and
+every membership reproduced on the first check, with zero side-findings claimed by nobody
+(unlike wave 21's evidence-only `mythic_adventures` pair — this wave's diff carries none).
+Re-derived independently via `completion_atlas.py` before/after both snapshots: `core_rulebook`
+DONE 4655→4656 (+1), C 193→192 (−1), all other buckets unchanged; `ultimate_campaign` DONE
+203→204 (+1), M 37→36 (−1), D/U/X unchanged (2/21/2); corpus-wide DONE 24961→24963 (+2), C
+4174→4173 (−1), M 4450→4449 (−1), every other bucket unchanged.
+
+**Movement, four buckets (`decisions.md §9`):** Closure **2** (both units, straight to DONE),
+Reclassification **0**, Reachability **0** (the UI picker fix touches no inventory bucket),
+Instrument-correction **0** in `docs/work-inventory.json` itself.
+
+`completion_atlas.py --check` (corpus-wide), run before any fix: `citation_failures=1` — the `V`
+bucket's citation line drifted 13250→13262 from wave 22's own `v06_work_inventory.rs`
+insertions. Re-derived by direct `grep -n`, fixed in `scripts/completion_atlas.py` this same
+cycle, re-run clean: `unclassified=0 overlap=0 done_evidence_violations=0
+missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`, exit 0. `--book
+core_rulebook --check` exits 1 — expected, book not yet 100% (`B:470 C:192 D:366 M:778 V:114
+U:10 X:115`). `cargo test --locked --no-run` exits 0, full workspace and `apps/desktop/src-tauri`
+tested explicitly as its own separate cargo workspace. No `src/**` file touched by this cycle
+itself — only `scripts/completion_atlas.py`'s one-line citation fix.
+
+**Red test re-confirmed GREEN, not newly fixed.** The dispatch brief re-described
+`38e10d066b`'s `engine_diagnostic:` prefix fix and its red test as outstanding; wave 21's own
+shared regen already baked the fix in and confirmed GREEN nine dispatches ago. Re-run at this
+wave's HEAD anyway: `cargo test --locked --test v06_work_inventory
+the_committed_inventory_is_well_formed_and_uses_only_declared_statuses` → `1 passed; 0 failed`,
+3.15s — a confirmation the fix has not regressed across ten dispatches, not new work.
+
+`python3 scripts/wave_ledger.py`: `wf_56c5bcae-8f5` already carried `"22"` in `KNOWN_WAVES` — no
+script edit needed. Wave 22 ran **at least 1:40:23** through this cycle's own last check before
+commit (`RUNNING` because this cycle's own activity is the wave's most recent; settles to `done`
+once this commit lands and three minutes pass with no further writes) — shorter so far than the
+last three full waves (wave 19: 2:19:04, wave 20: 1:57:52, wave 21: 2:13:44). Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_wave9_regen_receipt.md` (tenth section, "wave-22
+regeneration and attribution").
+
 ### Cycle 7 — AT-34-E3-003 — EQUIPMENT sub-causes, exhaustive remainder census — partial
 
 **Status: partial.** Territory: the two EQUIPMENT `M` sub-causes

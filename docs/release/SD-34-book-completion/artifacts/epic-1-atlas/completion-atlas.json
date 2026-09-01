@@ -29,7 +29,7 @@
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
-      "count": 4174,
+      "count": 4173,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'explanation_id' / 'diagnostic')",
       "meaning": "held and computed, never surfaced"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 24961,
+      "count": 24963,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -62,7 +62,7 @@
         "must_contain": "ingested-magnitude"
       },
       "clears": "running the compute path (shape engine)",
-      "count": 4450,
+      "count": 4449,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
       "meaning": "magnitude ingested, never computed or applied"
     },
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13250,
+        "line": 13262,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "ea611005527d3a2e9eb4991f6dbe280d0438f474",
+  "derived_at": "451a5d68375006761f1b65b7e73fa81d4780d2ad",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],

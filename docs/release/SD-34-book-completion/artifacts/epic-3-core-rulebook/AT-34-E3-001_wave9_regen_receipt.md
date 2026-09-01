@@ -1633,3 +1633,214 @@ edit. `completion_atlas.py --check` clean both scopes (book-scoped exit 1 is the
    the same ~920–955s band regardless of how many units the wave actually moved (72, 90, 337, 7,
    230 respectively) — the pipeline's cost is dominated by the fixed cost of walking the full
    49,438-unit corpus three times, not by the size of any one wave's own movement.
+
+# Cycle — wave-22 regeneration and attribution, tenth dispatch (2026-08-31/09-01, later same day)
+
+- **Commit SHA:** this receipt is committed in the same commit as the `docs/work-inventory.json`
+  regeneration and `completion-atlas.json` it describes; `git log -1` at the time of reading
+  resolves it. Base: `origin/tranche/14` tip at dispatch time, `451a5d6837` (fast-forwarded
+  cleanly from local `HEAD`, no conflict, no worktree needed).
+
+## 0. "Four lanes" named, three code lanes measured — same stale-boilerplate shape as waves 15/19/20/21
+
+The dispatch brief again named "UC (partial) / C (partial) / M (partial)" as if a fourth lane
+also reported — the same "fourth is this cycle itself" framing prior waves' own receipts already
+resolved. `git log --oneline a0cbc2388a..HEAD` shows exactly three code-bearing commits since
+wave 21's own shared regen: C `AT-34-E3-002` cycle 9 (`2c81e4bfce`, Ranger Favored Enemy exact-
+slug identity record), UC `AT-34-E4-002` cycle 10 (`c1cbfa0698` picker-gap fix + `7714a6a5ef`
+eighth trait slice, Eldritch Delver), M `AT-34-E3-003` bucket-M equipment cycle 7
+(`7e59387d9f`, exhaustive remainder census, explicitly **0 code change**). The dispatch brief's
+own second staleness this wave: its red-test instruction ("Commit `38e10d066b` ... Run that test
+after regenerating") describes a fix wave 21's own shared regen already baked in and confirmed
+GREEN nine dispatches ago (§7 of that section, this same file) — not new work for this cycle.
+Re-run anyway per instruction (§7 below); still GREEN, as expected, not newly fixed.
+
+UC's own picker-gap fix (`c1cbfa0698`, chaining `INITIATIVE_TRAIT_BONUSES`/
+`CONCENTRATION_TRAIT_BONUSES`/`ABILITY_DIFF_SKILL_TRAIT_BONUSES` into
+`list_available_character_traits`, closing the gap cycle 9 found and wave 22's own dispatch
+brief handed back as this cycle's explicit first task) moves no `docs/work-inventory.json`
+bucket by construction — it makes seven **already-`grounded`** traits selectable in the desktop
+character creator, a UI reachability fix, not a new engine computation. The commit that actually
+moved an inventory bucket for UC this wave is the eighth-trait-slice commit (`7714a6a5ef`,
+Eldritch Delver, mixed `CASTERLEVEL`+`SKILL`).
+
+## 1. Rebase and baseline
+
+`git fetch origin tranche/14 && git rebase origin/tranche/14` — fast-forwarded cleanly onto
+`451a5d6837`, no conflict, no worktree needed. `git show HEAD:docs/work-inventory.json` at
+`451a5d6837` is the before-snapshot for every figure below.
+
+## 2. Three-pass pipeline, in order, timed
+
+```
+corpus_literal_sweep            --json-out /tmp/sweep.json      194s (3m14s)   CLEAN (48,708 examined of 51,482 read, 0 findings)
+derived_evaluator_fixture_check --json-out /tmp/fixture.json     14s           1,839 units cleared over 2,580 fixture rows, 0 failed
+v06_work_inventory (CORPUS_LITERAL_SWEEP_REPORT + DERIVED_FIXTURE_CHECK_REPORT set, no --allow-stamp-loss)
+                                                                 729s (12m9s)
+```
+
+**Total pipeline wall time: 937s (~15m37s)**, timed from `date -u +%s` markers bracketing each
+pass. Sits inside the same ~920–955s band as the five prior measured shared-regen runs (wave 16:
+927s, wave 18: 953.664s, wave 19: 941.7s, wave 20: 919.5s, wave 21: ~940.5s) — a sixth
+confirmation that the pipeline's cost is fixed by the corpus walk, not by wave size.
+
+## 3. Whole-corpus before/after diff, by unit id — the headline finding
+
+```
+before: 49438 units    after: 49438 units    added: 0    removed: 0
+changed (status or evidence, any field): 2
+
+  Real bucket-boundary transitions: 2
+    engine-does-not-hold -> grounded : 1  (core_rulebook class_feature)
+    ingested-magnitude   -> grounded : 1  (ultimate_campaign trait)
+
+  Evidence-only, same-status churn: 0
+```
+
+**Both units, and only both:**
+
+| Unit id | Before | After |
+|---|---|---|
+| `core_rulebook:class_feature:ranger_favored_enemy` | `engine-does-not-hold` / `no_explanation_id_and_no_diagnostic_names_this_feature` | `grounded` / `explanation_id_observed_in_a_real_computation` |
+| `ultimate_campaign:trait:trait_eldritch_delver` | `ingested-magnitude` / `trait_content_table_holds_record_magnitude_not_yet_computed` | `grounded` / `trait_content_magnitude_computed_and_verified_by_fixture_execution_flat_2` |
+
+**Every lane's own stated figure reproduced exactly — no lane mismatch this wave, and no side-
+finding claimed by nobody either (unlike wave 21's `mythic_adventures` evidence-only pair — this
+wave's diff has zero evidence-only churn at all):**
+
+| Cycle | Commit | Own claim | Measured | Match |
+|---|---|---|---:|---|
+| C cycle 9 — Ranger Favored Enemy exact-slug identity record | `2c81e4bfce` | 1, `core_rulebook` C 193→192 | **1** (`ranger_favored_enemy`, `engine-does-not-hold`→`grounded`) | **exact** |
+| UC cycle 10 — eighth trait slice, mixed `CASTERLEVEL`+`SKILL` (Eldritch Delver) | `7714a6a5ef` | 1, `ultimate_campaign` DONE 203→204, M 37→36 | **1** (`trait_eldritch_delver`, `ingested-magnitude`→`grounded`) | **exact** |
+| M cycle 7 — exhaustive remainder census | `7e59387d9f` | **0** (explicitly "0 code change") | **0** | **exact** |
+| UC picker-gap fix — 3 trait tables chained into the desktop picker | `c1cbfa0698` | 0 (UI reachability, no bucket claimed) | **0** | **exact** |
+
+1 + 1 + 0 = 2, matching the whole-corpus diff's own real-transition total exactly. Re-derived
+independently via `completion_atlas.py` before/after both snapshots, not read from any lane's own
+prose: `core_rulebook` DONE 4655→4656 (+1), C 193→192 (−1), B/D/M/V/U/X/Z all unchanged
+(470/366/778/114/10/115/0); `ultimate_campaign` DONE 203→204 (+1), M 37→36 (−1), D/U/X
+unchanged (2/21/2); corpus-wide DONE 24961→24963 (+2), C 4174→4173 (−1), M 4450→4449 (−1),
+every other bucket unchanged (A 449, B 11769, D 2955, V 289, U 202, X 170, Z 19).
+
+**No lane's expectation mismatched this wave** — the first wave since 21 where every figure,
+membership included, reproduced digit for digit on the first check.
+
+## 4. Side-findings
+
+None this cycle. Zero evidence-only, same-status churn in the whole-corpus diff (§3), and no
+unit outside the two claimed above moved at all.
+
+## 5. Movement, four buckets (`decisions.md §9`)
+
+**Closure: 2** (`ranger_favored_enemy` `engine-does-not-hold`→`grounded` [C's own], and
+`trait_eldritch_delver` `ingested-magnitude`→`grounded` [UC's own] — both left a non-DONE bucket
+and landed in DONE).
+
+**Reclassification: 0.**
+
+**Reachability: 0** (the UC picker-gap fix is a real reachability improvement in the desktop UI,
+but it touches no `docs/work-inventory.json` bucket — the seven traits it unlocks were already
+`grounded` before this wave; nothing to attribute here).
+
+**Instrument-correction: 0** in `docs/work-inventory.json` itself this wave. (`completion_atlas.py`'s
+own `V`-bucket citation line drifted 13250→13262 from wave 22's `v06_work_inventory.rs`
+insertions — see §6 — a real instrument fix, but scoped to `scripts/completion_atlas.py`'s own
+citation table, not a unit-bucket movement in the inventory this section tracks.)
+
+2 = 2, the full changed-unit count.
+
+## 6. Atlas checks
+
+`python3 scripts/completion_atlas.py --check` (corpus-wide), run **before** any fix:
+`population=49438 unclassified=0 overlap=0 done_evidence_violations=0
+missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=1` —
+`citation_failure: V: src/bin/v06_work_inventory.rs:13250 no longer contains 'literal-verified'`,
+exit 1. Re-derived by direct `grep -n '"literal-verified"' src/bin/v06_work_inventory.rs`: the
+`item.verdict.status = "literal-verified";` assignment the `V` bucket's citation targets sits at
+line **13262** now (drifted from 13250 by wave 22's own `AT-34-E4-002` cycle 10 insertions into
+`v06_work_inventory.rs` — the eighth `.or_else` classifier fallback and its doc-comment/test
+additions). Fixed in `scripts/completion_atlas.py` (one line, the `V` bucket's `citation.line`
+13250→13262, comment updated to name the cause). Re-run: `citation_failures=0`, exit 0. All ten
+`BUCKET_DEFINITIONS` citations now re-checked and resolve at this wave's own HEAD.
+
+`python3 scripts/completion_atlas.py --book core_rulebook --check`: `population=6701
+unclassified=0 overlap=0`, `DONE:4656 A:0 B:470 C:192 D:366 M:778 V:114 U:10 X:115` (exit 1 —
+expected, book not yet 100% done, not an instrument failure).
+
+`python3 scripts/completion_atlas.py --book ultimate_campaign --check`: `population=265
+unclassified=0 overlap=0`, `DONE:204 A:0 B:0 C:0 D:2 M:36 V:0 U:21 X:2 Z:0` (exit 1 — expected,
+same reason).
+
+## 7. The red test
+
+The dispatch brief re-described `38e10d066b`'s `engine_diagnostic:` prefix fix and its red test
+as if newly outstanding — it is not; wave 21's own shared regen (this same file, ninth section,
+§7) already baked the fix in and confirmed GREEN nine dispatches ago. Re-run per this cycle's
+own instruction anyway, at this wave's post-regen HEAD:
+
+```
+$ cargo test --locked --test v06_work_inventory the_committed_inventory_is_well_formed_and_uses_only_declared_statuses
+running 1 test
+test the_committed_inventory_is_well_formed_and_uses_only_declared_statuses ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 3.15s
+```
+
+**GREEN**, as expected — not a new fix this cycle, a confirmation that wave 21's fix has not
+regressed across nine subsequent dispatches. No hand-edit involved either way.
+
+## 8. Build verification
+
+`cargo test --locked --no-run` (full workspace): exits 0. `apps/desktop/src-tauri`, tested
+explicitly as its own separate cargo workspace: `cargo test --locked --no-run --manifest-path
+apps/desktop/src-tauri/Cargo.toml` — exits 0 (`Finished` in 1m47s). Both run after this commit's
+own regeneration and the `completion_atlas.py` citation fix. No `src/**` file touched by this
+cycle itself — both lanes' own code was already committed by their respective cycles; this cycle
+only measures (plus the one-line `scripts/completion_atlas.py` citation-pin fix, `scripts/**`,
+not `src/**`).
+
+## 9. Wave ledger
+
+```
+WAVE         RUN               STARTED         LAST ACTIVITY     RAN FOR   LANES  STATE
+wave 19      wf_195c6a9e-931   08-31 11:14:32  08-31 13:33:36    2:19:04       4  done
+wave 20      wf_75aaf9fb-a7d   08-31 13:36:08  08-31 15:34:01    1:57:52       4  done
+wave 21      wf_e22a7b7d-419   08-31 15:39:11  08-31 17:52:56    2:13:44       4  done
+wave 22      wf_56c5bcae-8f5   08-31 18:33:18  08-31 20:13+      1:40:23+      4  RUNNING (this cycle)
+```
+
+`wf_56c5bcae-8f5` already carried `"22"` in `KNOWN_WAVES` (added by an earlier commit this same
+wave, `15485e5197`) — no script edit needed this cycle, and no run id is missing a wave number.
+Wave 22 ran (through this cycle's own last check before commit) **at least 1:40:23** — shorter so
+far than the last three full waves (wave 19: 2:19:04, wave 20: 1:57:52, wave 21: 2:13:44), still
+`RUNNING` because this cycle's own activity is the wave's most recent lane activity, settling to
+`done` once this commit lands and three minutes pass with no further writes.
+
+## Status
+
+**complete** — the shared regeneration ran in the assigned main checkout (clean rebase, no
+worktree needed); both code-bearing lanes' own stated figures reproduced exactly (1 / 1, and M's
+own explicit 0), zero numeric or membership discrepancies, zero bucket-label corrections needed.
+The red test is confirmed GREEN (already fixed at wave 21, not newly fixed here — the dispatch
+brief's own re-description of it is stale, named in §0). `completion_atlas.py --check` found and
+this cycle fixed one real citation drift (`V` bucket, 13250→13262), now clean at both scopes
+(corpus-wide `citation_failures=0`; book-scoped exit 1 is the expected "not yet 100%" signal, not
+a failure). Full workspace and desktop-crate `cargo test --locked --no-run` both exit 0.
+
+## Next-cycle plan
+
+1. **C's own remainder** (192, 13 sub-causes summing exactly, one row split off this wave's own
+   closure): full table in `AT-34-E3-002_cycle_receipt.md`.
+2. **M's own remainder** (`core_rulebook` 229 of 229, unchanged — 0 code change this wave): 7
+   named mechanisms summing exactly (choice-gated 104, cost-only-no-weight-deliberately-excluded
+   44, untraced-closure 28, VAR-formula-needs-evaluator 18, thin-no-raw-tokens 17,
+   ITEMCOST-pricing-formula-no-consumer 9, real-type-excluded-or-new-mechanic 9).
+3. **UC's own remainder** (61 non-DONE of 265: `M:36 D:2 U:21 X:2`): 3 genuinely distinct
+   `VAR`-only records (a cross-cutting luck-bonus modifier, an eidolon mechanic, 6 missing
+   channel-energy DC totals), 2 `ABILITYPOOL`-only, 1 corpus data gap = 6 `trait_content`, 30
+   `ability_content` records (Drawback/Retrain) declared out of scope.
+4. **Wave shape cost, measured across six runs**: 927s (wave 16), 953.664s (wave 18), 941.7s
+   (wave 19), 919.5s (wave 20), ~940.5s (wave 21), 937s (wave 22 — this cycle). All six sit
+   inside the same ~920–955s band regardless of how many units the wave actually moved (72, 90,
+   337, 7, 230, 2 respectively) — wave 22's own 2-unit movement is the smallest of the six and
+   still cost the same ~937s, the strongest confirmation yet that this pipeline's wall time is
+   fixed-cost, not movement-proportional.
