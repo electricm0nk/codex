@@ -288,7 +288,7 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
     let is_reviewed_placeholder_shape_text = |line: &str| {
         line.contains("Human Ethnicity placeholder row is not dropped")
             || line.contains("expected the vacuous-placeholder rung")
-            || line.contains("PCGen's own CHOOSE-menu \"no selection\" placeholder row")
+            || line.contains("PCGen's own CHOOSE-menu \\\"no selection\\\" placeholder row")
             || line.contains("carries a token beyond the placeholder's structural KEY/CATEGORY/TYPE")
             || line.contains("must carry real corpus prose, not a fabricated placeholder")
     };

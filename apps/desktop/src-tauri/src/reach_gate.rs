@@ -380,6 +380,12 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // itself a selectable thing (`ARCHETYPE_CHOICE_ID`), not provenance
     // attached to another record.
     ("ArchetypeSwapEntry", "archetypes"),
+    // AT-34-E3-003 (`decisions.md §2a`) widened Fighter/Wizard's class-skill posture from a
+    // hardcoded placeholder to the real, corpus-cited `CLASS_SKILL_LISTS` table
+    // (`crb/class_skill_tables.rs`), which `skill_allocation.rs`'s `full_fighter_class_skills`
+    // reads directly and which reaches the player through the character sheet's own skill
+    // totals -- the same "skills" family the corpus-directory table above already names.
+    ("ClassSkillList", "skills"),
 ];
 
 /// Element types that are real ingested data but are **not** an independent
@@ -392,6 +398,12 @@ const SUPPORTING_RECORD_TYPES: &[(&str, &str)] = &[
         "ClassWeaponProficiency",
         "a per-class facet of crb/weapons, not a separate record family: it says which of \
          WEAPON_TABLE's weapons a class may use, and has no identity of its own to render",
+    ),
+    (
+        "ClassArmorProficiency",
+        "the armor half of the same crb/weapon_tables.rs pair as ClassWeaponProficiency \
+         directly above, same file, same shape, same reason: it says which of ARMOR_TABLE's \
+         armor categories a class may wear, and has no identity of its own to render",
     ),
     (
         "GroundedAttack",

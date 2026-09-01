@@ -471,6 +471,22 @@ fn serve_desc_condition(token: &str) -> String {
             }
         }
         "PREALIGN" => format!("{} alignment", spell_out_alignment(body)),
+        // Widened deliberately, same discipline as `PREVARGTEQ`/`PREVARLT` above: the
+        // one real corpus shape this catalog has ever carried is `PREHD:MIN=<n>` (the
+        // Griffon's +1 HP-per-Hit-Die companion advancement,
+        // `rules_tables::crb::companion_data.rs`'s own `PREHD:MIN=3`). PCGen's `PREHD`
+        // also supports a `MAX=`/bare-range form this catalog has never seen -- refused
+        // below rather than guessed, matching this function's own established style.
+        "PREHD" => {
+            let bound = body.strip_prefix("MIN=").unwrap_or_else(|| {
+                panic!(
+                    "companion DESC condition {token:?} uses gate kind \"PREHD\" with body \
+                     {body:?}; this catalog renders only the \"MIN=<n>\" form seen in the real \
+                     corpus. Widen deliberately rather than shipping the raw token"
+                )
+            });
+            format!("{bound} Hit Dice or higher")
+        }
         // SD-29 Epic 7 round 9 (`decisions.md §69.3`). Ultimate Magic is the
         // second book to carry conditional `DESC:` tokens and the first to gate
         // them on something other than a variable or an alignment: its three
