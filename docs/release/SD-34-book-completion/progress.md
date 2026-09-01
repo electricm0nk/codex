@@ -11,6 +11,67 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 23, Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — frontend, the missed version bump, the stale site feeds — partial
+
+**Status: partial.** 2 of 3 assigned `verify.sh` stages closed GREEN
+(`frontend-test`: 96/100 → 100/100 files passed; `site-public-status-check`: crash → `OK`). 1 of
+3 (`site-dashboard-check`) not closed this cycle. This cycle does **not** touch `kanban.md`
+row 26 (`final-acceptance-scan`, criterion `AT-34-E6-001`) — that row correctly stays
+`not-started`; wave 23 reuses the `AT-34-E6-001` id only as an Epic-6 gate-remediation label for
+three territory-disjoint lanes (fable-review.md §7's 14-red-stage attribution), none of which is
+the final-acceptance scan itself.
+
+`frontend-test`: `apps/desktop/src-tauri/Cargo.toml`/`Cargo.lock` were still `0.11.0` — two
+tranches stale — while `package.json`/`tauri.conf.json` were correctly `0.14.0`; bumped, plus
+the same stale `0.11.` literal found (not named in the dispatch brief) in
+`.github/workflows/publish-tester-release.yml`'s publish-time `VERSION` stamp, caught by
+`buildVersionTriple.test.ts`'s workflow-stamp-agreement check. `apps/desktop/src/release` +
+`releaseChecks/buildVersionTriple.test.ts` tranche anchors moved `0.11`→`0.14`. Seven
+build-label fixture files (`makeSurface.ts` + 6 `*.test.ts`) moved `'Codex 0.11.0-test'` →
+`'Codex 0.14.0-test'`. Root `Cargo.toml` (`0.1.0`) deliberately left alone —
+`decisions.md §11` states it is not the version source of truth. `race_trait` count
+`596`→`605` in `raceCreationCoverage.test.ts`, re-derived independently
+(`find data/corpus/{core_rulebook,beastiary,advanced_race_guide}/race_trait -name '*.json' | wc -l`
+= `76+108+421=605`, matching the live failure exactly, not copied from the brief); root cause
+`ae25d75d7d` (AT-34-E3-001) adding 9 CRB rows, which also moved the same file's two downstream
+assertions (`standard.length` 175→184, "not racial defaults" list 2→11 entries).
+
+`site-public-status-check`: root cause was the committed `site/dashboard/units/*.json` shard
+cache (19 files, 36 occurrences) still carrying the pre-`AT-34-E1-005` status word
+`'not-ingested'` — that criterion's own directory list (`tests/src/apps/scripts`) never covered
+`site/`. **First fix attempt was wrong and reverted in the same cycle** (retro-logged
+correction): teaching `pf1e_dashboard_producer.py`'s doneness table the legacy word directly
+(mirroring its own `'unknown'`/`'unmeasurable'` precedent) reintroduces the literal string into
+`scripts/`, which AT-34-E1-005's own regression sweep
+(`test_legacy_not_ingested_string_swept.py`) explicitly forbids repo-wide — caught by that sweep
+going RED. Correct fix: a plain data-only rename in the 19 stale files (the exact `sed` command
+AT-34-E1-005's own receipt used), each validated as well-formed JSON before/after, plus a new
+regression test (`test_site_dashboard_units_status_vocabulary_current.py`, 3/3, RED→GREEN
+proven). `python3 scripts/site/build_public_status.py --check` → `OK`.
+
+`site-dashboard-check`: **not closed.** The committed `site/dashboard/PF1e-dashboard.json`
+(`generated_at: 2026-08-24`) genuinely predates wave-22's `docs/work-inventory.json`
+regeneration (2026-08-31) — real staleness, not a false positive. Its own read-only `--check`
+additionally hit an environmental bug (retro-logged, same recurrence-key as pre-existing
+`wf_b9c2a3a2-9da-1.jsonl`): `publish-site-dashboard.sh`'s `v06_work_inventory --summary`
+subprocess defaults its cwd to the shared checkout unless `CODEX_REPO_ROOT` is exported, timing
+out twice at 600s under shared-host load; fixed for this cycle's invocations, but the check
+still could not complete within budget under current contention. Per this wave's own hazard
+note, refreshing the feed for real (`scripts/publish-site-dashboard.sh` without `--check`) is
+explicitly out of this lane's authority (silent-stamp-drop risk) — named as the exact remainder
+for the wave's regeneration cycle.
+
+Denominator gate on this package, baseline unchanged by this cycle:
+`files_checked=16 violations=16` (all pre-existing, `progress.md`/`fable-review.md` verbatim
+corpus quotes). Dual-audit gate on this cycle's own diff: OK_NO_BUNDLE_TAGS, OK_NO_TOKENS.
+`apps/desktop`: `npm test` 100/100, `npm run typecheck` exit 0, both at HEAD. `cargo test
+--locked --no-run` (workspace) and `apps/desktop/src-tauri`'s own `cargo test --locked` **not
+run this cycle** — no Rust source touched (only a version-string bump in
+`Cargo.toml`/`Cargo.lock`), and this lane's `CARGO_TARGET_DIR` was occupied by an orphaned
+leftover test run plus Lane A's concurrent root-full sweep for most of the cycle; named for the
+next cycle rather than silently skipped. Receipt (non-colliding filename, see the receipt's own
+note): `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_cycle_receipt.md`.
+
 ### Cycle — AT-34-E3-001 — wave-22 shared `docs/work-inventory.json` regeneration and attribution — complete
 
 **Status: complete.** The mandatory closing regeneration cycle for wave 22 (`decisions.md §9`'s
