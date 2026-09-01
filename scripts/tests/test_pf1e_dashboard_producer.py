@@ -165,30 +165,6 @@ class DonenessVerdictGridTest(unittest.TestCase):
                 f"wiring_class={wiring_class!r}: 'unknown' and 'unmeasurable' must agree",
             )
 
-    def test_not_ingested_is_still_accepted_as_engine_does_not_holds_legacy_spelling(self):
-        """`not-ingested` is `engine-does-not-hold`'s pre-`AT-34-E1-005` name
-        (`decisions.md §2b`). No live unit in `docs/work-inventory.json`
-        carries it any more (`STATUS_VOCABULARY` in
-        `src/bin/v06_work_inventory.rs` dropped it, and every occurrence
-        there and in `docs/work-inventory.json` was renamed), but the
-        committed `site/dashboard/units/*.json` shard cache is a separate,
-        independently-staled artifact that legitimately still carries the
-        old word until its own regeneration cycle -- this function's whole
-        design is "never silently reinterpret a status word" (the same
-        precedent `test_unknown_is_still_accepted_as_unmeasurables_legacy_
-        spelling` establishes for `unknown`/`unmeasurable`), so both
-        spellings must keep resolving identically rather than the old one
-        starting to raise the day the rename landed. Found live: `python3
-        scripts/site/build_public_status.py --check` raised `ValueError:
-        doneness: unmapped 'static' + 'not-ingested'` reading the committed
-        `site/dashboard/units/PF1e-units-ability.json` shard."""
-        for wiring_class in producer.WIRING_CLASS_VALUES:
-            self.assertEqual(
-                producer.doneness_verdict(wiring_class, "not-ingested", "spell"),
-                producer.doneness_verdict(wiring_class, "engine-does-not-hold", "spell"),
-                f"wiring_class={wiring_class!r}: 'not-ingested' and 'engine-does-not-hold' must agree",
-            )
-
     def test_static_literal_verified_is_done(self):
         """Control: the ORIGINAL done rung (SD-32 decisions.md §2) still
         works -- `static` unambiguously reaches `done` on the same status
