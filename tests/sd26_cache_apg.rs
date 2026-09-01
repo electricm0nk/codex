@@ -175,7 +175,19 @@ fn assert_shape_b_record(path: &Path, record: &Value) {
 
 #[test]
 fn class_cache_has_all_six_real_apg_classes_with_full_chassis() {
-    let records = load_all("class");
+    // Re-derived 2026-09-01: `data/corpus/advanced_players_guide/class/` now carries 18
+    // files, not 6 -- a later ingest cycle added real chassis records for APG's prestige
+    // classes (Battle Herald, Holy Vindicator, Horizon Walker, Master Chymist, Master Spy,
+    // Nature Warden, Rage Prophet, Stalwart Defender), the Antipaladin base-class variant,
+    // its Eidolon companion chassis, and two PCGen-internal `VISIBLE:NO` helper records
+    // (`Ex-Antipaladin`, `Ex-Inquisitor`, same shape as ACG's `Ex-Warpriest`). Every one of
+    // those 12 carries `data.class_id: null`; only the 6 original base classes carry a real
+    // class_id (`python3 /tmp/cargo-sd34-at-34-e6-001/check_apg_classes.py` confirms all 18,
+    // per-file). Same structural discriminator as the ACG sibling test's own fix.
+    let records: Vec<(PathBuf, Value)> = load_all("class")
+        .into_iter()
+        .filter(|(_, record)| record["data"]["class_id"].as_str().is_some())
+        .collect();
     assert_eq!(records.len(), 6, "expected exactly the 6 real APG classes");
 
     let mut seen_ids = HashSet::new();
@@ -207,7 +219,18 @@ fn spell_cache_has_all_297_records_with_real_full_text_ceiling() {
     // `summon_monster_{i..ix}.json` records removed in the same cycle's
     // follow-up commit `fc5f1fab` (see this file's module doc). Net zero
     // change in count, but a different, now-real set of records.
-    assert_eq!(records.len(), 297, "real, deduplicated apg_spells.lst record count (decisions.md §11.4)");
+    //
+    // Re-derived 2026-09-01: 297 -> 945 raw files. A later ingest cycle (2026-08-23,
+    // `ingested_at` timestamps on the new files) added per-class spell-availability rows --
+    // e.g. `acid_splash-2.json`, `data.description: null`, `raw_tokens: [{"key":"CLASSES",
+    // "value":"Summoner=0"}]`, `source.line` distinct from the primary `acid_splash.json` --
+    // one real `apg_spells.lst` row per class that can cast a spell, not a duplicate of the
+    // spell's own content. This is a genuinely different population than "one record per
+    // real spell", which is exactly why `has_description`/`full_text_true` below (this
+    // test's own real-content ceilings) are UNCHANGED at 297/296 -- re-derived independently
+    // (`python3 /tmp/cargo-sd34-at-34-e6-001/check_apg_spells.py`) and confirmed to still
+    // match exactly. Nothing was lost; 648 real class-availability rows were added.
+    assert_eq!(records.len(), 945, "real apg_spells.lst row count, one per (spell, class) availability pair (decisions.md §11.4)");
 
     let mut has_description = 0;
     let mut full_text_true = 0;
