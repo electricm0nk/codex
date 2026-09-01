@@ -346,4 +346,7 @@ receipt's own stage table fresh rather than trusting it, per `decisions.md §12`
 
 ## Commit SHA (filled in after push)
 
-`<pending>`
+`c231d27a22` -- the single commit this cycle produced (rebased twice before it, onto `e5fd8dddb1`
+then `1d0a0a7207`; both rebases were clean fast-forwards with no local changes at either point).
+Nothing landed on Rust source, the corpus, or the desktop crate after this commit, so it is also
+this cycle's own build-scope SHA.
