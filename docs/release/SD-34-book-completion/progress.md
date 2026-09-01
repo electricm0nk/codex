@@ -11,6 +11,67 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 23, Gate Lane A (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — root-lib/root-full/desktop/reach, the accumulated 22-wave test drift — partial
+
+**Status: partial.** Full receipt: `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_cycle_receipt.md`.
+This cycle does **not** touch `kanban.md` row 26 (`final-acceptance-scan`, criterion
+`AT-34-E6-001`) — that row correctly stays `not-started`; wave 23 reuses the `AT-34-E6-001` id
+only as an Epic-6 gate-remediation label for three territory-disjoint lanes
+(fable-review.md §7's 14-red-stage attribution), none of which is the final-acceptance scan
+itself (same convention Lane B's own entry above established).
+
+`root-lib`: **CLOSED.** 3,022 passed / 0 failed, live-verified (was 3,019 passed / 3 failed at
+cycle start — 2 of the original 5 root-lib failures were already cleared by `58b4f837cc`
+alone, landed before this cycle). Two fixes were CODE, not count re-pins:
+`companion_chassis.rs`'s `HELD_STATUSES` widened 3→5 entries to admit
+`oracle-agree`/`oracle-unverifiable` (same reading as `58b4f837cc`); the third
+(`class_feature_pool_catalog.rs`) and fourth (`formula_interpreter_corpus_wide.rs`) were
+genuine re-derivations (excluded-class population 215→213; F1 population 5,400→5,231, the
+latter a real closure — wave 22's oracle restamp booked thousands of bucket-V units DONE,
+some F1-shaped).
+
+`root-full`: 33 test binaries individually diagnosed, fixed, and live-verified GREEN
+(24 `sd18_{cleric,wizard,sorcerer,bard}_level*_widening.rs` negative-control tests whose
+"gains nothing new" premise went stale the moment an EARLIER, already-landed, already-tested
+SD-34 closure (`49d72f5e03`, `cb0ba2286e`, `b4eadc9cbf`) widened real engine coverage —
+fixed by extending each exclusion list, mirroring the EXACT precedent `bfe90f020a`
+(2026-08-29, decisions.md §18) already set for the sibling `sd13_*`/`sd25_*` files; plus 9
+more files spanning `sd20`/`sd24`/`sd26`/`sd27`/`ingest_races.rs`/a formula fixture/the
+duergar book-list test, each a re-derived census/registry-filter fix with its own re-derive
+command in the receipt). A full untargeted ~600-binary sweep was started but killed after 38
+minutes/227 binaries when a `CARGO_TARGET_DIR` collision with a sibling worktree's own
+process was discovered (investigated: no confirmed contamination, but every subsequent
+verification used a freshly isolated target dir out of caution) — every touched file was
+instead individually re-verified via targeted `cargo test --test <name>` runs, all green.
+13 more root-full test functions across 8 files were investigated and triaged but NOT fixed
+this cycle (named by sub-cause in the receipt): 2 real Product-Identity/data-integrity
+defects (`sd30`, real PI leak — flag for priority; `sd31`, real corpus-key collision), 4
+`data/corpus/**` LICENSE.json staleness across 40 books (barred from hand-edit, needs the
+guarded regeneration path), 4 `v06_corpus_trap_report.rs` real ingest-trap findings, and 3
+more not yet fully triaged.
+
+`desktop`/`reach`: 21 of 28 originally-failing desktop-crate tests closed, live-verified
+(565 passed / 7 failed, was 544/28). One root cause dominated: `companion_catalog.rs`'s
+`serve_desc_condition` panicked on the corpus's one real `PREHD:MIN=3` condition (Griffon's
+companion advancement), cascading into 15+ companion_catalog/reach_gate test failures — added
+a `PREHD` render arm, same style as the existing `PREVARGTEQ`/`PREVARLT` arms. Second cause:
+`reach_gate.rs`'s type registry never learned two record types AT-34-E3-003's real
+Fighter skill/proficiency widening newly ingests (`ClassArmorProficiency`, armor twin of the
+already-registered `ClassWeaponProficiency`; `ClassSkillList`, genuinely player-facing via
+the character sheet's skill totals) — both added. Remaining 7: 4 trace to the SAME 9
+core_rulebook records already diagnosed root-side (fastest next-cycle win, ~population 30);
+1 large unrelated pre-existing companion-ability reach gap (hundreds of ids, not this
+cycle's cause); 2 not yet investigated.
+
+`clippy`: **NOT ATTEMPTED.** Root 86 warnings (ceiling 50, 36 over), desktop 25 (ceiling 7, 18
+over) per the fable-review baseline; nothing in this cycle's diff removes an existing
+warning.
+
+Movement: entirely **instrument-correction** (0 `docs/work-inventory.json`/`data/corpus/**`
+touches — every fix is a test/registry re-derivation against already-landed, already-tested
+engine state, several explicitly CODE fixes rather than count changes, per the brief's own
+warning against disguising one as the other).
+
 ### Cycle — Wave 23, Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — frontend, the missed version bump, the stale site feeds — partial
 
 **Status: partial.** 2 of 3 assigned `verify.sh` stages closed GREEN
