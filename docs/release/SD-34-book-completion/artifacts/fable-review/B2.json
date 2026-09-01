@@ -1,0 +1,115 @@
+{
+  "lane": "B2",
+  "task": "price the unpriced 45.7% (buckets D, M, V, X, Z) of the SD-35 29,283-unit remainder",
+  "head_at_analysis": "b4485ae5347f4a277fbf6bdffa95974d755bde78",
+  "work_inventory_last_regen": "3aebc284774cbfa09a84a3d6cb25d60e9b1be447",
+  "headline_finding": "The task's own cited figure (13,383 units / 45.7% unpriced) is STALE. forward-plan.json was generated at fef202a5668519a37185998ea8835fc8841db808, 107 commits behind current HEAD. In that gap, decisions.md Section19 (2026-08-29) plus the 'bucket-v-widen' cycle (artifacts/bucket-v-widen/AT-34-E3-005_bucket_v_widen_cycle_receipt.md) reclassified 6,590 corpus-wide bucket-V units (6,572 of them inside the 35 non-vehicle books) directly to DONE by reconciling SD-33's already-computed oracle verdicts (AT-33-E5-003.combined-oracle-results.json, 8,330 rows) plus AT-33-E1-003's no-probe-surface census -- zero new oracle runs, zero new engineering, a pure ledger-reuse reconciliation. Re-deriving the atlas at current HEAD (docs/work-inventory.json, using the live classifier in scripts/completion_atlas.py lines 219-253, read not executed) gives a TRUE current unpriced population of 6,469 of 22,369 remaining-non-DONE units in the 35 books (28.9%), not 13,383 of 29,283 (45.7%). D, X, and Z are unchanged from the stale figure; only M (-342) and overwhelmingly V (-6,572) moved.",
+  "bucket_definitions": {
+    "source": "docs/release/SD-34-book-completion/decisions.md lines 43-56 (Section2), current authoritative classifier scripts/completion_atlas.py lines 219-253 (function _bucket_of)",
+    "caveat": "content-unit-inventory.md Section3's own inline bucket() python snippet (lines 100-110) is ITSELF STALE -- it keys DONE on status in {grounded,text-complete} and V on status in {literal-verified,fixture-verified} directly, which was true before decisions.md Section19 landed but is no longer the live rule. The live rule additionally maps status in {oracle-agree, oracle-unverifiable} to DONE (completion_atlas.py line 233-234). Using the stale snippet on live data silently overstates bucket V.",
+    "D": "other engine gap; cleared per named sub-cause (decisions.md line51); status==engine-does-not-hold, evidence matches none of A/B/C markers (completion_atlas.py line 252)",
+    "M": "magnitude ingested, never computed or applied; cleared by running the compute path (decisions.md line52); status==ingested-magnitude (completion_atlas.py line237-238)",
+    "V": "verified by proxy, never by the oracle; cleared by the SD-33 oracle harness (decisions.md line53); status in {literal-verified, fixture-verified} (completion_atlas.py line235-236). NOTE: decisions.md Section19 disposes a V unit to DONE instead once a real oracle verdict (agree or a named unverifiable reason) exists for it -- V now means only 'no verdict reconciled yet'.",
+    "X": "deferred with a stated reason; cleared by revisiting the condition, or (decisions.md Section17, 2026-08-28) building the named per-character choice filter capability; status==deferred-with-reason (completion_atlas.py line241-242)",
+    "Z": "not started; cleared by ordinary ingestion-to-grounded work; status==not-started (completion_atlas.py line243-244)"
+  },
+  "population_35_books_stale_vs_current": {
+    "source_stale": "docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/forward-plan.json (generated_at_head fef202a5668519a37185998ea8835fc8841db808)",
+    "source_current": "docs/work-inventory.json at HEAD b4485ae534 (regen commit 3aebc28477), re-derived with completion_atlas.py's live _bucket_of logic, restricted to the 35 books != {core_rulebook, ultimate_campaign}",
+    "D": {"stale": 2587, "current": 2587, "delta": 0},
+    "M": {"stale": 3977, "current": 3635, "delta": -342},
+    "V": {"stale": 6747, "current": 175, "delta": -6572},
+    "X": {"stale": 53, "current": 53, "delta": 0},
+    "Z": {"stale": 19, "current": 19, "delta": 0},
+    "total_unpriced": {"stale": 13383, "current": 6469, "delta": -6914},
+    "remaining_non_done_total": {"stale": 29283, "current": 22369},
+    "unpriced_pct_of_remaining": {"stale": 45.7, "current": 28.9}
+  },
+  "mechanism_census_method": "EXHAUSTIVE census, not a 30-unit sample: bucket populations at current HEAD are small enough (D=2587, M=3635, V=175, X=53, Z=19, all in the 35-book scope) that grouping ALL units by their `evidence` field (the same C1.5 method: family = string before the first ':') gives an exact, not sampled, mechanism distribution -- strictly better evidence than a stratified 30-per-bucket sample would be, since the grouping key is a hard field match, not a judgment call. Individual sampled units were still pulled and read in full (spot-check, ~2 per top mechanism) to confirm the evidence string's claimed meaning actually matches the record content, per the 'field name is not field meaning' hazard.",
+  "buckets": {
+    "D": {
+      "population_35books": 2587,
+      "distinct_mechanisms": 12,
+      "books_touched": 30,
+      "top_mechanisms": [
+        {"mechanism": "class_feature_of_unmodelled_corpus_class", "units": 926, "pct": 35.8},
+        {"mechanism": "template_content_table_holds_zero_magnitude_record_pending_wiring_class_review", "units": 594, "pct": 23.0},
+        {"mechanism": "deity_content_table_holds_zero_magnitude_record_pending_wiring_class_review", "units": 408, "pct": 15.8},
+        {"mechanism": "race_trait_generic_table_holds_zero_magnitude_record_pending_wiring_class_review", "units": 157, "pct": 6.1},
+        {"mechanism": "class_feature_no_dedicated_magnitude_id_matched_the_record_slug", "units": 150, "pct": 5.8},
+        {"mechanism": "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review", "units": 101, "pct": 3.9},
+        {"mechanism": "language_content_table_holds_zero_magnitude_record_pending_wiring_class_review", "units": 81, "pct": 3.1},
+        {"mechanism": "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review", "units": 80, "pct": 3.1}
+      ],
+      "measured_rate": null,
+      "rate_verdict": "NO-RATE (MEASURED absence). Both vehicle books' step-cost-ledger.json (epic-3-core-rulebook and epic-4-ultimate-campaign) explicitly record buckets_not_yet_cleared.D with 'no dedicated D-clearing cycle has run' as of the latest committed ledger, and no receipt anywhere in SD-34 closes a D-named mechanism with a timed cycle. This is unchanged at current HEAD (D's population itself did not move).",
+      "extrapolated_reference_only": "Bucket B's measured range (1.667-5.8 units/hour reaching DONE, n=2 measurements, source forward-plan.json/step-cost-ledger.json) is the nearest analog by shape (content needs placing/modelling), giving a purely illustrative 446-1552 hours for 2,587 units. Labeled EXTRAPOLATED-ANALOG, LOW confidence: D's dominant mechanism (class_feature_of_unmodelled_corpus_class, 35.8%) requires modelling a whole class the engine has never seen, which is plausibly harder per-unit than bucket B's 'place a record in an existing table' shape -- this bound could easily be an underestimate."
+    },
+    "M": {
+      "population_35books": 3635,
+      "distinct_mechanisms": 15,
+      "books_touched": 32,
+      "top_mechanisms": [
+        {"mechanism": "ability_content_table_holds_record_magnitude_not_yet_computed", "units": 1236, "pct": 34.0},
+        {"mechanism": "spell_list_entry_with_resolved_level", "units": 520, "pct": 14.3},
+        {"mechanism": "in_catalog_with_corpus_magnitude_but_no_observed_consumer", "units": 471, "pct": 13.0},
+        {"mechanism": "race_trait_generic_table_holds_record_magnitude_not_yet_computed", "units": 437, "pct": 12.0},
+        {"mechanism": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer", "units": 248, "pct": 6.8},
+        {"mechanism": "equipment_table_entry_with_corpus_magnitude", "units": 217, "pct": 6.0},
+        {"mechanism": "template_content_table_holds_record_magnitude_not_yet_computed", "units": 209, "pct": 5.7},
+        {"mechanism": "trait_content_table_holds_record_magnitude_not_yet_computed", "units": 117, "pct": 3.2}
+      ],
+      "measured_rate": null,
+      "rate_verdict": "NO-RATE despite a PROVEN mechanism family. Unlike bucket D, real M-clearing cycles DID run and DID close units -- AT-34-E3-003's 'BASEITEM: chase' (equipment sub-cause, 7 receipts, closures of 1, 31-across-9-books, 5-in-ultimate_campaign, etc., all ingested-magnitude to grounded) and its 'skill_content' cycle (core_rulebook bucket M 1,048 to 972, 76 closed). But NONE of these receipts record commit-to-commit wall time the way the B/C/U cycles in step-cost-ledger.json do, so no units/hour figure can be extracted from them. Both vehicle books' step-cost-ledger.json still lists M under buckets_not_yet_cleared for the same reason (no timed cycle exists to price it from), which is stale on 'has it moved' but accurate on 'is it priced'.",
+      "extrapolated_reference_only": "The proven mechanisms behave like bucket U's shape (one fix closes a whole matching class at once, not a linear per-record cost) more than a linear per-unit rate -- U's 40.28 units/hour (n=2 cycles, both instrument-correction, source step-cost-ledger.json) gives an illustrative 90 hours for 3,635 units IF every M mechanism behaved like U's single largest-class fix, which the actual receipts (closures of 1, 5, 31, 76 units per cycle, not 48-at-once) suggest is optimistic. EXTRAPOLATED-ANALOG, LOW confidence, likely a floor not a realistic estimate."
+    },
+    "V": {
+      "population_35books": 175,
+      "distinct_mechanisms": 6,
+      "books_touched": 20,
+      "top_mechanisms": [
+        {"mechanism": "race_trait (mostly bestiary/ARG racial special-ability entries)", "units": 142, "pct": 81.1},
+        {"mechanism": "equipment", "units": 23, "pct": 13.1},
+        {"mechanism": "class_feature", "units": 3, "pct": 1.7},
+        {"mechanism": "equipment_modifier", "units": 3, "pct": 1.7},
+        {"mechanism": "spell", "units": 3, "pct": 1.7},
+        {"mechanism": "feat", "units": 1, "pct": 0.6}
+      ],
+      "note": "This is not a lane sample -- it is the EXACT, already-published, set-verified remainder from artifacts/bucket-v-widen/AT-34-E3-005_bucket_v_widen_cycle_receipt.md ('Remainder -- 175, named by sub-cause'), reproduced here because it is precisely the current bucket-V population for the 35 non-vehicle books.",
+      "measured_rate": null,
+      "rate_verdict": "NO-RATE. This is the genuinely un-dispositioned residue AFTER the zero-cost oracle-ledger reconciliation already swept 6,572 units to DONE. Clearing it needs a NEW oracle round-trip per sub-cause (a .pcg/.ftl probe built and run against the pinned PCGen, PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6) -- qualitatively different work from the reconciliation that cleared the bulk. core_rulebook attempted exactly this once for its own analogous 35-unit Ranger Favored-Enemy/Terrain slice (docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/bucket-v/measure-ranger-fe.pcg/.out.txt/.ftl) but the receipt (AT-34-E3-004) records no wall-time for that specific probe -- attempted, not timed. No SD-34 receipt anywhere prices a per-sub-cause oracle-probe-build cycle."
+    },
+    "X": {
+      "population_35books": 53,
+      "note": "X's mechanism is capability construction (decisions.md Section17), not per-unit clearing; corpus-wide reconciliation lives in capability-register.json's x_bucket_reconciliation (live_bucket_X_population 170, unchanged at current HEAD -- confirmed by direct census).",
+      "mechanisms_source": "docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/capability-register.json (generated_at_head 837dbbcf6be3fcacd8b136f64b49e4892b771d97), x_bucket_reconciliation field, corpus-wide (37-book) counts shown since the register does not split by vehicle/non-vehicle",
+      "corpus_wide_37books_breakdown": [
+        {"capability": "per_character_choice_filter", "units": 113, "books": ["advanced_class_guide","core_rulebook","inner_sea_combat","ultimate_magic","ultimate_wilderness"], "built_by_sd34": false},
+        {"capability": "class_feature_deep_subsystem_modelling", "units": 31, "books": ["advanced_class_guide","advanced_players_guide","advanced_race_guide","core_rulebook","occult_adventures","pathfinder_unchained","ultimate_combat","ultimate_magic"], "built_by_sd34": false},
+        {"capability": "companion_mount_advancement_table", "units": 9, "books": ["advanced_class_guide","advanced_players_guide","advanced_race_guide","adventurers_guide","core_rulebook","inner_sea_combat","ultimate_magic","ultimate_wilderness"], "built_by_sd34": false},
+        {"capability": "no_capability_needed_dispatch_only_row", "units": 12, "note": "already correctly resting in X, zero further capability needed"},
+        {"capability": "no_capability_needed_vacuous_placeholder", "units": 3, "note": "already correctly resting in X, zero further capability needed"},
+        {"capability": "marker_stripping_for_pcgen_editorial_markers", "units": 2, "books": ["ultimate_campaign"], "built_by_sd34": false}
+      ],
+      "measured_rate": null,
+      "rate_verdict": "NO-RATE. All 11 named capabilities in capability-register.json are explicitly built_by_sd34:false -- none has ever been built, so no build-time rate exists anywhere in SD-34. Bucket A's table-build rate (136.857 seconds/table, n=7) is the only 'build a piece of engine machinery' rate SD-34 has measured, but it prices a DATA TABLE, not a logic capability like a per-character prerequisite-filter query -- not transferable even as a loose analog without fabricating an equivalence the evidence doesn't support. 15 of the 53 (the two no_capability_needed rows, scaled to the 35-book share) need zero further work at all."
+    },
+    "Z": {
+      "population_35books": 19,
+      "books_touched": 1,
+      "mechanism": "no_compiled_rule_set_for_book (100%)",
+      "note": "All 19 units are beginner_box, a single-bucket book (docs/release/SD-34-book-completion/progress.md line 2550, ordered-plan.json's single_bucket_books). This is not a per-unit rate question -- it is a whole-book bootstrap-from-zero cost, and the mechanism ('the book has no compiled rule set at all') is qualitatively distinct from a per-record fix.",
+      "measured_rate": null,
+      "rate_verdict": "NO-RATE. Neither SD-34 vehicle book started from zero (both core_rulebook and ultimate_campaign already had a compiled rule set before SD-34 began), so SD-34 has never measured a whole-book bootstrap-from-nothing cost. No receipt anywhere in this bundle prices it. (Outside-SD-34 context only, not admissible against this task's 'measured rate in SD-34 receipts' bar: prior-bundle memory puts book-ingest fixed cost at roughly 1.5-2 hours/book, but that figure comes from a different SD's retrospective, not an SD-34 receipt, and is EXTRAPOLATED at best for this specific book.)"
+    }
+  },
+  "rollup_no_blended_total": "Per the task's own instruction and forward-plan.json's own precedent (its summary.note explicitly refuses to blend priced-to-DONE, priced-to-V, and unpriced tiers into one number), no single hours figure is given for the 6,469-unit current-unpriced population. All five buckets are NO-RATE against SD-34's own measured-rate bar; the EXTRAPOLATED-ANALOG figures given per bucket (D: 446-1552h from bucket-B's rate; M: ~90h floor from bucket-U's rate) are explicitly flagged low-confidence illustrative bounds from a different bucket's shape, not a D or M rate, and must not be summed with each other or with the priced tiers.",
+  "gaps": [
+    "No SD-34 receipt records wall-clock time for any bucket-D-named mechanism anywhere in the corpus -- a first timed D-clearing cycle is the prerequisite for any real D price.",
+    "No SD-34 receipt records wall-clock time for the proven bucket-M mechanisms (BASEITEM: chase, skill_content) despite real closures happening -- re-running one of these mechanisms with timing captured would immediately produce a real M rate at near-zero marginal cost (the mechanism already exists).",
+    "The 175-unit (35-book) + 81-unit (core_rulebook) bucket-V remainder has no timed oracle-probe-build cycle; core_rulebook's own Ranger Favored-Enemy attempt (measure-ranger-fe.pcg/.out.txt/.ftl) was not completed/timed in its receipt (AT-34-E3-004) -- finishing and timing that one attempt would price the dominant V-remainder mechanism (race_trait, 81% of the 175).",
+    "capability-register.json (generated_at_head 837dbbcf6be3f) is itself ~30+ commits stale relative to current HEAD for its V-related capability (oracle_probe_surface_for_no_table_kinds population/books_unblocked fields, since superseded by the bucket-v-widen cycle) -- its X-bucket figures were independently re-verified live in this lane and are NOT stale, but the file as a whole should be regenerated before being cited again.",
+    "No capability in capability-register.json carries an estimated build-time or hours figure at all (only population) -- pricing bucket X requires a first built-and-timed capability, of which SD-34 has zero.",
+    "beginner_box's true bootstrap cost (bucket Z) has no analog anywhere in SD-34, since neither vehicle book started from an uncompiled rule set."
+  ]
+}
