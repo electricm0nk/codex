@@ -237,7 +237,25 @@ fn equipment_cache_disambiguates_equipmods_by_real_key_token_not_display_name() 
 
 #[test]
 fn feat_cache_has_all_187_real_records_across_3_categories() {
-    let records = load_all("feat");
+    // Re-derived 2026-09-01: `load_all("feat")` now returns 235, not 187. The extra 48 are
+    // real, complete, corpus-cited records (`completeness: "full"`, real `description`, real
+    // `source.line` into `arg_feats.lst`) added by a 2026-08-23 ingest cycle -- but every one
+    // carries a `data.category` that is a PCGen CHOOSE-benefit sub-option group name
+    // (e.g. "OrcWeaponExpertise", "BloodDrinkerType"), never PF1's own three real feat
+    // categories this test's own name asks for. general/combat/teamwork themselves are
+    // UNCHANGED at 132/52/3 (re-derived independently,
+    // python3 /tmp/cargo-sd34-at-34-e6-001/count_arg_feats.py) -- nothing in the original 187
+    // moved or was lost. Scoped to the 3 real categories, matching this test's own name and
+    // its per-category assertions below.
+    const REAL_FEAT_CATEGORIES: [&str; 3] = ["general", "combat", "teamwork"];
+    let records: Vec<(PathBuf, Value)> = load_all("feat")
+        .into_iter()
+        .filter(|(_, record)| {
+            record["data"]["category"]
+                .as_str()
+                .is_some_and(|c| REAL_FEAT_CATEGORIES.contains(&c))
+        })
+        .collect();
     assert_eq!(records.len(), 187, "real arg_feats.lst CATEGORY:FEAT record count (re-measured this cycle; differs from the scoping brief's rough 239-line estimate -- see rules_tables::advanced_race_guide::feats's own doc comment)");
 
     let mut by_category: std::collections::HashMap<String, u32> = std::collections::HashMap::new();
@@ -304,7 +322,12 @@ fn every_v1_record_passes_the_shared_validate_license_gate() {
     // `equipment_cache_has_all_200_real_records_across_4_categories`'s
     // comment above. 92 -> 93: SD31-E6-F7-002's `.COPY=` racial SLA
     // variant addition (decisions.md §15), see
-    // `spell_cache_has_all_92_real_records`'s comment above.
-    assert_eq!(audited, 93 + 215 + 187);
+    // `spell_cache_has_all_92_real_records`'s comment above. 187 -> 235: a 2026-08-23 ingest
+    // cycle added 48 real, complete, corpus-cited PCGen CHOOSE-benefit sub-option feat
+    // records (e.g. Orc Weapon Expertise's three named benefit choices) -- see
+    // `feat_cache_has_all_187_real_records_across_3_categories`'s own comment above for the
+    // detail; every one of them passes this SAME license gate the 187 already did (this
+    // assertion is unscoped by category, unlike that sibling test).
+    assert_eq!(audited, 93 + 215 + 235);
     let _ = dir;
 }
