@@ -1,0 +1,100 @@
+{
+  "lane": "PC2",
+  "findings": [
+    {
+      "id": "PC2-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 9345,
+      "line_end": 9377,
+      "severity": "P2",
+      "category": "bug",
+      "title": "Stale 'race.semantics.unverified' diagnostic co-fires with real grounded explanations for 12+ non-CRB races",
+      "evidence": "explain_human_pilot_race_seam's fallback branch (lines 9360-9376) pushes diagnostic id race.semantics.unverified with message text '...chosen race {race_id} has no grounded race semantics in this slice' whenever race_id is not one of DWARF/ELF/GNOME/HALF_ELF/HALF_ORC/HALFLING (Human is handled by the outer check). That exclude list was never updated when the later flat-override and formula seams were added: explain_rougarou_flat_override_race_trait, explain_gillman_flat_override_race_trait, explain_vanara_flat_override_race_trait, explain_samsaran_flat_override_race_trait, explain_nagaji_flat_override_race_trait (lines 11321-11841) and explain_undine_formula_race_trait (lines 11931-12026) are all called unconditionally later in the same compute_pilot_base_chassis pipeline and DO push real, corpus-cited ComputationExplanation records for those exact races. Per race_ids_with_a_magnitude_consumer's own pinned test (the_union_is_exactly_the_nineteen_seamed_races, ~line 10512), the union of seamed races is 19; only 7 are excluded from this diagnostic (dwarf, elf, gnome, half-elf, half-orc, halfling, human). The remaining 12 of 19 seamed races (gillman, goblin, grippli, hobgoblin, kobold, nagaji, rougarou, samsaran, skinwalker, strix, svirfneblin, vanara), plus Undine (deliberately excluded from that 19-set per its own doc comment at line ~11849), all receive both a real grounded explanation AND this diagnostic falsely stating they have none. No test in tests/ or this file's own #[cfg(test)] modules asserts the diagnostic's absence for any of these 12+ races (confirmed via grep across tests/*.rs and this file). Contrast with SIZE_ONLY_RACE_TRAIT_BUNDLE's own doc comment (line ~11108), which explicitly acknowledges and accepts this same diagnostic firing alongside its partial size-only explanation for Kobold/Svirfneblin/Goblin/Grippli -- the 5 flat-override races and Undine carry no equivalent acknowledgment anywhere in their doc comments, indicating this is unaddressed drift rather than a considered decision.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "fix_description": "Either widen explain_human_pilot_race_seam's exclude condition to read race_ids_with_a_magnitude_consumer() (or an equivalent shared set) instead of the 6 hand-listed CRB constants, or rewrite the diagnostic message to stop claiming 'no grounded race semantics' when a race has any seam at all (e.g. distinguish 'no seam' from 'partial seam' the way SIZE_ONLY_RACE_TRAIT_BUNDLE's own doc comment already reasons about it).",
+      "risk_notes": "Changing the diagnostic's firing condition could flip diagnostics-count-based assertions in other tests (e.g. any test asserting zero non-claim-blocking diagnostics for a specific race); a rewrite of the message text is lower-risk than changing the gate."
+    },
+    {
+      "id": "PC2-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 11950,
+      "line_end": 11952,
+      "severity": "P2",
+      "category": "bug",
+      "title": "Undine alternate-trait formula evaluation silently drops its explanation record on any evaluator failure, with no diagnostic",
+      "evidence": "In explain_undine_formula_race_trait, `eval` is `evaluator.evaluate(undine_formula(field), &vars).ok().and_then(|v| i16::try_from(v).ok())` -- any Err from PcgenFormulaEvaluator::evaluate (a malformed formula, an unsupported operator, a future formula-table edit) or an i16 overflow is discarded via `.ok()`. Each of the three call sites (acid_breath ~line 11954, nereid_fascination ~line 11976, ooze_breath ~line 12001) then uses `if let (Some(...), Some(...), Some(...)) = (...)` and pushes nothing at all when any one term is None -- so a player who explicitly selected a real alternate trait (e.g. 'Undine ~ Acid Breath') gets zero explanation and zero diagnostic, indistinguishable from having selected nothing. This is inconsistent with this same file's own idiom elsewhere for an unresolvable computation (e.g. combat_size_modifiers at line ~8027 pushes a claim-blocking ComputationDiagnostic rather than silently defaulting) and contradicts the project's no-silent-failure doctrine.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "fix_description": "On an eval failure for a selected alternate trait, push a claim-blocking ComputationDiagnostic naming the trait and field that failed to evaluate, instead of silently omitting the explanation.",
+      "risk_notes": "Currently unreachable in practice since the three formula strings are fixed constants matched against a fixed variable set (TL/CON/CHA), so no live test exercises the failure path; low risk to add a diagnostic branch, but do not change success-path behavior."
+    },
+    {
+      "id": "PC2-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 9345,
+      "line_end": 11094,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "7 near-identical explain_<race>_race_seam functions repeat an ability_modifiers/size/speed/senses boilerplate template",
+      "evidence": "explain_human_pilot_race_seam (9345), explain_dwarf_race_seam (9586), explain_elf_race_seam (9939), explain_gnome_race_seam (10155), explain_half_elf_race_seam (10585), explain_half_orc_race_seam (10755), and explain_halfling_race_seam (10909) each independently push a near-identical 'trait_bundle.ability_modifiers'/'trait_bundle.size'/'trait_bundle.speed'/'trait_bundle.senses' record family with the same '+0, bounded recognition record, contributes no ... effect' phrasing, differing only in interpolated race name, size/speed constants, and which per-race bonus records follow. Combined this spans roughly 1900 lines. The file's own SIZE_ONLY_RACE_TRAIT_BUNDLE (line 11137) already demonstrates a table-driven collapse of this exact shape for 4 races with no special traits, proving the pattern is mechanically extractable at least for the common identity fields.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "fix_description": "Factor the common ability_modifiers/size/speed/senses boilerplate into a small per-race data table (race label, size category, speed, senses description) consumed by one shared emitter, leaving only each race's genuinely distinct bonus traits (Stonecunning, Keen Senses, etc.) as hand-written per-race code, mirroring what SIZE_ONLY_RACE_TRAIT_BUNDLE already does for the simpler races.",
+      "risk_notes": "High blast radius: race_ids_with_a_magnitude_consumer_tests::crb_seamed_race_function_count_is_seven (line ~10484) greps this file's own source text for 'fn explain_' + '_race_seam(' and would need updating in lockstep with any refactor that changes function count or naming; every explanation id and exact wording is pinned by dedicated tests/sd13_*_race_semantics_recognition.rs files, so a collapse must preserve every emitted id/value byte-for-byte."
+    },
+    {
+      "id": "PC2-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 9181,
+      "line_end": 9328,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "Three separate 6-arm string-matched dispatch functions over the same six ability names",
+      "evidence": "ability_score_for(scores, ability) (line 9181), with_ability_score(scores, ability, new_score) (line 9195), and assign_modifier(modifiers, ability, modifier) (line 9318) each independently match the same six literal strings ('strength'|'dexterity'|'constitution'|'intelligence'|'wisdom'|'charisma') against a different struct's fields. A single small helper (e.g. an Ability enum with get/set methods, or a 6-element array keyed by an ability index) would let all three collapse into one dispatch point.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "fix_description": "Introduce a small Ability enum (or reuse one if it already exists elsewhere in the crate) with get(&AbilityScores)/set(&mut AbilityScores)/get(&AbilityModifiers)/set(&mut AbilityModifiers) methods, and replace all three match blocks with calls through it.",
+      "risk_notes": "assign_modifier's match ends in `_ => unreachable!()` (a exhaustiveness guard) that must be preserved or replaced by the enum's own exhaustiveness; low risk otherwise since all three are pure functions with existing test coverage via the explanation records that depend on them."
+    },
+    {
+      "id": "PC2-5",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 9345,
+      "line_end": 12127,
+      "severity": "P3",
+      "category": "structure",
+      "title": "The whole race-trait explanation family is a self-contained ~2800-line submodule-extraction seam",
+      "evidence": "From explain_human_pilot_race_seam (9345) through explain_undine_formula_race_trait (12026), every function in this span depends only on CharacterInput, AbilityModifiers, ComputationExplanation, ComputationDiagnostic, and a handful of shared helpers (choice_selection, replaced_by_alternate_trait, selected_alternate_trait_keys, race_alternate_trait_selection_id, ability_modifier_for) -- none of it reaches into the class-chassis, combat-baseline, or spell-baseline machinery that dominates the rest of this 78,506-line file. This is roughly 3.5% of the whole file's line count concentrated in one thematically coherent unit.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "fix_description": "Extract this span into a `pilot_compute::race_traits` submodule (or similar), re-exporting the handful of pub/pub(crate) items (race_ids_with_a_magnitude_consumer, apply_human_ability_bonus, UNDINE_RACE_TRAIT_FORMULAS, etc.) that other files/binaries already import from pilot_compute::mod.",
+      "risk_notes": "Mechanical module split with re-exports should be provable by cargo check per the ground rules, but is still large-surface-area (many pub(crate) items, several include_str! fixture paths using relative '../../../tests/fixtures/...' that would need adjusting for a new file location) -- report_only rather than auto_fix given the volume of touched imports."
+    },
+    {
+      "id": "PC2-6",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 9709,
+      "line_end": 9863,
+      "severity": "P3",
+      "category": "structure",
+      "title": "Minor formatting inconsistency: several conditional explanations.push blocks are under-indented",
+      "evidence": "Inside explain_dwarf_race_seam, the four `if !replaced_by_alternate_trait(...) { explanations.push(...) }` blocks (Stonecunning ~9709, Greed ~9739, Hardy ~9779, Stability ~9819, Defensive Training ~9848) indent the inner `explanations.push(ComputationExplanation {` at 4 spaces instead of the 8 spaces a properly nested block would use, suggesting these were hand-edited without a rustfmt pass.",
+      "proposed_action": "report_only",
+      "confidence": "low",
+      "fix_description": "Run rustfmt over this file (or at minimum this function) to restore consistent nesting indentation.",
+      "risk_notes": "Purely cosmetic; only listed because ground rules exclude auto_fix for anything not provable by cargo check alone and a repo-wide rustfmt run is out of this lane's scope."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "cross_chunk": [
+      "fn explain_<race>_race_seam(input: &CharacterInput, [ability_modifiers: &AbilityModifiers,] explanations: &mut Vec<ComputationExplanation>, diagnostics: &mut Vec<ComputationDiagnostic>) -- 7 instances in this chunk (human/dwarf/elf/gnome/half_elf/half_orc/halfling, lines 9345-11094); check other chunks for any further per-race or per-class 'explain_*_seam'/'explain_*_class_features' functions following the same ability_modifiers/size/speed/senses boilerplate template so a cross-chunk table-driven collapse can be scoped together.",
+      "fn explain_<race>_flat_override_race_trait(input: &CharacterInput, [ability_modifiers: &AbilityModifiers,] explanations: &mut Vec<ComputationExplanation>) -- 5 instances in this chunk (rougarou/gillman/vanara/samsaran/nagaji, lines 11321-11841); same family as explain_undine_formula_race_trait (11931). Check whether later chunks add more races to this same shape (a 6th+ flat-override race would be a duplication signal worth flagging there too).",
+      "fn ability_score_for(scores: &AbilityScores, ability: &str) -> Option<i16>, fn with_ability_score(scores: AbilityScores, ability: &str, new_score: i16) -> AbilityScores, fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i16) -- three independent 6-arm string-match dispatchers over the same six ability names (lines 9181/9195/9318 in this chunk); check other chunks (e.g. skill_key_ability_modifier, referenced in this chunk's own doc comments as living elsewhere in this file) for further instances of the same match-on-ability-name-string shape.",
+      "const <RACE>_RACE_ID: &str / per-race adjustment consts (e.g. DWARF_CON_ADJUSTMENT, ELF_DEX_ADJUSTMENT, ...) -- a recurring per-race const-cluster pattern; if other chunks define additional races' adjustment consts, they belong to the same family race_ids_with_a_magnitude_consumer (line 10419 in this chunk) already tries to keep in sync."
+    ],
+    "notes": "Covered lines 7592-12127 exactly (the requested 7592-12128 boundary snapped back one line to end at the close of `mod formula_race_trait_tests`, immediately before the next top-level `#[cfg(test)] mod flat_override_race_trait_tests` begins at 12128). No file in this range carries a 'GENERATED FILE' marker (checked by reading the file's own first lines); 0 files skipped. This chunk is entirely one file (src/rules_core/pilot_compute/mod.rs), so files_reviewed=1. Content is almost entirely: (1) two #[cfg(test)] modules for Animal Companion progression/stat-block tests and combat-maneuver/touch-AC formula tests (lines 7592-8312), (2) the combat-size-modifier and CMB/CMD/touch-AC/flat-footed-AC formula functions (8016-8327), (3) ~90 Fighter-progression named constants documenting the level-1-through-20 bonus-feat/weapon-training/armor-training/Bravery cadence with no logic bugs found, (4) the top-level compute_pilot_base_chassis orchestration function (8780-9109) which is a long but well-commented sequential dispatcher whose call-order dependencies are explicitly documented (including one historical bug the current ordering was fixed to avoid, per its own comment at line ~9047), and (5) the race-trait explanation seam (9330-12127) covering Human/Dwarf/Elf/Gnome/Half-Elf/Half-Orc/Halfling plus the newer flat-override (Rougarou/Gillman/Vanara/Samsaran/Nagaji) and formula-based (Undine) race seams, which is where all 6 reported findings concentrate. No unchecked .unwrap() calls on external/runtime data were found anywhere in this chunk (0 occurrences outside test-fixture-loading .expect() calls, which panic only on a malformed literal test fixture, not on real user input). Test modules were skimmed for structure and a handful of representative assertions were read in full rather than every line; production code received the closer read."
+  }
+}

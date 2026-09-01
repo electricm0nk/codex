@@ -1,0 +1,128 @@
+{
+  "lane": "PC3",
+  "findings": [
+    {
+      "id": "PC3-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 15964,
+      "line_end": 15992,
+      "severity": "P2",
+      "category": "bug",
+      "title": "Good-domain Inquisitor explanation text emits the literal string \"{magnitude}\" instead of the number",
+      "evidence": "In ground_or_block_inquisitor_domain_power, `power_specific` for the GOOD_DOMAIN_SELECTION branch is a plain &str literal — \"The +{magnitude} bonus is applied to her own baseline melee attack bonus...\" — that is never itself passed through format!(). It is only later interpolated as `{power_specific}` into the OUTER format! call at line 15968. Rust does not re-parse already-substituted text for further `{}` placeholders, so the emitted explanation detail literally contains the seven characters `{magnitude}` rather than the computed bonus value. The sibling `value: magnitude` field on the same ComputationExplanation is unaffected (still numerically correct), but the human-readable detail text — the thing this whole file exists to keep trustworthy per its own 'grounded explanation' doctrine — is wrong for every Inquisitor who selects the Good domain and activates Touch of Good.",
+      "fix_description": "Either move the `{magnitude}` substitution into a real format!() call producing `power_specific` (passing `magnitude` as a named arg), or restructure so the Good-domain sentence is written as its own format! with `magnitude` bound, then interpolated as a fully-resolved String.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "src/rules_core/pilot_compute/mod.rs is compiled and exercised by `cargo test` at repo root, which scripts/verify.sh runs — per the ground rules this file's fixes must stay report_only regardless of triviality."
+    },
+    {
+      "id": "PC3-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 13118,
+      "line_end": 13509,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "18 near-identical `is_supported_<class>_single_class` gate functions collapsible into one table-driven check",
+      "evidence": "has_supported_class_chassis (line 13118) ORs together is_supported_uc_single_class, is_supported_cavalier_single_class, is_supported_alchemist_single_class, is_supported_inquisitor_single_class, is_supported_oracle_single_class, is_supported_brawler_single_class, is_supported_hunter_single_class, is_supported_arcanist_single_class, is_supported_warpriest_single_class, is_supported_slayer_single_class, is_supported_swashbuckler_single_class, is_supported_investigator_single_class, is_supported_shaman_single_class, is_supported_witch_single_class, is_supported_summoner_single_class, is_supported_bloodrager_single_class, is_supported_skald_single_class, is_supported_pu_single_class (18 of 18 examined in this chunk). Every one of the 13 ACG/APG-exact-match variants has the identical body shape: destructure `[class_level]`, compare `XxxClassId::from_class_id_str(...) != Some(XxxClassId::Y)`, then call `<book>::class_chassis_resolve(XxxClassId::Y, class_level.level, RuleSetId::Xxx).is_some()` — differing only in the enum variant, book module, and RuleSetId constant.",
+      "fix_description": "Replace the 13 exact-match gates with one data table of (ClassFamily enum, book module fn pointer, RuleSetId) rows plus a single generic `is_supported_exact_match_single_class(input, table)` walker; keep is_supported_uc_single_class/is_supported_pu_single_class/is_supported_generic_single_class as-is since their doc comments explain a deliberately different (broad vs. exact) admission policy.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Several of this file's own doc comments explicitly defend keeping per-class functions separate ('parallel-copy discipline', reviewability per class) — a collapse should preserve the exact per-class doc citations as table row comments, not just delete them. File is exercised by scripts/verify.sh's cargo test, so report_only regardless."
+    },
+    {
+      "id": "PC3-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 15307,
+      "line_end": 15474,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "Inquisitor Justice/Protection/Purity judgment: 3 identical-shape formula fns + 3 identical-shape 'active' query fns",
+      "evidence": "inquisitor_justice_judgment_attack_bonus, inquisitor_protection_judgment_ac_bonus, and inquisitor_purity_judgment_save_bonus (lines ~15307/15315/15323) all share the exact body `1 + i16::from(level) / 5`. active_inquisitor_justice_judgment_bonus (15372), active_inquisitor_protection_judgment_bonus (15408), and active_inquisitor_purity_judgment_bonus (15444) are byte-for-byte identical control flow (find Inquisitor level -> check choice_selection against one SELECTION_ID const -> find the activation -> check EquippedActive -> check rounds_consumed_today budget -> return Some((level, formula(level)))), differing only in which SELECTION_ID constant and which formula function is called.",
+      "fix_description": "Collapse the 3 formula fns into one `inquisitor_judgment_bonus(level: u8) -> i16` (the formula is identical for all three) and the 3 active-query fns into one `active_inquisitor_judgment_bonus(input, selection_id: &str) -> Option<(u8, i16)>` parametrized by the selection id.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "None of the three uses actually differ in formula (all `1 + level/5`), so this is lower-risk than PC3-2's collapse; still report_only per the verify.sh exclusion."
+    },
+    {
+      "id": "PC3-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 16598,
+      "line_end": 16755,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "5 near-identical `oracle_level_with_<X>_revelation` functions differ only in 4 constants",
+      "evidence": "oracle_level_with_battlecry_revelation (16598), oracle_level_with_steelbreaker_skin_revelation (16647), oracle_level_with_icy_skin_revelation (16675), oracle_level_with_spark_skin_revelation (16703), and oracle_level_with_coat_of_many_stars_revelation (16731) each: find the Oracle class level, call archetype_resolver::chooser_option_selected twice (once for the Mystery choice+pool, once for the Revelation choice+pool) with 4 different consts each time, then return Some(oracle_level). The doc comments explicitly note this shape was chosen deliberately per-Mystery rather than generalized, for independent reviewability of each addition.",
+      "fix_description": "A `oracle_level_with_mystery_revelation(input, mystery_sel, revelation_sel, revelation_pool) -> Option<u8>` helper (ORACLE_MYSTERY_POOL is shared across all five) would remove 4 of the 5 bodies while keeping named call sites at each usage; only worth doing if the team decides the review-independence argument in the doc comments no longer applies.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "The duplication is a deliberate, documented design choice (each revelation grounded and reviewed independently) — flagging for awareness, not urging a change against the stated policy."
+    },
+    {
+      "id": "PC3-5",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 18700,
+      "line_end": 18700,
+      "severity": "P3",
+      "category": "dead_code",
+      "title": "Orphaned doc-comment fragment sits above witch_base_spells_per_day_table's real doc",
+      "evidence": "Line 18700 reads `/// shape before that). An unrecognized or missing choice keeps a` immediately followed on line 18701 by `/// The APG Witch class table's BASE spells-per-day row, one entry per` (the real doc for witch_base_spells_per_day_table at line 18707). The line-18700 fragment is the tail of some other, since-edited doc comment (references 'choice keeps a[?]' with no continuation) that was never cleaned up when the surrounding code was rearranged, and now reads as a dangling, confusing half-sentence directly above an unrelated function's real documentation.",
+      "fix_description": "Delete the stray line 18700.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Purely a doc-comment line with no compiled effect, but the file is exercised by scripts/verify.sh's cargo test, so kept report_only per the ground rules' blanket exclusion rather than treated as a safe pure-deletion auto_fix."
+    },
+    {
+      "id": "PC3-6",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 14649,
+      "line_end": 14688,
+      "severity": "P3",
+      "category": "structure",
+      "title": "Misleading indentation in ground_alchemist_bomb_and_poison_resistance's if/else — match body reads as top-level code",
+      "evidence": "The `} else {` at line 14649 opens a block whose body (the `match alchemist_poison_resistance_bonus(level) { ... }` spanning lines 14650-14687) is indented at the SAME level as the `else {` itself, rather than one level deeper — so on a quick read the match block looks like it sits outside the else-branch at the function's top level instead of inside it. The logic is correct (the match genuinely is the else-branch body, confirmed by brace counting), only the formatting is wrong.",
+      "fix_description": "Re-indent lines 14650-14687 one level deeper to match normal rustfmt output.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Cosmetic only; no behavior change. Presumably rustfmt was not run after this hunk was hand-edited."
+    },
+    {
+      "id": "PC3-7",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 13897,
+      "line_end": 19600,
+      "severity": "P2",
+      "category": "structure",
+      "title": "Natural submodule-extraction seam: the ACG/APG per-class grounding clusters (Cavalier/Alchemist/Inquisitor/Oracle/Witch/Summoner/Arcanist) are self-contained but inline in this 78.5k-line file",
+      "evidence": "compute_apg_class_chassis (13897) dispatches to per-class clusters that are each internally self-contained (their own consts, formula fns, active_/ground_/unmet_ helper fns, and a single push_<class>_other_features_deferred_diagnostic) and reference only shared primitives (choice_selection, ComputationExplanation/Diagnostic, ability_modifier helpers) plus that class's own rules_tables/*::class_chassis_resolve and corpus lookup modules (alchemist_spell_list, witch_spell_list, domain_power, archetype_resolver). The Alchemist cluster alone (roughly lines 14396-15290, ~900 lines) has zero call-in from the Inquisitor, Oracle, Witch, or Summoner clusters and vice versa.",
+      "fix_description": "Extract each class cluster into its own file (e.g. pilot_compute/apg_alchemist.rs, apg_inquisitor.rs, apg_oracle.rs, apg_witch.rs, apg_summoner.rs, apg_arcanist.rs, apg_cavalier.rs) re-exported via `pub(crate) use` from mod.rs, following the existing pattern already used for rules_tables submodules (apg::, acg::, uc::, pu::). This chunk alone (12128-19600, ~7.5k lines) is about 10% of the whole 78.5k-line file and is almost entirely one clean seam.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Purely organizational; would need care to keep #[cfg(test)] modules and any cross-cluster shared consts (e.g. ORACLE_MYSTERY_POOL used only within Oracle's own cluster) correctly scoped. Out of this lane's write scope regardless."
+    },
+    {
+      "id": "PC3-8",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 19622,
+      "line_end": 19623,
+      "severity": "P3",
+      "category": "hazard",
+      "title": "Production `.expect()` couples two independently-defined lookup functions in a different module",
+      "evidence": "`resolve_metamagic_feat_effect(&feat_name).expect(\"evaluate_metamagic_feat_prerequisites already confirmed eligibility\")` assumes that if evaluate_metamagic_feat_prerequisites(feat_name).is_eligible is true, resolve_metamagic_feat_effect(feat_name) is guaranteed Some. Checked against src/rules_core/feat_prereqs/metamagic.rs: both currently iterate feat_tables() with the identical predicate `entry.category == FeatCategory::Metamagic && matches_feat_id(entry, feat_id)` (one via .any(), one via .find()), so today the invariant genuinely holds and this cannot panic. But the two functions are separately maintained (no shared assertion, no test pinning that they must stay in lockstep), so a future edit to either one's filter (e.g. adding a PREREQ check to one but not the other) would silently reintroduce a live panic on a legitimate, previously-working character.",
+      "fix_description": "Either derive one function from the other (e.g. have resolve_metamagic_feat_effect call evaluate_metamagic_feat_prerequisites internally, or vice versa) so they cannot structurally diverge, or replace the .expect() with a claim-blocking diagnostic push + early return, matching this file's own everywhere-else discipline of never letting external-shaped data panic a production path.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Not a live bug today (verified the two predicates are byte-identical); flagged as a latent hazard given this codebase's own stated no-panic-on-real-input discipline."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "cross_chunk": [
+      "is_supported_<class>_single_class(input: &CharacterInput) -> bool -- 18 near-identical predicate functions in this chunk alone (lines 13118-13509 of src/rules_core/pilot_compute/mod.rs); check other chunks for more (e.g. supported_fighter_level/supported_wizard_level-shaped functions) to size a single repo-wide table-collapse.",
+      "active_inquisitor_<judgment>_bonus(input: &CharacterInput) -> Option<(u8, i16)> -- 3 near-identical query functions (lines 15372-15474); check other chunks for the same shape under other class/activation-gated bonus families (e.g. active_<class>_<x>_bonus is a recurring naming convention across this file -- active_alchemist_mutagen_bonus, active_oracle_sidestep_secret_reflex_bonus, active_touch_of_good_bonus referenced in comments but not in this chunk).",
+      "ground_or_block_<class>_<feature>(input, level, explanations, diagnostics) -- recurring 4-arg signature shape (ground_or_block_alchemist_mutagen, ground_or_block_inquisitor_judgment, ground_or_block_inquisitor_domain_power, ground_or_block_oracle_mystery, ground_or_block_oracle_curse, ground_or_block_oracle_class_features, ground_or_block_witch_class_features, ground_or_block_summoner_eidolon_evolutions, ground_or_block_arcanist_metamagic_knowledge) -- all follow 'recognized choice grounds one canonical option narrowly, else push a named claim-blocking diagnostic' -- a strong candidate for a shared trait/closure-based helper if other chunks show the same shape for CRB core classes.",
+      "push_<class>_other_features_deferred_diagnostic(diagnostics) / push_<class>_<x>_deferred_diagnostic -- one per class cluster in this chunk (push_alchemist_other_features_deferred_diagnostic, push_inquisitor_other_features_deferred_diagnostic, push_oracle_other_features_deferred_diagnostic, push_witch_other_features_deferred_diagnostic, push_summoner_evolutions_deferred_diagnostic, push_arcanist_exploits_deferred_diagnostic) -- all take the same (input, diagnostics) or (diagnostics) shape and push one long-message claim-blocking/non-blocking diagnostic; useful to correlate against other chunks' CRB-class equivalents for a shared diagnostic-composition helper."
+    ],
+    "notes": "Actually covered file lines 12128-19623 (the requested upper boundary of 19600 fell mid-function inside ground_or_block_arcanist_metamagic_knowledge, which starts at 19580; extended reading to that function's next diagnostic push at ~19634 to avoid reviewing a truncated function). Read the full range in ~1200-line Read calls plus one grep-driven scan for unwrap()/expect()/panic!()/unreachable!()/todo!() across the whole chunk (zero raw .unwrap() calls found anywhere in this chunk, production or test -- the file's own no-stub/no-panic discipline holds up here). No files were skipped as generated -- this is a single hand-written file and the requested range does not cross a file boundary. Test code (one #[cfg(test)] module, flat_override_race_trait_tests, lines 12128-12440) was skimmed structurally and 3 of its 10 tests were read in full; all .expect() calls found in the chunk (21 total) are inside that test module or its fixtures, none in production code except the one flagged in PC3-8. This chunk is exceptionally doc-comment-dense (roughly half of every function's lines are /// citations back to specific PCGen .lst tokens and corpus files) which is why only ~169 fn items span 7.5k lines; that density also makes the file's stated 'parallel-copy discipline' (deliberately not DRY-ing near-identical per-class functions, to keep each independently reviewable/citable) an explicit, repeatedly-stated policy rather than an oversight -- PC3-2/PC3-3/PC3-4 are reported as real duplication for cross-chunk sizing purposes, but a reviewer should weigh that stated policy before mandating a collapse."
+  }
+}

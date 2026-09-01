@@ -1,0 +1,98 @@
+{
+  "lane": "R9",
+  "findings": [
+    {
+      "id": "R9-01",
+      "file": "src/bin/v06_work_inventory.rs",
+      "line_start": 15949,
+      "line_end": 15992,
+      "severity": "P2",
+      "category": "hazard",
+      "title": "MANDATORY finding REFUTED: the SD-30 silent-stamp-loss hazard already has a code guard, wired into the only production write path",
+      "evidence": "The premise 'inventory regenerator silently drops ~2,371 verification stamps on regeneration with no guard in code' describes SD-30's ORIGINAL finding (docs/release/SD-30-class-feature-archetype-bundle/state-goals-and-lessons.md line 105: 'The regenerator silently drops 2,371 verification stamps... FIRST CANDIDATE FOR A GUARD'), but that hazard was fixed the same bundle, commit 9060840cdc ('fix(sd30): guard v06_work_inventory against silent verification-stamp loss'), confirmed still present at current HEAD. The guard: DONE_RUNG_STAMP_STATUSES (line 13776-13777, now 4 statuses: literal-verified/fixture-verified/oracle-agree/oracle-unverifiable), stamped_ids() (13788-13799), stamp_loss() (13810-13812), and the enforcement site at main()'s ONLY write to docs/work-inventory.json (grep-confirmed: this is the only `fs::write(&output_path` / `fs::write(&out_path` production call in the file — line 15988). Lines 15960-15983: reads the existing on-disk file, computes incoming_stamped from the freshly-built inventory, diffs via stamp_loss(), and on any non-empty loss calls `std::process::exit(1)` UNLESS `--allow-stamp-loss` is passed (line 15960, 15968). A dedicated `stamp_loss_guard_tests` module exists (from line 24718) plus `apply_done_rung_stamps_tests` (13286) exercising the exact regression scenarios named in the guard's own doc comments (304-of-6502 loss, 12-stamp CRB-race loss). The 2,371 figure itself is stale for a second, unrelated reason: it does not even name a stamp-loss count in the current corpus — the only '2,371' hits in docs/ are an unrelated CATEGORY:Internal class_feature A/B split from SD-32 (docs/release/SD-32-.../progress.md), a coincidental number reuse.",
+      "fix_description": "No code fix needed -- the guard exists and is exercised at the only write path. Recommended non-code follow-up (report_only): update SD-34/prior retro pointers that still cite this as an open SD-30 hazard so future lanes do not re-investigate it; optionally add a CI assertion that `--allow-stamp-loss` usage is logged/greppable in CI output so a bypass is never silent in practice (the current design already makes a bypass require an explicit, greppable flag, so this is a hardening nice-to-have, not a gap).",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "None -- this is a confirm/refute finding, not a change. Re-verify with `git log -S allow-stamp-loss -- src/bin/v06_work_inventory.rs` if re-auditing later."
+    },
+    {
+      "id": "R9-02",
+      "file": "src/bin/v06_work_inventory.rs",
+      "line_start": 4237,
+      "line_end": 4240,
+      "severity": "P1",
+      "category": "bug",
+      "title": "enumerate_file's `rel` is a bare basename (not book-relative), silently misattributing citation provenance for any nested-subdirectory .lst file -- a live, still-open cross-SD-bundle carry-forward (C1.9)",
+      "evidence": "`let rel = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();` (lines 4237-4240) discards the file's subdirectory path, keeping only the basename. `rel` is then used as `Provenance { file: rel.clone(), .. }` at lines 4390 and 4584, and as a map key at 4572 -- i.e. it IS the citation-resolution provenance the wiring_class computation reads. This is the exact bug three successive SD packages flagged as unfixed: SD-30 forward-scope-register.md C1.9 (found, not fixed, 2026-08-15), carried into SD-31's register (line 30, still 'unassigned pending a cycle picking it up'), carried again into SD-32's register (line 52, same wording, same unassigned status). Both docs state the sibling bug was already fixed at two OTHER call sites (`corpus_traps.rs`'s audit self-check and `gen_book_cache.rs`'s generator) using a proper `strip_prefix`-based relative path -- confirmed in this repo: `src/bin/gen_book_cache.rs` line 129 does `path.strip_prefix(&ce_prefix)`, the correct pattern, while `v06_work_inventory.rs`'s own `enumerate_file` still does not. `enumerate_book` (the sole caller, calls at lines 655/680/706/745/778/4685) already holds `book_dir: &Path` in scope, so the fix is directly plumbable: pass `book_dir` into `enumerate_file` and compute `rel` via `path.strip_prefix(book_dir)` (falling back to the current basename only if `strip_prefix` fails). Consequence per the carried-forward doc language: 'any book with a real citation nested under a subdirectory may have its wiring_class / wiring_class_reason / wiring_class_signals silently misclassified in docs/work-inventory.json itself -- the measurement board this package's own figures are re-derived from every cycle,' with one confirmed real precedent already on record (`inner_sea_gods/support/`).",
+      "fix_description": "Thread `book_dir: &Path` into `enumerate_file` (already available in the caller, `enumerate_book`) and derive `rel` as `path.strip_prefix(book_dir).map(|p| p.to_string_lossy().replace('\\\\', \"/\")).unwrap_or_else(|_| <current basename fallback>)`, matching `gen_book_cache.rs` line 129's pattern. Then re-run the guarded regen procedure (`corpus_literal_sweep` -> `derived_evaluator_fixture_check` -> guarded `v06_work_inventory`) exactly as SD-31's own forward-scope-register.md line 30 already prescribes, and diff the board via `doneness_verdict()` at both ends rather than a raw reclassification count.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Touches the measurement instrument every SD bundle's figures derive from, and is explicitly excluded from auto_fix by this review's own ground rules (writes docs/work-inventory.json). Must be dispatched as its own reviewed cycle with the guarded regen + before/after board diff the prior three registers already specify, never a bare mechanical edit."
+    },
+    {
+      "id": "R9-03",
+      "file": "src/bin/v06_work_inventory.rs",
+      "line_start": 10211,
+      "line_end": 12770,
+      "severity": "P2",
+      "category": "structure",
+      "title": "classify() is a single ~2,555-line function -- by far the largest extraction seam in a 25.6k-line file",
+      "evidence": "`fn classify(...)` opens at line 10211 and the next top-level `fn` (`json_escape`) does not begin until line 12771, i.e. one function body spans roughly 2,555 of this file's 25,596 lines (about 10% of the whole file in one function). It is the file's largest function by a wide margin -- the next-largest is `main` at 933 lines (14966-15993) and `enumerate_file` at 388 lines (4207-4594). classify() is the core per-unit verdict computation (engine-book resolution, per-kind wiring rules, per-book special cases), so its size reflects genuinely dense, well-commented domain logic rather than accidental bloat, but its scale makes it the single hardest function in the file to safely modify or review incrementally -- any future per-kind/per-book rule change has to navigate the whole function to find the right branch.",
+      "fix_description": "Report only: a future refactor could extract clearly-delimited per-kind or per-book sections (e.g. the shared-library engine-book resolution at the top, ~10246-10270) into named helper functions returning intermediate results, without changing behavior. Not attempted here -- classify() is exactly the kind of core verdict logic this review's ground rules warn against mechanically touching, and a correctness-preserving split needs full test-suite re-verification, not a review-time edit.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Any split must preserve exact behavior (this function's output feeds docs/work-inventory.json); would need the same guarded-regen re-verification as R9-02."
+    },
+    {
+      "id": "R9-04",
+      "file": "src/bin/v06_work_inventory.rs",
+      "line_start": 14966,
+      "line_end": 15993,
+      "severity": "P3",
+      "category": "structure",
+      "title": "main() is 933 lines mixing CLI-flag dispatch, corpus enumeration, and the stamp-loss guard/write path in one function",
+      "evidence": "`fn main()` (14966-15993) handles at least 8 distinct early-return CLI modes (--epic2-table-transcript, --spell-probe, --class-probe, --class-feature-probe, --charbuild-remainder-probe, --summary/--stdout-only, plus the default full-regen path) inline before reaching the stamp-loss guard and file write (R9-01's evidence). Each mode is individually well-commented and testable in isolation, but they are not factored into separate functions, so the CLI's own dispatch table and the default regen pipeline share one 933-line body.",
+      "fix_description": "Report only: each `if args.iter().any(|a| a == \"--flag\")  { ...; return; }` block (e.g. 14975-15014, 15021-15026, 15031-15046, 15054-15071, 15082-15098) could be extracted into a named `run_<mode>(&repo_root, &args)` function called from a slimmer main(), improving navigability with no behavior change.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Low behavioral risk since blocks are already self-contained early returns, but still touches the file excluded from auto_fix by these ground rules (docs/work-inventory.json producer)."
+    },
+    {
+      "id": "R9-05",
+      "file": "src/bin/v06_work_inventory.rs",
+      "line_start": 1,
+      "line_end": 25596,
+      "severity": "P3",
+      "category": "structure",
+      "title": "No internal `mod` partitioning anywhere in ~13,500 lines of production code (only #[cfg(test)] mods exist)",
+      "evidence": "`grep -n \"^mod \\|^pub mod \"` on this file returns zero non-test hits; all 49 `#[cfg(test)] mod` blocks are test-only. Production logic (~13,494 of the file's 25,596 lines by an approximate brace-depth count of the 49 test-module spans, which total ~12,102 lines) lives entirely as flat top-level fns/consts/structs in one namespace, in one 25.6k-line file with no `mod` boundaries to signal e.g. 'corpus enumeration', 'classification', 'stamp-loss guard', or 'CLI probes' as distinct sub-areas.",
+      "fix_description": "Report only: introducing internal `mod` blocks (not necessarily separate files, given this is a `src/bin/*.rs` binary crate root) around the existing natural clusters (enumeration ~600-4900, classify()+helpers ~5000-13100, stamp-loss guard ~13760-13820, CLI dispatch in main()) would give the file real navigational seams without moving any logic. Not attempted here given the file's central role in verify.sh-adjacent tooling and this review's read-only/report-only mandate for this file.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Purely organizational; real risk is only in execution (large mechanical diff), not in the idea itself."
+    },
+    {
+      "id": "R9-06",
+      "file": "src/bin/v06_work_inventory.rs",
+      "line_start": 4677,
+      "line_end": 4681,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "The `path.file_name().map(...).unwrap_or_default()` basename-extraction idiom is repeated verbatim 16 times with no shared helper",
+      "evidence": "`grep -c '\\.file_name()'` returns 16 hits across the file, each following the same shape as lines 4677-4681 (`let basename = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();`), including the buggy `rel` computation in R9-02 (lines 4237-4240) which is the same idiom applied where a full relative path is actually needed. A single `fn basename(path: &Path) -> String` helper would remove the duplication and give R9-02's fix one obvious place to live alongside it.",
+      "fix_description": "Extract a shared `fn basename(path: &Path) -> String { path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default() }` and replace the 16 call sites. Purely mechanical and behavior-preserving in isolation, but left report_only per this review's ground rules for this file (not a pure deletion, and this file is the docs/work-inventory.json producer).",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Safe in principle (verifiable by cargo check + existing test suite), but bundling it with R9-02's fix in the same cycle is more efficient than doing it alone."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 14,
+    "files_skipped_generated": 0,
+    "notes": "Scope: src/bin/v06_work_inventory.rs (25,596 lines, primary target with mandated stamp-loss investigation) plus v06_class_state_dump.rs, v06_content_state_dump.rs, v06_corpus_trap_report.rs, and every other src/bin/*.rs file not owned by the enrich_*/ingest_*/gen_*/repair_*/e5_* families: bonus_stack_reader.rs, corpus_literal_sweep.rs, declared_pi_shipping_audit.rs, derived_evaluator_fixture_check.rs, e6_identity_rerun_ours.rs, fixture_verified_oracle_probe.rs, formula_interpreter.rs, pi_sweep_rules_tables.rs, reconcile_description_pi_stamps.rs, restamp_wiring_class.rs. 14 of 14 files in scope had readable first lines checked for 'GENERATED FILE' (none matched); 0 of 14 skipped. No cargo build/test/git-write/regenerator run performed anywhere in this review. Mandatory finding (SD-30 stamp-loss hazard): REFUTED as a live gap -- a guard (DONE_RUNG_STAMP_STATUSES/stamped_ids/stamp_loss, lines 13776-13812) is wired into the file's one production write path (lines 15960-15983) and has been since commit 9060840cdc within SD-30 itself; see R9-01. Secondary investigation surfaced a genuinely still-open, previously-known bug (enumerate_file's bare-basename `rel`, R9-02) that three successive SD forward-scope-registers (SD-30 C1.9, SD-31, SD-32) named as unfixed and which is confirmed unfixed at current HEAD -- this is the most actionable finding in this lane. Of the 10 non-v06 bins, none showed TODO/FIXME/unimplemented!/todo!, dead_code allows, or production (non-test) unwrap() risk beyond one benign strip_prefix-on-a-just-walked-path case in corpus_literal_sweep.rs:1027 (not reported: guaranteed to hold by construction). None of the 10 non-v06 bins are referenced by scripts/verify.sh except pi_sweep_rules_tables.rs and declared_pi_shipping_audit.rs and corpus_literal_sweep.rs, all three of which were read and found clean.",
+    "cross_chunk": [
+      "R9-02's fix (thread book_dir into enumerate_file) and R9-06's extraction (shared basename() helper) touch overlapping code and should land in one cycle, not two.",
+      "R9-01's conclusion (guard already present) should be relayed back so no other lane or future retro re-opens the SD-30 stamp-loss hazard as if it were still unguarded -- the live gap in this area is R9-02, not the stamp-loss guard."
+    ]
+  }
+}

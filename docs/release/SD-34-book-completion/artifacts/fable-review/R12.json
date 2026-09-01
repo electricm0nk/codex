@@ -1,0 +1,85 @@
+{
+  "lane": "R12",
+  "findings": [
+    {
+      "id": "R12-01",
+      "file": "scripts/transcribe_companion_tables.py",
+      "line_start": 1565,
+      "line_end": 1583,
+      "severity": "P1",
+      "category": "hazard",
+      "title": "companion_data.rs emitter writes non-atomically; sibling monster emitter already carries the fix for the identical hazard",
+      "evidence": "main() (lines 1565-1583) does `contents = transcribe(book)` first (correctly avoiding the 'raise truncates the file' shape its own comment describes as the Round 6 incident), then `with open(path, \"w\", encoding=\"utf-8\") as handle: handle.write(contents)` directly onto the real `companion_data.rs` path -- no temp file, no `os.replace()`. Compare `scripts/transcribe_monster_tables.py::write_book` (lines 2549-2584), whose docstring documents the SAME two-stage hazard on the SAME generator family and names a SECOND, later fix (`SD31-W9-INTEGRATE-001`): 'The write itself is now genuinely atomic too ... an interruption or disk-full error mid-`handle.write()` could still have left a truncated file on disk ... Writes to a same-directory temp file first, then `os.replace()`s it onto the real path.' That second-stage fix was applied to the monster transcriber but never backported to the companion transcriber, which is otherwise near-identical in shape (both do compute-then-open, both target `src/rules_core/rules_tables/<book>/*_data.rs`). 1 of the repo's 2 `*_data.rs` table transcribers is missing the atomic-write guard the other one already has.",
+      "fix_description": "Mirror `transcribe_monster_tables.py::write_book`'s pattern in `transcribe_companion_tables.py::main()`: write `contents` to `f\"{path}.tmp\"` first, then `os.replace(tmp_path, path)` instead of writing directly to `path`.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Not auto_fix: this is a generator script edit, not verifiable by cargo check, and per the ground rules only pure deletions/strictly-mechanical-and-cargo-checkable changes qualify for auto_fix."
+    },
+    {
+      "id": "R12-02",
+      "file": "scripts/derive_class_feature_description_fixtures.py",
+      "line_start": 535,
+      "line_end": 540,
+      "severity": "P2",
+      "category": "hazard",
+      "title": "11 of 11 derive_*_fixtures.py generators non-atomically overwrite the ONE shared fixture file they all merge into",
+      "evidence": "This file's `main()` does `doc = json.loads(FIXTURE_PATH.read_text())`, sets only its own keys (`doc[\"class_feature_description_...\"] = ...`), then `FIXTURE_PATH.write_text(json.dumps(doc, indent=2) + \"\\n\")` -- a correct read-modify-write of the shared `tests/fixtures/rules_core/derived-evaluator-fixtures.json`, but `write_text` is a single non-atomic open+write+close with no temp-file+`os.replace` step. The SAME pattern (read whole doc, set only own keys, `.write_text()`/`open(...,'w')` with no temp file) recurs verbatim in all 11 sibling generators that merge into this one file: derive_class_feature_level_scaling_fixtures.py:384, derive_companion_save_dc_fixtures.py:370, derive_companion_skill_bonus_fixtures.py:330, derive_companion_strength_damage_fixtures.py:376, derive_derived_evaluator_fixtures.py:562, derive_monster_ability_save_dc_fixtures.py:547, derive_monster_sla_spell_level_fixtures.py:427, derive_race_trait_formula_fixtures.py:304, derive_spell_caster_level_duration_fixtures.py:293, derive_spell_range_fixtures.py:345. Because every one of these 11 scripts reads then rewrites the WHOLE shared file, a crash, kill, or disk-full during any single one of the 11 writes truncates/corrupts the one file all 10 OTHER scripts' already-recorded sections live in, not just the running script's own contribution -- unlike the `*_data.rs` transcribers (finding R12-01), which each own a private per-book output file.",
+      "fix_description": "Add a shared write-fixture helper (e.g. in a small shared module, mirroring `pi_scrub.py`'s extraction precedent) that does temp-file + `os.replace()` for `derived-evaluator-fixtures.json`, and have all 11 generators call it instead of `write_text`/`open(...,'w')` directly.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Fixture file feeds `derived_evaluator_fixture_check*.rs` tests directly; a corrupted-JSON failure would be loud (test parse error), not silent PI exposure, so this is lower severity than R12-01 despite touching more files."
+    },
+    {
+      "id": "R12-03",
+      "file": "scripts/diff_check_regen.py",
+      "line_start": 1,
+      "line_end": 66,
+      "severity": "P2",
+      "category": "dead_code",
+      "title": "Script hardcodes an absolute path into a worktree that no longer exists on disk -- fully non-functional",
+      "evidence": "Every path this script touches (`git_show`'s `-C` argument at line 12, and the `post` file read at line 41) is hardcoded to `/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_2656fbd3-1ec-1`. `ls /home/ubuntu/workspace/repos/codex/.claude/worktrees/` confirms no directory named `wf_2656fbd3-1ec-1` exists (the worktree was cleaned up after the SD-32 cycle it was created for). Every invocation now fails immediately (git show against a nonexistent -C path, then a FileNotFoundError on the post-read). Repo-wide reference search (`grep -rl diff_check_regen`, excluding `.claude/worktrees`) finds it cited only in two already-closed docs (`docs/release/SD-32-compute-library-and-cause-closure/progress.md` and one epic-2 cycle receipt under that same closed bundle) -- never in `scripts/verify.sh` or any other currently-active script.",
+      "fix_description": "Delete the file; its only value was as a throwaway diff-check for one already-closed SD-32 regen cycle, and its two citations are historical receipts, not live callers.",
+      "proposed_action": "auto_fix",
+      "confidence": "high",
+      "risk_notes": "Pure deletion of an unreferenced, already-broken script; not in any excluded category (not generated, not completion_atlas.py, not work-inventory.json, not data/corpus, not invoked by verify.sh)."
+    },
+    {
+      "id": "R12-04",
+      "file": "scripts/summarize_domain_power_classes.py",
+      "line_start": 1,
+      "line_end": 21,
+      "severity": "P3",
+      "category": "dead_code",
+      "title": "Second script hardcoding the same defunct worktree path -- also fully non-functional",
+      "evidence": "Line 6's `glob.glob(...)` pattern is hardcoded to `/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_2656fbd3-1ec-1/data/corpus/*/class_feature/domain_power/*.json` -- the same nonexistent worktree as R12-03, so `glob.glob` always returns `[]` and the script only ever prints `total domain_power records: 0`. No shebang, no `if __name__ == \"__main__\"` guard, 21 lines total. Reference search finds it cited only in the same two closed SD-32 docs as R12-03, never in verify.sh or any other live script.",
+      "fix_description": "Delete the file (its live counterpart, `scripts/derive_domain_power_classes.py`, is the maintained, non-hardcoded implementation of the same idea).",
+      "proposed_action": "auto_fix",
+      "confidence": "high",
+      "risk_notes": "Pure deletion of an unreferenced, already-broken 21-line script; no excluded-category overlap."
+    },
+    {
+      "id": "R12-05",
+      "file": "scripts/t2b_pure_ability_pointer_row_safety_sweep.py",
+      "line_start": 1,
+      "line_end": 99,
+      "severity": "P3",
+      "category": "bloat",
+      "title": "22 of 100 top-level scripts/*.py are one-shot audit/census/regen scripts tied to CLOSED SD-32 work packages, with zero references outside historical receipts",
+      "evidence": "For each of the following 22 scripts, `grep -rl <name> --include=*.py --include=*.sh --include=*.md .` (excluding `.claude/worktrees`) finds matches ONLY under `docs/release/SD-32-*/` (closed-bundle progress/receipt/retro files) -- never in `scripts/verify.sh`, any CI config, or any other still-live script: sd32-t2a-residual-census.py, sd32_t9_census.py, sd32_t9_corpus_wide_pi_rescan.py, sd32_t9_pi_exposure_audit.py, sd32_t9_pi_final_disposition.py, sd32_t9_pi_review_companion_monsterability.py, sd32_t9_pi_review_feat_equipment.py, sd32_t9_pi_review_spell.py, t2b_adoptive_parentage_census.py, t2b_bestiary_3_row_classify.py, t2b_pc_class_prefix_stress_test.py, t2b_pure_ability_pointer_row_safety_sweep.py (this file, 99 lines, 2 refs both under the closed SD-32 bundle), t2b_race_trait_census.py, t2b_refine_kind_fix_movement_report.py, t2b_refine_kind_key_prefix_stress_test.py, t2b_remeasure_other_bucket_probe.py, row17_census.py, close_row17_provisional_defaults.py, regen_row17_pi_over_redaction.py, card15_reconcile.py, corpus_trap_audit_baseline.py, stamp_monster_ability_provisional_facets.py, scan_monster_ability_bundle_rows.py. That is 22 of the 100 top-level `scripts/*.py` files in this lane's scope (excluding oracle_harness/tests). A further ~7 `census_*.py` scripts (census_class_feature_pool_group_names.py, census_prestige_class_entry_requirements.py, census_t12_class_feature.py, census_untabled_base_classes.py, and 3 more) show the same shape but were not individually reference-checked within this review's budget.",
+      "fix_description": "None proposed here -- this is a report_only inventory for the owning team to triage; some entries (e.g. close_row17_provisional_defaults.py, regen_row17_pi_over_redaction.py) are idempotent corpus-patchers that could plausibly still be re-run if a future book reintroduces the same defect class, unlike the pure one-shot census/audit scripts, so a blanket deletion sweep needs a human call per script rather than one mechanical rule.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Confirmed zero LIVE (verify.sh/CI/other-script) references for all 22 named; historical doc citations alone do not make a script live. Deletion decision withheld from auto_fix given the batch size and mixed idempotent-patcher vs pure-audit shapes within the cluster."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 88,
+    "files_skipped_generated": 0,
+    "notes": "Scope: scripts/ top-level Python+shell excluding scripts/oracle_harness and scripts/tests (confirmed actual counts: 100 .py + 15 .sh across scripts/ + scripts/observer + scripts/release + scripts/site + scripts/tranche, matching the task's 164/23 repo-wide totals minus oracle_harness(7 py/1 sh)+tests(57 py/7 sh)) plus tools/ (8 files). files_reviewed counts files actually opened/greped in depth; the remainder of the 123-file population was covered by targeted grep sweeps (write-pattern audit, GENERATED FILE header check, reference-liveness check) rather than full reads. 0 files anywhere in scope carried a 'GENERATED FILE' header (expected -- this lane's scope is hand-authored tooling, not generated output). PI-scrub duplication (priority c): checked and found ALREADY FIXED -- scripts/pi_scrub.py is the one shared implementation of scrub_name_pi_tokens/PI_BLACKLIST_TERMS/normalized_term_hit/canonicalize, its own docstring documents the prior duplication-drift incident and the extraction that closed it, and a repo-wide grep for a second `def scrub_name_pi_tokens` or a second `PI_BLACKLIST_TERMS = [` definition found none; every ingest_*.py and sd32_t9_pi_*.py script imports from pi_scrub.py rather than redefining. Gates-that-cannot-fail (priority d): checked denominator_gate.py, supersession_register_gate.py, shape_coverage_standing_gate.py, site_dashboard_pi_gate.py, site_public_status_pi_gate.py, screen_pcc_load_gates.py -- all 5 true gates have reachable non-zero return paths; screen_pcc_load_gates.py always exits 0 but its own docstring states this is deliberate ('Exit code is 0 whatever it finds: this is a screen, not a gate') so it is not a finding. scripts/verify.sh's overall PASS/FAIL and retro-event-emission logic (lines 2244-2337) were read and are correctly ordered (retro emission runs after RESULT is computed and cannot flip it); the other ~2300 lines of stage-by-stage logic in that file were not exhaustively read given lane budget. tools/ (8 files, priority e): tools/release/check_release_manifest.py (tranche release-manifest schema) and scripts/release/validate_manifest.py (update-manifest.json schema) validate two DIFFERENT manifest schemas for two different consumers (tranche promotion vs. app auto-update) despite similar names -- checked and this is NOT duplication. tools/ci/branch-promotion-guard.sh has a correctly reachable failure path. No P1 findings in tools/.",
+    "cross_chunk": [
+      "R12-01 and R12-02 are the SAME underlying hazard class (non-atomic write to a generator's output) at two different blast radii: R12-01 is a private per-book .rs file (data-loss scoped to one book on a rare crash), R12-02 is the ONE shared JSON fixture 11 different scripts all merge into (corruption scoped to every OTHER derive_*_fixtures.py script's output, on a crash in ANY of the 11) -- an owning team fixing one should fix both with the same shared temp+os.replace helper rather than two separate patches.",
+      "R12-03 and R12-04 both hardcode the identical dead worktree path (wf_2656fbd3-1ec-1) and are both cited from the exact same two closed SD-32 docs -- almost certainly written in the same debugging session and abandoned together; delete both in one commit.",
+      "R12-05's cluster overlaps R12-03/R12-04's population (row17_census.py, card15_reconcile.py, etc. are also named in the SD-32 closed-bundle docs) -- a future cleanup pass should treat 'scripts referenced only from a closed docs/release/SD-32-*/ bundle' as one census, not run it twice."
+    ]
+  }
+}

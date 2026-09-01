@@ -1,0 +1,80 @@
+{
+  "lane": "PC7",
+  "findings": [
+    {
+      "id": "PC7-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 43149,
+      "line_end": 44185,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "sorcerer_spell_level_access ladder is hand-duplicated inline instead of calling the standalone fn of the same name",
+      "evidence": "explain_sorcerer_level1_spell_baseline (line 42714) builds `let sorcerer_spell_level_access: i16 = if level >= SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {9} else if ... else {1};` inline at lines 43149-43168. A standalone `fn sorcerer_spell_level_access(level: u8) -> i16` with the byte-for-byte identical nine-branch ladder is defined later at lines 44167-44185 and IS used elsewhere (e.g. line 44264 inside unmet_sorcerer_known_spell_conditions, and line 47139's doc comment cites it as the shared source of truth). The equivalent Cleric/Druid/Bard functions (cleric_spell_level_access at 47142, druid_spell_level_access at 48096, bard_spell_level_access at 49441) are each called through their standalone fn from inside their own explain_* function (`let cleric_spell_level_access = cleric_spell_level_access(level);` at 46983, etc.) rather than re-implemented inline -- Sorcerer is the one class where the two copies diverged into separate code paths tracking the same nine SORCERER_*_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL constants twice, 1 of 4 spellcasting classes in this chunk with this shape.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "fix_description": "Replace the inline if/else-if ladder at 43149-43168 with `let sorcerer_spell_level_access = sorcerer_spell_level_access(level);`, matching the Cleric/Druid/Bard idiom exactly.",
+      "risk_notes": "Currently the two copies agree (both read the same nine constants in the same order), so no live behavior bug today -- but any future level-threshold edit to one copy and not the other would silently desync the 'recognized' explanation record from the real access-gate used by unmet_sorcerer_known_spell_conditions. Sorcerer is a core_rulebook class, so this stays report_only per the ground rules regardless."
+    },
+    {
+      "id": "PC7-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 42714,
+      "line_end": 49725,
+      "severity": "P2",
+      "category": "structure",
+      "title": "Five near-identical per-class spellcasting mega-functions are a natural submodule-extraction seam and share a table-shaped core a generic helper would collapse",
+      "evidence": "explain_sorcerer_level1_spell_baseline (42714, ~840 lines incl. its ~340-line doc comment), explain_wizard_level1_prepared_spell_baseline (44687), explain_cleric_level1_spell_baseline (46306), explain_druid_level1_spell_baseline (47490), explain_bard_level1_spell_baseline (48395, ~1050 lines) all repeat the identical five-part shape: (1) a recognition/base-attack-and-save block, (2) a `<class>_spell_level_access(level) -> i16` threshold ladder, (3) a `<class>_base_spells_per_day_table/known_table(level) -> [Option<i16>; N]` literal lookup array, (4) a per-accessible-spell-level loop computing `10 + spell_level + ability_modifier` spell-save DCs, and (5) a paired `unmet_<class>_..._conditions`/`ground_<class>_..._spells` validate-then-ground pair. Each class only differs in its constant table values and which ability score feeds the DC formula (Int/Wis/Cha/Cha/Cha respectively).",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "fix_description": "Extract each class's block into its own submodule (pilot_compute/spellcasters/{sorcerer,wizard,cleric,druid,bard}.rs) and factor the shared skeleton (access-ladder-from-thresholds, per-day-table-to-explanations loop, DC-formula loop) into one generic helper parameterized by the class's own constant table and governing ability score, rather than five parallel hand-copies of the same loop bodies.",
+      "risk_notes": "Pure refactor risk is moderate given the volume (~5,000 lines) and the doc comments carry load-bearing corpus-verification history that must migrate with the code, not be dropped -- explicitly report_only, no auto_fix candidate."
+    },
+    {
+      "id": "PC7-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 50144,
+      "line_end": 50214,
+      "severity": "P3",
+      "category": "dead_code",
+      "title": "Monk arm in all three selected_skill_{climb,intimidate,swim}_is_class_skill functions is self-documented as currently unreachable",
+      "evidence": "Each of selected_skill_climb_is_class_skill (50144), selected_skill_intimidate_is_class_skill (50172), and selected_skill_swim_is_class_skill (50199) includes `class_level.class_id == MONK_CLASS_ID`. The doc comment directly above (lines ~50122-50143) states outright: 'Monk's arm is added for the same corpus-verified reason but is currently UNREACHABLE through compute_selected_skill_modifiers: unmet_selected_skill_posture_conditions gates on has_supported_class_chassis, which never calls the Monk-specific supported_monk_level'. Confirmed independently: has_supported_class_chassis (line 13118, outside this chunk) has no Monk-related disjunct in its 23-arm OR chain, and supported_monk_level (38229) is never referenced from it or from compute_selected_skill_modifiers/unmet_selected_skill_posture_conditions.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "fix_description": "Either wire has_supported_class_chassis to recognize single-class Monk (closing the gap the doc comment already tracks as a known follow-up) or remove the three dead MONK_CLASS_ID arms until that lands, so the code doesn't claim a class-skill fact for a class that can never reach this function.",
+      "risk_notes": "Harmless as-is (dead branches never execute), and the authors already flagged it as a tracked follow-up rather than an oversight -- reporting for visibility, not urgency."
+    },
+    {
+      "id": "PC7-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 51389,
+      "line_end": 51488,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "ground_standalone_feat_skill_facts mixes two different skill-name slugification strategies in the same function",
+      "evidence": "Within the same function, the arg_skill_facts_from_feats loop (line 51417) slugifies via `slugify_id_segment(fact.skill_name)` (51420-51421), the more careful helper defined immediately above at 51369-51386 (drops intraword punctuation, then separator-collapses). The other three loops in the same function -- standalone_skill_facts_from_feats (51396), skill_focus_facts_from_choices (51449), and master_craftsman_facts_from_choices (51466) -- instead each inline `fact.skill_name.to_lowercase().replace(' ', \"_\")`, which does not strip punctuation like parentheses or apostrophes the way slugify_id_segment does.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "fix_description": "Use slugify_id_segment consistently at all four call sites in this function.",
+      "risk_notes": "No observed live bug (every skill_name reaching these three loops today appears to be a plain space-separated name), but a future skill_name containing punctuation would produce a malformed explanation id via the naive path while the sibling loop three lines away would handle it correctly -- an inconsistency worth closing before it's load-bearing."
+    },
+    {
+      "id": "PC7-5",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 43255,
+      "line_end": 43524,
+      "severity": "P3",
+      "category": "bloat",
+      "title": "sorcerer_base_spells_per_day array is iterated in two separate identical enumerate() loops within one function instead of one merged loop",
+      "evidence": "The `sorcerer_base_spells_per_day: [Option<i16>; 9]` array built at line 43255 is walked with `for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate()` twice in explain_sorcerer_level1_spell_baseline: once at 43278 (pushing the base-count explanation) and again at 43507 (pushing the Charisma-bonus and, implicitly, recomputing the same base_count destructuring) to build the bonus-spells record.",
+      "proposed_action": "report_only",
+      "confidence": "low",
+      "fix_description": "Merge the two loops into one pass that pushes both the base-count and bonus-spells explanation records per accessible spell level.",
+      "risk_notes": "Purely a line-count/readability observation; each loop pushes a differently-worded, separately-tested explanation record, so merging is optional polish rather than a defect."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "notes": "Reviewed src/rules_core/pilot_compute/mod.rs lines 42316-51553 (snapped forward 53 lines from the requested 51500 boundary to the end of unmet_selected_skill_posture_conditions's sibling helper require_selected_skill_rank, the nearest clean top-level-item boundary). File confirmed not GENERATED (checked opening lines). This span covers: two #[cfg(test)] modules (base_class_weapon_and_armor_proficiency_tests, prestige_class_feature_generic_grant_tests -- skimmed structurally, not read line-by-line per instructions), then five class spellcasting-baseline pipelines (Sorcerer, Wizard, Cleric, Druid, Bard) each with its own explain_*/supported_*_level/*_spell_level_access/*_base_spells_per_day/unmet_*_conditions/ground_*_spells family, then compute_total_saves, the three selected_skill_*_is_class_skill predicates, active_rage_powers_level, feat_derived_pillar_contributions, compute_selected_skill_modifiers, ground_orphan_feat_facts, ground_orphan_trait_facts, ground_arg_and_pu_feat_facts, slugify_id_segment, ground_standalone_feat_skill_facts, and unmet_selected_skill_posture_conditions. No unchecked unwrap/expect on external/user-supplied data was found in production code in this range (the one non-test `.expect()`, cleric_touch_of_good_bonus at line 47080, unwraps a lookup into a fixed static catalog whose key is a compile-time constant, not external input -- low risk, not reported as a finding). No silent-fallback-hides-error pattern beyond the codebase's already-documented and heavily-tested claim-blocking-diagnostic idiom, which is the intended, correct behavior here (every 'unsupported'/'unmet' path pushes a claim_blocking diagnostic rather than fabricating a number). The code in this range is unusually well-tested and well-documented (each function's behavior, corpus citation, and defect history is recorded in an attached doc comment), so genuine correctness bugs were scarce; the most valuable findings were duplication/dead-code/structure items rather than live defects."
+  }
+}

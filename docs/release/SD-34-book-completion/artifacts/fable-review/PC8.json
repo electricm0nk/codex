@@ -1,0 +1,101 @@
+{
+  "lane": "PC8",
+  "findings": [
+    {
+      "id": "PC8-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 51445,
+      "line_end": 51487,
+      "severity": "P1",
+      "category": "bug",
+      "title": "Skill Focus / Master Craftsman skill-name slugging produces ids with literal punctuation for any Craft/Profession subtype target",
+      "evidence": "Lines 51449 and 51466 both build a fact's explanation id with `fact.skill_name.to_lowercase().replace(' ', \"_\")`. `master_craftsman_facts_from_choices`'s own test fixtures (src/rules_core/feat_effects.rs:4436-4506) use skill names like \"Craft (armor)\" and \"Profession (siege engineer)\" -- exactly the subtype-in-parens shape every real Craft/Profession skill has. Running that idiom on \"Craft (armor)\" yields `craft_(armor)`: lowercased, the space before `(` becomes `_`, but `(` and `)` are untouched, so the id `feat.master_craftsman_bonus.craft_(armor)` (and analogously `feat.skill_focus_bonus.craft_(alchemy)` for a Craft/Profession Skill Focus target) carries literal parentheses. This is the identical defect class `slugify_id_segment` (lines 51369-51386, added and doc-corrected 2026-08-01) exists specifically to close (\"putting punctuation into an id other code matches on\"), and that helper is already called three lines below at 51420 for ARG skill facts -- but not for these two call sites, whose doc comment claims the naive idiom is \"fine for the plain skill names they carry\", which does not hold for Craft/Profession subtypes.",
+      "fix_description": "Route the skill_focus and master_craftsman id-building through `slugify_id_segment(&fact.skill_name)` instead of `.to_lowercase().replace(' ', \"_\")`, the same way the ARG block a few lines above already does.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Changing these ids is a behavior/wire-format change to explanation ids other code (desktop sheet, tests) may already match on for the currently-malformed value, so it needs a coordinated fix + test update, not a blind mechanical edit."
+    },
+    {
+      "id": "PC8-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 51698,
+      "line_end": 51844,
+      "severity": "P1",
+      "category": "bug",
+      "title": "Per-weapon attack bonus omits the PF1 size modifier that the sibling baseline attack total applies",
+      "evidence": "`ground_per_weapon_combat_totals` (51698-51903) computes `attack_total = base_attack_bonus + attack_ability_modifier + focus_bonus + nonproficiency_penalty` (lines 51818-51819) with no size term, and its signature (51698-51703) never receives a `size` value at all. Its sibling `compute_combat_baseline`, three functions later in the same file, sums `size.armor_class_and_attack` into the analogous `melee_attack_bonus` (lines 52039-52047) under an explicit SD-27 comment: \"attack rolls take PF1 Table 8-1's size modifier -- the SAME column and the same magnitude as Armor Class\". `ground_per_weapon_combat_totals` is called unconditionally for every character regardless of posture (call site src/rules_core/pilot_compute/mod.rs:8863-8871, comment: \"independent of the GE-06 posture gate\"), so every Small race (Gnome, Halfling) or Large race gets a wrong `combat.weapon_attack_bonus.<weapon>` for every equipped weapon it grounds, off by the size modifier the file itself fixed for the one hardcoded Longsword baseline. The function's own doc comment (51657-51697) is otherwise scrupulous about naming every excluded term (ability governance, damage total scope) but never mentions size at all, unlike every other deliberate deferral in this file, which is stated explicitly.",
+      "fix_description": "Thread the same `size` (from `combat_size_modifiers`) into `ground_per_weapon_combat_totals` and add `size.armor_class_and_attack` to `attack_total`, updating the detail string and adding the unknown-race diagnostic path this call site currently has no access to.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Requires adding a `diagnostics` parameter (currently absent from this function's signature) to surface the unknown-size case the same way `compute_combat_baseline` does; touches a widely-asserted-against surface (grep shows dozens of `combat.weapon_attack_bonus.*` assertions later in the file)."
+    },
+    {
+      "id": "PC8-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 51913,
+      "line_end": 52459,
+      "severity": "P2",
+      "category": "bloat",
+      "title": "compute_combat_baseline is ~550 lines of repeated class-gated conditional-bonus boilerplate that a contribution table would collapse",
+      "evidence": "Between the two summed totals (`melee_attack_bonus` at 52039 and `armor_class` at 52250) there are 4 and 10 respectively near-identical blocks of the shape `let x_bonus = active_x(...).map(...).unwrap_or(0);` each followed by its own if/else detail-string builder and its own paragraph of prose in the final format! call (e.g. weapon_training/inspire_courage/touch_of_good/justice_judgment for attack; rage/inspired_rage/bloodrage/brawler/mutagen/protection_judgment/natures_whispers/challenge/draconic/armor_of_the_pit for AC). The shape is uniform enough that a `Vec<(&str, i16, &str)>`-style contribution list summed via iterator, with the detail string generated generically, would remove most of this duplication -- and would have made PC8-2's kind of drift (one twin gaining a term the other doesn't) structurally harder to introduce silently.",
+      "fix_description": "Extract a small `CombatBonusContribution { label, value, note }` accumulator used by both `compute_combat_baseline` and `ground_per_weapon_combat_totals`, so a new conditional bonus is added once instead of per-surface.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "The current explicit prose is deliberate for player-facing explanation quality (per this file's stated design philosophy); any refactor must preserve the exact wording of every existing detail string, which is asserted against extensively elsewhere in the file."
+    },
+    {
+      "id": "PC8-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 51369,
+      "line_end": 51488,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "`.to_lowercase().replace(' ', \"_\")` id-slug idiom duplicated inline next to the purpose-built slugify_id_segment helper",
+      "evidence": "`ground_standalone_feat_skill_facts` calls `slugify_id_segment(name: &str) -> String` (defined 51369-51386) at line 51420-51421 for ARG facts, but three other blocks in the very same function (51396, 51449, 51466) still inline the older, punctuation-unsafe `fact.skill_name.to_lowercase().replace(' ', \"_\")` idiom the helper was written to replace. The doc comment on `slugify_id_segment` explicitly defends keeping the old idiom at the pre-existing call sites for compatibility, but two of the three (skill_focus at 51449, master_craftsman at 51466) are not actually \"plain\" skill names -- see PC8-1.",
+      "fix_description": "N/A for this lane -- listed for cross-chunk correlation; see cross_chunk for the helper signature to grep other chunks for.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Low risk to note; any consolidation must go through the same id-compatibility analysis PC8-1 needs."
+    },
+    {
+      "id": "PC8-5",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 51041,
+      "line_end": 52579,
+      "severity": "P3",
+      "category": "structure",
+      "title": "Natural submodule-extraction seam: feat/skill/weapon/combat-baseline grounding cluster",
+      "evidence": "Lines 51041-52579 form one cohesive, self-contained unit -- feat-and-skill fact grounding (`ground_arg_and_pu_feat_facts`, `ground_standalone_feat_skill_facts`), weapon identity/proficiency helpers (`normalize_weapon_identity`, `equipped_weapon_stat_block`, `character_is_proficient_with`), per-weapon totals (`ground_per_weapon_combat_totals`), and the combat baseline plus its two posture-gate functions (`compute_combat_baseline`, `unmet_combat_posture_conditions`, `unmet_selected_skill_posture_conditions`) plus their two small `require_*` helpers -- with comparatively few dependencies on the rest of the 78.5k-line file (mostly `CharacterInput`, `AbilityModifiers`, `ComputationExplanation/Diagnostic`, and per-class `active_*_bonus` accessors defined elsewhere). This is a strong candidate for a `combat_baseline.rs` submodule.",
+      "fix_description": "N/A -- report only, per instructions.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "None for reporting; extraction itself would need visibility (pub(crate)) auditing across the whole file, out of scope for this lane."
+    },
+    {
+      "id": "PC8-6",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 52594,
+      "line_end": 60700,
+      "severity": "P3",
+      "category": "census",
+      "title": "Chunk is almost entirely inline #[cfg(test)] modules from line 52594 onward",
+      "evidence": "A `^fn |^pub fn |^pub(crate) fn |^impl |^struct ` scan over lines 52594-70000 (via grep) finds zero top-level production items; every line in that range is inside one of ~30 sequential `#[cfg(test)] mod ..._tests { ... }` blocks (multiclass_bab_save_stacking_generalization_tests, chassis_unsupported_diagnostics_name_the_real_gate_tests, prestige_class_entry_gate_wiring_tests, untabled_base_class_chassis_wiring_tests/feature_roster_wiring_tests, save/skill-boosting-feats tests, wizard_* tests, race_ability_modifier_parity_tests, fighter_feat_choice_legality_*_tests, combat_posture_multiclass_tests, ranger/paladin/apg/acg/sorcerer/cleric/druid/barbarian/skald dispatch-widening-safety and dispatch-chassis tests). Of my assigned 51500-60500 range, only 51500-52593 (about 11%) is production code; the remaining ~89% is test code, consistent with this file's own doc comment at 52581-52593 conceding one of these modules \"should\" live under `tests/**` instead.",
+      "fix_description": "N/A -- structural note only.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "None; informational for the overall review roll-up."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "notes": "Assigned range 51500-60500 snapped to enclosing items: actually read/reviewed lines 51350-52604 in full (production code, ending at the start of the first #[cfg(test)] mod) plus a structural/grep-level survey (function-signature scan + targeted sampling of panic!/unwrap/expect density and a couple of representative test bodies) of lines 52594-60700, which is essentially 100% inline #[cfg(test)] test modules with no interleaved production code found in that whole span (verified by grep for top-level item markers across 52594-70000). No file in this chunk began with a GENERATED FILE marker (0 skipped). Production-code review prioritized per instructions; test modules were skimmed structurally rather than read line-by-line, per instructions for inline #[cfg(test)] modules.",
+    "cross_chunk": [
+      "fn normalize_weapon_identity(raw: &str) -> String  [line 51566] -- folds an item_id/table-key to lowercase alphanumeric-only with prefix stripped; doc explicitly names a TypeScript twin (normalizeFeatIdentity in apps/desktop/src/characterHub/featsTabModel.ts) and asks that any THIRD Rust instance be unified with this one -- grep other chunks for `.chars().filter(|c| c.is_ascii_alphanumeric()).map(|c| c.to_ascii_lowercase()).collect()` or similarly-named `normalize_*_identity` helpers.",
+      "fn slugify_id_segment(name: &str) -> String  [line 51369] vs. the inline idiom `name.to_lowercase().replace(' ', \"_\")` used at lines 51396, 51449, 51466 in this same file -- grep the whole 78.5k-line file for `.to_lowercase().replace(' ', \"_\")` to find every other call site that should probably route through slugify_id_segment (or its equivalent) instead, especially any handling Craft/Profession-style skill names with parenthetical subtypes (see PC8-1).",
+      "fn require_active_state(input: &CharacterInput, item_id: &str, expected: ActiveState, unmet: &mut Vec<String>)  [line 51562] and fn require_selected_skill_rank(allocations: &[SkillAllocation], skill_id: &str, unmet: &mut Vec<String>)  [line 51539] -- both are 'push a formatted unmet-condition string unless field == expected' gate helpers feeding a `Vec<String>` of unmet posture conditions; check other chunks for a third near-identical require_* posture-gate helper that could unify into one generic `require_field_equals`.",
+      "fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String>  [line 52463] and fn unmet_selected_skill_posture_conditions(input: &CharacterInput) -> Vec<String>  [line 51497] -- family naming convention `unmet_X_posture_conditions(input) -> Vec<String>`; test names elsewhere in this file (e.g. 'stays_blocked_only_on_domain_powers', 'stays_blocked_only_on_nature_bond') imply sibling functions of this exact shape exist for spell/domain/nature-bond postures in other chunks -- worth cataloguing together to check they share the same gate-then-collect pattern and none has silently diverged.",
+      "The ground_*_facts / ground_*_totals family (ground_standalone_feat_skill_facts [51389], ground_per_weapon_combat_totals [51698], ground_arg_and_pu_feat_facts [51041, outside this chunk's read range but same family]) sharing the loop shape `for fact in X_facts_from_feats(...) { explanations.push(ComputationExplanation { id: format!(...), value: fact.field, detail: format!(...) }) }` -- likely repeated dozens of times across the 78.5k-line file; a shared small helper for the push-one-explanation-per-fact shape would be a large bloat reduction if corroborated by other chunks."
+    ]
+  }
+}
