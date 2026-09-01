@@ -66,6 +66,8 @@ KNOWN_WAVES = {
                               "(4 of 7 tables chained); first wave after the 104 GB worktree sweep"),
     "wf_4a1d662c-fd1": ("23", "GATE wave -- all three lanes retargeted from bucket mining to "
                               "the 14 red verify.sh stages the fable review found"),
+    "wf_31807799-a21": ("24", "gate 14 red -> 5 after wave 23; A takes root-full + the 124-row "
+                              "NAMEISPI policy rows (masked, not a leak), B desktop/reach/site, C clippy"),
 }
 
 
