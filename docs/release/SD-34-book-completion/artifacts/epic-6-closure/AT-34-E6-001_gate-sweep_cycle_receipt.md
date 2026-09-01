@@ -170,5 +170,5 @@ None named by this cycle beyond what `fable-review.md` §7 already routes: the 5
 
 ---
 
-**Commit SHA:** `<filled after commit — see `git log -1`>`
+**Commit SHA:** `644070a4228e34d6e1a6963c06c85051c8f7f156`
 **Full sweep log:** `/tmp/codex-verify-cMdsw1` (second, completed run)
