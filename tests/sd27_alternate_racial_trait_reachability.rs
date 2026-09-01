@@ -248,7 +248,7 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
         .count();
     assert_eq!(
         all,
-        910,
+        919,
         "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
          + 43 Horror Adventures + 64 Core Essentials heritage rows + SD-31 Epic 1-F2's \
          113 (57 standard + 42 ARG + 6 Inner Sea Races + 8 grant-linked, 2026-08-15) + the \
@@ -263,7 +263,7 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
          closing arg_races.lst's full 37-row playable-race roster + SD-31 wave-24's Rougarou \
          (Bestiary 6, 2026-08-20), 8 standard rows (786 -> 794) + SD-32 card-11 T2b lane's 18 \
          (2026-08-23: Dhampir's 12 standard rows + Monster Codex's 4 new Ratfolk alternates \
-         + the 2 dependent rows Surface Sprinter grants; 794 -> 812) + a sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted Mediator (Unclassified) = 12 (812 -> 824) + this cycle's own SD-32 card-11 T2b lane, 2026-08-23 (decisions.md §16 item 2): the 7 `Human ~ Adoptive Parentage` CHOOSE-pool members (824 -> 831) + SD-33 Epic 6's fold of SD31-E6-F4-005's lost wave-11 Skinwalker heritage lane (2026-08-26): 65 new records (9 kin selectors + 36 replacement rows + 20 shared `Change Shape (<Option>)` components) (831 -> 910)"
+         + the 2 dependent rows Surface Sprinter grants; 794 -> 812) + a sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted Mediator (Unclassified) = 12 (812 -> 824) + this cycle's own SD-32 card-11 T2b lane, 2026-08-23 (decisions.md §16 item 2): the 7 `Human ~ Adoptive Parentage` CHOOSE-pool members (824 -> 831) + SD-33 Epic 6's fold of SD31-E6-F4-005's lost wave-11 Skinwalker heritage lane (2026-08-26): 65 new records (9 kin selectors + 36 replacement rows + 20 shared `Change Shape (<Option>)` components) (831 -> 910) + a later ingest cycle (2026-09-01, re-derived): 7 core_rulebook `Adopted Race ~ <Race>` CHOOSE selectors + 2 `Human Ethnicity ~ {None,Unknown}` placeholder rows, neither book ARG (910 -> 919)"
     );
     assert_eq!(
         arg,
@@ -339,7 +339,7 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
     }
     assert_eq!(
         checked,
-        910,
+        919,
         "515 -> 628 by SD-31 Epic 1-F2 (2026-08-15); 628 -> 637 by the Skinwalker follow-on \
          batch; 637 -> 695 by SD-31-E6-F4-002's Advanced Race Guide batch; 695 -> 719 by \
          SD-31-E6-F4-003's own alternate-trait batch for the same 6 races (2026-08-16); \
@@ -356,7 +356,10 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
          §16 item 2): the 7 `Human ~ Adoptive Parentage` CHOOSE-pool members; 831 -> 910 by \
          SD-33 Epic 6's fold of SD31-E6-F4-005's lost wave-11 Skinwalker heritage lane \
          (2026-08-26): 65 new records (9 kin selectors + their 36 replacement rows + 20 \
-         shared `Change Shape (<Option>)` components), none containing a colon"
+         shared `Change Shape (<Option>)` components), none containing a colon; 910 -> 919 \
+         by a later ingest cycle (2026-09-01, re-derived): 7 core_rulebook `Adopted Race ~ \
+         <Race>` CHOOSE selectors (`ingest_race_traits.rs`) + 2 `Human Ethnicity ~ \
+         {None,Unknown}` placeholder rows, none containing a colon"
     );
 }
 
