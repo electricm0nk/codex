@@ -166,8 +166,8 @@ no denominator and no quote-marker is still caught (`test_bare_percentage_flagge
 2. **The figure-provenance count (32) matched the brief exactly** — that stage's own default
    scope (`PROVENANCE_DEFAULT_GLOBS`, SD-34-only) was already correctly scoped at authoring time.
 3. **Two of the "false positive" progress.md lines (2901, 3529) needed a cosmetic line-rewrap**,
-   not a code change alone: the corpus quote's own two words ("75%" / "chance...") had been
-   manually word-wrapped across two physical source lines by an earlier cycle's prose, which
+   not a code change alone: the corpus quote's own words ("75% chance...") had been manually
+   word-wrapped across two physical source lines by an earlier cycle's prose, which
    defeats any same-line idiom match by construction (the gate is deliberately line-scoped, per
    its own docstring). Rewrapped so both words land on one physical line — the quoted text itself
    is byte-for-byte unchanged, only where the line break falls moved.

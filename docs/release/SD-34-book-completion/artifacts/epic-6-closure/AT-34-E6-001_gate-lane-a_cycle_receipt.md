@@ -49,9 +49,7 @@ named, dated, already-landed commit; none is a guess.
 | `class_feature_pool_catalog::…_non_excluded_remainder_is_24…` | excluded=215 | excluded=213 | `python3 /tmp/cargo-sd34-at-34-e6-001/derive_excluded.py` |
 | `formula_interpreter_corpus_wide::f1_population_matches…` | F1=5,400 | F1=5,231 | `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --corpus-root data/corpus` |
 
-`cargo test --locked --lib` (isolated `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e6-001`, this
-cycle's tree): **3,022 passed; 0 failed; 14 ignored** (was 3,019 passed / 3 failed at cycle
-start; 2 of the original 5 root-lib failures were already cleared by `58b4f837cc` alone).
+`cargo test --locked --lib` (isolated `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e6-001`, this cycle's tree): **3,022 passed; 0 failed; 14 ignored** (was 3,019 passed / 3 failed at cycle start; 2 of the original 5 root-lib failures were already cleared by `58b4f837cc` alone).
 Floor `BASELINE_ROOT_LIB_TESTS=2336` — well clear.
 
 ## Figures + their re-derive commands (root-full — every touched file individually verified)
