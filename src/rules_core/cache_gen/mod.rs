@@ -13,6 +13,7 @@ pub mod apg;
 pub mod beastiary1;
 pub mod class_feature;
 pub mod class_feature_grants;
+pub mod enrich_raw_tokens_shared;
 pub mod equipment_copy_citation_repair;
 pub mod equipment_gap;
 pub mod feat_gap;
