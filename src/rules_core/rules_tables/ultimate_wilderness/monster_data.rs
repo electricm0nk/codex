@@ -21,7 +21,7 @@
 //!   * `uw_abilities_race.lst:25`
 //!   * `uw_abilities_race.lst:27`
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
 /// Every ultimate_wilderness monster stat block (0 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[

@@ -207,7 +207,6 @@ use super::{AbilityModifiers, ComputationExplanation, pu_feature_slug};
 /// actually gate this mechanism's own `docs/work-inventory.json` verdict.
 /// The citation-based property above is now the ONLY gate, for every class
 /// this module serves, with no exceptions.
-
 fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
@@ -847,11 +846,10 @@ fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String
             // Widening 3: an unrecognised PRE-tag shape refuses `extract_addends`'s summed
             // result, but a lone ungated row for this same target is still a real,
             // unconditional fact -- use it rather than dropping the target outright.
-            if let Some(formulas) = ungated_formulas.get(&name) {
-                if let [only] = formulas.iter().collect::<Vec<_>>().as_slice() {
+            if let Some(formulas) = ungated_formulas.get(&name)
+                && let [only] = formulas.iter().collect::<Vec<_>>().as_slice() {
                     out.insert(name, (*only).clone());
                 }
-            }
             continue;
         };
         match addends.as_slice() {
@@ -1483,14 +1481,12 @@ pub(crate) fn resolve_pcgen_var_chain(
                 Err(e) => {
                     if let Some(missing) =
                         e.0.strip_prefix("unbound variable \"").and_then(|s| s.strip_suffix('"'))
-                    {
-                        if !vars.contains_key(missing) && !bound_anywhere.contains(missing) {
+                        && !vars.contains_key(missing) && !bound_anywhere.contains(missing) {
                             let default_value =
                                 define_defaults.get(missing).copied().unwrap_or(0);
                             vars.insert(missing.to_string(), default_value);
                             progressed_zero = true;
                         }
-                    }
                 }
             }
         }
@@ -2444,7 +2440,7 @@ mod tests {
             resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 10, &AbilityModifiers::default());
         assert_eq!(vars.get("SomeLVL"), Some(&10));
         assert!(
-            vars.get("SomeBonus").is_none(),
+            !vars.contains_key("SomeBonus"),
             "a formula referencing an identifier bound elsewhere in the corpus (a sibling \
              record's own real BONUS:VAR target) must never resolve to a guessed number: {vars:?}"
         );

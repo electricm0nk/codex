@@ -709,8 +709,8 @@ fn main() {
                 // "third defect" fix already established -- never weakens
                 // an existing redaction, only strengthens a miss the weak
                 // `classify_optional_field` scan let through.
-                if let Some(v) = &stored_desc {
-                    if v.as_str() != codex::rules_core::shape_b_v1::REDACTED_PI_MARKER
+                if let Some(v) = &stored_desc
+                    && v.as_str() != codex::rules_core::shape_b_v1::REDACTED_PI_MARKER
                         && pi_screening::blacklist_term_hit_including_concatenated(v).is_some()
                     {
                         license = codex::rules_core::shape_b_v1::License::PiRedacted;
@@ -722,7 +722,6 @@ fn main() {
                         });
                         stored_desc = Some(codex::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string());
                     }
-                }
                 // t9-onboarding-pi-last-leak-and-generators cycle: `name`/
                 // `key` were NEVER screened at all -- only `description`.
                 // Same shape `cache_gen::{acg,apg,beastiary1,equipment_gap,

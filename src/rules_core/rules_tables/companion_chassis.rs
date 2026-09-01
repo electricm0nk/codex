@@ -1754,11 +1754,10 @@ mod tests {
         let units = inventory["units"].as_array().expect("units is an array");
         let mut status_by_key: BTreeMap<&str, &str> = BTreeMap::new();
         for u in units {
-            if u["book"].as_str() == Some("core_rulebook") && u["kind"].as_str() == Some("companion") {
-                if let (Some(k), Some(s)) = (u["corpus_key"].as_str(), u["status"].as_str()) {
+            if u["book"].as_str() == Some("core_rulebook") && u["kind"].as_str() == Some("companion")
+                && let (Some(k), Some(s)) = (u["corpus_key"].as_str(), u["status"].as_str()) {
                     status_by_key.insert(k, s);
                 }
-            }
         }
         // `oracle-agree`/`oracle-unverifiable` (`decisions.md §19`) are
         // REFINEMENTS of `literal-verified`/`fixture-verified`, never a new

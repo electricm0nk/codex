@@ -253,7 +253,7 @@ mod tests {
         // passes) produces an implausible drop from level 10's 21 to a
         // level-11 value of 1 -- this is why "sum" (this function's real
         // behavior) is the correct PCGen semantics, not a coin flip.
-        let replace_semantics_at_11 = ((11i16 - 10) * 3) / 2; // = 1
+        let replace_semantics_at_11 = 3 / 2; // = 1
         assert_eq!(replace_semantics_at_11, 1);
         assert_ne!(psion_powers_known(11), Some(replace_semantics_at_11));
     }

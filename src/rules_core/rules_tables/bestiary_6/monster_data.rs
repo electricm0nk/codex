@@ -36,7 +36,7 @@
 //!   * `ce_abilities_race.lst:2447`
 //!   * `ce_abilities_race.lst:2448`
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
 /// Every bestiary_6 monster stat block (0 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[

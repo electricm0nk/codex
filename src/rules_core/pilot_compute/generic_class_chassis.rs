@@ -121,7 +121,7 @@ fn is_conventional_pc_record(tokens: &[(String, String)]) -> bool {
 }
 
 /// Identical to `class_catalog_generic::select_baseab_formula`.
-fn select_baseab_formula<'a>(tokens: &'a [(String, String)]) -> Option<&'a str> {
+fn select_baseab_formula(tokens: &[(String, String)]) -> Option<&str> {
     let candidates: Vec<&str> =
         tokens.iter().filter(|(k, v)| k == "BONUS" && v.contains("BASEAB")).map(|(_, v)| v.as_str()).collect();
     if candidates.len() == 1 {
@@ -308,7 +308,7 @@ mod tests {
              re-derivation)"
         );
         let mut resolved = 0usize;
-        for (bare, _record) in generic_class_records() {
+        for bare in generic_class_records().keys() {
             let class_id = format!("class:{bare}");
             assert!(resolve(&class_id, 1).is_some(), "{bare} must resolve a real chassis at level 1");
             resolved += 1;

@@ -634,7 +634,6 @@ const MOD_MARKER: &str = ".MOD";
 /// reads the identical row shape at the resolver layer and a second,
 /// drifting copy of these two literals is exactly the duplication
 /// `decisions.md §17` warns will recur.
-
 fn sha256_hex(bytes: &[u8]) -> String {
     let mut hasher = Sha256::new();
     hasher.update(bytes);

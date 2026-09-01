@@ -91,7 +91,7 @@
 //!   * `pu_abilities_race.lst:179`
 //!   * `pu_abilities_race.lst:180`
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
 /// Every pathfinder_unchained monster stat block (0 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[

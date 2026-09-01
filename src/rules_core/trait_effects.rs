@@ -1355,7 +1355,7 @@ pub fn ability_diff_skill_bonuses_from_traits(
     let mut totals: BTreeMap<String, i8> = BTreeMap::new();
     for trait_id in selected_traits {
         let Some(entry) =
-            ABILITY_DIFF_SKILL_TRAIT_BONUSES.iter().find(|e| &e.trait_id == trait_id)
+            ABILITY_DIFF_SKILL_TRAIT_BONUSES.iter().find(|e| e.trait_id == trait_id)
         else {
             continue;
         };

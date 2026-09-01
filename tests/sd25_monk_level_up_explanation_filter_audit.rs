@@ -69,6 +69,7 @@
 //!    pass `is_monk_pillar_id`, but its value never changes between
 //!    `from_level` and `to_level` anywhere in the 1..=12 sweep, so it can
 //!    never itself drive a value-change grant.
+//!
 //! 1a. **RESOLVED, no longer an exclusion** (`AT-33-E5-remainder-charbuild`,
 //!    2026-08-25): this audit's own first RED run found `AC_BONUS_ID`
 //!    (`"class_chassis.monk.ac_bonus"`) flat because `pilot_compute.rs`

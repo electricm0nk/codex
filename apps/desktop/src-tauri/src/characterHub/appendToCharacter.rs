@@ -129,8 +129,8 @@ pub fn append_to_character_at_root(
             success: true,
             character: Some(AppendedCharacterDto {
                 summary: *summary,
-                snapshot,
-                corpus_derived,
+                snapshot: *snapshot,
+                corpus_derived: *corpus_derived,
             }),
             error: None,
         },

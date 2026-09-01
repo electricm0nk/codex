@@ -405,11 +405,10 @@ fn try_files(files: &[PathBuf], book_dir: &Path, key: &str, name: &str) -> Optio
     if let Some(hit) = resolve(key) {
         return Some(hit);
     }
-    if key != name {
-        if let Some(hit) = resolve(name) {
+    if key != name
+        && let Some(hit) = resolve(name) {
             return Some(hit);
         }
-    }
     None
 }
 
@@ -887,15 +886,14 @@ pub fn generate(
         // Disambiguate ONLY when the citation line genuinely differs --
         // when it matches, this is an ordinary idempotent rerun of the
         // SAME row, and must keep skipping exactly as before.
-        if let Some(existing_line) = existing_source_line(&write_dir, &slug) {
-            if existing_line != line {
+        if let Some(existing_line) = existing_source_line(&write_dir, &slug)
+            && existing_line != line {
                 report.disambiguated_collision.push(format!(
                     "{book_id}:{} (line {line}, was slug of the line-{existing_line} record)",
                     record_key
                 ));
                 slug = slugify(&record_key, used);
             }
-        }
         let wrote = write_json(&write_dir, &slug, &record)
             .map_err(|_| GenerationError::CorpusUnreachable(book_out.clone()))?;
         if !wrote {
@@ -1427,11 +1425,10 @@ mod tests {
         let mut used2: BTreeSet<String> = BTreeSet::new();
         let mut slug2 = slugify("Intelligent Item ~ Purpose / Slay All", &mut used2);
         let rerun_line: u32 = 446;
-        if let Some(existing_line) = existing_source_line(&dir, &slug2) {
-            if existing_line != rerun_line {
+        if let Some(existing_line) = existing_source_line(&dir, &slug2)
+            && existing_line != rerun_line {
                 slug2 = slugify("Intelligent Item ~ Purpose / Slay All", &mut used2);
             }
-        }
         assert_eq!(slug2, "intelligent_item_purpose_slay_all");
 
         std::fs::remove_dir_all(&dir).ok();

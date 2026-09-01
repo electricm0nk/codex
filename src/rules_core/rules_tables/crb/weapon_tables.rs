@@ -362,7 +362,7 @@ mod tests {
         assert_eq!(longsword.critical_threat_range_width, 2, "raw corpus CRITRANGE");
         assert_eq!(weapon_critical_threat_low(longsword), 19, "21 - 2");
         assert_ne!(
-            u8::from(longsword.critical_threat_range_width),
+            longsword.critical_threat_range_width,
             weapon_critical_threat_low(longsword),
             "width and low bound must not be conflated"
         );

@@ -805,9 +805,14 @@ pub enum CreateCharacterResponse {
         // serializes identically to `T` via serde, so the wire shape to the TS
         // boundary is unchanged.
         summary: Box<CharacterSummaryDto>,
-        snapshot: PilotSnapshotDto,
+        // Boxed for the same `clippy::large_enum_variant` reason as `summary`
+        // above -- boxing `summary`/`corpus_derived` alone still left a
+        // 248-vs-24-byte gap against `Blocked`, `PilotSnapshotDto` being the
+        // remaining bulk. `Box<T>` serializes identically to `T` via serde,
+        // so the wire shape to the TS boundary is unchanged.
+        snapshot: Box<PilotSnapshotDto>,
         #[serde(rename = "corpusDerived")]
-        corpus_derived: CorpusDerivedDto,
+        corpus_derived: Box<CorpusDerivedDto>,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
@@ -1127,6 +1132,14 @@ pub enum SavedCharacterMutationOp {
 /// One row of the `mutate_saved_character` operation table.
 #[derive(Debug, Clone, Copy)]
 pub struct SavedCharacterMutationOpDescriptor {
+    // Not yet read by any assertion (no dispatch-shape test currently
+    // matches a row's declared `op` against its position/enum coverage,
+    // per this struct's own doc above) -- kept as the row's own identity
+    // field, one real `SavedCharacterMutationOp` variant per table row,
+    // not bloat left over from a removal. Genuine false positive for
+    // `dead_code`: the table is read structurally (iterated, counted,
+    // matched by `name`) elsewhere, just never yet by this one field.
+    #[allow(dead_code)]
     pub op: SavedCharacterMutationOp,
     /// The operation name, matching its `#[tauri::command]` function name
     /// once wired.
@@ -1413,8 +1426,8 @@ pub(crate) fn create_character_at_root(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(&snapshot),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        snapshot: Box::new(map_snapshot_dto(&snapshot)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
     })
 }
 
@@ -1487,8 +1500,8 @@ pub fn clone_character(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(&snapshot),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        snapshot: Box::new(map_snapshot_dto(&snapshot)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
     })
 }
 
@@ -1963,13 +1976,20 @@ pub fn add_equipment_selection(
 pub enum PurchaseEquipmentResponse {
     Purchased {
         summary: Box<CharacterSummaryDto>,
-        snapshot: PilotSnapshotDto,
+        // Same `PilotSnapshotDto`-is-the-remaining-bulk reasoning as
+        // `CreateCharacterResponse::Saved`'s own `snapshot` field.
+        snapshot: Box<PilotSnapshotDto>,
         // Same reasoning as `CreateCharacterResponse::Saved`'s own
         // `corpus_derived` field: a per-field rename, not an enum-wide
         // `rename_all`, which would also lowercase the `"Purchased"`/
-        // `"Blocked"` tag values themselves.
+        // `"Blocked"` tag values themselves. Boxed for the same
+        // `clippy::large_enum_variant` reason as `summary` -- `Box<T>`
+        // serializes identically to `T` via serde, and this field is moved
+        // straight through from an already-boxed `CreateCharacterResponse::
+        // Saved.corpus_derived`, so keeping both boxed avoids an unbox/rebox
+        // at the move site too.
         #[serde(rename = "corpusDerived")]
-        corpus_derived: CorpusDerivedDto,
+        corpus_derived: Box<CorpusDerivedDto>,
         money: CharacterMoneyDto,
     },
     Blocked {
@@ -2078,9 +2098,15 @@ pub(crate) fn purchase_equipment_at_root(
 pub enum AttachEquipmentModifierResponse {
     Attached {
         summary: Box<CharacterSummaryDto>,
-        snapshot: PilotSnapshotDto,
+        // Same `PilotSnapshotDto`-is-the-remaining-bulk reasoning as
+        // `CreateCharacterResponse::Saved`'s own `snapshot` field.
+        snapshot: Box<PilotSnapshotDto>,
+        // Boxed for the same `clippy::large_enum_variant` reason as
+        // `summary` -- see `CreateCharacterResponse::Saved`'s own
+        // `corpus_derived` field for the full rationale; this field is
+        // moved straight through from that already-boxed source.
         #[serde(rename = "corpusDerived")]
-        corpus_derived: CorpusDerivedDto,
+        corpus_derived: Box<CorpusDerivedDto>,
         money: CharacterMoneyDto,
     },
     Blocked {
@@ -3884,8 +3910,8 @@ fn import_character_from_json(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(&snapshot),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        snapshot: Box::new(map_snapshot_dto(&snapshot)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
     })
 }
 
@@ -6473,7 +6499,7 @@ mod tests {
                 race_id: "race:human".to_owned(),
                 class_summary: "class:fighter:1".to_owned(),
             }),
-            snapshot: PilotSnapshotDto {
+            snapshot: Box::new(PilotSnapshotDto {
                 ability_modifiers: AbilityModifiersDto {
                     strength: 0,
                     dexterity: 0,
@@ -6495,8 +6521,8 @@ mod tests {
                 damage_reduction: None,
                 companion: None,
                 spellbook: None,
-            },
-            corpus_derived: CorpusDerivedDto {
+            }),
+            corpus_derived: Box::new(CorpusDerivedDto {
                 school_coverage: Vec::new(),
                 equipped_items: Vec::new(),
                 equipment_effects: EquipmentEffectsDto {
@@ -6511,7 +6537,7 @@ mod tests {
                 encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
                 unresolved_equipment_item_ids: Vec::new(),
-            },
+            }),
             money: money_dto_from_total(0),
         };
 
@@ -8053,7 +8079,7 @@ mod tests {
                 race_id: "race:human".to_owned(),
                 class_summary: "class:fighter:1".to_owned(),
             }),
-            snapshot: PilotSnapshotDto {
+            snapshot: Box::new(PilotSnapshotDto {
                 ability_modifiers: AbilityModifiersDto {
                     strength: 0,
                     dexterity: 0,
@@ -8075,8 +8101,8 @@ mod tests {
                 damage_reduction: None,
                 companion: None,
                 spellbook: None,
-            },
-            corpus_derived: CorpusDerivedDto {
+            }),
+            corpus_derived: Box::new(CorpusDerivedDto {
                 school_coverage: Vec::new(),
                 equipped_items: Vec::new(),
                 equipment_effects: EquipmentEffectsDto {
@@ -8091,7 +8117,7 @@ mod tests {
                 encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
                 unresolved_equipment_item_ids: Vec::new(),
-            },
+            }),
         };
 
         let value = serde_json::to_value(&response).expect("response should serialize");
@@ -8271,7 +8297,7 @@ mod tests {
                 race_id: "race:human".to_owned(),
                 class_summary: "class:fighter:1".to_owned(),
             }),
-            snapshot: PilotSnapshotDto {
+            snapshot: Box::new(PilotSnapshotDto {
                 ability_modifiers: AbilityModifiersDto {
                     strength: 0,
                     dexterity: 0,
@@ -8293,8 +8319,8 @@ mod tests {
                 damage_reduction: None,
                 companion: None,
                 spellbook: None,
-            },
-            corpus_derived: CorpusDerivedDto {
+            }),
+            corpus_derived: Box::new(CorpusDerivedDto {
                 school_coverage: Vec::new(),
                 equipped_items: Vec::new(),
                 equipment_effects: EquipmentEffectsDto {
@@ -8309,7 +8335,7 @@ mod tests {
                 encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
                 unresolved_equipment_item_ids: Vec::new(),
-            },
+            }),
             money: money_dto_from_total(0),
         };
 
@@ -9086,15 +9112,11 @@ mod tests {
             .collect();
 
         assert!(
-            class_records
-                .iter()
-                .any(|id| *id == "class_feature.fighter.bravery"),
+            class_records.contains(&"class_feature.fighter.bravery"),
             "a level-5 Fighter must carry its Bravery record: {class_records:?}"
         );
         assert!(
-            class_records
-                .iter()
-                .any(|id| *id == "class_feature.fighter.armor_training"),
+            class_records.contains(&"class_feature.fighter.armor_training"),
             "a level-5 Fighter must carry its Armor Training record: {class_records:?}"
         );
         // `class_feature.fighter.weapon_training` is deliberately NOT

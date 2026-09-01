@@ -47,7 +47,7 @@ fn acg_equipment_weight_and_description_are_populated_to_the_corpus_honest_ceili
     // modifiers have no independent physical weight in the real corpus).
     assert_eq!(
         report.has_weight,
-        30 + 19 + 86 + 0,
+        (30 + 19 + 86),
         "weight_lbs should be populated for exactly the records whose corpus row carries a WT: token"
     );
     // Real corpus SPROP: token counts (ACG's `description` source -- this

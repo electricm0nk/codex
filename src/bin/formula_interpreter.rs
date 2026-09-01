@@ -91,11 +91,10 @@ fn main() -> ExitCode {
     );
 
     if let Some(path) = &output {
-        if let Some(parent) = path.parent() {
-            if let Err(e) = std::fs::create_dir_all(parent) {
+        if let Some(parent) = path.parent()
+            && let Err(e) = std::fs::create_dir_all(parent) {
                 return fatal(&format!("--output: cannot create {}: {e}", parent.display()));
             }
-        }
         if let Err(e) = std::fs::write(path, &body) {
             return fatal(&format!("--output: cannot write {}: {e}", path.display()));
         }

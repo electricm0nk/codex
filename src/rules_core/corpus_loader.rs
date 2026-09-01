@@ -319,8 +319,8 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
     // token and a `weight_lbs` field has the two agree exactly). Only fires
     // when `raw_tokens` itself did not already carry the token, so an
     // enriched record's own literal value always wins unchanged.
-    if !tokens.iter().any(|t| t.key == "WT") {
-        if let Some(weight) = data.get("weight_lbs").and_then(serde_json::Value::as_f64) {
+    if !tokens.iter().any(|t| t.key == "WT")
+        && let Some(weight) = data.get("weight_lbs").and_then(serde_json::Value::as_f64) {
             tokens.push(EquipmentToken {
                 key: "WT".to_string(),
                 value: weight.to_string(),
@@ -328,9 +328,8 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
                 raw_pair: format!("WT:{weight}"),
             });
         }
-    }
-    if !tokens.iter().any(|t| t.key == "COST") {
-        if let Some(cost) = data.get("cost_gp").and_then(serde_json::Value::as_f64) {
+    if !tokens.iter().any(|t| t.key == "COST")
+        && let Some(cost) = data.get("cost_gp").and_then(serde_json::Value::as_f64) {
             tokens.push(EquipmentToken {
                 key: "COST".to_string(),
                 value: cost.to_string(),
@@ -338,7 +337,6 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
                 raw_pair: format!("COST:{cost}"),
             });
         }
-    }
 
     Some(EquipmentRecord {
         kind: EquipmentRecordKind::Equip,

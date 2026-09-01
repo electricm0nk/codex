@@ -155,9 +155,12 @@ fn split_token(field: &str) -> Option<(String, String)> {
     field.split_once(':').map(|(k, v)| (k.to_string(), v.to_string()))
 }
 
+/// `(key, name, description, raw_tokens, declared_pi)`, `parse_mod_row`'s own return shape.
+type ParsedModRow = (String, String, Option<String>, Vec<RawToken>, pi_screening::DeclaredProductIdentity);
+
 /// Parses one `.lst` line already known to be a `.MOD` row carrying a
 /// `CLASSES:` token: `(key, name, description, raw_tokens, declared_pi)`.
-fn parse_mod_row(line: &str) -> Option<(String, String, Option<String>, Vec<RawToken>, pi_screening::DeclaredProductIdentity)> {
+fn parse_mod_row(line: &str) -> Option<ParsedModRow> {
     let fields: Vec<&str> = line.split('\t').collect();
     let first = fields.first()?.trim();
     if first.is_empty() || !first.ends_with(".MOD") {

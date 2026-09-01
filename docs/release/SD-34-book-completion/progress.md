@@ -11,6 +11,66 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 25, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — clippy, root 86→0 desktop 12→0, ceilings tightened 50/7→0/0 — complete
+
+**Status: complete.** Assigned: `clippy`, "the one stage nobody has touched." Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-c_wave25_cycle_receipt.md`.
+
+**Re-measured before doing anything, per the dispatch brief's own instruction.** Root's fresh
+measurement reproduced the brief's "86" exactly, but `cargo clippy --locked --tests` actually
+exited **101**, not 0 — one hard `error: invisible character detected`
+(`clippy::invisible_characters`, deny-by-default) in `src/rules_core/rules_tables/monster_codex/
+spell_list.rs` (three literal U+00AD soft-hyphen bytes inside a spell description, landed in
+SD-32, 2026-08-23, unrelated to this bundle). Because `cargo` aborts `lib`/`lib test` compilation
+on a hard error, and every `tests/*.rs` integration target and `src/bin/*.rs` binary's own test
+build depends on the lib compiling first, **this stage has never once reached its full population
+in this bundle's history** — the fable-review "86" and the wave-23 gate-sweep's re-confirmed "86"
+were both, unknowingly, `lib`+`lib test`-only counts. Fixed the three bytes to regular hyphens
+first (verbatim quote content otherwise byte-for-byte unchanged), which is what let clippy reach
+the real, full `--tests` population for the first time.
+
+**Root: 86 → 0, real fixes only.** `cargo clippy --fix --tests --allow-dirty` closed 60 of the
+mechanical ones; the remaining 46 were hand-fixed: 2 genuinely-dead functions deleted
+(`hunter_animal_focus_bull_bonus`, superseded by a generic table-driven call site;
+`resolve_pool_member_sole_magnitude`, superseded by `resolve_pool_member_all_magnitudes` in the
+very SD-32 cycle that introduced it — both confirmed via `git log -S` and a crate-wide grep, not
+assumed from the lint alone) along with their 3 now-redundant dedicated tests; a 7-file copy-pasted
+dead test helper (`claim_blocking`, called nowhere in any of `tests/sd13_barbarian_level{2..8}_
+progression.rs`) deleted from all 7; 2 module constants confirmed test-fixture-only and gated
+`#[cfg(test)]` (a real scoping fix, not a silence); 6 `type` aliases closing `type_complexity`; 6
+narrow, individually-commented `#[allow(clippy::too_many_arguments)]` (no crate-level allow — every
+flagged function's parameters are real, independently-varying domain inputs, and a signature
+refactor across an ~80k-line compute file is out of this cycle's scope); assorted mechanical
+doc-comment/lint fixes.
+
+**Desktop: measured 12 (already down from the review's stale 25 via wave 24's own landed fixes,
+not this cycle) → 0.** `cargo clippy --fix` closed 3; the remaining 9 were hand-fixed: 5
+`clone`-to-`std::slice::from_ref` in `trait_picker.rs`; 3 `large_enum_variant` warnings across
+`CreateCharacterResponse::Saved`/`PurchaseEquipmentResponse::Purchased`/
+`AttachEquipmentModifierResponse::Attached`, which needed boxing BOTH `corpus_derived` (matching
+the existing `summary` precedent) AND (newly) `snapshot` — boxing `corpus_derived` alone only
+closed 504→248 bytes, still over threshold, `PilotSnapshotDto` being the remaining bulk; every
+construction/destructure site across `character_hub.rs`/`pf1_adapter.rs`/
+`characterHub/appendToCharacter.rs` updated compiler-error by compiler-error; 1 narrow, commented
+`#[allow(dead_code)]` (`SavedCharacterMutationOpDescriptor.op`, confirmed via `git log -S` to be
+an original SD-23 design element, not a bloat-removal orphan — deleting it would destroy real
+row-to-enum self-documentation its own struct doc describes as awaiting a not-yet-written test).
+
+**Both ceilings tightened, not raised: `BASELINE_CLIPPY_WARNINGS_ROOT`/`DESKTOP` 50/7 → 0/0**
+(`scripts/verify-baselines.env`), matching the gate's own "ceiling is loose" note and the same
+posture prior waves took (e.g. 51→50). `scripts/verify.sh --only clippy` → `PASS clippy (root:0
+desktop:0 warnings, 0 errors)`, re-confirmed twice.
+
+`cargo test --locked --no-run` (whole workspace): exit 0, 589 test binaries linked.
+`apps/desktop/src-tauri`: exit 0, `cargo test --locked --no-run` run explicitly, same HEAD.
+`corpus_literal_sweep`: unmoved (no `data/corpus/**` write this cycle).
+`BASELINE_CORPUS_LITERAL_RECORDS` 26500→48708 (the brief's stretch goal): confirmed already landed
+by the wave-23 gate-remediation closing sweep before this cycle started — no action needed.
+
+**Observed, not fixed (out of scope):** `figure-provenance` has 1 pre-existing violation in
+`AT-34-E6-001_gate-lane-a_wave24_cycle_receipt.md:144` (wave 24's own content, `de91cfb1e9`, not
+touched by this cycle) — named for whichever lane owns it, not silently fixed here.
+
 ### Cycle — Wave 24, Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — desktop crate 565/7 → 572/0, site-dashboard-check named and deferred — partial
 
 **Status: partial.** Assigned: `desktop`, `reach`, `site-dashboard-check` (wave-24's dispatch,

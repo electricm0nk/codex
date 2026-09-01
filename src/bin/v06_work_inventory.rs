@@ -1241,7 +1241,7 @@ fn closure_has_real_aspect_description(row_refs: &[Option<&str>]) -> bool {
         tab_fields(line)
             .iter()
             .filter_map(|f| f.strip_prefix("ASPECT:"))
-            .any(|value| aspect_display_text_is_real_description(value))
+            .any(aspect_display_text_is_real_description)
     })
 }
 
@@ -2288,11 +2288,10 @@ fn book_pc_class_names(book_dir: &Path) -> BTreeSet<String> {
                         type_value = Some(rest.trim());
                     }
                 }
-                if let (Some(name), Some(ty)) = (class_name, type_value) {
-                    if ty.split('.').any(|seg| seg == "PC") {
+                if let (Some(name), Some(ty)) = (class_name, type_value)
+                    && ty.split('.').any(|seg| seg == "PC") {
                         names.insert(name.to_string());
                     }
-                }
             }
         }
     }
@@ -4204,6 +4203,11 @@ mod drop_core_essentials_native_restatements_tests {
 const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 460;
 
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
+// Every parameter is a real, independently-varying input this single-pass
+// enumerator needs (path, book/kind identity, trap state, output sink) --
+// bundling into a struct is a separate refactor out of this
+// clippy-remediation cycle's scope.
+#[allow(clippy::too_many_arguments)]
 fn enumerate_file(
     path: &Path,
     book: &str,
@@ -6845,7 +6849,9 @@ const SPELL_PROBE_ABILITY_MODIFIER: i16 = 4;
 /// These seven are exactly the ids `spellbook::casting_ability_for_class` maps
 /// to a casting ability; a class it does not map yields no DC at all, so
 /// probing through one could observe nothing.
-const SPELL_PROBE_CASTING_CLASSES: &[(&str, fn(&str) -> Option<u8>)] = &[
+/// (`class:<id>`, spell-level lookup fn) per `SPELL_PROBE_CASTING_CLASSES` row.
+type SpellProbeCastingClass = (&'static str, fn(&str) -> Option<u8>);
+const SPELL_PROBE_CASTING_CLASSES: &[SpellProbeCastingClass] = &[
     ("class:wizard", crb_wizard_spell_list::wizard_spell_level),
     ("class:cleric", crb_cleric_spell_list::cleric_spell_level),
     ("class:druid", crb_druid_spell_list::druid_spell_level),
@@ -10104,6 +10110,11 @@ fn is_display_wiring_class_for_promotion(wc_class: &str) -> bool {
 /// held record that is neither (structurally excluded from both gates --
 /// e.g. a universal-sheet-modifier zero-magnitude record) falls to bucket D,
 /// honestly, rather than being forced into either shape.
+// Shared by all seven simple-kind tables (see the doc above), each of whose
+// gates is a real, independently-varying boolean/value input -- bundling
+// into a struct is a separate refactor out of this clippy-remediation
+// cycle's scope.
+#[allow(clippy::too_many_arguments)]
 fn simple_kind_verdict(
     table: Option<&simple_kind_tables::SimpleKindTable>,
     kind_label: &str,
@@ -11529,8 +11540,8 @@ fn classify(
                     .into_iter()
                     .find(|(sel_id, _, _)| *sel_id == selection_id)
                     .map(|(_, granted_power_name, _)| granted_power_name.to_string());
-                if let Some(granted_power_name) = granted_power_name {
-                    if facts.domain_power_effect_wired.contains(&granted_power_name) {
+                if let Some(granted_power_name) = granted_power_name
+                    && facts.domain_power_effect_wired.contains(&granted_power_name) {
                         return Verdict {
                             status: "grounded",
                             evidence:
@@ -11540,7 +11551,6 @@ fn classify(
                             engine_book: engine_book_field,
                         };
                     }
-                }
             }
             // `AT-34-E3-002` (bucket C continuation, cycle 4): the SAME
             // reuse for the SECOND real pool -- `"<Bloodline> Bloodline ~
@@ -11635,10 +11645,10 @@ fn classify(
             // only ever credit the engine's 4 hardcoded canonical
             // (tier, group) pairs, never the other 48 of this book's 52
             // weapon-training records.
-            if let Some(rest) = unit.key.strip_prefix("Weapon Training ") {
-                if let Some((tier_str, group_suffix)) = rest.split_once(' ') {
-                    if let Ok(tier) = tier_str.parse::<u8>() {
-                        if facts
+            if let Some(rest) = unit.key.strip_prefix("Weapon Training ")
+                && let Some((tier_str, group_suffix)) = rest.split_once(' ')
+                    && let Ok(tier) = tier_str.parse::<u8>()
+                        && facts
                             .fighter_weapon_training_wired
                             .contains(&(tier, group_suffix.to_string()))
                         {
@@ -11651,9 +11661,6 @@ fn classify(
                                 engine_book: engine_book_field,
                             };
                         }
-                    }
-                }
-            }
             // `AT-34-E3-001` (mechanism 3 continuation, cycle 3): `"Favored
             // Enemy Bonus ~ <type>"` sub-cause, same shape as Domain Power /
             // Weapon Training above -- `group` here is `"Favored Enemy
@@ -11784,9 +11791,9 @@ fn classify(
             // Small column is a real but cross-book-only attribution left
             // undecided, and the other seven sizes have no formula anywhere
             // in the engine.
-            if let Some(rest) = unit.key.strip_prefix("Monk Unarmed Damage LVL ") {
-                if let Some((level_str, size_paren)) = rest.split_once(' ') {
-                    if let Ok(level) = level_str.parse::<u8>() {
+            if let Some(rest) = unit.key.strip_prefix("Monk Unarmed Damage LVL ")
+                && let Some((level_str, size_paren)) = rest.split_once(' ')
+                    && let Ok(level) = level_str.parse::<u8>() {
                         let size = size_paren.trim_start_matches('(').trim_end_matches(')');
                         if facts
                             .monk_unarmed_damage_die_wired
@@ -11802,8 +11809,6 @@ fn classify(
                             };
                         }
                     }
-                }
-            }
             // `AT-34-E3-002` (bucket C, cycle 8): the bare `"<Class>"`
             // `TYPE:FavoredClass` bookkeeping record for six base classes
             // (Fighter, Barbarian, Monk, Paladin, Rogue, Wizard) -- `group`
@@ -12074,13 +12079,11 @@ fn classify(
                 if text_only {
                     if let Some(class_id) =
                         class_feature_pool_catalog::weapon_proficiency_grant_class_id(&unit.key)
-                    {
-                        if weapon_tables::class_weapon_proficiency(class_id).is_some() {
+                        && weapon_tables::class_weapon_proficiency(class_id).is_some() {
                             return engine_does_not_hold(
                                 "class_feature_weapon_proficiency_grant_held_by_class_weapon_proficiency_table",
                             );
                         }
-                    }
                     // AT-34-E3-001 cycle 6, armor/shield-flavored sibling of
                     // cycle 5's own weapon-only rung immediately above, for
                     // the DISPLAY-bearing `"Weapon and Armor Proficiency ~
@@ -12099,15 +12102,14 @@ fn classify(
                     // not a half-fix" outcome as cycle 5's own rung).
                     if let Some(class_id) = class_feature_pool_catalog::weapon_and_armor_proficiency_grant_class_id(
                         &unit.key,
-                    ) {
-                        if weapon_tables::class_weapon_proficiency(class_id).is_some()
+                    )
+                        && weapon_tables::class_weapon_proficiency(class_id).is_some()
                             && weapon_tables::class_armor_proficiency(class_id).is_some()
                         {
                             return engine_does_not_hold(
                                 "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables",
                             );
                         }
-                    }
                     // AT-34-E3-001 cycle 7, class-skill-list slice of the
                     // "class-skill/companion-mount attribution" sub-cause
                     // cycles 5-6 both named as a genuine new-subsystem
@@ -14836,8 +14838,9 @@ fn charbuild_remainder_probe(repo_root: &Path, fixture: &CharacterInput) -> Stri
     // Group units by (class_name, level, choice) so a class needing several
     // explanations from the SAME build (e.g. five Slayer units) triggers
     // exactly one `build_pilot_headless_receipt` call, not five.
-    let mut builds: BTreeMap<(&str, u8, Option<(&str, &str)>), Vec<&CharbuildRemainderUnit>> =
-        BTreeMap::new();
+    // (class_name, level, choice) -> the CHARBUILD_REMAINDER_CLASS_FEATURES rows that share it.
+    type BuildKey = (&'static str, u8, Option<(&'static str, &'static str)>);
+    let mut builds: BTreeMap<BuildKey, Vec<&CharbuildRemainderUnit>> = BTreeMap::new();
     for unit in CHARBUILD_REMAINDER_CLASS_FEATURES {
         builds.entry((unit.class_name, unit.level, unit.choice)).or_default().push(unit);
     }
@@ -22084,7 +22087,7 @@ mod class_feature_exact_suffix_grounded_tests {
 
     #[test]
     fn a_genuine_base_class_exact_match_still_grounds() {
-        let ids = vec!["class_feature.rogue.uncanny_dodge".to_string()];
+        let ids = ["class_feature.rogue.uncanny_dodge".to_string()];
         assert!(class_feature_exact_suffix_grounded(
             ids.iter(),
             "rogue",
@@ -22100,7 +22103,7 @@ mod class_feature_exact_suffix_grounded_tests {
         // via `class_feature_owner`'s substring fallback even though the
         // unit's own `group` is "Unchained Rogue" -- the group/owner
         // mismatch is exactly what must block the credit.
-        let ids = vec!["class_feature.rogue.uncanny_dodge".to_string()];
+        let ids = ["class_feature.rogue.uncanny_dodge".to_string()];
         assert!(!class_feature_exact_suffix_grounded(
             ids.iter(),
             "rogue",
@@ -22115,7 +22118,7 @@ mod class_feature_exact_suffix_grounded_tests {
         // feature_slug = "evasion" merely because the id ends with the
         // substring "evasion" -- its trailing DOT-SEGMENT is
         // "improved_evasion", not "evasion".
-        let ids = vec!["class_feature.monk.improved_evasion".to_string()];
+        let ids = ["class_feature.monk.improved_evasion".to_string()];
         assert!(!class_feature_exact_suffix_grounded(
             ids.iter(),
             "monk",
@@ -22131,7 +22134,7 @@ mod class_feature_exact_suffix_grounded_tests {
         // bloodraging" explanation) merely because it ends with the
         // substring "raging" -- its trailing dot-segment is "not_raging".
         let ids =
-            vec!["class_feature.acg.bloodrager.bloodrage_execution.not_raging".to_string()];
+            ["class_feature.acg.bloodrager.bloodrage_execution.not_raging".to_string()];
         assert!(!class_feature_exact_suffix_grounded(
             ids.iter(),
             "bloodrager",
@@ -22142,7 +22145,7 @@ mod class_feature_exact_suffix_grounded_tests {
 
     #[test]
     fn an_id_with_the_exact_trailing_segment_still_grounds_even_when_nested() {
-        let ids = vec!["class_feature.acg.bloodrager.bloodrage_execution.active".to_string()];
+        let ids = ["class_feature.acg.bloodrager.bloodrage_execution.active".to_string()];
         assert!(class_feature_exact_suffix_grounded(
             ids.iter(),
             "bloodrager",
@@ -22389,8 +22392,7 @@ mod modelled_class_books_registry_tests {
     /// silently promoted to `grounded`.
     #[test]
     fn a_previously_absent_crb_class_leaves_this_mechanism_once_registered() {
-        let mut facts = EngineFacts::default();
-        facts.class_books = modelled_class_books();
+        let facts = EngineFacts { class_books: modelled_class_books(), ..Default::default() };
         // deliberately NOT inserted into `class_effect_wired`
         for (name, source_book) in
             [("Arcane Archer", "core_rulebook"), ("Warrior", "core_rulebook"), ("Ex-Barbarian", "core_rulebook")]
@@ -22428,8 +22430,7 @@ mod modelled_class_books_registry_tests {
     /// `untabled_base_class_chassis::resolve`), not just this map.
     #[test]
     fn a_kind_class_record_for_a_newly_registered_class_reaches_grounded() {
-        let mut facts = EngineFacts::default();
-        facts.class_books = modelled_class_books();
+        let mut facts = EngineFacts { class_books: modelled_class_books(), ..Default::default() };
         facts.class_effect_wired.insert("kineticist".to_string());
         let unit = CorpusUnit {
             book: "occult_adventures".to_string(),

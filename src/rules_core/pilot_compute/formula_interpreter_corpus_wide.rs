@@ -369,8 +369,9 @@ pub fn scan_ledger_rows(
     corpus_root: &Path,
 ) -> CorpusWideReport {
     let mut report = CorpusWideReport::default();
-    let mut book_indices: BTreeMap<String, BTreeMap<(String, u64), Vec<(String, String)>>> =
-        BTreeMap::new();
+    // Per-book (kind, line) -> [(field, formula)] index, built once and reused below.
+    type BookIndex = BTreeMap<(String, u64), Vec<(String, String)>>;
+    let mut book_indices: BTreeMap<String, BookIndex> = BTreeMap::new();
 
     for row in rows {
         let family_entry = report.families.entry(row.family.clone()).or_default();
@@ -413,11 +414,10 @@ pub fn scan_ledger_rows(
         } else {
             family_entry.refused_units += 1;
             report.total_refused_units += 1;
-            if let Some(sample) = refusal {
-                if family_entry.refusal_samples.len() < 15 {
+            if let Some(sample) = refusal
+                && family_entry.refusal_samples.len() < 15 {
                     family_entry.refusal_samples.push(sample);
                 }
-            }
         }
     }
 

@@ -764,9 +764,9 @@ mod tests {
                 // all).
                 continue;
             }
-            let bonuses = codex::rules_core::trait_effects::skill_bonuses_from_traits(&[
-                option.id.clone(),
-            ]);
+            let bonuses = codex::rules_core::trait_effects::skill_bonuses_from_traits(
+                std::slice::from_ref(&option.id),
+            );
             assert!(
                 !bonuses.is_empty(),
                 "{} was returned by the picker but is not recognized by \
@@ -786,9 +786,9 @@ mod tests {
             let Some(save) = option.save.clone() else {
                 continue; // not a save-slice option
             };
-            let bonuses = codex::rules_core::trait_effects::save_bonuses_from_traits(&[
-                option.id.clone(),
-            ]);
+            let bonuses = codex::rules_core::trait_effects::save_bonuses_from_traits(
+                std::slice::from_ref(&option.id),
+            );
             let landed = match save.as_str() {
                 "Fortitude" => bonuses.fortitude,
                 "Reflex" => bonuses.reflex,
@@ -830,11 +830,11 @@ mod tests {
                 selection_id: picked.skill_id.clone(),
             };
             let mut bonuses = codex::rules_core::trait_effects::skill_choice_bonuses_from_traits(
-                &[option.id.clone()],
-                &[selected_choice.clone()],
+                std::slice::from_ref(&option.id),
+                std::slice::from_ref(&selected_choice),
             );
             for (skill_id, bonus) in codex::rules_core::trait_effects::family_choice_bonuses_from_traits(
-                &[option.id.clone()],
+                std::slice::from_ref(&option.id),
                 &[selected_choice],
             ) {
                 *bonuses.entry(skill_id).or_insert(0) += bonus;

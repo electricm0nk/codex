@@ -56,8 +56,6 @@
 //! multiclass negative control.
 
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic,
-    PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
@@ -80,27 +78,6 @@ const FIGHTER_FIXTURE: &str = include_str!(
 
 const BARBARIAN_UNCANNY_DODGE_ID: &str = "class_feature.barbarian.uncanny_dodge";
 const BARBARIAN_TRAP_SENSE_ID: &str = "class_feature.barbarian.trap_sense";
-
-fn claim_blocking<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationDiagnostic {
-    let diag = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected diagnostic id '{id}', got {:?}",
-                computation.diagnostics
-            )
-        });
-    assert!(
-        diag.claim_blocking,
-        "diagnostic '{id}' must be claim-blocking: {diag:?}"
-    );
-    diag
-}
 
 // ----- Base attack bonus at level 3 -----
 

@@ -85,7 +85,7 @@ fn equipment_weight_and_description_are_populated_to_the_corpus_honest_ceiling()
     // Unchanged by SD-25 criterion 7.N (weight_lbs was not touched).
     assert_eq!(
         report.has_weight,
-        379 + 137 + 1495 + 0,
+        (379 + 137 + 1495),
         "weight_lbs should be populated for exactly the records whose corpus row carries a WT: token"
     );
     // SD-24 baseline (corpus DESC: token, first-token-only): general 116 +

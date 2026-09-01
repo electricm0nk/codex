@@ -229,9 +229,9 @@ fn pcgen_gradle_wrapper_is_runnable(pcgen_repo_dir: &Path) -> bool {
     #[cfg(unix)]
     {
         use std::os::unix::fs::PermissionsExt;
-        return std::fs::metadata(&gradlew)
+        std::fs::metadata(&gradlew)
             .map(|meta| (meta.permissions().mode() & 0o111) != 0)
-            .unwrap_or(false);
+            .unwrap_or(false)
     }
     #[cfg(not(unix))]
     {
@@ -468,9 +468,8 @@ fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
     // correct) -- it is a second, previously-masked, structurally distinct discrepancy
     // (see this file's module doc comment) that this cycle deliberately does not attempt
     // to fix, since it is undiagnosed and out of the narrowly-authorized CG-03 scope.
-    for (dimension_id, pcgen_value, codex_value) in
-        [("combat.baseline_melee_attack_bonus", 5i16, 6i16)]
     {
+        let (dimension_id, pcgen_value, codex_value) = ("combat.baseline_melee_attack_bonus", 5i16, 6i16);
         let mismatch = comparison
             .mismatches
             .iter()

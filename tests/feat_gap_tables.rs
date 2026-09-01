@@ -205,7 +205,8 @@ fn the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one() {
 /// recorded as a named residual rather than folded into a count.
 ///
 /// `uw_feats.lst:164` is
-/// `CATEGORY=Special Ability|Samurai ~ Mount.MOD	TYPE:Mount`. A `.MOD` row is
+/// `CATEGORY=Special Ability|Samurai ~ Mount.MOD\tTYPE:Mount` (the `\t` a
+/// real tab column separator, not a doc-formatting artifact). A `.MOD` row is
 /// an **overlay onto a record defined elsewhere**, not a new record:
 /// `v06_work_inventory::enumerate_file` skips it on the normal path and
 /// stashes it in `mod_targets` for corpus-wide resolution afterwards, which is

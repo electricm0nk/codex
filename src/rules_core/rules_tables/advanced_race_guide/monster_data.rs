@@ -20,7 +20,7 @@
 //! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:
 //!   * `arg_abilities_race.lst:912`
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
 /// Every advanced_race_guide monster stat block (0 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[

@@ -174,7 +174,7 @@ fn tokens_from(data: &Value) -> Vec<(String, String)> {
 /// default progression. See the module doc's "BASEAB disambiguation"
 /// section: when more than one exists (only `Vigilante` today), the one
 /// whose trailing `PREVAREQ` pair reads `,0` (toggle off) wins.
-fn select_baseab_formula<'a>(tokens: &'a [(String, String)]) -> Option<&'a str> {
+fn select_baseab_formula(tokens: &[(String, String)]) -> Option<&str> {
     let candidates: Vec<&str> = tokens
         .iter()
         .filter(|(k, v)| k == "BONUS" && v.contains("BASEAB"))

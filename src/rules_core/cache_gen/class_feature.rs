@@ -3081,7 +3081,7 @@ mod tests {
             "a bare subdomain grant must resolve the same owners as Core Domain ~: {owners:?}"
         );
         assert!(
-            owners.get("Agile Feet").is_none(),
+            !owners.contains_key("Agile Feet"),
             "a .MOD line naming a foreign feat category must not be read as a domain grant point: {owners:?}"
         );
 
