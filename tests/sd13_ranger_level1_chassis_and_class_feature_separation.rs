@@ -32,16 +32,19 @@
 //! F6 test continues to pass), the Sorcerer/Bard/Wizard/Cleric/Druid postures,
 //! and the Human race/interaction seam.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationExplanation, HeadlessReceiptStatus, PilotBaseChassisComputation,
-    build_pilot_headless_receipt, compute_pilot_base_chassis,
+    HeadlessReceiptStatus,
+    PilotBaseChassisComputation,
+    build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const RANGER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_ranger_level1_sd13_deterministic_input.txt");
@@ -103,40 +106,8 @@ const RANGER_PER_PILLAR_RECORD_IDS: [&str; 8] = [
 const F6_HYBRID_RANGER_FEATURE_ID: &str = "class_feature.hybrid.ranger.unsupported";
 const F6_HYBRID_RANGER_SPELL_ID: &str = "class_spell.hybrid.ranger.unsupported";
 
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
 fn has_diagnostic(computation: &PilotBaseChassisComputation, id: &str) -> bool {
     computation.diagnostics.iter().any(|d| d.id == id)
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
 }
 
 // ----- The remaining per-pillar Ranger chassis blocker must be present and claim-blocking -----

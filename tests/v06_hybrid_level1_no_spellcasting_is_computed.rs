@@ -50,12 +50,12 @@
 //! table at the levels where spellcasting actually begins so the flip cannot be
 //! mistaken for "declare it computed and move on".
 
-use codex::rules_core::character_input::{
-    CharacterClassLevel, CharacterInput, load_character_input_fixture,
-};
+use codex::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use codex::rules_core::pilot_compute::{
     HeadlessReceiptStatus, build_pilot_headless_receipt, compute_pilot_base_chassis,
 };
+mod common;
+use common::load;
 
 /// The shared deterministic GE-06 loadout fixture, i.e. the *real fixed loadout*
 /// `pf1_adapter.rs`'s `compose_character_input` composes for a freshly created
@@ -80,18 +80,6 @@ const SPELLCASTING_BEGINS_AT_LEVEL: u8 = 4;
 /// The class level at which both classes' first nonzero *base* level-1 spell
 /// slot appears in the corpus (`CAST:0,1`).
 const FIRST_NONZERO_BASE_SLOT_LEVEL: u8 = 5;
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 /// Swap the GE-06 fixture onto `class_name` at `level`, mirroring
 /// `src/bin/v06_class_state_dump.rs`'s own `input_for` exactly. Neither Paladin

@@ -30,28 +30,16 @@
 //!    identical gap `fighter_level_in_mix` (SD-21 E7.30) already closed for
 //!    Fighter's own features. This is the RED this cycle closes.
 
-use codex::rules_core::character_input::{
-    CharacterClassLevel, CharacterInput, load_character_input_fixture,
-};
+use codex::rules_core::character_input::CharacterClassLevel;
 use codex::rules_core::level_up::fighter::compute_fighter_level_up_grants;
 use codex::rules_core::level_up::wizard::compute_wizard_level_up_grants;
 use codex::rules_core::pilot_compute::{BaseSaves, compute_pilot_base_chassis};
+mod common;
+use common::load;
 
 const FIGHTER4_WIZARD1_SPLIT_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter4_wizard1_sd24_multiclass_split_input.txt"
 );
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 // ----- Pillar 1: base chassis (BAB / save) stacking at the split level -----
 

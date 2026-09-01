@@ -23,11 +23,12 @@
 //! is specific to the Arcane bloodline (this class-skill grant belongs to it), so it is
 //! only recognized when the Arcane bloodline selection itself was recognized.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
+mod common;
+use common::load;
 
 const SORCERER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_sorcerer_level1_sd13_deterministic_input.txt");
@@ -35,18 +36,6 @@ const SORCERER_FIXTURE: &str =
 const CLASS_SKILL_CHOICE_EXPLANATION_ID: &str = "class_chassis.sorcerer.bloodline_class_skill_choice";
 const ARCANE_BOND_BLOCKER_ID: &str =
     "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn find_explanation<'a>(
     computation: &'a PilotBaseChassisComputation,

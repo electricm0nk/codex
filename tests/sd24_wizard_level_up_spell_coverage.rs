@@ -32,25 +32,13 @@
 //! `to_level`, a clean "newly granted" transition per this module's own
 //! diff idiom.
 
-use codex::rules_core::character_input::{
-    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
-};
+use codex::rules_core::character_input::{AcquisitionMode, CharacterInput, SpellSelection};
 use codex::rules_core::level_up::wizard::compute_wizard_level_up_grants;
+mod common;
+use common::load;
 
 const WIZARD_LEVEL_3_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_wizard_level3_sd13_deterministic_input.txt");
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn wizard_spell(spell_id: &str, mode: AcquisitionMode) -> SpellSelection {
     SpellSelection {

@@ -31,11 +31,10 @@
 //! the partial-caster spell burden, mercy, or Paladin level 3+ -- those stay
 //! named-but-unproven exactly as before.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
+mod common;
+use common::{load, explanation, has_explanation};
 
 const PALADIN_LEVEL1_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_paladin_level1_sd13_deterministic_input.txt");
@@ -46,38 +45,6 @@ const BASE_ATTACK_ID: &str = "class_chassis.paladin.base_attack_bonus";
 const BASE_SAVE_FORTITUDE_ID: &str = "class_chassis.paladin.base_save.fortitude";
 const BASE_SAVE_REFLEX_ID: &str = "class_chassis.paladin.base_save.reflex";
 const BASE_SAVE_WILL_ID: &str = "class_chassis.paladin.base_save.will";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 // ----- Grounded: the base attack bonus pillar, at both supported levels -----
 

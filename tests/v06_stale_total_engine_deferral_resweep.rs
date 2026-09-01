@@ -35,11 +35,11 @@
 //! Monk High Jump on the jump sub-use of Acrobatics. A conditional bonus no
 //! total can express is a genuine deferral; "the total does not exist" was not.
 
-use codex::rules_core::character_input::{
-    CharacterClassLevel, CharacterInput, load_character_input_fixture,
-};
+use codex::rules_core::character_input::CharacterClassLevel;
 use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
 use codex::rules_core::skill_allocation::allocate_skill_ranks;
+mod common;
+use common::load;
 
 const FIGHTER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
@@ -57,18 +57,6 @@ const FALSE_CLAIMS: &[&str] = &[
     "no Armor-Class-total engine exists",
     "no armor-class-total engine exists",
 ];
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn explanation_detail(computation: &PilotBaseChassisComputation, id: &str) -> String {
     computation

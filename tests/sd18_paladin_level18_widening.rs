@@ -72,13 +72,12 @@
 //! out-of-range boundary, mirroring the Barbarian/Fighter/Wizard/Rogue/
 //! Cleric level-N-to-level-(N+1) sibling-fix precedent exactly.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const PALADIN_LEVEL17_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_paladin_level17_sd18_widening_deterministic_input.txt"
@@ -104,38 +103,6 @@ const SPELL_LEVEL_ACCESS_ID: &str = "class_chassis.paladin.partial_caster.spell_
 const PARTIAL_CASTER_BLOCKER_ID: &str = "class_spell.paladin.partial_caster.unsupported";
 const MERCY_5_CHOICE_ID: &str = "class_chassis.paladin.mercy_5_choice";
 const MERCY_6_CHOICE_ID: &str = "class_chassis.paladin.mercy_6_choice";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 fn values_with_prefix(
     computation: &PilotBaseChassisComputation,

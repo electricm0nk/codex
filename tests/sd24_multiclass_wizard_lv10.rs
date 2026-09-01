@@ -19,26 +19,16 @@
 //! step (this cycle's actual fix), and that the final level-10 BAB/save
 //! totals match PF1's canonical additive multiclass stacking rule exactly.
 
-use codex::rules_core::character_input::{CharacterClassLevel, CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use codex::rules_core::level_up::fighter::compute_fighter_level_up_grants;
 use codex::rules_core::level_up::wizard::compute_wizard_level_up_grants;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
+mod common;
+use common::load;
 
 const WIZARD9_FIGHTER1_LV10_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_wizard9_fighter1_sd24_multiclass_lv10_input.txt"
 );
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 /// A solo Wizard clone of the level-10 mix fixture's own `chosen` state, at
 /// `level` (1-9). Reuses the level-10 fixture's own feat/choice/ability

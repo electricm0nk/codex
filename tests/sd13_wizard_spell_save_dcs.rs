@@ -35,8 +35,9 @@
 //! preserves the Fighter negative control and the multiclass negative
 //! control, mirroring the sibling `_spell_save_dcs.rs` files' structure.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
+mod common;
+use common::load;
 
 const WIZARD_LEVEL1_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_wizard_level1_sd13_deterministic_input.txt");
@@ -52,18 +53,6 @@ const FIGHTER_FIXTURE: &str = include_str!(
 const DC_PREFIX: &str = "class_chassis.wizard.spell_save_dc.";
 const SCHOOL_POWERS_BLOCKER_ID: &str =
     "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn dc_values(fixture: &str) -> Vec<(String, i16)> {
     let input = load(fixture);

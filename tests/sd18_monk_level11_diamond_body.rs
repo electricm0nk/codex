@@ -50,13 +50,12 @@
 //! level-1..level-10 truth (unchanged), the Fighter negative control, and
 //! the multiclass negative control.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation};
 
 const MONK_LEVEL10_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_monk_level10_sd13_deterministic_input.txt");
@@ -76,34 +75,6 @@ const MONK_PURITY_OF_BODY_ID: &str = "class_chassis.monk.purity_of_body";
 const MONK_KI_POOL_ID: &str = "class_chassis.monk.ki_pool_size";
 const MONK_SLOW_FALL_ID: &str = "class_chassis.monk.slow_fall";
 const MONK_DIAMOND_BODY_ID: &str = "class_chassis.monk.diamond_body";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 // ----- Base attack bonus rises, saves stay unchanged at level 11 -----
 

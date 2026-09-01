@@ -19,47 +19,21 @@
 //!
 //! Slice: cycle-2026-07-14T0400, matrix row_id: race.dwarf.bounded_semantics.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, PilotBaseChassisComputation,
+    ComputationDiagnostic,
+    PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation};
 
 const DWARF_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_dwarf_fighter_level1_sd13_deterministic_input.txt");
 
 const HARDY_ID: &str = "race.dwarf.trait_bundle.hardy";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 fn diagnostic<'a>(
     computation: &'a PilotBaseChassisComputation,

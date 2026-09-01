@@ -26,11 +26,12 @@
 //! (`tests/sd13_sorcerer_bloodline_class_skill_choice.rs`) is only recognized when
 //! the Arcane bloodline itself was the recognized selection.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
+mod common;
+use common::load;
 
 const SORCERER_LEVEL1_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_sorcerer_level1_sd13_deterministic_input.txt");
@@ -51,18 +52,6 @@ const RESISTANCE_EXPLANATION_ID: &str =
     "class_feature.sorcerer.draconic_bloodline.dragon_resistances.resistance_bonus";
 const ENERGY_TYPE_UNRESOLVED_DIAGNOSTIC_ID: &str =
     "class_feature.sorcerer.draconic_bloodline.dragon_resistances.energy_type_unresolved";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn draconic(fixture: &str) -> String {
     fixture.replace("bloodline:arcane", "bloodline:draconic")

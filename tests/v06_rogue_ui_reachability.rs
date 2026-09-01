@@ -35,24 +35,13 @@
 //! ownership — complementary to, not a duplicate of, backend's
 //! Tauri-command-layer proof.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{HeadlessReceiptStatus, build_pilot_headless_receipt};
+mod common;
+use common::load;
 
 const FIGHTER_LEVEL1_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
 );
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 #[test]
 fn rogue_level1_with_the_real_fixed_loadout_reaches_computed() {

@@ -60,9 +60,11 @@
 //! `domain_power_*`) during this cycle's own verification pass, then
 //! reverted — see this cycle's receipt.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::CharacterInput;
 use codex::rules_core::level_up::cleric::compute_cleric_level_up_grants;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
+mod common;
+use common::load;
 
 const CLERIC_LEVEL1_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_cleric_level1_sd13_deterministic_input.txt");
@@ -70,18 +72,6 @@ const CLERIC_LEVEL1_FIXTURE: &str =
 const CLERIC_RECOGNITION_ID: &str = "class_chassis.spell_baseline.cleric";
 const CLERIC_EXPLANATION_PREFIX: &str = "class_chassis.cleric.";
 const PREPARED_DIVINE_UNSUPPORTED_DIAGNOSTIC_ID: &str = "class_spell.cleric.prepared_divine.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 /// Builds a deterministic single-class Human Cleric input at `level`
 /// (canonical Good + Healing domain selections), by swapping the level

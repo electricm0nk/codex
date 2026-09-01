@@ -51,10 +51,11 @@
 //! Wild Shape execution burden, or the prepared divine spell posture burden,
 //! and it preserves the accepted Druid level-1..level-15 truth unchanged.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
+mod common;
+use common::load;
 
 const DRUID_LEVEL15_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_druid_level15_sd18_widening_deterministic_input.txt"
@@ -70,18 +71,6 @@ const DRUID_LEVEL20_FIXTURE: &str = include_str!(
 
 const FIGHTER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn explanation<'a>(
     computation: &'a PilotBaseChassisComputation,

@@ -16,13 +16,14 @@
 //! Invalid-choice cases are expressed by safe in-test mutation of the accepted Fighter
 //! fixtures; no new fixture file is introduced.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
     HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
     compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
+mod common;
+use common::load;
 
 const LEVEL_1_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
@@ -30,18 +31,6 @@ const LEVEL_2_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level2_sd13_deterministic_input.txt");
 const LEVEL_3_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level3_sd13_deterministic_input.txt");
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 /// Return the claim-blocking diagnostics that name the non-canonical feat-choice seam.
 fn feat_choice_blocks(

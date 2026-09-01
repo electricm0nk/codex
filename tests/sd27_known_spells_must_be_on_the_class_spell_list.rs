@@ -46,9 +46,7 @@
 //! the exact SD-21 acceptance shape (3 recorded / 2 prepared / 4 and 3
 //! slots) that this file's change must leave untouched.
 
-use codex::rules_core::character_input::{
-    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
-};
+use codex::rules_core::character_input::{AcquisitionMode, SpellSelection};
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
@@ -58,6 +56,8 @@ use codex::rules_core::rules_tables::{
     inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_combat, ultimate_intrigue,
     ultimate_magic, ultimate_wilderness,
 };
+mod common;
+use common::load;
 
 const WIZARD_LEVEL_3_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_wizard_level3_sd13_deterministic_input.txt");
@@ -66,18 +66,6 @@ const WIZARD_LEVEL_3_FIXTURE: &str =
 /// is reported under (both diagnostics carry the same joined list; this is
 /// the spellbook-specific one).
 const SPELLBOOK_DIAGNOSTIC: &str = "class_spell.wizard.prepared_spellbook.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn wizard_spell(spell_id: &str, mode: AcquisitionMode) -> SpellSelection {
     SpellSelection {

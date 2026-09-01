@@ -29,11 +29,12 @@
 //! fires. Absent selections fabricate nothing; the Fighter and multiclass
 //! negative controls are preserved.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::load;
 
 const BARBARIAN_LEVEL10_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_barbarian_level10_sd13_deterministic_input.txt");
@@ -52,18 +53,6 @@ fn slot_id(n: u8) -> String {
     } else {
         format!("class_chassis.barbarian.rage_power_{n}_choice")
     }
-}
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
 }
 
 fn detail_of(fixture: &str, id: &str) -> Option<String> {

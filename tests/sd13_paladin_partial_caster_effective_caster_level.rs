@@ -21,14 +21,15 @@
 //! `class_spell.paladin.partial_caster.unsupported` diagnostic remains
 //! claim-blocking for all of that, exactly as before this slice.
 
-use codex::rules_core::character_input::{
-    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
-};
+use codex::rules_core::character_input::{AcquisitionMode, SpellSelection};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, PilotBaseChassisComputation,
+    ComputationDiagnostic,
+    PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
+mod common;
+use common::{load, explanation, has_explanation};
 
 const PALADIN_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_paladin_level1_sd13_deterministic_input.txt");
@@ -43,38 +44,6 @@ const PALADIN_EFFECTIVE_CASTER_LEVEL_ID: &str =
     "class_chassis.paladin.partial_caster.effective_caster_level";
 
 const PALADIN_PARTIAL_CASTER_BLOCKER_ID: &str = "class_spell.paladin.partial_caster.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 fn claim_blocking<'a>(
     computation: &'a PilotBaseChassisComputation,
