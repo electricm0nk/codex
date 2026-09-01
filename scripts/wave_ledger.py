@@ -36,6 +36,10 @@ import sys
 
 PROJECTS = os.path.expanduser("~/.claude/projects")
 
+# Silence longer than this means dead, not merely quiet. Shared with the autonomous
+# nudge's rule 3 so the two instruments cannot disagree -- see annotate().
+IDLE_DEAD_SECONDS = 40 * 60
+
 # Run id -> the wave number it dispatched. A run only lands here once its identity is
 # established from the repo (the commits it produced) or from this session's own launch.
 # Anything absent is reported by run id rather than guessed at.
@@ -129,8 +133,19 @@ def annotate(waves, boots):
         w["wave"] = wave
         w["note"] = note
         idle = now - w["last_activity"]
-        # Still writing in the last 3 minutes: treat as live.
-        w["running"] = idle < 180
+        # A lane blocked on a long subprocess writes NOTHING to its transcript while it
+        # waits. On 2026-09-01 wave 25's lane sat 10 minutes silent inside a
+        # `scripts/verify.sh` run and this function -- then using a 3-minute threshold --
+        # reported "0 running", which under the autonomous nudge's rule 4 ("no wave
+        # running: dispatch the next immediately") would have put a SECOND writer on
+        # tranche/14. That is the one thing the dispatch protocol forbids outright.
+        #
+        # 40 minutes matches the nudge's own "silent over 40 minutes: treat as dead" rule.
+        # Two instruments disagreeing about what "running" means is how the near-miss
+        # happened, so they now share one number. A full verify.sh sweep takes ~2h and can
+        # be quiet for a long stretch of it.
+        w["running"] = idle < IDLE_DEAD_SECONDS
+        w["idle_s"] = int(idle)
         w["duration_s"] = int((now if w["running"] else w["last_activity"]) - w["start"])
         w["killed"] = False
         if not w["running"]:
@@ -168,6 +183,8 @@ def main():
     for w in waves:
         f = lambda t: dt.datetime.fromtimestamp(t).strftime("%m-%d %H:%M:%S")
         state = "RUNNING" if w["running"] else ("KILLED?" if w["killed"] else "done")
+        if w["running"] and w.get("idle_s", 0) > 180:
+            state += f" (quiet {w['idle_s'] // 60}m)"
         print(fmt.format("wave " + w["wave"], w["run"], f(w["start"]), f(w["last_activity"]),
                          hms(w["duration_s"]), w["lanes"], state))
         if w["note"]:
