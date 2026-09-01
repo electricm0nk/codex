@@ -139,6 +139,10 @@ If this run dies (token exhaustion, interrupt), a fresh session resumes as follo
 5. Hazards: never run the inventory regenerator or the dashboard producer from a review/backlog lane (silent stamp-dropping; raise-on-unknown-status). Shared checkout: `git status` before every git write; explicit paths only; never `git add -A`; never `git stash`. Idle session codex-75 may resume SD-34 on this branch — check HEAD freshness before committing.
 6. Verification bar: per-fix `cargo check`; per-batch full `scripts/verify.sh` (covers desktop crate, frontend, clippy, corpus gates).
 
+### Standing instruction (operator, 2026-08-31)
+
+After the bloat-fix batches land and the final full `scripts/verify.sh` is green: send a message to peer session **codex-75** telling it to UNPAUSE SD-34 activity (it was implicitly paused while this review edited shared files on tranche/14). Include: HEAD sha at that point, the note that `fable-review.md` + register row C1.6 exist, and that pilot_compute/mod.rs, src/bin, cache_gen, and tests/ were refactored (behavior-identical) so it should rebase/pull before further work.
+
 ### Run ids
 
 - Backlog assessment (B1–B4 + B-SYNTH): Workflow run `wf_c656b776-955`, launched 2026-08-31. Script: session workflows dir, `fable-backlog-assessment-wf_c656b776-955.js`.
