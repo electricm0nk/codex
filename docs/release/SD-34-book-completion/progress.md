@@ -11,6 +11,34 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 24, Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — desktop crate 565/7 → 572/0, site-dashboard-check named and deferred — partial
+
+**Status: partial.** Assigned: `desktop`, `reach`, `site-dashboard-check` (wave-24's dispatch,
+`apps/desktop/` + `site/` territory). Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_wave24_cycle_receipt.md`.
+
+**`desktop`/`reach`: CLOSED, 572/0, verified live.** All 7 of lane A's named remaining
+desktop-crate failures fixed: `race_trait_picker` + 3× `reach_gate` (the 9-record CRB
+Adopted-Race/Human-Ethnicity cascade — but the brief's own "identity-only" premise for the CRB
+selectors was wrong, re-derived to real multi-member `<Race> Race Trait` pools for 6 of 7),
+`companion_catalog`'s unmodelled-facet count (141→2193 wire rows / 39→93 records, traced to
+`AT-34-E3-001`'s already-landed 54-record book-wide progression-table cascade),
+`companion_catalog`'s unowned-ability gap (a REAL code fix, not a re-pin — `cross_book_owners`
+was `pub` and data-correct but nothing on the wire path ever read it; the brief's own "hundreds of
+ids" characterization was a stale mid-wave-23 snapshot, the live gap was 14), and `feat_catalog`'s
+rewritten-record count (201→187, traced to `AT-34-E3-003` bucket-U cycle 2's already-landed
+`render_pcgen_desc` fix for the digit-preceded bare-`%` drop defect, 14 named feats identified
+exactly).
+
+**`site-dashboard-check`: NOT closed, deliberately not attempted.** The dispatch brief's own
+hazard note forbids running the inventory regenerator or dashboard producer from a lane, and
+`--check` mode still invokes the real producer (no pre-built `v06_work_inventory` binary exists at
+this worktree's default `target/`, so a real attempt risks an unbounded subprocess build this lane
+cannot bound). Staleness re-confirmed by cheap, read-only means instead (the committed feed's own
+`generated_at` vs. `docs/work-inventory.json`'s last commit date — 7 days stale, unchanged from
+wave-23's own finding). Named exactly for the closing sweep: run
+`./scripts/publish-site-dashboard.sh` for real, then re-verify.
+
 ### Cycle — Wave 24, Gate Lane A (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — the 124-row PI item closed by test correction, 3 more root-full functions fixed — partial
 
 **Status: partial.** Assigned: `root-full` (the 13-test remainder wave-23's Lane A named) plus
