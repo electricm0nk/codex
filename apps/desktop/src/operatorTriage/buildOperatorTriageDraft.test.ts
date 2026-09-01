@@ -129,7 +129,7 @@ function partitionsPreserveTesterAutoOperatorSplit() {
 
   const build = partitions.autoCaptured.find((e) => e.key === 'buildLabel');
   assert(!!build, 'auto-captured partition includes build label');
-  assert(!!build && build.value === 'Codex 0.11.0-test', 'build label preserved from auto-captured evidence');
+  assert(!!build && build.value === 'Codex 0.14.0-test', 'build label preserved from auto-captured evidence');
 
   const primaryClass = partitions.operatorAdded.find((e) => e.key === 'primaryClass');
   assert(!!primaryClass, 'operator-added partition includes primary class');
@@ -328,7 +328,7 @@ function textDraftIsCopyableAndPreservesEvidence() {
   assertEqual(typeof text, 'string', 'text draft is a string');
   assert(text.length > 0, 'text draft is non-empty');
   assert(text.includes('SD15-RR-20260701-001'), 'text draft carries the receipt id');
-  assert(text.includes('Codex 0.11.0-test'), 'text draft carries the build label');
+  assert(text.includes('Codex 0.14.0-test'), 'text draft carries the build label');
   assert(text.includes('The preview crashed when computing baseline AC.'), 'text draft carries observed behavior');
   assert(text.includes('rules-engine'), 'text draft carries the operator primary class');
   assert(/tester-supplied/i.test(text), 'text draft labels the tester-supplied partition');

@@ -108,7 +108,7 @@ jobs:
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.11.${GITHUB_RUN_NUMBER}"
+          VERSION="0.14.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];

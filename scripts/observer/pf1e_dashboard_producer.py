@@ -3956,7 +3956,19 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
     """The (wiring_class, status) table `doneness_verdict()` caps by kind."""
     if status == "deferred-with-reason":
         return DONENESS_DEFERRED
-    if status in ("engine-does-not-hold", "not-started"):
+    # `not-ingested` is `engine-does-not-hold`'s pre-`AT-34-E1-005` name
+    # (`decisions.md §2b`; SD-34 AT-34-E1-005 renamed the string everywhere
+    # in `docs/work-inventory.json` and `STATUS_VOCABULARY`). Kept alongside
+    # the current word for the same reason `unknown` is kept alongside
+    # `unmeasurable` below: this function's whole design is "never silently
+    # reinterpret a status word", not "assume every caller regenerated
+    # today". The committed `site/dashboard/units/*.json` shard cache is an
+    # independently-staled artifact (its own regeneration is `publish-site-
+    # dashboard.sh`'s job, not this table's) and still legitimately carries
+    # the old word until that cache is refreshed -- found live via
+    # `python3 scripts/site/build_public_status.py --check` raising
+    # `ValueError: doneness: unmapped 'static' + 'not-ingested'`.
+    if status in ("engine-does-not-hold", "not-started", "not-ingested"):
         return DONENESS_NOT_STARTED
     # An `unknown`/`unmeasurable` status cannot be measured against any bar,
     # classifiable or not -- checked first, ahead of both the ambiguous check
