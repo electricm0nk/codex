@@ -95,11 +95,73 @@ fn fighter_class_skills_get_the_flat_plus_three_trained_bonus_when_ranked() {
 
     let totals = allocate_skill_ranks(&input);
 
+    // Re-derived 2026-09-01, same widening and same live value as
+    // `multiclass_characters_get_the_union_of_grounded_class_skill_postures` above
+    // (`AT-34-E3-003` / `c5c4a1b788` -- `full_fighter_class_skills()`'s real 62-skill list).
     assert_eq!(
         totals.class_skills,
         vec![
             "skill:climb".to_string(),
+            "skill:craft_alchemy".to_string(),
+            "skill:craft_armor".to_string(),
+            "skill:craft_baskets".to_string(),
+            "skill:craft_blacksmithing".to_string(),
+            "skill:craft_books".to_string(),
+            "skill:craft_bows".to_string(),
+            "skill:craft_calligraphy".to_string(),
+            "skill:craft_carpentry".to_string(),
+            "skill:craft_cloth".to_string(),
+            "skill:craft_clothing".to_string(),
+            "skill:craft_gemcutting".to_string(),
+            "skill:craft_glass".to_string(),
+            "skill:craft_jewelry".to_string(),
+            "skill:craft_leather".to_string(),
+            "skill:craft_locks".to_string(),
+            "skill:craft_paintings".to_string(),
+            "skill:craft_pottery".to_string(),
+            "skill:craft_sculptures".to_string(),
+            "skill:craft_ships".to_string(),
+            "skill:craft_shoes".to_string(),
+            "skill:craft_stonemasonry".to_string(),
+            "skill:craft_traps".to_string(),
+            "skill:craft_weapons".to_string(),
+            "skill:handle_animal".to_string(),
             "skill:intimidate".to_string(),
+            "skill:knowledge_dungeoneering".to_string(),
+            "skill:knowledge_engineering".to_string(),
+            "skill:profession_architect".to_string(),
+            "skill:profession_baker".to_string(),
+            "skill:profession_barrister".to_string(),
+            "skill:profession_brewer".to_string(),
+            "skill:profession_butcher".to_string(),
+            "skill:profession_clerk".to_string(),
+            "skill:profession_cook".to_string(),
+            "skill:profession_courtesan".to_string(),
+            "skill:profession_driver".to_string(),
+            "skill:profession_engineer".to_string(),
+            "skill:profession_farmer".to_string(),
+            "skill:profession_fisherman".to_string(),
+            "skill:profession_gambler".to_string(),
+            "skill:profession_gardener".to_string(),
+            "skill:profession_herbalist".to_string(),
+            "skill:profession_innkeeper".to_string(),
+            "skill:profession_librarian".to_string(),
+            "skill:profession_merchant".to_string(),
+            "skill:profession_midwife".to_string(),
+            "skill:profession_miller".to_string(),
+            "skill:profession_miner".to_string(),
+            "skill:profession_porter".to_string(),
+            "skill:profession_sailor".to_string(),
+            "skill:profession_scribe".to_string(),
+            "skill:profession_shepherd".to_string(),
+            "skill:profession_soldier".to_string(),
+            "skill:profession_soothsayer".to_string(),
+            "skill:profession_stable_master".to_string(),
+            "skill:profession_tanner".to_string(),
+            "skill:profession_trapper".to_string(),
+            "skill:profession_woodcutter".to_string(),
+            "skill:ride".to_string(),
+            "skill:survival".to_string(),
             "skill:swim".to_string(),
         ],
         "Fighter's grounded class-skill set is recognized regardless of \
@@ -192,11 +254,78 @@ fn multiclass_characters_get_the_union_of_grounded_class_skill_postures() {
 
     let totals = allocate_skill_ranks(&input);
 
+    // Re-derived 2026-09-01 (`AT-34-E3-003` / `c5c4a1b788`, 2026-08-2x, already landed at
+    // this cycle's HEAD -- `skill_allocation.rs` unchanged since the fable-review's own
+    // capture of this exact live value): Fighter's class-skill posture widened from the old
+    // 3-skill grounded placeholder to `full_fighter_class_skills()`'s real, corpus-cited
+    // full list (`decisions.md §2a`), expanded via `expand_raw_class_skill_list` -- which is
+    // why Wizard (still ungrounded here) contributes nothing further but Fighter alone now
+    // produces 62 skills, not 3. This IS the union this test's own name promises; the old
+    // 3-skill pin predates the widening it never re-derived against.
     assert_eq!(
         totals.class_skills,
         vec![
             "skill:climb".to_string(),
+            "skill:craft_alchemy".to_string(),
+            "skill:craft_armor".to_string(),
+            "skill:craft_baskets".to_string(),
+            "skill:craft_blacksmithing".to_string(),
+            "skill:craft_books".to_string(),
+            "skill:craft_bows".to_string(),
+            "skill:craft_calligraphy".to_string(),
+            "skill:craft_carpentry".to_string(),
+            "skill:craft_cloth".to_string(),
+            "skill:craft_clothing".to_string(),
+            "skill:craft_gemcutting".to_string(),
+            "skill:craft_glass".to_string(),
+            "skill:craft_jewelry".to_string(),
+            "skill:craft_leather".to_string(),
+            "skill:craft_locks".to_string(),
+            "skill:craft_paintings".to_string(),
+            "skill:craft_pottery".to_string(),
+            "skill:craft_sculptures".to_string(),
+            "skill:craft_ships".to_string(),
+            "skill:craft_shoes".to_string(),
+            "skill:craft_stonemasonry".to_string(),
+            "skill:craft_traps".to_string(),
+            "skill:craft_weapons".to_string(),
+            "skill:handle_animal".to_string(),
             "skill:intimidate".to_string(),
+            "skill:knowledge_dungeoneering".to_string(),
+            "skill:knowledge_engineering".to_string(),
+            "skill:profession_architect".to_string(),
+            "skill:profession_baker".to_string(),
+            "skill:profession_barrister".to_string(),
+            "skill:profession_brewer".to_string(),
+            "skill:profession_butcher".to_string(),
+            "skill:profession_clerk".to_string(),
+            "skill:profession_cook".to_string(),
+            "skill:profession_courtesan".to_string(),
+            "skill:profession_driver".to_string(),
+            "skill:profession_engineer".to_string(),
+            "skill:profession_farmer".to_string(),
+            "skill:profession_fisherman".to_string(),
+            "skill:profession_gambler".to_string(),
+            "skill:profession_gardener".to_string(),
+            "skill:profession_herbalist".to_string(),
+            "skill:profession_innkeeper".to_string(),
+            "skill:profession_librarian".to_string(),
+            "skill:profession_merchant".to_string(),
+            "skill:profession_midwife".to_string(),
+            "skill:profession_miller".to_string(),
+            "skill:profession_miner".to_string(),
+            "skill:profession_porter".to_string(),
+            "skill:profession_sailor".to_string(),
+            "skill:profession_scribe".to_string(),
+            "skill:profession_shepherd".to_string(),
+            "skill:profession_soldier".to_string(),
+            "skill:profession_soothsayer".to_string(),
+            "skill:profession_stable_master".to_string(),
+            "skill:profession_tanner".to_string(),
+            "skill:profession_trapper".to_string(),
+            "skill:profession_woodcutter".to_string(),
+            "skill:ride".to_string(),
+            "skill:survival".to_string(),
             "skill:swim".to_string(),
         ],
         "a multiclass character carrying the grounded Fighter class level \
@@ -224,11 +353,13 @@ fn skills_outside_the_bounded_grounded_universe_are_never_fabricated() {
                 skill_id: "skill:climb".to_string(),
                 ranks: 1,
             },
-            // "skill:perception" has no grounded ability-key mapping
-            // anywhere in this codebase yet (no cited corpus evidence);
-            // the engine must not invent one.
+            // `AT-34-E3-003` widened `skill_ability_key`'s match to all 35 real PF1 Core
+            // Rulebook skill categories (`decisions.md §2a`), so "skill:perception" is now
+            // genuinely grounded (KEYSTAT Wisdom, `skill_allocation.rs` line ~609) and no
+            // longer serves this test's purpose. A skill id outside the real PF1 universe
+            // entirely stays the right negative example.
             SkillAllocation {
-                skill_id: "skill:perception".to_string(),
+                skill_id: "skill:not_a_real_pf1_skill".to_string(),
                 ranks: 1,
             },
         ],
@@ -238,7 +369,7 @@ fn skills_outside_the_bounded_grounded_universe_are_never_fabricated() {
 
     assert!(totals.totals.contains_key("skill:climb"));
     assert!(
-        !totals.totals.contains_key("skill:perception"),
+        !totals.totals.contains_key("skill:not_a_real_pf1_skill"),
         "an allocated skill outside the bounded, cited skill universe must \
          not appear in totals with a fabricated ability modifier"
     );

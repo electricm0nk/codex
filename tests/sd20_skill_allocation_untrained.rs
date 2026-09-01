@@ -186,16 +186,19 @@ fn a_ranked_skill_is_not_recorded_in_untrained_use() {
 
 #[test]
 fn a_skill_outside_the_bounded_universe_is_never_fabricated_in_either_map() {
+    // `AT-34-E3-003` widened the ability-key match to all 35 real PF1 skills
+    // (`skill_allocation.rs` line ~609 grounds "skill:perception" now), so a skill id
+    // outside the real PF1 universe entirely is the right negative example here.
     let input = input_for(
         fighter_class_levels(1),
         vec![SkillAllocation {
-            skill_id: "skill:perception".to_string(),
+            skill_id: "skill:not_a_real_pf1_skill".to_string(),
             ranks: 0,
         }],
     );
 
     let totals = allocate_skill_ranks(&input);
 
-    assert!(!totals.totals.contains_key("skill:perception"));
-    assert!(!totals.untrained_use.contains_key("skill:perception"));
+    assert!(!totals.totals.contains_key("skill:not_a_real_pf1_skill"));
+    assert!(!totals.untrained_use.contains_key("skill:not_a_real_pf1_skill"));
 }

@@ -204,9 +204,21 @@ fn wizard_level_21_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
+            .any(|e| (e.id.starts_with("class_chassis.wizard.")
                 || e.id.starts_with("class_feature.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard"),
+                || e.id == "class_chassis.spell_baseline.wizard")
+                // SD-34 decisions.md section 18 (`bfe90f020a`, 2026-08-29) widened the
+                // anti-fabrication gate BY CONSTRUCTION for Wizard: class_feature_grant_
+                // consumer now emits a real, citation-backed class_feature.wizard.
+                // corpus_record.* id for any grant fact with a renderable corpus record,
+                // at any Wizard level -- that commit widened the sd13_* acceptance tests
+                // it named but never reached these later sd18_* widening siblings. Same
+                // carve-out, same reasoning, applied here.
+                && !e.id.starts_with("class_feature.wizard.corpus_record.")
+                // AT-34-E3-001 cycle 6 (`49d72f5e03`, 2026-08-28) grounded Wizard Weapon
+                // and Armor Proficiency unconditionally (real PF1 content, any level) --
+                // pre-existing, already-tested, not promotion by this slice.
+                && e.id != "class_feature.wizard.weapon_and_armor_proficiency"),
         "level-21 Wizard must not gain any bounded wizard explanation: {:?}",
         computation.explanations
     );

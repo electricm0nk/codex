@@ -345,9 +345,16 @@ fn sorcerer_level17_does_not_fabricate_any_bloodline_entry() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.to_lowercase().contains("bloodline_feat")
+            .any(|e| (e.id.to_lowercase().contains("bloodline_feat")
                 || e.id.to_lowercase().contains("bloodline_power")
-                || e.id.to_lowercase().contains("bloodline_spell")),
+                || e.id.to_lowercase().contains("bloodline_spell"))
+                // AT-34-E3-001 owner-matched cycle 5 (`cb0ba2286e`, 2026-08-28) grounded
+                // the Bloodline Feat pool's bounded slot-count tracker (real, tested,
+                // pre-existing content -- see mod.rs's own
+                // sorcerer_bloodline_feat_pool_slot_count_* tests). It is a generic pool
+                // size, never a specific named bloodline feat/power/spell entry -- not
+                // the fabrication this test guards against.
+                && e.id != "class_feature.sorcerer.bloodline_feat_pool.slot_count"),
         "level-17 Sorcerer must not fabricate a bloodline-feat/bloodline-power/bloodline-spell \
          record — the level-17 Special column names \"Bloodline spell\" but stays \
          bloodline-specific and named-but-unproven, exactly mirroring levels 3/5/7/9/11/13/15: \

@@ -213,17 +213,20 @@ fn a_cross_class_skill_at_exactly_its_half_cap_produces_no_diagnostic() {
 
 #[test]
 fn a_skill_outside_the_bounded_universe_never_produces_a_diagnostic() {
+    // `AT-34-E3-003` widened the ability-key match to all 35 real PF1 skills
+    // (`skill_allocation.rs` line ~609 grounds "skill:perception" now), so a skill id
+    // outside the real PF1 universe entirely is the right negative example here.
     let input = input_for(
         fighter_class_levels(1),
         vec![SkillAllocation {
-            skill_id: "skill:perception".to_string(),
+            skill_id: "skill:not_a_real_pf1_skill".to_string(),
             ranks: 99,
         }],
     );
 
     let totals = allocate_skill_ranks(&input);
 
-    assert!(!totals.totals.contains_key("skill:perception"));
+    assert!(!totals.totals.contains_key("skill:not_a_real_pf1_skill"));
     assert!(
         totals.diagnostics.is_empty(),
         "a skill outside this module's bounded, cited universe must never \

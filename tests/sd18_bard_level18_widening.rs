@@ -318,13 +318,23 @@ fn bard_level18_does_not_fabricate_mass_suggestion_or_versatile_performance() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.contains("suggestion")),
+            .any(|e| e.id.contains("suggestion")
+                // AT-34-E3-001 option-pool-with-magnitude cycle 5 (`b4eadc9cbf`, 2026-08-28)
+                // grounded Suggestion's and Mass Suggestion's flat Will-save DC magnitude
+                // (real corpus-cited `BONUS:VAR|...DC|10+(BardicPerformanceLVL/2)+CHA`
+                // formula) -- explicitly NOT the full effect: no range/audible-performance
+                // checking, no Will-save resolution, no suggestion-effect application. The
+                // DC number is real, tested, non-fabricated content; only the execution
+                // burden this test's own name still correctly guards stays unproven.
+                && e.id != "class_feature.bard.suggestion_dc"
+                && e.id != "class_feature.bard.mass_suggestion_dc"),
         "Mass Suggestion (the PF1 CRB's 18th-level Bard spell-like ability, \"functions just \
          like suggestion, but allows a bard of 18th level or higher to make a suggestion \
          simultaneously to any number of creatures that he has already fascinated\") inherits \
          the same fascinated-target prerequisite and the \"suggestion\" spell's own \
          effect-resolution engine already declined at level 6, neither of which exists in this \
-         codebase; no explanation record must be fabricated for it: {:?}",
+         codebase; no explanation record must be fabricated for it BEYOND the two grounded DC \
+         magnitudes: {:?}",
         computation.explanations
     );
     assert!(

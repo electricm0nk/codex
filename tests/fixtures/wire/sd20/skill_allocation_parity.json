@@ -8,7 +8,12 @@
     "note": "reuses the same level-1 Human Fighter ability scores as tests/fixtures/wire/sd20/human_fighter_level_1_tabletop.json, with a broader skill_allocations set (mirroring tests/sd20_tabletop_readiness_integration.rs's epic_probe_skill_allocation_covers_class_cross_class_and_untrained_breadth) that exercises class-skill handling, cross-class-penalty handling, untrained-use handling, and max-rank-cap handling in one scenario, per the SD-20 loop's Epic 4 ask",
     "character": {
       "race_id": "human",
-      "class_levels": [{ "class_id": "class:fighter", "level": 1 }],
+      "class_levels": [
+        {
+          "class_id": "class:fighter",
+          "level": 1
+        }
+      ],
       "ability_scores": {
         "strength": 16,
         "dexterity": 14,
@@ -18,25 +23,140 @@
         "charisma": 8
       },
       "skill_allocations": [
-        { "skill_id": "skill:climb", "ranks": 5, "note": "class skill; raw 5 ranks exceeds the level-1 class-skill cap of 4 -> capped, with a diagnostic" },
-        { "skill_id": "skill:intimidate", "ranks": 1, "note": "class skill, within cap" },
-        { "skill_id": "skill:swim", "ranks": 0, "note": "class skill, 0 ranks -> untrained use" },
-        { "skill_id": "skill:diplomacy", "ranks": 1, "note": "cross-class, exactly at the level-1 cross-class cap of 1" },
-        { "skill_id": "skill:disable_device", "ranks": 1, "note": "cross-class AND trained-only, invested at 1 rank" }
+        {
+          "skill_id": "skill:climb",
+          "ranks": 5,
+          "note": "class skill; raw 5 ranks exceeds the level-1 class-skill cap of 4 -> capped, with a diagnostic"
+        },
+        {
+          "skill_id": "skill:intimidate",
+          "ranks": 1,
+          "note": "class skill, within cap"
+        },
+        {
+          "skill_id": "skill:swim",
+          "ranks": 0,
+          "note": "class skill, 0 ranks -> untrained use"
+        },
+        {
+          "skill_id": "skill:diplomacy",
+          "ranks": 1,
+          "note": "cross-class, exactly at the level-1 cross-class cap of 1"
+        },
+        {
+          "skill_id": "skill:disable_device",
+          "ranks": 1,
+          "note": "cross-class AND trained-only, invested at 1 rank"
+        }
       ]
     }
   },
   "expected_output": {
-    "class_skills": ["skill:climb", "skill:intimidate", "skill:swim"],
+    "class_skills": [
+      "skill:climb",
+      "skill:craft_alchemy",
+      "skill:craft_armor",
+      "skill:craft_baskets",
+      "skill:craft_blacksmithing",
+      "skill:craft_books",
+      "skill:craft_bows",
+      "skill:craft_calligraphy",
+      "skill:craft_carpentry",
+      "skill:craft_cloth",
+      "skill:craft_clothing",
+      "skill:craft_gemcutting",
+      "skill:craft_glass",
+      "skill:craft_jewelry",
+      "skill:craft_leather",
+      "skill:craft_locks",
+      "skill:craft_paintings",
+      "skill:craft_pottery",
+      "skill:craft_sculptures",
+      "skill:craft_ships",
+      "skill:craft_shoes",
+      "skill:craft_stonemasonry",
+      "skill:craft_traps",
+      "skill:craft_weapons",
+      "skill:handle_animal",
+      "skill:intimidate",
+      "skill:knowledge_dungeoneering",
+      "skill:knowledge_engineering",
+      "skill:profession_architect",
+      "skill:profession_baker",
+      "skill:profession_barrister",
+      "skill:profession_brewer",
+      "skill:profession_butcher",
+      "skill:profession_clerk",
+      "skill:profession_cook",
+      "skill:profession_courtesan",
+      "skill:profession_driver",
+      "skill:profession_engineer",
+      "skill:profession_farmer",
+      "skill:profession_fisherman",
+      "skill:profession_gambler",
+      "skill:profession_gardener",
+      "skill:profession_herbalist",
+      "skill:profession_innkeeper",
+      "skill:profession_librarian",
+      "skill:profession_merchant",
+      "skill:profession_midwife",
+      "skill:profession_miller",
+      "skill:profession_miner",
+      "skill:profession_porter",
+      "skill:profession_sailor",
+      "skill:profession_scribe",
+      "skill:profession_shepherd",
+      "skill:profession_soldier",
+      "skill:profession_soothsayer",
+      "skill:profession_stable_master",
+      "skill:profession_tanner",
+      "skill:profession_trapper",
+      "skill:profession_woodcutter",
+      "skill:ride",
+      "skill:survival",
+      "skill:swim"
+    ],
     "cross_class_penalty_applied": true,
     "totals": {
-      "skill:climb": { "ranks": 4, "ability_modifier": 3, "class_skill_bonus": 3, "misc_modifier": 0, "total_modifier": 10 },
-      "skill:intimidate": { "ranks": 1, "ability_modifier": -1, "class_skill_bonus": 3, "misc_modifier": 0, "total_modifier": 3 },
-      "skill:swim": { "ranks": 0, "ability_modifier": 3, "class_skill_bonus": 0, "misc_modifier": 0, "total_modifier": 3 },
-      "skill:diplomacy": { "ranks": 1, "ability_modifier": -1, "class_skill_bonus": 0, "misc_modifier": 0, "total_modifier": 0 },
-      "skill:disable_device": { "ranks": 1, "ability_modifier": 2, "class_skill_bonus": 0, "misc_modifier": 0, "total_modifier": 3 }
+      "skill:climb": {
+        "ranks": 4,
+        "ability_modifier": 3,
+        "class_skill_bonus": 3,
+        "misc_modifier": 0,
+        "total_modifier": 10
+      },
+      "skill:intimidate": {
+        "ranks": 1,
+        "ability_modifier": -1,
+        "class_skill_bonus": 3,
+        "misc_modifier": 0,
+        "total_modifier": 3
+      },
+      "skill:swim": {
+        "ranks": 0,
+        "ability_modifier": 3,
+        "class_skill_bonus": 0,
+        "misc_modifier": 0,
+        "total_modifier": 3
+      },
+      "skill:diplomacy": {
+        "ranks": 1,
+        "ability_modifier": -1,
+        "class_skill_bonus": 0,
+        "misc_modifier": 0,
+        "total_modifier": 0
+      },
+      "skill:disable_device": {
+        "ranks": 1,
+        "ability_modifier": 2,
+        "class_skill_bonus": 0,
+        "misc_modifier": 0,
+        "total_modifier": 3
+      }
     },
-    "untrained_use": { "skill:swim": 3 },
+    "untrained_use": {
+      "skill:swim": 3
+    },
     "diagnostics": [
       {
         "id": "skill_allocation.class_skill_max_rank_exceeded",

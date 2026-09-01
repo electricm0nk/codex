@@ -304,7 +304,18 @@ fn multiclass_cleric_level17_is_not_promoted_by_this_slice() {
                 // unconditionally, regardless of level bound or
                 // single-class status (mirrors every other class's
                 // gate-ordering fix)
-                && e.id != "class_feature.domain.good_touch_of_good_not_active"),
+                && e.id != "class_feature.domain.good_touch_of_good_not_active"
+                // AT-34-E3-001 cycle 6 (`49d72f5e03`, 2026-08-28) grounded Cleric
+                // Weapon and Armor Proficiency unconditionally (real PF1 content,
+                // any Cleric level, any multiclass mix -- not gated the way this
+                // widening slice is), and the generic domain-power pass grounds
+                // Healing domain's Rebuke Death uses-per-day the same way Good
+                // domain's Touch of Good already is above (both domains are
+                // selected in this fixture and "not level-gated, still fire" per
+                // this file's own doc comment). Neither is promotion by THIS
+                // slice's widening; both are pre-existing, already-tested closures.
+                && e.id != "class_feature.cleric.weapon_and_armor_proficiency"
+                && e.id != "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes"),
         "multiclass Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
