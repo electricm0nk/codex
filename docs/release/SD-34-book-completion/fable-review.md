@@ -24,7 +24,8 @@ Operator commission: (1) code review — gaps, improvements, bloat; report + low
 | R14 | remaining src/ modules | sonnet | DONE | 8 findings |
 | H1–H2 | grep sweeps + denominators | haiku | DONE | 22 census figures |
 | VERIFY | finding verification (P1/P2 + all auto_fix) | sonnet+opus | DONE | 56 CONFIRMED / 9 REJECTED / 61 P3 unverified-by-design |
-| FIX | safe-fix application | orchestrator | IN PROGRESS | 2 cleared, 1 blocked |
+| FIX | safe-fix application | orchestrator | DONE | 2 applied (`920cb53307`), 1 blocked→§4 |
+| TOKEN-MODEL | token-vocabulary cost model (operator challenge) | sonnet | DONE | see §1.b; register row C1.6 |
 
 Raw lane outputs land in `docs/release/SD-34-book-completion/artifacts/fable-review/` as JSON, one file per lane, written by the lane itself at completion. This file is the synthesis; the JSON is the evidence.
 
