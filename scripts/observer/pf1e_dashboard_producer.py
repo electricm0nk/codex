@@ -4051,7 +4051,8 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
         # away and the unit reads `held` anyway -- so `held` is the one verdict that does not
         # depend on which tool ran last. (Launch-readiness remediation Step 4D, blocker B6.)
         if status in ("grounded", "text-complete", "ingested-magnitude",
-                      "literal-verified", "fixture-verified"):
+                      "literal-verified", "fixture-verified",
+                      "oracle-agree", "oracle-unverifiable"):
             return DONENESS_HELD
         raise ValueError(f"doneness: unmapped {wiring_class!r} + {status!r}")
     if wiring_class == "display":
@@ -4107,7 +4108,30 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
         # observation, not a literal/evaluator check). Operator directive
         # 2026-08-13 ("add the done rung for static and derived"), answering
         # SD-32 decisions.md §2's open question.
-        if status in ("literal-verified", "fixture-verified"):
+        # `oracle-agree`/`oracle-unverifiable` (SD-34 AT-34-E3-005, 2026-08-31)
+        # are REFINEMENTS of these two words, never a separate tier: the
+        # inventory's own vocabulary defines each as "a `literal-verified`/
+        # `fixture-verified` unit whose id carries a real <verdict> in the
+        # consolidated bucket-V oracle ledger", and
+        # `src/bin/v06_work_inventory.rs` treats all four as one family in a
+        # single list. So the unit had already met static's bar (the literal
+        # byte-compared clean) or derived's (the evaluator matched its pinned
+        # fixture) BEFORE the oracle looked at it.
+        #
+        # `oracle-agree` is strictly stronger -- a real PCGen round-trip
+        # matched the engine's own computed value exactly.
+        #
+        # `oracle-unverifiable` is NOT weaker. It means the oracle could not
+        # check the unit at all (`no_bonus_chain`, `no_probe_surface`,
+        # `oracle_export_no_spellname_line`) -- a limitation of the oracle,
+        # not evidence against the unit, whose own literal/evaluator proof is
+        # untouched. Downgrading it would punish a record for an instrument's
+        # blind spot, which is the same over-correction round 3 made and
+        # round 4 undid. A `disagree` verdict is the case that WOULD be
+        # evidence against, and it is deliberately never mapped to either
+        # word -- it leaves the status alone so the unit stays outstanding.
+        if status in ("literal-verified", "fixture-verified",
+                      "oracle-agree", "oracle-unverifiable"):
             return DONENESS_DONE
         if status in ("ingested-magnitude", "grounded", "text-complete"):
             return DONENESS_HELD
