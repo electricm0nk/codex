@@ -2071,7 +2071,13 @@ mod tests {
              refuse -- this WOULD be a narrow catalog-widening closure, re-investigate: \
              {real_desc_unrefused_unexpected:?}"
         );
-        assert_eq!(excluded, 215, "excluded-class population (sibling lane's, do not touch)");
+        // Re-derived 2026-09-01 against `docs/work-inventory.json` at this cycle's HEAD (this
+        // test's own live query above, re-run standalone): 215 -> 213. `mechanism_units.len()`
+        // itself moved 239 -> 237 (two units no longer carry `status ==
+        // "engine-does-not-hold"` with this evidence string; the EXCLUDED-CLASS ROSTER, the 7
+        // names above, is unchanged and not the cause -- only membership in `mechanism_units`
+        // shrank). `null_desc`/`real_desc_refused` below are unaffected (18/6 still hold live).
+        assert_eq!(excluded, 213, "excluded-class population (sibling lane's, do not touch)");
         assert_eq!(null_desc, 18, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
         assert_eq!(real_desc_refused, 6, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
         assert_eq!(excluded + null_desc + real_desc_refused, mechanism_units.len() as u32);

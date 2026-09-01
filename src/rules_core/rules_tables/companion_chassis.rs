@@ -1760,7 +1760,19 @@ mod tests {
                 }
             }
         }
-        const HELD_STATUSES: [&str; 3] = ["grounded", "text-complete", "literal-verified"];
+        // `oracle-agree`/`oracle-unverifiable` (`decisions.md §19`) are
+        // REFINEMENTS of `literal-verified`/`fixture-verified`, never a new
+        // tier -- the unit already met `literal-verified`'s bar before the
+        // oracle looked at it (or, for `oracle-unverifiable`, before the
+        // oracle found it had no surface to check). Both are held content,
+        // same as `58b4f837cc` taught the doneness table.
+        const HELD_STATUSES: [&str; 5] = [
+            "grounded",
+            "text-complete",
+            "literal-verified",
+            "oracle-agree",
+            "oracle-unverifiable",
+        ];
 
         let companion_dir = repo_root.join("data/corpus/core_rulebook/companion");
         let mut companion_docs: Vec<Value> = Vec::new();

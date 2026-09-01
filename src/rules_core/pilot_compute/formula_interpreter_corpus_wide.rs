@@ -720,19 +720,23 @@ mod tests {
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5400,
-            "F1 population must equal the CURRENT true formula-bearing count (5,400, re-derived \
-             2026-08-27 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
+            f1.population, 5231,
+            "F1 population must equal the CURRENT true formula-bearing count (5,231, re-derived \
+             2026-09-01 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
              `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
-             cycle's own true-at-the-time 5,401 (1 `ultimate_magic` Black Blade companion-class \
-             row left bucket B for `literal-verified` this cycle, F1-shaped -- see this test's \
-             own doc comment), not the previous cycle's own WRONG 5,563 re-pin (a bad \
-             re-derivation, not a stale one -- see this test's own doc comment and the \
-             `AT-34-E3-001-class_feature_owner_matched-cycle` \
-             retro correction), not the stale 6,257 pin, not the pre-fold 6,260/6,278, not the \
-             pre-regen 6,308 this test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 \
-             census (6,032) — AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001"
+             cycle's own true-at-the-time 5,400 (wave 22's oracle-verdict restamp -- \
+             `decisions.md §19` -- booked SD-33's already-computed `oracle-agree`/\
+             `oracle-unverifiable` verdicts for thousands of bucket-V units once \
+             `58b4f837cc` taught the doneness table the two new statuses; a real share of the \
+             newly-DONE units were F1-shaped, so F1's not-done population fell 5,400 -> 5,231, \
+             a genuine closure movement, not a re-pin of a wrong prior count), not the \
+             cycle-before-that's own true-at-the-time 5,401, not the previous cycle's own WRONG \
+             5,563 re-pin (a bad re-derivation, not a stale one -- see this test's own doc \
+             comment and the `AT-34-E3-001-class_feature_owner_matched-cycle` retro correction), \
+             not the stale 6,257 pin, not the pre-fold 6,260/6,278, not the pre-regen 6,308 this \
+             test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 census (6,032) — \
+             AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001 / SD-34 wave 22/23 gate remediation"
         );
     }
 }
