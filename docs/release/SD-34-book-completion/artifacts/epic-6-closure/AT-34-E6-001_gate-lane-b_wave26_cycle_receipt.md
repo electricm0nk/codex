@@ -326,4 +326,4 @@ wave-24 receipt; not re-measured this cycle, out of scope).**
 
 ## Commit SHA (filled in after push)
 
-`__COMMIT_SHA_PLACEHOLDER__`
+`4d0b59fc15d0f5de9a27ad8f0c8626a7e5472edf (this cycle's own commit) -- rebased cleanly on top of Lane A's concurrent wave-26 work (d501120fb6, 45c25e1bc8, both LICENSE.json/class_feature content under data/corpus/**, zero apps/desktop/ or tests/ touch -- confirmed via `git diff --name-only bc9e84553e..d501120fb6`, none of this receipt's figures depend on that diff)`
