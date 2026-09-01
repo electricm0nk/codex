@@ -675,6 +675,47 @@ fn map_ability(
     }
 }
 
+/// Every ability record, from ANY registered companion book, that names this
+/// creature (`book_id`, `companion_key`) in its own `cross_book_owners` list
+/// (`companion_chassis::CompanionAbilityRecord::cross_book_owners`,
+/// `decisions.md` Shape 8) -- paired with the ability's own book id, since a
+/// cross-book ability's wire `key` is built from the book that OWNS the
+/// ability record, never the creature's book (the same rule same-book
+/// abilities already follow via `map_ability(book.corpus_book, ability)`).
+///
+/// **Closes a real gap, not a cosmetic one.** `CompanionBook::abilities_of`
+/// resolves a creature's `ability_keys` only against its OWN book's
+/// `companion_abilities` table (`companion_ability_resolve` is a same-book
+/// lookup) -- so an ability record that declares ownership only via
+/// `cross_book_owners` (e.g. Core Rulebook's 14 generic `Familiar ~ <X>`
+/// rows, cross-owned by `beastiary`'s Bat/Cat/Hawk/.../Weasel familiars)
+/// never appeared under ANY creature's `abilities` list before this fix,
+/// even though `companion_chassis.rs`'s own
+/// `the_chassis_link_resolves_in_both_directions_for_every_book` test
+/// already proves every such row names a real, registered owner on the data
+/// side. `cross_book_owners` was read by `v06_work_inventory.rs` (for
+/// reachability accounting) and by that root-lib consistency test, but by
+/// nothing on the actual wire path -- `reach_gate::every_registered_
+/// ability_reaches_the_wire_under_an_owner` is what caught the gap between
+/// "the data model says this is owned" and "the screen actually shows it".
+fn cross_book_abilities_of(
+    book_id: &str,
+    companion_key: &str,
+) -> Vec<(&'static str, &'static companion_chassis::CompanionAbilityRecord)> {
+    companion_chassis::COMPANION_BOOKS
+        .iter()
+        .flat_map(|owning_book| {
+            owning_book.companion_abilities.iter().filter_map(move |ability| {
+                ability
+                    .cross_book_owners
+                    .iter()
+                    .any(|(owner_book, owner_key)| *owner_book == book_id && *owner_key == companion_key)
+                    .then_some((owning_book.corpus_book, ability))
+            })
+        })
+        .collect()
+}
+
 fn map_companion(
     book: &companion_chassis::CompanionBook,
     record: &CompanionRecord,
@@ -757,6 +798,11 @@ fn map_companion(
             .abilities_of(record)
             .into_iter()
             .map(|ability| map_ability(book.corpus_book, ability))
+            .chain(
+                cross_book_abilities_of(book.corpus_book, record.key)
+                    .into_iter()
+                    .map(|(owning_book, ability)| map_ability(owning_book, ability)),
+            )
             .collect(),
         external_ability_refs: record
             .external_ability_refs
@@ -1324,11 +1370,34 @@ mod tests {
         // each book's own `ability_keys` ownership graph reports 141 rows over
         // 39 records with `Temp Evolution ~ Grab` as the single new
         // two-owner row.
-        assert_eq!(unmodelled.len(), 141);
+        //
+        // `AT-34-E3-001` (2026-08-27, `decisions.md §66`): 141 -> 2193 and
+        // 39 -> 93, and this time the deltas are wildly UNEQUAL by design,
+        // not a wiring gap -- 54 new Core Rulebook records (the book-wide
+        // generic Animal Companion progression table: 31
+        // `TYPE:AnimalCompanionFeat` feat-pool rows, 14 `TYPE:AnimalTrick`
+        // trick rows, 6 `TYPE:CompStatChoice` by-level stat rows, 3
+        // `TYPE:CompChoice`/`TYPE:Special` rows) each name no single
+        // creature -- upstream grants the whole table to EVERY companion a
+        // core_rulebook class can have, so `companion_chassis`'s ownership
+        // graph attaches each of the 54 records to every one of
+        // core_rulebook's own companion-eligible creature rows, producing
+        // +2052 wire rows from +54 records (2052 / 54 ≈ 38 average owners
+        // per record -- book-wide-granted content, not a per-creature
+        // ability). The 39 pre-existing records are untouched; `93` is
+        // exactly `companion_chassis.rs`'s own
+        // `an_ability_with_no_modelled_facet_still_states_its_type_segments`
+        // pin (39 + 54), re-derived independently here on the wire side
+        // rather than copied. None of the 54 is a feat, a special quality,
+        // or a special attack the way `CompanionAbilityFacet` models those
+        // concepts -- they are a level-progression TABLE, a different shape
+        // this classifier does not model, the same "real content, no facet"
+        // reason every earlier round's records carry `facet: None`.
+        assert_eq!(unmodelled.len(), 2193);
         let mut keys: Vec<&str> = unmodelled.iter().map(|a| a.key.as_str()).collect();
         keys.sort_unstable();
         keys.dedup();
-        assert_eq!(keys.len(), 39, "39 distinct records behind the 141 wire rows");
+        assert_eq!(keys.len(), 93, "93 distinct records (39 pre-existing + AT-34-E3-001's 54) behind the 2193 wire rows");
         // Named, so neither count above can be satisfied by a different record.
         // Asserted on the WIRE rather than only on the table, because the gap
         // this catches is a row that exists in `rules_tables` and never crosses
@@ -1477,7 +1546,44 @@ mod tests {
                     || ability.type_segments
                         == vec!["EvolutionChoice".to_owned(), "Extraordinary".to_owned()]
                     || ability.type_segments
-                        == vec!["TempEvolutionChoice".to_owned(), "Extraordinary".to_owned()],
+                        == vec!["TempEvolutionChoice".to_owned(), "Extraordinary".to_owned()]
+                    // `AT-34-E3-001` (2026-08-27, `decisions.md §66`) adds the
+                    // ELEVENTH through FIFTEENTH shapes -- all five from Core
+                    // Rulebook's book-wide generic Animal Companion
+                    // progression table (`docs/release/SD-34-book-completion/
+                    // artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_
+                    // cycle_receipt.md`'s companion cascade, re-derived
+                    // directly against the live table rather than copied:
+                    // `grep -c 'type_segments: &\["<Shape>"\]'
+                    // src/rules_core/rules_tables/crb/companion_data.rs`):
+                    //
+                    // * `AnimalCompanionFeat` (31 rows) -- the pool of bonus
+                    //   feats an advancing companion may select, e.g.
+                    //   `Animal Companion Feat ~ Dodge`. A choice, not a
+                    //   quality the creature already has.
+                    // * `AnimalTrick` (14 rows) -- the trained-trick pool,
+                    //   e.g. `Animal Trick ~ Attack`. Same choice shape.
+                    // * `CompStatChoice` (6 rows, `Companion Stat ~
+                    //   STR/DEX/CON/INT/WIS/CHA`) -- the by-level ability-score
+                    //   bump a player assigns, not a fixed quality.
+                    // * `CompChoice` (2 rows: `+2 to Dexterity and
+                    //   Constitution`, `Companion Skills`) and `Special` (1
+                    //   row: `Companion Advancement`) -- the remaining
+                    //   miscellaneous progression-table entries, the same
+                    //   "a choice, not a quality" reason as the four above.
+                    //
+                    // None of these five is a feat the creature already
+                    // knows, a special quality, or a special attack --
+                    // `CompanionAbilityFacet` models exactly those three
+                    // concepts and none of them is "a pool the player picks
+                    // from as the companion advances", so all five ship
+                    // unmodelled rather than mapped onto a facet that would
+                    // claim something false.
+                    || ability.type_segments == vec!["AnimalCompanionFeat".to_owned()]
+                    || ability.type_segments == vec!["AnimalTrick".to_owned()]
+                    || ability.type_segments == vec!["CompStatChoice".to_owned()]
+                    || ability.type_segments == vec!["CompChoice".to_owned()]
+                    || ability.type_segments == vec!["Special".to_owned()],
                 "{} carries an unrecognised unmodelled shape: {:?}",
                 ability.key,
                 ability.type_segments

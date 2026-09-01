@@ -2298,30 +2298,45 @@ mod tests {
         }
     }
 
-    /// SD-32 `decisions.md §25` cycle 2: the menu command carries all 14 real
-    /// "Adopted Race" selectors this cycle's new `selector_only`
-    /// `BookSource`s ingested, correctly book-coded, and none flagged
-    /// malformed (every real oracle row's `CHOOSE:` token parses).
+    /// SD-32 `decisions.md §25` cycle 2: the menu command carries all 21 real
+    /// "Adopted Race" selectors ingested corpus-wide -- the original 14
+    /// `inner_sea_races` (ISR) selectors, plus AT-34-E3-001's 7
+    /// `core_rulebook` (CRB) selectors (2026-08-27,
+    /// `ingest_race_traits.rs`'s new `selector_only` `BookSource`) -- all
+    /// correctly book-coded, and none flagged malformed (every real oracle
+    /// row's `CHOOSE:` token parses).
     ///
-    /// **13 of 14 resolve a real grant, via a real `kind: trait` write.**
-    /// `epic-6-kind-trait` cycle 2 built this resolver against a temporary
-    /// `ability/`-directory fallback because `shape_ledger.py`'s kind-blind
-    /// join blocked the real `--kind trait` ingest. Cycle 3 (this cycle): a
-    /// sibling cycle fixed that join and ran `ingest_generic_kind.py --kind
-    /// trait` for real; `trait_pool::load_trait_pool`'s fallback is retired
-    /// (see that module's own doc comment), and this test now proves the 13
-    /// real grants resolve from `data/corpus/inner_sea_races/trait_generic/`
-    /// -- the modelled `kind: trait` schema `decisions.md §25` specifies --
-    /// with no fallback read anywhere in the path. Rougarou is honestly 0:
-    /// cycle 1's own corpus-wide scan proved no book anywhere grants a
-    /// Rougarou Race Trait (`race_resolver.rs`'s own `rougarou` chassis
-    /// comment: no `Rougarou_Replace*` flag is ever set `True` anywhere in
-    /// the pinned oracle), re-confirmed this cycle by re-running the same
-    /// scan against the freshly-bootstrapped oracle (§0 below / this cycle's
-    /// receipt) -- a hard impossibility of source data (`decisions.md §27b`),
+    /// **20 of 21 resolve at least one real grant, via a real `kind: trait`
+    /// write.** `epic-6-kind-trait` cycle 2 built this resolver against a
+    /// temporary `ability/`-directory fallback because `shape_ledger.py`'s
+    /// kind-blind join blocked the real `--kind trait` ingest. Cycle 3 fixed
+    /// that join and ran `ingest_generic_kind.py --kind trait` for real;
+    /// `trait_pool::load_trait_pool`'s fallback is retired (see that
+    /// module's own doc comment). The original 13 ISR selectors each pick
+    /// from a single-member pool (their own named race trait, e.g. Oread's
+    /// `Loner of the Rocks`). AT-34-E3-001's 7 CRB selectors are a different
+    /// shape: `<Race> Race Trait` (e.g. `TYPE:Trait.RaceTrait.Elf Race
+    /// Trait`) is PF1e's *general* chargen-Trait race tag, carrying every
+    /// `advanced_players_guide`/`inner_sea_races` Trait book-authored FOR
+    /// that race, not one dedicated ISR pool member -- so
+    /// `resolve_adopted_race_options` (which returns the WHOLE pool, not a
+    /// single pick) resolves each to several real grants, re-derived per
+    /// race directly from the corpus books `RACE_CORPUS_BOOKS` loads
+    /// (`grep -rl 'RaceTrait.<Race> Race Trait'` over
+    /// `core_rulebook,beastiary,advanced_race_guide,advanced_players_guide,
+    /// monster_codex,inner_sea_races,horror_adventures,bestiary_{2,3,5,6}`,
+    /// deliberately excluding `ultimate_campaign`'s own matching trait
+    /// files, which `RACE_CORPUS_BOOKS` never loads):
+    /// Dwarf 4, Elf 4, Gnome 4, Half-Elf 4, Half-Orc 4, Halfling 3, Human 4.
+    ///
+    /// **Rougarou remains the sole honest zero.** Cycle 1's own corpus-wide
+    /// scan proved no book anywhere grants a Rougarou Race Trait
+    /// (`race_resolver.rs`'s own `rougarou` chassis comment: no
+    /// `Rougarou_Replace*` flag is ever set `True` anywhere in the pinned
+    /// oracle), a hard impossibility of source data (`decisions.md §27b`),
     /// not a gap.
     #[test]
-    fn the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_with_real_grants() {
+    fn the_menu_command_carries_all_twentyone_adopted_race_options_twenty_with_real_grants() {
         let menu = menu();
         let keys: Vec<&str> = menu.adopted_race_options.iter().map(|o| o.key.as_str()).collect();
         assert_eq!(
@@ -2329,8 +2344,15 @@ mod tests {
             vec![
                 "Adopted Race ~ Catfolk",
                 "Adopted Race ~ Dhampir",
+                "Adopted Race ~ Dwarf",
+                "Adopted Race ~ Elf",
                 "Adopted Race ~ Fetchling",
+                "Adopted Race ~ Gnome",
                 "Adopted Race ~ Grippli",
+                "Adopted Race ~ Half-Elf",
+                "Adopted Race ~ Half-Orc",
+                "Adopted Race ~ Halfling",
+                "Adopted Race ~ Human",
                 "Adopted Race ~ Ifrit",
                 "Adopted Race ~ Oread",
                 "Adopted Race ~ Ratfolk",
@@ -2343,26 +2365,74 @@ mod tests {
                 "Adopted Race ~ Vishkanya",
             ]
         );
+        // (key, expected grant count, expected grant books) -- `None` book
+        // set means "every book named is legal", used only for the 7 CRB
+        // multi-member pools whose members are drawn from more than one
+        // book; the 13 single-member ISR pools keep the original exact
+        // `["ISR"]` pin.
+        const EXPECTED: &[(&str, usize)] = &[
+            ("Adopted Race ~ Catfolk", 1),
+            ("Adopted Race ~ Dhampir", 1),
+            ("Adopted Race ~ Dwarf", 4),
+            ("Adopted Race ~ Elf", 4),
+            ("Adopted Race ~ Fetchling", 1),
+            ("Adopted Race ~ Gnome", 4),
+            ("Adopted Race ~ Grippli", 1),
+            ("Adopted Race ~ Half-Elf", 4),
+            ("Adopted Race ~ Half-Orc", 4),
+            ("Adopted Race ~ Halfling", 3),
+            ("Adopted Race ~ Human", 4),
+            ("Adopted Race ~ Ifrit", 1),
+            ("Adopted Race ~ Oread", 1),
+            ("Adopted Race ~ Ratfolk", 1),
+            ("Adopted Race ~ Rougarou", 0),
+            ("Adopted Race ~ Skinwalker", 1),
+            ("Adopted Race ~ Suli", 1),
+            ("Adopted Race ~ Sylph", 1),
+            ("Adopted Race ~ Undine", 1),
+            ("Adopted Race ~ Vanara", 1),
+            ("Adopted Race ~ Vishkanya", 1),
+        ];
+        const CRB_MULTI_MEMBER: &[&str] = &[
+            "Adopted Race ~ Dwarf",
+            "Adopted Race ~ Elf",
+            "Adopted Race ~ Gnome",
+            "Adopted Race ~ Half-Elf",
+            "Adopted Race ~ Half-Orc",
+            "Adopted Race ~ Halfling",
+            "Adopted Race ~ Human",
+        ];
+        assert_eq!(EXPECTED.len(), 21, "every key above must have an entry here");
         for option in &menu.adopted_race_options {
             assert!(!option.malformed_choose_token, "{:?}: every real oracle row must parse cleanly", option.key);
-            if option.key == "Adopted Race ~ Rougarou" {
-                assert!(option.grants.is_empty(), "Rougarou's pool is genuinely, corpus-wide empty");
-                continue;
-            }
+            let (_, expected_count) = EXPECTED
+                .iter()
+                .find(|(key, _)| *key == option.key.as_str())
+                .unwrap_or_else(|| panic!("{:?}: no expected-count entry", option.key));
             assert_eq!(
                 option.grants.len(),
-                1,
-                "{:?}: exactly 1 real inner_sea_races pool member expected",
+                *expected_count,
+                "{:?}: expected {expected_count} real pool member(s)",
                 option.key
             );
-            let grant = &option.grants[0];
-            assert!(!grant.name.trim().is_empty(), "{:?}: grant must carry a real name", option.key);
-            assert_eq!(grant.book, "ISR", "{:?}: the real pool member's own book", option.key);
-            assert!(
-                grant.description.as_deref().is_some_and(|d| !d.trim().is_empty()),
-                "{:?}: grant must carry real corpus prose",
-                option.key
-            );
+            for grant in &option.grants {
+                assert!(!grant.name.trim().is_empty(), "{:?}: grant must carry a real name", option.key);
+                assert!(
+                    grant.description.as_deref().is_some_and(|d| !d.trim().is_empty()),
+                    "{:?}: grant must carry real corpus prose",
+                    option.key
+                );
+                if !CRB_MULTI_MEMBER.contains(&option.key.as_str()) {
+                    assert_eq!(grant.book, "ISR", "{:?}: the real pool member's own book", option.key);
+                } else {
+                    assert!(
+                        grant.book == "ISR" || grant.book == "APG",
+                        "{:?}: {:?} is a book RACE_CORPUS_BOOKS does not load for the CRB Race Trait pool",
+                        option.key,
+                        grant.book
+                    );
+                }
+            }
         }
         // The one real corpus prose sample, pinned by exact text so a future
         // regeneration that silently changed the content would be caught.
@@ -2376,6 +2446,6 @@ mod tests {
             )
         );
         let books: BTreeSet<&str> = menu.adopted_race_options.iter().map(|o| o.book.as_str()).collect();
-        assert_eq!(books, BTreeSet::from(["B2", "B3", "B5", "B6"]));
+        assert_eq!(books, BTreeSet::from(["B2", "B3", "B5", "B6", "CRB"]));
     }
 }
