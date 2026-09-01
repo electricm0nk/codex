@@ -121,7 +121,7 @@ unchanged.
 
 | # | Stage | Result | Detail |
 |---|---|---|---|
-| 1 | preflight-disk | PASS | run proceeded past it (a fail aborts immediately); 189G free / 81% used at check time |
+| 1 | preflight-disk | PASS | run proceeded past it (a fail aborts immediately); `df -h /` -> 189G free of 968G, 81% used at check time |
 | 2 | preflight-oracle | PASS | `pcgen-oracle: OK 7f818006e371188e5717fd18d74d18a420747fc6` |
 | 3 | oracle-pin-selftest | PASS | 11 passed / 0 failed |
 | 4 | producer-selftest | PASS | 21 tests OK |
@@ -140,7 +140,7 @@ unchanged.
 | 17 | supersession-gate-selftest | PASS | 16 tests OK |
 | 18 | shape-coverage-standing-gate-selftest | PASS | 20 tests OK |
 | 19 | shape-coverage-standing-gate | PASS | unclassified=0, piles reconcile True, no_record budget 0/26112 within baseline |
-| 20 | denominator-gate | **FAIL** | `files_checked=139 violations=2`, both NEW since wave-23's 0-violation close, both in `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_wave26_cycle_receipt.md` lines 138 & 153 (a "99% CPU" figure without a same-line re-derive command); wave-26 lane B's own content, untouched since, not this lane's territory |
+| 20 | denominator-gate | **FAIL** | `files_checked=139 violations=2` (out of 139 files checked), both NEW since wave-23's 0-violation close, both in `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_wave26_cycle_receipt.md` lines 138 & 153 -- a CPU-utilization figure stated without a same-line re-derive command; wave-26 lane B's own content, untouched since, not this lane's territory |
 | 21 | figure-provenance | **FAIL** | `files_checked=69 figures_examined=119 violations=1`, pre-existing at `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave24_cycle_receipt.md:144` (unsourced `(447,1,130)` tuple), unchanged since wave 24/25 (already named there) |
 | 22 | pi-sweep | PASS | CLEAN, 11 hits over `rules_tables`, 11 baseline rows, 0 unbaselined |
 | 23 | declared-pi-audit | PASS | CLEAN, no shipped record contradicts its own corpus row's PI declaration |
