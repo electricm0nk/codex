@@ -167,18 +167,25 @@ fn every_catalog_row_off_the_wizard_list_is_refused() {
 
     assert_eq!(
         catalog.len(),
-        2113,
+        2127,
         "the desktop Add Spell picker serves this many records"
     );
     assert_eq!(
         off_list.len(),
-        1369 + 45 + 57,
+        1369 + 45 + 57 + 14,
         "this many of them are on no wizard list in any ingested book -- SD-31 wave-29 \
          (`lane5-book-onboard` lane) added `adventurers_guide`'s 45 spells, none of which are \
          on any wizard list in any ingested book (re-derived, not assumed); SD-32 Gate 0 \
          book-onboarding precondition (`gate-0-book-onboarding-precondition`, AT-32-G0-003) \
          added inner_sea_faiths/inner_sea_magic/inner_sea_temples' 57 spells (2 + 34 + 21), \
-         none of which are on any wizard list in any ingested book either (re-derived)"
+         none of which are on any wizard list in any ingested book either (re-derived); \
+         `ea2a72dd64` (SD-32 `decisions.md §24` PI-name-blocked spell close, 2026-08-23) then \
+         added 14 more Codex-generated-neutral-name spells across `inner_sea_gods` (4), \
+         `adventurers_guide` (4), `inner_sea_faiths` (1) and `inner_sea_magic` (5) -- re-derived \
+         per-book via `git show a50b7da04c:<path> | grep -c 'SpellListEntry {{'` against the \
+         live file, none of which are on any wizard list either (this test's own off_list \
+         filter, re-run, confirms all 14 land in off_list -- the +14/+14 delta matching exactly \
+         is not assumed)"
     );
 
     // Sampling the whole 543 through `compute_pilot_base_chassis` would be
