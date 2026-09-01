@@ -6769,7 +6769,7 @@ mod tests {
     /// and `monsters` kinds, corpus-wide -- not scoped to the hand-modelled
     /// subsets `RaceId::ALL` (7 CRB races) / `beastiary1::MonsterId::ALL`
     /// (46 Bestiary-1 stat blocks) that a prior wave's own unit tests
-    /// covered (`SD-31-corpus-closure-grind/todo/sweeps.md` S1/S2,
+    /// covered (`SD-31-corpus-closure-grind/`, tracked-sweeps list `sweeps.md`, S1/S2,
     /// `artifacts/MEASURE-TWICE.md` T1: "Race/monster: partial only ...
     /// the other 280 chassis-served monster entries and 31 non-CRB races
     /// were never checked for this shape").

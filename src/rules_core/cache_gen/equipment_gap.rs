@@ -1516,7 +1516,7 @@ mod tests {
     /// collision shape and does not silently re-point any other already-
     /// correct citation. Requires a real PCGen oracle checkout
     /// (`PCGEN_CORPUS_ROOT`); `#[ignore]`d by default like this crate's
-    /// other oracle-backed audits (`sd24_equipment_coverage_audit`, etc.),
+    /// other oracle-backed audits (`tests/sd24_equipment_coverage_audit.rs`, etc.),
     /// run explicitly:
     /// `PCGEN_CORPUS_ROOT=... cargo test --locked --lib
     /// equipment_gap::tests::find_citation_full_population_regression -- --ignored --nocapture`

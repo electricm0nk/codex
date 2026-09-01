@@ -442,7 +442,8 @@ fn load_raw_grant_facts() -> Vec<RawGrantFact> {
 /// disagreeing pairs are dropped rather than resolved by picking one side.
 ///
 /// **T7/D12 -- shallow, single-hop `granted_via_archetype` traversal
-/// (`docs/release/SD-31-corpus-closure-grind/todo/defects.md` D12).**
+/// (`docs/release/SD-31-corpus-closure-grind/`, tracked-defects list
+/// `defects.md`, item D12).**
 /// `granted_via_archetype` (`load_raw_grant_facts`'s own filter, above) reads
 /// only the ONE row that carries the `ABILITY:` grant token's OWN `CATEGORY`
 /// field -- a single hop. It cannot see a grant token nested INSIDE another
@@ -1971,8 +1972,8 @@ mod tests {
         }
     }
 
-    /// T7/D12 (`docs/release/SD-31-corpus-closure-grind/todo/defects.md` D12,
-    /// `docs/release/SD-32-compute-library-and-cause-closure` card 11):
+    /// T7/D12 (`docs/release/SD-31-corpus-closure-grind/`, tracked-defects list
+    /// `defects.md`, item D12; `docs/release/SD-32-compute-library-and-cause-closure` card 11):
     /// `("gunslinger", "Gunslinger ~ Gun Training")` is the one live,
     /// reproducible D12 pair with NO cross-book level conflict at all (the
     /// other three named pairs are already caught by

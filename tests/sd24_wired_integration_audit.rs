@@ -135,6 +135,12 @@ fn no_zero_tolerance_forbidden_tokens_in_shipping_source() {
     );
     let is_plant_growth_full_spell_text =
         |line: &str| line.contains("creatures must hack or force a way through");
+    // Second named exception, same shape (real PF1 corpus text using "hack" as an ordinary
+    // English verb, not a stub marker): Tophet (Bestiary 3)'s swallow-whole ability text --
+    // "a creature can attempt to hack or smash its way out as normal". Matched by the
+    // record's own distinctive phrase, same discipline as the Plant Growth exception above.
+    let is_tophet_swallow_whole_full_text =
+        |line: &str| line.contains("A creature can attempt to hack or smash its way out as normal");
     // Registry entry 0002 (`docs/governance/wired-integration-stubs-registry.md`):
     // `StubAdapter`'s operator-approved "Would render for system ...; not
     // yet implemented" placeholder message, widened (criterion 3.4) to the
@@ -162,6 +168,7 @@ fn no_zero_tolerance_forbidden_tokens_in_shipping_source() {
         .into_iter()
         .filter(|line| {
             !is_plant_growth_full_spell_text(line)
+                && !is_tophet_swallow_whole_full_text(line)
                 && !is_registry_0002_stub_adapter_exception(line)
         })
         .collect();
@@ -261,6 +268,31 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
         in_scoped_path && line.contains("p.xx")
     };
 
+    // Bucket F (AT-34-E3-001 fallout, gate-remediation cycle, 2026-09-01): five string-
+    // literal (not `//`-comment) hits, all reviewed this cycle and confirmed non-stub --
+    // opposite-of-a-stub anti-fabrication assertion text and real corpus-shape description,
+    // the same discipline as buckets D/E, matched by each hit's own distinctive phrase so no
+    // *different* future stub can silently ride along:
+    // - `ingest_race_traits.rs`: a test assertion naming the real, corpus-confirmed "Human
+    //   Ethnicity placeholder row" shape (the `human_ethnicity_{none,unknown}.json` records).
+    // - `v06_work_inventory.rs`: a diagnostic panic message naming the real
+    //   "vacuous-placeholder" atlas rung (`decisions.md §2`'s bucket-U sub-cause), not an
+    //   unfinished-work marker.
+    // - `class_feature_pool_catalog.rs` (4 hits): PCGen's own CHOOSE-menu "no selection"
+    //   placeholder rows' data description, plus the anti-fabrication assertion guarding
+    //   their structural shape -- both describe upstream PCGen placeholder data, not a stub
+    //   in this codebase.
+    // - `race_resolver.rs`: an anti-fabrication assertion ("must carry real corpus prose,
+    //   not a fabricated placeholder") -- the opposite of the forbidden pattern, same as
+    //   bucket D.
+    let is_reviewed_placeholder_shape_text = |line: &str| {
+        line.contains("Human Ethnicity placeholder row is not dropped")
+            || line.contains("expected the vacuous-placeholder rung")
+            || line.contains("PCGen's own CHOOSE-menu \"no selection\" placeholder row")
+            || line.contains("carries a token beyond the placeholder's structural KEY/CATEGORY/TYPE")
+            || line.contains("must carry real corpus prose, not a fabricated placeholder")
+    };
+
     let unexplained: Vec<&String> = hits
         .iter()
         .filter(|line| {
@@ -269,6 +301,7 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
                 && !is_reviewed_comment_prose(line)
                 && !is_anti_fabrication_explanation_text(line)
                 && !is_pcgen_pxx_source_page_token(line)
+                && !is_reviewed_placeholder_shape_text(line)
         })
         .collect();
 
