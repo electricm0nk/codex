@@ -6215,6 +6215,12 @@ fn app_race_corpus_books(repo_root: &Path) -> Vec<String> {
 /// display name is not unique corpus-wide — the name-coincidence defect
 /// `modelled_race_of_race_trait` exists to close is the proof — whereas the
 /// `.lst` file and line the ingest records verbatim is an identity.
+// Used only from this file's own `#[cfg(test)]` modules (`race_trait_grounding_tests`,
+// `rule_set_mapping_tests`). `cargo clippy --all-targets` builds the bin WITHOUT tests as one
+// of its targets, so in that build the function is genuinely unreachable and clippy is right to
+// say so. Scoped to test builds rather than deleted -- AT-34-E6-001's clippy lane deleted two
+// genuinely-dead siblings, but deleting these two would break their live callers.
+#[cfg(test)]
 fn probe_reachable_race_traits(repo_root: &Path) -> BTreeMap<(String, usize), String> {
     probe_race_trait_corpus(repo_root).reachable
 }
@@ -6617,6 +6623,12 @@ mod race_trait_creation_chassis_consumer_tests {
 /// stat effect. A key from a book whose corpus is not loaded resolves to
 /// nothing and stays unwired, which is the honest result rather than a
 /// promotion.
+// Used only from this file's own `#[cfg(test)]` modules (`race_trait_grounding_tests`,
+// `rule_set_mapping_tests`). `cargo clippy --all-targets` builds the bin WITHOUT tests as one
+// of its targets, so in that build the function is genuinely unreachable and clippy is right to
+// say so. Scoped to test builds rather than deleted -- AT-34-E6-001's clippy lane deleted two
+// genuinely-dead siblings, but deleting these two would break their live callers.
+#[cfg(test)]
 fn probe_equipment_key_universe() -> BTreeSet<&'static str> {
     equipment_resolver::equipment_catalog_rows()
         .iter()
