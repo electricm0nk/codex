@@ -68,6 +68,8 @@ KNOWN_WAVES = {
                               "the 14 red verify.sh stages the fable review found"),
     "wf_31807799-a21": ("24", "gate 14 red -> 5 after wave 23; A takes root-full + the 124-row "
                               "NAMEISPI policy rows (masked, not a leak), B desktop/reach/site, C clippy"),
+    "wf_6807ac3c-039": ("25", "last 4 data/corpus mechanisms of root-full; C re-measures the "
+                              "whole gate itself -- the 14-red figure is several waves stale"),
 }
 
 
