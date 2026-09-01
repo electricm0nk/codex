@@ -1,0 +1,1467 @@
+{
+ "generated": "2026-08-31",
+ "head": "920cb53307",
+ "inventory": "docs/work-inventory.json regenerated 2026-09-01T00:01:15Z (commit 2026-08-31 20:15 -0400)",
+ "population": {
+  "non_done_35_books": 22369,
+  "joined_to_corpus": 22366,
+  "unjoined": 3,
+  "join_note": "corpus dir 'beastiary' aliased to inventory book 'bestiary'; 3 spells have no corpus record",
+  "buckets_joined": {
+   "B": 11296,
+   "C": 3981,
+   "X": 53,
+   "V": 175,
+   "D": 2587,
+   "M": 3635,
+   "U": 171,
+   "Z": 19,
+   "A": 449
+  }
+ },
+ "vocabulary": {
+  "distinct_top_level_types": 189,
+  "token_instances": 181274,
+  "zero_token_units": 921,
+  "instance_coverage_thresholds": {
+   "0.5": 6,
+   "0.8": 15,
+   "0.9": 28,
+   "0.95": 44,
+   "0.99": 84
+  },
+  "unit_coverage_thresholds": {
+   "0.5": 21,
+   "0.8": 49,
+   "0.9": 68,
+   "0.95": 87,
+   "0.99": 128
+  },
+  "class_breakdown": {
+   "other": {
+    "instances": 2171,
+    "types": 33
+   },
+   "metadata": {
+    "instances": 78987,
+    "types": 22
+   },
+   "bonus/var": {
+    "instances": 34780,
+    "types": 6
+   },
+   "grant/structural": {
+    "instances": 18641,
+    "types": 24
+   },
+   "prereq": {
+    "instances": 14734,
+    "types": 69
+   },
+   "display": {
+    "instances": 18602,
+    "types": 5
+   },
+   "spell-grant": {
+    "instances": 3543,
+    "types": 4
+   },
+   "choice": {
+    "instances": 1643,
+    "types": 3
+   },
+   "equip-data": {
+    "instances": 2157,
+    "types": 11
+   },
+   "spell-data": {
+    "instances": 6016,
+    "types": 12
+   }
+  },
+  "vocab": [
+   {
+    "type": "BONUS",
+    "instances": 21810,
+    "units": 8660,
+    "class": "bonus/var",
+    "rules_core_files": 131
+   },
+   {
+    "type": "TYPE",
+    "instances": 17910,
+    "units": 17515,
+    "class": "metadata",
+    "rules_core_files": 147
+   },
+   {
+    "type": "CATEGORY",
+    "instances": 16777,
+    "units": 16777,
+    "class": "metadata",
+    "rules_core_files": 80
+   },
+   {
+    "type": "DESC",
+    "instances": 14985,
+    "units": 11815,
+    "class": "display",
+    "rules_core_files": 138
+   },
+   {
+    "type": "KEY",
+    "instances": 14854,
+    "units": 14854,
+    "class": "metadata",
+    "rules_core_files": 139
+   },
+   {
+    "type": "ABILITY",
+    "instances": 12484,
+    "units": 5728,
+    "class": "grant/structural",
+    "rules_core_files": 111
+   },
+   {
+    "type": "SOURCEPAGE",
+    "instances": 12225,
+    "units": 12192,
+    "class": "metadata",
+    "rules_core_files": 31
+   },
+   {
+    "type": "DEFINE",
+    "instances": 9459,
+    "units": 4236,
+    "class": "bonus/var",
+    "rules_core_files": 35
+   },
+   {
+    "type": "FACT",
+    "instances": 8635,
+    "units": 1630,
+    "class": "metadata",
+    "rules_core_files": 32
+   },
+   {
+    "type": "VISIBLE",
+    "instances": 4312,
+    "units": 4290,
+    "class": "metadata",
+    "rules_core_files": 31
+   },
+   {
+    "type": "PREMULT",
+    "instances": 3025,
+    "units": 2398,
+    "class": "prereq",
+    "rules_core_files": 38
+   },
+   {
+    "type": "ASPECT",
+    "instances": 2996,
+    "units": 1872,
+    "class": "display",
+    "rules_core_files": 10
+   },
+   {
+    "type": "PREVARGTEQ",
+    "instances": 2823,
+    "units": 2593,
+    "class": "prereq",
+    "rules_core_files": 52
+   },
+   {
+    "type": "PREABILITY",
+    "instances": 2467,
+    "units": 2364,
+    "class": "prereq",
+    "rules_core_files": 59
+   },
+   {
+    "type": "COST",
+    "instances": 1995,
+    "units": 1981,
+    "class": "equip-data",
+    "rules_core_files": 40
+   },
+   {
+    "type": "SPELLKNOWN",
+    "instances": 1956,
+    "units": 1001,
+    "class": "spell-grant",
+    "rules_core_files": 7
+   },
+   {
+    "type": "CLASSES",
+    "instances": 1621,
+    "units": 1238,
+    "class": "grant/structural",
+    "rules_core_files": 58
+   },
+   {
+    "type": "MULT",
+    "instances": 1582,
+    "units": 1581,
+    "class": "bonus/var",
+    "rules_core_files": 50
+   },
+   {
+    "type": "CHOOSE",
+    "instances": 1533,
+    "units": 1532,
+    "class": "choice",
+    "rules_core_files": 11
+   },
+   {
+    "type": "!PREABILITY",
+    "instances": 1507,
+    "units": 1470,
+    "class": "prereq",
+    "rules_core_files": 26
+   },
+   {
+    "type": "STACK",
+    "instances": 1313,
+    "units": 1313,
+    "class": "bonus/var",
+    "rules_core_files": 10
+   },
+   {
+    "type": "PRECLASS",
+    "instances": 1204,
+    "units": 1186,
+    "class": "prereq",
+    "rules_core_files": 36
+   },
+   {
+    "type": "SPELLS",
+    "instances": 1107,
+    "units": 609,
+    "class": "spell-grant",
+    "rules_core_files": 36
+   },
+   {
+    "type": "FACTSET",
+    "instances": 1055,
+    "units": 463,
+    "class": "metadata",
+    "rules_core_files": 2
+   },
+   {
+    "type": "NATURALATTACKS",
+    "instances": 1033,
+    "units": 978,
+    "class": "grant/structural",
+    "rules_core_files": 18
+   },
+   {
+    "type": "NAMEISPI",
+    "instances": 938,
+    "units": 938,
+    "class": "metadata",
+    "rules_core_files": 26
+   },
+   {
+    "type": "PRESIZEEQ",
+    "instances": 885,
+    "units": 885,
+    "class": "prereq",
+    "rules_core_files": 6
+   },
+   {
+    "type": "SCHOOL",
+    "instances": 697,
+    "units": 692,
+    "class": "spell-data",
+    "rules_core_files": 23
+   },
+   {
+    "type": "CASTTIME",
+    "instances": 676,
+    "units": 676,
+    "class": "spell-data",
+    "rules_core_files": 0
+   },
+   {
+    "type": "RANGE",
+    "instances": 662,
+    "units": 662,
+    "class": "spell-data",
+    "rules_core_files": 22
+   },
+   {
+    "type": "DURATION",
+    "instances": 661,
+    "units": 661,
+    "class": "spell-data",
+    "rules_core_files": 7
+   },
+   {
+    "type": "TARGETAREA",
+    "instances": 659,
+    "units": 659,
+    "class": "spell-data",
+    "rules_core_files": 2
+   },
+   {
+    "type": "COMPS",
+    "instances": 648,
+    "units": 648,
+    "class": "spell-data",
+    "rules_core_files": 0
+   },
+   {
+    "type": "SAVEINFO",
+    "instances": 631,
+    "units": 631,
+    "class": "spell-data",
+    "rules_core_files": 0
+   },
+   {
+    "type": "SPELLRES",
+    "instances": 631,
+    "units": 631,
+    "class": "spell-data",
+    "rules_core_files": 0
+   },
+   {
+    "type": "OUTPUTNAME",
+    "instances": 587,
+    "units": 586,
+    "class": "metadata",
+    "rules_core_files": 9
+   },
+   {
+    "type": "DESCISPI",
+    "instances": 565,
+    "units": 564,
+    "class": "metadata",
+    "rules_core_files": 12
+   },
+   {
+    "type": "TEMPBONUS",
+    "instances": 546,
+    "units": 353,
+    "class": "bonus/var",
+    "rules_core_files": 8
+   },
+   {
+    "type": "PREFACT",
+    "instances": 504,
+    "units": 504,
+    "class": "prereq",
+    "rules_core_files": 14
+   },
+   {
+    "type": "BENEFIT",
+    "instances": 483,
+    "units": 457,
+    "class": "display",
+    "rules_core_files": 22
+   },
+   {
+    "type": "SPELLLEVEL",
+    "instances": 479,
+    "units": 333,
+    "class": "spell-grant",
+    "rules_core_files": 4
+   },
+   {
+    "type": "DOMAINS",
+    "instances": 465,
+    "units": 446,
+    "class": "grant/structural",
+    "rules_core_files": 29
+   },
+   {
+    "type": "TEMPLATE",
+    "instances": 433,
+    "units": 420,
+    "class": "grant/structural",
+    "rules_core_files": 18
+   },
+   {
+    "type": "CSKILL",
+    "instances": 425,
+    "units": 420,
+    "class": "grant/structural",
+    "rules_core_files": 8
+   },
+   {
+    "type": "SORTKEY",
+    "instances": 419,
+    "units": 419,
+    "class": "metadata",
+    "rules_core_files": 4
+   },
+   {
+    "type": "DEITYWEAP",
+    "instances": 414,
+    "units": 414,
+    "class": "grant/structural",
+    "rules_core_files": 3
+   },
+   {
+    "type": "ALIGN",
+    "instances": 414,
+    "units": 414,
+    "class": "grant/structural",
+    "rules_core_files": 14
+   },
+   {
+    "type": "PREVARLT",
+    "instances": 375,
+    "units": 374,
+    "class": "prereq",
+    "rules_core_files": 29
+   },
+   {
+    "type": "DESCRIPTOR",
+    "instances": 361,
+    "units": 361,
+    "class": "spell-data",
+    "rules_core_files": 6
+   },
+   {
+    "type": "HD",
+    "instances": 336,
+    "units": 159,
+    "class": "other",
+    "rules_core_files": 67
+   },
+   {
+    "type": "AUTO",
+    "instances": 245,
+    "units": 227,
+    "class": "grant/structural",
+    "rules_core_files": 46
+   },
+   {
+    "type": "PRESTAT",
+    "instances": 240,
+    "units": 240,
+    "class": "prereq",
+    "rules_core_files": 14
+   },
+   {
+    "type": "PREVAREQ",
+    "instances": 235,
+    "units": 235,
+    "class": "prereq",
+    "rules_core_files": 44
+   },
+   {
+    "type": "SITUATION",
+    "instances": 213,
+    "units": 182,
+    "class": "other",
+    "rules_core_files": 9
+   },
+   {
+    "type": "RACESUBTYPE",
+    "instances": 207,
+    "units": 207,
+    "class": "grant/structural",
+    "rules_core_files": 20
+   },
+   {
+    "type": "ITEM",
+    "instances": 201,
+    "units": 201,
+    "class": "spell-data",
+    "rules_core_files": 24
+   },
+   {
+    "type": "EQMOD",
+    "instances": 189,
+    "units": 123,
+    "class": "other",
+    "rules_core_files": 10
+   },
+   {
+    "type": "SPROP",
+    "instances": 179,
+    "units": 167,
+    "class": "other",
+    "rules_core_files": 26
+   },
+   {
+    "type": "SUBSCHOOL",
+    "instances": 174,
+    "units": 174,
+    "class": "spell-data",
+    "rules_core_files": 4
+   },
+   {
+    "type": "COMPANIONLIST",
+    "instances": 166,
+    "units": 149,
+    "class": "other",
+    "rules_core_files": 3
+   },
+   {
+    "type": "SOURCELINK",
+    "instances": 166,
+    "units": 166,
+    "class": "other",
+    "rules_core_files": 1
+   },
+   {
+    "type": "SOURCELONG",
+    "instances": 156,
+    "units": 156,
+    "class": "metadata",
+    "rules_core_files": 15
+   },
+   {
+    "type": "SOURCESHORT",
+    "instances": 156,
+    "units": 156,
+    "class": "metadata",
+    "rules_core_files": 17
+   },
+   {
+    "type": "PRETYPE",
+    "instances": 150,
+    "units": 136,
+    "class": "prereq",
+    "rules_core_files": 6
+   },
+   {
+    "type": "SUBRACE",
+    "instances": 146,
+    "units": 146,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PRESKILL",
+    "instances": 145,
+    "units": 141,
+    "class": "prereq",
+    "rules_core_files": 24
+   },
+   {
+    "type": "SERVESAS",
+    "instances": 139,
+    "units": 135,
+    "class": "other",
+    "rules_core_files": 2
+   },
+   {
+    "type": "PRETEXT",
+    "instances": 139,
+    "units": 139,
+    "class": "prereq",
+    "rules_core_files": 17
+   },
+   {
+    "type": "FOLLOWERS",
+    "instances": 136,
+    "units": 136,
+    "class": "other",
+    "rules_core_files": 3
+   },
+   {
+    "type": "MAXLEVEL",
+    "instances": 134,
+    "units": 134,
+    "class": "metadata",
+    "rules_core_files": 33
+   },
+   {
+    "type": "MOVE",
+    "instances": 132,
+    "units": 132,
+    "class": "grant/structural",
+    "rules_core_files": 36
+   },
+   {
+    "type": "!PREFACT",
+    "instances": 125,
+    "units": 125,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "DR",
+    "instances": 115,
+    "units": 108,
+    "class": "grant/structural",
+    "rules_core_files": 74
+   },
+   {
+    "type": "PREALIGN",
+    "instances": 112,
+    "units": 111,
+    "class": "prereq",
+    "rules_core_files": 14
+   },
+   {
+    "type": "RACETYPE",
+    "instances": 111,
+    "units": 111,
+    "class": "grant/structural",
+    "rules_core_files": 16
+   },
+   {
+    "type": "TEMPVALUE",
+    "instances": 107,
+    "units": 107,
+    "class": "display",
+    "rules_core_files": 1
+   },
+   {
+    "type": "KIT",
+    "instances": 106,
+    "units": 106,
+    "class": "metadata",
+    "rules_core_files": 2
+   },
+   {
+    "type": "PRERACE",
+    "instances": 104,
+    "units": 104,
+    "class": "prereq",
+    "rules_core_files": 22
+   },
+   {
+    "type": "LANGBONUS",
+    "instances": 97,
+    "units": 97,
+    "class": "grant/structural",
+    "rules_core_files": 0
+   },
+   {
+    "type": "ITYPE",
+    "instances": 97,
+    "units": 97,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "LEGS",
+    "instances": 87,
+    "units": 87,
+    "class": "grant/structural",
+    "rules_core_files": 3
+   },
+   {
+    "type": "VISION",
+    "instances": 78,
+    "units": 77,
+    "class": "grant/structural",
+    "rules_core_files": 10
+   },
+   {
+    "type": "CR",
+    "instances": 78,
+    "units": 78,
+    "class": "other",
+    "rules_core_files": 182
+   },
+   {
+    "type": "SELECT",
+    "instances": 70,
+    "units": 69,
+    "class": "choice",
+    "rules_core_files": 11
+   },
+   {
+    "type": "DEFINESTAT",
+    "instances": 70,
+    "units": 36,
+    "class": "bonus/var",
+    "rules_core_files": 0
+   },
+   {
+    "type": "!PRETYPE",
+    "instances": 68,
+    "units": 58,
+    "class": "prereq",
+    "rules_core_files": 2
+   },
+   {
+    "type": "PRETEMPLATE",
+    "instances": 65,
+    "units": 65,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "PREVARGT",
+    "instances": 64,
+    "units": 64,
+    "class": "prereq",
+    "rules_core_files": 55
+   },
+   {
+    "type": "UDAM",
+    "instances": 59,
+    "units": 59,
+    "class": "grant/structural",
+    "rules_core_files": 2
+   },
+   {
+    "type": "UMULT",
+    "instances": 59,
+    "units": 59,
+    "class": "grant/structural",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PRETOTALAB",
+    "instances": 58,
+    "units": 58,
+    "class": "prereq",
+    "rules_core_files": 18
+   },
+   {
+    "type": "NAMEOPT",
+    "instances": 57,
+    "units": 57,
+    "class": "other",
+    "rules_core_files": 2
+   },
+   {
+    "type": "HANDS",
+    "instances": 54,
+    "units": 54,
+    "class": "grant/structural",
+    "rules_core_files": 6
+   },
+   {
+    "type": "SIZE",
+    "instances": 52,
+    "units": 52,
+    "class": "equip-data",
+    "rules_core_files": 48
+   },
+   {
+    "type": "PREDEITY",
+    "instances": 50,
+    "units": 50,
+    "class": "prereq",
+    "rules_core_files": 11
+   },
+   {
+    "type": "REACH",
+    "instances": 49,
+    "units": 49,
+    "class": "equip-data",
+    "rules_core_files": 45
+   },
+   {
+    "type": "!PRECHARACTERTYPE",
+    "instances": 45,
+    "units": 45,
+    "class": "prereq",
+    "rules_core_files": 1
+   },
+   {
+    "type": "STARTFEATS",
+    "instances": 45,
+    "units": 45,
+    "class": "other",
+    "rules_core_files": 1
+   },
+   {
+    "type": "SR",
+    "instances": 42,
+    "units": 42,
+    "class": "grant/structural",
+    "rules_core_files": 35
+   },
+   {
+    "type": "INFO",
+    "instances": 41,
+    "units": 17,
+    "class": "metadata",
+    "rules_core_files": 1
+   },
+   {
+    "type": "REGION",
+    "instances": 41,
+    "units": 41,
+    "class": "metadata",
+    "rules_core_files": 0
+   },
+   {
+    "type": "ADD",
+    "instances": 40,
+    "units": 38,
+    "class": "choice",
+    "rules_core_files": 12
+   },
+   {
+    "type": "PREDEITYDOMAIN",
+    "instances": 37,
+    "units": 37,
+    "class": "prereq",
+    "rules_core_files": 1
+   },
+   {
+    "type": "MONSTERCLASS",
+    "instances": 32,
+    "units": 32,
+    "class": "grant/structural",
+    "rules_core_files": 20
+   },
+   {
+    "type": "TEMPDESC",
+    "instances": 31,
+    "units": 31,
+    "class": "display",
+    "rules_core_files": 0
+   },
+   {
+    "type": "KEYSTAT",
+    "instances": 31,
+    "units": 31,
+    "class": "other",
+    "rules_core_files": 2
+   },
+   {
+    "type": "USEUNTRAINED",
+    "instances": 31,
+    "units": 31,
+    "class": "other",
+    "rules_core_files": 1
+   },
+   {
+    "type": "SOURCEWEB",
+    "instances": 27,
+    "units": 27,
+    "class": "metadata",
+    "rules_core_files": 0
+   },
+   {
+    "type": "MOVECLONE",
+    "instances": 24,
+    "units": 24,
+    "class": "grant/structural",
+    "rules_core_files": 0
+   },
+   {
+    "type": "SOURCEDATE",
+    "instances": 23,
+    "units": 23,
+    "class": "metadata",
+    "rules_core_files": 0
+   },
+   {
+    "type": "HITDIE",
+    "instances": 23,
+    "units": 23,
+    "class": "metadata",
+    "rules_core_files": 3
+   },
+   {
+    "type": "ADDLEVEL",
+    "instances": 22,
+    "units": 22,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "MONCSKILL",
+    "instances": 21,
+    "units": 21,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PREVARLTEQ",
+    "instances": 20,
+    "units": 20,
+    "class": "prereq",
+    "rules_core_files": 8
+   },
+   {
+    "type": "!PRERACE",
+    "instances": 20,
+    "units": 20,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "!PRECAMPAIGN",
+    "instances": 20,
+    "units": 20,
+    "class": "prereq",
+    "rules_core_files": 1
+   },
+   {
+    "type": "PLUS",
+    "instances": 19,
+    "units": 19,
+    "class": "other",
+    "rules_core_files": 22
+   },
+   {
+    "type": "REPLACES",
+    "instances": 19,
+    "units": 19,
+    "class": "other",
+    "rules_core_files": 2
+   },
+   {
+    "type": "PREBASESIZEGTEQ",
+    "instances": 19,
+    "units": 19,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "!PRECLASS",
+    "instances": 18,
+    "units": 18,
+    "class": "prereq",
+    "rules_core_files": 2
+   },
+   {
+    "type": "PRESUBCLASS",
+    "instances": 17,
+    "units": 17,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "BASEITEM",
+    "instances": 17,
+    "units": 17,
+    "class": "equip-data",
+    "rules_core_files": 3
+   },
+   {
+    "type": "PREBASESIZEEQ",
+    "instances": 16,
+    "units": 16,
+    "class": "prereq",
+    "rules_core_files": 1
+   },
+   {
+    "type": "PRELEVEL",
+    "instances": 15,
+    "units": 15,
+    "class": "prereq",
+    "rules_core_files": 18
+   },
+   {
+    "type": "VARIANTS",
+    "instances": 15,
+    "units": 15,
+    "class": "spell-data",
+    "rules_core_files": 1
+   },
+   {
+    "type": "!PREALIGN",
+    "instances": 12,
+    "units": 12,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "UNENCUMBEREDMOVE",
+    "instances": 12,
+    "units": 12,
+    "class": "other",
+    "rules_core_files": 1
+   },
+   {
+    "type": "REMOVABLE",
+    "instances": 12,
+    "units": 12,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "WT",
+    "instances": 12,
+    "units": 12,
+    "class": "equip-data",
+    "rules_core_files": 38
+   },
+   {
+    "type": "PREWEAPONPROF",
+    "instances": 11,
+    "units": 11,
+    "class": "prereq",
+    "rules_core_files": 6
+   },
+   {
+    "type": "PRESPELLTYPE",
+    "instances": 10,
+    "units": 10,
+    "class": "prereq",
+    "rules_core_files": 7
+   },
+   {
+    "type": "!PRESTAT",
+    "instances": 10,
+    "units": 10,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PRESIZELTEQ",
+    "instances": 9,
+    "units": 9,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "LEVELSPERFEAT",
+    "instances": 9,
+    "units": 9,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PRECSKILL",
+    "instances": 9,
+    "units": 9,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PREDEITYALIGN",
+    "instances": 8,
+    "units": 8,
+    "class": "prereq",
+    "rules_core_files": 4
+   },
+   {
+    "type": "PRESPELL",
+    "instances": 8,
+    "units": 8,
+    "class": "prereq",
+    "rules_core_files": 15
+   },
+   {
+    "type": "PRESIZEGTEQ",
+    "instances": 8,
+    "units": 8,
+    "class": "prereq",
+    "rules_core_files": 3
+   },
+   {
+    "type": "CCSKILL",
+    "instances": 8,
+    "units": 8,
+    "class": "grant/structural",
+    "rules_core_files": 0
+   },
+   {
+    "type": "REMOVE",
+    "instances": 7,
+    "units": 7,
+    "class": "other",
+    "rules_core_files": 6
+   },
+   {
+    "type": "PRERULE",
+    "instances": 7,
+    "units": 7,
+    "class": "prereq",
+    "rules_core_files": 16
+   },
+   {
+    "type": "PREMOVE",
+    "instances": 7,
+    "units": 7,
+    "class": "prereq",
+    "rules_core_files": 4
+   },
+   {
+    "type": "QUALIFY",
+    "instances": 7,
+    "units": 5,
+    "class": "other",
+    "rules_core_files": 2
+   },
+   {
+    "type": "ALTEQMOD",
+    "instances": 7,
+    "units": 5,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PROFICIENCY",
+    "instances": 7,
+    "units": 7,
+    "class": "equip-data",
+    "rules_core_files": 13
+   },
+   {
+    "type": "CRITMULT",
+    "instances": 7,
+    "units": 7,
+    "class": "equip-data",
+    "rules_core_files": 13
+   },
+   {
+    "type": "CRITRANGE",
+    "instances": 7,
+    "units": 7,
+    "class": "equip-data",
+    "rules_core_files": 10
+   },
+   {
+    "type": "DAMAGE",
+    "instances": 7,
+    "units": 7,
+    "class": "equip-data",
+    "rules_core_files": 25
+   },
+   {
+    "type": "PREVISION",
+    "instances": 6,
+    "units": 6,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "PREBASESIZELT",
+    "instances": 6,
+    "units": 6,
+    "class": "prereq",
+    "rules_core_files": 1
+   },
+   {
+    "type": "ASSIGNTOALL",
+    "instances": 6,
+    "units": 6,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "WIELD",
+    "instances": 6,
+    "units": 6,
+    "class": "other",
+    "rules_core_files": 4
+   },
+   {
+    "type": "PRESPELLCAST",
+    "instances": 5,
+    "units": 5,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "PREDOMAIN",
+    "instances": 5,
+    "units": 5,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "FORMATCAT",
+    "instances": 5,
+    "units": 5,
+    "class": "other",
+    "rules_core_files": 2
+   },
+   {
+    "type": "!PREVISION",
+    "instances": 4,
+    "units": 4,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "!PRETEMPLATE",
+    "instances": 4,
+    "units": 4,
+    "class": "prereq",
+    "rules_core_files": 1
+   },
+   {
+    "type": "!PREMOVE",
+    "instances": 4,
+    "units": 4,
+    "class": "prereq",
+    "rules_core_files": 1
+   },
+   {
+    "type": "PREVARNEQ",
+    "instances": 4,
+    "units": 4,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "ROLE",
+    "instances": 3,
+    "units": 3,
+    "class": "other",
+    "rules_core_files": 1
+   },
+   {
+    "type": "ADDSPELLLEVEL",
+    "instances": 3,
+    "units": 3,
+    "class": "other",
+    "rules_core_files": 1
+   },
+   {
+    "type": "PREHD",
+    "instances": 3,
+    "units": 3,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "CONTAINS",
+    "instances": 3,
+    "units": 3,
+    "class": "equip-data",
+    "rules_core_files": 1
+   },
+   {
+    "type": "PRECHECKBASE",
+    "instances": 2,
+    "units": 2,
+    "class": "prereq",
+    "rules_core_files": 3
+   },
+   {
+    "type": "CHANGEPROF",
+    "instances": 2,
+    "units": 2,
+    "class": "grant/structural",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PRECHARACTERTYPE",
+    "instances": 2,
+    "units": 2,
+    "class": "prereq",
+    "rules_core_files": 1
+   },
+   {
+    "type": "PREGENDER",
+    "instances": 2,
+    "units": 2,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "CRMOD",
+    "instances": 2,
+    "units": 1,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PREPCLEVEL",
+    "instances": 2,
+    "units": 2,
+    "class": "prereq",
+    "rules_core_files": 4
+   },
+   {
+    "type": "ALLOWBASECLASS",
+    "instances": 2,
+    "units": 2,
+    "class": "metadata",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PRE",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 144
+   },
+   {
+    "type": "PRESPELLDESCRIPTOR",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 3
+   },
+   {
+    "type": "PREDR",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 3
+   },
+   {
+    "type": "EXCLASS",
+    "instances": 1,
+    "units": 1,
+    "class": "metadata",
+    "rules_core_files": 1
+   },
+   {
+    "type": "PRECLASSLEVELMAX",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PREARMORTYPE",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 1
+   },
+   {
+    "type": "PRESPELLBOOK",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PREHANDSGTEQ",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 2
+   },
+   {
+    "type": "PRESIZELT",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "ACCHECK",
+    "instances": 1,
+    "units": 1,
+    "class": "equip-data",
+    "rules_core_files": 14
+   },
+   {
+    "type": "PREPROFWITHSHIELD",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 5
+   },
+   {
+    "type": "KNOWNSPELLS",
+    "instances": 1,
+    "units": 1,
+    "class": "spell-grant",
+    "rules_core_files": 2
+   },
+   {
+    "type": "PREREACHGTEQ",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "CHARGES",
+    "instances": 1,
+    "units": 1,
+    "class": "other",
+    "rules_core_files": 0
+   },
+   {
+    "type": "EXCLUSIVE",
+    "instances": 1,
+    "units": 1,
+    "class": "other",
+    "rules_core_files": 2
+   },
+   {
+    "type": "!PRESPELL",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "!PRECSKILL",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 0
+   },
+   {
+    "type": "PRELEVELMAX",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 3
+   },
+   {
+    "type": "PRELANG",
+    "instances": 1,
+    "units": 1,
+    "class": "prereq",
+    "rules_core_files": 1
+   }
+  ]
+ },
+ "choice": {
+  "units": 1669,
+  "by_bucket": {
+   "B": 565,
+   "C": 447,
+   "X": 19,
+   "V": 3,
+   "D": 195,
+   "M": 433,
+   "U": 6,
+   "A": 1
+  },
+  "pct_choice_refs": 384
+ },
+ "coverage": {
+  "covered_types": 151,
+  "uncovered": [
+   "CASTTIME",
+   "COMPS",
+   "SAVEINFO",
+   "SPELLRES",
+   "SUBRACE",
+   "LANGBONUS",
+   "ITYPE",
+   "DEFINESTAT",
+   "UMULT",
+   "REGION",
+   "TEMPDESC",
+   "SOURCEWEB",
+   "MOVECLONE",
+   "SOURCEDATE",
+   "ADDLEVEL",
+   "MONCSKILL",
+   "!PRERACE",
+   "PREBASESIZEGTEQ",
+   "PRESUBCLASS",
+   "REMOVABLE",
+   "!PRESTAT",
+   "LEVELSPERFEAT",
+   "PRECSKILL",
+   "CCSKILL",
+   "ALTEQMOD",
+   "ASSIGNTOALL",
+   "!PREVISION",
+   "PREVARNEQ",
+   "CHANGEPROF",
+   "PREGENDER",
+   "CRMOD",
+   "ALLOWBASECLASS",
+   "PRECLASSLEVELMAX",
+   "PRESPELLBOOK",
+   "PREREACHGTEQ",
+   "CHARGES",
+   "!PRESPELL",
+   "!PRECSKILL"
+  ],
+  "cov_inst_share": 0.9813,
+  "unit_all_cov": 21066
+ }
+}

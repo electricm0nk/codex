@@ -59,6 +59,19 @@ The discipline that separates SD-32/33/34 successes from SD-31's failure: **name
 - Three denominators in play: 22,369 (35 books) / 24,475 (37 books) / 49,438 (incl. DONE) — every figure must name its population.
 - SD-34 itself: 20 of 36 kanban rows complete; 16 open rows can still move populations.
 
+## 1.b METHOD CORRECTION (operator challenge, 2026-08-31) — supersedes §1's cost model
+
+The operator rejected the 600–5,300h bucket-B bracket: the data is already machine-readable (PCGen .lst tokens, preserved as `raw_tokens` on ingested records); PCGen computes it with a token interpreter; hand-modeling per unit is the wrong method. A dedicated measurement (`artifacts/fable-review/TOKEN-MODEL.md` + `.json`) confirms this **on every measured axis**:
+
+- **The vocabulary is small.** 189 distinct top-level token types carry all 181,274 token instances on the 22,366 joinable remainder units (of 22,369; 99.99% join). 6 types = 50% of instances, **28 types = 90%**. Only ~139 types (41.7% of instances) are compute-bearing at all — 43.6% is metadata the kind-table loaders already consume, 10.3% is display text. Within compute tokens, 21 types cover 90%; BONUS collapses to 35 sub-targets with 9 covering 95%.
+- **Most of the interpreter already exists.** F1–F9 `formula_interpreter` + `bonus_stack_reader` handle BONUS:VAR/DEFINE — present on **6,708 remainder units (30.0%)**; `pre_tokens.rs` covers 48 of 69 PRE types = 97.3% of prereq instances. Genuinely uncovered: ~9–15 BONUS application sub-targets + ~20 grant/structural consumers + a sub-3% tail.
+- **The slow hours were transcription, not computation.** Receipts itemized (incl. the 617-min/2-unit cycle): the variable cost was reading tokens by eye, transcribing arithmetic into bespoke Rust, and hand-writing per-feature probes/tests — all of it replaced by interpreter + generic pass + oracle fixtures. Fixed per-pass costs (regen, sweeps, receipts) amortize.
+- **CHOOSE is small.** Genuinely choice-bearing units = 1,669 of 22,366 = **7.5%**, and the v0.6 Path-A canonical-default precedent covers them as policy.
+- **The old ban is dead.** SD-27 decisions.md §24.1 banned a formula interpreter; **SD-31 Decision 20 (operator, 2026-08-21) overturned it** — only the `derived_evaluator_fixture_check` gate still binds.
+- **Revised bracket (engine route): ~85–350h reaching 14,817 units (66.2%) directly**, vs 3,900–31,000h at measured hand-modeling rates. The brackets do not overlap under any reading. Non-collapsing remainder = 7,549 units (33.8%): bucket C surfacing 3,981, choice-bearing 1,669, PI-redacted 1,333, token-less 924, X/U/Z/V residue 418.
+
+**Superseding proposal for SD-35 step 1** (replaces §1's engine 2/4 framing; engines 1, 3, 5 stand): run the EXISTING interpreter + stack-reader as one corpus-wide pass over the 6,708 BONUS:VAR/DEFINE-bearing remainder units, oracle-fixture-verified (all machinery exists; only the pass is new). That converts the extrapolated bracket into a measured yield rate — and is itself the card-1 spike, cheaper and more direct than the 40h sampling plan in §1.
+
 ## 2. Confirmed Findings
 
 126 findings total from 19 lanes; 56 CONFIRMED by independent re-verification, 9 REJECTED, 61 P3s left unverified by design. Full detail with evidence and line ranges: `artifacts/fable-review/findings-all.json` (per-lane raw JSON in the same dir).
@@ -88,7 +101,7 @@ The discipline that separates SD-32/33/34 successes from SD-31's failure: **name
 
 ## 3. Applied Fixes (commit log)
 
-- (in progress) R12-03 + R12-04: delete `scripts/diff_check_regen.py` and `scripts/summarize_domain_power_classes.py` — both hardcode a `.claude/worktrees/wf_2656fbd3-1ec-1` path that no longer exists; fully non-functional; zero references; Opus-cleared.
+- `920cb53307` — R12-03 + R12-04: deleted `scripts/diff_check_regen.py` and `scripts/summarize_domain_power_classes.py` — both hardcode a `.claude/worktrees/wf_2656fbd3-1ec-1` path that no longer exists; fully non-functional; only references are SD-32 frozen history docs; Opus-cleared.
 
 Blocked by Opus clearance (correctly): R8-02 deletion of 11 obsolete `e5_*`/`e6_*` probe binaries — `scripts/verify.sh:1317` enforces a gate-tracked binary count; deletion needs the baseline updated in the same change → moved to §4.
 
