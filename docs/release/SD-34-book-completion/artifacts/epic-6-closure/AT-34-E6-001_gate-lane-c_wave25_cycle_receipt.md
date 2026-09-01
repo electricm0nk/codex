@@ -297,3 +297,9 @@ measured 3022, also untouched by this cycle). The final-acceptance scan
 (`AT-34-E6-001_cycle_receipt.md`, a separate criterion) should re-verify `scripts/verify.sh --only
 clippy` reports `root:0 desktop:0 warnings, 0 errors` as part of its own re-derivation, per
 `acceptance-and-verification.md §3` obligation 2.
+
+## Commit SHA (filled in after push)
+
+`9d2e7d9e28` -- the single commit this cycle produced, pushed to `tranche/14` before this receipt
+update. Nothing landed on Rust source after this commit, so it is also this cycle's own
+build-scope SHA.
