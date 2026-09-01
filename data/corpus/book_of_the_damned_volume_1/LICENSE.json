@@ -3,16 +3,16 @@
   "classified_at": "2026-08-13T09:20:44Z",
   "classified_by_cycle": "SD29-E7-F2-010",
   "license_declaration": {
-    "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md \u00a72.2; the book's own book_of_the_damned_volume_1.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+    "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own book_of_the_damned_volume_1.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
     "product_identity_note": "Named deities, NPCs and unique places are Product Identity; monster stat blocks and their special-ability rules text are Open Game Content.",
-    "product_identity_source": "Paizo Pathfinder Campaign Setting: Princes of Darkness, Book of the Damned Volume 1, OGL \u00a715 Product Identity section"
+    "product_identity_source": "Paizo Pathfinder Campaign Setting: Princes of Darkness, Book of the Damned Volume 1, OGL §15 Product Identity section"
   },
   "operator_sign_off": {
     "note": "Set true only after an operator has reviewed this book's classification pass, per docs/governance/ogl-pi-blacklist.md's DRAFT header.",
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 53,
+  "records_processed": 90,
   "records_redacted": 1,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "PASS -- SD31-E5-F1-001 (class_feature lane), 2026-08-16T01:41:34Z: every DESCISPI:/NAMEISPI:-declared and blacklist-term field of the 10 class_feature records this run wrote for book_of_the_damned_volume_1 was screened via pi_screening::classify_optional_field_declared (description) and declared_product_identity (name -- rows declaring NAMEISPI:YES are not written at all, per docs/governance/ogl-pi-blacklist.md's 'a name cannot be redacted' doctrine, rather than shipped unredacted). A hit is a hard stop in this generator, not a warning. records_processed is 53: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own 10-record output. records_redacted is 1, re-derived from the real on-disk license/pi_marker fields, not carried forward from the prior stated value. This is NOT an exhaustive human legal review; it is a bounded substring scan plus the corpus's own declared-PI tokens, and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "RECONCILED SD34-AT-34-E6-001, 2026-09-01: gate-lane-a wave-24 diagnosed this book's stated records_processed/records_redacted as stale against the live corpus (sd27_book_license_record_counts.rs); records_processed re-derived from disk to 90 (was 53), re-derived from disk (find data/corpus/book_of_the_damned_volume_1 -mindepth 2 -name '*.json' ! -name LICENSE.json -not -path '*/_parity/*' | wc -l = 90; per-kind: class: 1, class_feature: 10, companion: 31, monster: 5, monster_ability: 36, race_trait_generic: 1, spell: 6). records_processed is 90, records_redacted is 1. Prior note follows, unedited. PASS -- SD31-E5-F1-001 (class_feature lane), 2026-08-16T01:41:34Z: every DESCISPI:/NAMEISPI:-declared and blacklist-term field of the 10 class_feature records this run wrote for book_of_the_damned_volume_1 was screened via pi_screening::classify_optional_field_declared (description) and declared_product_identity (name -- rows declaring NAMEISPI:YES are not written at all, per docs/governance/ogl-pi-blacklist.md's 'a name cannot be redacted' doctrine, rather than shipped unredacted). A hit is a hard stop in this generator, not a warning. records_processed is 53: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own 10-record output. records_redacted is 1, re-derived from the real on-disk license/pi_marker fields, not carried forward from the prior stated value. This is NOT an exhaustive human legal review; it is a bounded substring scan plus the corpus's own declared-PI tokens, and does not prove the absence of PI beyond what that scan can see."
 }

@@ -13,7 +13,7 @@
     "signed_off_at": null
   },
   "records_processed": 1500,
-  "records_redacted": 642,
+  "records_redacted": 850,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "PASS -- SD29-E5-F2-010 (monster lane), 2026-08-23T22:08:42Z: every field of the 1 records this run wrote (0 monsters + 1 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 1500: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "RECONCILED SD34-AT-34-E6-001, 2026-09-01: gate-lane-a wave-24 diagnosed this book's stated records_processed/records_redacted as stale against the live corpus (sd27_book_license_record_counts.rs); records_redacted re-derived from disk to 850 (was 642), re-derived from disk (find data/corpus/inner_sea_gods -mindepth 2 -name '*.json' ! -name LICENSE.json -not -path '*/_parity/*' | wc -l = 1500; per-kind: ability: 502, class: 3, deity: 296, domain: 21, equipment: 150, feat: 86, monster: 39, monster_ability: 164, race_trait_generic: 25, spell: 96, template: 3, trait_generic: 115). records_processed is 1500, records_redacted is 850. Prior note follows, unedited. PASS -- SD29-E5-F2-010 (monster lane), 2026-08-23T22:08:42Z: every field of the 1 records this run wrote (0 monsters + 1 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 1500: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

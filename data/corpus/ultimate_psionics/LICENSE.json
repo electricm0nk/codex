@@ -12,8 +12,8 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 3382,
-  "records_redacted": 0,
+  "records_processed": 3530,
+  "records_redacted": 2,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "PASS -- SD29-E5-F2-011 (monster lane), 2026-08-23T14:10:45Z: every field of the 64 records this run wrote (0 monsters + 64 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 3382: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "RECONCILED SD34-AT-34-E6-001, 2026-09-01: gate-lane-a wave-24 diagnosed this book's stated records_processed/records_redacted as stale against the live corpus (sd27_book_license_record_counts.rs); records_processed re-derived from disk to 3530 (was 3382); records_redacted re-derived from disk to 2 (was 0), re-derived from disk (find data/corpus/ultimate_psionics -mindepth 2 -name '*.json' ! -name LICENSE.json -not -path '*/_parity/*' | wc -l = 3530; per-kind: ability: 313, class: 37, class_feature: 1573, domain: 4, equipment: 552, feat: 222, language: 5, monster: 21, monster_ability: 191, power: 421, race_generic: 3, race_trait_generic: 47, skill: 5, template: 104, trait_generic: 32). records_processed is 3530, records_redacted is 2. Prior note follows, unedited. PASS -- SD29-E5-F2-011 (monster lane), 2026-08-23T14:10:45Z: every field of the 64 records this run wrote (0 monsters + 64 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 3382: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

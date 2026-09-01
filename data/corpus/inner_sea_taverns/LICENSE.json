@@ -12,8 +12,8 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 11,
-  "records_redacted": 0,
+  "records_processed": 20,
+  "records_redacted": 1,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "CREATED SD31-W4-INTEGRATE-001, 2026-08-16 (OPEN-ISSUES.md row 48/49): this book gained real content this wave (SD31-E5-F1-001's class_feature cache-gen) but no LICENSE.json compliance artifact was ever created for it -- `tests/sd27_book_license_record_counts.rs`'s own `books_on_disk()` only enumerates books that ALREADY have a LICENSE.json, so this gap was invisible to that guard rather than failing it. The records themselves were genuinely PI-screened inline at write time (cache_gen::class_feature calls pi_screening::classify_field on both name and description plus the declared-PI reader on both fields, per OPEN-ISSUES.md row 48's fix) -- this artifact documents that screening, it does not re-run it. records_processed = 11 (find data/corpus/inner_sea_taverns -mindepth 2 -name '*.json' ! -name LICENSE.json -not -path '*/_parity/*' | wc -l), records_redacted = 0 (real on-disk license==PI-REDACTED count). This is NOT an exhaustive human legal review; it is a bounded substring scan plus the corpus's own declared-PI tokens, and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "RECONCILED SD34-AT-34-E6-001, 2026-09-01: gate-lane-a wave-24 diagnosed this book's stated records_processed/records_redacted as stale against the live corpus (sd27_book_license_record_counts.rs); records_processed re-derived from disk to 20 (was 11); records_redacted re-derived from disk to 1 (was 0), re-derived from disk (find data/corpus/inner_sea_taverns -mindepth 2 -name '*.json' ! -name LICENSE.json -not -path '*/_parity/*' | wc -l = 20; per-kind: class_feature: 11, feat: 9). records_processed is 20, records_redacted is 1. Prior note follows, unedited. CREATED SD31-W4-INTEGRATE-001, 2026-08-16 (OPEN-ISSUES.md row 48/49): this book gained real content this wave (SD31-E5-F1-001's class_feature cache-gen) but no LICENSE.json compliance artifact was ever created for it -- `tests/sd27_book_license_record_counts.rs`'s own `books_on_disk()` only enumerates books that ALREADY have a LICENSE.json, so this gap was invisible to that guard rather than failing it. The records themselves were genuinely PI-screened inline at write time (cache_gen::class_feature calls pi_screening::classify_field on both name and description plus the declared-PI reader on both fields, per OPEN-ISSUES.md row 48's fix) -- this artifact documents that screening, it does not re-run it. records_processed = 11 (find data/corpus/inner_sea_taverns -mindepth 2 -name '*.json' ! -name LICENSE.json -not -path '*/_parity/*' | wc -l), records_redacted = 0 (real on-disk license==PI-REDACTED count). This is NOT an exhaustive human legal review; it is a bounded substring scan plus the corpus's own declared-PI tokens, and does not prove the absence of PI beyond what that scan can see."
 }
