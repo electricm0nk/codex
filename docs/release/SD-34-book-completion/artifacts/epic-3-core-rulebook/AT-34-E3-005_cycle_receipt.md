@@ -20,13 +20,8 @@
   final state, and the evidence pointer establishing it. **The closure scan re-derives a random
   sample independently.**"
 - **Figures + their re-derive commands:**
-  - `python3 scripts/completion_atlas.py --book core_rulebook --check` → `population=6701
-    unclassified=0 overlap=0`, `DONE=1448 A=0 B=532 C=372 D=382 M=1048 V=2793 U=10 X=116 Z=0`,
-    exit **1** (non-DONE total 5253 ≠ 0). Denominator: the 6,701-unit `core_rulebook`
-    population inside `docs/work-inventory.json`.
-  - Manifest row count: `python3 -c "import json;print(len(json.load(open('docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/core-rulebook-completion-manifest.json'))['units']))"`
-    → `6701` (see Row-count row below). Denominator: same 6,701-unit population, one manifest row
-    per unit.
+  - `python3 scripts/completion_atlas.py --book core_rulebook --check` → `population=6701 unclassified=0 overlap=0`, `DONE=1448 A=0 B=532 C=372 D=382 M=1048 V=2793 U=10 X=116 Z=0`, exit **1** (non-DONE total 5253 ≠ 0). Denominator: the 6,701-unit `core_rulebook` population inside `docs/work-inventory.json`, per this same `completion_atlas.py --book core_rulebook --check` command.
+  - Manifest row count: `python3 -c "import json;print(len(json.load(open('docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/core-rulebook-completion-manifest.json'))['units']))"` → `6701` (see Row-count row below). Denominator: same 6,701-unit population, one manifest row per unit, per the same manifest-row-count command above.
   - Remaining-population arithmetic: `532+372+382+1048+2793+10+116 = 5253`; `1448+5253=6701`
     (matches the atlas's own printed counts exactly, cross-checked by the manifest generator
     importing `scripts/completion_atlas.py`'s own `_bucket_of` classifier rather than

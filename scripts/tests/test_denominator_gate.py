@@ -116,6 +116,50 @@ class TestFindViolations(unittest.TestCase):
         text = "## Not folded into a false 100% (of 6,589): the real 777 unexamined\n"
         self.assertEqual(dg.find_violations(text), [])
 
+    def test_chance_idiom_not_flagged(self):
+        # A verbatim-quoted PF1e rules percentile ("FRT_HVY": "75% chance
+        # to negate critical hits and sneak attack damage") is not an
+        # ungrounded figure -- it is a quotation. `AT-34-E6-001` gate lane
+        # C, 2026-09-01.
+        text = (
+            "the pre-existing verbatim-quoted corpus prose (`FRT_HVY`'s "
+            '"75% chance to negate critical hits and sneak attack damage")\n'
+        )
+        self.assertEqual(dg.find_violations(text), [])
+
+    def test_chance_idiom_bare_form_not_flagged(self):
+        text = "a 10% chance per round of the effect triggering\n"
+        self.assertEqual(dg.find_violations(text), [])
+
+    def test_chance_idiom_does_not_shadow_a_real_percentage_on_the_same_line(self):
+        # The idiom must only exempt its own "NN% chance" token -- a
+        # genuine, separate percentage claim on the same line, with no
+        # denominator of its own, is still a violation.
+        text = "a 75% chance quote sits beside a real 63% figure with no denominator here\n"
+        violations = dg.find_violations(text, source="chance-shadow.md")
+        self.assertEqual(len(violations), 1)
+        self.assertIn("63%", violations[0]["text"])
+
+    def test_chance_idiom_with_its_own_denominator_still_passes(self):
+        text = "a 75% chance quote next to a real 63% of 100 units figure\n"
+        self.assertEqual(dg.find_violations(text), [])
+
+    def test_known_quoted_corpus_phrase_not_flagged(self):
+        text = (
+            'its corpus description ("Carrying capacity increased by 50%") '
+            "carries the identical digit-preceded-% shape\n"
+        )
+        self.assertEqual(dg.find_violations(text), [])
+
+    def test_known_quoted_corpus_phrase_does_not_shadow_a_real_percentage(self):
+        text = (
+            '"Carrying capacity increased by 50%" sits beside a real 63% '
+            "figure with no denominator here\n"
+        )
+        violations = dg.find_violations(text, source="phrase-shadow.md")
+        self.assertEqual(len(violations), 1)
+        self.assertIn("63%", violations[0]["text"])
+
 
 class TestExpandPaths(unittest.TestCase):
     def test_literal_existing_file(self):

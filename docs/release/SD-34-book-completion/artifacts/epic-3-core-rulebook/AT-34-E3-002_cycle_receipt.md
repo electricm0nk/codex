@@ -251,11 +251,11 @@ cycle's own single closure exactly, at both scopes.
 | Figure | Value | Command | Denominator |
 |---|---:|---|---|
 | `core_rulebook` bucket C at cycle start | 193 | `python3 scripts/completion_atlas.py --book core_rulebook --check` against the committed `docs/work-inventory.json` | of 6,701 |
-| `core_rulebook` bucket C after this cycle's own fix | **192** | same command, live regen including this cycle's edit | of 6,701 (delta −1) |
-| `core_rulebook` bucket DONE after this cycle | **4,656** | same command | of 6,701 (delta +1) |
+| `core_rulebook` bucket C after this cycle's own fix | **192** | `python3 scripts/completion_atlas.py --book core_rulebook --check`, live regen including this cycle's edit | of 6,701 (delta −1) |
+| `core_rulebook` bucket DONE after this cycle | **4,656** | `python3 scripts/completion_atlas.py --book core_rulebook --check` | of 6,701 (delta +1) |
 | This cycle's own isolated closure | **1**, `core_rulebook:class_feature:ranger_favored_enemy` | whole-inventory diff, exhaustive (not filtered — the diff found exactly one changed unit corpus-wide) | of 1 (targeted population) |
 | Corpus-wide bucket C before/after this cycle's own regen | 4,174 / **4,173** | `python3 scripts/completion_atlas.py --check` | of 49,438 (delta −1) |
-| Corpus-wide bucket DONE before/after | 24,961 / **24,962** | same command | of 49,438 (delta +1) |
+| Corpus-wide bucket DONE before/after | 24,961 / **24,962** | `python3 scripts/completion_atlas.py --check` | of 49,438 (delta +1) |
 | `corpus_literal_sweep` (before/after, unchanged) | 48,708 examined, 0 findings | `corpus_literal_sweep --json-out` | of 51,482 read |
 | `derived_evaluator_fixture_check` (before/after, unchanged) | 1,839 cleared of 2,580 rows, 0 failed | `derived_evaluator_fixture_check --json-out` | of 2,580 |
 | `completion_atlas.py --check` (corpus-wide, post-regen) | `population=49438 unclassified=0 overlap=0 citation_failures=0`, exit 0 | `python3 scripts/completion_atlas.py --check` | of 49,438 |

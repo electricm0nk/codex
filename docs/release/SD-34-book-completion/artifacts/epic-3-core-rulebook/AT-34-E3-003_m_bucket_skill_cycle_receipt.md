@@ -81,17 +81,13 @@
   stays open (`M`'s other sub-causes, and buckets V/D/X, are untouched).
 
 - **Figures + their re-derive commands:**
-  - Corpus-wide bucket `M`: **5,114 → 5,038** (−76), denominator 49,438 total
-    units. Re-derive: `python3 scripts/completion_atlas.py --check`.
-  - `core_rulebook` bucket `M`: **1,048 → 972** (−76), denominator 6,701
-    `core_rulebook` units. Re-derive: `python3 scripts/completion_atlas.py
-    --book core_rulebook --check`.
-  - `core_rulebook` DONE: **4,254 → 4,330** (+76); corpus-wide DONE:
-    **24,166 → 24,242** (+76). Same commands as above.
+  - Corpus-wide bucket `M`: **5,114 → 5,038** (−76), denominator 49,438 total units — `python3 scripts/completion_atlas.py --check`.
+  - `core_rulebook` bucket `M`: **1,048 → 972** (−76), denominator 6,701 `core_rulebook` units — `python3 scripts/completion_atlas.py --book core_rulebook --check`.
+  - `core_rulebook` DONE: **4,254 → 4,330** (+76), denominator 6,701 — `python3 scripts/completion_atlas.py --book core_rulebook --check`; corpus-wide DONE: **24,166 → 24,242** (+76), denominator 49,438 — `python3 scripts/completion_atlas.py --check`.
   - Whole-corpus before/after diff by unit id (script:
     `/tmp/cargo-sd34-at-34-e3-003/diff_inventory.py`, comparing `git show
     3cc878de05:docs/work-inventory.json` against the regenerated
-    `docs/work-inventory.json`): **49,438 units before, 49,438 after, 0
+    `docs/work-inventory.json`). Re-derive the before/after unit counts: `python3 -c "import json,subprocess; before=json.loads(subprocess.check_output(['git','show','3cc878de05:docs/work-inventory.json'])); after=json.load(open('docs/work-inventory.json')); print(len(before['units']), len(after['units']))"` → `49438 49438`. **49,438 units before, 49,438 after, 0
     added, 0 removed, exactly 76 changed — all in `core_rulebook`, all
     `kind == "skill"`, all one status transition
     `ingested-magnitude → grounded`, all one evidence transition
@@ -110,7 +106,7 @@
     — never trusted from the epic-breakdown's or kanban's own inherited
     figures, both of which cited stale numbers this cycle disproved: the
     inherited `epic-breakdown.md` total of "512 M" for the whole criterion
-    was already superseded by the kanban's own live re-derive of 1,048 before
+    was already superseded by the kanban's own live re-derive of 1,048 (`python3 scripts/completion_atlas.py --book core_rulebook --check`, `M` row, pre-cycle) before
     this cycle touched anything).
 
 - **Row-count command output:**

@@ -172,6 +172,59 @@ DENOMINATOR_RE = re.compile(
 # verbatim -- see the remediation cycle receipt for the re-derivation.
 FALSE_100_IDIOM_RE = re.compile(r"\bfalse[\s-]100%", re.IGNORECASE)
 
+# A verbatim-quoted corpus percentile idiom: "NN% chance" names a game
+# probability drawn from ingested PF1e rules text (`FRT_HVY`'s "75% chance
+# to negate critical hits and sneak attack damage", `ce_feats_...lst`),
+# never a completion/coverage figure this gate exists to ground -- the same
+# reasoning `FALSE_100_IDIOM_RE` above already applies to a different
+# idiom. A percentile game mechanic is always phrased "N% chance (to/of/
+# per...)" in PF1e/PCGen source text; a completion or coverage figure in
+# this bundle's own prose is never phrased that way (it says "of <N>",
+# "N of M", or "DONE"). `AT-34-E6-001` gate lane C (2026-09-01) re-derived
+# every live denominator-gate violation in this package and found 9 of 16
+# were this exact idiom or prose quoting it (`progress.md` lines 337,
+# 1785, 2101, 2634, 2901, 2944, 3001, 3007, 3529) -- a verbatim corpus
+# quote is not an ungrounded figure, it is a quotation
+# (`AT-34-E6-001`'s own dispatch brief), and rewording game rule text to
+# manufacture a fake denominator would misrepresent the corpus. Matched
+# and blanked out of the line *before* `PERCENT_RE`/`DENOMINATOR_RE` run,
+# so only the idiom's own "NN% chance" token is exempted -- a genuine,
+# separate percentage claim placed on the same line is still caught in
+# full (proven by
+# `test_chance_idiom_does_not_shadow_a_real_percentage_on_the_same_line`).
+QUOTED_PROSE_CHANCE_IDIOM_RE = re.compile(
+    r"\d[\d,]*(?:\.\d+)?\s?%\s*chance\b", re.IGNORECASE
+)
+
+# A short, explicit allowlist of exact verbatim corpus-quote substrings
+# this package's own receipts cite directly -- narrower and safer than a
+# general "percentage inside quotation marks" heuristic would be (that
+# would also exempt a genuine completion claim someone quoted for
+# emphasis, which is exactly the failure shape this gate exists to catch).
+# Each entry is a real PF1e record's own `DESC:`-token prose, re-verified
+# against the live corpus by the cycle that added it here:
+#
+#   - "Carrying capacity increased by 50%" --
+#     `advanced_class_guide:equipment_modifier:burdenless`'s description
+#     (`AT-34-E6-001` gate lane C, 2026-09-01; cited in
+#     `AT-34-E3-003_u_bucket_render_bug_cycle_receipt.md`).
+#
+# Matched by exact literal substring (not a regex) and blanked out of the
+# line before `PERCENT_RE`/`DENOMINATOR_RE` run, same discipline as the
+# two idioms above. A later cycle extends this tuple by appending its own
+# corpus-verified quote -- it never widens an existing entry into a
+# pattern, and this list is never used to swallow a figure that is not a
+# literal, cited corpus quote.
+KNOWN_QUOTED_CORPUS_PHRASES = (
+    "Carrying capacity increased by 50%",
+)
+
+
+def _blank_known_quoted_corpus_phrases(line):
+    for phrase in KNOWN_QUOTED_CORPUS_PHRASES:
+        line = line.replace(phrase, " " * len(phrase))
+    return line
+
 
 def find_violations(text, source="<text>"):
     """Return a list of {source, line, text} dicts, one per line that
@@ -195,6 +248,8 @@ def find_violations(text, source="<text>"):
         if in_fence:
             continue
         scan_line = FALSE_100_IDIOM_RE.sub(" ", line)
+        scan_line = QUOTED_PROSE_CHANCE_IDIOM_RE.sub(" ", scan_line)
+        scan_line = _blank_known_quoted_corpus_phrases(scan_line)
         if PERCENT_RE.search(scan_line) and not DENOMINATOR_RE.search(scan_line):
             violations.append(
                 {"source": source, "line": lineno, "text": line.strip()}
@@ -348,7 +403,11 @@ def find_provenance_violations(text, source="<text>", repo_root=REPO_ROOT):
         if in_fence or not in_scope[idx]:
             continue
         has_figure = bool(FIGURE_NUMBER_RE.search(line)) or bool(
-            PERCENT_RE.search(FALSE_100_IDIOM_RE.sub(" ", line))
+            PERCENT_RE.search(
+                _blank_known_quoted_corpus_phrases(
+                    QUOTED_PROSE_CHANCE_IDIOM_RE.sub(" ", FALSE_100_IDIOM_RE.sub(" ", line))
+                )
+            )
         )
         if not has_figure:
             continue
@@ -485,7 +544,9 @@ def run_provenance_check(patterns, out=sys.stdout, repo_root=REPO_ROOT):
             if in_fence or not in_scope[idx]:
                 continue
             if FIGURE_NUMBER_RE.search(line) or PERCENT_RE.search(
-                FALSE_100_IDIOM_RE.sub(" ", line)
+                _blank_known_quoted_corpus_phrases(
+                    QUOTED_PROSE_CHANCE_IDIOM_RE.sub(" ", FALSE_100_IDIOM_RE.sub(" ", line))
+                )
             ):
                 figures_examined += 1
         all_violations.extend(

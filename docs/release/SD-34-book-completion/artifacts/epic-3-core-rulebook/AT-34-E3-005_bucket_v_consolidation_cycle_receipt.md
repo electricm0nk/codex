@@ -99,7 +99,7 @@ honestly as this cycle's real stopping point, not hidden behind a false "unverif
 | `agree` | 385 | 2,793 (reused, freshness-confirmed, SD-33's own live oracle round-trips) |
 | `unverifiable` — `no_bonus_chain` / `oracle_export_no_spellname_line` / other named SD-33 reasons | 2,197 | 2,793 (reused, freshness-confirmed) |
 | `unverifiable` — `no_probe_surface` (AT-33-E1-003) | 130 | 2,793 (newly dispositioned this cycle, no JVM) |
-| **Dispositioned total** | **2,712** | **2,793 (97.1%)** |
+| **Dispositioned total** | **2,712** | **2,793 (97.1% of 2,793)** |
 | Not yet dispositioned (needs a cargo-built "ours" probe, out of this lane's scope) | 81 | 2,793 (2.9%) |
 
 Zero `disagree` found in the reused population (SD-33's own prior finding, re-confirmed by the freshness
@@ -107,13 +107,9 @@ spot check, not re-litigated).
 
 ## Figures + re-derive commands
 
-- Bucket V population (`core_rulebook`, `literal-verified`+`fixture-verified`): **2,793** —
-  `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); print(len([u for u in inv['units'] if u['book']=='core_rulebook' and u['status'] in ('literal-verified','fixture-verified')]))"`
-- Distinct `core_rulebook` bucket-V units already carrying a real SD-33 oracle verdict: **2,582** — union of
-  all 24 `docs/release/SD-33-computed-value-verification/**/*.oracle-results.json` by `unit_id`, intersected
-  with the population above.
-- Consolidated ledger row count (final): **2,712** —
-  `python3 -c "import json; print(len(json.load(open('docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/bucket-v/bucket-v-consolidated.oracle-results.json'))['results']))"`
+- Bucket V population (`core_rulebook`, `literal-verified`+`fixture-verified`): **2,793** — `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); print(len([u for u in inv['units'] if u['book']=='core_rulebook' and u['status'] in ('literal-verified','fixture-verified')]))"`
+- Distinct `core_rulebook` bucket-V units already carrying a real SD-33 oracle verdict: **2,582** — union of all 24 `docs/release/SD-33-computed-value-verification/**/*.oracle-results.json` by `unit_id`, intersected with the population above: `python3 -c "import glob,json; inv=json.load(open('docs/work-inventory.json')); pop={u['id'] for u in inv['units'] if u['book']=='core_rulebook' and u['status'] in ('literal-verified','fixture-verified')}; ids=set(); [ids.update(r.get('unit_id') for r in json.load(open(f)).get('results',[])) for f in glob.glob('docs/release/SD-33-computed-value-verification/**/*.oracle-results.json', recursive=True)]; print(len(pop & ids))"`
+- Consolidated ledger row count (final): **2,712** — `python3 -c "import json; print(len(json.load(open('docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/bucket-v/bucket-v-consolidated.oracle-results.json'))['results']))"`
 - Remainder: **81** —
   `python3 -c "import json; print(len(json.load(open('docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/bucket-v/bucket-v-remainder.json'))['missing_unit_ids']))"`
 - Sanity: `2,712 + 81 == 2,793` — verified, no double-counting and no unit dropped (checked: 2,712 distinct
@@ -131,8 +127,8 @@ spot check, not re-litigated).
   freshness-confirmed rather than merely assumed still valid.
 - **reachability:** 130 — units proven this cycle to have no computed-value oracle comparison possible at
   all (`no_probe_surface`), a real, bounded, cross-book-established fact, not a shrug.
-- **instrument-correction:** 0 — no prior figure was found wrong this cycle; the 92.4%-already-covered fact
-  is a genuine discovery, not a correction of a previously-stated number.
+- **instrument-correction:** 0 — no prior figure was found wrong this cycle; the 92.4% of 2,793
+  already-covered fact is a genuine discovery, not a correction of a previously-stated number.
 
 ## Remainder — named by sub-cause, populations sum to 81
 
@@ -172,5 +168,6 @@ lane's explicit write-scope restriction). No `--no-run`/workspace build attempte
    performance, domain power, arcane school, cleric domain) and the 6 generic ability-bonus `race_trait`
    entries' real race ownership, before designing fixtures.
 5. Widen this exact reconciliation method (cross-reference SD-33's committed oracle-results against
-   SD-34's atlas) to bucket V's remaining corpus-wide population outside `core_rulebook` — the 92.4%
-   already-covered fact very likely generalizes, and is nearly free to check (no JVM needed, same script).
+   SD-34's atlas) to bucket V's remaining corpus-wide population outside `core_rulebook` — the
+   92.4% of 2,793 already-covered fact very likely generalizes, and is nearly free to check (no
+   JVM needed, same script).

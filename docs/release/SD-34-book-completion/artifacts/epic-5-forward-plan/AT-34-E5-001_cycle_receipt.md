@@ -20,12 +20,10 @@
 
 - **35 non-vehicle books, 37 total inventory books minus `core_rulebook`/`ultimate_campaign`:**
   `python3 scripts/completion_atlas.py --by-book | wc -l` → 37 lines; 37 − 2 = 35.
-- **29,364 non-DONE units across the 35 books** (denominator: the 35-book population, itself
-  42,472 of the corpus's 49,438): `python3 scripts/completion_atlas.py --check` →
-  `population=49438`; `python3 scripts/completion_atlas.py --by-book` summed per-book, minus
+- **29,364 non-DONE units across the 35 books** (denominator: the 35-book population, itself 42,472 of the corpus's 49,438) — `python3 scripts/completion_atlas.py --check` → `population=49438`; `python3 scripts/completion_atlas.py --by-book` summed per-book, minus
   `core_rulebook` and `ultimate_campaign` rows. Cross-checked two ways inside
   `build_forward_plan.py` (an assertion compares the sum of per-book `remaining_non_done`
-  against the sum of `totals_by_bucket`; both scripts agree: 29,364).
+  against the sum of `totals_by_bucket`; both scripts agree: 29,364, per the same `completion_atlas.py --by-book` command above).
 - **Remaining by bucket, 35 books (denominator: 29,364 non-DONE units in the 35-book
   population):** A=449, B=11,299, C=3,981, D=2,668, M=3,977, V=6,747, U=171, X=53, Z=19.
   Re-derive: `python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_forward_plan.py`

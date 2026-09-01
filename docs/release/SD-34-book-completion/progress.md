@@ -11,6 +11,62 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 23, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — `denominator-gate` and `figure-provenance`, both GREEN — complete
+
+**Status: complete.** Both assigned `verify.sh` stages closed GREEN: `denominator-gate`
+(`files_checked=132 violations=0`, full default scope — `AT-34-E1-006` already widened
+`DEFAULT_GLOBS` before this cycle, so the real standing gate is the wider default, not the
+narrow root-only command `decisions.md §3` still documents) and `figure-provenance`
+(`files_checked=62 figures_examined=112 violations=0`). This cycle does **not** touch
+`kanban.md` row 26 (`final-acceptance-scan`, criterion `AT-34-E6-001`) — same reuse-of-the-id
+posture wave 23's own gate-lane-B entry below already recorded: this label covers a
+territory-disjoint gate-remediation lane, not the final-acceptance scan itself.
+
+**Re-derived both violation lists fresh rather than trusting the dispatch brief's stale "26" /
+"32" figures** (`decisions.md §12` L2): the brief's "26" for `denominator-gate` did not match
+either real scope — the narrow root-only command (`decisions.md §3`'s own documented interim
+command) showed `files_checked=16 violations=16`; the true standing-gate scope
+(`scripts/verify.sh --only denominator-gate`, full default, `files_checked=132`) showed **21**
+original violations once reconstructed (16 root + 5 artifacts-only). Filed as a `correction`
+retro event. `figure-provenance`'s "32" matched exactly (`files_checked=62
+figures_examined=119 violations=32`, `PROVENANCE_DEFAULT_GLOBS` was already correctly SD-34-only
+at authoring time).
+
+**Every violation classified genuine or false-positive, never silently reworded:** of the 21
+`denominator-gate` hits, **11 were genuine** (a real figure missing its same-line
+denominator/command — fixed by restating it inline, in `fable-review.md` ×3, `progress.md` ×4,
+and 3 `epic-3-core-rulebook`/`epic-5-forward-plan` receipts ×4) and **10 were verbatim-quoted
+PF1e corpus prose** (9× `FRT_HVY`'s "75% chance to negate critical hits and sneak attack
+damage" in `progress.md`, 1× `burdenless`'s "Carrying capacity increased by 50%" in an
+`epic-3-core-rulebook` receipt) — real corpus quotes, not ungrounded figures, per this cycle's
+own dispatch brief ("a rules quote containing '75% chance' is not an ungrounded figure, it is a
+quotation. Do not reword a corpus quote to appease a gate"). Of the 32 `figure-provenance`
+hits, **31 were genuine** (the command that already existed elsewhere in the same table/
+paragraph restated on the figure's own line, in place of "same command"/"same artifact"/a
+mid-command line-wrap — see this cycle's own receipt for the full per-file table) and **1**
+shared the same `burdenless` quote as above.
+
+**Two new, additive baseline mechanisms in `scripts/denominator_gate.py`** (the gate had none
+for quoted prose, so per the brief: propose one and build it) — `QUOTED_PROSE_CHANCE_IDIOM_RE`
+(a content-shaped idiom, `NN% chance`, generalizing to any future PF1e percentile-mechanic
+quote) and `KNOWN_QUOTED_CORPUS_PHRASES` (a narrow, named, exact-substring allowlist for the one
+quote that isn't chance-shaped — deliberately not a broad "percentage inside quotes" heuristic,
+which would also swallow a genuine completion percentage someone quoted for emphasis). Both
+wired into *both* stages (`find_violations` and `find_provenance_violations`/`figures_examined`
+counting), identical discipline to the pre-existing `FALSE_100_IDIOM_RE`. 6 new unit tests, all
+proving the mechanism exempts only its own token and still catches a genuine, separate
+percentage on the same line. `python3 -m unittest scripts.tests.test_denominator_gate` →
+`Ran 46 tests ... OK` (41 pre-existing + 6 new; the two pre-existing whole-package mutation-proof
+tests, `test_default_globs_currently_clean` and `test_provenance_default_run_is_clean`, now pass
+for the first time).
+
+**No `data/corpus/**` file touched** — sweep population N/A, not re-run. `cargo test --locked
+--no-run` exits 0, full workspace (60 test binaries) and `apps/desktop/src-tauri` tested
+explicitly as its own separate cargo workspace, both at HEAD `9ac2170b3d82f70a3f6076294d22c62a351d5c23`
+(this cycle's diff is `.md`/`.py` only — no commit in this cycle can move that result). Dual-audit
+gate on this cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`. Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-c_cycle_receipt.md`.
+
 ### Cycle — Wave 23, Gate Lane A (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — root-lib/root-full/desktop/reach, the accumulated 22-wave test drift — partial
 
 **Status: partial.** Full receipt: `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_cycle_receipt.md`.
@@ -183,10 +239,10 @@ bucket's citation line drifted 13250→13262 from wave 22's own `v06_work_invent
 insertions. Re-derived by direct `grep -n`, fixed in `scripts/completion_atlas.py` this same
 cycle, re-run clean: `unclassified=0 overlap=0 done_evidence_violations=0
 missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`, exit 0. `--book
-core_rulebook --check` exits 1 — expected, book not yet 100% (`B:470 C:192 D:366 M:778 V:114
-U:10 X:115`). `cargo test --locked --no-run` exits 0, full workspace and `apps/desktop/src-tauri`
-tested explicitly as its own separate cargo workspace. No `src/**` file touched by this cycle
-itself — only `scripts/completion_atlas.py`'s one-line citation fix.
+core_rulebook --check` exits 1 — expected, book not yet 100% of 6,701 units (`B:470 C:192
+D:366 M:778 V:114 U:10 X:115`). `cargo test --locked --no-run` exits 0, full workspace and
+`apps/desktop/src-tauri` tested explicitly as its own separate cargo workspace. No `src/**` file
+touched by this cycle itself — only `scripts/completion_atlas.py`'s one-line citation fix.
 
 **Red test re-confirmed GREEN, not newly fixed.** The dispatch brief re-described
 `38e10d066b`'s `engine_diagnostic:` prefix fix and its red test as outstanding; wave 21's own
@@ -478,7 +534,7 @@ above).
 `completion_atlas.py --check`: corpus-wide clean (`unclassified=0 overlap=0
 done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False
 citation_failures=0`, exit 0). `--book core_rulebook --check` exits 1 — expected, book not yet
-100% (`B:470 C:193 D:366 M:778 V:114 U:10 X:115`). `citation_failures=0` — none of this wave's
+100% of 6,701 units (`B:470 C:193 D:366 M:778 V:114 U:10 X:115`). `citation_failures=0` — none of this wave's
 three lane-cycles' own line insertions broke a citation this time, no re-derivation needed.
 `cargo test --locked --no-run` exits 0, full workspace and `apps/desktop/src-tauri` tested
 explicitly as its own separate cargo workspace. No `src/**` file touched by this cycle itself.
@@ -751,8 +807,8 @@ measured under this shape.
 `completion_atlas.py --check`: corpus-wide clean (`unclassified=0 overlap=0
 done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False
 citation_failures=0`, exit 0). `--book core_rulebook --check` exits 1 — expected: that flag
-combination exits 0 only when a book is 100% done, and `core_rulebook` still carries 6 non-DONE
-buckets (`B:470 C:199 D:366 M:811 V:114 U:10 X:115`). `citation_failures=0` in the live run means
+combination exits 0 only when a book is 100% (of 6,701 units) done, and `core_rulebook` still
+carries 6 non-DONE buckets (`B:470 C:199 D:366 M:811 V:114 U:10 X:115`). `citation_failures=0` in the live run means
 none of the three lane-cycles' own line insertions shifted `completion_atlas.py`'s hardcoded
 citations enough to break them — no re-derivation needed this cycle. `cargo test --locked
 --no-run` exits 0, full workspace (5m58.348s) and `apps/desktop/src-tauri` tested explicitly as
@@ -1085,10 +1141,10 @@ the shared receipt, not silently rewritten into that cycle's own already-committ
 `completion_atlas.py --check`: corpus-wide clean (`unclassified=0 overlap=0
 done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False
 citation_failures=0`, exit 0). `--book core_rulebook --check` exits 1 — expected: that flag
-combination exits 0 only when a book is 100% done, and `core_rulebook` still carries 6 non-DONE
-buckets. `cargo test --locked --no-run` exits 0, full workspace (307s) and `apps/desktop/
-src-tauri` tested explicitly as its own workspace. No `src/**` file touched — all three folded-in
-cycles' own code was already committed.
+combination exits 0 only when a book is 100% (of 6,701 units) done, and `core_rulebook` still
+carries 6 non-DONE buckets. `cargo test --locked --no-run` exits 0, full workspace (307s) and
+`apps/desktop/src-tauri` tested explicitly as its own workspace. No `src/**` file touched — all
+three folded-in cycles' own code was already committed.
 
 `python3 scripts/wave_ledger.py`: `wf_195c6a9e-931` already carried `"19"` in `KNOWN_WAVES` — no
 script edit needed. Wave 19 ran **at least 2:09** through this cycle's own last check (`RUNNING`
@@ -2959,9 +3015,9 @@ is scratch tooling, not committed — `scripts/` outside `scripts/oracle_harness
 Standing gates re-checked, unaffected by this cycle (no bucket move, no corpus/inventory
 change): `python3 scripts/completion_atlas.py --check` → `population=49438 unclassified=0
 overlap=0`. Pre-existing, unrelated to this cycle: `denominator_gate.py --check` on this
-package reports `violations=3`, all inside `progress.md` lines quoting corpus prose ("75%
-chance...") from the already-merged `AT-34-E3-004` cycle — out of this criterion's file-touch
-set, not caused or fixed here. `box_ledger.py --check` (SD-33, inherited, read-only) reports
+package reports `violations=3`, all inside `progress.md` lines quoting corpus prose
+("75% chance...") from the already-merged `AT-34-E3-004` cycle — out of this criterion's
+file-touch set, not caused or fixed here. `box_ledger.py --check` (SD-33, inherited, read-only) reports
 `uncovered=19817` — pre-existing, SD-34 does not write to `THE-BOX.md`.
 
 `cargo test --locked --no-run` exits 0 at HEAD `2eabffa7a527ad10c6d13b37d8c2f04aab932fb8`; this
@@ -3587,8 +3643,8 @@ X=2 Z=0` (exit 1 for the same reason; zero of this book's units were touched by 
 four lanes).
 
 **`denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'`:** `files_checked=15
-violations=5`, all pre-existing verbatim-quoted corpus prose in `progress.md` ("75%
-chance..." from `FRT_HVY`'s own description), already flagged by the already-merged
+violations=5`, all pre-existing verbatim-quoted corpus prose in `progress.md`
+("75% chance..." from `FRT_HVY`'s own description), already flagged by the already-merged
 `AT-34-E3-004` cycle and every subsequent cycle that ran this check. Unchanged by this cycle.
 
 **Build scope, final HEAD (post-restoration):** `cargo test --locked --no-run` (workspace)

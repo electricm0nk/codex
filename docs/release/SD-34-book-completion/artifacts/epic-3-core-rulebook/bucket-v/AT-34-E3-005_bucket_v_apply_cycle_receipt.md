@@ -111,15 +111,12 @@ regenerated `docs/work-inventory.json` (after), by `id`, over all 49,438 units i
 
 ## Figures + re-derive commands
 
-- `core_rulebook` bucket V: **2,793 → 81** —
-  `python3 scripts/completion_atlas.py --book core_rulebook --check` (V row before/after this
-  commit; `docs/work-inventory.json` at each SHA).
-- `core_rulebook` bucket DONE: **1,503 → 4,215** (delta +2,712, matches V's delta exactly).
-- Corpus-wide V: **9,558 → 6,846** (delta -2,712) —
-  `python3 scripts/completion_atlas.py --check`.
-- Corpus-wide DONE: **14,741 → 17,453** (delta +2,712) — same command.
+- `core_rulebook` bucket V: **2,793 → 81** — `python3 scripts/completion_atlas.py --book core_rulebook --check` (V row before/after this commit; `docs/work-inventory.json` at each SHA).
+- `core_rulebook` bucket DONE: **1,503 → 4,215** (delta +2,712, matches V's delta exactly) — same `python3 scripts/completion_atlas.py --book core_rulebook --check` command, DONE row.
+- Corpus-wide V: **9,558 → 6,846** (delta -2,712) — `python3 scripts/completion_atlas.py --check`.
+- Corpus-wide DONE: **14,741 → 17,453** (delta +2,712) — same `python3 scripts/completion_atlas.py --check` command, DONE row.
 - Corpus-wide `unclassified=0 overlap=0 citation_failures=0` (10 citation line numbers corrected
-  this cycle, all caused by my own insertions upstream of the cited lines) — same command.
+  this cycle, all caused by my own insertions upstream of the cited lines) — same `python3 scripts/completion_atlas.py --check` command.
 - 81-unit remainder SET equality, not just count:
   `python3 -c "import json; a=set(json.load(open('docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/bucket-v/bucket-v-remainder.json'))['missing_unit_ids']); b=set(u['id'] for u in json.load(open('docs/work-inventory.json'))['units'] if u['book']=='core_rulebook' and u['status'] in ('literal-verified','fixture-verified')); print(a==b, len(a), len(b))"`
   → `True 81 81`.
@@ -129,9 +126,7 @@ regenerated `docs/work-inventory.json` (after), by `id`, over all 49,438 units i
   `python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/verify_capability_register.py`
   → `PASS: 11 capabilities named, X-bucket reconciliation sums to live population (170), 0
   flagged built_by_sd34=true`.
-- `oracle_probe_surface_for_no_table_kinds` capability population: **130 of 2,793** (`ability`
-  90, `template` 36, `companion` 4) —
-  `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); print(len([u for u in inv['units'] if u['status']=='oracle-unverifiable' and 'AT-33-E1-003 probe-surface census' in (u.get('reason') or '')]))"`.
+- `oracle_probe_surface_for_no_table_kinds` capability population: **130 of 2,793** (`ability` 90, `template` 36, `companion` 4) — `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); print(len([u for u in inv['units'] if u['status']=='oracle-unverifiable' and 'AT-33-E1-003 probe-surface census' in (u.get('reason') or '')]))"`.
 
 ## Row-count command output
 

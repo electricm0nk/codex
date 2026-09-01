@@ -104,13 +104,11 @@
     returns for the exact key handed in, and none of the 147 closure-only alias rows in this
     population happen to resolve to a base record that itself carries a `DAMAGE:` token.
     **One fix did not cover both shapes.**
-  - Corpus-wide bucket `M`: **5002 → 4971** (−31), out of population 49,438 (unchanged — 0
-    added, 0 removed). Re-derive: `python3 scripts/completion_atlas.py --check`. Corpus-wide
-    DONE: **24278 → 24309** (+31), same command.
+  - Corpus-wide bucket `M`: **5002 → 4971** (−31), out of population 49,438 (unchanged — 0 added, 0 removed): `python3 scripts/completion_atlas.py --check`. Corpus-wide DONE: **24278 → 24309** (+31), same `python3 scripts/completion_atlas.py --check` command.
   - **Whole-corpus before/after diff by unit id** (script written this cycle, comparing the
     pre-cycle committed `docs/work-inventory.json` at `50790d6bf9` — the last commit that
-    touched that file before this cycle's rebase base — against the local post-fix regen):
-    **49,438 units before, 49,438 after, 0 added, 0 removed, 37 changed.** 31 real status
+    touched that file before this cycle's rebase base — against the local post-fix regen).
+    Re-derive the before/after unit counts: `python3 -c "import json,subprocess; before=json.loads(subprocess.check_output(['git','show','50790d6bf9:docs/work-inventory.json'])); after=json.load(open('docs/work-inventory.json')); print(len(before['units']), len(after['units']))"` → `49438 49438`. **49,438 units before, 49,438 after, 0 added, 0 removed, 37 changed.** 31 real status
     transitions (`ingested-magnitude → grounded`), by book:
     `core_rulebook` 14, `ultimate_equipment` 5, `bestiary_3` 4, `inner_sea_races` 2,
     `ultimate_psionics` 2, `advanced_class_guide` 1, `advanced_players_guide` 1, `bestiary_2` 1,
@@ -124,7 +122,7 @@
     though it moves no bucket count. **The fix is generic by construction** — the same
     `equipment_key_is_wired` function every book's probe pass calls — and the movement proves
     it: 31 units closed across **9 books**, not just `core_rulebook`.
-  - `corpus_literal_sweep`: **48,708 examined of 51,482 read**, CLEAN, 0 findings, both before
+  - `corpus_literal_sweep`: **48,708 examined of 51,482 read** (`cargo run --locked --bin corpus_literal_sweep`), CLEAN, 0 findings, both before
     and after this cycle's own regen (no `data/corpus/**` file added or changed — only the
     engine classifier and the derived inventory changed).
 

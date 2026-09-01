@@ -11,7 +11,7 @@ Operator commission: (1) code review — gaps, improvements, bloat; report + low
 |---|---|---|---|---|
 | B1 | forward-plan.json number audit | sonnet | DONE | stale plan; live remainder 22,369 |
 | B2 | price the unpriced 45.7% (D/M/V/X/Z) | sonnet | DONE | live unpriced 6,469 = 28.9%; 5/5 buckets rate-less |
-| B3 | engine ROI ranking (136 mechanisms) | sonnet | DONE | live census 83 mech / 22 cover 90% (35 books) |
+| B3 | engine ROI ranking (136 mechanisms) | sonnet | DONE | live census 83 mech / 22 cover 90% of 22,369 units (35 books) |
 | B4 | bucket-B rate decomposition | sonnet | DONE | fast/slow 9.8×; composition projection overturned by synth |
 | B-SYNTH | backlog verdict + engine build order | opus | DONE | see §1 |
 | PC1–PC10 | pilot_compute/mod.rs (10 chunks) | sonnet | DONE | 60 findings |
@@ -45,7 +45,7 @@ The discipline that separates SD-32/33/34 successes from SD-31's failure: **name
 
 ### Proposed SD-35 shape (5 engines, ordered; details in B-SYNTH §3)
 1. **Kind-table loader extension** (power+companion): 449 units, ~0.1–0.6h — retires bucket A, cheapest gate rehearsal.
-2. **Display-class record placement**: 6,718 units (30.0% of remainder) — the biggest lever; cost bracket is honestly 10–60h *or* ~4,500h depending on whether the class_feature families behave like display placement or like core_rulebook's slow class. **Gated on card-1 spike measurement.**
+2. **Display-class record placement**: 6,718 of 22,369 units (30.0% of the 35-book remainder) — the biggest lever; cost bracket is honestly 10–60h *or* ~4,500h depending on whether the class_feature families behave like display placement or like core_rulebook's slow class. **Gated on card-1 spike measurement.**
 3. **wiring_class review classifier**: 1,446 bucket-D units — high relabel risk; success counted in →DONE only.
 4. **Widen formula/bonus engines vs bucket M**: 3,428 units; bracket 40–150h, low confidence; prove on `ability_content` (1,236) first.
 5. **Oracle probe surfaces for V residue**: 175 units; its real value is timing the oracle round-trip.
@@ -69,7 +69,7 @@ The operator rejected the 600–5,300h bucket-B bracket: the data is already mac
 - **The slow hours were transcription, not computation.** Receipts itemized (incl. the 617-min/2-unit cycle): the variable cost was reading tokens by eye, transcribing arithmetic into bespoke Rust, and hand-writing per-feature probes/tests — all of it replaced by interpreter + generic pass + oracle fixtures. Fixed per-pass costs (regen, sweeps, receipts) amortize.
 - **CHOOSE is small.** Genuinely choice-bearing units = 1,669 of 22,366 = **7.5%**, and the v0.6 Path-A canonical-default precedent covers them as policy.
 - **The old ban is dead.** SD-27 decisions.md §24.1 banned a formula interpreter; **SD-31 Decision 20 (operator, 2026-08-21) overturned it** — only the `derived_evaluator_fixture_check` gate still binds.
-- **Revised bracket (engine route): ~85–350h reaching 14,817 units (66.2%) directly**, vs 3,900–31,000h at measured hand-modeling rates. The brackets do not overlap under any reading. Non-collapsing remainder = 7,549 units (33.8%): bucket C surfacing 3,981, choice-bearing 1,669, PI-redacted 1,333, token-less 924, X/U/Z/V residue 418.
+- **Revised bracket (engine route): ~85–350h reaching 14,817 of 22,369 units (66.2%) directly**, vs 3,900–31,000h at measured hand-modeling rates. The brackets do not overlap under any reading. Non-collapsing remainder = 7,549 of 22,369 units (33.8%): bucket C surfacing 3,981, choice-bearing 1,669, PI-redacted 1,333, token-less 924, X/U/Z/V residue 418.
 
 **Superseding proposal for SD-35 step 1** (replaces §1's engine 2/4 framing; engines 1, 3, 5 stand): run the EXISTING interpreter + stack-reader as one corpus-wide pass over the 6,708 BONUS:VAR/DEFINE-bearing remainder units, oracle-fixture-verified (all machinery exists; only the pass is new). That converts the extrapolated bracket into a measured yield rate — and is itself the card-1 spike, cheaper and more direct than the 40h sampling plan in §1.
 

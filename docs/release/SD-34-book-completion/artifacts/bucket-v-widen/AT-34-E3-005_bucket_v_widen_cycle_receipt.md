@@ -111,13 +111,13 @@ own `kind` field. **30 of 30 passed, 0 drift found.** Command:
 |---|---:|---|
 | Population, non-`core_rulebook` bucket V | 6,765 | `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); print(len([u for u in inv['units'] if u['status'] in ('literal-verified','fixture-verified') and u['book']!='core_rulebook']))"` (run **before** this cycle's regen, against the pre-cycle `docs/work-inventory.json`) |
 | Dispositioned this cycle (of 6,765) | 6,590 (97.4% of 6,765) | `python3 -c "import json; d=json.load(open('.../bucket-v-corpus-wide-consolidated.oracle-results.json')); print(len(d['results']))"` → `6590` |
-| — via SD-33's combined oracle ledger | 5,748 of 6,590 (87.2% of 6,590) | row count of ledger entries whose `_source`/provenance is the combined file (script above) |
-| — via `AT-33-E1-003` no-probe-surface census | 842 of 6,590 (12.8% of 6,590) | same script, entries citing the census |
-| `agree` verdicts | 426 of 6,590 | `python3 -c "import json,collections; print(collections.Counter(r['verdict'] for r in json.load(open('.../bucket-v-corpus-wide-consolidated.oracle-results.json'))['results']))"` |
-| `unverifiable` verdicts | 6,164 of 6,590 | same command |
-| `disagree` verdicts | **0** | same command — key absent entirely |
+| — via SD-33's combined oracle ledger | 5,748 of 6,590 (87.2% of 6,590) | `python3 -c "import json,collections; print(collections.Counter(r['_source'] for r in json.load(open('.../bucket-v-corpus-wide-consolidated.oracle-results.json'))['results']))"` → `.../AT-33-E5-003.combined-oracle-results.json: 5748` |
+| — via `AT-33-E1-003` no-probe-surface census | 842 of 6,590 (12.8% of 6,590) | same `_source`-Counter command above → `.../probe-surface-census.json: 842` |
+| `agree` verdicts | 426 of 6,590 | `python3 -c "import json,collections; print(collections.Counter(r['verdict'] for r in json.load(open('.../bucket-v-corpus-wide-consolidated.oracle-results.json'))['results']))"` → `agree: 426` |
+| `unverifiable` verdicts | 6,164 of 6,590 | same verdict-Counter command above → `unverifiable: 6164` |
+| `disagree` verdicts | **0** | same verdict-Counter command above — `disagree` key absent entirely |
 | Remainder, not dispositioned | 175 of 6,765 (2.6% of 6,765) | `python3 -c "import json; print(json.load(open('.../bucket-v-widen-remainder.json'))['remainder_count'])"` → `175`; SET-verified against `docs/work-inventory.json`'s own post-regen `literal-verified`/`fixture-verified` non-`core_rulebook` ids (see "Whole-corpus diff" below) |
-| Freshness-check sample size | 30 of 6,590 (0.5%) | see "Freshness check" above |
+| Freshness-check sample size | 30 of 6,590 (0.5%) | the Freshness-check command two sections above (`python3 -c "import json,random; ..."` → `OK 30`) |
 | Corpus-wide bucket V, before this cycle | 6,846 | `python3 scripts/completion_atlas.py --check` (V row, pre-cycle HEAD) |
 | Corpus-wide bucket V, after this cycle | **256** | `python3 scripts/completion_atlas.py --check` (V row, post-cycle) — 256 = 81 (`core_rulebook`, untouched) + 175 (this cycle's own named remainder) |
 | Corpus-wide DONE, before → after | 17,576 → 24,166 (+6,590) | `python3 scripts/completion_atlas.py --check` (DONE row, before/after) |

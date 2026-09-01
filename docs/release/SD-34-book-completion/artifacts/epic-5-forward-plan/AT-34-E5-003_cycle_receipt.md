@@ -127,7 +127,7 @@ PASS: power population=421 (4 cross-checks agree), directory-match confirmed, ra
 ## Figures + their re-derive commands
 
 - `population=49438 buckets=10 unclassified=0 overlap=0` — `python3 scripts/completion_atlas.py --check` (whole-corpus denominator).
-- `power` population: **421 of 49,438** corpus-wide — four independent cross-checks above, all agreeing.
+- `power` population: **421 of 49,438** corpus-wide — four independent cross-checks (lines 31-38 above), all agreeing; re-derive via `python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/verify_power_table_cost.py` → `PASS: power population=421 (4 cross-checks agree)`.
 - `ultimate_psionics` book total: **3,498** — `python3 -c "import json,sys; sys.path.insert(0,'scripts'); import completion_atlas as ca; d=json.load(open('docs/work-inventory.json')); print(ca.partition(d['units'], book='ultimate_psionics')['examined'])"`.
 - `ultimate_psionics` live bucket counts (of 3,498): `DONE=803 A=421 B=711 C=289 D=465 M=427 U=10 V=372` — same command, `.counts`.
 - Projected marginal lines for `power`: **2–7**, of the 6 matched-directory comparator kinds (`table-build-rate.json`'s own measured/estimated per-kind figures) — `docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/power-table-cost.json`, `rate_derivation.projected_marginal_lines_range`.

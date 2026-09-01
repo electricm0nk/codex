@@ -81,7 +81,7 @@ PASS: 10 capabilities named, X-bucket reconciliation sums to live population (17
 ## Figures + their re-derive commands
 
 - `population=49438 buckets=10 unclassified=0 overlap=0` — `python3 scripts/completion_atlas.py --check` (denominator for every figure below).
-- Bucket X live population: **171 of 49,438** — same command, `X:` row.
+- Bucket X live population: **171 of 49,438** — same `python3 scripts/completion_atlas.py --check` command, `X:` row.
 - `power` kind, `ultimate_psionics`: **421** — status==`engine-does-not-hold` AND evidence contains `has_no_engine_table` AND kind==`power`, over `docs/work-inventory.json`; cross-checked against `artifacts/epic-1-atlas/missing-engine-tables.json`'s own `power.count`.
 - `companion` kind, `bestiary`: **28** — same query, kind==`companion`; cross-checked against `missing-engine-tables.json`'s `companion.count`.
 - `per_character_choice_filter`: **113 of 171** X units — status==`deferred-with-reason` AND evidence matches `combat_style_feat_pool.option.` / `bloodline_feat_pool.option.` / `progression_subchoices_unresolved`, over `docs/work-inventory.json`.

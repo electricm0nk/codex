@@ -62,7 +62,7 @@ re-derivation from `forward-plan.json`:**
 - Cheapest two (tied, both 1 unit / bucket U / 0.025h): `advanced_players_guide`,
   `inner_sea_taverns`.
 - Most expensive of the 19 ranked: `ultimate_equipment` — 1.068h across 44 priced units of
-  1,477 remaining (97.0% of that book's remaining population is unpriced, dominated by bucket V).
+  1,477 remaining (97.0% of 1,477 is unpriced, dominated by bucket V).
 
 **Single-bucket books, flagged by name:** exactly **1** of 35 — `beginner_box` (19 units, all
 bucket `Z`; zero measured Z-clearing rate exists anywhere in this bundle, so it also lands in
@@ -109,7 +109,7 @@ PASS: 19 ranked + 16 unrankable = 35 books, sorted ascending by priced_to_done_h
 - 35 books / 19 ranked / 16 unrankable — `python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_ordered_plan.py`, then read `ordered-plan.json`'s `population` object.
 - 1 single-bucket book (`beginner_box`, bucket `Z`, 19 of 19 of that book's remaining units) — same artifact, `.single_bucket_books`, of the 35-book population.
 - Cheapest ranked (tied): `advanced_players_guide` and `inner_sea_taverns`, both 1 priced unit / 0.025h midpoint — same artifact, `.ranked_by_priced_to_done_cost[0:2]`.
-- Priciest ranked: `ultimate_equipment`, 44 priced units of 1,477 remaining (2.98% priced), 1.068h midpoint — same artifact, `.ranked_by_priced_to_done_cost[-1]`.
+- Priciest ranked: `ultimate_equipment`, 44 priced units of 1,477 remaining (2.98% priced), 1.068h midpoint — `python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_ordered_plan.py`, then read `ordered-plan.json`'s `.ranked_by_priced_to_done_cost[-1]`.
 - Denominator gate against this package: `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` → `files_checked=15 violations=4` — all 4 pre-existing in `progress.md` (verbatim-quoted corpus prose, "75% chance..."), already flagged and attributed by the already-merged `AT-34-E3-004` cycle (confirmed by line numbers 260, 303, 360, 366, unchanged from that cycle's own receipt); this cycle's new files are `.py`/`.json` only and its `progress.md`/`kanban.md` edits contain no bare percentage.
 
 ## Row-count command output
