@@ -64,6 +64,8 @@ KNOWN_WAVES = {
                               "and turn the committed-inventory test green"),
     "wf_56c5bcae-8f5": ("22", "UC lane's first task is the trait-picker no-stub gap it found "
                               "(4 of 7 tables chained); first wave after the 104 GB worktree sweep"),
+    "wf_4a1d662c-fd1": ("23", "GATE wave -- all three lanes retargeted from bucket mining to "
+                              "the 14 red verify.sh stages the fable review found"),
 }
 
 
