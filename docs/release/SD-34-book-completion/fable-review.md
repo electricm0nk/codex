@@ -166,3 +166,4 @@ After the bloat-fix batches land and the final full `scripts/verify.sh` is green
 - Backlog assessment (B1–B4 + B-SYNTH): Workflow run `wf_c656b776-955`, launched 2026-08-31. Script: session workflows dir, `fable-backlog-assessment-wf_c656b776-955.js`.
 - Code review (PC1–PC10, R8–R14, H1–H2 + verify + clearance): Workflow run `wf_23734e3f-d67`, launched 2026-08-31. Script: `fable-code-review-wf_23734e3f-d67.js`.
 - Lane statuses B1–B4, B-SYNTH, all review lanes: RUNNING as of launch.
+- Bloat-fix batches A–E + audit: Workflow run `wf_9ba4044a-ff5` (script `fable-bloat-fixes.js`), launched 2026-08-31 after the baseline sweep. Pass bar: zero NEW test failures beyond the 5 pre-existing lib suites (§7).
