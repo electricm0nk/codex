@@ -282,13 +282,17 @@ mod tests {
     kind_holds_named_record!(skill_table_holds_craft_rope, "skill", "bestiary_2", "Craft (Rope)");
     kind_holds_named_record!(language_table_holds_xenophobic, "language", "advanced_race_guide", "Xenophobic");
 
-    /// `AT-34-E3-001` (`domain`, 1 unit): `Death (Pharasma)` at
-    /// `cr_domains.lst:46` is PI-redacted at ingestion (the domain's own
-    /// name embeds the deity `Pharasma`) -- its corpus record's `key`/`name`
-    /// are rewritten to `Codex-Named Unit (...)`, so a plain `resolve` by
-    /// the record's REAL corpus name (what `docs/work-inventory.json`'s
-    /// unit carries as `corpus_key`) never finds it, even though the
-    /// record physically exists. `resolve_by_coordinate` matches on the
+    /// `AT-34-E3-001` (`domain`, 1 unit): the domain at `cr_domains.lst:46`
+    /// is PI-redacted at ingestion, because its own name embeds a
+    /// Product-Identity deity name -- its corpus record's `key`/`name` are
+    /// rewritten to `Codex-Named Unit (...)`, so a plain `resolve` by the
+    /// record's REAL corpus name (what `docs/work-inventory.json`'s unit
+    /// carries as `corpus_key`) never finds it, even though the record
+    /// physically exists. The real name is deliberately NOT spelled out in
+    /// this comment; the single assertion below is the only place in this
+    /// file that needs the literal, and it is baselined in
+    /// `docs/governance/pi-sweep-baseline.tsv` as a false positive because
+    /// it asserts the name does NOT resolve. `resolve_by_coordinate` matches on the
     /// record's own stored `(book, source_file, source_line)` instead --
     /// never reading, logging, or reconstructing the redacted real name --
     /// and returns the SAME masked-key record.

@@ -25,3 +25,4 @@ src/rules_core/rules_tables/crb/bard_spell_list.rs	Nex	1	false-positive	same "Ne
 src/rules_core/rules_tables/crb/sorcerer_spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
 src/rules_core/rules_tables/crb/wizard_spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
 src/rules_core/rules_tables/ultimate_magic/equipment_tables.rs	Geb	1	false-positive	blacklist term "Geb" (a place name) inside the unrelated proper noun "Gebr" — the example license-matrix.md already records
+src/rules_core/rules_tables/simple_kind_tables.rs	Pharasma	1	false-positive	AT-34-E3-001 negative assertion: proves the PI-redacted domain name does NOT resolve directly (resolve_by_coordinate returns the masked record instead). The literal is the thing under test -- removing it would delete the proof that redaction works. Two further prose occurrences were removed rather than baselined, so this file carries the minimum PI surface the test needs.
