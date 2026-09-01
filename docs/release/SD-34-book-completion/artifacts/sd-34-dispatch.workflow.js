@@ -545,7 +545,23 @@ const REGEN_SCHEMA = {
 }
 
 function regenPrompt(laneSummaries) {
-  return 'You are the SINGLE regeneration-and-attribution cycle that closes this wave of bundle SD-34, in '
+  return 'You are the SINGLE closing cycle of a GATE-REMEDIATION wave for bundle SD-34, in '
+    + '/home/ubuntu/workspace/repos/codex on branch ' + BT + 'tranche/14' + BT + '. Three lanes just fixed failing '
+    + 'verify.sh stages. **Your job is the full sweep, NOT a regeneration** — do not run the inventory '
+    + 'regenerator or the dashboard producer (the review names both as silent stamp-droppers).\n\n'
+    + '1. ' + BT + 'git fetch origin tranche/14 && git rebase origin/tranche/14' + BT + '.\n'
+    + '2. Run ' + BT + 'bash scripts/verify.sh' + BT + ' (full, not quick). It is long — foreground it.\n'
+    + '3. Report the stage table: which PASS, which FAIL, and the count of each.\n'
+    + '4. **The bar is: same-or-fewer red stages than the 14 the review recorded, and ZERO stages that '
+    + 'were green going red.** A stage that flipped green->red is a regression this wave caused and must be '
+    + 'named, not averaged away.\n'
+    + '5. Baseline note the review flagged: ' + BT + 'BASELINE_CORPUS_LITERAL_RECORDS' + BT + ' 26500 -> 48708 needs a '
+    + 'DELIBERATE update. Update it only if you can state why the new number is right.\n\n'
+    + 'Write the receipt with the before/after stage counts. Do not claim the gate is green unless every '
+    + 'stage exits 0.\n\nIGNORE the regeneration instructions that follow if they conflict with the above.\n\n'
+    + 'Historical context for this wave (three lanes just reported):\n\n'
+    + '## What the lanes reported\n\n' + laneSummaries + '\n\nLEGACY REGEN PROCEDURE (reference only):\n'
+    + 'You are the SINGLE regeneration-and-attribution cycle that closes this wave of bundle SD-34, in '
     + '/home/ubuntu/workspace/repos/codex on branch ' + BT + 'tranche/14' + BT + '. Four lanes just landed engine changes and '
     + 'DELIBERATELY did not regenerate ' + BT + 'docs/work-inventory.json' + BT + '. You do it once, for all of them.\n\n'
     + '## What the lanes reported\n\n' + laneSummaries + '\n\n'
@@ -629,109 +645,91 @@ function salvageNote(branch, what) {
   return '\\n\\n## Start from the rescued work, do not redo it\\n\\n**`origin/' + branch + '` holds your predecessor\'s uncommitted work**, rescued after the host killed the box mid-run: ' + what + '. Read it FIRST — `git diff 1ea93e99ce origin/' + branch + '` — and build on whatever is sound.\\n\\n**It is an unreviewed checkpoint, not a result.** Nothing in it was verified, tested, or measured, and its author never got to check it. Treat every line as a claim to confirm, not a fact to inherit: keep what survives your own review, fix what does not, and say in your receipt which parts you kept and which you discarded and why. Do not cite it as evidence and do not carry any figure out of it un-re-derived.';
 }
 
+
+// WAVE 23 RETARGET. The operator-commissioned fable review found tranche/14 does not pass
+// its own gate -- 14 of 40 verify.sh stages red, and already red at wave-22's own commit.
+// Turning them green IS SD-34's remaining card work (fable-review.md section 7), so these
+// three lanes stop mining buckets and fix the gate. Two stages are already green again:
+// pi-sweep (104519e553) and reachability-audit + shape-coverage-standing-gate (58b4f837cc),
+// the latter being the dominant root cause -- wave-22's restamp introduced `oracle-agree`
+// and `oracle-unverifiable` with no doneness rule. Content lanes resume once the gate is green.
+
 function ucLanePrompt() {
-  return cycleProcedurePrompt({ id: 'AT-34-E4-002', dir: 'epic-4-ultimate-campaign',
-    title: 'drive Ultimate Campaign to zero — extend the trait/drawback capability, pillar by pillar.\n\n'
-      + 'Bar: ' + BT + 'DONE = 265 of 265' + BT + '. Re-derive the split yourself before anything else; measured at '
-      + 'HEAD a0cbc2388a: ' + BT + 'DONE 203' + BT + ', 37 ' + BT + 'ingested-magnitude' + BT + ' (bucket M), 21 '
-      + BT + 'unmeasurable' + BT + ' (U), 2 ' + BT + 'deferred-with-reason' + BT + ' (D), 2 ' + BT + 'engine-does-not-hold' + BT + ' (X). '
-      + 'Bucket V is **0** — closed corpus-wide by AT-34-E3-005, not by you; do not re-open or re-claim it.\n\n'
-      + '**The capability EXISTS and is seven cycles old. You are extending it, not starting it.** Read '
-      + BT + 'artifacts/epic-4-ultimate-campaign/AT-34-E4-002_cycle_receipt_9.md' + BT + ' FIRST — it is the newest, and its '
-      + '"next cycle" section names your work. Do NOT read receipt_3 as current: it describes a repo state seven cycles '
-      + 'gone, and a lane already lost time to that. `src/rules_core/trait_effects.rs` now holds real tables, real '
-      + 'producers, and a real desktop picker in `apps/desktop/src-tauri/src/trait_picker.rs`.\n\n'
-      + '**The proven idiom is: one BONUS token shape at a time, reusing an existing consumer.** Four pillars are done '
-      + 'this way — skills, saves, initiative, concentration — each a small table plus a producer feeding a consumer that '
-      + 'already existed (`ground_orphan_feat_facts` is the pattern). Take the next cheapest shape from receipt_7`s '
-      + 'remainder and do the same.\n\n'
-      + '**A record leaves M only when EVERY one of its BONUS tokens computes.** `Trait ~ Arcane Temper` carries two '
-      + 'independently-pillared tokens and only went DONE once both fixture-executed. Never part-credit a record on one '
-      + 'of its tokens.\n\n'
-      + '**FIX THE PICKER GAP FIRST — it is a live no-stub violation.** '
-      + BT + 'apps/desktop/src-tauri/src/trait_picker.rs' + BT + '`s ' + BT + 'list_available_character_traits' + BT + ' chains only '
-      + '4 of the module`s 7 tables, so 7 already-computed traits (Tactician, Arcane Temper, Desperate Resolve, '
-      + 'Bruising Intellect, Planar Savant, Pragmatic Activator, Precise Treatment) **cannot be selected in the '
-      + 'character creator at all**. Cycle 9 found this and logged it; cycles 7 and 8 had claimed the picker '
-      + '"surfaces every selected trait generically", which only holds for a trait already selected some other way. '
-      + 'Chain all 7 tables, prove each option is reachable AND grants its bonus, and say in your receipt that the '
-      + 'earlier claim was wrong. Then take your next slice.\n\n'
-      + '**No stubs** (' + BT + 'docs/governance/no-stub-mvp-doctrine.md' + BT + '): a selector that renders but grants '
-      + 'nothing is a doctrine violation, and so is a compute path with no UI reaching it. Ship a narrow slice that '
-      + 'genuinely works rather than a wide one that does not.\n\n'
-      + '**Key on the KIND, not the book.** This same evidence shape is 1,665 of 49,438 units corpus-wide, so a '
-      + 'kind-keyed fix pays beyond ' + BT + 'ultimate_campaign' + BT + ' when the corpus KEY is shared — check, do not assume; the last two cycles found 3 shared and 0 shared. Report the corpus-wide movement, not just this '
-      + 'book\'s.\n\n'
-      + '**Territory:** you own the trait/ability compute paths and ' + BT + 'CharacterInput' + BT + '. A sibling lane owns the '
-      + 'EQUIPMENT sub-causes and another owns the explanation-id wiring — do not touch either.\n\n'
-      + 'U(21), D(2), X(2) were re-checked last cycle and are NOT yours to reopen. A unit leaves M only when its value is '
-      + 'genuinely computed and applied, never relabelled. M→D is reclassification; say which is which. A cycle here once '
-      + 'claimed 8 closures where measurement found 1.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE + FRESH_BASE_RULE
-      + salvageNote('salvage/wave14-lane1','the trait-capability build, TWICE rescued and now the furthest-along version -- it already contains `salvage/wave13-lane1` (three NEW files `src/rules_core/trait_effects.rs`, `apps/desktop/src-tauri/src/trait_picker.rs`, `apps/desktop/src/boundary/loadCharacterTraits.ts`, plus +81 lines in `character_input.rs` and +111 in `CreateCharacterForm.tsx`) MERGED and reviewed by your immediate predecessor, who then extended it before an operator-requested restart cut it short. Start here, NOT from `salvage/wave13-lane1`, which this supersedes') })
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'GATE LANE A — the Rust test suites: root-lib, root-full, desktop, reach.\n\n'
+      + 'Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + ' section 7 FIRST — it is the '
+      + 'review that found this, with the failing-stage table and how each was attributed.\n\n'
+      + '**Your stages:** ' + BT + 'root-lib' + BT + ' (5 failing lib suites), ' + BT + 'root-full' + BT + ' (47 failing '
+      + 'suites of ~600, 8,289 passing), ' + BT + 'desktop' + BT + ', ' + BT + 'reach' + BT + '. Also ' + BT + 'clippy' + BT + ' '
+      + '(root 86 warnings, desktop 25 against a ceiling of 7) since it lives in the same files.\n\n'
+      + '**The cause is one thing, mostly.** Wave 22 restamped bucket-V units with two new statuses, '
+      + BT + 'oracle-agree' + BT + ' (811 units) and ' + BT + 'oracle-unverifiable' + BT + ' (8,491), and moved counts. '
+      + 'Suites across sd18/sd20/sd24/sd26/sd27/sd30/sd31 carry hardcoded census numbers and status '
+      + 'matches that predate that. The producer-side doneness table is ALREADY FIXED (58b4f837cc) — read '
+      + 'that commit to see the reasoning, and apply the SAME reading: both words are refinements of '
+      + BT + 'literal-verified' + BT + '/' + BT + 'fixture-verified' + BT + ', never a new tier, and '
+      + BT + 'oracle-unverifiable' + BT + ' is NOT weaker (the oracle could not look; that is a blind spot in the '
+      + 'instrument, not evidence against the record).\n\n'
+      + '**Update a hardcoded count only after re-deriving it from the repo**, and say in your receipt what '
+      + 'the old and new numbers were and which command produced the new one. A count changed to match '
+      + 'whatever the suite currently prints is not a fix — it is the assertion deleted. If a suite is red '
+      + 'because the CODE is wrong rather than the number, fix the code and say so.\n\n'
+      + '**Territory:** you own ' + BT + 'src/' + BT + ', ' + BT + 'tests/' + BT + ' and the clippy warnings in them. '
+      + 'Lane B owns ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '; lane C owns ' + BT + 'docs/' + BT + '. '
+      + 'The desktop crate\'s own failing tests are YOURS only where they live under ' + BT + 'src-tauri/src/' + BT + '.\n\n'
+      + 'Bar: every stage you own exits 0, with ZERO stages that were green going red. Report the '
+      + 'before/after failing-suite counts, not an impression.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
-// Wave 13 replaces the bucket-V ledger lane: AT-34-E3-005's ledger landed at cfd9c6d3d9 and its
-// re-verification at 68117a505f, and `--book core_rulebook --check` now reports V=81 (was 2,793).
-// Re-dispatching a criterion whose work is done is exactly the duplicate-dispatch incident logged
-// at ab65a090ef, so the slot moves to bucket C — the largest single-mechanism block left in the book.
 function cLanePrompt() {
-  return cycleProcedurePrompt({ id: 'AT-34-E3-002', dir: 'epic-3-core-rulebook',
-    title: 'bucket C for the Core Rulebook — 193 of 6,701, sixth pass on the pool-group seam.\n\n'
-      + 'Re-derive first; measured at HEAD 5e0ba466a5: ' + BT + 'core_rulebook' + BT + ' bucket C = **193** (351 -> 296 -> 233 -> 201 -> 199 -> 193; the seam is nearly mined out, so expect small yields and say so rather than forcing one). '
-      + '**Do not inherit the old "all one evidence string" framing — wave 16 disproved it.** That wave closed 38 C '
-      + 'units for real (Electricity Resistance and siblings, via the already-shipped generic pool-group compute pass '
-      + 'the classifier had simply never consulted) and moved 17 more C→V. Both numbers are corpus-derived, not '
-      + 'reported: bucket-diff the inventory yourself and you will see them.\n\n'
-      + 'So your 296 are the RESIDUE after the easy uniform slice was taken. Expect several distinct shapes, not one. '
-      + 'Enumerate them before you build anything, and name each with its own population.\n\n'
-      + 'The prior cycle (' + BT + 'artifacts/epic-3-core-rulebook/AT-34-E3-002_cycle_receipt.md' + BT + ' — READ IT FIRST) closed '
-      + '42 of 414 via the paired display/chassis record mechanism (Favored Enemy + Favored Terrain) and named 8 '
-      + 'sub-causes. Start from its named remainder; do not re-derive it from scratch, but DO confirm its stated reasons '
-      + 'still hold — this bundle has had one cycle disprove another\'s stated reason.\n\n'
-      + '**A unit leaves C when the feature genuinely gains an explanation id or a diagnostic that names it** — a real '
-      + 'wire-up a player or a developer can actually see, never a relabel and never a broadened matcher that merely '
-      + 'stops the check firing. If the honest answer for a sub-cause is "the explanation surface does not exist yet", '
-      + 'that is bucket B/M work and belongs in the remainder with its mechanism named, not force-closed here.\n\n'
-      + '**Build generically.** These are KINDS. A recent generic fix closed 123 units across 6 books from one change; '
-      + 'the ledger records ~345 units/hour for generic work against ~20 for book-scoped. Report corpus-wide movement.\n\n'
-      + '**Territory:** you own the explanation-id / diagnostic-naming wiring. A sibling lane owns the EQUIPMENT '
-      + 'magnitude sub-causes and another owns trait/ability compute + ' + BT + 'CharacterInput' + BT + ' — do not touch either.\n\n'
-      + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 357.** Return ' + BT + 'partial' + BT + ' with '
-      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE + FRESH_BASE_RULE
-      + salvageNote('salvage/wave13-lane2','bucket-C work -- +303 lines in `src/bin/v06_work_inventory.rs`, edits to `scripts/completion_atlas.py`, and a substantially rewritten `AT-34-E3-002_cycle_receipt.md`') })
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'GATE LANE B — frontend, the missed version bump, and the stale site feeds.\n\n'
+      + 'Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + ' section 7 FIRST.\n\n'
+      + '**Your stages:** ' + BT + 'frontend-test' + BT + ' (4 of 100 files), ' + BT + 'site-dashboard-check' + BT + ', '
+      + BT + 'site-public-status-check' + BT + '.\n\n'
+      + '**A real release defect, already confirmed — do this one first.** The tranche/14 version bump '
+      + 'reached 2 of 3 version files. Measured at HEAD 58b4f837cc:\n'
+      + '  - ' + BT + 'apps/desktop/package.json' + BT + ' = 0.14.0 (correct)\n'
+      + '  - ' + BT + 'apps/desktop/src-tauri/tauri.conf.json' + BT + ' = 0.14.0 (correct)\n'
+      + '  - ' + BT + 'apps/desktop/src-tauri/Cargo.toml' + BT + ' = **0.11.0** (two tranches stale)\n'
+      + 'So the desktop app\'s Rust crate reports a version from two tranches ago. Fixtures still expect '
+      + '0.11.0 too (' + BT + 'composeEnhancementRequest.test.ts' + BT + ', ' + BT + 'loadTesterWorkbenchSurface.test.ts' + BT + ', '
+      + BT + 'buildLabelFixtureFreshness.test.ts' + BT + '). Bump the crate and move the fixtures with it. Note that '
+      + 'the root ' + BT + 'Cargo.toml' + BT + ' reads 0.1.0 and is a DIFFERENT question — it has never tracked the '
+      + 'tranche digit; do not "fix" it without establishing what it is supposed to be, and say which you did.\n\n'
+      + '**Also:** race-trait count 596 -> 605 stale, and the committed site feeds are stale against the '
+      + 'wave-22 inventory. Re-derive the count; do not copy 605 from this brief.\n\n'
+      + '**Hazard the review names explicitly:** do NOT run the inventory regenerator or the dashboard '
+      + 'producer from this lane — both can silently drop stamps. If a feed can only be refreshed by running '
+      + 'the producer, say so in your receipt and leave it for the wave\'s regeneration cycle.\n\n'
+      + '**Territory:** ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '. Lane A owns ' + BT + 'src/' + BT + ' and '
+      + BT + 'tests/' + BT + '; lane C owns ' + BT + 'docs/' + BT + '.\n\n'
+      + 'Bar: your stages exit 0, nothing green goes red.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 function mLanePrompt() {
-  return cycleProcedurePrompt({ id: 'AT-34-E3-003', dir: 'epic-3-core-rulebook',
-    title: 'bucket M for the Core Rulebook — the EQUIPMENT magnitude sub-causes, of the 778 left.\n\n'
-      + 'Definition: magnitude ingested, never computed or applied. **The instrument already exists** — that is what '
-      + 'separates this from bucket B, whose remainder needs new subsystems built.\n\n'
-      + 'Re-derive the sub-causes; do not trust inherited figures OR inherited reasons — this bundle has had a cycle '
-      + 'disprove another\'s stated reason. Measured at HEAD 651966b83e, ' + BT + 'core_rulebook' + BT + ' bucket M = **972** '
-      + '(down from 1,048; the last cycle closed 76 via ' + BT + 'skill_content' + BT + ', see '
-      + BT + 'artifacts/epic-3-core-rulebook/' + BT + '\'s AT-34-E3-003 receipts and commit 4d27d70551). Split: '
-      + BT + 'equipment_table_entry_with_corpus_magnitude' + BT + ' 276, '
-      + BT + 'ability_content_table_holds_record_magnitude_not_yet_computed' + BT + ' 217, '
-      + BT + 'equipment_own_line_has_no_magnitude_but_closure_wiring_class_does' + BT + ' 147, '
-      + BT + 'race_trait_generic_table_holds_record_magnitude_not_yet_computed' + BT + ' 119, '
-      + BT + 'template_content_table_holds_record_magnitude_not_yet_computed' + BT + ' 96, '
-      + BT + 'in_catalog_with_corpus_magnitude_but_no_observed_consumer' + BT + ' 47.\n\n'
-      + '**Your territory this wave is the two EQUIPMENT sub-causes (276 + 147 = 423).** A sibling lane owns '
-      + 'trait/ability compute and ' + BT + 'CharacterInput' + BT + ', and another owns explanation-id wiring — so '
-      + BT + 'ability_content' + BT + ', ' + BT + 'race_trait_generic' + BT + ' and ' + BT + 'template_content' + BT + ' are OFF LIMITS '
-      + 'this cycle even though they are bucket M. Two lanes editing one compute path has cost this bundle a full cycle '
-      + 'before.\n\n'
-      + 'Note the two equipment shapes are genuinely different: 276 have a magnitude on their own line, 147 do NOT and '
-      + 'are classified by their closure wiring class instead. Read real corpus records for both before assuming one fix '
-      + 'covers them, and say in your receipt whether it did.\n\n'
-      + '**Build generically — the payoff is measured.** A recent generic fix closed 123 units across 6 books from one '
-      + 'change; the ledger records ~345 units/hour for generic work against ~20 for book-scoped. These sub-causes are '
-      + 'KINDS, so a fix keyed on the kind\'s compute path is corpus-wide by construction. Report corpus-wide movement, '
-      + 'not just this book\'s.\n\n'
-      + 'Take the largest sub-cause you can finish end-to-end. **Do not attempt all 423.** Return ' + BT + 'partial' + BT + ' with '
-      + 'every remaining unit named by sub-cause, populations summing exactly.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + NO_RELABEL_RULE + FRESH_BASE_RULE
-      + salvageNote('salvage/wave13-lane3','equipment bucket-M work -- +128 lines in `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py` edits, and a NEW receipt `AT-34-E3-003_m_bucket_equipment_cycle_receipt.md`') })
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'GATE LANE C — denominator-gate (26 violations) and figure-provenance (32).\n\n'
+      + 'Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + ' section 7 FIRST.\n\n'
+      + '**Your stages:** ' + BT + 'denominator-gate' + BT + ' and ' + BT + 'figure-provenance' + BT + '. Every violation is '
+      + 'in SD-34\'s OWN documents — ' + BT + 'progress.md' + BT + ' and the epic-3 / epic-5 receipts. This is our own '
+      + 'mess, written by our own lanes over 22 waves.\n\n'
+      + 'Re-derive both violation lists yourself:\n'
+      + '  ' + BT + 'python3 scripts/denominator_gate.py --check \'docs/release/SD-34-book-completion/*.md\'' + BT + '\n'
+      + '  (and the figure-provenance stage\'s own command, from ' + BT + 'scripts/verify.sh' + BT + ')\n\n'
+      + '**Several are false positives and must be recorded as such, not "fixed".** Prior cycles repeatedly '
+      + 'found the denominator gate flagging verbatim-quoted corpus prose — a rules quote containing "75% '
+      + 'chance" is not an ungrounded figure, it is a quotation. Do not reword a corpus quote to appease a '
+      + 'gate. If the gate has no baseline mechanism for quoted prose, propose one and say so.\n\n'
+      + '**For the genuine ones:** every figure states its denominator in the same construct, and carries the '
+      + 'command that re-derives it. That is the standing rule these documents were supposed to follow.\n\n'
+      + '**Territory:** ' + BT + 'docs/' + BT + ' only. Lane A owns ' + BT + 'src/' + BT + '/' + BT + 'tests/' + BT + '; lane B '
+      + 'owns ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '. You may edit ' + BT + 'scripts/denominator_gate.py' + BT + ' '
+      + 'ONLY to add a baseline mechanism, never to weaken what it detects.\n\n'
+      + 'Bar: both stages exit 0. Report violations before and after, and how many were real versus quoted '
+      + 'prose.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
+
 
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
@@ -744,23 +742,23 @@ async function runBucketBMechanisms() {
   // build in src/rules_core + apps/desktop) and was disjoint from both in wave 13's own diff,
   // so it still runs alongside. Serializing costs wall-clock, which no longer matters: the
   // 20-minute checkpoint rule means a host reset costs minutes regardless of how long a wave is.
-  log('wave 14: UC in parallel with (C then M, serialized on the classifier), then ONE regeneration')
+  log('wave 23 (GATE): lane A in parallel with (lane B then lane C), then ONE full verify.sh sweep')
 
   const [uc, [vled, m]] = await parallel([
-    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'UC: build trait capability', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'A: rust suites + clippy', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     async () => {
-      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'C: core_rulebook 357', schema: CYCLE_SCHEMA, isolation: 'worktree' })
-      log('C -> ' + (c && c.status) + '; starting M (classifier now free)')
-      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'M: equipment 423', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: frontend + version bump', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      log('B -> ' + (c && c.status) + '; starting C (docs gates)')
+      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: denominator + provenance', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       return [c, mm]
     },
   ])
   log('UC -> ' + (uc && uc.status) + ' | C -> ' + (vled && vled.status) + ' | M -> ' + (m && m.status))
 
-  const summary = [['UC', uc], ['C', vled], ['M', m]].map(([n, r]) =>
+  const summary = [['A rust-suites', uc], ['B frontend', vled], ['C docs-gates', m]].map(([n, r]) =>
     '- ' + n + ' (' + ((r && r.status) || '?') + '): ' + String((r && (r.discoveries || r.remainder)) || 'no report').slice(0, 400)).join('\n')
   const regen = await agent(regenPrompt(summary), {
-    model: 'sonnet', phase: title, label: 'regen + attribution', schema: REGEN_SCHEMA,
+    model: 'sonnet', phase: title, label: 'full verify.sh sweep', schema: REGEN_SCHEMA,
   })
   return { uc, vled, m, regen }
 }
