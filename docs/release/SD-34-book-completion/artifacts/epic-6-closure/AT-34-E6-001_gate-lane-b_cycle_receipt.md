@@ -142,16 +142,32 @@ explicitly the "dashboard producer" run this wave's brief forbids from this lane
 - **Build scope verified:** `cd apps/desktop && npm test` exit 0 (100/100) and
   `npm run typecheck` exit 0, both re-run at `19d1c6fdcf` (post-fix HEAD).
   `python3 -m unittest scripts.tests.test_pf1e_dashboard_producer scripts.tests.test_legacy_not_ingested_string_swept scripts.tests.test_site_dashboard_units_status_vocabulary_current` → all green, re-run at the same SHA.
-  **NOT run this cycle:** `cargo test --locked --no-run` at the workspace's widest scope, and
-  `apps/desktop/src-tauri`'s own `cargo test --locked` — the only Rust-adjacent files this cycle
-  touched are `apps/desktop/src-tauri/Cargo.toml`/`Cargo.lock` (a pure version-string bump, no
-  source), and this lane's shared `CARGO_TARGET_DIR` was occupied for most of the cycle by the
+  `cd apps/desktop/src-tauri && cargo test --locked` (separate workspace, run explicitly per
+  `workflow-instruction.md §2.5`) → `544 passed; 28 failed`, 39.20s, at the same HEAD. **Not
+  caused by this cycle** — the only file this cycle touched in that crate is
+  `Cargo.toml`/`Cargo.lock` (a pure version-string bump, no source), and the failure set is
+  `companion_catalog` (15) + `reach_gate` (11) + `feat_catalog` (1) + `race_trait_picker` (1),
+  exactly matching `fable-review.md §7`'s own pre-existing attribution for the `desktop`/`reach`
+  `verify.sh` stages ("broken by the same status/count movement"). `desktop` is explicitly
+  **Lane A's** assigned stage (wave-23 dispatch commit `7071c52e50`: "A ... root-lib, root-full,
+  desktop, reach"), not one of this lane's three ("frontend-test, site-dashboard-check,
+  site-public-status-check") — reported here as a discovery, not fixed. **One is worth naming
+  precisely for whoever owns it:**
+  `race_trait_picker::tests::the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_with_real_grants`
+  fails on the exact same root cause this cycle's own `raceCreationCoverage.test.ts` fix
+  addressed — the panic's `left` list carries 7 extra entries
+  (`Adopted Race ~ {Dwarf,Elf,Gnome,Half-Elf,Half-Orc,Halfling,Human}`), the identical 7 CRB
+  rows `ae25d75d7d` added — but this is a **Rust** source assertion in
+  `apps/desktop/src-tauri/src/race_trait_picker.rs:2327`, outside this cycle's three-stage bar
+  and inside `desktop`'s stage ownership; left for that lane/cycle.
+  `cargo test --locked --no-run` at the root workspace's widest scope was **not run this
+  cycle** — this lane's shared `CARGO_TARGET_DIR` was occupied for most of the cycle by the
   `site-dashboard-check` investigation (a leftover orphaned `cargo test --locked --no-fail-fast -j 6`
   process, PID 1338655, PPID 1 — inherited from an earlier incarnation of this same lane, still
   running throughout this cycle) and by Lane A's own concurrent root-full sweep on the shared
-  host; running a second cargo workspace build concurrently risks the exact memory/CPU fan-out
-  hazard this wave's brief names explicitly. **Left for the next cycle to run explicitly before
-  any further Rust-adjacent change**, named here rather than silently skipped.
+  host; running a second, larger cargo workspace build concurrently risks the exact memory/CPU
+  fan-out hazard this wave's brief names explicitly, and this cycle touched zero root-workspace
+  Rust source. Named for the next cycle rather than silently skipped.
 - **Sweep population:** N/A — no `data/corpus/` records added or regenerated this cycle.
 - **Oracle pin:** N/A — no figure in this cycle came from the pinned PCGen corpus.
 - **Status:** partial
@@ -176,6 +192,24 @@ explicitly the "dashboard producer" run this wave's brief forbids from this lane
     `scripts/publish-site-dashboard.sh` are shared instruments, not `apps/desktop/`/`site/`).
 
 ## Notes — the wrong first fix, corrected in the same cycle
+
+**`site-dashboard-check`, three attempts, all timed out.** Attempt 1 (900s outer / default
+600s inner, no `CODEX_REPO_ROOT`): the subprocess ran against the wrong tree (the shared
+checkout) and hit the inner 600s timeout. Attempt 2 (300s outer, `CODEX_REPO_ROOT` set): outer
+timeout fired before the inner 600s budget could even complete — a self-inflicted mistake,
+noted and corrected in the same cycle. Attempt 3 (750s outer, `CODEX_REPO_ROOT` set, cwd
+confirmed correct via `/proc/<pid>/cwd`): the inner subprocess **still** hit its own 600s
+timeout (`pf1e-producer: v06_work_inventory failed to run: ... timed out after 600 seconds`),
+then ran on for another ~150s before the outer wrapper killed it. This rules out the
+wrong-cwd bug as the sole cause: `v06_work_inventory --summary`'s single-threaded walk over the
+full corpus genuinely does not complete within 600s under the shared host's current load (Lane
+A's concurrent root-full sweep, an orphaned leftover cargo-test process, and the standing
+`swarm-observer` daemon all contending for the same box). A code-level fix (raising
+`PF1E_CLASS_STATE_TIMEOUT`, or the wave's regeneration cycle simply running with more headroom
+and less concurrent load) is available but was not attempted a fourth time this cycle — three
+attempts already exceed this one stage's reasonable share of the cycle's time budget, and the
+underlying committed feed is independently, genuinely stale regardless of how the `--check`
+itself resolves.
 
 The first attempt at `site-public-status-check` taught `pf1e_dashboard_producer.py`'s
 `_doneness_verdict_uncapped` the legacy `'not-ingested'` word directly, reasoning by analogy from
