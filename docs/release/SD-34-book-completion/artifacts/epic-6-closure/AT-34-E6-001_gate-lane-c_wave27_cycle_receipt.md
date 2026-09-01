@@ -141,7 +141,7 @@ unchanged.
 | 18 | shape-coverage-standing-gate-selftest | PASS | 20 tests OK |
 | 19 | shape-coverage-standing-gate | PASS | unclassified=0, piles reconcile True, no_record budget 0/26112 within baseline |
 | 20 | denominator-gate | **FAIL** | `files_checked=139 violations=2` (out of 139 files checked), both NEW since wave-23's 0-violation close, both in `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_wave26_cycle_receipt.md` lines 138 & 153 -- a CPU-utilization figure stated without a same-line re-derive command; wave-26 lane B's own content, untouched since, not this lane's territory |
-| 21 | figure-provenance | **FAIL** | `files_checked=69 figures_examined=119 violations=1`, pre-existing at `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave24_cycle_receipt.md:144` (unsourced `(447,1,130)` tuple), unchanged since wave 24/25 (already named there) |
+| 21 | figure-provenance | **FAIL** | `files_checked=71 figures_examined=122 violations=2` (re-derived after the second rebase, `scripts/verify.sh --only figure-provenance`, this cycle's own final check): 1 pre-existing at `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave24_cycle_receipt.md:144` (unchanged since wave 24/25); 1 NEW, landed by `1d0a0a7207` itself (lane A's own wave-26 receipt, `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave26_cycle_receipt.md:135`, the same `(447,1,130)`/`(447,1,126)` tuple restated without a same-line command) -- neither is this lane's own content |
 | 22 | pi-sweep | PASS | CLEAN, 11 hits over `rules_tables`, 11 baseline rows, 0 unbaselined |
 | 23 | declared-pi-audit | PASS | CLEAN, no shipped record contradicts its own corpus row's PI declaration |
 | 24 | audit-selftest | PASS | 28 passed / 0 failed |
@@ -184,7 +184,7 @@ precisely-attributed regressions this cycle is the first to name with an exact c
 | `desktop` `corpus_ingest_diagnostic`, post-rebase | 14 passed / 1 failed / 557 filtered out | `cd apps/desktop/src-tauri && cargo test --locked corpus_ingest_diagnostic`, this cycle, at HEAD `1d0a0a7207` | of 15 in that filter |
 | `corpus-sweep`, post re-pin | `PASS`, 48706 examined / 51476 read, 0 findings | `scripts/verify.sh --only corpus-sweep`, this cycle, at HEAD `1d0a0a7207` (after the `verify-baselines.env` edit) | against the re-pinned floor 48706 |
 | `denominator-gate` | `files_checked=139 violations=2` | `scripts/verify.sh --only denominator-gate`, run 1's own log | of 139 files |
-| `figure-provenance` | `files_checked=69 figures_examined=119 violations=1` | `scripts/verify.sh --only figure-provenance`, run 1's own log | of 119 figures |
+| `figure-provenance` | `files_checked=71 figures_examined=122 violations=2` | `scripts/verify.sh --only figure-provenance`, this cycle's own final re-check at HEAD `1d0a0a7207`+ | of 122 figures |
 | `corpus-trap-audit` | `records_examined=27634`, all 4 registered kinds at pin, `wiring-class-mismatch=0` | `scripts/verify.sh --only corpus-trap-audit`, run 2's own log | of 27634 records |
 | `cargo test --locked --no-run`, workspace | exit 0, 589 test binaries built | this cycle, at HEAD `1d0a0a7207` (after this cycle's own commit) | N/A (build check) |
 | `cargo test --locked --no-run`, `apps/desktop/src-tauri` | exit 0 | same command, run explicitly, same HEAD | N/A (build check) |
@@ -293,7 +293,7 @@ brief's own boundary, named precisely above for whichever cycle picks each one u
 
 - **Judgment call:** did not attempt to fix `sd27_pathfinder_unchained_cache_shape.rs`,
   `corpus_ingest_diagnostic.rs`, `sd24_wired_integration_audit.rs`, `site-dashboard-check`,
-  `denominator-gate`'s 2 violations, or `figure-provenance`'s 1 violation. Every one is outside
+  `denominator-gate`'s 2 violations, or `figure-provenance`'s 2 violations. Every one is outside
   this lane's declared territory (`clippy anywhere, plus the sweep`) and inside lanes A/B's
   corpus/desktop/site trees or a prior wave's own documentation content -- `AGENTS.md` rule 3
   ("do not expand scope... if broader changes appear necessary, stop and explain why") and this
@@ -327,8 +327,10 @@ Five named remainders, by sub-cause, populations summing exactly to the 5 FAILs 
 2. **`denominator-gate`** (2 violations) -- restate the "99% CPU" figure in
    `AT-34-E6-001_gate-lane-b_wave26_cycle_receipt.md` lines 138 and 153 with an inline command;
    whichever lane or the closing sweep owns package-doc hygiene.
-3. **`figure-provenance`** (1 violation) -- restate the `(447,1,130)` tuple in
-   `AT-34-E6-001_gate-lane-a_wave24_cycle_receipt.md:144` with its own command; same owner as (2).
+3. **`figure-provenance`** (2 violations) -- restate the `(447,1,130)` tuple in
+   `AT-34-E6-001_gate-lane-a_wave24_cycle_receipt.md:144` AND the same tuple in
+   `AT-34-E6-001_gate-lane-a_wave26_cycle_receipt.md:135`, each with its own command; lane A
+   territory (own receipt content), or the closing sweep.
 4. **`root-full`** (3 suites / 7 tests) -- `sd27_pathfinder_unchained_cache_shape.rs` (2 tests,
    restate 42->38 records / 7->3 `+0` records to match the corrected corpus; lane A territory,
    same shape as their own `sd27_book_license_record_counts.rs` fix); `sd24_wired_integration_
