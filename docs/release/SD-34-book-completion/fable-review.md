@@ -104,6 +104,14 @@ The operator rejected the 600–5,300h bucket-B bracket: the data is already mac
 
 - `920cb53307` — R12-03 + R12-04: deleted `scripts/diff_check_regen.py` and `scripts/summarize_domain_power_classes.py` — both hardcode a `.claude/worktrees/wf_2656fbd3-1ec-1` path that no longer exists; fully non-functional; only references are SD-32 frozen history docs; Opus-cleared.
 
+Bloat-fix batches (run `wf_9ba4044a-ff5`, audited PASS — every claimed diff-stat verified against git; net **−10,809 lines**):
+- `84760e4326` — **A** (R8-02): deleted 11 obsolete `e5_*`/`e6_*` probe bins (−1,756) with the atomic deliberate baseline change (`BASELINE_ROOT_TEST_BINARIES` 580→569, tests floor unchanged — the 11 bins carried 0 `#[test]`).
+- `a049f694ac` — **B** (R8-04): 4 near-identical `enrich_*_raw_tokens` bins now wrap one shared engine (`cache_gen/enrich_raw_tokens_shared.rs`, `EnrichConfig`); every real per-bin difference (dreamscarred 3-segment dirs, PI-screen shapes, identity fields) preserved as explicit named config. Net −453. `enrich_class`/`enrich_equipment` confirmed-different, untouched.
+- `a80e7c769f` — **C** (R14-04): byte-identical cache_gen helper family hoisted to `mod.rs`; call sites untouched via re-imports; genuinely-divergent same-name helpers deliberately left. Net −261.
+- `93310c03ff` + `b567746058` — **E** (R10-F2): `tests/common/mod.rs` created; 312 byte-identical `fn load()` (+265 `explanation()`, 116 `has_explanation()`) copies deleted across 313 files. Net −8,377. Test-binary count unchanged at 543; zero new warnings (each suspect proven pre-existing by HEAD-restore).
+- **D** (PC5-3/PC6-1/PC1-1/PC2-3): **zero commits, correctly.** All four pilot_compute dedup findings failed the byte-identical bar on close read — PC1-1 is duplicated for a ratified reason stated in the code (lines 7398–7405); PC2-3's seven race seams genuinely diverge (variable trait dimensions, alternate-trait gating, unique prose) and its evidence partly misidentified its own target; PC5-3 likewise non-mechanical. **§4 items 2's dedup sub-items are hereby re-classed from "mechanical" to "genuine refactors requiring design"** — the extraction seams stand, the quick-win framing does not.
+- Batch E also surfaced a **6th pre-existing failing suite**: `tests/sd27_known_spells_must_be_on_the_class_spell_list.rs` (proven identical-failure at HEAD content) — added to §7's ledger.
+
 Blocked by Opus clearance (correctly): R8-02 deletion of 11 obsolete `e5_*`/`e6_*` probe binaries — `scripts/verify.sh:1317` enforces a gate-tracked binary count; deletion needs the baseline updated in the same change → moved to §4.
 
 ## 4. Report-Only Proposals (the bloat-reduction backlog, ranked by payoff)
