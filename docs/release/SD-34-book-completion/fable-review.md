@@ -126,7 +126,25 @@ Blocked by Opus clearance (correctly): R8-02 deletion of 11 obsolete `e5_*`/`e6_
 
 - Method: every P1/P2 finding and every auto-fix candidate re-verified by an independent agent that re-opened the cited file:lines (65 findings re-checked; 56 CONFIRMED, 9 REJECTED). All 3 auto-fix candidates then adversarially judged by Opus (default-refuse): 2 cleared, 1 blocked.
 - Workflow runs: backlog `wf_c656b776-955` (5 agents), review `wf_23734e3f-d67` (39 agents, 0 errors).
-- Final sweep: (pending — full `scripts/verify.sh` after fix application)
+- Baseline full sweep (2026-08-31, pre-fix, at `4f3f995184`): **FAIL — 14 of 40 stages red, ALL pre-existing at SD-34 wave-22 (`3aebc28477`); none caused by this review** (attribution below). 26 stages green. Log dir `/tmp/codex-verify-RWY6GT`.
+
+## 7. Gate State at Baseline (P1 review finding: tranche/14 does not pass its own gate)
+
+One dominant root cause: **the wave-22 oracle-verdict restamp introduced statuses (`oracle-agree`, `oracle-unverifiable`) that downstream instruments have no mapping for**, plus stale hardcoded counts — the exact raise-on-unknown-status and count-change hazards prior retros recorded.
+
+| Failed stage(s) | Cause | Whose fix |
+|---|---|---|
+| `reachability-audit`(+selftest), `shape-coverage-standing-gate` | `ValueError: doneness: unmapped 'static'/'derived' + 'oracle-agree'` — verdict tables lack the new statuses | SD-34 (instrument owners) |
+| `site-dashboard-check`, `site-public-status-check` | committed feeds stale vs wave-22 inventory; producer also degrades on `oracle-unverifiable` templates; v06_work_inventory `--summary` timed out (600s) under sweep load | SD-34 |
+| `root-lib`, `root-full` (5 failing suites, 8,289 passed/600) | stale census tests: formula_interpreter corpus-wide populations, `owner_matched` remainder=24, companion_chassis dispatch now sees `oracle-unverifiable` | SD-34 |
+| `desktop`, `reach` | companion_catalog + reach_gate tests broken by the same status/count movement | SD-34 |
+| `frontend-test` (4 of 100 files) | race-trait count 596→605 stale; **Cargo.toml 0.11.0 vs expected 0.14.0 — the tranche/14 version bump was never applied**; build-label fixture stale | SD-34 |
+| `denominator-gate` (26), `figure-provenance` (32) | all violations in SD-34's own `progress.md` + epic-3/5 receipts, pre-existing and partly already flagged by AT-34-E3-004 | SD-34 |
+| `pi-sweep` | 3 unbaselined `Pharasma` hits in `simple_kind_tables.rs` from AT-34-E3-001 — needs baseline rows or scrub (PI/legal-adjacent, prioritize) | SD-34 |
+| `clippy` (root 86, desktop 25>7) | accumulated warnings incl. now-unused fns | SD-34 / partly addressed by bloat batches |
+| Baseline note (not a failure) | `BASELINE_CORPUS_LITERAL_RECORDS` 26500→48708 stale | SD-34 deliberate update |
+
+**Revised completion bar for this review's fixes:** the post-fix sweep must show the SAME OR FEWER red stages with ZERO new ones. Turning these 14 green is SD-34's remaining-card work and goes to codex-75 in the unpause message.
 
 ## Resume Contract
 
