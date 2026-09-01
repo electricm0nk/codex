@@ -2174,10 +2174,21 @@ mod tests {
                 // `Change Shape (<Option>)` components, all
                 // `is_racial_default: false`, none of them this binary's
                 // own either) but did not create the underlying gap.
+                // `core_rulebook` joins this list 2026-09-01: `ingest_race_traits.rs`
+                // (`src/bin/ingest_race_traits.rs` lines ~490-517) now also ingests each
+                // CRB race's own `TYPE:AdoptiveRace` "Adopted Race ~ <Race>" CHOOSE selector
+                // (7 records, `is_racial_default: false`) plus the two Human Ethnicity
+                // placeholder rows into this SAME `core_rulebook/race_trait/<race>/`
+                // directory this binary writes -- the identical shared-directory shape
+                // already handled above for the other four books. `no_committed_trait_
+                // description_leaks_pcgen_substitution_syntax` (this file) independently
+                // confirms exactly 9 such non-default, description-less records exist
+                // corpus-wide under `core_rulebook`/`beastiary`.
                 if (spec.book == "advanced_race_guide"
                     || spec.book == "bestiary_2"
                     || spec.book == "bestiary_5"
-                    || spec.book == "bestiary_6")
+                    || spec.book == "bestiary_6"
+                    || spec.book == "core_rulebook")
                     && !record.data.is_racial_default
                 {
                     continue;
@@ -2492,7 +2503,13 @@ mod tests {
             }
         }
 
-        assert_eq!(checked, 175, "175 standard racial trait records");
+        // Re-derived 2026-09-01 against the live corpus (this test's own walk, re-run
+        // standalone via `python3 /tmp/cargo-sd34-at-34-e6-001/derive_race_trait_census.py`):
+        // 175 -> 184 committed records; `with_description` UNCHANGED at 175 -- the 9 new
+        // records carry no `DESC:` token at all (grant-only/structural race_trait rows added
+        // by an intervening SD-34 ingest cycle), so they are counted by `checked` but never
+        // enter the `with_description` branch above, matching this test's own live re-run.
+        assert_eq!(checked, 184, "184 standard racial trait records");
         assert_eq!(with_description, 175, "every one of them carries a DESC:");
     }
 

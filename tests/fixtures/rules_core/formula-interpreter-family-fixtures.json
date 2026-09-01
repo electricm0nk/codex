@@ -92,7 +92,7 @@
       "raw_token_key": "BONUS",
       "raw_token_value": "VAR|SpiritWalkDuration|classlevel(\"Shaman\")",
       "formula": "classlevel(\"Shaman\")",
-      "vars": { "__LEVEL__": 9 },
+      "vars": { "__LEVEL__": 9, "CLASSLEVEL::Shaman": 9 },
       "expected": 9
     },
     {
