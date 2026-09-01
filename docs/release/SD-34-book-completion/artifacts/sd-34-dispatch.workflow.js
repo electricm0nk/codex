@@ -656,78 +656,77 @@ function salvageNote(branch, what) {
 
 function ucLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
-    title: 'GATE LANE A — the Rust test suites: root-lib, root-full, desktop, reach.\n\n'
-      + 'Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + ' section 7 FIRST — it is the '
-      + 'review that found this, with the failing-stage table and how each was attributed.\n\n'
-      + '**Your stages:** ' + BT + 'root-lib' + BT + ' (5 failing lib suites), ' + BT + 'root-full' + BT + ' (47 failing '
-      + 'suites of ~600, 8,289 passing), ' + BT + 'desktop' + BT + ', ' + BT + 'reach' + BT + '. Also ' + BT + 'clippy' + BT + ' '
-      + '(root 86 warnings, desktop 25 against a ceiling of 7) since it lives in the same files.\n\n'
-      + '**The cause is one thing, mostly.** Wave 22 restamped bucket-V units with two new statuses, '
-      + BT + 'oracle-agree' + BT + ' (811 units) and ' + BT + 'oracle-unverifiable' + BT + ' (8,491), and moved counts. '
-      + 'Suites across sd18/sd20/sd24/sd26/sd27/sd30/sd31 carry hardcoded census numbers and status '
-      + 'matches that predate that. The producer-side doneness table is ALREADY FIXED (58b4f837cc) — read '
-      + 'that commit to see the reasoning, and apply the SAME reading: both words are refinements of '
-      + BT + 'literal-verified' + BT + '/' + BT + 'fixture-verified' + BT + ', never a new tier, and '
-      + BT + 'oracle-unverifiable' + BT + ' is NOT weaker (the oracle could not look; that is a blind spot in the '
-      + 'instrument, not evidence against the record).\n\n'
-      + '**Update a hardcoded count only after re-deriving it from the repo**, and say in your receipt what '
-      + 'the old and new numbers were and which command produced the new one. A count changed to match '
-      + 'whatever the suite currently prints is not a fix — it is the assertion deleted. If a suite is red '
-      + 'because the CODE is wrong rather than the number, fix the code and say so.\n\n'
-      + '**Territory:** you own ' + BT + 'src/' + BT + ', ' + BT + 'tests/' + BT + ' and the clippy warnings in them. '
-      + 'Lane B owns ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '; lane C owns ' + BT + 'docs/' + BT + '. '
-      + 'The desktop crate\'s own failing tests are YOURS only where they live under ' + BT + 'src-tauri/src/' + BT + '.\n\n'
-      + 'Bar: every stage you own exits 0, with ZERO stages that were green going red. Report the '
-      + 'before/after failing-suite counts, not an impression.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+    title: 'GATE LANE A — root-full and the 124-row Product-Identity policy violation.\n\n'
+      + 'Wave 23 took the gate from 14 red stages to 5. Yours are ' + BT + 'root-full' + BT + ' and the PI item.\n'
+      + 'Read ' + BT + 'artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_cycle_receipt.md' + BT + ' FIRST — it names the\n'
+      + '13 remaining test functions across 8 files, each with its diagnosis.\n\n'
+      + '**FIRST TASK — and the report you inherited is WRONG, so read this carefully.** Wave 23 reported\n'
+      + '"a REAL Product-Identity leak, inner_sea_world_guide, 5+ records shipping a declared-PI name."\n'
+      + 'I re-derived it. All three parts are wrong:\n'
+      + '  - the book is ' + BT + 'inner_sea_magic' + BT + ', not inner_sea_world_guide\n'
+      + '  - it is **124** records, not 5\n'
+      + '  - **NOT ONE exposes a real name.** Every offender already ships masked as\n'
+      + '    ' + BT + 'Codex-Named Unit (...)' + BT + '. Verified by listing every offender and grepping for an unmasked one.\n\n'
+      + 'The detector is ' + BT + 'name_leak(r) = declares(r, "NAMEISPI")' + BT + ' — it fires on the DECLARATION, not on\n'
+      + 'exposure. So this is a **policy** violation, not a text leak: ' + BT + 'decisions.md §50' + BT + ' says a name\n'
+      + 'cannot be redacted, therefore a NAMEISPI row must not ship AT ALL, masked or not. No Product\n'
+      + 'Identity text is currently exposed. **Do not describe it as a leak in your receipt.**\n\n'
+      + 'Fixing it means those rows stop being emitted at ingest. That is a ' + BT + 'data/corpus/**' + BT + '\n'
+      + 'regeneration, which carries a known hazard: regenerating has previously destroyed LICENSE/PI\n'
+      + 'metadata and raw_tokens. Use the guarded regeneration path, verify the licence metadata\n'
+      + 'survives, and if you cannot do it safely, say so and leave it — an honest deferral beats a\n'
+      + 'regeneration that silently drops provenance.\n\n'
+      + '**Then root-full.** The receipt names all 13. Note its own finding: wave-22`s restamp explains\n'
+      + 'only 2 of the original failures; the rest trace to SIX other already-landed SD-34 commits whose\n'
+      + 'engine widenings were never followed by a full-suite run. Each fix must name the commit that\n'
+      + 'caused it. A count updated to match whatever a suite currently prints is the assertion deleted,\n'
+      + 'not a fix — re-derive it, and state old value, new value, and command.\n\n'
+      + '**Territory:** ' + BT + 'src/' + BT + ', ' + BT + 'tests/' + BT + ', ' + BT + 'data/corpus/**' + BT + ' (PI item only).\n'
+      + 'Lane B owns ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '; lane C owns clippy.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 function cLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
-    title: 'GATE LANE B — frontend, the missed version bump, and the stale site feeds.\n\n'
-      + 'Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + ' section 7 FIRST.\n\n'
-      + '**Your stages:** ' + BT + 'frontend-test' + BT + ' (4 of 100 files), ' + BT + 'site-dashboard-check' + BT + ', '
-      + BT + 'site-public-status-check' + BT + '.\n\n'
-      + '**A real release defect, already confirmed — do this one first.** The tranche/14 version bump '
-      + 'reached 2 of 3 version files. Measured at HEAD 58b4f837cc:\n'
-      + '  - ' + BT + 'apps/desktop/package.json' + BT + ' = 0.14.0 (correct)\n'
-      + '  - ' + BT + 'apps/desktop/src-tauri/tauri.conf.json' + BT + ' = 0.14.0 (correct)\n'
-      + '  - ' + BT + 'apps/desktop/src-tauri/Cargo.toml' + BT + ' = **0.11.0** (two tranches stale)\n'
-      + 'So the desktop app\'s Rust crate reports a version from two tranches ago. Fixtures still expect '
-      + '0.11.0 too (' + BT + 'composeEnhancementRequest.test.ts' + BT + ', ' + BT + 'loadTesterWorkbenchSurface.test.ts' + BT + ', '
-      + BT + 'buildLabelFixtureFreshness.test.ts' + BT + '). Bump the crate and move the fixtures with it. Note that '
-      + 'the root ' + BT + 'Cargo.toml' + BT + ' reads 0.1.0 and is a DIFFERENT question — it has never tracked the '
-      + 'tranche digit; do not "fix" it without establishing what it is supposed to be, and say which you did.\n\n'
-      + '**Also:** race-trait count 596 -> 605 stale, and the committed site feeds are stale against the '
-      + 'wave-22 inventory. Re-derive the count; do not copy 605 from this brief.\n\n'
-      + '**Hazard the review names explicitly:** do NOT run the inventory regenerator or the dashboard '
-      + 'producer from this lane — both can silently drop stamps. If a feed can only be refreshed by running '
-      + 'the producer, say so in your receipt and leave it for the wave\'s regeneration cycle.\n\n'
-      + '**Territory:** ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '. Lane A owns ' + BT + 'src/' + BT + ' and '
-      + BT + 'tests/' + BT + '; lane C owns ' + BT + 'docs/' + BT + '.\n\n'
-      + 'Bar: your stages exit 0, nothing green goes red.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+    title: 'GATE LANE B — desktop, reach, and site-dashboard-check.\n\n'
+      + 'Wave 23 took the gate from 14 red stages to 5. Yours are ' + BT + 'desktop' + BT + ', ' + BT + 'reach' + BT + ' and\n'
+      + BT + 'site-dashboard-check' + BT + '. Read ' + BT + 'artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_cycle_receipt.md' + BT + '\n'
+      + 'and ' + BT + '..._gate-lane-b_cycle_receipt.md' + BT + ' FIRST.\n\n'
+      + '**The desktop crate went 544 passed / 28 failed to 565 / 7.** The 7 left are named in lane A`s\n'
+      + 'receipt. Four of them (race_trait_picker + reach_gate, ~30 records) are the SAME 9 already-diagnosed\n'
+      + 'core_rulebook Adopted-Race / Human-Ethnicity records cascading into desktop surfaces — that is the\n'
+      + 'cheapest win and it closes two stages at once. The other three are\n'
+      + BT + 'companion_catalog' + BT + ' (2, one apparently a large pre-existing reach gap spanning hundreds of ids)\n'
+      + 'and ' + BT + 'feat_catalog' + BT + ' (1, uninvestigated).\n\n'
+      + '**site-dashboard-check:** the committed feeds are stale against the wave-22 inventory. The hazard\n'
+      + 'the review names, twice: do NOT run the inventory regenerator or the dashboard producer from a\n'
+      + 'lane — both silently drop stamps. If the feed can only be refreshed by running the producer, say\n'
+      + 'so in your receipt and leave it for the closing sweep. Note the producer`s own\n'
+      + BT + 'v06_work_inventory --summary' + BT + ' has been timing out at its 600s cap under load; that is a\n'
+      + 'contention symptom, not a bug to paper over by raising the cap.\n\n'
+      + '**Territory:** ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '. Lane A owns ' + BT + 'src/' + BT + ', '
+      + BT + 'tests/' + BT + ' and the corpus; lane C owns clippy.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
-    title: 'GATE LANE C — denominator-gate (26 violations) and figure-provenance (32).\n\n'
-      + 'Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + ' section 7 FIRST.\n\n'
-      + '**Your stages:** ' + BT + 'denominator-gate' + BT + ' and ' + BT + 'figure-provenance' + BT + '. Every violation is '
-      + 'in SD-34\'s OWN documents — ' + BT + 'progress.md' + BT + ' and the epic-3 / epic-5 receipts. This is our own '
-      + 'mess, written by our own lanes over 22 waves.\n\n'
-      + 'Re-derive both violation lists yourself:\n'
-      + '  ' + BT + 'python3 scripts/denominator_gate.py --check \'docs/release/SD-34-book-completion/*.md\'' + BT + '\n'
-      + '  (and the figure-provenance stage\'s own command, from ' + BT + 'scripts/verify.sh' + BT + ')\n\n'
-      + '**Several are false positives and must be recorded as such, not "fixed".** Prior cycles repeatedly '
-      + 'found the denominator gate flagging verbatim-quoted corpus prose — a rules quote containing "75% '
-      + 'chance" is not an ungrounded figure, it is a quotation. Do not reword a corpus quote to appease a '
-      + 'gate. If the gate has no baseline mechanism for quoted prose, propose one and say so.\n\n'
-      + '**For the genuine ones:** every figure states its denominator in the same construct, and carries the '
-      + 'command that re-derives it. That is the standing rule these documents were supposed to follow.\n\n'
-      + '**Territory:** ' + BT + 'docs/' + BT + ' only. Lane A owns ' + BT + 'src/' + BT + '/' + BT + 'tests/' + BT + '; lane B '
-      + 'owns ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '. You may edit ' + BT + 'scripts/denominator_gate.py' + BT + ' '
-      + 'ONLY to add a baseline mechanism, never to weaken what it detects.\n\n'
-      + 'Bar: both stages exit 0. Report violations before and after, and how many were real versus quoted '
-      + 'prose.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+    title: 'GATE LANE C — clippy, the one stage nobody has touched.\n\n'
+      + 'Wave 23 took the gate from 14 red stages to 5 and explicitly did not touch clippy. Measured at\n'
+      + 'the fable-review baseline, NOT re-measured since: root **86 warnings against a ceiling of 50**\n'
+      + '(36 over), desktop **25 against a ceiling of 7** (18 over).\n\n'
+      + '**Re-measure both before doing anything** — wave 23 deleted 11 dead binaries and ~10,809 lines,\n'
+      + 'so some warnings are already gone and the real numbers may be lower. Report measured-now versus\n'
+      + 'the baseline.\n\n'
+      + '**Fix the warnings; do not raise the ceilings.** A ceiling raised to meet the count is the gate\n'
+      + 'disabled. The review notes many are now-unused functions left behind by the bloat-removal\n'
+      + 'batches — those should be DELETED, not silenced with an allow attribute. If a warning is a\n'
+      + 'genuine false positive, an ' + BT + '#[allow]' + BT + ' with a comment saying why is fine; a blanket\n'
+      + 'crate-level allow is not.\n\n'
+      + 'If you finish clippy and have time, take ' + BT + 'BASELINE_CORPUS_LITERAL_RECORDS' + BT + ' 26500 -> 48708,\n'
+      + 'which the review flagged as a deliberate baseline update. Only do it if you can state why 48708\n'
+      + 'is the right number, with the command that produced it.\n\n'
+      + '**Territory:** clippy warnings wherever they live, but coordinate: lane A owns ' + BT + 'src/' + BT + ' and\n'
+      + BT + 'tests/' + BT + ', lane B owns ' + BT + 'apps/desktop/' + BT + '. You run LAST of the three, so their edits\n'
+      + 'are already in — rebase before you start and re-measure after.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 
@@ -742,14 +741,14 @@ async function runBucketBMechanisms() {
   // build in src/rules_core + apps/desktop) and was disjoint from both in wave 13's own diff,
   // so it still runs alongside. Serializing costs wall-clock, which no longer matters: the
   // 20-minute checkpoint rule means a host reset costs minutes regardless of how long a wave is.
-  log('wave 23 (GATE): lane A in parallel with (lane B then lane C), then ONE full verify.sh sweep')
+  log('wave 24 (GATE): 5 red stages left. Lane A parallel with (B then C), then ONE full verify.sh sweep')
 
   const [uc, [vled, m]] = await parallel([
-    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'A: rust suites + clippy', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'A: root-full + PI policy', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     async () => {
-      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: frontend + version bump', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: desktop + reach + site', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       log('B -> ' + (c && c.status) + '; starting C (docs gates)')
-      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: denominator + provenance', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: clippy', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       return [c, mm]
     },
   ])
