@@ -143,7 +143,6 @@
 
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use serde::Serialize;
 use serde_json::Value;
@@ -504,40 +503,14 @@ fn resolve_book_file(book_dir: &Path, file: &str) -> Option<PathBuf> {
     }
 }
 
-pub fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// Hoisted to `cache_gen` (R14-04); re-exported here as
+/// `class_feature::sha256_file` since `class_feature_grants.rs` reaches
+/// it by that path.
+pub use super::sha256_file;
 
-fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
-    let mut slug: String = name
-        .to_lowercase()
-        .chars()
-        .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
-        .collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
-    if !used.contains(&slug) {
-        used.insert(slug.clone());
-        return slug;
-    }
-    let mut n = 2;
-    loop {
-        let candidate = format!("{slug}-{n}");
-        if !used.contains(&candidate) {
-            used.insert(candidate.clone());
-            return candidate;
-        }
-        n += 1;
-    }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_dedup`, imported back
+/// under this file's original local name.
+use super::slugify_dedup as slugify;
 
 /// Reads [`DeclaredProductIdentity`] off the real corpus line at
 /// `lst_path:line` (1-indexed), matching `cache_gen::ultimate_equipment`'s

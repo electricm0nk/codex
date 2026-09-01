@@ -24,13 +24,155 @@ pub mod spell_lane_dump;
 pub mod spell_mod_access;
 pub mod ultimate_equipment;
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
+use std::process::Command;
 
+use serde::Serialize;
+
+use crate::rules_core::pi_screening;
 use crate::rules_core::wiring_class::{
     ClosureIndexes, CorpusLines, build_copy_base_index, build_mod_index, determine_closure,
     token_closure_rows,
 };
+
+// ---------------------------------------------------------------------
+// R14-04: helper-function family shared by the per-book generators below.
+// Each was previously hand-copied, byte-identical, into up to 13 of the
+// 14 non-`mod.rs` files in this directory. Hoisted here once; every
+// per-book file that used a given helper now imports it under its
+// original local name (`use super::x [as y];`) so every existing call
+// site is untouched. A generator whose own copy diverges in real
+// behavior (different signature, an extra `is_disabled_line` filter, a
+// different return shape) keeps that copy local -- it is a distinct
+// helper that happens to share a name, not a duplicate of this family.
+// ---------------------------------------------------------------------
+
+/// Real sha256 of `path`'s current on-disk content, via the system
+/// `sha256sum` tool (no `sha2` crate dependency exists in this
+/// workspace). Byte-identical across every per-book generator that had
+/// its own copy.
+pub fn sha256_file(path: &Path) -> std::io::Result<String> {
+    let output = Command::new("sha256sum").arg(path).output()?;
+    if !output.status.success() {
+        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
+    }
+    let text = String::from_utf8_lossy(&output.stdout);
+    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
+}
+
+/// Finds `record_name` as an exact match on a line's first tab-delimited
+/// column in `lst_path`. Real corpus lookup, not a value parse -- only
+/// the line number is used. `feat_gap`/`equipment_gap` keep their own
+/// divergent (disabled-line-aware, `Option`-returning) variants local,
+/// since those are a genuinely different helper under the same name.
+pub(crate) fn find_exact_first_column(lst_path: &Path, record_name: &str) -> std::io::Result<Option<u32>> {
+    let content = std::fs::read_to_string(lst_path)?;
+    for (idx, line) in content.lines().enumerate() {
+        let first_col = line.split('\t').next().unwrap_or("");
+        if first_col == record_name {
+            return Ok(Some((idx + 1) as u32));
+        }
+    }
+    Ok(None)
+}
+
+/// Finds a line carrying the exact tab-delimited field `KEY:<record_key>`
+/// in `lst_path` -- for a book whose display name repeats across
+/// distinct `KEY:`-tagged targets. `feat_gap`/`equipment_gap` keep their
+/// own divergent variants local (see [`find_exact_first_column`]).
+pub(crate) fn find_by_key_field(lst_path: &Path, record_key: &str) -> std::io::Result<Option<u32>> {
+    let content = std::fs::read_to_string(lst_path)?;
+    let needle = format!("KEY:{record_key}");
+    for (idx, line) in content.lines().enumerate() {
+        if line.split('\t').any(|field| field == needle) {
+            return Ok(Some((idx + 1) as u32));
+        }
+    }
+    Ok(None)
+}
+
+/// PI blacklist screen over a record's own candidate identity strings
+/// (typically `[name, key]`). `ultimate_equipment` keeps its own
+/// differently-shaped `(declared_name, name)` variant local -- a
+/// distinct helper under the same name, not a duplicate of this one.
+pub(crate) fn name_or_key_is_pi(values: &[&str]) -> bool {
+    values.iter().any(|v| pi_screening::blacklist_term_hit_including_concatenated(v).is_some())
+}
+
+/// Lowercases `name`, collapses every non-alphanumeric run to a single
+/// `_`, trims leading/trailing `_`, falls back to `"unnamed"` when
+/// empty, then disambiguates against `used` with a `-2`, `-3`, ... suffix
+/// so two records that slugify identically still get distinct file
+/// names.
+pub(crate) fn slugify_dedup(name: &str, used: &mut BTreeSet<String>) -> String {
+    let mut slug: String =
+        name.to_lowercase().chars().map(|c| if c.is_ascii_alphanumeric() { c } else { '_' }).collect();
+    while slug.contains("__") {
+        slug = slug.replace("__", "_");
+    }
+    let slug = slug.trim_matches('_').to_string();
+    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
+
+    if !used.contains(&slug) {
+        used.insert(slug.clone());
+        return slug;
+    }
+    let mut n = 2;
+    loop {
+        let candidate = format!("{slug}-{n}");
+        if !used.contains(&candidate) {
+            used.insert(candidate.clone());
+            return candidate;
+        }
+        n += 1;
+    }
+}
+
+/// Same slug formula as [`slugify_dedup`], without the collision-dedup
+/// step -- for a generator whose record population is already known not
+/// to collide.
+pub(crate) fn slugify_or_unnamed(name: &str) -> String {
+    let mut slug: String =
+        name.to_lowercase().chars().map(|c| if c.is_ascii_alphanumeric() { c } else { '_' }).collect();
+    while slug.contains("__") {
+        slug = slug.replace("__", "_");
+    }
+    let slug = slug.trim_matches('_').to_string();
+    if slug.is_empty() { "unnamed".to_string() } else { slug }
+}
+
+/// Serializes `record` to `<out_dir>/<slug>.json`, creating `out_dir` if
+/// needed, WITHOUT overwriting an existing file (SD-32 Epic 5 protective
+/// sweep -- an already-shipped file's later-pass-only fields, e.g.
+/// `raw_tokens`, must never be silently clobbered by a re-run). Silently
+/// no-ops when the file already exists; callers that need to know
+/// whether a write actually happened use [`write_json_bool`] instead.
+pub(crate) fn write_json_unit<R: Serialize>(out_dir: &Path, slug: &str, record: &R) -> std::io::Result<()> {
+    std::fs::create_dir_all(out_dir)?;
+    let path = out_dir.join(format!("{slug}.json"));
+    if path.exists() {
+        return Ok(());
+    }
+    let json = serde_json::to_string_pretty(record)
+        .expect("record is a plain-data shape; serialization cannot fail");
+    std::fs::write(path, json)
+}
+
+/// Same no-clobber contract as [`write_json_unit`], but reports whether a
+/// write actually happened (`Ok(true)`) or an existing file blocked it
+/// (`Ok(false)`).
+pub(crate) fn write_json_bool<R: Serialize>(out_dir: &Path, slug: &str, record: &R) -> std::io::Result<bool> {
+    std::fs::create_dir_all(out_dir)?;
+    let path = out_dir.join(format!("{slug}.json"));
+    if path.exists() {
+        return Ok(false);
+    }
+    let json = serde_json::to_string_pretty(record)
+        .expect("record is a plain-data shape; serialization cannot fail");
+    std::fs::write(path, json)?;
+    Ok(true)
+}
 
 /// GE-01 `wiring_class` support shared by every per-book generator: builds
 /// the book's `.MOD`-row closure index once, then answers per-record

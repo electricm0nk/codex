@@ -80,49 +80,16 @@ const BOOK_SPECS: &[BookSpec] = &[
     },
 ];
 
-fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
-    let mut slug: String =
-        name.to_lowercase().chars().map(|c| if c.is_ascii_alphanumeric() { c } else { '_' }).collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
-    if !used.contains(&slug) {
-        used.insert(slug.clone());
-        return slug;
-    }
-    let mut n = 2;
-    loop {
-        let candidate = format!("{slug}-{n}");
-        if !used.contains(&candidate) {
-            used.insert(candidate.clone());
-            return candidate;
-        }
-        n += 1;
-    }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_dedup`, imported back
+/// under this file's original local name.
+use super::slugify_dedup as slugify;
 
-fn write_json<T: serde::Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<bool> {
-    std::fs::create_dir_all(out_dir)?;
-    let path = out_dir.join(format!("{slug}.json"));
-    if path.exists() {
-        return Ok(false);
-    }
-    let json = serde_json::to_string_pretty(record)
-        .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
-    std::fs::write(path, json)?;
-    Ok(true)
-}
+/// Hoisted to `cache_gen` (R14-04) as `write_json_bool`, imported back
+/// under this file's original local name.
+use super::write_json_bool as write_json;
 
-fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = std::process::Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// Hoisted to `cache_gen` (R14-04).
+use super::sha256_file;
 
 #[derive(Debug, Default)]
 pub struct GenerationReport {

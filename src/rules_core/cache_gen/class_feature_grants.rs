@@ -650,15 +650,9 @@ pub struct GenerationReport {
     pub books_written: Vec<String>,
 }
 
-fn slugify(name: &str) -> String {
-    let mut slug: String =
-        name.to_lowercase().chars().map(|c| if c.is_ascii_alphanumeric() { c } else { '_' }).collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    if slug.is_empty() { "unnamed".to_string() } else { slug }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_or_unnamed`, imported back
+/// under this file's original local name.
+use super::slugify_or_unnamed as slugify;
 
 /// Recursively collects every real `class_feature` corpus record's `data.key`
 /// under `corpus_root/*/class_feature/**/*.json` -- the cross-check this

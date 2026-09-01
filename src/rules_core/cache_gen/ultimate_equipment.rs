@@ -54,7 +54,6 @@
 
 use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use serde::Serialize;
 
@@ -142,15 +141,8 @@ fn book_dir(corpus_root: &Path) -> PathBuf {
 }
 
 /// Real sha256 of `path`'s current on-disk content (mirrors
-/// `cache_gen::acg::sha256_file`).
-pub fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// `cache_gen::acg::sha256_file`). Hoisted to `cache_gen` (R14-04).
+pub use super::sha256_file;
 
 fn equipment_category_file(category: EquipmentCategory) -> &'static str {
     match category {
@@ -162,33 +154,15 @@ fn equipment_category_file(category: EquipmentCategory) -> &'static str {
 }
 
 /// Finds `record_name` as an exact match on a line's first tab-delimited
-/// column in `lst_path`.
-fn find_exact_first_column(lst_path: &Path, record_name: &str) -> std::io::Result<Option<u32>> {
-    let content = std::fs::read_to_string(lst_path)?;
-    for (idx, line) in content.lines().enumerate() {
-        let first_col = line.split('\t').next().unwrap_or("");
-        if first_col == record_name {
-            return Ok(Some((idx + 1) as u32));
-        }
-    }
-    Ok(None)
-}
+/// column in `lst_path`. Hoisted to `cache_gen` (R14-04).
+use super::find_exact_first_column;
 
 /// Finds a line carrying the exact tab-delimited field `KEY:<record_key>`
 /// in `lst_path` -- required for `ue_equipmods.lst`'s `~`-qualified keys
 /// (e.g. `Material ~ Bone`), the same disambiguation
 /// `cache_gen::acg::find_by_key_field` established for ACG's own
-/// equipmods.
-fn find_by_key_field(lst_path: &Path, record_key: &str) -> std::io::Result<Option<u32>> {
-    let content = std::fs::read_to_string(lst_path)?;
-    let needle = format!("KEY:{record_key}");
-    for (idx, line) in content.lines().enumerate() {
-        if line.split('\t').any(|field| field == needle) {
-            return Ok(Some((idx + 1) as u32));
-        }
-    }
-    Ok(None)
-}
+/// equipmods. Hoisted to `cache_gen` (R14-04).
+use super::find_by_key_field;
 
 /// Finds a `.COPY=<record_name>` variant line's first column in
 /// `lst_path` (see module doc comment's 92-row `.COPY=` note).
@@ -329,16 +303,7 @@ impl From<std::io::Error> for GenerationError {
 /// dropped record's file disappear -- this guard only protects a record
 /// that is STILL VALID this run from being needlessly re-derived in a
 /// narrower, pre-enrichment shape.
-fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<()> {
-    std::fs::create_dir_all(out_dir)?;
-    let path = out_dir.join(format!("{slug}.json"));
-    if path.exists() {
-        return Ok(());
-    }
-    let json = serde_json::to_string_pretty(record)
-        .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
-    std::fs::write(path, json)
-}
+use super::write_json_unit as write_json;
 
 /// Removes every JSON file directly or recursively under `dir` whose
 /// `data.key` is NOT in `current_keys` -- the same "genuinely stale, not
@@ -408,32 +373,7 @@ pub fn remove_stale_owned_files(
     }
 }
 
-fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
-    let mut slug: String = name
-        .to_lowercase()
-        .chars()
-        .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
-        .collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
-
-    if !used.contains(&slug) {
-        used.insert(slug.clone());
-        return slug;
-    }
-    let mut n = 2;
-    loop {
-        let candidate = format!("{slug}-{n}");
-        if !used.contains(&candidate) {
-            used.insert(candidate.clone());
-            return candidate;
-        }
-        n += 1;
-    }
-}
+use super::slugify_dedup as slugify;
 
 fn generate_equipment(
     corpus_root: &Path,

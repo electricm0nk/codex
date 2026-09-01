@@ -58,7 +58,6 @@
 
 use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use serde::Serialize;
 
@@ -141,10 +140,9 @@ pub struct CacheRecord<T: Serialize> {
 /// `cache_gen::acg::name_or_key_is_pi`'s byte-identical sibling for APG --
 /// same gap, same fix, `t9-onboarding-pi-final-leaks-and-generators` cycle.
 /// Zero live impact today (this cycle's own corpus-wide re-derivation found
-/// no hit in this book).
-fn name_or_key_is_pi(values: &[&str]) -> bool {
-    values.iter().any(|v| pi_screening::blacklist_term_hit_including_concatenated(v).is_some())
-}
+/// no hit in this book). Hoisted to `cache_gen` (R14-04): identical across
+/// `acg`/`apg`/`beastiary1`.
+use super::name_or_key_is_pi;
 
 // ---------------------------------------------------------------------
 // Content-kind data shapes
@@ -199,18 +197,10 @@ fn book_dir(corpus_root: &Path) -> PathBuf {
 /// `sha256sum` tool (no `sha2` crate dependency exists in this workspace
 /// yet; mirrors `pcgen_runner.rs`'s established pattern of wrapping a
 /// real external tool for a generation-time-only concern rather than
-/// adding a new crate dependency).
-pub fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!(
-            "sha256sum failed for {}",
-            path.display()
-        )));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// adding a new crate dependency). Hoisted to `cache_gen` (R14-04);
+/// re-exported here as `apg::sha256_file` since external tests reach it
+/// by that path.
+pub use super::sha256_file;
 
 /// A resolved LST citation: which file (relative to `APG_DIR`) and which
 /// 1-indexed line the record was found on.
@@ -221,17 +211,8 @@ struct Citation {
 
 /// Finds `record_name` as an exact match on a line's first tab-delimited
 /// column in `lst_path`. Real corpus lookup, not a value parse -- only
-/// the line number is used.
-fn find_exact_first_column(lst_path: &Path, record_name: &str) -> std::io::Result<Option<u32>> {
-    let content = std::fs::read_to_string(lst_path)?;
-    for (idx, line) in content.lines().enumerate() {
-        let first_col = line.split('\t').next().unwrap_or("");
-        if first_col == record_name {
-            return Ok(Some((idx + 1) as u32));
-        }
-    }
-    Ok(None)
-}
+/// the line number is used. Hoisted to `cache_gen` (R14-04).
+use super::find_exact_first_column;
 
 /// Like [`find_exact_first_column`], but only returns a line that ALSO
 /// carries a real `DESC:` token.
@@ -287,16 +268,7 @@ fn find_copy_variant(lst_path: &Path, record_name: &str) -> std::io::Result<Opti
 /// (`apg_spells.lst:649`-`657`). Same defect shape as the ACG Naturalist
 /// fix (`053cfd51`): identity is `KEY:`, not field 0, and a resolver that
 /// only checks field 0 either finds nothing or the wrong record.
-fn find_by_key_field(lst_path: &Path, record_key: &str) -> std::io::Result<Option<u32>> {
-    let content = std::fs::read_to_string(lst_path)?;
-    let needle = format!("KEY:{record_key}");
-    for (idx, line) in content.lines().enumerate() {
-        if line.split('\t').any(|field| field == needle) {
-            return Ok(Some((idx + 1) as u32));
-        }
-    }
-    Ok(None)
-}
+use super::find_by_key_field;
 
 /// Resolves a real citation for `record_name`, trying (in order): a
 /// `KEY:<record_name>` field match (the record's real corpus identity,
@@ -400,44 +372,14 @@ impl From<std::io::Error> for GenerationError {
 }
 
 /// SD-32 Epic 5 protective sweep -- see `cache_gen::acg::write_json`'s
-/// identical doc comment; same shape, same fix.
-fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<()> {
-    std::fs::create_dir_all(out_dir)?;
-    let path = out_dir.join(format!("{slug}.json"));
-    if path.exists() {
-        return Ok(());
-    }
-    let json = serde_json::to_string_pretty(record)
-        .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
-    std::fs::write(path, json)
-}
+/// identical doc comment; same shape, same fix. Hoisted to `cache_gen`
+/// (R14-04) as `write_json_unit`, imported back under this file's
+/// original local name.
+use super::write_json_unit as write_json;
 
-fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
-    let mut slug: String = name
-        .to_lowercase()
-        .chars()
-        .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
-        .collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
-
-    if !used.contains(&slug) {
-        used.insert(slug.clone());
-        return slug;
-    }
-    let mut n = 2;
-    loop {
-        let candidate = format!("{slug}-{n}");
-        if !used.contains(&candidate) {
-            used.insert(candidate.clone());
-            return candidate;
-        }
-        n += 1;
-    }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_dedup`, imported back
+/// under this file's original local name.
+use super::slugify_dedup as slugify;
 
 // ---------------------------------------------------------------------
 // Real per-class line citations (`apg_classes.lst`), transcribed from

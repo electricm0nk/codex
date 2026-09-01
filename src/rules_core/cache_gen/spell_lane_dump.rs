@@ -51,7 +51,6 @@
 
 use std::collections::BTreeMap;
 use std::path::Path;
-use std::process::Command;
 
 use serde::Serialize;
 
@@ -579,15 +578,9 @@ fn book_specs() -> Vec<BookSpec> {
 
 /// Real sha256 of `path`'s current on-disk content, via the system
 /// `sha256sum` tool (mirrors every sibling `cache_gen` module -- no
-/// `sha2` crate dependency exists in this workspace's binaries).
-fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// `sha2` crate dependency exists in this workspace's binaries). Hoisted
+/// to `cache_gen` (R14-04).
+use super::sha256_file;
 
 /// Every base spell declaration's real 1-based source line, keyed by its
 /// column-0 name -- via the SAME tested parser
@@ -907,29 +900,9 @@ fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>)
     std::fs::write(path, json + "\n")
 }
 
-fn slugify(name: &str, used: &mut std::collections::BTreeSet<String>) -> String {
-    let mut slug: String =
-        name.to_lowercase().chars().map(|c| if c.is_ascii_alphanumeric() { c } else { '_' }).collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
-
-    if !used.contains(&slug) {
-        used.insert(slug.clone());
-        return slug;
-    }
-    let mut n = 2;
-    loop {
-        let candidate = format!("{slug}-{n}");
-        if !used.contains(&candidate) {
-            used.insert(candidate.clone());
-            return candidate;
-        }
-        n += 1;
-    }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_dedup`, imported back
+/// under this file's original local name.
+use super::slugify_dedup as slugify;
 
 #[cfg(test)]
 mod tests {

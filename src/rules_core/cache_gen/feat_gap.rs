@@ -76,7 +76,6 @@
 
 use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use serde::Serialize;
 
@@ -270,14 +269,8 @@ pub(crate) const BOOK_SPECS: &[BookSpec] = &[
     },
 ];
 
-fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// Hoisted to `cache_gen` (R14-04).
+use super::sha256_file;
 
 /// Finds a line carrying the exact tab-delimited field `KEY:<record_key>`.
 fn find_by_key_field(lst_path: &Path, record_key: &str) -> Option<u32> {
@@ -370,28 +363,9 @@ pub(crate) fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdent
     pi_screening::declared_product_identity(tokens)
 }
 
-fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
-    let mut slug: String =
-        name.to_lowercase().chars().map(|c| if c.is_ascii_alphanumeric() { c } else { '_' }).collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
-    if !used.contains(&slug) {
-        used.insert(slug.clone());
-        return slug;
-    }
-    let mut n = 2;
-    loop {
-        let candidate = format!("{slug}-{n}");
-        if !used.contains(&candidate) {
-            used.insert(candidate.clone());
-            return candidate;
-        }
-        n += 1;
-    }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_dedup`, imported back
+/// under this file's original local name.
+use super::slugify_dedup as slugify;
 
 /// Writes `record` to `<out_dir>/<slug>.json` -- UNLESS a file already
 /// exists there, in which case it is left untouched and `Ok(false)` is
