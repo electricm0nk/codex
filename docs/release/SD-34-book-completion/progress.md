@@ -11,6 +11,57 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 26, Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — desktop/reach re-confirmed green, site-dashboard-check measured and deferred, the brief's own timing premise corrected — partial
+
+**Status: partial.** Assigned: `desktop`, `reach`, `site-dashboard-check` (`apps/desktop/` +
+`site/` territory). Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_wave26_cycle_receipt.md`.
+
+**Worktree opened stale** (`HEAD` at the tranche cut `ea2b3396f2`, 24 commits behind
+`origin/tranche/14`'s `bc9e84553e`); rebased clean before anything else.
+
+**`desktop`/`reach`: RE-CONFIRMED still green, not re-fixed.** `cd apps/desktop/src-tauri &&
+cargo test --locked` → `572 passed / 0 failed`, identical to wave-24's closing figure, unbroken
+by wave-25's clippy remediation (which touched 4 desktop-crate source files on top of it). The
+brief's "7th desktop failure" conditional does not apply.
+
+**`site-dashboard-check`: still stale, gap widened 7→8 days** (`site/dashboard/
+PF1e-dashboard.json` `generated_at` `2026-08-24T22:17:30Z` vs `docs/work-inventory.json`'s last
+real touch `2026-08-31`, `3aebc284`). The producer was **not** run this cycle (`--check` included),
+per the brief's own doubled hazard instruction — deferred to the closing sweep exactly as
+wave-24's own receipt already routed it.
+
+**The brief's "~2m26s unloaded" claim for `v06_work_inventory --summary` is wrong — re-measured
+twice on a confirmed-quiet box (44Gi free, load 2.80/24, zero other cargo processes).** First run
+(`timeout 590`) was killed without finishing (exit 124, 604.52s user time accrued). Second run
+(`timeout 1800`) completed at **12:37.01 (757.01s) wall time, exit 0**, producing a valid summary
+(`totals.units: 49438`, matching this bundle's own fact sheet). `--summary` is source-confirmed
+read-only (never writes `docs/work-inventory.json`), which is why running it directly is distinct
+from "running the regenerator/producer" — the brief's own carved-out exception, exercised, not
+extended.
+
+**Discovery: half of the doubled "silent stamp-loss" hazard note is itself a stale quote inside
+this bundle's own `fable-review.md`.** That document's own verification log (§5, finding `R9-01`,
+confidence high) already code-reads a real, tested guard on `v06_work_inventory`'s only write
+path (`stamp_loss()` + `exit(1)` unless `--allow-stamp-loss`) and calls the SD-30 stamp-loss
+premise "stale" — but the same document's later "Resume instructions" section repeats the
+un-refuted hazard verbatim, and this dispatch brief's own hazard note traces to that later,
+uncorrected copy. This does **not** clear the dashboard producer (a different, Python codebase
+R9 never audited) and this cycle still did not run either write path — the brief's explicit
+instruction stands regardless. Surfaced for the closing sweep / an operator to reconcile.
+
+**Discovery: `reach: CLOSED` means the test suite passes, not that every `reach_gate.rs` verdict
+is proven player-reachable.** `fable-review/R11.json`'s `R11-02` (P1, `report_only`, out of this
+lane's scope) already found `reach_gate.rs` marks 12 content-kind families "Surfaced" via a Tauri
+command with zero frontend callers. Named as a caveat on this cycle's own "reach: CLOSED" claim,
+not re-litigated.
+
+`cargo test --locked --no-run` (workspace) not re-run this cycle (zero `src/`/`tests/`/`apps/`
+files touched; wave-25's own receipt already covers a later commit). `corpus_literal_sweep`:
+unmoved, `48708`. Denominator gate on this package: `files_checked=16 violations=0`.
+
+---
+
 ### Cycle — Wave 25, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — clippy, root 86→0 desktop 12→0, ceilings tightened 50/7→0/0 — complete
 
 **Status: complete.** Assigned: `clippy`, "the one stage nobody has touched." Receipt:
