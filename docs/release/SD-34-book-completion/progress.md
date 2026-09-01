@@ -11,6 +11,54 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 27, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — clippy re-confirmed 0/0 across two rebases, the whole 40-stage gate re-measured honestly (5 red, not the stale 14), one instrument re-pin — partial
+
+**Status: partial.** Assigned: `clippy` (both crates) + a full, honest re-measure of `bash
+scripts/verify.sh`'s 40 stages. Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-c_wave27_cycle_receipt.md`.
+
+**Worktree opened stale twice.** First: `HEAD` at the tranche cut, `origin/tranche/14` at
+`e5fd8dddb1` (waves 23-26 + lane A's own PU-dedup fix, all ahead); rebased clean. Mid-cycle,
+`origin/tranche/14` advanced again to `1d0a0a7207` (gate-lane-a's own wave-26 cycle, landed while
+this cycle's ~85-minute `root-full`/`desktop` follow-up run was alive but quiet — the same commit
+also fixed a near-miss where the autonomous wave-ledger nudge nearly double-dispatched onto
+`tranche/14`, believing this cycle's quiet-but-alive subprocess was dead); rebased again, clean.
+
+**Clippy: re-confirmed 0/0 both crates, three times, across both rebases — no fix needed.**
+Lanes A and B introduced zero new clippy warnings since wave-25's close. Ceilings held at `0/0`,
+not raised.
+
+**The whole gate, re-measured live: 35 PASS, 5 FAIL — not the "14 red" the bundle has been
+carrying from a review several waves stale.** Two full/targeted `verify.sh` runs (a full run
+killed by this cycle's own outer timeout at `root-full` 113/589, and a true-background
+`--only`-scoped run covering the remaining 11 stages to a real conclusion) plus a third,
+surgical re-verification of exactly the 4 test suites `1d0a0a7207`'s mid-cycle LICENSE.json fix
+could plausibly move. Every one of the 40 stages carries a live, dated verdict; every FAIL
+carries a one-line named cause, re-derived from the repo — full stage table, every command, and
+every citation in the receipt.
+
+**The 5 remaining FAILs, by sub-cause:** `site-dashboard-check` (producer's own internal 600s cap
+< the real ~757s runtime, pre-existing since wave-26); `denominator-gate` (2 violations, both in
+wave-26 lane B's own receipt content, unrelated to this cycle); `figure-provenance` (1
+pre-existing violation, wave-24's own content); `root-full` (3 suites / 7 tests: 4 REGISTERED
+`v06_corpus_trap_report` findings, `decisions.md §13`; 2 tests in `sd27_pathfinder_unchained_
+cache_shape.rs` and 1 in `sd24_wired_integration_audit.rs`, both newly named this cycle with
+exact cause and commit); `desktop` (1 test, `corpus_ingest_diagnostic.rs`'s own hardcoded PU pin,
+same root cause as one of `root-full`'s items, different file). **None of the 5 are this lane's
+own territory to fix** (`clippy anywhere, plus the sweep` — the brief's own boundary); named
+precisely for lanes A/B or the closing sweep, not silently absorbed or left vague as "the rest."
+
+**One instrument correction, this lane's own territory ("the sweep"):**
+`BASELINE_CORPUS_LITERAL_RECORDS` re-pinned `48708 -> 48706` in `scripts/verify-baselines.env`.
+Not a mystery drift — gate-lane-a's own wave-26 cycle had already diagnosed and TDD-verified it
+(2 stale duplicate `class_feature` records deleted, delta exactly -2, matching `decisions.md §12`
+L8) but never re-pinned the shared baseline file; this cycle closed that gap with the full
+citation chain in the receipt, and `corpus-sweep` now PASSes on the true, verified population.
+
+`cargo test --locked --no-run` (whole workspace): exit 0, 589 test binaries built, at HEAD
+`1d0a0a7207`. `apps/desktop/src-tauri`: exit 0, run explicitly, same HEAD. `corpus_literal_sweep`:
+48706 examined, 0 findings, unmoved by this cycle's own diff (no `data/corpus/**` write here).
+
 ### Cycle — Wave 26, Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — desktop/reach re-confirmed green, site-dashboard-check measured and deferred, the brief's own timing premise corrected — partial
 
 **Status: partial.** Assigned: `desktop`, `reach`, `site-dashboard-check` (`apps/desktop/` +
