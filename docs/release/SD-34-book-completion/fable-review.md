@@ -65,4 +65,6 @@ If this run dies (token exhaustion, interrupt), a fresh session resumes as follo
 
 ### Run ids
 
-(recorded at launch)
+- Backlog assessment (B1–B4 + B-SYNTH): Workflow run `wf_c656b776-955`, launched 2026-08-31. Script: session workflows dir, `fable-backlog-assessment-wf_c656b776-955.js`.
+- Code review (PC1–PC10, R8–R14, H1–H2 + verify + clearance): Workflow run `wf_23734e3f-d67`, launched 2026-08-31. Script: `fable-code-review-wf_23734e3f-d67.js`.
+- Lane statuses B1–B4, B-SYNTH, all review lanes: RUNNING as of launch.
