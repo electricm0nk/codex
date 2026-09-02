@@ -615,7 +615,7 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     // SD-34 wave 34 lane C: this cycle's own re-derive of wave 33 lane C's
     // named 19-unit remainder (`docs/release/SD-34-book-completion/
     // artifacts/bucket-d-mining/wave33_laneC_class_snapshot_delta_cycle_
-    // receipt.md`'s Next-cycle plan item 1), checked per-class against
+    // receipt.md`'s "next cycle" plan item 1), checked per-class against
     // `data/corpus/**/class_feature/<class>/` individually, not batch-
     // assumed:
     //
