@@ -77,6 +77,10 @@ KNOWN_WAVES = {
     "wf_4cb8e9fe-c43": ("26", "3 red left; A implements decisions.md 13 by baselining the 4 trap "
                               "tests (they assert zero against registered debt), B settles the "
                               "desktop contradiction, C sweeps with command+output per FAIL"),
+    "wf_cbb90b15-7b0": ("33", "bucket D is six mechanisms, not one shape -- A takes the 27 "
+                              "held-by-table records without escalating the disposition, B the 53 "
+                              "race_traits that load but never apply, C the 38 class snapshot-deltas, "
+                              "D the four baselines verify.sh flags stale"),
     "wf_820936ab-e11": ("32", "the last 2 verify.sh FAILs -> 40/40 (A); completion_atlas condition-6 "
                               "citation gate is correctly tripping on DONE (B); bucket D from 50.5% "
                               "DONE, 24963/49438 (C)"),
