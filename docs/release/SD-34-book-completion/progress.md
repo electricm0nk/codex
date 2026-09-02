@@ -11,6 +11,46 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 27, Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — `site-dashboard-check` timeout fixed: fails loudly instead of silently serving a stale cache — complete
+
+**Status: complete.** Receipt: `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_wave27_cycle_receipt.md`. Commit `a893bfcb39`.
+
+Wave 26 traced `site-dashboard-check` to the bottom but could not fix it — its territory was
+`apps/desktop/` and `site/`, and the real defect lives in `scripts/`. This wave's territory
+included `scripts/`, so it got fixed rather than re-diagnosed a fourth time.
+
+**The actual defect, confirmed by reading the code, not by trusting the prior chain:**
+`publish-site-dashboard.sh --check` runs the real producer even in check mode; the producer
+bounds each of its three state-dump binaries with a shared `PF1E_CLASS_STATE_TIMEOUT` (default
+600s); `v06_work_inventory` alone measures ~757s on a quiet box (wave-26's own measurement,
+re-confirmed unchanged this cycle); **on a timeout, the producer silently fell back to whatever
+stale cache was on disk instead of raising** — so `--check` could compare two stale-cache-derived
+outputs and report the feed "current" when it was not. That silent fallback is the fix, not the
+600s number: `pf1e_dashboard_producer.py` now raises a new `StateDumpTimeout` on a subprocess
+timeout when `PF1E_DASHBOARD_STRICT_TIMEOUT=1` (set only by `--check`); a live regeneration keeps
+the old stale-cache-preferred behavior unchanged and on purpose (a blank public panel is worse
+than a stale one — only `--check` needs the opposite bias). Also split `v06_work_inventory` onto
+its own `PF1E_WORK_INVENTORY_TIMEOUT` (950s = 757s measured + ~25% margin), separate from the
+two cheaper dumps' shared 600s cap — the deliberate, documented bound the brief explicitly
+permits once the failure path is loud, done alongside the fix rather than as a substitute for
+it. `verify.sh`'s `site-dashboard-check` stage now has its own outer `timeout` wrapper (2400s),
+matching `corpus-trap-audit`'s own precedent (whose comment names this exact gap).
+
+**5 new unittest cases** (`test_pf1e_dashboard_producer.py`, mocked-`subprocess` timeouts, both
+strict and non-strict) **+ 2 new plumbing cases** (`test_publish_site_dashboard.sh`, proving
+`--check` sets the env var and a real run does not) — all mutation-proven RED for the intended
+reason before the fix, GREEN after. 26/26 and 8/8 passing. Dual-audit clean on this cycle's own
+diff (`OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS`); the whole-`scripts/`-since-cut diff carries 6
+pre-existing `SD34_BUNDLE_DIR` hits from `AT-34-E1-006` (`6490738c38`), not this cycle's own.
+
+**This closes the defect, not the stage's live PASS/FAIL** — this lane did not run the real
+producer end-to-end (forbidden by the brief's own hazard note), so whether `site-dashboard-check`
+itself now reports PASS depends on a live run this lane may not make. `corpus_literal_sweep`:
+48706 → 48706, unmoved (0 corpus records touched). Build scope: workspace `cargo test --locked
+--no-run` and `apps/desktop/src-tauri cargo test --locked --no-run`, both exit 0 at this cycle's
+HEAD. `kanban.md` row 26 intentionally not touched — no board row tracks individual
+gate-remediation sub-waves, matching wave-24 through wave-29's own precedent.
+
 ### Cycle — Wave 29, gate-remediation closing sweep (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — full sweep, no regeneration, 37/40 PASS — complete
 
 **Status: complete** (this cycle's own obligation: a full, honest, independently-re-derived
