@@ -11,6 +11,43 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 28, Gate-Remediation Closing Sweep (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — full sweep only, no regeneration; 35 PASS / 5 FAIL, independently re-confirms wave-27's own figure — complete (this cycle's own obligation)
+
+**Status: complete** (this cycle's own obligation: a full, honest, independently-re-derived
+sweep). Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-sweep_wave28_cycle_receipt.md`.
+
+**Rebase was a no-op** — this worktree's `HEAD` was already `origin/tranche/14`'s tip
+(`65f24c9936`, wave-27 gate-lane-c's own final self-heal commit) — the three lanes this cycle's
+own dispatch brief describes as "just reported" (rust-suites, frontend, docs-gates) are the
+already-landed gate-lane-a/b/c wave-24/26/27 work at this same HEAD; `git log` shows zero commits
+landed between fetch and this cycle's own rebase.
+
+**Full `bash scripts/verify.sh --show-actuals -j 8`, foregrounded, ~101 minutes, not
+`--only`-scoped: 35 PASS, 5 FAIL** — `site-dashboard-check`, `denominator-gate`,
+`figure-provenance`, `root-full`, `desktop`. Every one of the 5 is an exact subset of the
+review's original 14 red (`fable-review.md` §7); every one is already named with exact cause by
+wave-27's own receipt; none is new. **9 of the original 14 are now green**, all closed by the
+inherited gate-lane work, not by this cycle: `reachability-audit`(+selftest),
+`shape-coverage-standing-gate`, `site-public-status-check`, `root-lib`, `reach`, `frontend-test`,
+`pi-sweep`, `clippy`. **Bar met: 5 <= 14, zero green→red regressions** (cross-checked name-by-name
+against the review's own 14, not just totals).
+
+**`BASELINE_CORPUS_LITERAL_RECORDS`: no edit needed.** Already deliberately updated by wave-27
+(`26500 -> 48708 -> 48706`, both moves cited and justified in `scripts/verify-baselines.env`).
+This cycle's own live `corpus-sweep` stage measured `48706` examined, 0 findings — an exact match
+to the pinned floor, independently re-derived. Editing a baseline that already matches the live
+measurement would be a change with no stated reason.
+
+**Did not run the inventory regenerator or the dashboard producer for real** (both stayed
+read-only: `--check`/`--summary`), per this cycle's own brief. `root-full`'s own
+`v06_work_inventory.rs::the_committed_inventory_is_well_formed_and_uses_only_declared_statuses`
+test PASSED live in this run — the committed `docs/work-inventory.json` needed no regeneration to
+pass its own test at this HEAD.
+
+`kanban.md` not touched (no board row tracks individual gate-remediation waves; row 26,
+`final-acceptance-scan`, stays `not-started`, per wave-27's own precedent).
+
 ### Cycle — Wave 27, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — clippy re-confirmed 0/0 across two rebases, the whole 40-stage gate re-measured honestly (5 red, not the stale 14), one instrument re-pin — partial
 
 **Status: partial.** Assigned: `clippy` (both crates) + a full, honest re-measure of `bash
