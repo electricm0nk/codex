@@ -647,13 +647,13 @@ function CreateCharacterFields(props: {
       setOutcome(result);
       if (result.kind === 'saved') {
         // v0.8 F-1: the bio sidecar is a separate command from
-        // `create_character`; persist the eight fields the form collected
+        // `create_character`; persist the nine fields the form collected
         // now that the character exists. A failure here is reported but is
         // not a creation failure — the character is already saved.
         try {
           await updateCharacterBio(
             request.characterId,
-            composeCreationBio({ alignment, deity, sex, age, eyes, hair, heightInches, weightLb }),
+            composeCreationBio({ playerName, alignment, deity, sex, age, eyes, hair, heightInches, weightLb }),
           );
         } catch (cause: unknown) {
           setBioSaveWarning(

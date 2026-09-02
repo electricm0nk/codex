@@ -117,12 +117,14 @@ export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[]):
 
     // v0.8 F-7: the corpus gp cost, verbatim, between category and prose.
     // `null` (every PU row) shows nothing — never a fabricated 0 gp. The
-    // DTO carries no weight, so none is shown until the bridge exposes it.
     const cost = entry.costGp === null ? null : `${entry.costGp} gp`;
+    // v0.8 F-15: weight, same rule — `null` is "no weight recorded", shown as
+    // nothing, never as 0 lb (backend keeps `None` distinct on purpose).
+    const weight = entry.weightLbs === null ? null : `${entry.weightLbs} lb`;
     return {
       key: entry.key,
       name: entry.name,
-      detail: [category, cost, description].filter((part): part is string => part !== null).join(' · '),
+      detail: [category, cost, weight, description].filter((part): part is string => part !== null).join(' · '),
     };
   });
 }

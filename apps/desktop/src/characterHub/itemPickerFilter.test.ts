@@ -19,9 +19,9 @@ import { assert, assertEqual } from '../testSupport/asserts';
  * mapping assertion — 974 of the 3830 served records are in that state.
  */
 const EQUIPMENT_ENTRIES: EquipmentCatalogEntryDto[] = [
-  { key: 'equipment:longsword', category: 'ArmsArmor', name: 'Longsword', costGp: 15, book: 'CRB', description: 'This sword is about 3-1/2 feet in length.' },
-  { key: 'equipment:banded_mail', category: 'ArmsArmor', name: 'Banded Mail', costGp: 250, book: 'CRB', description: null },
-  { key: 'equipment:potion_of_cure_light_wounds', category: 'MagicItems', name: 'Potion of Cure Light Wounds', costGp: 50, book: 'CRB', description: 'Cures 1d8+1 damage.' },
+  { key: 'equipment:longsword', category: 'ArmsArmor', name: 'Longsword', costGp: 15, weightLbs: 4, book: 'CRB', description: 'This sword is about 3-1/2 feet in length.' },
+  { key: 'equipment:banded_mail', category: 'ArmsArmor', name: 'Banded Mail', costGp: 250, weightLbs: 35, book: 'CRB', description: null },
+  { key: 'equipment:potion_of_cure_light_wounds', category: 'MagicItems', name: 'Potion of Cure Light Wounds', costGp: 50, weightLbs: null, book: 'CRB', description: 'Cures 1d8+1 damage.' },
 ];
 
 const SPELL_ENTRIES: SpellCatalogEntryDto[] = [
@@ -62,17 +62,19 @@ const FEAT_ENTRIES: FeatCatalogEntryDto[] = [
  * and the picker never showed it — a player learned the price from the
  * gold balance dropping. The cost now sits on the detail line, verbatim
  * from the DTO; a `null` cost (every PU row) renders no price rather than
- * a fabricated 0. Weight is not on the DTO at all, so nothing is shown
- * for it (backend wiring needed, not a frontend workaround).
+ * a fabricated 0. v0.8 F-15 (after B-8): `weightLbs` follows, with the
+ * same null → nothing rule — `null` means no weight recorded, never 0 lb.
  */
 function verifiesEquipmentMappingShowsTheCorpusCostOnTheRow() {
   const entries = mapEquipmentCatalogEntries(EQUIPMENT_ENTRIES);
-  assertEqual(entries[0].detail, 'Arms & Armor · 15 gp · This sword is about 3-1/2 feet in length.', 'cost sits between category and description');
-  assertEqual(entries[1].detail, 'Arms & Armor · 250 gp', 'cost with no description has no dangling separator');
-  const free = mapEquipmentCatalogEntries([{ ...EQUIPMENT_ENTRIES[1], costGp: null }]);
-  assertEqual(free[0].detail, 'Arms & Armor', 'null cost renders no price, not 0 gp');
-  const fractional = mapEquipmentCatalogEntries([{ ...EQUIPMENT_ENTRIES[1], costGp: 0.5, description: null }]);
-  assertEqual(fractional[0].detail, 'Arms & Armor · 0.5 gp', 'fractional gp is written as the corpus has it');
+  assertEqual(entries[0].detail, 'Arms & Armor · 15 gp · 4 lb · This sword is about 3-1/2 feet in length.', 'cost then weight sit between category and description');
+  assertEqual(entries[1].detail, 'Arms & Armor · 250 gp · 35 lb', 'cost and weight with no description has no dangling separator');
+  const free = mapEquipmentCatalogEntries([{ ...EQUIPMENT_ENTRIES[1], costGp: null, weightLbs: null }]);
+  assertEqual(free[0].detail, 'Arms & Armor', 'null cost and null weight render nothing, never 0 gp / 0 lb');
+  const fractional = mapEquipmentCatalogEntries([{ ...EQUIPMENT_ENTRIES[1], costGp: 0.5, weightLbs: 0.5, description: null }]);
+  assertEqual(fractional[0].detail, 'Arms & Armor · 0.5 gp · 0.5 lb', 'fractional gp and lb are written as the corpus has them');
+  const weightOnly = mapEquipmentCatalogEntries([{ ...EQUIPMENT_ENTRIES[1], costGp: null, weightLbs: 35, description: null }]);
+  assertEqual(weightOnly[0].detail, 'Arms & Armor · 35 lb', 'weight shows on its own when cost is absent (F-15)');
 }
 
 function verifiesFilterMatchesEntryNameCaseInsensitively() {
@@ -106,13 +108,13 @@ function verifiesEquipmentMappingUsesFriendlyCategoryLabel() {
   assertEqual(mapped.name, 'Longsword', 'name comes from the catalog entry name');
   assertEqual(
     mapped.detail,
-    'Arms & Armor · 15 gp · This sword is about 3-1/2 feet in length.',
-    'detail is the friendly category label, the corpus cost, then the record’s real corpus description'
+    'Arms & Armor · 15 gp · 4 lb · This sword is about 3-1/2 feet in length.',
+    'detail is the friendly category label, the corpus cost and weight, then the record’s real corpus description'
   );
 }
 
 function verifiesEquipmentMappingFallsBackToRawCategoryForUnknownVariant() {
-  const [mapped] = mapEquipmentCatalogEntries([{ key: 'equipment:mystery', category: 'SomeNewCategory', name: 'Mystery Item', costGp: null, book: 'CRB', description: null }]);
+  const [mapped] = mapEquipmentCatalogEntries([{ key: 'equipment:mystery', category: 'SomeNewCategory', name: 'Mystery Item', costGp: null, weightLbs: null, book: 'CRB', description: null }]);
   assertEqual(mapped.detail, 'SomeNewCategory', 'unmapped categories fall back to the raw variant string, never a fabricated label');
 }
 
@@ -138,15 +140,15 @@ function verifiesEquipmentMappingOmitsADescriptionTheCorpusDoesNotHave() {
   const [, bandedMail] = mapEquipmentCatalogEntries(EQUIPMENT_ENTRIES);
   assertEqual(
     bandedMail.detail,
-    'Arms & Armor · 250 gp',
-    'a record with no corpus description shows only its category and cost — no dangling separator, no invented text'
+    'Arms & Armor · 250 gp · 35 lb',
+    'a record with no corpus description shows only its category, cost and weight — no dangling separator, no invented text'
   );
 }
 
 /** Blank-but-present prose is the same absence as `null`, treated the same. */
 function verifiesEquipmentMappingTreatsBlankDescriptionAsAbsent() {
   const [mapped] = mapEquipmentCatalogEntries([
-    { key: 'equipment:blank', category: 'General', name: 'Blank', costGp: 1, book: 'CRB', description: '   ' },
+    { key: 'equipment:blank', category: 'General', name: 'Blank', costGp: 1, weightLbs: null, book: 'CRB', description: '   ' },
   ]);
   assertEqual(mapped.detail, 'General · 1 gp', 'whitespace-only description is treated as no description (cost still shown)');
 }

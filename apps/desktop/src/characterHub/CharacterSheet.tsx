@@ -549,17 +549,16 @@ function SpeedPanel(props: { land: string }) {
  */
 function AttackPanel(props: { baseAttackBonus: number; melee: number; cmb: number | null; cmd: number | null }) {
   // v0.8 F-9: `melee` is the engine's `baselineMeleeAttackBonus`, which was
-  // loaded on every sheet and never rendered. The pre-existing "Spell Res."
-  // tile is left exactly as it was (out of F-9's scope).
+  // loaded on every sheet and never rendered. v0.8 F-13: the old "Spell
+  // Res." tile here was a hard-coded "—" nothing could populate; the real
+  // spell resistance renders on the Defense tab from
+  // `equipmentEffects.spellResistanceTotal` when a build has one.
   const tiles = buildAttackTiles({ baseAttackBonus: props.baseAttackBonus, melee: props.melee, cmb: props.cmb, cmd: props.cmd });
   return (
     <StatBox title="Attack">
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         {tiles.map((tile) => (
-          <Fragment key={tile.label}>
-            <StatTile label={tile.label} value={tile.value} />
-            {tile.label === 'Melee' ? <StatTile label="Spell Res." value="—" /> : null}
-          </Fragment>
+          <StatTile key={tile.label} label={tile.label} value={tile.value} />
         ))}
       </div>
     </StatBox>
@@ -662,6 +661,12 @@ export const SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feat
 type Tab = (typeof SHEET_TABS)[number];
 
 export interface BioFields {
+  /**
+   * v0.8 F-14: carried (not yet edited here) so the sheet's blur-save sends
+   * back the value the create form persisted instead of blanking it —
+   * `update_character_bio` replaces the whole sidecar.
+   */
+  playerName: string;
   alignment: string;
   deity: string;
   sex: string;
@@ -673,6 +678,7 @@ export interface BioFields {
 }
 
 export const BLANK_BIO_FIELDS: BioFields = {
+  playerName: '',
   alignment: '',
   deity: '',
   sex: '',
