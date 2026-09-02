@@ -134,7 +134,16 @@ export function DmToolkitScreen(props: { onBack: () => void }) {
   }
 
   if (showEncounters) {
-    return <EncounterBuilderScreen onBack={() => setShowEncounters(false)} />;
+    return (
+      <EncounterBuilderScreen
+        campaignId={campaignId}
+        onBack={() => {
+          // The builder may have written a scene (G-4); re-read storage on return.
+          setRevision((n) => n + 1);
+          setShowEncounters(false);
+        }}
+      />
+    );
   }
 
   return (

@@ -5,6 +5,8 @@ import { rateEncounter, type RateEncounterResponse } from '../boundary/rateEncou
 import { hasTauriRuntime } from '../boundary/runtime';
 import { addMonster, addSavedMember, addTypedMember, emptyBuilder, removeMember, removeMonster, setMonsterCount, toRequest, type EncounterBuilder } from './encounterBuilderModel';
 import { buildEncounterView, describeTier, formatCr } from './encounterViewModel';
+import { formatEncounterRecord } from './encounterRecord';
+import { createDmRecord, getDmRecords, updateDmRecord, type DmRecord } from './dmRecordModel';
 
 /**
  * Encounter builder (v0.8 E-2): build a party from saved characters or
@@ -24,7 +26,11 @@ const accentButton: CSSProperties = { background: 'var(--color-accent)', border:
 const quietButton: CSSProperties = { background: 'none', border: '1px solid var(--color-border)', borderRadius: 8, color: 'var(--color-text)', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600, padding: '0.35rem 0.7rem' };
 const inputStyle: CSSProperties = { background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 8, boxSizing: 'border-box', color: 'var(--color-text)', fontFamily: 'inherit', fontSize: '0.9rem', padding: '0.5rem 0.7rem' };
 
-export function EncounterBuilderScreen(props: { onBack: () => void }) {
+export function EncounterBuilderScreen(props: {
+  /** The DM Toolkit's current campaign; `null` when none exists (then nothing can be saved to a scene). */
+  campaignId: string | null;
+  onBack: () => void;
+}) {
   const [builder, setBuilder] = useState<EncounterBuilder>(emptyBuilder);
   const [catalog, setCatalog] = useState<MonsterCatalogEntryDto[] | null>(null);
   const [catalogError, setCatalogError] = useState<string | null>(null);
@@ -35,6 +41,11 @@ export function EncounterBuilderScreen(props: { onBack: () => void }) {
   const [rating, setRating] = useState<RateEncounterResponse | null>(null);
   const [ratingError, setRatingError] = useState<string | null>(null);
   const [ratingBusy, setRatingBusy] = useState(false);
+  // G-4: save-to-scene target. Existing scene id, or '' for a new scene named `newSceneTitle`.
+  const [sceneRevision, setSceneRevision] = useState(0);
+  const [sceneTarget, setSceneTarget] = useState('');
+  const [newSceneTitle, setNewSceneTitle] = useState('');
+  const [saveStatus, setSaveStatus] = useState<string | null>(null);
 
   useEffect(() => {
     let live = true;
@@ -88,6 +99,38 @@ export function EncounterBuilderScreen(props: { onBack: () => void }) {
   const needle = search.trim().toLowerCase();
   const matches = needle === '' ? [] : (catalog ?? []).filter((entry) => entry.name.toLowerCase().includes(needle)).slice(0, 40);
   const view = rating ? buildEncounterView(rating) : null;
+  const scenes = useMemo(
+    () => (props.campaignId ? getDmRecords(props.campaignId).filter((record): record is DmRecord => record.kind === 'Scene') : []),
+    [props.campaignId, sceneRevision],
+  );
+
+  function saveToScene() {
+    if (!props.campaignId || !rating) {
+      return;
+    }
+    const names = Object.fromEntries(saved.map((entry) => [entry.characterId, entry.displayLabel]));
+    const text = formatEncounterRecord(rating, names, new Date().toISOString());
+    if (sceneTarget === '') {
+      const title = newSceneTitle.trim();
+      if (title === '') {
+        setSaveStatus('Give the new scene a title, or pick an existing one.');
+        return;
+      }
+      const scene = createDmRecord(props.campaignId, { kind: 'Scene', title, fields: { encounter: text } });
+      setSceneTarget(scene.id);
+      setNewSceneTitle('');
+      setSaveStatus(`Saved to new scene “${scene.title}”.`);
+    } else {
+      const scene = scenes.find((candidate) => candidate.id === sceneTarget);
+      if (!scene) {
+        setSaveStatus('That scene no longer exists.');
+        return;
+      }
+      updateDmRecord(props.campaignId, scene.id, { fields: { ...scene.fields, encounter: text } });
+      setSaveStatus(`Saved to scene “${scene.title}” (replacing its previous encounter, if any).`);
+    }
+    setSceneRevision((n) => n + 1);
+  }
 
   return (
     <section style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 6rem)', marginTop: '1rem' }}>
@@ -232,6 +275,31 @@ export function EncounterBuilderScreen(props: { onBack: () => void }) {
                   {caveat}
                 </p>
               ))}
+
+              {/* G-4: write the engine's answer — caveats included — onto a Scene. */}
+              <h3 style={{ ...heading, marginTop: '1rem' }}>Save to a scene</h3>
+              {props.campaignId === null ? (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>No campaign exists yet, so there is no scene to save to.</p>
+              ) : (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  <select aria-label="Scene" value={sceneTarget} onChange={(event) => setSceneTarget(event.target.value)} style={{ ...inputStyle, flex: '1 1 180px' }}>
+                    <option value="">New scene…</option>
+                    {scenes.map((scene) => (
+                      <option key={scene.id} value={scene.id}>
+                        {scene.title}
+                        {scene.fields.encounter ? ' (has an encounter)' : ''}
+                      </option>
+                    ))}
+                  </select>
+                  {sceneTarget === '' ? (
+                    <input aria-label="New scene title" placeholder="New scene title" value={newSceneTitle} onChange={(event) => setNewSceneTitle(event.target.value)} style={{ ...inputStyle, flex: '1 1 160px' }} />
+                  ) : null}
+                  <button type="button" onClick={saveToScene} style={accentButton}>
+                    Save encounter
+                  </button>
+                  {saveStatus ? <p style={{ color: 'var(--color-text-secondary)', flexBasis: '100%', fontSize: '0.8rem', margin: 0 }}>{saveStatus}</p> : null}
+                </div>
+              )}
             </>
           ) : null}
         </div>

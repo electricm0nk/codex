@@ -59,6 +59,8 @@ export const DM_KIND_FIELDS: Record<DmRecordKind, DmFieldSpec[]> = {
     { key: 'trigger', label: 'Trigger', multiline: false },
     { key: 'gmBrief', label: 'GM brief', multiline: true },
     { key: 'readAloud', label: 'Read aloud', multiline: true },
+    /** v0.8 G-4: a rated encounter as the engine wrote it (see `encounterRecord.ts`). */
+    { key: 'encounter', label: 'Encounter', multiline: true },
   ],
   Rule: [],
 };

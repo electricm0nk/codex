@@ -1,4 +1,5 @@
 import {
+  DM_KIND_FIELDS,
   DM_RECORD_KINDS,
   createDmRecord,
   createMemoryDmStorage,
@@ -73,6 +74,10 @@ assertEqual(getDmRecord(campaign, bar.id, storage), null, 'delete persists');
 assertEqual(getDmRecord(campaign, rogue.id, storage)?.links.length, 0, 'links from other records to the deleted one are removed');
 assertEqual(getDmRecord(campaign, scene.id, storage)?.links.length, 0, '…from every record, not just the first');
 assertEqual(getDmRecords(campaign, storage).length, 2, 'the other records survive');
+
+// G-4: a Scene carries the saved encounter as a multiline field, so it
+// persists, renders in the console and rides both exports like any field.
+assertEqual(DM_KIND_FIELDS.Scene.find((spec) => spec.key === 'encounter')?.multiline, true, 'Scene has a multiline encounter field');
 
 // D-3a visibility: private by default, explicit to share, and records written
 // before the field existed load as 'gm' — an upgrade never exposes prep.
