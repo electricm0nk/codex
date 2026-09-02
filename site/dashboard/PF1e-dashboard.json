@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-08-24T22:17:30Z",
+  "generated_at": "2026-09-02T08:11:40Z",
   "generated_by": "pf1e_dashboard_producer",
   "schema_version": 2,
   "usage": {
-    "captured_at": "2026-08-24T22:15:10Z",
-    "session_used_pct": "2",
-    "session_reset": "resets Aug 24, 10:19pm (America/New_York)",
-    "week_all_models_used_pct": "85",
-    "week_all_models_reset": "resets Aug 26, 4:59am (America/New_York)",
-    "fable_used_pct": "2",
+    "captured_at": "2026-09-02T08:00:08Z",
+    "session_used_pct": "20",
+    "session_reset": "resets Sep 2, 4:50am (America/New_York)",
+    "week_all_models_used_pct": "14",
+    "week_all_models_reset": "resets Sep 2, 5am (America/New_York)",
+    "fable_used_pct": "13",
     "fable_reset": "?",
     "requests_24h": "24",
     "requests_7d": "7"
@@ -42,7 +42,7 @@
   ],
   "content_state": {
     "available": true,
-    "generated_at": "2026-08-24T22:16:28Z",
+    "generated_at": "2026-09-02T07:52:18Z",
     "generated_by": "v06_content_state_dump",
     "books": [
       {
@@ -2273,7 +2273,7 @@
         "feats": "X"
       },
       "open_questions": {
-        "feats": "186 feat records ingested and prerequisite-evaluable, but only 45 of them compute a real mechanical effect: adding the other 141 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-08-24T22:16:28Z]"
+        "feats": "186 feat records ingested and prerequisite-evaluable, but only 45 of them compute a real mechanical effect: adding the other 141 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-02T07:52:18Z]"
       },
       "items": {
         "equipment": [
@@ -5427,8 +5427,8 @@
         "feats": "X"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-08-24T22:16:28Z]",
-        "feats": "172 feat records ingested and prerequisite-evaluable, but only 5 of them compute a real mechanical effect: adding the other 167 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-08-24T22:16:28Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-09-02T07:52:18Z]",
+        "feats": "172 feat records ingested and prerequisite-evaluable, but only 5 of them compute a real mechanical effect: adding the other 167 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-02T07:52:18Z]"
       },
       "items": {
         "equipment": [
@@ -6270,8 +6270,8 @@
         "feats": "X"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-08-24T22:16:28Z]",
-        "feats": "129 feat records ingested and prerequisite-evaluable, but only 2 of them compute a real mechanical effect: adding the other 127 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-08-24T22:16:28Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-09-02T07:52:18Z]",
+        "feats": "129 feat records ingested and prerequisite-evaluable, but only 2 of them compute a real mechanical effect: adding the other 127 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-02T07:52:18Z]"
       },
       "items": {
         "equipment": [
@@ -6796,10 +6796,10 @@
         "feats": "O"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-08-24T22:16:28Z]",
-        "classes": "No class records are ingested for this book. [engine content dump 2026-08-24T22:16:28Z]",
-        "spells": "No spell records are ingested for this book. [engine content dump 2026-08-24T22:16:28Z]",
-        "feats": "No feat records are ingested for this book. [engine content dump 2026-08-24T22:16:28Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-09-02T07:52:18Z]",
+        "classes": "No class records are ingested for this book. [engine content dump 2026-09-02T07:52:18Z]",
+        "spells": "No spell records are ingested for this book. [engine content dump 2026-09-02T07:52:18Z]",
+        "feats": "No feat records are ingested for this book. [engine content dump 2026-09-02T07:52:18Z]"
       },
       "items": {
         "equipment": [
@@ -12444,7 +12444,7 @@
         "rest": "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Wizard, Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest.",
         "list": "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Wizard, Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest",
         "source": "engine-state-dump",
-        "generated_at": "2026-08-24T22:05:33Z",
+        "generated_at": "2026-09-02T08:10:42Z",
         "input_posture": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt with the class swapped to the class under test, swept over levels 1-20, plus the canonical per-class choice/spell seeds compose_character_input applies (pf1_adapter.rs). A class counts as computed only when every level in the sweep reaches HeadlessReceiptStatus::Computed.",
         "excluded": [
           "unchained_barbarian",
@@ -14539,19 +14539,19 @@
   },
   "work_inventory": {
     "available": true,
-    "generated_at": "2026-08-24T21:51:56Z",
+    "generated_at": "2026-09-02T07:50:38Z",
     "generated_by": "cargo run --bin v06_work_inventory",
     "corpus_root": "/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game",
     "total_units": 49438,
-    "proven_units": 14889,
+    "proven_units": 22943,
     "by_status": {
-      "deferred-with-reason": 46,
-      "grounded": 5984,
-      "ingested-magnitude": 7262,
-      "not-ingested": 22995,
+      "deferred-with-reason": 170,
+      "engine-does-not-hold": 19346,
+      "grounded": 11535,
+      "ingested-magnitude": 6758,
       "not-started": 19,
-      "text-complete": 8905,
-      "unknown": 4227
+      "text-complete": 11408,
+      "unmeasurable": 202
     },
     "by_kind": {
       "ability": 4337,
@@ -14585,7 +14585,7 @@
     "wiring_class_note": null,
     "wiring_class_determinator_versions": [],
     "doneness_available": true,
-    "doneness_source_generated_at": "2026-08-23T21:13:46Z",
+    "doneness_source_generated_at": "2026-09-01T00:01:15Z",
     "status_sources_agree": false,
     "doneness_values": [
       "done",
@@ -14599,26 +14599,26 @@
       "done": "The evidence this unit has meets the bar its wiring_class requires. Nothing further is owed. For `static`/`derived` specifically, this requires the literal/evaluator check the class has always named -- `static` cleared by `corpus_literal_sweep`'s byte-equality compare, `derived` cleared by `derived_evaluator_fixture_check`'s evaluator-vs-fixture compare -- carried in the record as `status` `literal-verified`/`fixture-verified`. Ordinary `ingested-magnitude`/`grounded`/`text-complete` evidence on a `static`/`derived` unit does NOT clear this bar and stays `held` (SD-32 decisions.md \u00a72, operator directive 2026-08-13).",
       "held": "The engine holds the record with its real data. For `static`/`derived` the check that would confirm the bar now EXISTS -- `corpus_literal_sweep` for `static`, `derived_evaluator_fixture_check` for `derived` -- but this particular unit has not yet been swept/checked and found to pass (it carries ordinary `ingested-magnitude`/`grounded`/`text-complete` evidence rather than `literal-verified`/`fixture-verified`). A unit that HAS cleared its check reads `done`, not `held` (SD-32 decisions.md \u00a72, operator directive 2026-08-13). For `ambiguous` and `display` (specifically `display`+`grounded`, where a real consumer delta contradicts the no-magnitude classification) the bar is not even known yet -- both need a working wiring-class classifier before there is a bar to check against at all. Also where a unit of any `kind` listed in `NO_GROUNDING_PROBE` would otherwise land `in-progress`: that kind has no consumer-delta probe at all, so its bar can never be confirmed reachable by an instrument that exists. As done as the current instruments can prove, and deliberately not counted as done (SD-29 decisions.md \u00a746.4). `NO_GROUNDING_PROBE` is empty as of SD30-E0-F2 (2026-08-14) -- `spell` and `companion`, the two kinds it used to name, both have a landed probe reaching a nonzero `grounded` count under `computed` (46 and 416 respectively, re-derived that cycle), so this clause is currently vacuous by construction, not dead code -- a future kind with a genuinely unreachable bar has somewhere to be listed.",
       "in-progress": "Really part way: ingested, short of its own class's bar, and the bar is reachable with an instrument that exists. Dominated by `computed` units holding their numbers with no consumer delta yet observed. Would never be assigned to a `kind` listed in `NO_GROUNDING_PROBE` -- currently empty (SD30-E0-F2, 2026-08-14; see that constant's declaration) -- since for such a kind no instrument that could reach the bar would exist at all.",
-      "not-started": "No record in the engine -- `not-ingested` (the book is in play, this unit is not) or `not-started` (the book has not been worked).",
+      "not-started": "No record in the engine -- `engine-does-not-hold` (the book is in play, this unit is not) or `not-started` (the book has not been worked).",
       "unmeasurable": "`status` came back `unknown`: the record itself gives no evidence at all, regardless of wiring_class, so there is nothing to place on the ladder. A work item against the instruments, not a statement about the content, and never counted toward or against coverage.",
       "deferred": "Ruled out of scope with a recorded reason. Not pending work."
     },
     "by_doneness": {
-      "done": 15034,
-      "held": 1921,
-      "in-progress": 1251,
-      "not-started": 26962,
-      "unmeasurable": 4224,
-      "deferred": 46
+      "done": 23338,
+      "held": 2723,
+      "in-progress": 3640,
+      "not-started": 19365,
+      "unmeasurable": 202,
+      "deferred": 170
     },
     "mandate_headline": {
-      "done": 15034,
+      "done": 23338,
       "denominator": 49438,
       "denominator_rule": "all units, all books except beginner_box, incl. unmeasurable, deferred and future_state; nothing subtracted",
       "unmapped_units": 0,
       "secondary_in_scope_measurable": {
-        "done": 15034,
-        "denominator": 45149,
+        "done": 23338,
+        "denominator": 49047,
         "rule": "in_scope books only, minus unmeasurable and deferred (the pre-2026-08-15 headline)"
       }
     },
@@ -14628,62 +14628,71 @@
         "not-started": 157
       },
       "class_feature": {
-        "not-started": 14457,
-        "unmeasurable": 3052,
-        "deferred": 44,
-        "done": 459,
-        "held": 31
+        "not-started": 13355,
+        "done": 4439,
+        "deferred": 156,
+        "held": 93
       },
       "race_trait": {
-        "not-started": 1740,
-        "done": 560,
-        "in-progress": 260,
-        "held": 1
+        "held": 144,
+        "in-progress": 672,
+        "done": 1213,
+        "not-started": 532
       },
       "feat": {
-        "done": 1586,
-        "unmeasurable": 578,
-        "held": 107,
+        "done": 1585,
+        "in-progress": 421,
+        "held": 204,
         "not-started": 490,
-        "deferred": 2,
-        "in-progress": 1
+        "unmeasurable": 62,
+        "deferred": 2
       },
       "spell": {
-        "done": 1573,
-        "held": 425,
-        "in-progress": 157,
-        "not-started": 662,
-        "unmeasurable": 26
+        "done": 1576,
+        "held": 684,
+        "in-progress": 192,
+        "not-started": 391
       },
       "equipment": {
-        "in-progress": 264,
-        "done": 5386,
-        "held": 285,
-        "unmeasurable": 195,
+        "in-progress": 109,
+        "done": 5610,
+        "held": 292,
+        "unmeasurable": 119,
         "not-started": 93
       },
       "equipment_modifier": {
-        "done": 577,
-        "unmeasurable": 373,
-        "in-progress": 566,
-        "held": 16
+        "done": 972,
+        "unmeasurable": 21,
+        "in-progress": 480,
+        "held": 59
       },
       "template": {
-        "not-started": 2248
+        "not-started": 1816,
+        "in-progress": 268,
+        "held": 37,
+        "done": 127
       },
       "domain": {
-        "not-started": 183
+        "not-started": 80,
+        "in-progress": 67,
+        "done": 36
       },
       "ability": {
-        "not-started": 4337
+        "in-progress": 1267,
+        "done": 2169,
+        "held": 216,
+        "not-started": 685
       },
       "companion": {
-        "not-started": 769,
-        "done": 871,
-        "held": 56
+        "not-started": 662,
+        "done": 952,
+        "held": 70,
+        "deferred": 12
       },
       "trait": {
-        "not-started": 487
+        "not-started": 6,
+        "done": 358,
+        "in-progress": 123
       },
       "race": {
         "in-progress": 3,
@@ -14691,9 +14700,9 @@
         "not-started": 56
       },
       "monster_ability": {
-        "done": 2968,
-        "held": 747,
-        "not-started": 91
+        "done": 3122,
+        "held": 671,
+        "not-started": 13
       },
       "language": {
         "not-started": 136
@@ -14704,49 +14713,54 @@
         "not-started": 27
       },
       "skill": {
-        "not-started": 149
+        "in-progress": 29,
+        "done": 83,
+        "not-started": 37
       },
       "deity": {
-        "not-started": 459
+        "done": 42,
+        "not-started": 408,
+        "in-progress": 9
       },
       "power": {
         "not-started": 421
       }
     },
     "cross_tab": {
-      "computed|grounded": 2035,
-      "computed|not-ingested": 7488,
-      "display|not-ingested": 14471,
-      "static|not-ingested": 2408,
-      "computed|unknown": 2074,
-      "derived|unknown": 1142,
-      "static|unknown": 687,
-      "ambiguous|not-ingested": 335,
-      "derived|not-ingested": 2241,
-      "computed|deferred-with-reason": 30,
-      "display|deferred-with-reason": 10,
-      "display|text-complete": 4669,
-      "derived|grounded": 864,
-      "derived|fixture-verified": 1741,
-      "static|deferred-with-reason": 6,
-      "static|literal-verified": 6589,
-      "ambiguous|text-complete": 111,
-      "static|text-complete": 72,
-      "derived|ingested-magnitude": 271,
-      "ambiguous|grounded": 42,
-      "computed|ingested-magnitude": 999,
-      "display|unknown": 308,
-      "computed|text-complete": 206,
-      "display|ingested-magnitude": 46,
-      "derived|text-complete": 41,
-      "static|ingested-magnitude": 184,
-      "display|grounded": 138,
+      "computed|grounded": 2950,
+      "computed|engine-does-not-hold": 6258,
+      "display|text-complete": 10797,
+      "display|engine-does-not-hold": 8313,
+      "static|engine-does-not-hold": 1824,
+      "derived|engine-does-not-hold": 2631,
+      "ambiguous|engine-does-not-hold": 320,
+      "computed|deferred-with-reason": 32,
+      "display|deferred-with-reason": 125,
+      "derived|grounded": 951,
+      "derived|oracle-agree": 396,
+      "static|deferred-with-reason": 9,
+      "static|oracle-agree": 415,
+      "static|literal-verified": 289,
+      "derived|oracle-unverifiable": 1345,
+      "derived|ingested-magnitude": 792,
+      "computed|ingested-magnitude": 3432,
+      "ambiguous|text-complete": 112,
+      "static|text-complete": 98,
+      "static|oracle-unverifiable": 7146,
+      "ambiguous|grounded": 70,
+      "display|unmeasurable": 191,
+      "computed|text-complete": 160,
+      "display|ingested-magnitude": 48,
+      "derived|text-complete": 185,
+      "static|ingested-magnitude": 150,
+      "display|grounded": 168,
+      "static|grounded": 170,
+      "ambiguous|ingested-magnitude": 27,
       "static|not-started": 16,
       "display|not-started": 2,
       "ambiguous|not-started": 1,
-      "static|grounded": 155,
-      "ambiguous|unknown": 13,
-      "ambiguous|ingested-magnitude": 43
+      "ambiguous|deferred-with-reason": 4,
+      "ambiguous|unmeasurable": 11
     },
     "spell_kind_capped_count": 0,
     "by_doneness_book_kind": {
@@ -14756,42 +14770,48 @@
           "not-started": 1
         },
         "class_feature": {
-          "not-started": 2276,
-          "unmeasurable": 334,
-          "deferred": 18,
-          "done": 58,
-          "held": 12
+          "not-started": 2108,
+          "done": 557,
+          "deferred": 19,
+          "held": 14
         },
         "race_trait": {
-          "not-started": 128
+          "held": 14,
+          "in-progress": 7,
+          "done": 1,
+          "not-started": 106
         },
         "feat": {
           "done": 90,
-          "unmeasurable": 34,
-          "held": 5
+          "in-progress": 26,
+          "held": 13
         },
         "spell": {
           "done": 134,
           "held": 10
         },
         "equipment": {
-          "in-progress": 56,
-          "done": 164,
+          "in-progress": 9,
+          "done": 211,
           "held": 1
         },
         "equipment_modifier": {
-          "done": 34,
-          "unmeasurable": 5,
+          "done": 35,
+          "unmeasurable": 4,
           "in-progress": 9
         },
         "template": {
-          "not-started": 22
+          "not-started": 18,
+          "in-progress": 4
         },
         "domain": {
           "not-started": 10
         },
         "ability": {
-          "not-started": 109
+          "in-progress": 23,
+          "done": 81,
+          "held": 4,
+          "not-started": 1
         }
       },
       "advanced_players_guide": {
@@ -14800,19 +14820,19 @@
           "not-started": 12
         },
         "class_feature": {
-          "not-started": 1868,
-          "unmeasurable": 372,
-          "done": 88,
+          "not-started": 1762,
+          "done": 566,
           "held": 3,
           "deferred": 3
         },
         "race_trait": {
-          "not-started": 92,
+          "in-progress": 43,
+          "not-started": 49,
           "done": 1
         },
         "feat": {
-          "unmeasurable": 29,
-          "done": 137,
+          "done": 138,
+          "in-progress": 28,
           "held": 7,
           "not-started": 1
         },
@@ -14822,8 +14842,7 @@
           "in-progress": 20
         },
         "equipment": {
-          "done": 310,
-          "in-progress": 26,
+          "done": 336,
           "unmeasurable": 1,
           "held": 1
         },
@@ -14837,24 +14856,31 @@
           "held": 3
         },
         "template": {
-          "not-started": 38
+          "not-started": 21,
+          "held": 1,
+          "in-progress": 16
         },
         "domain": {
-          "not-started": 71
+          "not-started": 70,
+          "in-progress": 1
         },
         "ability": {
-          "not-started": 123
+          "in-progress": 62,
+          "done": 47,
+          "held": 12,
+          "not-started": 2
         },
         "trait": {
-          "not-started": 90
+          "not-started": 1,
+          "done": 36,
+          "in-progress": 53
         }
       },
       "advanced_race_guide": {
         "class_feature": {
-          "not-started": 554,
-          "unmeasurable": 145,
-          "deferred": 2,
-          "done": 7
+          "done": 274,
+          "not-started": 432,
+          "deferred": 2
         },
         "race": {
           "in-progress": 2,
@@ -14862,27 +14888,28 @@
           "not-started": 1
         },
         "race_trait": {
-          "in-progress": 93,
-          "not-started": 79,
-          "done": 143
+          "in-progress": 102,
+          "done": 145,
+          "not-started": 54,
+          "held": 14
         },
         "feat": {
-          "unmeasurable": 65,
+          "in-progress": 52,
           "done": 165,
-          "held": 6
+          "held": 16,
+          "unmeasurable": 3
         },
         "spell": {
           "in-progress": 93
         },
         "equipment": {
-          "done": 173,
-          "in-progress": 13
+          "done": 184,
+          "in-progress": 2
         },
         "equipment_modifier": {
-          "in-progress": 12,
-          "done": 14,
-          "unmeasurable": 2,
-          "held": 1
+          "in-progress": 10,
+          "done": 17,
+          "held": 2
         },
         "monster_ability": {
           "done": 1
@@ -14899,7 +14926,10 @@
           "not-started": 2
         },
         "ability": {
-          "not-started": 352
+          "in-progress": 116,
+          "not-started": 32,
+          "done": 179,
+          "held": 25
         }
       },
       "adventurers_guide": {
@@ -14907,10 +14937,9 @@
           "not-started": 25
         },
         "class_feature": {
-          "not-started": 639,
-          "unmeasurable": 113,
-          "deferred": 1,
-          "done": 2
+          "not-started": 677,
+          "done": 77,
+          "deferred": 1
         },
         "race": {
           "not-started": 3
@@ -14924,18 +14953,23 @@
         },
         "equipment": {
           "not-started": 18,
-          "held": 81,
-          "unmeasurable": 14,
-          "in-progress": 2
+          "held": 86,
+          "unmeasurable": 9,
+          "done": 2
         },
         "equipment_modifier": {
-          "unmeasurable": 1
+          "done": 1
         },
         "template": {
-          "not-started": 10
+          "done": 1,
+          "not-started": 5,
+          "in-progress": 4
         },
         "ability": {
-          "not-started": 137
+          "in-progress": 56,
+          "held": 24,
+          "done": 46,
+          "not-started": 11
         }
       },
       "beginner_box": {
@@ -14957,10 +14991,11 @@
         },
         "feat": {
           "done": 11,
-          "unmeasurable": 4
+          "in-progress": 4
         },
         "spell": {
-          "not-started": 109
+          "held": 108,
+          "in-progress": 1
         },
         "equipment": {
           "done": 3,
@@ -14973,9 +15008,8 @@
           "not-started": 4
         },
         "monster_ability": {
-          "done": 606,
-          "held": 105,
-          "not-started": 22
+          "done": 636,
+          "held": 97
         },
         "companion": {
           "done": 122,
@@ -14997,13 +15031,13 @@
           "not-started": 6
         },
         "race_trait": {
-          "not-started": 174,
-          "done": 42,
-          "in-progress": 27
+          "done": 149,
+          "not-started": 25,
+          "held": 25,
+          "in-progress": 44
         },
         "equipment": {
-          "in-progress": 1,
-          "done": 6
+          "done": 7
         },
         "monster": {
           "done": 216,
@@ -15011,67 +15045,69 @@
           "not-started": 2
         },
         "monster_ability": {
-          "done": 532,
-          "held": 126,
-          "not-started": 9
+          "done": 559,
+          "held": 108
         },
         "companion": {
           "held": 6,
           "done": 10
         },
         "skill": {
-          "not-started": 1
+          "in-progress": 1
         },
         "template": {
-          "not-started": 149
+          "not-started": 127,
+          "done": 9,
+          "in-progress": 13
         },
         "language": {
           "not-started": 6
         },
         "ability": {
-          "not-started": 28
+          "done": 21,
+          "in-progress": 7
         }
       },
       "bestiary_3": {
         "race_trait": {
-          "not-started": 189,
-          "done": 26,
-          "in-progress": 20,
-          "held": 1
+          "not-started": 15,
+          "in-progress": 66,
+          "done": 147,
+          "held": 8
         },
         "equipment": {
-          "in-progress": 4
+          "done": 4
         },
         "equipment_modifier": {
-          "unmeasurable": 4
+          "done": 4
         },
         "monster": {
           "done": 252,
           "held": 9
         },
         "monster_ability": {
-          "done": 540,
-          "held": 135,
-          "not-started": 21
+          "done": 563,
+          "held": 133
         },
         "companion": {
           "done": 76,
           "held": 9
         },
         "template": {
-          "not-started": 63
+          "not-started": 53,
+          "in-progress": 10
         },
         "language": {
           "not-started": 24
         },
         "ability": {
-          "not-started": 5
+          "in-progress": 5
         }
       },
       "bestiary_4": {
         "class_feature": {
-          "not-started": 5,
-          "unmeasurable": 1
+          "not-started": 3,
+          "done": 3
         },
         "race": {
           "in-progress": 1,
@@ -15079,12 +15115,14 @@
           "done": 4
         },
         "race_trait": {
-          "not-started": 97,
-          "done": 31,
-          "in-progress": 16
+          "not-started": 17,
+          "done": 84,
+          "in-progress": 36,
+          "held": 7
         },
         "spell": {
-          "not-started": 56
+          "held": 54,
+          "not-started": 2
         },
         "equipment": {
           "not-started": 3,
@@ -15099,9 +15137,8 @@
           "not-started": 14
         },
         "monster_ability": {
-          "done": 630,
-          "held": 176,
-          "not-started": 7
+          "done": 663,
+          "held": 150
         },
         "companion": {
           "done": 72,
@@ -15109,19 +15146,22 @@
           "not-started": 2
         },
         "skill": {
-          "not-started": 1
+          "in-progress": 1
         },
         "template": {
-          "not-started": 183
+          "done": 42,
+          "not-started": 102,
+          "held": 24,
+          "in-progress": 15
         },
         "domain": {
-          "not-started": 3
+          "in-progress": 3
         },
         "language": {
           "not-started": 26
         },
         "ability": {
-          "not-started": 9
+          "in-progress": 9
         }
       },
       "bestiary_5": {
@@ -15130,18 +15170,18 @@
           "done": 1
         },
         "race_trait": {
-          "not-started": 137,
-          "done": 4,
-          "in-progress": 5
+          "not-started": 23,
+          "done": 109,
+          "held": 8,
+          "in-progress": 6
         },
         "monster_ability": {
-          "done": 27,
-          "held": 12,
-          "not-started": 1
+          "done": 28,
+          "held": 12
         },
         "companion": {
           "done": 55,
-          "not-started": 2
+          "held": 2
         },
         "template": {
           "not-started": 23
@@ -15150,13 +15190,13 @@
           "not-started": 3
         },
         "ability": {
-          "not-started": 2
+          "in-progress": 2
         }
       },
       "bestiary_6": {
         "class_feature": {
-          "not-started": 15,
-          "unmeasurable": 7
+          "not-started": 17,
+          "done": 5
         },
         "race": {
           "done": 1
@@ -15179,16 +15219,18 @@
           "not-started": 9
         },
         "deity": {
-          "not-started": 22
+          "done": 21,
+          "not-started": 1
         },
         "domain": {
-          "not-started": 11
+          "done": 9,
+          "in-progress": 2
         },
         "language": {
           "not-started": 1
         },
         "ability": {
-          "not-started": 1
+          "in-progress": 1
         }
       },
       "bonus_bestiary": {
@@ -15211,10 +15253,12 @@
           "not-started": 10
         },
         "race_trait": {
-          "not-started": 1
+          "done": 1
         },
         "spell": {
-          "not-started": 6
+          "not-started": 2,
+          "in-progress": 1,
+          "held": 3
         },
         "monster": {
           "done": 5
@@ -15224,9 +15268,9 @@
           "held": 2
         },
         "companion": {
-          "not-started": 29,
-          "held": 1,
-          "done": 1
+          "held": 2,
+          "done": 2,
+          "not-started": 27
         }
       },
       "book_of_the_damned_volume_2": {
@@ -15234,23 +15278,23 @@
           "not-started": 1
         },
         "class_feature": {
-          "not-started": 31,
-          "unmeasurable": 139
+          "not-started": 152,
+          "done": 18
         },
         "race_trait": {
           "not-started": 1
         },
         "feat": {
-          "unmeasurable": 3,
+          "in-progress": 3,
           "done": 40
         },
         "spell": {
-          "not-started": 12
+          "not-started": 4,
+          "held": 8
         },
         "equipment": {
-          "in-progress": 2,
-          "not-started": 1,
-          "done": 3
+          "done": 5,
+          "not-started": 1
         },
         "monster": {
           "done": 4
@@ -15259,13 +15303,14 @@
           "done": 17
         },
         "template": {
-          "not-started": 52
+          "not-started": 7,
+          "in-progress": 45
         },
         "deity": {
           "not-started": 48
         },
         "ability": {
-          "not-started": 2
+          "done": 2
         }
       },
       "core_rulebook": {
@@ -15274,21 +15319,21 @@
           "done": 11
         },
         "class_feature": {
-          "not-started": 1078,
-          "unmeasurable": 333,
-          "done": 88,
-          "deferred": 6,
-          "held": 12
+          "done": 619,
+          "not-started": 723,
+          "held": 72,
+          "deferred": 103
         },
         "race_trait": {
-          "not-started": 141,
-          "done": 65,
-          "in-progress": 2
+          "done": 75,
+          "not-started": 12,
+          "in-progress": 120,
+          "held": 1
         },
         "feat": {
-          "held": 21,
+          "held": 42,
           "done": 117,
-          "unmeasurable": 47
+          "in-progress": 26
         },
         "spell": {
           "done": 572,
@@ -15296,39 +15341,46 @@
           "in-progress": 11
         },
         "equipment": {
-          "in-progress": 109,
-          "done": 2068,
-          "held": 122,
-          "unmeasurable": 20
+          "in-progress": 74,
+          "done": 2123,
+          "held": 122
         },
         "equipment_modifier": {
-          "in-progress": 257,
-          "done": 205,
-          "unmeasurable": 210,
-          "held": 4
+          "in-progress": 250,
+          "done": 410,
+          "unmeasurable": 10,
+          "held": 6
         },
         "companion": {
-          "not-started": 100,
-          "held": 9,
-          "done": 75
+          "done": 152,
+          "held": 20,
+          "deferred": 12
         },
         "skill": {
-          "not-started": 110
+          "in-progress": 19,
+          "done": 76,
+          "not-started": 15
         },
         "template": {
-          "not-started": 262
+          "in-progress": 92,
+          "done": 36,
+          "not-started": 130,
+          "held": 4
         },
         "deity": {
-          "not-started": 21
+          "done": 21
         },
         "domain": {
-          "not-started": 34
+          "in-progress": 34
         },
         "language": {
           "not-started": 22
         },
         "ability": {
-          "not-started": 471
+          "in-progress": 216,
+          "done": 145,
+          "not-started": 109,
+          "held": 1
         }
       },
       "horror_adventures": {
@@ -15336,22 +15388,21 @@
           "not-started": 1
         },
         "class_feature": {
-          "not-started": 356,
-          "unmeasurable": 71,
-          "done": 4
+          "not-started": 348,
+          "done": 83
         },
         "race": {
           "not-started": 1
         },
         "race_trait": {
-          "done": 43,
-          "not-started": 49
+          "done": 45,
+          "not-started": 47
         },
         "feat": {
           "done": 41,
-          "held": 2,
-          "unmeasurable": 18,
-          "not-started": 17
+          "held": 19,
+          "not-started": 17,
+          "in-progress": 1
         },
         "spell": {
           "held": 70,
@@ -15362,7 +15413,7 @@
           "held": 1
         },
         "equipment_modifier": {
-          "unmeasurable": 2
+          "done": 2
         },
         "monster": {
           "held": 1,
@@ -15370,43 +15421,50 @@
         },
         "monster_ability": {
           "held": 24,
-          "done": 38,
-          "not-started": 9
+          "done": 47
         },
         "companion": {
           "done": 2
         },
         "template": {
-          "not-started": 28
+          "done": 16,
+          "in-progress": 10,
+          "not-started": 1,
+          "held": 1
         },
         "domain": {
-          "not-started": 4
+          "done": 3,
+          "in-progress": 1
         },
         "language": {
           "not-started": 2
         },
         "ability": {
-          "not-started": 551
+          "in-progress": 238,
+          "held": 40,
+          "done": 270,
+          "not-started": 3
         }
       },
       "inner_sea_bestiary": {
         "race_trait": {
-          "not-started": 2
+          "in-progress": 1,
+          "held": 1
         },
         "monster": {
           "done": 38,
           "not-started": 2
         },
         "monster_ability": {
-          "done": 162,
-          "held": 18,
-          "not-started": 12
+          "done": 169,
+          "held": 16,
+          "not-started": 7
         },
         "skill": {
           "not-started": 4
         },
         "template": {
-          "not-started": 4
+          "in-progress": 4
         }
       },
       "inner_sea_combat": {
@@ -15414,16 +15472,16 @@
           "not-started": 2
         },
         "class_feature": {
-          "not-started": 298,
-          "unmeasurable": 8,
-          "deferred": 1,
-          "done": 9
+          "not-started": 229,
+          "done": 73,
+          "deferred": 14
         },
         "feat": {
           "not-started": 1,
-          "done": 16,
-          "held": 6,
-          "unmeasurable": 1
+          "done": 14,
+          "unmeasurable": 3,
+          "in-progress": 1,
+          "held": 5
         },
         "equipment": {
           "unmeasurable": 35,
@@ -15438,7 +15496,8 @@
           "not-started": 1
         },
         "ability": {
-          "not-started": 4
+          "not-started": 1,
+          "done": 3
         }
       },
       "inner_sea_faiths": {
@@ -15450,7 +15509,9 @@
           "held": 2
         },
         "ability": {
-          "not-started": 187
+          "not-started": 53,
+          "done": 86,
+          "held": 48
         }
       },
       "inner_sea_gods": {
@@ -15458,7 +15519,8 @@
           "not-started": 3
         },
         "race_trait": {
-          "not-started": 25
+          "not-started": 22,
+          "done": 3
         },
         "feat": {
           "done": 63,
@@ -15467,15 +15529,13 @@
         },
         "spell": {
           "not-started": 4,
-          "done": 8,
-          "held": 58,
-          "unmeasurable": 26
+          "done": 11,
+          "held": 81
         },
         "equipment": {
-          "done": 105,
+          "done": 121,
           "not-started": 25,
           "unmeasurable": 3,
-          "in-progress": 16,
           "held": 1
         },
         "monster": {
@@ -15483,9 +15543,9 @@
           "held": 2
         },
         "monster_ability": {
-          "done": 138,
+          "done": 139,
           "held": 22,
-          "not-started": 4
+          "not-started": 3
         },
         "template": {
           "not-started": 3
@@ -15494,13 +15554,18 @@
           "not-started": 296
         },
         "domain": {
-          "not-started": 21
+          "done": 21
         },
         "ability": {
-          "not-started": 387
+          "not-started": 266,
+          "in-progress": 55,
+          "done": 53,
+          "held": 13
         },
         "trait": {
-          "not-started": 115
+          "done": 86,
+          "in-progress": 28,
+          "not-started": 1
         }
       },
       "inner_sea_intrigue": {
@@ -15508,22 +15573,23 @@
           "not-started": 2
         },
         "class_feature": {
-          "not-started": 179,
-          "unmeasurable": 5
+          "not-started": 149,
+          "done": 35
         },
         "feat": {
           "done": 5,
-          "unmeasurable": 1
+          "in-progress": 1
         },
         "spell": {
-          "not-started": 26
+          "held": 21,
+          "not-started": 5
         },
         "equipment": {
           "done": 31,
           "not-started": 8
         },
         "equipment_modifier": {
-          "unmeasurable": 2,
+          "done": 2,
           "in-progress": 1
         },
         "companion": {
@@ -15531,7 +15597,8 @@
           "held": 1
         },
         "template": {
-          "not-started": 6
+          "not-started": 4,
+          "in-progress": 2
         }
       },
       "inner_sea_magic": {
@@ -15539,8 +15606,8 @@
           "not-started": 3
         },
         "class_feature": {
-          "not-started": 187,
-          "unmeasurable": 38
+          "not-started": 208,
+          "done": 17
         },
         "feat": {
           "not-started": 7
@@ -15553,39 +15620,42 @@
           "held": 6
         },
         "equipment_modifier": {
-          "unmeasurable": 48,
-          "in-progress": 4,
-          "held": 10
+          "in-progress": 8,
+          "done": 4,
+          "held": 50
         },
         "skill": {
-          "not-started": 1
+          "in-progress": 1
         },
         "template": {
-          "not-started": 3
+          "done": 3
         },
         "ability": {
-          "not-started": 147
+          "not-started": 46,
+          "in-progress": 76,
+          "done": 24,
+          "held": 1
         }
       },
       "inner_sea_races": {
         "race_trait": {
-          "in-progress": 22,
-          "not-started": 50,
-          "done": 70
+          "in-progress": 41,
+          "not-started": 26,
+          "done": 75
         },
         "feat": {
-          "unmeasurable": 4,
+          "unmeasurable": 3,
           "done": 46,
-          "not-started": 22
+          "not-started": 22,
+          "held": 1
         },
         "spell": {
-          "not-started": 29
+          "in-progress": 29
         },
         "equipment": {
-          "done": 69,
+          "done": 70,
           "not-started": 1,
-          "held": 1,
-          "in-progress": 1
+          "held": 1
         },
         "template": {
           "not-started": 9
@@ -15597,12 +15667,15 @@
           "not-started": 8
         },
         "trait": {
-          "not-started": 96
+          "in-progress": 30,
+          "done": 64,
+          "not-started": 2
         }
       },
       "inner_sea_taverns": {
         "class_feature": {
-          "not-started": 11
+          "not-started": 6,
+          "done": 5
         },
         "feat": {
           "done": 8,
@@ -15626,31 +15699,33 @@
           "not-started": 5
         },
         "class_feature": {
-          "not-started": 79,
-          "unmeasurable": 97
+          "not-started": 151,
+          "done": 25
         },
         "race": {
           "not-started": 14
         },
         "race_trait": {
-          "not-started": 34,
-          "done": 20
+          "not-started": 32,
+          "done": 22
         },
         "feat": {
           "not-started": 6,
           "done": 15,
-          "unmeasurable": 16
+          "in-progress": 10,
+          "unmeasurable": 5,
+          "held": 1
         },
         "spell": {
-          "not-started": 22
+          "held": 9,
+          "not-started": 13
         },
         "equipment": {
           "not-started": 7,
           "done": 40
         },
         "equipment_modifier": {
-          "unmeasurable": 2,
-          "in-progress": 2,
+          "in-progress": 4,
           "done": 2
         },
         "monster": {
@@ -15664,37 +15739,43 @@
           "not-started": 3
         },
         "template": {
-          "not-started": 84
+          "not-started": 83,
+          "in-progress": 1
         },
         "deity": {
           "not-started": 63
         },
         "domain": {
-          "not-started": 6
+          "in-progress": 6
         },
         "language": {
           "not-started": 18
         },
         "ability": {
-          "not-started": 67
+          "not-started": 64,
+          "done": 1,
+          "in-progress": 2
         }
       },
       "monster_codex": {
         "class_feature": {
-          "not-started": 70,
-          "unmeasurable": 2
+          "not-started": 60,
+          "done": 12
         },
         "race_trait": {
-          "not-started": 4,
-          "in-progress": 8,
-          "done": 2
+          "done": 3,
+          "in-progress": 9,
+          "not-started": 2
         },
         "feat": {
           "done": 21,
-          "unmeasurable": 11
+          "held": 8,
+          "in-progress": 2,
+          "unmeasurable": 1
         },
         "spell": {
-          "not-started": 24
+          "held": 23,
+          "in-progress": 1
         },
         "equipment": {
           "done": 39,
@@ -15702,7 +15783,7 @@
           "held": 1
         },
         "equipment_modifier": {
-          "unmeasurable": 4
+          "done": 4
         },
         "monster": {
           "held": 1,
@@ -15718,40 +15799,48 @@
           "not-started": 2
         },
         "ability": {
-          "not-started": 2
+          "not-started": 1,
+          "in-progress": 1
         }
       },
       "mythic_adventures": {
         "race_trait": {
-          "not-started": 118
+          "held": 7,
+          "done": 107,
+          "not-started": 3,
+          "in-progress": 1
         },
         "feat": {
           "done": 118,
-          "unmeasurable": 90,
+          "in-progress": 79,
           "not-started": 353,
-          "held": 5
+          "held": 16
         },
         "spell": {
-          "not-started": 9
+          "held": 9
         },
         "equipment": {
-          "unmeasurable": 23,
-          "done": 83,
+          "done": 91,
+          "unmeasurable": 15,
           "not-started": 3,
           "held": 1
         },
         "equipment_modifier": {
-          "unmeasurable": 57,
-          "in-progress": 88
+          "done": 143,
+          "in-progress": 2
         },
         "monster_ability": {
           "done": 21
         },
         "template": {
-          "not-started": 15
+          "in-progress": 5,
+          "not-started": 10
         },
         "ability": {
-          "not-started": 416
+          "in-progress": 116,
+          "not-started": 23,
+          "held": 15,
+          "done": 262
         }
       },
       "occult_adventures": {
@@ -15759,20 +15848,22 @@
           "not-started": 9
         },
         "class_feature": {
-          "not-started": 913,
-          "unmeasurable": 57,
-          "done": 58,
+          "not-started": 670,
+          "done": 358,
           "deferred": 2
         },
         "race": {
           "not-started": 4
         },
         "race_trait": {
-          "not-started": 71
+          "done": 67,
+          "held": 2,
+          "in-progress": 1,
+          "not-started": 1
         },
         "feat": {
           "done": 58,
-          "unmeasurable": 6,
+          "in-progress": 6,
           "held": 4
         },
         "spell": {
@@ -15793,7 +15884,8 @@
           "done": 3
         },
         "template": {
-          "not-started": 4
+          "not-started": 3,
+          "held": 1
         },
         "language": {
           "not-started": 1
@@ -15801,37 +15893,40 @@
       },
       "pathfinder_unchained": {
         "class_feature": {
-          "not-started": 506,
-          "unmeasurable": 56,
-          "done": 32,
+          "not-started": 244,
+          "done": 350,
           "deferred": 6,
           "held": 4
         },
         "race_trait": {
-          "not-started": 105
+          "in-progress": 75,
+          "not-started": 7,
+          "done": 23
         },
         "feat": {
           "done": 3,
           "held": 1,
-          "unmeasurable": 4
+          "in-progress": 4
         },
         "equipment_modifier": {
           "done": 38,
           "in-progress": 4
         },
         "monster_ability": {
-          "done": 37,
-          "held": 32,
-          "not-started": 3
+          "done": 60,
+          "held": 12
         },
         "skill": {
-          "not-started": 24
+          "not-started": 17,
+          "done": 7
         },
         "template": {
-          "not-started": 12
+          "not-started": 11,
+          "done": 1
         },
         "ability": {
-          "not-started": 365
+          "not-started": 7,
+          "done": 358
         }
       },
       "ultimate_campaign": {
@@ -15840,10 +15935,13 @@
           "deferred": 2
         },
         "ability": {
-          "not-started": 88
+          "done": 58,
+          "in-progress": 30
         },
         "trait": {
-          "not-started": 154
+          "done": 146,
+          "not-started": 2,
+          "in-progress": 6
         }
       },
       "ultimate_combat": {
@@ -15852,21 +15950,21 @@
           "not-started": 2
         },
         "class_feature": {
-          "not-started": 1320,
-          "unmeasurable": 166,
-          "done": 49,
+          "not-started": 1059,
+          "done": 476,
           "deferred": 1
         },
         "race": {
           "not-started": 3
         },
         "race_trait": {
-          "not-started": 4
+          "in-progress": 4
         },
         "feat": {
           "done": 210,
-          "unmeasurable": 34,
-          "held": 19
+          "in-progress": 31,
+          "held": 20,
+          "unmeasurable": 2
         },
         "spell": {
           "done": 140,
@@ -15875,49 +15973,51 @@
           "not-started": 1
         },
         "equipment": {
-          "done": 184,
-          "in-progress": 1
+          "done": 185
         },
         "equipment_modifier": {
-          "done": 26,
-          "unmeasurable": 6,
-          "in-progress": 7
+          "done": 27,
+          "in-progress": 12
         },
         "skill": {
-          "not-started": 2
+          "in-progress": 2
         },
         "template": {
-          "not-started": 7
+          "not-started": 6,
+          "in-progress": 1
         },
         "ability": {
-          "not-started": 7
+          "in-progress": 4,
+          "not-started": 3
         }
       },
       "ultimate_equipment": {
         "spell": {
-          "not-started": 1
+          "held": 1
         },
         "equipment": {
-          "done": 1308,
-          "held": 16,
-          "unmeasurable": 85,
-          "in-progress": 14,
+          "done": 1339,
+          "held": 19,
+          "unmeasurable": 42,
+          "in-progress": 23,
           "not-started": 1
         },
         "equipment_modifier": {
-          "done": 102,
-          "in-progress": 85,
+          "done": 111,
+          "in-progress": 77,
           "held": 1,
-          "unmeasurable": 2
+          "unmeasurable": 1
         },
         "skill": {
-          "not-started": 1
+          "in-progress": 1
         },
         "template": {
           "not-started": 4
         },
         "ability": {
-          "not-started": 46
+          "not-started": 2,
+          "in-progress": 2,
+          "done": 42
         }
       },
       "ultimate_intrigue": {
@@ -15925,17 +16025,18 @@
           "not-started": 3
         },
         "class_feature": {
-          "not-started": 667,
-          "unmeasurable": 261,
-          "done": 7
+          "not-started": 733,
+          "done": 202
         },
         "race_trait": {
-          "not-started": 2
+          "in-progress": 1,
+          "done": 1
         },
         "feat": {
           "done": 91,
-          "unmeasurable": 15,
-          "held": 1
+          "in-progress": 8,
+          "held": 6,
+          "unmeasurable": 2
         },
         "spell": {
           "done": 89,
@@ -15943,8 +16044,8 @@
           "in-progress": 1
         },
         "equipment": {
-          "done": 89,
-          "held": 2
+          "done": 90,
+          "held": 1
         },
         "equipment_modifier": {
           "done": 14
@@ -15962,24 +16063,24 @@
           "not-started": 1
         },
         "class_feature": {
-          "not-started": 1452,
-          "unmeasurable": 317,
-          "deferred": 3,
-          "done": 6
+          "not-started": 1544,
+          "done": 231,
+          "deferred": 3
         },
         "race_trait": {
-          "not-started": 3
+          "in-progress": 3
         },
         "feat": {
           "done": 100,
-          "unmeasurable": 53,
-          "held": 2
+          "in-progress": 45,
+          "held": 4,
+          "unmeasurable": 6
         },
         "spell": {
           "held": 22,
           "done": 225,
-          "in-progress": 22,
-          "not-started": 22
+          "in-progress": 25,
+          "not-started": 19
         },
         "equipment": {
           "held": 8,
@@ -15990,18 +16091,23 @@
           "held": 10
         },
         "companion": {
-          "not-started": 139,
-          "done": 57,
-          "held": 2
+          "held": 3,
+          "done": 59,
+          "not-started": 136
         },
         "template": {
-          "not-started": 23
+          "not-started": 14,
+          "done": 2,
+          "in-progress": 7
         },
         "domain": {
-          "not-started": 13
+          "in-progress": 13
         },
         "ability": {
-          "not-started": 511
+          "in-progress": 87,
+          "done": 414,
+          "not-started": 6,
+          "held": 4
         }
       },
       "ultimate_psionics": {
@@ -16009,30 +16115,32 @@
           "not-started": 37
         },
         "class_feature": {
-          "unmeasurable": 464,
-          "not-started": 1079,
-          "done": 30
+          "not-started": 1342,
+          "done": 231
         },
         "race": {
           "not-started": 3
         },
         "race_trait": {
-          "not-started": 47
+          "held": 10,
+          "in-progress": 20,
+          "done": 16,
+          "not-started": 1
         },
         "feat": {
-          "unmeasurable": 91,
+          "in-progress": 80,
           "done": 130,
-          "held": 1
+          "held": 8,
+          "unmeasurable": 4
         },
         "equipment": {
-          "done": 307,
-          "in-progress": 18,
+          "done": 325,
           "held": 1
         },
         "equipment_modifier": {
-          "in-progress": 84,
-          "done": 114,
-          "unmeasurable": 28
+          "in-progress": 90,
+          "done": 130,
+          "unmeasurable": 6
         },
         "monster": {
           "held": 5,
@@ -16043,25 +16151,33 @@
           "held": 57
         },
         "skill": {
-          "not-started": 5
+          "in-progress": 4,
+          "not-started": 1
         },
         "template": {
-          "not-started": 104
+          "not-started": 59,
+          "in-progress": 22,
+          "done": 17,
+          "held": 6
         },
         "power": {
           "not-started": 421
         },
         "domain": {
-          "not-started": 4
+          "in-progress": 4
         },
         "language": {
           "not-started": 5
         },
         "ability": {
-          "not-started": 281
+          "in-progress": 158,
+          "not-started": 17,
+          "done": 77,
+          "held": 29
         },
         "trait": {
-          "not-started": 32
+          "done": 26,
+          "in-progress": 6
         }
       },
       "ultimate_wilderness": {
@@ -16069,22 +16185,24 @@
           "not-started": 1
         },
         "class_feature": {
-          "not-started": 864,
-          "unmeasurable": 66,
-          "done": 21,
-          "deferred": 1
+          "done": 222,
+          "not-started": 728,
+          "deferred": 2
         },
         "race": {
           "not-started": 2
         },
         "race_trait": {
-          "not-started": 100
+          "not-started": 2,
+          "held": 47,
+          "done": 26,
+          "in-progress": 25
         },
         "feat": {
-          "unmeasurable": 21,
+          "in-progress": 14,
           "done": 101,
-          "held": 13,
-          "in-progress": 1,
+          "held": 19,
+          "unmeasurable": 2,
           "not-started": 1
         },
         "spell": {
@@ -16105,46 +16223,48 @@
         },
         "companion": {
           "not-started": 248,
-          "done": 314,
-          "held": 13
+          "done": 315,
+          "held": 12
         },
         "template": {
-          "not-started": 26
+          "not-started": 9,
+          "in-progress": 17
         },
         "deity": {
-          "not-started": 9
+          "in-progress": 9
         },
         "domain": {
-          "not-started": 6
+          "done": 3,
+          "in-progress": 3
         },
         "language": {
           "not-started": 5
         },
         "ability": {
-          "not-started": 1
+          "in-progress": 1
         }
       }
     },
     "mechanically_confirmed_by_kind": {
       "class": 28,
-      "class_feature": 62,
+      "class_feature": 306,
       "feat": 85,
       "spell": 66,
-      "equipment": 169,
-      "equipment_modifier": 169,
-      "race_trait": 357,
-      "companion": 420,
-      "monster_ability": 672,
+      "equipment": 351,
+      "equipment_modifier": 436,
+      "race_trait": 389,
+      "companion": 444,
+      "trait": 59,
+      "monster_ability": 703,
       "monster": 7,
+      "skill": 76,
       "domain": 0,
-      "ability": 0,
-      "skill": 0,
       "power": 0,
-      "language": 0,
       "deity": 0,
+      "ability": 0,
       "race": 0,
-      "trait": 0,
-      "template": 0
+      "template": 0,
+      "language": 0
     },
     "classifier_reclassified_units": {
       "predicate": "kind=='class_feature' and wiring_class=='display' and status=='grounded' and evidence=='explanation_id_observed_in_a_real_computation', EXCLUDED_BOOKS dropped",
@@ -16175,9 +16295,11 @@
       "ingested-magnitude": "The engine holds the record WITH its real numeric fields, but this generator observes no consumer delta for this kind (spells, equipment). Strictly weaker than `grounded` and deliberately a separate word: calling it grounded would be the same over-claim this inventory exists to prevent.",
       "text-complete": "The engine holds the record, the corpus record carries NO magnitude token at all (so there is no number to compute), AND its token closure carries a real, non-empty, non-.CLEAR/.CLEARALL, non-PI-redacted DESC: value (so there is real prose to show a player). Per Decision 7 (`docs/release/SD-31-corpus-closure-grind/decisions.md`) all three are required; the third was unchecked before SD31-D7-PROSE-001 and 634 units were found `done` on the live board with a null corpus description as a result.",
       "deferred-with-reason": "A claim-blocking diagnostic the engine itself emits names this unit. `reason` is that diagnostic's message VERBATIM and `reason_id` is its id -- never re-narrated.",
-      "not-ingested": "The book IS ingested but the engine holds no record matching this unit's identity. A real gap inside a started book, distinct from a book nobody has begun.",
+      "engine-does-not-hold": "The book IS ingested but the engine holds no record matching this unit's identity. A real gap inside a started book, distinct from a book nobody has begun.",
       "not-started": "The book has no compiled rule set at all. Nothing about this unit has been attempted.",
-      "unknown": "Could not be classified. `reason` says why. An honest unknown beats a confident wrong entry."
+      "unmeasurable": "Could not be classified without guessing. `reason` states, per unit, exactly what is missing or ambiguous -- an honest unmeasurable beats a confident wrong entry, and is never a stand-in for work not yet attempted.",
+      "oracle-agree": "A `literal-verified`/`fixture-verified` unit whose id carries a real `agree` verdict in AT-34-E3-005's consolidated bucket-V oracle ledger (`docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/bucket-v/bucket-v-consolidated.oracle-results.json`) -- a genuine PCGen oracle round-trip, this run's or a reused, freshness-confirmed prior one, matched the engine's own computed value exactly.",
+      "oracle-unverifiable": "A `literal-verified`/`fixture-verified` unit whose id carries a real `unverifiable` verdict in AT-34-E3-005's consolidated bucket-V oracle ledger. `reason` carries that ledger row's own reason text VERBATIM (e.g. `no_bonus_chain`, `oracle_export_no_spellname_line`, or AT-33-E1-003's `no_probe_surface` census finding) -- never re-narrated. A `disagree` verdict is NEVER mapped here or to `oracle-agree`; it leaves the unit's status untouched so it stays outstanding in bucket V."
     },
     "books": [
       {
@@ -16186,14 +16308,14 @@
         "engine_rule_set": "advanced_class_guide",
         "units": 3520,
         "by_status": {
-          "grounded": 217,
-          "not-ingested": 2051,
-          "deferred-with-reason": 18,
-          "text-complete": 640,
-          "unknown": 373,
-          "ingested-magnitude": 221
+          "engine-does-not-hold": 2244,
+          "grounded": 347,
+          "deferred-with-reason": 19,
+          "text-complete": 713,
+          "ingested-magnitude": 193,
+          "unmeasurable": 4
         },
-        "proven": 857,
+        "proven": 1060,
         "by_wiring_class": {
           "computed": 1054,
           "display": 1568,
@@ -16202,12 +16324,12 @@
           "ambiguous": 58
         },
         "by_doneness": {
-          "done": 490,
-          "not-started": 2546,
-          "unmeasurable": 373,
-          "deferred": 18,
-          "held": 28,
-          "in-progress": 65
+          "done": 1119,
+          "not-started": 2244,
+          "deferred": 19,
+          "held": 56,
+          "in-progress": 78,
+          "unmeasurable": 4
         },
         "reconciliation": [
           {
@@ -16303,14 +16425,14 @@
         "engine_rule_set": "advanced_players_guide",
         "units": 3829,
         "by_status": {
-          "grounded": 280,
-          "not-ingested": 2037,
+          "engine-does-not-hold": 2121,
+          "grounded": 586,
           "deferred-with-reason": 3,
-          "text-complete": 731,
-          "unknown": 402,
-          "ingested-magnitude": 376
+          "text-complete": 780,
+          "ingested-magnitude": 338,
+          "unmeasurable": 1
         },
-        "proven": 1011,
+        "proven": 1366,
         "by_wiring_class": {
           "computed": 1250,
           "display": 1371,
@@ -16319,12 +16441,12 @@
           "derived": 519
         },
         "by_doneness": {
-          "done": 801,
-          "not-started": 2498,
-          "unmeasurable": 402,
-          "held": 67,
+          "done": 1389,
+          "not-started": 2121,
+          "held": 80,
           "deferred": 3,
-          "in-progress": 58
+          "in-progress": 235,
+          "unmeasurable": 1
         },
         "reconciliation": [
           {
@@ -16434,13 +16556,13 @@
         "units": 2037,
         "by_status": {
           "deferred-with-reason": 2,
-          "not-ingested": 795,
-          "text-complete": 436,
-          "unknown": 212,
-          "grounded": 217,
-          "ingested-magnitude": 375
+          "engine-does-not-hold": 589,
+          "text-complete": 444,
+          "grounded": 346,
+          "ingested-magnitude": 653,
+          "unmeasurable": 3
         },
-        "proven": 653,
+        "proven": 790,
         "by_wiring_class": {
           "display": 759,
           "computed": 690,
@@ -16449,12 +16571,12 @@
           "ambiguous": 6
         },
         "by_doneness": {
-          "not-started": 1056,
-          "unmeasurable": 212,
+          "done": 1008,
+          "not-started": 589,
           "deferred": 2,
-          "done": 546,
-          "in-progress": 213,
-          "held": 8
+          "in-progress": 377,
+          "held": 58,
+          "unmeasurable": 3
         },
         "reconciliation": [
           {
@@ -16522,8 +16644,8 @@
           },
           {
             "kind": "template",
-            "corpus_units_total": 47,
-            "corpus_units_declared": 47,
+            "corpus_units_total": 50,
+            "corpus_units_declared": 50,
             "engine_records": null,
             "delta": null
           },
@@ -16564,13 +16686,14 @@
         "engine_rule_set": "adventurers_guide",
         "units": 1176,
         "by_status": {
-          "not-ingested": 843,
+          "engine-does-not-hold": 824,
           "deferred-with-reason": 1,
-          "text-complete": 78,
-          "unknown": 128,
-          "ingested-magnitude": 126
+          "text-complete": 114,
+          "ingested-magnitude": 167,
+          "grounded": 61,
+          "unmeasurable": 9
         },
-        "proven": 78,
+        "proven": 175,
         "by_wiring_class": {
           "computed": 250,
           "display": 473,
@@ -16579,12 +16702,12 @@
           "ambiguous": 14
         },
         "by_doneness": {
-          "not-started": 917,
-          "unmeasurable": 128,
+          "not-started": 824,
+          "done": 127,
           "deferred": 1,
-          "done": 2,
-          "held": 126,
-          "in-progress": 2
+          "held": 155,
+          "unmeasurable": 9,
+          "in-progress": 60
         },
         "reconciliation": [
           {
@@ -16665,7 +16788,7 @@
       },
       {
         "id": "beginner_box",
-        "scope": "out_of_scope",
+        "scope": "future_state",
         "engine_rule_set": null,
         "units": 19,
         "by_status": {
@@ -16694,13 +16817,12 @@
         "engine_rule_set": "bestiary_1",
         "units": 2737,
         "by_status": {
-          "not-ingested": 1249,
-          "grounded": 846,
-          "ingested-magnitude": 79,
-          "text-complete": 559,
-          "unknown": 4
+          "engine-does-not-hold": 1249,
+          "grounded": 848,
+          "ingested-magnitude": 77,
+          "text-complete": 563
         },
-        "proven": 1405,
+        "proven": 1411,
         "by_wiring_class": {
           "computed": 899,
           "display": 1137,
@@ -16709,11 +16831,10 @@
           "ambiguous": 4
         },
         "by_doneness": {
-          "not-started": 1380,
-          "done": 1060,
-          "in-progress": 68,
-          "unmeasurable": 4,
-          "held": 225
+          "not-started": 1249,
+          "done": 1090,
+          "in-progress": 73,
+          "held": 325
         },
         "reconciliation": [
           {
@@ -16819,12 +16940,12 @@
         "engine_rule_set": "bestiary_2",
         "units": 1439,
         "by_status": {
-          "not-ingested": 366,
-          "grounded": 756,
-          "ingested-magnitude": 34,
-          "text-complete": 283
+          "engine-does-not-hold": 166,
+          "grounded": 760,
+          "ingested-magnitude": 127,
+          "text-complete": 386
         },
-        "proven": 1039,
+        "proven": 1146,
         "by_wiring_class": {
           "static": 250,
           "derived": 311,
@@ -16833,10 +16954,10 @@
           "ambiguous": 2
         },
         "by_doneness": {
-          "not-started": 375,
-          "done": 806,
-          "in-progress": 28,
-          "held": 230
+          "not-started": 166,
+          "done": 971,
+          "held": 237,
+          "in-progress": 65
         },
         "reconciliation": [
           {
@@ -16890,15 +17011,22 @@
           },
           {
             "kind": "template",
-            "corpus_units_total": 74,
-            "corpus_units_declared": 74,
+            "corpus_units_total": 149,
+            "corpus_units_declared": 149,
             "engine_records": null,
             "delta": null
           },
           {
             "kind": "language",
-            "corpus_units_total": 4,
-            "corpus_units_declared": 4,
+            "corpus_units_total": 6,
+            "corpus_units_declared": 6,
+            "engine_records": null,
+            "delta": null
+          },
+          {
+            "kind": "ability",
+            "corpus_units_total": 28,
+            "corpus_units_declared": 21,
             "engine_records": null,
             "delta": null
           }
@@ -16920,13 +17048,12 @@
         "engine_rule_set": "bestiary_3",
         "units": 1378,
         "by_status": {
-          "grounded": 467,
-          "ingested-magnitude": 25,
-          "not-ingested": 281,
-          "text-complete": 601,
-          "unknown": 4
+          "engine-does-not-hold": 92,
+          "grounded": 471,
+          "ingested-magnitude": 116,
+          "text-complete": 699
         },
-        "proven": 1068,
+        "proven": 1170,
         "by_wiring_class": {
           "display": 783,
           "computed": 136,
@@ -16935,11 +17062,10 @@
           "ambiguous": 12
         },
         "by_doneness": {
-          "not-started": 302,
-          "done": 894,
-          "in-progress": 24,
-          "held": 154,
-          "unmeasurable": 4
+          "not-started": 92,
+          "in-progress": 81,
+          "done": 1046,
+          "held": 159
         },
         "reconciliation": [
           {
@@ -16986,15 +17112,22 @@
           },
           {
             "kind": "template",
-            "corpus_units_total": 26,
-            "corpus_units_declared": 26,
+            "corpus_units_total": 63,
+            "corpus_units_declared": 63,
             "engine_records": null,
             "delta": null
           },
           {
             "kind": "language",
-            "corpus_units_total": 21,
-            "corpus_units_declared": 21,
+            "corpus_units_total": 24,
+            "corpus_units_declared": 24,
+            "engine_records": null,
+            "delta": null
+          },
+          {
+            "kind": "ability",
+            "corpus_units_total": 5,
+            "corpus_units_declared": 0,
             "engine_records": null,
             "delta": null
           }
@@ -17016,13 +17149,12 @@
         "engine_rule_set": "bestiary_4",
         "units": 1558,
         "by_status": {
-          "not-ingested": 346,
-          "text-complete": 600,
-          "unknown": 1,
-          "grounded": 589,
-          "ingested-magnitude": 22
+          "engine-does-not-hold": 173,
+          "text-complete": 640,
+          "grounded": 593,
+          "ingested-magnitude": 152
         },
-        "proven": 1189,
+        "proven": 1233,
         "by_wiring_class": {
           "display": 750,
           "derived": 336,
@@ -17031,11 +17163,10 @@
           "ambiguous": 7
         },
         "by_doneness": {
-          "not-started": 410,
-          "unmeasurable": 1,
-          "in-progress": 18,
-          "done": 928,
-          "held": 201
+          "not-started": 173,
+          "done": 1059,
+          "in-progress": 66,
+          "held": 260
         },
         "reconciliation": [
           {
@@ -17103,8 +17234,8 @@
           },
           {
             "kind": "template",
-            "corpus_units_total": 140,
-            "corpus_units_declared": 140,
+            "corpus_units_total": 183,
+            "corpus_units_declared": 183,
             "engine_records": null,
             "delta": null
           },
@@ -17117,8 +17248,15 @@
           },
           {
             "kind": "language",
-            "corpus_units_total": 22,
-            "corpus_units_declared": 22,
+            "corpus_units_total": 26,
+            "corpus_units_declared": 26,
+            "engine_records": null,
+            "delta": null
+          },
+          {
+            "kind": "ability",
+            "corpus_units_total": 9,
+            "corpus_units_declared": 0,
             "engine_records": null,
             "delta": null
           }
@@ -17141,12 +17279,12 @@
         "engine_rule_set": "bestiary_5",
         "units": 278,
         "by_status": {
-          "grounded": 69,
-          "not-ingested": 171,
-          "ingested-magnitude": 5,
-          "text-complete": 33
+          "engine-does-not-hold": 55,
+          "grounded": 105,
+          "ingested-magnitude": 31,
+          "text-complete": 87
         },
-        "proven": 102,
+        "proven": 192,
         "by_wiring_class": {
           "static": 27,
           "display": 119,
@@ -17155,10 +17293,10 @@
           "computed": 98
         },
         "by_doneness": {
-          "not-started": 174,
-          "done": 87,
-          "in-progress": 5,
-          "held": 12
+          "not-started": 55,
+          "done": 193,
+          "held": 22,
+          "in-progress": 8
         },
         "reconciliation": [
           {
@@ -17170,8 +17308,8 @@
           },
           {
             "kind": "race_trait",
-            "corpus_units_total": 72,
-            "corpus_units_declared": 71,
+            "corpus_units_total": 117,
+            "corpus_units_declared": 116,
             "engine_records": null,
             "delta": null
           },
@@ -17190,9 +17328,23 @@
             "delta": null
           },
           {
+            "kind": "template",
+            "corpus_units_total": 23,
+            "corpus_units_declared": 23,
+            "engine_records": null,
+            "delta": null
+          },
+          {
             "kind": "language",
             "corpus_units_total": 3,
             "corpus_units_declared": 3,
+            "engine_records": null,
+            "delta": null
+          },
+          {
+            "kind": "ability",
+            "corpus_units_total": 2,
+            "corpus_units_declared": 1,
             "engine_records": null,
             "delta": null
           }
@@ -17213,12 +17365,12 @@
         "engine_rule_set": "bestiary_6",
         "units": 120,
         "by_status": {
-          "not-ingested": 55,
-          "text-complete": 16,
-          "unknown": 7,
-          "grounded": 42
+          "engine-does-not-hold": 29,
+          "text-complete": 46,
+          "grounded": 42,
+          "ingested-magnitude": 3
         },
-        "proven": 58,
+        "proven": 88,
         "by_wiring_class": {
           "display": 67,
           "derived": 16,
@@ -17226,10 +17378,10 @@
           "computed": 34
         },
         "by_doneness": {
-          "not-started": 60,
-          "unmeasurable": 7,
-          "done": 43,
-          "held": 10
+          "not-started": 29,
+          "done": 78,
+          "held": 10,
+          "in-progress": 3
         },
         "reconciliation": [
           {
@@ -17275,6 +17427,13 @@
             "delta": null
           },
           {
+            "kind": "template",
+            "corpus_units_total": 9,
+            "corpus_units_declared": 9,
+            "engine_records": null,
+            "delta": null
+          },
+          {
             "kind": "deity",
             "corpus_units_total": 22,
             "corpus_units_declared": 22,
@@ -17285,6 +17444,20 @@
             "kind": "domain",
             "corpus_units_total": 11,
             "corpus_units_declared": 11,
+            "engine_records": null,
+            "delta": null
+          },
+          {
+            "kind": "language",
+            "corpus_units_total": 1,
+            "corpus_units_declared": 1,
+            "engine_records": null,
+            "delta": null
+          },
+          {
+            "kind": "ability",
+            "corpus_units_total": 1,
+            "corpus_units_declared": 0,
             "engine_records": null,
             "delta": null
           }
@@ -17302,7 +17475,7 @@
         "engine_rule_set": "bonus_bestiary",
         "units": 34,
         "by_status": {
-          "not-ingested": 3,
+          "engine-does-not-hold": 3,
           "grounded": 22,
           "text-complete": 9
         },
@@ -17355,12 +17528,12 @@
         "engine_rule_set": "book_of_the_damned_volume_1",
         "units": 90,
         "by_status": {
-          "not-ingested": 43,
-          "ingested-magnitude": 4,
-          "grounded": 17,
+          "engine-does-not-hold": 40,
+          "ingested-magnitude": 5,
+          "grounded": 19,
           "text-complete": 26
         },
-        "proven": 43,
+        "proven": 45,
         "by_wiring_class": {
           "computed": 8,
           "derived": 30,
@@ -17368,9 +17541,10 @@
           "static": 15
         },
         "by_doneness": {
-          "not-started": 47,
-          "done": 40,
-          "held": 3
+          "not-started": 40,
+          "done": 42,
+          "in-progress": 1,
+          "held": 7
         },
         "reconciliation": [
           {
@@ -17441,13 +17615,12 @@
         "engine_rule_set": "book_of_the_damned_volume_2",
         "units": 356,
         "by_status": {
-          "not-ingested": 130,
-          "text-complete": 67,
-          "unknown": 142,
-          "ingested-magnitude": 5,
-          "grounded": 12
+          "engine-does-not-hold": 214,
+          "text-complete": 77,
+          "ingested-magnitude": 49,
+          "grounded": 16
         },
-        "proven": 79,
+        "proven": 93,
         "by_wiring_class": {
           "computed": 119,
           "display": 85,
@@ -17455,10 +17628,10 @@
           "derived": 132
         },
         "by_doneness": {
-          "not-started": 148,
-          "unmeasurable": 142,
-          "done": 64,
-          "in-progress": 2
+          "not-started": 214,
+          "done": 86,
+          "in-progress": 48,
+          "held": 8
         },
         "reconciliation": [
           {
@@ -17574,8 +17747,8 @@
           },
           {
             "kind": "race_trait",
-            "corpus_units_total": 327,
-            "corpus_units_declared": 319,
+            "corpus_units_total": 282,
+            "corpus_units_declared": 274,
             "engine_records": null,
             "delta": null
           },
@@ -17588,29 +17761,29 @@
           },
           {
             "kind": "companion",
-            "corpus_units_total": 43,
-            "corpus_units_declared": 17,
+            "corpus_units_total": 29,
+            "corpus_units_declared": 3,
             "engine_records": null,
             "delta": null
           },
           {
             "kind": "template",
-            "corpus_units_total": 1200,
-            "corpus_units_declared": 1200,
+            "corpus_units_total": 977,
+            "corpus_units_declared": 977,
             "engine_records": null,
             "delta": null
           },
           {
             "kind": "language",
-            "corpus_units_total": 15,
-            "corpus_units_declared": 15,
+            "corpus_units_total": 4,
+            "corpus_units_declared": 4,
             "engine_records": null,
             "delta": null
           },
           {
             "kind": "ability",
-            "corpus_units_total": 84,
-            "corpus_units_declared": 22,
+            "corpus_units_total": 29,
+            "corpus_units_declared": 0,
             "engine_records": null,
             "delta": null
           }
@@ -17637,14 +17810,14 @@
         "engine_rule_set": "core_rulebook",
         "units": 6701,
         "by_status": {
-          "grounded": 1117,
-          "not-ingested": 2060,
-          "deferred-with-reason": 6,
-          "text-complete": 649,
-          "unknown": 610,
-          "ingested-magnitude": 2259
+          "engine-does-not-hold": 1028,
+          "grounded": 3646,
+          "deferred-with-reason": 115,
+          "text-complete": 856,
+          "ingested-magnitude": 1046,
+          "unmeasurable": 10
         },
-        "proven": 1766,
+        "proven": 4502,
         "by_wiring_class": {
           "computed": 2034,
           "display": 1216,
@@ -17653,12 +17826,12 @@
           "ambiguous": 116
         },
         "by_doneness": {
-          "not-started": 2256,
-          "done": 3201,
-          "unmeasurable": 610,
-          "deferred": 6,
-          "held": 249,
-          "in-progress": 379
+          "not-started": 1028,
+          "done": 4357,
+          "held": 349,
+          "deferred": 115,
+          "in-progress": 842,
+          "unmeasurable": 10
         },
         "reconciliation": [
           {
@@ -17719,8 +17892,8 @@
           },
           {
             "kind": "companion",
-            "corpus_units_total": 170,
-            "corpus_units_declared": 170,
+            "corpus_units_total": 184,
+            "corpus_units_declared": 184,
             "engine_records": null,
             "delta": null
           },
@@ -17733,8 +17906,8 @@
           },
           {
             "kind": "template",
-            "corpus_units_total": 240,
-            "corpus_units_declared": 240,
+            "corpus_units_total": 262,
+            "corpus_units_declared": 262,
             "engine_records": null,
             "delta": null
           },
@@ -17761,7 +17934,7 @@
           },
           {
             "kind": "ability",
-            "corpus_units_total": 464,
+            "corpus_units_total": 471,
             "corpus_units_declared": 463,
             "engine_records": null,
             "delta": null
@@ -17786,13 +17959,12 @@
         "engine_rule_set": "horror_adventures",
         "units": 1453,
         "by_status": {
-          "not-ingested": 932,
-          "text-complete": 172,
-          "unknown": 91,
-          "grounded": 82,
-          "ingested-magnitude": 176
+          "engine-does-not-hold": 422,
+          "text-complete": 384,
+          "grounded": 137,
+          "ingested-magnitude": 510
         },
-        "proven": 254,
+        "proven": 521,
         "by_wiring_class": {
           "display": 539,
           "computed": 435,
@@ -17801,10 +17973,10 @@
           "ambiguous": 7
         },
         "by_doneness": {
-          "not-started": 1020,
-          "unmeasurable": 91,
-          "done": 244,
-          "held": 98
+          "not-started": 422,
+          "done": 625,
+          "held": 156,
+          "in-progress": 250
         },
         "reconciliation": [
           {
@@ -17932,7 +18104,8 @@
         "engine_rule_set": "inner_sea_bestiary",
         "units": 242,
         "by_status": {
-          "not-ingested": 19,
+          "ingested-magnitude": 6,
+          "engine-does-not-hold": 13,
           "grounded": 93,
           "text-complete": 130
         },
@@ -17945,9 +18118,10 @@
           "ambiguous": 2
         },
         "by_doneness": {
-          "not-started": 24,
-          "done": 200,
-          "held": 18
+          "in-progress": 5,
+          "held": 17,
+          "done": 207,
+          "not-started": 13
         },
         "reconciliation": [
           {
@@ -17999,14 +18173,14 @@
         "engine_rule_set": "inner_sea_combat",
         "units": 429,
         "by_status": {
-          "not-ingested": 249,
-          "deferred-with-reason": 1,
+          "engine-does-not-hold": 241,
+          "deferred-with-reason": 14,
           "text-complete": 93,
-          "unknown": 47,
-          "ingested-magnitude": 30,
-          "grounded": 9
+          "ingested-magnitude": 10,
+          "unmeasurable": 38,
+          "grounded": 33
         },
-        "proven": 102,
+        "proven": 126,
         "by_wiring_class": {
           "computed": 59,
           "ambiguous": 23,
@@ -18015,11 +18189,12 @@
           "derived": 6
         },
         "by_doneness": {
-          "not-started": 313,
-          "unmeasurable": 44,
-          "deferred": 1,
-          "done": 64,
-          "held": 7
+          "not-started": 241,
+          "done": 129,
+          "deferred": 14,
+          "unmeasurable": 38,
+          "in-progress": 1,
+          "held": 6
         },
         "reconciliation": [
           {
@@ -18089,10 +18264,11 @@
         "engine_rule_set": "inner_sea_faiths",
         "units": 191,
         "by_status": {
-          "not-ingested": 189,
-          "text-complete": 2
+          "engine-does-not-hold": 55,
+          "text-complete": 86,
+          "ingested-magnitude": 50
         },
-        "proven": 2,
+        "proven": 86,
         "by_wiring_class": {
           "display": 103,
           "derived": 53,
@@ -18100,8 +18276,9 @@
           "computed": 33
         },
         "by_doneness": {
-          "not-started": 189,
-          "held": 2
+          "not-started": 55,
+          "held": 50,
+          "done": 86
         },
         "reconciliation": [
           {
@@ -18139,13 +18316,13 @@
         "engine_rule_set": "inner_sea_gods",
         "units": 1385,
         "by_status": {
-          "not-ingested": 882,
-          "text-complete": 225,
-          "unknown": 38,
-          "ingested-magnitude": 115,
-          "grounded": 125
+          "engine-does-not-hold": 623,
+          "text-complete": 365,
+          "unmeasurable": 12,
+          "ingested-magnitude": 200,
+          "grounded": 185
         },
-        "proven": 350,
+        "proven": 550,
         "by_wiring_class": {
           "computed": 506,
           "display": 500,
@@ -18154,11 +18331,11 @@
           "static": 191
         },
         "by_doneness": {
-          "not-started": 883,
-          "done": 351,
-          "held": 97,
-          "unmeasurable": 38,
-          "in-progress": 16
+          "not-started": 623,
+          "done": 534,
+          "held": 133,
+          "unmeasurable": 12,
+          "in-progress": 83
         },
         "reconciliation": [
           {
@@ -18265,13 +18442,12 @@
         "engine_rule_set": "inner_sea_intrigue",
         "units": 277,
         "by_status": {
-          "not-ingested": 165,
-          "text-complete": 45,
-          "unknown": 8,
-          "ingested-magnitude": 53,
-          "grounded": 6
+          "engine-does-not-hold": 168,
+          "text-complete": 47,
+          "ingested-magnitude": 34,
+          "grounded": 28
         },
-        "proven": 51,
+        "proven": 75,
         "by_wiring_class": {
           "computed": 42,
           "display": 118,
@@ -18280,11 +18456,10 @@
           "ambiguous": 1
         },
         "by_doneness": {
-          "not-started": 221,
-          "unmeasurable": 8,
-          "done": 46,
-          "in-progress": 1,
-          "held": 1
+          "not-started": 168,
+          "done": 83,
+          "in-progress": 4,
+          "held": 22
         },
         "reconciliation": [
           {
@@ -18360,12 +18535,12 @@
         "engine_rule_set": "inner_sea_magic",
         "units": 493,
         "by_status": {
-          "not-ingested": 336,
-          "text-complete": 17,
-          "unknown": 86,
-          "ingested-magnitude": 54
+          "engine-does-not-hold": 269,
+          "text-complete": 42,
+          "ingested-magnitude": 176,
+          "grounded": 6
         },
-        "proven": 17,
+        "proven": 48,
         "by_wiring_class": {
           "computed": 231,
           "display": 99,
@@ -18374,10 +18549,10 @@
           "ambiguous": 3
         },
         "by_doneness": {
-          "not-started": 353,
-          "unmeasurable": 86,
-          "held": 50,
-          "in-progress": 4
+          "not-started": 269,
+          "done": 48,
+          "held": 91,
+          "in-progress": 85
         },
         "reconciliation": [
           {
@@ -18462,13 +18637,13 @@
         "engine_rule_set": "inner_sea_races",
         "units": 432,
         "by_status": {
-          "grounded": 73,
-          "ingested-magnitude": 112,
-          "not-ingested": 190,
-          "text-complete": 53,
-          "unknown": 4
+          "engine-does-not-hold": 72,
+          "grounded": 134,
+          "ingested-magnitude": 105,
+          "text-complete": 118,
+          "unmeasurable": 3
         },
-        "proven": 126,
+        "proven": 252,
         "by_wiring_class": {
           "computed": 165,
           "ambiguous": 3,
@@ -18477,11 +18652,11 @@
           "derived": 2
         },
         "by_doneness": {
-          "in-progress": 23,
-          "not-started": 219,
-          "done": 185,
-          "unmeasurable": 4,
-          "held": 1
+          "in-progress": 100,
+          "not-started": 72,
+          "done": 255,
+          "unmeasurable": 3,
+          "held": 2
         },
         "reconciliation": [
           {
@@ -18557,9 +18732,9 @@
         "engine_rule_set": "inner_sea_taverns",
         "units": 20,
         "by_status": {
-          "not-ingested": 6,
+          "engine-does-not-hold": 6,
           "text-complete": 13,
-          "unknown": 1
+          "unmeasurable": 1
         },
         "proven": 13,
         "by_wiring_class": {
@@ -18570,8 +18745,8 @@
           "ambiguous": 1
         },
         "by_doneness": {
-          "not-started": 11,
-          "done": 8,
+          "not-started": 6,
+          "done": 13,
           "unmeasurable": 1
         },
         "reconciliation": [
@@ -18602,11 +18777,12 @@
         "engine_rule_set": "inner_sea_temples",
         "units": 65,
         "by_status": {
-          "ingested-magnitude": 56,
-          "unknown": 8,
-          "not-ingested": 1
+          "ingested-magnitude": 24,
+          "grounded": 32,
+          "unmeasurable": 8,
+          "engine-does-not-hold": 1
         },
-        "proven": 0,
+        "proven": 32,
         "by_wiring_class": {
           "derived": 19,
           "static": 37,
@@ -18653,13 +18829,13 @@
         "engine_rule_set": "inner_sea_world_guide",
         "units": 643,
         "by_status": {
-          "not-ingested": 381,
-          "text-complete": 59,
-          "unknown": 115,
-          "grounded": 42,
-          "ingested-magnitude": 46
+          "engine-does-not-hold": 464,
+          "text-complete": 61,
+          "grounded": 76,
+          "ingested-magnitude": 37,
+          "unmeasurable": 5
         },
-        "proven": 101,
+        "proven": 137,
         "by_wiring_class": {
           "computed": 150,
           "display": 328,
@@ -18667,11 +18843,11 @@
           "static": 92
         },
         "by_doneness": {
-          "not-started": 413,
-          "unmeasurable": 115,
-          "done": 98,
-          "in-progress": 2,
-          "held": 15
+          "not-started": 464,
+          "done": 126,
+          "in-progress": 23,
+          "unmeasurable": 5,
+          "held": 25
         },
         "reconciliation": [
           {
@@ -18746,8 +18922,8 @@
           },
           {
             "kind": "template",
-            "corpus_units_total": 75,
-            "corpus_units_declared": 75,
+            "corpus_units_total": 84,
+            "corpus_units_declared": 84,
             "engine_records": null,
             "delta": null
           },
@@ -18767,14 +18943,14 @@
           },
           {
             "kind": "language",
-            "corpus_units_total": 17,
-            "corpus_units_declared": 17,
+            "corpus_units_total": 18,
+            "corpus_units_declared": 18,
             "engine_records": null,
             "delta": null
           },
           {
             "kind": "ability",
-            "corpus_units_total": 65,
+            "corpus_units_total": 67,
             "corpus_units_declared": 64,
             "engine_records": null,
             "delta": null
@@ -18798,13 +18974,13 @@
         "engine_rule_set": "monster_codex",
         "units": 215,
         "by_status": {
-          "not-ingested": 66,
-          "text-complete": 38,
-          "unknown": 22,
-          "grounded": 18,
-          "ingested-magnitude": 71
+          "engine-does-not-hold": 65,
+          "text-complete": 42,
+          "grounded": 36,
+          "ingested-magnitude": 66,
+          "unmeasurable": 6
         },
-        "proven": 56,
+        "proven": 78,
         "by_wiring_class": {
           "derived": 49,
           "static": 53,
@@ -18812,11 +18988,11 @@
           "display": 63
         },
         "by_doneness": {
-          "not-started": 102,
-          "unmeasurable": 22,
-          "in-progress": 8,
-          "done": 81,
-          "held": 2
+          "not-started": 65,
+          "done": 98,
+          "in-progress": 13,
+          "held": 33,
+          "unmeasurable": 6
         },
         "reconciliation": [
           {
@@ -18913,13 +19089,13 @@
         "engine_rule_set": "mythic_adventures",
         "units": 1400,
         "by_status": {
-          "not-ingested": 905,
-          "grounded": 31,
-          "text-complete": 126,
-          "unknown": 170,
-          "ingested-magnitude": 168
+          "engine-does-not-hold": 392,
+          "ingested-magnitude": 270,
+          "text-complete": 514,
+          "grounded": 209,
+          "unmeasurable": 15
         },
-        "proven": 157,
+        "proven": 723,
         "by_wiring_class": {
           "derived": 56,
           "display": 898,
@@ -18928,11 +19104,11 @@
           "static": 114
         },
         "by_doneness": {
-          "not-started": 914,
-          "done": 222,
-          "unmeasurable": 170,
-          "held": 6,
-          "in-progress": 88
+          "held": 48,
+          "done": 742,
+          "not-started": 392,
+          "in-progress": 203,
+          "unmeasurable": 15
         },
         "reconciliation": [
           {
@@ -19010,14 +19186,13 @@
         "engine_rule_set": "occult_adventures",
         "units": 1785,
         "by_status": {
-          "not-ingested": 1031,
+          "engine-does-not-hold": 1017,
           "deferred-with-reason": 2,
-          "text-complete": 424,
-          "unknown": 63,
-          "ingested-magnitude": 261,
-          "grounded": 4
+          "text-complete": 471,
+          "ingested-magnitude": 176,
+          "grounded": 119
         },
-        "proven": 428,
+        "proven": 590,
         "by_wiring_class": {
           "computed": 243,
           "derived": 189,
@@ -19026,12 +19201,11 @@
           "ambiguous": 65
         },
         "by_doneness": {
-          "not-started": 1331,
-          "unmeasurable": 63,
-          "done": 371,
+          "not-started": 1017,
+          "done": 738,
           "deferred": 2,
-          "held": 17,
-          "in-progress": 1
+          "held": 20,
+          "in-progress": 8
         },
         "reconciliation": [
           {
@@ -19133,13 +19307,12 @@
         "units": 1232,
         "by_status": {
           "deferred-with-reason": 6,
+          "engine-does-not-hold": 286,
           "grounded": 85,
-          "not-ingested": 695,
-          "text-complete": 382,
-          "unknown": 60,
-          "ingested-magnitude": 4
+          "text-complete": 756,
+          "ingested-magnitude": 99
         },
-        "proven": 467,
+        "proven": 841,
         "by_wiring_class": {
           "display": 905,
           "computed": 213,
@@ -19148,12 +19321,11 @@
           "derived": 39
         },
         "by_doneness": {
-          "not-started": 1015,
-          "unmeasurable": 60,
-          "done": 110,
+          "not-started": 286,
+          "done": 840,
           "deferred": 6,
-          "held": 37,
-          "in-progress": 4
+          "held": 17,
+          "in-progress": 83
         },
         "reconciliation": [
           {
@@ -19232,10 +19404,13 @@
         "units": 265,
         "by_status": {
           "deferred-with-reason": 2,
-          "unknown": 21,
-          "not-ingested": 242
+          "unmeasurable": 21,
+          "ingested-magnitude": 54,
+          "text-complete": 133,
+          "engine-does-not-hold": 2,
+          "grounded": 53
         },
-        "proven": 0,
+        "proven": 186,
         "by_wiring_class": {
           "ambiguous": 8,
           "display": 150,
@@ -19245,7 +19420,9 @@
         "by_doneness": {
           "unmeasurable": 21,
           "deferred": 2,
-          "not-started": 242
+          "done": 204,
+          "in-progress": 36,
+          "not-started": 2
         },
         "reconciliation": [
           {
@@ -19287,14 +19464,14 @@
         "engine_rule_set": "ultimate_combat",
         "units": 2196,
         "by_status": {
-          "grounded": 27,
-          "not-ingested": 923,
+          "engine-does-not-hold": 1074,
+          "grounded": 153,
           "deferred-with-reason": 1,
-          "text-complete": 712,
-          "unknown": 206,
-          "ingested-magnitude": 327
+          "text-complete": 717,
+          "ingested-magnitude": 249,
+          "unmeasurable": 2
         },
-        "proven": 739,
+        "proven": 870,
         "by_wiring_class": {
           "computed": 243,
           "display": 1430,
@@ -19303,12 +19480,12 @@
           "ambiguous": 36
         },
         "by_doneness": {
-          "done": 610,
-          "not-started": 1346,
-          "unmeasurable": 206,
+          "done": 1039,
+          "not-started": 1074,
           "deferred": 1,
-          "held": 24,
-          "in-progress": 9
+          "in-progress": 55,
+          "held": 25,
+          "unmeasurable": 2
         },
         "reconciliation": [
           {
@@ -19408,13 +19585,13 @@
         "engine_rule_set": "ultimate_equipment",
         "units": 1666,
         "by_status": {
-          "text-complete": 100,
-          "grounded": 188,
-          "ingested-magnitude": 1239,
-          "not-ingested": 52,
-          "unknown": 87
+          "text-complete": 137,
+          "engine-does-not-hold": 7,
+          "grounded": 1250,
+          "ingested-magnitude": 229,
+          "unmeasurable": 43
         },
-        "proven": 288,
+        "proven": 1387,
         "by_wiring_class": {
           "static": 1236,
           "computed": 218,
@@ -19422,11 +19599,11 @@
           "display": 184
         },
         "by_doneness": {
-          "not-started": 53,
-          "done": 1410,
-          "held": 17,
-          "unmeasurable": 87,
-          "in-progress": 99
+          "held": 21,
+          "done": 1492,
+          "unmeasurable": 43,
+          "in-progress": 103,
+          "not-started": 7
         },
         "reconciliation": [
           {
@@ -19490,13 +19667,13 @@
         "engine_rule_set": "ultimate_intrigue",
         "units": 1263,
         "by_status": {
-          "not-ingested": 481,
-          "text-complete": 313,
-          "unknown": 276,
-          "ingested-magnitude": 189,
-          "grounded": 4
+          "engine-does-not-hold": 740,
+          "text-complete": 312,
+          "ingested-magnitude": 155,
+          "unmeasurable": 2,
+          "grounded": 54
         },
-        "proven": 317,
+        "proven": 366,
         "by_wiring_class": {
           "display": 500,
           "computed": 328,
@@ -19505,11 +19682,11 @@
           "ambiguous": 5
         },
         "by_doneness": {
-          "not-started": 676,
-          "unmeasurable": 276,
-          "done": 294,
-          "held": 16,
-          "in-progress": 1
+          "not-started": 740,
+          "done": 491,
+          "in-progress": 10,
+          "held": 20,
+          "unmeasurable": 2
         },
         "reconciliation": [
           {
@@ -19596,14 +19773,14 @@
         "engine_rule_set": "ultimate_magic",
         "units": 3012,
         "by_status": {
-          "not-ingested": 1941,
+          "engine-does-not-hold": 1720,
           "deferred-with-reason": 3,
-          "text-complete": 348,
-          "unknown": 370,
-          "ingested-magnitude": 287,
-          "grounded": 63
+          "text-complete": 516,
+          "ingested-magnitude": 693,
+          "unmeasurable": 6,
+          "grounded": 74
         },
-        "proven": 411,
+        "proven": 590,
         "by_wiring_class": {
           "computed": 815,
           "display": 1329,
@@ -19612,12 +19789,12 @@
           "ambiguous": 21
         },
         "by_doneness": {
-          "not-started": 2164,
-          "unmeasurable": 370,
+          "not-started": 1720,
+          "done": 1052,
           "deferred": 3,
-          "done": 409,
-          "held": 44,
-          "in-progress": 22
+          "in-progress": 180,
+          "held": 51,
+          "unmeasurable": 6
         },
         "reconciliation": [
           {
@@ -19718,13 +19895,13 @@
         "engine_rule_set": "ultimate_psionics",
         "units": 3498,
         "by_status": {
-          "not-ingested": 1817,
-          "text-complete": 523,
-          "unknown": 583,
-          "grounded": 215,
-          "ingested-magnitude": 360
+          "engine-does-not-hold": 1886,
+          "text-complete": 606,
+          "ingested-magnitude": 455,
+          "unmeasurable": 10,
+          "grounded": 541
         },
-        "proven": 738,
+        "proven": 1147,
         "by_wiring_class": {
           "computed": 1144,
           "display": 1017,
@@ -19733,11 +19910,11 @@
           "ambiguous": 10
         },
         "by_doneness": {
-          "not-started": 2018,
-          "unmeasurable": 583,
-          "done": 731,
-          "held": 64,
-          "in-progress": 102
+          "not-started": 1886,
+          "done": 1102,
+          "held": 116,
+          "in-progress": 384,
+          "unmeasurable": 10
         },
         "reconciliation": [
           {
@@ -19873,14 +20050,14 @@
         "engine_rule_set": "ultimate_wilderness",
         "units": 2004,
         "by_status": {
-          "not-ingested": 1062,
-          "deferred-with-reason": 1,
-          "text-complete": 402,
-          "unknown": 88,
-          "ingested-magnitude": 183,
-          "grounded": 268
+          "engine-does-not-hold": 996,
+          "deferred-with-reason": 2,
+          "text-complete": 425,
+          "ingested-magnitude": 203,
+          "unmeasurable": 3,
+          "grounded": 375
         },
-        "proven": 670,
+        "proven": 800,
         "by_wiring_class": {
           "computed": 515,
           "display": 821,
@@ -19889,12 +20066,12 @@
           "ambiguous": 24
         },
         "by_doneness": {
-          "not-started": 1263,
-          "unmeasurable": 88,
-          "done": 613,
-          "deferred": 1,
-          "held": 30,
-          "in-progress": 9
+          "not-started": 996,
+          "done": 844,
+          "deferred": 2,
+          "held": 82,
+          "in-progress": 77,
+          "unmeasurable": 3
         },
         "reconciliation": [
           {
@@ -19969,8 +20146,8 @@
           },
           {
             "kind": "template",
-            "corpus_units_total": 24,
-            "corpus_units_declared": 24,
+            "corpus_units_total": 26,
+            "corpus_units_declared": 26,
             "engine_records": null,
             "delta": null
           },
@@ -19992,6 +20169,13 @@
             "kind": "language",
             "corpus_units_total": 5,
             "corpus_units_declared": 5,
+            "engine_records": null,
+            "delta": null
+          },
+          {
+            "kind": "ability",
+            "corpus_units_total": 1,
+            "corpus_units_declared": 0,
             "engine_records": null,
             "delta": null
           }
@@ -20024,170 +20208,91 @@
   },
   "retrospective": {
     "available": true,
-    "generated_at": "2026-08-24T22:17:43Z",
+    "generated_at": "2026-09-02T08:11:52Z",
     "generated_by": "scripts/retro.py summary",
     "window": "14d",
-    "total_events": 1918,
+    "total_events": 1007,
     "by_type": {
-      "correction": 539,
-      "deferral": 86,
-      "incident": 276,
-      "near_miss": 47,
-      "note": 62,
-      "rework": 34,
-      "verification": 874
+      "correction": 277,
+      "deferral": 73,
+      "incident": 111,
+      "near_miss": 9,
+      "note": 34,
+      "resolution": 45,
+      "rework": 9,
+      "verification": 449
     },
     "by_origin": {
-      "agent": 913,
-      "derived": 1005
+      "agent": 524,
+      "derived": 483
     },
     "corrections": {
-      "total": 539,
+      "total": 277,
       "by_subject": {
         "15-card-15-class-feature-memo.md": 1,
         "15-card-15-class-feature-memo.md \u00a73": 1,
-        "?": 17,
-        "AT-31-004": 1,
-        "CompanionCatalogScreen.test.ts's SERVED_BOOK_CODES roster": 1,
-        "OPEN-ISSUES row 199/200": 1,
-        "OPEN-ISSUES row 70 (SD31-D7-PROSE-001)": 1,
-        "OPEN-ISSUES.md row 12 (SD31-E6-F11-001) / kanban.md epic-6-ingest-lanes card text": 1,
-        "OPEN-ISSUES.md row 199": 1,
-        "OPEN-ISSUES.md row 2 (Finding B, BONUS:STAT/DR false positive)": 1,
-        "OPEN-ISSUES.md row 207 (SD31-E6-F4-006) routing note": 1,
-        "OPEN-ISSUES.md row 22 (SD31-E6-F4-001)": 1,
-        "OPEN-ISSUES.md row 224's class_feature census": 1,
-        "OPEN-ISSUES.md row 26 / SD31-E6-F11-002 receipt": 1,
-        "OPEN-ISSUES.md row 27 (SD31-E6-F11-002)": 1,
-        "OPEN-ISSUES.md row 38": 1,
-        "OPEN-ISSUES.md row 68 (SD31-W5-ORCH-001)": 1,
-        "OPEN-ISSUES.md row 69's remediation column (SD31-D7-PROSE-001)": 1,
-        "OPEN-ISSUES.md row 70 (SD31-E4-F1-001)": 1,
-        "OPEN-ISSUES.md row 78 (SD31-E4-F1-001)": 1,
-        "OPEN-ISSUES.md row anchoring (race/seam/equipment/spell/ambiguous lanes)": 1,
-        "PF1e dashboard producer NO_GROUNDING_PROBE justification": 1,
-        "RACE_NEWEST_PRINTING doc comment (src/bin/v06_work_inventory.rs:1598-1606)": 1,
+        "?": 1,
+        "AT-33-E4-002 (00ca087775) / pf1e_dashboard_producer.py::_doneness_verdict_uncapped": 1,
+        "AT-33-E5-001-remediation-receipt's own module-docstring assumption": 1,
+        "AT-33-E5-002_cycle_receipt.md (next-cycle plan)": 1,
+        "AT-33-E5-finalize wave report (three-lane + finalize)": 1,
+        "AT-33-E5-finalize-wave3 kanban row 18 note": 2,
+        "AT-33-E5-finalize-wave5 merge step": 1,
+        "AT-33-E5-last39-skill-combat dispatch brief": 1,
+        "AT-33-E5-last67-eqm_cycle_receipt.md (wave 5)": 1,
+        "AT-33-E5-last75 (wave 4) and every earlier ultimate_psionics equipment lane": 1,
+        "AT-33-E5-last75_cycle_receipt.md (wave 4, sd33-r4-last75)": 1,
+        "AT-33-E5-shape-combat harness (combat-shape-work/ac_build_results.py)": 1,
+        "AT-33-E5-shape-combat_cycle_receipt.md": 1,
+        "AT-33-E5-shape-combat_cycle_receipt.md (wave-3 root-cause of advanced_class_guide:equipment:full_plate_of_the_corpse)": 1,
+        "AT-33-E6-001 attempt 11 receipt / release-notes.md / forward-scope-register.md D1.1 / sd33 retrospective \u00a75": 1,
+        "AT-33-E6-001 attempt 5 Rust-suite scope": 1,
+        "AT-33-E6-001-attempt6 scan / wave-5 method changes": 1,
+        "AT-33-E6-001-build-green lane disposition (not its figures)": 1,
+        "AT-33-E6-001-corpus-sweep lane's epic5_units_affected figure": 1,
+        "AT-33-E6-001-suite-green lane report": 1,
+        "AT-33-E6-001_cycle_receipt.md's denominator-gate reading": 1,
+        "AT-34-E1-003_cycle_receipt.md": 1,
+        "AT-34-E1-004 shape-engine-boundary.md": 1,
+        "AT-34-E3-001 class_feature_option_pool_with_magnitude cycle 2's own F1-population re-pin": 1,
+        "AT-34-E3-001 cycle 5's four-buckets row, and decisions.md 16's own completeness": 1,
+        "AT-34-E3-001 dispatch brief (this cycle's own task text)": 2,
+        "AT-34-E3-001-class_feature_owner_matched-cycle": 1,
+        "AT-34-E3-001-cycle-receipts": 1,
+        "AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt_3.md's own F1 re-pin": 1,
+        "AT-34-E3-001_class_feature_owner_matched_cycle_receipt_5/6": 1,
+        "AT-34-E3-001_cycle_receipt.md (prior cycle's escalation)": 1,
+        "AT-34-E3-002 cycle 6 receipt": 1,
+        "AT-34-E3-002 cycle 7 receipt remainder table": 1,
+        "AT-34-E3-002 prior cycle receipt (denominator_gate row)": 1,
+        "AT-34-E3-003 cycle 2 receipt (VAR sub-shape classification)": 1,
+        "AT-34-E3-003 kanban row 15 / prior u_bucket_render_bug receipt": 1,
+        "AT-34-E3-003 wave dispatch brief": 1,
+        "AT-34-E3-003_m_bucket_equipment_cycle_receipt.md (prior cycle, commit 7147fd86ab)": 1,
+        "AT-34-E3-003_m_bucket_equipment_cycle_receipt_4.md next-cycle-plan item 1": 1,
+        "AT-34-E3-003_m_bucket_equipment_cycle_receipt_5.md (cycles 2/3/5)": 1,
+        "AT-34-E4-002 dispatch brief": 2,
+        "AT-34-E4-002_cycle_receipt_4.md": 1,
+        "AT-34-E4-002_cycle_receipt_6.md's own remainder census": 1,
+        "AT-34-E4-002_cycle_receipt_7.md": 1,
+        "AT-34-E4-002_cycle_receipt_9.md next-cycle-plan": 1,
+        "AT-34-E6-001 dispatch brief (fable-review.md \u00a77)": 1,
+        "AT-34-E6-001_gate-lane-b_wave24/26_cycle_receipt.md + wave-28 gate-sweep receipt": 1,
         "RaceTraitProbe::consumer_verified's race-level rule (SD31-W12-INTEGRATE-001)": 1,
-        "S3-oracle dispatch brief": 1,
-        "SD-28 decisions.md Decision 64 (the 25-class hand-verified roster)": 1,
-        "SD-28 decisions.md Decision 64 / SD-30 decisions.md Decision 34 (inherited Oracle figure)": 1,
-        "SD-29 Epic 10 run 1 review": 1,
-        "SD-29 closure-run-3 dispatch brief": 1,
-        "SD-29 decisions.md 62.4 (sd29-monster-r11)": 1,
-        "SD-29 decisions.md \u00a744.4/\u00a744.5 (race-trait lane round 1's successor queue)": 1,
-        "SD-29 decisions.md \u00a745.2 and the ISR ingest's own PI claim": 1,
-        "SD-29 decisions.md \u00a747.8 (race-trait lane round 3's successor queue)": 1,
-        "SD-29 epic-6 pilot (this actor), pre-gate expectation": 1,
-        "SD-29 epic-6 pilot receipt (this actor), progress.md and decisions.md 43.6": 1,
-        "SD-29 epic-6-race-trait-repin dispatch brief": 1,
-        "SD-29 epic-breakdown / kanban card epic-4-proven-feat-race-class": 1,
-        "SD-29 kanban card 10 scope figure": 1,
-        "SD-29 kanban.md card 10 note + progress.md (actor sd29-e6-racetrait-extend)": 1,
-        "SD-29 kanban.md card epic-6-race-trait-lane-pilot / epic ordering": 1,
-        "SD-29 kanban.md re-pin-candidates note (actor sd29-e6-racetrait-pilot)": 1,
-        "SD-29 kanban.md row 8 / loop-instruction.md DoD item 6": 1,
-        "SD-29 progress.md 8b (race-trait lane round 1's receipt)": 1,
-        "SD-29 round-7 dispatch brief (monster lane template)": 1,
-        "SD-30 decisions.md \u00a733 (2026-08-10 snapshot)": 1,
-        "SD-30 decisions.md \u00a745 item 2, reproduced into SD-32-engine-capability-builds Epic 2's charter": 1,
-        "SD-30 epic-breakdown.md Epic 3 (SD30-E3-F1)": 1,
-        "SD-30-class-feature-archetype-bundle/decisions.md \u00a742": 1,
         "SD-31 defects.md D12 / SD-32 epic-breakdown.md T7 row": 1,
-        "SD-31 dispatch brief / OPEN-ISSUES.md row 13": 1,
-        "SD-31 dispatch brief / mandate prompt": 1,
-        "SD-31 epic-breakdown.md Epic 1 objective text": 1,
-        "SD-31 epic-breakdown.md Epic 6-F1 (pre-remediation)": 1,
-        "SD-31 exit gate / AT-31-102 (pre-remediation)": 1,
-        "SD-31 package docs (README.md/kanban.md/epic-breakdown.md/scope-draft.md/technical-requirements.md/risks-and-open-questions.md, pre-cycle state)": 1,
         "SD-31 todo/sweeps.md S1/S2": 1,
         "SD-31 todo/sweeps.md S6": 1,
         "SD-31 wave-15 monster lane dispatch brief": 1,
-        "SD-32 decisions.md \u00a75 (spell reported structurally blocked)": 1,
-        "SD-32 progress.md / decisions.md \u00a79 board-movement tables": 1,
-        "SD-32 scope authoring (this agent), pre-derivation assumption": 1,
-        "SD29-E6-F1-002's report of the stale standard-trait column": 1,
-        "SD30-E7-F1-001 dispatch brief": 1,
-        "SD31-ATTRIB-001's RACE_TRUE_BOOK table": 1,
-        "SD31-ATTRIB-001's receipt / OPEN-ISSUES row 68's own demanded answer": 1,
-        "SD31-ATTRIB-002 (cycle/sd31-attrib-002)": 1,
-        "SD31-ATTRIB-003's own first-draft race-citation script": 1,
-        "SD31-CE-COMPANION-001": 1,
-        "SD31-D14-PROV-001's site-dashboard-pi-gate": 1,
-        "SD31-D7-PROSE-003 receipt": 1,
-        "SD31-D7-PROSE-004 dispatch brief": 1,
-        "SD31-D7-PROSE-004's own first-draft UNIVERSAL_MODIFIER_CUES": 1,
-        "SD31-D9-DISSOLVE-001's own first draft": 1,
-        "SD31-D9-DISSOLVE-001's own initial Decision-10 implementation": 1,
-        "SD31-E1-F3-001": 1,
-        "SD31-E2-F1-ground-truth-methodology.md Stratification section": 1,
-        "SD31-E2-F1-ground-truth-methodology.md:290 Result table + return report": 1,
-        "SD31-E2-F1-ground-truth-methodology.md:306 headline agreement figures": 1,
-        "SD31-E2-F1-ground-truth-sample-v1.json (105 canned units)": 1,
-        "SD31-E2-F1-ground-truth-sample-v1.json (bestiary:monster:neothelid hand label)": 1,
-        "SD31-E2-F1-ground-truth-sample-v1.json population display_grounded_target": 1,
-        "SD31-E2-F1-ground-truth-sample-v1.json stratification depth vs F2 acceptance": 1,
-        "SD31-E2-F1-ground-truth-sample-v1.json token_evidence field (105/150 units)": 1,
-        "SD31-E2-F2-001-wiringfix (wiring_class.rs has_arith_scoped/has_scalar_or_arith_for_token)": 1,
-        "SD31-E2-F2-001-wiringfix report summary + commit message + OPEN-ISSUES Resolved rows 1/2": 1,
-        "SD31-E2-F2-001-wiringfix's own test assumption (CorpusLines::line())": 1,
-        "SD31-E2-F3-001 ambiguous lane": 3,
-        "SD31-E2-F3-001 ambiguous lane, SPELLS: field scanning (D6)": 1,
-        "SD31-E2-F3-002-marker": 1,
-        "SD31-E2-F3-002-marker (this cycle, self-caught)": 1,
-        "SD31-E3-F1-001 class_feature measurement": 1,
-        "SD31-E3-F1-001 class_feature measurement, kanban.md": 1,
-        "SD31-E3-F1-001-clearance-table.json": 1,
-        "SD31-E4-F1-001's own pilot_compute.rs test (oracle_unrecognized_mystery_or_curse_alongside_the_canonical_one_stays_blocked)": 1,
-        "SD31-E4-F1-004's own dispatch brief / this cycle's own initial assumption": 1,
-        "SD31-E4-F2-004's class_feature demotion evidence string": 1,
-        "SD31-E6-F10-001 dispatch brief": 1,
-        "SD31-E6-F10-002": 1,
-        "SD31-E6-F10-004 receipt": 1,
-        "SD31-E6-F11-001 held-cell map (artifacts/SD31-E6-F11-001-held-cell-map.md) and OPEN-ISSUES row 11": 1,
-        "SD31-E6-F11-001-held-cell-map.md (sd31-e6-heldcells)": 1,
-        "SD31-E6-F11-001-held-cell-map.md / this card's own brief": 1,
-        "SD31-E6-F11-002 (spell_like_ability_caster_level, wave 4)": 1,
-        "SD31-E6-F11-002 seam lane": 1,
-        "SD31-E6-F11-002's monster-seam mutation-proof test": 1,
-        "SD31-E6-F11-003's fixture-seam done credit": 1,
-        "SD31-E6-F2-001 (OPEN-ISSUES row 34)": 1,
-        "SD31-E6-F2-001 spell lane": 1,
-        "SD31-E6-F2-001 spell lane, ingest 2026-08-03": 1,
-        "SD31-E6-F2-004's own initial doc-comment draft": 1,
-        "SD31-E6-F3-002 (own draft mid-cycle)": 1,
-        "SD31-E6-F4-006 receipt": 1,
-        "SD31-E6-F5-001 / SD31-E6-F2-001 equipment+spell lanes": 1,
-        "SD31-E6-F5-001 equipment lane": 3,
-        "SD31-E6-F5-003 dispatch preamble": 1,
-        "SD31-E6-F5-004 (sd31-equip-repair/E6-F5-004)": 1,
-        "SD31-E6-F5-004's own dispatch (card item 4)": 1,
-        "SD31-E6-F6-001 (own mid-cycle misread)": 1,
-        "SD31-E6-F7-001's own confirmed finding remedy (join on source_book unconditionally)": 1,
-        "SD31-E6-F7-001's own initial raw_tokens-enrichment expectation": 1,
-        "SD31-E6-F7-002's 2 new .COPY= spell records": 1,
-        "SD31-E6-F8-001 receipt": 1,
-        "SD31-E6-F9-001 dispatch brief": 1,
-        "SD31-E6-F9-002 (OPEN-ISSUES row 157)": 1,
-        "SD31-E6-F9-005 dispatch receipt": 1,
-        "SD31-W13-INTEGRATE-001's own first LICENSE.json merge (advanced_race_guide)": 1,
+        "SD-32 gate-2-engines/formula_interpreter.corpus-wide.json (committed artifact)": 1,
+        "SD-34/SD-35 cost model, before the operator challenged it": 1,
         "SD31-W15-MONSTER-ABILITY-001": 1,
         "SD31-W15-MONSTER-SLA-001's own scoping figure for the caster-level seam": 1,
         "SD31-W16-MONSTER-ABILITY-001 (OPEN-ISSUES.md row 295)": 1,
-        "SD31-W5-INTEGRATE-001 (OPEN-ISSUES row 90)": 1,
-        "SD31-W9-INTEGRATE-001 dispatch prompt": 2,
-        "SITE-PUBSTATUS-001 dispatch brief": 1,
-        "SITE-PUBSTATUS-001 progress receipt": 1,
         "THE-BOX.md \u00a72.1 F2 / wave-28 VISIBILITY-class-feature.md": 1,
         "ability_category identity-collision reading (this cycle's own first pass)": 1,
         "acceptance-and-verification.md AT-32-G1-003 / epic-breakdown.md Epic 1": 1,
-        "apps/desktop monster catalog challenge-rating guards (two Rust tests and the frontend formatter)": 1,
-        "apps/desktop/src-tauri/src/equipment_catalog.rs test comment (per_book_category_counts_are_pinned)": 1,
-        "apps/desktop/src/monsterCatalog \u2014 the catalog screen's own blurb and monsterCatalogRuntime.ts's doc comment": 1,
         "artifacts/UNMERGED-BRANCHES.md \u00a73": 1,
-        "bestiary_5/LICENSE.json (race lane SD31-E6-F4-001 note)": 1,
-        "brief": 1,
-        "cache_gen::equipment_gap (this cycle's own first implementation)": 1,
-        "cache_gen::ultimate_equipment": 1,
+        "atlas-defects.md defect 1's implied population": 1,
         "card-15-class-feature-memo": 1,
         "card-15-enumerate cycle receipt / kanban.md row 15 / object-definition-rules.md": 1,
         "card-7-007_cycle_receipt": 1,
@@ -20197,265 +20302,131 @@
         "card11-t2b-remeasure.md brief handed to this cycle": 1,
         "card11-t2b-remeasure.md finding 5": 1,
         "census_independent.py": 1,
-        "chooser lane's own progress.md receipt + OPEN-ISSUES row 167 test count": 1,
-        "classify()'s Kind::Class arm (evidence token, pre-e702fa80)": 1,
-        "classify_monster_ability_rows.py, the lane's ceiling instrument": 1,
-        "closure-cf (own first draft)": 1,
-        "companion lane per-book registration cost, as stated in decisions 48 and every receipt since": 1,
-        "corpus-literal-sweep book resolution (self)": 1,
-        "corpus-literal-sweep first draft (self)": 1,
-        "corpus-shape-37-books.md \u00a75 conditional cross-book support files row": 1,
-        "corpus-work-channels.md \u00a79.3 / v06_work_inventory classify()": 1,
+        "class_chassis.monk.ac_bonus (src/rules_core/pilot_compute/mod.rs)": 1,
+        "commit 2bbc9c87a7 (same-day figure-provenance fix)": 1,
+        "companion_catalog.rs test literal pin (141/39)": 1,
+        "completion_atlas.py / missing_engine_tables.py BUCKET_DEFINITIONS citations": 1,
+        "completion_atlas.py BUCKET_DEFINITIONS['V']['citation']": 1,
+        "compute_arms_armor_effect / compute_var_effect (src/rules_core/equipment_effects/)": 1,
+        "compute_general_effect (src/rules_core/equipment_effects/general.rs)": 1,
         "corpus_ingest_diagnostic.rs::tests::the_two_ingested_books_totals_reconcile_with_their_license_artifacts": 1,
+        "corpus_ingest_diagnostic.rs::the_two_ingested_books_totals_reconcile_with_their_license_artifacts (pathfinder_unchained corpus_only_records literal)": 1,
         "cycle-15 t12-class-feature-pool-population receipt": 1,
         "cycle-19 receipt / \u00a727b exhaustive verification": 1,
         "cycle18 receipt (t12-class-feature-pool-population_cycle-18)": 1,
-        "d8175d817 (Core Essentials removal)": 1,
-        "data/corpus/inner_sea_gods/monster/{psychopomp_ahmuuth,steward_of_the_skein,the_first_blade}.json + src/bin/gen_book_cache.rs's wiring_class_for_source": 1,
-        "decisions.md #38": 1,
-        "decisions.md 49.8 race_trait remainder": 1,
-        "decisions.md 58.5 / 60.7 (the carried-forward monster-lane blocker)": 1,
-        "decisions.md Decision 1(e) blockquote (SD-30 \u00a750(c))": 1,
-        "decisions.md Decision 10": 1,
         "decisions.md Decision 17 / OPERATOR-RULINGS-2026-08-19.md \u00a717": 1,
-        "decisions.md \u00a710 worked-example list": 1,
+        "decisions.md section 17's own named examples of the bucket-U shape": 1,
         "decisions.md \u00a712b leading hypothesis (mod_continuation/copy_derivation inflating class_feature)": 1,
         "decisions.md \u00a713 T2a-residual estimate": 1,
         "decisions.md \u00a713 table / epic-2-t2a-t12_cycle-1 lane": 1,
         "decisions.md \u00a715": 1,
         "decisions.md \u00a716 item 2 / epic-2-t2b-adoptive-parentage_cycle-1_cycle_receipt.md": 1,
-        "decisions.md \u00a739.2": 1,
-        "decisions.md \u00a739.4 / epic-breakdown.md SD30-E3-F3": 1,
-        "decisions.md \u00a739.4 / epic-breakdown.md SD30-E3-F3-F4": 1,
-        "decisions.md \u00a746.4 (this lane's own round-2 finding)": 1,
-        "decisions.md \u00a748.1/\u00a748.6 (companion lane round 1)": 1,
-        "decisions.md \u00a751.1": 1,
-        "decisions.md \u00a751.7 / kanban.md card 12 / scripts/classify_companion_rows.py": 1,
-        "decisions.md \u00a756 (companion lane REAL ceiling), and the classifier's own remainder arithmetic": 1,
-        "decisions.md \u00a764 / kanban card 8 / SD-29 closure run 2 receipt": 1,
+        "decisions.md \u00a72 bucket taxonomy (as filed by the mechanism's own Cycle 2 next-cycle plan)": 1,
+        "decisions.md \u00a77": 1,
+        "denominator_gate.py DEFAULT_GLOBS": 1,
         "dispatch brief (discovering lane's own escalation figure)": 1,
-        "dispatch brief (epic-5-monster-lane-extend, round 6)": 1,
-        "dispatch brief (epic-5-monster-lane-extend, round 9)": 1,
         "dispatch brief (this cycle's own handoff)": 1,
-        "dispatch brief (verify-this-run card list)": 1,
-        "dispatch brief for epic-5-monster-lane-extend": 1,
-        "dispatch brief for epic-5-monster-lane-extend round 5": 1,
-        "dispatch brief for epic-5-monster-lane-extend round 8": 1,
-        "dispatch brief for epic-6-race-trait-lane-extend": 1,
-        "dispatch brief for epic-7-companion-lane": 1,
-        "dispatch brief for epic-7-companion-lane (round 5)": 1,
+        "dispatch brief (wave-26 gate-lane-b)": 1,
+        "dispatch brief (wave-27 gate-lane-c)": 1,
         "dispatch brief for gate3-repin cycle": 1,
-        "dispatch brief for spell-consumer-delta-probe": 1,
-        "dispatch prompt (SD31-E6-F4-002 cycle brief)": 1,
-        "dispatch prompt (SD31-E6-F4-002 cycle brief, \u00a77 REFINED summary)": 1,
-        "dispatch prompt (this cycle's own mandate text)": 1,
-        "dispatch's own adversarial-review summary": 1,
-        "dispatch-brief": 9,
+        "dispatch-brief": 8,
         "dispatch-brief (T9-round-4 receipt's own re-derivation)": 1,
         "dispatch-brief (equipment_modifier-rootcause cycle)": 1,
         "dispatch-brief-row17-remaining-21": 1,
         "dispatch-brief-worked-example": 1,
-        "dispatch-brief:epic-7-companion-lane": 1,
-        "dispatched worktree base": 1,
-        "dispatching brief (derived-evaluator-fixture-check card)": 1,
-        "docs/architecture/release-pipeline.md \u00a7Version stamp (last verified 2026-07-22 against tranche/5-3)": 1,
-        "docs/architecture/rules-data-tables.md \u00a7JSON corpus cache": 1,
-        "docs/architecture/rules-data-tables.md \u00a7RuleSetId": 1,
-        "docs/architecture/status.md (2026-08-11 pass)": 1,
-        "docs/architecture/status.md rule-table catalogs row": 1,
-        "docs/governance/license-matrix.md (its own five-minute manual Pipeline B sweep)": 1,
-        "docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md \"D0 -- no resolvable corpus line\"": 1,
-        "docs/release/SD-30-class-feature-archetype-bundle load-bearing gate text (AT-30-006/008/010, loop-instruction.md hard-stops)": 1,
-        "docs/release/SD-30-class-feature-archetype-bundle/acceptance-and-verification.md": 1,
-        "docs/release/SD-30-class-feature-archetype-bundle/acceptance-and-verification.md AT-30-015": 1,
-        "docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md pilot/scope validation citation": 1,
-        "docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md pre-launch item 7": 1,
         "docs/release/SD-32-compute-library-and-cause-closure/decisions.md \u00a717's own 98-cycle estimate": 1,
-        "docs/retro/events/wf_924a22ca-f35-13.jsonl (this cycle own reclaim.sh --apply invocation)": 1,
-        "docs/retro/events/wiring-classifier.jsonl near_miss 1786636949488, and the inventory-determinism brief that inherited it": 1,
         "docs/work-inventory.json": 1,
-        "docs/work-inventory.json (v06_work_inventory's spell classifier)": 1,
-        "doneness-derived (this agent)": 1,
-        "doneness-inprogress (my own first-cut residue analysis)": 1,
-        "enrich_spell_raw_tokens.rs / gen_feat_gap_tables.rs (pre-wave-7)": 1,
-        "epic-11-closure (SD-29 closure cycle, 2026-08-11)": 1,
-        "epic-11-closure run 1 (2026-08-11, commits 73f1421f/ac217788)": 1,
+        "docs/work-inventory.json (committed 2026-08-23)": 1,
         "epic-2-cause-closure cycle-1 receipt / MEASURE-TWICE.md wave-31": 1,
         "epic-2-cause-closure_cycle-2_t8 receipt (Decision 11 condition 2 proof)": 1,
         "epic-2-t12-modelled-class-books cycle receipt": 1,
         "epic-2-t2b-bestiary2_cycle-1_cycle_receipt.md / epic-2-t2b-bestiary6_cycle-1_cycle_receipt.md": 1,
         "epic-2-t2b_cycle_receipt.md \u00a76": 1,
         "epic-2-t8 (this lane's own first commit, 3685bd15a)": 1,
-        "epic-4-proven-feat-race-class receipt \u00a711-12.5, propagated to epic-4-proven-equip-mod \u00a710 and epic-6-race-trait-lane-pilot DoD item 8": 1,
-        "epic-5-monster-lane-extend dispatch brief": 1,
         "epic-5-protective-sweep cycle-1 (card 1)": 1,
-        "epic-6-ui dispatch brief correction event (1785642923369-epic-6-ui-10608b)": 1,
-        "epic-7-companion-lane dispatch brief": 1,
-        "epic-7-ucam dispatch brief correction event (1785643184700-epic-7-ucam-3ea519)": 1,
-        "epic-8-uw dispatch brief correction event (1785643422132-epic-8-uw-db0f86)": 1,
-        "epic-9-version, BASELINE_CLIPPY_WARNINGS_ROOT": 1,
-        "epic-breakdown.md AT-31-010 (wiring_class==display, status==grounded population)": 1,
-        "epic-breakdown.md Epic 0-F2 / decisions.md \u00a74 (authoring-time figure)": 1,
+        "epic-breakdown.md AT-34-E3-001": 1,
+        "epic-breakdown.md AT-34-E3-002 criterion": 1,
         "epic-breakdown.md Epic 2 T9 row / epic-2-cause-closure_cycle-1_cycle_receipt.md": 1,
         "epic-breakdown.md Epic 3 / AT-32-E3-001": 2,
         "epic-breakdown.md Epic 5 / defects.md D9": 1,
-        "epic-breakdown.md Epic 6-F11 / this card's own dispatch brief": 1,
-        "epic-breakdown.md SD30-E0-F2 acceptance text": 1,
-        "epic-breakdown.md SD30-E0-F3 acceptance text": 1,
-        "epic-breakdown.md SD31-E6-F10": 1,
-        "epic-breakdown.md SD31-E6-F4 header": 1,
         "epic-breakdown.md T2b row / card 11 cycle-1 receipt": 1,
         "epic-breakdown.md T4 row / card-11-cycle-1-receipt": 1,
-        "epic-breakdown.md:81,86": 1,
+        "equipment_id_resolve / AT-33-E5-shape-combat's engine_id_resolve_fails_templated_variant_record finding": 1,
         "equipment_resolver.rs pinned test (catalog_rows_span_every_ingested_book_with_their_real_counts)": 1,
         "equipment_resolver.rs pinned test (catalog_rows_span_every_ingested_book_with_their_real_counts, rows.len())": 1,
-        "equipment_resolver.rs's the_two_lookups_agree_on_every_catalog_key_but_the_one_pinned_collision test (pre-existing, predates wave 4)": 1,
-        "explain_gnome_race_seam/explain_halfling_race_seam (pilot_compute.rs)": 1,
+        "fable-review.md Resume-instructions \u00a75 hazard note, quoted into this dispatch brief": 1,
+        "fable-review.md \u00a77 / wave-23 gate-sweep receipt": 1,
         "feat-lane PI-leak receipt (sd32-pi-leak-screening-path-inner-sea-combat-feat)": 1,
+        "feat_catalog.rs test literal pin (changed.len()==201 + exact-name vec)": 1,
+        "fixture_verified_oracle_probe.rs --remainder (this cycle's own first draft)": 1,
+        "fold-inventory_cycle_receipt.md": 2,
         "formula_interpreter.rs::tests::wrong_arg_counts_refuse (pinned prior to cycle 16)": 1,
-        "gen_equipment_gap_tables.rs (pre-existing doc comment, SD31-E6-F5-002 era)": 1,
-        "gen_feat_gap_tables.rs (pre-existing generator, since SD31-E6-F8-001)": 1,
-        "incentive-fix dispatch brief": 1,
-        "inventory-gaps lane's own progress.md receipt, ground_unchained_rogue_class_features": 1,
-        "item8-harness harness design assumption": 1,
-        "item8-harness verify-on-screen.sh (first draft)": 1,
+        "formula_interpreter_corpus_wide.rs f1_population_matches... test pin": 1,
+        "formula_interpreter_corpus_wide.rs::f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census": 1,
         "kanban row 11 consolidation cycle": 1,
+        "kanban row 14 AT-33-E4-002": 1,
         "kanban row 19 brief": 2,
-        "kanban row for epic-7-companion-lane-extend (round 7 hazard a)": 1,
-        "kanban.md card 10 / this cycle's own first reading of the APG record": 1,
         "kanban.md card 7 (gate-2-engines-f10-binding)": 1,
-        "kanban.md card epic-4-proven-equip-mod": 1,
-        "kanban.md card epic-4-proven-equip-mod (equipment remaining-unit figure)": 1,
-        "kanban.md card epic-4-proven-feat-race-class": 1,
-        "kanban.md epic-0-instrument-apply note (2026-08-14)": 1,
-        "kanban.md epic-7-version row": 1,
-        "kanban.md lane-card denominators (cards 8, 10, 12) and the epic-12-reopen dispatch brief": 1,
+        "launch checklist item 10 attribution": 1,
         "lead": 4,
-        "loop-instruction.md Concurrency and resource budget section": 1,
-        "loop-instruction.md Corpus shape notes (2026-08-02)": 1,
-        "loop-instruction.md corpus shape note on PRECAMPAIGN-gated support files": 1,
-        "monster-lane transcriber (this cycle's first draft)": 1,
-        "monster_catalog.rs's natural-attack grounding note (written by the Epic 5 pilot, inherited by this cycle)": 1,
-        "monster_catalog::every_row_carries_the_fields_the_screen_renders": 1,
-        "oa_spells.lst:464 Repulsion row, treated as a base declaration by the .MOD/.COPY= exclusion convention alone": 1,
-        "oracle_unrecognized_mystery_or_curse_alongside_the_canonical_one_stays_blocked (test's own probe value, SD31-E4-F2-001's earlier correction)": 1,
-        "orchestrator brief (apply-derived-check card)": 1,
-        "orchestrator brief (apply-static-sweep card)": 1,
-        "orchestrator brief (held bucket = 'largest cheap lever in the program')": 1,
-        "orchestrator brief (verify-closure-run card)": 1,
-        "orchestrator brief (verify-closure-run card, and the run brief's held-bucket premise)": 1,
+        "my own pre-check estimate": 1,
+        "orchestrator (me), in every gate-wave lane brief from wave 23 to wave 27": 1,
         "orchestrator dispatch brief (row 15/card 11)": 1,
         "orchestrator dispatch brief (this cycle)": 1,
-        "orchestrator dispatch brief (this wave's GATE DISCIPLINE section)": 1,
-        "orchestrator observation 3 (epic-5 deleted its own 27G CARGO_TARGET_DIR)": 1,
-        "orchestrator observation 4 (wrong-base dispatch worktrees)": 1,
-        "orchestrator observation 5 (DoD item 8 blind for the entire bundle)": 1,
         "orchestrator-brief": 1,
-        "orchestrator-brief (probe-race-and-class card)": 1,
-        "origin/sd31/e2-groundtruth commit 5399060168edfe86cb6615bb7d22c87465d6abba": 1,
-        "origin/tranche/9 as the race-trait lane's round-5 push (b8fa449f) left it": 1,
         "own-blast-radius-measurement": 1,
         "own-instrument": 1,
-        "pf1e_dashboard_producer.py NO_GROUNDING_PROBE declaration comment (round 8, SD-29)": 1,
-        "pf1e_dashboard_producer.py doc comments (SD31-ATTRIB-001/SD31-W5-INTEGRATE-001)": 1,
+        "pf1e_dashboard_producer.py EXCLUDED_BOOKS carve-out": 1,
         "pi-key-rawtokens-screen deferral 1787493585450-t9-onboarding-bcf0ca": 1,
         "pi_key_rawtokens_audit.py v1 (this cycle's own first-draft screen)": 1,
-        "pi_screening (the corpus-wide PI screen, all lanes)": 1,
-        "pilot_compute.rs task#91 diagnostic (SD31 wave3/4)": 1,
-        "pre-launch retro brief (2026-08-10 four-fixes)": 1,
         "prior SD-32 T9 companion/monster_ability cycles' no_record figures": 1,
-        "probe-spell-ground (this cycle's own receipt draft)": 1,
-        "race-trait lane decisions.md 44.4": 1,
-        "race_trait lane's own progress.md receipt, the single held unit": 1,
-        "reach_gate.rs UNREACHED_RECORD_FINDINGS + progress.md SD31-E1-F1-001 receipt": 1,
+        "prior session's ingest_race_traits.rs heritage-grant carry-through (direct_subrace_grants post-processing loop)": 1,
+        "probe_wizard_arcane_school_wiring's Transmutation variant": 1,
+        "progress.md front-matter (AT-33-E5-finalize-wave4 era)": 1,
+        "render_pcgen_desc bare-percent branch": 1,
+        "root-full test suite (accumulated, 22 waves)": 1,
         "row20-cycle2 receipt (apps/desktop/src-tauri claim)": 1,
         "row21-cycle1-deferral": 1,
-        "run-1 cycles sd29-e1b-naming-cycle / sd29-e4-frc-cycle1 / sd29-e5-monster-pilot (3 independent reports)": 1,
-        "scope card in-progress-734": 1,
         "scope-draft.md": 1,
-        "scope-draft.md spell row": 1,
-        "scope-the-instrument-work launch brief": 1,
         "scripts/card15_reconcile.py": 1,
-        "scripts/classify_companion_rows.py": 1,
-        "scripts/classify_companion_rows.py (the companion lane's orphan instrument), and kanban.md's round-5 queue": 1,
         "scripts/classify_companion_rows.py::book_dirs": 1,
-        "scripts/classify_monster_ability_rows.py (its own summary line)": 1,
-        "scripts/classify_monster_ability_rows.py (the lane's ceiling instrument)": 1,
-        "scripts/classify_monster_ability_rows.py (the lane's own ceiling instrument, as decisions.md 50.7 left it)": 1,
-        "scripts/classify_race_trait_rows.py": 1,
+        "scripts/completion_atlas.py BUCKET_DEFINITIONS + scripts/missing_engine_tables.py ENGINE_SURFACE_CITATIONS": 1,
+        "scripts/completion_atlas.py and scripts/missing_engine_tables.py BUCKET_DEFINITIONS citations": 1,
+        "scripts/completion_atlas.py and scripts/missing_engine_tables.py BUCKET_DEFINITIONS/ENGINE_SURFACE_CITATIONS": 2,
         "scripts/derive_monster_sla_spell_level_fixtures.py spell_level_index()": 1,
         "scripts/derive_monster_sla_spell_level_fixtures.py target_units()": 1,
         "scripts/derive_spell_range_fixtures.py candidate filter (SD31-E6-F2-008)": 1,
-        "scripts/ground_truth_evidence_guard.py corpus_text_for_record()": 1,
-        "scripts/identifier-discipline-audit.sh": 1,
-        "scripts/identifier-discipline-audit.sh (as hardened by SD-29 Epic 1)": 1,
-        "scripts/identifier-discipline-audit.sh (its own header)": 1,
         "scripts/pi_scrub.py::PI_BLACKLIST_TERMS vs src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS (decisions.md \u00a712b)": 1,
         "scripts/race_trait_ceiling.py, scripts/classify_race_trait_rows.py": 1,
-        "scripts/reachability_audit.py docstring + commit eadb263f7 message": 1,
-        "scripts/reclaim.sh": 1,
-        "scripts/retro.py summary (recurrence clustering, tranche/7 missing guard 2)": 1,
+        "scripts/retro.py summary deferrals.open": 1,
         "scripts/sd32_t9_corpus_wide_pi_rescan.py::kind_from_path (prior cycle's own instrument)": 1,
-        "scripts/tests/test_reclaim.py": 2,
-        "scripts/transcribe_companion_tables.py's creature_species map (predates this round; introduced with ownership shape 3)": 1,
-        "scripts/transcribe_companion_tables.py's generated module doc (written round 4)": 1,
-        "scripts/transcribe_monster_tables.py (this lane's own checked-in transcriber, round 1)": 1,
-        "scripts/transcribe_monster_tables.py::parse_desc docstring": 1,
-        "scripts/verify-baselines.env (this run's own floors)": 1,
-        "scripts/verify-baselines.env BASELINE_ROOT_FULL_TESTS": 1,
-        "scripts/verify.sh (gate coverage)": 1,
-        "sd29-companion-r5's own earlier correction this cycle (event 1786547346067-sd29-companion-r5-8ca422)": 1,
-        "sd29-companion-r8 (self, caught pre-commit)": 1,
-        "sd29-driver-fix (this cycle's own first-draft self-test)": 1,
-        "sd29-e10-review (this cycle, first pass)": 1,
-        "sd29-e5-monster-pilot (the first monster_ability wire adapter, which served the corpus DESC: token verbatim)": 1,
-        "sd29-e5-monster-pilot (this cycle's own first draft of the bonus_bestiary natural-attack denominator)": 1,
-        "sd29-e5-monster-pilot's first bonus_bestiary cache generator": 1,
-        "sd29-e9-version dispatch brief, STANDING BASELINE NOTE (carried from Epic 1's followup)": 1,
-        "sd29-monster-r6 and sd29-monster-r7 (rounds 4 and 5)": 1,
-        "sd29-monster-r7 (round 5, decisions.md 55.1)": 1,
-        "sd29-racetrait-r2 (race-trait lane round 2)": 1,
-        "sd29-racetrait-r2's own citation for the .MOD-rows-with-a-racial-trait-TYPE count": 1,
-        "sd29-racetrait-r2's own draft comment on Human ~ Tribalistic Languages": 1,
-        "sd29-racetrait-r3 (this cycle's own first derivation)": 1,
-        "sd31-e1-chassis (self)": 1,
-        "sd31-equip-residual (own mid-cycle estimate)": 1,
-        "sd31-racetrait2's own prior retro event (id 1786929120341-sd31-racetrait2-a7e343)": 1,
-        "sd31-ready-s4 (own commit 195b237d3 message)": 1,
-        "sd31-spell-racetrait (own draft doc comment)": 1,
-        "sd31-spell-reach (own OPEN-ISSUES.md row 48 draft)": 1,
-        "sd31-spell-reach (own ingest_ultimate_magic_spells.rs first draft)": 1,
-        "sd31-w8-integrate (own dispatch brief re-derivation)": 1,
-        "sd31/attrib-evidence-003 (SD31-ATTRIB-003)": 1,
-        "sd31/e4-f2-chooser-SD31-E4-F2-001 (SD31-E4-F2-001)": 1,
-        "sd31/equipmod-e6f6-001 (SD31-E6-F6-001)": 1,
-        "sd31/spell-feat-e6-f2-007 (SD31-E6-F2-007)": 1,
+        "scripts/verify-baselines.env (BASELINE_CORPUS_LITERAL_RECORDS)": 1,
+        "sd31/racetrait4-SD31-E6-F4-005 rescue branch + commit message": 1,
+        "sd32-five-unverified-deferrals": 1,
+        "sd33-r-e5-fixture (AT-33-E5-001 remediation)": 1,
+        "sd33-r2-acceptance-scan (this scanner) denominator-gate detection re-proof": 1,
+        "sd33-r3-statsave dispatch brief": 1,
+        "sd33-r3-var (own first-pass batching)": 1,
+        "sd33-r5-e5-finalize (this cycle's own first-draft merge script)": 1,
+        "sd33-r5-e5-finalize's Open blockers entry": 1,
+        "sd33-r6-acceptance-scan dispatch brief": 1,
+        "sd33-r6-corpus-extraction (AT-33-E5-003-corpus-extraction-fix escalation note)": 1,
+        "sd33-r8-acceptance-scan retro attribution": 1,
+        "sd33-r8-build-green's Open blockers entry": 1,
+        "sd33-r9-acceptance-scan dispatch brief (remediation wave 8 prompt)": 1,
+        "sd34-at-34-e3-001 (own first-pass check)": 1,
+        "sd34-at-34-e3-002": 1,
+        "sd34-at-34-e5-001 build_forward_plan.py first draft": 1,
         "self (SD31-W27-RACETRAIT-001 doc comment)": 1,
         "shape_ledger.py-pre-cycle": 1,
         "sibling lane f7e709f50 (inner_sea_races stale-regen fix)": 1,
-        "sibling report figures[].command for dead_end_cells_grid / race_not_done (SD31-E0-F1-001 return report)": 1,
         "src/bin/derived_evaluator_fixture_check.rs --json-out summary line": 1,
         "src/bin/enrich_monster_raw_tokens.rs and enrich_monster_ability_raw_tokens.rs module doc comments": 1,
-        "src/bin/ingest_pu_classes.rs (SD30-E3-F2 class_feature ingest)": 1,
-        "src/bin/ingest_race_traits.rs IN_SCOPE_RACES comment": 1,
-        "src/bin/ingest_races.rs's own pinned test (every_committed_race_record_on_disk_deserializes_through_the_shape_b_v1_schema)": 1,
-        "src/bin/v06_work_inventory.rs SD28-E14-F1 note (three places) and SD-32 decisions.md 5 / forward-scope-register F2": 1,
+        "src/bin/v06_work_inventory.rs classify()": 1,
         "src/bin/v06_work_inventory.rs core_essentials residual guard": 1,
         "src/bin/v06_work_inventory.rs load_derived_fixture_verified doc comment": 1,
-        "src/bin/v06_work_inventory.rs's enumerate_file (the GE-01 measurement instrument, not just the two generator/audit copies already fixed this cycle)": 1,
-        "src/bin/v06_work_inventory.rs:4585 and derived_evaluator_fixture_check.rs:14 doc comments": 1,
-        "src/pcgen_import/corpus_traps.rs audit_ingested_cache (SD30-CARRY-001's book_dir fix)": 1,
-        "src/rules_core/pcgen_desc.rs::leaked_pcgen_syntax": 1,
-        "src/rules_core/rules_tables/companion_chassis.rs an_ability_with_no_modelled_facet_still_states_its_type_segments, and companion_catalog.rs's wire-side twin": 1,
-        "src/rules_core/wiring_class.rs signals_with_rules": 1,
-        "src/rules_core/wiring_class.rs::UPSTREAM_NOT_IMPLEMENTED": 1,
-        "src/rules_core/wiring_class.rs::resolve_corpus_file doc comment": 1,
-        "state-goals-and-lessons.md \u00a71.1 / SD-31 AT-31-005 spell row": 1,
-        "state-goals-and-lessons.md \u00a72.3": 1,
-        "static analysis: corpus_literal_sweep done-rung": 1,
-        "static-byte-equality-sweep dispatch brief": 1,
-        "supersession_register_build.py + gate.py": 1,
-        "supersession_register_gate.py (pre-wave-7)": 1,
+        "src/rules_core/equipment_resolver.rs::catalog_rows_span_every_ingested_book_with_their_real_counts (inherited from the tranche/13 cut, f652db7ac7)": 1,
+        "src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs::f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census (commit 347e9d1a34)": 1,
         "t12-class-feature-pool-population cycle-2 receipt": 1,
         "t2b-census": 4,
         "t9-onboarding-brief-figure": 1,
@@ -20466,77 +20437,46 @@
         "t9-pi-review-feat-equipment.md \u00a76 summary table": 1,
         "t9-t2-race-monster-class-racetrait-no-record-closure_cycle-1_cycle_receipt.md": 1,
         "test_derive_spell_range_fixtures.py (wave-15)": 1,
-        "tests/feat_gap_tables.rs comment (the_one_not_ingested_feat_unit_this_lane_deliberately_does_not_close)": 1,
         "tests/feat_gap_tables.rs pinned gap-row total": 1,
-        "tests/sd31_e2_ground_truth_agreement.rs": 1,
+        "tests/sd24_wired_integration_audit.rs (this cycle's own earlier commit)": 1,
+        "tests/sd27_alternate_racial_trait_reachability.rs's every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_and_really_applies": 1,
+        "tests/v06_corpus_trap_report.rs's four corpus-invariant tests": 1,
         "tests/v06_work_inventory.rs:1064 (ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status)": 1,
         "tests/v06_work_inventory.rs::sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books": 1,
-        "tests/v06_work_inventory.rs::zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown": 1,
-        "the SD-29 companion-lane dispatch brief": 1,
-        "the live PF1e dashboard": 1,
-        "the round-8 dispatch brief for epic-7-companion-lane": 1,
         "the_live_scale_of_this_waves_widening_is_measured_and_pinned (pinned prior to cycle 18)": 1,
-        "this card's dispatch brief": 1,
-        "this cycle (sd29-e4-frc), hand-summing a pinned total": 1,
-        "this cycle's own OPEN-ISSUES row 108 (equipment_catalog leak-guard deferral)": 1,
-        "this cycle's own corpus_json_description_leaks_pcgen_syntax (first cut)": 1,
-        "this cycle's own decisions.md 44.5": 1,
-        "this cycle's own dispatch brief (SD31-E4-F2-002 mandate text)": 1,
-        "this cycle's own dispatch brief (card epic-5-monster-lane-extend, round 3)": 1,
-        "this cycle's own doc comments in rules_tables/bestiary_2/mod.rs": 1,
-        "this cycle's own draft receipt (SD31-E6-F10-002)": 1,
         "this cycle's own earlier retro correction (id 1787485799736-t9-onboarding-7c97d7)": 1,
-        "this cycle's own first commit (ca261b3d7)": 1,
         "this cycle's own first design of the companion fixture derivation": 1,
-        "this cycle's own first draft of no_shipped_monster_field_carries_a_product_identity_term": 1,
-        "this cycle's own first draft of the transcriber PI screen": 1,
+        "this cycle's own first fix attempt": 1,
         "this cycle's own first-choice seam (natural-attack Strength damage, 178 rows)": 1,
-        "this cycle's own first-draft SUPERSESSION-REGISTER.md \u00a78": 1,
-        "this cycle's own pre-work derivation": 1,
-        "this cycle's own receipt, first draft (sd29-monster-r9)": 1,
-        "this cycle's own reclaim invocation": 1,
+        "this cycle's own initial generator (charbuild_remainder_generate.py first draft)": 1,
         "this cycle's own third mutation proof, first attempt": 1,
-        "this cycle's own \u00a74 count-change sweep methodology": 1,
         "this lane's initial reading of its own full-gate result": 1,
         "this lane's own OPEN-ISSUES row 267 / progress receipt, before commit amend": 1,
         "this lane's own first count of the books missing from OBSERVABLE_BOOK_DIRS": 1,
         "this lane's own first-draft receipt and artifact": 1,
         "this lane's own first-pass candidate survey (read data/corpus/, not the upstream oracle)": 1,
-        "this lane's own registration-point count, carried in every prior monster receipt": 1,
-        "tranche-7 retrospective section 3's detection classifier (its own regexes)": 1,
-        "tranche-9-retrospective section 2.1 (this document, self-correction regex)": 1,
-        "tranche-9-retrospective.md (box core count, repeated 4x)": 1,
-        "tranche-9-retrospective.md \u00a70/\u00a70.1 (published selector)": 1,
-        "tranche-9-retrospective.md \u00a71 (corpus-shape restatement)": 1,
-        "tranche-9-retrospective.md \u00a72.1 (package-instruction share)": 1,
-        "tranche-9-retrospective.md \u00a74.1 (orchestration-failure catalogue completeness)": 1,
-        "tranche-9-retrospective.md \u00a74.1 / \u00a73.2 / \u00a74.2 (turn-budget count, item-8 tally, agent absolution)": 1,
-        "tranche-9-retrospective.md \u00a77.2 observation 3 (the 27G rebuttal)": 1,
-        "tranche-9-retrospective.md \u00a79.5 (tagged-filename forward work)": 1,
-        "tranche/9 retro brief, THE DATA section (event-set selector)": 1,
-        "tranche/9 retro brief, per-type event breakdown": 1,
+        "this-cycle's-own-first-desktop-test (trait_picker.rs)": 1,
+        "this-cycle-item-1": 1,
+        "this-cycle-self": 1,
+        "ultimate_campaign::feat_tables module doc comment": 1,
         "uncompiled_books_stay_none_test": 1,
-        "v06_corpus_trap_report -- --audit standing state (last recorded clean in SD-29 progress.md)": 1,
-        "v06_work_inventory file_kind() classification of _abilities_race*_companion basenames": 1,
-        "v06_work_inventory's corpus-book to engine-book join": 1,
-        "v06_work_inventory's race-trait grounding probe": 1,
         "v06_work_inventory.rs classify() Kind::Equipment/Kind::EquipmentModifier arm doc comment": 1,
-        "v06_work_inventory.rs doc comment (SD-32 spell-consumer-delta-probe cycle, line 2162)": 1,
-        "v06_work_inventory.rs text_only->text-complete branches (Feat/Equipment/EquipmentModifier/Spell)": 1,
-        "verify-on-screen.sh spell family SEARCH_Y (deferred by item8-harness 2026-08-11)": 1,
-        "wave-11 board (implicit, via v06_work_inventory's probe_race_trait_corpus)": 1,
-        "wave-14 dispatch brief for lane epic-2-verdict-paths": 2,
+        "v06_work_inventory.rs::a_trait_outside_the_flat_slice_stays_ingested_magnitude (as it stood before this cycle)": 1,
+        "verify.sh corpus-trap-audit exit contract": 1,
         "wave-15 monster_ability lane brief (and this lane's own first survey)": 1,
         "wave-18 dispatch brief": 1,
         "wave-22-race_trait-dispatch-brief": 1,
         "wave-23 dispatch brief": 1,
+        "wave-24 dispatch brief": 3,
         "wave-25 race_trait dispatch brief": 1,
+        "wave-26 gate-lane-a lead: reach_gate.rs:3192 placeholder hit is legitimate UI text": 1,
+        "wave-26 gate-lane-a lead: sd27 PU equipmods ceilings 42->38 and 7->3 are corpus restatements": 1,
         "wave-26-dispatch-brief": 1,
         "wave-27 dispatch brief": 1,
         "wave-29-lane2-dispatch-brief": 1,
         "wave-29-lane2-self": 1,
+        "wave-6 dispatch (39-unit residual partition: 23 weapon-shape + 11 skill-combat-shape + 7 eqm-shape)": 1,
         "wave25b-class-feature-grant-interp lane's 'scope' field": 1,
-        "wiring_class.rs (pre-existing, unrelated to any wave-8 lane)": 1,
         "workflow-instruction.md \u00a73 / kanban.md dispatch ordering": 1,
         "worktree-base": 1,
         "worktree-init": 1
@@ -20556,18 +20496,8 @@
         "card15-duplicate-identity": 1,
         "card15-internal": 1,
         "category-internal-adjudication": 1,
-        "closure-cf": 2,
-        "closure-derived": 2,
-        "closure-race-class": 2,
-        "closure-static": 1,
-        "closure-verify": 2,
         "codex": 1,
         "companion-monsterability": 1,
-        "doneness-derived": 2,
-        "doneness-inprogress": 2,
-        "doneness-scope": 3,
-        "doneness-static": 3,
-        "doneness-verify": 2,
         "epic-2-cause-closure": 1,
         "epic-2-t2a-t12": 1,
         "epic-2-t2b": 1,
@@ -20584,156 +20514,13 @@
         "gate-1-shape": 1,
         "gate-2-corpus-run": 1,
         "gate-3-invariant": 1,
-        "gate-reliability": 3,
         "gate3-budget-repair": 1,
         "gate3-repin": 1,
         "generic-enumeration": 2,
-        "incentive-fix": 1,
         "interpreter-race-trait-wiring": 1,
-        "item8-harness": 2,
-        "p03-doc-sweep": 5,
-        "p04-kanban-decisions": 1,
-        "pi-scope-sd30": 1,
-        "probe-determinism": 1,
-        "probe-spell": 2,
-        "probe-spell-ground": 3,
-        "probe-verify": 2,
         "reclosure-epilogue": 1,
-        "sd29-closure-r2": 1,
-        "sd29-closure-r3": 2,
-        "sd29-companion-final-r1": 3,
-        "sd29-companion-r10": 2,
-        "sd29-companion-r11": 4,
-        "sd29-companion-r12": 2,
-        "sd29-companion-r4": 1,
-        "sd29-companion-r5": 2,
-        "sd29-companion-r7": 2,
-        "sd29-companion-r8": 2,
-        "sd29-companion-r9": 5,
-        "sd29-driver-fix": 2,
-        "sd29-e1-identifier": 1,
-        "sd29-e10-review": 3,
-        "sd29-e11-closure": 3,
-        "sd29-e1b-naming": 2,
-        "sd29-e2-prelaunch": 4,
-        "sd29-e3-provenance": 1,
-        "sd29-e4-equip": 2,
-        "sd29-e4-frc": 4,
-        "sd29-e4-spell": 1,
-        "sd29-e5-monster-pilot": 3,
-        "sd29-e6-racetrait-extend": 2,
-        "sd29-e6-racetrait-pilot": 2,
-        "sd29-e9-version": 2,
-        "sd29-monster-final-r1": 2,
-        "sd29-monster-r1": 4,
-        "sd29-monster-r10": 2,
-        "sd29-monster-r11": 2,
-        "sd29-monster-r12": 4,
-        "sd29-monster-r3": 3,
-        "sd29-monster-r5": 3,
-        "sd29-monster-r6": 5,
-        "sd29-monster-r7": 3,
-        "sd29-monster-r8": 3,
-        "sd29-monster-r9": 4,
-        "sd29-prelaunch-fourfixes": 4,
-        "sd29-racetrait-r1": 6,
-        "sd29-racetrait-r2": 3,
-        "sd29-racetrait-r3": 2,
-        "sd29-racetrait-r4": 1,
-        "sd29-racetrait-r6": 2,
-        "sd29-racetrait-repin": 5,
-        "sd29-reopen": 2,
-        "sd29-review-r2": 2,
-        "sd30-carry-defects": 1,
-        "sd30-e0-f1-rung": 2,
-        "sd30-e0-f2-probes": 3,
-        "sd30-e0-f3-unknown": 2,
-        "sd30-e0-f4-report": 1,
-        "sd30-e3-f2-declared": 1,
-        "sd30-e3-f3-backfill": 1,
-        "sd30-e7-version": 1,
-        "sd30-e8-triage": 4,
-        "sd30-e9-closure": 1,
-        "sd30-lessons-from-sd29": 8,
-        "sd30-preflight": 1,
-        "sd30-refresh": 2,
-        "sd31-attrib-evidence": 1,
-        "sd31-attrib-finish": 1,
-        "sd31-book-attrib": 1,
-        "sd31-cachegen-cf": 1,
-        "sd31-cachegen-rest": 2,
-        "sd31-ce-companion": 1,
-        "sd31-cf-ground": 1,
-        "sd31-cf-pools": 1,
-        "sd31-cf-prose2": 2,
-        "sd31-chooser": 1,
-        "sd31-classwire3": 1,
-        "sd31-classwire4": 1,
-        "sd31-companion-feat": 1,
-        "sd31-dissolve-ce": 3,
-        "sd31-e0-audit": 1,
-        "sd31-e1-chassis": 2,
-        "sd31-e2-close": 2,
-        "sd31-e2-groundtruth": 1,
-        "sd31-e2-relabel": 2,
-        "sd31-e2-verdict-paths": 4,
-        "sd31-e2-wiringfix": 1,
-        "sd31-e3-measure": 2,
-        "sd31-e4-classwire": 1,
-        "sd31-e6-equipment": 1,
-        "sd31-e6-heldcells": 1,
-        "sd31-e6-seam": 1,
-        "sd31-e6-spell-mab": 1,
-        "sd31-equip-class": 1,
-        "sd31-equip-class2": 2,
-        "sd31-equip-class3": 1,
-        "sd31-equip-repair": 1,
-        "sd31-equip-residual": 2,
-        "sd31-equipmod": 1,
-        "sd31-feat-companion": 1,
-        "sd31-feat-equip-class": 1,
-        "sd31-feat-matcher": 1,
-        "sd31-fixture-seam": 1,
-        "sd31-ingest6": 1,
-        "sd31-ingest6-w14": 1,
-        "sd31-mab-comp2": 1,
-        "sd31-mab-companion": 1,
-        "sd31-merge-resequence": 1,
-        "sd31-monster-ability": 2,
-        "sd31-monster-widen": 1,
-        "sd31-monster2": 1,
         "sd31-orchestrator": 4,
-        "sd31-pi-fix": 1,
-        "sd31-pool-match": 1,
-        "sd31-pools-wire": 2,
-        "sd31-prose-path": 1,
-        "sd31-prose-payout": 1,
-        "sd31-race-lane": 1,
-        "sd31-racetrait": 2,
-        "sd31-racetrait2": 4,
-        "sd31-racetrait3": 1,
-        "sd31-racetrait5": 1,
-        "sd31-ready-s1": 1,
-        "sd31-ready-s2": 2,
-        "sd31-ready-s3": 1,
-        "sd31-ready-s4": 1,
-        "sd31-ready-s5": 4,
-        "sd31-ready-s7-version": 1,
-        "sd31-register-race": 1,
-        "sd31-spell-lists": 1,
-        "sd31-spell-monster": 1,
-        "sd31-spell-racetrait": 1,
-        "sd31-spell-reach": 2,
-        "sd31-supersession": 2,
-        "sd31-sweep-attrib": 2,
-        "sd31-transcribe": 5,
-        "sd31-w1-integrate": 9,
-        "sd31-w10-integrate": 6,
-        "sd31-w11-integrate": 16,
-        "sd31-w12-integrate": 3,
-        "sd31-w13-integrate": 6,
-        "sd31-w14-epic1-race-chassis": 2,
-        "sd31-w14-integrate": 3,
+        "sd31-transcribe": 7,
         "sd31-w15-companion": 2,
         "sd31-w15-equipmod": 4,
         "sd31-w15-monster-ability": 3,
@@ -20741,19 +20528,62 @@
         "sd31-w15-racetrait": 1,
         "sd31-w15-spell-classfeature-lane": 1,
         "sd31-w17-monster-ability-lane": 1,
-        "sd31-w2-integrate": 9,
         "sd31-w22-racetrait": 1,
         "sd31-w25-race_trait-lane": 1,
         "sd31-w25b-integration": 1,
-        "sd31-w3-integrate": 16,
-        "sd31-w4-integrate": 2,
-        "sd31-w5-integrate": 4,
-        "sd31-w6-integrate": 5,
-        "sd31-w7-integrate": 5,
-        "sd31-w8-integrate": 5,
-        "sd31-w9-integrate": 3,
-        "site-public-status": 1,
-        "site-pubstatus-fix": 1,
+        "sd32-dashboard-and-carveout": 1,
+        "sd32-retro-deferral-resolution": 1,
+        "sd33-e3-coverage": 1,
+        "sd33-e4-unknown": 1,
+        "sd33-fold-fix-repin": 1,
+        "sd33-fold-fix-rescan": 1,
+        "sd33-fold-rescan": 1,
+        "sd33-fold-skinwalker": 3,
+        "sd33-r-denominator-gate": 1,
+        "sd33-r-e5-disagreements": 1,
+        "sd33-r10-acceptance-scan": 1,
+        "sd33-r2-acceptance-scan": 2,
+        "sd33-r2-charbuild": 2,
+        "sd33-r2-e5-finalize": 2,
+        "sd33-r2-equipment": 1,
+        "sd33-r2-spell": 1,
+        "sd33-r3-acceptance-scan": 1,
+        "sd33-r3-e5-finalize": 1,
+        "sd33-r3-gate-scope": 1,
+        "sd33-r3-statsave": 1,
+        "sd33-r3-var": 1,
+        "sd33-r4-disagreements": 2,
+        "sd33-r5-acceptance-scan": 3,
+        "sd33-r5-disagreements": 1,
+        "sd33-r5-e5-finalize": 2,
+        "sd33-r5-skillcombat": 2,
+        "sd33-r5-weapon": 1,
+        "sd33-r6-acceptance-scan": 1,
+        "sd33-r6-corpus-extraction": 1,
+        "sd33-r6-e5-finalize": 2,
+        "sd33-r6-method-rerun": 1,
+        "sd33-r6-skillcombat": 1,
+        "sd33-r7-suite-green": 3,
+        "sd33-r8-acceptance-scan": 2,
+        "sd33-r9-acceptance-scan": 2,
+        "sd33-r9-corpus-sweep": 1,
+        "sd34-at-34-e1-003": 1,
+        "sd34-at-34-e1-004": 1,
+        "sd34-at-34-e1-006": 1,
+        "sd34-at-34-e1-007": 1,
+        "sd34-at-34-e2-004": 1,
+        "sd34-at-34-e3-001": 18,
+        "sd34-at-34-e3-002": 7,
+        "sd34-at-34-e3-003": 7,
+        "sd34-at-34-e4-001": 1,
+        "sd34-at-34-e4-002": 9,
+        "sd34-at-34-e5-001": 1,
+        "sd34-at-34-e5-003": 1,
+        "sd34-at-34-e6-001": 18,
+        "sd34-at-34-e6-001-gate-lane-c": 1,
+        "sd34-at-34-e6-001-lane-b": 2,
+        "sd34-orchestrator": 2,
+        "sd34-orchestrator-verify": 4,
         "spell": 1,
         "t12-census": 1,
         "t2a-residual-census": 1,
@@ -20771,7 +20601,6 @@
         "t9-onboarding-pi-final-leaks-and-generators": 2,
         "t9-pi-audit": 1,
         "t9-pi-signoff": 1,
-        "tranche-9-retrospective": 8,
         "unred-branch": 1,
         "unred-powers": 1,
         "w27-integration": 1,
@@ -20779,21 +20608,14 @@
         "wave23-race_trait": 1,
         "wave29-lane2": 2,
         "wave29-lane4": 1,
-        "wf_071aed05-f44-1": 1,
         "wf_69b5938a-634-4": 2,
         "wf_78ca9c19-w18-intitem": 1,
         "wf_a45ece26-3fc-4": 1,
-        "wf_be4660f2-72a-4-w26-interpreter-shapes": 1,
-        "wf_c2092bd6-95a-5": 1,
-        "wiring-classifier": 1
+        "wf_be4660f2-72a-4-w26-interpreter-shapes": 1
       },
       "repeat_subjects": [
         {
-          "count": 17,
-          "subject": "?"
-        },
-        {
-          "count": 9,
+          "count": 8,
           "subject": "dispatch-brief"
         },
         {
@@ -20810,23 +20632,7 @@
         },
         {
           "count": 3,
-          "subject": "SD31-E6-F5-001 equipment lane"
-        },
-        {
-          "count": 3,
-          "subject": "SD31-E2-F3-001 ambiguous lane"
-        },
-        {
-          "count": 2,
-          "subject": "scripts/tests/test_reclaim.py"
-        },
-        {
-          "count": 2,
-          "subject": "SD31-W9-INTEGRATE-001 dispatch prompt"
-        },
-        {
-          "count": 2,
-          "subject": "wave-14 dispatch brief for lane epic-2-verdict-paths"
+          "subject": "wave-24 dispatch brief"
         },
         {
           "count": 2,
@@ -20835,194 +20641,125 @@
         {
           "count": 2,
           "subject": "kanban row 19 brief"
+        },
+        {
+          "count": 2,
+          "subject": "AT-33-E5-finalize-wave3 kanban row 18 note"
+        },
+        {
+          "count": 2,
+          "subject": "fold-inventory_cycle_receipt.md"
+        },
+        {
+          "count": 2,
+          "subject": "scripts/completion_atlas.py and scripts/missing_engine_tables.py BUCKET_DEFINITIONS/ENGINE_SURFACE_CITATIONS"
+        },
+        {
+          "count": 2,
+          "subject": "AT-34-E3-001 dispatch brief (this cycle's own task text)"
+        },
+        {
+          "count": 2,
+          "subject": "AT-34-E4-002 dispatch brief"
         }
       ],
-      "already_propagated": 284
+      "already_propagated": 129
     },
     "incidents": {
-      "total": 276,
-      "silent": 29,
+      "total": 111,
+      "silent": 18,
       "recurring": [
         {
-          "count": 122,
+          "count": 34,
           "recurrence_key": "disk-full"
         },
         {
-          "count": 28,
+          "count": 10,
           "recurrence_key": "wrong-base-worktree"
         },
         {
-          "count": 14,
-          "recurrence_key": "disk-pressure"
-        },
-        {
-          "count": 5,
-          "recurrence_key": "shared-scratchpad-clobber"
-        },
-        {
-          "count": 3,
-          "recurrence_key": "run-desktop-driver-window-never-appears"
-        },
-        {
-          "count": 3,
+          "count": 4,
           "recurrence_key": "shared-target-dir"
         },
         {
-          "count": 3,
+          "count": 2,
+          "recurrence_key": "shared-scratchpad-clobber"
+        },
+        {
+          "count": 2,
           "recurrence_key": "shared-scratchpad"
-        },
-        {
-          "count": 2,
-          "recurrence_key": "stale-hardcoded-book-roots"
-        },
-        {
-          "count": 2,
-          "recurrence_key": "red-tip-pushed"
-        },
-        {
-          "count": 2,
-          "recurrence_key": "wholesale-regen-destroys-enrichment"
         }
       ]
     },
     "near_misses": {
-      "total": 47,
-      "escaped": 5,
+      "total": 9,
+      "escaped": 0,
       "by_gate": {
-        "DoD item 8 on-screen desktop driving (run-desktop driver.sh, RUN_DESKTOP_AGENT=sd29-e4-spell-cycle): reading the rendered chip row and adding it up against the stated total.": 1,
-        "Opus adversarial review (SD31-W13-INTEGRATE-001-VERIFY), mutation-tested with seeded Desna/Zon-Kuthon/Magaambyan... against site_public_status_pi_gate.py": 1,
-        "building a fixture with a source.path that actually carries a directory segment before the book name (roleplaying_game/test_book/support/...), which none of the three pre-existing ScratchAudit-based tests do; running it against the pre-fix code first (RED, computed display/blank instead of derived) before writing the fix": 1,
+        "before/after diff of docs/work-inventory.json against the committed baseline, re-run after the first version of the fix": 1,
         "cargo run --bin declared_pi_shipping_audit, run before commit as this cycle's own section-12c before/after PI-audit proof": 1,
         "cargo run --bin declared_pi_shipping_audit, run before commit as this cycle's own \u00a712c before/after PI-audit proof": 1,
         "cargo test (full suite, all 577 binaries), iterated to green across 9 fix rounds": 1,
-        "cargo test --locked --lib race_resolver, specifically the_whole_corpus_classifies_into_the_four_roles_with_no_leftovers and selecting_every_alternate_at_once_stays_consistent_for_every_in_scope_race": 1,
-        "diffing a pre-run backup (/tmp/fixture-before-genrun.json) against the file scripts/derive_derived_evaluator_fixtures.py wrote when run for real": 1,
-        "direct process-tree inspection (pstree/ps) plus reading to the true end of the log rather than trusting the first SUMMARY block found": 1,
-        "driving the running desktop app and reading the sentence (DoD item 8); all 21 tests in monster_catalog.rs passed before and after, because none of them read the words": 1,
-        "equipment_catalog::no_catalog_serves_a_description_carrying_raw_pcgen_syntax": 1,
-        "gen_book_cache's PI screen hard-stopped on 'Urgathoa', which sent this round to read the corpus rows themselves; grep -c 'NAMEISPI:YES' over both races .lst files then found 5, not 3": 1,
-        "gen_book_cache::verified_citation_line, which compares the cited corpus row's first column to the record's name": 1,
-        "git diff --stat 64e946cb origin/tranche/9 before deciding whether the merge needed a re-gate, rather than reading the commit subject": 1,
-        "git fetch origin tranche/9 before pushing, then comparing origin/tranche/9 (919703e3) against the local base (579d5941) \u2014 the branch had moved under this cycle while it verified.": 1,
         "git status --porcelain -- data/corpus/core_rulebook/ before commit": 1,
-        "grep -rln 'Codex 0.9.0' apps/desktop/src before committing, plus a full node scripts/run-tests.mjs pass after the fix": 1,
-        "guarded regen's own stamp-preservation refusal (v06_work_inventory --allow-stamp-loss gate)": 1,
-        "hand-diffing wiring_class_signals + source_file/source_line for one anomalous unit (advanced_race_guide:race_trait:half_elf_drow_blooded): the SAME id resolved to two different source files across runs (arg_abilities_race.lst:157 vs pfs_arg_abilities_race.lst:10) with no wiring_class.rs change between them -- pre-existing nondeterminism in v06_work_inventory.rs's own unit-to-source-line resolution (likely HashMap iteration order), unrelated to and out of scope for this task": 1,
-        "manual code read of recorded_unreached()/UNREACHED_RECORD_FINDINGS before the gate reached the reach stage, cross-checked with a standalone cargo test in a separate target dir": 1,
-        "manual mutation of gen_equipment_gap_tables.rs's screen_record (deleted the real screen, ran cargo test, 2/4 blacklist_screen_tests still passed)": 1,
-        "manual spot-check of Amateur Investigator's raw .lst line against the classifier's first-pass bucket assignment before the count was taken": 1,
+        "git status --porcelain before the next git write, per this repo's own standing shared-checkout discipline": 1,
+        "own before/after diff against a saved pre-cycle docs/work-inventory.json snapshot, plus a corpus-wide 431+282-unit Python cross-check before the final commit": 1,
         "own scoped-diff scan against every term in scripts.transcribe_monster_tables.pi_blacklist_terms(), run deliberately before the commit that would have shipped it": 1,
-        "planted 'pub const sd30_leak_marker' in a disposable git worktree/branch (sd30-e1-audit-proof-scratch), ran the audit against origin/develop, confirmed exit 1 with the offending line printed, then discarded the worktree and branch": 1,
-        "re-deriving the live declared-PI count over data/corpus/pathfinder_unchained/class_feature/ before writing the assertion (grep -rl NAMEISPI/DESCISPI, 0 hits), per state-goals-and-lessons.md's re-derive-don't-transcribe rule; fixed by stating the zero case explicitly (eprintln) and adding a synthetic self-test (the_leak_detectors_actually_fire...) that proves the detector works independent of live corpus content": 1,
-        "re-running ./scripts/verify.sh --full after the first fix landed, rather than trusting a python one-off check against a hand-picked sample; root-full failed again at the same test, now with left:29 not left:405": 1,
-        "re-running cargo run --bin pi_sweep_rules_tables by hand AFTER merging origin/tranche/9, rather than trusting the CLEAN seen five minutes earlier; a clean merge is not evidence a baseline-backed gate still passes": 1,
-        "re-running scripts/derive_spell_range_fixtures.py against the committed docs/work-inventory.json and diffing its output against the committed fixture: 147 entries where 199 were expected, 199 lost": 1,
-        "reading engine_book_for(book) before writing the registration, then proving it by regenerating the inventory and asserting bestiary companion by_status == {grounded: 59}": 1,
-        "reading gen_monster_book end to end before running it, because this is the first book in the lane whose output directory was already populated by another lane": 1,
-        "reading the FAILED verify.md's own rendered-text extraction (still showed the unfiltered 3009-row catalog) plus a live screenshot, rather than accepting the harness's FAIL verdict at face value": 1,
-        "reading the LICENSE.json diff after the first generator run rather than only the record files": 1,
-        "reading the log's own header, which said repo: .../worktrees/wf_924a22ca-f35-7 -- a sibling worktree": 1,
-        "reading the resolved conflict section before committing and finding the heading/body mismatch": 1,
-        "running the live producer end-to-end and diffing the shipped payload's own no_grounding_probe_kinds/by_doneness against the expected values, rather than trusting the code diff alone": 1,
-        "running the three checked-in row classifiers before ruling anything: classify_companion_rows.py, classify_monster_ability_rows.py + scan_monster_ability_bundle_rows.py, and race_trait_ceiling.py \u2014 REAL workable is 63, not 5,275": 1,
-        "scripts/transcribe_companion_tables.py raising FileNotFoundError on the same path the classifier had been silently skipping": 1,
-        "tests/derived_evaluator_fixture_check.rs on its first run": 1,
-        "tests/sd27_alternate_racial_trait_reachability.rs's corpus-derived reachable-bonus scan, whose delta check panics on an unknown total rather than skipping it -- so adding Fortitude/Reflex arms turned a silent skip into a named failure": 1,
-        "tests/sd27_feat_prerequisite_enforcement.rs::every_pre_kind_in_the_catalog_is_either_modelled_or_declared_unmodelled -- the completeness guard that fails when a newly ingested book introduces a PRE kind no arm names": 1,
-        "tests::every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_and_really_applies": 1,
-        "the count moved at all. The change was supposed to be order hardening with no semantic effect, so a 7-byte output delta was investigated rather than banked: diffed the pre-sort and post-sort runs, found the single unit, opened its corpus record, found no mechanical token, and then enumerated every record in the book whose NAME matches the needle -- two, with different identities.": 1,
-        "this lane's full verify.sh run on the merged tree; proven inherited rather than assumed, by reading both files at 9595bd82 itself": 1,
-        "this lane's own full verify.sh run over the MERGED tree; the reds exist only in the merged tree and neither lane's isolated gate could have seen all of them": 1,
-        "verify-on-screen.sh's own filtered-count gate \u2014 'still shows 77 rows \u2014 filter did not apply'": 1,
-        "verify-on-screen.sh's own filtered-count gate: SEARCH_Y=285, copied by analogy from the other single-chip-row families, lands below this screen's search box, so the query never applied and the row count stayed at 15": 1,
-        "verify.sh:desktop, on the first book whose abilities have more than one owner": 1
+        "re-running scripts/derive_spell_range_fixtures.py against the committed docs/work-inventory.json and diffing its output against the committed fixture: 147 entries where 199 were expected, 199 lost": 1
       }
     },
     "deferrals": {
-      "total": 86
+      "total": 73
     },
     "rework": {
-      "total": 34,
+      "total": 9,
       "by_cause": {
-        "6 of 904 candidates (e.g. advanced_players_guide:spell:fester) are pre-.lst-pipeline records sourced web_second_source with no raw_tokens in data/corpus at all, so the evaluator correctly reported them unresolved even though work-inventory.json states a real upstream .lst citation for them": 1,
-        "A record-count change compiles clean but leaves OTHER files hardcoded assertions red. dde9dfc4 chained 83 gap rows onto feats_all::all_feat_tables without sweeping for downstream count pins; epic-5-monster-lane-extend then observed both failures and correctly left them alone to avoid clobbering a live sibling, so they survived to the review card": 1,
         "A ~250-line new-code cycle ran the full gate once at the end of the code change instead of running 'cargo clippy --locked --tests' locally first; clippy is a CEILING in verify-baselines.env, so a single new lint fails the whole gate after ~50 minutes of build.": 1,
-        "DoD-8 (driving the real desktop app, not a code gate) found saved_character::local_store::validate_character_input rejects any selection_id with zero colons -- the bare form CLASS_FEATURE_POOLS registers as this pool's own convention (empty namespace) cannot be persisted through the real save path at all, the same shape the pre-existing Arcanist EMPOWER_SPELL_METAMAGIC_SELECTION fix already documented": 1,
-        "It fails at 96 of 152 rows and all 96 are correct: when a monster row names an ability whose namespace is that same monster, the row-named pass records the owner first and the prefix pass adds nothing, leaving owners == [prefix] -- indistinguishable in the table from a prefix-only reach. The split is a property of the two PASSES, not of their output.": 1,
-        "Linnorm (Crag) (b1_races.lst:269) carries BONUS:VAR|SLA_CL|HD but its spell-like effects reach only through an ABILITY: cross-reference, with no SPELLS: token on the row at all -- caught by run_monster_bar_check_clears_every_committed_monster_fixture going red on 3 of the seam's own committed fixtures (linnorm_crag/ice/tarn) before commit": 1,
-        "The generator seeded its already-held set with each hand-authored row's KEY *and* NAME, then tested a corpus record against both. v06_work_inventory's classifier seeds equipment_keys with row.key ALONE and then tests unit.key OR unit.name \u2014 an asymmetry that looks like a bug in the classifier and is not. Mirroring it exactly is what makes the generated set provably the classifier's not-ingested set.": 1,
-        "This integration cycle's own wiring-class refresh gave cache_gen::lst_provenance_repair::decide a three-element return type, tripping clippy::type_complexity. The lane-level test runs (cargo test --bin/--test) do not run clippy, so it was invisible until the full gate.": 1,
-        "adding a 5th book to race_catalog::RACE_CORPUS_BOOKS moved five count pins and two book-scoped assertions that were written when ARG was the only book contributing alternates (assert_eq!(alternate.book, \"ARG\"), total 153 -> 157, (173,153) -> (173,157), checked 153 -> 157, every-alternate-has-a-guard). The pre-commit sweep looked for the RENAMED BINARY's references and for the new book's own wiring, but not for assertions about the SHAPE the new book changes": 1,
-        "bare !rendered.trim().is_empty() accepted the [redacted PI] PI-screening placeholder as real prose; reused is_real_description_value(), the same refusal every other text_only->text-complete branch already applies": 1,
-        "both asserted a corrupted expected value differed from the real formula in isolation and never called run_spell_range_bar_check/run_spell_bar_check -- none of either function's failure branches was exercised by any test (OPEN-ISSUES.md row 201, adversarial review CONFIRMED wave 11)": 1,
-        "cache_gen::spell_lane_dump::generate() is destructive (remove_dir_all + full rewrite) per book on every run, including books not being widened; raw_tokens is a separate later pass this generator does not write, so any re-run silently strips it from every book it covers": 1,
+        "a prior lane built the same ledger and wrote complete into kanban.md, but the data file was never git-added; the session exited uncommitted and the file was lost, so a salvage lane correctly landed only the loader as a no-op": 1,
         "codex_neutral_name-derived slugs for name-PI-blocked units can themselves end in a numeral (codex_named_unit_feat_adventurers_guide_ag_feats_lst_2.json), so a *_2.json glob cannot distinguish 'collision-suffixed duplicate' from 'legitimately-named record that happens to end in _2'": 1,
-        "decisions.md 52.5 already recorded that a comment recording a removal instantiates the name as surely as one recording a hit, and pi-sweep does not read intent. The lesson was known and re-paid anyway, in the very module documenting the removal.": 1,
-        "each of the two cache-gen lanes independently reproduced a defect shape the wave-3/wave-4 dispatch had already named as a known failure mode (NAME-half PI screening dropped; a non-.FORGET disabled-row class never guarded), and the sweep's book_dir_of was never widened for a non-Paizo publisher's path shape until a whole lane's output silently could not be checked at all": 1,
-        "each relaunch surfaced a real, previously-undetected defect this cycle's own new content exposed (a latent EquipmentToken::raw_pair contract violation predating this cycle; several hardcoded per-book/per-total test counts in a separate crate root-lib does not build)": 1,
-        "first attempt pre-rendered BOTH desc and benefit unconditionally (single-field case too), which broke feat_catalog.rs's existing raw_leaks==changed.len() invariant for the single-field population that was already correctly handled at serve time; reworked to pre-render ONLY inside the two-field-join branch, leaving the single-field pass-through exactly as raw as before": 1,
-        "first implementation piped printf into awk; awk's early exit on a HIT sigpipes printf, and under 'set -o pipefail' the pipeline returns 141 \u2014 every hit read as a miss, so the open-file-handle guard silently protected nothing. Same function also scanned /proc per candidate, O(candidates x fds), blowing a 60s test timeout": 1,
-        "grounded->text-complete only improves doneness for wiring_class==display; for computed it is strictly worse (computed+grounded already maps to done, computed+text-complete falls to in-progress), a class of record the first draft did not check for": 1,
+        "first design used a tool-name whitelist (python3/cargo/git/jq missing) that flagged SD-33's out-of-scope receipts, and a section-boundary regex requiring a colon after the closing ** that never matches this package's actual bold-then-colon style, silently absorbing Notes/Next-cycle-plan into the Figures section": 1,
+        "ingest_race_trait_generic.py files each record under the unit's reporting-attribution book (unit.book), not the physically-walked source_book; classify()'s local engine_book variable is resolved off source_book -- for 4 units walked from core_essentials but reported under core_rulebook, the two disagree": 1,
         "isf_spells.lst genuinely restates 'Curse of Disgust (Besmaran)' as a second non-.MOD base declaration later in the file; the initial ingest binary treated both as distinct base declarations, which spell_resolver's own cross-book dedup then silently collapsed downstream, producing a mismatch between the raw SPELL_LIST count (3) and the deduped catalog count (2) that the mapping_helpers_agree_with_the_registry test caught": 1,
-        "no RuleSetId compiled for occult_adventures at all -- v06_work_inventory::classify()'s first gate (engine_book_for -> rule_set_for -> None) short-circuits every unit of an uncompiled book to not-started before any per-kind arm runs, discovered only by measuring a before/after guarded regen that showed zero movement": 1,
         "prior red-proof fabricated a family:None row via mock.patch, a state no real object can ever reach (classify_unit always falls through to F0/F8); decisions.md \u00a714a caught it": 1,
         "ran 'cargo fmt -- <2 files>' which walked the whole crate's mod-tree and reformatted ~792 unrelated files (10508-line diff on mod.rs alone, project is not rustfmt-clean); had to git checkout -- . and redo all edits by hand": 1,
-        "resolved apps/desktop/src-tauri/src/race_trait_picker.rs with 'git checkout --theirs' because the concurrent race-trait lane owns that file and had independently made the same PI-redaction fix. Taking the whole file kept THEIR fix and dropped MINE -- the setter pin, which that lane had not moved. Picking a side on a file two lanes both edited keeps only the intersection of intent, and nothing about the conflict markers showed that a non-conflicting hunk was being lost": 1,
-        "the first run was launched before the count-pin sweep, so a red test found afterwards invalidated it and it was killed mid-root-full; the second went red on a baseline floor that turned out to be over-counting 7 tests": 1,
-        "the first sweep (grep -rn for literal '349'/'757' substrings) missed assertions written in a different literal shape ('checked, 349' with no trailing comma-space match, and a tuple '(335, 349)'); the full gate's own root-full/desktop stages caught 8 more breaks, and a separate later grep of apps/desktop/src (TS, not Rust) caught a 9th in the frontend test suite": 1,
-        "the harness's own auto-mode classifier blocked the cargo test invocation while the baseline file was in the edited (gate-weakened) state -- it cannot distinguish 'proving a real gate refuses' from 'weakening a real gate to see what happens', and correctly refuses either way": 1,
-        "the new reason string prose used the standalone word 'placeholder', which tests/sd24_wired_integration_audit.rs's zero-tolerance stub-marker scan legitimately flags -- the string was ordinary engineering prose about a MARKER a corpus/generator ships, not a code stub, but the audit cannot tell language apart from code by itself": 1,
-        "the two named worked examples (PLUS:3/PLUS:1, both bare literals) hid that ~250 equipment_modifier records ALSO carry a PRETYPE/PREMULT item-type guard, which the already-landed computed:pre_guard rule then fires on once PLUS: makes mags non-empty -- moved 264 units from done to in-progress corpus-wide, resting on an unresolved eligibility-vs-magnitude guard-scope design question the ground-truth methodology already flagged open": 1,
-        "trusted an earlier grep-derived line number instead of re-reading the file at the actual cut point": 1,
-        "unit.book was silently overloaded for two purposes -- physical-file lookup (token_closure_rows/CorpusLines) and engine-consumer-table lookup (classify()'s engine_book_for) -- both of which require the book directory ACTUALLY WALKED, not the true reporting attribution. The first regen (--allow-stamp-loss) silently downgraded 7 CRB race units from literal-verified/static to grounded/display; the second regen silently downgraded 16 companion units from grounded to not-ingested (companion_absent_from_bestiary_1_companion_tables). Neither was caught by any existing test -- caught only by diffing every unit's doneness_verdict before vs after and demanding zero transitions.": 1,
-        "useless_format clippy lint on a new Gunslinger diagnostic message! (format! with no interpolation placeholders)": 1,
-        "verify-on-screen.sh's race_trait family default navigates to the Standard traits tab, but the alternate racial traits view is a separate TAB whose race chips are not searchable; --tab alternate --no-search is required and the family default does not supply it": 1,
-        "wrongly generalized from ultimate_equipment (no LICENSE.json, so assumed the artifact was optional) instead of checking whether the SPECIFIC 21 books this cycle touched already had one; 14 of them did, from earlier lanes' ingest of a different kind in the same book, and this cycle's 12,431 new class_feature records silently drifted their stated records_processed/records_redacted counts stale": 1
+        "scratch CORPUS_LITERAL_SWEEP_REPORT/DERIVED_FIXTURE_CHECK_REPORT JSON was written with python json.dump's default separators (space after colon/comma); the Rust loader does a literal substring search for \"clean\":true and \"verified\":[ with no space, so it silently found 0 verified entries": 1
       }
     },
     "verification": {
-      "runs": 874,
-      "failed_runs": 282,
-      "fail_rate": 0.3227,
+      "runs": 449,
+      "failed_runs": 164,
+      "fail_rate": 0.3653,
       "by_failing_stage": {
-        "clippy": 34,
+        "clippy": 11,
         "corpus-sweep": 2,
-        "declared-pi-audit": 1,
-        "desktop": 33,
-        "driver-selftest": 3,
-        "frontend-test": 17,
-        "frontend-typecheck": 2,
-        "pi-sweep": 6,
-        "preflight-disk": 12,
-        "preflight-oracle": 117,
-        "producer-selftest": 1,
-        "reach": 17,
-        "root-full": 61,
+        "corpus-trap-audit": 6,
+        "declared-pi-audit": 2,
+        "denominator-gate": 10,
+        "desktop": 4,
+        "figure-provenance": 3,
+        "frontend-test": 4,
+        "pi-sweep": 3,
+        "preflight-oracle": 115,
+        "reach": 4,
+        "reachability-audit": 2,
+        "reachability-audit-selftest": 2,
+        "root-full": 11,
         "root-lib": 2,
-        "shape-coverage-standing-gate": 5,
-        "site-asset-stamp-check": 1,
-        "site-dashboard-check": 53,
-        "site-dashboard-selftest": 6,
-        "site-public-status-check": 2,
-        "supersession-gate": 1
+        "shape-coverage-standing-gate": 7,
+        "site-dashboard-check": 18,
+        "site-public-status-check": 2
       }
     },
     "git_join": {
-      "authors": 3,
+      "authors": 2,
       "available": true,
-      "commits": 1247,
-      "events_per_commit": 1.5381,
+      "commits": 1059,
+      "events_per_commit": 0.9509,
       "top_authors": [
         [
           "Todd Hintzmann",
-          1243
+          1057
         ],
         [
           "god-emporer",
-          2
-        ],
-        [
-          "electricm0nk",
           2
         ]
       ]
@@ -21057,7 +20794,7 @@
         "units": 4337,
         "proven": 0,
         "by_status": {
-          "not-ingested": 4337
+          "engine-does-not-hold": 4337
         },
         "shard": "PF1e-units-ability.json",
         "bytes": 561447,
@@ -22394,7 +22131,7 @@
         "proven": 28,
         "by_status": {
           "grounded": 28,
-          "not-ingested": 157
+          "engine-does-not-hold": 157
         },
         "shard": "PF1e-units-class.json",
         "bytes": 18623,
@@ -22461,7 +22198,7 @@
         "units": 18043,
         "proven": 458,
         "by_status": {
-          "not-ingested": 14457,
+          "engine-does-not-hold": 14457,
           "unknown": 3052,
           "deferred-with-reason": 44,
           "grounded": 93,
@@ -27907,7 +27644,7 @@
         "units": 1696,
         "proven": 641,
         "by_status": {
-          "not-ingested": 769,
+          "engine-does-not-hold": 769,
           "literal-verified": 99,
           "text-complete": 165,
           "grounded": 476,
@@ -28572,7 +28309,7 @@
         "units": 459,
         "proven": 0,
         "by_status": {
-          "not-ingested": 459
+          "engine-does-not-hold": 459
         },
         "shard": "PF1e-units-deity.json",
         "bytes": 42473,
@@ -28594,7 +28331,7 @@
         "units": 183,
         "proven": 0,
         "by_status": {
-          "not-ingested": 183
+          "engine-does-not-hold": 183
         },
         "shard": "PF1e-units-domain.json",
         "bytes": 17069,
@@ -28620,7 +28357,7 @@
           "literal-verified": 5170,
           "grounded": 170,
           "unknown": 195,
-          "not-ingested": 74,
+          "engine-does-not-hold": 74,
           "not-started": 19,
           "text-complete": 181,
           "fixture-verified": 11
@@ -29916,7 +29653,7 @@
           "text-complete": 1586,
           "unknown": 578,
           "grounded": 108,
-          "not-ingested": 490,
+          "engine-does-not-hold": 490,
           "deferred-with-reason": 2
         },
         "shard": "PF1e-units-feat.json",
@@ -30308,7 +30045,7 @@
         "units": 136,
         "proven": 0,
         "by_status": {
-          "not-ingested": 136
+          "engine-does-not-hold": 136
         },
         "shard": "PF1e-units-language.json",
         "bytes": 14598,
@@ -30342,7 +30079,7 @@
           "fixture-verified": 140,
           "grounded": 260,
           "literal-verified": 843,
-          "not-ingested": 27
+          "engine-does-not-hold": 27
         },
         "shard": "PF1e-units-monster.json",
         "bytes": 109640,
@@ -30493,7 +30230,7 @@
           "grounded": 1397,
           "text-complete": 2070,
           "literal-verified": 148,
-          "not-ingested": 91,
+          "engine-does-not-hold": 91,
           "fixture-verified": 100
         },
         "shard": "PF1e-units-monster_ability.json",
@@ -32532,7 +32269,7 @@
         "units": 421,
         "proven": 0,
         "by_status": {
-          "not-ingested": 421
+          "engine-does-not-hold": 421
         },
         "shard": "PF1e-units-power.json",
         "bytes": 40428,
@@ -32556,7 +32293,7 @@
         "by_status": {
           "ingested-magnitude": 3,
           "literal-verified": 36,
-          "not-ingested": 56
+          "engine-does-not-hold": 56
         },
         "shard": "PF1e-units-race.json",
         "bytes": 9366,
@@ -32650,7 +32387,7 @@
         "units": 2561,
         "proven": 547,
         "by_status": {
-          "not-ingested": 1740,
+          "engine-does-not-hold": 1740,
           "grounded": 357,
           "ingested-magnitude": 261,
           "text-complete": 190,
@@ -34035,7 +33772,7 @@
         "units": 149,
         "proven": 0,
         "by_status": {
-          "not-ingested": 149
+          "engine-does-not-hold": 149
         },
         "shard": "PF1e-units-skill.json",
         "bytes": 16595,
@@ -34125,7 +33862,7 @@
           "literal-verified": 217,
           "ingested-magnitude": 435,
           "text-complete": 39,
-          "not-ingested": 662,
+          "engine-does-not-hold": 662,
           "unknown": 26
         },
         "shard": "PF1e-units-spell.json",
@@ -34199,7 +33936,7 @@
         "units": 2248,
         "proven": 0,
         "by_status": {
-          "not-ingested": 2248
+          "engine-does-not-hold": 2248
         },
         "shard": "PF1e-units-template.json",
         "bytes": 211203,
@@ -34275,7 +34012,7 @@
         "units": 487,
         "proven": 0,
         "by_status": {
-          "not-ingested": 487
+          "engine-does-not-hold": 487
         },
         "shard": "PF1e-units-trait.json",
         "bytes": 60201,

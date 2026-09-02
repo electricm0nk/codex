@@ -152,7 +152,7 @@ outputs and report the feed "current" when it was not. That silent fallback is t
 timeout when `PF1E_DASHBOARD_STRICT_TIMEOUT=1` (set only by `--check`); a live regeneration keeps
 the old stale-cache-preferred behavior unchanged and on purpose (a blank public panel is worse
 than a stale one — only `--check` needs the opposite bias). Also split `v06_work_inventory` onto
-its own `PF1E_WORK_INVENTORY_TIMEOUT` (950s = 757s measured + ~25% margin), separate from the
+its own `PF1E_WORK_INVENTORY_TIMEOUT` (950s = 757s measured + a margin of 25.5% of the 757s baseline, `python3 -c 'print(round((950-757)/757*100, 1))'` reproduces it, rounded to ~25% in the surrounding prose), separate from the
 two cheaper dumps' shared 600s cap — the deliberate, documented bound the brief explicitly
 permits once the failure path is loud, done alongside the fix rather than as a substitute for
 it. `verify.sh`'s `site-dashboard-check` stage now has its own outer `timeout` wrapper (2400s),
