@@ -174,3 +174,36 @@ is already shown in the right place. Do NOT compute or fetch SR in the Attack pa
 duplicate a rules-bearing value the Defense panel already sources from the engine.
 
 Owner: `frontend`. Verification: `npm run typecheck` (0 errors) and `npm test`.
+
+---
+
+## Follow-on backend queue (B-8..B-10) — all from implementer-found ticket-text errors
+
+Three tickets exist because `frontend` verified my ticket text against the actual DTOs instead of
+trusting it, and found the claims wrong. Each was shipped half-done honestly rather than completed
+by inventing the missing half in TypeScript (§3.3). The defective artifacts were my tickets, drawn
+from the gap audit; the implementer's checks caught them.
+
+- **B-8 — weight on the equipment catalog DTO.** F-7's text claimed `list_equipment` rows "already
+  carry cost and weight." They carry `costGp` only. `equipment_catalog.rs`'s own header comment
+  notes weight "reached no user-facing surface." Must distinguish "no weight known" from "weighs
+  zero" (Option-shaped, not defaulted 0), and must source from wherever encumbrance already reads
+  weight rather than introducing a second, potentially disagreeing lookup.
+- **B-9 — distinguish "non-caster" from "caster whose list is not ingested".** F-10 withholds
+  "Add Spell" on the engine's `known: false` flag, but that flag conflates two different facts, so
+  the UI carries a hand-assembled exception set (Oracle / Summoner / Unchained Summoner / Magus) to
+  avoid hiding a legal action from a real caster. `frontend` disclosed this candidly against its own
+  passed ticket: `loadClassSpellLevels.ts` documents "Magus, Summoner and Oracle" as the core, but
+  `unchained_summoner` was added on separate evidence and `magus` is inert (not in CLASS_OPTIONS).
+  **"Which classes are casters" is a rules judgment, so it may not live in TypeScript.** Expose the
+  distinction on the response; the TS set then disappears entirely. Until then F-10 stands, because
+  it fails OPEN — a wrong guess shows a harmless empty picker rather than silently denying a caster
+  their spells.
+- **B-10 — skill ranks per level on the class catalog.** F-11's text claimed the catalog returns
+  skill points per level. `ClassCatalogEntryDto` has only classId / level / baseAttackBonus /
+  fortSave / refSave / willSave. Expose skill ranks per level so the class preview can show what a
+  player actually needs to choose between classes.
+
+Each unblocks a small frontend follow-up: F-7-weight, F-10-cleanup, F-11-skillpoints, plus
+F-1-playername (already unblocked by B-1) and optionally exposing `trait_skill_choices` on load so
+F-3 can name a choice-trait's chosen skill instead of saying "a chosen skill".
