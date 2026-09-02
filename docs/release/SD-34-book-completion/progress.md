@@ -11,6 +11,35 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 34 lane C — Ninja closed from wave 33 lane C's named 19-unit remainder, 1/19 — complete
+
+**Status: complete for 1 of 19; 18 named open, not escalated.** Searched each of wave 33 lane
+C's named 19 gate-eligible-but-no-proficiency-row classes individually against its own
+`data/corpus/**/class_feature/<class>/` directory. 17 (the 10 untabled base classes + 7 CRB
+NPC/`Ex-*` classes) carry genuinely no `AUTO:WEAPONPROF` token anywhere, re-confirmed rather
+than re-quoted. Samurai carries a real record (`AUTO:WEAPONPROF|TYPE=Samurai`) but it's a
+weapon-TYPE selector this table's schema has no representation for — an all-empty row would be
+indistinguishable from a real "proficient with nothing" claim, so none is added. Ninja carries
+a real 9-named-weapon token (`AUTO:WEAPONPROF|Shortbow|Sword (Short)|Kama|Kusarigama (Sickle
+and Chain)|Nunchaku|Sai|Shuriken|Siangham|Wakizashi`), transcribed as a new
+`CLASS_WEAPON_PROFICIENCIES` row — a real, honestly-partial transcription (its DESC additionally
+claims blanket Simple-weapon proficiency the token does not carry, the identical boundary
+already shipped for Occultist/Vigilante), but correct for the table's one live consumer
+(Longsword proficiency, Martial-tier, outside Ninja's named list either way). The chassis gate
+was already open (wave 33 lane C's own fix); the row alone closed the unit, verified directly
+via a real headless receipt reaching `Computed`, not assumed.
+
+`docs/work-inventory.json` regenerated through the guarded corpus-literal-sweep path (CLEAN,
+no findings). `python3 scripts/completion_atlas.py --check`: `population=49438 overlap=0
+unclassified=0`, `DONE: 24994 → 24995 (+1)`, `D: 2924 → 2923 (-1)`,
+`sub_causes.D.class_modelled_but_no_observed_delta_on_the_rendered_snapshot: 29 → 28 (-1)`.
+`denominator_gate.py --check`: `files_checked=156 violations=0`; `--check-provenance`:
+`files_checked=86 figures_examined=128 violations=0`. Scoped tests: `cargo test --locked --lib
+-j 6 -- class_weapon_proficiency_tests untabled_class_chassis_gate_tests
+ultimate_combat_chassis_gate_tests`, **24 passed, 0 failed**.
+
+Full receipt: `artifacts/bucket-d-mining/wave34_laneC_class_snapshot_delta_ninja_closure_cycle_receipt.md`.
+
 ### Cycle — Wave 34 lane B — wire `adoptedRaceOptions`/`adoptiveParentageOptions` into the desktop UI, close 27/53 race_trait units to DONE — complete
 
 **Status: complete.** Closes wave 33 lane B's own next-cycle plan item 1: the desktop
