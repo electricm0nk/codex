@@ -192,11 +192,52 @@ Scoped paths (this lane's territory): `src/ tests/ docs/governance/`.
 
 The count is over this lane's assigned population: the three named tests.
 
-<!-- ROWCOUNT -->
+Derived mechanically from the `root-full` log, not self-assessed
+(`decisions.md §4`). Script: `/tmp/cargo-sd34-at-34-e6-001/rowcount.sh` — for each test, `PASS`
+iff the log carries the exact line `test <name> ... ok`.
+
+```
+$ bash rowcount.sh
+PASS placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral
+PASS equipment_cache_has_all_42_real_pu_equipmods_records
+PASS equipment_cache_plus_zero_records_have_no_fabricated_plus_value
+rows=3 PASS=3 FAIL=0
+```
+
+**3 of 3.** Denominator: the three tests named in this lane's dispatch brief, which is this lane's
+whole assigned population. Status `complete` follows from this count.
 
 ## Build scope verified
 
-<!-- BUILDSCOPE -->
+Run at `1fd5244c79` — the last commit in this cycle that can move any figure an
+assertion depends on (`decisions.md §12` L7). The only commit after it is the receipt/ledger
+commit carrying these results, which changes no code, no corpus record and no fixture.
+
+| Scope | Command | Result |
+|---|---|---|
+| `--no-run` | `cargo test --locked --no-run` | **EXIT=0** |
+| root workspace | `cargo test --locked --no-fail-fast` | **EXIT=0** — 590 result lines, **8,372 passed / 0 failed**, `test result: FAILED` count = 0 |
+| ↳ suite coverage | `ls tests/*.rs \| wc -l` vs `grep -c '^     Running tests/'` | **543 of 543** `tests/*.rs` suites executed, 0 never ran |
+| desktop crate | `cd apps/desktop/src-tauri && cargo test --locked --no-fail-fast` | **EXIT=0** — **572 passed / 0 failed** |
+
+Totals were derived twice by independent implementations (`awk` and a Python `re` pass) and agreed
+exactly, per `AGENTS.md` "Derive counts with `awk`, not `grep -o`".
+
+**Attribution, re-derived rather than inherited (`decisions.md §12` L14).** SD-34's registered
+inherited baseline was **29 of 599** suites carrying **46 of 8,034** failures. The root workspace
+now carries **0 failures across 590 result lines**. That is not a measurement anomaly and it is not
+this lane's claim to have fixed 46 things: waves 24–29 closed the bulk, wave 29's independent sweep
+recorded `root-full`'s remaining failing set as exactly **2 suites / 3 tests**
+(`sd24_wired_integration_audit`, `sd27_pathfinder_unchained_cache_shape`), and those 3 are
+precisely the 3 this cycle closed. The two figures corroborate: 3 remaining − 3 closed = 0.
+
+**The `root-full` stage is therefore green.** The desktop crate was tested explicitly, in its own
+separate cargo workspace, with its own `CARGO_TARGET_DIR`.
+
+**Sweeps NOT run this cycle, and named as such:** the full `scripts/verify.sh` (40 stages), the
+frontend stages (`frontend-install` / `frontend-test` / `frontend-typecheck`), `clippy`,
+`corpus-sweep`, `site-dashboard-check` and `denominator-gate`. The last two are wave 29's other
+two live FAILs and sit in other lanes' territory.
 
 - **Sweep population:** N/A — this cycle changed **no** `data/corpus/**` record. Both files touched
   are under `tests/`. `corpus_literal_sweep`'s examined-population is unmoved by construction and
