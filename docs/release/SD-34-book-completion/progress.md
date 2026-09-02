@@ -11,6 +11,68 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 33, Lane C — `class_modelled_but_no_observed_delta_on_the_rendered_snapshot`'s 38-unit class-level snapshot-delta shape — 9/38 closed, 19 named reachability, 10 named out-of-scope
+
+**Status: complete for 9 of 38, remainder named by mechanism, no escalation.** Recovered from a
+server crash (2026-09-02 kernel soft-lockup, unrelated to this cycle's own work — the crash hit
+mid-flight before this lane could commit) via its preserved worktree diff, rebased onto
+`tranche/14` (which had moved to include wave 33 lane A, `e8fc4f8ff9`, and lane B, `8d4646e2a8`,
+in the meantime), then landed with zero source-file conflicts (neither lane touched any of this
+cycle's three files). Assigned population: bucket D's 38-unit
+`class_modelled_but_no_observed_delta_on_the_rendered_snapshot` shape. Receipt:
+`artifacts/bucket-d-mining/wave33_laneC_class_snapshot_delta_cycle_receipt.md`.
+
+**The real defect: a shared gate function never grew a matching arm.** `untabled_base_class_
+chassis`/`crb_untabled_class_chassis` already dispatch a real BAB/base-save chassis for 27
+classes (20 real base classes plus CRB's 7 NPC/`Ex-*` classes) through `compute_class_chassis`,
+but `has_supported_class_chassis` — checked independently by `compute_total_saves`,
+`compute_combat_baseline`, and `compute_selected_skill_modifiers` — had no arm for either
+registry, so these classes' receipts never reached `Computed` despite a real, correct chassis.
+Fixed: `has_supported_class_chassis` gained two new arms covering both registries. Deliberately
+NOT extended to `prestige_class_entry_gate` — no BAB/save chassis exists for prestige classes by
+design, so widening the gate there would fabricate a total from nothing.
+
+**The gate alone does not close a unit.** 9 of the newly-gated classes (Kineticist, Medium,
+Mesmerist, Occultist, Vigilante, Psychic, Spiritualist, Psion, Shifter) also got a real
+`CLASS_WEAPON_PROFICIENCIES` row this cycle, transcribed from each class's own corpus
+weapon-and-armor-proficiency token (never DESC prose alone — the table's existing discipline),
+and only these 9 reach `Computed` for real. 17 more gate-eligible classes (10 untabled base + 7
+CRB NPC/`Ex-*`) correctly stay Blocked on `combat.baseline_weapon_proficiency_unknown` — no
+proficiency answer was fabricated where none was found this cycle. `--class-probe`'s CLI path
+was also widened from a stale 27-class subset to the full 71-class `modelled_class_books()` set
+it had silently never probed.
+
+**Verified, not assumed: the 29-unit remainder is 19 reachability + 10 out-of-scope, not 18 + 10
+as a naive registry count would suggest.** Checked every one of the 29 individually against
+`docs/work-inventory.json` rather than trusting the two registries' own nominal membership: 2 of
+the 19 (Ninja, Samurai) reach their chassis gate through a different, pre-existing Ultimate
+Combat arm, not this cycle's own fix — the same no-proficiency-row shape either way. Also found
+and named, not fixed: `Psychic Warrior` (the untabled-base registry's 20th member) never even
+reaches this bucket — a key-naming mismatch (`psychic_warrior` vs. corpus `psychic warrior`)
+routes it to a different bucket-D evidence string entirely, out of this cycle's own scope.
+
+**Rebase (onto lane A + lane B) resolved by regenerating, never hand-merging.** The only
+conflicts were in the two shared generated artifacts (`docs/work-inventory.json`,
+`completion-atlas.json`); both were fully regenerated through the guarded path (corpus literal
+sweep + derived evaluator fixture check reports supplied, no `--allow-stamp-loss` needed) after
+the rebase landed, at this cycle's own final commit.
+
+Measured via `python3 scripts/completion_atlas.py --check` at this cycle's own final commit:
+`population=49438 buckets=10 unclassified=0 overlap=0`, `DONE=24994` (from lane B's 24985,
+delta +9) and `D=2924` (from lane B's 2933, delta -9);
+`class_modelled_but_no_observed_delta_on_the_rendered_snapshot` sub-cause 38 → 29 (delta -9).
+`done_evidence_violations=0 citation_failures=0`. `denominator_gate.py --check`:
+`files_checked=155 violations=0`; `--check-provenance`: `files_checked=85 figures_examined=128
+violations=0`. Scoped tests: `cargo test --locked --lib -j 6 -- untabled_class_chassis_gate_
+tests class_weapon_proficiency_tests` → **19 passed, 0 failed**; `cargo test --locked --bin
+v06_work_inventory -j 6 -- class_probe_tests` → **12 passed, 0 failed**.
+
+Movement: closure 9 (bucket D → DONE), reclassification 0, reachability 19 (gate-eligible,
+still Blocked on the proficiency-row gap — 17 newly gated this cycle, 2 already gate-eligible),
+instrument-correction 1 (`--class-probe`'s CLI population widened to the full modelled set).
+Full `scripts/verify.sh` not run this cycle — scoped verification only, per this fold's own
+dispatch instruction; the full sweep runs once at wave-end after all three lanes land.
+
 ### Cycle — Wave 33, Lane B — the 53 `race_trait_record_loaded_but_never_applies` units, 27 get precise engine-does-not-hold evidence — partial, instrument-correction only, no bucket movement
 
 **Status: partial (0/53 reach `DONE`), all 53 named by mechanism, no escalation.** Recovered
