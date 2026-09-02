@@ -11,6 +11,63 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 33, Lane D — the four stale `scripts/verify.sh` test-count baselines refreshed — complete
+
+**Status: complete.** Assigned population: the four BASELINE NOTES `scripts/verify.sh` has
+printed on every green run since SD-31 wave 29 (2026-08-21) — `BASELINE_ROOT_LIB_TESTS`
+(2336 recorded), `BASELINE_ROOT_FULL_TESTS` (7469), `BASELINE_ROOT_TEST_BINARIES` (569),
+`BASELINE_DESKTOP_TESTS` (515) — all four raised to this cycle's own freshly-measured
+values. Receipt: `artifacts/bucket-d-mining/wave33_laneD_baseline-refresh_cycle_receipt.md`.
+Baseline-edit commit `7ea9651b87`, receipt/progress entry landed in this same commit.
+
+**The brief said "wave 32"; the repo's own ledger already had wave 33 registered at HEAD
+(`aee47d3c5a`, "register wave 33 in the ledger").** Per the standing rule that the repo wins
+a disagreement with the dispatch brief, this cycle is logged as wave 33 lane D — the wave-33
+dispatch script's own `laneD()` prompt is verbatim identical to the brief this cycle
+received, just correctly labeled.
+
+**Measured via `scripts/verify.sh --only root-lib --only root-full --only desktop
+--show-actuals`** at this cycle's own HEAD: `BASELINE_ROOT_LIB_TESTS` 2336 → **3028**
+(`PASS root-lib (3028 passed)`), `BASELINE_ROOT_FULL_TESTS` 7469 → **8372**
+(`PASS root-full (8372 passed across 589 suites, all tests/*.rs suites executed)`),
+`BASELINE_ROOT_TEST_BINARIES` 569 → **589** (same root-full run), `BASELINE_DESKTOP_TESTS`
+515 → **572** (`PASS desktop (572 passed)`). All four match the dispatch brief's own stated
+measured figures exactly.
+
+**Itemized per `scripts/verify-baselines.env`'s own convention**, not just rounded to the
+measured number. `BASELINE_ROOT_TEST_BINARIES` is fully and exactly reconciled: the SD-34
+batch-A cycle (`84760e4326`, 2026-08-31, "delete 11 dead SD-33 remediation probe bins")
+computed its own `-11` delta against the *stale* wave-29 baseline (580) instead of
+re-measuring first. Between wave 29 and the commit immediately before batch-A, the real
+`src/bin/*.rs` + `tests/*.rs` file count had already grown from 580 to 600 (17 new bin files
++ 3 new tests files, re-derived via `git ls-tree --name-only <rev> -- src/bin/ tests/`) —
+batch-A's `-11` landed on the true 589 but *wrote* 569, silently discarding that +20 of
+already-real, already-landed growth. Zero further `src/bin`/`tests` file churn happened
+between batch-A and this cycle's HEAD (`git diff --stat 84760e4326 HEAD -- src/bin tests`
+is empty), so 589 is exact, not approximate.
+
+The other three floors (+692 lib / +903 full / +57 desktop) span 283 commits across the
+closed SD-32 and SD-33 bundles plus SD-34's own 33+ waves — full per-cycle tracing was
+judged out of this lane's budget and not attempted. Instead: a mechanical, reproducible
+`git grep -c '#\[test\]'` proxy count at each bundle-boundary commit (SD-31 tail / SD-32
+close / SD-33 close / SD-34 HEAD), which reconciles to within 4 tests of the real measured
+deltas on lib and full, and exactly on desktop — full table and re-derive commands are in
+`scripts/verify-baselines.env`'s own new comment block, with the untraced 4/4-test residual
+named rather than rounded away, per the brief's own explicit instruction ("a raise you
+cannot itemize is a raise you should not make — record what you could not account for").
+
+Repo-wide grep for both the old (2336/7469/569/515) and new (3028/8372/589/572) integer
+literals across `tests/`, `src/`, `apps/`, `scripts/` found no load-bearing hits to move —
+the only matches are coincidental `monster_data.rs` `source_line:` values and unrelated
+PCGen `.lst` line citations, each individually read and confirmed unrelated.
+
+Movement: closure 0, reclassification 0, reachability 0, instrument-correction 4 (the four
+baseline floors). Full `scripts/verify.sh` (all 40 stages) re-run at this cycle's own final
+commit: **RESULT: PASS, 40/40**, 5906s (1h38m26s), log `/tmp/codex-verify-9KJsiq`. This run
+was interrupted mid-flight by a server crash (unrelated kernel soft-lockup — heavy parallel
+`rust-lld` link jobs, confirmed via `journalctl -b -1`, not this cycle's own edit) and
+re-run clean from the same commit after reboot; the re-run is the one cited here.
+
 ### Cycle — Wave 32, Lane A — the last two `scripts/verify.sh` FAILs closed, 40/40 confirmed live — complete
 
 **Status: complete.** Assigned population: the two named FAILs from wave 31's sweep (38 PASS / 2
