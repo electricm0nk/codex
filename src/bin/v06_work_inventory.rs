@@ -52,7 +52,10 @@ use codex::rules_core::character_input::{
 use codex::rules_core::class_feature_pool_catalog;
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
 use codex::rules_core::race_creation::race_creation_chassis;
-use codex::rules_core::race_resolver::{TraitRole, load_race_corpus};
+use codex::rules_core::race_resolver::{
+    TraitRole, adopted_race_choose_selectors, adoptive_parentage_options, load_race_corpus,
+};
+use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_options};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
@@ -5633,6 +5636,22 @@ impl EngineFacts {
         self.race_trait_probe.creation_chassis_consumed.contains(&coordinate)
     }
 
+    /// SD-34 wave 33 lane B: whether this unit is an "Adopted Race" selector
+    /// whose resolution against the real Trait pool returns at least one
+    /// real grant -- see [`RaceTraitProbe::adopted_race_selector_grants`].
+    fn race_trait_adopted_race_selector_grants(&self, unit: &CorpusUnit) -> bool {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.adopted_race_selector_grants.contains(&coordinate)
+    }
+
+    /// SD-34 wave 33 lane B: this unit's real, rendered "Adoptive Parentage"
+    /// option description, if it is one -- see
+    /// [`RaceTraitProbe::adoptive_parentage_rendered`].
+    fn race_trait_adoptive_parentage_rendered_description(&self, unit: &CorpusUnit) -> Option<&str> {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.adoptive_parentage_rendered.get(&coordinate).map(String::as_str)
+    }
+
     /// Whether one book really holds this unit. Delegates to
     /// [`Self::holds_key`] for every kind whose identity is its name, and
     /// uses the source-coordinate join for race traits, which is the only
@@ -6271,6 +6290,41 @@ struct RaceTraitProbe {
     /// Populated at the bottom of [`probe_race_trait_corpus`]; see that block
     /// for what it observes and what it deliberately refuses.
     creation_chassis_consumed: BTreeSet<(String, usize)>,
+    /// SD-34 wave 33 lane B: coordinates of an "Adopted Race" selector
+    /// (`TYPE:AdoptiveRace`) whose resolution against the real `kind: trait`
+    /// pool -- `trait_pool::resolve_adopted_race_options`, the SAME call
+    /// `race_trait_picker.rs`'s own `list_alternate_racial_traits` Tauri
+    /// command makes -- returns at least one real grant. The record itself
+    /// is deliberately [`TraitRole::Unclassified`] (it never applies through
+    /// `RaceCorpus::resolve`; see that role's own doc comment). This set
+    /// exists to make its evidence string HONEST, not to promote it to
+    /// `done`: the engine genuinely resolves real payload for it through a
+    /// real, tested Tauri command (`reach_gate.rs`'s own dated
+    /// `OPEN_FINDINGS` entry confirms this independently,
+    /// `"crb"`/`"race_traits"`, 2026-08-27), but no desktop UI surface reads
+    /// the response field that carries it (verified this cycle: absent from
+    /// `apps/desktop/src/boundary/loadAlternateRacialTraits.ts`'s own
+    /// `AlternateRacialTraitsResponse` interface, and from every other file
+    /// under `apps/desktop/src`) -- so it stays `engine-does-not-hold`, with
+    /// a string that names the REAL remaining gap (desktop UI wiring)
+    /// instead of a blanket "never applies" that would misdescribe a record
+    /// the engine demonstrably does resolve. Populated at the bottom of
+    /// [`probe_race_trait_corpus`].
+    adopted_race_selector_grants: BTreeSet<(String, usize)>,
+    /// SD-34 wave 33 lane B: coordinates of an "Adoptive Parentage" option
+    /// (`CATEGORY:Adoptive Parentage`) paired with its own real, non-empty
+    /// rendered description -- read by `race_resolver::adoptive_parentage_
+    /// options`, the SAME function `race_trait_picker.rs`'s own menu command
+    /// calls (proven live by that file's own
+    /// `the_menu_command_itself_carries_all_seven_adoptive_parentage_
+    /// options_with_real_grants` test). The record is deliberately
+    /// [`TraitRole::Unclassified`] for the identical reason the Adopted-Race
+    /// selector above is, and this set exists for the identical reason: an
+    /// honest, more precise `engine-does-not-hold` evidence string, not a
+    /// `done` promotion -- the desktop UI does not read this DTO field
+    /// either (same verification as above). Populated at the bottom of
+    /// [`probe_race_trait_corpus`].
+    adoptive_parentage_rendered: BTreeMap<(String, usize), String>,
 }
 
 /// Every race the product's OWN character-creation roster would offer a
@@ -6438,6 +6492,47 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
                 file.to_string_lossy().into_owned(),
                 record.source_line as usize,
             ));
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // THIRD, INDEPENDENT consumer observation -- SD-34 wave 33 lane B. Two
+    // shapes `role != Unclassified` (the `reachable` set built at the top of
+    // this function) was never written to see: an "Adopted Race" selector
+    // and an "Adoptive Parentage" option. Both are deliberately
+    // `TraitRole::Unclassified` -- no readable default/replace/grant gate of
+    // their own -- and BOTH apply through a real, already-shipped consumer
+    // this function's per-record role check cannot observe. Read the SAME
+    // two functions `race_trait_picker.rs`'s own `list_alternate_racial_
+    // traits` Tauri command calls, over the SAME loaded corpus, never
+    // re-implemented: `adopted_race_choose_selectors` + `trait_pool::
+    // resolve_adopted_race_options` for the selector shape,
+    // `adoptive_parentage_options` for the parentage shape.
+    let selectors = adopted_race_choose_selectors(&corpus);
+    let pool = load_trait_pool(&roots);
+    let selector_keys_with_real_grants: BTreeSet<String> =
+        resolve_adopted_race_options(&selectors, &pool)
+            .into_iter()
+            .filter(|option| !option.grants.is_empty())
+            .map(|option| option.key)
+            .collect();
+    let parentage_rendered_by_key: BTreeMap<String, String> = adoptive_parentage_options(&corpus)
+        .into_iter()
+        .filter_map(|option| {
+            let description = option.description?;
+            if description.trim().is_empty() { None } else { Some((option.key, description)) }
+        })
+        .collect();
+    for race in corpus.race_keys() {
+        for record in corpus.traits_for(race) {
+            let Some(file) = Path::new(&record.source_path).file_name() else { continue };
+            let coordinate = (file.to_string_lossy().into_owned(), record.source_line as usize);
+            if selector_keys_with_real_grants.contains(&record.data.key) {
+                probe.adopted_race_selector_grants.insert(coordinate.clone());
+            }
+            if let Some(description) = parentage_rendered_by_key.get(&record.data.key) {
+                probe.adoptive_parentage_rendered.insert(coordinate, description.clone());
+            }
         }
     }
 
@@ -11248,6 +11343,54 @@ fn classify(
                     reason: None,
                     engine_book: engine_book_field,
                 };
+            }
+            // SD-34 wave 33 lane B: two shapes deliberately
+            // `TraitRole::Unclassified` (so `race_trait_engine_book` above
+            // returned `None`) whose OWN evidence string must not read
+            // "never applies" -- `reach_gate.rs`'s own dated `OPEN_FINDINGS`
+            // entries prove the exact opposite for both: the engine resolves
+            // real payload for them through a real, live, already-shipped
+            // Tauri command (`list_alternate_racial_traits` ->
+            // `adopted_race_choose_selectors`/`trait_pool` and ->
+            // `adoptive_parentage_options`). **This does NOT reach `done`.**
+            // `reach_gate.rs`'s own module doc names its bar precisely:
+            // "runs the real IPC builder ... and checks the records are in
+            // the response" -- a real but strictly weaker claim than the
+            // `text-complete`/`grounded` rung above requires, which (per
+            // `race_trait_rendered_description`'s own doc comment, and
+            // `AGENTS.md`'s "a magnitude is not wired until it moves on the
+            // twin the player reads") demands the record reach the SHIPPED
+            // SCREEN, not merely the DTO. Verified this cycle: neither
+            // `AlternateRacialTraitsResponse.adoptive_parentage_options` nor
+            // `.adopted_race_options` is declared in the desktop
+            // TypeScript boundary (`apps/desktop/src/boundary/
+            // loadAlternateRacialTraits.ts`'s own `AlternateRacialTraitsResponse`
+            // interface carries only `races`/`diagnostics`/`findings`) and
+            // neither name appears anywhere else under `apps/desktop/src`
+            // (`grep -rln adoptiveParentageOptions\|adoptedRaceOptions
+            // apps/desktop/src` -> no matches) -- the Rust DTO field's own
+            // doc comment says so too ("Additive field -- a consumer that
+            // does not read it is unaffected"). So this stays
+            // `engine-does-not-hold` (bucket D, unchanged), with a NEW,
+            // more precise evidence string than the blanket "never applies"
+            // these 28 used to carry -- naming exactly what remains (a
+            // desktop UI wiring gap, not a resolver gap) rather than
+            // collapsing it into the 25 records that have no real consumer
+            // of any kind. Checked here, immediately ahead of the "loaded
+            // but inert" fallback below, because that is exactly the
+            // fallback these 28 records used to fall into.
+            if facts
+                .race_trait_adoptive_parentage_rendered_description(unit)
+                .is_some_and(is_real_description_value)
+            {
+                return engine_does_not_hold(
+                    "race_trait_adoptive_parentage_option_rendered_by_the_engine_but_no_desktop_ui_surface_reads_it",
+                );
+            }
+            if facts.race_trait_adopted_race_selector_grants(unit) {
+                return engine_does_not_hold(
+                    "race_trait_adopted_race_selector_resolves_real_grants_but_no_desktop_ui_surface_reads_them",
+                );
             }
             // The honest middle: the record IS ingested and IS loaded, and
             // still no selection a player can make brings it in. Distinct
@@ -18541,6 +18684,182 @@ mod race_trait_grounding_tests {
         assert_ne!(verdict.evidence, "race_trait_race_not_modelled");
         assert_eq!(verdict.status, "ingested-magnitude");
         assert_eq!(verdict.evidence, "race_trait_generic_table_holds_record_magnitude_not_yet_computed");
+    }
+
+    // -----------------------------------------------------------------
+    // SD-34 wave 33 lane B: two shapes deliberately `TraitRole::Unclassified`
+    // (`race_resolver`'s own vocabulary was never written to describe them)
+    // whose OWN evidence string must not read the blanket "never applies" --
+    // `race_resolver::adopted_race_choose_selectors`/`trait_pool::
+    // resolve_adopted_race_options` and `race_resolver::adoptive_parentage_
+    // options`, both called by `race_trait_picker.rs`'s real
+    // `list_alternate_racial_traits` Tauri command, resolve real payload for
+    // 28 of the 53 `race_trait_record_loaded_but_never_applies` records --
+    // confirmed independently by `reach_gate.rs`'s own dated `OPEN_FINDINGS`
+    // entry (`"crb"`/`"race_traits"`, 2026-08-27).
+    //
+    // **This does not reach `done`.** `reach_gate.rs`'s own module doc names
+    // its bar precisely: "runs the real IPC builder ... and checks the
+    // records are in the response" -- real, but strictly weaker than the
+    // `text-complete`/`grounded` rung's bar, which (per `race_trait_
+    // rendered_description`'s own doc comment, and `AGENTS.md`'s "a
+    // magnitude is not wired until it moves on the twin the player reads")
+    // requires the SHIPPED SCREEN to read the field, not merely the DTO to
+    // carry it. Verified this cycle: `AlternateRacialTraitsResponse.
+    // adoptive_parentage_options`/`.adopted_race_options` are declared
+    // nowhere in the desktop TypeScript boundary (`apps/desktop/src/
+    // boundary/loadAlternateRacialTraits.ts`'s own `AlternateRacialTraitsResponse`
+    // interface carries only `races`/`diagnostics`/`findings`;
+    // `grep -rln adoptiveParentageOptions\|adoptedRaceOptions apps/desktop/src`
+    // -> no matches anywhere under the desktop app) -- the Rust DTO field's
+    // own doc comment says the same thing ("Additive field -- a consumer
+    // that does not read it is unaffected"). So both stay `engine-does-not-
+    // hold` (bucket D, unchanged), with a NEW, more precise evidence string
+    // than the blanket "never applies" they used to carry -- naming exactly
+    // what remains (a desktop UI wiring gap) rather than collapsing 28 real,
+    // engine-resolved records into the same bucket as the 25 that have no
+    // real consumer of any kind.
+    //
+    // The other 25 `Unclassified` bucket-D records (20 Skinwalker `Change
+    // Shape (<Option>)` components, `Oversized Goblin`, 2 Human Ethnicity
+    // placeholders, `Human ~ Tribalistic Languages`, `Suli ~ Trusted
+    // Mediator`) are UNCHANGED by this cycle -- `reach_gate` names a real
+    // remedy for each, and every one is "a new mechanism, not a missing
+    // wire" (its own words); the negative tests below pin that this fix
+    // does not sweep them in too.
+    // -----------------------------------------------------------------
+
+    /// RED/GREEN proof case 1, against the REAL corpus and the REAL
+    /// resolver chain (`adopted_race_choose_selectors` + `load_trait_pool` +
+    /// `resolve_adopted_race_options` -- the identical three calls
+    /// `race_trait_picker.rs`'s own menu command makes). `Adopted Race ~
+    /// Dwarf` (`dwarf_abilities_race.lst:37`) is one of the 7 Core Rulebook
+    /// selectors `reach_gate.rs`'s own finding names as reaching "4 real
+    /// grants apiece for Dwarf/Elf/Gnome/Half-Elf/Half-Orc/Human" through
+    /// the IPC builder. Before this cycle's fix this fell to the blanket
+    /// `race_trait_record_loaded_but_never_applies` even though the exact
+    /// same corpus load already resolves it with real grants; after, it
+    /// carries a more precise (still non-done) evidence string naming the
+    /// real remaining gap (desktop UI wiring, not resolver logic).
+    #[test]
+    fn an_adopted_race_selector_with_real_pool_grants_gets_the_precise_ui_gap_evidence() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = core_rulebook_race_trait_unit("dwarf_abilities_race.lst", 37, "Adopted Race ~ Dwarf", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_ne!(
+            verdict.evidence, "race_trait_record_loaded_but_never_applies",
+            "the selector resolves real grants through trait_pool and must not read as inert"
+        );
+        assert_ne!(verdict.status, "grounded", "the desktop UI never reads this DTO field yet");
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_adopted_race_selector_resolves_real_grants_but_no_desktop_ui_surface_reads_them"
+        );
+    }
+
+    /// RED/GREEN proof case 2, against the REAL corpus. ARG's `Drow`
+    /// (`arg_abilities_race.lst:296`, `CATEGORY:Adoptive Parentage`) carries
+    /// a real, non-PI description ("You were adopted and raised by drow.")
+    /// the engine genuinely renders -- `race_trait_picker.rs`'s own
+    /// `the_menu_command_itself_carries_all_seven_adoptive_parentage_
+    /// options_with_real_grants` test already proves the real Tauri command
+    /// serves it. It still must not read `text-complete`: Decision 7's
+    /// condition 3 is "the prose is available to print... on the character
+    /// sheet", and no character sheet reads this DTO field today.
+    #[test]
+    fn an_adoptive_parentage_option_with_a_real_description_gets_the_precise_ui_gap_evidence() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = race_trait_unit("arg_abilities_race.lst", 296, "Drow", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_ne!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
+        assert_ne!(
+            verdict.status, "text-complete",
+            "the real description exists but no shipped screen renders this DTO field yet"
+        );
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_adoptive_parentage_option_rendered_by_the_engine_but_no_desktop_ui_surface_reads_it"
+        );
+        // The real text still must be independently provable -- it is what
+        // makes this a UI gap and not a content gap.
+        let rendered = facts.race_trait_adoptive_parentage_rendered_description(&unit).unwrap();
+        assert!(
+            rendered.contains("You were adopted and raised by drow"),
+            "expected the real DESC: text, got {rendered:?}"
+        );
+    }
+
+    /// Regression: `Oversized Goblin` (`mc_abilities_race.lst:31`) is
+    /// neither an Adopted-Race selector nor an Adoptive Parentage option --
+    /// its own `ABILITY:...AUTOMATIC...` grant targets two OTHER, already-
+    /// `Alternate` records, never itself. `reach_gate.rs`'s own
+    /// `OPEN_FINDINGS` names its real remedy as a whole new ability-pool
+    /// variant mechanism ("outside the race-trait lane's replace-flag
+    /// protocol"), so this fix must leave it exactly where it was.
+    #[test]
+    fn oversized_goblin_is_unaffected_and_still_reads_never_applies() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "monster_codex".to_string(),
+            source_book: "monster_codex".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Oversized Goblin".to_string(),
+            name: "Oversized Goblin".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "mc_abilities_race.lst".to_string(), line: 31 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
+    }
+
+    /// Regression: a Skinwalker `Change Shape (<Option>)` component
+    /// (`skinwalker_abilities_race_subrace.lst:236`, `VISIBLE:NO`) is a
+    /// TYPE-pool-referenced sub-record, not an Adopted-Race selector or an
+    /// Adoptive Parentage option, and it carries a real magnitude token
+    /// (`text_only` false) besides. `reach_gate.rs`'s own `OPEN_FINDINGS`
+    /// names its remedy as a new TYPE-pool option picker ("outside this
+    /// fold's scope"), so this fix must leave all 20 exactly where they
+    /// were.
+    #[test]
+    fn a_skinwalker_change_shape_component_is_unaffected_and_still_reads_never_applies() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "bestiary_5".to_string(),
+            source_book: "bestiary_5".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Skinwalker ~ Change Shape (Bite)".to_string(),
+            name: "Change Shape (Bite Attack)".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance {
+                file: "skinwalker_abilities_race_subrace.lst".to_string(),
+                line: 236,
+            },
+            magnitude_token_count: 2,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
     }
 }
 
