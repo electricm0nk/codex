@@ -11,6 +11,49 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 34 lane B — wire `adoptedRaceOptions`/`adoptiveParentageOptions` into the desktop UI, close 27/53 race_trait units to DONE — complete
+
+**Status: complete.** Closes wave 33 lane B's own next-cycle plan item 1: the desktop
+TypeScript boundary (`apps/desktop/src/boundary/loadAlternateRacialTraits.ts`) now declares
+`AlternateRacialTraitsResponse.adoptiveParentageOptions`/`.adoptedRaceOptions` (previously
+undeclared — `grep -rln 'adoptedRaceOptions\|adoptiveParentageOptions' apps/desktop/src`
+found 0 files at cycle start, 5 at cycle end), and `AlternateTraitPicker.tsx` renders a real
+picker section for each — name, book, rendered description, real corpus grants. The Rust
+resolver chain and Tauri command were already real and tested (wave 33 lane B / SD-32
+card-11 / `AT-34-E3-001`); this cycle is the frontend wiring plus the
+`v06_work_inventory.rs` classify()-instrument update the frontend fix made true (that
+instrument hardcodes its "no desktop UI surface reads it" finding rather than deriving it
+live, so leaving it stale after shipping the UI would have made the atlas silently wrong).
+
+**Bucket movement**, confirmed by `python3 scripts/completion_atlas.py --check` before/after
+and independently by a full unit-level diff of `docs/work-inventory.json` (49438=49438 ids,
+exactly 27 units differ, only their `status`/`evidence` fields): `population=49438 overlap=0
+unclassified=0 citation_failures=0`; `D: 2924 → 2897` (−27), `DONE: 24994 → 25021` (+27).
+`denominator_gate.py --check`/`--check-provenance`: `violations=0` both.
+
+**Worktree provisioning defect, caught and self-corrected before implementation:** this
+cycle's own worktree was cut 409 commits behind `tranche/14`'s real tip (merge-base =
+`ea2b3396f2`, the tranche/13→develop merge point) — `scripts/completion_atlas.py` did not
+exist at all at that base, and `race_trait_picker.rs` was missing part of the exact
+population this cycle's own brief targets. Fixed via `git rebase tranche/14` (clean, zero
+conflicts — no other commit between the two points touched this cycle's frontend files)
+before any implementation began. Retro-logged as an `incident`
+(`docs/retro/events/sd34-wave34-laneb.jsonl`, `recurrence_key: wrong-base-worktree`).
+
+Full detail, RED→GREEN evidence, and every figure's re-derive command: receipt
+`artifacts/bucket-d-mining/wave34_laneB_race_trait_desktop_wiring_cycle_receipt.md`.
+
+- **Commit SHA:** `c889e99943` (code + instrument fix + guarded regen).
+- **Files touched:** `apps/desktop/src/boundary/loadAlternateRacialTraits.ts`,
+  `apps/desktop/src/raceCatalog/{alternateTraitPickerModel.ts,alternateTraitPickerModel.test.ts,AlternateTraitPicker.tsx}`,
+  `apps/desktop/src/characterHub/alternateTraitSelection.test.ts`,
+  `src/bin/v06_work_inventory.rs`, `scripts/completion_atlas.py`,
+  `docs/work-inventory.json`, `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`.
+- **Next-cycle plan (unchanged from wave 33 lane B, items 2–4 — not touched this cycle):**
+  Skinwalker `Change Shape` (20, needs a new TYPE-pool option picker), Human Ethnicity +
+  `Oversized Goblin` (2+1, operator ruling needed), `inner_sea_races`/`Rougarou` (2+1,
+  upstream data gaps, permanently blocked).
+
 ### Cycle — Wave 34, Lane A — closes wave 33 lane A's deferred 5-unit `weapon-and-armor-proficiency` rung (Bard, Fighter, Paladin, Ranger, Rogue) — complete
 
 **Status: complete (5/5), no escalation.** `pilot_compute::explain_base_class_weapon_and_armor_
