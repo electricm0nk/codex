@@ -118,3 +118,37 @@ unverified change AGENTS.md forbids. No commit message on this branch may attrib
 
 Caution for anyone re-running it: `cargo test ... | tail` reports shell exit 0 even when the test
 fails, because the pipeline takes `tail`'s status. Read the `test result:` line, not `$?`.
+
+---
+
+## Choice-pool inventory (from B-6; sizes the item-13 picker work)
+
+`backend` surveyed what the ~45 `choice:*` slots the engine reads can actually be offered from
+today. Derivation commands are in its B-6 report. Three tiers:
+
+**Has a list command today** — dispatchable as frontend picker tickets right now: feat slots
+(`level_1_character_feat`, `fighter_bonus_feat`, `human_bonus_feat`, `monk_bonus_feat`) via
+`list_feats_for_character`; feat chooser targets via `list_weapon_targets` and the existing picker
+flow; companion species via `list_companion_catalog`; character traits; alternate racial traits.
+
+**Partially covered by `list_class_feature_pool_options`** — it returns corpus record KEYS
+(`"Rogue Talent ~ Ledge Walker"`), not the engine's selection ids (`talent:resiliency`), so a
+picker needs a key→selection-id bridge that does not exist in src-tauri yet. Real depth exists:
+Rogue Talent (74 across 7 books), Rage Power (105 across 6), Discovery (57), Magus Arcana (32),
+Slayer Talent (21), Ninja Trick (21), Arcanist Exploit (20).
+
+**No list command at all** — the item-13 headline gap: cleric/inquisitor domain, sorcerer and
+bloodrager bloodline, wizard school specialization and opposed schools, druid nature bond, oracle
+mystery/curse/revelation, witch hex, shaman spirit, cavalier order, warpriest blessing, arcanist
+metamagic knowledge, summoner eidolon evolution, ranger combat style/favored enemy/terrain, psychic
+discipline, favored class bonus, fighter weapon training group.
+
+**Sizing caveat, which is the important part.** The per-slot id counts are greps over
+`src/rules_core` including tests, so they are an upper bound on what the engine actually resolves,
+not a validated option list. Each `list_*_options` command is a **bridge ticket only if the engine
+already holds a queryable option table** for that slot. Where the engine only has hard-coded match
+arms, exposing "all valid ids" is an engine gap (§4.2 blocker), not something this team can wire.
+The pool catalog's group names ("Anger Domain", "Arcane Bloodline") could yield display *names* but
+not ids the engine accepts.
+
+Which slots fall on which side of that line is not yet known — B-7 (read-only) answers it.
