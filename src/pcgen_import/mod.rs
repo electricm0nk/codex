@@ -14,6 +14,7 @@
 //! without depending on the IR converter. The canonical home remains
 //! `pcgen_import::lst_parser::ParsedLstRecord`.
 
+pub mod corpus_trap_baseline;
 pub mod corpus_traps;
 pub mod include_resolver;
 pub mod ir_converter;
