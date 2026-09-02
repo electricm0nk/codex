@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 0,
-      "partial": 0,
-      "not_started": 45,
+      "done": 42,
+      "partial": 1,
+      "not_started": 2,
       "denominator": 45,
-      "pct": 0.0,
+      "pct": 93.3,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "origin": 45,
@@ -25,7 +25,7 @@
         },
         {
           "name": "Default",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Default"
@@ -39,301 +39,301 @@
         },
         {
           "name": "Equipment ~ Deliquescent Gloves",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Equipment ~ Deliquescent Gloves"
         },
         {
           "name": "Equipment ~ Medusa Mask",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Equipment ~ Medusa Mask"
         },
         {
           "name": "Equipment ~ Perform Bonus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Equipment ~ Perform Bonus"
         },
         {
           "name": "Headband of Intellect Knowledge Skill Selection",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "HeadbandKnowledgeSkill",
           "standing": "origin",
           "display_name": "Headband of Intellect Knowledge Skill Selection"
         },
         {
           "name": "Merform Belt Merfolk Form",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Merform Belt Merfolk Form"
         },
         {
           "name": "Unarmed Benevolent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Benevolent"
         },
         {
           "name": "Unarmed Conductive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Conductive"
         },
         {
           "name": "Unarmed Corrosive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Corrosive"
         },
         {
           "name": "Unarmed Corrosive Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Corrosive Burst"
         },
         {
           "name": "Unarmed Cruel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Cruel"
         },
         {
           "name": "Unarmed Cunning",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Cunning"
         },
         {
           "name": "Unarmed Dispelling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Dispelling"
         },
         {
           "name": "Unarmed Dispelling Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Dispelling Burst"
         },
         {
           "name": "Unarmed Furious",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Furious"
         },
         {
           "name": "Unarmed Furyborn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Furyborn"
         },
         {
           "name": "Unarmed Glorious",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Glorious"
         },
         {
           "name": "Unarmed Grayflame",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Grayflame"
         },
         {
           "name": "Unarmed Grounding",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Grounding"
         },
         {
           "name": "Unarmed Guardian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Guardian"
         },
         {
           "name": "Unarmed Heartseeker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Heartseeker"
         },
         {
           "name": "Unarmed Huntsman",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Huntsman"
         },
         {
           "name": "Unarmed Igniting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Igniting"
         },
         {
           "name": "Unarmed Impact",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Impact"
         },
         {
           "name": "Unarmed Invigorating",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Invigorating"
         },
         {
           "name": "Unarmed Jurist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Jurist"
         },
         {
           "name": "Unarmed Ki Intensifying",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Ki Intensifying"
         },
         {
           "name": "Unarmed Lifesurge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Lifesurge"
         },
         {
           "name": "Unarmed Limning",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Limning"
         },
         {
           "name": "Unarmed Menacing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Menacing"
         },
         {
           "name": "Unarmed Mimetic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Mimetic"
         },
         {
           "name": "Unarmed Negating",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Negating"
         },
         {
           "name": "Unarmed Neutralizing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Neutralizing"
         },
         {
           "name": "Unarmed Nullifying",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Nullifying"
         },
         {
           "name": "Unarmed Ominous",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Ominous"
         },
         {
           "name": "Unarmed Phase locking",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Phase locking"
         },
         {
           "name": "Unarmed Planar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Planar"
         },
         {
           "name": "Unarmed Quenching",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Quenching"
         },
         {
           "name": "Unarmed Repositioning",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Repositioning"
         },
         {
           "name": "Unarmed Seaborne",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Seaborne"
         },
         {
           "name": "Unarmed Spellstealing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Spellstealing"
         },
         {
           "name": "Unarmed Stalking",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Stalking"
         },
         {
           "name": "Unarmed Thawing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Thawing"
         },
         {
           "name": "Unarmed Valiant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnarmedDisplay",
           "standing": "origin",
           "display_name": "Unarmed Valiant"
@@ -343,11 +343,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 1128,
-      "partial": 28,
-      "not_started": 83,
+      "done": 1158,
+      "partial": 41,
+      "not_started": 40,
       "denominator": 1239,
-      "pct": 91.0,
+      "pct": 93.5,
       "excluded_from_percentage": 185,
       "standing_breakdown": {
         "origin": 1239,
@@ -881,7 +881,7 @@
         },
         {
           "name": "Bane Baldric",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMedium.Shirt",
           "standing": "origin",
           "display_name": "Bane Baldric"
@@ -937,7 +937,7 @@
         },
         {
           "name": "Barding (Agile Breastplate/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Agile Breastplate/Large)"
@@ -951,7 +951,7 @@
         },
         {
           "name": "Barding (Agile Half-Plate/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Agile Half-Plate/Large)"
@@ -965,7 +965,7 @@
         },
         {
           "name": "Barding (Armored Coat/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Armored Coat/Large)"
@@ -979,7 +979,7 @@
         },
         {
           "name": "Barding (Do-maru/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Do-maru/Large)"
@@ -993,7 +993,7 @@
         },
         {
           "name": "Barding (Four-mirror/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Four-mirror/Large)"
@@ -1007,7 +1007,7 @@
         },
         {
           "name": "Barding (Haramaki/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Haramaki/Large)"
@@ -1021,7 +1021,7 @@
         },
         {
           "name": "Barding (Kikko/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Kikko/Large)"
@@ -1035,7 +1035,7 @@
         },
         {
           "name": "Barding (Kusari Gusoku/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Kusari Gusoku/Large)"
@@ -1049,7 +1049,7 @@
         },
         {
           "name": "Barding (Lamellar Cuirass/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Lamellar Cuirass/Large)"
@@ -1063,7 +1063,7 @@
         },
         {
           "name": "Barding (Lamellar/Iron/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Lamellar/Iron/Large)"
@@ -1077,7 +1077,7 @@
         },
         {
           "name": "Barding (Lamellar/Leather/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Lamellar/Leather/Large)"
@@ -1091,7 +1091,7 @@
         },
         {
           "name": "Barding (Lamellar/Steel/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Lamellar/Steel/Large)"
@@ -1105,7 +1105,7 @@
         },
         {
           "name": "Barding (Lamellar/Stone/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Lamellar/Stone/Large)"
@@ -1119,7 +1119,7 @@
         },
         {
           "name": "Barding (Lemellar/Horn/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Lemellar/Horn/Large)"
@@ -1133,7 +1133,7 @@
         },
         {
           "name": "Barding (Mountain Pattern/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Mountain Pattern/Large)"
@@ -1147,7 +1147,7 @@
         },
         {
           "name": "Barding (O-yoroi/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (O-yoroi/Large)"
@@ -1161,7 +1161,7 @@
         },
         {
           "name": "Barding (Parade/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Parade/Large)"
@@ -1175,7 +1175,7 @@
         },
         {
           "name": "Barding (Quilted Cloth/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Quilted Cloth/Large)"
@@ -1189,7 +1189,7 @@
         },
         {
           "name": "Barding (Silken Ceremonial/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Silken Ceremonial/Large)"
@@ -1203,7 +1203,7 @@
         },
         {
           "name": "Barding (Stone Plate/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Stone Plate/Large)"
@@ -1217,7 +1217,7 @@
         },
         {
           "name": "Barding (Tatami-do/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Tatami-do/Large)"
@@ -1231,7 +1231,7 @@
         },
         {
           "name": "Barding (Wooden/Large)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barding (Wooden/Large)"
@@ -1245,7 +1245,7 @@
         },
         {
           "name": "Bastard's Sting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bastard's Sting"
@@ -1462,14 +1462,14 @@
         },
         {
           "name": "Blade of the Rising Sun",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blade of the Rising Sun"
         },
         {
           "name": "Blade of the Sword-Saint",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blade of the Sword-Saint"
@@ -1966,14 +1966,14 @@
         },
         {
           "name": "Bullet (Burrowing/Greater)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bullet (Burrowing/Greater)"
         },
         {
           "name": "Bullet (Burrowing/Lesser)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bullet (Burrowing/Lesser)"
@@ -2001,7 +2001,7 @@
         },
         {
           "name": "Bullet (Tracer)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bullet (Tracer)"
@@ -2141,7 +2141,7 @@
         },
         {
           "name": "Candles (10)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Candles (10)"
@@ -3226,7 +3226,7 @@
         },
         {
           "name": "Duelist's Vambraces",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Bracer.LesserMedium",
           "standing": "origin",
           "display_name": "Duelist's Vambraces"
@@ -3597,7 +3597,7 @@
         },
         {
           "name": "Feychild Necklace",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Amulet.GreaterMinor",
           "standing": "origin",
           "display_name": "Feychild Necklace"
@@ -3695,7 +3695,7 @@
         },
         {
           "name": "Flight Arrows (20)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.Arrow",
           "standing": "origin",
           "display_name": "Flight Arrows (20)"
@@ -4248,14 +4248,14 @@
         },
         {
           "name": "Hammer (Polarity)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hammer (Polarity)"
         },
         {
           "name": "Hammer of Thunderbolts (Major Form)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Martial.Ranged.Thrown.Bludgeoning.Electricity.Sonic.Hammer.Artifact.Minor",
           "standing": "origin",
           "display_name": "Hammer of Thunderbolts (Major Form)"
@@ -4269,7 +4269,7 @@
         },
         {
           "name": "Hammer, Dwarfbond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hammer, Dwarfbond"
@@ -4549,7 +4549,7 @@
         },
         {
           "name": "Hellscourge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hellscourge"
@@ -5179,7 +5179,7 @@
         },
         {
           "name": "Katana",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.EasternWeapon.Eastern.Melee.Exotic.Slashing.Deadly.OneHanded.Sword.BladeHeavy.Tengu",
           "standing": "unclassified",
           "display_name": "Katana"
@@ -5361,7 +5361,7 @@
         },
         {
           "name": "Lash of the Howler",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Lash of the Howler"
@@ -5809,7 +5809,7 @@
         },
         {
           "name": "Merform Belt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Belt.LesserMajor",
           "standing": "origin",
           "display_name": "Merform Belt"
@@ -6383,28 +6383,28 @@
         },
         {
           "name": "Orb of Foul Abaddon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMedium",
           "standing": "origin",
           "display_name": "Orb of Foul Abaddon"
         },
         {
           "name": "Orb of Golden Heaven",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMedium.Light Source",
           "standing": "origin",
           "display_name": "Orb of Golden Heaven"
         },
         {
           "name": "Orb of Pure Law",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMajor",
           "standing": "origin",
           "display_name": "Orb of Pure Law"
         },
         {
           "name": "Orb of Utter Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMajor",
           "standing": "origin",
           "display_name": "Orb of Utter Chaos"
@@ -6446,7 +6446,7 @@
         },
         {
           "name": "Otherworldly Kimono",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMajor.Robe",
           "standing": "origin",
           "display_name": "Otherworldly Kimono"
@@ -6761,7 +6761,7 @@
         },
         {
           "name": "Pistol (Firedrake)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pistol (Firedrake)"
@@ -6775,7 +6775,7 @@
         },
         {
           "name": "Pistol of the Infinite Sky",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pistol of the Infinite Sky"
@@ -7118,7 +7118,7 @@
         },
         {
           "name": "Quarterstaff of Vaulting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Quarterstaff of Vaulting"
@@ -8238,7 +8238,7 @@
         },
         {
           "name": "Scimitar of the Spellthief",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Scimitar of the Spellthief"
@@ -8896,21 +8896,21 @@
         },
         {
           "name": "Spider's Fang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider's Fang"
         },
         {
           "name": "Spirit Caller",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spirit Caller"
         },
         {
           "name": "Spiritualist Rings",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.GreaterMajor",
           "standing": "origin",
           "display_name": "Spiritualist Rings"
@@ -9365,7 +9365,7 @@
         },
         {
           "name": "Surgeon's Tools (Small)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Surgeon's Tools (Small)"
@@ -9407,7 +9407,7 @@
         },
         {
           "name": "Sword (Ten-Ring)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sword (Ten-Ring)"
@@ -9582,7 +9582,7 @@
         },
         {
           "name": "Thieves' Tools (Masterwork)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Thieves' Tools (Masterwork)"
@@ -9701,7 +9701,7 @@
         },
         {
           "name": "Trident, Triton's",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Trident, Triton's"
@@ -10327,11 +10327,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 80,
-      "partial": 70,
-      "not_started": 2,
+      "done": 87,
+      "partial": 64,
+      "not_started": 1,
       "denominator": 152,
-      "pct": 52.6,
+      "pct": 57.2,
       "excluded_from_percentage": 38,
       "standing_breakdown": {
         "origin": 152,
@@ -10452,7 +10452,7 @@
         },
         {
           "name": "Brawling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "unclassified",
           "display_name": "Brawling"
@@ -10585,7 +10585,7 @@
         },
         {
           "name": "Deathless",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Armor.Bracer",
           "standing": "origin",
           "display_name": "Deathless"
@@ -10732,21 +10732,21 @@
         },
         {
           "name": "Fire-Forged Steel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin",
           "display_name": "Fire-Forged Steel (BaseMaterial.MasterworkQuality.Armor)"
         },
         {
           "name": "Fire-Forged Steel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin",
           "display_name": "Fire-Forged Steel (BaseMaterial.MasterworkQuality.Armor) #3"
         },
         {
           "name": "Fire-Forged Steel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin",
           "display_name": "Fire-Forged Steel (BaseMaterial.MasterworkQuality.Armor) #4"
@@ -10774,21 +10774,21 @@
         },
         {
           "name": "Frost-Forged Steel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin",
           "display_name": "Frost-Forged Steel (BaseMaterial.MasterworkQuality.Armor)"
         },
         {
           "name": "Frost-Forged Steel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin",
           "display_name": "Frost-Forged Steel (BaseMaterial.MasterworkQuality.Armor) #3"
         },
         {
           "name": "Frost-Forged Steel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin",
           "display_name": "Frost-Forged Steel (BaseMaterial.MasterworkQuality.Armor) #4"
@@ -11614,7 +11614,7 @@
         },
         {
           "name": "Whipwood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.Weapon",
           "standing": "unclassified",
           "display_name": "Whipwood"
@@ -11685,7 +11685,7 @@
       "items": [
         {
           "name": "Craft (Tattoos)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Intelligence.Craft.Base",
           "standing": "unclassified",
           "display_name": "Craft (Tattoos)"
@@ -11696,8 +11696,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 1,
+      "partial": 1,
+      "not_started": 0,
       "denominator": 1,
       "pct": 0.0,
       "excluded_from_percentage": 0,
@@ -11707,7 +11707,7 @@
       "items": [
         {
           "name": "Medusa Mask Gaze",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Medusa Mask Gaze"

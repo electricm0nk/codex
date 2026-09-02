@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 26,
       "partial": 0,
-      "not_started": 120,
+      "not_started": 94,
       "denominator": 120,
-      "pct": 0.0,
+      "pct": 21.7,
       "excluded_from_percentage": 64,
       "standing_breakdown": {
         "unclassified": 64,
@@ -32,7 +32,7 @@
         },
         {
           "name": "Atheist Inspiration",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent",
           "standing": "origin",
           "display_name": "Atheist Inspiration"
@@ -67,14 +67,14 @@
         },
         {
           "name": "Calumny",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.ProvocateurClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Calumny"
         },
         {
           "name": "Cavern Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Cavern Stride"
@@ -95,7 +95,7 @@
         },
         {
           "name": "Chosen Victim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Chosen Victim"
@@ -165,7 +165,7 @@
         },
         {
           "name": "Clockwork Familiar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Clockwork Familiar"
@@ -179,7 +179,7 @@
         },
         {
           "name": "Clockwork Upgrade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Clockwork Upgrade"
@@ -228,7 +228,7 @@
         },
         {
           "name": "Critical Research Focus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.StudiousLibrarianClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Critical Research Focus"
@@ -249,7 +249,7 @@
         },
         {
           "name": "Darkvision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Darkvision"
@@ -291,7 +291,7 @@
         },
         {
           "name": "Dirge of Misfortune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance",
           "standing": "origin",
           "display_name": "Dirge of Misfortune"
@@ -305,14 +305,14 @@
         },
         {
           "name": "Disarming Flirtation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Disarming Flirtation"
         },
         {
           "name": "Discreet Inquiries",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Social Talent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Discreet Inquiries"
@@ -326,14 +326,14 @@
         },
         {
           "name": "Divine Might",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Divine Might"
         },
         {
           "name": "Divine Word",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Divine Word"
@@ -382,7 +382,7 @@
         },
         {
           "name": "Executioner's Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Executioner's Strike"
@@ -396,7 +396,7 @@
         },
         {
           "name": "Eye of the Sun and Moon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Features.PerfectScholarClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Eye of the Sun and Moon"
@@ -410,7 +410,7 @@
         },
         {
           "name": "False Spellcaster",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent",
           "standing": "origin",
           "display_name": "False Spellcaster"
@@ -445,7 +445,7 @@
         },
         {
           "name": "Final Sway",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Final Sway"
@@ -522,21 +522,21 @@
         },
         {
           "name": "Guerrilla Sniping",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Guerrilla Sniping"
         },
         {
           "name": "Guidance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Guidance"
         },
         {
           "name": "Hardy Killer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ninja Class Features.FrozenShadowClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Hardy Killer"
@@ -564,7 +564,7 @@
         },
         {
           "name": "Heart's Desire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Heart's Desire"
@@ -606,7 +606,7 @@
         },
         {
           "name": "Iconoclastic Strike*",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.InvestigatorTalent",
           "standing": "origin",
           "display_name": "Iconoclastic Strike*"
@@ -655,14 +655,14 @@
         },
         {
           "name": "Inspire Devotion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Inspire Devotion"
         },
         {
           "name": "Inspired Familiar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Investigator Class Features.BondedInvestigatorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Inspired Familiar"
@@ -795,7 +795,7 @@
         },
         {
           "name": "Nameless Mask",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magus Class Features.MagicWarriorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Nameless Mask"
@@ -823,7 +823,7 @@
         },
         {
           "name": "One with the Library",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.StudiousLibrarianClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "One with the Library"
@@ -837,7 +837,7 @@
         },
         {
           "name": "Overwhelming Presence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Overwhelming Presence"
@@ -851,14 +851,14 @@
         },
         {
           "name": "Paralyzing Light",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Paralyzing Light"
         },
         {
           "name": "Perfect Recollection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.StudiousLibrarianClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Perfect Recollection"
@@ -893,7 +893,7 @@
         },
         {
           "name": "Poison Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison Resistance"
@@ -1096,21 +1096,21 @@
         },
         {
           "name": "Stunning Light",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Stunning Light"
         },
         {
           "name": "Sustained Inspirational Expertise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent",
           "standing": "origin",
           "display_name": "Sustained Inspirational Expertise"
         },
         {
           "name": "Swift Tracker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ninja Class Features.FrozenShadowClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Swift Tracker"
@@ -1173,14 +1173,14 @@
         },
         {
           "name": "Turnabout",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Turnabout"
         },
         {
           "name": "Twilight Talon Improvisation*",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.InvestigatorTalent",
           "standing": "origin",
           "display_name": "Twilight Talon Improvisation*"
@@ -1720,11 +1720,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 0,
+      "done": 2,
       "partial": 1,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 3,
-      "pct": 0.0,
+      "pct": 66.7,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 3
@@ -1732,14 +1732,14 @@
       "items": [
         {
           "name": "Obliviating",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee.Bludgeoning",
           "standing": "origin",
           "display_name": "Obliviating"
         },
         {
           "name": "Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon",
           "standing": "origin",
           "display_name": "Training"
@@ -1757,8 +1757,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 5,
-      "partial": 0,
-      "not_started": 1,
+      "partial": 1,
+      "not_started": 0,
       "denominator": 6,
       "pct": 83.3,
       "excluded_from_percentage": 0,
@@ -1782,7 +1782,7 @@
         },
         {
           "name": "Masked Renown",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Masked Renown"
@@ -1814,8 +1814,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 21,
+      "partial": 21,
+      "not_started": 0,
       "denominator": 21,
       "pct": 0.0,
       "excluded_from_percentage": 5,
@@ -1826,14 +1826,14 @@
       "items": [
         {
           "name": "Apathy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Apathy"
         },
         {
           "name": "Assumed Likeness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Assumed Likeness"
@@ -1847,133 +1847,133 @@
         },
         {
           "name": "Commune with Texts",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Commune with Texts"
         },
         {
           "name": "Diminished Detection",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Diminished Detection"
         },
         {
           "name": "Dream Reality",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Dream Reality"
         },
         {
           "name": "Implant Urge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Implant Urge"
         },
         {
           "name": "Inveigle Monster",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Inveigle Monster"
         },
         {
           "name": "Inveigle Person",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Inveigle Person"
         },
         {
           "name": "Oath of Anonymity",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Oath of Anonymity"
         },
         {
           "name": "Recorporeal Incarnation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Recorporeal Incarnation"
         },
         {
           "name": "Rotting Alliance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Rotting Alliance"
         },
         {
           "name": "Sealed Sending",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Sealed Sending"
         },
         {
           "name": "Searching Shadows",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Searching Shadows"
         },
         {
           "name": "Seeds of Influence",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Seeds of Influence"
         },
         {
           "name": "Seeds of Influence (Greater)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Seeds of Influence (Greater)"
         },
         {
           "name": "Seek Shelter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Seek Shelter"
         },
         {
           "name": "Substitute Trail",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Substitute Trail"
         },
         {
           "name": "Transfiguring Touch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Transfiguring Touch"
         },
         {
           "name": "True Skill",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "True Skill"
         },
         {
           "name": "Violent Accident",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Violent Accident"
         },
         {
           "name": "Wandering Trail",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Wandering Trail"
@@ -2012,8 +2012,8 @@
       "kind": "template",
       "label": "Templates",
       "done": 0,
-      "partial": 0,
-      "not_started": 6,
+      "partial": 2,
+      "not_started": 4,
       "denominator": 6,
       "pct": 0.0,
       "excluded_from_percentage": 0,
@@ -2044,7 +2044,7 @@
         },
         {
           "name": "Lantern Bearer Bonus Darkvision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Lantern Bearer Bonus Darkvision"
@@ -2058,7 +2058,7 @@
         },
         {
           "name": "Lantern Bearer New Darkvision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Lantern Bearer New Darkvision"

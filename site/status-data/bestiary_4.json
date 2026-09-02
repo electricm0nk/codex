@@ -6,8 +6,8 @@
       "kind": "ability",
       "label": "Abilities",
       "done": 0,
-      "partial": 0,
-      "not_started": 9,
+      "partial": 9,
+      "not_started": 0,
       "denominator": 9,
       "pct": 0.0,
       "excluded_from_percentage": 0,
@@ -17,63 +17,63 @@
       "items": [
         {
           "name": "Racial Traits ~ Changeling",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Changeling"
         },
         {
           "name": "Racial Traits ~ Kasatha",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Kasatha"
         },
         {
           "name": "Racial Traits ~ Kitsune",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Kitsune"
         },
         {
           "name": "Racial Traits ~ Nagaji",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Nagaji"
         },
         {
           "name": "Racial Traits ~ Samsaran",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Samsaran"
         },
         {
           "name": "Racial Traits ~ Trox",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Trox"
         },
         {
           "name": "Racial Traits ~ Wayang",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Wayang"
         },
         {
           "name": "Racial Traits ~ Wyrwood",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Wyrwood"
         },
         {
           "name": "Racial Traits ~ Wyvaran",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Wyvaran"
@@ -95,14 +95,14 @@
       "items": [
         {
           "name": "Guarded Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower",
           "standing": "unclassified",
           "display_name": "Guarded Mind"
         },
         {
           "name": "It Came From Beyond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "It Came From Beyond"
@@ -116,7 +116,7 @@
         },
         {
           "name": "The Stars Are Right",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "The Stars Are Right"
@@ -728,21 +728,21 @@
       "items": [
         {
           "name": "Dark Tapestry Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dark Tapestry Subdomain"
         },
         {
           "name": "Stars Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Stars Subdomain"
         },
         {
           "name": "Void",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Void"
@@ -1037,11 +1037,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 460,
-      "partial": 130,
-      "not_started": 6,
+      "done": 479,
+      "partial": 117,
+      "not_started": 0,
       "denominator": 596,
-      "pct": 77.2,
+      "pct": 80.4,
       "excluded_from_percentage": 217,
       "standing_breakdown": {
         "origin": 596,
@@ -1337,7 +1337,7 @@
         },
         {
           "name": "Artifice Domain - Repair",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Artifice Domain - Repair"
@@ -1778,7 +1778,7 @@
         },
         {
           "name": "Chameleon Scales",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Chameleon Scales"
@@ -1890,7 +1890,7 @@
         },
         {
           "name": "Colossus Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Colossus Traits"
@@ -2275,7 +2275,7 @@
         },
         {
           "name": "Demon Lord Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural",
           "standing": "origin",
           "display_name": "Demon Lord Traits"
@@ -2506,7 +2506,7 @@
         },
         {
           "name": "Divine Swiftness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Divine Swiftness"
@@ -2590,7 +2590,7 @@
         },
         {
           "name": "Earth Domain - Tremorsense",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Earth Domain - Tremorsense"
@@ -2653,7 +2653,7 @@
         },
         {
           "name": "Empyreal Lord Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural",
           "standing": "origin",
           "display_name": "Empyreal Lord Traits"
@@ -2877,7 +2877,7 @@
         },
         {
           "name": "Favored Spawn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Favored Spawn"
@@ -3045,7 +3045,7 @@
         },
         {
           "name": "Flight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "YaoguaiMakersGift.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Flight"
@@ -3073,14 +3073,14 @@
         },
         {
           "name": "Formian Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural",
           "standing": "origin",
           "display_name": "Formian Traits"
         },
         {
           "name": "Fortification",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Fortification"
@@ -3199,14 +3199,14 @@
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption)"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #2"
@@ -3220,7 +3220,7 @@
         },
         {
           "name": "Grab and Constrict",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "YaoguaiMakersGift.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Grab and Constrict"
@@ -3241,7 +3241,7 @@
         },
         {
           "name": "Great Old One Traits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural",
           "standing": "origin",
           "display_name": "Great Old One Traits"
@@ -3766,7 +3766,7 @@
         },
         {
           "name": "Kaiju Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Kaiju Traits"
@@ -3976,7 +3976,7 @@
         },
         {
           "name": "Magic Domain - Resistant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Magic Domain - Resistant"
@@ -4130,7 +4130,7 @@
         },
         {
           "name": "Multiple Heads",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Multiple Heads"
@@ -4144,7 +4144,7 @@
         },
         {
           "name": "Mythic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Mythic"
@@ -4291,7 +4291,7 @@
         },
         {
           "name": "Otherworldly Insight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Otherworldly Insight"
@@ -4893,7 +4893,7 @@
         },
         {
           "name": "Psychopomp Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural",
           "standing": "unclassified",
           "display_name": "Psychopomp Traits"
@@ -5054,35 +5054,35 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP)"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #4"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #5"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #6"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #7"
@@ -5306,7 +5306,7 @@
         },
         {
           "name": "Serpent-Headed Tail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Serpent-Headed Tail"
@@ -5859,7 +5859,7 @@
         },
         {
           "name": "Stat Bonuses",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Stat Bonuses"
@@ -5880,7 +5880,7 @@
         },
         {
           "name": "Sticky",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sticky"
@@ -6069,7 +6069,7 @@
         },
         {
           "name": "Telekinesis",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "unclassified",
           "display_name": "Telekinesis"
@@ -6111,7 +6111,7 @@
         },
         {
           "name": "Tentacles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Tentacles"
@@ -6216,7 +6216,7 @@
         },
         {
           "name": "Trample",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "YaoguaiMakersGift.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Trample (YaoguaiMakersGift.SpecialAttack.Extraordinary)"
@@ -6272,7 +6272,7 @@
         },
         {
           "name": "Travel Domain - Unstoppable",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Travel Domain - Unstoppable"
@@ -6349,7 +6349,7 @@
         },
         {
           "name": "Unnatural Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "unclassified",
           "display_name": "Unnatural Aura"
@@ -8300,11 +8300,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 12,
-      "partial": 4,
-      "not_started": 62,
+      "done": 51,
+      "partial": 13,
+      "not_started": 14,
       "denominator": 78,
-      "pct": 15.4,
+      "pct": 65.4,
       "excluded_from_percentage": 66,
       "standing_breakdown": {
         "unclassified": 66,
@@ -8320,7 +8320,7 @@
         },
         {
           "name": "+2 Dexterity, +2 Intelligence, -2 Charisma",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Dexterity, +2 Intelligence, -2 Charisma"
@@ -8334,14 +8334,14 @@
         },
         {
           "name": "+2 Dexterity, +2 Wisdom",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Dexterity, +2 Wisdom"
         },
         {
           "name": "+2 Dexterity, +2 Wisdom, -2 Intelligence",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Dexterity, +2 Wisdom, -2 Intelligence"
@@ -8369,14 +8369,14 @@
         },
         {
           "name": "+6 Strength, -2 Intelligence, -2 Wisdom, -2 Charisma",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin",
           "display_name": "+6 Strength, -2 Intelligence, -2 Wisdom, -2 Charisma"
         },
         {
           "name": "Acid Belching",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BeheadedBelchingType.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Acid Belching"
@@ -8390,7 +8390,7 @@
         },
         {
           "name": "Alien Presence",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RaceAbility.SpecialQuality.Extraordinary.Aura",
           "standing": "origin",
           "display_name": "Alien Presence"
@@ -8404,7 +8404,7 @@
         },
         {
           "name": "Burrow",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Burrow"
@@ -8439,28 +8439,28 @@
         },
         {
           "name": "Cold Belching",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BeheadedBelchingType.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Cold Belching"
         },
         {
           "name": "Comprehend Languages",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Communicate.SpellLike",
           "standing": "unclassified",
           "display_name": "Comprehend Languages"
         },
         {
           "name": "Construct",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Type",
           "standing": "unclassified",
           "display_name": "Construct"
         },
         {
           "name": "Control Weather (rain only)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MythicSpellList",
           "standing": "origin",
           "display_name": "Control Weather (rain only)"
@@ -8474,7 +8474,7 @@
         },
         {
           "name": "Darkvision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision (RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Vision)"
@@ -8488,105 +8488,105 @@
         },
         {
           "name": "Darkvision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision (RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Darkvision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision (RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Defensive Training",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Defensive Training"
         },
         {
           "name": "Demon Lord Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Lord Traits"
         },
         {
           "name": "Desert Runner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
           "standing": "unclassified",
           "display_name": "Desert Runner"
         },
         {
           "name": "Desert Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
           "standing": "origin",
           "display_name": "Desert Stride"
         },
         {
           "name": "Dragon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Type",
           "standing": "unclassified",
           "display_name": "Dragon"
         },
         {
           "name": "Electricity Belching",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BeheadedBelchingType.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Electricity Belching"
         },
         {
           "name": "Empyreal Lord Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Empyreal Lord Traits"
         },
         {
           "name": "Fire Belching",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BeheadedBelchingType.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Fire Belching"
         },
         {
           "name": "Flight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Flight"
         },
         {
           "name": "Formian Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Formian Traits"
         },
         {
           "name": "Frenzy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialAttack.Special Attack.Special Ability.Extraordinary",
           "standing": "origin",
           "display_name": "Frenzy"
         },
         {
           "name": "Grabbing Appendages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
           "standing": "origin",
           "display_name": "Grabbing Appendages"
         },
         {
           "name": "Green Widow (Green Hag)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
           "standing": "origin",
           "display_name": "Green Widow (Green Hag)"
@@ -8607,7 +8607,7 @@
         },
         {
           "name": "Hulking Changeling (Annis Hag)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
           "standing": "origin",
           "display_name": "Hulking Changeling (Annis Hag)"
@@ -8621,70 +8621,70 @@
         },
         {
           "name": "Humanoid (Changeling)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Changeling)"
         },
         {
           "name": "Humanoid (Kasatha)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Kasatha)"
         },
         {
           "name": "Humanoid (Kitsune)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Kitsune)"
         },
         {
           "name": "Humanoid (Samsaran)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Samsaran)"
         },
         {
           "name": "Humanoid (Shapechanger)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Shapechanger)"
         },
         {
           "name": "Humanoid (Wayang)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Wayang)"
         },
         {
           "name": "Ijiraq ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ijiraq ~ Change Shape"
         },
         {
           "name": "Julunggali ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Julunggali ~ Change Shape"
         },
         {
           "name": "Jumper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
           "standing": "unclassified",
           "display_name": "Jumper"
         },
         {
           "name": "Kaiju Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kaiju Traits"
@@ -8698,7 +8698,7 @@
         },
         {
           "name": "Kasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Type",
           "standing": "origin",
           "display_name": "Kasatha (RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Type)"
@@ -8733,7 +8733,7 @@
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Language)"
@@ -8761,7 +8761,7 @@
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Language)"
@@ -8775,14 +8775,14 @@
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Language)"
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Language)"
@@ -8796,7 +8796,7 @@
         },
         {
           "name": "Leanan Sidhe ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Leanan Sidhe ~ Change Shape"
@@ -8817,7 +8817,7 @@
         },
         {
           "name": "Living Machine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Living Machine"
@@ -8845,14 +8845,14 @@
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision (RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision (RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Vision)"
@@ -8873,7 +8873,7 @@
         },
         {
           "name": "Medium",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Size",
           "standing": "unclassified",
           "display_name": "Medium (RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Size)"
@@ -8901,28 +8901,28 @@
         },
         {
           "name": "Medium",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Size",
           "standing": "unclassified",
           "display_name": "Medium (RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Size)"
         },
         {
           "name": "Monstrous Humanoid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Type",
           "standing": "unclassified",
           "display_name": "Monstrous Humanoid"
         },
         {
           "name": "Mudlord ~ Freeze",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mudlord ~ Freeze"
         },
         {
           "name": "Multi-Armed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
           "standing": "origin",
           "display_name": "Multi-Armed"
@@ -8964,7 +8964,7 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Speed)"
@@ -8992,49 +8992,49 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Normal Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Normal Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Psychopomp (Morrigna) ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Psychopomp (Morrigna) ~ Change Shape"
         },
         {
           "name": "Psychopomp Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Psychopomp Traits"
         },
         {
           "name": "Quickened Dominate Person",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MythicSpellList",
           "standing": "origin",
           "display_name": "Quickened Dominate Person"
         },
         {
           "name": "Quickened Mirror Image",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MythicSpellList",
           "standing": "origin",
           "display_name": "Quickened Mirror Image"
@@ -9048,7 +9048,7 @@
         },
         {
           "name": "Resistance to Negative Energy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Resistance to Negative Energy"
@@ -9090,14 +9090,14 @@
         },
         {
           "name": "Sea Lungs (Sea Hag)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Sea Lungs (Sea Hag)"
         },
         {
           "name": "Selkie ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Selkie ~ Change Shape"
@@ -9132,7 +9132,7 @@
         },
         {
           "name": "Slapping Tail",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Slapping Tail"
@@ -9160,49 +9160,49 @@
         },
         {
           "name": "Soulsliver ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Soulsliver ~ Change Shape"
         },
         {
           "name": "Soulsliver ~ Sound Mimicry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Soulsliver ~ Sound Mimicry"
         },
         {
           "name": "Speak with Animals (aquatic only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Communicate.SpellLike",
           "standing": "origin",
           "display_name": "Speak with Animals (aquatic only)"
         },
         {
           "name": "Speak with Animals (including vermin)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Communicate.SpellLike",
           "standing": "origin",
           "display_name": "Speak with Animals (including vermin)"
         },
         {
           "name": "Speak with Animals (rodents only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Communicate.SpellLike",
           "standing": "unclassified",
           "display_name": "Speak with Animals (rodents only)"
         },
         {
           "name": "Speak with Animals (winged animals only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Communicate.SpellLike",
           "standing": "origin",
           "display_name": "Speak with Animals (winged animals only)"
         },
         {
           "name": "Stalker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
           "standing": "unclassified",
           "display_name": "Stalker"
@@ -9216,28 +9216,28 @@
         },
         {
           "name": "Swan Maiden ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Swan Maiden ~ Change Shape"
         },
         {
           "name": "Tikbalang ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Tikbalang ~ Change Shape"
         },
         {
           "name": "Tikbalang ~ Sound Mimicry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Tikbalang ~ Sound Mimicry"
         },
         {
           "name": "Titan (Fomorian) ~ Push",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Titan (Fomorian) ~ Push"
@@ -9251,7 +9251,7 @@
         },
         {
           "name": "Trackless Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "unclassified",
           "display_name": "Trackless Step"
@@ -9265,14 +9265,14 @@
         },
         {
           "name": "Tunche ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Tunche ~ Change Shape"
         },
         {
           "name": "Tunche ~ Sound Mimicry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Tunche ~ Sound Mimicry"
@@ -9307,14 +9307,14 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI]"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #2"
@@ -9403,8 +9403,8 @@
       "kind": "skill",
       "label": "Skills",
       "done": 0,
-      "partial": 0,
-      "not_started": 1,
+      "partial": 1,
+      "not_started": 0,
       "denominator": 1,
       "pct": 0.0,
       "excluded_from_percentage": 0,
@@ -9414,7 +9414,7 @@
       "items": [
         {
           "name": "Craft (Wood)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Intelligence.Craft.Base",
           "standing": "origin",
           "display_name": "Craft (Wood)"
@@ -9425,8 +9425,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 53,
+      "partial": 53,
+      "not_started": 0,
       "denominator": 53,
       "pct": 0.0,
       "excluded_from_percentage": 3,
@@ -9437,182 +9437,182 @@
       "items": [
         {
           "name": "Bestow Curse (30 ft. range)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Bestow Curse (30 ft. range)"
         },
         {
           "name": "Charm Animal (snakes only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Charm Animal (snakes only)"
         },
         {
           "name": "Charm Monster (vermin only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Charm Monster (vermin only)"
         },
         {
           "name": "Control Weather (alter storms)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Control Weather (alter storms)"
         },
         {
           "name": "Control Weather (rain only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Control Weather (rain only)"
         },
         {
           "name": "Control Weather (windy or cold weather only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Control Weather (windy or cold weather only)"
         },
         {
           "name": "Dimension Door (within sacred site)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dimension Door (within sacred site)"
         },
         {
           "name": "Dominate Monster (vermin only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dominate Monster (vermin only)"
         },
         {
           "name": "Empowered Cone of Cold",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Empowered Cone of Cold"
         },
         {
           "name": "Extended Animate Objects (Warsworn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Extended Animate Objects (Warsworn)"
         },
         {
           "name": "Fly (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fly (self only)"
         },
         {
           "name": "Haste (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Haste (self only)"
         },
         {
           "name": "Hedge Stride",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Hedge Stride"
         },
         {
           "name": "Hold Monster (vermin only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Hold Monster (vermin only)"
         },
         {
           "name": "Magic Jar (other formians only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Magic Jar (other formians only)"
         },
         {
           "name": "Miracle (Divine Realm)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Miracle (Divine Realm)"
         },
         {
           "name": "Plane Shift (Nightmare Lord)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (Nightmare Lord)"
         },
         {
           "name": "Plane Shift (Ostiarius)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (Ostiarius)"
         },
         {
           "name": "Plane Shift (Owb)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (Owb)"
         },
         {
           "name": "Polymorph (self only/same size)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Polymorph (self only/same size)"
         },
         {
           "name": "Purify Food and Drink (water only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Purify Food and Drink (water only)"
         },
         {
           "name": "Quickened Charm Person",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Charm Person"
         },
         {
           "name": "Quickened Cure Serious Wounds",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Cure Serious Wounds"
         },
         {
           "name": "Quickened Dispel Magic (Greater)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Quickened Dispel Magic (Greater)"
         },
         {
           "name": "Quickened Dominate Person",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Dominate Person"
         },
         {
           "name": "Quickened Feeblemind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Feeblemind"
@@ -9626,196 +9626,196 @@
         },
         {
           "name": "Quickened Mirror Image",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Mirror Image"
         },
         {
           "name": "Quickened True Strike",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened True Strike"
         },
         {
           "name": "Sending (dryads only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Sending (dryads only)"
         },
         {
           "name": "Sending (to the hive queen only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Sending (to the hive queen only)"
         },
         {
           "name": "Share Memory (Jinmenju)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Share Memory (Jinmenju)"
         },
         {
           "name": "Silence (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Silence (self only)"
         },
         {
           "name": "Speak with Animals (aquatic only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Speak with Animals (aquatic only)"
         },
         {
           "name": "Speak with Animals (snakes only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Speak with Animals (snakes only)"
         },
         {
           "name": "Speak with Animals (winged animals only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Speak with Animals (winged animals only)"
         },
         {
           "name": "Spider Climb (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Spider Climb (self only)"
         },
         {
           "name": "Summon Monster II (Devilbound)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster II (Devilbound)"
         },
         {
           "name": "Summon Monster III (Magaav)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Magaav)"
         },
         {
           "name": "Summon Monster IV (Sarglagon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Sarglagon)"
         },
         {
           "name": "Summon Monster IX (Devilbound)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Devilbound)"
         },
         {
           "name": "Summon Monster IX (Yamaraj)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Yamaraj)"
         },
         {
           "name": "Summon Monster V (Devilbound)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Devilbound)"
         },
         {
           "name": "Summon Monster VI (Devilbound)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Devilbound)"
         },
         {
           "name": "Summon Monster VII (Advodaza)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VII (Advodaza)"
         },
         {
           "name": "Summon Monster VII (Devilbound)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VII (Devilbound)"
         },
         {
           "name": "Summon Monster VII (Morrigna)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VII (Morrigna)"
         },
         {
           "name": "Summon Monster VIII (Devilbound)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Devilbound)"
         },
         {
           "name": "Summon Nature's Ally V (Oceanid)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally V (Oceanid)"
         },
         {
           "name": "Summon Nature's Ally VI (Erlking)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally VI (Erlking)"
         },
         {
           "name": "Summon Nature's Ally VII (swimming creatures only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally VII (swimming creatures only)"
         },
         {
           "name": "Summon Swarm (locusts only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Swarm (locusts only)"
         },
         {
           "name": "Summon Swarm (rat swarm only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Swarm (rat swarm only)"
         },
         {
           "name": "Telekinesis (Warsworn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Telekinesis (Warsworn)"
         },
         {
           "name": "Wood Shape (10 lbs. only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Wood Shape (10 lbs. only)"
@@ -9832,11 +9832,11 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 0,
-      "partial": 0,
-      "not_started": 181,
+      "done": 42,
+      "partial": 39,
+      "not_started": 100,
       "denominator": 181,
-      "pct": 0.0,
+      "pct": 23.2,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 181,
@@ -9845,7 +9845,7 @@
       "items": [
         {
           "name": "Abjuration Clockwork Mage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Abjuration Clockwork Mage"
@@ -9859,7 +9859,7 @@
         },
         {
           "name": "Accuser Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Accuser Devil Bound"
@@ -9894,7 +9894,7 @@
         },
         {
           "name": "Barbed Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barbed Devil Bound"
@@ -9908,7 +9908,7 @@
         },
         {
           "name": "Bearded Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bearded Devil Bound"
@@ -9922,147 +9922,147 @@
         },
         {
           "name": "Beheaded (Belching)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching)"
         },
         {
           "name": "Beheaded (Belching/Flaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching/Flaming)"
         },
         {
           "name": "Beheaded (Belching/Flaming/Grabbing)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching/Flaming/Grabbing)"
         },
         {
           "name": "Beheaded (Belching/Flaming/Grabbing/Screaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching/Flaming/Grabbing/Screaming)"
         },
         {
           "name": "Beheaded (Belching/Flaming/Screaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching/Flaming/Screaming)"
         },
         {
           "name": "Beheaded (Belching/Grabbing)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching/Grabbing)"
         },
         {
           "name": "Beheaded (Belching/Grabbing/Screaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching/Grabbing/Screaming)"
         },
         {
           "name": "Beheaded (Belching/Screaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching/Screaming)"
         },
         {
           "name": "Beheaded (Belching/Screaming/Swarming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching/Screaming/Swarming)"
         },
         {
           "name": "Beheaded (Belching/Swarming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Belching/Swarming)"
         },
         {
           "name": "Beheaded (Familiar)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Familiar)"
         },
         {
           "name": "Beheaded (Flaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Flaming)"
         },
         {
           "name": "Beheaded (Flaming/Grabbing)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Flaming/Grabbing)"
         },
         {
           "name": "Beheaded (Flaming/Grabbing/Screaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Flaming/Grabbing/Screaming)"
         },
         {
           "name": "Beheaded (Flaming/Screaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Flaming/Screaming)"
         },
         {
           "name": "Beheaded (Grabbing)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Grabbing)"
         },
         {
           "name": "Beheaded (Grabbing/Screaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Grabbing/Screaming)"
         },
         {
           "name": "Beheaded (Screaming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Screaming)"
         },
         {
           "name": "Beheaded (Screaming/Swarming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Screaming/Swarming)"
         },
         {
           "name": "Beheaded (Swarming)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded (Swarming)"
         },
         {
           "name": "Belier Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Belier Devil Bound"
@@ -10083,7 +10083,7 @@
         },
         {
           "name": "Bone Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bone Devil Bound"
@@ -10118,7 +10118,7 @@
         },
         {
           "name": "Broken Soul",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Broken Soul"
@@ -10160,21 +10160,21 @@
         },
         {
           "name": "Clockwork Dragon Acid Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Clockwork Dragon Acid Breath"
         },
         {
           "name": "Clockwork Dragon Fire Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Clockwork Dragon Fire Breath"
         },
         {
           "name": "Clockwork Dragon Flaming Tar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Clockwork Dragon Flaming Tar"
@@ -10209,14 +10209,14 @@
         },
         {
           "name": "Conjuration Clockwork Mage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Conjuration Clockwork Mage"
         },
         {
           "name": "Contract Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Contract Devil Bound"
@@ -10237,7 +10237,7 @@
         },
         {
           "name": "Demon Lord in Home Realm",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Lord in Home Realm"
@@ -10251,56 +10251,56 @@
         },
         {
           "name": "Devil (Nemesis) ~ Evil Domain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Evil Domain"
         },
         {
           "name": "Devil (Nemesis) ~ Fire Domain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Fire Domain"
         },
         {
           "name": "Devil (Nemesis) ~ Law Domain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Law Domain"
         },
         {
           "name": "Devil (Nemesis) ~ Trickery Domain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Trickery Domain"
         },
         {
           "name": "Devil (Nemesis) ~ War Domain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ War Domain"
         },
         {
           "name": "Devil (Nemesis) ~ Weather Domain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Weather Domain"
         },
         {
           "name": "Devilbound Creature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devilbound Creature"
         },
         {
           "name": "Divine Guardian",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Divine Guardian"
@@ -10398,21 +10398,21 @@
         },
         {
           "name": "Dread Gholdako",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dread Gholdako"
         },
         {
           "name": "Drowning Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drowning Devil Bound"
         },
         {
           "name": "Ectoplasmic Creature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ectoplasmic Creature"
@@ -10426,35 +10426,35 @@
         },
         {
           "name": "Empyreal Lord in Home Realm",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Empyreal Lord in Home Realm"
         },
         {
           "name": "Enchantment Clockwork Mage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Enchantment Clockwork Mage"
         },
         {
           "name": "Enhanced Skinstitch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Enhanced Skinstitch"
         },
         {
           "name": "Erinyes Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Erinyes Devil Bound"
         },
         {
           "name": "Evocation Clockwork Mage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Evocation Clockwork Mage"
@@ -10510,7 +10510,7 @@
         },
         {
           "name": "Fungal Creature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fungal Creature"
@@ -10524,49 +10524,49 @@
         },
         {
           "name": "Handmaiden Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Handmaiden Devil Bound"
         },
         {
           "name": "Horned Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Horned Devil Bound"
         },
         {
           "name": "Host Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Host Devil Bound"
         },
         {
           "name": "Ice Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ice Devil Bound"
         },
         {
           "name": "Illusion Clockwork Mage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Illusion Clockwork Mage"
         },
         {
           "name": "Immolation Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Immolation Devil Bound"
         },
         {
           "name": "Imp Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imp Devil Bound"
@@ -10580,7 +10580,7 @@
         },
         {
           "name": "Infiltrator-Type Clockwork Dragon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Infiltrator-Type Clockwork Dragon"
@@ -10734,14 +10734,14 @@
         },
         {
           "name": "Mithral Clockwork Dragon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mithral Clockwork Dragon"
         },
         {
           "name": "Mummified Creature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mummified Creature"
@@ -10825,28 +10825,28 @@
         },
         {
           "name": "Necromancy Clockwork Mage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Necromancy Clockwork Mage"
         },
         {
           "name": "Nemesis Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nemesis Devil Bound"
         },
         {
           "name": "Nightmare Creature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nightmare Creature"
         },
         {
           "name": "Nightmare Lord",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nightmare Lord"
@@ -10860,14 +10860,14 @@
         },
         {
           "name": "Nosferatu",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nosferatu"
         },
         {
           "name": "Pit Fiend Devil Bound",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pit Fiend Devil Bound"
@@ -10881,21 +10881,21 @@
         },
         {
           "name": "Pod-Spawned Creature (Basic)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pod-Spawned Creature (Basic)"
         },
         {
           "name": "Pod-Spawned Creature (With class levels)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pod-Spawned Creature (With class levels)"
         },
         {
           "name": "Pod-Spawned Creature (With magical abilities)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pod-Spawned Creature (With magical abilities)"
@@ -10909,7 +10909,7 @@
         },
         {
           "name": "Resilient Skinstitch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Resilient Skinstitch"
@@ -10944,14 +10944,14 @@
         },
         {
           "name": "Shadow Creature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shadow Creature"
         },
         {
           "name": "Shadow Lord",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shadow Lord"
@@ -10965,21 +10965,21 @@
         },
         {
           "name": "Soulbound Cleric",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Soulbound Cleric"
         },
         {
           "name": "Soulbound Witch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Soulbound Witch"
         },
         {
           "name": "Soulbound Wizard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Soulbound Wizard"
@@ -11007,7 +11007,7 @@
         },
         {
           "name": "Standard Skinstitch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Standard Skinstitch"
@@ -11021,7 +11021,7 @@
         },
         {
           "name": "Transmutation Clockwork Mage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Transmutation Clockwork Mage"
@@ -11063,7 +11063,7 @@
         },
         {
           "name": "Werebat Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werebat Abilities"
@@ -11077,7 +11077,7 @@
         },
         {
           "name": "Werecrocodile Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werecrocodile Abilities"
@@ -11091,7 +11091,7 @@
         },
         {
           "name": "Wereshark Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wereshark Abilities"
@@ -11119,7 +11119,7 @@
         },
         {
           "name": "Zombie Lord",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Zombie Lord"

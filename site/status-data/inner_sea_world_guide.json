@@ -6,8 +6,8 @@
       "kind": "ability",
       "label": "Abilities",
       "done": 0,
-      "partial": 0,
-      "not_started": 2,
+      "partial": 2,
+      "not_started": 0,
       "denominator": 2,
       "pct": 0.0,
       "excluded_from_percentage": 65,
@@ -18,21 +18,21 @@
       "items": [
         {
           "name": "Default",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Default"
         },
         {
           "name": "Racial Traits ~ Gillman",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Gillman"
         },
         {
           "name": "Racial Traits ~ Strix",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Strix"
@@ -490,11 +490,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 8,
       "partial": 0,
-      "not_started": 52,
+      "not_started": 44,
       "denominator": 52,
-      "pct": 0.0,
+      "pct": 15.4,
       "excluded_from_percentage": 124,
       "standing_breakdown": {
         "unclassified": 124,
@@ -566,14 +566,14 @@
         },
         {
           "name": "Damnation ~ Chaotic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.LowFinal",
           "standing": "origin",
           "display_name": "Damnation ~ Chaotic"
         },
         {
           "name": "Damnation ~ Evil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.LowFinal",
           "standing": "origin",
           "display_name": "Damnation ~ Evil"
@@ -601,14 +601,14 @@
         },
         {
           "name": "Dinosaur Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower.Animal Companion",
           "standing": "origin",
           "display_name": "Dinosaur Companion (SpecialQuality.DomainPower.Animal Companion)"
         },
         {
           "name": "Dinosaur Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower.Animal Companion",
           "standing": "origin",
           "display_name": "Dinosaur Companion (SpecialQuality.DomainPower.Animal Companion) #2"
@@ -650,7 +650,7 @@
         },
         {
           "name": "Dragonbreath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "Dragonbreath (SpecialQuality.DomainPower)"
@@ -790,49 +790,49 @@
         },
         {
           "name": "Force of Will 3 (Charm)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.HKFoW3",
           "standing": "unclassified",
           "display_name": "Force of Will 3 (Charm)"
         },
         {
           "name": "Force of Will 3 (Compulsion)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.HKFoW3",
           "standing": "unclassified",
           "display_name": "Force of Will 3 (Compulsion)"
         },
         {
           "name": "Force of Will 3 (Fear)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.HKFoW3",
           "standing": "unclassified",
           "display_name": "Force of Will 3 (Fear)"
         },
         {
           "name": "Force of Will 3 (Figment)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.HKFoW3",
           "standing": "unclassified",
           "display_name": "Force of Will 3 (Figment)"
         },
         {
           "name": "Force of Will 3 (Glamer)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.HKFoW3",
           "standing": "unclassified",
           "display_name": "Force of Will 3 (Glamer)"
         },
         {
           "name": "Force of Will 3 (Pattern)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.HKFoW3",
           "standing": "unclassified",
           "display_name": "Force of Will 3 (Pattern)"
         },
         {
           "name": "Force of Will 3 (Phantasm)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.HKFoW3",
           "standing": "unclassified",
           "display_name": "Force of Will 3 (Phantasm)"
@@ -846,14 +846,14 @@
         },
         {
           "name": "Guarded Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower",
           "standing": "unclassified",
           "display_name": "Guarded Mind (SpecialQuality.Extraordinary.DomainPower)"
         },
         {
           "name": "Guarded Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower",
           "standing": "unclassified",
           "display_name": "Guarded Mind (SpecialQuality.Extraordinary.DomainPower) #2"
@@ -881,14 +881,14 @@
         },
         {
           "name": "It Came From Beyond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "It Came From Beyond (SpecialQuality.DomainPower)"
         },
         {
           "name": "It Came From Beyond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "It Came From Beyond (SpecialQuality.DomainPower) #2"
@@ -909,14 +909,14 @@
         },
         {
           "name": "Lawbringer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Lawbringer"
         },
         {
           "name": "Live to Fight Another Day",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Live to Fight Another Day"
@@ -972,7 +972,7 @@
         },
         {
           "name": "Parting Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Parting Shot"
@@ -1063,21 +1063,21 @@
         },
         {
           "name": "Redemption ~ Good",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.LowFinal",
           "standing": "origin",
           "display_name": "Redemption ~ Good"
         },
         {
           "name": "Redemption ~ Lawful",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.LowFinal",
           "standing": "origin",
           "display_name": "Redemption ~ Lawful"
         },
         {
           "name": "Resurrection Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Resurrection Sense"
@@ -1287,7 +1287,7 @@
         },
         {
           "name": "Scion of Peace",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.NobleScion",
           "standing": "origin",
           "display_name": "Scion of Peace"
@@ -1392,14 +1392,14 @@
         },
         {
           "name": "The Stars Are Right",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "The Stars Are Right (SpecialQuality.DomainPower)"
         },
         {
           "name": "The Stars Are Right",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "The Stars Are Right (SpecialQuality.DomainPower) #2"
@@ -2257,42 +2257,42 @@
       "items": [
         {
           "name": "Dark Tapestry Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dark Tapestry Subdomain"
         },
         {
           "name": "Dragon Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dragon Subdomain"
         },
         {
           "name": "Saurian Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Saurian Subdomain"
         },
         {
           "name": "Scalykind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Scalykind"
         },
         {
           "name": "Stars Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Stars Subdomain"
         },
         {
           "name": "Void",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Void"
@@ -2648,8 +2648,8 @@
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
       "done": 2,
-      "partial": 1,
-      "not_started": 1,
+      "partial": 2,
+      "not_started": 0,
       "denominator": 4,
       "pct": 50.0,
       "excluded_from_percentage": 2,
@@ -2660,7 +2660,7 @@
       "items": [
         {
           "name": "LEAF",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "LEAF"
@@ -2688,7 +2688,7 @@
         },
         {
           "name": "STONE",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "STONE"
@@ -2706,8 +2706,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 12,
-      "partial": 0,
-      "not_started": 13,
+      "partial": 10,
+      "not_started": 3,
       "denominator": 25,
       "pct": 48.0,
       "excluded_from_percentage": 12,
@@ -2732,7 +2732,7 @@
         },
         {
           "name": "Careful Speaker",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Careful Speaker"
@@ -2753,14 +2753,14 @@
         },
         {
           "name": "Demon Hunter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Demon Hunter"
         },
         {
           "name": "Dervish Dance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Dervish Dance"
@@ -2795,7 +2795,7 @@
         },
         {
           "name": "Flagbearer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Flagbearer"
@@ -2816,14 +2816,14 @@
         },
         {
           "name": "Free Spirit",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Free Spirit"
         },
         {
           "name": "Godless Healing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Godless Healing"
@@ -2865,7 +2865,7 @@
         },
         {
           "name": "Noble Scion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Noble Scion"
@@ -2879,21 +2879,21 @@
         },
         {
           "name": "Scholar",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "unclassified",
           "display_name": "Scholar"
         },
         {
           "name": "Secret Signs",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Secret Signs"
         },
         {
           "name": "Shrewd Tactician",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Shrewd Tactician"
@@ -2921,7 +2921,7 @@
         },
         {
           "name": "Totem Spirit",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Totem Spirit"
@@ -3462,11 +3462,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 7,
+      "done": 8,
       "partial": 0,
-      "not_started": 24,
+      "not_started": 23,
       "denominator": 31,
-      "pct": 22.6,
+      "pct": 25.8,
       "excluded_from_percentage": 23,
       "standing_breakdown": {
         "unclassified": 23,
@@ -3650,14 +3650,14 @@
         },
         {
           "name": "Humanoid (Aquatic)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Aquatic)"
         },
         {
           "name": "Humanoid (Strix)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Strix)"
@@ -3970,8 +3970,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 8,
+      "partial": 8,
+      "not_started": 0,
       "denominator": 8,
       "pct": 0.0,
       "excluded_from_percentage": 14,
@@ -3982,7 +3982,7 @@
       "items": [
         {
           "name": "Ancestral Memory",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Ancestral Memory"
@@ -4003,7 +4003,7 @@
         },
         {
           "name": "Covetous Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Covetous Aura"
@@ -4017,21 +4017,21 @@
         },
         {
           "name": "Harrowing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Harrowing"
         },
         {
           "name": "Infernal Healing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Infernal Healing"
         },
         {
           "name": "Infernal Healing (Greater)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Infernal Healing (Greater)"
@@ -4045,7 +4045,7 @@
         },
         {
           "name": "Lover's Vengeance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Lover's Vengeance"
@@ -4059,7 +4059,7 @@
         },
         {
           "name": "Summon Demons (Nascent Demon Lord)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "unclassified",
           "display_name": "Summon Demons (Nascent Demon Lord)"
@@ -4073,14 +4073,14 @@
         },
         {
           "name": "Teleport Trap",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Teleport Trap"
         },
         {
           "name": "Unbreakable Heart",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Unbreakable Heart"
@@ -4222,7 +4222,7 @@
         },
         {
           "name": "Nascent Demon Lord Traits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Nascent Demon Lord Traits"

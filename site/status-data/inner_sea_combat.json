@@ -25,21 +25,21 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Perfect Style House of Perfection",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Perfect Style House of Perfection)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Perfect Style House of Perfection",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Perfect Style House of Perfection) #2"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Perfect Style House of Perfection",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Perfect Style House of Perfection) #3"
@@ -49,11 +49,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 9,
+      "done": 48,
       "partial": 0,
-      "not_started": 138,
+      "not_started": 99,
       "denominator": 147,
-      "pct": 6.1,
+      "pct": 32.7,
       "excluded_from_percentage": 169,
       "standing_breakdown": {
         "origin": 147,
@@ -83,7 +83,7 @@
         },
         {
           "name": "Acrobatic Stunt",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Acrobatic Stunt"
@@ -104,14 +104,14 @@
         },
         {
           "name": "Alert Guardian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Alert Guardian"
         },
         {
           "name": "Alignment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Alignment"
@@ -146,21 +146,21 @@
         },
         {
           "name": "Aura of Blood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Aura of Blood"
         },
         {
           "name": "Aura of Death",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Aura of Death"
         },
         {
           "name": "Aura of Excellence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Aura of Excellence"
@@ -174,35 +174,35 @@
         },
         {
           "name": "Aura of Perfection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Aura of Perfection"
         },
         {
           "name": "Aura of Putrefaction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Aura of Putrefaction"
         },
         {
           "name": "Aura of Quietus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Aura of Quietus"
         },
         {
           "name": "Aura of Rebirth",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Aura of Rebirth"
         },
         {
           "name": "Aura of the Grave",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Aura of the Grave"
@@ -279,7 +279,7 @@
         },
         {
           "name": "Bond Breaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Bond Breaker"
@@ -300,7 +300,7 @@
         },
         {
           "name": "Bonus Feats",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bonus Feats (Monk Class Feature.SpecialQuality) #3"
@@ -328,7 +328,7 @@
         },
         {
           "name": "Catch Off-Guard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Catch Off-Guard (Rogue Class Feature.SpecialQuality.Extraordinary)"
@@ -356,7 +356,7 @@
         },
         {
           "name": "Change Out",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Change Out"
@@ -377,14 +377,14 @@
         },
         {
           "name": "Cinder Dance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Cinder Dance"
         },
         {
           "name": "Cinder Sight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Cinder Sight"
@@ -440,7 +440,7 @@
         },
         {
           "name": "Clothed in Civilization",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Clothed in Civilization"
@@ -454,21 +454,21 @@
         },
         {
           "name": "Code of Conduct",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Code of Conduct (Paladin Class Feature.SpecialQuality)"
         },
         {
           "name": "Code of Conduct",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Code of Conduct (Paladin Class Feature.SpecialQuality) #2"
         },
         {
           "name": "Code of Conduct",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Code of Conduct (Antipaladin Class Feature.SpecialQuality)"
@@ -503,7 +503,7 @@
         },
         {
           "name": "Corpse Rider",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Corpse Rider"
@@ -545,7 +545,7 @@
         },
         {
           "name": "Daring Deeds",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Daring Deeds"
@@ -580,14 +580,14 @@
         },
         {
           "name": "Deeds",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Gunslinger Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Deeds (Gunslinger Class Feature.SpecialQuality)"
         },
         {
           "name": "Deeds",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Gunslinger Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Deeds (Gunslinger Class Feature.SpecialQuality) #2"
@@ -608,7 +608,7 @@
         },
         {
           "name": "Demonologist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Demonologist"
@@ -636,7 +636,7 @@
         },
         {
           "name": "Detect Chaos",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Detect Chaos"
@@ -692,7 +692,7 @@
         },
         {
           "name": "Divine Body",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Divine Body"
@@ -748,21 +748,21 @@
         },
         {
           "name": "Edicts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts (Cavalier Class Feature.SpecialQuality)"
         },
         {
           "name": "Edicts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts (Cavalier Class Feature.SpecialQuality) #2"
         },
         {
           "name": "Endurance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Endurance"
@@ -783,7 +783,7 @@
         },
         {
           "name": "Escaping Stunt",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Escaping Stunt"
@@ -825,7 +825,7 @@
         },
         {
           "name": "Expanded Spell List",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Expanded Spell List"
@@ -839,7 +839,7 @@
         },
         {
           "name": "Favored Enemy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Favored Enemy"
@@ -853,14 +853,14 @@
         },
         {
           "name": "Fiendish Quarry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Fiendish Quarry"
         },
         {
           "name": "Flame Runner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Flame Runner"
@@ -888,14 +888,14 @@
         },
         {
           "name": "Give Me Fire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Give Me Fire"
         },
         {
           "name": "Go By Feel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Go By Feel"
@@ -979,7 +979,7 @@
         },
         {
           "name": "Grit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Grit"
@@ -1007,7 +1007,7 @@
         },
         {
           "name": "Gunsmith",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Gunslinger Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Gunsmith"
@@ -1028,14 +1028,14 @@
         },
         {
           "name": "Have Gun",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Have Gun"
         },
         {
           "name": "Havoc",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Havoc"
@@ -1056,14 +1056,14 @@
         },
         {
           "name": "Home Ground Advantage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Home Ground Advantage"
         },
         {
           "name": "Home Ground Supremacy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Home Ground Supremacy"
@@ -1140,7 +1140,7 @@
         },
         {
           "name": "Improved Fiendish Quarry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Improved Fiendish Quarry"
@@ -1245,14 +1245,14 @@
         },
         {
           "name": "Infamous Deeds",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Infamous Deeds"
         },
         {
           "name": "Infernal Resilience",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Infernal Resilience"
@@ -1308,7 +1308,7 @@
         },
         {
           "name": "Ki Pool",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Ki Pool (Monk Class Feature.SpecialQuality.Supernatural)"
@@ -1378,7 +1378,7 @@
         },
         {
           "name": "Misdirection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Misdirection"
@@ -1427,7 +1427,7 @@
         },
         {
           "name": "Mount",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Mount (Barbarian Class Feature.SpecialQuality)"
@@ -1455,21 +1455,21 @@
         },
         {
           "name": "Notorious Deeds",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Notorious Deeds"
         },
         {
           "name": "Oath Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Oath Spells (Paladin Class Feature.SpecialQuality)"
         },
         {
           "name": "Oath Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Oath Spells (Paladin Class Feature.SpecialQuality) #2"
@@ -1490,7 +1490,7 @@
         },
         {
           "name": "Old Reliable",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Old Reliable"
@@ -1504,7 +1504,7 @@
         },
         {
           "name": "Order of Good",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Order of Good"
@@ -1623,7 +1623,7 @@
         },
         {
           "name": "Quick Retort",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Quick Retort"
@@ -1658,7 +1658,7 @@
         },
         {
           "name": "Restore True Beauty",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Restore True Beauty"
@@ -1714,7 +1714,7 @@
         },
         {
           "name": "Scattershot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Scattershot"
@@ -1728,7 +1728,7 @@
         },
         {
           "name": "Seafaring Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Seafaring Companion"
@@ -1742,7 +1742,7 @@
         },
         {
           "name": "Sense Perfection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Sense Perfection"
@@ -1840,7 +1840,7 @@
         },
         {
           "name": "Smite Chaos",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Smite Chaos"
@@ -1861,7 +1861,7 @@
         },
         {
           "name": "Spell Severed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Spell Severed"
@@ -1882,7 +1882,7 @@
         },
         {
           "name": "Spurn Tradition",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Monk Class Feature.Ouat Class Feature.SpecialQuality.Special Quality.Extraordinary",
           "standing": "origin",
           "display_name": "Spurn Tradition"
@@ -1910,7 +1910,7 @@
         },
         {
           "name": "Stunning Fist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Stunning Fist (Monk Class Feature.SpecialQuality.Extraordinary)"
@@ -1973,7 +1973,7 @@
         },
         {
           "name": "Teamwork",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Teamwork"
@@ -2001,7 +2001,7 @@
         },
         {
           "name": "Tough as Nails",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Tough as Nails"
@@ -2071,7 +2071,7 @@
         },
         {
           "name": "Unstoppable Ravager",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Unstoppable Ravager"
@@ -2204,7 +2204,7 @@
         },
         {
           "name": "Worn Banner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Worn Banner"
@@ -2912,8 +2912,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 14,
-      "partial": 4,
-      "not_started": 1,
+      "partial": 5,
+      "not_started": 0,
       "denominator": 19,
       "pct": 73.7,
       "excluded_from_percentage": 5,
@@ -2952,21 +2952,21 @@
         },
         {
           "name": "Duelist of the Roaring Falls",
-          "doneness": "partial",
+          "doneness": "not-started",
           "type_facet": "Combat",
           "standing": "unclassified",
           "display_name": "Duelist of the Roaring Falls"
         },
         {
           "name": "Duelist of the Shrouded Lake",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "Combat",
           "standing": "unclassified",
           "display_name": "Duelist of the Shrouded Lake"
         },
         {
           "name": "Falling Water Gambit",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "Combat",
           "standing": "unclassified",
           "display_name": "Falling Water Gambit"
@@ -2987,7 +2987,7 @@
         },
         {
           "name": "Monstrous Mount",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Monstrous Mount",
           "standing": "origin",
           "display_name": "Monstrous Mount"

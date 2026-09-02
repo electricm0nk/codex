@@ -1601,8 +1601,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 11,
-      "partial": 0,
-      "not_started": 4,
+      "partial": 4,
+      "not_started": 0,
       "denominator": 15,
       "pct": 73.3,
       "excluded_from_percentage": 0,
@@ -1661,28 +1661,28 @@
         },
         {
           "name": "Improved Natural Armor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Improved Natural Armor"
         },
         {
           "name": "Improved Natural Attack",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Improved Natural Attack"
         },
         {
           "name": "Multiattack",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General.Combat",
           "standing": "origin",
           "display_name": "Multiattack"
         },
         {
           "name": "Multiweapon Fighting",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General.Combat",
           "standing": "origin",
           "display_name": "Multiweapon Fighting"
@@ -1834,11 +1834,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 287,
-      "partial": 64,
-      "not_started": 20,
+      "done": 318,
+      "partial": 53,
+      "not_started": 0,
       "denominator": 371,
-      "pct": 77.4,
+      "pct": 85.7,
       "excluded_from_percentage": 362,
       "standing_breakdown": {
         "origin": 371,
@@ -1861,7 +1861,7 @@
         },
         {
           "name": "+2 resistance to saves vs. evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "+2 resistance to saves vs. evil"
@@ -1875,21 +1875,21 @@
         },
         {
           "name": "+4 Resistance to Saves vs. Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "+4 Resistance to Saves vs. Evil"
         },
         {
           "name": "+4 racial bonus on saves against poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "+4 racial bonus on saves against poison (SpecialQuality)"
         },
         {
           "name": "+4 racial bonus on saves against poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "+4 racial bonus on saves against poison (SpecialQuality) #2"
@@ -1994,28 +1994,28 @@
         },
         {
           "name": "Additional Movement (Burrow/1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Additional Movement (Burrow/1 CP)"
         },
         {
           "name": "Additional Movement (Climb/1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Additional Movement (Climb/1 CP)"
         },
         {
           "name": "Additional Movement (Fly/1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Additional Movement (Fly/1 CP)"
         },
         {
           "name": "Additional Movement (Swim/1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Additional Movement (Swim/1 CP)"
@@ -2155,7 +2155,7 @@
         },
         {
           "name": "Bleed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Bleed"
@@ -3303,7 +3303,7 @@
         },
         {
           "name": "Energy Drain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Energy Drain (SpecialAttack.Supernatural)"
@@ -3422,35 +3422,35 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP)"
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #2"
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #3"
         },
         {
           "name": "Fast Healing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #4"
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #5"
@@ -3464,35 +3464,35 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #7"
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #8"
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #9"
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #10"
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #11"
@@ -3506,7 +3506,7 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #13"
@@ -3541,7 +3541,7 @@
         },
         {
           "name": "Faster (Walk/1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Faster (Walk/1 CP)"
@@ -3849,7 +3849,7 @@
         },
         {
           "name": "Grab (1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Grab (1 CP)"
@@ -4885,7 +4885,7 @@
         },
         {
           "name": "Outsider Traits Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Outsider Traits Output"
@@ -4990,91 +4990,91 @@
         },
         {
           "name": "Permanency Spell / Arcane Sight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Arcane Sight"
         },
         {
           "name": "Permanency Spell / Comprehend Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Comprehend Languages"
         },
         {
           "name": "Permanency Spell / Darkvision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Darkvision"
         },
         {
           "name": "Permanency Spell / Detect Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Detect Magic"
         },
         {
           "name": "Permanency Spell / Enlarge Person",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Enlarge Person"
         },
         {
           "name": "Permanency Spell / Greater Magic Fang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Greater Magic Fang"
         },
         {
           "name": "Permanency Spell / Magic Fang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Magic Fang"
         },
         {
           "name": "Permanency Spell / Read Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Read Magic"
         },
         {
           "name": "Permanency Spell / Reduce Person",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Reduce Person"
         },
         {
           "name": "Permanency Spell / Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Resistance"
         },
         {
           "name": "Permanency Spell / See Invisibility",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / See Invisibility"
         },
         {
           "name": "Permanency Spell / Telepathic Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Telepathic Bond"
         },
         {
           "name": "Permanency Spell / Tongues",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PermanencySpell",
           "standing": "origin",
           "display_name": "Permanency Spell / Tongues"
@@ -5522,21 +5522,21 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #2"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #3"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #4"
@@ -5564,7 +5564,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #8"
@@ -5585,7 +5585,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #11"
@@ -5907,7 +5907,7 @@
         },
         {
           "name": "Slow Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Slow Aura"
@@ -5970,7 +5970,7 @@
         },
         {
           "name": "Sneak Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Sneak Attack"
@@ -6187,7 +6187,7 @@
         },
         {
           "name": "Stench",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Aura",
           "standing": "origin",
           "display_name": "Stench (SpecialQuality.Extraordinary.Aura) #2"
@@ -6390,7 +6390,7 @@
         },
         {
           "name": "Swarm Traits Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "origin",
           "display_name": "Swarm Traits Output"
@@ -6523,7 +6523,7 @@
         },
         {
           "name": "Trample (2 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Trample (2 CP)"
@@ -6544,7 +6544,7 @@
         },
         {
           "name": "Trap Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Trap Master"
@@ -6635,7 +6635,7 @@
         },
         {
           "name": "Undead Traits Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Undead Traits Output"
@@ -6936,7 +6936,7 @@
         },
         {
           "name": "Wild Empathy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "UnicornRacialTrait.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Wild Empathy"
@@ -11207,8 +11207,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 108,
+      "partial": 108,
+      "not_started": 0,
       "denominator": 108,
       "pct": 0.0,
       "excluded_from_percentage": 1,
@@ -11219,763 +11219,763 @@
       "items": [
         {
           "name": "Blur (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Blur (self only)"
         },
         {
           "name": "Charm Monster (elementals only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Charm Monster (elementals only)"
         },
         {
           "name": "Commune (six questions)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Commune (six questions)"
         },
         {
           "name": "Confusion (single target only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Confusion (single target only)"
         },
         {
           "name": "Create Wine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Create Wine"
         },
         {
           "name": "Dimension Door (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dimension Door (self only)"
         },
         {
           "name": "Dimension Door (self plus 5 lbs.)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dimension Door (self plus 5 lbs.)"
         },
         {
           "name": "Dimension Door (self plus objects)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dimension Door (self plus objects)"
         },
         {
           "name": "Elemental Body III (air/water)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Elemental Body III (air/water)"
         },
         {
           "name": "Empowered Chaos Hammer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Empowered Chaos Hammer"
         },
         {
           "name": "Empowered Magic Missile",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Empowered Magic Missile"
         },
         {
           "name": "Empowered Order's Wrath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Empowered Order's Wrath"
         },
         {
           "name": "Enlarge Person (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Enlarge Person (self only)"
         },
         {
           "name": "Ethereal Jaunt (self plus objects)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Ethereal Jaunt (self plus objects)"
         },
         {
           "name": "Ethereal Jaunt ~ Cauchemar Nightmare",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Ethereal Jaunt ~ Cauchemar Nightmare"
         },
         {
           "name": "Fabricate (1 cu ft)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fabricate (1 cu ft)"
         },
         {
           "name": "Fabricate (Leng Spider)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fabricate (Leng Spider)"
         },
         {
           "name": "Fear (single target)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Fear (single target)"
         },
         {
           "name": "Fire Shield (warm)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fire Shield (warm)"
         },
         {
           "name": "Invisibility (Greater/self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Invisibility (Greater/self only)"
         },
         {
           "name": "Invisibility (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Invisibility (self only)"
         },
         {
           "name": "Magic Circle against Evil (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Magic Circle against Evil (self only)"
         },
         {
           "name": "Major Image (visual and auditory only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Major Image (visual and auditory only)"
         },
         {
           "name": "Meld into Stone (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Meld into Stone (self only)"
         },
         {
           "name": "Plane Shift (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (self only)"
         },
         {
           "name": "Plane Shift (self plus skiff)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (self plus skiff)"
         },
         {
           "name": "Plane Shift (self/shadow only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (self/shadow only)"
         },
         {
           "name": "Plane Shift (willing targets only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (willing targets only)"
         },
         {
           "name": "Plane Shift ~ Nightmare",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Plane Shift ~ Nightmare"
         },
         {
           "name": "Purify Food and Drink (liquids only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Purify Food and Drink (liquids only)"
         },
         {
           "name": "Pyroclastic Storm",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Pyroclastic Storm"
         },
         {
           "name": "Quickened Cone of Cold",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Cone of Cold"
         },
         {
           "name": "Quickened Confusion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Confusion"
         },
         {
           "name": "Quickened Darkness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Darkness"
         },
         {
           "name": "Quickened Dimension Door",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Dimension Door"
         },
         {
           "name": "Quickened Dimension Door (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Dimension Door (self only)"
         },
         {
           "name": "Quickened Disintegrate",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Disintegrate"
         },
         {
           "name": "Quickened Enervation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Enervation"
         },
         {
           "name": "Quickened Fireball",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Fireball"
         },
         {
           "name": "Quickened Heal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Quickened Heal"
         },
         {
           "name": "Quickened Invisibility (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Invisibility (self only)"
         },
         {
           "name": "Quickened Lightning Bolt",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Quickened Lightning Bolt"
         },
         {
           "name": "Quickened Magic Missile",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Magic Missile"
         },
         {
           "name": "Quickened Suggestion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Suggestion"
         },
         {
           "name": "Quickened Summon Swarm",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Summon Swarm"
         },
         {
           "name": "Quickened Telekinesis",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Telekinesis"
         },
         {
           "name": "Quickened Unholy Blight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Quickened Unholy Blight"
         },
         {
           "name": "Quickened Wall of Fire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Wall of Fire"
         },
         {
           "name": "Reduce Person (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Reduce Person (self only)"
         },
         {
           "name": "Scorching Ray (2 rays only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Scorching Ray (2 rays only)"
         },
         {
           "name": "Shadow Walk (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Shadow Walk (self only)"
         },
         {
           "name": "Speak with Animals (fish only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Speak with Animals (fish only)"
         },
         {
           "name": "Suggestion (Nereid)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Suggestion (Nereid)"
         },
         {
           "name": "Summon (Olethrodaemon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon (Olethrodaemon)"
         },
         {
           "name": "Summon Monster I (Dretch)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster I (Dretch)"
         },
         {
           "name": "Summon Monster III (Accuser Devil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Accuser Devil)"
         },
         {
           "name": "Summon Monster III (Babau)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Babau)"
         },
         {
           "name": "Summon Monster III (Bearded Devil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Bearded Devil)"
         },
         {
           "name": "Summon Monster III (Erinyes)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Erinyes)"
         },
         {
           "name": "Summon Monster III (Hydrodaemon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Hydrodaemon)"
         },
         {
           "name": "Summon Monster III (Leukodaemon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Leukodaemon)"
         },
         {
           "name": "Summon Monster III (Shadow Demon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Shadow Demon)"
         },
         {
           "name": "Summon Monster III (Succubus)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Succubus)"
         },
         {
           "name": "Summon Monster III (Vrock)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Vrock)"
         },
         {
           "name": "Summon Monster IV (Barbed Devil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Barbed Devil)"
         },
         {
           "name": "Summon Monster IV (Bone Devil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Bone Devil)"
         },
         {
           "name": "Summon Monster IV (Derghodaemon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Derghodaemon)"
         },
         {
           "name": "Summon Monster IV (Glabrezu)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Glabrezu)"
         },
         {
           "name": "Summon Monster IV (Hezrou)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Hezrou)"
         },
         {
           "name": "Summon Monster IV (Ice Devil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Ice Devil)"
         },
         {
           "name": "Summon Monster IV (Kalavakus)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Kalavakus)"
         },
         {
           "name": "Summon Monster IV (Nabasu)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Nabasu)"
         },
         {
           "name": "Summon Monster IV (Omox)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Omox)"
         },
         {
           "name": "Summon Monster IV (Piscodaemon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Piscodaemon)"
         },
         {
           "name": "Summon Monster IV (Thanadaemon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Thanadaemon)"
         },
         {
           "name": "Summon Monster IV (Witchfire)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Witchfire)"
         },
         {
           "name": "Summon Monster IX (Celestials Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Celestials Only)"
         },
         {
           "name": "Summon Monster IX (Fiends Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Fiends Only)"
         },
         {
           "name": "Summon Monster IX (Immolation Devil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Immolation Devil)"
         },
         {
           "name": "Summon Monster IX (Nightwave)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Nightwave)"
         },
         {
           "name": "Summon Monster IX (Pit Fiend)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Pit Fiend)"
         },
         {
           "name": "Summon Monster V (Handmaiden Devil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Handmaiden Devil)"
         },
         {
           "name": "Summon Monster V (Large water elemental)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Large water elemental)"
         },
         {
           "name": "Summon Monster V (Marilith)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Marilith)"
         },
         {
           "name": "Summon Monster V (Nalfeshnee)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Nalfeshnee)"
         },
         {
           "name": "Summon Monster V (Purrodaemon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Purrodaemon)"
         },
         {
           "name": "Summon Monster V (Shemhazian)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Shemhazian)"
         },
         {
           "name": "Summon Monster V (Xacarba)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Xacarba)"
         },
         {
           "name": "Summon Monster VI (Astradaemon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Astradaemon)"
         },
         {
           "name": "Summon Monster VI (Belier Devil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Belier Devil)"
         },
         {
           "name": "Summon Monster VI (Horned Devil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Horned Devil)"
         },
         {
           "name": "Summon Monster VI (Nereid)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Nereid)"
         },
         {
           "name": "Summon Monster VI (Nightwing)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Nightwing)"
         },
         {
           "name": "Summon Monster VI (Vrolikai)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Vrolikai)"
         },
         {
           "name": "Summon Monster VII (Nightwalker)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VII (Nightwalker)"
         },
         {
           "name": "Summon Monster VIII (Balor)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Balor)"
         },
         {
           "name": "Summon Monster VIII (Nightcrawler)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Nightcrawler)"
         },
         {
           "name": "Summon Monster VIII (Scylla)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Scylla)"
         },
         {
           "name": "Summon Monster VIII (water elementals)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (water elementals)"
         },
         {
           "name": "Summon Nature's Ally II (Triton)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally II (Triton)"
         },
         {
           "name": "Summon Nature's Ally V (earth/fire elementals)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally V (earth/fire elementals)"
         },
         {
           "name": "Teleport (Greater/Within its forest territory)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Teleport (Greater/Within its forest territory)"
         },
         {
           "name": "Teleport (Greater/self plus entrapped)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Teleport (Greater/self plus entrapped)"
         },
         {
           "name": "Teleport (Greater/self plus objects)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Teleport (Greater/self plus objects)"
         },
         {
           "name": "Teleport (Greater/self plus skiff)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Teleport (Greater/self plus skiff)"
         },
         {
           "name": "Tree Shape (Colossal tree)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Tree Shape (Colossal tree)"
         },
         {
           "name": "Veil (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Veil (self only)"
         },
         {
           "name": "Wish (granted to a mortal humanoid only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Wish (granted to a mortal humanoid only)"
         },
         {
           "name": "Wood Shape (1 lb only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Wood Shape (1 lb only)"

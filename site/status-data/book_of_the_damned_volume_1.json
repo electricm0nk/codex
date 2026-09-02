@@ -113,11 +113,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 0,
+      "done": 1,
       "partial": 1,
-      "not_started": 24,
+      "not_started": 23,
       "denominator": 25,
-      "pct": 0.0,
+      "pct": 4.0,
       "excluded_from_percentage": 6,
       "standing_breakdown": {
         "unclassified": 6,
@@ -126,7 +126,7 @@
       "items": [
         {
           "name": "1",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "1"
@@ -175,7 +175,7 @@
         },
         {
           "name": "Imp Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monster.Companion",
           "standing": "origin",
           "display_name": "Imp Companion"
@@ -676,7 +676,7 @@
       "items": [
         {
           "name": "Trample",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal",
           "standing": "unclassified",
           "display_name": "Trample"
@@ -687,8 +687,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 4,
+      "partial": 4,
+      "not_started": 0,
       "denominator": 4,
       "pct": 0.0,
       "excluded_from_percentage": 2,
@@ -706,28 +706,28 @@
         },
         {
           "name": "Greater Teleport (Self Plus 50 Lbs. Of Objects Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Greater Teleport (Self Plus 50 Lbs. Of Objects Only)"
         },
         {
           "name": "Hellfire Ray",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Hellfire Ray"
         },
         {
           "name": "Maledication",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Maledication"
         },
         {
           "name": "Sacrifice",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Sacrifice"

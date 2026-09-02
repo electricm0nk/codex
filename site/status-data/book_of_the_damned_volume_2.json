@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "unclassified": 1,
@@ -18,14 +18,14 @@
       "items": [
         {
           "name": "Aligned Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Aligned Strike"
         },
         {
           "name": "Grant Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Grant Spells"
@@ -35,11 +35,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 18,
       "partial": 0,
-      "not_started": 156,
+      "not_started": 138,
       "denominator": 156,
-      "pct": 0.0,
+      "pct": 11.5,
       "excluded_from_percentage": 14,
       "standing_breakdown": {
         "origin": 156,
@@ -62,7 +62,7 @@
         },
         {
           "name": "Awaken Flames",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Awaken Flames"
@@ -181,7 +181,7 @@
         },
         {
           "name": "Deeper Cuts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Deeper Cuts"
@@ -475,14 +475,14 @@
         },
         {
           "name": "Gain Lycanthropy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Gain Lycanthropy"
         },
         {
           "name": "Gain Swim Speed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal.DagonSecondOath",
           "standing": "origin",
           "display_name": "Gain Swim Speed"
@@ -496,7 +496,7 @@
         },
         {
           "name": "Ghoulish Apotheosis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Ghoulish Apotheosis"
@@ -587,7 +587,7 @@
         },
         {
           "name": "Life in Blood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Life in Blood"
@@ -615,7 +615,7 @@
         },
         {
           "name": "Master of Shapes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Master of Shapes"
@@ -888,7 +888,7 @@
         },
         {
           "name": "Swarm Walker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Swarm Walker"
@@ -916,56 +916,56 @@
         },
         {
           "name": "Teratoma (Bite)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "LamashtuTeratomaType",
           "standing": "origin",
           "display_name": "Teratoma (Bite)"
         },
         {
           "name": "Teratoma (Bleed)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.LamashtuTeratomaAbility",
           "standing": "origin",
           "display_name": "Teratoma (Bleed)"
         },
         {
           "name": "Teratoma (Claw)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "LamashtuTeratomaType",
           "standing": "origin",
           "display_name": "Teratoma (Claw)"
         },
         {
           "name": "Teratoma (Grab)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.LamashtuTeratomaAbility",
           "standing": "origin",
           "display_name": "Teratoma (Grab)"
         },
         {
           "name": "Teratoma (Reach)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.LamashtuTeratomaAbility",
           "standing": "origin",
           "display_name": "Teratoma (Reach)"
         },
         {
           "name": "Teratoma (Tail)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "LamashtuTeratomaType",
           "standing": "origin",
           "display_name": "Teratoma (Tail)"
         },
         {
           "name": "Teratoma (Tentacle)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "LamashtuTeratomaType",
           "standing": "origin",
           "display_name": "Teratoma (Tentacle)"
         },
         {
           "name": "Teratoma (Trip)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.LamashtuTeratomaAbility",
           "standing": "origin",
           "display_name": "Teratoma (Trip)"
@@ -1077,14 +1077,14 @@
         },
         {
           "name": "True Lycanthrope",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "True Lycanthrope ([redacted PI])"
         },
         {
           "name": "True Lycanthrope",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "True Lycanthrope ([redacted PI]) #3"
@@ -1614,11 +1614,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 3,
-      "partial": 2,
+      "done": 5,
+      "partial": 0,
       "not_started": 0,
       "denominator": 5,
-      "pct": 60.0,
+      "pct": 100.0,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "origin": 5,
@@ -1627,14 +1627,14 @@
       "items": [
         {
           "name": "Amulet of the Abyss",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Amulet",
           "standing": "origin",
           "display_name": "Amulet of the Abyss"
         },
         {
           "name": "Book of the Damned (Demonic)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Major",
           "standing": "origin",
           "display_name": "Book of the Damned (Demonic)"
@@ -1673,8 +1673,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 40,
-      "partial": 0,
-      "not_started": 3,
+      "partial": 3,
+      "not_started": 0,
       "denominator": 43,
       "pct": 93.0,
       "excluded_from_percentage": 0,
@@ -1684,7 +1684,7 @@
       "items": [
         {
           "name": "Demonic Obedience",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Demonic Obedience (General)"
@@ -1824,7 +1824,7 @@
         },
         {
           "name": "Demonic Obedience",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DemonicObedience",
           "standing": "origin",
           "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience)"
@@ -1908,7 +1908,7 @@
         },
         {
           "name": "Demonic Obedience",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DemonicObedience",
           "standing": "origin",
           "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience) #33"
@@ -2189,8 +2189,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 8,
+      "partial": 8,
+      "not_started": 0,
       "denominator": 8,
       "pct": 0.0,
       "excluded_from_percentage": 4,
@@ -2208,14 +2208,14 @@
         },
         {
           "name": "Portal Jump",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Portal Jump"
         },
         {
           "name": "Rift of Ruin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Rift of Ruin"
@@ -2229,42 +2229,42 @@
         },
         {
           "name": "Summon Monster II (Vermlek)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster II (Vermlek)"
         },
         {
           "name": "Summon Monster III (Brimorak)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Brimorak)"
         },
         {
           "name": "Summon Monster V (Seraptis)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Seraptis)"
         },
         {
           "name": "Summon Monster VI (Demoniac)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Demoniac)"
         },
         {
           "name": "Summon Monster VI (Vavakia)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Vavakia)"
         },
         {
           "name": "Summon Monster VIII (Demoniac)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Demoniac)"
@@ -2289,8 +2289,8 @@
       "kind": "template",
       "label": "Templates",
       "done": 0,
-      "partial": 0,
-      "not_started": 50,
+      "partial": 44,
+      "not_started": 6,
       "denominator": 50,
       "pct": 0.0,
       "excluded_from_percentage": 2,
@@ -2308,42 +2308,42 @@
         },
         {
           "name": "Demon Talon ~ Colossal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Talon ~ Colossal"
         },
         {
           "name": "Demon Talon ~ Diminutive",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Talon ~ Diminutive"
         },
         {
           "name": "Demon Talon ~ Fine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Talon ~ Fine"
         },
         {
           "name": "Demon Talon ~ Gargantuan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Talon ~ Gargantuan"
         },
         {
           "name": "Demon Talon ~ Huge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Talon ~ Huge"
         },
         {
           "name": "Demon Talon ~ Large",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Talon ~ Large"
@@ -2357,273 +2357,273 @@
         },
         {
           "name": "Demon Talon ~ Small",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Talon ~ Small"
         },
         {
           "name": "Demon Talon ~ Tiny",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Talon ~ Tiny"
         },
         {
           "name": "Nascent Demon Lord Traits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Nascent Demon Lord Traits"
         },
         {
           "name": "Teratoma Bite ~ Colossal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Bite ~ Colossal"
         },
         {
           "name": "Teratoma Bite ~ Diminutive",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Bite ~ Diminutive"
         },
         {
           "name": "Teratoma Bite ~ Fine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Bite ~ Fine"
         },
         {
           "name": "Teratoma Bite ~ Gargantuan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Bite ~ Gargantuan"
         },
         {
           "name": "Teratoma Bite ~ Huge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Bite ~ Huge"
         },
         {
           "name": "Teratoma Bite ~ Large",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Bite ~ Large"
         },
         {
           "name": "Teratoma Bite ~ Medium",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Bite ~ Medium"
         },
         {
           "name": "Teratoma Bite ~ Small",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Bite ~ Small"
         },
         {
           "name": "Teratoma Bite ~ Tiny",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Bite ~ Tiny"
         },
         {
           "name": "Teratoma Claw ~ Colossal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Claw ~ Colossal"
         },
         {
           "name": "Teratoma Claw ~ Diminutive",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Claw ~ Diminutive"
         },
         {
           "name": "Teratoma Claw ~ Fine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Claw ~ Fine"
         },
         {
           "name": "Teratoma Claw ~ Gargantuan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Claw ~ Gargantuan"
         },
         {
           "name": "Teratoma Claw ~ Huge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Claw ~ Huge"
         },
         {
           "name": "Teratoma Claw ~ Large",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Claw ~ Large"
         },
         {
           "name": "Teratoma Claw ~ Medium",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Claw ~ Medium"
         },
         {
           "name": "Teratoma Claw ~ Small",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Claw ~ Small"
         },
         {
           "name": "Teratoma Claw ~ Tiny",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Claw ~ Tiny"
         },
         {
           "name": "Teratoma Tail ~ Colossal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tail ~ Colossal"
         },
         {
           "name": "Teratoma Tail ~ Diminutive",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tail ~ Diminutive"
         },
         {
           "name": "Teratoma Tail ~ Fine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tail ~ Fine"
         },
         {
           "name": "Teratoma Tail ~ Gargantuan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tail ~ Gargantuan"
         },
         {
           "name": "Teratoma Tail ~ Huge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tail ~ Huge"
         },
         {
           "name": "Teratoma Tail ~ Large",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tail ~ Large"
         },
         {
           "name": "Teratoma Tail ~ Medium",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tail ~ Medium"
         },
         {
           "name": "Teratoma Tail ~ Small",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tail ~ Small"
         },
         {
           "name": "Teratoma Tail ~ Tiny",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tail ~ Tiny"
         },
         {
           "name": "Teratoma Tentacle ~ Colossal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tentacle ~ Colossal"
         },
         {
           "name": "Teratoma Tentacle ~ Diminutive",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tentacle ~ Diminutive"
         },
         {
           "name": "Teratoma Tentacle ~ Fine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tentacle ~ Fine"
         },
         {
           "name": "Teratoma Tentacle ~ Gargantuan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tentacle ~ Gargantuan"
         },
         {
           "name": "Teratoma Tentacle ~ Huge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tentacle ~ Huge"
         },
         {
           "name": "Teratoma Tentacle ~ Large",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tentacle ~ Large"
         },
         {
           "name": "Teratoma Tentacle ~ Medium",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tentacle ~ Medium"
         },
         {
           "name": "Teratoma Tentacle ~ Small",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tentacle ~ Small"
         },
         {
           "name": "Teratoma Tentacle ~ Tiny",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Teratoma Tentacle ~ Tiny"

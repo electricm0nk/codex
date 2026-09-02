@@ -6,8 +6,8 @@
       "kind": "ability",
       "label": "Abilities",
       "done": 0,
-      "partial": 0,
-      "not_started": 5,
+      "partial": 5,
+      "not_started": 0,
       "denominator": 5,
       "pct": 0.0,
       "excluded_from_percentage": 0,
@@ -17,35 +17,35 @@
       "items": [
         {
           "name": "Racial Traits ~ Catfolk",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Catfolk"
         },
         {
           "name": "Racial Traits ~ Ratfolk",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Ratfolk"
         },
         {
           "name": "Racial Traits ~ Suli",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Suli"
         },
         {
           "name": "Racial Traits ~ Vanara",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Vanara"
         },
         {
           "name": "Racial Traits ~ Vishkanya",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Vishkanya"
@@ -666,11 +666,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 0,
-      "partial": 2,
+      "done": 2,
+      "partial": 0,
       "not_started": 0,
       "denominator": 2,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "unclassified": 2,
@@ -679,28 +679,28 @@
       "items": [
         {
           "name": "Binding Contract",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Melee.OneHanded.Exotic.Reach.Finesseable.Slashing.Flail",
           "standing": "unclassified",
           "display_name": "Binding Contract"
         },
         {
           "name": "Cannon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Ranged.SiegeWeapon.SiegeFirearm.Exotic.Bludgeoning.Piercing",
           "standing": "unclassified",
           "display_name": "Cannon"
         },
         {
           "name": "Dagger (Chain)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Melee.Light.Finesseable.Ranged.Simple.Standard.Piercing.Slashing.Dagger.BladeLight",
           "standing": "origin",
           "display_name": "Dagger (Chain)"
         },
         {
           "name": "Shears",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Melee.OneHanded.Martial.Standard.Slashing.Sword.BladeHeavy",
           "standing": "origin",
           "display_name": "Shears"
@@ -710,11 +710,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 0,
+      "done": 4,
       "partial": 0,
-      "not_started": 4,
+      "not_started": 0,
       "denominator": 4,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 4
@@ -722,28 +722,28 @@
       "items": [
         {
           "name": "BLEED",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BLEED"
         },
         {
           "name": "Bleed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon",
           "standing": "origin",
           "display_name": "Bleed"
         },
         {
           "name": "PPRCT",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PPRCT"
         },
         {
           "name": "Paper Cut",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon",
           "standing": "origin",
           "display_name": "Paper Cut"
@@ -937,11 +937,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 338,
-      "partial": 21,
-      "not_started": 16,
+      "done": 356,
+      "partial": 19,
+      "not_started": 0,
       "denominator": 375,
-      "pct": 90.1,
+      "pct": 94.9,
       "excluded_from_percentage": 321,
       "standing_breakdown": {
         "origin": 375,
@@ -950,42 +950,42 @@
       "items": [
         {
           "name": "+1 Cha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Stat Selection",
           "standing": "origin",
           "display_name": "+1 Cha"
         },
         {
           "name": "+1 Con",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Stat Selection",
           "standing": "origin",
           "display_name": "+1 Con"
         },
         {
           "name": "+1 Dex",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Stat Selection",
           "standing": "origin",
           "display_name": "+1 Dex"
         },
         {
           "name": "+1 Int",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Stat Selection",
           "standing": "origin",
           "display_name": "+1 Int"
         },
         {
           "name": "+1 Str",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Stat Selection",
           "standing": "origin",
           "display_name": "+1 Str"
         },
         {
           "name": "+1 Wis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Stat Selection",
           "standing": "origin",
           "display_name": "+1 Wis"
@@ -1125,14 +1125,14 @@
         },
         {
           "name": "Armor Training",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AkvanRacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Armor Training"
         },
         {
           "name": "Asura Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Asura Traits"
@@ -1202,7 +1202,7 @@
         },
         {
           "name": "Battle Trained",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ValkyrieRacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Battle Trained"
@@ -1223,7 +1223,7 @@
         },
         {
           "name": "Behemoth Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Behemoth Traits"
@@ -1321,7 +1321,7 @@
         },
         {
           "name": "Brass Falchion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BrassGolemRacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Brass Falchion"
@@ -1475,7 +1475,7 @@
         },
         {
           "name": "Chained Daggers",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CrucidaemonRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Chained Daggers"
@@ -1615,7 +1615,7 @@
         },
         {
           "name": "Clockwork Traits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Clockwork Traits"
@@ -1881,7 +1881,7 @@
         },
         {
           "name": "Demodand Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Demodand Traits"
@@ -2049,7 +2049,7 @@
         },
         {
           "name": "Div Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Div Traits"
@@ -2756,14 +2756,14 @@
         },
         {
           "name": "Jiang-Shi Vampire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.JiangShiVampire",
           "standing": "origin",
           "display_name": "Jiang-Shi Vampire"
         },
         {
           "name": "Kami Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Kami Traits"
@@ -2791,7 +2791,7 @@
         },
         {
           "name": "Kyton Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Kyton Traits"
@@ -2847,7 +2847,7 @@
         },
         {
           "name": "Leshy Traits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Leshy Traits"
@@ -3120,7 +3120,7 @@
         },
         {
           "name": "None",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AsurendraAdditional",
           "standing": "origin",
           "display_name": "None"
@@ -3666,7 +3666,7 @@
         },
         {
           "name": "Rakshasa Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Rakshasa Traits"
@@ -3932,7 +3932,7 @@
         },
         {
           "name": "Second Skin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Second Skin"
@@ -4254,7 +4254,7 @@
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpellLike)"
@@ -5017,7 +5017,7 @@
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "LunarNagaRacialAbility",
           "standing": "unclassified",
           "display_name": "Spells (LunarNagaRacialAbility)"
@@ -5038,7 +5038,7 @@
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RoyalNagaRacialAbility",
           "standing": "unclassified",
           "display_name": "Spells (RoyalNagaRacialAbility)"
@@ -5052,7 +5052,7 @@
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WaterNagaRacialAbility",
           "standing": "unclassified",
           "display_name": "Spells (WaterNagaRacialAbility)"
@@ -5318,7 +5318,7 @@
         },
         {
           "name": "Swift Reactions",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Swift Reactions"
@@ -7668,11 +7668,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 9,
-      "partial": 8,
-      "not_started": 144,
+      "done": 106,
+      "partial": 41,
+      "not_started": 14,
       "denominator": 161,
-      "pct": 5.6,
+      "pct": 65.8,
       "excluded_from_percentage": 75,
       "standing_breakdown": {
         "unclassified": 75,
@@ -7716,14 +7716,14 @@
         },
         {
           "name": "Acid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SlimyDemodandRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Acid"
         },
         {
           "name": "Adhesion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TarryDemodandRacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Adhesion"
@@ -7737,175 +7737,175 @@
         },
         {
           "name": "Air: Flight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.GravenGuardianDomain.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Air: Flight"
         },
         {
           "name": "Animal: Beast Ward",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Animal: Beast Ward"
         },
         {
           "name": "Aquatic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Base Form",
           "standing": "unclassified",
           "display_name": "Aquatic"
         },
         {
           "name": "Armor Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Eidolon AC Bonus",
           "standing": "origin",
           "display_name": "Armor Bonus"
         },
         {
           "name": "Arms",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Arms"
         },
         {
           "name": "Artifice: Repair",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Extraordinary.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Artifice: Repair"
         },
         {
           "name": "Asura Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Asura Traits"
         },
         {
           "name": "Awakened Demilich",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DemilichSelection.SpecialQuality",
           "standing": "origin",
           "display_name": "Awakened Demilich"
         },
         {
           "name": "Bear Hug",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Bear Hug"
         },
         {
           "name": "Bear Lord (Grizzly Bear)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Bear Lord (Grizzly Bear)"
         },
         {
           "name": "Biped",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Base Form",
           "standing": "unclassified",
           "display_name": "Biped"
         },
         {
           "name": "Bite",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bite"
         },
         {
           "name": "Blood Drain (Su)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTrait.PenanggalenRacialAbility.SpecialAttack",
           "standing": "origin",
           "display_name": "Blood Drain (Su)"
         },
         {
           "name": "Brutal Claws",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.RaceAbility.SpecialQuality.JiangShiVampire",
           "standing": "origin",
           "display_name": "Brutal Claws"
         },
         {
           "name": "Brutal Jaws",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Brutal Jaws"
         },
         {
           "name": "Burrow",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Burrow"
         },
         {
           "name": "Camouflage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "unclassified",
           "display_name": "Camouflage"
         },
         {
           "name": "Canine Lord (Dog)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Canine Lord (Dog)"
         },
         {
           "name": "Canine Lord (Hyena)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Canine Lord (Hyena)"
         },
         {
           "name": "Canine Lord (Riding Dog)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Canine Lord (Riding Dog)"
         },
         {
           "name": "Canine Lord (Wolf)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Canine Lord (Wolf)"
         },
         {
           "name": "Captivating Song",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BogNixieRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Captivating Song"
         },
         {
           "name": "Cat Lord (Leopard)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Cat Lord (Leopard)"
         },
         {
           "name": "Cat Lord (Lion)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Cat Lord (Lion)"
         },
         {
           "name": "Cat Lord (Tiger)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Cat Lord (Tiger)"
@@ -7933,105 +7933,105 @@
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BogNixieRacialAbility.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (BogNixieRacialAbility.SpecialQuality.Supernatural)"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (Supernatural)"
         },
         {
           "name": "Change Shape (Su)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.SpecialQuality",
           "standing": "origin",
           "display_name": "Change Shape (Su)"
         },
         {
           "name": "Chaos: Chaotic Weapons",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Chaos: Chaotic Weapons"
         },
         {
           "name": "Charm: Command",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Charm: Command"
         },
         {
           "name": "Claw",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Claw"
         },
         {
           "name": "Climb",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Climb"
         },
         {
           "name": "Clockwork Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Clockwork Traits"
         },
         {
           "name": "Community: Alliance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Community: Alliance"
         },
         {
           "name": "Confounding Bandersnatch (+1 CR)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VariantBandersnatch.RacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Confounding Bandersnatch (+1 CR)"
         },
         {
           "name": "Corpse Lure",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Corpse Lure"
         },
         {
           "name": "Create Spawn (Su)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTrait.PenanggalenRacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Create Spawn (Su)"
         },
         {
           "name": "Crocodile Lord (Crocodile)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Crocodile Lord (Crocodile)"
         },
         {
           "name": "Damage Reduction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.RaceAbility.SpecialQuality.FooCreatureRacialAbility",
           "standing": "unclassified",
           "display_name": "Damage Reduction"
         },
         {
           "name": "Darkness: Darkness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Darkness: Darkness"
@@ -8045,105 +8045,105 @@
         },
         {
           "name": "Darting Claw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SharkeatingCrabRacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Darting Claw"
         },
         {
           "name": "Death Curse",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "LinnormRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Death Curse"
         },
         {
           "name": "Death: Bleed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Extraordinary.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Death: Bleed"
         },
         {
           "name": "Demodand Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demodand Traits"
         },
         {
           "name": "Destruction: Shatter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Extraordinary.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Destruction: Shatter"
         },
         {
           "name": "Dinosaur Lord (Deinonychus)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Dinosaur Lord (Deinonychus)"
         },
         {
           "name": "Dinosaur Lord (Tyrannosaurus)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Dinosaur Lord (Tyrannosaurus)"
         },
         {
           "name": "Disease (Su)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTrait.PenanggalenRacialAbility.SpecialAttack",
           "standing": "origin",
           "display_name": "Disease (Su)"
         },
         {
           "name": "Div Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Div Traits"
         },
         {
           "name": "Dominion (Su)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.SpecialQuality",
           "standing": "origin",
           "display_name": "Dominion (Su)"
         },
         {
           "name": "Drain Chi",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.RaceAbility.SpecialQuality.JiangShiVampire",
           "standing": "origin",
           "display_name": "Drain Chi"
         },
         {
           "name": "Dread Claws",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SlimyDemodandRacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Dread Claws"
         },
         {
           "name": "Dusk Kamadan (CR +1)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialQuality.VariantKamadan",
           "standing": "origin",
           "display_name": "Dusk Kamadan (CR +1)"
         },
         {
           "name": "Earth: Rocky",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Extraordinary.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Earth: Rocky"
         },
         {
           "name": "Electricity Blast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SapphireRacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Electricity Blast"
@@ -8157,14 +8157,14 @@
         },
         {
           "name": "Elusive Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.SpecialQuality",
           "standing": "origin",
           "display_name": "Elusive Aura"
         },
         {
           "name": "Energy Attacks",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Supernatural.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Energy Attacks"
@@ -8178,42 +8178,42 @@
         },
         {
           "name": "Energy Resistance (Acid)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Acid)"
         },
         {
           "name": "Energy Resistance (Cold)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Cold)"
         },
         {
           "name": "Energy Resistance (Electricity)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Electricity)"
         },
         {
           "name": "Energy Resistance (Fire)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Fire)"
         },
         {
           "name": "Energy Resistance (Sonic)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Sonic)"
         },
         {
           "name": "Eremite Overlord",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "EremiteSelection.SpecialQuality",
           "standing": "origin",
           "display_name": "Eremite Overlord"
@@ -8227,203 +8227,203 @@
         },
         {
           "name": "Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "unclassified",
           "display_name": "Evasion"
         },
         {
           "name": "Evil: Evil Weapons",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Evil: Evil Weapons"
         },
         {
           "name": "Fey Creature ~ Mind Affect Save",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature ~ Mind Affect Save"
         },
         {
           "name": "Fire: Flaming",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Fire: Flaming"
         },
         {
           "name": "Flash of Brutality",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GreatCyclopsRacialAbility.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Flash of Brutality"
         },
         {
           "name": "Flight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Flight"
         },
         {
           "name": "Flight Additional",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Flight Additional"
         },
         {
           "name": "Freedom of Movement",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "LinnormRacialAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Freedom of Movement"
         },
         {
           "name": "Freeze",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.RaceAbility.SpecialQuality.FooCreatureRacialAbility",
           "standing": "origin",
           "display_name": "Freeze"
         },
         {
           "name": "Frumious Bandersnatch (+2 CR)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VariantBandersnatch.RacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Frumious Bandersnatch (+2 CR)"
         },
         {
           "name": "Gills",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Gills"
         },
         {
           "name": "Glacier Kami",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialQuality.ElderJinushigami",
           "standing": "origin",
           "display_name": "Glacier Kami"
         },
         {
           "name": "Glory: Glorious",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Glory: Glorious"
         },
         {
           "name": "Good: Good Weapons",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Good: Good Weapons"
         },
         {
           "name": "Gore",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RaceAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Gore (RaceAbility.SpecialQuality)"
         },
         {
           "name": "Gore",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Gore (Extraordinary.UnfetteredEidolonEvolution.SpecialQuality)"
         },
         {
           "name": "Great Reef Kami",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialQuality.ElderJinushigami",
           "standing": "origin",
           "display_name": "Great Reef Kami"
         },
         {
           "name": "Healing: Recovery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Healing: Recovery"
         },
         {
           "name": "Hearty",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Hearty"
         },
         {
           "name": "Huge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Huge"
         },
         {
           "name": "Humanoid (Catfolk)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Catfolk)"
         },
         {
           "name": "Humanoid (Ratfolk)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Ratfolk)"
         },
         {
           "name": "Humanoid (Vanara)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Vanara)"
         },
         {
           "name": "Humanoid (Vishkanya)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Humanoid (Vishkanya)"
         },
         {
           "name": "Immunity to Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FossilRacialAbility.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Immunity to Magic"
         },
         {
           "name": "Implant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Implant"
         },
         {
           "name": "Improved Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Improved Evasion"
         },
         {
           "name": "Improved Natural Armor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Improved Natural Armor"
         },
         {
           "name": "Kami Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kami Traits"
@@ -8444,7 +8444,7 @@
         },
         {
           "name": "Knowledge: Familiarity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Knowledge: Familiarity"
@@ -8486,42 +8486,42 @@
         },
         {
           "name": "Large",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Large"
         },
         {
           "name": "Law: Lawful Weapons",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Law: Lawful Weapons"
         },
         {
           "name": "Leap",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Leap"
         },
         {
           "name": "Legs",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Legs"
         },
         {
           "name": "Lesser Bandersnatch (-4 CR)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VariantBandersnatch.RacialAbility.SpecialQuality.LesserBandersnatch",
           "standing": "origin",
           "display_name": "Lesser Bandersnatch (-4 CR)"
         },
         {
           "name": "Liberation: Unfettered",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Liberation: Unfettered"
@@ -8570,42 +8570,42 @@
         },
         {
           "name": "Luck: Lucky",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Luck: Lucky"
         },
         {
           "name": "Madness: Confusion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Madness: Confusion"
         },
         {
           "name": "Magic: Resistant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Magic: Resistant"
         },
         {
           "name": "Magical Flight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Supernatural.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Magical Flight"
         },
         {
           "name": "Magical Flight Additional",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Supernatural.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Magical Flight Additional"
         },
         {
           "name": "Magicbane Bandersnatch (+3 CR)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VariantBandersnatch.RacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Magicbane Bandersnatch (+3 CR)"
@@ -8619,7 +8619,7 @@
         },
         {
           "name": "Martial Arts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VoidlordSelection.SpecialQuality",
           "standing": "origin",
           "display_name": "Martial Arts"
@@ -8654,21 +8654,21 @@
         },
         {
           "name": "Melee",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTrait.PenanggalenRacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Melee"
         },
         {
           "name": "Minor Wish",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BogNixieRacialAbility.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Minor Wish"
         },
         {
           "name": "Mountain Kami",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialQuality.ElderJinushigami",
           "standing": "origin",
           "display_name": "Mountain Kami"
@@ -8682,7 +8682,7 @@
         },
         {
           "name": "Natural Armor Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Eidolon AC Bonus",
           "standing": "origin",
           "display_name": "Natural Armor Bonus"
@@ -8710,14 +8710,14 @@
         },
         {
           "name": "No Variant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VariantBandersnatch",
           "standing": "origin",
           "display_name": "No Variant"
         },
         {
           "name": "Nobility: Honored",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Nobility: Honored"
@@ -8752,49 +8752,49 @@
         },
         {
           "name": "Paired Protectors",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.RaceAbility.SpecialQuality.FooCreatureRacialAbility",
           "standing": "origin",
           "display_name": "Paired Protectors"
         },
         {
           "name": "Petrification",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FossilRacialAbility.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Petrification"
         },
         {
           "name": "Plant: Entangle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Plant: Entangle"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialAbility.ConfoundingBandersnatchRacialAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (RacialAbility.ConfoundingBandersnatchRacialAbility.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SapphireRacialAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SapphireRacialAbility.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VenomousSnakeSwarmRacialAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (VenomousSnakeSwarmRacialAbility.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Poison Immunity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Poison Immunity"
@@ -8815,14 +8815,14 @@
         },
         {
           "name": "Polar Kamadan (CR +2)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialQuality.VariantKamadan",
           "standing": "origin",
           "display_name": "Polar Kamadan (CR +2)"
         },
         {
           "name": "Prayer Scroll",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.RaceAbility.SpecialQuality.JiangShiVampire",
           "standing": "origin",
           "display_name": "Prayer Scroll"
@@ -8836,56 +8836,56 @@
         },
         {
           "name": "Primal Bandersnatch (+2 CR)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "VariantBandersnatch.RacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Primal Bandersnatch (+2 CR)"
         },
         {
           "name": "Primeval Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Primeval Mind"
         },
         {
           "name": "Protection: Protected",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Protection: Protected"
         },
         {
           "name": "Quadruped",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Base Form",
           "standing": "unclassified",
           "display_name": "Quadruped"
         },
         {
           "name": "Raptor Lord (Eagle)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Raptor Lord (Eagle)"
         },
         {
           "name": "Raptor Lord (Falcon)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Raptor Lord (Falcon)"
         },
         {
           "name": "Raptor's Dive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Raptor's Dive"
         },
         {
           "name": "Rat Lord (Giant Rat)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Rat Lord (Giant Rat)"
@@ -8906,35 +8906,35 @@
         },
         {
           "name": "Reach",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Reach"
         },
         {
           "name": "Reincarnate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Reincarnate"
         },
         {
           "name": "Rend",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "CerberiRacialAbility.SpecialAttack",
           "standing": "unclassified",
           "display_name": "Rend"
         },
         {
           "name": "Repose: Rest Eternal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Repose: Rest Eternal"
         },
         {
           "name": "Resistance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Resistance"
@@ -8948,63 +8948,63 @@
         },
         {
           "name": "Rune: Rune Carved",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Rune: Rune Carved"
         },
         {
           "name": "Savage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Savage"
         },
         {
           "name": "Screech of Doom",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Screech of Doom"
         },
         {
           "name": "Separate (Su)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTrait.PenanggalenRacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Separate (Su)"
         },
         {
           "name": "Serpent Lord (Constrictor Snake)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Serpent Lord (Constrictor Snake)"
         },
         {
           "name": "Serpent Lord (Venomous Snake)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Serpent Lord (Venomous Snake)"
         },
         {
           "name": "Serpentine",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unfettered Eidolon Base Form",
           "standing": "unclassified",
           "display_name": "Serpentine"
         },
         {
           "name": "Shark Lord (Shark)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Shark Lord (Shark)"
         },
         {
           "name": "Slam",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Slam"
@@ -9025,49 +9025,49 @@
         },
         {
           "name": "Speed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTrait.PenanggalenRacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Speed"
         },
         {
           "name": "Spell Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "unclassified",
           "display_name": "Spell Resistance"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (RacialTrait.AnimalLordRacialTrait.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTrait.FeyCreatureRacialTrait.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (RacialTrait.FeyCreatureRacialTrait.SpecialQuality)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MaharajaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (MaharajaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SlimyDemodandRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SlimyDemodandRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TarryDemodandRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (TarryDemodandRacialAbility.SpecialQuality.SpellLike)"
@@ -9095,21 +9095,21 @@
         },
         {
           "name": "Sting",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Sting"
         },
         {
           "name": "Stony Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.RaceAbility.SpecialQuality.FooCreatureRacialAbility",
           "standing": "origin",
           "display_name": "Stony Defense"
         },
         {
           "name": "Strength: Powerful",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Extraordinary.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Strength: Powerful"
@@ -9123,7 +9123,7 @@
         },
         {
           "name": "Sun: Dazzling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Sun: Dazzling"
@@ -9137,35 +9137,35 @@
         },
         {
           "name": "Swim",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Swim"
         },
         {
           "name": "Swordplay",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VoidlordSelection.SpecialQuality",
           "standing": "origin",
           "display_name": "Swordplay"
         },
         {
           "name": "Tail",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Tail"
         },
         {
           "name": "Tail Slap",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Tail Slap"
         },
         {
           "name": "Thick Skin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Thick Skin"
@@ -9186,28 +9186,28 @@
         },
         {
           "name": "Trackless Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "unclassified",
           "display_name": "Trackless Step"
         },
         {
           "name": "Travel: Speedy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Travel: Speedy"
         },
         {
           "name": "Trickery: Trip",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Trickery: Trip"
         },
         {
           "name": "True Seeing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "LinnormRacialAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "True Seeing"
@@ -9263,35 +9263,35 @@
         },
         {
           "name": "Voidlord",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VoidYaiSelection",
           "standing": "origin",
           "display_name": "Voidlord"
         },
         {
           "name": "Volcano Kami",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialQuality.ElderJinushigami",
           "standing": "origin",
           "display_name": "Volcano Kami"
         },
         {
           "name": "War: Enhanced",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "War: Enhanced"
         },
         {
           "name": "Water: Swimmer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Extraordinary.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Water: Swimmer"
         },
         {
           "name": "Weaknesses",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTrait.PenanggalenRacialAbility.SpecialQuality.Weakness",
           "standing": "origin",
           "display_name": "Weaknesses"
@@ -9305,28 +9305,28 @@
         },
         {
           "name": "Weapon Training",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Weapon Training"
         },
         {
           "name": "Weather: Shocking Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GravenGuardianDomain.Supernatural.RaceAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Weather: Shocking Weapon"
         },
         {
           "name": "Wither (Su)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTrait.PenanggalenRacialAbility.SpecialAttack",
           "standing": "origin",
           "display_name": "Wither (Su)"
         },
         {
           "name": "Woodland Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Woodland Stride"
@@ -9337,8 +9337,8 @@
       "kind": "template",
       "label": "Templates",
       "done": 0,
-      "partial": 0,
-      "not_started": 60,
+      "partial": 10,
+      "not_started": 50,
       "denominator": 60,
       "pct": 0.0,
       "excluded_from_percentage": 3,
@@ -9356,7 +9356,7 @@
         },
         {
           "name": "Animal Lord",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animal Lord"
@@ -9461,28 +9461,28 @@
         },
         {
           "name": "Fey Creature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature"
         },
         {
           "name": "Fey Creature Has Good Flight Maneuverability",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature Has Good Flight Maneuverability"
         },
         {
           "name": "Fey Creature Has Natural Armor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature Has Natural Armor"
         },
         {
           "name": "Fey Creature Has No Flight Maneuverability",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature Has No Flight Maneuverability"
@@ -9496,14 +9496,14 @@
         },
         {
           "name": "Foo Creature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Foo Creature"
         },
         {
           "name": "Graveknight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Graveknight"
@@ -9601,7 +9601,7 @@
         },
         {
           "name": "Imperial Foo Creature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Foo Creature"
@@ -9643,7 +9643,7 @@
         },
         {
           "name": "Jiang-Shi Vampire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Jiang-Shi Vampire"
@@ -9678,7 +9678,7 @@
         },
         {
           "name": "Penanggalen",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Penanggalen"

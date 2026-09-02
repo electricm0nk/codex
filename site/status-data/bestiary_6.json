@@ -6,8 +6,8 @@
       "kind": "ability",
       "label": "Abilities",
       "done": 0,
-      "partial": 0,
-      "not_started": 1,
+      "partial": 1,
+      "not_started": 0,
       "denominator": 1,
       "pct": 0.0,
       "excluded_from_percentage": 0,
@@ -17,7 +17,7 @@
       "items": [
         {
           "name": "Racial Traits ~ Rougarou",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Rougarou"
@@ -27,11 +27,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 4,
+      "not_started": 3,
       "denominator": 4,
-      "pct": 0.0,
+      "pct": 25.0,
       "excluded_from_percentage": 18,
       "standing_breakdown": {
         "origin": 4,
@@ -61,7 +61,7 @@
         },
         {
           "name": "Dragonbreath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "Dragonbreath"
@@ -75,7 +75,7 @@
         },
         {
           "name": "Guarded Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower",
           "standing": "unclassified",
           "display_name": "Guarded Mind"
@@ -89,14 +89,14 @@
         },
         {
           "name": "Intense Celebration",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Intense Celebration"
         },
         {
           "name": "It Came From Beyond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "It Came From Beyond"
@@ -145,7 +145,7 @@
         },
         {
           "name": "The Stars Are Right",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "The Stars Are Right"
@@ -406,126 +406,126 @@
       "items": [
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI]"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #2"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #3"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #4"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #5"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #6"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #7"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #8"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #9"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #10"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #11"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #12"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #13"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #14"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #15"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #16"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #17"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #18"
@@ -539,21 +539,21 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #20"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #21"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #22"
@@ -575,77 +575,77 @@
       "items": [
         {
           "name": "Dark Tapestry Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dark Tapestry Subdomain"
         },
         {
           "name": "Dragon Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dragon Subdomain"
         },
         {
           "name": "Entropy Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Entropy Subdomain"
         },
         {
           "name": "Fear Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Fear Subdomain"
         },
         {
           "name": "Judgment Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Judgment Subdomain"
         },
         {
           "name": "Revelry Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Revelry Subdomain"
         },
         {
           "name": "Scalykind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Scalykind"
         },
         {
           "name": "Stars Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Stars Subdomain"
         },
         {
           "name": "Tyranny Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Tyranny Subdomain"
         },
         {
           "name": "Venom Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Venom Subdomain"
         },
         {
           "name": "Void",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Void"
