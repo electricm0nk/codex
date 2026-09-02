@@ -80,8 +80,13 @@ KNOWN_WAVES = {
     "wf_820936ab-e11": ("32", "the last 2 verify.sh FAILs -> 40/40 (A); completion_atlas condition-6 "
                               "citation gate is correctly tripping on DONE (B); bucket D from 50.5% "
                               "DONE, 24963/49438 (C)"),
-    "wf_71f08acc-764": ("27", "last 3 root-full tests (A, on opus); B makes the dashboard timeout "
-                              "fail loudly instead of serving stale cache; C sweeps with evidence"),
+    # Run ids and wave numbers are NOT 1:1 from 28 onward. This single run carried
+    # several numbered cycles -- its lanes self-labelled "wave 30" (gate lane A) and
+    # "wave 31" (gate lane C). Waves 28-31 all ran and landed work; only the ledger
+    # registration was skipped, which made the ledger look like it stopped at 27.
+    "wf_71f08acc-764": ("28-31", "gate lanes across four numbered cycles -- B made site-dashboard-check "
+                                 "fail loudly instead of serving a stale cache (a893bfcb39); A turned "
+                                 "root-full GREEN; C swept 38/40 PASS with zero green-to-red"),
 }
 
 
