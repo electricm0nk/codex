@@ -155,7 +155,7 @@ pub fn classify_class_record(tokens: &[(String, String)]) -> ClassRecordCategory
     }
 }
 
-fn tokens_from(data: &Value) -> Vec<(String, String)> {
+pub(crate) fn tokens_from(data: &Value) -> Vec<(String, String)> {
     data["raw_tokens"]
         .as_array()
         .map(|arr| {
@@ -225,7 +225,7 @@ fn max_level_for(tokens: &[(String, String)], type_value: &str) -> u8 {
         .unwrap_or(if type_value.contains("Prestige") { 10 } else { 20 })
 }
 
-fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
+pub(crate) fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
     let Ok(entries) = std::fs::read_dir(dir) else { return };
     let mut entries: Vec<_> = entries.flatten().collect();
     entries.sort_by_key(|e| e.file_name());
