@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2892,
+      "count": 2891,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 25026,
+      "count": 25027,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "78c60fe1393c54cd14ed4ee22c6d650711b4c9dc",
+  "derived_at": "69159a67f53f0c324673bd114b889473f63926d5",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -194,7 +194,7 @@
       "class_feature_of_unmodelled_corpus_class:undead": 13,
       "class_feature_of_unmodelled_corpus_class:war_mind": 17,
       "class_feature_of_unmodelled_corpus_class:westcrown_devil": 11,
-      "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 29,
+      "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 28,
       "deity_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 408,
       "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,
       "language_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 103,
