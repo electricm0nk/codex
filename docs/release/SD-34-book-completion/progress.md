@@ -11,6 +11,56 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 33 crash-recovery fold closure — lanes A/B/C landed, full `scripts/verify.sh` 40/40 confirmed live — complete
+
+**Status: complete.** A kernel soft-lockup crashed the server mid-wave (confirmed via
+`journalctl -b -1`: heavy parallel `rust-lld` link jobs across wave 33's four concurrent
+lanes — one more than the three-lane ceiling `.cargo/config.toml`'s own `jobs=6` fix was
+calibrated for). Lanes A, B, and C had real, uncommitted work sitting in
+`.claude/worktrees/wf_cbb90b15-7b0-{1,2,3}` when it died; lane D had already landed cleanly
+(`d686678427`, receipt above). Nothing was lost: each worktree's diff was backed up before
+anything else was touched, then the three lanes were folded onto `tranche/14`
+**strictly sequentially** — one `cargo` build in flight at a time, never parallel — to avoid
+repeating the crash. Their own detailed receipts are the three entries directly below this
+one:
+
+- **Lane A** (`e8fc4f8ff9`) — 22 of 27 `class_feature_*_held_by_*_table` units closed, 5
+  deferred.
+- **Lane B** (`9ebf638f6f`/`c675d0ad5f`) — 27 of 53 `race_trait_record_loaded_but_never_applies`
+  units get precise engine-does-not-hold evidence (a self-caught correction dropped the
+  crashed draft's claimed 28 to the verified 27 — Bestiary 6's Rougarou selector is genuinely
+  empty by design, not a defect).
+- **Lane C** (`73345ff6cc`/`ba2876a54a`) — 9 of 38
+  `class_modelled_but_no_observed_delta_on_the_rendered_snapshot` units closed, 19 named
+  reachability, 10 named out-of-scope prestige classes.
+
+**Bucket D movement across the whole fold**, re-derived fresh at each landing
+(`python3 scripts/completion_atlas.py --check`), never hand-merged: `population=49438`
+throughout (`overlap=0 unclassified=0` at every step) — `D: 2955 → 2933 (lane A, -22) → 2933
+(lane B, evidence-only, no bucket move) → 2924 (lane C, -9)`; `DONE: 24963 → 24985 → 24985 →
+24994`. Net this fold: **D -31, DONE +31**.
+
+**Two follow-on instrument corrections, landed in `b9e6975406`** after the first post-fold
+full run flagged them: `site/dashboard` + `site/status-data` were regenerated (stale relative
+to the shifted `docs/work-inventory.json`) — diffed before committing per this file's own
+recurring convention: all 49,438 unit rows survive across every kind-shard, zero
+license/`raw_tokens`/`pi_field` lines touched. `BASELINE_ROOT_LIB_TESTS` 3028→3032 and
+`BASELINE_ROOT_FULL_TESTS` 8372→8387, itemized by `#[test]` diff against `7ea9651b87` (+4
+lib-target, +11 bin-target, summing exactly to both measured deltas — no residual, unlike
+lane D's own baseline raise which had one).
+
+**Full `scripts/verify.sh -j 6`, run twice.** Run 1 (commit `ba2876a54a`, immediately after
+all three lanes landed): 39 PASS / 1 FAIL (`site-dashboard-check`, the stale-projection gap
+above) plus the two baseline notes. Run 2, after the two fixes (commit `b9e6975406`):
+**40 PASS / 0 FAIL, `RESULT: PASS`, 5031s (1h23m51s)**, log `/tmp/codex-verify-9ERSLe`,
+auto-emitted retro line `docs/retro/events/sd31-transcribe.jsonl` (`ts:
+2026-09-02T19:42:27Z`). Every stage from the pre-crash lane-D baseline (`7ea9651b87`, 40/40)
+is still PASS with the two expected test-count increases and zero other regressions.
+
+**Root-cause note, filed to standing memory, not just this receipt:** four concurrent
+dispatch lanes is itself the hazard on this box, independent of the per-lane `jobs=6` cap —
+future waves should not exceed three concurrent cargo-building lanes.
+
 ### Cycle — Wave 33, Lane C — `class_modelled_but_no_observed_delta_on_the_rendered_snapshot`'s 38-unit class-level snapshot-delta shape — 9/38 closed, 19 named reachability, 10 named out-of-scope
 
 **Status: complete for 9 of 38, remainder named by mechanism, no escalation.** Recovered from a
