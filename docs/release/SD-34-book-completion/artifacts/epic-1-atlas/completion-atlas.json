@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12494,
+        "line": 12610,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,7 +14,7 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12174,
+        "line": 12290,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
@@ -25,7 +25,7 @@
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12399,
+        "line": 12515,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2955,
+      "count": 2933,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 24963,
+      "count": 24985,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13276,
+        "line": 13392,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -123,7 +123,6 @@
   "sub_causes": {
     "D": {
       "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 210,
-      "class_feature_class_skill_list_held_by_class_skill_list_table": 10,
       "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 179,
       "class_feature_of_unmodelled_corpus_class:adaptive_warrior": 18,
       "class_feature_of_unmodelled_corpus_class:aldori_swordlord": 13,
@@ -196,8 +195,6 @@
       "class_feature_of_unmodelled_corpus_class:war_mind": 17,
       "class_feature_of_unmodelled_corpus_class:westcrown_devil": 11,
       "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables": 5,
-      "class_feature_weapon_proficiency_grant_held_by_class_weapon_proficiency_table": 3,
-      "class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join": 9,
       "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 38,
       "deity_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 408,
       "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,

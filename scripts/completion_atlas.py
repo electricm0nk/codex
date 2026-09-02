@@ -146,7 +146,14 @@ BUCKET_DEFINITIONS = {
         # `Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table")`.
         # Wave 32 re-derivation: fresh `grep -n` for the full literal, line
         # content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12494, "must_contain": "has_no_engine_table"},
+        # Wave 33 re-derivation: lane A's own insertions into `Kind::
+        # ClassFeature`'s `text_only` block (three new no-prose closure
+        # rungs, before this line) shifted every citation below by exactly
+        # +116 lines -- fresh `grep -n` for the SAME unique literal
+        # (`Kind::Companion => engine_does_not_hold("companion_content_has_
+        # no_engine_table"),`), line content read back and confirmed
+        # unchanged in substance, only position.
+        "citation": {"file": _ENGINE_SRC, "line": 12610, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -158,7 +165,9 @@ BUCKET_DEFINITIONS = {
         # `engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine")`.
         # Wave 32 re-derivation: fresh `grep -n` for the full literal, line
         # content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12174, "must_contain": "not_held_by_engine"},
+        # Wave 33 re-derivation: same +116-line shift as bucket A above
+        # (lane A's own insertions land BEFORE this line too), same method.
+        "citation": {"file": _ENGINE_SRC, "line": 12290, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -170,7 +179,9 @@ BUCKET_DEFINITIONS = {
         # `engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")`.
         # Wave 32 re-derivation: fresh `grep -n` for the full literal, line
         # content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12399, "must_contain": "explanation_id"},
+        # Wave 33 re-derivation: same +116-line shift as buckets A/B above
+        # (lane A's own insertions land BEFORE this line too), same method.
+        "citation": {"file": _ENGINE_SRC, "line": 12515, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -209,7 +220,13 @@ BUCKET_DEFINITIONS = {
         # insertions above `apply_done_rung_stamps`): fresh `grep -n` against
         # the real current file content, line content read back and confirmed
         # not to be one of the test-assertion or STATUS_VOCABULARY hits.
-        "citation": {"file": _ENGINE_SRC, "line": 13276, "must_contain": "literal-verified"},
+        # Re-derived at wave 33 (line drifted 13276 -> 13392, same +116-line
+        # shift as buckets A/B/C above -- lane A's own insertions land
+        # BEFORE this line too): fresh `grep -n` for the exact same unique
+        # literal (`item.verdict.status = "literal-verified";`), line
+        # content read back and confirmed still the real construction site,
+        # not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 13392, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",

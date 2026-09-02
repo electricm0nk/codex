@@ -12082,16 +12082,37 @@ fn classify(
                 // `weapon_tables::CLASS_WEAPON_PROFICIENCIES` table combat
                 // already consults via `character_is_proficient_with` --
                 // not a new stub, a real fact the engine already computes).
-                // This still has `description: null` (nothing to display),
-                // so it deliberately does NOT return `text-complete` --
-                // only that the record's own content is now genuinely held
-                // by an engine table (bucket B -> D, `decisions.md §2`'s
-                // "a shelf, not a half-fix"), leaving the display gap for
-                // whichever mechanism owns `has_real_description`.
+                // Wave 33 lane A verified this genuinely has `description:
+                // null` upstream, not merely un-ingested: none of the three
+                // keys' own `cr_abilities_class.lst` rows (2791/2793/2795)
+                // carry a `DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:` token at all
+                // -- `CATEGORY:Internal`, `AUTO:WEAPONPROF` only. Confirmed
+                // against BOTH the PCGen source tree
+                // (`~/workspace/repos/pcgen/data/pathfinder/paizo/
+                // roleplaying_game/core_rulebook/cr_abilities_class.lst`)
+                // and the already-ingested corpus JSON
+                // (`data/corpus/core_rulebook/class_feature/
+                // weapon_proficiencies/*.json`, `data.description: null`
+                // for all three) -- the same conclusion two independent
+                // sources. So `!has_real_description` below returns `grounded`
+                // (bucket D -> DONE, `decisions.md §20`'s extension of the
+                // zero-magnitude/text-shown ruling to a genuinely proseless
+                // set-shaped record) rather than the display-gap
+                // `engine-does-not-hold` this rung used to return
+                // unconditionally.
                 if text_only {
                     if let Some(class_id) =
                         class_feature_pool_catalog::weapon_proficiency_grant_class_id(&unit.key)
                         && weapon_tables::class_weapon_proficiency(class_id).is_some() {
+                            if !has_real_description {
+                                return Verdict {
+                                    status: "grounded",
+                                    evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+                                        .to_string(),
+                                    reason: None,
+                                    engine_book: engine_book_field,
+                                };
+                            }
                             return engine_does_not_hold(
                                 "class_feature_weapon_proficiency_grant_held_by_class_weapon_proficiency_table",
                             );
@@ -12107,11 +12128,60 @@ fn classify(
                     // match on BOTH halves against the already-shipped
                     // `weapon_tables::CLASS_WEAPON_PROFICIENCIES` table and
                     // the new `weapon_tables::CLASS_ARMOR_PROFICIENCIES`
-                    // table this cycle adds. Still `description: null`'s
-                    // display-bucket sibling concern is untouched -- this
-                    // only certifies the record's own content is now held
-                    // by real engine tables (bucket B -> D, same "a shelf,
-                    // not a half-fix" outcome as cycle 5's own rung).
+                    // table this cycle adds.
+                    //
+                    // **CORRECTION (wave 33 lane A):** this cycle 6 comment's
+                    // own "still `description: null`" claim is FALSE for all
+                    // five of these keys -- verified against both the PCGen
+                    // source (`cr_abilities_class.lst` lines 2814/2816/2818/
+                    // 2819/2820, each carrying a real, multi-sentence `DESC:`
+                    // token, e.g. Bard's "A bard is proficient with all
+                    // simple weapons, plus the longsword, rapier, sap, short
+                    // sword, shortbow, and whip. ...") and the already-
+                    // ingested corpus JSON (`data/corpus/core_rulebook/
+                    // class_feature/weapon_and_armor_proficiency/*.json`,
+                    // `data.description` populated, `wiring_class: "display"`
+                    // for all five). `has_real_description` is therefore
+                    // `true` here, unlike cycle 5's/7's/9's genuinely
+                    // proseless siblings (confirmed false for those, see
+                    // their own updated comments) -- so this rung does NOT
+                    // qualify for wave 33 lane A's `!has_real_description`
+                    // no-prose closure below.
+                    //
+                    // The real blocker is a DIFFERENT gap: `class_feature_
+                    // effect_wired` (the `Kind::ClassFeature` "owner
+                    // resolved" arm's own probe, this match's very first
+                    // check) never contains these five keys, because
+                    // `pilot_compute::explain_base_class_weapon_and_armor_
+                    // proficiency`/`ground_class_weapon_and_armor_
+                    // proficiency` -- the exact grounding idiom that already
+                    // promotes Sorcerer, Wizard, Cleric, Assassin and
+                    // Shadowdancer's own "Weapon and Armor Proficiency ~
+                    // <Class>" records to `text-complete` via that SAME
+                    // earlier check -- has never been extended to Bard,
+                    // Fighter, Paladin, Ranger, or Rogue. Extending it is
+                    // real, precedented, in-scope-shaped work -- but NOT a
+                    // same-cycle-safe one: unlike Assassin/Shadowdancer
+                    // (zero registered archetypes) or Sorcerer/Wizard (same),
+                    // all five of THESE classes have real, registered
+                    // archetypes in `rules_tables/*/archetype_tables.rs`
+                    // that supersede one or more of their weapon/armor
+                    // proficiency slots (confirmed by `grep -n "replaces:"
+                    // ... | grep -i "bard\|fighter\|paladin\|ranger\|rogue"`
+                    // across every archetype-table module -- dozens of
+                    // matches, not the 1-in-7-tables count Cleric's own
+                    // cycle 6 found). Grounding these five correctly, the
+                    // same rigor Cleric's own cycle 6 applied (reading every
+                    // matching archetype's own replacement grant text before
+                    // trusting the base-class prose), is real next-cycle
+                    // scope -- named exactly in this receipt's remainder,
+                    // not rushed here at the risk of shipping stale
+                    // archetype text to a player who selected one of them.
+                    // So this rung's own behaviour is UNCHANGED this cycle:
+                    // still `engine-does-not-hold` (bucket D), still
+                    // "a shelf, not a half-fix" for the mechanical-grant
+                    // half only -- the comment above was simply wrong about
+                    // WHY the display half is not yet done.
                     if let Some(class_id) = class_feature_pool_catalog::weapon_and_armor_proficiency_grant_class_id(
                         &unit.key,
                     )
@@ -12132,19 +12202,44 @@ fn classify(
                     // chassis record plus `"Jack of All Trades ~ Class
                     // Skills"`), each independently verified byte-for-byte
                     // against the live corpus's own `CSKILL` token by
-                    // `class_skill_tables`'s own test. Still `description:
-                    // null`'s display-bucket sibling concern is untouched
-                    // -- this only certifies the record's own content is
-                    // now held by a real engine table (bucket B -> D,
-                    // same "a shelf, not a half-fix" outcome as cycles 5-6's
-                    // own rungs). The remaining 3 units of the 13-unit
-                    // sub-cause (`Companion ~ Animal Companion`, `Companion
-                    // ~ Special Mount`, `Special Mount ~ Standard Choices`)
-                    // are a DIFFERENT corpus shape (`FOLLOWERS:`/
+                    // `class_skill_tables`'s own test.
+                    //
+                    // Wave 33 lane A verified this genuinely has
+                    // `description: null` upstream, not merely un-ingested:
+                    // none of the 10 keys' own `cr_abilities_class.lst` rows
+                    // (99-106, 1088, 2831-2838) carry a `DESC:`/`SPROP:`/
+                    // `BENEFIT:`/`ASPECT:` token -- `CATEGORY:Internal`,
+                    // `CSKILL:` only. Confirmed against BOTH the PCGen
+                    // source tree and the already-ingested corpus JSON
+                    // (`data/corpus/core_rulebook/class_feature/
+                    // class_skills/*.json` + `jack_of_all_trades/*.json`,
+                    // `data.description: null` for all 10) -- the same
+                    // conclusion two independent sources. So
+                    // `!has_real_description` below returns `grounded`
+                    // (bucket D -> DONE, `decisions.md §20`'s extension of
+                    // the zero-magnitude/text-shown ruling to a genuinely
+                    // proseless set-shaped record) rather than the
+                    // display-gap `engine-does-not-hold` this rung used to
+                    // return unconditionally. The remaining 3 units of the
+                    // 13-unit sub-cause (`Companion ~ Animal Companion`,
+                    // `Companion ~ Special Mount`, `Special Mount ~ Standard
+                    // Choices`) are a DIFFERENT corpus shape (`FOLLOWERS:`/
                     // `COMPANIONLIST:`, not `CSKILL:`) and fall through to
-                    // this arm's own fallback below, unchanged.
+                    // this arm's own fallback below, unchanged -- not
+                    // verified against upstream prose by this cycle, out of
+                    // scope (a different mechanism, `decisions.md §20` does
+                    // not name them).
                     if class_feature_pool_catalog::class_skill_list_grant_owner_id(&unit.key).is_some()
                     {
+                        if !has_real_description {
+                            return Verdict {
+                                status: "grounded",
+                                evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+                                    .to_string(),
+                                reason: None,
+                                engine_book: engine_book_field,
+                            };
+                        }
                         return engine_does_not_hold(
                             "class_feature_class_skill_list_held_by_class_skill_list_table",
                         );
@@ -12158,15 +12253,36 @@ fn classify(
                     // join of two already-shipped, already-tested tables
                     // (`crb::wizard_spell_list::WIZARD_SPELL_LIST` +
                     // `crb::spell_list::SPELL_LIST`), verified byte-for-byte
-                    // against all 9 corpus records. Still `description:
-                    // null` -- this only certifies the record's own content
-                    // is now held by real engine tables (bucket B -> D,
-                    // same "a shelf, not a half-fix" outcome as cycles 5-7's
-                    // own rungs), leaving the display gap for whichever
-                    // mechanism owns `has_real_description`.
+                    // against all 9 corpus records.
+                    //
+                    // Wave 33 lane A verified this genuinely has
+                    // `description: null` upstream, not merely un-ingested:
+                    // none of the 9 keys' own `cr_abilities_class.lst` rows
+                    // (2624-2632) carry a `DESC:`/`SPROP:`/`BENEFIT:`/
+                    // `ASPECT:` token -- `CATEGORY:Internal`, `SPELLKNOWN:`
+                    // only. Confirmed against BOTH the PCGen source tree and
+                    // the already-ingested corpus JSON
+                    // (`data/corpus/core_rulebook/class_feature/
+                    // <school>_wizard_spells/*.json`, `data.description:
+                    // null` for all 9) -- the same conclusion two
+                    // independent sources. So `!has_real_description` below
+                    // returns `grounded` (bucket D -> DONE, `decisions.md
+                    // §21`'s extension of the zero-magnitude/text-shown
+                    // ruling to a genuinely proseless set-shaped record)
+                    // rather than the display-gap `engine-does-not-hold`
+                    // this rung used to return unconditionally.
                     if class_feature_pool_catalog::wizard_school_spell_list_key_owner(&unit.key)
                         .is_some()
                     {
+                        if !has_real_description {
+                            return Verdict {
+                                status: "grounded",
+                                evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+                                    .to_string(),
+                                reason: None,
+                                engine_book: engine_book_field,
+                            };
+                        }
                         return engine_does_not_hold(
                             "class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join",
                         );
@@ -21684,20 +21800,22 @@ mod class_feature_text_complete_rung_tests {
         );
     }
 
-    /// `AT-34-E3-001` cycle 5, weapon-proficiency-grant shard: a
-    /// `description: null` internal chassis row whose corpus key is one of
+    /// `AT-34-E3-001` cycle 5 / wave 33 lane A: a `description: null`
+    /// internal chassis row whose corpus key is one of
     /// `class_feature_pool_catalog::WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_
-    /// MATCHES`' three verified members must leave bucket B for bucket D --
-    /// `engine-does-not-hold` status still (nothing displays yet), but
-    /// evidence naming a real held fact, never the mechanism's own generic
-    /// `class_feature_option_pool_record_not_held_by_engine` fallback.
-    /// Proves this FAILS before the fix (the intended-reason RED): before
-    /// `weapon_proficiency_grant_class_id` was consulted, this exact unit
-    /// fell all the way through to the generic fallback despite the engine
-    /// already computing this exact class's weapon proficiency for real
-    /// combat (`character_is_proficient_with`).
+    /// MATCHES`' three verified members, with NO real description anywhere
+    /// upstream (verified against both the PCGen source and the ingested
+    /// corpus JSON, `decisions.md §20`) must now reach bucket D's own DONE
+    /// closure -- `status: "grounded"` with the wave-33 no-prose evidence
+    /// string, never `text-complete` (which would assert prose that does
+    /// not exist) and never the old unconditional `engine-does-not-hold`
+    /// this rung returned before this cycle. Proves this FAILS before the
+    /// fix (the intended-reason RED): before the `!has_real_description`
+    /// check was added, this exact unit (real `has_real_description: false`
+    /// input) stayed at `engine-does-not-hold` forever, with no closure
+    /// path at all for a genuinely proseless record.
     #[test]
-    fn a_weapon_proficiency_grant_verified_against_the_class_table_leaves_bucket_b() {
+    fn a_weapon_proficiency_grant_with_no_upstream_prose_reaches_the_no_prose_done_closure() {
         let facts = EngineFacts::default();
         let unit = class_feature_unit(
             "core_rulebook",
@@ -21707,15 +21825,39 @@ mod class_feature_text_complete_rung_tests {
             0,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "a genuinely proseless held-by-table record must close bucket D: status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+        );
+    }
+
+    /// Control: the SAME key, but with `has_real_description: true` (a
+    /// hypothetical -- production has none, but the branch must be real
+    /// content-gated, never a bare shape/key match) must NOT take the
+    /// no-prose closure and must keep falling to the pre-existing bucket-D
+    /// `engine-does-not-hold` rung, exactly as the whole family did before
+    /// this cycle -- proving `!has_real_description` is a real, live gate.
+    #[test]
+    fn a_weapon_proficiency_grant_with_a_hypothetical_real_description_does_not_take_the_no_prose_closure()
+    {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            57,
+            "Weapon Proficiencies ~ Bard",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(
             verdict.evidence,
             "class_feature_weapon_proficiency_grant_held_by_class_weapon_proficiency_table"
-        );
-        assert!(
-            !verdict.evidence.contains("not_held_by_engine"),
-            "must NOT carry a bucket-B marker any more: evidence={}",
-            verdict.evidence
         );
     }
 
@@ -21739,22 +21881,20 @@ mod class_feature_text_complete_rung_tests {
         assert_eq!(verdict.evidence, "class_feature_option_pool_record_not_held_by_engine");
     }
 
-    /// `AT-34-E3-001` cycle 9, wizard-opposition-school-spell-tracking
-    /// sub-cause: a `description: null` `"<School> Wizard Spells"` internal
-    /// chassis row whose corpus key is one of
-    /// `class_feature_pool_catalog::WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER`'s
-    /// nine verified members must leave bucket B for bucket D --
-    /// `engine-does-not-hold` status still (nothing displays yet), but
-    /// evidence naming a real held fact (the `wizard_spell_list`/
-    /// `spell_list` join), never the mechanism's own generic
-    /// `class_feature_option_pool_record_not_held_by_engine` fallback.
-    /// Proves this FAILS before the fix (the intended-reason RED): before
-    /// `wizard_school_spell_list_key_owner` was consulted, this exact unit
-    /// fell all the way through to the generic fallback despite the engine
-    /// already holding this exact school's 0-level Wizard spell list, for
-    /// real, via two already-shipped tables.
+    /// `AT-34-E3-001` cycle 9 / wave 33 lane A: a `description: null`
+    /// `"<School> Wizard Spells"` internal chassis row whose corpus key is
+    /// one of `class_feature_pool_catalog::WIZARD_SCHOOL_SPELL_LIST_KEY_
+    /// OWNER`'s nine verified members, with NO real description anywhere
+    /// upstream (verified against both the PCGen source and the ingested
+    /// corpus JSON, `decisions.md §20`) must now reach bucket D's own DONE
+    /// closure -- `status: "grounded"` with the wave-33 no-prose evidence
+    /// string. Proves this FAILS before the fix (the intended-reason RED):
+    /// before the `!has_real_description` check was added, this exact unit
+    /// (real `has_real_description: false` input) stayed at
+    /// `engine-does-not-hold` forever, with no closure path at all for a
+    /// genuinely proseless record.
     #[test]
-    fn a_wizard_school_spell_list_row_verified_against_the_join_leaves_bucket_b() {
+    fn a_wizard_school_spell_list_row_with_no_upstream_prose_reaches_the_no_prose_done_closure() {
         let facts = EngineFacts::default();
         let unit = class_feature_unit(
             "core_rulebook",
@@ -21764,15 +21904,121 @@ mod class_feature_text_complete_rung_tests {
             0,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "a genuinely proseless held-by-table record must close bucket D: status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+        );
+    }
+
+    /// Control: the SAME key, but with `has_real_description: true` (a
+    /// hypothetical -- production has none) must NOT take the no-prose
+    /// closure and must keep falling to the pre-existing bucket-D
+    /// `engine-does-not-hold` rung, proving `!has_real_description` is a
+    /// real, live gate rather than a bare shape/key match.
+    #[test]
+    fn a_wizard_school_spell_list_row_with_a_hypothetical_real_description_does_not_take_the_no_prose_closure()
+    {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2624,
+            "Abjuration Wizard Spells",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(
             verdict.evidence,
             "class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join"
         );
-        assert!(
-            !verdict.evidence.contains("not_held_by_engine"),
-            "must NOT carry a bucket-B marker any more: evidence={}",
-            verdict.evidence
+    }
+
+    /// `AT-34-E3-001` cycle 7 / wave 33 lane A: the class-skill-list rung's
+    /// own sibling of the two tests above -- a `description: null` `"Class
+    /// Skills ~ <Class>"` internal chassis row whose corpus key is one of
+    /// `class_feature_pool_catalog::CLASS_SKILL_LIST_GRANT_OWNER_TABLE_
+    /// MATCHES`' ten verified members, with NO real description anywhere
+    /// upstream (verified against both the PCGen source and the ingested
+    /// corpus JSON, `decisions.md §20`) must reach the SAME no-prose DONE
+    /// closure.
+    #[test]
+    fn a_class_skill_list_row_with_no_upstream_prose_reaches_the_no_prose_done_closure() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2831,
+            "Class Skills ~ Barbarian",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "a genuinely proseless held-by-table record must close bucket D: status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+        );
+    }
+
+    /// Control: the SAME class-skill-list key with a hypothetical real
+    /// description must keep falling to the pre-existing bucket-D
+    /// `engine-does-not-hold` rung, unaffected.
+    #[test]
+    fn a_class_skill_list_row_with_a_hypothetical_real_description_does_not_take_the_no_prose_closure() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2831,
+            "Class Skills ~ Barbarian",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_class_skill_list_held_by_class_skill_list_table"
+        );
+    }
+
+    /// Control: `AT-34-E3-001` cycle 6's `weapon-and-armor-proficiency`
+    /// sibling rung is DELIBERATELY UNCHANGED by this cycle, even though
+    /// (unlike its three siblings above) it genuinely DOES have real
+    /// upstream prose for all five of its keys (`decisions.md §20`) -- the
+    /// remaining blocker there is that `pilot_compute` has never been wired
+    /// to ground Bard/Fighter/Paladin/Ranger/Rogue's own version of this
+    /// record shape (unlike Sorcerer/Wizard/Cleric/Assassin/Shadowdancer,
+    /// which already are), so `class_feature_effect_wired` never contains
+    /// these keys and this rung is never reached with `has_real_description:
+    /// true` in real production data. This test pins that: even WITH
+    /// `has_real_description: true`, this rung must still return
+    /// `engine-does-not-hold` with its own original evidence, never the
+    /// no-prose closure (which would be dishonest for a record that DOES
+    /// have real prose) and never `text-complete` (nothing grounds it yet).
+    #[test]
+    fn a_weapon_and_armor_proficiency_grant_with_its_real_upstream_prose_still_falls_to_bucket_d() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2814,
+            "Weapon and Armor Proficiency ~ Bard",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables"
         );
     }
 

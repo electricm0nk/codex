@@ -313,6 +313,31 @@ with a named resolution point, not an unresolved placeholder.
 
 ---
 
+## §20 — Wave 33 lane A: `§2a`'s zero-magnitude ruling extends to set-shaped `class_feature` records with genuinely no upstream prose
+
+**Question.** Bucket D's 27-unit `class_feature_*_held_by_*_table` shape (four rungs: `weapon-proficiency` 3, `weapon-and-armor-proficiency` 5, `class-skill-list` 10, `wizard-school-spell-list` 9) all carry `description: null` in `docs/work-inventory.json`. Wave 32 lane C recommended escalating the disposition to the operator. This cycle was directed **not** to escalate, and instead to determine from the data whether real `DESC:` prose exists upstream and was never ingested (a content fix), or genuinely does not exist anywhere (a different-shape ruling).
+
+**Method — every one of the 27 checked individually against two independent sources**, not assumed from the shape:
+1. The PCGen source tree (`~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst`) — the raw `.lst` row for every one of the 27 keys, read directly, checked for a `DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:` token.
+2. The already-ingested corpus JSON (`data/corpus/core_rulebook/class_feature/**/*.json`) — `data.description`, checked directly, not inferred from `work-inventory.json` (which does not export a `description` field at all).
+
+**Finding — the 27 split into two genuinely different shapes, not one:**
+
+| Rung | Units | Real `DESC:` prose upstream? | Disposition |
+|---|---:|---|---|
+| `weapon-proficiency` (Bard/Druid/Rogue, `CATEGORY:Internal`) | 3 of 27 | **No** — confirmed absent both sources | Closed this cycle: `!has_real_description` → `grounded`/`class_feature_set_shaped_grant_carries_no_upstream_description_by_design` |
+| `class-skill-list` (9 base classes + Jack of All Trades, `CATEGORY:Internal`) | 10 of 27 | **No** — confirmed absent both sources | Closed this cycle, same evidence string |
+| `wizard-school-spell-list` (9 schools, `CATEGORY:Internal`) | 9 of 27 | **No** — confirmed absent both sources | Closed this cycle, same evidence string |
+| `weapon-and-armor-proficiency` (Bard/Fighter/Paladin/Ranger/Rogue) | 5 of 27 | **Yes** — real multi-sentence `DESC:` prose exists in BOTH the PCGen source (`cr_abilities_class.lst` lines 2814/2816/2818/2819/2820) AND is already ingested into the corpus JSON (`data.description` populated, `VISIBLE:DISPLAY`, `wiring_class: "display"`) | **Not closed this cycle** — see below |
+
+**22 of 27 (the first three rungs): the "different shape" branch.** These are genuinely set/list-shaped records (`CSKILL:`/`SPELLKNOWN:`/`AUTO:WEAPONPROF` tokens only) with no player-facing prose anywhere upstream — not an ingestion gap, a real absence. `§2a`'s standing ruling ("a zero-magnitude feature whose description is shown to the player is COMPLETE") is extended here to its honest sibling: **a zero-magnitude, set-shaped record that has no description to show is also complete** — there is no display gap to close because there is nothing to display. A new, distinct evidence string, `class_feature_set_shaped_grant_carries_no_upstream_description_by_design`, marks this — deliberately NOT `text-complete` (that status would assert real rendered prose that does not exist) and carrying no substring of `completion_atlas.py`'s `_DONE_VIOLATION_MARKERS`. It uses the SAME `status: "grounded"` the file's own existing "bounded grant-only identity record" idiom already uses (Sorcerer/Wizard's own Weapon and Armor Proficiency grounding, `pilot_compute/mod.rs`), so `completion_atlas.py`'s existing `DONE` citation (`status in {grounded, text-complete}`, `v06_work_inventory.rs:10195`) already covers it — no `BUCKET_DEFINITIONS` schema change needed, only the new marker itself, verified absent from `_DONE_VIOLATION_MARKERS`.
+
+**5 of 27 (`weapon-and-armor-proficiency`): the "ingest it" branch, discovered to already be half-true and half-blocked — reported, not rushed.** The prose exists AND is already ingested; what's missing is that the ENGINE side never wired it. `v06_work_inventory.rs`'s `Kind::ClassFeature` arm promotes a text-only, real-description, `display`-wiring-class record to `text-complete` only once `pilot_compute`'s own `class_feature_effect_wired` probe observes a grounded explanation for that exact key — and `pilot_compute::explain_base_class_weapon_and_armor_proficiency`/`ground_class_weapon_and_armor_proficiency` (the precedented idiom that already grounds Sorcerer, Wizard, Cleric, Assassin and Shadowdancer's own version of this exact record shape) has never been extended to Bard, Fighter, Paladin, Ranger, or Rogue. Extending it is real, in-scope-shaped, precedented work — but doing it at the SAME rigor the precedent requires (Cleric's own cycle 6 read every one of that class's registered archetypes before trusting any replacement text) is not a same-cycle-safe move here: all five of these classes have real, registered archetypes across `rules_tables/*/archetype_tables.rs` that supersede one or more of their proficiency slots (many more matches than Cleric's single Ecclesitheurge case) — grounding them without reading every one risks shipping stale archetype text to a player who selected one, which is exactly the fabrication risk `AGENTS.md` rule 7/8 warns against. Named exactly as next-cycle scope in this wave's own receipt, not closed here.
+
+**Enforced by:** `python3 scripts/completion_atlas.py --check` (population/DONE/D deltas, `done_evidence_violations=0`, `citation_failures=0`); the two source-file checks named above, individually, per key (this receipt's own `figures` section carries the literal grep commands); `cargo test` on the touched module.
+
+---
+
 ## §19 — Operator ruling, 2026-08-29: `§17`'s disposition principle extends to bucket `V`
 
 **Operator ruling:** *"assume the correctness of previous ruling and continue."* `§17`'s reasoning
