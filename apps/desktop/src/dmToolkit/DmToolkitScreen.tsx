@@ -7,6 +7,7 @@ import { linkCandidates, resolveLinks } from './dmLinksModel';
 import { historyFor } from './dmHistoryModel';
 import { renderDmConsoleHtml } from './dmConsoleExport';
 import { DESKTOP_DM_CONSOLE_EXPORT_DEPS, runDmConsoleExport } from './dmConsoleExportFlow';
+import { EncounterBuilderScreen } from './EncounterBuilderScreen';
 import { draftFromRecord, draftToInput, emptyDraft, validateDraft, type DmRecordDraft } from './dmRecordForm';
 
 /**
@@ -34,6 +35,8 @@ export function DmToolkitScreen(props: { onBack: () => void }) {
   const [editing, setEditing] = useState<{ recordId: string | null; draft: DmRecordDraft } | null>(null);
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [exporting, setExporting] = useState(false);
+  /** v0.8 E-2: the encounter builder lives beside the console, same top-level screen. */
+  const [showEncounters, setShowEncounters] = useState(false);
   const [exportStatus, setExportStatus] = useState<{ tone: 'ok' | 'error'; text: string } | null>(null);
 
   const records = useMemo(() => (campaignId ? getDmRecords(campaignId) : []), [campaignId, revision]);
@@ -130,6 +133,10 @@ export function DmToolkitScreen(props: { onBack: () => void }) {
     setSelectedId(nextSelectionForKind(getDmRecords(campaignId), kind, null));
   }
 
+  if (showEncounters) {
+    return <EncounterBuilderScreen onBack={() => setShowEncounters(false)} />;
+  }
+
   return (
     <section style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 6rem)', marginTop: '1rem' }}>
       {/* Top bar: brand, tabs, campaign, back */}
@@ -192,6 +199,9 @@ export function DmToolkitScreen(props: { onBack: () => void }) {
               </button>
             </>
           ) : null}
+          <button type="button" onClick={() => setShowEncounters(true)} style={{ ...quietButton, fontSize: '0.85rem', padding: '0.4rem 0.9rem' }}>
+            Encounter builder
+          </button>
           <button type="button" onClick={props.onBack} style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 8, color: 'var(--color-text)', cursor: 'pointer', padding: '0.4rem 0.9rem' }}>
             Back
           </button>
