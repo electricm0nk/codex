@@ -175,3 +175,88 @@ an acceptance check *before* D-5 started — which is what eventually worked, on
 `StubScreen.tsx` is now imported nowhere (the orchestrator's claim that Manage Party still used it
 was wrong, verified by `frontend`). Left as dead code rather than deleted inside an unrelated
 ticket; housekeeping for a follow-up.
+
+---
+
+# Addendum 2 — Encounter generator v1 (strawman), same session
+
+The operator directed the party-strength encounter generator be built as a strawman too. Two
+tickets (E-1, E-2). Brief: `encounter-generator-build.md`.
+
+**Final: 32 commits, clean tree, typecheck 0, 119/119 test files, cargo 627 passed / 3 failed
+(the known bar).**
+
+## It was a bridge, not engine work — B14 revised
+
+`scout`'s blocker B14 said rating encounters against real monsters needs `encounters.rs` to take a
+Bestiary record rather than a bare CR. Verified by reading before dispatch: `Encounter::new`,
+`CharacterSnapshot::new` and `MonsterRef::new` are all **pub**, and the desktop monster catalog DTO
+**already carries `challenge_rating`** parsed from the corpus. CR is exactly what PF1 encounter
+math consumes, so catalog monster → `MonsterRef` is a mapping. Only the Tauri command was missing.
+**No repo-root `src/` edit.** B14 stands only for a richer monster shape.
+
+## What the strawman found — the engine misrates 81 monsters
+
+`encounters.rs`'s `xp_for_cr` rounds the CR then floors it to 1, so **every CR 1/8, 1/4, 1/3 and
+1/2 creature is rated as a full CR 1 = 400 XP monster.** Four CR 1/4 creatures against four level-1
+PCs rate **Deadly** where the rulebook says roughly **Medium**.
+
+Measured against the real catalog: **1,243 monsters — 81 below CR 1 and materially misrated**
+(every low-level vermin and animal), **289 above CR 10** rated by an extrapolation the engine's own
+doc says was never independently re-verified. About **30% of the catalog** sits outside the
+verified CR 1–10 table. The error runs in the safe direction — it overstates threat — but a DM has
+no way to know. **The fix is six rows.** Filed: `engine-handoff-fractional-cr-xp.md`.
+
+This is the strawman earning its cost: the feature was built to be reacted to, and what it produced
+first was a defect nobody knew about.
+
+## The design consequence: disclosure became the feature
+
+The bridge **discloses rather than corrects**. `crAsRated` is read back from the engine by rating
+each monster alone — a lone monster's Encounter Level *is* the CR the engine rated it at — so no
+copy of the rounding rule lives in the bridge and it cannot drift when the engine is fixed. A
+bridge that silently repaired the arithmetic would hide the defect.
+
+On screen, a tier that can't be fully vouched for never appears alone and confident: the card marks
+itself unverified, an "Outside the verified table" list names each offending monster as
+`CR 1/3 → rated as 1` with the engine's own reason **verbatim**, and the flag repeats inline while
+editing. A clean rating **positively states** every creature is inside the verified table — absence
+of a warning is weaker than a statement. The tier is always glossed against the rulebook's five
+(`Hard (rulebook Challenging or Hard — merged)`), and an unknown tier passes through unmapped in
+two independent places rather than being coerced into one of the four.
+
+Five refusals return `Err` rather than substituting a value, including an unresolvable
+`characterId` failing the **whole** rating — a silently smaller party inflates difficulty.
+
+## Two rules identities the sprint refused to author
+
+- **"Character level = sum of class levels."** `frontend` found the party could only be built by
+  parsing `classSummary` in TypeScript, and stopped rather than do it — stating it would ship the
+  typed-level half and leave the rest explicitly unbuilt first. The ruling moved resolution
+  engine-side. The identity now lives once in the desktop crate
+  (`character_hub::character_level`); the remaining copy against the engine's **private**
+  `skill_allocation::character_level` needs one `pub` keyword —
+  `engine-handoff-character-level-identity.md`. `qa` proved the two formulas agree across the
+  entire input space by induction, not sampling.
+- **The five-tier rulebook mapping.** It exists only in an engine doc comment, so `backend`
+  described the collapse in prose and returned the raw `elMinusApl` rather than naming a rulebook
+  tier the engine doesn't compute.
+
+## Orchestrator errors in this addendum, recorded
+
+1. I dispatched E-1 to `qa` for verification and told `frontend` to start **while `backend` was
+   mid-conversion**, applying a shape ruling I had made after announcing E-1 as landed. `frontend`
+   detected the half-converted crate and refused to wire a boundary against a moving shape; `qa`
+   hit 27 compile errors.
+2. I told `qa` to verify the bridge delegated to `character_hub.rs:1930` "rather than summing class
+   levels itself." That instruction was **wrong twice**: the line was not a reusable function, and
+   reusing it would have been **off by one** (it is a level-up preview computing `sum + 1`). Both
+   `qa` and `backend` caught it independently.
+
+## Deferred to v0.9
+
+XP budgeting and awards, treasure, terrain, saving an encounter, linking an encounter to a Scene
+record, and the CRB's party-size APL adjustment (flagged by `backend` as a rule it knows but the
+engine does not state — deliberately not authored). Also `qa`'s finding that `catalog_index()`
+collects into a `BTreeMap`, so a duplicate monster key would silently keep whichever entry iterated
+last; zero duplicates today, no defence if a future ingestion introduces one.
