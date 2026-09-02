@@ -160,7 +160,12 @@ BUCKET_DEFINITIONS = {
         # engine_does_not_hold("companion_content_has_no_engine_table"),`),
         # line content read back and confirmed still the real construction
         # site.
-        "citation": {"file": _ENGINE_SRC, "line": 12753, "must_contain": "has_no_engine_table"},
+        # Wave 34 lane A re-derivation: this cycle's own `ground_class_
+        # weapon_and_armor_proficiency` insertions into `pilot_compute/
+        # mod.rs` shifted `v06_work_inventory.rs`'s own citation targets
+        # below them -- fresh `grep -n` for the same unique literal, line
+        # content read back and confirmed still the real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 12776, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -177,7 +182,10 @@ BUCKET_DEFINITIONS = {
         # for the same unique literal (`return engine_does_not_hold(
         # "class_feature_option_pool_record_not_held_by_engine");`), line
         # content read back and confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12433, "must_contain": "not_held_by_engine"},
+        # Wave 34 lane A re-derivation: same shift as bucket A above -- fresh
+        # `grep -n` for the same unique literal, line content read back and
+        # confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12456, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -194,7 +202,10 @@ BUCKET_DEFINITIONS = {
         # `grep -n` for the same unique literal (`engine_does_not_hold(
         # "no_explanation_id_and_no_diagnostic_names_this_feature")`), line
         # content read back and confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12658, "must_contain": "explanation_id"},
+        # Wave 34 lane A re-derivation: same shift as buckets A/B above --
+        # fresh `grep -n` for the same unique literal, line content read
+        # back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12681, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -242,7 +253,11 @@ BUCKET_DEFINITIONS = {
         # exact same unique literal (`item.verdict.status =
         # "literal-verified";`), line content read back and confirmed still
         # the real construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 13535, "must_contain": "literal-verified"},
+        # Re-derived at wave 34 lane A: same shift as buckets A/B/C above --
+        # fresh `grep -n` against the real current file content, line
+        # content read back and confirmed still the real construction site,
+        # not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 13558, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",

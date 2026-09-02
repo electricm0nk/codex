@@ -42202,6 +42202,151 @@ fn explain_base_class_weapon_and_armor_proficiency(
         false,
         explanations,
     );
+
+    // Wave 33 lane A's own next-cycle plan (`decisions.md §21`): Bard,
+    // Fighter, Paladin, Ranger, Rogue -- the `class_feature_pool_catalog::
+    // WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES` five, the
+    // "Weapon and Armor Proficiency ~ <Class>" combined-key shape (a
+    // DIFFERENT corpus key ordering than Cleric/Sorcerer/Wizard's own
+    // "<Class> ~ Weapon and Armor Proficiency"). Every one of these five
+    // classes' OWN registered archetypes across `rules_tables/*/
+    // archetype_tables.rs` was read individually (not grep-and-trust) before
+    // choosing each `proficiency_slot_ids` list below, at the same rigor
+    // Cleric's own cycle 6 applied -- and the result is NOT uniform across
+    // the five, unlike the wave-33 receipt's own assumption that all five
+    // "have real archetypes doing exactly that":
+    //
+    // - **Bard**: `BardWeaponProficiencies`/`BardArmorProficiencies`.
+    //   `Bard Archetype ~ Geisha` (Ultimate Magic) replaces BOTH; `Bard
+    //   Archetype ~ Dervish Dancer` (Ultimate Combat) replaces the weapon
+    //   half only. Neither archetype's own catalog `grants` names a "~
+    //   Weapon and Armor Proficiency" sub-feature WITH resolved text
+    //   (Geisha's own grants are "Scribe Scroll"/"Tea Ceremony"; Dervish
+    //   Dancer's own "Dervish Dancer ~ Weapon and Armor Proficiency" grant
+    //   carries `description: None`), so both correctly fall to the "not
+    //   resolved in this catalog entry" branch -- never fabricated text.
+    // - **Fighter**: `FighterArmorProficiencies`/`FighterTowerShieldProficiency`
+    //   ONLY -- never `FighterWeaponTraining*`/`FighterArmorTraining*`/
+    //   `FighterArmorMastery`/`FighterWeaponMastery`/`FighterBravery`/
+    //   `FighterBonusFeat*`, which are the class's OWN separate, higher-level
+    //   Fighter features (Weapon/Armor Training, Bravery, ...), not this
+    //   1st-level proficiency grant, even though several Fighter archetypes'
+    //   `replaces` lists are dominated by those unrelated slots. Cad,
+    //   Gladiator, Tactician, and Unarmed Fighter (all Ultimate Combat)
+    //   replace `FighterArmorProficiencies`; Dragoon and Unbreakable (same
+    //   book) replace only `FighterTowerShieldProficiency`. Every one of
+    //   these six archetypes' own grant carries `description: None` for its
+    //   "~ Weapon and Armor Proficiency" entry, so all six correctly fall to
+    //   the "not resolved" branch.
+    // - **Paladin**: `PaladinArmorProficiencies`/`PaladinWeaponProficiencies`
+    //   ONLY. `Paladin Archetype ~ Holy Gun` (Ultimate Combat) replaces both
+    //   and carries its own "Holy Gun ~ Weapon and Armor Proficiency" grant
+    //   (`description: None`) -- the "not resolved" branch applies.
+    //   **`Paladin Archetype ~ Divine Hunter` is deliberately EXCLUDED**,
+    //   the fabrication hazard this cycle's dispatch named by name: Divine
+    //   Hunter's own `replaces` list carries `PaladinArmorProficiencyHeavy`
+    //   alone (heavy armor only -- light/medium armor and all weapon
+    //   proficiencies are untouched), and its own grant is named "Divine
+    //   Hunter ~ Precise Shot" ("This ability replaces her Heavy Armor
+    //   Proficiency"), never a "~ Weapon and Armor Proficiency" sub-feature.
+    //   Including `PaladinArmorProficiencyHeavy` in this list would make a
+    //   Divine Hunter selection wrongly claim "the base progression does not
+    //   apply" for a class whose light/medium armor and weapon proficiencies
+    //   are still fully in force -- exactly the stale-text-to-a-real-player
+    //   risk this cycle's dispatch instruction warned against.
+    // - **Ranger, Rogue**: `&[]`, empty -- like the Assassin/Shadowdancer
+    //   precedent above, NOT a re-run of that precedent's premise. This
+    //   cycle's own dispatch (and the wave-33 receipt it carries forward)
+    //   assumed all five classes "have real archetypes doing exactly that,
+    //   unlike the zero-archetype Assassin/Shadowdancer precedent" -- that
+    //   assumption does not hold for Ranger or Rogue specifically. Every one
+    //   of Ranger's and Rogue's registered archetypes across all six
+    //   archetype-table modules that carry either class was read; not one
+    //   `replaces` list names any of the TYPE facets the base Ranger/Rogue
+    //   corpus record's own `!PREABILITY` negation gates reference
+    //   (`RangerArmorProficiencies`/`RangerWeaponProficiency`/
+    //   `RangerLightArmorProficiency`/`RangerMediumArmorProficiency`/
+    //   `RangerShieldProficiency`/`RogueWeaponProficiencies`/
+    //   `RogueArmorProficiencies`/`RogueLightArmor` -- confirmed by direct
+    //   grep for every one of those eight literal TYPE facets across
+    //   `rules_tables/*/archetype_tables.rs`, zero matches for any). PCGen's
+    //   own source anticipates such an archetype existing somewhere in the
+    //   wider game line; none of the tier-1 books this engine has ingested
+    //   happens to be it. Passing empty lists here is the honest finding,
+    //   not a shortcut -- the archetype lookup is always a no-op for these
+    //   two classes today, and remains the single place a future archetype
+    //   landing in the catalog would need to be wired.
+    ground_class_weapon_and_armor_proficiency(
+        input,
+        BARD_CLASS_ID,
+        "Bard",
+        &["BardWeaponProficiencies", "BardArmorProficiencies"],
+        "class_feature.bard.weapon_and_armor_proficiency",
+        "Bard",
+        "A bard is proficient with all simple weapons, plus the longsword, rapier, sap, \
+         short sword, shortbow, and whip. Bards are proficient with light armor and \
+         shields (except tower shields). A bard can cast bard spells while wearing light \
+         armor without incurring the normal arcane spell failure chance. However, like \
+         any other arcane spellcaster, a bard wearing medium or heavy armor or using a \
+         shield incurs a chance of arcane spell failure if the spell in question has a \
+         somatic component (most do). A multiclass bard still incurs the normal arcane \
+         spell failure chance for arcane spells received from other classes.",
+        true,
+        explanations,
+    );
+
+    ground_class_weapon_and_armor_proficiency(
+        input,
+        FIGHTER_CLASS_ID,
+        "Fighter",
+        &["FighterArmorProficiencies", "FighterTowerShieldProficiency"],
+        "class_feature.fighter.weapon_and_armor_proficiency",
+        "Fighter",
+        "A fighter is proficient with all simple and martial weapons and with all armor \
+         (heavy, medium, and light) and shields (including tower shields).",
+        true,
+        explanations,
+    );
+
+    ground_class_weapon_and_armor_proficiency(
+        input,
+        PALADIN_CLASS_ID,
+        "Paladin",
+        &["PaladinArmorProficiencies", "PaladinWeaponProficiencies"],
+        "class_feature.paladin.weapon_and_armor_proficiency",
+        "Paladin",
+        "Paladins are proficient with all simple and martial weapons, with all types of \
+         armor (heavy, medium, and light), and with shields (except tower shields).",
+        true,
+        explanations,
+    );
+
+    ground_class_weapon_and_armor_proficiency(
+        input,
+        RANGER_CLASS_ID,
+        "Ranger",
+        &[],
+        "class_feature.ranger.weapon_and_armor_proficiency",
+        "Ranger",
+        "A ranger is proficient with all simple and martial weapons and with light \
+         armor, medium armor, and shields (except tower shields).",
+        true,
+        explanations,
+    );
+
+    ground_class_weapon_and_armor_proficiency(
+        input,
+        ROGUE_CLASS_ID,
+        "Rogue",
+        &[],
+        "class_feature.rogue.weapon_and_armor_proficiency",
+        "Rogue",
+        "Rogues are proficient with all simple weapons, plus the hand crossbow, rapier, \
+         sap, shortbow, and short sword. Rogues are proficient with light armor, but not \
+         with shields.",
+        true,
+        explanations,
+    );
 }
 
 /// `AT-34-E3-001` (`class_feature_owner_matched_by_name_but_record_not_held_
@@ -42338,7 +42483,8 @@ fn ground_class_weapon_and_armor_proficiency(
 mod base_class_weapon_and_armor_proficiency_tests {
     use super::{
         build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, ASSASSIN_CLASS_ID,
-        CLERIC_CLASS_ID, SHADOWDANCER_CLASS_ID, SORCERER_CLASS_ID, WIZARD_CLASS_ID,
+        BARD_CLASS_ID, CLERIC_CLASS_ID, FIGHTER_CLASS_ID, PALADIN_CLASS_ID, RANGER_CLASS_ID,
+        ROGUE_CLASS_ID, SHADOWDANCER_CLASS_ID, SORCERER_CLASS_ID, WIZARD_CLASS_ID,
     };
     use crate::rules_core::character_input::load_character_input_fixture;
 
@@ -42490,6 +42636,234 @@ mod base_class_weapon_and_armor_proficiency_tests {
         assert!(
             explanation(&input, "class_feature.shadowdancer.weapon_and_armor_proficiency").is_none()
         );
+    }
+
+    // Wave 33 lane A's own next-cycle plan: Bard, Fighter, Paladin, Ranger,
+    // Rogue. All five have a real `weapon_tables::class_weapon_proficiency`
+    // entry, so all five must claim "already grounded separately", matching
+    // Cleric/Sorcerer/Wizard's own shape, never Assassin/Shadowdancer's
+    // "NOT grounded elsewhere" disclosure.
+
+    #[test]
+    fn bard_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant() {
+        let input = character(BARD_CLASS_ID, 1);
+        let (value, detail) = explanation(&input, "class_feature.bard.weapon_and_armor_proficiency")
+            .expect("a Bard must ground this base-class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("longsword, rapier, sap, short sword, shortbow, and whip"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+        assert!(
+            detail.contains("already grounded separately"),
+            "Bard has a real weapon_tables entry: {detail}"
+        );
+        assert!(!detail.to_lowercase().contains("superseded"), "no archetype selected: {detail}");
+    }
+
+    /// Supersession branch, both slots at once: Geisha's own catalog entry
+    /// names no "~ Weapon and Armor Proficiency" sub-feature grant with
+    /// resolved text (its own grants are "Scribe Scroll"/"Tea Ceremony"), so
+    /// this must fall to the honest "not resolved in this catalog entry"
+    /// branch, never fabricate replacement prose.
+    #[test]
+    fn bard_weapon_and_armor_proficiency_is_superseded_by_geisha_but_replacement_text_is_not_resolved()
+    {
+        let mut input = character(BARD_CLASS_ID, 1);
+        input.chosen.selected_choices.push(crate::rules_core::character_input::SelectedChoice {
+            choice_set_id: crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Bard Archetype ~ Geisha".to_owned(),
+        });
+        let (value, detail) = explanation(&input, "class_feature.bard.weapon_and_armor_proficiency")
+            .expect("the record must still ground, with superseded text");
+        assert_eq!(value, 0);
+        assert!(detail.contains("Geisha"), "must name the superseding archetype: {detail}");
+        assert!(
+            detail.contains("not resolved in this catalog entry"),
+            "Geisha's own catalog entry names no proficiency replacement grant, so this must \
+             not fabricate replacement text: {detail}"
+        );
+        assert!(
+            !detail.contains("longsword, rapier, sap, short sword"),
+            "the base grant's own text must NOT appear once superseded: {detail}"
+        );
+    }
+
+    #[test]
+    fn fighter_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant() {
+        let input = character(FIGHTER_CLASS_ID, 1);
+        let (value, detail) = explanation(&input, "class_feature.fighter.weapon_and_armor_proficiency")
+            .expect("a Fighter must ground this base-class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("proficient with all simple and martial weapons"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+        assert!(
+            detail.contains("already grounded separately"),
+            "Fighter has a real weapon_tables entry: {detail}"
+        );
+        assert!(!detail.to_lowercase().contains("superseded"), "no archetype selected: {detail}");
+    }
+
+    /// Cad replaces `FighterArmorProficiencies` (armor half only, never
+    /// `FighterWeaponProficiencies` -- confirmed absent from Fighter's own
+    /// registered `replaces` catalog entirely), and its own "Cad ~ Weapon
+    /// and Armor Proficiency" grant carries `description: None` -- the
+    /// honest "not resolved" branch applies, same as Bard's Geisha.
+    #[test]
+    fn fighter_weapon_and_armor_proficiency_is_superseded_by_cad_but_replacement_text_is_not_resolved()
+    {
+        let mut input = character(FIGHTER_CLASS_ID, 1);
+        input.chosen.selected_choices.push(crate::rules_core::character_input::SelectedChoice {
+            choice_set_id: crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Fighter Archetype ~ Cad".to_owned(),
+        });
+        let (value, detail) =
+            explanation(&input, "class_feature.fighter.weapon_and_armor_proficiency")
+                .expect("the record must still ground, with superseded text");
+        assert_eq!(value, 0);
+        assert!(detail.contains("Cad"), "must name the superseding archetype: {detail}");
+        assert!(
+            detail.contains("not resolved in this catalog entry"),
+            "Cad's own catalog entry names no proficiency replacement grant, so this must not \
+             fabricate replacement text: {detail}"
+        );
+    }
+
+    #[test]
+    fn paladin_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant() {
+        let input = character(PALADIN_CLASS_ID, 1);
+        let (value, detail) = explanation(&input, "class_feature.paladin.weapon_and_armor_proficiency")
+            .expect("a Paladin must ground this base-class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("proficient with all simple and martial weapons"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+        assert!(
+            detail.contains("already grounded separately"),
+            "Paladin has a real weapon_tables entry: {detail}"
+        );
+        assert!(!detail.to_lowercase().contains("superseded"), "no archetype selected: {detail}");
+    }
+
+    /// Holy Gun replaces BOTH `PaladinArmorProficiencies` and
+    /// `PaladinWeaponProficiencies`, and carries its own "Holy Gun ~ Weapon
+    /// and Armor Proficiency" grant with `description: None` -- the "not
+    /// resolved" branch applies.
+    #[test]
+    fn paladin_weapon_and_armor_proficiency_is_superseded_by_holy_gun_but_replacement_text_is_not_resolved()
+    {
+        let mut input = character(PALADIN_CLASS_ID, 1);
+        input.chosen.selected_choices.push(crate::rules_core::character_input::SelectedChoice {
+            choice_set_id: crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Paladin Archetype ~ Holy Gun".to_owned(),
+        });
+        let (value, detail) =
+            explanation(&input, "class_feature.paladin.weapon_and_armor_proficiency")
+                .expect("the record must still ground, with superseded text");
+        assert_eq!(value, 0);
+        assert!(detail.contains("Holy Gun"), "must name the superseding archetype: {detail}");
+        assert!(
+            detail.contains("not resolved in this catalog entry"),
+            "Holy Gun's own catalog entry names no proficiency replacement grant, so this must \
+             not fabricate replacement text: {detail}"
+        );
+    }
+
+    /// **The fabrication-risk hazard this cycle's dispatch named directly.**
+    /// Divine Hunter's own `replaces` list carries `PaladinArmorProficiencyHeavy`
+    /// ALONE (heavy armor only -- light/medium armor and every weapon
+    /// proficiency are untouched), and it names no "~ Weapon and Armor
+    /// Proficiency" sub-feature of its own (its own grant is "Divine Hunter
+    /// ~ Precise Shot", "This ability replaces her Heavy Armor
+    /// Proficiency"). `PaladinArmorProficiencyHeavy` is deliberately absent
+    /// from this function's own `proficiency_slot_ids` list for exactly this
+    /// reason -- a Divine Hunter selection must keep showing the FULL base
+    /// progression text, never a "superseded" claim that would wrongly tell
+    /// a real player their light/medium armor and weapon proficiencies no
+    /// longer apply.
+    #[test]
+    fn paladin_weapon_and_armor_proficiency_divine_hunter_does_not_supersede_the_base_grant() {
+        let mut input = character(PALADIN_CLASS_ID, 1);
+        input.chosen.selected_choices.push(crate::rules_core::character_input::SelectedChoice {
+            choice_set_id: crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Paladin Archetype ~ Divine Hunter".to_owned(),
+        });
+        let (value, detail) =
+            explanation(&input, "class_feature.paladin.weapon_and_armor_proficiency")
+                .expect("the base grant must still ground");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("all simple and martial weapons"),
+            "Divine Hunter replaces only heavy armor proficiency -- the base grant's own full \
+             text (including light/medium armor and every weapon proficiency) must still \
+             render unchanged: {detail}"
+        );
+        assert!(
+            !detail.to_lowercase().contains("superseded"),
+            "Divine Hunter's own `replaces` list never names a full proficiency slot this \
+             function tracks, so this must NOT claim supersession: {detail}"
+        );
+        assert!(
+            !detail.contains("Divine Hunter"),
+            "the archetype must not be named as a superseding archetype it is not: {detail}"
+        );
+    }
+
+    #[test]
+    fn ranger_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant() {
+        let input = character(RANGER_CLASS_ID, 1);
+        let (value, detail) = explanation(&input, "class_feature.ranger.weapon_and_armor_proficiency")
+            .expect("a Ranger must ground this base-class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("proficient with all simple and martial weapons"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+        assert!(
+            detail.contains("already grounded separately"),
+            "Ranger has a real weapon_tables entry: {detail}"
+        );
+        assert!(!detail.to_lowercase().contains("superseded"), "no archetype selected: {detail}");
+    }
+
+    /// Not one of Ranger's registered archetypes names any of the TYPE
+    /// facets the base corpus record's own `!PREABILITY` negation gates
+    /// reference (confirmed by direct grep, zero matches) -- so even with a
+    /// real Ranger archetype selected, this record must keep showing the
+    /// base progression, exactly like the Assassin/Shadowdancer precedent.
+    #[test]
+    fn ranger_weapon_and_armor_proficiency_is_never_superseded_by_a_registered_archetype() {
+        let mut input = character(RANGER_CLASS_ID, 1);
+        input.chosen.selected_choices.push(crate::rules_core::character_input::SelectedChoice {
+            choice_set_id: crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Ranger Archetype ~ Guide".to_owned(),
+        });
+        let (_, detail) = explanation(&input, "class_feature.ranger.weapon_and_armor_proficiency")
+            .expect("the base grant must still ground");
+        assert!(
+            !detail.to_lowercase().contains("superseded"),
+            "no registered Ranger archetype claims this slot in this engine's catalog: {detail}"
+        );
+    }
+
+    #[test]
+    fn rogue_weapon_and_armor_proficiency_grounds_as_a_zero_magnitude_grant() {
+        let input = character(ROGUE_CLASS_ID, 1);
+        let (value, detail) = explanation(&input, "class_feature.rogue.weapon_and_armor_proficiency")
+            .expect("a Rogue must ground this base-class grant");
+        assert_eq!(value, 0);
+        assert!(
+            detail.contains("hand crossbow, rapier"),
+            "must quote the real base corpus DESC: {detail}"
+        );
+        assert!(
+            detail.contains("already grounded separately"),
+            "Rogue has a real weapon_tables entry: {detail}"
+        );
+        assert!(!detail.to_lowercase().contains("superseded"), "no archetype selected: {detail}");
     }
 }
 

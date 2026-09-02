@@ -12274,63 +12274,86 @@ fn classify(
                     // table this cycle adds.
                     //
                     // **CORRECTION (wave 33 lane A):** this cycle 6 comment's
-                    // own "still `description: null`" claim is FALSE for all
-                    // five of these keys -- verified against both the PCGen
-                    // source (`cr_abilities_class.lst` lines 2814/2816/2818/
-                    // 2819/2820, each carrying a real, multi-sentence `DESC:`
-                    // token, e.g. Bard's "A bard is proficient with all
-                    // simple weapons, plus the longsword, rapier, sap, short
-                    // sword, shortbow, and whip. ...") and the already-
-                    // ingested corpus JSON (`data/corpus/core_rulebook/
-                    // class_feature/weapon_and_armor_proficiency/*.json`,
-                    // `data.description` populated, `wiring_class: "display"`
-                    // for all five). `has_real_description` is therefore
-                    // `true` here, unlike cycle 5's/7's/9's genuinely
-                    // proseless siblings (confirmed false for those, see
-                    // their own updated comments) -- so this rung does NOT
-                    // qualify for wave 33 lane A's `!has_real_description`
-                    // no-prose closure below.
+                    // own "still `description: null`" claim was FALSE for
+                    // all five of these keys -- verified against both the
+                    // PCGen source (`cr_abilities_class.lst` lines 2814/
+                    // 2816/2818/2819/2820, each carrying a real,
+                    // multi-sentence `DESC:` token, e.g. Bard's "A bard is
+                    // proficient with all simple weapons, plus the
+                    // longsword, rapier, sap, short sword, shortbow, and
+                    // whip. ...") and the already-ingested corpus JSON
+                    // (`data/corpus/core_rulebook/class_feature/
+                    // weapon_and_armor_proficiency/*.json`, `data.
+                    // description` populated, `wiring_class: "display"` for
+                    // all five). `has_real_description` is therefore `true`
+                    // here, unlike cycle 5's/7's/9's genuinely proseless
+                    // siblings.
                     //
-                    // The real blocker is a DIFFERENT gap: `class_feature_
-                    // effect_wired` (the `Kind::ClassFeature` "owner
-                    // resolved" arm's own probe, this match's very first
-                    // check) never contains these five keys, because
+                    // **Wave 33 lane A's own next-cycle plan, closed here:**
+                    // `class_feature_effect_wired` (the `Kind::ClassFeature`
+                    // "owner resolved" arm's own probe, this match's very
+                    // first check) never contained these five keys, because
                     // `pilot_compute::explain_base_class_weapon_and_armor_
                     // proficiency`/`ground_class_weapon_and_armor_
-                    // proficiency` -- the exact grounding idiom that already
-                    // promotes Sorcerer, Wizard, Cleric, Assassin and
-                    // Shadowdancer's own "Weapon and Armor Proficiency ~
-                    // <Class>" records to `text-complete` via that SAME
-                    // earlier check -- has never been extended to Bard,
-                    // Fighter, Paladin, Ranger, or Rogue. Extending it is
-                    // real, precedented, in-scope-shaped work -- but NOT a
-                    // same-cycle-safe one: unlike Assassin/Shadowdancer
-                    // (zero registered archetypes) or Sorcerer/Wizard (same),
-                    // all five of THESE classes have real, registered
-                    // archetypes in `rules_tables/*/archetype_tables.rs`
-                    // that supersede one or more of their weapon/armor
-                    // proficiency slots (confirmed by `grep -n "replaces:"
-                    // ... | grep -i "bard\|fighter\|paladin\|ranger\|rogue"`
-                    // across every archetype-table module -- dozens of
-                    // matches, not the 1-in-7-tables count Cleric's own
-                    // cycle 6 found). Grounding these five correctly, the
-                    // same rigor Cleric's own cycle 6 applied (reading every
-                    // matching archetype's own replacement grant text before
-                    // trusting the base-class prose), is real next-cycle
-                    // scope -- named exactly in this receipt's remainder,
-                    // not rushed here at the risk of shipping stale
-                    // archetype text to a player who selected one of them.
-                    // So this rung's own behaviour is UNCHANGED this cycle:
-                    // still `engine-does-not-hold` (bucket D), still
-                    // "a shelf, not a half-fix" for the mechanical-grant
-                    // half only -- the comment above was simply wrong about
-                    // WHY the display half is not yet done.
+                    // proficiency` had never been extended to Bard, Fighter,
+                    // Paladin, Ranger, or Rogue. It now has been (see that
+                    // function's own doc comment, `decisions.md §21`), at the
+                    // same rigor Cleric's own cycle 6 applied -- every one of
+                    // these five classes' own registered archetypes was read
+                    // before trusting any replacement text, and (unlike the
+                    // wave-33 receipt's own assumption) that reading found
+                    // Ranger and Rogue carry ZERO registered archetypes that
+                    // actually supersede this slot, the same shape as
+                    // Assassin/Shadowdancer, not the "all five have real
+                    // archetypes" premise.
+                    //
+                    // **This branch still cannot promote these five to
+                    // `text-complete` on its own generic owner/group match**
+                    // -- `class_feature_owner`'s `group == class name` guard
+                    // can never hold for this key's REVERSED shape ("Weapon
+                    // and Armor Proficiency ~ <Class>", group = "Weapon and
+                    // Armor Proficiency", never a class name), which is
+                    // exactly why this whole arm is the owner-resolution-
+                    // FAILURE branch in the first place (`class_feature_
+                    // owner_via_type_facet`'s own doc comment: recovering an
+                    // owner this way -- or, as here, via a named-list
+                    // fallback -- can never widen what GROUNDS a record
+                    // through the generic `group == owner` checks below).
+                    // So this branch checks `facts.explanation_ids` directly
+                    // for the new grounding ids `ground_class_weapon_and_
+                    // armor_proficiency` now emits (`class_feature.<slug>.
+                    // weapon_and_armor_proficiency`, produced by the
+                    // per-class sweep at every `SWEEP_LEVELS` level, the
+                    // same source `facts.explanation_ids` draws from
+                    // everywhere else in this file) -- the same three
+                    // display-wiring guards (`has_real_description`,
+                    // `is_display_wiring_class_for_promotion`,
+                    // `!universal_sheet_modifier`) this arm's own sibling
+                    // `text-complete` promotions above already require.
                     if let Some(class_id) = class_feature_pool_catalog::weapon_and_armor_proficiency_grant_class_id(
                         &unit.key,
                     )
                         && weapon_tables::class_weapon_proficiency(class_id).is_some()
                             && weapon_tables::class_armor_proficiency(class_id).is_some()
                         {
+                            let grounding_explanation_id = format!(
+                                "class_feature.{}.weapon_and_armor_proficiency",
+                                class_id.trim_start_matches("class:"),
+                            );
+                            if has_real_description
+                                && is_display_wiring_class_for_promotion(wc_class)
+                                && !universal_sheet_modifier
+                                && facts.explanation_ids.contains(&grounding_explanation_id)
+                            {
+                                return Verdict {
+                                    status: "text-complete",
+                                    evidence:
+                                        "explanation_id_observed_and_corpus_record_carries_real_description"
+                                            .to_string(),
+                                    reason: None,
+                                    engine_book: engine_book_field,
+                                };
+                            }
                             return engine_does_not_hold(
                                 "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables",
                             );
@@ -22311,28 +22334,82 @@ mod class_feature_text_complete_rung_tests {
         );
     }
 
-    /// Control: `AT-34-E3-001` cycle 6's `weapon-and-armor-proficiency`
-    /// sibling rung is DELIBERATELY UNCHANGED by this cycle, even though
-    /// (unlike its three siblings above) it genuinely DOES have real
-    /// upstream prose for all five of its keys (`decisions.md §20`) -- the
-    /// remaining blocker there is that `pilot_compute` has never been wired
-    /// to ground Bard/Fighter/Paladin/Ranger/Rogue's own version of this
-    /// record shape (unlike Sorcerer/Wizard/Cleric/Assassin/Shadowdancer,
-    /// which already are), so `class_feature_effect_wired` never contains
-    /// these keys and this rung is never reached with `has_real_description:
-    /// true` in real production data. This test pins that: even WITH
-    /// `has_real_description: true`, this rung must still return
-    /// `engine-does-not-hold` with its own original evidence, never the
-    /// no-prose closure (which would be dishonest for a record that DOES
-    /// have real prose) and never `text-complete` (nothing grounds it yet).
+    /// `AT-34-E3-001` cycle 6's `weapon-and-armor-proficiency` sibling rung
+    /// genuinely DOES have real upstream prose for all five of its keys
+    /// (`decisions.md §20`), and `pilot_compute` is now wired (wave 34 lane
+    /// A, `decisions.md §21`) to ground Bard/Fighter/Paladin/Ranger/Rogue's
+    /// own version of this record shape. This module's own generic
+    /// `class_feature_effect_wired`/`explanation_id_observed` promotion
+    /// paths (above) can never reach this shape, though -- its own corpus
+    /// key is REVERSED (`"Weapon and Armor Proficiency ~ <Class>"`), so
+    /// `class_feature_owner`'s `group == class name` guard can never
+    /// resolve an owner for it (confirmed directly: with `EngineFacts::
+    /// default()`'s empty `explanation_ids`, this test proves the rung
+    /// still correctly falls to `engine-does-not-hold` with its own
+    /// original evidence, never the no-prose closure, which would be
+    /// dishonest for a record that DOES have real prose).
     #[test]
-    fn a_weapon_and_armor_proficiency_grant_with_its_real_upstream_prose_still_falls_to_bucket_d() {
+    fn a_weapon_and_armor_proficiency_grant_with_no_grounding_explanation_id_still_falls_to_bucket_d()
+    {
         let facts = EngineFacts::default();
         let unit = class_feature_unit(
             "core_rulebook",
             "cr_abilities_class.lst",
             2814,
             "Weapon and Armor Proficiency ~ Bard",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables"
+        );
+    }
+
+    /// The positive sibling of the test immediately above: once
+    /// `facts.explanation_ids` carries the grounding id
+    /// `ground_class_weapon_and_armor_proficiency` now emits for Bard (the
+    /// same id shape the real per-class sweep in `EngineFacts` production
+    /// code populates), this rung DOES promote to `text-complete` -- proving
+    /// the branch this cycle added to `weapon_and_armor_proficiency_grant_
+    /// class_id`'s own consumer, not merely that `pilot_compute` grounds the
+    /// explanation in isolation (the `pilot_compute` module's own
+    /// `base_class_weapon_and_armor_proficiency_tests` proves that half).
+    #[test]
+    fn a_weapon_and_armor_proficiency_grant_with_the_grounding_explanation_id_present_reaches_text_complete()
+    {
+        let mut facts = EngineFacts::default();
+        facts.explanation_ids.insert("class_feature.bard.weapon_and_armor_proficiency".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2814,
+            "Weapon and Armor Proficiency ~ Bard",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "explanation_id_observed_and_corpus_record_carries_real_description"
+        );
+    }
+
+    /// Control: the same explanation id gates on the RIGHT class. A Fighter
+    /// unit must not promote off Bard's own grounding id -- proving the
+    /// per-class `class_id.trim_start_matches("class:")` slug, not a bare
+    /// presence check.
+    #[test]
+    fn a_weapon_and_armor_proficiency_grant_does_not_promote_off_a_different_classs_explanation_id()
+    {
+        let mut facts = EngineFacts::default();
+        facts.explanation_ids.insert("class_feature.bard.weapon_and_armor_proficiency".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2816,
+            "Weapon and Armor Proficiency ~ Fighter",
             0,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);

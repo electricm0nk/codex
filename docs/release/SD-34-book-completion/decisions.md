@@ -844,3 +844,87 @@ re-derived against the live corpus and `docs/work-inventory.json` rather than tr
 prior cycle's receipt.
 
 ---
+
+## §21 — Wave 34 lane A: `§20`'s deferred 5-unit `weapon-and-armor-proficiency` rung closes, and the wave-33 receipt's own "all five have real archetypes" premise was wrong for two of them
+
+**Decision.** `pilot_compute::explain_base_class_weapon_and_armor_proficiency`/
+`ground_class_weapon_and_armor_proficiency` — the idiom already grounding Sorcerer, Wizard,
+Cleric, Assassin, and Shadowdancer's own version of this record shape — is extended to Bard,
+Fighter, Paladin, Ranger, and Rogue, closing `§20`'s named 5-unit deferral
+(`class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables`). All five
+now ground to `text-complete` (bucket D → DONE).
+
+**Method — every one of these five classes' own registered archetypes read individually**, the
+same rigor `§20`'s own next-cycle plan demanded (Cleric's cycle 6 precedent), not grep-and-trust:
+
+| Class | `proficiency_slot_ids` passed | Archetypes found claiming a slot | Own replacement text resolved? |
+|---|---|---|---|
+| Bard | `BardWeaponProficiencies`, `BardArmorProficiencies` | Geisha (UM, both), Dervish Dancer (UC, weapon only) | No — both archetypes' own catalog `grants` name no "~ Weapon and Armor Proficiency" sub-feature with text; "not resolved" branch |
+| Fighter | `FighterArmorProficiencies`, `FighterTowerShieldProficiency` | Cad, Gladiator, Tactician, Unarmed Fighter (armor); Dragoon, Unbreakable (tower shield) — all UC | No — all six carry `description: None` on their own proficiency grant; "not resolved" branch |
+| Paladin | `PaladinArmorProficiencies`, `PaladinWeaponProficiencies` | Holy Gun (UC, both) | No — `description: None`; "not resolved" branch |
+| Ranger | `&[]` (empty) | **None** | N/A |
+| Rogue | `&[]` (empty) | **None** | N/A |
+
+**The wave-33 receipt's own premise — "all five of these classes have real archetypes doing
+exactly that, unlike the zero-archetype Assassin/Shadowdancer precedent" — does not hold for
+Ranger or Rogue.** Every registered archetype for both classes across every archetype-table
+module that carries them was read; not one `replaces` list names any of the eight TYPE facets
+the base Ranger/Rogue corpus record's own `!PREABILITY` negation gates reference
+(`RangerArmorProficiencies`/`RangerWeaponProficiency`/`RangerLightArmorProficiency`/
+`RangerMediumArmorProficiency`/`RangerShieldProficiency`/`RogueWeaponProficiencies`/
+`RogueArmorProficiencies`/`RogueLightArmor` — confirmed by direct grep, zero matches for any).
+PCGen's own upstream data anticipates such an archetype existing somewhere in the wider game
+line; none of the books this engine has ingested happens to be it. Ranger and Rogue pass empty
+`proficiency_slot_ids`, the identical shape to Assassin/Shadowdancer — a corrected finding, not a
+shortcut (`scripts/retro.py correction --subject wave33-lane-a-receipt --claimed
+"all_five_classes_have_superseding_archetypes" --actual
+"ranger_and_rogue_have_zero_superseding_archetypes_in_this_engines_catalog" --verified-by "grep
+-rn 'RangerArmorProficiencies\|RangerWeaponProficiency\|RangerLightArmorProficiency\|
+RangerMediumArmorProficiency\|RangerShieldProficiency\|RogueWeaponProficiencies\|
+RogueArmorProficiencies\|RogueLightArmor' src/rules_core/rules_tables/*/archetype_tables.rs"`).
+
+**The fabrication hazard the dispatch named by name, confirmed real and closed by omission, not
+by a runtime guard.** Paladin's own `Divine Hunter` archetype replaces
+`PaladinArmorProficiencyHeavy` alone (heavy armor only — light/medium armor and every weapon
+proficiency are untouched), and names no "~ Weapon and Armor Proficiency" sub-feature of its own
+(its real grant is "Divine Hunter ~ Precise Shot", "This ability replaces her Heavy Armor
+Proficiency"). `PaladinArmorProficiencyHeavy` is deliberately absent from Paladin's
+`proficiency_slot_ids` list for exactly this reason: including it would make a Divine Hunter
+selection wrongly claim "the base progression does not apply" for a class whose light/medium
+armor and weapon proficiencies remain fully in force — shipping stale, over-broad archetype text
+to a real player who selected a real archetype. `pilot_compute::base_class_weapon_and_armor_
+proficiency_tests::paladin_weapon_and_armor_proficiency_divine_hunter_does_not_supersede_the_
+base_grant` pins this directly: with Divine Hunter selected, the base grant's own full text
+still renders, unchanged, un-superseded.
+
+**A second, distinct blocker beyond `pilot_compute` wiring, found and closed in the same
+cycle.** Wiring `pilot_compute` alone does not promote this key shape to `text-complete` through
+`v06_work_inventory.rs`'s own GENERIC owner/group match (`class_feature_exact_suffix_grounded`'s
+`group.eq_ignore_ascii_case(&class_name_as_group_text(owner))` guard) — this record's own key is
+REVERSED (`"Weapon and Armor Proficiency ~ <Class>"`, `group` = the constant text `"Weapon and
+Armor Proficiency"`, never a class name), which is exactly why `classify()`'s `Kind::ClassFeature`
+arm treats it as an owner-resolution FAILURE and falls to `weapon_and_armor_proficiency_grant_
+class_id`'s own named-list branch in the first place. `class_feature_owner_via_type_facet`'s own
+doc comment proves this generic path can never widen what grounds a record through that owner/
+group guard — so the wave-33 receipt's assumption that grounding these five would "promote [them]
+to `text-complete` via that SAME earlier check" the way Cleric did was also incomplete. This
+cycle's fix is in the SAME branch `§20`'s own comment already named
+(`weapon_and_armor_proficiency_grant_class_id`'s consumer in `v06_work_inventory.rs`): it now
+checks `facts.explanation_ids` directly for the new `class_feature.<slug>.weapon_and_armor_
+proficiency` ids `ground_class_weapon_and_armor_proficiency` emits, gated by the same three
+display-wiring guards (`has_real_description`, `is_display_wiring_class_for_promotion`,
+`!universal_sheet_modifier`) every sibling `text-complete` promotion in this file already
+requires.
+
+**Figures.** `python3 scripts/completion_atlas.py --check`: population **49438** (unchanged),
+`D: 2924 → 2919` (**-5**), `DONE: 24994 → 24999` (**+5**), `overlap=0 unclassified=0
+done_evidence_violations=0 citation_failures=0`.
+
+**Enforced by:** 10 new `pilot_compute::base_class_weapon_and_armor_proficiency_tests` cases (a
+base-grounding + an archetype-supersession/non-supersession test per class, including the Divine
+Hunter negative-control above) plus 2 new `v06_work_inventory.rs` classify() tests (the positive
+promotion case and a per-class-slug control) and 1 renamed pre-existing negative control;
+`cargo test --lib --bin v06_work_inventory -- weapon_and_armor_proficiency` (lib 24 passed, bin 3
+passed, 0 failed); `python3 scripts/completion_atlas.py --check` (figures above).
+
+---

@@ -11,6 +11,52 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 34, Lane A — closes wave 33 lane A's deferred 5-unit `weapon-and-armor-proficiency` rung (Bard, Fighter, Paladin, Ranger, Rogue) — complete
+
+**Status: complete (5/5), no escalation.** `pilot_compute::explain_base_class_weapon_and_armor_
+proficiency`/`ground_class_weapon_and_armor_proficiency` — the idiom already grounding Sorcerer,
+Wizard, Cleric, Assassin, and Shadowdancer's own version of this record shape — is extended to
+Bard, Fighter, Paladin, Ranger, and Rogue, at the same rigor `decisions.md §20`'s next-cycle plan
+demanded (Cleric's own cycle 6 precedent): every one of these five classes' own registered
+archetypes across `rules_tables/*/archetype_tables.rs` was read individually before choosing each
+class's `proficiency_slot_ids` list, never grep-and-trust.
+
+**Two findings corrected the wave-33 receipt's own premise.** First, "all five of these classes
+have real archetypes doing exactly that, unlike the zero-archetype Assassin/Shadowdancer
+precedent" does not hold for Ranger or Rogue — every registered archetype for both classes was
+read and none supersedes their weapon/armor proficiency slot in this engine's catalog; both pass
+`&[]`, the identical shape to Assassin/Shadowdancer (`scripts/retro.py correction`, subject
+`wave33-lane-a-receipt`, filed this cycle). Second, wiring `pilot_compute` alone does not promote
+this key shape to `text-complete` through `v06_work_inventory.rs`'s own generic owner/group
+match, because this shape's own corpus key is REVERSED (`"Weapon and Armor Proficiency ~
+<Class>"`) — a second fix landed in `v06_work_inventory.rs`'s `weapon_and_armor_proficiency_
+grant_class_id` branch, checking `facts.explanation_ids` directly.
+
+**The fabrication hazard the dispatch named directly was real, not hypothetical.** Paladin's own
+`Divine Hunter` archetype replaces `PaladinArmorProficiencyHeavy` alone (heavy armor only) and
+names no "~ Weapon and Armor Proficiency" sub-feature of its own — deliberately excluded from
+Paladin's `proficiency_slot_ids` list; a dedicated negative-control test
+(`paladin_weapon_and_armor_proficiency_divine_hunter_does_not_supersede_the_base_grant`) pins
+that a Divine Hunter selection still shows the full, un-superseded base progression.
+
+**Figures**, `python3 scripts/completion_atlas.py --check`: population `49438` (unchanged),
+`D: 2924 → 2919` (**-5**), `DONE: 24994 → 24999` (**+5**), `overlap=0 unclassified=0
+done_evidence_violations=0 citation_failures=0` (4 `BUCKET_DEFINITIONS` citations in
+`completion_atlas.py`, shifted below this cycle's own `pilot_compute/mod.rs` insertions,
+re-derived via fresh `grep -n` for the same unique literal each).
+
+**Scoped tests:** `cargo test --lib --bin v06_work_inventory -j 6 -- weapon_and_armor_proficiency`
+— lib 24 passed / bin 3 passed, 0 failed (10 new `pilot_compute` cases: a base-grounding test per
+class, an archetype-supersession "not resolved" test for Bard/Fighter/Paladin, a
+never-superseded-by-a-registered-archetype test for Ranger, and the Divine Hunter negative
+control above; plus 2 new `v06_work_inventory.rs` classify() tests and 1 renamed pre-existing
+control).
+
+**Full gate not run this cycle** — a separate agent runs the full `scripts/verify.sh` once at
+wave-end, per this wave's own dispatch instruction.
+
+Full receipt: `artifacts/bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_receipt.md`.
+
 ### Cycle — Wave 33 crash-recovery fold closure — lanes A/B/C landed, full `scripts/verify.sh` 40/40 confirmed live — complete
 
 **Status: complete.** A kernel soft-lockup crashed the server mid-wave (confirmed via

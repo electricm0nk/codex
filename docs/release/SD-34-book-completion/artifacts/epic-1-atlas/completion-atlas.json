@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12753,
+        "line": 12776,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,7 +14,7 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12433,
+        "line": 12456,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
@@ -25,7 +25,7 @@
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12658,
+        "line": 12681,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2924,
+      "count": 2919,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 24994,
+      "count": 24999,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13535,
+        "line": 13558,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "ba2876a54a6ce958f9cf7e47d8eab639aeedfca1",
+  "derived_at": "fc709b3c98b762fd1eea7fe671c225d42fabd837",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -194,7 +194,6 @@
       "class_feature_of_unmodelled_corpus_class:undead": 13,
       "class_feature_of_unmodelled_corpus_class:war_mind": 17,
       "class_feature_of_unmodelled_corpus_class:westcrown_devil": 11,
-      "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables": 5,
       "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 29,
       "deity_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 408,
       "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,
