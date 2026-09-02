@@ -10,6 +10,7 @@ mod class_catalog_generic;
 mod class_feature_descriptions;
 mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
+mod wizard_school_picker;
 mod class_spell_levels;
 mod corpus_fixtures;
 mod corpus_full;
@@ -63,6 +64,7 @@ use class_catalog::list_class_catalog;
 use class_feature_descriptions::list_class_feature_descriptions;
 use class_feature_feat_bridge::list_class_feature_feat_bridge_descriptions;
 use class_feature_pool_picker::list_class_feature_pool_options;
+use wizard_school_picker::list_wizard_school_options;
 use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
@@ -246,6 +248,7 @@ fn main() {
             // regardless of selection, modelled on
             // `list_alternate_racial_traits`'s own precedent.
             list_class_feature_pool_options,
+            list_wizard_school_options,
             list_equipment,
             list_spells,
             list_feats,

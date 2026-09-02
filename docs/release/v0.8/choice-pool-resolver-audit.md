@@ -139,8 +139,16 @@ visibility/inversion change, not a new capability. Until it lands, each of the s
   is pub). But the engine grounds only the 5 fixed triples above, so a picker that lets the
   player choose specialty × any 2 opposed (the real PF1 rule: any two except own school, and
   Divination may not be opposed) will silently ground nothing for ~90% of legal combinations.
-  Free opposed-pair support is an **engine gap**. Honest interim: picker offers the 5 supported
-  combos only, greyed-with-reason for the rest.
+  Free opposed-pair support is an **engine gap**.
+- **Correction (B-11, same day):** "grounds" was too generous. Executing the real save path
+  (`compose_character_input` → `resolve_unified_pilot_snapshot`) on a level-1 Wizard shows
+  **only Evocation + Necromancy/Transmutation reaches `Computed`.** The other four gates ground
+  their school-power explanation rows, but `unmet_wizard_spellbook_conditions` still
+  claim-blocks with "prepared spellbook grounding requires the canonical Evocation
+  specialization (opposed Necromancy/Transmutation)" — so Abjuration/Transmutation/Conjuration/
+  Universal characters are **unsaveable** today. `list_wizard_school_options` (B-11) reports
+  this by probing the engine per combination rather than by a list, so it widens on its own
+  when the gate does. Retro correction logged under task B-11.
 
 ## 4. `choice:druid_nature_bond` — **engine gap**
 
