@@ -656,72 +656,72 @@ function salvageNote(branch, what) {
 
 function ucLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
-    title: 'GATE LANE A — the four data/corpus mechanisms that are the last of root-full.\n\n'
-      + 'The gate has gone 14 red -> 5 -> nearly clear. Wave 24`s lane A diagnosed the last root-full\n'
-      + 'failures completely and withheld the fixes only because its territory was PI-only. **You have\n'
-      + 'the corpus grant it lacked.** Read ' + BT + 'artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave24_cycle_receipt.md' + BT + '\n'
-      + 'FIRST — all four are fully diagnosed, none needs further investigation:\n\n'
-      + '1. ' + BT + 'sd27_book_license_record_counts.rs' + BT + ' (2 tests) — 21 books` ' + BT + 'records_processed' + BT + ' and\n'
-      + '   19 books` ' + BT + 'records_redacted' + BT + ' are stale in ' + BT + 'data/corpus/**/LICENSE.json' + BT + '. The receipt\n'
-      + '   captured every book and value live. This is a **guarded LICENSE-only** regeneration, NOT a full\n'
-      + '   corpus regen — a full one has previously destroyed licence metadata and raw_tokens.\n'
-      + '2. ' + BT + 'sd27_equipment_modifier_price_matches_corpus_cost_token.rs' + BT + ' (2 tests) —\n'
-      + '   ' + BT + 'pathfinder_unchained' + BT + ' has 4 genuinely duplicated corpus keys (Special Ability ~ ABP +0 ~\n'
-      + '   {Ammunition,Armor,Shield,Weapon}). That is a GENERATOR defect: find why it emits duplicates\n'
-      + '   before writing corpus. The sibling price count (447,1,126)->(447,1,130) is plausibly the same 4,\n'
-      + '   unconfirmed — confirm it rather than assuming.\n'
-      + '3. ' + BT + 'sd31_class_feature_corpus_key_uniqueness.rs' + BT + ' (1 test) — delete ONE stale leftover:\n'
-      + '   ' + BT + 'data/corpus/adventurers_guide/class_feature/enlightened_bloodrager/bloodline_feat-2.json' + BT + ',\n'
-      + '   superseded at the same source line by ' + BT + 'bloodline_feat.json' + BT + ' after a08973ae35. Verify the\n'
-      + '   supersession before deleting — read both files.\n'
-      + '4. ' + BT + 'v06_corpus_trap_report.rs' + BT + ' (4 tests) — 3,181 findings (249+650+2117+165). Wave 24 judged\n'
-      + '   these belong to the EXISTING AT-34-E1-007/AT-34-E1-008 trap epic, not here. Route them: record\n'
-      + '   the population against that epic and say so. Do NOT silently re-scope 3,181 findings into this\n'
-      + '   card, and do NOT weaken the trap tests to make them pass.\n\n'
-      + '**Territory:** ' + BT + 'src/' + BT + ', ' + BT + 'tests/' + BT + ', ' + BT + 'data/corpus/**' + BT + '.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+    title: 'GATE LANE A — root-full: implement the ruling the trap tests never implemented.\n\n'
+      + '**The gate is 3 red of 40** (root-full, desktop, site-dashboard-check), down from 14. Yours is\n'
+      + BT + 'root-full' + BT + ', and it is blocked by exactly 4 tests in ' + BT + 'tests/v06_corpus_trap_report.rs' + BT + '.\n\n'
+      + '**Read ' + BT + 'decisions.md §13' + BT + ' FIRST — it already decided this, and the tests never caught up.**\n'
+      + 'It rules that AT-34-E1-008`s bar is ' + BT + 'wiring-class-mismatch = 0' + BT + ', "with the other four trap kinds\n'
+      + 'reported at their **unchanged counts**". Those four are SD-33 inherited debt, explicitly\n'
+      + '"registered, not absorbed", against ' + BT + 'forward-scope-register.md D1.1' + BT + '. Live counts, re-derived:\n'
+      + '  ' + BT + 'no_two_ingested_records_share_a_record_key' + BT + '            249\n'
+      + '  ' + BT + 'ingested_record_keys_match_their_cited_line' + BT + '           650\n'
+      + '  ' + BT + 'every_mod_sourced_ingest_has_a_live_base_declaration' + BT + '  2,117\n'
+      + '  ' + BT + 'no_ingested_record_is_sourced_from_a_disabled_line' + BT + '      165\n\n'
+      + 'All four still assert ' + BT + 'violations.is_empty()' + BT + ' — zero tolerance. So they demand something §13\n'
+      + 'explicitly says this bundle is NOT required to deliver, and root-full can never go green.\n\n'
+      + '**Implement §13: baseline them, exactly the way ' + BT + 'pi-sweep' + BT + ' already does it in this repo.**\n'
+      + 'Read ' + BT + 'docs/governance/pi-sweep-baseline.tsv' + BT + ' and ' + BT + 'run_pi_sweep' + BT + ' in ' + BT + 'scripts/verify.sh' + BT + '\n'
+      + 'for the working pattern. The bar becomes: **the count equals its registered baseline**. That fails\n'
+      + 'if a finding is ADDED (a real regression) and fails if one is REMOVED without updating the\n'
+      + 'baseline (a stale row) — pi-sweep enforces both, and so must this.\n\n'
+      + '**This is NOT weakening the test and your receipt must show why not.** A test that says "zero'
+      + ' allowed" against 3,181 known, registered, out-of-DoD findings never fails informatively — it is\n'
+      + 'red forever and tells you nothing new. A baselined one goes red the moment the number moves. If\n'
+      + 'you cannot make it detect a planted regression, you have weakened it: **prove it fires** with a\n'
+      + 'mutation test, the way ' + BT + 'sd30_declared_product_identity...' + BT + '`s own\n'
+      + BT + 'the_leak_detectors_actually_fire_on_a_planted_leak' + BT + ' does.\n\n'
+      + 'Do NOT drive the 3,181 to zero — that is AT-34-E1-008`s scope, not yours, and §13 says so.\n\n'
+      + '**Territory:** ' + BT + 'tests/' + BT + ', ' + BT + 'src/' + BT + ', ' + BT + 'docs/governance/' + BT + '.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 function cLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
-    title: 'GATE LANE B — site-dashboard-check, and the producer timeout behind it.\n\n'
-      + 'Wave 24 closed 6 of the 7 desktop failures. ' + BT + 'site-dashboard-check' + BT + ' is the stage still\n'
-      + 'attributed to your territory. Read ' + BT + '..._gate-lane-b_wave24_cycle_receipt.md' + BT + ' FIRST.\n\n'
-      + 'The committed feeds under ' + BT + 'site/dashboard/' + BT + ' are stale against the current inventory. The\n'
-      + 'obstacle is real and measured, not hypothetical: the producer`s own\n'
-      + BT + 'v06_work_inventory --summary' + BT + ' step times out at its 600s cap when the box is under wave\n'
-      + 'load. Unloaded it takes about 2m26s. **That is contention, not a performance bug — do not raise\n'
-      + 'the cap to hide it.** You are the only heavy lane running, so you have the quiet box; measure it\n'
-      + 'and report the real number.\n\n'
-      + '**The standing hazard, which the review states twice:** do NOT run the inventory regenerator or\n'
-      + 'the dashboard producer from a lane — both can silently drop stamps. If the feed genuinely can\n'
-      + 'only be refreshed by running the producer, say so plainly in your receipt and leave it for the\n'
-      + 'closing sweep. An honest deferral is worth more than a feed refreshed by a tool that ate its own\n'
-      + 'provenance.\n\n'
-      + 'If ' + BT + 'desktop' + BT + ' or ' + BT + 'reach' + BT + ' are still red, the 7th desktop failure is yours too — wave 24\'s\n'
-      + 'receipt names it.\n\n'
+    title: 'GATE LANE B — site-dashboard-check, and settle the desktop contradiction.\n\n'
+      + '**Two stages, and one of them may already be green.** Wave 25`s lane B reported the desktop crate\n'
+      + 'at **572 passed / 0 failed** and called ' + BT + 'desktop' + BT + ' CLOSED. The wave-28 closing sweep listed\n'
+      + BT + 'desktop' + BT + ' as FAIL. Both cannot be right. **Run it yourself and settle it**, and if it is green,\n'
+      + 'say so plainly — the sweep was independently wrong twice in that same table (it marked\n'
+      + BT + 'denominator-gate' + BT + ' red when it was green, and reported "zero regressions" while carrying a real\n'
+      + 'one in ' + BT + 'figure-provenance' + BT + ', since fixed).\n\n'
+      + '**' + BT + 'site-dashboard-check' + BT + ' is the one nobody has closed.** Wave 25 deliberately left it. The\n'
+      + 'committed feeds under ' + BT + 'site/dashboard/' + BT + ' are stale against the current inventory, and the\n'
+      + 'refresh path runs through the dashboard producer.\n\n'
+      + '**The standing hazard, unchanged:** do NOT run the inventory regenerator or the dashboard producer\n'
+      + 'from a lane — both can silently drop stamps. Wave 25 measured the producer`s own\n'
+      + BT + 'v06_work_inventory --summary' + BT + ' at ~757s on a quiet box, over its 600s cap, so the cap is not\n'
+      + 'merely a contention artefact. **Do not raise the cap to make it pass.** If the feed can only be\n'
+      + 'refreshed by a tool this lane may not run, say exactly that and name who can.\n\n'
       + '**Territory:** ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
-    title: 'GATE LANE C — hold clippy at zero, then re-measure the whole gate honestly.\n\n'
-      + '**Clippy is at 0/0 and the ceilings are now 0/0 — no slack at all.** Wave 24 fixed 86 root and\n'
-      + '25 desktop warnings and tightened the ceilings to match, which is right, but it means any warning\n'
-      + 'a sibling lane introduces is an instant FAIL. I already had to fix two that appeared right after\n'
-      + '(199ec991e0): ' + BT + 'probe_reachable_race_traits' + BT + ' and ' + BT + 'probe_equipment_key_universe' + BT + '\n'
-      + 'read as dead under ' + BT + '--all-targets' + BT + ' but are called from `#[cfg(test)]` modules — **scoped with\n'
-      + BT + '#[cfg(test)]' + BT + ', not deleted, because deleting them breaks three live tests.** Expect more of\n'
-      + 'that shape and apply the same test: before deleting a "never used" function, grep for callers\n'
-      + 'inside test modules.\n\n'
-      + 'You run LAST. Rebase, re-measure clippy for both crates, and fix anything lanes A and B\n'
-      + 'introduced. Do not raise the ceilings — a ceiling raised to meet the count is the gate disabled.\n\n'
-      + '**Then the real job: re-measure the whole gate and write down what is actually left.** Run\n'
-      + BT + 'bash scripts/verify.sh' + BT + ' (full) and produce the stage table: PASS/FAIL for all 40, the count\n'
-      + 'of each, and for every remaining FAIL a one-line named cause. The bundle has been carrying a\n'
-      + '"14 red" figure from a review that is now several waves stale; nobody has stated the current\n'
-      + 'truth in one place. **Do not report a stage as green because a lane said so — you ran it.**\n\n'
-      + '**Territory:** clippy anywhere, plus the sweep. Lanes A and B own the corpus and the desktop/site\n'
-      + 'trees respectively; report their stages, do not edit their files.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+    title: 'GATE LANE C — hold the line, then sweep and report honestly.\n\n'
+      + 'Clippy is at 0/0 with the ceilings also at 0/0 — no slack. Re-measure both crates after A and B\n'
+      + 'land and fix anything they introduce. **Before deleting any "never used" function, grep for\n'
+      + 'callers inside ' + BT + '#[cfg(test)]' + BT + ' modules** — two such were caught in 199ec991e0 and scoped\n'
+      + 'rather than deleted, because deleting them breaks three live tests. Never raise a ceiling.\n\n'
+      + '**Then the sweep, and this time it has to be right.** The wave-28 sweep got two of five stages\n'
+      + 'wrong in the SAME table: it marked ' + BT + 'denominator-gate' + BT + ' FAIL when a live re-run showed\n'
+      + BT + 'violations=0' + BT + ', and it claimed "zero green->red" while ' + BT + 'figure-provenance' + BT + ' had genuinely\n'
+      + 'regressed from PASS. Both were caught only by re-running them by hand afterwards.\n\n'
+      + 'So: **for every stage you mark FAIL, paste the command and its last output line.** A stage`s\n'
+      + 'status is the output of running it, not a row copied from a prior table. And compare against\n'
+      + 'wave-28`s table stage by stage — any PASS that is now FAIL is a regression this wave caused and\n'
+      + 'must be named, not averaged into a count.\n\n'
+      + 'Current truth to beat, measured by hand at 2bbc9c87a7: **3 red of 40** — ' + BT + 'root-full' + BT + ',\n'
+      + BT + 'desktop' + BT + ' (contested, lane B is settling it), ' + BT + 'site-dashboard-check' + BT + '.\n\n'
+      + '**Territory:** clippy anywhere, plus the sweep. Report A`s and B`s stages, do not edit their files.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 
@@ -736,14 +736,14 @@ async function runBucketBMechanisms() {
   // build in src/rules_core + apps/desktop) and was disjoint from both in wave 13's own diff,
   // so it still runs alongside. Serializing costs wall-clock, which no longer matters: the
   // 20-minute checkpoint rule means a host reset costs minutes regardless of how long a wave is.
-  log('wave 25 (GATE): the last corpus mechanisms + a full, honest gate re-measure')
+  log('wave 26 (GATE): 3 red left. Implement decisions.md 13 in the trap tests; settle desktop; sweep honestly')
 
   const [uc, [vled, m]] = await parallel([
-    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'A: corpus mechanisms', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'A: root-full trap baseline', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     async () => {
-      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: site-dashboard + producer', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: site-dashboard + desktop', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       log('B -> ' + (c && c.status) + '; starting C (docs gates)')
-      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: clippy + full gate re-measure', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: clippy + honest sweep', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       return [c, mm]
     },
   ])
