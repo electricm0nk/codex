@@ -206,4 +206,6 @@ cycle rather than assumed stale):
 
 ## Commit SHA (filled in after push)
 
-Pending -- see final commit in this cycle's own push.
+`bfaa288ead0f20b4652155ace37acff02ba35f27` -- the single commit this cycle produced (receipt +
+`progress.md` entry). No rebase was needed after the sweep (no upstream movement during the
+~101-minute run); this is also this cycle's own build-scope SHA.
