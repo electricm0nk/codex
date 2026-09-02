@@ -258,21 +258,30 @@ See the row-count self-check already given above (Figures section): `40 2 38`, m
 
 ## Build scope verified
 
-`cargo test --locked --no-run` was not run as a separate step this cycle — this lane made **no**
-shipping-code change (clippy was already at ceiling; the sweep is read-only), so the full
-`verify.sh` run itself *is* the widest-build-scope evidence: its own `root-lib`, `root-full`, and
-`desktop` stages each build and execute their full target set. `--no-run` exit 0 is implied by
-every one of those three stages passing (a suite cannot execute if it did not compile).
+This lane made **no** shipping-code change (clippy was already at ceiling; the sweep is
+read-only), so the full `verify.sh` run's own `root-lib`, `root-full`, and `desktop` stages
+already prove every target compiles and runs. Additionally, `cargo test --locked --no-run` was
+run literally, both crates, after the sweep and after the final docs commit (a pure-docs commit
+cannot move any figure, so re-running after it is a formality, not a requirement of
+`decisions.md §12` L7 — done anyway for a literal exit code):
 
-- **`--no-run` equivalent:** implied PASS (see above) — `root-lib` 3028 passed, `root-full` 8372
-  passed across 589 suites / all 543 `tests/*.rs` suites executed, `desktop` 572 passed, all at
-  this cycle's own HEAD.
-- **Workspace result:** PASS (root-lib + root-full above)
-- **Desktop crate result:** PASS (`apps/desktop/src-tauri`, a separate cargo workspace, tested
-  explicitly per `decisions.md §10`)
-- **Ran at SHA:** `d007d2e9e4` (this cycle's rebase-onto HEAD — no shipping-code commit in this
-  cycle moves any figure an assertion depends on, so the sweep's own HEAD is also the last
-  figure-moving commit; `decisions.md §12` L7 satisfied vacuously)
+```
+$ CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e6-001-laneC-3 cargo test --locked --no-run
+$ echo $?
+0
+$ cd apps/desktop/src-tauri && CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e6-001-laneC-3 cargo test --locked --no-run
+$ echo $?
+0
+```
+
+- **`--no-run`:** root exit 0, desktop exit 0 (literal, both crates, at `02465cea71`)
+- **Workspace result:** PASS — `root-lib` 3028 passed, `root-full` 8372 passed across 589 suites
+  / all 543 `tests/*.rs` suites executed (sweep, at `d007d2e9e4`)
+- **Desktop crate result:** PASS — 572 passed (`apps/desktop/src-tauri`, a separate cargo
+  workspace, tested explicitly per `decisions.md §10`; sweep, at `d007d2e9e4`)
+- **Ran at SHA:** sweep at `d007d2e9e4`, `--no-run` literal re-check at `02465cea71` — no
+  shipping-code commit exists between the two (both this cycle's own commits are docs-only), so
+  neither run's figures are stale relative to the other (`decisions.md §12` L7)
 
 - **Sweep population:** N/A -- this cycle touched no `data/corpus/**` record; it is a
   report-only lane (clippy + sweep), no corpus regeneration.
