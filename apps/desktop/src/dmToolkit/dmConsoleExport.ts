@@ -1,6 +1,7 @@
 import { DM_KIND_FIELDS, DM_KIND_LABELS, DM_RECORD_KINDS, type DmRecord, type DmRecordKind, type DmVisibility } from './dmRecordModel';
 import { kindPlural } from './dmConsoleModel';
 import { resolveLinks } from './dmLinksModel';
+import { historyFor } from './dmHistoryModel';
 
 /**
  * Renders the whole campaign console as ONE self-contained HTML file
@@ -61,6 +62,7 @@ function renderRecord(record: DmRecord, records: readonly DmRecord[]): string {
   const links = resolveLinks(record, records);
   const backlinks = records.filter((source) => source.links.some((link) => link.targetId === record.id));
   const clues = attachedClues(record, records);
+  const history = historyFor(record, records);
   const linkButton = (target: DmRecord, label: string) =>
     `<button class="link" type="button" onclick="focusRecord(${jsString(target.id)})"><span><strong>${escapeHtml(target.title)}</strong><small>${escapeHtml(target.summary || DM_KIND_LABELS[target.kind].singular)}</small></span><b>${escapeHtml(label)}</b></button>`;
   return [
@@ -71,6 +73,14 @@ function renderRecord(record: DmRecord, records: readonly DmRecord[]): string {
       : '',
     record.body.trim() !== '' ? `<section><h2>Notes</h2>${paragraphs(record.body)}</section>` : '',
     clues.length > 0 ? `<section><h2>Clues</h2>${clues.map(renderClueBlock).join('')}</section>` : '',
+    history.length > 0
+      ? `<section><h2>History</h2><ol class="history">${history
+          .map(
+            (entry) =>
+              `<li><button type="button" onclick="focusRecord(${jsString(entry.id)})"><span>${escapeHtml((entry.fields.when ?? '').trim() || 'Timeline')}</span><strong>${escapeHtml(entry.title)}</strong>${entry.summary ? `<small>${escapeHtml(entry.summary)}</small>` : ''}</button></li>`,
+          )
+          .join('')}</ol></section>`
+      : '',
     links.length > 0 ? `<section><h2>Links</h2>${links.map((link) => linkButton(link.target, link.label)).join('')}</section>` : '',
     backlinks.length > 0
       ? `<section><h2>Linked from</h2>${backlinks
@@ -125,6 +135,7 @@ nav{display:flex;flex-wrap:wrap}nav button{border:0;border-bottom:3px solid tran
 dl{margin:20px 0 0}dl>div{border-bottom:1px solid #2a3139;padding:9px 0}dt{color:#6d7885}dd{margin:4px 0 0;font-size:14px;line-height:1.6}
 .record section{margin-top:26px}.record h2{color:#6d7885;border-bottom:1px solid #2a3139;padding-bottom:6px;margin:0 0 10px}.record p{font-size:14px;line-height:1.75;margin:0 0 12px}
 .link{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:left;border:1px solid #2a3139;background:#161b21;color:#fff;padding:10px 12px;margin-bottom:7px;border-radius:8px;cursor:pointer}.link:hover{border-color:#8ab4ff}
+.history{list-style:none;margin:0;padding:0;border-left:2px solid #2a3139}.history li{position:relative;padding:0 0 10px 16px}.history li:before{content:'';position:absolute;left:-5px;top:8px;width:8px;height:8px;border-radius:50%;background:#8ab4ff}.history button{border:0;background:none;color:#fff;padding:0;text-align:left;cursor:pointer}.history button:hover strong{color:#8ab4ff}.history span{display:block;color:#6d7885;font:700 9px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.08em}.history strong{display:block;font-size:13px;margin-top:2px}.history small{display:block;color:#98a2ad;font-size:11px;margin-top:2px}
 .audience{margin-left:auto;color:#98a2ad;font:800 10px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}
 .link strong{display:block;font-size:13px}.link small{display:block;color:#98a2ad;font-size:11px;margin-top:3px}.link b{color:#8ab4ff;font:800 9px ui-monospace,monospace;white-space:nowrap;text-transform:uppercase}
 @media(max-width:760px){.panes{grid-template-columns:1fr;grid-template-rows:40vh 1fr}.master{border-right:0;border-bottom:1px solid #2a3139}.detail{padding:20px}}

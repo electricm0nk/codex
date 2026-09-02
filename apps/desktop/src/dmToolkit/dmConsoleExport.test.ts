@@ -84,4 +84,15 @@ assert(!stripped.includes('.clue{'), 'the clue styling ships only when a clue is
 assert(gm.includes('data-tab="Rule"') && gm.includes('No rules yet.'), 'the GM copy keeps empty tabs — there the statement is true and a prompt to write');
 assert(renderDmConsoleHtml('NC', [], 'players').includes('Nothing has been shared with players yet.'), 'a handout with nothing visible says so once, instead of seven empty tabs');
 
+// D-8: derived history in both exports, same filtering rule as everything else.
+const ev1 = rec('ev1', 'Timeline', 'Night 1 — 22:00', { visibility: 'players', fields: { when: 'Night 1, 22:00' }, links: [{ targetId: 'rogue', label: 'Involves' }] });
+const ev2 = rec('ev2', 'Timeline', 'The secret meeting', { visibility: 'gm', fields: { when: 'later that night' }, links: [{ targetId: 'rogue', label: 'Involves' }] });
+const histGm = renderDmConsoleHtml('NC', [publicRogue, ev1, ev2], 'gm');
+const rogueGm = histGm.slice(histGm.indexOf('data-record="rogue"'), histGm.indexOf('data-record="ev1"'));
+assert(rogueGm.includes('History') && rogueGm.includes('Night 1 — 22:00') && rogueGm.includes('The secret meeting'), 'GM copy: linked timeline entries listed inside the record');
+assert(rogueGm.indexOf('Night 1') < rogueGm.indexOf('secret meeting'), 'in insertion order');
+const histPl = renderDmConsoleHtml('NC', [publicRogue, ev1, ev2], 'players');
+const roguePl = histPl.slice(histPl.indexOf('data-record="rogue"'), histPl.indexOf('data-record="ev1"'));
+assert(roguePl.includes('Night 1 — 22:00') && !histPl.includes('secret meeting'), 'handout: a GM-only entry is absent from a shared record’s history');
+
 console.log('dmConsoleExport tests passed');

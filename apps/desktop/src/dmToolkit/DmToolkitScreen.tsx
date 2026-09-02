@@ -4,6 +4,7 @@ import { DM_KIND_FIELDS, DM_KIND_LABELS, DM_RECORD_KINDS, getDmRecords, type DmR
 import { buildDmConsoleView, nextSelectionForKind } from './dmConsoleModel';
 import { DM_LINK_LABELS, backlinksTo, createDmRecord, deleteDmRecord, linkDmRecords, unlinkDmRecords, updateDmRecord } from './dmRecordModel';
 import { linkCandidates, resolveLinks } from './dmLinksModel';
+import { historyFor } from './dmHistoryModel';
 import { renderDmConsoleHtml } from './dmConsoleExport';
 import { DESKTOP_DM_CONSOLE_EXPORT_DEPS, runDmConsoleExport } from './dmConsoleExportFlow';
 import { draftFromRecord, draftToInput, emptyDraft, validateDraft, type DmRecordDraft } from './dmRecordForm';
@@ -414,6 +415,7 @@ function RecordPane(props: {
   const { record } = props;
   const links = resolveLinks(record, props.records);
   const backlinks = backlinksTo(props.records, record.id);
+  const history = historyFor(record, props.records);
   const fields = DM_KIND_FIELDS[record.kind].filter((spec) => (record.fields[spec.key] ?? '').trim() !== '');
   return (
     <article style={{ margin: '0 auto', maxWidth: 860, width: '100%' }}>
@@ -449,6 +451,26 @@ function RecordPane(props: {
         <section style={{ marginTop: '1.75rem' }}>
           <h2 style={sectionHeading}>Notes</h2>
           <p style={{ color: 'var(--color-text)', fontSize: '0.9rem', lineHeight: 1.75, margin: 0, whiteSpace: 'pre-wrap' }}>{record.body}</p>
+        </section>
+      ) : null}
+
+      {/* v0.8 D-8: derived history — Timeline entries linked to this record,
+          in the order they were created. `when` is a label, never parsed. */}
+      {history.length > 0 ? (
+        <section style={{ marginTop: '1.75rem' }}>
+          <h2 style={sectionHeading}>History</h2>
+          <ol style={{ borderLeft: '2px solid var(--color-border)', listStyle: 'none', margin: 0, padding: 0 }}>
+            {history.map((entry) => (
+              <li key={entry.id} style={{ padding: '0 0 0.6rem 1rem', position: 'relative' }}>
+                <span style={{ background: 'var(--color-accent)', borderRadius: '50%', height: 8, left: -5, position: 'absolute', top: 6, width: 8 }} />
+                <button type="button" onClick={() => props.onFocus(entry.id)} style={{ background: 'none', border: 'none', color: 'var(--color-text)', cursor: 'pointer', padding: 0, textAlign: 'left' }}>
+                  <span style={{ ...mono, color: 'var(--color-text-muted)', display: 'block', fontSize: '0.55rem' }}>{(entry.fields.when ?? '').trim() || 'Timeline'}</span>
+                  <strong style={{ display: 'block', fontSize: '0.85rem', marginTop: '0.1rem' }}>{entry.title}</strong>
+                  {entry.summary ? <small style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.72rem' }}>{entry.summary}</small> : null}
+                </button>
+              </li>
+            ))}
+          </ol>
         </section>
       ) : null}
 
