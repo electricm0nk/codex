@@ -152,3 +152,25 @@ The pool catalog's group names ("Anger Domain", "Arcane Bloodline") could yield 
 not ids the engine accepts.
 
 Which slots fall on which side of that line is not yet known — B-7 (read-only) answers it.
+
+---
+
+## F-13 — Remove the dead "Spell Res." tile from the Attack panel
+
+Flagged by `frontend` during F-9 (it removed the tile, realised that was outside F-9's scope,
+restored it exactly, and reported it for separate triage — the right call). Orchestrator triage:
+this is a real no-stub violation, so it gets its own ticket.
+
+`CharacterSheet.tsx:545` renders `<StatTile label="Spell Res." value="—" />` with a hardcoded em
+dash, emitted next to the Melee tile. Nothing populates it; there is no code path that can give it
+a value. It is a user-facing affordance that permanently displays nothing.
+
+Meanwhile the sheet already renders the **real** spell resistance at `CharacterSheet.tsx:1416` on
+the Defense panel — `{spellResistanceTotal !== undefined ? <StatTile label="Spell Resistance" ... />`
+— from an engine value, conditionally, and correctly absent when the engine has nothing to say.
+
+So the fix is deletion, not wiring: remove the dead tile from the Attack panel. The genuine value
+is already shown in the right place. Do NOT compute or fetch SR in the Attack panel — that would
+duplicate a rules-bearing value the Defense panel already sources from the engine.
+
+Owner: `frontend`. Verification: `npm run typecheck` (0 errors) and `npm test`.
