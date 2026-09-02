@@ -820,6 +820,72 @@ function eLanePrompt() {
       + BT + 'verify.sh' + BT + ' and ' + BT + 'publish-site-dashboard.sh' + BT + ', not in the transcribers.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
+// Lanes F and G run on FABLE, the planning tier (operator tiering: Fable for planning, Sonnet
+// for execution, Opus for adversarial verification). They are DESIGN-ONLY and write no code --
+// not to be cautious, but because every code-bearing territory is already claimed this wave:
+// F's subject is tests/ (lane A holds it) and G's is pilot_compute/ (lane D holds it). A design
+// lane that emits a plan collides with nobody, and the review already re-classed this work from
+// "mechanical" to "genuine refactors requiring design" after batch D correctly produced zero
+// commits against it.
+function fLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'LANE F (DESIGN ONLY, no code) — a migration plan for the test-suite duplication.\n\n'
+      + '**Write a plan. Change no code.** Every file you would touch is held by another lane this wave.\n'
+      + 'Your deliverable is one document; if you edit a `.rs` file you have broken the wave.\n\n'
+      + 'Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + ' section 4 item 1 and\n'
+      + BT + 'artifacts/fable-review/R10.json' + BT + ' FIRST. Measured at HEAD, by me, just now:\n'
+      + '  89 ' + BT + 'tests/sd18_*_widening.rs' + BT + '\n'
+      + '  95 ' + BT + 'tests/sd13_*progression*.rs' + BT + '\n'
+      + '  179,393 total lines across ' + BT + 'tests/' + BT + '\n'
+      + 'The review estimates these templates are ~80k of those lines, and that consolidation takes the\n'
+      + 'test binary count from 543 to roughly 360 — a large compile-time win on a box where a full\n'
+      + 'sweep already costs ~2 hours.\n\n'
+      + '**Re-derive those figures yourself before building on them.** The review\'s own numbers have been\n'
+      + 'wrong before, and its 543 predates wave 23\'s deletion of 11 binaries.\n\n'
+      + 'What the plan must contain:\n'
+      + '  1. The real duplication shape — read a sample of BOTH families and say what genuinely varies\n'
+      + '     per file versus what is copied. A table-driven rewrite is only safe where the variation is\n'
+      + '     data; where a file diverges for a reason, say so and exclude it.\n'
+      + '  2. A migration path that is **coverage-identical**, and how you would PROVE that rather than\n'
+      + '     assert it — the failure mode here is deleting assertions and calling it consolidation.\n'
+      + '  3. An ordering that lands in slices, each independently verifiable, so a half-finished\n'
+      + '     migration is not a broken suite.\n'
+      + '  4. What it costs, with the measurement behind the estimate.\n\n'
+      + '**Prove the shape on ONE family, on paper.** Show the concrete before/after for two or three\n'
+      + 'real files rather than describing a transformation in the abstract.\n\n'
+      + '**Territory:** ' + BT + 'docs/release/SD-34-book-completion/artifacts/fable-review/' + BT + ' — write\n'
+      + BT + 'R10-MIGRATION-PLAN.md' + BT + ' there. Nothing else, anywhere.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+}
+
+function gLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'LANE G (DESIGN ONLY, no code) — a seam map for the two files nobody can safely edit.\n\n'
+      + '**Write a plan. Change no code.** ' + BT + 'pilot_compute/mod.rs' + BT + ' is lane D\'s territory this\n'
+      + 'wave and ' + BT + 'v06_work_inventory.rs' + BT + ' is lane A\'s. Your deliverable is one document.\n\n'
+      + 'Measured at HEAD, by me, just now:\n'
+      + '  ' + BT + 'src/rules_core/pilot_compute/mod.rs' + BT + ' — **78,400 lines**\n'
+      + '  ' + BT + 'src/bin/v06_work_inventory.rs' + BT + ' — 24,537 lines, of which ' + BT + 'classify()' + BT + '\n'
+      + '  is a single ~2,555-line function\n\n'
+      + 'These two files are the reason several defects in this bundle went unfixed for waves: they are\n'
+      + 'too large to change confidently, and the review notes R9-02\'s fix will force the second one open\n'
+      + 'anyway. Read ' + BT + 'fable-review.md' + BT + ' section 4 items 2 and 4, and the ' + BT + 'PC*' + BT + ' findings\n'
+      + 'in ' + BT + 'artifacts/fable-review/findings-all.json' + BT + '.\n\n'
+      + '**The review already learned something here that must shape your plan.** Batch D attempted four\n'
+      + 'pilot_compute dedup items as "mechanical" and correctly produced ZERO commits: PC1-1 is duplicated\n'
+      + 'for a ratified reason stated in the code (lines 7398-7405), PC2-3\'s seven race seams genuinely\n'
+      + 'diverge, and the evidence for one partly misidentified its own target. **The extraction seams\n'
+      + 'stand; the "quick win" framing did not.** So: for each seam you propose, say whether it is a move\n'
+      + 'or a merge, and for any merge, what you checked to be sure the two sides are actually the same.\n\n'
+      + 'What the plan must contain:\n'
+      + '  1. A seam map — what comes out, in what order, and what each extraction depends on.\n'
+      + '  2. For each seam, how a reviewer would confirm behaviour did not change.\n'
+      + '  3. Which seams are safe to do WHILE other lanes work in the file, and which need it quiet.\n'
+      + '  4. An honest note on any seam you looked at and rejected, and why — that is as useful as the\n'
+      + '     ones you propose, and batch D\'s four rejections are the proof.\n\n'
+      + '**Territory:** ' + BT + 'docs/release/SD-34-book-completion/artifacts/fable-review/' + BT + ' — write\n'
+      + BT + 'SEAM-MAP.md' + BT + ' there. Nothing else, anywhere.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+}
+
 // MODEL OVERRIDE, operator instruction 2026-09-01 21:39 EDT, narrowed 21:47: LANE A ONLY
 // runs on OPUS for seven hours, reverting 2026-09-02 04:39. Lanes B and C and the closing
 // sweep stay on Sonnet.
@@ -848,7 +914,7 @@ async function runBucketBMechanisms() {
   // build in src/rules_core + apps/desktop) and was disjoint from both in wave 13's own diff,
   // so it still runs alongside. Serializing costs wall-clock, which no longer matters: the
   // 20-minute checkpoint rule means a host reset costs minutes regardless of how long a wave is.
-  log('wave 28: 5 lanes -- 3 gate + D pilot_compute correctness + E atomic writes')
+  log('wave 28: 7 lanes -- 3 gate + D/E correctness (sonnet) + F/G design-only (fable)')
 
   // Wave 28 widens to FIVE lanes on operator instruction -- there is quota to spend and the
   // fable review left 6 confirmed P1s and 7 P2s owned by nobody, because every lane so far was
@@ -866,7 +932,7 @@ async function runBucketBMechanisms() {
   // path fences, which is the shape that held afterwards.
   //
   // C still runs after B because the sweep must see B's edits. D and E are independent of both.
-  const [uc, [vled, m], d, e] = await parallel([
+  const [uc, [vled, m], d, e, f, g] = await parallel([
     () => agent(ucLanePrompt(), { model: 'opus', phase: title, label: 'A: last 3 root-full tests', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     async () => {
       const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: site-dashboard timeout', schema: CYCLE_SCHEMA, isolation: 'worktree' })
@@ -876,11 +942,13 @@ async function runBucketBMechanisms() {
     },
     () => agent(dLanePrompt(), { model: 'sonnet', phase: title, label: 'D: pilot_compute P1/P2 bugs', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     () => agent(eLanePrompt(), { model: 'sonnet', phase: title, label: 'E: atomic writes family', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(fLanePrompt(), { model: 'fable', phase: title, label: 'F: test-consolidation plan', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(gLanePrompt(), { model: 'fable', phase: title, label: 'G: pilot_compute seam map', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
   ])
-  log('D -> ' + (d && d.status) + ' | E -> ' + (e && e.status))
+  log('D -> ' + (d && d.status) + ' | E -> ' + (e && e.status) + ' | F -> ' + (f && f.status) + ' | G -> ' + (g && g.status))
   log('UC -> ' + (uc && uc.status) + ' | C -> ' + (vled && vled.status) + ' | M -> ' + (m && m.status))
 
-  const summary = [['A rust-suites', uc], ['B frontend', vled], ['C docs-gates', m], ['D pilot_compute', d], ['E atomic-writes', e]].map(([n, r]) =>
+  const summary = [['A rust-suites', uc], ['B frontend', vled], ['C docs-gates', m], ['D pilot_compute', d], ['E atomic-writes', e], ['F test-plan', f], ['G seam-map', g]].map(([n, r]) =>
     '- ' + n + ' (' + ((r && r.status) || '?') + '): ' + String((r && (r.discoveries || r.remainder)) || 'no report').slice(0, 400)).join('\n')
   const regen = await agent(regenPrompt(summary), {
     model: 'sonnet', phase: title, label: 'full verify.sh sweep', schema: REGEN_SCHEMA,
