@@ -123,16 +123,17 @@ BUCKET_DEFINITIONS = {
         # several markers is a doc-comment or a `BUCKET_DEFINITIONS`-adjacent
         # status-vocabulary tuple, not the construction site) against the
         # current file, all ten landing at exactly old_line+20.
-        # `SD-34` wave 32 (bucket-D lane C) re-derived every line below a tenth
-        # time: found `citation_failures=10` already standing at the branch tip
-        # (a prior wave's own insertions -- `199ec991e0`/`9d2e7d9e28` clippy
-        # fixes -- shifted every pin, never re-derived). Fresh `grep -n` for each
-        # marker's own unique construction-site literal against the real
-        # post-fix file content: DONE/M/D/Z/X/U all landed at exactly
-        # old_line+23 (one uniform insertion before line ~10172); A/B/C/V all
-        # landed at exactly old_line+14 (a second, later insertion). Not this
-        # cycle's own edit -- confirmed pre-existing via `git status --porcelain`
-        # showing a clean tree before any local change.
+        # Wave 32 (AT-34-E1-002 citation-gate repair) re-derived all ten
+        # citations a tenth time: `--check` reported ALL TEN as broken, not
+        # just DONE's -- an intervening edit shifted every line below without
+        # any lane re-deriving them. Method: fresh `grep -n` for each
+        # marker's own unique literal, excluding (a) the `STATUS_VOCABULARY`
+        # tuple entries near line 9330-9410 (doc strings, not construction
+        # sites) and (b) `#[cfg(test)]` assertions, then confirmed the
+        # surviving hit sits inside real production code by walking upward
+        # to the nearest `fn`/`#[cfg(test)]` marker. Each new line's exact
+        # content was read back and checked to literally contain the marker
+        # before being written here -- never assumed from the grep hit alone.
         "citation": {"file": _ENGINE_SRC, "line": 10195, "must_contain": "grounded"},
     },
     "A": {
@@ -143,6 +144,8 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'has_no_engine_table')"
         ),
         # `Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table")`.
+        # Wave 32 re-derivation: fresh `grep -n` for the full literal, line
+        # content read back and confirmed.
         "citation": {"file": _ENGINE_SRC, "line": 12494, "must_contain": "has_no_engine_table"},
     },
     "B": {
@@ -153,6 +156,8 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')"
         ),
         # `engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine")`.
+        # Wave 32 re-derivation: fresh `grep -n` for the full literal, line
+        # content read back and confirmed.
         "citation": {"file": _ENGINE_SRC, "line": 12174, "must_contain": "not_held_by_engine"},
     },
     "C": {
@@ -163,6 +168,8 @@ BUCKET_DEFINITIONS = {
             "(evidence contains 'explanation_id' / 'diagnostic')"
         ),
         # `engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")`.
+        # Wave 32 re-derivation: fresh `grep -n` for the full literal, line
+        # content read back and confirmed.
         "citation": {"file": _ENGINE_SRC, "line": 12399, "must_contain": "explanation_id"},
     },
     "D": {
@@ -171,13 +178,22 @@ BUCKET_DEFINITIONS = {
         "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
         # The shared `engine_does_not_hold` closure that stamps `status: "engine-does-not-hold"`
         # for every arm that falls through A/B/C -- this IS the D fallthrough
-        # (the closure's own definition line immediately precedes this one).
+        # (the closure's own `Verdict { status: "engine-does-not-hold", ... }`
+        # body, one line below its own `let engine_does_not_hold = |evidence: &str| Verdict {`
+        # definition line). Wave 32 re-derivation: fresh `grep -n` for the
+        # closure definition (`let engine_does_not_hold = `), line content
+        # read back and confirmed.
         "citation": {"file": _ENGINE_SRC, "line": 10369, "must_contain": "engine-does-not-hold"},
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
         "clears": "running the compute path (shape engine)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
+        # First real `status: "ingested-magnitude"` construction site in
+        # `simple_kind_verdict` (the `STATUS_VOCABULARY` tuple entry near
+        # line 9367 is a doc string, not a construction site). Wave 32
+        # re-derivation: fresh `grep -n`, line content read back and
+        # confirmed.
         "citation": {"file": _ENGINE_SRC, "line": 10204, "must_contain": "ingested-magnitude"},
     },
     "V": {
@@ -189,24 +205,40 @@ BUCKET_DEFINITIONS = {
         # AT-34-E4-002 cycle 10 eighth-trait-slice + picker-gap-fix insertions into
         # v06_work_inventory.rs): fresh `grep -n` against the real post-regen file
         # content, not the prior cycle's own pre-insertion number.
+        # Re-derived at wave 32 (line drifted 13262 -> 13276 after intervening
+        # insertions above `apply_done_rung_stamps`): fresh `grep -n` against
+        # the real current file content, line content read back and confirmed
+        # not to be one of the test-assertion or STATUS_VOCABULARY hits.
         "citation": {"file": _ENGINE_SRC, "line": 13276, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
         "clears": "instrument correction",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
+        # First real `status: "unmeasurable"` construction site (the
+        # `STATUS_VOCABULARY` tuple entry near line 9404 is a doc string,
+        # not a construction site). Wave 32 re-derivation: fresh `grep -n`,
+        # line content read back and confirmed.
         "citation": {"file": _ENGINE_SRC, "line": 10456, "must_contain": "unmeasurable"},
     },
     "X": {
         "meaning": "deferred with a stated reason",
         "clears": "revisiting the stated condition",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
+        # First real `status: "deferred-with-reason"` construction site (the
+        # `STATUS_VOCABULARY` tuple entry near line 9383 is a doc string,
+        # not a construction site). Wave 32 re-derivation: fresh `grep -n`,
+        # line content read back and confirmed.
         "citation": {"file": _ENGINE_SRC, "line": 10416, "must_contain": "deferred-with-reason"},
     },
     "Z": {
         "meaning": "not started",
         "clears": "ordinary work",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == not-started)",
+        # Only real `status: "not-started"` construction site in the file
+        # (the `STATUS_VOCABULARY` tuple entry near line 9393 is a doc
+        # string, not a construction site). Wave 32 re-derivation: fresh
+        # `grep -n`, line content read back and confirmed.
         "citation": {"file": _ENGINE_SRC, "line": 10277, "must_contain": "not-started"},
     },
 }

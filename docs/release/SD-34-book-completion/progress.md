@@ -11,6 +11,34 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 32, Lane B (`AT-34-E1-002` condition-6 citation-gate repair) — all ten citations re-derived and verified, `citation_failures` 10→0 — complete
+
+**Status: complete.** `python3 scripts/completion_atlas.py --check` was failing condition 6 (the
+citation gate) on `DONE`'s citation (`v06_work_inventory.rs:10172` no longer contains
+`grounded`). **The brief named one broken citation; the repo, checked fresh at this cycle's own
+`HEAD`, showed all ten broken** — an intervening edit shifted every line without any lane
+re-deriving them, and the check reports only the first failure so a green run after fixing one
+does not prove the other nine resolve (exactly the trap the brief warned about). All ten were
+independently re-derived by grepping each marker's live literal construction site (excluding the
+`STATUS_VOCABULARY` doc-string tuple entries and `#[cfg(test)]` assertion hits), confirmed to sit
+in real production code by walking up to the nearest `fn`, and read back to verify the exact new
+line content contains the marker before being written. Result:
+`citation_failures=0`, `population=49438 buckets=10 unclassified=0 overlap=0`,
+`done_evidence_violations=0` — re-derive: `python3 scripts/completion_atlas.py --check`. The
+script's own 38-test unit suite (`python3 -m unittest scripts.tests.test_completion_atlas -v`)
+passes, including `test_real_citations_all_resolve_and_match`. No bucket population moved (checked
+via `git diff docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` —
+only the ten `"line"` fields and `derived_at` changed) — this cycle is pure instrument-correction
+(10 citations), zero closure, zero reclassification, zero reachability change. The check's own
+`_citation_failures` content-verification logic (`scripts/completion_atlas.py`) was not touched —
+only the `BUCKET_DEFINITIONS` line-number data and its historical re-derivation comments. A
+durable-anchor alternative to raw line numbers was considered per the brief and **not
+implemented** (recommendation only, in the receipt) — a self-discovering anchor would weaken
+exactly the human-verification condition 6 exists to enforce; a middle-ground literal-anchor
+design is recommended as a dedicated future cycle rather than folded into this data-repair cycle.
+Full ten-citation audit table, method, and rationale:
+`artifacts/epic-1-atlas/AT-34-E1-002_wave32_citation-repair_cycle_receipt.md`.
+
 ### Cycle — Wave 31, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — clippy re-confirmed 0/0 (isolated dir), full sweep 38/40 PASS — the gate's best result on record, root-full now clean — partial
 
 **Status: partial** (this lane's own two obligations — hold clippy; run and report an honest
