@@ -11,6 +11,59 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 33, Lane A — `class_feature_*_held_by_*_table`'s 27-unit rung, 22 closed as genuinely proseless, 5 deferred — complete (22/27), no escalation
+
+**Status: complete for 22 of 27; 5 named as next-cycle scope.** Recovered from a
+server crash (2026-09-02 kernel soft-lockup, unrelated to this cycle's own work — the
+crash hit mid-flight before this lane could commit) via its preserved worktree diff,
+rebased cleanly onto tranche/14, then landed. Assigned population: bucket D's
+`class_feature_*_held_by_*_table` shape (27 units, four rungs: `weapon-proficiency` 3,
+`weapon-and-armor-proficiency` 5, `class-skill-list` 10, `wizard-school-spell-list` 9),
+all carrying `description: null`. Receipt:
+`artifacts/bucket-d-mining/wave33_laneA_class_feature_held_by_no_prose_cycle_receipt.md`.
+Commit `9558f4a774` (code + `decisions.md §20`, rebased); receipt/progress land in
+this same commit.
+
+**Wave 32 lane C recommended escalating this shape to the operator.** This cycle was
+directed not to escalate, and instead to check the data itself: does real `DESC:`
+prose exist upstream and was never ingested (a content fix), or does it genuinely not
+exist anywhere (a different-shape ruling)? Every one of the 27 keys was checked
+individually against two independent sources — the PCGen `cr_abilities_class.lst`
+source rows and the already-ingested corpus JSON's own `data.description` field, never
+assumed from the shape alone.
+
+**22 of 27 (`weapon-proficiency`, `class-skill-list`, `wizard-school-spell-list`):
+genuinely no upstream prose in either source.** Not an ingestion gap — a real absence.
+`decisions.md §20` extends `§2a`'s zero-magnitude ruling to this sibling shape: a
+proseless, set-shaped record with nothing to display is also complete. New evidence
+string `class_feature_set_shaped_grant_carries_no_upstream_description_by_design`
+marks the closure, reusing the existing `status: "grounded"` (already covered by
+`completion_atlas.py`'s DONE citation — no `BUCKET_DEFINITIONS` schema change needed).
+These 22 close this cycle: `status` moves `engine-does-not-hold` → `grounded`.
+
+**5 of 27 (`weapon-and-armor-proficiency`): real, already-ingested prose exists — not
+closed.** The gap is that `pilot_compute` has never been wired to ground Bard,
+Fighter, Paladin, Ranger, or Rogue's version of this record shape (unlike Sorcerer,
+Wizard, Cleric, Assassin, and Shadowdancer, already grounded via the same idiom). Not
+same-cycle-safe: all five classes have real, registered archetypes in
+`rules_tables/*/archetype_tables.rs` that supersede one or more proficiency slots —
+grounding without reading every one risks shipping stale archetype text. Named as
+next-cycle scope, not rushed.
+
+Measured via `python3 scripts/completion_atlas.py --check` at this cycle's own final
+commit: `population=49438 buckets=10 unclassified=0 overlap=0`, `DONE` 24963 → **24985**
+(+22), `D` 2955 → **2933** (-22), `done_evidence_violations=0`, `citation_failures=0`,
+`missing_clearing_mechanisms=0`, `stale_derived_at=False`. Scoped tests (`cargo test
+--locked --lib -j 6 --bin v06_work_inventory -- class_feature_text_complete_rung_tests`):
+**84 passed, 0 failed**. `completion_atlas.py`'s bucket A/B/C/V citation line numbers
+shifted +116 lines from this cycle's own insertions above them; re-derived via fresh
+`grep -n`, content confirmed unchanged in substance.
+
+Movement: closure 22, reclassification 0, reachability 0, instrument-correction 4 (the
+four shifted atlas citation lines). Full `scripts/verify.sh` not run this cycle — scoped
+verification only, per this fold's own dispatch instruction; the full sweep runs once at
+wave-end after all lanes land.
+
 ### Cycle — Wave 33, Lane D — the four stale `scripts/verify.sh` test-count baselines refreshed — complete
 
 **Status: complete.** Assigned population: the four BASELINE NOTES `scripts/verify.sh` has
