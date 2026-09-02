@@ -8721,6 +8721,173 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- G-1 (v0.8 iteration 2): does a level-up pick persist and reload? -----
+
+    fn created_at_level_1(root: &Path, class_id: &str) {
+        let request = request_for_class("race:human", class_id, 1);
+        let created = create_character_at_root(root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(created, CreateCharacterResponse::Saved { .. }), "{class_id}: {created:?}");
+    }
+
+    /// The finding G-1 was opened to establish: the engine's `LevelUpPlan`
+    /// carries NO pick lists for any of the classes whose level-2 pick the
+    /// audit named -- `PickList` is never constructed anywhere in the engine
+    /// (`grep -rn "PickList {" src/ --include=*.rs` finds only the type).
+    /// So `LevelUpDialog` is not ignoring candidates; there are none. If the
+    /// engine ever starts emitting them, this test flips and the picker
+    /// work becomes real.
+    #[test]
+    fn the_engine_emits_no_level_up_pick_lists_for_rogue_barbarian_or_witch() {
+        for class_id in ["class:rogue", "class:barbarian", "class:witch", "class:unchained_rogue"] {
+            let root = tempdir(&format!("g1-no-lists-{}", class_id.replace(':', "-")));
+            created_at_level_1(&root, class_id);
+            let preview = preview_level_up_at_root(&root, class_id).expect("preview");
+            assert_eq!(preview.to_level, 2);
+            assert!(
+                preview.pick_from_lists.is_empty(),
+                "{class_id}: the engine now emits pick lists -- G-1's finding is out of date"
+            );
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The choice channel itself round-trips for the engine's own
+    /// two-segment ids: sent on `level_up_character`'s `additional_choices`,
+    /// persisted verbatim, read back on load, and -- for the one talent the
+    /// engine computes -- grounded as a real magnitude.
+    #[test]
+    fn a_rogue_talent_pick_on_level_up_persists_reloads_and_grounds() {
+        let root = tempdir("g1-rogue-talent");
+        created_at_level_1(&root, "class:rogue");
+
+        let outcome = level_up_character_at_root(
+            &root,
+            "class:rogue",
+            vec![SelectedChoice {
+                choice_set_id: "choice:rogue_talent".to_owned(),
+                selection_id: "talent:resiliency".to_owned(),
+            }],
+            None,
+            "2026-09-02T00:00:00Z",
+        )
+        .expect("level up");
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload");
+        assert!(reloaded.character_input.chosen.selected_choices.iter().any(|c| {
+            c.choice_set_id == "choice:rogue_talent" && c.selection_id == "talent:resiliency"
+        }));
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        let ids: Vec<&str> = loaded.explanations.iter().map(|e| e.id.as_str()).collect();
+        assert!(ids.contains(&"class_chassis.rogue.talent_choice"), "{ids:?}");
+        assert!(ids.contains(&"class_feature.rogue.resiliency_temp_hp"), "{ids:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Same channel for a Barbarian rage power and a Witch hex.
+    #[test]
+    fn a_rage_power_and_a_hex_pick_on_level_up_persist_and_ground() {
+        for (class_id, set, selection, grounded_id) in [
+            (
+                "class:barbarian",
+                "choice:barbarian_rage_power",
+                "rage_power:superstition",
+                "class_feature.barbarian.rage_power.superstition.save_bonus",
+            ),
+            (
+                "class:witch",
+                "choice:witch_hex",
+                "hex:ward",
+                "class_feature.apg.witch.ward_hex.deflection_and_resistance_bonus",
+            ),
+        ] {
+            let root = tempdir(&format!("g1-{}", class_id.replace(':', "-")));
+            created_at_level_1(&root, class_id);
+            let outcome = level_up_character_at_root(
+                &root,
+                class_id,
+                vec![SelectedChoice { choice_set_id: set.to_owned(), selection_id: selection.to_owned() }],
+                None,
+                "2026-09-02T00:00:00Z",
+            )
+            .expect("level up");
+            assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{class_id}: {outcome:?}");
+            let reloaded = SavedCharacterStore::load(&root).expect("reload");
+            assert!(reloaded
+                .character_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == set && c.selection_id == selection));
+            let loaded = load_saved_character_at_root(&root).expect("load");
+            assert!(
+                loaded.explanations.iter().any(|e| e.id == grounded_id),
+                "{class_id}: {grounded_id} not grounded"
+            );
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The other half of the honest answer: an id the engine does not
+    /// hand-model still persists and is echoed as a +0 "recognized" record
+    /// -- the rogue talent slot is open-ended, no talent-list validation --
+    /// so a picker over the full corpus list would look like it worked and
+    /// compute nothing for 73 of 74 talents.
+    #[test]
+    fn an_unmodelled_rogue_talent_persists_but_grounds_no_magnitude() {
+        let root = tempdir("g1-rogue-unmodelled");
+        created_at_level_1(&root, "class:rogue");
+        let outcome = level_up_character_at_root(
+            &root,
+            "class:rogue",
+            vec![SelectedChoice {
+                choice_set_id: "choice:rogue_talent".to_owned(),
+                selection_id: "talent:ledge_walker".to_owned(),
+            }],
+            None,
+            "2026-09-02T00:00:00Z",
+        )
+        .expect("level up");
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        let talent_records: Vec<&str> = loaded
+            .explanations
+            .iter()
+            .map(|e| e.id.as_str())
+            .filter(|id| id.contains("talent") || id.contains("ledge"))
+            .collect();
+        assert_eq!(talent_records, vec!["class_chassis.rogue.talent_choice"], "recognition only, value 0");
+        assert_eq!(
+            loaded.explanations.iter().find(|e| e.id == "class_chassis.rogue.talent_choice").map(|e| e.value),
+            Some(0)
+        );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A raw corpus pool key (`list_class_feature_pool_options`'s `key`)
+    /// is NOT a selection id: it has no colon segment and the store
+    /// refuses it outright -- a picker must never send one.
+    #[test]
+    fn a_raw_corpus_pool_key_is_refused_by_the_store_not_silently_dropped() {
+        let root = tempdir("g1-raw-key");
+        created_at_level_1(&root, "class:rogue");
+        let result = level_up_character_at_root(
+            &root,
+            "class:rogue",
+            vec![SelectedChoice {
+                choice_set_id: "choice:rogue_talent".to_owned(),
+                selection_id: "Rogue Talent ~ Ledge Walker".to_owned(),
+            }],
+            None,
+            "2026-09-02T00:00:00Z",
+        );
+        let err = result.expect_err("a bare corpus key must not persist");
+        assert!(err.contains("two colon-segments"), "{err}");
+        let reloaded = SavedCharacterStore::load(&root).expect("reload");
+        assert_eq!(reloaded.character_input.chosen.class_levels[0].level, 1, "the level-up did not happen either");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     /// B-1 (v0.8): `playerName` rides the bio sidecar and round-trips.
     #[test]
     fn update_character_bio_at_root_round_trips_player_name() {
