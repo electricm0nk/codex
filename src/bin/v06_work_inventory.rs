@@ -11344,7 +11344,7 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            // SD-34 wave 33 lane B: two shapes deliberately
+            // SD-34 wave 33 lane B / wave 34 lane B: two shapes deliberately
             // `TraitRole::Unclassified` (so `race_trait_engine_book` above
             // returned `None`) whose OWN evidence string must not read
             // "never applies" -- `reach_gate.rs`'s own dated `OPEN_FINDINGS`
@@ -11352,45 +11352,49 @@ fn classify(
             // real payload for them through a real, live, already-shipped
             // Tauri command (`list_alternate_racial_traits` ->
             // `adopted_race_choose_selectors`/`trait_pool` and ->
-            // `adoptive_parentage_options`). **This does NOT reach `done`.**
-            // `reach_gate.rs`'s own module doc names its bar precisely:
-            // "runs the real IPC builder ... and checks the records are in
-            // the response" -- a real but strictly weaker claim than the
-            // `text-complete`/`grounded` rung above requires, which (per
-            // `race_trait_rendered_description`'s own doc comment, and
-            // `AGENTS.md`'s "a magnitude is not wired until it moves on the
-            // twin the player reads") demands the record reach the SHIPPED
-            // SCREEN, not merely the DTO. Verified this cycle: neither
+            // `adoptive_parentage_options`).
+            //
+            // Wave 33 lane B verified (2026-09-02) that neither
             // `AlternateRacialTraitsResponse.adoptive_parentage_options` nor
-            // `.adopted_race_options` is declared in the desktop
-            // TypeScript boundary (`apps/desktop/src/boundary/
-            // loadAlternateRacialTraits.ts`'s own `AlternateRacialTraitsResponse`
-            // interface carries only `races`/`diagnostics`/`findings`) and
-            // neither name appears anywhere else under `apps/desktop/src`
-            // (`grep -rln adoptiveParentageOptions\|adoptedRaceOptions
-            // apps/desktop/src` -> no matches) -- the Rust DTO field's own
-            // doc comment says so too ("Additive field -- a consumer that
-            // does not read it is unaffected"). So this stays
-            // `engine-does-not-hold` (bucket D, unchanged), with a NEW,
-            // more precise evidence string than the blanket "never applies"
-            // these 28 used to carry -- naming exactly what remains (a
-            // desktop UI wiring gap, not a resolver gap) rather than
-            // collapsing it into the 25 records that have no real consumer
-            // of any kind. Checked here, immediately ahead of the "loaded
-            // but inert" fallback below, because that is exactly the
-            // fallback these 28 records used to fall into.
+            // `.adopted_race_options` was declared in the desktop
+            // TypeScript boundary and left both `engine-does-not-hold`,
+            // naming the gap precisely rather than the blanket "never
+            // applies" the 28 used to carry. Wave 34 lane B closed that
+            // exact gap: `apps/desktop/src/boundary/loadAlternateRacialTraits.ts`
+            // now declares both fields, `apps/desktop/src/raceCatalog/
+            // AlternateTraitPicker.tsx` renders a real picker section for
+            // each (`describeAdoptiveParentageGrants`/`describeAdoptedRaceGrants`
+            // in `alternateTraitPickerModel.ts`), and both descriptions are
+            // confirmed on screen (`grep -rn
+            // 'adoptedRaceOptions\|adoptiveParentageOptions'
+            // apps/desktop/src` now finds the boundary types, the model
+            // helpers and the component's own reads). That satisfies
+            // `race_trait_rendered_description`'s own doc comment and
+            // `AGENTS.md`'s "a magnitude is not wired until it moves on the
+            // twin the player reads": the SHIPPED SCREEN reads the field
+            // now, not merely the DTO. `text-complete`, not `grounded`,
+            // because both option kinds are `text_only`/zero-magnitude
+            // (Decision 7 condition 3's rung for exactly that shape).
             if facts
                 .race_trait_adoptive_parentage_rendered_description(unit)
                 .is_some_and(is_real_description_value)
             {
-                return engine_does_not_hold(
-                    "race_trait_adoptive_parentage_option_rendered_by_the_engine_but_no_desktop_ui_surface_reads_it",
-                );
+                return Verdict {
+                    status: "text-complete",
+                    evidence: "race_trait_adoptive_parentage_option_rendered_on_the_desktop_picker_screen"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field.clone(),
+                };
             }
             if facts.race_trait_adopted_race_selector_grants(unit) {
-                return engine_does_not_hold(
-                    "race_trait_adopted_race_selector_resolves_real_grants_but_no_desktop_ui_surface_reads_them",
-                );
+                return Verdict {
+                    status: "text-complete",
+                    evidence: "race_trait_adopted_race_selector_grants_rendered_on_the_desktop_picker_screen"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field.clone(),
+                };
             }
             // The honest middle: the record IS ingested and IS loaded, and
             // still no selection a player can make brings it in. Distinct
@@ -18712,46 +18716,49 @@ mod race_trait_grounding_tests {
     }
 
     // -----------------------------------------------------------------
-    // SD-34 wave 33 lane B: two shapes deliberately `TraitRole::Unclassified`
-    // (`race_resolver`'s own vocabulary was never written to describe them)
-    // whose OWN evidence string must not read the blanket "never applies" --
-    // `race_resolver::adopted_race_choose_selectors`/`trait_pool::
-    // resolve_adopted_race_options` and `race_resolver::adoptive_parentage_
-    // options`, both called by `race_trait_picker.rs`'s real
-    // `list_alternate_racial_traits` Tauri command, resolve real payload for
-    // 28 of the 53 `race_trait_record_loaded_but_never_applies` records --
-    // confirmed independently by `reach_gate.rs`'s own dated `OPEN_FINDINGS`
-    // entry (`"crb"`/`"race_traits"`, 2026-08-27).
+    // SD-34 wave 33 lane B / wave 34 lane B: two shapes deliberately
+    // `TraitRole::Unclassified` (`race_resolver`'s own vocabulary was never
+    // written to describe them) whose OWN evidence string must not read the
+    // blanket "never applies" -- `race_resolver::adopted_race_choose_
+    // selectors`/`trait_pool::resolve_adopted_race_options` and
+    // `race_resolver::adoptive_parentage_options`, both called by
+    // `race_trait_picker.rs`'s real `list_alternate_racial_traits` Tauri
+    // command, resolve real payload for 27 of the 53
+    // `race_trait_record_loaded_but_never_applies` records -- confirmed
+    // independently by `reach_gate.rs`'s own dated `OPEN_FINDINGS` entry
+    // (`"crb"`/`"race_traits"`, 2026-08-27).
     //
-    // **This does not reach `done`.** `reach_gate.rs`'s own module doc names
-    // its bar precisely: "runs the real IPC builder ... and checks the
-    // records are in the response" -- real, but strictly weaker than the
-    // `text-complete`/`grounded` rung's bar, which (per `race_trait_
-    // rendered_description`'s own doc comment, and `AGENTS.md`'s "a
-    // magnitude is not wired until it moves on the twin the player reads")
-    // requires the SHIPPED SCREEN to read the field, not merely the DTO to
-    // carry it. Verified this cycle: `AlternateRacialTraitsResponse.
-    // adoptive_parentage_options`/`.adopted_race_options` are declared
-    // nowhere in the desktop TypeScript boundary (`apps/desktop/src/
-    // boundary/loadAlternateRacialTraits.ts`'s own `AlternateRacialTraitsResponse`
-    // interface carries only `races`/`diagnostics`/`findings`;
-    // `grep -rln adoptiveParentageOptions\|adoptedRaceOptions apps/desktop/src`
-    // -> no matches anywhere under the desktop app) -- the Rust DTO field's
-    // own doc comment says the same thing ("Additive field -- a consumer
-    // that does not read it is unaffected"). So both stay `engine-does-not-
-    // hold` (bucket D, unchanged), with a NEW, more precise evidence string
-    // than the blanket "never applies" they used to carry -- naming exactly
-    // what remains (a desktop UI wiring gap) rather than collapsing 28 real,
-    // engine-resolved records into the same bucket as the 25 that have no
-    // real consumer of any kind.
+    // Wave 33 lane B (2026-09-02) found the DTOs unwired at the desktop
+    // TypeScript boundary and left both `engine-does-not-hold`, per
+    // `AGENTS.md`'s "a magnitude is not wired until it moves on the twin
+    // the player reads": real, but strictly weaker than the
+    // `text-complete`/`grounded` rung's bar, which requires the SHIPPED
+    // SCREEN to read the field, not merely the DTO to carry it.
     //
-    // The other 25 `Unclassified` bucket-D records (20 Skinwalker `Change
+    // Wave 34 lane B closed that gap. `apps/desktop/src/boundary/
+    // loadAlternateRacialTraits.ts`'s `AlternateRacialTraitsResponse` now
+    // declares `adoptiveParentageOptions`/`adoptedRaceOptions`,
+    // `apps/desktop/src/raceCatalog/AlternateTraitPicker.tsx` renders a
+    // real picker section for each (name, book, rendered description,
+    // grants -- `describeAdoptiveParentageGrants`/`describeAdoptedRaceGrants`
+    // in `alternateTraitPickerModel.ts`), and the render path was confirmed,
+    // not assumed: `grep -rln 'adoptedRaceOptions\|adoptiveParentageOptions'
+    // apps/desktop/src` now finds the boundary types, the model helpers and
+    // the component's own reads (previously zero matches). Both option
+    // kinds are `text_only`/zero-magnitude, so `text-complete` (not
+    // `grounded`) is the correct DONE status -- Decision 7 condition 3's
+    // rung for exactly that shape. These 27 now move DONE; the `Rougarou`
+    // selector (the sole genuinely empty pool among the 21 real oracle
+    // rows) still resolves no grants and correctly falls through to the
+    // unchanged fallback below.
+    //
+    // The other 26 `Unclassified` bucket-D records (20 Skinwalker `Change
     // Shape (<Option>)` components, `Oversized Goblin`, 2 Human Ethnicity
     // placeholders, `Human ~ Tribalistic Languages`, `Suli ~ Trusted
-    // Mediator`) are UNCHANGED by this cycle -- `reach_gate` names a real
-    // remedy for each, and every one is "a new mechanism, not a missing
-    // wire" (its own words); the negative tests below pin that this fix
-    // does not sweep them in too.
+    // Mediator`, `Rougarou`'s selector) are UNCHANGED by this cycle --
+    // `reach_gate` names a real remedy for each, and every one is "a new
+    // mechanism, not a missing wire" (its own words); the negative tests
+    // below pin that this fix does not sweep them in too.
     // -----------------------------------------------------------------
 
     /// RED/GREEN proof case 1, against the REAL corpus and the REAL
@@ -18761,13 +18768,12 @@ mod race_trait_grounding_tests {
     /// Dwarf` (`dwarf_abilities_race.lst:37`) is one of the 7 Core Rulebook
     /// selectors `reach_gate.rs`'s own finding names as reaching "4 real
     /// grants apiece for Dwarf/Elf/Gnome/Half-Elf/Half-Orc/Human" through
-    /// the IPC builder. Before this cycle's fix this fell to the blanket
-    /// `race_trait_record_loaded_but_never_applies` even though the exact
-    /// same corpus load already resolves it with real grants; after, it
-    /// carries a more precise (still non-done) evidence string naming the
-    /// real remaining gap (desktop UI wiring, not resolver logic).
+    /// the IPC builder. Wave 33 lane B's fix already stopped this reading
+    /// as the blanket `race_trait_record_loaded_but_never_applies`; wave 34
+    /// lane B's desktop wiring closes the remaining gap, so this now reads
+    /// `text-complete`, not `engine-does-not-hold`.
     #[test]
-    fn an_adopted_race_selector_with_real_pool_grants_gets_the_precise_ui_gap_evidence() {
+    fn an_adopted_race_selector_with_real_pool_grants_reaches_text_complete() {
         let facts = EngineFacts {
             race_trait_probe: probe_race_trait_corpus(&probe_root()),
             ..Default::default()
@@ -18778,12 +18784,12 @@ mod race_trait_grounding_tests {
             verdict.evidence, "race_trait_record_loaded_but_never_applies",
             "the selector resolves real grants through trait_pool and must not read as inert"
         );
-        assert_ne!(verdict.status, "grounded", "the desktop UI never reads this DTO field yet");
-        assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_ne!(verdict.status, "grounded", "text_only/zero-magnitude reaches text-complete, not grounded");
+        assert_ne!(verdict.status, "engine-does-not-hold", "the desktop picker now reads this DTO field");
+        assert_eq!(verdict.status, "text-complete");
         assert_eq!(
             verdict.evidence,
-            "race_trait_adopted_race_selector_resolves_real_grants_but_no_desktop_ui_surface_reads_them"
+            "race_trait_adopted_race_selector_grants_rendered_on_the_desktop_picker_screen"
         );
     }
 
@@ -18793,11 +18799,12 @@ mod race_trait_grounding_tests {
     /// the engine genuinely renders -- `race_trait_picker.rs`'s own
     /// `the_menu_command_itself_carries_all_seven_adoptive_parentage_
     /// options_with_real_grants` test already proves the real Tauri command
-    /// serves it. It still must not read `text-complete`: Decision 7's
-    /// condition 3 is "the prose is available to print... on the character
-    /// sheet", and no character sheet reads this DTO field today.
+    /// serves it. Wave 34 lane B's `AlternateTraitPicker.tsx` now renders
+    /// that description on the desktop screen, so Decision 7 condition 3
+    /// ("the prose is available to print... on the character sheet") is
+    /// met and this reaches `text-complete`.
     #[test]
-    fn an_adoptive_parentage_option_with_a_real_description_gets_the_precise_ui_gap_evidence() {
+    fn an_adoptive_parentage_option_with_a_real_description_reaches_text_complete() {
         let facts = EngineFacts {
             race_trait_probe: probe_race_trait_corpus(&probe_root()),
             ..Default::default()
@@ -18805,17 +18812,15 @@ mod race_trait_grounding_tests {
         let unit = race_trait_unit("arg_abilities_race.lst", 296, "Drow", 0);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
         assert_ne!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
-        assert_ne!(
-            verdict.status, "text-complete",
-            "the real description exists but no shipped screen renders this DTO field yet"
-        );
-        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_ne!(verdict.status, "engine-does-not-hold", "the desktop picker now renders this description");
+        assert_eq!(verdict.status, "text-complete");
         assert_eq!(
             verdict.evidence,
-            "race_trait_adoptive_parentage_option_rendered_by_the_engine_but_no_desktop_ui_surface_reads_it"
+            "race_trait_adoptive_parentage_option_rendered_on_the_desktop_picker_screen"
         );
         // The real text still must be independently provable -- it is what
-        // makes this a UI gap and not a content gap.
+        // makes this real content, genuinely rendered, rather than a
+        // pretended completion.
         let rendered = facts.race_trait_adoptive_parentage_rendered_description(&unit).unwrap();
         assert!(
             rendered.contains("You were adopted and raised by drow"),
