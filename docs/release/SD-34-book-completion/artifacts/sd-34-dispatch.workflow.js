@@ -725,14 +725,23 @@ function mLanePrompt() {
 }
 
 
-// MODEL OVERRIDE, operator instruction 2026-09-01 21:39 EDT: the three wave lanes and the
-// closing sweep run on OPUS for seven hours, reverting 2026-09-02 04:39. This deliberately
-// overrides the standing tiering (Sonnet for execution/orchestration, Opus reserved for
-// adversarial verification), which exists to protect a subscription quota -- so it is a
-// spend decision, not a correctness one, and it is time-boxed for that reason.
+// MODEL OVERRIDE, operator instruction 2026-09-01 21:39 EDT, narrowed 21:47: LANE A ONLY
+// runs on OPUS for seven hours, reverting 2026-09-02 04:39. Lanes B and C and the closing
+// sweep stay on Sonnet.
 //
-// Cron job reverts it automatically. If you are reading this AFTER 04:39 on 2026-09-02 and
-// the lanes still say opus, the revert did not fire: put them back to sonnet.
+// Lane A is the one carrying a judgment call rather than a mechanical fix: it must implement
+// decisions.md 13 by baselining four trap tests that currently assert zero against 3,181
+// registered findings, and prove the baselined tests still fire on a planted regression. Get
+// that wrong in the lenient direction and the gate is quietly disabled. B (settle a
+// contradiction, re-run a suite) and C (fix clippy warnings, run a sweep and paste output)
+// are mechanical, and Sonnet has been doing them correctly for twenty-odd waves.
+//
+// This overrides the standing tiering (Sonnet for execution/orchestration, Opus reserved for
+// adversarial verification), which exists to protect a subscription quota -- so it is a spend
+// decision, not a correctness one, and it is time-boxed and narrowed for that reason.
+//
+// Cron job ca6a1da0 reverts it automatically. If you are reading this AFTER 04:39 on
+// 2026-09-02 and lane A still says opus, the revert did not fire: put it back to sonnet.
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
   phase(title)
@@ -749,9 +758,9 @@ async function runBucketBMechanisms() {
   const [uc, [vled, m]] = await parallel([
     () => agent(ucLanePrompt(), { model: 'opus', phase: title, label: 'A: root-full trap baseline', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     async () => {
-      const c = await agent(cLanePrompt(), { model: 'opus', phase: title, label: 'B: site-dashboard + desktop', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: site-dashboard + desktop', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       log('B -> ' + (c && c.status) + '; starting C (docs gates)')
-      const mm = await agent(mLanePrompt(), { model: 'opus', phase: title, label: 'C: clippy + honest sweep', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: clippy + honest sweep', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       return [c, mm]
     },
   ])
@@ -760,7 +769,7 @@ async function runBucketBMechanisms() {
   const summary = [['A rust-suites', uc], ['B frontend', vled], ['C docs-gates', m]].map(([n, r]) =>
     '- ' + n + ' (' + ((r && r.status) || '?') + '): ' + String((r && (r.discoveries || r.remainder)) || 'no report').slice(0, 400)).join('\n')
   const regen = await agent(regenPrompt(summary), {
-    model: 'opus', phase: title, label: 'full verify.sh sweep', schema: REGEN_SCHEMA,
+    model: 'sonnet', phase: title, label: 'full verify.sh sweep', schema: REGEN_SCHEMA,
   })
   return { uc, vled, m, regen }
 }
