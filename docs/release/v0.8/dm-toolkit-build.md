@@ -28,7 +28,14 @@ decided here as defaults. **Every one is a v0.9 adjustment point — that is the
   the right long-term answer for hundreds of linked records — `scout` is right that it is neither
   queryable nor safe — but it is real persistence, needs no new Tauri surface, and keeps v1 inside
   one lane. File-backed storage is the first v0.9 decision.
-- **Q-DM2 (record model) → the six NoDA kinds**: World, Timeline, Place, Person, Scene, Rule.
+- **Q-DM2 (record model) → SEVEN kinds**: World, Timeline, Place, Person, **Clue**, Scene, Rule.
+  Operator clarification 2026-09-01 named clues as a top-level thing a DM defines, alongside NPCs
+  and places: *"define npc's with state, define places, define clues, and have them all
+  interlinked."* NoDA holds clue fragments inside places and trigger conditions inside scenes, but
+  for an **authoring** tool that is backwards — a DM wants to define a clue once and link it to the
+  place it is found, the person who reveals it, and the scene it fires in. Burying it as a per-record
+  text field would make the most interesting relationships un-authorable. Clue carries a
+  trigger/condition field plus links out to Places, People and Scenes.
   A record is: id, kind, title, one-line summary, Markdown body, typed links to other records, and
   per-kind extra fields kept deliberately thin in v1.
 - **Q-DM3 (export) → standalone single-file HTML, read-only, no embedded images in v1.** This is
@@ -36,6 +43,12 @@ decided here as defaults. **Every one is a v0.9 adjustment point — that is the
 - **Q-DM4 (Campaign Manager seam) → build BESIDE it. Touch nothing existing.** The console is a new
   `dmToolkit/` subtree scoped per campaign. The four Markdown tabs stay exactly as they are.
   Absorb-or-replace is a v0.9 decision once the operator has both in front of them.
+- **Encounter generator (party-strength based) → DEFERRED, not cancelled.** The operator still
+  wants it and judges it needs more detail before even a prototype is worth building. Build nothing
+  toward it, and leave no hook, tab or greyed button hinting at it — that would be the exact
+  stub-shape this sprint has refused throughout. This is also what blocker B14 gates: rating
+  encounters against real monsters needs `encounters.rs` to take a Bestiary record rather than a
+  bare CR, plus a Tauri command, and neither exists.
 - **Q-DM6 (initiative tracking) → OUT.** NoDA does not do it; the stub promised it. The stub's
   wording gets corrected rather than honoured.
 
@@ -64,7 +77,7 @@ verbatim to a path the user chooses. Mirror how character export already works
 (`characterExport.ts` → plugin-dialog `save` → boundary → real command). Verify with
 `npm run tauri:check` and `cargo test`. Bar: 3 known reds.
 
-**D-1 `[frontend]` — record store.** `dmToolkit/dmRecordModel.ts`: the six kinds, typed links,
+**D-1 `[frontend]` — record store.** `dmToolkit/dmRecordModel.ts`: the seven kinds, typed links,
 CRUD, localStorage persistence keyed per campaign, mirroring `campaignModel.ts`'s conventions.
 Pure model + tests, no UI. This is the foundation — get the shape right.
 
