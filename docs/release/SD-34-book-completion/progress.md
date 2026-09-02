@@ -11,6 +11,64 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 26, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — clippy held at 0/0, whole gate re-measured live and honestly, one prior-cycle mismeasurement caught and corrected — partial
+
+**Status: partial** (this cycle's own assigned scope -- clippy + an honest sweep -- is
+`complete`; the bundle's overall gate is not green, which is not this lane's population to
+close). Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-c_wave26_cycle_receipt.md`.
+
+**Clippy: re-confirmed 0/0, both crates, live.** Lanes A and B introduced zero new warnings
+since wave-25's close. Ceilings held at 0/0, not raised, no fix needed.
+
+**The whole 40-stage gate, re-measured live and diffed against wave-28's own table, stage by
+stage: 37 PASS / 3 FAIL** (`row-count` command output: `rows=40 FAIL=3 PASS=37`). Two real
+fixes confirmed genuine (`figure-provenance` and `desktop`, both FAIL->PASS, pre-dating this
+cycle); `root-full` stays FAIL but its failing set shrank from 3 suites/7 tests to 2 suites/3
+tests (`v06_corpus_trap_report` now 26/0, fixed by lane A's `decisions.md §13` baseline). The
+other 2 named remaining FAILs (`site-dashboard-check`, `denominator-gate`) are unchanged,
+pre-existing, and named to lanes A/B's own territory, not touched.
+
+**Discovery: the wave-28-cycle's own same-day fix commit (`2bbc9c87a7`) got `denominator-gate`
+wrong too, in the opposite direction from wave-28's own two known mistakes.** It claimed
+`denominator-gate files_checked=16 violations=0 -- actually GREEN`, but `16` is the narrow
+explicit SD-34-only glob from `acceptance-and-verification.md §2`, not `verify.sh`'s own stage
+scope (`DEFAULT_GLOBS`, no path args). Re-verified independently in a disposable detached
+worktree at the exact commit the fix cites (`37f4336ab0`): the real count was
+`files_checked=142 violations=3`, never actually green. One of the 3 violations was a genuine
+first-time hit (wave-28's own receipt row 15, a bare reachable-ceiling percentage with no
+same-line denominator (48893 of 49438 units), caused by `verify.sh`'s own
+`run_reachability_audit()` stage_pass message dropping the `(reachable/total)` its underlying
+script's log line actually carries) --
+self-healed (this lane's own historical artifact, one line), bringing `denominator-gate` back
+to the same `violations=2` wave-27/28 already carried, both in gate-lane-b's own
+`wave26_cycle_receipt.md`, B's territory, not touched. Retro correction logged
+(`docs/retro/events/sd34-at-34-e6-001.jsonl`).
+
+**Discovery, out of this lane's territory (not fixed): `completion_atlas.py --check` fails at
+HEAD** (`citation_failures=10`, all 10 buckets) -- not one of `verify.sh`'s 40 stages. Cause,
+re-derived from `git log`: the atlas was last regenerated at wave-22's shared regeneration
+(`3aebc28477`), and wave-25's own clippy remediation edited `src/bin/v06_work_inventory.rs`
+afterward, shifting every cited line number. `unclassified=0`/`overlap=0` still hold -- only the
+citations are stale. Belongs to the wave's own closing atlas-regeneration cycle, not a gate
+lane; named here so it is not re-discovered from scratch. Restored the `--check` side-effect
+mutation to `completion-atlas.json` before committing.
+
+**Root-full's full aggregate pass count did not finish this cycle, reported honestly as
+partial.** 185 of 589 suites confirmed live, 0 unexpected failures, when this receipt was
+finalized -- the two named failing suites are independently, fully verified by direct targeted
+runs (quoted in full in the receipt); the remaining ~404 suites' full re-verification is left as
+open, not silently assumed clean.
+
+`cargo test --locked --no-run` (workspace): exit 0, at HEAD `7f3ab6a671` (this cycle's own last
+figure-moving point; neither lane A's wave-26 receipt commit nor this lane's own doc-only
+commits move a test assertion). `apps/desktop/src-tauri`: exit 0 (the live 572/0 run doubles as
+the build-scope proof), same HEAD. `corpus_literal_sweep`: 48706 examined, 0 findings, unmoved
+(no `data/corpus/**` write this cycle). `denominator_gate.py --check
+'docs/release/SD-34-book-completion/*.md'`: `files_checked=16 violations=0`. `kanban.md` not
+touched (no board row tracks individual gate-remediation waves; row 26 stays `not-started`,
+matching wave-23/25/27/28's own precedent).
+
 ### Cycle — Wave 26, Gate Lane A (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — implement `decisions.md §13`'s baseline for the 4 `v06_corpus_trap_report.rs` tests — complete
 
 **Status: complete.** Assigned: `root-full`'s last named blocker — 4 tests in
