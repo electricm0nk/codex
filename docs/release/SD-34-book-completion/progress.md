@@ -11,6 +11,68 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 33, Lane B — the 53 `race_trait_record_loaded_but_never_applies` units, 27 get precise engine-does-not-hold evidence — partial, instrument-correction only, no bucket movement
+
+**Status: partial (0/53 reach `DONE`), all 53 named by mechanism, no escalation.** Recovered
+from a server crash (2026-09-02 kernel soft-lockup, unrelated to this cycle's own work — the
+crash hit mid-flight before this lane could commit) via its preserved worktree diff, rebased
+onto `tranche/14` (which had moved to include wave 33 lane A, `e8fc4f8ff9`, in the meantime),
+then landed. Assigned population: bucket D's 53-unit `race_trait_record_loaded_but_never_
+applies` shape. Receipt:
+`artifacts/bucket-d-mining/wave33_laneB_race_trait_never_applies_cycle_receipt.md`.
+
+**The dispatch's own "Shape 8" citation is wrong and is corrected in place.** The brief and the
+wave-32 lane C receipt it cites both claim `AT-34-E3-001`'s `race_trait_absent` receipt already
+diagnosed this population as needing a "cross-book ownership shape (Shape 8)." Read in full this
+cycle — it never mentions Shape 8 at all. That name belongs to a sibling receipt about a
+*different* content kind (`companion_absent`'s familiar-pool cross-book ownership gap) —
+misattributed by name-shape coincidence, caught before any code was written against the false
+premise. Retro-logged (`docs/retro/events/wave33-laneb.jsonl`).
+
+**The real defect: an instrument gap, not a resolver gap.** 27 of the 53 (20 "Adopted Race"
+selectors across CRB/`bestiary_2`/`bestiary_3`/`bestiary_5`, plus 7 `advanced_race_guide`
+"Adoptive Parentage" options) apply through a real, already-shipped engine consumer
+(`race_resolver::adopted_race_choose_selectors`/`trait_pool::resolve_adopted_race_options` and
+`race_resolver::adoptive_parentage_options` — the exact two functions
+`race_trait_picker.rs`'s own `list_alternate_racial_traits` Tauri command calls) that the probe's
+`reachable` set, built from `role != TraitRole::Unclassified` alone, could never see. Fixed:
+`probe_race_trait_corpus` now calls both functions directly and `classify()`'s `Kind::RaceTrait`
+arm checks the result before falling to the blanket "never applies," giving these 27 a precise,
+honest `engine-does-not-hold` evidence string instead. Checked and refused promotion to `done`:
+`grep -rn "adoptiveParentageOptions\|adoptedRaceOptions" apps/desktop/src` finds 0 matches — the
+engine resolves real content, but no desktop UI surface reads it yet, so these stay bucket D
+under `AGENTS.md`'s "a magnitude is not wired until it moves on the twin the player reads."
+
+**Post-fold self-correction, caught before landing.** This cycle's own pre-fold draft claimed
+all 21 "Adopted Race" selector records resolve real grants. Re-verified fresh post-rebase, only
+20 of 21 do — bestiary 6's `Rougarou` selector chooses from a `TYPE=Rougarou Race Trait` pool
+that has exactly one member corpus-wide: the upstream `No Race Trait Available` placeholder
+itself. The pool is genuinely empty by design; the record correctly stays under the blanket
+evidence string. Every figure in the draft (28→27 throughout) is corrected in place; retro-logged
+as a `correction` event, caught before landing, not shipped.
+
+**Rebase conflicts (four shared instrument files vs. wave 33 lane A) resolved by re-deriving,
+never hand-merging.** `scripts/completion_atlas.py`'s five disputed `BUCKET_DEFINITIONS`
+citation lines were re-derived fresh with `grep -n` against the actual post-fold merged
+`src/bin/v06_work_inventory.rs` (both lanes' insertions present) — neither lane's own
+hand-computed line-shift arithmetic was trusted. `docs/work-inventory.json` and
+`completion-atlas.json` were fully regenerated through the guarded path after the rebase, never
+hand-merged.
+
+Measured via `python3 scripts/completion_atlas.py --check` at this cycle's own final commit:
+`population=49438 buckets=10 unclassified=0 overlap=0`, `DONE=24985` and `D=2933` — both
+unchanged from wave 33 lane A's own post-cycle figures, because this cycle moves no unit between
+buckets, only evidence-string precision within D. `done_evidence_violations=0
+citation_failures=0`. Scoped tests (`cargo test --locked --bin v06_work_inventory
+race_trait_grounding_tests:: -j 6`): **38 passed, 0 failed**; full binary suite **511 passed, 0
+failed**; `cargo clippy --locked --bin v06_work_inventory` clean.
+
+Movement: closure 0, reclassification 0, reachability 0, instrument-correction 27 (evidence
+strings replaced) + 5 (atlas citation lines re-derived) + 3 (retro-logged corrections: Shape 8
+misattribution, the magnitude/description figure, this draft's own 21→20 correction). Full
+`scripts/verify.sh` not run this cycle — scoped verification only, per this fold's own dispatch
+instruction; the full sweep runs once at wave-end after all lanes land.
+
 ### Cycle — Wave 33, Lane A — `class_feature_*_held_by_*_table`'s 27-unit rung, 22 closed as genuinely proseless, 5 deferred — complete (22/27), no escalation
 
 **Status: complete for 22 of 27; 5 named as next-cycle scope.** Recovered from a
