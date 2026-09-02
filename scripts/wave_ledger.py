@@ -74,6 +74,9 @@ KNOWN_WAVES = {
                               "NAMEISPI policy rows (masked, not a leak), B desktop/reach/site, C clippy"),
     "wf_6807ac3c-039": ("25", "last 4 data/corpus mechanisms of root-full; C re-measures the "
                               "whole gate itself -- the 14-red figure is several waves stale"),
+    "wf_4cb8e9fe-c43": ("26", "3 red left; A implements decisions.md 13 by baselining the 4 trap "
+                              "tests (they assert zero against registered debt), B settles the "
+                              "desktop contradiction, C sweeps with command+output per FAIL"),
 }
 
 
