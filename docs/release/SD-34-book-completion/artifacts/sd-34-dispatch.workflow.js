@@ -886,23 +886,6 @@ function gLanePrompt() {
       + BT + 'SEAM-MAP.md' + BT + ' there. Nothing else, anywhere.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
-// MODEL OVERRIDE, operator instruction 2026-09-01 21:39 EDT, narrowed 21:47: LANE A ONLY
-// runs on OPUS for seven hours, reverting 2026-09-02 04:39. Lanes B and C and the closing
-// sweep stay on Sonnet.
-//
-// Lane A is the one carrying a judgment call rather than a mechanical fix: it must implement
-// decisions.md 13 by baselining four trap tests that currently assert zero against 3,181
-// registered findings, and prove the baselined tests still fire on a planted regression. Get
-// that wrong in the lenient direction and the gate is quietly disabled. B (settle a
-// contradiction, re-run a suite) and C (fix clippy warnings, run a sweep and paste output)
-// are mechanical, and Sonnet has been doing them correctly for twenty-odd waves.
-//
-// This overrides the standing tiering (Sonnet for execution/orchestration, Opus reserved for
-// adversarial verification), which exists to protect a subscription quota -- so it is a spend
-// decision, not a correctness one, and it is time-boxed and narrowed for that reason.
-//
-// Cron job ca6a1da0 reverts it automatically. If you are reading this AFTER 04:39 on
-// 2026-09-02 and lane A still says opus, the revert did not fire: put it back to sonnet.
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
   phase(title)
@@ -933,7 +916,7 @@ async function runBucketBMechanisms() {
   //
   // C still runs after B because the sweep must see B's edits. D and E are independent of both.
   const [uc, [vled, m], d, e, f, g] = await parallel([
-    () => agent(ucLanePrompt(), { model: 'opus', phase: title, label: 'A: last 3 root-full tests', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'A: last 3 root-full tests', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     async () => {
       const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: site-dashboard timeout', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       log('B -> ' + (c && c.status) + '; starting C (docs gates)')
