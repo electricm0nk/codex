@@ -11,6 +11,62 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 26 (second round), Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — desktop contradiction settled GREEN by fixing a real 4-record drift, site-dashboard-check re-confirmed genuinely un-closable from this lane — partial
+
+**Status: partial.** Assigned: `site-dashboard-check`, and settle the `desktop` contradiction
+(`apps/desktop/` + `site/` territory). Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_wave26-settle_cycle_receipt.md`.
+
+**`desktop`: settled GREEN — neither prior report was wrong, the corpus moved between them.**
+Ran the suite fresh at this cycle's own pre-fix HEAD (`607b1b6c86`): RED, 571 passed / 1
+failed, `corpus_ingest_diagnostic::tests::the_two_ingested_books_totals_reconcile_with_their_
+license_artifacts` panicking exactly as wave-27/28 already described (`left: 1271, right:
+1267`). Wave-25's own 572/0 report and the wave-28 sweep's FAIL were **both correct at their own
+point in time** — lane A's later `e5fd8dddb1` (2026-08-31) deleted 4 duplicate PU
+`equipment_modifier` records, moving the live on-disk walk from 1271 to 1267 without anyone
+re-deriving this file's own hardcoded `corpus_only_records` pin. Independently re-derived the
+live count (`find data/corpus/pathfinder_unchained -name '*.json' | grep -v LICENSE.json |
+grep -v '/_' | wc -l` = 1267) and `reported` (127, unchanged), fixed the literal (1144 → 1140,
+per `decisions.md §17a`'s "re-derive fresh, never repin without proof"), re-ran twice (once
+pre-commit, once at the committed SHA `3257813a4f`): **GREEN, 572 passed / 0 failed both
+times.** `desktop` is genuinely closed at this cycle's HEAD.
+
+**`site-dashboard-check`: still not closed, and this cycle nailed down exactly why it cannot be
+from this lane, rather than just restating the hazard.** Feed still stale (~8 days,
+`generated_at` `2026-08-24T22:17:30Z` vs `docs/work-inventory.json`'s last real commit
+`2026-08-31T20:15:47-04:00`). Read the full mechanical chain: `verify.sh`'s `site-dashboard-
+check` stage runs `publish-site-dashboard.sh --check` with no outer timeout wrapper of its own;
+`--check` still invokes the real producer (writes only to a `mktemp` scratch dir, never the
+committed file in place, but still runs the forbidden process); the producer's `_run_state_dump`
+bounds `cargo run --bin v06_work_inventory -- --summary` to one **shared** 600s cap
+(`PF1E_CLASS_STATE_TIMEOUT`, `pf1e_dashboard_producer.py:122-124`) used by all three state-dump
+binaries, not a work-inventory-specific one; wave-26's own 757.01s measurement (not re-run this
+cycle — code unchanged, confirmed via `git log`) is 157s over that cap, a fixed shortfall, not
+contention; and `_load_cached_dump`'s own fallback silently serves a stale cache on timeout
+rather than erroring, which is the actual "silently drop stamps" mechanism the brief's hazard
+note names, not a hypothetical. **Neither of the brief's two forbidden fixes (run the
+producer/regenerator; raise the cap) was taken.** `forward-scope-register.md` already carries
+this exact defect forward from SD-33 (observed 3 separate times during SD-33's own closure,
+before this bundle even started) with a named owner outside this lane's territory: "A future
+SD-N, or whichever cycle next touches `scripts/verify.sh`'s stage list." Combined with this
+bundle's own 3 hits (wave-26/27/28) that is 6+ firings — `decisions.md §12` L5 calls for a
+mechanical control at that frequency, and the control (splitting `v06_work_inventory`'s own
+timeout from the shared 600s cap, plus an outer wrapper on the `site-dashboard-check` stage
+itself, the way `corpus-trap-audit` already got one) is a `scripts/verify.sh` edit — outside
+`apps/desktop/`/`site/`, and exactly the register's own named next-owner. **Who can close it:**
+the operator, running the real producer interactively and diffing unit totals before/after to
+confirm no silent stamp-loss, or a future cycle explicitly scoped to edit `verify.sh` and the
+producer's timeout architecture.
+
+`cargo test --locked --no-run` (whole workspace, `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e6-001-lane-b-root`):
+exit 0, at this cycle's own last figure-moving commit `3257813a4f`. `apps/desktop/src-tauri`:
+`cargo test --locked --no-run` exit 0 and full `cargo test --locked` 572/0, both run explicitly,
+same HEAD. `corpus_literal_sweep`: 48706 examined, 0 findings, unmoved (matches
+`BASELINE_CORPUS_LITERAL_RECORDS=48706` exactly — no `data/corpus/**` write this cycle).
+`denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'`: `files_checked=16
+violations=0`. `kanban.md` not touched (no board row tracks individual gate-remediation waves;
+row 26 stays `not-started`, matching wave-24/25/26/27/28's own precedent).
+
 ### Cycle — Wave 28, Gate-Remediation Closing Sweep (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — full sweep only, no regeneration; 35 PASS / 5 FAIL, independently re-confirms wave-27's own figure — complete (this cycle's own obligation)
 
 **Status: complete** (this cycle's own obligation: a full, honest, independently-re-derived
