@@ -93,3 +93,28 @@ Verification for all: `npm run typecheck` and `npm test` from `apps/desktop/`.
 
 Items 17, 24, 26, 29, 30, 42, 46–50, 53, 59 and everything gated on B-6's follow-on pickers stay
 on the punch list until the backend queue lands. §3.5 DM Toolkit remains unreached.
+
+---
+
+## Known-red baseline (established, not caused by this sprint)
+
+`cargo test --manifest-path apps/desktop/src-tauri/Cargo.toml` is **575 passed / 1 failed** and
+that one red is the standing bar for every backend ticket. Anything beyond it is a real regression.
+
+The failure is
+`corpus_ingest_diagnostic::tests::the_two_ingested_books_totals_reconcile_with_their_license_artifacts`
+(`src/corpus_ingest_diagnostic.rs:1508`): the diagnostic pins 127 rules_tables records + 1144
+corpus-only records = 1271 for `pathfinder_unchained`, while a live walk of the corpus finds 1267.
+
+Independently established three ways: reported by `backend` during B-2, confirmed by `qa` reading
+`git status`/`git diff --stat` (the file is untouched in the working tree), and reproduced by the
+orchestrator on a clean `git worktree` checked out at commit 656326195e with zero sprint code
+present — identical numbers, 1271 vs 1267.
+
+It is **not fixable inside this sprint's write scope**: the corpus data lives outside
+`apps/desktop/**`, and the assertion's own message says "re-derive corpus_only_records fresh
+(decisions.md §17a), never repin without proof." Repinning the count to silence it is exactly the
+unverified change AGENTS.md forbids. No commit message on this branch may attribute it to a ticket.
+
+Caution for anyone re-running it: `cargo test ... | tail` reports shell exit 0 even when the test
+fails, because the pipeline takes `tail`'s status. Read the `test result:` line, not `$?`.
