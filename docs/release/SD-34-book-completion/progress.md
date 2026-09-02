@@ -11,6 +11,41 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 31, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — clippy re-confirmed 0/0 (isolated dir), full sweep 38/40 PASS — the gate's best result on record, root-full now clean — partial
+
+**Status: partial** (this lane's own two obligations — hold clippy; run and report an honest
+sweep — are both complete; the bundle's own gate is not green, which is not this lane's
+population to close). Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-c_wave31_cycle_receipt.md`. Commit `a0ac6caff6`.
+
+**A real `CARGO_TARGET_DIR` collision, caught before any figure was reported.** This lane's own
+dispatch brief specified the same literal `/tmp/cargo-sd34-at-34-e6-001` a concurrent worktree
+(`wf_71f08acc-764-1`) was also using at the same time — the `shared-target-dir` recurrence key,
+now at **6 firings**, past the 3+-mechanical-control threshold `decisions.md §12` L5 sets. Both
+clippy runs already taken against the shared dir were discarded rather than reported (a clean
+result there is not evidence of isolation), and everything was re-run against a fresh, isolated
+`/tmp/cargo-sd34-at-34-e6-001-laneC-3`. **Clippy: 0/0 both crates, confirmed three independent
+ways.**
+
+**The full sweep, run live end-to-end (~1h57m, one uninterrupted run): 38 PASS / 2 FAIL** —
+`site-dashboard-check` (genuinely stale published dashboard, not a timeout — lane B's own
+`a893bfcb39` fix is working exactly as intended, surfacing the real defect loudly instead of
+masking it) and `denominator-gate` (violations=3 of files_checked=149, one new hit at
+`progress.md:33` introduced by lane B's own wave-27-labeled prepend, in addition to the two
+already-named hits in `AT-34-E6-001_gate-lane-b_wave26_cycle_receipt.md`). **`root-full` is now
+PASS** — lane A's wave-30 fix (`538aceea3d`) confirmed live, closing the last 2 failing suites.
+Diffed stage-by-stage against both wave 28 (35/5) and wave 29 (37/3, the more informative
+comparison since the repo moved twice since wave 28): **zero stages that were PASS are FAIL now,
+in either direction.** This is the smallest failing set on record for this bundle's `verify.sh`
+gate — 2 of 40, down from the review's original 14, wave-28's 5, and wave-29's 3. Both remaining
+FAILs are single-line-shaped fixes inside lanes A/B's own already-landed prose/artifacts, named
+precisely in the receipt, not edited here per this lane's own territorial fence. The gate is
+**not** claimed green: closing those 2 does not by itself satisfy `AT-34-E6-001`'s real bar (the
+final-acceptance scan), which additionally needs `kanban.md` row 28's bucket-V gap (6,846
+unchanged) and every other Epic 1–5 criterion `complete`. `kanban.md` row 26
+(`final-acceptance-scan`) intentionally not touched, matching every prior gate-lane wave's own
+precedent. See the cycle log below; `## Open blockers` is empty.
+
 ### Cycle — Wave 30, Gate Lane A (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — the last three `root-full` tests closed with **no ceiling repinned**; `root-full` is now GREEN — complete
 
 **Status: complete.** Row count, derived mechanically from the `root-full` log rather than

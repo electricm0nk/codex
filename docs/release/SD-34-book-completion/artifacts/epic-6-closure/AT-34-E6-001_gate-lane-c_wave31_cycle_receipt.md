@@ -19,7 +19,8 @@ gate-remediation tracking label, distinct from the real, committed
 row 26 (`final-acceptance-scan`) is **not** touched by this cycle, matching every prior
 gate-lane-c wave's own precedent.
 
-- **Commit SHA:** see bottom (pushed after this receipt)
+- **Commit SHA:** `a0ac6caff6` (this receipt's own commit; the `progress.md`/`kanban.md` update
+  in this same cycle lands as a second, immediately-following commit, per §5's retry protocol)
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/epic-6-closure/AT-34-E6-001_gate-lane-c_wave31_cycle_receipt.md` (new, this file)
   - `docs/release/SD-34-book-completion/progress.md` (prepended cycle entry, same commit)
@@ -29,8 +30,9 @@ gate-lane-c wave's own precedent.
     `scripts/verify-baselines.env` — clippy needed no fix (ceilings already at 0/0) and the 2
     real FAILs this cycle found both trace to lanes A/B's own already-landed prose, named and
     left for them per this brief's own "report their stages, do not edit their files"
-- **Identifier audit result:** see Dual-audit gate section below
-- **Wired-integration audit result:** see Dual-audit gate section below
+- **Identifier audit result:** 1 hit, both real pre-existing test-suite filenames cited in prose
+  (not a violation) — see Dual-audit gate section below
+- **Wired-integration audit result:** `OK_NO_TOKENS` — see Dual-audit gate section below
 - **Base HEAD this cycle rebased onto:** `d007d2e9e4` (`origin/tranche/14` tip at rebase time --
   wave-27-labeled gate-lane-b's `site-dashboard-check` timeout fix, itself stacked on wave-30
   gate-lane-a's `root-full` fix, `538aceea3d`)
@@ -40,6 +42,34 @@ gate-lane-c wave's own precedent.
   FAIL, paste the command and its last output line. ... Diff your table against wave 28's stage
   by stage and name any PASS that is now FAIL as a regression this wave caused. ... Territory:
   clippy anywhere, plus the sweep. Report A's and B's stages, do not edit their files."
+
+## Dual-audit gate (`workflow-instruction.md §6` step 2)
+
+Scoped to this cycle's own diff (`ee2221c22b..HEAD`, this cycle's package-docs-only changes —
+Epic 6's file-touch set is "package docs, receipts.md, release-notes.md, docs/architecture/",
+and this cycle touched only `docs/release/SD-34-book-completion/**`):
+
+```
+$ git diff --unified=0 ee2221c22b..HEAD -- 'docs/release/SD-34-book-completion/**' \
+    | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})'
+```
+**1 hit**, line 142 of this receipt's own stage-30 row: `sd24_wired_integration_audit`,
+`sd27_pathfinder_unchained_cache_shape` — the two real, already-existing test-suite filenames
+lane A's wave-30 fix closed. Same "cite the real filename in prose" shape wave-29's own audit
+and wave-30-lane-a's own doc-comment citation both already established is not a defect (real
+identifiers, not fabricated bundle tags). No shipping-code hit; this receipt is documentation.
+
+```
+$ git diff --unified=0 ee2221c22b..HEAD -- 'docs/release/SD-34-book-completion/**' \
+    | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+OK_NO_TOKENS
+```
+
+**Over the full branch range (`ea2b3396f2...HEAD`, `src/` + `tests/` + `docs/governance/`):**
+56,509 diff lines — identical to wave-30-lane-a's own citation of the same range, confirming
+this lane added zero lines to it (no `src/`/`tests/`/`docs/governance/` touched this cycle).
+Not re-audited line-by-line here (not this cycle's population); reported for honesty per
+`workflow-instruction.md §6` step 4, not claimed clean by this lane.
 
 ## A genuine collision caught before any figure was reported
 
@@ -118,7 +148,7 @@ only for the `#`/`Stage` columns which are `verify.sh`'s own stage names.
 | 12 | site-public-status-pi-gate | PASS | `PASS site-public-status-pi-gate (31 file(s) scanned against 1612 declared-PI name(s), zero leaked)` |
 | 13 | site-asset-stamp-check | PASS | `PASS site-asset-stamp-check (site/*.html cache-busting stamps match site/styles.css)` |
 | 14 | reachability-audit-selftest | PASS | `PASS reachability-audit-selftest (11 cases passed)` |
-| 15 | reachability-audit | PASS | `PASS reachability-audit (reachable ceiling 98.90%)` |
+| 15 | reachability-audit | PASS | `PASS reachability-audit (reachable ceiling 98.90%)` — of 49,438 units |
 | 16 | groundtruth-guard-selftest | PASS | `PASS groundtruth-guard-selftest (17 cases passed)` |
 | 17 | supersession-gate-selftest | PASS | `PASS supersession-gate-selftest (16 cases passed)` |
 | 18 | shape-coverage-standing-gate-selftest | PASS | `PASS shape-coverage-standing-gate-selftest (20 cases passed)` |
@@ -207,7 +237,7 @@ definition but reported here rather than silently omitted, per "state the truth"
 | `corpus-sweep` | 48706 records examined, 0 findings | same run, stage 33; `cargo run --locked --bin corpus_literal_sweep` | matches `BASELINE_CORPUS_LITERAL_RECORDS=48706` exactly |
 | `denominator-gate` | violations=3 of files_checked=149 | same run, stage 20; `python3 scripts/denominator_gate.py --check`, independently re-run standalone with identical result | of 149 SD-34 `.md`/receipt files in the widened default scope |
 | `site-dashboard-check` | FAIL, exit 1, `STALE` (not a timeout) | same run, stage 8; `/tmp/codex-verify-e6001-c2/site-dashboard-check.log` | — |
-| `reachability-audit` | 98.90% | same run, stage 15 | of 49,438 units |
+| `reachability-audit` | 98.90% | `python3 scripts/reachability_audit.py` (same run, stage 15) | of 49,438 units |
 | `shared-target-dir` recurrence key | 6 firings (was 5 before this cycle's own entry) | `python3 scripts/retro.py summary --json`, `.incidents.by_recurrence_key["shared-target-dir"]` | across all of `tranche/14`'s history to date |
 | Sweep wall time | ~1h57m (01:26:36 → 03:23:27 EDT) | `stat -c '%y'` on the run log and its launch timestamp | — |
 
