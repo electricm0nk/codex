@@ -124,6 +124,15 @@ doc = {
 with open(args.out, "w") as f:
     json.dump(doc, f)
 print(f"fake-producer: rendered {args.out}")
+# AT-34-E6-001 wave-27: echoes PF1E_DASHBOARD_STRICT_TIMEOUT verbatim so the
+# shell test below can prove --check sets it and a real (non---check) run
+# does not -- the switch between "a timeout raises loudly" and "a timeout
+# falls back to the stale cache", see pf1e_dashboard_producer.py's own
+# `StateDumpTimeout` docstring for why the two paths must differ. Printed to
+# stderr, not stdout: publish-site-dashboard.sh redirects the producer's
+# stdout to /dev/null on both paths, so stdout can never reach this test's
+# captured $OUT.
+print(f"STRICT_TIMEOUT_ENV={os.environ.get('PF1E_DASHBOARD_STRICT_TIMEOUT', '<unset>')}", file=sys.stderr)
 sys.exit(0)
 PY
 
@@ -182,6 +191,25 @@ AFTER=$(md5sum "$COMMITTED" | awk '{print $1}')
 if [ "$BEFORE" = "$AFTER" ]; then
     pass "--check does not mutate the committed copy on disk"
 else fail "--check does not mutate the committed copy on disk" "before=$BEFORE after=$AFTER"; fi
+
+# --- 7. --check sets PF1E_DASHBOARD_STRICT_TIMEOUT=1 for the producer. -----
+#         AT-34-E6-001 wave-27: --check is the ONLY caller allowed to turn a
+#         state-dump timeout into a loud failure; this proves the plumbing
+#         that opts it in, independent of the timeout-handling logic itself
+#         (covered against the real producer's helpers by
+#         test_pf1e_dashboard_producer.py's StateDumpTimeoutIsLoudUnderStrictModeTest).
+FAKE_FIGURE=2 run --check
+if echo "$OUT" | grep -q "STRICT_TIMEOUT_ENV=1"; then
+    pass "--check sets PF1E_DASHBOARD_STRICT_TIMEOUT=1 for the producer"
+else fail "--check sets PF1E_DASHBOARD_STRICT_TIMEOUT=1 for the producer" "$OUT (exit $ST)"; fi
+
+# --- 8. A real (non---check) run leaves it unset -- the live-regen path ----
+#         keeps its stale-cache-preferred fallback, so the public dashboard
+#         never goes blank over one slow build.
+FAKE_FIGURE=2 run
+if echo "$OUT" | grep -q "STRICT_TIMEOUT_ENV=<unset>"; then
+    pass "a real (non---check) run leaves PF1E_DASHBOARD_STRICT_TIMEOUT unset"
+else fail "a real (non---check) run leaves PF1E_DASHBOARD_STRICT_TIMEOUT unset" "$OUT (exit $ST)"; fi
 
 echo "---------------------------------------------------------------"
 echo "passed: $PASSED  failed: $FAILED"

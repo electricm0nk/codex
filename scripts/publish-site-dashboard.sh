@@ -73,7 +73,15 @@ if [ "${1:-}" = "--check" ]; then
         cp -r -p "$SHARD_DIR" "$TMPDIR_CHECK/units"
     fi
 
-    python3 "$PRODUCER" --out "$TMP" >/dev/null
+    # PF1E_DASHBOARD_STRICT_TIMEOUT=1: --check is the ONLY caller that opts
+    # into loud-failure-on-timeout. A live regeneration (the `else` branch
+    # below) leaves this unset so its own stale-cache fallback keeps the
+    # public site from going blank over one slow build -- see
+    # `StateDumpTimeout`'s own docstring in pf1e_dashboard_producer.py for
+    # why a --check that silently compared two stale-cache-derived outputs
+    # and reported "current" was the actual defect (SD-34 AT-34-E6-001
+    # wave-27), not the 600s cap by itself.
+    PF1E_DASHBOARD_STRICT_TIMEOUT=1 python3 "$PRODUCER" --out "$TMP" >/dev/null
 
     # Compare everything except the stamps, which move on every run by
     # design, AND everything that is not actually derived from committed
