@@ -11,6 +11,72 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 32, Lane C (mine bucket D) — instrument fix landed, zero bucket-D content closures, full mechanism enumeration — partial
+
+**Status: partial.** Re-derived bucket D fresh at the branch tip:
+`population=49438`, `D: 2955` (`python3 scripts/completion_atlas.py --check`),
+matching the brief's dispatch-time figures exactly — not smaller, not
+reshaped at the coarse level. Independently hit and fixed the same
+`AT-34-E1-002` condition-6 citation-gate defect Lane B was separately
+dispatched at (all 10 `BUCKET_DEFINITIONS` line pins had drifted from a prior
+wave's uncredited `v06_work_inventory.rs` edits); pushed as `65c891e277`
+before Lane B's own independent fix landed and confirmed byte-identical
+(`0eaba444bc`). Reported as instrument-correction, not a bucket-D closure —
+no bucket population moved.
+
+Decomposed D's full 2,955 population into exactly six named mechanisms
+(summing exactly, `artifacts/bucket-d-mining/wave32_laneC_reconnaissance_
+cycle_receipt.md`'s table): 1,727 Epic-2 simple-kind-table zero-magnitude
+fallthrough, 931 `class_feature_of_unmodelled_corpus_class` (75 classes, NOT
+zero-magnitude — needs new chassis, Epic 4/5), 179
+`class_feature_no_dedicated_magnitude_id_matched_the_record_slug` (also not
+zero-magnitude), 53 `race_trait_record_loaded_but_never_applies` (a prior
+cycle's own named "Shape 8" cross-book-ownership blocker), 38
+`class_modelled_but_no_observed_delta_on_the_rendered_snapshot` (class-level,
+Epic 5), 27 `AT-34-E3-001` cycles 5–9's own "held by table" rungs
+(`description: null` by the code's own comment, confirmed against the
+corpus).
+
+Investigated the brief's "text-only, zero-magnitude, description-shown =
+COMPLETE" ruling against the one genuinely zero-magnitude shape (1,727
+units): the ruling is already the exact, live gate on
+`simple_kind_verdict` (`v06_work_inventory.rs:10130`,
+`is_display_wiring_class_for_promotion` + `has_real_description` +
+`!universal_sheet_modifier`). Cross-referencing all 1,727 against real
+corpus `DESC:` tokens: 427 of 1,727 (25%) carry one; of those, only 3 pass
+`wiring_class == "display"`, and all 3 are correctly excluded by the same
+`universal_sheet_modifier` gate the shipped `gnome_size_is_demoted_from_
+done_by_the_universal_modifier_gate` test already proves. **Zero of the
+1,727-unit shape is a promotable-but-blocked record** — this ruling has
+already been mined to its floor by prior Epic 2/3 waves.
+
+**Self-corrected hypothesis, not silently shipped.** Suspected
+`docs/work-inventory.json` was stale for 401 `deity`-kind units with real
+descriptions stuck at `wiring_class: computed`/`pre_guard` (their rows carry
+zero `MAGNITUDE_TOKENS` fields, and `pre_guard` detection reads
+`if !mags.is_empty()` in the live `wiring_class.rs`). Ran the full guarded
+regeneration to test it (`corpus_literal_sweep` CLEAN, `48706 of 51476`
+examined 0 findings; `derived_evaluator_fixture_check` `1839 unit(s) cleared
+... 0 failed`; then `cargo run --locked --bin v06_work_inventory` with both
+reports set, no `--allow-stamp-loss`): `docs/work-inventory.json`'s `units`
+array came back **byte-identical** (`git diff --stat` — only `generated_at`
+moved). The stale-cache hypothesis was wrong; the committed inventory is
+fresh. The exact mechanism by which `pre_guard` fires on these rows is left
+unresolved (flagged, not asserted) rather than guessed at.
+
+**Bucket-diff, four movement categories:** closure 0, reclassification 0,
+reachability 0, instrument-correction 10 (citation pins) + 1 negative
+finding (falsified stale-cache hypothesis, saving the next lane the same
+regen). Verified via `docs/work-inventory.json` byte-identical before/after
+and `completion_atlas.py --check`'s bucket counts identical before/after
+(`DONE: 24963`, `D: 2955`, both times).
+
+Receipt: `artifacts/bucket-d-mining/wave32_laneC_reconnaissance_cycle_receipt.md`.
+Commit `65c891e277` (citation fix; this progress/kanban update lands in a
+follow-on commit on the same branch). `## Open blockers`: none filed — every
+remaining unit is named by mechanism above with a next-cycle plan in the
+receipt, per `decisions.md`'s "decompose, do not defer" rule.
+
 ### Cycle — Wave 32, Lane B (`AT-34-E1-002` condition-6 citation-gate repair) — all ten citations re-derived and verified, `citation_failures` 10→0 — complete
 
 **Status: complete.** `python3 scripts/completion_atlas.py --check` was failing condition 6 (the
