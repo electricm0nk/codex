@@ -11,6 +11,44 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 29, gate-remediation closing sweep (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — full sweep, no regeneration, 37/40 PASS — complete
+
+**Status: complete** (this cycle's own obligation: a full, honest, independently-re-derived
+sweep after gate-lane-a/b/c's wave-24/26/27 fixes; the bundle's overall gate is not green, which
+is not this cycle's population to close). Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-sweep_wave29_cycle_receipt.md`.
+
+`git fetch origin tranche/14 && git rebase origin/tranche/14` -> clean, HEAD `d17c784ccd`. Full
+`bash scripts/verify.sh` run live and foregrounded (first attempt killed mid-`root-full`-build by
+an unrelated background-task interrupt with git state unaffected; re-run fully detached via
+`nohup ... & disown` completed clean, 22:50:31 -> 00:43:21 EDT, ~1h53m).
+
+**37 PASS / 3 FAIL** (`site-dashboard-check`, `denominator-gate`, `root-full`) — the identical 3
+stages wave-26-lane-c's own re-measurement already found, byte-for-byte the same failing set,
+confirmed here by a second, fully independent full sweep. All 3 are members of the original 14
+`fable-review.md` §7 recorded; zero stages outside that 14; zero green→red regressions against
+either wave-28's 5-FAIL sweep or wave-26-lane-c's 3-FAIL sweep — `figure-provenance` and
+`desktop`, both FAIL at wave-28, both confirmed genuinely PASS here (fixes pre-date this cycle).
+`root-full`'s own failing set: 2 suites / 3 tests (`sd24_wired_integration_audit`,
+`sd27_pathfinder_unchained_cache_shape`), down from wave-28's 3 suites / 7 tests —
+`v06_corpus_trap_report` now fully green via gate-lane-a's wave-26 baseline reconciler.
+
+**`BASELINE_CORPUS_LITERAL_RECORDS`: no update needed.** The brief flagged 26500→48708 as
+needing a deliberate update, but that update (and a second, 48708→48706) already landed on
+`tranche/14` before this cycle started, both already justified in `scripts/verify-baselines.env`.
+This cycle's own live `corpus-sweep` measured `48706 records examined` — an exact match to the
+currently pinned floor, re-derived independently a third time. `scripts/verify-baselines.env` was
+not touched. Two unrelated floors (`BASELINE_ROOT_LIB_TESTS` 2336→3028,
+`BASELINE_DESKTOP_TESTS` 515→572) printed STALE notes and were deliberately left alone — out of
+this cycle's named scope, per wave-26-lane-c's own precedent for `BASELINE_ROOT_TEST_BINARIES`.
+
+Did not run the inventory regenerator or the dashboard producer for real (only the read-only
+`--check`/`--summary` paths inside `verify.sh`'s own stages), per this cycle's own dispatch
+brief. `docs/work-inventory.json` and `site/dashboard/PF1e-dashboard.json` untouched. `kanban.md`
+not touched (no board row tracks individual gate-remediation waves; row 26 stays `not-started`,
+matching wave-23/25/26/27/28's own precedent). Full figures, the complete 40-row stage table, and
+every re-derive command: the receipt above.
+
 ### Cycle — Wave 26, Gate Lane C (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — clippy held at 0/0, whole gate re-measured live and honestly, one prior-cycle mismeasurement caught and corrected — partial
 
 **Status: partial** (this cycle's own assigned scope -- clippy + an honest sweep -- is
