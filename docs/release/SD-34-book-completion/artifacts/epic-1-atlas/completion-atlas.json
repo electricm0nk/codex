@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12776,
+        "line": 12780,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,7 +14,7 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12456,
+        "line": 12460,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
@@ -25,7 +25,7 @@
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12681,
+        "line": 12685,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2919,
+      "count": 2892,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 24999,
+      "count": 25026,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13558,
+        "line": 13562,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "fc709b3c98b762fd1eea7fe671c225d42fabd837",
+  "derived_at": "78c60fe1393c54cd14ed4ee22c6d650711b4c9dc",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -198,8 +198,6 @@
       "deity_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 408,
       "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,
       "language_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 103,
-      "race_trait_adopted_race_selector_resolves_real_grants_but_no_desktop_ui_surface_reads_them": 20,
-      "race_trait_adoptive_parentage_option_rendered_by_the_engine_but_no_desktop_ui_surface_reads_it": 7,
       "race_trait_generic_table_holds_zero_magnitude_record_pending_wiring_class_review": 160,
       "race_trait_record_loaded_but_never_applies": 26,
       "skill_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 36,
