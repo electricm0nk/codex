@@ -420,6 +420,18 @@ bio / money / HP-durability / portrait sidecars; clone, recompute, export (Load 
   0 gp and can buy nothing. (`money.rs` is in the engine crate: `ls src/rules_core/money.rs`.)
 - **B11 — Favored class bonus.** No engine concept (`grep -rl favored_class src/rules_core` →
   none).
+- **B13 — Choice-trait characters cannot be saved at all.** `trait_effects.rs:517`
+  `trait_skill_choice_id` emits a 3-segment id (`trait_choice:trait:trait_criminal`) while
+  `local_store.rs:254` rejects any `choice_set_id` that is not exactly 2 segments. Every
+  `SKILL_CHOICE_TRAIT_BONUSES` / `FAMILY_CHOICE_TRAIT_BONUSES` trait (Criminal, Fiend Blood,
+  Harvester...) fails to save when its skill is chosen — and the create form sends that payload
+  today (`CreateCharacterForm.tsx:613`). Pre-existing, user-facing, not sprint-caused. Found by
+  `backend` during B-4, confirmed by the orchestrator. Full write-up with both candidate one-line
+  fixes: `engine-handoff-trait-choice-save.md`. Operator ruling 2026-09-01: hand to the concurrent
+  engine session rather than edit `src/` from two sessions at once; B-4 ships flat-traits-only.
+  **Corrects this file's own "already wired" line** crediting per-trait skill choice — true for
+  flat traits, false for the choice-trait subset.
+
 - **B12 — Archetypes and prestige classes.** The picker offers 31 base classes; the engine has
   6 files mentioning "archetype" (`grep -rli archetype src/rules_core/*.rs | wc -l`) but no
   selectable archetype surface reaches Tauri. Not a v0.8 UI ticket; recorded so it is not
