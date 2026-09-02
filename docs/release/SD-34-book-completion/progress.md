@@ -11,6 +11,50 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 26, Gate Lane A (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — implement `decisions.md §13`'s baseline for the 4 `v06_corpus_trap_report.rs` tests — complete
+
+**Status: complete.** Assigned: `root-full`'s last named blocker — 4 tests in
+`tests/v06_corpus_trap_report.rs` that asserted `violations.is_empty()` (zero tolerance) against
+3,181 findings `decisions.md §13` already ruled are SD-33's registered, out-of-DoD inherited
+debt, "registered, not absorbed." The tests never implemented that ruling. Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave26_trap-baseline_cycle_receipt.md` (a
+distinguishing suffix — the literal `AT-34-E6-001_cycle_receipt.md` path is the genuine
+`canonical: true` final-acceptance-scan verdict and must not be overwritten, same precedent the
+sibling wave-26 gate-lane-a receipt already set).
+
+**Baselined the way `pi_sweep_rules_tables` reconciles `pi-sweep-baseline.tsv`.** New
+`docs/governance/corpus-trap-baseline.tsv` (4 rows) and new
+`src/pcgen_import/corpus_trap_baseline.rs` (`parse_baseline` + `reconcile_trap_count`, 9 unit
+tests) reconcile a live finding count against a registered row in both directions: live above the
+row is `Added` (a real regression), live below is `Stale` (debt shrank, row not updated), no row
+at all is `Unbaselined`. Only an exact match passes. All four tests now assert the reconciler's
+`Matched` verdict instead of `is_empty()`.
+
+Live counts re-derived at HEAD, **unchanged** from wave-24/26's own figures:
+`shared-name-distinct-records` 249, `key-differs-from-name` 650, `mod-record` 2,117,
+`disabled-line` 165 (sum 3,181, matching `decisions.md §13` exactly). `data/corpus/**` untouched
+— no count was driven toward zero, which remains `AT-34-E1-008`'s scope per §13.
+
+**Mutation-proved, not just asserted, per the brief's own bar.** Unit tests prove the
+reconciler function can fail in both directions; a new integration test, modelled on
+`sd30_declared_product_identity`'s own `the_leak_detectors_actually_fire_on_a_planted_leak_and_
+clear_on_a_redacted_row`, proves the same against a synthetic baseline. Beyond either
+requirement, this cycle also proved it end-to-end: temporarily edited the real baseline file's
+`disabled-line` row down and up by 1 and re-ran the real test against the real corpus — FAILED
+both times with the expected `Added`/`Stale` message, then restored and re-confirmed 26/26 green.
+
+`cargo test --locked --test v06_corpus_trap_report`: **26 passed / 0 failed** (was 21 passed / 4
+failed). `cargo test --locked --no-run` (whole workspace) and `apps/desktop/src-tauri`'s own
+`--no-run`: both exit 0 at this cycle's commit. Identifier audit: 1 hit, a doc-comment citation
+of this repo's own `sd30_...` test filename (the pattern the brief itself names as the model) —
+not a defect, same shape wave-24/26 already established. Wired-integration audit:
+`OK_NO_TOKENS`.
+
+**This cycle does not close `root-full` itself.** Two other targets wave-28's sweep named
+(`sd24_wired_integration_audit`, `sd27_pathfinder_unchained_cache_shape`) are outside this
+criterion's scope (`tests/v06_corpus_trap_report.rs` only) and were not re-verified live this
+cycle — named in the receipt's Next-cycle plan rather than assumed still current.
+
 ### Cycle — Wave 26 (second round), Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — desktop contradiction settled GREEN by fixing a real 4-record drift, site-dashboard-check re-confirmed genuinely un-closable from this lane — partial
 
 **Status: partial.** Assigned: `site-dashboard-check`, and settle the `desktop` contradiction
