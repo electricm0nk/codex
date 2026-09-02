@@ -1658,6 +1658,19 @@ pub fn load_saved_character(
     load_saved_character_at_root(&root)
 }
 
+/// PF1 character level: the SUM of the character's class levels (a
+/// Fighter 3 / Wizard 1 is level 4), never the highest single class --
+/// the identity the engine's own `skill_allocation::character_level`
+/// documents. The one place this crate states it; `preview_level_up` and
+/// `rate_encounter` (E-1) both read it from here.
+pub(crate) fn character_level(input: &CharacterInput) -> u8 {
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .fold(0u8, |sum, class_level| sum.saturating_add(class_level.level))
+}
+
 /// The real body of `load_saved_character`, split out from the
 /// `AppHandle`-taking command so it is directly testable against a
 /// temp-dir character root — the same `*_at_root` convention
@@ -1927,11 +1940,7 @@ pub(crate) fn preview_level_up_at_root(
         .map(|held| held.level)
         .unwrap_or(0);
     let to_level = from_level.saturating_add(1);
-    let character_level = class_levels
-        .iter()
-        .map(|held| held.level)
-        .fold(0u8, |sum, level| sum.saturating_add(level))
-        .saturating_add(1);
+    let character_level = character_level(&envelope.character_input).saturating_add(1);
 
     // `compute_level_up_grants_for_class`, not the top-level
     // `compute_level_up_grants`: the latter dispatches on the character's

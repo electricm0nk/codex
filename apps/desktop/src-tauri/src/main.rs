@@ -12,6 +12,7 @@ mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
 mod wizard_school_picker;
 mod dm_console_export;
+mod encounter_rating;
 mod class_spell_levels;
 mod corpus_fixtures;
 mod corpus_full;
@@ -67,6 +68,7 @@ use class_feature_feat_bridge::list_class_feature_feat_bridge_descriptions;
 use class_feature_pool_picker::list_class_feature_pool_options;
 use wizard_school_picker::list_wizard_school_options;
 use dm_console_export::export_dm_console;
+use encounter_rating::rate_encounter;
 use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
@@ -252,6 +254,7 @@ fn main() {
             list_class_feature_pool_options,
             list_wizard_school_options,
             export_dm_console,
+            rate_encounter,
             list_equipment,
             list_spells,
             list_feats,
