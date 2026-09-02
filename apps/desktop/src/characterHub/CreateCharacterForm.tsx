@@ -7,7 +7,6 @@ import {
   CLASS_OPTIONS,
   DEFAULT_ABILITY_SCORES,
   abilityModifier,
-  ageEffectForAbility,
   clampLevelForClass,
   classSupportLevelSuffix,
   describeClassSupportLevel,
@@ -328,8 +327,11 @@ function CreateCharacterFields(props: {
     return abilityScores[key];
   }
 
+  // Age category deliberately contributes nothing here (v0.8 F-12): the
+  // engine has no aging model, and previewing an aging modifier that
+  // submission never sent made the sheet disagree with this column.
   function calculatedScore(key: AbilityKey): number {
-    return rawScore(key) + (selectedRace.abilityAdjustments[key] ?? 0) + allocation[key] + ageEffectForAbility(age, key);
+    return rawScore(key) + (selectedRace.abilityAdjustments[key] ?? 0) + allocation[key];
   }
 
   const levelOptions = getLevelOptionsForClass(classId);

@@ -574,28 +574,6 @@ export const MENTAL_ABILITIES: readonly AbilityKey[] = ['intelligence', 'wisdom'
 export type AgeCategory = 'Adult' | 'Middle Age' | 'Old' | 'Venerable';
 export const AGE_OPTIONS: readonly AgeCategory[] = ['Adult', 'Middle Age', 'Old', 'Venerable'];
 
-/**
- * Cumulative PF1 aging ability modifiers: physical abilities (Str/Dex/Con)
- * take the penalty, mental abilities (Int/Wis/Cha) take the bonus.
- */
-export const AGE_EFFECTS: Record<AgeCategory, { physical: number; mental: number }> = {
-  Adult: { physical: 0, mental: 0 },
-  'Middle Age': { physical: -1, mental: 1 },
-  Old: { physical: -3, mental: 2 },
-  Venerable: { physical: -6, mental: 3 },
-};
-
-export function ageEffectForAbility(age: AgeCategory, ability: AbilityKey): number {
-  const effect = AGE_EFFECTS[age];
-  if (PHYSICAL_ABILITIES.includes(ability)) {
-    return effect.physical;
-  }
-  if (MENTAL_ABILITIES.includes(ability)) {
-    return effect.mental;
-  }
-  return 0;
-}
-
 /** PF1 ability modifier: floor((score - 10) / 2). */
 export function abilityModifier(score: number): number {
   return Math.floor((score - 10) / 2);
