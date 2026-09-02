@@ -77,6 +77,9 @@ KNOWN_WAVES = {
     "wf_4cb8e9fe-c43": ("26", "3 red left; A implements decisions.md 13 by baselining the 4 trap "
                               "tests (they assert zero against registered debt), B settles the "
                               "desktop contradiction, C sweeps with command+output per FAIL"),
+    "wf_820936ab-e11": ("32", "the last 2 verify.sh FAILs -> 40/40 (A); completion_atlas condition-6 "
+                              "citation gate is correctly tripping on DONE (B); bucket D from 50.5% "
+                              "DONE, 24963/49438 (C)"),
     "wf_71f08acc-764": ("27", "last 3 root-full tests (A, on opus); B makes the dashboard timeout "
                               "fail loudly instead of serving stale cache; C sweeps with evidence"),
 }
