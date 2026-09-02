@@ -1,4 +1,9 @@
 import { useEffect, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
+import { buildCreationRacialTraitsPreview } from './creationRacialTraitsPreview';
+import { composeCreationBio } from './creationBio';
+import { buildClassPreview } from './classPreviewModel';
+import { loadClassCatalog, type ClassCatalogEntryDto } from '../boundary/loadClassCatalog';
+import { updateCharacterBio } from '../boundary/characterBio';
 import {
   ABILITY_ABBREVIATIONS,
   ABILITY_KEYS,
@@ -281,6 +286,9 @@ function CreateCharacterFields(props: {
   const [submitting, setSubmitting] = useState(false);
   const [outcome, setOutcome] = useState<CreateCharacterOutcomeSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [bioSaveWarning, setBioSaveWarning] = useState<string | null>(null);
+  const [classCatalog, setClassCatalog] = useState<ClassCatalogEntryDto[] | null>(null);
+  const [classCatalogError, setClassCatalogError] = useState<string | null>(null);
   // SD-27: ARG's alternate racial traits, taken at creation. The menu is the
   // same `race_trait_picker` payload the Race Traits screen browses; the live
   // resolution is the same `RaceCorpus::resolve` call. Nothing about which
@@ -402,6 +410,26 @@ function CreateCharacterFields(props: {
     setWeightLb(rollWeight(nextBody));
   }
 
+  // v0.8 F-11: the class progression catalog, loaded once for the preview
+  // beside the class select. A failure is shown in place of the preview.
+  useEffect(() => {
+    let live = true;
+    loadClassCatalog()
+      .then((response) => {
+        if (live) {
+          setClassCatalog(response.entries);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setClassCatalogError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
+
   // The alternate-racial-trait menu, loaded once. A failure is shown rather
   // than swallowed: the rest of the form still works, and the player is told
   // why the trait list is absent instead of concluding this race has none.
@@ -504,6 +532,8 @@ function CreateCharacterFields(props: {
     alternateResolution
   );
   const alternateTraitWarnings = creationSelectionWarnings(alternateResolution);
+  const racialTraitsPreview = buildCreationRacialTraitsPreview(alternateResolution);
+  const classPreview = buildClassPreview(classCatalog, selectedClass.label, level);
 
   function toggleAlternateTrait(key: string) {
     setSelectedAlternateTraitKeys((current) =>
@@ -568,6 +598,7 @@ function CreateCharacterFields(props: {
     }
     setSubmitting(true);
     setError(null);
+    setBioSaveWarning(null);
     try {
       const rawAbilityScores = ABILITY_KEYS.reduce(
         (scores, key) => ({ ...scores, [key]: rawScore(key) }),
@@ -615,6 +646,20 @@ function CreateCharacterFields(props: {
       const result = await createCharacterRuntime(request);
       setOutcome(result);
       if (result.kind === 'saved') {
+        // v0.8 F-1: the bio sidecar is a separate command from
+        // `create_character`; persist the eight fields the form collected
+        // now that the character exists. A failure here is reported but is
+        // not a creation failure — the character is already saved.
+        try {
+          await updateCharacterBio(
+            request.characterId,
+            composeCreationBio({ alignment, deity, sex, age, eyes, hair, heightInches, weightLb }),
+          );
+        } catch (cause: unknown) {
+          setBioSaveWarning(
+            `Character saved, but its bio fields were not: ${cause instanceof Error ? cause.message : String(cause)}. Edit them on the sheet.`,
+          );
+        }
         props.onCreated();
       }
     } catch (cause: unknown) {
@@ -684,8 +729,20 @@ function CreateCharacterFields(props: {
               </select>
             </div>
           </div>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '-0.5rem 0 1rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
             {describeClassSupportLevel(selectedClass.supportLevel, selectedClass.label)}
+          </p>
+          {/* v0.8 F-11: what this class is mechanically at the level being
+              created — the `list_class_catalog` row, verbatim. Skill points
+              per level are not on that DTO, so none are shown. */}
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
+            {classCatalogError !== null
+              ? `Class preview unavailable: ${classCatalogError}`
+              : classPreview.kind === 'Loading'
+                ? 'Loading class preview…'
+                : classPreview.kind === 'Unavailable'
+                  ? classPreview.message
+                  : `${selectedClass.label} ${classPreview.level}: BAB ${classPreview.baseAttackBonus} · Fort ${classPreview.fortSave} · Ref ${classPreview.refSave} · Will ${classPreview.willSave}`}
           </p>
 
           {/* Level + HP (computed) + Alignment + Deity */}
@@ -784,6 +841,55 @@ function CreateCharacterFields(props: {
               <input id="character-hair" style={INPUT_STYLE} value={hair} onChange={(event) => setHair(event.target.value)} />
             </LabeledField>
           </div>
+
+          {/* v0.8 F-2: the standard traits the picked race grants, before the
+              player commits. Same `resolve_race_alternate_selection` payload
+              the alternate picker below already receives on every race /
+              selection change; alternates are omitted here because they are
+              the checkboxes beneath. Prose is the engine's, verbatim. */}
+          <p
+            style={{
+              ...LABEL_STYLE,
+              borderTop: '1px solid var(--color-border)',
+              color: 'var(--color-text)',
+              fontSize: '0.95rem',
+              marginTop: '0.5rem',
+              paddingTop: '1rem',
+            }}
+          >
+            Racial Traits
+          </p>
+          {racialTraitsPreview.unavailableReason !== null ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>
+              {alternateResolution === null ? 'Resolving racial traits…' : racialTraitsPreview.unavailableReason}
+            </p>
+          ) : (
+            <>
+              {racialTraitsPreview.rows.map((row) => (
+                <div key={row.key} style={{ padding: '0.3rem 0' }}>
+                  <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700 }}>
+                    {row.name}
+                    <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>
+                      {' '}· {row.roleLabel} ({row.book})
+                    </span>
+                  </span>
+                  <span style={{ color: 'var(--color-text-secondary)', display: 'block', fontSize: '0.72rem' }}>
+                    {row.text}
+                  </span>
+                  {row.droppedArgs.length > 0 ? (
+                    <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.7rem' }}>
+                      The engine could not resolve {row.droppedArgs.join(', ')}, so this description is incomplete.
+                    </span>
+                  ) : null}
+                </div>
+              ))}
+              {racialTraitsPreview.replaced.map((gone) => (
+                <p key={gone.key} style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.2rem 0 0' }}>
+                  {gone.name} is replaced by {gone.byName}.
+                </p>
+              ))}
+            </>
+          )}
 
           {/* Alternate racial traits, from every book
               `race_catalog::RACE_CORPUS_BOOKS` loads — whichever those are.
@@ -1330,6 +1436,7 @@ function CreateCharacterFields(props: {
       </button>
 
       {error ? <p style={{ color: 'var(--color-error)', marginTop: '0.75rem' }}>{error}</p> : null}
+      {bioSaveWarning ? <p style={{ color: 'var(--color-warn)', marginTop: '0.75rem' }}>{bioSaveWarning}</p> : null}
 
       {/* A race the backend could not read completely is withheld from the
           picker rather than offered with a guessed size or speed. Naming it

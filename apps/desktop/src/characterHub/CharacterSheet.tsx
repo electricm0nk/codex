@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
+import { Fragment, useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import {
   loadSavedCharacterDetail,
@@ -69,7 +69,13 @@ import {
   spellSourceClassIds,
 } from './spellsTabModel';
 import { buildPetsTabView } from './petsTabModel';
-import type { PilotSnapshotDto } from '../boundary/loadCreateCharacter';
+import { buildSaveRows } from './defenseSavesModel';
+import { DESKTOP_EXPORT_DEPS, runCharacterExport } from './characterExport';
+import { resolveSelectedTraits } from './traitsTabModel';
+import { buildAttackTiles } from './attackPanelModel';
+import { resolveAddSpellAffordance } from './addSpellAffordanceModel';
+import { loadCharacterTraits, type CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
+import type { BaseSavesDto, PilotSnapshotDto } from '../boundary/loadCreateCharacter';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
@@ -209,6 +215,13 @@ const removeItemButtonStyle: CSSProperties = {
  */
 const WEAPONS_AND_ARMOR_CATEGORY = 'ArmsArmor';
 const EQUIPMODS_CATEGORY = 'Equipmods';
+/**
+ * v0.8 F-6: everything purchasable that is not arms & armor. The engine's
+ * `EquipmentCategory` (each book's `rules_tables/<book>/equipment_tables.rs`)
+ * has exactly four variants — `General`, `ArmsArmor`, `MagicItems`,
+ * `Equipmods` — and `Equipmods` is the modifier picker's, not a purchase.
+ */
+const GEAR_CATEGORIES = ['General', 'MagicItems'] as const;
 
 /** Matches `characterHubModel.ts`'s `CLASS_OPTIONS` id for Wizard. */
 const WIZARD_CLASS_ID = 'class:wizard';
@@ -234,7 +247,7 @@ export interface ItemPickerConfig {
  * `characterSheetRefresh.ts`.
  */
 export function buildItemPickerConfig(
-  kind: 'weapon' | 'armor' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null,
+  kind: 'weapon' | 'armor' | 'gear' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null,
   deps: {
     loadEquipment: (category: string) => Promise<ItemPickerEntry[]>;
     loadSpells: () => Promise<ItemPickerEntry[]>;
@@ -252,6 +265,15 @@ export function buildItemPickerConfig(
       title: kind === 'weapon' ? 'Add Weapon' : 'Add Armor',
       searchPlaceholder: 'Search arms & armor…',
       loadEntries: () => deps.loadEquipment(WEAPONS_AND_ARMOR_CATEGORY),
+      onSelect: deps.onSelectEquipment,
+    };
+  }
+  if (kind === 'gear') {
+    return {
+      title: 'Add Gear',
+      searchPlaceholder: 'Search gear & magic items…',
+      loadEntries: () =>
+        Promise.all(GEAR_CATEGORIES.map((category) => deps.loadEquipment(category))).then((lists) => lists.flat()),
       onSelect: deps.onSelectEquipment,
     };
   }
@@ -525,14 +547,20 @@ function SpeedPanel(props: { land: string }) {
  * React component, neither aware of creature size, so every Small character's
  * CMB and CMD were a point too high. See SD-27 `decisions.md §28`.
  */
-function AttackPanel(props: { baseAttackBonus: number; cmb: number | null; cmd: number | null }) {
+function AttackPanel(props: { baseAttackBonus: number; melee: number; cmb: number | null; cmd: number | null }) {
+  // v0.8 F-9: `melee` is the engine's `baselineMeleeAttackBonus`, which was
+  // loaded on every sheet and never rendered. The pre-existing "Spell Res."
+  // tile is left exactly as it was (out of F-9's scope).
+  const tiles = buildAttackTiles({ baseAttackBonus: props.baseAttackBonus, melee: props.melee, cmb: props.cmb, cmd: props.cmd });
   return (
     <StatBox title="Attack">
       <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <StatTile label="BAB" value={fmt(props.baseAttackBonus)} />
-        <StatTile label="Spell Res." value="—" />
-        <StatTile label="CMB" value={fmtOrAbsent(props.cmb, true)} />
-        <StatTile label="CMD" value={fmtOrAbsent(props.cmd, false)} />
+        {tiles.map((tile) => (
+          <Fragment key={tile.label}>
+            <StatTile label={tile.label} value={tile.value} />
+            {tile.label === 'Melee' ? <StatTile label="Spell Res." value="—" /> : null}
+          </Fragment>
+        ))}
       </div>
     </StatBox>
   );
@@ -626,10 +654,12 @@ function SkillsPanel(props: {
 // 'Details' and 'Bio' are deliberately absent: that content already renders
 // unconditionally in the right-column `DetailsPanel` below, regardless of
 // which tab is active, so a duplicate tab selector for it would only ever
-// show the generic "coming soon" placeholder next to content that's already
-// on screen.
-const TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Overrides'] as const;
-type Tab = (typeof TABS)[number];
+// have shown a placeholder next to content that's already on screen.
+// 'Overrides' was removed for the same reason (v0.8 F-5): it had no panel
+// behind it, and a visible affordance with no behavior is a stub. Every
+// tab listed here has a real panel in the switch below.
+export const SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions'] as const;
+type Tab = (typeof SHEET_TABS)[number];
 
 export interface BioFields {
   alignment: string;
@@ -982,6 +1012,12 @@ function SpellsTab(props: {
    * non-caster or a build with no spell yet resolved against the corpus.
    */
   snapshot: PilotSnapshotDto | null | undefined;
+  /**
+   * The held class `handleAddSpell` would attribute a pick to (the same
+   * `resolveSpellRouting` answer), or `null` with no held class. Drives
+   * whether "Add Spell" is offered at all — see `addSpellAffordanceModel.ts`.
+   */
+  routedClass: { classId: string; classLabel: string } | null;
   onAddSpell: () => void;
   /**
    * Forgets the spell for that row's own source class, in every
@@ -1017,7 +1053,10 @@ function SpellsTab(props: {
   // multiclass sheet pulls each of its lists and nothing else. Joined into
   // a string so the effect re-runs when the set changes, not on every
   // render of an equal array.
-  const sourceClassIds = spellSourceClassIds(props.spellsSelected);
+  // v0.8 F-10: the routed class is fetched alongside the source classes so
+  // the "Add Spell" decision can read its `known` flag.
+  const routedClassId = props.routedClass?.classId ?? null;
+  const sourceClassIds = [...new Set([...spellSourceClassIds(props.spellsSelected), ...(routedClassId ? [routedClassId] : [])])].sort();
   const sourceClassKey = sourceClassIds.join('|');
   const [classSpellLevels, setClassSpellLevels] = useState<ClassSpellLevelsDto[]>([]);
   useEffect(() => {
@@ -1047,6 +1086,7 @@ function SpellsTab(props: {
   }, [sourceClassKey]);
 
   const rows = resolveSelectedSpellEntries(props.spellsSelected, catalog ?? [], classSpellLevels);
+  const addSpell = resolveAddSpellAffordance(props.routedClass, classSpellLevels);
   const schools = props.corpusDerived?.schoolCoverage ?? [];
   const spellbook = props.snapshot?.spellbook;
   // Real `class_spell.*.<total|base>_<spells|extracts>_per_day.*` records,
@@ -1137,11 +1177,20 @@ function SpellsTab(props: {
         &ldquo;Lowest class level&rdquo; are classes with no spell list ingested yet &mdash; that
         number is the spell&rsquo;s lowest level across all classes, not this one&rsquo;s.
       </p>
-      <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onAddSpell} style={addItemButtonStyle}>
-          Add Spell
-        </button>
-      </div>
+      {addSpell.kind === 'Withheld' ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0 0 1.25rem', textAlign: 'center' }}>
+          {addSpell.message}
+        </p>
+      ) : (
+        <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '1.25rem' }}>
+          <button type="button" onClick={props.onAddSpell} style={addItemButtonStyle}>
+            Add Spell
+          </button>
+          {addSpell.kind === 'OfferedUningested' ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: 0, textAlign: 'center' }}>{addSpell.note}</p>
+          ) : null}
+        </div>
+      )}
       {rows.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>No spells selected yet.</p>
       ) : (
@@ -1394,15 +1443,17 @@ function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined
  * `character_hub.rs`) — currently only ever grounded for Barbarian, which
  * isn't a chassis-supported class through this UI yet, so `undefined` here
  * is the expected, honest state for every character reachable today, not a
- * bug. AC breakdown *by source* (which item contributed what) and save
- * modifiers by source have no equivalent backend computation, so that part
- * of the tab stays an honest placeholder rather than a fabricated layout
- * for uncomputed data. Note: the "Recompute" menu action doesn't currently
+ * bug. Saving throws render base (class progression) beside total, both
+ * verbatim from the engine (`baseSaves` / `totalSaves`); a per-source
+ * breakdown of what sits between them has no backend computation yet, so
+ * none is fabricated here. Note: the "Recompute" menu action doesn't currently
  * refresh `damageReduction` (`RecomputedCharacterSnapshotDto` doesn't carry
  * it), so it always reflects the originally loaded snapshot — a real,
  * narrow, pre-existing gap, not something this change papers over.
  */
 function DefenseTab(props: {
+  baseSaves: BaseSavesDto | undefined;
+  totalSaves: BaseSavesDto | undefined;
   damageReduction: number | undefined;
   equipmentEffects: EquipmentEffectsDto | undefined;
   encumbrance: EncumbranceDto | undefined;
@@ -1426,9 +1477,38 @@ function DefenseTab(props: {
           <span style={{ fontWeight: 700 }}>Damage Reduction:</span> {props.damageReduction}/—
         </p>
       ) : null}
-      <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
-        Save modifiers by source — coming soon.
+      <SavesPanel baseSaves={props.baseSaves} totalSaves={props.totalSaves} />
+    </div>
+  );
+}
+
+/**
+ * Base vs. total saving throws, both straight from the engine snapshot.
+ * Renders nothing when the snapshot is absent (blocked build) rather than
+ * printing zeros the app has not established.
+ */
+function SavesPanel(props: { baseSaves: BaseSavesDto | undefined; totalSaves: BaseSavesDto | undefined }) {
+  if (props.baseSaves === undefined || props.totalSaves === undefined) {
+    return null;
+  }
+  const rows = buildSaveRows(props.baseSaves, props.totalSaves);
+  return (
+    <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
+        Saving Throws
       </p>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', columnGap: '1.25rem', rowGap: '0.3rem', fontSize: '0.85rem' }}>
+        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem' }} />
+        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', textAlign: 'right' }}>Base</span>
+        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', textAlign: 'right' }}>Total</span>
+        {rows.map((row) => (
+          <Fragment key={row.label}>
+            <span>{row.label}</span>
+            <span style={{ fontVariantNumeric: 'tabular-nums', textAlign: 'right' }}>{row.renderedBase}</span>
+            <span style={{ fontVariantNumeric: 'tabular-nums', fontWeight: 700, textAlign: 'right' }}>{row.renderedTotal}</span>
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 }
@@ -1587,6 +1667,8 @@ function EncumbrancePanel(props: { encumbrance: EncumbranceDto | undefined }) {
 function GearTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
   onAddArmor: () => void;
+  /** v0.8 F-6: opens the `gear` picker (General + MagicItems). */
+  onAddGear: () => void;
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
   /** See `WeaponsTab.onRemoveWeapon` — the same command, no refund. */
   onRemoveItem: (itemId: string) => void;
@@ -1612,6 +1694,9 @@ function GearTab(props: {
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onAddArmor} style={addItemButtonStyle}>
           Add Armor
+        </button>
+        <button type="button" onClick={props.onAddGear} style={addItemButtonStyle}>
+          Add Gear
         </button>
       </div>
       {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="item" /> : null}
@@ -2255,6 +2340,8 @@ function ActionsTab(props: {
 function FeatsTab(props: {
   selectedFeats: string[];
   chosenFeatTargets: ChosenFeatTargetsDto[];
+  /** Persisted `chosen.selected_traits` ids, rendered in the Traits section below the feats. */
+  selectedTraits: string[];
   onAddFeat: () => void;
   /**
    * Removes one held copy of the feat, optionally taking the one recorded
@@ -2372,6 +2459,63 @@ function FeatsTab(props: {
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>
                 {row.entry.detail}
               </p>
+            ) : null}
+          </div>
+        ))
+      )}
+      <TraitsSection selectedTraits={props.selectedTraits} />
+    </div>
+  );
+}
+
+/**
+ * The character's chosen traits (v0.8 F-3). `selectedTraits` was persisted,
+ * loaded and carried through every refresh with no render site at all, so
+ * a trait picked at creation was invisible from then on. Names, prose and
+ * bonus lines come from the same `list_available_character_traits` roster
+ * the create form's picker uses; see `traitsTabModel.ts`. Traits are
+ * add-at-creation only today — the add/remove commands are a backend
+ * ticket (B-4), so this section offers no mutation affordance rather than
+ * a dead one.
+ */
+function TraitsSection(props: { selectedTraits: string[] }) {
+  const [catalog, setCatalog] = useState<CharacterTraitOptionDto[] | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    loadCharacterTraits()
+      .then((options) => {
+        if (!cancelled) {
+          setCatalog(options);
+        }
+      })
+      .catch(() => {
+        // Raw ids are still real data; render them rather than nothing.
+        if (!cancelled) {
+          setCatalog([]);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const rows = resolveSelectedTraits(props.selectedTraits, catalog ?? []);
+  return (
+    <div style={{ marginTop: '1.5rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
+        Traits
+      </p>
+      {rows.length === 0 ? (
+        <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>No traits selected.</p>
+      ) : (
+        rows.map((row) => (
+          <div key={row.id} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+            <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
+              <span style={{ fontWeight: 700 }}>{row.name}</span>
+              {row.grants ? <span style={{ fontSize: '0.78rem', fontVariantNumeric: 'tabular-nums' }}>{row.grants}</span> : null}
+            </div>
+            {row.description ? (
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>{row.description}</p>
             ) : null}
           </div>
         ))
@@ -2496,7 +2640,7 @@ export function CharacterSheet(props: {
   // since only one mutation can be in flight from this sheet at a time.
   const [mutationError, setMutationError] = useState<string | null>(null);
   const [itemPickerOpen, setItemPickerOpen] = useState<
-    'weapon' | 'armor' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null
+    'weapon' | 'armor' | 'gear' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null
   >(null);
   // Set between the two steps of adding a chooser feat: the feat has been
   // picked, and the picker has reopened for the thing it names.
@@ -2678,6 +2822,7 @@ export function CharacterSheet(props: {
   const [recomputed, setRecomputed] = useState<RecomputedCharacterSnapshotDto | null>(null);
   const [recomputing, setRecomputing] = useState(false);
   const [cloning, setCloning] = useState(false);
+  const [exporting, setExporting] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   /**
@@ -3497,6 +3642,15 @@ export function CharacterSheet(props: {
   );
   const vision = alternateVisionFt === null ? standardVision : `Darkvision ${alternateVisionFt} ft.`;
   const baseAttackBonus = recomputed?.baseAttackBonus ?? snapshot?.baseAttackBonus ?? 0;
+  const meleeAttackBonus = recomputed?.baselineMeleeAttackBonus ?? snapshot?.baselineMeleeAttackBonus ?? 0;
+  // v0.8 F-10: the same routing `handleAddSpell` / `loadSpellPickerEntries`
+  // use, so the tab withholds "Add Spell" for exactly the class a pick
+  // would be attributed to.
+  const spellRoutedClassId = resolveSpellRouting(heldClasses, props.detail?.spellsSelected ?? [], WIZARD_CLASS_ID)?.primaryClassId ?? null;
+  const spellRoutedClass = (() => {
+    const held = heldClasses.find((candidate) => candidate.classId === spellRoutedClassId);
+    return held ? { classId: held.classId, classLabel: held.classLabel } : null;
+  })();
   const hp = maxHitPoints(heldClasses, abilities.constitution);
   // SD-27 `decisions.md §28` defect 1: CMB/CMD are engine values now
   // (`pilot_compute::combat_maneuver_bonus` / `combat_maneuver_defense`, called
@@ -3537,6 +3691,26 @@ export function CharacterSheet(props: {
     { simple: false, martial: false, exotic: false }
   );
 
+  /** Top-menu "Export" (v0.8 F-8): same real `export_character` flow as the Load screen, from the open sheet. */
+  async function handleExport() {
+    setMutationError(null);
+    setStatusMessage(null);
+    setExporting(true);
+    try {
+      const outcome = await runCharacterExport(
+        { characterId: props.row.characterId, displayLabel: props.row.displayLabel },
+        DESKTOP_EXPORT_DEPS,
+      );
+      if (outcome.kind === 'Exported') {
+        setStatusMessage(outcome.message);
+      } else if (outcome.kind === 'Failed') {
+        setMutationError(outcome.message);
+      }
+    } finally {
+      setExporting(false);
+    }
+  }
+
   // SD-25 Criterion 3.5 register A4: `Open`/`Save`/`Clone` were bare
   // `() => {}` no-op handlers — a no-stub-doctrine violation on a
   // user-facing affordance. `Open` and `Clone` are wired to real behavior
@@ -3554,6 +3728,7 @@ export function CharacterSheet(props: {
     { label: 'Open', onSelect: props.onOpen },
     { label: recomputing ? 'Recomputing…' : 'Recompute', onSelect: () => void handleRecompute() },
     { label: cloning ? 'Cloning…' : 'Clone', onSelect: () => void handleClone() },
+    { label: exporting ? 'Exporting…' : 'Export', onSelect: () => void handleExport() },
     { label: 'Print', onSelect: () => window.print() },
   ];
 
@@ -3874,7 +4049,7 @@ export function CharacterSheet(props: {
           <div style={{ display: 'flex', gap: '0.6rem' }}>
             <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
               <ArmorClassPanel ac={ac} touch={touch} flatFooted={flatFooted} />
-              <AttackPanel baseAttackBonus={baseAttackBonus} cmb={cmb} cmd={cmd} />
+              <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} cmb={cmb} cmd={cmd} />
             </div>
             <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
               <SavingThrowsPanel saves={saves} />
@@ -3885,7 +4060,7 @@ export function CharacterSheet(props: {
           {/* Weapons / Defense / Gear — bottom, spanning the middle */}
           <div style={{ marginTop: '0.4rem' }}>
             <div style={{ borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1rem' }}>
-              {TABS.map((name) => {
+              {SHEET_TABS.map((name) => {
                 const active = name === tab;
                 return (
                   <button
@@ -3920,6 +4095,8 @@ export function CharacterSheet(props: {
                 />
               ) : tab === 'Defense' ? (
                 <DefenseTab
+                  baseSaves={recomputed?.baseSaves ?? snapshot?.baseSaves}
+                  totalSaves={recomputed?.totalSaves ?? snapshot?.totalSaves}
                   damageReduction={snapshot?.damageReduction}
                   equipmentEffects={props.detail?.corpusDerived?.equipmentEffects}
                   encumbrance={props.detail?.corpusDerived?.encumbrance}
@@ -3934,6 +4111,7 @@ export function CharacterSheet(props: {
                   corpusDerived={props.detail?.corpusDerived}
                   snapshot={props.detail?.snapshot}
                   explanations={engineRecords.explanations}
+                  routedClass={spellRoutedClass}
                   onAddSpell={() => setItemPickerOpen('spell')}
                   onRemoveSpell={(spellId, sourceClassId) =>
                     void handleRemoveSpell(spellId, sourceClassId)
@@ -3943,6 +4121,7 @@ export function CharacterSheet(props: {
                 <GearTab
                   corpusDerived={props.detail?.corpusDerived}
                   onAddArmor={() => setItemPickerOpen('armor')}
+                  onAddGear={() => setItemPickerOpen('gear')}
                   onAttachModifier={handleAttachModifier}
                   onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
                   money={money}
@@ -3953,13 +4132,14 @@ export function CharacterSheet(props: {
               ) : tab === 'Feats' ? (
                 <FeatsTab
             selectedFeats={props.detail?.selectedFeats ?? []}
+            selectedTraits={props.detail?.selectedTraits ?? []}
             chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
             onAddFeat={() => setItemPickerOpen('feat')}
             onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
           />
               ) : tab === 'Pets' ? (
                 <PetsTab snapshot={snapshot} />
-              ) : tab === 'Actions' ? (
+              ) : (
                 <ActionsTab
                   levelEntries={currentBenefits}
                   explanations={engineRecords.explanations}
@@ -3968,8 +4148,6 @@ export function CharacterSheet(props: {
                   raceLabel={props.row.raceLabel}
                   selectedFeats={props.detail?.selectedFeats ?? []}
                 />
-              ) : (
-                <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>{tab} — coming soon.</p>
               )}
             </div>
           </div>

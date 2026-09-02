@@ -57,6 +57,24 @@ const FEAT_ENTRIES: FeatCatalogEntryDto[] = [
  * (the backend `list_equipment`/`list_spells` filter narrows the initial
  * load by category/school; the search box narrows further by name/detail).
  */
+/**
+ * v0.8 F-7 (scout audit item 37): `list_equipment` rows carried `costGp`
+ * and the picker never showed it — a player learned the price from the
+ * gold balance dropping. The cost now sits on the detail line, verbatim
+ * from the DTO; a `null` cost (every PU row) renders no price rather than
+ * a fabricated 0. Weight is not on the DTO at all, so nothing is shown
+ * for it (backend wiring needed, not a frontend workaround).
+ */
+function verifiesEquipmentMappingShowsTheCorpusCostOnTheRow() {
+  const entries = mapEquipmentCatalogEntries(EQUIPMENT_ENTRIES);
+  assertEqual(entries[0].detail, 'Arms & Armor · 15 gp · This sword is about 3-1/2 feet in length.', 'cost sits between category and description');
+  assertEqual(entries[1].detail, 'Arms & Armor · 250 gp', 'cost with no description has no dangling separator');
+  const free = mapEquipmentCatalogEntries([{ ...EQUIPMENT_ENTRIES[1], costGp: null }]);
+  assertEqual(free[0].detail, 'Arms & Armor', 'null cost renders no price, not 0 gp');
+  const fractional = mapEquipmentCatalogEntries([{ ...EQUIPMENT_ENTRIES[1], costGp: 0.5, description: null }]);
+  assertEqual(fractional[0].detail, 'Arms & Armor · 0.5 gp', 'fractional gp is written as the corpus has it');
+}
+
 function verifiesFilterMatchesEntryNameCaseInsensitively() {
   const entries = mapEquipmentCatalogEntries(EQUIPMENT_ENTRIES);
   const result = filterItemPickerEntries(entries, 'LONGSWORD');
@@ -88,8 +106,8 @@ function verifiesEquipmentMappingUsesFriendlyCategoryLabel() {
   assertEqual(mapped.name, 'Longsword', 'name comes from the catalog entry name');
   assertEqual(
     mapped.detail,
-    'Arms & Armor · This sword is about 3-1/2 feet in length.',
-    'detail is the friendly category label followed by the record’s real corpus description'
+    'Arms & Armor · 15 gp · This sword is about 3-1/2 feet in length.',
+    'detail is the friendly category label, the corpus cost, then the record’s real corpus description'
   );
 }
 
@@ -120,8 +138,8 @@ function verifiesEquipmentMappingOmitsADescriptionTheCorpusDoesNotHave() {
   const [, bandedMail] = mapEquipmentCatalogEntries(EQUIPMENT_ENTRIES);
   assertEqual(
     bandedMail.detail,
-    'Arms & Armor',
-    'a record with no corpus description shows only its category — no dangling separator, no invented text'
+    'Arms & Armor · 250 gp',
+    'a record with no corpus description shows only its category and cost — no dangling separator, no invented text'
   );
 }
 
@@ -130,7 +148,7 @@ function verifiesEquipmentMappingTreatsBlankDescriptionAsAbsent() {
   const [mapped] = mapEquipmentCatalogEntries([
     { key: 'equipment:blank', category: 'General', name: 'Blank', costGp: 1, book: 'CRB', description: '   ' },
   ]);
-  assertEqual(mapped.detail, 'General', 'whitespace-only description is treated as no description');
+  assertEqual(mapped.detail, 'General · 1 gp', 'whitespace-only description is treated as no description (cost still shown)');
 }
 
 /** The search box reaches description text, not only name and category. */
@@ -321,6 +339,7 @@ function verifiesCatalogCoverageRefusesToDescribeAnEmptyResponse() {
 }
 
 function main() {
+  verifiesEquipmentMappingShowsTheCorpusCostOnTheRow();
   verifiesFilterMatchesEntryNameCaseInsensitively();
   verifiesFilterMatchesEntryDetailToo();
   verifiesEmptySearchReturnsEveryEntry();
