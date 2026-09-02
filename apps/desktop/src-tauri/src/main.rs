@@ -52,6 +52,7 @@ use character_hub::{
     load_character_durability, load_character_money, load_character_portrait,
     list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
+    add_trait_selection, remove_trait_selection, set_equipment_active_state,
     remove_spell_selection,
     save_character_portrait, set_skill_allocations, update_character_bio,
 };
@@ -179,6 +180,9 @@ fn main() {
             record_and_prepare_spell_selection,
             add_feat_selection,
             remove_feat_selection,
+            add_trait_selection,
+            remove_trait_selection,
+            set_equipment_active_state,
             remove_spell_selection,
             remove_equipment_selection,
             set_skill_allocations,
