@@ -64,7 +64,7 @@ foregrounded run covering all 40 stages start to finish.
 | 12 | site-public-status-pi-gate | PASS | 31 files vs 1612 names, zero leaked |
 | 13 | site-asset-stamp-check | PASS | stamps match |
 | 14 | reachability-audit-selftest | PASS | 11 cases passed |
-| 15 | reachability-audit | PASS | reachable ceiling 98.90% |
+| 15 | reachability-audit | PASS | reachable ceiling 98.90% (48893 / 49438, re-derived `python3 scripts/reachability_audit.py` at wave-26-lane-c's own HEAD `7f3ab6a671` -- unmoved since this row was first written) |
 | 16 | groundtruth-guard-selftest | PASS | 17 cases passed |
 | 17 | supersession-gate-selftest | PASS | 16 cases passed |
 | 18 | shape-coverage-standing-gate-selftest | PASS | 20 cases passed |
