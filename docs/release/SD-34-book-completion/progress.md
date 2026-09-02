@@ -11,6 +11,65 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 30, Gate Lane A (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — the last three `root-full` tests closed with **no ceiling repinned**; `root-full` is now GREEN — complete
+
+**Status: complete.** Row count, derived mechanically from the `root-full` log rather than
+self-assessed (`decisions.md §4`): `rows=3 PASS=3 FAIL=0`. Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave30_cycle_receipt.md`. Fix commit
+`538aceea3d`.
+
+**Both of the brief's leads were re-derived, and one was wrong in the expensive direction.**
+
+`sd27_pathfinder_unchained_cache_shape` (2 tests, reported as `42->38` and `7->3` "restatements
+matching the corrected corpus"): **not a restatement, and repinning would have deleted a live
+assertion.** Traced causally instead of repinned. `b34bf2b4f0` `git mv`'d PU's four
+`+0 ABP (Enhancement to …)` equipmods from the flat `equipment/<slug>.json` layout to the
+category-nested `equipment/equipmods/<slug>.json` layout; `gen_book_cache`'s write guard checked
+only the flat path and re-created four flat **duplicates**; `e5fd8dddb1` deleted **those
+duplicates**. The four real records were never deleted — they are on disk at
+`data/corpus/pathfinder_unchained/equipment/equipmods/`. The actual defect was this test file's own
+`load_all`, which did a flat non-recursive `read_dir` and stopped seeing them. **The loader was
+fixed; both ceilings stay at 42 and 7.** (42 = 38 flat + 4 nested; 7 = 3 flat `+0 Attuned` + 4
+nested `+0 ABP`.) The tell was available before compiling anything: the third equipment test,
+asserting `attune_count == 18`, was passing throughout, so no `+0 Attuned` record had been lost and
+the four missing ones had to be exactly the four relocated ABP records.
+
+`sd24_wired_integration_audit` (1 test): one `placeholder` hit at `reach_gate.rs:3192`, introduced
+by `170c9219c4`. Reviewed in context rather than widened on the keyword. It is a string literal
+inside the `OPEN_FINDINGS` gap table describing **PCGen's own** upstream flavor placeholder rows
+(`Human Ethnicity ~ None`/`~ Unknown`) — bucket E/F's established shape, the opposite of a stub
+marker. Widening does not weaken the gate: `OPEN_FINDINGS` is pinned in **both** directions by
+`unsurfaced_families_are_exactly_the_recorded_findings`, so an entry cannot make a gap pass and the
+reachability gate still counts this family as unsurfaced. New **bucket G** is scoped by path AND by
+the hit's own distinctive phrase; any different `placeholder` hit in that file still fails.
+**Correcting wave 26 for the record:** it called this "legitimate UI text". It is not —
+`reach_gate.rs` renders no UI, and bucket A (`is_ui_placeholder_text`) neither does nor should match
+it. Relaxing bucket A on that premise would have cost the audit its ability to catch real
+JSX-adjacent stub markers.
+
+**Widest build scope, run at `1fd5244c79`** (the last figure-moving commit): `cargo test --locked
+--no-run` **EXIT=0**; root `cargo test --locked --no-fail-fast` **EXIT=0, 8,372 passed / 0 failed**
+with **543 of 543** `tests/*.rs` suites executed and none never-run; `apps/desktop/src-tauri` tested
+explicitly in its own workspace, **EXIT=0, 572 passed / 0 failed**. Totals derived twice by
+independent implementations (`awk` and a Python `re` pass), agreeing exactly. Two other lanes'
+commits (`a893bfcb39`, `ff5f19e05e`) landed during the run; `git diff --name-only 1fd5244c79 HEAD
+-- src/ tests/ apps/ data/ Cargo.lock Cargo.toml` returns **0 files**, so the figures stand.
+
+**Attribution re-derived from `git`, not inherited** (`decisions.md §12` L14): SD-34's registered
+baseline was **29 of 599** suites / **46 of 8,034** failures; root now carries **0**. This lane
+claims 3 of those, not 46 — waves 24–29 closed the rest, and wave 29's independent sweep had
+already recorded `root-full`'s remaining failing set as exactly **2 suites / 3 tests**, which are
+precisely the 3 closed here. 3 − 3 = 0; the two figures corroborate.
+
+**Sweep population:** N/A — no `data/corpus/**` record changed; both files touched are under
+`tests/`, record delta 0, so `decisions.md §12` L8 is satisfied vacuously and is stated as such
+rather than reported as a pass. Two `correction` events logged, each `--verified-by` a command.
+`docs/work-inventory.json` and `completion-atlas.json` untouched and `completion_atlas.py --check`
+not run, so no timestamp side effect. `kanban.md` not touched (no board row tracks an individual
+gate-remediation wave — waves 23/25/26/27/28/29's own precedent). **Sweeps NOT run, named as
+such:** full `verify.sh`, `frontend-*`, `clippy`, `corpus-sweep`, and the two remaining live FAILs
+`site-dashboard-check` / `denominator-gate`, both in other lanes' territory.
+
 ### Cycle — Wave 27, Gate Lane B (`AT-34-E6-001` tracking label — NOT the final-acceptance scan) — `site-dashboard-check` timeout fixed: fails loudly instead of silently serving a stale cache — complete
 
 **Status: complete.** Receipt: `artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_wave27_cycle_receipt.md`. Commit `a893bfcb39`.

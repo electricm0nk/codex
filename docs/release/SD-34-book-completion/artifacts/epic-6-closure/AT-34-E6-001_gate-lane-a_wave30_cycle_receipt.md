@@ -210,8 +210,20 @@ whole assigned population. Status `complete` follows from this count.
 ## Build scope verified
 
 Run at `1fd5244c79` — the last commit in this cycle that can move any figure an
-assertion depends on (`decisions.md §12` L7). The only commit after it is the receipt/ledger
-commit carrying these results, which changes no code, no corpus record and no fixture.
+assertion depends on (`decisions.md §12` L7).
+
+**Re-checked after a rebase.** Two other lanes' commits (`a893bfcb39`, `ff5f19e05e`) landed on
+`tranche/14` while this verification was in flight and now sit between `1fd5244c79` and this
+receipt. They do **not** invalidate the figures, and that is verified rather than assumed:
+
+```
+$ git diff --name-only 1fd5244c79 HEAD -- src/ tests/ apps/ data/ Cargo.lock Cargo.toml
+(no output — 0 files)
+```
+
+Their whole touch set is `scripts/` and `docs/`. No Rust source, no test, no corpus record and no
+lockfile changed, so nothing the root or desktop suites compile or read moved. This cycle's own
+later commits are ledger-only.
 
 | Scope | Command | Result |
 |---|---|---|
