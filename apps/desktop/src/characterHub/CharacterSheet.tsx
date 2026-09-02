@@ -70,6 +70,8 @@ import {
 } from './spellsTabModel';
 import { buildPetsTabView } from './petsTabModel';
 import { buildSaveRows } from './defenseSavesModel';
+import { describeEligibilityDelta, eligibilityDelta } from './featEligibilityDelta';
+import type { FeatCatalogEntryDto } from '../boundary/listFeats';
 import { DESKTOP_EXPORT_DEPS, runCharacterExport } from './characterExport';
 import { resolveSelectedTraits } from './traitsTabModel';
 import { buildAttackTiles } from './attackPanelModel';
@@ -3223,6 +3225,31 @@ export function CharacterSheet(props: {
     void commitFeatSelection(pending.featKey, entry.key, pending.targetKind);
   }
 
+  /**
+   * v0.8 G-3: the engine's eligibility verdicts for this character, or
+   * `null` when they cannot be fetched — in which case no delta is shown,
+   * rather than one guessed from a partial answer.
+   */
+  async function featVerdictsForCharacter(): Promise<FeatCatalogEntryDto[] | null> {
+    try {
+      const response = await listFeatsForCharacter(props.row.characterId, { nameContains: null, category: null });
+      return response.entries;
+    } catch {
+      return null;
+    }
+  }
+
+  /** Diffs two engine answers and shows the result as the status line. Decides nothing itself. */
+  function announceEligibilityDelta(before: FeatCatalogEntryDto[] | null, after: FeatCatalogEntryDto[] | null, featId: string) {
+    if (!before || !after) {
+      return;
+    }
+    const line = describeEligibilityDelta(eligibilityDelta(before, after, featId));
+    if (line) {
+      setStatusMessage(line);
+    }
+  }
+
   async function commitFeatSelection(
     featId: string,
     target: string | null,
@@ -3230,6 +3257,8 @@ export function CharacterSheet(props: {
   ) {
     setMutationError(null);
     try {
+      // G-3: the engine's verdicts BEFORE this feat lands, to diff against after.
+      const verdictsBefore = await featVerdictsForCharacter();
       const outcome = await addFeatSelection({
         characterId: props.row.characterId,
         featId,
@@ -3265,6 +3294,7 @@ export function CharacterSheet(props: {
       // A feat can also change a weapon's damage (Weapon Specialization)
       // and gate class-feature records.
       await refreshEngineRecords();
+      announceEligibilityDelta(verdictsBefore, await featVerdictsForCharacter(), featId);
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -3312,6 +3342,7 @@ export function CharacterSheet(props: {
   async function handleRemoveFeat(featId: string, target: string | null) {
     setMutationError(null);
     try {
+      const verdictsBefore = await featVerdictsForCharacter();
       const outcome = await removeFeatSelection({
         characterId: props.row.characterId,
         featId,
@@ -3324,6 +3355,8 @@ export function CharacterSheet(props: {
       }
       await republishFromDisk();
       await refreshEngineRecords();
+      // G-3 inverse: a removal can make other held-able feats ineligible.
+      announceEligibilityDelta(verdictsBefore, await featVerdictsForCharacter(), featId);
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
