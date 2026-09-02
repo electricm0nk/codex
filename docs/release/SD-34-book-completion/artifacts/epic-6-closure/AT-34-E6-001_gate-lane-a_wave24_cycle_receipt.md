@@ -141,7 +141,7 @@ cycle's territory is `data/corpus/** (PI item only)`. Named exactly, not left as
 | root-full named-13 status | 13 failing | **10 failing, 3 fixed** | this cycle's 3 targeted `cargo test` runs, all green (see Figures row above); remaining 10 named exactly in "Then root-full" above (5 files, 10 tests — `sd27_book_license_record_counts` 2, `sd27_equipment_modifier_price_matches_corpus_cost_token` 2, `sd31_class_feature_corpus_key_uniqueness` 1, `v06_corpus_trap_report` 4, `sd27_ability_automatic_granted_race_traits`/`sd27_known_spells...` now 0 — dropped from the remainder) |
 | `v06_corpus_trap_report` finding counts | not re-derived by wave-23 | 249 / 650 / 2,117 / 165 (4 failing tests) | `cargo test --locked --test v06_corpus_trap_report <test_name> -- --nocapture 2>&1 \| grep -c "Finding {"`, one command per failing test |
 | `sd27_equipment...` PU duplicate keys | 4 (wave-23's finding, re-confirmed) | 4, unchanged | `cargo test --locked --test sd27_equipment_modifier_price_matches_corpus_cost_token -- --nocapture` |
-| `sd27_equipment...` price-classification tuple | (447,1,126) pinned | (447,1,130) live | same run |
+| `sd27_equipment...` price-classification tuple | (447,1,126) pinned | (447,1,130) live | `cargo test --locked --test sd27_equipment_modifier_price_matches_corpus_cost_token -- --nocapture` |
 | `sd27_book_license_record_counts` book counts | not re-derived by wave-23 | 21 `records_processed` mismatches, 19 `records_redacted` mismatches, every book + both values captured live | `cargo test --locked --test sd27_book_license_record_counts -- --nocapture` (full per-book table in the test's own panic output, captured this cycle) |
 
 ## Row-count command output

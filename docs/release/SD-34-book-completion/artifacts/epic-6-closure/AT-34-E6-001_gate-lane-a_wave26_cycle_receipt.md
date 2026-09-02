@@ -132,7 +132,7 @@ re-discovers it as new.
 | LICENSE `records_redacted` mismatches | 19 books (wave-24) | 19 books, reproduced exactly, all fixed | same run |
 | `sd27_book_license_record_counts` | 4 passed / 2 failed | 6 passed / 0 failed | `cargo test --locked --test sd27_book_license_record_counts` |
 | PU duplicate equipmods keys | 4 (wave-24, re-confirmed) | 4 found and deleted, 0 remain | `cargo test --locked --test sd27_equipment_modifier_price_matches_corpus_cost_token -- --nocapture` before/after |
-| PU price-classification tuple | (447,1,130) live vs (447,1,126) pinned | (447,1,130) == (447,1,130), test green | same run |
+| PU price-classification tuple | (447,1,130) live vs (447,1,126) pinned | (447,1,130) == (447,1,130), test green | `cargo test --locked --test sd27_equipment_modifier_price_matches_corpus_cost_token -- --nocapture` |
 | `sd27_equipment_modifier_price_matches_corpus_cost_token` | 1 passed / 2 failed | 3 passed / 0 failed | `cargo test --locked --test sd27_equipment_modifier_price_matches_corpus_cost_token` |
 | `gen_book_cache` unit tests | 5 passed (pre-existing) | 8 passed / 0 failed (+3 new) | `cargo test --locked --bin gen_book_cache` |
 | class_feature duplicate `(book,key)` pairs | 1 known (wave-24), 1 more found this cycle | 0 remain, corpus-wide | standalone python full-corpus scan (this receipt's own script) + `cargo test --locked --test sd31_class_feature_corpus_key_uniqueness` |
