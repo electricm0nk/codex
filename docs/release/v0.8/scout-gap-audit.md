@@ -444,10 +444,148 @@ bio / money / HP-durability / portrait sidecars; clone, recompute, export (Load 
 | `[frontend]` | 49 | `grep -cE '^[0-9]+\. `\[frontend\]`' docs/release/v0.8/scout-gap-audit.md` |
 | `[backend]` | 10 | `grep -cE '^[0-9]+\. `\[backend\]`' docs/release/v0.8/scout-gap-audit.md` |
 | Open questions | 12 | `grep -c '^- \*\*Q' docs/release/v0.8/scout-gap-audit.md` |
-| Open blockers | 12 | `grep -c '^- \*\*B' docs/release/v0.8/scout-gap-audit.md` |
+| Open blockers | 14 | `grep -c '^- \*\*B' docs/release/v0.8/scout-gap-audit.md` |
 
 Items that need a `[backend]` command *before* a `[frontend]` picker (1, 6, 12→13, 19, 33,
 34→35, 39) are tagged by the half that must land first, with the sibling named inline, per
 brief §4.1's "two tickets, sequenced" rule.
 
-Not done (deliberately, per the spawn brief): the §3.5 DM Toolkit stretch pass.
+The §3.5 DM Toolkit stretch pass was dispatched later in the session and is the separate section below.
+
+---
+
+## DM Toolkit (stretch, phase 2)
+
+**Scope of this section:** a note for a future brief, not a ticket queue (brief §3.5). Nothing
+here is dispatchable this sprint. Read-only pass, ~20 minutes, against
+`docs/release/v0.8/NoDA_Campaign_Console.html` (the target), `StubScreen.tsx` (today's entry
+point), `src/rules_core/encounters.rs` (the only engine code carrying the "DM Toolkit" name),
+and `apps/desktop/src/campaign/**` (the nearest existing DM-side surface).
+
+**Verdict up front:** the NoDA console's actual scope — authoring linked world / timeline /
+place / person / scene / rules records and rendering them as one self-contained HTML file — has
+**no engine backing at all**, and the app has no storage model for it either. It is an
+`## Open blockers`-class item (B14 below), not something this team can cut and close. The parts
+that *are* UI-only are the smallest part.
+
+### 1. What the NoDA console offers a DM, in its own terms
+
+Figures derived by `grep -c "focusRecord('<tab>'," docs/release/v0.8/NoDA_Campaign_Console.html`
+(these count link buttons, i.e. records plus cross-references, not distinct records):
+
+| Tab | Link buttons | What a record is |
+|---|---|---|
+| World | 20 | A premise/topic card: one paragraph of situation ("Core premise", "The missing owner", "Real-time format"). |
+| Timeline | 12 | A clock entry: a time stamp, a headline, one paragraph of what escalates. |
+| Places | 163 | A location with a map grid ref and a one-line role, its resident NPCs, and any clue fragments held there. |
+| People | 267 | An NPC: one-line hook, role, motivation, home base (a link to a Place), clue fragments, a **mini stat block** (HP / wound thresholds / armor / STATs / skills / weapons), and a per-NPC timeline. NPCs without a sheet point at a shared "Civilian Template". |
+| Scenes | 60 | A scene: spotlight role, GM brief, boxed read-aloud text, trigger, location link, NPC links, **clue triggers** (who, under what condition, reveals what), and drop-in encounters. |
+| Rules | 62 | Quick-reference rules cards for play at the table (checks, combat turn, range, damage, healing, netrunning, civilian template) with DV tables. |
+
+The **workflow** it supports is the DM's, at the table, in real time: a master/detail layout
+(list on the left, one record on the right), a search box per tab, and 440 cross-links between
+records (`grep -c "focusRecord('(people|places)'"` → 440), so from a scene the DM jumps to the
+NPC, from the NPC to their home base, from the base to who else is there, and back. Every
+record's tactical facts (stat block, clue conditions, read-aloud text) sit inside the record, so
+nothing needs a second document open.
+
+Three things a future brief must not misread:
+
+- **It is a rendered artefact, not an editor.** `grep -ciE "contenteditable|localStorage|<textarea|<input"` on the file returns nothing. The console is the *output* of authoring done
+  elsewhere; the operator's "used it live at the table" means read/navigate, not write.
+- **It is system-agnostic.** The example campaign is Cyberpunk RED (`<title>` and the Rules tab
+  say so). Its NPC stat blocks and DV tables are not PF1 and were not produced by any rules
+  engine. The value is the record model and the linking, not the numbers.
+- **The record model is small and regular:** six record kinds, each a short prose body plus
+  typed fields, plus links. That is a good sign for storage design and a bad sign for anyone
+  hoping an existing engine type covers it.
+
+### 2. What exists today against that
+
+Close to nothing, in three pieces:
+
+- **`StubScreen.tsx`** — the landing-page "DM Toolkit" button renders a dashed box reading
+  "Encounter building, initiative tracking, and other GM-side tools. Not built yet." No
+  behaviour behind it. (Already known; confirmed.)
+- **`src/rules_core/encounters.rs`** — `Encounter::new(party, monsters) -> EncounterResult
+  { difficulty, average_party_level, encounter_level }` where `MonsterRef` is a single
+  `challenge_rating: f32` and `CharacterSnapshot` a single `level: u8` (lines 84-135). It is
+  encounter-difficulty arithmetic only, is not registered as a Tauri command
+  (`grep -n encounter apps/desktop/src-tauri/src/main.rs` → no hit), and has no notion of
+  people, places, scenes, timelines or rules text. Applying the sprint's "resolves is not
+  computes" lesson: this cannot be credited as backing for anything on the NoDA list — it does
+  not even back the "encounter building" the stub promises, since its monster input is a bare
+  CR, not a Bestiary record.
+- **`apps/desktop/src/campaign/**`** — the Campaign Manager is the nearest real thing. A
+  `Campaign` has name, rule set, description, member e-mails and a party of saved-character
+  ids; `CampaignSheet` has four tabs, **Party Resources / Adventure Log / Maps / Wiki**, each a
+  list of free-form Markdown assets (`campaignModel.ts:44-56`). Source of truth is
+  `localStorage`; a Tauri write-through mirrors it to a local folder / Drive folder
+  (`campaign_drive.rs`). This is generic notes, not typed records: no person/place/scene kinds,
+  no links between assets, no stat blocks, no per-record timeline, no export to a standalone
+  page. It is a starting point for *where* DM data lives, not for *what* it is.
+
+### 3. What a v0.9-shaped effort would actually require
+
+Split by the brief's own three buckets. The honest weighting is roughly: storage/model design
+is the bulk, UI is second, engine is small but real.
+
+**UI-only (`apps/desktop/src/**`)**
+- A master/detail console shell with per-tab search and record cross-links, patterned on the
+  NoDA layout. Straightforward React; the console's own JS is ~9 small functions.
+- Record editors for the six kinds (form per kind, Markdown body, link pickers).
+- Reuse of existing pickers where a record points at engine data: an NPC's "mini sheet" could
+  be a saved Codex character or a Bestiary monster (`list_monster_catalog` exists), a Rules card
+  could cite a corpus rule.
+
+**Needs storage / model design that does not exist yet (the real work)**
+- A **typed campaign-record model** — World / Timeline / Place / Person / Scene / Rule with
+  first-class links — and where it persists. Today's campaign data is `localStorage` with a
+  folder mirror; that is neither queryable nor safe as a source of truth for hundreds of linked
+  records. This is a design decision before it is a ticket (see Q-DM1/Q-DM2).
+- **Export to standalone HTML.** The NoDA file is 437 KB of pre-rendered, self-contained
+  markup (`wc -c`). Producing that from stored records is a renderer plus a decision about
+  what "standalone" means for images, maps and character sheets (Q-DM3).
+- **Ownership across the Campaign Manager seam.** The existing Adventure Log / Wiki / Maps
+  tabs overlap the World / Timeline / Places kinds. Whether the console replaces, absorbs or
+  sits beside them is an operator call (Q-DM4).
+
+**Needs new engine capability (`src/`, out of scope → B14)**
+- An NPC "mini stat block" that is *PF1-correct* is a character-sheet computation — i.e. the
+  engine's existing character build, not a new one. The engine question is only whether an NPC
+  can be built from a Bestiary/NPC-Codex record with class levels on top; `encounters.rs`'s
+  bare-CR `MonsterRef` explicitly defers the richer monster shape to an unshipped Epic 5 type.
+- Encounter building against real monsters (the thing the stub promises) needs
+  `encounters.rs` to take the Bestiary record, not a CR, and needs a Tauri command. Both are
+  engine + backend, neither exists.
+- Everything else on the NoDA list (prose records, links, timeline, export) needs **no rules
+  engine at all** and should not be routed through one.
+
+### 4. Questions for the operator before a future brief is written
+
+- **Q-DM1 — Storage.** Where do campaign records live: the existing `localStorage` + folder
+  mirror, the character store's on-disk shape, a new SQLite/JSON store, or the Drive folder as
+  source of truth? (Today's campaign code says localStorage is the truth and the folder is a
+  mirror; that was a v0.6 expedient.)
+- **Q-DM2 — Record model.** Are the six NoDA kinds the model, or a first cut? In particular:
+  is a Person a free-form NPC card, a saved Codex character, a Bestiary monster, or any of the
+  three with a link? The answer decides whether the engine is involved at all.
+- **Q-DM3 — Export.** Is "standalone HTML a DM opens on a phone" the *only* output, and must it
+  embed images/maps (size) or link them? Is it read-only at the table (as NoDA is) or should the
+  exported page carry state (initiative, HP ticks) that never comes back?
+- **Q-DM4 — Relationship to the Campaign Manager.** Replace the four Markdown tabs, keep them
+  as the free-form layer under typed records, or leave them alone and build the console
+  separately? The Party tab (saved characters) is the one clear reuse.
+- **Q-DM5 — System-agnostic or PF1-first.** NoDA is Cyberpunk RED. Is the console meant to
+  serve any table the operator runs (prose + links only, engine optional), or PF1 specifically
+  (NPC sheets computed, encounters rated)? This sets whether B14 blocks the whole effort or
+  only its stat-block corner.
+- **Q-DM6 — Initiative tracking.** The stub promises it; NoDA doesn't do it. In or out?
+
+### Open blocker added by this pass
+
+- **B14 — DM Toolkit has no engine backing beyond CR arithmetic.** `src/rules_core/encounters.rs`
+  models an encounter as party levels vs. a list of bare Challenge Ratings and is not exposed
+  through Tauri. Building NPCs from Bestiary records, rating encounters against real monsters,
+  or any of the NoDA record kinds would need new engine or storage capability outside
+  `apps/desktop/**`. Not a v0.8 ticket; recorded so the next brief starts from here.
