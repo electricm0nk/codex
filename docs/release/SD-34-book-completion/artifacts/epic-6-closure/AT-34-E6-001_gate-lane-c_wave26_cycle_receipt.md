@@ -343,4 +343,8 @@ load-bearing for `reachability-audit`'s and `corpus-sweep`'s figures above.
 
 ---
 
-**Commit SHA (this cycle):** filled below before push.
+**Commit SHA (this cycle):** `9c2e5cf7fc` (the receipt-finalizing commit) and `cd7cb0819e`/
+`cd0653f3cb` (two earlier mid-cycle checkpoints, per this wave's own "commit every 20 minutes"
+directive). Nothing landed on Rust source, the corpus, or the desktop crate after `9c2e5cf7fc`,
+so it is also this cycle's own build-scope SHA -- matching `7f3ab6a671` in substance (no test
+assertion moved between the two).
