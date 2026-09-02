@@ -694,7 +694,11 @@ function ucLanePrompt() {
       + '(temp file + atomic rename, SD31-W9-INTEGRATE-001). Write to a temp file and rename; a rename '
       + 'on the same filesystem is atomic, two writes are not. Prove it with a test that fails on the '
       + 'old shape.\n\n'
-      + '**Territory:** ' + BT + 'src/' + BT + ', ' + BT + 'tests/' + BT + ', ' + BT + 'docs/governance/' + BT + '.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+      + '**Territory (NARROWED this wave — two new lanes now hold the rest of ' + BT + 'src/' + BT + '):** '
+      + BT + 'tests/' + BT + ', ' + BT + 'src/bin/' + BT + ', ' + BT + 'src/pcgen_import/' + BT + ', '
+      + BT + 'src/saved_character/' + BT + ', ' + BT + 'docs/governance/' + BT + '. **Do NOT touch '
+      + BT + 'src/rules_core/pilot_compute/' + BT + ' (lane D) or ' + BT + 'src/campaign/' + BT + ' / '
+      + BT + 'src/homebrew_authoring/' + BT + ' (lane E).**\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 function cLanePrompt() {
@@ -756,6 +760,66 @@ function mLanePrompt() {
 }
 
 
+function dLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'LANE D — the pilot_compute correctness bugs the review confirmed and nobody owns.\n\n'
+      + 'These are NOT gate stages. They are confirmed wrong-answer defects in character maths, found by\n'
+      + 'the fable review, marked report_only because none was safely auto-fixable, and therefore owned by\n'
+      + 'no lane for several waves. Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + '\n'
+      + 'sections 2 (P1 table) and the P2 list FIRST, then ' + BT + 'artifacts/fable-review/findings-all.json' + BT + '\n'
+      + 'for each finding`s evidence and line ranges.\n\n'
+      + '**Start with PC8-2 — it is the one that gives players wrong numbers.**\n'
+      + BT + 'pilot_compute/mod.rs:51698-51844' + BT + ': the per-weapon attack total omits the PF1 size modifier\n'
+      + 'that the sibling ' + BT + 'compute_combat_baseline' + BT + ' applies — the function never receives size at\n'
+      + 'all. Every non-Medium character`s per-weapon rows are wrong. Fix it so both paths get size from one\n'
+      + 'place rather than two, and add a test with a non-Medium character that fails on the old code.\n\n'
+      + 'Then, in your judgement of cheapest-first:\n'
+      + '  - **PC8-1** — Skill Focus / Master Craftsman explanation ids keep literal parens\n'
+      + '    (' + BT + 'feat.master_craftsman_bonus.craft_(armor)' + BT + '). A wire-format defect. **Consumers may\n'
+      + '    match on these ids** — find out who does before changing them, and say so.\n'
+      + '  - **PC4-1** — the Warpriest/Skald/Bloodrager chooser `recognized` flag checks only hand-modelled\n'
+      + '    selections while the generic pool-group pass already grounded the records, so diagnostics can\n'
+      + '    contradict the same run`s own records.\n'
+      + '  - **PC3-1** — Good-domain Inquisitor explanation emits the literal ' + BT + '{magnitude}' + BT + '.\n'
+      + '  - **PC2-1** — stale ' + BT + 'race.semantics.unverified' + BT + ' co-fires with real grounded explanations.\n'
+      + '  - **PC2-2** — Undine alternate-trait formula silently drops its explanation on evaluator failure.\n'
+      + '  - **PC5-1** — Hunter`s ' + BT + 'other_features_deferred' + BT + ' never reaches the sheet`s "Not computed" lane.\n\n'
+      + '**Take as many as you can finish properly; a partial with a named remainder beats a rushed sweep.**\n'
+      + 'Each fix needs a test that fails on the old behaviour — otherwise you cannot show it was real.\n'
+      + 'Two of the review`s findings were REJECTED on re-verification because the code was already right,\n'
+      + 'and one "fix" would have introduced a bug, so **verify each finding against the code before\n'
+      + 'changing anything** and report any you find already correct.\n\n'
+      + '**Territory:** ' + BT + 'src/rules_core/pilot_compute/' + BT + ' ONLY, plus its tests. Lane A holds\n'
+      + BT + 'tests/' + BT + ' and ' + BT + 'src/bin/' + BT + ' — coordinate if a test file overlaps.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+}
+
+function eLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'LANE E — finish the non-atomic write family, everywhere it lives.\n\n'
+      + 'The review found (R14-02) that saving a character is two sequential ' + BT + 'fs::write' + BT + ' calls with\n'
+      + 'no temp-file-and-rename: a crash between them corrupts the app`s most valuable artifact. Lane A is\n'
+      + 'fixing ' + BT + 'src/saved_character/local_store.rs' + BT + '. **The same pattern is in three more places,\n'
+      + 'and they are yours:**\n'
+      + '  - ' + BT + 'src/campaign/local_store.rs:69' + BT + '\n'
+      + '  - ' + BT + 'src/homebrew_authoring/package_store.rs:49' + BT + '\n'
+      + '  - ' + BT + 'scripts/transcribe_companion_tables.py:1565' + BT + ' (R12-01) — the companion_data.rs emitter\n\n'
+      + '**The correct fix already exists in this repo** — the sibling monster emitter carries it\n'
+      + '(SD31-W9-INTEGRATE-001): write to a temp file, then ' + BT + 'os.replace' + BT + ' / ' + BT + 'fs::rename' + BT + '.\n'
+      + 'A rename within one filesystem is atomic; two writes never are. Port it rather than inventing a\n'
+      + 'variant, and say in your receipt that you did.\n\n'
+      + '**Also yours: R12-02** — 11 of 11 ' + BT + 'derive_*_fixtures.py' + BT + ' generators non-atomically overwrite\n'
+      + 'the ONE shared fixture file they all merge into. Same fix, eleven call sites; a shared helper is\n'
+      + 'better than eleven copies, and this bundle has already been bitten by copied helpers drifting\n'
+      + '(R8-01: 3 of 6 copies missing a fix the others had).\n\n'
+      + 'Prove each one: a test that fails on the old shape, or if a crash-between-writes test is not\n'
+      + 'practical, state plainly how you established the fix is correct. **Do not claim atomicity you have\n'
+      + 'not demonstrated** — this is data-loss territory, and a confident claim is worse than an honest\n'
+      + '"verified by inspection, not by test".\n\n'
+      + '**Territory:** ' + BT + 'src/campaign/' + BT + ', ' + BT + 'src/homebrew_authoring/' + BT + ', and the named\n'
+      + BT + 'scripts/' + BT + ' generators. Lane B holds the rest of ' + BT + 'scripts/' + BT + ' — it is working in\n'
+      + BT + 'verify.sh' + BT + ' and ' + BT + 'publish-site-dashboard.sh' + BT + ', not in the transcribers.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+}
+
 // MODEL OVERRIDE, operator instruction 2026-09-01 21:39 EDT, narrowed 21:47: LANE A ONLY
 // runs on OPUS for seven hours, reverting 2026-09-02 04:39. Lanes B and C and the closing
 // sweep stay on Sonnet.
@@ -784,9 +848,25 @@ async function runBucketBMechanisms() {
   // build in src/rules_core + apps/desktop) and was disjoint from both in wave 13's own diff,
   // so it still runs alongside. Serializing costs wall-clock, which no longer matters: the
   // 20-minute checkpoint rule means a host reset costs minutes regardless of how long a wave is.
-  log('wave 27 (GATE): last 3 root-full tests; make the dashboard timeout fail loudly; sweep with evidence')
+  log('wave 28: 5 lanes -- 3 gate + D pilot_compute correctness + E atomic writes')
 
-  const [uc, [vled, m]] = await parallel([
+  // Wave 28 widens to FIVE lanes on operator instruction -- there is quota to spend and the
+  // fable review left 6 confirmed P1s and 7 P2s owned by nobody, because every lane so far was
+  // scoped to a verify.sh stage and those defects belong to no stage.
+  //
+  // D and E can run in parallel with A/B/C only because A's territory was NARROWED in the same
+  // change: it used to claim all of src/, which would have collided with both. The fences are
+  // now file-level and disjoint --
+  //   A  tests/, src/bin/, src/pcgen_import/, src/saved_character/, docs/governance/
+  //   B  apps/desktop/, site/, scripts/verify.sh + publish-site-dashboard.sh
+  //   C  clippy anywhere + the sweep (reports, never edits, A/B/D/E files)
+  //   D  src/rules_core/pilot_compute/ only
+  //   E  src/campaign/, src/homebrew_authoring/, scripts/ transcribers + derive_*_fixtures.py
+  // A bucket fence failed this bundle before (wave 13, two lanes on one classifier); these are
+  // path fences, which is the shape that held afterwards.
+  //
+  // C still runs after B because the sweep must see B's edits. D and E are independent of both.
+  const [uc, [vled, m], d, e] = await parallel([
     () => agent(ucLanePrompt(), { model: 'opus', phase: title, label: 'A: last 3 root-full tests', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     async () => {
       const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: site-dashboard timeout', schema: CYCLE_SCHEMA, isolation: 'worktree' })
@@ -794,10 +874,13 @@ async function runBucketBMechanisms() {
       const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: clippy + honest sweep', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       return [c, mm]
     },
+    () => agent(dLanePrompt(), { model: 'sonnet', phase: title, label: 'D: pilot_compute P1/P2 bugs', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(eLanePrompt(), { model: 'sonnet', phase: title, label: 'E: atomic writes family', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
   ])
+  log('D -> ' + (d && d.status) + ' | E -> ' + (e && e.status))
   log('UC -> ' + (uc && uc.status) + ' | C -> ' + (vled && vled.status) + ' | M -> ' + (m && m.status))
 
-  const summary = [['A rust-suites', uc], ['B frontend', vled], ['C docs-gates', m]].map(([n, r]) =>
+  const summary = [['A rust-suites', uc], ['B frontend', vled], ['C docs-gates', m], ['D pilot_compute', d], ['E atomic-writes', e]].map(([n, r]) =>
     '- ' + n + ' (' + ((r && r.status) || '?') + '): ' + String((r && (r.discoveries || r.remainder)) || 'no report').slice(0, 400)).join('\n')
   const regen = await agent(regenPrompt(summary), {
     model: 'sonnet', phase: title, label: 'full verify.sh sweep', schema: REGEN_SCHEMA,
