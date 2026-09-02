@@ -50,6 +50,23 @@ usual. A picker over the pool catalog would let a player choose Ledge Walker, sa
 see it on the sheet, and get **nothing**. That is a worse failure than today's silent skip, because
 it looks like it worked. Raw corpus keys at least fail loudly at the store.
 
+## Finding 3 — even once candidates exist, the DTO carries no `choiceSetId`
+
+Found independently by `frontend` while pre-reading G-2. `LevelUpPickListDto`
+(`character_hub.rs:1894`) carries `category, count, candidates, filter` — **no set id** — and the
+engine's own `PickList` (`level_up.rs:129`) has none either. But the ids are engine grammar with
+level-specific variants (`choice:barbarian_rage_power` at level 2 vs `choice:barbarian_rage_power_4`
+at level 4), so a UI composing them from `category` would be **inventing wire grammar** — precisely
+what B13's two-colon bug punishes.
+
+`frontend` declined to do it, correctly. So even after Finding 1 is fixed and the engine emits
+candidates, a picker still cannot be built until each `PickList` carries the `choiceSetId` the
+selection must be recorded under. Whether that is a bridge mapping or an engine field depends on
+where the category→set-id rule can be read from; the engine knows it, the bridge currently does not.
+
+**Confirm at the same time** that `candidates[].id` is already the exact `selectionId` to echo back
+(the `talent:resiliency` form), so the UI echoes rather than constructs.
+
 ## The ask
 
 1. **Emit real `PickList` candidates** for talent / rage-power / hex slots from the pool catalog,
