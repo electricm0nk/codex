@@ -99,3 +99,79 @@ the engine rather than declaring it — so it widens automatically when the engi
   JSON rather than through the code under review; traced a data-loss argument across three layers;
   and confirmed a sanctioned red test failed for the *right* reason. It refused five times to let
   unreviewed code ride along in a diff it was approving.
+
+---
+
+# Addendum — DM Toolkit v1 (operator directive, same session)
+
+The operator overruled this document's "defer to v0.9" recommendation and directed the build in
+the same window: *"I'd rather you take a stab and get something out there that I can look at and
+then provide feedback to adjust with v0.9 than to start cold."* Nine tickets shipped (B-12,
+D-1..D-8). Brief: `dm-toolkit-build.md`. Reference: `world-anvil-reference.md`.
+
+**Final state:** 26 commits, clean tree, typecheck 0, **117/117** test files, cargo at the known
+3-red bar.
+
+## What a DM can now do
+
+Reach the DM Toolkit from the landing page and author seven linked record kinds — World, Timeline,
+Place, Person (with a free-text stat block), **Clue**, Scene, Rule. Link records in any direction
+with relation labels; backlinks are derived, never stored twice, so the two ends cannot disagree.
+Every record has a derived **History** built from the Timeline entries linked to it. Every record
+carries a **GM-only / Players** flag, private by default. Export the same records as either a **GM
+copy** or a **player handout**, each one self-contained HTML that opens on a phone with no network.
+
+## The decisions that made it buildable in a window
+
+- **System-agnostic, prose and links, no rules numbers (Q-DM5).** NoDA is a Cyberpunk RED campaign
+  whose stat blocks came from no engine; the value is the record model and its 440 cross-links. This
+  removed the engine dependency entirely, so blocker B14 never gated the build and nothing touched
+  repo-root `src/`.
+- **Clue as a first-class kind, not a text field.** The operator named clues as something a DM
+  defines. NoDA holds clue fragments inside places — but that is the shape of a rendered *output*,
+  not of an authoring tool. A clue defined once and linked to the place it is found, the person who
+  reveals it and the scene it fires in is the model's most interesting relationship.
+- **World Anvil's actual secrets mechanism, not the assumed one.** The orchestrator specified
+  visibility as a per-record flag from a one-line understanding. `scout` read the real mechanism: a
+  secret is a chunk *embedded into* many articles that "simply doesn't exist" in the reader's copy.
+  Our Clue records + directed links + visibility already expressed that — **zero schema change**,
+  purely a renderer behaviour.
+
+## The rule the export is built on
+
+**A reader must not be able to infer what was removed from the shape of what remains.** Stripping
+content is not enough. Three separate defects were found and closed against this rule:
+
+1. Backlinks from a visible record would have leaked a GM-only record's existence (`scout`).
+2. The handout rendered an empty "Clues" tab reading *"No clues yet"* — false, since clues existed
+   and were stripped (orchestrator, auditing generated samples).
+3. The same shape-leak one level down: a record whose only linked Timeline entry is GM-only must
+   show **no** History heading rather than an empty one (`qa`, proven with a live probe).
+
+The guarantee is structural rather than a set of guards: one filtered record set is computed per
+render, and every downstream derivation — lists, links, backlinks, inlined clues, History, the tab
+list, even the CSS — reads only from it.
+
+## What was deliberately NOT built
+
+- **The party-strength encounter generator.** Deferred at the operator's direction pending more
+  detail, and **no hook, tab or greyed button hints at it** — that would be the stub-shape this
+  sprint refused throughout. Blocker B14 records what it would need.
+- **A `'draft'` visibility state**, hierarchy, per-player audiences, a Map kind, re-kinding records.
+  All in `world-anvil-reference.md` as v0.9 questions with the operator's six (Q-WA1..6).
+- **A `when`-parser for timeline ordering.** The field looks sortable and is not: NoDA's entries only
+  appear ordered because they were typed in order, so a parser sorts demo data correctly and
+  silently scrambles "later that night". History uses insertion order; `when` is a display label.
+
+## Process failure, recorded
+
+The orchestrator edited `dmRecordModel.ts` while `frontend` had uncommitted work in it, after four
+messages failed to arrive before the next ticket was claimed. `frontend` correctly stopped on the
+one-writer rule, reconciled rather than merging blind, and caught a real bug in that edit
+(`visibility` omitted from `DmRecordChanges`, so `updateDmRecord` could not set the field just
+added). Incident in `docs/retro/events/frontend.jsonl`. The correct move was a blocking ticket with
+an acceptance check *before* D-5 started — which is what eventually worked, one ticket too late.
+
+`StubScreen.tsx` is now imported nowhere (the orchestrator's claim that Manage Party still used it
+was wrong, verified by `frontend`). Left as dead code rather than deleted inside an unrelated
+ticket; housekeeping for a follow-up.
