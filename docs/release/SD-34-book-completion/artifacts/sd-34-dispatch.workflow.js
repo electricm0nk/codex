@@ -725,6 +725,14 @@ function mLanePrompt() {
 }
 
 
+// MODEL OVERRIDE, operator instruction 2026-09-01 21:39 EDT: the three wave lanes and the
+// closing sweep run on OPUS for seven hours, reverting 2026-09-02 04:39. This deliberately
+// overrides the standing tiering (Sonnet for execution/orchestration, Opus reserved for
+// adversarial verification), which exists to protect a subscription quota -- so it is a
+// spend decision, not a correctness one, and it is time-boxed for that reason.
+//
+// Cron job reverts it automatically. If you are reading this AFTER 04:39 on 2026-09-02 and
+// the lanes still say opus, the revert did not fire: put them back to sonnet.
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
   phase(title)
@@ -739,11 +747,11 @@ async function runBucketBMechanisms() {
   log('wave 26 (GATE): 3 red left. Implement decisions.md 13 in the trap tests; settle desktop; sweep honestly')
 
   const [uc, [vled, m]] = await parallel([
-    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'A: root-full trap baseline', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(ucLanePrompt(), { model: 'opus', phase: title, label: 'A: root-full trap baseline', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     async () => {
-      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: site-dashboard + desktop', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const c = await agent(cLanePrompt(), { model: 'opus', phase: title, label: 'B: site-dashboard + desktop', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       log('B -> ' + (c && c.status) + '; starting C (docs gates)')
-      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: clippy + honest sweep', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const mm = await agent(mLanePrompt(), { model: 'opus', phase: title, label: 'C: clippy + honest sweep', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       return [c, mm]
     },
   ])
@@ -752,7 +760,7 @@ async function runBucketBMechanisms() {
   const summary = [['A rust-suites', uc], ['B frontend', vled], ['C docs-gates', m]].map(([n, r]) =>
     '- ' + n + ' (' + ((r && r.status) || '?') + '): ' + String((r && (r.discoveries || r.remainder)) || 'no report').slice(0, 400)).join('\n')
   const regen = await agent(regenPrompt(summary), {
-    model: 'sonnet', phase: title, label: 'full verify.sh sweep', schema: REGEN_SCHEMA,
+    model: 'opus', phase: title, label: 'full verify.sh sweep', schema: REGEN_SCHEMA,
   })
   return { uc, vled, m, regen }
 }
