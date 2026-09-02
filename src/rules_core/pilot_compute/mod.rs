@@ -13160,6 +13160,59 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         // `claim_blocking: true` "unsupported" diagnostics fired anyway. See
         // `ultimate_combat_chassis_gate_tests` below `supported_class_chassis_description`.
         || is_supported_uc_single_class(input)
+        // SD-34 wave 33 lane C (`class_modelled_but_no_observed_delta_on_
+        // the_rendered_snapshot`): the SAME recurring gap the UC comment
+        // above already names -- `untabled_base_class_chassis::resolve`
+        // (SD-32 card 11, the 20-class real-base-class registry: Aegis,
+        // Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium,
+        // Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter,
+        // Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, Wilder)
+        // and `crb_untabled_class_chassis::resolve` (SD-34's own seven CRB
+        // NPC/`Ex-*` classes: Adept, Aristocrat, Commoner, Expert, Warrior,
+        // Ex-Barbarian, Ex-Paladin) have dispatched real BAB/base-save
+        // chassis rows through `compute_class_chassis` since their own
+        // cycles, but this shared gate -- which `compute_total_saves`,
+        // `compute_combat_baseline`, and `compute_selected_skill_modifiers`
+        // each check independently of `compute_class_chassis` itself --
+        // never grew a matching arm, so all 27 of those classes' receipts
+        // still never reached `Computed` despite a real, correct chassis.
+        // Deliberately NOT extended to `prestige_class_entry_gate`: that
+        // registry's own module doc comment states it "still returns no
+        // chassis magnitude" by design (`class_chassis.unsupported` stays
+        // claim-blocking for prestige classes on purpose, since no BAB/save
+        // row exists to fold into a total save or combat baseline -- adding
+        // it here would fabricate zeroes as if they were real numbers).
+        || is_supported_untabled_base_class_single_class(input)
+        || is_supported_crb_untabled_class_single_class(input)
+}
+
+/// A single-class character at a level `untabled_base_class_chassis::
+/// resolve` carries a real corpus-derived BAB/base-save row for -- one of
+/// the 20 real base classes (Aegis, Antipaladin, Cryptic, Dread,
+/// Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion,
+/// Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician,
+/// Vigilante, Vitalist, Wilder) that had no `compute_class_chassis`
+/// dispatch arm until SD-32 card 11. Named and shaped like
+/// `is_supported_uc_single_class` rather than folded inline, for the same
+/// reason: a future widening has one obvious place to grow.
+fn is_supported_untabled_base_class_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    untabled_base_class_chassis::resolve(&class_level.class_id, class_level.level).is_some()
+}
+
+/// A single-class character at a level `crb_untabled_class_chassis::
+/// resolve` carries a real corpus-derived BAB/base-save row for -- one of
+/// CRB's five NPC classes or two `Ex-*` variant states (Adept, Aristocrat,
+/// Commoner, Expert, Warrior, Ex-Barbarian, Ex-Paladin), registered by
+/// SD-34 `AT-34-E3-001`. Named and shaped like `is_supported_uc_single_class`
+/// for the same reason as its sibling immediately above.
+fn is_supported_crb_untabled_class_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    crb_untabled_class_chassis::resolve(&class_level.class_id, class_level.level).is_some()
 }
 
 /// A single-class Ultimate Combat character (Gunslinger, Ninja, or
@@ -13201,7 +13254,12 @@ pub(crate) fn supported_class_chassis_description() -> String {
          Investigator, Witch, Shaman, or Summoner chassis, or a supported \
          single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or \
          Unchained Summoner chassis (Pathfinder Unchained), or a supported \
-         single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat)"
+         single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a \
+         supported single-class untabled real base class (Aegis, Antipaladin, \
+         Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, \
+         Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, \
+         Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, \
+         Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis"
     )
 }
 
@@ -76375,6 +76433,137 @@ mod ultimate_combat_chassis_gate_tests {
             !has_supported_class_chassis(&single_class(GUNSLINGER_CLASS_ID, 21)),
             "has_supported_class_chassis must itself refuse level 21, not just the downstream \
              chassis resolver -- this is the assertion the pre-fix gate could not fail"
+        );
+    }
+}
+
+/// SD-34 wave 33 lane C (`class_modelled_but_no_observed_delta_on_the_
+/// rendered_snapshot`, bucket D). The same integration gap
+/// `ultimate_combat_chassis_gate_tests` already proved and closed for
+/// Gunslinger: `untabled_base_class_chassis`/`crb_untabled_class_chassis`
+/// dispatch a real chassis through `compute_class_chassis`, but
+/// `has_supported_class_chassis` -- checked independently by
+/// `compute_total_saves`/`compute_combat_baseline`/
+/// `compute_selected_skill_modifiers` -- never grew a matching arm.
+#[cfg(test)]
+mod untabled_class_chassis_gate_tests {
+    use super::{
+        build_pilot_headless_receipt, has_supported_class_chassis, untabled_base_class_chassis,
+        crb_untabled_class_chassis, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn single_class(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    /// The gate must recognize every one of the 27 classes the two
+    /// registries cover, at every level within each class's own real
+    /// `MAXLEVEL` ceiling -- not just level 1.
+    #[test]
+    fn all_27_untabled_classes_pass_the_chassis_gate_at_every_real_level() {
+        for meta in untabled_base_class_chassis::untabled_base_class_registry() {
+            for level in 1..=meta.max_level {
+                assert!(
+                    has_supported_class_chassis(&single_class(&meta.class_id, level)),
+                    "{} level {level} must be a supported chassis",
+                    meta.class_id
+                );
+            }
+        }
+        for meta in crb_untabled_class_chassis::covered_classes() {
+            // `crb_untabled_class_chassis::resolve` reads MAXLEVEL from the
+            // corpus itself rather than exposing it on the metadata struct;
+            // level 1 and level 20 (the sweep's own ceiling) bracket every
+            // real NPC/Ex-* class's table, which tops out at 20 like every
+            // other class this engine models.
+            for level in [1u8, 20] {
+                assert!(
+                    has_supported_class_chassis(&single_class(&meta.class_id, level)),
+                    "{} level {level} must be a supported chassis",
+                    meta.class_id
+                );
+            }
+        }
+    }
+
+    /// The gate widening did not touch the prestige-entry-gate arm --
+    /// prestige classes correctly stay unsupported here, since no BAB/save
+    /// chassis exists for them to fold into a total save or combat
+    /// baseline.
+    #[test]
+    fn a_prestige_class_id_still_fails_the_gate() {
+        assert!(!has_supported_class_chassis(&single_class("class:arcane_archer", 5)));
+    }
+
+    /// The real deliverable for the nine classes this cycle also gave a
+    /// real `CLASS_WEAPON_PROFICIENCIES` row (`weapon_tables.rs`): every
+    /// one of the four integration blockers is gone, and the receipt
+    /// reaches `Computed` for real -- the same two-part proof
+    /// `gunslinger_alone_reaches_computed_status` established for UC.
+    #[test]
+    fn the_nine_classes_with_a_real_proficiency_row_reach_computed() {
+        for class_id in [
+            "class:kineticist", "class:medium", "class:mesmerist", "class:occultist",
+            "class:vigilante", "class:psychic", "class:spiritualist", "class:psion",
+            "class:shifter",
+        ] {
+            let receipt = build_pilot_headless_receipt(&single_class(class_id, 1));
+            let blocking: Vec<String> = receipt
+                .computation
+                .diagnostics
+                .iter()
+                .filter(|d| d.claim_blocking)
+                .map(|d| d.id.clone())
+                .collect();
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "{class_id} level 1 must reach Computed, blockers: {blocking:?}"
+            );
+        }
+    }
+
+    /// The remaining 18 (27 minus the 9 above minus Antipaladin, which sits
+    /// in the same registry but was not paired with a weapon-proficiency
+    /// row this cycle either) still honestly carry
+    /// `combat.baseline_weapon_proficiency_unknown` -- the gate fix alone
+    /// does not fabricate a proficiency answer nothing was ingested for.
+    #[test]
+    fn a_class_without_a_new_proficiency_row_still_reports_proficiency_unknown() {
+        let receipt = build_pilot_headless_receipt(&single_class("class:magus", 1));
+        assert_ne!(receipt.status, HeadlessReceiptStatus::Computed);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "combat.baseline_weapon_proficiency_unknown" && d.claim_blocking),
+            "{:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.claim_blocking
+                    && (d.id == "class_chassis.unsupported"
+                        || d.id == "combat.baseline_unsupported"
+                        || d.id == "defense.total_save.unsupported"
+                        || d.id == "skill.selected_modifier.unsupported")),
+            "the chassis-gate blockers specifically must be gone even though the class is \
+             still Blocked overall: {:?}",
+            receipt.computation.diagnostics
         );
     }
 }

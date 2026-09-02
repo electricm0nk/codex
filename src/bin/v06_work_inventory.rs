@@ -15304,16 +15304,18 @@ fn main() {
     // nothing, classifies nothing, moves no unit.
     if args.iter().any(|a| a == "--class-probe") {
         let fixture = load_probe_fixture(&repo_root);
-        let mut modelled: BTreeSet<String> = BTreeSet::new();
-        for id in ClassId::ALL {
-            modelled.insert(crb_class_name(*id).to_string());
-        }
-        for id in ApgClassId::ALL {
-            modelled.insert(id.name().to_string());
-        }
-        for id in AcgClassId::ALL {
-            modelled.insert(id.name().to_string());
-        }
+        // SD-34 wave 33 lane C: this used to reconstruct only
+        // ClassId+ApgClassId+AcgClassId (27 classes) -- a stale subset that
+        // predated `modelled_class_books()`'s later UC/PU/untabled-base-
+        // class/prestige/NPC widenings and silently never probed any of
+        // them, so the CLI's own ceiling report was blind to exactly the
+        // population `main()`'s real classification runs against. Reusing
+        // `modelled_class_books()` (the same set `classify`'s `Kind::Class`
+        // arm builds `EngineFacts` from) is the fix: the probe that reports
+        // "27 examined, 27 wired" while never calling `probe_class_name` on
+        // the other 44 is the "reports success without executing anything"
+        // failure shape this instrument must not repeat.
+        let modelled: BTreeSet<String> = modelled_class_books().keys().cloned().collect();
         let outcomes = probe_class_effect_wiring(&fixture, &modelled);
         print!("{}", class_probe_ceiling_report(&outcomes));
         return;
@@ -24585,6 +24587,56 @@ mod class_probe_tests {
         let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "class_absent_from_ClassId_ALL_and_book_class_id_enums");
+    }
+
+    /// SD-34 wave 33 lane C: the class consumer-delta probe, run against the
+    /// FULL `modelled_class_books()` set (71 classes, not the CLI's former
+    /// 27-class stale subset -- see `--class-probe`'s own fix note), must
+    /// observe a real `Wired` outcome for every one of the nine classes this
+    /// cycle gave both a `has_supported_class_chassis` gate arm AND a real
+    /// `CLASS_WEAPON_PROFICIENCIES` row. This is `classify`'s own
+    /// `Kind::Class` arm's grounding condition, exercised end to end.
+    #[test]
+    fn nine_classes_are_now_probe_observed_wired_against_the_full_modelled_set() {
+        let fixture = fixture();
+        let class_books = modelled_class_books();
+        let modelled: BTreeSet<String> = class_books.keys().cloned().collect();
+        let baseline = class_probe_baseline_numbers(&fixture);
+        for name in [
+            "kineticist", "medium", "mesmerist", "occultist", "vigilante", "psychic",
+            "spiritualist", "psion", "shifter",
+        ] {
+            assert!(class_books.contains_key(name), "{name} must be in modelled_class_books()");
+            let outcome = probe_class_name(&fixture, name, &modelled, baseline.as_ref());
+            assert!(
+                matches!(outcome, ClassProbeOutcome::Wired { .. }),
+                "{name} must now be observed Wired, got {outcome:?}"
+            );
+        }
+    }
+
+    /// The ten prestige classes in bucket D's 38-unit remainder correctly
+    /// stay unwired: `prestige_class_entry_gate` deliberately returns no
+    /// chassis magnitude, so `has_supported_class_chassis` was NOT widened
+    /// for them (see that gate's own doc comment) and the probe must keep
+    /// reporting them un-grounded rather than silently promoting them.
+    #[test]
+    fn the_ten_prestige_classes_stay_unwired() {
+        let fixture = fixture();
+        let class_books = modelled_class_books();
+        let modelled: BTreeSet<String> = class_books.keys().cloned().collect();
+        let baseline = class_probe_baseline_numbers(&fixture);
+        for name in [
+            "arcane archer", "arcane trickster", "assassin", "dragon disciple", "duelist",
+            "eldritch knight", "loremaster", "mystic theurge", "pathfinder chronicler",
+            "shadowdancer",
+        ] {
+            let outcome = probe_class_name(&fixture, name, &modelled, baseline.as_ref());
+            assert!(
+                !matches!(outcome, ClassProbeOutcome::Wired { .. }),
+                "{name} (prestige, no chassis by design) must stay unwired, got {outcome:?}"
+            );
+        }
     }
 }
 
