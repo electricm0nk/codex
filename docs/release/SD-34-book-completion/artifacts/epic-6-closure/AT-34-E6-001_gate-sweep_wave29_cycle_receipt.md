@@ -208,4 +208,4 @@ already named by prior waves, and confirmed here neither new nor grown. The bar 
 smallest of any full sweep on record for this bundle (3, down from the review's original 14 and
 wave-28's own 5).
 
-**Commit at receipt time:** (filled in at commit)
+**Commit at receipt time:** `025c458b38` (`tranche/14`, pushed).
