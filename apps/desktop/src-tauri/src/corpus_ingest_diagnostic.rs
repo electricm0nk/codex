@@ -1493,7 +1493,19 @@ mod tests {
             // as the RED-branch note above) against `live_on_disk_record_count`
             // (`1271`) with `reported` unchanged (`127`), `1271 - 127 = 1144`. +7 more
             // T12 census/class-feature-lane corpus growth, not a new defect.
-            ("pathfinder_unchained", "pathfinder_unchained", 1144u32),
+            // 1144 -> 1140 by SD-34 `AT-34-E6-001` gate-lane-B (2026-09-01), settling
+            // the wave-27/wave-28 desktop contradiction: `AT-34-E6-001` gate-lane-A's
+            // own `e5fd8dddb1` (2026-08-31) fixed the PU equipmods dup-key generator
+            // and deleted 4 stale flat `equipment_modifier` records, moving the live
+            // on-disk walk from 1271 to 1267 (`find data/corpus/pathfinder_unchained
+            // -name '*.json' | grep -v LICENSE.json | grep -v '/_' | wc -l` = 1267,
+            // independently re-derived this cycle). `reported` (127, from
+            // `pathfinder_unchained_counts()`) is unchanged -- no `rules_tables`
+            // module touched by that commit -- so `1267 - 127 = 1140`. This is the
+            // SAME defect wave-27 lane C already named and explicitly left for
+            // lane B/desktop's own territory to fix (`AT-34-E6-001_gate-lane-c_
+            // wave27_cycle_receipt.md:154`), not a new drift.
+            ("pathfinder_unchained", "pathfinder_unchained", 1140u32),
         ] {
             let response = build_corpus_ingest_diagnostic();
             let book = response
