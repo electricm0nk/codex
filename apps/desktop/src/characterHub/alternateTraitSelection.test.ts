@@ -65,6 +65,8 @@ const MENU: AlternateRacialTraitsResponse = {
       alternates: [alternate({ key: 'Half-Elf ~ Dual Minded', name: 'Dual Minded' })],
     }),
   ],
+  adoptiveParentageOptions: [],
+  adoptedRaceOptions: [],
   diagnostics: [],
   findings: [],
 };
@@ -321,6 +323,8 @@ function aRowsSentenceIsTheOneRenderedForWhoeverTheResolutionNamed() {
         ],
       }),
     ],
+    adoptiveParentageOptions: [],
+    adoptedRaceOptions: [],
     diagnostics: [],
     findings: [],
   };
