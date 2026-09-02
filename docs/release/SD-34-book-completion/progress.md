@@ -11,6 +11,50 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 32, Lane A — the last two `scripts/verify.sh` FAILs closed, 40/40 confirmed live — complete
+
+**Status: complete.** Assigned population: the two named FAILs from wave 31's sweep (38 PASS / 2
+FAIL of 40) — `site-dashboard-check` and `denominator-gate` (`violations=3` of
+`files_checked=149`). Receipt:
+`artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave32_cycle_receipt.md`. Fix commit
+`e158f8af04`, receipt commit `8782669226`.
+
+**`site-dashboard-check`.** The published `site/dashboard/PF1e-dashboard.json` was genuinely
+stale (`generated_at: 2026-08-24T22:17:30Z`, 8 days behind `docs/work-inventory.json`'s last real
+touch). Regenerated via `./scripts/publish-site-dashboard.sh` (38.2s). **Diffed before
+committing, per this cycle's own brief**, because this artifact class has destroyed data before:
+all 49,438 unit rows survive across all 19 kind-shards with identical names/fields (re-derive:
+`python3 -c "import json,glob; print(sum(len(json.load(open(f))['rows']) for f in
+glob.glob('site/dashboard/units/*.json')))"` → `49438`, matched before and after); no license/PI/
+`raw_tokens` loss (this artifact carries no raw corpus text — the 17 pre-regen `license`/
+`raw_tokens` hits are a benign `"license": "OGL"` manifest-item string and plain retrospective
+prose, both unchanged in kind). What moved (`work_inventory.by_doneness_kind`,
+`mandate_headline.done: 15034 → 23338`) is a pass-through of `docs/work-inventory.json`'s own
+8-day-newer snapshot, not something this regeneration did — both changed figures are increases,
+consistent with the bundle's own closure work over that window, not loss in either direction.
+
+**`denominator-gate`, `violations=3` of `files_checked=149`.** Fixed all three named hits: two
+`99% CPU` → `99% of 1 CPU core` (with a same-line re-derive command) in
+`AT-34-E6-001_gate-lane-b_wave26_cycle_receipt.md:138`/`:153`, and this file's own then-line-33
+bare margin percentage (drifted to line 127 by prior prepends — the repo won over the brief's
+stale line reference, noted rather than followed silently) rewritten to state its denominator and
+a same-line re-derive command: `` `python3 -c 'print(round((950-757)/757*100, 1))'` `` → a margin
+of 25.5% of the 757s baseline. Not
+satisfied with the words "same run" (carries no digit, would not have cleared the gate). This
+edit repairs an existing line's own provenance in place — a correction, not a new claim — per
+this cycle's own explicit permission for `progress.md`'s prepend-only rule.
+
+**Full `scripts/verify.sh`, run twice.** Run 1 (before this cycle's own receipt existed) hit a
+self-inflicted `figure-provenance` FAIL from the receipt's own draft (an unreachable-command cell)
+— caught before `root-full`, fixed, re-run clean rather than reported as a regression. **Run 2, at
+the rebased commit `e158f8af04`: 40 PASS / 0 FAIL, `RESULT: PASS`, 1h51m32s** (`docs/retro/events/
+sd31-transcribe.jsonl`'s own auto-emitted line: `"duration_seconds": 6692`). Diffed stage-by-stage
+against the wave-31 baseline (`AT-34-E6-001_gate-lane-c_wave31_cycle_receipt.md`, 38 PASS / 2
+FAIL): every one of those 38 stages is still PASS with matching figures (`root-full` 8372/589/543
+tests/*.rs suites, `desktop` 572, `reach` 31, `corpus-sweep` 48706, `corpus-trap-audit`'s defect
+counts all unchanged, `clippy` 0/0) — **zero regressions**, and the two named FAILs are now PASS.
+`kanban.md` not touched, matching every prior gate-lane wave's own precedent.
+
 ### Cycle — Wave 32, Lane C (mine bucket D) — instrument fix landed, zero bucket-D content closures, full mechanism enumeration — partial
 
 **Status: partial.** Re-derived bucket D fresh at the branch tip:
