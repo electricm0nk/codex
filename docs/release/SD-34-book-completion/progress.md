@@ -11,6 +11,63 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 38, lane B — sub-mechanism 5's top-2 classes scope-checked, not bounded — complete, 0 units closed
+
+**Status: complete (0 units closed, honestly reported).**
+`artifacts/bucket-d-mining/wave38_laneB_submech5_top2_class_chassis_scope_check_cycle_receipt.md`.
+
+Dispatched to pick sub-mechanism 5's largest class group (re-derived fresh:
+still `634` units / `60` classes, unchanged from wave 37) and build a real,
+bounded BAB/save-plus-feature-magnitude chassis for it, or stop and report
+honestly if the scope turned out larger. Investigated both of the top two
+groups in full:
+
+- **`divine_scion`** (45 units, `inner_sea_magic` — corrects wave 37 lane
+  B's own receipt, which named `adventurers_guide`): every one of the 45
+  units is magnitude-bearing (0 zero-magnitude), and 34 of them are each a
+  *different* domain-specific spell-like-ability grant (Air→Fly, etc.) — a
+  34-variant subsystem, not "the specific feature magnitude this shape
+  needs" the dispatch brief anticipated. Genuinely Epic 4/5 scope.
+- **`phrenic_slayer`** (43 units, `ultimate_psionics`): its cheap 31-unit
+  zero-magnitude subset (Favored Enemy creature-type choices) turns out to
+  be independently, correctly blocked by an already-shipped safety gate —
+  every one of the 31 corpus records carries a house-rule-branched second
+  `DESC:` row (`PRERULE:1,DisplayFullAbility`) this engine has no toggle
+  for, so `class_feature_pool_catalog.rs`'s multi-DESC refusal is right to
+  decline serving either variant. Its 12 magnitude-bearing records depend
+  on a prestige-class "prime manifesting stat" / manifester-level-stacking
+  mechanism `crb_untabled_class_chassis.rs`'s own doc comment already names
+  as deferred for 6 of CRB's 10 prestige classes — the same cross-cutting
+  gap, not a per-class chassis question.
+
+Explicitly checked and declined building a partial BAB/save-only chassis for
+either class: traced `v06_work_inventory.rs`'s owner-resolved branch and
+confirmed it would close **zero** of the 88 units (same "owner resolves,
+engine still doesn't hold the magnitude" outcome wave 37 lane B already
+proved for 151 `ranger_combat_style_feat` siblings) — shipping it would be
+real, untested surface area for a proven zero payoff, exactly the "rushing
+an incomplete chassis" this cycle's own brief warned against.
+
+**Wider finding, retro-logged as a correction**: an 8-class sample of
+sub-mechanism 5's other classes shows the population is a MIX of at least 3
+disposition shapes (genuine prestige-class chassis gaps — majority;
+name-collision/no-class-record cases — `twilight_talon`,
+`golden_legionnaire`, no `data/corpus/*/class/*.json` record exists at all;
+`TYPE` mismatches — `phantom` files as `TYPE:Monster`, `psychic_detective`
+carries no `TYPE`), not the single uniform "real new chassis needed per
+class" shape wave 37 lane B's own receipt used. Named as real next-cycle
+work: a full 60-class TYPE/MAXLEVEL/record-existence pass before any more
+"largest classes first" chassis cycles are dispatched.
+
+No `src/`, `scripts/`, or `data/corpus/**` file touched this cycle.
+`completion_atlas.py --check` unchanged: `population=49438 D=2661
+DONE=25244` before and after. Movement: closure 0, reclassification 0,
+reachability 0, instrument-correction 1 + 1 deferral (both real blockers
+named precisely, revisit conditions stated). Worktree self-heal: started at
+the SD-33 PR #377 merge commit, far behind local `tranche/14`'s real tip,
+rebased cleanly before any analysis, matching wave 37's own precedent for
+the identical hazard.
+
 ### Cycle — Wave 38 lane A — `DomainPowerSpec` uses-per-day-formula override, Construct Subdomain's Animate Servant closed — complete
 
 **Status: complete.** Closed wave 37 lane A's own named next-cycle item: widened
