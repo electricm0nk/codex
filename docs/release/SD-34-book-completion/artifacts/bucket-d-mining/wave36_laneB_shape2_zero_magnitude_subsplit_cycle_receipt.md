@@ -3,10 +3,22 @@
 - **Commit SHA:** <filled after commit, see below>
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/bucket-d-mining/wave36_laneB_shape2_zero_magnitude_subsplit_cycle_receipt.md` (new, this file)
-  - `docs/release/SD-34-book-completion/progress.md` (prepended entry)
+  - `docs/release/SD-34-book-completion/progress.md` (prepended entry, one merge conflict resolved — see Notes)
   - `docs/release/SD-34-book-completion/kanban.md` (row 37 `mine-bucket-d` Notes cell appended)
-- **Identifier audit result:** OK_NO_BUNDLE_TAGS
-- **Wired-integration audit result:** OK_NO_TOKENS
+  - `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` (trailing `derived_at` freshness stamp, from the mandated `completion_atlas.py --check` re-run — no bucket count changed)
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS for this cycle's own diff (`git diff --unified=0
+  4379c9be05...HEAD -- <the 4 files above>`, this cycle's true starting point — zero matches).
+  The protocol's own wider window (`git merge-base HEAD origin/develop` = `ea2b3396f2`, spanning
+  every wave since) finds 48 matches, all pre-existing `sd13_`/`sd18_`/`sd27_`-shaped
+  cross-bundle test-name citations from wave 33's own baseline-count receipt (already landed,
+  not introduced by this cycle) — confirmed by diffing this cycle's own two commits in
+  isolation, which come back clean.
+- **Wired-integration audit result:** OK_NO_TOKENS for this cycle's own diff (isolated window,
+  zero matches). The wide protocol window finds 19 matches, all the literal word
+  `placeholder` inside legitimate, already-landed prose from earlier waves (e.g.
+  `vacuous_placeholder_reason`, "3 PCGen 'no selection' CHOOSE-menu placeholder rows" —
+  real, named, non-stub code/corpus concepts, not a stub marker) — none introduced by this
+  cycle's own two commits.
 - **Acceptance criterion:** No `AT-34-E#` card exists yet for this investigation (kanban row 37,
   `mine-bucket-d`, tracked under Epic 3, status `partial` since wave 32). This cycle's own
   assignment (wave 35 lane C's next-cycle plan item 2, `wave35_laneC_reconnaissance_cycle_receipt.md`
@@ -181,7 +193,10 @@ scope, which the brief named as the 17 `display`-class units specifically).
 - `git status --porcelain` clean before every write this cycle, in this cycle's own isolated
   worktree; no `git add -A`; `git diff --cached --numstat` read before committing.
 - Identifier and wired-integration audits (`workflow-instruction.md §6` step 2) run against
-  this cycle's own diff, scoped to the 3 files above: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+  this cycle's own diff, scoped to the 4 files above, both windows (this cycle's own two
+  commits, and the protocol's full `merge-base HEAD origin/develop` window): `OK_NO_BUNDLE_TAGS`,
+  `OK_NO_TOKENS` (see the two audit-result rows above for the wide window's own pre-existing,
+  not-introduced-here matches).
 
 ## Build scope verified
 
@@ -206,6 +221,19 @@ complete
 
 ## Notes
 
+- **Base-branch hazard caught mid-cycle.** This worktree's first rebase targeted
+  `origin/tranche/14`, per `workflow-instruction.md §5`'s own protocol — but that ref turned out
+  to be 3 commits **stale** (pinned at wave 33's `7ea9651b87`), three commits behind the real
+  local `tranche/14` branch tip (wave 35's own `4379c9be05`, unpushed to origin). No figure in
+  this receipt had actually gone stale as a result (Shape 2's own population is unchanged either
+  way), but the base itself was wrong, and a later wave working from a genuinely-changed shape
+  would have shipped a stale figure without knowing it. Re-rebased onto the local `tranche/14`
+  ref directly; this required resolving one real merge conflict in `progress.md` (both this
+  cycle's own prepend and the wave-35-wave-end-gate entry wanted the same insertion point —
+  resolved by placing this cycle's entry above wave 35's, newest-first, per the file's own
+  convention). Logged in `progress.md`'s own entry for the next lane: check both `origin/*` and
+  local refs before trusting "fresh", since `workflow-instruction.md §5` names only
+  `origin/tranche/14`.
 - The brief's own description of where Shape 2's evidence is emitted in
   `v06_work_inventory.rs` ("owner is found... but no record-specific magnitude id matched")
   did not match this cycle's own read of the code at the cited line range (12335-12337 is
