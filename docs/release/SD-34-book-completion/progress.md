@@ -11,6 +11,118 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 34 wave-end gate — 4 verify.sh failures fixed, full 40/40 confirmed — complete
+
+**Status: complete, verified.** Wave 34's three lanes (A/B/C, landed onto `tranche/14` as
+`c0141ea54b`/`375ba0267f`-family/`9918a577a2`, merged `1d0982b895`, plus a same-day pi-sweep
+comment fix at `3c4e25a77f`) left a full `scripts/verify.sh -j 6` run (log
+`/tmp/sd34-wave34-verify.log`) with 4 failures. All 4 fixed this cycle; a second full run
+confirmed **40/40 PASS** (log `/tmp/codex-verify-QyrOag`, `RESULT: PASS`).
+
+1. **site-dashboard-check (stale).** `site/dashboard/PF1e-dashboard.json` and `site/status-
+   data*` had not been regenerated after wave 34 shifted `docs/work-inventory.json`'s DONE/D
+   bucket counts. Fixed via `./scripts/publish-site-dashboard.sh`. Diff-checked before
+   committing: summed `site/dashboard/units/PF1e-units-*.json` row counts are 49438 both
+   before and after (every kind-shard, unchanged population), and
+   `git diff -- site/ | grep -nE '^[+-].*("license"|raw_tokens|pi_field|"pi_")'` found zero
+   changed lines. Only the class/class_feature/race_trait shards and the affected books'
+   status-data projections moved, matching wave 34's own bucket-movement figures. Commit
+   `235a5bc831`.
+
+2. **pi-sweep (stale, not re-fixed).** Already fixed at `3c4e25a77f` (a comment reworded so
+   it no longer trips the `weapon_tables.rs` blacklist match); the failing run had started
+   before that commit landed. Confirmed clean via `scripts/verify.sh --only pi-sweep
+   --show-actuals` -> `PASS pi-sweep (11 hits over src/rules_core/rules_tables, 11 baseline
+   rows)`. No code change needed.
+
+3. **clippy (1 new warning).** Wave 34 lane A's own new Samurai negative-control test in
+   `src/rules_core/pilot_compute/mod.rs` looped over a one-element array literal
+   (`clippy::single_element_loop`, line 76772). Fixed per clippy's own suggested diff:
+   destructures the `(SAMURAI_CLASS_ID, "samurai")` tuple directly instead of looping over
+   it. `cargo clippy --locked --tests -j 6` (scoped re-run) and the full verify.sh's own
+   `clippy` stage both now report `root:0 desktop:0 warnings, 0 errors`. Commit
+   `f4bee34397`.
+
+4. **root-full — 55 tests failed across 40 files, all Bard/Ranger/Rogue progression-slice
+   regression tests (the real one).** Root cause: wave 34 lane A legitimately grounds
+   `class_feature.{bard,fighter,paladin,ranger,rogue}.weapon_and_armor_proficiency` as a
+   real, level-independent, always-on +0 identity record (true since level 1, the same "no
+   gate to lift" idiom already used for Jack-of-All-Trades) --
+   `artifacts/bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_receipt.md`.
+   Bard, Ranger, and Rogue each carry older progression tests whose negative controls
+   assert that NO bounded `[class]`-namespaced explanation exists at all in a given scenario
+   (a level-21 probe past the tranche's character-level cap, or a multiclass Bard/Ranger/
+   Rogue at levels 9-20) -- correct assertions *before* this wave (no such record existed
+   yet) that are now simply too broad, since the new identity grant legitimately fires in
+   every one of those scenarios too. This is case (a) from the dispatch brief: a genuinely
+   correct new always-on explanation outrunning an old narrow assertion, **not** a real bug
+   -- the grant is real corpus-quoted text, value 0, fires identically regardless of level
+   or multiclass status, exactly as designed.
+
+   Confirmed **not** case (b) (a mis-firing bug) by reading the actual assertion shapes in
+   `tests/sd13_bard_level10_progression.rs` and `tests/sd18_bard_level11_inspire_widening.rs`:
+   the failing assertions are `e.id.starts_with("class_feature.bard.")`-style exhaustive
+   checks, and the new id (`class_feature.bard.weapon_and_armor_proficiency`) is exactly the
+   one new thing appearing in every failing scenario, with no duplication and no unrelated
+   ids appearing alongside it.
+
+   **Fighter and Paladin were unaffected** despite gaining the identical new grant, because
+   neither class has an equivalent exhaustive `class_feature.<class>.` namespace assertion
+   in its own test suite -- their negative controls only check the narrower
+   `class_chassis.<class>.` (numeric formula output) namespace, confirmed by
+   `grep -rn 'starts_with("class_feature\.fighter\.")' tests/sd13_fighter_*.rs
+   tests/sd18_fighter_*.rs` and the Paladin equivalent, both empty. Not a coverage gap this
+   cycle needed to close (out of scope, no card names it) -- just the reason the split
+   landed exactly on Bard/Ranger/Rogue and nowhere else.
+
+   Fixed by extending two shapes already established in this codebase for admitting a prior
+   always-on addition without weakening the underlying claim:
+   - `tests/sd13_bard_level{4,5,6,7,8}_progression.rs`'s `known_bard_ids` exhaustive allowlist
+     (already carries `caster_level`, `spontaneous.spell_level_access`, `suggestion_dc`, etc.
+     for the identical reason) gains `class_feature.bard.weapon_and_armor_proficiency`, with a
+     comment citing this wave and the receipt.
+   - The `*_is_not_promoted_by_this_slice` / `multiclass_*_is_not_promoted_by_this_slice`
+     negative controls (40 files total across `tests/sd13_*.rs` and `tests/sd18_*.rs`) each
+     gain a per-id exception clause for the new grant, mirroring Bard's own pre-existing
+     exception for `class_feature.bard.bardic_performance_execution.not_performing`
+     (Ranger/Rogue had no such exception clause before this cycle; one is added following the
+     identical pattern, scoped only to those two functions per file so the sibling
+     `fighter_does_not_gain_*_recognitionN` control -- which never observes the new id, since
+     it lives in a different class's namespace -- is untouched).
+
+   No assertion is weakened for any *other* id; each exception names exactly the one new,
+   real explanation id. Verified per-file: `cargo test --locked --no-fail-fast -j 6
+   --test <file>` for all 40 previously-FAILED files (`CARGO_TARGET_DIR=/tmp/cargo-sd34-
+   wave34-testfix`), 0 failed across all of them, re-confirmed by the full verify.sh re-run.
+   Commit `995222456c`.
+
+**Baseline housekeeping:** the confirming verify.sh run also flagged two stale (non-failing)
+test-count baselines from wave 34's own already-landed tests (not from this cycle's fixes,
+which added zero new `#[test]` functions): `BASELINE_ROOT_LIB_TESTS` 3032 -> 3043 (+11,
+measured via `cargo test --locked --lib -j 6`) and `BASELINE_ROOT_FULL_TESTS` 8387 -> 8400
+(+13, measured via `cargo test --locked --no-fail-fast -j 6`). Updated in
+`scripts/verify-baselines.env` per this bundle's own recurring convention.
+
+**Final measured figures**, `python3 scripts/completion_atlas.py --check`:
+`population=49438 buckets=10 unclassified=0 overlap=0` -- `DONE: 25027`, `D: 2891` (both
+unchanged by this cycle's own fixes, which touched no corpus/work-inventory data, only
+tests/CI/site infrastructure; these are the same post-wave-34 figures the lane A/B/C
+receipts already established).
+
+**Full gate result:** `scripts/verify.sh -j 6` (`CARGO_TARGET_DIR=/tmp/cargo-sd34-wave34-
+verify2`), duration 5926s (~1h39m, per `docs/retro/events/sd31-transcribe.jsonl`'s own
+`duration_seconds` field for this run's entry, `id` prefix
+`1788402726299-sd31-transcribe-150571`), **RESULT: PASS**, all 40/40 stages green, log
+`/tmp/codex-verify-QyrOag`.
+
+- **Commit SHAs (this cycle):** `f4bee34397` (clippy fix), `995222456c` (40-file test-
+  regression fix), `235a5bc831` (site-dashboard regen), plus this entry's own commit.
+- **Files touched:** `src/rules_core/pilot_compute/mod.rs` (clippy fix only, no behavior
+  change); 40 files under `tests/sd13_*.rs`/`tests/sd18_*.rs` (assertion allowlist/exception
+  additions only, no fixture or production-code change); `site/dashboard/**`,
+  `site/status-data*` (regenerated); `scripts/verify-baselines.env` (two stale baselines
+  raised); this file.
+
 ### Cycle — Wave 34 lane C — Ninja closed from wave 33 lane C's named 19-unit remainder, 1/19 — complete
 
 **Status: complete for 1 of 19; 18 named open, not escalated.** Searched each of wave 33 lane
