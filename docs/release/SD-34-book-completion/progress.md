@@ -116,6 +116,53 @@ final reported state exactly (`population=49438`, `D: 2662`, `DONE: 25242`,
 **Movement: closure 0, reclassification 0, reachability 0,
 instrument-correction 1** (the Sentinel Kind-retag hypothesis, refuted).
 
+### Cycle — Wave 37, Lane C — `/data/class` reliability audit vs. narrow owner-override, wave 36 lane C's Next-cycle-plan item 1 — complete (investigation only, 0 units closed)
+
+**Status: complete, honest zero-closure outcome.** Disposition trace, not a fix cycle. Full
+receipt: `artifacts/bucket-d-mining/wave37_laneC_class_field_reliability_disposition_cycle_receipt.md`.
+
+**Worktree self-heal:** assigned base was `ea2b3396f2`, **441 commits** behind `tranche/14`'s
+real local tip (`c1580ac9ba`) — `scripts/completion_atlas.py` did not even exist in the
+worktree pre-rebase. Rebased clean before any commit landed; retro-logged (`incident`,
+`recurrence_key: wrong-base-worktree`).
+
+**Population re-derived fresh: 17 magnitude-bearing units**, not the brief's own estimate —
+1 Undead Savant Subschool (Arcanist), 7 Dragon Shaman (Druid), 9 Plant Master Plant Focus
+(Hunter), filtered from `docs/work-inventory.json` on `evidence ==
+"class_feature_of_unmodelled_corpus_class:{undead,dragon,plant}"` AND `magnitude_token_count
+> 0` (the zero-magnitude siblings in the same three families were already promoted to
+`text-complete` by wave 36 lane C's own fix).
+
+**Path (a) — `/data/class` corpus-wide reliability — REJECTED, with a corpus-wide audit, not
+an anecdote.** Read all 18,074 `class_feature` corpus JSON files, grouped by `(book,
+archetype-subdir)`: **118 of 3,804 groups (3.10%) carry internally inconsistent `data.class`
+values** — a systemic pattern (10 separate "X Shaman" archetypes across 3 books show the
+identical Druid/Shaman split Dragon Shaman itself shows; self-referential archetype-name-as-
+class collisions span 13 distinct books), not limited to the 3 groups that motivated the
+question.
+
+**Path (b) — narrow per-group hardcoded owner override — right SHAPE, NOT implemented this
+cycle.** Traced the actual code path before writing anything: every one of the 17 units fails
+both `text_only` and the pool/standalone catalog holds-check, the exact two preconditions
+`class_feature_owner_via_pool_catalog`'s own doc comment proves are required for a recovered
+owner to ever move a verdict past `engine-does-not-hold` — so resolving owner here changes
+ONLY the evidence string, never the `status`/bucket. **Zero bucket movement**, the identical
+verdict wave 36 lane C's own receipt already reached for the PaDFE Construct/Ooze/Undead
+finding and declined to fix for the same reason. Root cause for all three groups is also now
+traced to one shared defect: the same "no space before `ClassFeatures`" `type_facet` glue
+issue wave 36 lane C named for Undead Savant Subschool alone, confirmed present in Dragon
+Shaman (6 of 9 records) and Plant Master's own pool members too.
+
+**Named precisely for a dedicated future wave** (exact 3-entry override table, insertion
+point, and expected zero-movement outcome all specified in the receipt) — bundled with wave 36
+lane C's own PaDFE fix, since both are the same class of "correct a misattribution, zero
+bucket movement" cleanup.
+
+**Movement: closure 0, reclassification 0, reachability 0, instrument-correction 1** (the
+brief's implicit assumption that resolving owner matters for bucket movement — traced and
+found false, retro-logged as a `deferral`). `population=49438`, `D: 2662` (unchanged — no code
+touched this cycle).
+
 ### Cycle — Wave 36 wave-end gate — stale dashboard + stale test-count baseline fixed, full 40/40 confirmed — complete
 
 **Status: complete, verified.** All three wave 36 lanes (A, B, C) merged onto `tranche/14`
