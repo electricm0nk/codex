@@ -6503,6 +6503,30 @@ const STRENGTH_DOMAIN_SELECTION: &str = "domain:strength";
 // Good/War/Strength already establish.
 const DESTRUCTION_DOMAIN_SELECTION: &str = "domain:destruction";
 const GLORY_DOMAIN_SELECTION: &str = "domain:glory";
+// SD-34 wave 37 lane A (bucket D's "domain-vs-class_feature dual-
+// representation" mechanism gap, `wave36_laneC_creature_type_collision_
+// disposition_cycle_receipt.md` next-cycle plan item 5): Undead Subdomain's
+// Death's Kiss, the first APG SUBDOMAIN (not a base CRB domain) ever added to
+// this catalog. Confirmed a real, legal Cleric/Inquisitor subdomain by direct
+// corpus read (`data/corpus/advanced_players_guide/domain/undead_subdomain.json`'s
+// own `PREMULT` gate: `[PREDOMAIN:1,Undead Subdomain],[PREVARLT:DeathDomain,1]`
+// -- selectable once Death Domain is available, the same substitution shape
+// every APG subdomain uses). Unlike every domain this catalog already grounds,
+// Death's Kiss's own `DESC` formula slot is NOT a flat combat/skill/save
+// bonus -- it is the power's EFFECT DURATION in rounds ("touched creatures are
+// treated as undead ... for %1 rounds"), so `DOMAIN_POWER_CATALOG`'s shared
+// "a +{magnitude} {label} {duration}" sentence would misrepresent a round
+// count as a game bonus. `DomainPowerSpec::grounds_self_application` (added
+// alongside this entry) is `false` here, so this spec's `magnitude_formula`
+// is transcribed and byte/parse-verified by this module's own
+// `fixture_check_tests` but never surfaced as a "self_application"/
+// "not_active" explanation -- only its real, honestly-labeled uses-per-day
+// (the shared, corpus-proven `3+WIS` chain, see below) is ever computed and
+// reported, exactly the same discipline Good's own doc comment uses for
+// declining to model granting a bonus to another creature: refuse to claim
+// what would be a plausible-looking but wrong number, rather than fabricate
+// one.
+const UNDEAD_SUBDOMAIN_SELECTION: &str = "domain:undead_subdomain";
 
 /// v0.6 alpha swarm, risks item 8 (Cleric Good domain closure, generalized
 /// task #64 to every real base class whose own domain-choice class feature
@@ -6569,6 +6593,13 @@ const DESTRUCTIVE_SMITE_ABILITY_ID: &str = "destructive_smite";
 /// id, the `domain_power::DOMAIN_POWER_CATALOG` sibling of
 /// `TOUCH_OF_GOOD_ABILITY_ID`.
 const TOUCH_OF_GLORY_ABILITY_ID: &str = "touch_of_glory";
+/// SD-34 wave 37 lane A: Undead Subdomain's Death's Kiss self-application
+/// activation id, the `domain_power::DOMAIN_POWER_CATALOG` sibling of
+/// `TOUCH_OF_GOOD_ABILITY_ID` -- kept even though `grounds_self_application`
+/// is `false` for this spec (no activation state is ever read for it in
+/// production), so a future cycle that DOES honestly ground its duration
+/// effect has a stable, already-reserved id to activate against.
+const DEATH_S_KISS_ABILITY_ID: &str = "death_s_kiss";
 
 // PF1 Core Rulebook Domains: a cleric gains one domain spell slot per level of
 // cleric spells she can cast, 1st and up. At levels 1-2 this bounded seam supports
@@ -16019,58 +16050,66 @@ fn ground_or_block_inquisitor_domain_power(
         return;
     };
 
-    let magnitude = domain_power_magnitude(spec, inquisitor_level, &AbilityModifiers::default());
-    let activation = input
-        .chosen
-        .class_ability_activations
-        .iter()
-        .find(|activation| activation.ability_id == spec.ability_id);
-    match activation.map(|activation| activation.active_state) {
-        Some(ActiveState::EquippedActive) => {
-            explanations.push(ComputationExplanation {
-                id: domain_power_explanation_id(spec, "self_application"),
-                value: magnitude,
-                detail: format!(
-                    "Inquisitor level {inquisitor_level}, whose Domain class feature selected \
-                     {domain} (PF1 Advanced Player's Guide Domain: an inquisitor gains ONLY that \
-                     domain's powers, never its bonus spells), is actively using {power} on \
-                     HERSELF, SELF-APPLICATION ONLY: a +{magnitude} {label} {duration}. \
-                     {power_specific}Granting this bonus to ANOTHER creature is NOT modeled: no \
-                     target-creature entity exists anywhere in this codebase.",
-                    domain = spec.domain_display_name,
-                    power = spec.granted_power_name,
-                    label = spec.magnitude_label,
-                    duration = spec.effect_duration_phrase,
-                    power_specific = if spec.selection_id == GOOD_DOMAIN_SELECTION {
-                        "The +{magnitude} bonus is applied to her own baseline melee attack \
-                         bonus, selected-skill modifiers, and total saves (see \
-                         compute_combat_baseline, compute_selected_skill_modifiers, \
-                         compute_total_saves); the ability-check facet has no separate \
-                         integrated total in this codebase and stays a flat, unintegrated \
-                         magnitude. "
-                    } else {
-                        "This grounds only the flat magnitude; it is not integrated into any \
-                         other computed total (melee damage, combat maneuver, or ability-check \
-                         totals) anywhere in this codebase. "
-                    },
-                ),
-            });
-        }
-        _ => {
-            explanations.push(ComputationExplanation {
-                id: domain_power_explanation_id(spec, "not_active"),
-                value: 0,
-                detail: format!(
-                    "Inquisitor level {inquisitor_level} is not currently using {power} (no \
-                     active class_ability_activations entry for \"{ability_id}\"): a genuinely \
-                     valid PF1 posture -- not every {domain}-domain Inquisitor is using this \
-                     limited-use power at every moment -- so no {label} is claimed",
-                    power = spec.granted_power_name,
-                    ability_id = spec.ability_id,
-                    domain = spec.domain_display_name,
-                    label = spec.magnitude_label,
-                ),
-            });
+    // SD-34 wave 37 lane A: mirrors Cleric's own `grounds_self_application`
+    // guard (see `explain_cleric_level1_spell_baseline`'s own comment) --
+    // `false` for a catalog entry whose corpus formula is an effect DURATION
+    // rather than a flat bonus (Undead Subdomain's Death's Kiss), so this
+    // block never emits a "+{magnitude}" sentence that would misrepresent a
+    // round count as a game bonus. Unchanged for every pre-existing entry.
+    if spec.grounds_self_application {
+        let magnitude = domain_power_magnitude(spec, inquisitor_level, &AbilityModifiers::default());
+        let activation = input
+            .chosen
+            .class_ability_activations
+            .iter()
+            .find(|activation| activation.ability_id == spec.ability_id);
+        match activation.map(|activation| activation.active_state) {
+            Some(ActiveState::EquippedActive) => {
+                explanations.push(ComputationExplanation {
+                    id: domain_power_explanation_id(spec, "self_application"),
+                    value: magnitude,
+                    detail: format!(
+                        "Inquisitor level {inquisitor_level}, whose Domain class feature selected \
+                         {domain} (PF1 Advanced Player's Guide Domain: an inquisitor gains ONLY that \
+                         domain's powers, never its bonus spells), is actively using {power} on \
+                         HERSELF, SELF-APPLICATION ONLY: a +{magnitude} {label} {duration}. \
+                         {power_specific}Granting this bonus to ANOTHER creature is NOT modeled: no \
+                         target-creature entity exists anywhere in this codebase.",
+                        domain = spec.domain_display_name,
+                        power = spec.granted_power_name,
+                        label = spec.magnitude_label,
+                        duration = spec.effect_duration_phrase,
+                        power_specific = if spec.selection_id == GOOD_DOMAIN_SELECTION {
+                            "The +{magnitude} bonus is applied to her own baseline melee attack \
+                             bonus, selected-skill modifiers, and total saves (see \
+                             compute_combat_baseline, compute_selected_skill_modifiers, \
+                             compute_total_saves); the ability-check facet has no separate \
+                             integrated total in this codebase and stays a flat, unintegrated \
+                             magnitude. "
+                        } else {
+                            "This grounds only the flat magnitude; it is not integrated into any \
+                             other computed total (melee damage, combat maneuver, or ability-check \
+                             totals) anywhere in this codebase. "
+                        },
+                    ),
+                });
+            }
+            _ => {
+                explanations.push(ComputationExplanation {
+                    id: domain_power_explanation_id(spec, "not_active"),
+                    value: 0,
+                    detail: format!(
+                        "Inquisitor level {inquisitor_level} is not currently using {power} (no \
+                         active class_ability_activations entry for \"{ability_id}\"): a genuinely \
+                         valid PF1 posture -- not every {domain}-domain Inquisitor is using this \
+                         limited-use power at every moment -- so no {label} is claimed",
+                        power = spec.granted_power_name,
+                        ability_id = spec.ability_id,
+                        domain = spec.domain_display_name,
+                        label = spec.magnitude_label,
+                    ),
+                });
+            }
         }
     }
 
@@ -16095,21 +16134,37 @@ fn ground_or_block_inquisitor_domain_power(
         ),
     });
 
+    // SD-34 wave 37 lane A: the real corpus `DEFINE` token concatenates a
+    // multi-word domain display name with no space (`Undead Subdomain` ->
+    // `InquisitorDomainUndeadSubdomain`, confirmed by direct corpus read of
+    // `inquisitor_domains.json`) -- every pre-existing catalog entry's own
+    // `domain_display_name` happens to be a single word, so this is the
+    // first spec where blindly interpolating a space into the token name
+    // would cite a token that does not exist.
+    let define_token_domain = spec.domain_display_name.replace(' ', "");
+    let grounded_facets = if spec.grounds_self_application {
+        "bonus magnitude, self-application state, and uses-per-day count"
+    } else {
+        // Death's Kiss shape: its own corpus formula is an effect DURATION,
+        // not a flat bonus -- only its honestly-computed uses-per-day count
+        // is grounded (see `grounds_self_application`'s own doc comment).
+        "uses-per-day count only (its own corpus formula is an effect \
+         duration, not a flat bonus, so no bonus magnitude is claimed)"
+    };
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.inquisitor.domain_powers.unsupported".to_owned(),
         message: format!(
             "Inquisitor's remaining Domain class-feature granted-power burden is named but no \
-             longer claim-blocking: the {domain} domain's {power} (bonus magnitude, \
-             self-application state, and uses-per-day count) IS grounded, and the corpus \
-             confirms {domain} is a real base-class Inquisitor domain (`advanced_players_guide/\
-             class_feature/inquisitor/inquisitor_domains.json` carries \
-             `DEFINE:InquisitorDomain{domain}|0`). So a {domain}-domain inquisitor's domain \
-             power is genuinely computed rather than deferred. Every domain not in \
-             `domain_power::DOMAIN_POWER_CATALOG` (Good, War, Strength, Destruction, Glory) \
-             remains entirely unproven and is still not claimed anywhere -- selecting one keeps \
-             this diagnostic claim-blocking (Path A canonical narrowing, 2026-07-29, widened \
-             SD-31 wave 25, widened again SD-31 wave 26, mirroring Cleric's own domain-power \
-             seam)",
+             longer claim-blocking: the {domain} domain's {power} ({grounded_facets}) IS \
+             grounded, and the corpus confirms {domain} is a real base-class Inquisitor domain \
+             (`advanced_players_guide/class_feature/inquisitor/inquisitor_domains.json` carries \
+             `DEFINE:InquisitorDomain{define_token_domain}|0`). So a {domain}-domain \
+             inquisitor's domain power is genuinely computed rather than deferred. Every domain \
+             not in `domain_power::DOMAIN_POWER_CATALOG` (Good, War, Strength, Destruction, \
+             Glory, Undead Subdomain) remains entirely unproven and is still not claimed \
+             anywhere -- selecting one keeps this diagnostic claim-blocking (Path A canonical \
+             narrowing, 2026-07-29, widened SD-31 wave 25, widened again SD-31 wave 26, \
+             widened again SD-34 wave 37, mirroring Cleric's own domain-power seam)",
             domain = spec.domain_display_name,
             power = spec.granted_power_name,
         ),
@@ -46848,50 +46903,63 @@ fn explain_cleric_level1_spell_baseline(
             // integrated into any other computed total (unlike Good's
             // bonus, which IS wired into melee attack/skill/save totals).
             for spec in &other_catalog_domains {
-                let magnitude = domain_power_magnitude(spec, cleric_level, ability_modifiers);
-                let activation = input
-                    .chosen
-                    .class_ability_activations
-                    .iter()
-                    .find(|activation| activation.ability_id == spec.ability_id);
-                match activation.map(|activation| activation.active_state) {
-                    Some(ActiveState::EquippedActive) => {
-                        explanations.push(ComputationExplanation {
-                            id: domain_power_explanation_id(spec, "self_application"),
-                            value: magnitude,
-                            detail: format!(
-                                "Cleric level {cleric_level}, whose Domain class feature \
-                                 selected {domain}, is actively using {power} on HERSELF, \
-                                 SELF-APPLICATION ONLY: a +{magnitude} {label} {duration}. This \
-                                 grounds only the flat magnitude; it is not integrated into any \
-                                 other computed total (melee attack, melee damage, skill, or \
-                                 save totals) anywhere in this codebase, unlike Good's own Touch \
-                                 of Good. Granting this bonus to ANOTHER creature is NOT \
-                                 modeled: no target-creature entity exists anywhere in this \
-                                 codebase.",
-                                domain = spec.domain_display_name,
-                                power = spec.granted_power_name,
-                                label = spec.magnitude_label,
-                                duration = spec.effect_duration_phrase,
-                            ),
-                        });
-                    }
-                    _ => {
-                        explanations.push(ComputationExplanation {
-                            id: domain_power_explanation_id(spec, "not_active"),
-                            value: 0,
-                            detail: format!(
-                                "Cleric level {cleric_level} is not currently using {power} (no \
-                                 active class_ability_activations entry for \"{ability_id}\"): a \
-                                 genuinely valid PF1 posture -- not every {domain}-domain Cleric \
-                                 is using this limited-use power at every moment -- so no \
-                                 {label} is claimed",
-                                power = spec.granted_power_name,
-                                ability_id = spec.ability_id,
-                                domain = spec.domain_display_name,
-                                label = spec.magnitude_label,
-                            ),
-                        });
+                // SD-34 wave 37 lane A: `grounds_self_application` gates the
+                // magnitude/activation-state block below -- `false` for a
+                // catalog entry whose corpus formula is NOT a flat combat/
+                // skill/save bonus (Undead Subdomain's Death's Kiss: its
+                // formula is the power's own effect DURATION in rounds, and
+                // the shared "a +{magnitude} {label} {duration}" sentence
+                // below would misrepresent a round count as a game bonus).
+                // Every pre-existing entry (Good's own special branch above,
+                // War/Strength/Destruction/Glory here) is a real flat bonus
+                // and keeps `grounds_self_application: true`, so this guard
+                // changes nothing for any of them.
+                if spec.grounds_self_application {
+                    let magnitude = domain_power_magnitude(spec, cleric_level, ability_modifiers);
+                    let activation = input
+                        .chosen
+                        .class_ability_activations
+                        .iter()
+                        .find(|activation| activation.ability_id == spec.ability_id);
+                    match activation.map(|activation| activation.active_state) {
+                        Some(ActiveState::EquippedActive) => {
+                            explanations.push(ComputationExplanation {
+                                id: domain_power_explanation_id(spec, "self_application"),
+                                value: magnitude,
+                                detail: format!(
+                                    "Cleric level {cleric_level}, whose Domain class feature \
+                                     selected {domain}, is actively using {power} on HERSELF, \
+                                     SELF-APPLICATION ONLY: a +{magnitude} {label} {duration}. This \
+                                     grounds only the flat magnitude; it is not integrated into any \
+                                     other computed total (melee attack, melee damage, skill, or \
+                                     save totals) anywhere in this codebase, unlike Good's own Touch \
+                                     of Good. Granting this bonus to ANOTHER creature is NOT \
+                                     modeled: no target-creature entity exists anywhere in this \
+                                     codebase.",
+                                    domain = spec.domain_display_name,
+                                    power = spec.granted_power_name,
+                                    label = spec.magnitude_label,
+                                    duration = spec.effect_duration_phrase,
+                                ),
+                            });
+                        }
+                        _ => {
+                            explanations.push(ComputationExplanation {
+                                id: domain_power_explanation_id(spec, "not_active"),
+                                value: 0,
+                                detail: format!(
+                                    "Cleric level {cleric_level} is not currently using {power} (no \
+                                     active class_ability_activations entry for \"{ability_id}\"): a \
+                                     genuinely valid PF1 posture -- not every {domain}-domain Cleric \
+                                     is using this limited-use power at every moment -- so no \
+                                     {label} is claimed",
+                                    power = spec.granted_power_name,
+                                    ability_id = spec.ability_id,
+                                    domain = spec.domain_display_name,
+                                    label = spec.magnitude_label,
+                                ),
+                            });
+                        }
                     }
                 }
                 let wisdom_modifier = ability_modifier(input.chosen.ability_scores.wisdom);
@@ -59822,10 +59890,10 @@ mod cleric_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, AcquisitionMode, ActiveState, BATTLE_RAGE_ABILITY_ID,
         CharacterClassLevel, CharacterInput, CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID,
-        DESTRUCTION_DOMAIN_SELECTION, DESTRUCTIVE_SMITE_ABILITY_ID, FIGHTER_CLASS_ID,
-        GLORY_DOMAIN_SELECTION, GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION,
+        DEATH_S_KISS_ABILITY_ID, DESTRUCTION_DOMAIN_SELECTION, DESTRUCTIVE_SMITE_ABILITY_ID,
+        FIGHTER_CLASS_ID, GLORY_DOMAIN_SELECTION, GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION,
         HeadlessReceiptStatus, STRENGTH_DOMAIN_SELECTION, TOUCH_OF_GLORY_ABILITY_ID,
-        TOUCH_OF_GOOD_ABILITY_ID, WAR_DOMAIN_SELECTION,
+        TOUCH_OF_GOOD_ABILITY_ID, UNDEAD_SUBDOMAIN_SELECTION, WAR_DOMAIN_SELECTION,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice, SpellSelection,
@@ -60298,6 +60366,56 @@ mod cleric_dispatch_widening_safety_tests {
             .expect("Touch of Glory self-application explanation must be grounded");
         // Glory domain magnitude: the bare cleric level, unhalved -- level 7 -> 7.
         assert_eq!(self_application.value, 7, "{self_application:?}");
+    }
+
+    /// SD-34 wave 37 lane A: a Cleric with Undead Subdomain reaches
+    /// `Computed` through the SAME generic loop as War/Strength/Destruction/
+    /// Glory -- the first APG SUBDOMAIN, not a base CRB domain, proven
+    /// through this seam. Only Death's Kiss's real, honestly-computed
+    /// uses-per-day is ever grounded: NEITHER a "self_application" NOR a
+    /// "not_active" explanation is emitted for it, regardless of whether an
+    /// activation entry is present -- `grounds_self_application: false`
+    /// (its own corpus formula is an effect duration in rounds, not a flat
+    /// bonus, so no "+{magnitude}" sentence is ever produced for it).
+    #[test]
+    fn single_class_cleric_with_undead_subdomain_reaches_computed_via_uses_per_day_only() {
+        let mut input = human_cleric_input_with_domains(4, &[UNDEAD_SUBDOMAIN_SELECTION]);
+        // Even WITH an activation entry present, no bonus explanation may be
+        // emitted -- proves the guard is unconditional, not merely "happens
+        // not to fire because nothing activated it".
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: DEATH_S_KISS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "{:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.domain.undead_subdomain_death_s_kiss_self_application"
+                    || e.id == "class_feature.domain.undead_subdomain_death_s_kiss_not_active"),
+            "Death's Kiss must never surface a self_application/not_active magnitude \
+             explanation (its corpus formula is a duration, not a bonus): {:?}",
+            receipt.computation.explanations
+        );
+        let uses_per_day = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.undead_subdomain_death_s_kiss_uses_per_day")
+            .expect("Death's Kiss uses-per-day explanation must be grounded");
+        // `human_cleric_input_with_domains`'s fixture Wisdom modifier is +1 -> 3 + 1 = 4.
+        assert_eq!(uses_per_day.value, 4, "{uses_per_day:?}");
     }
 
     /// A Cleric with an unrecognized domain (not Good or Healing) still
@@ -64686,15 +64804,15 @@ mod sorcerer_draconic_bloodline_dragon_resistances_ac_wiring_tests {
 mod inquisitor_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, FIGHTER_CLASS_ID, GLORY_DOMAIN_SELECTION, GOOD_DOMAIN_SELECTION,
-        INQUISITOR_CLASS_ID, INQUISITOR_DOMAIN_CHOICE_ID, INQUISITOR_JUDGMENT_ABILITY_ID,
-        INQUISITOR_JUDGMENT_CHOICE_ID,
+        DEATH_S_KISS_ABILITY_ID, HeadlessReceiptStatus, FIGHTER_CLASS_ID, GLORY_DOMAIN_SELECTION,
+        GOOD_DOMAIN_SELECTION, INQUISITOR_CLASS_ID, INQUISITOR_DOMAIN_CHOICE_ID,
+        INQUISITOR_JUDGMENT_ABILITY_ID, INQUISITOR_JUDGMENT_CHOICE_ID,
         INQUISITOR_JUDGMENT_DESTRUCTION_SELECTION_ID, INQUISITOR_JUDGMENT_HEALING_SELECTION_ID,
         INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID, INQUISITOR_JUDGMENT_PIERCING_SELECTION_ID,
         INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID, INQUISITOR_JUDGMENT_PURITY_SELECTION_ID,
         INQUISITOR_JUDGMENT_RESILIENCY_SELECTION_ID, INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID,
         INQUISITOR_JUDGMENT_SMITING_SELECTION_ID, TOUCH_OF_GLORY_ABILITY_ID,
-        TOUCH_OF_GOOD_ABILITY_ID,
+        TOUCH_OF_GOOD_ABILITY_ID, UNDEAD_SUBDOMAIN_SELECTION,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
@@ -65580,6 +65698,60 @@ mod inquisitor_dispatch_widening_safety_tests {
             self_application.value, 9,
             "Inquisitor level 9 Touch of Glory bonus: the bare level, unhalved = 9: \
              {self_application:?}"
+        );
+    }
+
+    /// SD-34 wave 37 lane A: an Inquisitor who selected Undead Subdomain (a
+    /// real, legal Inquisitor domain -- `advanced_players_guide/class_feature/
+    /// inquisitor/inquisitor_domains.json` carries
+    /// `DEFINE:InquisitorDomainUndeadSubdomain|0`, confirmed by direct corpus
+    /// read) reaches `Computed` through the SAME generic catalog loop, but
+    /// -- unlike every domain above -- Death's Kiss's own `grounds_self_
+    /// application: false` means NO "self_application"/"not_active" bonus
+    /// explanation is ever emitted for it, even with an activation entry
+    /// present: only its real uses-per-day is grounded.
+    #[test]
+    fn single_class_inquisitor_with_undead_subdomain_grounds_uses_per_day_only() {
+        let mut input = human_inquisitor_input(4);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_DOMAIN_CHOICE_ID.to_owned(),
+            selection_id: UNDEAD_SUBDOMAIN_SELECTION.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: DEATH_S_KISS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "with Undead Subdomain recorded, Inquisitor's remaining gaps are named without \
+             blocking: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.domain.undead_subdomain_death_s_kiss_self_application"
+                    || e.id == "class_feature.domain.undead_subdomain_death_s_kiss_not_active"),
+            "Death's Kiss must never surface a self_application/not_active bonus explanation \
+             for Inquisitor either: {:?}",
+            receipt.computation.explanations
+        );
+        let uses_per_day = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.undead_subdomain_death_s_kiss_uses_per_day")
+            .expect("Death's Kiss uses-per-day explanation must be grounded");
+        assert_eq!(
+            uses_per_day.value, 4,
+            "3 + WIS modifier (+1 from the fixture's WIS 12) = 4: {uses_per_day:?}"
         );
     }
 

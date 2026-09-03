@@ -11766,6 +11766,40 @@ fn classify(
                     };
                 }
             }
+            // `SD-34 wave 37 lane A` (bucket D's "domain-vs-class_feature
+            // dual-representation" mechanism gap, item 5 of wave 36 lane C's
+            // next-cycle plan): the SUBDOMAIN-keyed sibling of the `"Domain
+            // Power ~ <Power>"` check just above -- the SAME granted power
+            // ingested a SECOND time under its own subdomain's key (e.g.
+            // `"Undead Subdomain ~ Death's Kiss"`, a real, separate `.lst`
+            // line from `"Domain Power ~ Death's Kiss"`, confirmed by direct
+            // corpus read -- not a duplicate to collapse). Matched by the
+            // catalog's own `(domain_display_name, granted_power_name)` pair
+            // -- never by `feature` alone, which a direct corpus scan proved
+            // unsafe: `"Rage Power ~ Strength Surge"` (a Barbarian rage
+            // power) and `"Strength Blessing ~ Strength Surge"` (a Warpriest
+            // blessing) both collide with this catalog's own `"Strength
+            // Surge"` granted-power name under an UNRELATED group, so a bare
+            // feature-name match would wrongly credit both as Cleric/
+            // Inquisitor domain power.
+            if group != "Domain Power" {
+                let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
+                let matches_a_catalog_spec = domain_power::domain_power_catalog_group_and_power_names()
+                    .iter()
+                    .any(|(domain_display_name, granted_power_name)| {
+                        *domain_display_name == group && *granted_power_name == feature
+                    });
+                if matches_a_catalog_spec && facts.domain_power_effect_wired.contains(feature) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence:
+                            "domain_power_probe_observed_a_real_computed_magnitude_for_the_subdomain_record"
+                                .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+            }
             // `AT-34-E3-002` (bucket C continuation, cycle 3): the SIBLING
             // corpus shape to the `"Domain Power ~ <Power>"` check just
             // above -- the SAME granted power ingested a second time under
@@ -20950,6 +20984,62 @@ mod class_feature_text_complete_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_eq!(verdict.status, "grounded");
         assert_eq!(verdict.evidence, "domain_power_probe_observed_a_real_computed_magnitude");
+    }
+
+    /// SD-34 wave 37 lane A (bucket D's "domain-vs-class_feature dual-
+    /// representation" mechanism gap, item 5 of wave 36 lane C's next-cycle
+    /// plan): the SUBDOMAIN-keyed sibling of the `"Domain Power ~ *"` check
+    /// above -- `"Undead Subdomain ~ Death's Kiss"` is the SAME granted
+    /// power ingested a second time under its own subdomain's key (a real,
+    /// separate `.lst` line, confirmed by direct corpus read, not a
+    /// duplicate to collapse). Matched by the catalog's own
+    /// `domain_display_name`/`granted_power_name` pair
+    /// (`domain_power_catalog_group_and_power_names`), never by a bare
+    /// feature-name check: `"Rage Power ~ Strength Surge"` and `"Strength
+    /// Blessing ~ Strength Surge"` both collide with this catalog's own
+    /// `"Strength Surge"` granted-power name (confirmed by direct corpus
+    /// scan) -- a bare feature-name match would wrongly credit both.
+    #[test]
+    fn a_subdomain_keyed_sibling_of_a_domain_power_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.domain_power_effect_wired.insert("Death's Kiss".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1807,
+            "Undead Subdomain ~ Death's Kiss",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "domain_power_probe_observed_a_real_computed_magnitude_for_the_subdomain_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a bare feature-name collision must NOT be credited
+    /// -- `"Rage Power ~ Strength Surge"` (a real, separate corpus record,
+    /// `core_rulebook/class_feature/rage_power/strength_surge.json`, a
+    /// Barbarian rage power sharing only a NAME with the Cleric/Inquisitor
+    /// Strength domain's own granted power) must stay `engine-does-not-hold`
+    /// even when the probe genuinely observed `"Strength Surge"` via the
+    /// UNRELATED Strength-domain mechanism, proving the new check matches
+    /// the catalog's own `(domain_display_name, granted_power_name)` pair,
+    /// never the feature name alone.
+    #[test]
+    fn a_bare_feature_name_collision_with_a_different_group_is_not_credited() {
+        let mut facts = EngineFacts::default();
+        facts.domain_power_effect_wired.insert("Strength Surge".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_feats.lst",
+            1,
+            "Rage Power ~ Strength Surge",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_ne!(verdict.status, "grounded");
     }
 
     /// NEGATIVE CONTROL: a magnitude-bearing `"Domain Power ~ *"` record

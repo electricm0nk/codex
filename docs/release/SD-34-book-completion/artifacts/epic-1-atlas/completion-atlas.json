@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12986,
+        "line": 13020,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,18 +14,18 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12666,
+        "line": 12700,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 11771,
+      "count": 11770,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12891,
+        "line": 12925,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2662,
+      "count": 2661,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 25242,
+      "count": 25244,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13768,
+        "line": 13802,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "f5c698b72623b9c8a7fb5a8496ec9dc57d9cd4f6",
+  "derived_at": "c1580ac9ba36eb71088c54ea8cf0a3643ac2893a",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -189,7 +189,7 @@
       "class_feature_of_unmodelled_corpus_class:thrallherd": 19,
       "class_feature_of_unmodelled_corpus_class:twilight_talon": 17,
       "class_feature_of_unmodelled_corpus_class:ulfen_guard": 1,
-      "class_feature_of_unmodelled_corpus_class:undead": 12,
+      "class_feature_of_unmodelled_corpus_class:undead": 11,
       "class_feature_of_unmodelled_corpus_class:war_mind": 15,
       "class_feature_of_unmodelled_corpus_class:westcrown_devil": 11,
       "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 29,

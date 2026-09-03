@@ -352,6 +352,18 @@ pub(super) struct DomainPowerSpec {
     /// a plausible-looking but WRONG sentence, exactly the failure mode
     /// this seam exists to avoid.
     pub effect_duration_phrase: &'static str,
+    /// SD-34 wave 37 lane A: `true` when `magnitude_formula` is a flat
+    /// combat/skill/save bonus (every entry through SD-31 wave 26) -- `false`
+    /// when the corpus's own formula slot is something else entirely (Undead
+    /// Subdomain's Death's Kiss: an effect DURATION in rounds, not a bonus).
+    /// Gates the "self_application"/"not_active" explanation block in BOTH
+    /// `explain_cleric_level1_spell_baseline` and
+    /// `ground_or_block_inquisitor_domain_power` -- when `false`, neither
+    /// call site ever interpolates `magnitude_formula`'s value into the
+    /// shared "a +{magnitude} {label} {duration}" sentence (which would
+    /// misrepresent a round count as a game bonus); only this power's real,
+    /// honestly-labeled uses-per-day is ever computed and reported for it.
+    pub grounds_self_application: bool,
     // Provenance-only: read by this module's own `fixture_check_tests` (`catalog_provenance_
     // matches_the_corpus_records_own_source_citation`, below) against the corpus's own `source`
     // object, never by any PRODUCTION/runtime code path -- `cargo build --lib` (the non-test
@@ -385,6 +397,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         magnitude_formula: "max(DomainGoodLVL/2,1)",
         magnitude_label: "sacred bonus",
         effect_duration_phrase: "for 1 round",
+        grounds_self_application: true,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 713,
@@ -398,6 +411,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         magnitude_formula: "max(DomainWarLVL/2,1)",
         magnitude_label: "melee damage bonus",
         effect_duration_phrase: "for 1 round",
+        grounds_self_application: true,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 747,
@@ -411,6 +425,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         magnitude_formula: "max(DomainStrengthLVL/2,1)",
         magnitude_label: "enhancement bonus",
         effect_duration_phrase: "for 1 round",
+        grounds_self_application: true,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 739,
@@ -441,6 +456,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         // at all -- unlike Good/War/Strength, this is a single declared attack,
         // not a buff that persists for a round.
         effect_duration_phrase: "on a single melee attack, which must be declared before the attack roll is made",
+        grounds_self_application: true,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 703,
@@ -461,9 +477,52 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         // duration shape from Good/War/Strength's "for 1 round".
         effect_duration_phrase:
             "for one hour, or until the creature touched elects to apply the bonus to a roll",
+        grounds_self_application: true,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 711,
+    },
+    // SD-34 wave 37 lane A (bucket D's "domain-vs-class_feature dual-
+    // representation" mechanism gap, item 5 of wave 36 lane C's next-cycle
+    // plan): the first APG SUBDOMAIN this catalog grounds, and the first
+    // entry whose own corpus formula slot is NOT a flat combat/skill/save
+    // bonus -- see `UNDEAD_SUBDOMAIN_SELECTION`'s own doc comment in
+    // `pilot_compute/mod.rs` for the full provenance and why
+    // `grounds_self_application` is `false` here. Confirmed a real, legal
+    // domain for BOTH classes this catalog serves: Cleric (subdomain
+    // substitution, `data/corpus/advanced_players_guide/domain/
+    // undead_subdomain.json`'s own `PREMULT` gate) and Inquisitor
+    // (`data/corpus/advanced_players_guide/class_feature/inquisitor/
+    // inquisitor_domains.json`'s own `DEFINE:InquisitorDomainUndeadSubdomain|0`
+    // token, confirmed present by direct corpus read).
+    DomainPowerSpec {
+        selection_id: UNDEAD_SUBDOMAIN_SELECTION,
+        domain_slug: "undead_subdomain",
+        domain_display_name: "Undead Subdomain",
+        granted_power_name: "Death's Kiss",
+        ability_id: DEATH_S_KISS_ABILITY_ID,
+        // Verbatim from `data/corpus/advanced_players_guide/class_feature/
+        // undead_subdomain/death_s_kiss.json`'s own DESC token's first `|`
+        // segment: the power's effect DURATION in rounds, not a bonus
+        // amount (unlike every entry above). `DomainLVL` is the bare,
+        // universal granting-class-level variable `domain_power_env`
+        // already resolves for every entry (no per-domain `Domain<X>LVL`
+        // chain is needed for this term -- Undead Subdomain's own header
+        // carries none at all, confirmed by direct corpus read).
+        magnitude_formula: "max(1,DomainLVL/2)",
+        // Unused in production (`grounds_self_application: false` skips the
+        // block that would read this field) -- kept honest and test-pinned
+        // for provenance, and so a future cycle that DOES honestly ground
+        // this power's real effect (a status change, not a numeric bonus)
+        // has the corpus-verified formula already on hand.
+        magnitude_label: "rounds of undead-traits self-application \
+            (a duration, not a numeric game bonus -- never surfaced as a \
+            magnitude explanation, see `grounds_self_application`)",
+        effect_duration_phrase: "",
+        grounds_self_application: false,
+        upstream_lst: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+        upstream_lst_sha256: "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+        upstream_line: 1807,
     },
 ];
 
@@ -514,6 +573,25 @@ pub fn domain_power_probe_catalog() -> Vec<(&'static str, &'static str, [String;
             )
         })
         .collect()
+}
+
+/// SD-34 wave 37 lane A bridge for `v06_work_inventory`'s completion-atlas
+/// classifier: the SIBLING corpus shape to `"Domain Power ~ <power>"` --
+/// every catalog entry's granted power is ALSO ingested a second time under
+/// its own domain's key (`"<domain_display_name> ~ <power>"`, e.g. `"Undead
+/// Subdomain ~ Death's Kiss"`, a real, separate `.lst` line confirmed by
+/// direct corpus read, not a duplicate to collapse). Returns each catalog
+/// entry's own `(domain_display_name, granted_power_name)` pair so the
+/// classifier can match a unit's own `"<group> ~ <feature>"` split against a
+/// SPECIFIC, named catalog spec -- never a bare feature-name match, which
+/// would wrongly credit an unrelated same-named record from a different
+/// mechanism (`"Rage Power ~ Strength Surge"` and `"Strength Blessing ~
+/// Strength Surge"` both collide with this catalog's own `"Strength Surge"`
+/// granted-power name, confirmed by direct corpus scan -- a bare
+/// feature-name check would misclassify both as Cleric/Inquisitor domain
+/// power).
+pub fn domain_power_catalog_group_and_power_names() -> Vec<(&'static str, &'static str)> {
+    DOMAIN_POWER_CATALOG.iter().map(|spec| (spec.domain_display_name, spec.granted_power_name)).collect()
 }
 
 /// Interprets `spec`'s own `magnitude_formula` at `class_level`. `expect`s
@@ -746,6 +824,16 @@ mod fixture_check_tests {
     const TOUCH_OF_GLORY_JSON: &str = include_str!(
         "../../../data/corpus/core_rulebook/class_feature/domain_power/touch_of_glory.json"
     );
+    // SD-34 wave 37 lane A addition. Pinned against the SUBDOMAIN-keyed
+    // record (`"Undead Subdomain ~ Death's Kiss"`), matching this catalog
+    // entry's own `domain_display_name` -- the sibling `"Domain Power ~
+    // Death's Kiss"` record (a real, separate `.lst` line, different
+    // `upstream_line`) is a different corpus key this same formula also
+    // byte-matches, confirmed by direct read, but is not this test's own
+    // provenance anchor.
+    const DEATH_S_KISS_JSON: &str = include_str!(
+        "../../../data/corpus/advanced_players_guide/class_feature/undead_subdomain/death_s_kiss.json"
+    );
 
     fn parse(json: &str) -> serde_json::Value {
         serde_json::from_str(json).expect("committed corpus JSON must parse")
@@ -829,6 +917,7 @@ mod fixture_check_tests {
             (STRENGTH_SURGE_JSON, STRENGTH_DOMAIN_SELECTION),
             (DESTRUCTIVE_SMITE_JSON, DESTRUCTION_DOMAIN_SELECTION),
             (TOUCH_OF_GLORY_JSON, GLORY_DOMAIN_SELECTION),
+            (DEATH_S_KISS_JSON, UNDEAD_SUBDOMAIN_SELECTION),
         ] {
             let doc = parse(json);
             let desc = doc["data"]["raw_tokens"]
@@ -867,6 +956,7 @@ mod fixture_check_tests {
             (STRENGTH_SURGE_JSON, STRENGTH_DOMAIN_SELECTION),
             (DESTRUCTIVE_SMITE_JSON, DESTRUCTION_DOMAIN_SELECTION),
             (TOUCH_OF_GLORY_JSON, GLORY_DOMAIN_SELECTION),
+            (DEATH_S_KISS_JSON, UNDEAD_SUBDOMAIN_SELECTION),
         ] {
             let doc = parse(json);
             let spec = resolve_domain_power(selection_id).expect("must be catalogued");
@@ -907,6 +997,13 @@ mod fixture_check_tests {
             WAR_DOMAIN_SELECTION,
             STRENGTH_DOMAIN_SELECTION,
             DESTRUCTION_DOMAIN_SELECTION,
+            // Death's Kiss's own formula is `max(1,DomainLVL/2)` -- args
+            // reversed from Good/War/Strength/Destruction's `max(X/2,1)`,
+            // but `max` is commutative so the same hand-computed table
+            // applies. (Its VALUE is a round count, never surfaced as a
+            // bonus -- see `grounds_self_application` -- but the arithmetic
+            // itself is still real and worth proving correct.)
+            UNDEAD_SUBDOMAIN_SELECTION,
         ] {
             let spec = resolve_domain_power(selection_id).expect("must be catalogued");
             for level in [1u8, 2, 3, 4, 7, 12, 20] {
@@ -946,5 +1043,50 @@ mod fixture_check_tests {
                 "Glory magnitude at level {level}: expected the bare cleric level = {expected}"
             );
         }
+    }
+
+    /// SD-34 wave 37 lane A: Death's Kiss must be catalogued with
+    /// `grounds_self_application: false` -- a regression guard against a
+    /// future edit accidentally flipping it back to `true`, which would
+    /// re-enable the misleading "a +{magnitude} rounds" bonus sentence this
+    /// entry exists specifically to avoid. Every pre-existing entry stays
+    /// `true`.
+    #[test]
+    fn death_s_kiss_does_not_ground_a_self_application_bonus() {
+        let spec = resolve_domain_power(UNDEAD_SUBDOMAIN_SELECTION)
+            .expect("Undead Subdomain must be catalogued");
+        assert!(
+            !spec.grounds_self_application,
+            "Death's Kiss's own corpus formula is an effect duration in rounds, not a flat \
+             bonus -- grounds_self_application must stay false"
+        );
+        for other in [
+            GOOD_DOMAIN_SELECTION,
+            WAR_DOMAIN_SELECTION,
+            STRENGTH_DOMAIN_SELECTION,
+            DESTRUCTION_DOMAIN_SELECTION,
+            GLORY_DOMAIN_SELECTION,
+        ] {
+            let other_spec = resolve_domain_power(other).expect("must be catalogued");
+            assert!(
+                other_spec.grounds_self_application,
+                "{} is a real flat bonus and must keep grounds_self_application: true",
+                other_spec.domain_display_name
+            );
+        }
+    }
+
+    /// SD-34 wave 37 lane A: the classifier bridge's own pairing must name
+    /// Death's Kiss under its subdomain's real display name, matching the
+    /// corpus's own `"Undead Subdomain ~ Death's Kiss"` key -- proves
+    /// `domain_power_catalog_group_and_power_names` (consumed by
+    /// `v06_work_inventory`'s classifier) actually carries this entry.
+    #[test]
+    fn group_and_power_names_bridge_carries_death_s_kiss() {
+        let pairs = domain_power_catalog_group_and_power_names();
+        assert!(
+            pairs.contains(&("Undead Subdomain", "Death's Kiss")),
+            "expected (\"Undead Subdomain\", \"Death's Kiss\") among {pairs:?}"
+        );
     }
 }

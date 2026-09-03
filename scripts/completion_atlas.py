@@ -186,7 +186,11 @@ BUCKET_DEFINITIONS = {
         # against the actual merged file for the same unique literal,
         # 12955 -> 12986, line content read back and confirmed still the
         # real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12986, "must_contain": "has_no_engine_table"},
+        # Wave 37 lane A re-derivation (the new subdomain-keyed sibling check
+        # inserted a 34-line block above this site): fresh `grep -n` for the
+        # same unique literal, 12986 -> 13020, line content read back and
+        # confirmed still the real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 13020, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -221,7 +225,10 @@ BUCKET_DEFINITIONS = {
         # fresh `grep -n` against the actual merged file for the same unique
         # literal, 12635 -> 12666, line content read back and confirmed
         # still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12666, "must_contain": "not_held_by_engine"},
+        # Wave 37 lane A re-derivation (same insertion as bucket A above):
+        # fresh `grep -n` for the same unique literal, 12666 -> 12700, line
+        # content read back and confirmed still the real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 12700, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -255,7 +262,11 @@ BUCKET_DEFINITIONS = {
         # above): fresh `grep -n` against the actual merged file for the
         # same unique literal, 12860 -> 12891, line content read back and
         # confirmed still the real construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 12891, "must_contain": "explanation_id"},
+        # Wave 37 lane A re-derivation (same insertion as buckets A/B
+        # above): fresh `grep -n` for the same unique literal, 12891 ->
+        # 12925, line content read back and confirmed still the real
+        # construction site, not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 12925, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -347,7 +358,11 @@ BUCKET_DEFINITIONS = {
         # literal (`item.verdict.status = "literal-verified";`), 13737 ->
         # 13768, read back and confirmed still the real construction site,
         # not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 13768, "must_contain": "literal-verified"},
+        # Wave 37 lane A re-derivation (same insertion as buckets A/B/C
+        # above): fresh `grep -n` for the same unique literal, 13768 ->
+        # 13802, read back and confirmed still the real construction site,
+        # not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 13802, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",

@@ -11,6 +11,50 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 37, lane A — domain granted-power grounding path (Death's Kiss), 2 of 7 units closed — complete
+
+**Status: complete, honestly partial.** Closed wave 36 lane C's own named Next-cycle-plan
+item 5 (`artifacts/bucket-d-mining/wave36_laneC_creature_type_collision_disposition_cycle_receipt.md`):
+the "domain-vs-class_feature dual-representation" shape. Re-derived the real 7-unit
+population from the live tree (not the stale wave-36 table — Dragonbreath's own
+class_feature records had already closed as an emergent side effect of wave 36's own
+matcher fix). Found the existing precedented mechanism (`domain_power::DOMAIN_POWER_CATALOG`,
+live since SD-31 wave 25/26, already grounding 5 CRB domains generically for both
+Cleric and Inquisitor) and extended it with Undead Subdomain's Death's Kiss — the first
+APG SUBDOMAIN this catalog grounds, and the first entry whose own corpus formula is an
+effect DURATION in rounds rather than a flat bonus (`max(1,DomainLVL/2)`). Added
+`DomainPowerSpec::grounds_self_application: bool` to gate the misleading "a +{magnitude}
+bonus" sentence off for this shape while still honestly grounding its real, corpus-proven
+uses-per-day count. Added a matching classify() check in `v06_work_inventory.rs` for the
+subdomain-keyed sibling corpus record, matched by the catalog's own
+`(domain_display_name, granted_power_name)` pair — a bare feature-name match would have
+wrongly credited two real, unrelated corpus collisions (`"Rage Power ~ Strength Surge"`,
+`"Strength Blessing ~ Strength Surge"`), proven by a negative-control test. **2 units
+close to DONE**: `advanced_players_guide:class_feature:domain_power_death_s_kiss` and
+`advanced_players_guide:class_feature:undead_subdomain_death_s_kiss`. **5 of the 7-unit
+population honestly NOT closed**, each named precisely in the receipt: Animate Servant
+×3 (Construct Subdomain) needs a per-spec uses-per-day formula override this cycle's
+catalog structure does not yet carry (its own formula, `DomainArtificeLVL/4-1`, is
+genuinely different from the shared `3+WIS` every grounded entry rides — reusing it would
+fabricate a wrong number); Dragon Subdomain's own domain header + its granted power
+Venomous Stare are correctly excluded by the catalog's own pre-existing design boundary
+(enemy-facing, multi-`DESC`-token formula), not a gap. Also fixed a real prose-citation
+bug found while wiring Inquisitor's diagnostic text: a multi-word domain name would have
+cited a non-existent corpus token (`InquisitorDomainUndead Subdomain` with a space) —
+fixed before it could ship. `population=49438`, `engine-does-not-hold: 19067→19065`,
+`grounded: 4341→4343`, `citation_failures` 4→0 (this cycle's own ~34-line insertion
+shifted 4 `completion_atlas.py` pins, re-derived and confirmed against the real
+construction site). RED→GREEN at every layer: 19/19 `domain_power.rs` tests (2 new),
+56/56 domain-related `pilot_compute` tests (2 new), 1029/1029 full `pilot_compute` module,
+527/527 `v06_work_inventory` bin tests (2 new), `cargo test --locked --no-run` exit 0 full
+workspace. `corpus_literal_sweep` 48706 of 51476 CLEAN unchanged (no `data/corpus/**`
+touched). Full receipt:
+`artifacts/bucket-d-mining/wave37_laneA_domain_granted_power_death_s_kiss_cycle_receipt.md`.
+Next-cycle plan named precisely: (1) widen `DomainPowerSpec` with a per-spec
+uses-per-day-formula override to close Animate Servant's 3 units; (2) domain-kind
+(`Kind::Domain`) header records reaching `grounded` is a structurally separate, larger
+question, not attempted this cycle.
+
 ### Cycle — Wave 36 wave-end gate — stale dashboard + stale test-count baseline fixed, full 40/40 confirmed — complete
 
 **Status: complete, verified.** All three wave 36 lanes (A, B, C) merged onto `tranche/14`
