@@ -2039,6 +2039,93 @@ fn size_from_size_template(value: &str) -> Option<SizeCategory> {
     SizeCategory::from_base_size_code(code)
 }
 
+/// A row's own `TEMPLATE:Bonus Language ~ <Lang>|...` chain, transcribed
+/// verbatim into the language name(s) it names — **reading, not applying**,
+/// the same claim [`size_from_size_template`] makes for `SIZE_<code>`.
+///
+/// Verified directly against the real corpus, not assumed: every
+/// `Bonus Language ~ <Lang>` row PCGen defines is a single-purpose template
+/// whose entire body is one `LANGBONUS:<Lang>` token —
+/// `data/corpus/core_rulebook/template/bonus_language_common.json`'s own
+/// `raw_tokens` are exactly `[VISIBLE:NO, LANGBONUS:Common]`, and the same
+/// shape holds for every sibling this function is used against
+/// (`bonus_language_giant.json`, `_goblin.json`, `_halfling.json`). Reading
+/// `"Bonus Language ~ Common"` off a `TEMPLATE:` chain and returning
+/// `"Common"` is therefore transcription of a real, verified 1:1 name
+/// mapping, not an interpretation.
+///
+/// A `TEMPLATE:` value that does not carry the `"Bonus Language ~ "` prefix
+/// contributes nothing. One real corpus row's own chain, `Human ~ Languages`'
+/// `TEMPLATE:Bonus Language ~ Any Spoken`, DOES match the prefix and yields
+/// the literal marker `"Any Spoken"` — that is PCGen's own "no restriction"
+/// template, not a real language, and callers that care about the
+/// difference must check for it; this function only transcribes, it does
+/// not classify what it reads.
+pub fn declared_template_bonus_languages(raw_tokens: &[RawToken]) -> Vec<String> {
+    raw_tokens
+        .iter()
+        .filter(|t| t.key == "TEMPLATE")
+        .flat_map(|t| t.value.split('|'))
+        .filter_map(|part| part.trim().strip_prefix("Bonus Language ~ ").map(str::to_string))
+        .collect()
+}
+
+#[cfg(test)]
+mod declared_template_bonus_languages_tests {
+    use super::*;
+
+    fn token(key: &str, value: &str) -> RawToken {
+        RawToken { key: key.to_string(), value: value.to_string() }
+    }
+
+    /// `isr_abilities_race.lst:216`'s own `TEMPLATE:` value, copied verbatim
+    /// from `data/corpus/inner_sea_races/race_trait/human/
+    /// human_tribalistic_languages.json` — real corpus content, not a
+    /// fabricated example.
+    #[test]
+    fn tribalistic_languages_template_chain_transcribes_to_four_real_languages() {
+        let raw = vec![token(
+            "TEMPLATE",
+            "Bonus Language ~ Common|Bonus Language ~ Giant|Bonus Language ~ Goblin|Bonus Language ~ Halfling",
+        )];
+        assert_eq!(
+            declared_template_bonus_languages(&raw),
+            vec![
+                "Common".to_string(),
+                "Giant".to_string(),
+                "Goblin".to_string(),
+                "Halfling".to_string(),
+            ]
+        );
+    }
+
+    /// `core_rulebook`'s standard `Human ~ Languages` row (`suppressed_by_flag:
+    /// Human_ReplaceLanguages`) carries the "no restriction" marker template,
+    /// not a real language — transcribed, not filtered, so a caller sees the
+    /// literal name and can decide what it means.
+    #[test]
+    fn any_spoken_marker_transcribes_literally_not_as_a_language_name() {
+        let raw = vec![token("TEMPLATE", "Bonus Language ~ Any Spoken")];
+        assert_eq!(declared_template_bonus_languages(&raw), vec!["Any Spoken".to_string()]);
+    }
+
+    /// A `TEMPLATE:` chain naming something other than a `Bonus Language ~`
+    /// row (e.g. a `SIZE_<code>` row) contributes nothing here — the two
+    /// readers are deliberately independent.
+    #[test]
+    fn non_bonus_language_template_yields_nothing() {
+        let raw = vec![token("TEMPLATE", "SIZE_M")];
+        assert!(declared_template_bonus_languages(&raw).is_empty());
+    }
+
+    /// No `TEMPLATE:` token at all yields nothing, not a guess.
+    #[test]
+    fn no_template_token_yields_nothing() {
+        let raw = vec![token("DESC", "irrelevant")];
+        assert!(declared_template_bonus_languages(&raw).is_empty());
+    }
+}
+
 /// `Walk,20` / `Walk,15,Swim,30` -> `20` / `15`. `None` when the token names
 /// no walk movement at all.
 fn walk_speed_from_move(value: &str) -> Option<i32> {
