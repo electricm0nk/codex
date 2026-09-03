@@ -11,6 +11,74 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 35 lane B — `Human ~ Tribalistic Languages` TEMPLATE: grant reader, precise evidence — complete
+
+**Status: complete, with an honest scope correction.** Dispatched to close wave 33 lane B's
+own named 2-unit remainder (`Next-cycle plan` item 4), plus the dispatch brief's own claim
+that `Human ~ Tribalistic` was a second open unit needing the same fix. Re-derived first:
+`Human ~ Tribalistic` was already `status: grounded` before this cycle — no defect, no work
+needed. The real remaining population is exactly **one** unit: `Human ~ Tribalistic
+Languages` (`isr_abilities_race.lst:216`). Logged as a `correction`
+(`docs/retro/events/sd34-wave35-laneb.jsonl`, `1788405507082-sd34-wave35-laneb-3579c5`).
+
+Read the record's own `TEMPLATE:Bonus Language ~ Common|Giant|Goblin|Halfling` chain
+directly against the pinned upstream `.lst` line and the real, already-ingested `Kind::
+Template` corpus records it names (each one's whole body is a single `LANGBONUS:<Lang>`
+token) — a real, quoted, non-fabricated bonus-language-pool restriction, matching the
+record's own `DESC:` exactly. No existing engine mechanism read a `TEMPLATE:` value as a
+*reference* to another corpus record (`declared_size`'s `TEMPLATE:SIZE_<code>` precedent
+reads a literal size code, a different shape), so this cycle adds one:
+`race_resolver::declared_template_bonus_languages` (transcription only, 4 unit tests).
+
+Verified directly against the pinned upstream `.lst` line (not only the corpus JSON) that
+the record carries zero `FACT`/`PREFACT`/`PREABILITY`/`ABILITY:...AUTOMATIC...` tokens of any
+kind — a genuine upstream PCGen data omission, independently confirmed three ways
+(`race_resolver.rs`'s own `no_corpus_trait_is_left_without_a_readable_gate` test comment,
+`reach_gate.rs`'s dated `OPEN_FINDINGS`, this cycle's own direct `.lst` read). Building an
+automatic-grant mechanism with no real upstream token backing it would fabricate a game
+mechanic the source data does not license (`TraitRole::FlagGranted`'s own documented
+contract requires either a positive `PREFACT` or an `ABILITY:...AUTOMATIC...` token — this
+record has neither), so the record correctly stays `TraitRole::Unclassified` /
+`engine-does-not-hold`, unchanged. What changed: the blanket
+`race_trait_record_loaded_but_never_applies` evidence — silent on whether the record carries
+real content at all — is replaced with
+`race_trait_template_bonus_language_grant_verified_but_has_no_upstream_activation_gate`,
+naming exactly what the TEMPLATE chain resolves to and why it still never fires. Confirmed
+this is the ONLY Unclassified race_trait record with a Bonus-Language TEMPLATE chain
+(~49 other such rows in the corpus are all already Default/Alternate/FlagGranted, cross-
+checked against `no_corpus_trait_is_left_without_a_readable_gate`'s exhaustive pinned list).
+
+**Files touched:** `src/rules_core/race_resolver.rs` (new `declared_template_bonus_
+languages`, 4 tests), `src/bin/v06_work_inventory.rs` (new `RaceTraitProbe` field, accessor,
+`classify()` branch, 3 tests), `scripts/completion_atlas.py` (9 citation lines re-derived
+after this cycle's own insertions shifted them — `citation_failures` 9 -> 0), `docs/work-
+inventory.json` + `.../completion-atlas.json` (guarded regen, 49438 units unchanged, only
+this one unit's `evidence` field moved).
+
+**Commit:** `f723288869` (code) + a second commit (instrument fix + guarded regen) + a third
+(receipt/progress, this entry).
+
+**Verification:** `cargo test --locked --bin v06_work_inventory race_trait_grounding_tests::`
+-> 41/41 passed (38 pre-existing + 3 new). `cargo test --locked --lib rules_core::race_
+resolver::declared_template_bonus_languages` -> 4/4 passed. `cargo test --locked --lib
+no_corpus_trait_is_left_without_a_readable_gate` -> 1/1 passed (role unchanged). Both
+`cargo clippy -- -D warnings` scopes clean. RED->GREEN confirmed by temporarily neutralizing
+the new `classify()` branch. `python3 scripts/completion_atlas.py --check` ->
+`population=49438 buckets=10 unclassified=0 overlap=0 citation_failures=0`, D unchanged at
+2891. Full receipt: `artifacts/bucket-d-mining/
+wave35_laneB_tribalistic_languages_template_grant_cycle_receipt.md`.
+
+**Retro:** one `incident` (`recurrence_key: wrong-base-worktree` — this worktree's own base
+was 409 commits behind the real bundle state, the identical shape `wave34_laneB` hit, now a
+further recurrence of `AGENTS.md` item 8's 27+ prior occurrences) plus the one `correction`
+above.
+
+**Next-cycle plan:** 0 remaining for this exact shape — name it permanently blocked pending
+an upstream PCGen fix, alongside `Suli ~ Trusted Mediator` and `Rougarou`'s selector. Wave 33
+lane B's own remaining named mechanisms (Skinwalker `Change Shape` TYPE-pool picker, Human
+Ethnicity picker, Oversized Goblin ability-pool variant) are still the only real, buildable
+`race_trait` bucket-D work this lane's reconnaissance named.
+
 ### Cycle — Wave 35, Lane A — Skinwalker `Change Shape` TYPE-pool option resolver, 19/20 units get precise evidence — partial
 
 **Status: partial. Zero units reach `DONE`.** Closes wave 33 lane B's own named 20-unit
