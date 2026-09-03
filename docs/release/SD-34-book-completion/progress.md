@@ -55,6 +55,67 @@ uses-per-day-formula override to close Animate Servant's 3 units; (2) domain-kin
 (`Kind::Domain`) header records reaching `grounded` is a structurally separate, larger
 question, not attempted this cycle.
 
+### Cycle — Wave 37, lane B — Sentinel Kind-retag hypothesis refuted (0 units closed, honest); sub-mechanism 5 re-derived 832→634 — complete
+
+**Status: complete, 0 units closed, both items honestly dispositioned.**
+Two small independent items from wave 36 lane C's own next-cycle plan.
+Receipt: `artifacts/bucket-d-mining/wave37_laneB_sentinel_correction_and_submech5_rederive_cycle_receipt.md`.
+
+**Item 1 (Sentinel, 1 unit) — the requested ingest-time `Kind::feat` re-tag
+is factually wrong, NOT made.** Investigated per the brief's own "confirm
+before touching anything" instruction before writing anything, and the
+investigation refutes the premise both wave 35 and wave 36 lane C carried:
+`Sentinel Style Feat ~ Improved Sense Intruder` IS a genuine
+`Kind::ClassFeature` — Ranger's own 10th-level combat-style-feat-chain slot,
+granted via the Ranger "Sentinel" archetype (traced through 3 corpus
+records: `sentinel_style_feat/improved_sense_intruder.json`,
+`sentinel/sense_intruder.json`, `ranger_archetype/sentinel.json`).
+Wave 35's own cited analogy — "like Vital Strike" — actually PROVES the
+opposite: `advanced_players_guide/class_feature/ranger_combat_style_feat/
+vital_strike.json` is itself filed `Kind::ClassFeature`, byte-identical
+shape (`TYPE:RangerBonusFeat`, `CATEGORY:Special Ability`, `class:
+"Ranger"`), one of ~180 correctly-classified siblings. The real D-bucket
+cause is a short-word matcher collision (`"sentinel"` group text hits the
+real, unmodelled `inner_sea_gods:class:sentinel` prestige class) — same
+shape as Order of the Dragon (wave 36 lane C's own case-a fix), NOT a
+`Kind` question. Even fixing that collision would not close the unit:
+`magnitude_token_count: 1` (not zero-magnitude, so wave 36's text-only
+promotion path doesn't apply) and all 151 of its real siblings
+(`class_feature_owner_matched_by_name_but_record_not_held_by_engine`,
+correctly attributed to Ranger already) are STILL `engine-does-not-hold` —
+the underlying mechanism (Ranger's combat-style bonus-feat chain) is itself
+unbuilt engine-wide, Epic 4/5 scope. No `data/corpus/**` edit made (guarded-
+generator-path-only; the requested edit would have corrupted a correctly-
+classified record). Retro-logged correction:
+`docs/retro/events/sd34-wave37-laneb.jsonl`, event id
+`1788442730755-sd34-wave37-laneb-7cdc91`.
+
+**Item 2 (figure re-derivation, read-only) — sub-mechanism 5's stale
+832-unit/60-class figure re-derived to `634` units / same `60` classes.**
+Re-ran wave 35 lane C's own exact `Counter` method against the current
+committed `docs/work-inventory.json` (post wave 36's matcher-fix regen):
+`701` units / `68` classes total under
+`class_feature_of_unmodelled_corpus_class:*`, minus the 10 classes already
+in sub-mechanisms 1–4 = `634`/`60` for sub-mechanism 5. Full per-class
+breakdown in the receipt, largest-yield-first (`divine_scion` 45,
+`phrenic_slayer` 43 remain the top two; `ulfen_guard` 1,
+`argent_dramaturge`/`holy_vindicator` 2 each are now the cheapest). Honestly
+flagged a small, unreconciled 4-unit gap against wave 36 lane C's own
+claimed "202 closed outside its own scope" (this cycle independently
+measures 198) — does not change the corrected `634` remaining figure, which
+is directly reproducible and is what the next wave should dispatch from.
+
+**Worktree self-heal:** assigned worktree started at `ea2b3396f2` (SD-33 PR
+#377 merge), far behind local `tranche/14`'s real tip (`c1580ac9ba`, wave
+36's wave-end gate); `origin/tranche/14` itself stale at `7ea9651b87`.
+Clean fast-forward confirmed, rebased with zero conflicts before any
+analysis; post-rebase `completion_atlas.py --check` matched wave 36's own
+final reported state exactly (`population=49438`, `D: 2662`, `DONE: 25242`,
+`citation_failures=0`).
+
+**Movement: closure 0, reclassification 0, reachability 0,
+instrument-correction 1** (the Sentinel Kind-retag hypothesis, refuted).
+
 ### Cycle — Wave 36 wave-end gate — stale dashboard + stale test-count baseline fixed, full 40/40 confirmed — complete
 
 **Status: complete, verified.** All three wave 36 lanes (A, B, C) merged onto `tranche/14`
