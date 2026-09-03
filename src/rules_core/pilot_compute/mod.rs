@@ -76769,7 +76769,8 @@ mod ultimate_combat_chassis_gate_tests {
             );
         }
 
-        for (class_id, name) in [(SAMURAI_CLASS_ID, "samurai")] {
+        {
+            let (class_id, name) = (SAMURAI_CLASS_ID, "samurai");
             let other_receipt = build_pilot_headless_receipt(&single_class(class_id, 5));
             assert_ne!(
                 other_receipt.status,
