@@ -11,6 +11,54 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 37 wave-end gate — dashboard fix, 2 baselines raised, full 40/40 confirmed — complete
+
+**Status: complete.** Integration summary for wave 37's three lanes, all already merged onto
+`tranche/14`. Individual lanes' own receipts carry the detailed evidence; this entry is the
+roll-up plus the wave-end gate.
+
+**Real movement this wave: 2 units closed to DONE** (D: 2661, DONE: 25244 — from wave 36's
+close of D: 2662, DONE: 25242). Both real closures came from lane A; lanes B and C closed
+zero, honestly reported, and both did genuinely valuable non-closure work:
+
+- **Lane A** (`e2a0b2abb2`) — built a new domain-granted-power grounding mechanism
+  (`domain_power.rs`'s `DOMAIN_POWER_CATALOG`, extended with `grounds_self_application` to
+  honestly gate off a fabricated bonus sentence for a duration-shaped power) and closed
+  Undead Subdomain's Death's Kiss (2 of the assigned 7 units). The other 5 were named with
+  their exact structural reason: 3 (Animate Servant) need a per-spec uses-per-day-formula
+  override (real, bounded next-cycle work); 2 (Dragon Subdomain header + Venomous Stare) are
+  correctly excluded by the catalog's own pre-existing enemy-facing-effect boundary, not a
+  gap. Also fixed a real prose-citation bug in Inquisitor diagnostic text found while wiring
+  this (would have cited a non-existent corpus token for any multi-word domain name).
+- **Lane B** (`a169fba956`) — investigated the Sentinel 1-unit ingest-retag request BEFORE
+  touching anything and found the premise wrong: two prior receipts (wave 35/36 lane C) had
+  carried forward a claim ("not a class feature... a Vigilante talent") without checking it
+  against their own cited analogy record. Direct corpus reads prove it IS a genuine Ranger
+  class feature. No corpus edit was made (the requested edit would have corrupted a correctly
+  classified record) — logged as a retro correction against the two prior receipts instead.
+  Also re-derived sub-mechanism 5's own population fresh post-regen: **832 → 634** real
+  remaining units (202 closed as text-only by wave 36 lane C's own work).
+- **Lane C** (`62ec305811`) — disposition-traced wave 36's own named 17-unit remainder
+  (Undead Savant/Plant Master/Dragon Shaman), no fix landed this cycle — investigation-only,
+  honestly reported as 0 closures.
+
+**Wave-end gate fixes:**
+- `site/dashboard` + `site/status-data` regenerated (stale relative to lane A's shifted
+  `docs/work-inventory.json`) — diffed before committing (`00d8f92339`): all 49,438 unit rows
+  survive across every kind-shard, zero license/`raw_tokens`/`pi_field` lines touched.
+- `BASELINE_ROOT_LIB_TESTS` 3050→3054 and `BASELINE_ROOT_FULL_TESTS` 8417→8423, itemized by
+  `#[test]` diff against `c1580ac9ba` (+4 lib-target, +2 bin-target, summing exactly — no
+  residual).
+
+**Full `scripts/verify.sh -j 6`, run twice.** Run 1 (commit `183f27d0c7`, right after all
+three lanes merged): 39 PASS / 1 FAIL (`site-dashboard-check`, the staleness above). Run 2,
+after the dashboard fix (commit `00d8f92339`): **40 PASS / 0 FAIL, `RESULT: PASS`**, log
+`/tmp/codex-verify-GfpfKo`. Every stage from wave 36's own baseline is still PASS with the two
+expected test-count increases and zero other regressions.
+
+**Bucket state, re-derived fresh:** `population=49438 overlap=0 unclassified=0` throughout;
+`D: 2662 → 2661`, `DONE: 25242 → 25244`. `done_evidence_violations=0 citation_failures=0`.
+
 ### Cycle — Wave 37, lane A — domain granted-power grounding path (Death's Kiss), 2 of 7 units closed — complete
 
 **Status: complete, honestly partial.** Closed wave 36 lane C's own named Next-cycle-plan
