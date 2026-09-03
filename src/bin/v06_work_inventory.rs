@@ -23502,10 +23502,18 @@ mod modelled_class_books_registry_tests {
         assert_eq!(registry.len(), 20, "registry population drifted; re-run its own census script");
         for meta in registry {
             let bare = meta.class_id.strip_prefix("class:").unwrap_or(meta.class_id.as_str());
+            // SD-34 wave 36 lane A fixed the registration loop to space-join
+            // a multi-word `bare_name` (matching the CRB-prestige loop's own
+            // documented convention and `corpus_class_names`'s naturally
+            // space-joined form) instead of leaving raw underscores in the
+            // key -- look the class up the same way production now stores
+            // it, not by the registry's own underscore-slugged `class_id`.
+            let lookup_key = bare.replace('_', " ");
             assert_eq!(
-                class_books.get(bare).copied(),
+                class_books.get(lookup_key.as_str()).copied(),
                 Some(meta.source_book.as_str()),
-                "{bare} (registry entry) must be registered under its own source_book"
+                "{bare} (registry entry) must be registered under its own source_book, keyed \
+                 by its space-joined display name {lookup_key:?}"
             );
         }
         // Spot check two by name, so a reader sees a concrete example rather

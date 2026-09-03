@@ -18,7 +18,7 @@
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 11769,
+      "count": 11771,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
@@ -29,7 +29,7 @@
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
-      "count": 4173,
+      "count": 4185,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'explanation_id' / 'diagnostic')",
       "meaning": "held and computed, never surfaced"
     },
@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2891,
+      "count": 2873,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 25027,
+      "count": 25031,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "4379c9be05d8c23e1bc4e4b0de935e6c55eb0231",
+  "derived_at": "9c928030c590909c3d06678f44691e19204f7259",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -173,12 +173,10 @@
       "class_feature_of_unmodelled_corpus_class:psion_uncarnate": 19,
       "class_feature_of_unmodelled_corpus_class:psychic_detective": 18,
       "class_feature_of_unmodelled_corpus_class:psychic_fist": 18,
-      "class_feature_of_unmodelled_corpus_class:psychic_warrior": 18,
       "class_feature_of_unmodelled_corpus_class:pure_legion_enforcer": 15,
       "class_feature_of_unmodelled_corpus_class:pyrokineticist": 13,
       "class_feature_of_unmodelled_corpus_class:rage_prophet": 11,
       "class_feature_of_unmodelled_corpus_class:rivethun_emissary": 9,
-      "class_feature_of_unmodelled_corpus_class:rogue": 1,
       "class_feature_of_unmodelled_corpus_class:sanguine_angel": 17,
       "class_feature_of_unmodelled_corpus_class:sentinel": 1,
       "class_feature_of_unmodelled_corpus_class:sighted_seeker": 25,
@@ -194,7 +192,7 @@
       "class_feature_of_unmodelled_corpus_class:undead": 13,
       "class_feature_of_unmodelled_corpus_class:war_mind": 17,
       "class_feature_of_unmodelled_corpus_class:westcrown_devil": 11,
-      "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 28,
+      "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 29,
       "deity_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 408,
       "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,
       "language_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 103,
