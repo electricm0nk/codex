@@ -1,6 +1,8 @@
 # Cycle — SD-34 wave 38, Lane A — `DomainPowerSpec` per-spec uses-per-day-formula override, closing Construct Subdomain's Animate Servant (2 of the 3-unit named population)
 
-- **Commit SHA:** (local, this worktree — see structured report)
+- **Commit SHA:** `faca302af1` (feature commit; `9776003d1c` follows with
+  the retro-log-only incident entry, this worktree, not merged onto
+  `tranche/14`)
 - **Files touched:** `src/rules_core/pilot_compute/domain_power.rs` (new
   `uses_per_day_formula: Option<&'static str>` field on `DomainPowerSpec`,
   new `domain_power_uses_per_day_for` function, new Construct Subdomain
