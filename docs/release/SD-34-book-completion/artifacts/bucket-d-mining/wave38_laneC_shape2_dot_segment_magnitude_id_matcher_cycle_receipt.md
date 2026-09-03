@@ -1,6 +1,6 @@
-# Cycle — SD-34 wave 38, Lane C — Shape 2's 154-unit magnitude-bearing remainder: a real matcher fix, 105 units closed, 54 honestly named unclosed
+# Cycle — SD-34 wave 38, Lane C — Shape 2's 154-unit magnitude-bearing remainder: a real matcher fix, 100 units closed (112 total incl. bonus), 54 honestly named unclosed
 
-- **Commit SHA:** (local, this worktree — see structured report)
+- **Commit SHA:** `b80ccbffa4`
 - **Files touched:** `src/bin/v06_work_inventory.rs` (widened
   `class_feature_exact_suffix_grounded` with a second-to-last-dot-segment
   check plus two safety guards, new
