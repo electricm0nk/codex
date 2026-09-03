@@ -1,6 +1,7 @@
 # Cycle — SD-34 wave 38, Lane B — Sub-mechanism 5's top-2 classes (`divine_scion` 45, `phrenic_slayer` 43) scope-checked, NOT genuinely bounded for a single chassis cycle; 0 units closed, honestly reported
 
-- **Commit SHA:** (this receipt's own commit, see report)
+- **Commit SHA:** `7e32b82488` (this receipt's own commit; local to this
+  cycle's worktree, not yet merged onto `tranche/14`)
 - **Files touched:** this receipt, `progress.md`, `kanban.md`,
   `docs/retro/events/sd34-wave38-laneb.jsonl` (new),
   `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`
