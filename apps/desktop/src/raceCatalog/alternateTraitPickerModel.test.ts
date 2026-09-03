@@ -8,6 +8,8 @@ import {
   describePicker,
   describeReplacement,
   describeSelectionOutcome,
+  describeSkinwalkerChangeShapeGrants,
+  describeSkinwalkerChangeShapeOptions,
   descriptionsByTraitKey,
   traitDescription,
   orderRacesByAlternateCount,
@@ -24,6 +26,7 @@ import type {
   AlternateTraitDto,
   RacePickerDto,
   RaceSelectionResponse,
+  SkinwalkerChangeShapeOptionDto,
 } from '../boundary/loadAlternateRacialTraits';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -111,12 +114,20 @@ const menu: AlternateRacialTraitsResponse = {
   races: [race(), race({ raceKey: 'Elf', raceName: 'Elf', alternates: [alternate({ key: 'Elf ~ A' }), alternate({ key: 'Elf ~ B' })] })],
   adoptiveParentageOptions: [],
   adoptedRaceOptions: [],
+  skinwalkerChangeShapeOptions: [],
   diagnostics: [],
   findings: [],
 };
 assertEqual(describePicker(menu), '3 alternate racial traits across 2 races', 'summary counts what arrived');
 assertEqual(
-  describePicker({ races: [race()], adoptiveParentageOptions: [], adoptedRaceOptions: [], diagnostics: [], findings: [] }),
+  describePicker({
+    races: [race()],
+    adoptiveParentageOptions: [],
+    adoptedRaceOptions: [],
+    skinwalkerChangeShapeOptions: [],
+    diagnostics: [],
+    findings: [],
+  }),
   '1 alternate racial trait across 1 race',
   'singular wording',
 );
@@ -376,6 +387,7 @@ const adoptionMenu: AlternateRacialTraitsResponse = {
   races: [],
   adoptiveParentageOptions: [adoptiveParentageOption(), adoptiveParentageOption({ key: 'Dwarf', name: 'Dwarf', adoptedRace: 'Dwarf' })],
   adoptedRaceOptions: [adoptedRaceOption()],
+  skinwalkerChangeShapeOptions: [],
   diagnostics: [],
   findings: [],
 };
@@ -385,7 +397,14 @@ assertEqual(
   'the header counts what actually arrived, plural/singular correctly',
 );
 assertEqual(
-  describeAdoptionOptions({ races: [], adoptiveParentageOptions: [], adoptedRaceOptions: [], diagnostics: [], findings: [] }),
+  describeAdoptionOptions({
+    races: [],
+    adoptiveParentageOptions: [],
+    adoptedRaceOptions: [],
+    skinwalkerChangeShapeOptions: [],
+    diagnostics: [],
+    findings: [],
+  }),
   '0 Adoptive Parentage options, 0 Adopted Race selectors',
   'zero is reported plainly, not hidden',
 );
@@ -415,6 +434,47 @@ assertEqual(
   describeAdoptedRaceGrants(adoptedRaceOption({ malformedChooseToken: true, grants: [] })),
   "Corpus finding: this selector's CHOOSE token could not be read, so its pool cannot be shown.",
   'a malformed CHOOSE token is a distinct finding, never conflated with a real empty pool',
+);
+
+// --- Skinwalker Change Shape (SD-34 wave 33 lane B's own 20-unit remainder) -
+
+function skinwalkerChangeShapeOption(
+  overrides: Partial<SkinwalkerChangeShapeOptionDto> = {},
+): SkinwalkerChangeShapeOptionDto {
+  return {
+    key: 'Werebear-Kin ~ Change Shape',
+    name: 'Change Shape',
+    book: 'B5',
+    kin: 'Werebear-Kin',
+    grants: [
+      { key: 'Skinwalker ~ Change Shape (Bite)', name: 'Change Shape (Bite Attack)', description: null },
+      { key: 'Skinwalker ~ Change Shape (Wisdom)', name: 'Change Shape (Ability Modifier Wisdom)', description: null },
+    ],
+    ...overrides,
+  };
+}
+
+assertEqual(
+  describeSkinwalkerChangeShapeOptions({
+    races: [],
+    adoptiveParentageOptions: [],
+    adoptedRaceOptions: [],
+    skinwalkerChangeShapeOptions: [skinwalkerChangeShapeOption(), skinwalkerChangeShapeOption({ key: 'Werewolf-Kin ~ Change Shape', kin: 'Werewolf-Kin' })],
+    diagnostics: [],
+    findings: [],
+  }),
+  '2 Skinwalker kins',
+  'the header counts what actually arrived',
+);
+assertEqual(
+  describeSkinwalkerChangeShapeGrants(skinwalkerChangeShapeOption()),
+  'Choose one: Change Shape (Bite Attack), Change Shape (Ability Modifier Wisdom).',
+  'names the real option pool, the Werebear-Kin shape pinned by the backend test',
+);
+assertEqual(
+  describeSkinwalkerChangeShapeGrants(skinwalkerChangeShapeOption({ grants: [] })),
+  'No ingested option pool for Werebear-Kin — this pool offers nothing to pick from today.',
+  'an empty pool is reported honestly, never papered over',
 );
 
 console.log('alternateTraitPickerModel: all assertions passed');

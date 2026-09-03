@@ -143,6 +143,34 @@ export interface AdoptedRaceOptionDto {
   malformedChooseToken: boolean;
 }
 
+/** One Trait a {@link SkinwalkerChangeShapeOptionDto} can grant. */
+export interface SkinwalkerChangeShapeGrantDto {
+  key: string;
+  name: string;
+  /**
+   * Honestly `null` for every one of these — the record carries no `DESC:`
+   * token of its own. `name` is the real, non-fabricated corpus text
+   * ("Change Shape (2 Claw Attacks)", "Change Shape (Bite Attack)", ...).
+   */
+  description: string | null;
+}
+
+/**
+ * One Skinwalker kin's `Change Shape` master trait (SD-34 wave 33 lane B's
+ * own named 20-unit remainder), resolved against its real option pool.
+ * Structurally the closest existing row is {@link AdoptedRaceOptionDto} — a
+ * selector paired with its real pool members.
+ */
+export interface SkinwalkerChangeShapeOptionDto {
+  key: string;
+  name: string;
+  book: string;
+  /** The kin this pool belongs to, e.g. `"Werebear-Kin"`. */
+  kin: string;
+  /** Real option records this kin's pool resolves to. Never empty. */
+  grants: SkinwalkerChangeShapeGrantDto[];
+}
+
 export interface AlternateRacialTraitsResponse {
   races: RacePickerDto[];
   /**
@@ -155,6 +183,11 @@ export interface AlternateRacialTraitsResponse {
    * real Trait pool. See {@link AdoptedRaceOptionDto}.
    */
   adoptedRaceOptions: AdoptedRaceOptionDto[];
+  /**
+   * Skinwalker's nine `Change Shape` kin pools, resolved. See
+   * {@link SkinwalkerChangeShapeOptionDto}.
+   */
+  skinwalkerChangeShapeOptions: SkinwalkerChangeShapeOptionDto[];
   /** Corpus files the adapter could not read. Empty in a healthy checkout. */
   diagnostics: string[];
   /** Corpus-quality findings the backend refuses to hide. */

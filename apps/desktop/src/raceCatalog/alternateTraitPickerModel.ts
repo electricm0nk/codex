@@ -7,6 +7,7 @@ import type {
   RacePickerDto,
   RaceSelectionResponse,
   RenderedTraitDescriptionDto,
+  SkinwalkerChangeShapeOptionDto,
   SuppressionDto,
 } from '../boundary/loadAlternateRacialTraits';
 
@@ -272,6 +273,30 @@ export function describeAdoptedRaceGrants(option: AdoptedRaceOptionDto): string 
   }
   if (option.grants.length === 0) {
     return `No ingested Trait pool for ${option.adoptedRace} — this selector offers nothing to pick from today.`;
+  }
+  return `Choose one: ${option.grants.map((grant) => grant.name).join(', ')}.`;
+}
+
+/**
+ * The header line for the Skinwalker `Change Shape` section, derived from
+ * what the backend actually served rather than a compiled-in count.
+ */
+export function describeSkinwalkerChangeShapeOptions(response: AlternateRacialTraitsResponse): string {
+  const kinCount = response.skinwalkerChangeShapeOptions.length;
+  const kinWord = kinCount === 1 ? 'kin' : 'kins';
+  return `${kinCount} Skinwalker ${kinWord}`;
+}
+
+/**
+ * What one Skinwalker kin's `Change Shape` pool offers, in a sentence. Real
+ * magnitude (a `TEMPBONUS` each option applies once activated during play)
+ * is not computed by this screen — naming the real, available benefits is
+ * the whole bar this row clears; see `codex::rules_core::skinwalker_change_shape`
+ * module doc for the remaining gap (no on-sheet activation exists yet).
+ */
+export function describeSkinwalkerChangeShapeGrants(option: SkinwalkerChangeShapeOptionDto): string {
+  if (option.grants.length === 0) {
+    return `No ingested option pool for ${option.kin} — this pool offers nothing to pick from today.`;
   }
   return `Choose one: ${option.grants.map((grant) => grant.name).join(', ')}.`;
 }

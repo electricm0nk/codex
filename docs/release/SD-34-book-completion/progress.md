@@ -11,6 +11,77 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 35, Lane A — Skinwalker `Change Shape` TYPE-pool option resolver, 19/20 units get precise evidence — partial
+
+**Status: partial. Zero units reach `DONE`.** Closes wave 33 lane B's own named 20-unit
+remainder (next-cycle plan item 2): a new module, `src/rules_core/skinwalker_change_shape.rs`,
+builds the TYPE-pool option-picker resolver mechanism the receipt named as missing, following
+`trait_pool.rs`'s idiom with one necessary difference — PCGen encodes a Change Shape option's
+per-kin pool membership as a `.MOD` row appended to an *already-declared* ability elsewhere in
+the `.lst` file, which this project's ingest pipeline does not fold back onto the target
+record, so pool membership comes from a cited static table (`KIN_OPTION_KEYS`, transcribed
+directly from the pinned oracle's own `.MOD` rows) instead of a `TYPE:` token read off each
+member. Cross-checked by 3 tests against the live corpus (all 9 real kins resolve; union of
+resolved option keys pinned at exactly 19 of 20 — `Endurance` is a genuine, verified orphan no
+kin's `.MOD` row ever names).
+
+Wired end to end into the desktop TypeScript boundary and a real picker UI section — the SAME
+pattern wave 34 lane B used for `adoptedRaceOptions`/`adoptiveParentageOptions`: a new
+`AlternateRacialTraitsResponse.skinwalkerChangeShapeOptions` field, a new "Skinwalker Change
+Shape" section in `AlternateTraitPicker.tsx` (one pill per kin; selecting one renders its real
+option names), proven end to end by a new Rust test on the real Tauri command surface
+(`the_menu_command_carries_all_nine_skinwalker_change_shape_kin_pools_with_real_grants`).
+
+**Why this stays bucket D, unlike wave 34 lane B's 27 units.** Every one of these 20 records
+carries real, non-zero magnitude (a `TEMPBONUS` applied only when a player activates that
+benefit during play, PCGen's "Temporary Bonuses" mechanic) — `AGENTS.md`'s "a magnitude is not
+wired until it moves on the twin the player reads" bar requires the NUMBER to move, not merely
+the option's name to render, and no mechanism in this engine computes an activated-during-play
+temporary bonus onto any character sheet today. So 19 of the 20 move off the blanket
+`race_trait_record_loaded_but_never_applies` onto a precise
+`race_trait_skinwalker_change_shape_option_resolves_real_kin_pool_but_no_activation_mechanism_computes_its_magnitude`
+evidence string — an honest instrument-correction, not a closure. `Endurance` (the 20th) is
+unchanged: correctly inert, the identical disposition `Rougarou`'s selector got in wave 33 lane
+B.
+
+**Bucket movement**, confirmed by `python3 scripts/completion_atlas.py --check` before/after and
+independently by the unit-level evidence-field diff:
+`population=49438 overlap=0 unclassified=0 citation_failures=0`; `D` unchanged at **2891**
+(evidence-string precision only, no unit crosses a bucket boundary) — `DONE=25027 A=449 B=11769
+C=4173 D=2891 M=4449 V=289 U=202 X=170 Z=19`. `denominator_gate.py --check`/
+`--check-provenance`: `violations=0` both.
+
+**A genuine pre-existing latent citation defect found and fixed, not introduced this cycle:**
+this cycle's own insertions shifted all 10 of `completion_atlas.py`'s `BUCKET_DEFINITIONS`
+citation lines (`citation_failures` 9→0 for DONE/A/B/C/D/M/U/X/Z — full old→new table in the
+receipt). The 10th, bucket V, did **not** trip `--check` (its shifted line coincidentally still
+CONTAINED the target substring "literal-verified"), but reading the line's real content showed
+it had drifted onto a doc comment, not the real `item.verdict.status = "literal-verified";`
+assignment site — the exact "a citation that passes the string check but is not the real call
+site" hazard. Re-derived to the real site and retro-logged as a `correction`
+(`docs/retro/events/sd34-wave35-lanea.jsonl`, `1788405610803-sd34-wave35-lanea-e70e6d`).
+
+Full detail, RED→GREEN evidence, the static pool-membership table with its per-kin oracle
+citations, and every figure's re-derive command: receipt
+`artifacts/bucket-d-mining/wave35_laneA_skinwalker_change_shape_cycle_receipt.md`.
+
+- **Commit SHA:** see this cycle's own commit (code + guarded regen, single commit).
+- **Files touched:** `src/rules_core/skinwalker_change_shape.rs` (new), `src/rules_core/mod.rs`,
+  `src/bin/v06_work_inventory.rs`, `apps/desktop/src-tauri/src/race_trait_picker.rs`,
+  `apps/desktop/src/boundary/loadAlternateRacialTraits.ts`,
+  `apps/desktop/src/raceCatalog/{alternateTraitPickerModel.ts,alternateTraitPickerModel.test.ts,AlternateTraitPicker.tsx}`,
+  `apps/desktop/src/characterHub/alternateTraitSelection.test.ts`, `scripts/completion_atlas.py`,
+  `docs/work-inventory.json`,
+  `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`.
+- **Next-cycle plan:** the real remaining work is an activation-state mechanism (this engine has
+  no concept of "which one Change Shape benefit is currently active" at all — a materially
+  larger undertaking than a picker, likely needing an operator ruling on whether play-time
+  temporary bonuses are in scope for a character-BUILDER tool at all). Also filed, not fixed: the
+  ingest-pipeline gap (`.MOD` rows not folded onto their target's own `TYPE:` tokens), a
+  cross-cutting defect outside this cycle's scope. Unchanged from wave 33 lane B: Human Ethnicity
+  + `Oversized Goblin` (2+1, operator ruling needed), `inner_sea_races`/`Rougarou` (2+1, upstream
+  data gaps, permanently blocked).
+
 ### Cycle — Wave 34 wave-end gate — 4 verify.sh failures fixed, full 40/40 confirmed — complete
 
 **Status: complete, verified.** Wave 34's three lanes (A/B/C, landed onto `tranche/14` as

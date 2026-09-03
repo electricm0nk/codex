@@ -5,6 +5,7 @@ import type {
   AlternateRacialTraitsResponse,
   RacePickerDto,
   RaceSelectionResponse,
+  SkinwalkerChangeShapeOptionDto,
 } from '../boundary/loadAlternateRacialTraits';
 import type { CharacterSummaryDto } from '../boundary/loadListSavedCharacters';
 import {
@@ -25,6 +26,8 @@ import {
   describePicker,
   describeReplacement,
   describeSelectionOutcome,
+  describeSkinwalkerChangeShapeGrants,
+  describeSkinwalkerChangeShapeOptions,
   descriptionsByTraitKey,
   orderRacesByAlternateCount,
   selectionWarnings,
@@ -93,6 +96,14 @@ export function AlternateTraitPicker() {
   // reaching a player is the description rendered below once selected.
   const [parentageKey, setParentageKey] = useState<string | null>(null);
   const [adoptedRaceKey, setAdoptedRaceKey] = useState<string | null>(null);
+  // Skinwalker `Change Shape` kin pools: a third independent single-select
+  // picker. Unlike the two above, these options carry REAL magnitude (a
+  // `TEMPBONUS` each grant applies once activated during play) that this
+  // screen does not compute — naming the real, available benefits is the
+  // whole bar this section clears today; see
+  // `codex::rules_core::skinwalker_change_shape` module doc for the
+  // remaining gap.
+  const [skinwalkerKinKey, setSkinwalkerKinKey] = useState<string | null>(null);
 
   useEffect(() => {
     if (!alternateTraitPickerAvailable()) {
@@ -106,6 +117,7 @@ export function AlternateTraitPicker() {
         setRaceKey((current) => current ?? first?.raceKey ?? null);
         setParentageKey((current) => current ?? response.adoptiveParentageOptions[0]?.key ?? null);
         setAdoptedRaceKey((current) => current ?? response.adoptedRaceOptions[0]?.key ?? null);
+        setSkinwalkerKinKey((current) => current ?? response.skinwalkerChangeShapeOptions[0]?.key ?? null);
       })
       .catch((cause: unknown) => {
         setError(cause instanceof Error ? cause.message : 'Unknown alternate racial traits failure');
@@ -193,6 +205,11 @@ export function AlternateTraitPicker() {
   const selectedAdoptedRace: AdoptedRaceOptionDto | null = useMemo(
     () => adoptedRaceOptions.find((option) => option.key === adoptedRaceKey) ?? null,
     [adoptedRaceOptions, adoptedRaceKey],
+  );
+  const skinwalkerOptions = menu?.skinwalkerChangeShapeOptions ?? [];
+  const selectedSkinwalkerOption: SkinwalkerChangeShapeOptionDto | null = useMemo(
+    () => skinwalkerOptions.find((option) => option.key === skinwalkerKinKey) ?? null,
+    [skinwalkerOptions, skinwalkerKinKey],
   );
 
   function onToggle(key: string) {
@@ -480,6 +497,43 @@ export function AlternateTraitPicker() {
             )}
           </div>
         </div>
+      </div>
+
+      <div style={{ marginTop: '1.5rem' }}>
+        <h3 style={{ fontSize: '0.9rem', margin: '0 0 0.4rem' }}>Skinwalker Change Shape</h3>
+        <p style={{ ...muted, margin: '0 0 0.5rem' }}>{describeSkinwalkerChangeShapeOptions(menu)}</p>
+        <p style={{ ...muted, margin: '0 0 0.5rem' }}>
+          Each Skinwalker kin gains one of these benefits while in bestial form. This screen names the
+          real options each kin's own Change Shape trait offers; it does not yet compute the chosen
+          benefit's bonus on the character sheet.
+        </p>
+        {skinwalkerOptions.length === 0 ? (
+          <p style={{ ...muted, margin: '0.5rem 0' }}>No Skinwalker Change Shape kin pools loaded.</p>
+        ) : (
+          <>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.5rem' }}>
+              {skinwalkerOptions.map((option) => (
+                <button
+                  key={option.key}
+                  type="button"
+                  onClick={() => setSkinwalkerKinKey(option.key)}
+                  style={pillStyle(option.key === skinwalkerKinKey)}
+                >
+                  {option.kin}
+                </button>
+              ))}
+            </div>
+            {selectedSkinwalkerOption ? (
+              <div style={{ ...panel, padding: '0.6rem 0.9rem' }}>
+                <span style={{ fontWeight: 700 }}>{selectedSkinwalkerOption.name}</span>
+                <span style={{ ...muted, marginLeft: '0.5rem' }}>{selectedSkinwalkerOption.book}</span>
+                <p style={{ ...muted, color: 'var(--color-accent)', margin: '0.3rem 0 0' }}>
+                  {describeSkinwalkerChangeShapeGrants(selectedSkinwalkerOption)}
+                </p>
+              </div>
+            ) : null}
+          </>
+        )}
       </div>
     </>
   );

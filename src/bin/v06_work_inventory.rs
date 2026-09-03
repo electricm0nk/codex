@@ -55,6 +55,7 @@ use codex::rules_core::race_creation::race_creation_chassis;
 use codex::rules_core::race_resolver::{
     TraitRole, adopted_race_choose_selectors, adoptive_parentage_options, load_race_corpus,
 };
+use codex::rules_core::skinwalker_change_shape::skinwalker_change_shape_options;
 use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_options};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
@@ -5652,6 +5653,17 @@ impl EngineFacts {
         self.race_trait_probe.adoptive_parentage_rendered.get(&coordinate).map(String::as_str)
     }
 
+    /// SD-34 wave 33/35 (bucket-D mining): whether this unit is one of
+    /// Bestiary 5's 20 Skinwalker `Change Shape (<Option>)` records that a
+    /// real kin pool resolves through
+    /// `codex::rules_core::skinwalker_change_shape` -- see
+    /// [`RaceTraitProbe::skinwalker_change_shape_option_resolved`]'s own doc
+    /// comment for why this does NOT promote past `engine-does-not-hold`.
+    fn race_trait_skinwalker_change_shape_option_resolved(&self, unit: &CorpusUnit) -> bool {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.skinwalker_change_shape_option_resolved.contains(&coordinate)
+    }
+
     /// Whether one book really holds this unit. Delegates to
     /// [`Self::holds_key`] for every kind whose identity is its name, and
     /// uses the source-coordinate join for race traits, which is the only
@@ -6325,6 +6337,33 @@ struct RaceTraitProbe {
     /// either (same verification as above). Populated at the bottom of
     /// [`probe_race_trait_corpus`].
     adoptive_parentage_rendered: BTreeMap<(String, usize), String>,
+    /// SD-34 wave 33/35 (bucket-D mining): coordinates of one of Bestiary
+    /// 5's 20 Skinwalker `Change Shape (<Option>)` records (wave 33 lane
+    /// B's own named 20-unit remainder, next-cycle plan item 2) that a real
+    /// kin pool resolves through `codex::rules_core::skinwalker_change_shape
+    /// ::skinwalker_change_shape_options` -- the SAME resolver
+    /// `race_trait_picker.rs`'s own `list_alternate_racial_traits` Tauri
+    /// command calls (proven live by that file's own
+    /// `the_menu_command_carries_all_nine_skinwalker_change_shape_kin_pools_
+    /// with_real_grants` test).
+    ///
+    /// **Unlike the Adopted Race / Adoptive Parentage sets above, this one
+    /// does NOT promote to `text-complete`.** Every one of these 20 records
+    /// carries a real, non-zero `magnitude_token_count` (a `TEMPBONUS` the
+    /// record applies once a player activates that benefit during play) --
+    /// `AGENTS.md`'s "a magnitude is not wired until it moves on the twin
+    /// the player reads" bar requires the NUMBER to move, not merely the
+    /// option's name to render. No mechanism in this engine
+    /// computes an activated-during-play temporary bonus for any record
+    /// today (verified: `grep -rln 'TEMPBONUS'` across `src/` finds no
+    /// activation-state consumer), so this set exists for the identical
+    /// honesty reason `adopted_race_selector_grants` does: a precise
+    /// `engine-does-not-hold` evidence string ("this kin pool resolves for
+    /// real, no magnitude reaches the sheet") in place of the blanket
+    /// "never applies" the 20 used to carry -- never a `done`/`text-
+    /// complete` promotion this shape has not earned. Populated at the
+    /// bottom of [`probe_race_trait_corpus`].
+    skinwalker_change_shape_option_resolved: BTreeSet<(String, usize)>,
 }
 
 /// Every race the product's OWN character-creation roster would offer a
@@ -6523,6 +6562,17 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
             if description.trim().is_empty() { None } else { Some((option.key, description)) }
         })
         .collect();
+    // SD-34 wave 33/35 (bucket-D mining): a FOURTH, INDEPENDENT consumer
+    // observation, over the SAME loaded `corpus` -- Bestiary 5's Skinwalker
+    // `Change Shape (<Option>)` records (`TraitRole::Unclassified`, same
+    // reason as the two shapes above: no readable default/replace/grant
+    // gate of its own). Read the SAME resolver
+    // `race_trait_picker.rs`'s own `list_alternate_racial_traits` Tauri
+    // command calls, never re-implemented.
+    let skinwalker_option_keys_with_real_pool: BTreeSet<String> = skinwalker_change_shape_options(&corpus)
+        .into_iter()
+        .flat_map(|option| option.grants.into_iter().map(|grant| grant.key))
+        .collect();
     for race in corpus.race_keys() {
         for record in corpus.traits_for(race) {
             let Some(file) = Path::new(&record.source_path).file_name() else { continue };
@@ -6531,7 +6581,10 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
                 probe.adopted_race_selector_grants.insert(coordinate.clone());
             }
             if let Some(description) = parentage_rendered_by_key.get(&record.data.key) {
-                probe.adoptive_parentage_rendered.insert(coordinate, description.clone());
+                probe.adoptive_parentage_rendered.insert(coordinate.clone(), description.clone());
+            }
+            if skinwalker_option_keys_with_real_pool.contains(&record.data.key) {
+                probe.skinwalker_change_shape_option_resolved.insert(coordinate);
             }
         }
     }
@@ -11395,6 +11448,30 @@ fn classify(
                     reason: None,
                     engine_book: engine_book_field.clone(),
                 };
+            }
+            // SD-34 wave 33/35 (bucket-D mining): Bestiary 5's Skinwalker
+            // `Change Shape (<Option>)` records, wave 33 lane B's own named
+            // 20-unit remainder. `race_trait_picker.rs`'s menu command now
+            // resolves a real kin pool for 19 of the 20 (`Endurance` is a
+            // verified, genuinely orphaned option -- see
+            // `codex::rules_core::skinwalker_change_shape` module doc), and
+            // a real desktop UI section now renders it
+            // (`AlternateTraitPicker.tsx`'s "Skinwalker Change Shape"
+            // section, confirmed by `grep -rn 'skinwalkerChangeShapeOptions'
+            // apps/desktop/src` finding the boundary type, the model
+            // helpers and the component's own reads). **Still
+            // `engine-does-not-hold`, not `text-complete`:** every one of
+            // these 20 carries a real, non-zero magnitude (a `TEMPBONUS`
+            // the record applies once activated during play) that this
+            // engine has no mechanism to compute onto any character sheet
+            // today -- `AGENTS.md`'s "the NUMBER must move, not merely the
+            // name render" bar, the exact reason the two shapes
+            // above qualify for `text-complete` (zero-magnitude,
+            // `text_only`) and this one does not.
+            if facts.race_trait_skinwalker_change_shape_option_resolved(unit) {
+                return engine_does_not_hold(
+                    "race_trait_skinwalker_change_shape_option_resolves_real_kin_pool_but_no_activation_mechanism_computes_its_magnitude",
+                );
             }
             // The honest middle: the record IS ingested and IS loaded, and
             // still no selection a player can make brings it in. Distinct
@@ -18752,13 +18829,27 @@ mod race_trait_grounding_tests {
     // rows) still resolves no grants and correctly falls through to the
     // unchanged fallback below.
     //
-    // The other 26 `Unclassified` bucket-D records (20 Skinwalker `Change
-    // Shape (<Option>)` components, `Oversized Goblin`, 2 Human Ethnicity
-    // placeholders, `Human ~ Tribalistic Languages`, `Suli ~ Trusted
-    // Mediator`, `Rougarou`'s selector) are UNCHANGED by this cycle --
-    // `reach_gate` names a real remedy for each, and every one is "a new
-    // mechanism, not a missing wire" (its own words); the negative tests
-    // below pin that this fix does not sweep them in too.
+    // SD-34 wave 35 (bucket-D mining) closes wave 33 lane B's own named
+    // 20-unit remainder (next-cycle plan item 2): 19 of Bestiary 5's 20
+    // Skinwalker `Change Shape (<Option>)` components now resolve a real
+    // kin pool through `codex::rules_core::skinwalker_change_shape` (the
+    // SAME resolver `race_trait_picker.rs`'s menu command calls) and move
+    // off the blanket "never applies" onto a precise evidence string --
+    // still `engine-does-not-hold`, never `text-complete`/`grounded`,
+    // because every one carries real (non-zero) magnitude a `TEMPBONUS`
+    // applies only once activated during play, which no mechanism in this
+    // engine computes onto any character sheet today. `Endurance` is the
+    // one verified, genuinely orphaned option (no kin's `.MOD` row ever
+    // names it) and correctly stays unchanged, the identical disposition
+    // `Rougarou`'s selector gets among the Adopted Race population.
+    //
+    // The other 6 `Unclassified` bucket-D records (`Oversized Goblin`, 2
+    // Human Ethnicity placeholders, `Human ~ Tribalistic Languages`,
+    // `Suli ~ Trusted Mediator`, `Rougarou`'s selector) are UNCHANGED by
+    // this cycle -- `reach_gate` names a real remedy for each, and every
+    // one is "a new mechanism, not a missing wire" (its own words); the
+    // negative test below pins that this fix does not sweep `Oversized
+    // Goblin` in too.
     // -----------------------------------------------------------------
 
     /// RED/GREEN proof case 1, against the REAL corpus and the REAL
@@ -18858,16 +18949,21 @@ mod race_trait_grounding_tests {
         assert_eq!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
     }
 
-    /// Regression: a Skinwalker `Change Shape (<Option>)` component
-    /// (`skinwalker_abilities_race_subrace.lst:236`, `VISIBLE:NO`) is a
-    /// TYPE-pool-referenced sub-record, not an Adopted-Race selector or an
-    /// Adoptive Parentage option, and it carries a real magnitude token
-    /// (`text_only` false) besides. `reach_gate.rs`'s own `OPEN_FINDINGS`
-    /// names its remedy as a new TYPE-pool option picker ("outside this
-    /// fold's scope"), so this fix must leave all 20 exactly where they
-    /// were.
+    /// SD-34 wave 35 (bucket-D mining), closing wave 33 lane B's own named
+    /// 20-unit remainder (next-cycle plan item 2): a Skinwalker `Change
+    /// Shape (<Option>)` component (`skinwalker_abilities_race_subrace.
+    /// lst:236`, `VISIBLE:NO`) is a TYPE-pool-referenced sub-record whose
+    /// real kin pool `codex::rules_core::skinwalker_change_shape` now
+    /// resolves -- the SAME resolver `race_trait_picker.rs`'s own menu
+    /// command calls. This unit (`Bite`, a real member of 8 of the 9 real
+    /// kin pools) must therefore move OFF the blanket "never applies" onto
+    /// the precise new evidence string. It still carries a real magnitude
+    /// token (`text_only` false), so `AGENTS.md`'s "the NUMBER
+    /// must move" bar is unmet regardless -- `engine-does-not-hold`, never
+    /// `text-complete`/`grounded`, is the correct status (see this evidence
+    /// string's own doc comment for why).
     #[test]
-    fn a_skinwalker_change_shape_component_is_unaffected_and_still_reads_never_applies() {
+    fn a_skinwalker_change_shape_component_with_a_real_kin_pool_gets_the_precise_evidence() {
         let facts = EngineFacts {
             race_trait_probe: probe_race_trait_corpus(&probe_root()),
             ..Default::default()
@@ -18882,6 +18978,47 @@ mod race_trait_grounding_tests {
             provenance: Provenance {
                 file: "skinwalker_abilities_race_subrace.lst".to_string(),
                 line: 236,
+            },
+            magnitude_token_count: 2,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_ne!(
+            verdict.evidence, "race_trait_record_loaded_but_never_applies",
+            "Bite resolves through a real kin pool and must not read as the blanket 'never applies'"
+        );
+        assert_ne!(verdict.status, "text-complete", "real magnitude means the text-only rung never applies here");
+        assert_ne!(verdict.status, "grounded");
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_skinwalker_change_shape_option_resolves_real_kin_pool_but_no_activation_mechanism_computes_its_magnitude"
+        );
+    }
+
+    /// `Endurance` (`skinwalker_abilities_race_subrace.lst:240`) is the one
+    /// verified, genuinely orphaned option among the 20 -- no kin's `.MOD`
+    /// row ever names it (`codex::rules_core::skinwalker_change_shape`
+    /// module doc). It must stay on the unchanged blanket evidence, the
+    /// identical disposition `Rougarou`'s selector gets among the Adopted
+    /// Race population: correctly inert, not swept in by this fix.
+    #[test]
+    fn endurance_is_the_verified_orphan_and_still_reads_never_applies() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "bestiary_5".to_string(),
+            source_book: "bestiary_5".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Skinwalker ~ Change Shape (Endurance)".to_string(),
+            name: "Change Shape (Endurance)".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance {
+                file: "skinwalker_abilities_race_subrace.lst".to_string(),
+                line: 240,
             },
             magnitude_token_count: 2,
             type_facet: None,

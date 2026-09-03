@@ -36,6 +36,7 @@ pub mod rules_tables;
 pub mod shape_b_v1;
 pub mod size;
 pub mod skill_allocation;
+pub mod skinwalker_change_shape;
 pub mod source_content;
 pub mod spell_resolver;
 pub mod wiring_class;
