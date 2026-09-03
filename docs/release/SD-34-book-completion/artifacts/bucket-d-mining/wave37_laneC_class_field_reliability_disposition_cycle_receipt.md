@@ -1,6 +1,7 @@
 # Cycle — SD-34 wave 37, Lane C — `/data/class` reliability audit vs. narrow owner-override for wave 36 lane C's Next-cycle-plan item 1 (17 units, investigation only, no fix landed)
 
-- **Commit SHA:** (this cycle's own commit, see structured report)
+- **Commit SHA:** `757368a388` (docs-only commit; a small follow-up commit fills in this
+  line itself with the real SHA, per this schema's own requirement)
 - **Files touched:** this receipt, `progress.md`, `kanban.md`,
   `docs/retro/events/sd34-wave37-lanec.jsonl`,
   `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`
