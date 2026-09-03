@@ -181,7 +181,12 @@ BUCKET_DEFINITIONS = {
         # `facts.class_books` membership check earlier in the same function):
         # fresh `grep -n` for the same unique literal, 12934 -> 12955, line
         # content read back and confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12955, "must_contain": "has_no_engine_table"},
+        # Wave 36 merge re-derivation (lane A + lane C's own creature-type-
+        # collision guard both compose at the SAME site): fresh `grep -n`
+        # against the actual merged file for the same unique literal,
+        # 12955 -> 12986, line content read back and confirmed still the
+        # real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 12986, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -212,7 +217,11 @@ BUCKET_DEFINITIONS = {
         # bucket A above): fresh `grep -n` for the same unique literal,
         # 12614 -> 12635, line content read back and confirmed still the
         # real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12635, "must_contain": "not_held_by_engine"},
+        # Wave 36 merge re-derivation (same composition as bucket A above):
+        # fresh `grep -n` against the actual merged file for the same unique
+        # literal, 12635 -> 12666, line content read back and confirmed
+        # still the real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 12666, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -242,7 +251,11 @@ BUCKET_DEFINITIONS = {
         # buckets A/B above): fresh `grep -n` for the same unique literal,
         # 12839 -> 12860, line content read back and confirmed still the
         # real construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 12860, "must_contain": "explanation_id"},
+        # Wave 36 merge re-derivation (same composition as buckets A/B
+        # above): fresh `grep -n` against the actual merged file for the
+        # same unique literal, 12860 -> 12891, line content read back and
+        # confirmed still the real construction site, not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 12891, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -328,7 +341,13 @@ BUCKET_DEFINITIONS = {
         # membership check above this line): fresh `grep -n` for the same
         # unique literal, 13716 -> 13737, read back and confirmed still the
         # real construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 13737, "must_contain": "literal-verified"},
+        # Wave 36 merge re-derivation (lane A + lane C's own composition
+        # above this citation's own construction site shifts it too): fresh
+        # `grep -n` against the actual merged file for the same unique
+        # literal (`item.verdict.status = "literal-verified";`), 13737 ->
+        # 13768, read back and confirmed still the real construction site,
+        # not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 13768, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
