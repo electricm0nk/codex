@@ -11,6 +11,79 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 35, Lane C (mine bucket D's two largest untouched shapes) — reconnaissance only, zero closures, both shapes fully decomposed — partial
+
+**Status: partial.** Read-only mining cycle per this cycle's own dispatch
+brief (no Rust/corpus changes authorized this cycle). **Worktree self-heal,
+not escalated:** this cycle's assigned worktree started 41 commits behind
+`origin/tranche/14` (`ea2b3396f2`, the SD-33 PR #377 merge — no
+`scripts/completion_atlas.py`, no `docs/release/SD-34-book-completion/` at
+all). Confirmed a clean fast-forward (`git merge-base --is-ancestor HEAD
+origin/tranche/14` → true) and fast-forwarded to `7ea9651b87` before any
+analysis — a self-healable stale-base condition
+(`workflow-instruction.md §8`), not a diverged-tree blocker.
+
+Re-derived both of wave 32's own named-but-unmined shapes fresh at this
+cycle's HEAD: `class_feature_of_unmodelled_corpus_class:*` (931 units) and
+`class_feature_no_dedicated_magnitude_id_matched_the_record_slug` (179
+units) — both match the brief's dispatch-time figures exactly
+(`population=49438`, `D: 2955`). **Correction, logged to retro
+(`docs/retro/events/sd34-wave35-lanec.jsonl`):** the brief's own "75 distinct
+classes" for the unmodelled-class shape does not hold at this cycle's fresh
+re-derivation — **70**, not 75 (unit population unchanged at 931; the 75
+figure was never independently re-verified by a second method since wave
+32 first stated it).
+
+Decomposed the 931-unit shape into 5 named sub-mechanisms, cheapest-first,
+summing exactly (`19 + 63 + 16 + 1 + 832 = 931`): **19** units where a real
+chassis already exists but the classifier's own matcher discards the correct
+attribution (`psychic_warrior` 18 — `modelled_class_books()` inserts the
+`untabled_base_class_chassis` registry's underscore-slugged `bare_name`
+directly rather than space-joining it the way the very next loop's own doc
+comment says to for multi-word names, `v06_work_inventory.rs:13958` vs
+`:13966-13970`; `rogue` 1 — the final `corpus_class_names` fallback,
+`:11951-11969`, never re-checks `class_books` membership before declaring a
+class unmodelled, so a real ambiguity-guard rejection upstream mislabels a
+class that unambiguously IS modelled). Both traced to source and to a real
+corpus record, not asserted from the evidence label alone — **not
+live-verified by a cargo run this cycle** (read-only mandate), flagged as
+next-wave RED-test candidates. **63** units mismatched onto unrelated
+same-named creature-type corpus records (Animal 23, Undead 13, Dragon 15,
+Construct 2, Plant 9, Ooze 1) — real companion/subdomain features (Animal
+Companion, Undead Scourge, Dragon Shaman, ...) miscategorized via the same
+short-word-collision shape wave 32's own receipt already named for
+`"warrior"`/`"Adaptive Warrior"`, running in the opposite direction here.
+**16** Eidolon companion-progression-table records (same disposition
+question, kept separate since `eidolon` is a real declared class-shaped
+corpus record rather than a creature-type collision). **1** feat-chain
+record (`Sentinel Style Feat`) miscategorized via the identical collision
+shape. **832** units across **60** genuinely unmodelled prestige/base
+classes — real Epic 4/5 new-chassis work; full per-class population table
+in the receipt, largest-yield-first (`phrenic_slayer` 47, `divine_scion` 46
+lead).
+
+Decomposed the 179-unit shape by its 36 owning (already-modelled) classes,
+all named, summing exactly. Flagged (not yet run) a cheap 25-unit
+sub-population still at `magnitude_token_count == 0` inside it — 17 of
+those already carry `wiring_class == "display"`, making them candidates for
+the exact `DESC:`-token / `universal_sheet_modifier` cross-reference method
+wave 32's own receipt already proved out on the unrelated 1,727-unit shape,
+not yet run against this smaller, different population.
+
+**Bucket-diff, four movement categories:** closure 0, reclassification 0,
+reachability 0, instrument-correction 1 (the 75→70 class-count figure,
+prose only — no code, script, or corpus file touched). Verified via
+`completion_atlas.py --check`'s bucket counts guaranteed identical before
+and after (no code/corpus/inventory file was touched this cycle at all).
+
+Receipt: `artifacts/bucket-d-mining/wave35_laneC_reconnaissance_cycle_receipt.md`.
+`## Open blockers`: none filed — every one of the 931+179 units is named by
+mechanism above with a next-cycle plan in the receipt (cheapest-first:
+sub-mechanism 1's 19-unit matcher fix, then shape 2's 25-unit zero-magnitude
+sub-split, then sub-mechanisms 2–4's 80-unit disposition trace, then shape
+2's remaining 154 magnitude-id units, then sub-mechanism 5's 832-unit
+per-class chassis work).
+
 ### Cycle — Wave 35 lane B — `Human ~ Tribalistic Languages` TEMPLATE: grant reader, precise evidence — complete
 
 **Status: complete, with an honest scope correction.** Dispatched to close wave 33 lane B's
