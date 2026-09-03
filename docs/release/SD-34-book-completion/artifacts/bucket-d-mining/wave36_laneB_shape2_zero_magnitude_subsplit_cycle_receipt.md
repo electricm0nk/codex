@@ -1,6 +1,10 @@
 # Cycle — wave 36, lane B (mine bucket D, `mine-bucket-d` kanban row 37) — Shape 2's 25-unit zero-magnitude sub-split, `DESC:`/`universal_sheet_modifier` cross-reference — complete, zero promotable
 
-- **Commit SHA:** <filled after commit, see below>
+- **Commit SHA:** `7c5261836c` (primary content — analysis, `progress.md`, `kanban.md`), with
+  two small trailing docs-only commits on this same worktree branch:
+  `101c6f5438` (`completion-atlas.json` freshness stamp) and this file's own final polish
+  commit (base-branch hazard + audit-window notes, committed immediately after this line was
+  written). Full range: `4379c9be05..HEAD` on `worktree-wf_2d4a97a1-eaf-2`.
 - **Files touched:**
   - `docs/release/SD-34-book-completion/artifacts/bucket-d-mining/wave36_laneB_shape2_zero_magnitude_subsplit_cycle_receipt.md` (new, this file)
   - `docs/release/SD-34-book-completion/progress.md` (prepended entry, one merge conflict resolved — see Notes)
