@@ -11,6 +11,41 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 36 lane A — Sub-mechanism 1 matcher fix (`psychic_warrior`/`rogue`) — complete, 4 real closures
+
+**Status: complete, honest accounting.** Closed wave 35 lane C's own named Sub-mechanism 1 (19
+units: `psychic_warrior` 18 + `rogue` 1) from the `class_feature_of_unmodelled_corpus_class`
+shape — a matcher fix, not a new chassis, exactly as that reconnaissance named it. Two bugs
+fixed in `modelled_class_books()`/`classify()` (`src/bin/v06_work_inventory.rs`): (a)
+`bare_name` in the untabled-registry loop is now space-joined (`"psychic_warrior"` →
+`"psychic warrior"`), matching the CRB-prestige loop's own documented convention three lines
+below — the underscore form was never equal to `corpus_class_names`'s naturally space-joined
+form, so the safety cross-check always discarded the correct match; (b) the FINAL
+`corpus_class_names`-only owner-resolution fallback now re-checks `facts.class_books`
+membership (normalized via the existing `class_name_as_group_text` helper) before declaring a
+class unmodelled — every earlier branch in the same chain already did this check, this one
+never had. RED confirmed for both (both fixes neutralized in place, the 3 new proof tests
+failed for the stated reason), then GREEN. **Real, measured movement (guarded regen, whole-
+inventory id-diff: 0 added/0 removed/20 changed):** 4 units close to `DONE`
+(`psychic_warrior_martial_power`/`_psionic_proficiency`/`_secondary_path`/`_twisting_path`, via
+the already-shipped `class_feature_pool_catalog` text-complete rung, now reachable because the
+owner resolves correctly), 16 are honestly reclassified to a more precise non-`DONE` bucket (`B`
+or `C` — naming the TRUE remaining gap, real per-feature magnitude wiring, instead of a false
+"class not modelled" claim), 0 pure instrument-corrections with no bucket movement. The 20th
+changed unit is `ultimate_psionics:class:psychic_warrior` itself (a `Kind::Class`-level record
+OUTSIDE the named 19-unit shape) — fix (a) corrects its previously FALSE
+`class_absent_from_ClassId_ALL_and_book_class_id_enums` evidence too, confirming the dispatch
+brief's own flagged concern that this bug reaches beyond the 931-unit `class_feature` shape.
+Checked and found one more, related, **currently-dormant** twin of the SAME bug shape
+(`PuClassId`'s own 4 multi-word class names, also stored underscore-slugged) — not fixed this
+cycle (no live unit is affected today, confirmed two ways), named for the next wave instead of
+silently carried forward. `cargo test --locked --bin v06_work_inventory -j 6 --
+class_feature_type_facet_owner_fallback_tests::` 13/13, `-- class_feature` 167/167 (356
+filtered), `cargo clippy` clean, `cargo test --locked --no-run` (full workspace) exit 0.
+`completion_atlas.py --check`: `population=49438 buckets=10 unclassified=0 overlap=0
+citation_failures=0` (4 citation lines re-derived after this cycle's own `+21`-line shift).
+Full receipt: `artifacts/bucket-d-mining/wave36_laneA_sub_mechanism_1_matcher_fix_cycle_receipt.md`.
+
 ### Cycle — Wave 35 wave-end gate — 1 verify.sh failure fixed, full 40/40 confirmed — complete
 
 **Status: complete, verified.** Wave 35's three lanes merged onto `tranche/14` one at a
