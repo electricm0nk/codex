@@ -177,7 +177,11 @@ BUCKET_DEFINITIONS = {
         # literal (`Kind::Companion => engine_does_not_hold(
         # "companion_content_has_no_engine_table"),`), 12780 -> 12934, line
         # content read back and confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12934, "must_contain": "has_no_engine_table"},
+        # Wave 36 lane A re-derivation (sub-mechanism 1 matcher fix adds a
+        # `facts.class_books` membership check earlier in the same function):
+        # fresh `grep -n` for the same unique literal, 12934 -> 12955, line
+        # content read back and confirmed still the real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 12955, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -204,7 +208,11 @@ BUCKET_DEFINITIONS = {
         # 12460 -> 12614, line content read back and confirmed still the
         # real construction site (not one of the differently-worded
         # `engine_does_not_hold(...)` calls a few lines above it).
-        "citation": {"file": _ENGINE_SRC, "line": 12614, "must_contain": "not_held_by_engine"},
+        # Wave 36 lane A re-derivation (same membership-check insertion as
+        # bucket A above): fresh `grep -n` for the same unique literal,
+        # 12614 -> 12635, line content read back and confirmed still the
+        # real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 12635, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -230,7 +238,11 @@ BUCKET_DEFINITIONS = {
         # "no_explanation_id_and_no_diagnostic_names_this_feature")`),
         # 12685 -> 12839, line content read back and confirmed still the
         # real construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 12839, "must_contain": "explanation_id"},
+        # Wave 36 lane A re-derivation (same membership-check insertion as
+        # buckets A/B above): fresh `grep -n` for the same unique literal,
+        # 12839 -> 12860, line content read back and confirmed still the
+        # real construction site, not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 12860, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -312,7 +324,11 @@ BUCKET_DEFINITIONS = {
         # Fresh `grep -n` against the actual merged file for the same
         # unique literal, 13639 -> 13716, read back and confirmed still the
         # real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 13716, "must_contain": "literal-verified"},
+        # Wave 36 lane A re-derivation (sub-mechanism 1 matcher fix adds a
+        # membership check above this line): fresh `grep -n` for the same
+        # unique literal, 13716 -> 13737, read back and confirmed still the
+        # real construction site, not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 13737, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",

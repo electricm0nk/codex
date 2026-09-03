@@ -12259,15 +12259,36 @@ fn classify(
                         facts.corpus_class_names.iter(),
                     )
                 }) {
-                    return Verdict {
-                        status: "engine-does-not-hold",
-                        evidence: format!(
-                            "class_feature_of_unmodelled_corpus_class:{}",
-                            slug(&corpus_class)
-                        ),
-                        reason: None,
-                        engine_book: engine_book_field,
-                    };
+                    // SD-34 wave 36 lane A (sub-mechanism 1, `rogue` unit):
+                    // every EARLIER branch in this owner-resolution chain
+                    // checks `facts.class_books` membership before trusting a
+                    // match; this final, `corpus_class_names`-only fallback
+                    // never repeated that check, so a class that genuinely
+                    // IS modelled (its own name just lost the cross-check
+                    // above to a differently-shaped candidate, e.g.
+                    // `"unchained_rogue"` losing to `"rogue"` because the
+                    // corpus never declares a standalone `"Unchained Rogue"`
+                    // class record) could still be reported as unmodelled.
+                    // Compared via `class_name_as_group_text` because
+                    // `facts.class_books` keys carry a mix of space- and
+                    // underscore-joined multi-word names depending on which
+                    // registration loop produced them.
+                    let corpus_class_text = class_name_as_group_text(&corpus_class);
+                    let already_modelled = facts
+                        .class_books
+                        .keys()
+                        .any(|modelled| class_name_as_group_text(modelled) == corpus_class_text);
+                    if !already_modelled {
+                        return Verdict {
+                            status: "engine-does-not-hold",
+                            evidence: format!(
+                                "class_feature_of_unmodelled_corpus_class:{}",
+                                slug(&corpus_class)
+                            ),
+                            reason: None,
+                            engine_book: engine_book_field,
+                        };
+                    }
                 }
                 // SD28-E15: `text-complete` requires the engine to HOLD the
                 // record (status_vocabulary's own definition), not merely
@@ -14395,7 +14416,25 @@ fn modelled_class_books() -> BTreeMap<String, &'static str> {
                 meta.class_id
             ),
         };
-        class_books.insert(bare_name, book);
+        // SD-34 wave 36 lane A (sub-mechanism 1, `psychic_warrior` unit):
+        // `bare_name` is underscore-joined (`meta.class_id` strips
+        // `"class:"` off a runtime-dispatch id like `"class:psychic_
+        // warrior"`), but this loop's own neighbor three lines below (the
+        // CRB-prestige loop) documents the correct convention: this key is
+        // the corpus DISPLAY name, lowercased AS-IS (never underscore-
+        // slugged), because `classify`'s `Kind::Class` arm and
+        // `class_feature_owner`'s cross-check both compare against a
+        // naturally space-joined form (`corpus_class_names`, built from
+        // `unit.name.to_lowercase()`). Every entry here was single-word
+        // except `psychic_warrior`, so this silently broke only that one
+        // multi-word registry entry -- `class_feature_owner`'s own longest-
+        // match tie-break returned this raw, still-underscored key as the
+        // resolved owner, which then failed the safety cross-check against
+        // `corpus_class_names`'s space-joined `"psychic warrior"` and
+        // misrouted every `Psychic Warrior ~ <Feature>` record to
+        // `class_feature_of_unmodelled_corpus_class:psychic_warrior` despite
+        // the chassis genuinely being modelled.
+        class_books.insert(bare_name.replace('_', " "), book);
     }
     // SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_
     // from_ClassId_ALL_and_book_class_id_enums`): CRB's ten prestige
@@ -22978,6 +23017,164 @@ mod class_feature_type_facet_owner_fallback_tests {
         assert_eq!(
             verdict.evidence,
             "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `SD-34 wave 36 lane A`, fix (a) direct unit coverage: `modelled_class_
+    /// books()`'s untabled-registry loop (`untabled_base_class_chassis::
+    /// untabled_base_class_registry()`) must space-join a multi-word
+    /// `bare_name` the same way its own neighboring CRB-prestige loop
+    /// already does, three lines below in the source. Before the fix the
+    /// loop inserted the raw underscore form (`"psychic_warrior"`) as the
+    /// `class_books` key; `class_feature_owner` clones and returns that
+    /// exact candidate string on a match (its internal comparison
+    /// normalizes underscores to spaces, but the RETURNED owner string is
+    /// the original, unconverted key), so the resolved owner never equalled
+    /// `corpus_class_names`'s naturally space-joined `"psychic warrior"` in
+    /// the downstream safety cross-check. Wired directly against the real
+    /// `modelled_class_books()` output, not a hand-built substitute, so a
+    /// regression in either function turns this test RED.
+    #[test]
+    fn modelled_class_books_space_joins_a_multi_word_untabled_registry_name() {
+        let books = modelled_class_books();
+        assert!(
+            books.contains_key("psychic warrior"),
+            "modelled_class_books() must register the untabled `psychic_warrior` chassis \
+             under its space-joined display name \"psychic warrior\", matching the \
+             CRB-prestige loop's own documented convention; psychic-related keys present: \
+             {:?}",
+            books.keys().filter(|k| k.contains("psychic")).collect::<Vec<_>>()
+        );
+        let owner = class_feature_owner("Psychic Warrior ~ Eternal Warrior", books.keys());
+        assert_eq!(
+            owner,
+            Some("psychic warrior".to_string()),
+            "class_feature_owner's own returned candidate string must already be space-joined \
+             so it can equal corpus_class_names's naturally-spaced form in the downstream \
+             cross-check; got {owner:?}"
+        );
+    }
+
+    /// `SD-34 wave 36 lane A`, fix (a) integration coverage (RED before the
+    /// fix): reproduces wave 35 lane C's own traced real record,
+    /// `ultimate_psionics:class_feature:psychic_warrior_eternal_warrior`
+    /// (`corpus_key: "Psychic Warrior ~ Eternal Warrior"`). `psychic_warrior`
+    /// is a real, computed `untabled_base_class_chassis` chassis (confirmed
+    /// against `tests/fixtures/rules_core/untabled-base-class-chassis.json`)
+    /// AND the corpus separately declares its own `"Psychic Warrior"`
+    /// `Kind::Class` record (`data/corpus/ultimate_psionics/class/
+    /// psychic_warrior.json`, `data.name: "Psychic Warrior"`) -- so it must
+    /// never be reported as an unmodelled corpus class. Populated from the
+    /// real `modelled_class_books()` output (not a hand-picked substitute)
+    /// so the fix (a) space-join is exercised exactly as production runs it.
+    #[test]
+    fn psychic_warrior_class_feature_is_not_misreported_as_an_unmodelled_corpus_class() {
+        let mut facts = EngineFacts::default();
+        for (name, book) in modelled_class_books() {
+            facts.class_books.insert(name, book);
+        }
+        facts.corpus_class_names.insert("psychic warrior".to_string());
+        let unit = CorpusUnit {
+            book: "ultimate_psionics".to_string(),
+            source_book: "ultimate_psionics".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Psychic Warrior ~ Eternal Warrior".to_string(),
+            name: "Eternal Warrior".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "up_abilities_class.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(
+            verdict.evidence,
+            "class_feature_of_unmodelled_corpus_class:psychic_warrior",
+            "psychic_warrior has a real untabled_base_class_chassis chassis and a real corpus \
+             Kind::Class record; it must not be misreported as an unmodelled corpus class \
+             (wave 35 lane C sub-mechanism 1), got status={:?} evidence={:?}",
+            verdict.status,
+            verdict.evidence
+        );
+    }
+
+    /// `SD-34 wave 36 lane A`, fix (b) integration coverage (RED before the
+    /// fix): reproduces wave 35 lane C's own traced real record,
+    /// `pathfinder_unchained:class_feature:unchained_rogue_finesse_
+    /// training_choice` (`corpus_key: "Unchained Rogue ~ Finesse Training
+    /// Choice"`, no `"<Class> Class Feature"` marker in its own
+    /// `type_facet`). `class_feature_owner`'s longest-match tie-break
+    /// resolves `modelled_owner` to PU's own `"unchained_rogue"` registry
+    /// entry over the shorter `"rogue"`, but the corpus never declares a
+    /// standalone `"Unchained Rogue"` `Kind::Class` record (PF Unchained's
+    /// Rogue variant is alternate features grafted onto base Rogue, not a
+    /// separate class file), so the safety cross-check against
+    /// `corpus_class_names` correctly discards that candidate -- and every
+    /// other fallback misses too for this record. The FINAL,
+    /// `corpus_class_names`-only fallback then finds `"rogue"` and, before
+    /// this fix, reported it as unmodelled WITHOUT checking whether `"rogue"`
+    /// is itself a `facts.class_books` member -- which it unambiguously is
+    /// (CRB's own base class, single word, immune to fix (a)'s underscore
+    /// bug).
+    #[test]
+    fn rogue_final_fallback_checks_class_books_membership_before_declaring_unmodelled() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("rogue".to_string(), "core_rulebook");
+        facts.class_books.insert("unchained_rogue".to_string(), "pathfinder_unchained");
+        facts.corpus_class_names.insert("rogue".to_string());
+        let unit = CorpusUnit {
+            book: "pathfinder_unchained".to_string(),
+            source_book: "pathfinder_unchained".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Unchained Rogue ~ Finesse Training Choice".to_string(),
+            name: "Finesse Training Choice".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "pu_abilities_class.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: Some("Unchained Rogue Finesse Damage Choice.SpecialQuality.Extraordinary".to_string()),
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(
+            verdict.evidence,
+            "class_feature_of_unmodelled_corpus_class:rogue",
+            "the final corpus_class_names-only fallback must check facts.class_books \
+             membership before declaring a class unmodelled -- \"rogue\" IS a class_books \
+             member (CRB base class); got status={:?} evidence={:?}",
+            verdict.status,
+            verdict.evidence
+        );
+    }
+
+    /// NEGATIVE CONTROL for fix (b): a class the corpus declares but this
+    /// engine genuinely does NOT model (no `facts.class_books` entry under
+    /// any spelling) must still read `class_feature_of_unmodelled_corpus_
+    /// class` -- the membership check only suppresses the branch for a
+    /// class that really is modelled, it must not swallow the genuine
+    /// Sub-mechanism 5 (832-unit, 60-class) population this same branch
+    /// also serves.
+    #[test]
+    fn a_genuinely_unmodelled_corpus_class_still_reads_unmodelled_after_the_membership_check() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("rogue".to_string(), "core_rulebook");
+        facts.corpus_class_names.insert("horizon walker".to_string());
+        let unit = CorpusUnit {
+            book: "ultimate_psionics".to_string(),
+            source_book: "ultimate_psionics".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Horizon Walker ~ Terrain Mastery".to_string(),
+            name: "Terrain Mastery".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "ds_abilities_class.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_of_unmodelled_corpus_class:horizon_walker"
         );
     }
 }
