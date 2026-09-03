@@ -326,6 +326,15 @@ fn bard_level7_gains_no_new_bard_namespaced_explanation_id() {
         // real "Special"-column class feature this test's own known-id list never
         // listed.
         "class_feature.bard.suggestion_dc",
+        // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+        // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+        // receipt.md`): Weapon and Armor Proficiency is now genuinely grounded
+        // as a level-independent, always-on +0 identity record (true since
+        // level 1, mirrors the Jack-of-All-Trades idiom already used above --
+        // no trained-only gate exists in this codebase to lift). It is not a
+        // "Special"-column class feature gained at this level, so listing it
+        // here keeps this control accurate without weakening its claim.
+        "class_feature.bard.weapon_and_armor_proficiency",
     ];
     assert!(
         computation

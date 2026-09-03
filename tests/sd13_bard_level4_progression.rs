@@ -284,6 +284,15 @@ fn bard_level4_does_not_fabricate_a_new_class_feature() {
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_2",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_3",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_4",
+        // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+        // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+        // receipt.md`): Weapon and Armor Proficiency is now genuinely grounded
+        // as a level-independent, always-on +0 identity record (true since
+        // level 1, mirrors the Jack-of-All-Trades idiom already used above --
+        // no trained-only gate exists in this codebase to lift). It is not a
+        // "Special"-column class feature gained at this level, so listing it
+        // here keeps this control accurate without weakening its claim.
+        "class_feature.bard.weapon_and_armor_proficiency",
     ];
     assert!(
         computation

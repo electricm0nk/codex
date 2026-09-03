@@ -290,8 +290,16 @@ fn rogue_level_21_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")
-                || e.id.starts_with("class_feature.rogue.")),
+            .any(|e| (e.id.starts_with("class_chassis.rogue.")
+                || e.id.starts_with("class_feature.rogue."))
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Rogue's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.rogue.weapon_and_armor_proficiency"),
         "level-21 Rogue must not gain any bounded rogue explanation (PF1 has no 21st character \
          level; this is a pure implementation-gate check): {:?}",
         computation.explanations
@@ -329,8 +337,16 @@ fn multiclass_rogue_level20_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")
-                || e.id.starts_with("class_feature.rogue.")),
+            .any(|e| (e.id.starts_with("class_chassis.rogue.")
+                || e.id.starts_with("class_feature.rogue."))
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Rogue's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.rogue.weapon_and_armor_proficiency"),
         "multiclass Rogue must not gain any bounded rogue explanation: {:?}",
         computation.explanations
     );

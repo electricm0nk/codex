@@ -273,7 +273,15 @@ fn bard_level_21_is_not_promoted_by_this_slice() {
                 // unconditionally, regardless of level bound or
                 // single-class status (mirrors the spell-posture
                 // classes' and Barbarian's gate-ordering fix)
-                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"),
+                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Bard's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.bard.weapon_and_armor_proficiency"),
         "level-21 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
@@ -317,7 +325,15 @@ fn multiclass_bard_level11_is_not_promoted_by_this_slice() {
                 // unconditionally, regardless of level bound or
                 // single-class status (mirrors the spell-posture
                 // classes' and Barbarian's gate-ordering fix)
-                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"),
+                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Bard's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.bard.weapon_and_armor_proficiency"),
         "multiclass Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
