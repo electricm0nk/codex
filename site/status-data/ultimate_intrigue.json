@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 164,
+      "done": 169,
       "partial": 0,
-      "not_started": 526,
+      "not_started": 521,
       "denominator": 690,
-      "pct": 23.8,
+      "pct": 24.5,
       "excluded_from_percentage": 245,
       "standing_breakdown": {
         "origin": 690,
@@ -683,7 +683,7 @@
         },
         {
           "name": "Case the Joint",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Case the Joint (RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary)"
@@ -2370,7 +2370,7 @@
         },
         {
           "name": "Feign Innocence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Feign Innocence (RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary)"
@@ -2580,7 +2580,7 @@
         },
         {
           "name": "Gossip Collector",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Gossip Collector (RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary)"
@@ -2622,7 +2622,7 @@
         },
         {
           "name": "Great Renown",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Great Renown (RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary)"
@@ -3014,7 +3014,7 @@
         },
         {
           "name": "Incredible Renown",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Incredible Renown (RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary)"
@@ -3105,7 +3105,7 @@
         },
         {
           "name": "Instant Recognition",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Instant Recognition (RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary)"
@@ -3693,7 +3693,7 @@
         },
         {
           "name": "Mockingbird",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Mockingbird (RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary)"
@@ -6052,7 +6052,7 @@
         },
         {
           "name": "Triumphant Return",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Triumphant Return (RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary)"

@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-09-03T06:20:42Z",
+  "generated_at": "2026-09-03T11:55:15Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 18925,
+    "done": 19089,
     "partial": 5474,
-    "not_started": 13481,
+    "not_started": 13317,
     "denominator": 37880,
-    "pct": 50.0,
+    "pct": 50.4,
     "excluded_from_percentage": 11558,
     "standing_breakdown": {
       "unclassified": 11558,
@@ -35,11 +35,11 @@
     {
       "id": "ultimate_psionics",
       "title": "Ultimate Psionics",
-      "done": 1049,
+      "done": 1108,
       "partial": 485,
-      "not_started": 1729,
+      "not_started": 1670,
       "denominator": 3263,
-      "pct": 32.1,
+      "pct": 34.0,
       "excluded_from_percentage": 235,
       "standing_breakdown": {
         "origin": 3263,
@@ -49,11 +49,11 @@
     {
       "id": "advanced_players_guide",
       "title": "Advanced Player's Guide",
-      "done": 1081,
+      "done": 1123,
       "partial": 263,
-      "not_started": 1420,
+      "not_started": 1378,
       "denominator": 2764,
-      "pct": 39.1,
+      "pct": 40.6,
       "excluded_from_percentage": 1065,
       "standing_breakdown": {
         "origin": 2764,
@@ -63,9 +63,9 @@
     {
       "id": "ultimate_magic",
       "title": "Ultimate Magic",
-      "done": 884,
+      "done": 885,
       "partial": 211,
-      "not_started": 1239,
+      "not_started": 1238,
       "denominator": 2334,
       "pct": 37.9,
       "excluded_from_percentage": 678,
@@ -147,9 +147,9 @@
     {
       "id": "ultimate_combat",
       "title": "Ultimate Combat",
-      "done": 754,
+      "done": 755,
       "partial": 70,
-      "not_started": 647,
+      "not_started": 646,
       "denominator": 1471,
       "pct": 51.3,
       "excluded_from_percentage": 725,
@@ -217,11 +217,11 @@
     {
       "id": "ultimate_intrigue",
       "title": "Ultimate Intrigue",
-      "done": 449,
+      "done": 454,
       "partial": 27,
-      "not_started": 534,
+      "not_started": 529,
       "denominator": 1010,
-      "pct": 44.5,
+      "pct": 45.0,
       "excluded_from_percentage": 253,
       "standing_breakdown": {
         "origin": 1010,
@@ -287,11 +287,11 @@
     {
       "id": "book_of_the_damned_volume_2",
       "title": "Book of the Damned, Vol. 2",
-      "done": 80,
+      "done": 81,
       "partial": 55,
-      "not_started": 146,
+      "not_started": 145,
       "denominator": 281,
-      "pct": 28.5,
+      "pct": 28.8,
       "excluded_from_percentage": 75,
       "standing_breakdown": {
         "unclassified": 75,
@@ -315,11 +315,11 @@
     {
       "id": "inner_sea_combat",
       "title": "Inner Sea Combat",
-      "done": 101,
+      "done": 115,
       "partial": 6,
-      "not_started": 137,
+      "not_started": 123,
       "denominator": 244,
-      "pct": 41.4,
+      "pct": 47.1,
       "excluded_from_percentage": 185,
       "standing_breakdown": {
         "origin": 244,
@@ -329,11 +329,11 @@
     {
       "id": "inner_sea_intrigue",
       "title": "Inner Sea Intrigue",
-      "done": 72,
+      "done": 83,
       "partial": 26,
-      "not_started": 100,
+      "not_started": 89,
       "denominator": 198,
-      "pct": 36.4,
+      "pct": 41.9,
       "excluded_from_percentage": 79,
       "standing_breakdown": {
         "origin": 198,
@@ -399,11 +399,11 @@
     {
       "id": "book_of_the_damned_volume_1",
       "title": "Book of the Damned, Vol. 1",
-      "done": 21,
+      "done": 23,
       "partial": 5,
-      "not_started": 32,
+      "not_started": 30,
       "denominator": 58,
-      "pct": 36.2,
+      "pct": 39.7,
       "excluded_from_percentage": 32,
       "standing_breakdown": {
         "origin": 58,

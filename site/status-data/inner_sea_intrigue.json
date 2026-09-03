@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 26,
+      "done": 37,
       "partial": 0,
-      "not_started": 94,
+      "not_started": 83,
       "denominator": 120,
-      "pct": 21.7,
+      "pct": 30.8,
       "excluded_from_percentage": 64,
       "standing_breakdown": {
         "unclassified": 64,
@@ -207,7 +207,7 @@
         },
         {
           "name": "Contact Poison Wielder",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Contact Poison Wielder"
@@ -221,7 +221,7 @@
         },
         {
           "name": "Covert Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Covert Spells"
@@ -235,7 +235,7 @@
         },
         {
           "name": "Crowd Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Crowd Strike"
@@ -270,7 +270,7 @@
         },
         {
           "name": "Deluding Touch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Deluding Touch"
@@ -354,7 +354,7 @@
         },
         {
           "name": "Enchanting Touch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Enchanting Touch"
@@ -473,7 +473,7 @@
         },
         {
           "name": "Grandmaster of Disguise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Grandmaster of Disguise"
@@ -578,7 +578,7 @@
         },
         {
           "name": "Hide in the Crowd",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Hide in the Crowd"
@@ -634,7 +634,7 @@
         },
         {
           "name": "Informative Liaisons",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Informative Liaisons"
@@ -760,7 +760,7 @@
         },
         {
           "name": "Master of Disguise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Master of Disguise"
@@ -781,7 +781,7 @@
         },
         {
           "name": "Move with the Crowd",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Move with the Crowd"
@@ -844,7 +844,7 @@
         },
         {
           "name": "Overwhelming Touch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Overwhelming Touch"
@@ -900,7 +900,7 @@
         },
         {
           "name": "Poison Use",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary.Poison Use",
           "standing": "unclassified",
           "display_name": "Poison Use"
@@ -998,7 +998,7 @@
         },
         {
           "name": "Secret Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Secret Step"
@@ -1068,7 +1068,7 @@
         },
         {
           "name": "Slowing Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Slowing Strike"

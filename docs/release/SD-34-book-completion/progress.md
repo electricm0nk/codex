@@ -11,6 +11,97 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 36 wave-end gate — stale dashboard + stale test-count baseline fixed, full 40/40 confirmed — complete
+
+**Status: complete, verified.** All three wave 36 lanes (A, B, C) merged onto `tranche/14`
+by the merge stage, final HEAD `f5c698b72623b9c8a7fb5a8496ec9dc57d9cd4f6`. This entry is the
+wave-end closure gate: confirm the merged bucket state, run `scripts/verify.sh -j 6` to
+completion, fix anything the wave's own changes broke, and re-run to green.
+
+**What wave 36 actually closed, per lane (real unit counts, honest accounting):**
+- **Lane A** (`bdcf5353dc`, sub-mechanism 1 matcher fix) — **4 units close to `DONE`**
+  (`psychic_warrior_martial_power`/`_psionic_proficiency`/`_secondary_path`/`_twisting_path`),
+  16 reclassified `D`→`B`/`C` (precision-only, naming the true remaining per-feature-magnitude
+  gap), plus a system-wide fix (space-joined `bare_name` keys in the untabled-registry loop)
+  that also corrected one out-of-shape `Kind::Class` record's evidence string.
+- **Lane B** (`39bfdaabda`, docs-only recon) — **0 units close.** Ran the proven `DESC:`/
+  `universal_sheet_modifier` cross-reference against Shape 2's 17 zero-magnitude units; all 17
+  fail `has_real_description` (7 "Class Skills" header records with no prose to promote, 10
+  internal-chassis records whose real text lives on a sibling record the gate does not follow).
+  Zero promotable — the same honest outcome wave 32 found on the larger 1,727-unit shape.
+- **Lane C** (`55351ba49c`, disposition trace + 1 matcher fix) — **211 units close to `DONE`**
+  in the final merged tree (lane C's own standalone measurement was 215; 4 of those were
+  already closed by lane A's earlier, broader space-join fix before lane C's fix ran against
+  the merged tree — the merge stage's id-level diff confirmed exactly 211 new closures here,
+  honestly not double-counted against lane A's 4).
+
+**Total wave 36 closure: 215 units `D`→`DONE`** (lane A's 4 + lane C's 211 against the merged
+tree = lane C's own standalone 215, reconciled). Combined with lane A's 16 reclassifications
+(`D`→`B`/`C`, not closures), that is the wave's full real movement — lane B is honestly
+zero, and is reported as such rather than papered over.
+
+**Lane C's own disposition-trace findings** (all 80 units of wave 35 lane C's sub-mechanisms
+2–4, none left as "the rest" — full table in
+`artifacts/bucket-d-mining/wave36_laneC_creature_type_collision_disposition_cycle_receipt.md`):
+- **Case (a) — 5 units, a real matcher bug, fixed.** `"Order of the Dragon"`'s 5 units
+  (Cavalier's own real chassis) were short-circuited by a corpus-wide creature-type collision
+  with the bestiary's own unmodelled `"Dragon"` pseudo-class, before the text-only
+  `class_feature_pool_catalog` promotion every non-colliding sibling order already reaches
+  `text-complete` through ever got a chance to run. Fixed by guarding the short-circuit.
+- **Case (b) — 75 units**, genuinely-unbuilt companion/subdomain/archetype mechanisms (several
+  confirmed directly against the engine's own doc comments — Power Over Undead's channel DC,
+  Eidolon's evolution-slot table), named precisely per group, none built this cycle.
+- **Case (c) — 5 units** (Undead Savant Subschool ×2, PaDFE ×3), real misattributions traced
+  to source but not safely fixable this cycle (unreliable corpus signal, or zero achievable
+  bucket movement even if reclassified) — named for the next wave, not attempted.
+- The one case-(a) fix's blast radius reaches beyond its own 80-unit scope: 202 of the 215
+  total closures are sub-mechanism 5's own 60-class zero-magnitude, text-only sub-features
+  hitting the identical short-circuit, now correctly served — every affected class's own
+  magnitude-bearing siblings spot-checked and confirmed still correctly `engine-does-not-hold`.
+  Reported as an unavoidable, provably-safe emergent effect of one narrow code fix, not new
+  scope chosen this cycle.
+
+**Bucket-D movement, measured fresh** (`completion_atlas.py --check` at wave-start tip
+`4379c9be05` vs. the merged tree, both runs this cycle):
+`D: 2891 → 2662` (−229), `DONE: 25027 → 25242` (+215), `B: 11769 → 11771` (+2),
+`C: 4173 → 4185` (+12) — `A`/`M`/`V`/`U`/`X`/`Z` unchanged. `population=49438`,
+`unclassified=0`, `overlap=0` confirmed at both points. The B/C growth is lane A's own 16
+reclassifications, honestly retained (not double-counted against lane C's closures) exactly
+as the merge stage's id-level diff reconciled it.
+
+**Wave-end gate work this cycle (both caused by this wave's own changes, both fixed):**
+1. `scripts/verify.sh -j 6` first run (log `/tmp/codex-verify-M2oJPK`, 6151s) FAILed at
+   `site-dashboard-check`: `site/dashboard/PF1e-dashboard.json is STALE` — the three lanes'
+   merged `docs/work-inventory.json` bucket movement was never re-projected into the public
+   dashboard feed. Fixed by running `scripts/publish-site-dashboard.sh` (regenerates
+   `site/dashboard/{PF1e-dashboard.json,PF1e-dashboard.json.last-good,units/*}` and
+   `site/status-data*` from the live producer). 39/40 passed on that run; only
+   `site-dashboard-check` failed.
+2. That same run's SUMMARY carried a non-failing baseline note: `BASELINE_ROOT_FULL_TESTS`
+   stale (8411 recorded, 8417 measured) — wave 36 added 6 new `#[test]` functions, all inside
+   `src/bin/v06_work_inventory.rs` (a `--bin` target, root-full-only): `bdcf5353dc` (lane A) +4,
+   `48e308e68b` (merge fix, edited an existing test, +0 new), `55351ba49c` (lane C) +2.
+   `root-lib`/`desktop` unaffected (3050/573, unchanged). Updated
+   `scripts/verify-baselines.env`: `BASELINE_ROOT_FULL_TESTS` `8411 → 8417`, itemized per
+   commit inline in the file, matching this convention's own established format.
+
+**Full verify.sh result, confirmed 40/40 on re-run:** `scripts/verify.sh -j 6`, log dir
+`/tmp/codex-verify-OO9MJb`, `duration_seconds=5199` (~86m39s, from
+`docs/retro/events/sd31-transcribe.jsonl`'s own auto-logged receipt), `RESULT: PASS`, all 40
+stages green including `site-dashboard-check` (now current) and `root-full` (`8417 passed`,
+matching the updated baseline exactly). `cargo clippy` clean on both crates, `class-dump`
+31/31 computing, `corpus-sweep` 0 findings, `corpus-trap-audit` all defect kinds at their
+registered counts, `frontend-test` 100/100, `frontend-typecheck` clean.
+
+Movement this cycle: closure 0 (wave 36's 215 closures are lanes A+C's own, reported above,
+not re-claimed here), reclassification 0, reachability 0, instrument-correction 2 (stale
+dashboard regen, stale test-count baseline correction). Next-wave plan (from lane C's own
+receipt): re-derive sub-mechanism 5's own now-stale 832-unit figure (shrunk by the 202-unit
+emergent closure above); fold Pathfinder Delver's 3 PaDFE units into its real 13-unit total;
+the domain-vs-`class_feature` dual-representation pattern (7 units) needs a real grounding
+mechanism, Epic 3 scope; the dormant `PuClassId` multi-word-class-name twin bug lane A named
+(not fixed, no live unit affected) remains open.
+
 ### Cycle — Wave 36 lane A — Sub-mechanism 1 matcher fix (`psychic_warrior`/`rogue`) — complete, 4 real closures
 
 **Status: complete, honest accounting.** Closed wave 35 lane C's own named Sub-mechanism 1 (19

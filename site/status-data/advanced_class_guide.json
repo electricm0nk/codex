@@ -5921,7 +5921,7 @@
         },
         {
           "name": "Deliver Touch Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Deliver Touch Spells"
@@ -16484,7 +16484,7 @@
         },
         {
           "name": "Spirit Animal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Spirit Animal (SpecialQuality.Supernatural) #3"
@@ -16498,7 +16498,7 @@
         },
         {
           "name": "Spirit Animal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Spirit Animal (SpecialQuality.Supernatural) #5"

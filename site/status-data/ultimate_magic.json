@@ -3598,11 +3598,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 90,
+      "done": 91,
       "partial": 0,
-      "not_started": 1063,
+      "not_started": 1062,
       "denominator": 1153,
-      "pct": 7.8,
+      "pct": 7.9,
       "excluded_from_percentage": 625,
       "standing_breakdown": {
         "origin": 1153,
@@ -3996,7 +3996,7 @@
         },
         {
           "name": "Animal Friend",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Animal Friend (BardClassFeatures.SpecialQuality)"
@@ -6614,7 +6614,7 @@
         },
         {
           "name": "Dragon Bite",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.ArchetypeDruid.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Dragon Bite"
@@ -13383,7 +13383,7 @@
         },
         {
           "name": "Soothing Performance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialQuality.BardicPerformance",
           "standing": "unclassified",
           "display_name": "Soothing Performance"
@@ -15700,7 +15700,7 @@
         },
         {
           "name": "Wild Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Wild Empathy (DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary)"

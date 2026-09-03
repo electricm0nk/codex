@@ -657,7 +657,7 @@
         },
         {
           "name": "Dragonbreath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "Dragonbreath (SpecialQuality.DomainPower) #2"

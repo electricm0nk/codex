@@ -882,11 +882,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 329,
+      "done": 371,
       "partial": 2,
-      "not_started": 1122,
+      "not_started": 1080,
       "denominator": 1453,
-      "pct": 22.6,
+      "pct": 25.5,
       "excluded_from_percentage": 881,
       "standing_breakdown": {
         "unclassified": 881,
@@ -986,7 +986,7 @@
         },
         {
           "name": "Act as One",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Act as One"
@@ -1378,7 +1378,7 @@
         },
         {
           "name": "Animal Speech",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Animal Speech"
@@ -1980,7 +1980,7 @@
         },
         {
           "name": "Assumption",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Assumption"
@@ -2085,7 +2085,7 @@
         },
         {
           "name": "Aura of Life",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.PaladinClassFeatures.SpecialQuality.Supernatural.PaladinAuraOfResolve",
           "standing": "unclassified",
           "display_name": "Aura of Life"
@@ -2834,7 +2834,7 @@
         },
         {
           "name": "Bloodfire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Bloodfire"
@@ -2988,7 +2988,7 @@
         },
         {
           "name": "Bloodrain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Bloodrain"
@@ -3303,7 +3303,7 @@
         },
         {
           "name": "Bulwark",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "origin",
           "display_name": "Bulwark"
@@ -3709,7 +3709,7 @@
         },
         {
           "name": "Clear Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "unclassified",
           "display_name": "Clear Mind"
@@ -3961,14 +3961,14 @@
         },
         {
           "name": "Companion Soul",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Companion Soul"
         },
         {
           "name": "Companion Walk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Companion Walk"
@@ -3982,14 +3982,14 @@
         },
         {
           "name": "Complex Commands",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Complex Commands"
         },
         {
           "name": "Concealed Thoughts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Concealed Thoughts"
@@ -5200,7 +5200,7 @@
         },
         {
           "name": "Demanding Challenge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Demanding Challenge (SpecialQuality.Extraordinary)"
@@ -5494,14 +5494,14 @@
         },
         {
           "name": "Divine Judgment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Divine Judgment"
         },
         {
           "name": "Divine Retribution",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Divine Retribution"
@@ -5536,7 +5536,7 @@
         },
         {
           "name": "Divine Wrath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Divine Wrath"
@@ -5851,7 +5851,7 @@
         },
         {
           "name": "Easy March",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Easy March"
@@ -5872,7 +5872,7 @@
         },
         {
           "name": "Edicts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts (SpecialQuality) #2"
@@ -6026,7 +6026,7 @@
         },
         {
           "name": "Elude Detection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Elude Detection"
@@ -6075,7 +6075,7 @@
         },
         {
           "name": "Enduring Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Enduring Rage"
@@ -6488,7 +6488,7 @@
         },
         {
           "name": "Faith Healing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Faith Healing"
@@ -6684,7 +6684,7 @@
         },
         {
           "name": "Favored Terrain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Favored Terrain (ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary)"
@@ -6810,7 +6810,7 @@
         },
         {
           "name": "Fearless Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "origin",
           "display_name": "Fearless Defense"
@@ -7300,7 +7300,7 @@
         },
         {
           "name": "Fool Casting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Fool Casting"
@@ -7622,7 +7622,7 @@
         },
         {
           "name": "Glib Lie",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Glib Lie"
@@ -7881,7 +7881,7 @@
         },
         {
           "name": "Greater Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Greater Rage"
@@ -7972,7 +7972,7 @@
         },
         {
           "name": "Guarded Lands",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Guarded Lands"
@@ -8028,7 +8028,7 @@
         },
         {
           "name": "Halting Blow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "origin",
           "display_name": "Halting Blow"
@@ -8210,7 +8210,7 @@
         },
         {
           "name": "Hidden Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Hidden Mind"
@@ -8511,7 +8511,7 @@
         },
         {
           "name": "Immobile",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "origin",
           "display_name": "Immobile"
@@ -8581,7 +8581,7 @@
         },
         {
           "name": "Improved Leadership",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Improved Leadership"
@@ -8637,7 +8637,7 @@
         },
         {
           "name": "Improved Uncanny Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Improved Uncanny Dodge"
@@ -8672,7 +8672,7 @@
         },
         {
           "name": "Indomitable Caster",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Indomitable Caster"
@@ -8917,7 +8917,7 @@
         },
         {
           "name": "Inspire Greatness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Inspire Greatness"
@@ -8931,7 +8931,7 @@
         },
         {
           "name": "Inspire Last Stand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Inspire Last Stand"
@@ -8987,7 +8987,7 @@
         },
         {
           "name": "Intercept",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "unclassified",
           "display_name": "Intercept"
@@ -9001,7 +9001,7 @@
         },
         {
           "name": "Internal Fortitude",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "unclassified",
           "display_name": "Internal Fortitude"
@@ -9085,7 +9085,7 @@
         },
         {
           "name": "Ironpaw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ironpaw"
@@ -9407,7 +9407,7 @@
         },
         {
           "name": "Last Word",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Last Word"
@@ -10058,7 +10058,7 @@
         },
         {
           "name": "Mask Alignment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Mask Alignment"
@@ -10107,7 +10107,7 @@
         },
         {
           "name": "Master of All Lands",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Master of All Lands"
@@ -10121,7 +10121,7 @@
         },
         {
           "name": "Master of Disguise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Master of Disguise (ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary)"
@@ -10247,7 +10247,7 @@
         },
         {
           "name": "Mighty Resilience",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "origin",
           "display_name": "Mighty Resilience"
@@ -10275,7 +10275,7 @@
         },
         {
           "name": "Mobile Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Mobile Defense"
@@ -10632,7 +10632,7 @@
         },
         {
           "name": "Mutagenic Form",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Special Quality.Extraordinary",
           "standing": "origin",
           "display_name": "Mutagenic Form"
@@ -10646,7 +10646,7 @@
         },
         {
           "name": "Mystic Harmony",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Mystic Harmony"
@@ -10702,7 +10702,7 @@
         },
         {
           "name": "Natural Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Natural Empathy"
@@ -10961,7 +10961,7 @@
         },
         {
           "name": "Nonmagical Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Nonmagical Aura"
@@ -11472,7 +11472,7 @@
         },
         {
           "name": "Persistent Commands",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Persistent Commands"
@@ -11640,7 +11640,7 @@
         },
         {
           "name": "Plant Speech",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Plant Speech"
@@ -12011,7 +12011,7 @@
         },
         {
           "name": "Quick Change",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Quick Change (ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary)"
@@ -12116,14 +12116,14 @@
         },
         {
           "name": "Raging Healer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Raging Healer"
         },
         {
           "name": "Raging Spellstrength",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Raging Spellstrength"
@@ -12592,7 +12592,7 @@
         },
         {
           "name": "Roused Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "origin",
           "display_name": "Roused Defense"
@@ -12718,7 +12718,7 @@
         },
         {
           "name": "Savage Seer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Extra",
           "standing": "origin",
           "display_name": "Savage Seer"
@@ -13271,7 +13271,7 @@
         },
         {
           "name": "Shift Alignment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shift Alignment"
@@ -13390,7 +13390,7 @@
         },
         {
           "name": "Silverclaw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Silverclaw"
@@ -13572,7 +13572,7 @@
         },
         {
           "name": "Smash",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "unclassified",
           "display_name": "Smash"
@@ -13992,14 +13992,14 @@
         },
         {
           "name": "Spirit Guardian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Spirit Guardian"
         },
         {
           "name": "Spirit Guide",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spirit Guide"
@@ -14412,7 +14412,7 @@
         },
         {
           "name": "Strategy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Strategy"
@@ -14664,7 +14664,7 @@
         },
         {
           "name": "Superficial Knowledge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Superficial Knowledge"
@@ -15826,7 +15826,7 @@
         },
         {
           "name": "Uncanny Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Uncanny Dodge"
@@ -15903,7 +15903,7 @@
         },
         {
           "name": "Unexpected Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "unclassified",
           "display_name": "Unexpected Strike"
@@ -16057,7 +16057,7 @@
         },
         {
           "name": "Versatile Channel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Versatile Channel"
@@ -16085,7 +16085,7 @@
         },
         {
           "name": "Vindicator's Shield",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Vindicator's Shield"
@@ -16687,7 +16687,7 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master Chymist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (ClassFeatures.Master Chymist Class Feature.SpecialQuality)"
@@ -16932,7 +16932,7 @@
         },
         {
           "name": "Wild Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Wild Stride"

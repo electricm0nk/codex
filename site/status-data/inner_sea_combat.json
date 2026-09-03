@@ -49,11 +49,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 48,
+      "done": 62,
       "partial": 0,
-      "not_started": 99,
+      "not_started": 85,
       "denominator": 147,
-      "pct": 32.7,
+      "pct": 42.2,
       "excluded_from_percentage": 169,
       "standing_breakdown": {
         "origin": 147,
@@ -69,7 +69,7 @@
         },
         {
           "name": "Absolute Law",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Absolute Law"
@@ -90,7 +90,7 @@
         },
         {
           "name": "Adaptable Guardian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Adaptable Guardian"
@@ -139,7 +139,7 @@
         },
         {
           "name": "Aura Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Aura Sense"
@@ -370,7 +370,7 @@
         },
         {
           "name": "Chosen Ally",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Chosen Ally"
@@ -496,7 +496,7 @@
         },
         {
           "name": "Confiscate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Confiscate"
@@ -573,7 +573,7 @@
         },
         {
           "name": "Decree of Law",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Decree of Law"
@@ -657,7 +657,7 @@
         },
         {
           "name": "Discern Lies",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Discern Lies"
@@ -741,7 +741,7 @@
         },
         {
           "name": "Edict of Law",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Edict of Law"
@@ -993,7 +993,7 @@
         },
         {
           "name": "Guarded Thoughts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "unclassified",
           "display_name": "Guarded Thoughts"
@@ -1070,7 +1070,7 @@
         },
         {
           "name": "Iconoclast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Iconoclast"
@@ -1273,7 +1273,7 @@
         },
         {
           "name": "Iron-Willed Atheist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Iron-Willed Atheist"
@@ -1441,7 +1441,7 @@
         },
         {
           "name": "Nonbeliever",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Nonbeliever"
@@ -1630,7 +1630,7 @@
         },
         {
           "name": "Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "unclassified",
           "display_name": "Rage"
@@ -1651,7 +1651,7 @@
         },
         {
           "name": "Reactive Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Reactive Strike"
@@ -1987,7 +1987,7 @@
         },
         {
           "name": "Tight Follower",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Tight Follower"
@@ -2008,7 +2008,7 @@
         },
         {
           "name": "Traces of Divinity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Traces of Divinity"
@@ -2057,7 +2057,7 @@
         },
         {
           "name": "Unbreakable Defender",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Unbreakable Defender"
@@ -2099,7 +2099,7 @@
         },
         {
           "name": "Voice of Law",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Voice of Law"

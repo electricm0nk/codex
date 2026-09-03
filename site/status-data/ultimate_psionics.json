@@ -1988,11 +1988,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 200,
+      "done": 259,
       "partial": 0,
-      "not_started": 1177,
+      "not_started": 1118,
       "denominator": 1377,
-      "pct": 14.5,
+      "pct": 18.8,
       "excluded_from_percentage": 196,
       "standing_breakdown": {
         "origin": 1377,
@@ -2029,7 +2029,7 @@
         },
         {
           "name": "Accelerated Action",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ElocaterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Accelerated Action"
@@ -2043,7 +2043,7 @@
         },
         {
           "name": "Accelerated Combat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Accelerated Combat"
@@ -3282,7 +3282,7 @@
         },
         {
           "name": "Assume Likeness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsionUncarnateClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Assume Likeness (PsionUncarnateClassFeatures.SpecialQuality.Supernatural)"
@@ -3856,7 +3856,7 @@
         },
         {
           "name": "Breach Power Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Breach Power Resistance (PhrenicSlayerClassFeatures.SpecialQuality.Supernatural)"
@@ -3940,7 +3940,7 @@
         },
         {
           "name": "Capricious Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ElocaterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Capricious Step"
@@ -3954,14 +3954,14 @@
         },
         {
           "name": "Cerebral Blind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cerebral Blind"
         },
         {
           "name": "Cerebral Immunity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cerebral Immunity"
@@ -3982,7 +3982,7 @@
         },
         {
           "name": "Chain of Overwhelming Force",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WarMindClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Chain of Overwhelming Force"
@@ -4318,7 +4318,7 @@
         },
         {
           "name": "Concentrated Will",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsychicFistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Concentrated Will"
@@ -4759,7 +4759,7 @@
         },
         {
           "name": "Dimension Spring Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ElocaterClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Dimension Spring Attack"
@@ -4773,7 +4773,7 @@
         },
         {
           "name": "Dimension Swap",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ElocaterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Dimension Swap"
@@ -5102,14 +5102,14 @@
         },
         {
           "name": "Dual Kinetic Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TelekineticWeaponmasterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Dual Kinetic Mastery"
         },
         {
           "name": "Dual Summon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MetaforgeClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Dual Summon"
@@ -5270,7 +5270,7 @@
         },
         {
           "name": "Empowered Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SoulArcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Empowered Shot"
@@ -5333,7 +5333,7 @@
         },
         {
           "name": "Enemy Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Enemy Sense"
@@ -5522,7 +5522,7 @@
         },
         {
           "name": "Essence Crystal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsicrystalImprinterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Essence Crystal"
@@ -5837,14 +5837,14 @@
         },
         {
           "name": "Extended Memory",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Extended Memory"
         },
         {
           "name": "Extended Shift",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MetamorphClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Extended Shift"
@@ -5858,7 +5858,7 @@
         },
         {
           "name": "Extended Transfer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Extended Transfer"
@@ -5949,7 +5949,7 @@
         },
         {
           "name": "Favored Prey",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SightedSeekerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Favored Prey"
@@ -6145,7 +6145,7 @@
         },
         {
           "name": "Fire Lash",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialAttack.Psilike",
           "standing": "origin",
           "display_name": "Fire Lash"
@@ -6173,14 +6173,14 @@
         },
         {
           "name": "Firewalk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Firewalk"
         },
         {
           "name": "Flanker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ElocaterClassFeatures.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Flanker"
@@ -6334,7 +6334,7 @@
         },
         {
           "name": "Font of Power",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MetamindClassFeatures.SpecialQuality.Psilike",
           "standing": "unclassified",
           "display_name": "Font of Power"
@@ -6691,14 +6691,14 @@
         },
         {
           "name": "Greater Melding Exchange",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Greater Melding Exchange"
         },
         {
           "name": "Greater Mind Control",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ThrallherdClassFeatures.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Greater Mind Control"
@@ -6999,7 +6999,7 @@
         },
         {
           "name": "Hide Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsionUncarnateClassFeatures.SpecialQuality.Supernatural.Defensive",
           "standing": "origin",
           "display_name": "Hide Mind (PsionUncarnateClassFeatures.SpecialQuality.Supernatural.Defensive)"
@@ -8098,7 +8098,7 @@
         },
         {
           "name": "Martial Power",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsychicWarriorClassFeatures.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Martial Power"
@@ -8168,7 +8168,7 @@
         },
         {
           "name": "Matter-Bound",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsionUncarnateClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Matter-Bound"
@@ -8378,7 +8378,7 @@
         },
         {
           "name": "Mimic Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Mimic Feat"
@@ -8392,7 +8392,7 @@
         },
         {
           "name": "Mimic Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Mimic Proficiency"
@@ -8567,7 +8567,7 @@
         },
         {
           "name": "Mindleap Contingency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Mindleap Contingency"
@@ -9022,7 +9022,7 @@
         },
         {
           "name": "Parting the Veil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsionUncarnateClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Parting the Veil"
@@ -9351,7 +9351,7 @@
         },
         {
           "name": "Permanent Shift",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MetamorphClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Permanent Shift"
@@ -9393,14 +9393,14 @@
         },
         {
           "name": "Personal Gravity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ElocaterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Personal Gravity"
         },
         {
           "name": "Phasing Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SoulArcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Phasing Shot"
@@ -9477,7 +9477,7 @@
         },
         {
           "name": "Power Critical",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DarkTempestClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Power Critical"
@@ -9575,7 +9575,7 @@
         },
         {
           "name": "Prescient Tactics",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SightedSeekerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Prescient Tactics"
@@ -9638,7 +9638,7 @@
         },
         {
           "name": "Psicrystal Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsicrystalImprinterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Psicrystal Bond"
@@ -9806,7 +9806,7 @@
         },
         {
           "name": "Psionic Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsychicWarriorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Psionic Proficiency"
@@ -9904,7 +9904,7 @@
         },
         {
           "name": "Psychic Fusion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsychicFistClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Psychic Fusion"
@@ -10387,7 +10387,7 @@
         },
         {
           "name": "Rapid Transfer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Rapid Transfer"
@@ -10492,7 +10492,7 @@
         },
         {
           "name": "Reflexive Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SoulArcherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Reflexive Shot"
@@ -10520,7 +10520,7 @@
         },
         {
           "name": "Rend the Veil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsionUncarnateClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Rend the Veil"
@@ -10660,14 +10660,14 @@
         },
         {
           "name": "Scorn Earth",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ElocaterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Scorn Earth"
         },
         {
           "name": "Seal the Host",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Seal the Host"
@@ -10681,7 +10681,7 @@
         },
         {
           "name": "Secondary Path",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsychicWarriorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Secondary Path"
@@ -10702,7 +10702,7 @@
         },
         {
           "name": "Seeker's Analysis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SightedSeekerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Seeker's Analysis"
@@ -10870,7 +10870,7 @@
         },
         {
           "name": "Shift Type",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MetamorphClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Shift Type"
@@ -10933,7 +10933,7 @@
         },
         {
           "name": "Sighted Analysis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SightedSeekerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Sighted Analysis"
@@ -11507,14 +11507,14 @@
         },
         {
           "name": "Superior Mind Control",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ThrallherdClassFeatures.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Superior Mind Control"
         },
         {
           "name": "Supernatural Shift",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MetamorphClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Supernatural Shift"
@@ -11626,7 +11626,7 @@
         },
         {
           "name": "Sweeping Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WarMindClassFeatures.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Sweeping Strike"
@@ -11661,7 +11661,7 @@
         },
         {
           "name": "Swift Transfer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MetaforgeClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Swift Transfer"
@@ -11836,14 +11836,14 @@
         },
         {
           "name": "Telekinetic Throw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TelekineticWeaponmasterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Telekinetic Throw"
         },
         {
           "name": "Telekinetic Whirlwind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TelekineticWeaponmasterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Telekinetic Whirlwind"
@@ -11941,7 +11941,7 @@
         },
         {
           "name": "Terminal Velocity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ElocaterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Terminal Velocity"
@@ -12368,7 +12368,7 @@
         },
         {
           "name": "Traumatic Transfer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Traumatic Transfer"
@@ -12403,7 +12403,7 @@
         },
         {
           "name": "Twisting Path",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsychicWarriorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Twisting Path"
@@ -12459,7 +12459,7 @@
         },
         {
           "name": "Uncarnate Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PsionUncarnateClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Uncarnate Armor"
@@ -12900,7 +12900,7 @@
         },
         {
           "name": "Weave the Sources",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CerebremancerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Weave the Sources"

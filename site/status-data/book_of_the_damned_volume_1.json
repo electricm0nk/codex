@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 2,
       "partial": 0,
-      "not_started": 8,
+      "not_started": 6,
       "denominator": 8,
-      "pct": 0.0,
+      "pct": 25.0,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 8,
@@ -60,7 +60,7 @@
         },
         {
           "name": "Infernal Bargain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Infernal Bargain"
@@ -81,7 +81,7 @@
         },
         {
           "name": "Master Conjurer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Master Conjurer"

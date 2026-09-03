@@ -70,11 +70,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 326,
+      "done": 327,
       "partial": 0,
-      "not_started": 632,
+      "not_started": 631,
       "denominator": 958,
-      "pct": 34.0,
+      "pct": 34.1,
       "excluded_from_percentage": 578,
       "standing_breakdown": {
         "origin": 958,
@@ -8574,7 +8574,7 @@
         },
         {
           "name": "Spontaneous Casting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spontaneous Casting"
@@ -9190,7 +9190,7 @@
         },
         {
           "name": "Swooping Charge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.AnimalTrick",
           "standing": "origin",
           "display_name": "Swooping Charge"
