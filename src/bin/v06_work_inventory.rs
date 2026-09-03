@@ -53,7 +53,8 @@ use codex::rules_core::class_feature_pool_catalog;
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
 use codex::rules_core::race_creation::race_creation_chassis;
 use codex::rules_core::race_resolver::{
-    TraitRole, adopted_race_choose_selectors, adoptive_parentage_options, load_race_corpus,
+    TraitRole, adopted_race_choose_selectors, adoptive_parentage_options,
+    declared_template_bonus_languages, load_race_corpus,
 };
 use codex::rules_core::skinwalker_change_shape::skinwalker_change_shape_options;
 use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_options};
@@ -5664,6 +5665,16 @@ impl EngineFacts {
         self.race_trait_probe.skinwalker_change_shape_option_resolved.contains(&coordinate)
     }
 
+    /// SD-34 wave 35 lane B: the real language name(s) this unit's own
+    /// `TEMPLATE:` chain transcribes to, if any -- see
+    /// [`RaceTraitProbe::template_bonus_language_grant`]. Non-empty only for
+    /// a record whose `TEMPLATE:` chain names one or more real
+    /// `Bonus Language ~ <Lang>` rows; never a consumer observation.
+    fn race_trait_template_bonus_language_grant(&self, unit: &CorpusUnit) -> Option<&[String]> {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.template_bonus_language_grant.get(&coordinate).map(Vec::as_slice)
+    }
+
     /// Whether one book really holds this unit. Delegates to
     /// [`Self::holds_key`] for every kind whose identity is its name, and
     /// uses the source-coordinate join for race traits, which is the only
@@ -6364,6 +6375,26 @@ struct RaceTraitProbe {
     /// complete` promotion this shape has not earned. Populated at the
     /// bottom of [`probe_race_trait_corpus`].
     skinwalker_change_shape_option_resolved: BTreeSet<(String, usize)>,
+    /// SD-34 wave 35 lane B: coordinates of a record whose own `TEMPLATE:`
+    /// chain transcribes (via
+    /// [`race_resolver::declared_template_bonus_languages`]) to one or more
+    /// REAL language names, mapped to that transcribed list. The record is
+    /// deliberately [`TraitRole::Unclassified`] -- unlike the two sets
+    /// above, this population has no consumer to observe: wave 33 lane B's
+    /// own analysis (kept in this file's `race_trait_grounding_tests`
+    /// comment above) confirmed `Human ~ Tribalistic Languages` carries no
+    /// `FACT:<flag>|True`, no `PREFACT`, no `PREABILITY` and no upstream
+    /// `ABILITY:<category>|AUTOMATIC|<key>` grant naming it -- a genuine
+    /// upstream data gap (`reach_gate.rs`'s own dated `OPEN_FINDINGS` entry,
+    /// `"inner_sea_races"`/`"race_traits"`, names it explicitly), not a
+    /// missing consumer this engine could wire around. This set exists only
+    /// to make the fallback evidence string HONEST about what the record
+    /// itself carries -- the corpus content is real and its own `TEMPLATE:`
+    /// chain resolves to real languages, quoted in the receipt -- never to
+    /// promote the record out of `engine-does-not-hold`: it still never
+    /// applies, because nothing upstream ever fires it. Populated at the
+    /// bottom of [`probe_race_trait_corpus`].
+    template_bonus_language_grant: BTreeMap<(String, usize), Vec<String>>,
 }
 
 /// Every race the product's OWN character-creation roster would offer a
@@ -6584,7 +6615,20 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
                 probe.adoptive_parentage_rendered.insert(coordinate.clone(), description.clone());
             }
             if skinwalker_option_keys_with_real_pool.contains(&record.data.key) {
-                probe.skinwalker_change_shape_option_resolved.insert(coordinate);
+                probe.skinwalker_change_shape_option_resolved.insert(coordinate.clone());
+            }
+            // SD-34 wave 35 lane B: transcribe this record's own `TEMPLATE:`
+            // chain, if it names one or more real `Bonus Language ~ <Lang>`
+            // rows (`declared_template_bonus_languages`'s own doc comment
+            // for the grounding). `"Any Spoken"` -- the marker `Human ~
+            // Languages` itself carries, never a real language -- is
+            // excluded so this set only ever names verified real content.
+            let template_languages: Vec<String> = declared_template_bonus_languages(&record.data.raw_tokens)
+                .into_iter()
+                .filter(|lang| lang != "Any Spoken")
+                .collect();
+            if !template_languages.is_empty() {
+                probe.template_bonus_language_grant.insert(coordinate, template_languages);
             }
         }
     }
@@ -11471,6 +11515,39 @@ fn classify(
             if facts.race_trait_skinwalker_change_shape_option_resolved(unit) {
                 return engine_does_not_hold(
                     "race_trait_skinwalker_change_shape_option_resolves_real_kin_pool_but_no_activation_mechanism_computes_its_magnitude",
+                );
+            }
+            // SD-34 wave 35 lane B: `Human ~ Tribalistic Languages`
+            // (`isr_abilities_race.lst:216`) and any sibling this shape
+            // ever gains. Wave 33 lane B's own analysis (this file's
+            // `race_trait_grounding_tests` comment above) and
+            // `reach_gate.rs`'s dated `OPEN_FINDINGS` entry
+            // (`"inner_sea_races"`/`"race_traits"`) both confirm the SAME
+            // fact from two independent angles: the row carries no
+            // `FACT:<flag>|True`, no `PREFACT`, no `PREABILITY` and no
+            // upstream `ABILITY:<category>|AUTOMATIC|<key>` grant naming
+            // it -- verified this cycle a third way, directly against the
+            // pinned upstream `.lst` line (`grep -n Tribalistic
+            // isr_abilities_race.lst` shows `:210`'s `FACT:
+            // Human_ReplaceLanguages|true` and `:216`'s own row with no
+            // PRE-token of any kind). This is a genuine upstream data gap,
+            // not a wiring gap this engine could close: nothing fires the
+            // row, so it must stay `engine-does-not-hold` regardless of
+            // what it would grant if it ever did fire. What CAN be made
+            // honest is the evidence string's OWN claim: the blanket
+            // "never applies" is silent on whether the record carries real
+            // content at all. Its `TEMPLATE:Bonus Language ~ Common|...`
+            // chain transcribes (`declared_template_bonus_languages`) to
+            // four real, verified languages -- quoted in this cycle's own
+            // receipt -- so a record with real, TEMPLATE-borne content and
+            // NO activation gate gets a string that says exactly that,
+            // instead of the same blanket string a record with no
+            // resolvable content at all would also carry.
+            if let Some(langs) = facts.race_trait_template_bonus_language_grant(unit)
+                && !langs.is_empty()
+            {
+                return engine_does_not_hold(
+                    "race_trait_template_bonus_language_grant_verified_but_has_no_upstream_activation_gate",
                 );
             }
             // The honest middle: the record IS ingested and IS loaded, and
@@ -19025,6 +19102,114 @@ mod race_trait_grounding_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
+    }
+
+    // -----------------------------------------------------------------
+    // SD-34 wave 35 lane B: `Human ~ Tribalistic Languages`
+    // (`isr_abilities_race.lst:216`), wave 33 lane B's own named 2-unit
+    // remainder (`Next-cycle plan` item 4, this file's `race_trait_
+    // grounding_tests` comment above). Confirmed a genuine upstream data
+    // gap this cycle -- verified directly against the pinned upstream
+    // `.lst` line, not merely against the corpus JSON -- so it stays
+    // `engine-does-not-hold`. What changes is the evidence string: it now
+    // names the real, TEMPLATE-borne content instead of a blanket "never
+    // applies" that would be silent on it.
+    // -----------------------------------------------------------------
+
+    /// RED/GREEN proof, against the REAL corpus. Before this cycle's fix,
+    /// this exact coordinate read the blanket
+    /// `race_trait_record_loaded_but_never_applies` (confirmed by
+    /// temporarily reverting the new `classify()` branch and re-running
+    /// this test, which failed on the `assert_ne!` below for that reason).
+    #[test]
+    fn tribalistic_languages_gets_a_precise_template_grant_evidence_not_the_blanket_string() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "inner_sea_races".to_string(),
+            source_book: "inner_sea_races".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Human ~ Tribalistic Languages".to_string(),
+            name: "Languages".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "isr_abilities_race.lst".to_string(), line: 216 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_ne!(
+            verdict.evidence, "race_trait_record_loaded_but_never_applies",
+            "the record's own TEMPLATE: chain resolves to four real languages and must not \
+             read as indistinguishable from a record with no resolvable content at all"
+        );
+        // Still NOT done: nothing upstream ever fires this row (verified against
+        // the pinned `.lst` line -- no `FACT`, `PREFACT`, `PREABILITY` or
+        // `ABILITY:...AUTOMATIC...` naming it), so `engine-does-not-hold` is
+        // the correct, honest status, unchanged.
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_template_bonus_language_grant_verified_but_has_no_upstream_activation_gate"
+        );
+    }
+
+    /// Regression: the probe's transcription is real, not a guess -- pinned
+    /// against the exact four languages the row's own `TEMPLATE:` chain
+    /// names (`data/corpus/inner_sea_races/race_trait/human/
+    /// human_tribalistic_languages.json`'s own `TEMPLATE` raw token).
+    #[test]
+    fn tribalistic_languages_template_grant_transcribes_the_real_four_languages() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "inner_sea_races".to_string(),
+            source_book: "inner_sea_races".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Human ~ Tribalistic Languages".to_string(),
+            name: "Languages".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "isr_abilities_race.lst".to_string(), line: 216 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let langs = facts
+            .race_trait_template_bonus_language_grant(&unit)
+            .expect("Human ~ Tribalistic Languages must carry a transcribed TEMPLATE grant");
+        assert_eq!(langs, ["Common", "Giant", "Goblin", "Halfling"]);
+    }
+
+    /// Negative control: `Suli ~ Trusted Mediator` (`isr_abilities_race.lst:
+    /// 1266`) is the OTHER inner_sea_races Unclassified residue this same
+    /// wave 33 lane B remainder item named, but it carries NO `TEMPLATE:`
+    /// token at all (its own `PREMULT` wraps a self-exclusion guard, unlike
+    /// a bonus-language grant) -- this fix must not touch it.
+    #[test]
+    fn suli_trusted_mediator_is_unaffected_and_still_reads_never_applies() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "inner_sea_races".to_string(),
+            source_book: "inner_sea_races".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Suli ~ Trusted Mediator".to_string(),
+            name: "Trusted Mediator".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "isr_abilities_race.lst".to_string(), line: 1266 },
+            magnitude_token_count: 2,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
     }
