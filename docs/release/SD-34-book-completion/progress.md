@@ -46,6 +46,64 @@ filtered), `cargo clippy` clean, `cargo test --locked --no-run` (full workspace)
 citation_failures=0` (4 citation lines re-derived after this cycle's own `+21`-line shift).
 Full receipt: `artifacts/bucket-d-mining/wave36_laneA_sub_mechanism_1_matcher_fix_cycle_receipt.md`.
 
+### Cycle — Wave 36, Lane B (mine bucket D — Shape 2's 25-unit zero-magnitude sub-split) — `DESC:`/`universal_sheet_modifier` cross-reference run to completion, zero promotable — complete
+
+**Status: complete, zero units closed.** Picked up wave 35 lane C's own next-cycle item 2
+(`wave35_laneC_reconnaissance_cycle_receipt.md`): run wave 32's own proven `DESC:`-token /
+`universal_sheet_modifier` cross-reference method (already proved out on the 1,727-unit
+simple-kind-table shape) against the 17 `display`-wiring-class, zero-magnitude units inside
+Shape 2's (`class_feature_no_dedicated_magnitude_id_matched_the_record_slug`, 179 units)
+25-unit zero-magnitude sub-split. Re-derived the population fresh at this worktree's own
+rebased tip (the real `tranche/14` branch tip, `4379c9be05` — `origin/tranche/14` was found
+stale mid-cycle, still pinned at wave 33's `7ea9651b87`; rebased onto the correct local ref
+instead, see Notes below): `population=49438`, `D: 2891` (down from wave 32/35 lane C's own
+`2955` — a real, expected shift from wave 33's own closures on OTHER named D mechanisms;
+Shape 2 itself is unchanged at 179, confirmed by re-derivation at this cycle's own final tip,
+so this cycle's own 25/17-unit sub-split figures are not stale).
+
+**Result: 0 of 17 promotable — the same honest outcome wave 32 found on the larger 1,727-unit
+shape.** Every one of the 17 fails `has_real_description` (the promotion gate's first conjunct)
+under all three sources that function actually checks (a real `DESC:` token in the record's own
+`.MOD` closure, a `.COPY=`-inherited description, a real-prose `ASPECT:` tooltip) — confirmed by
+direct cross-reference against each unit's own matched `data/corpus/<book>/class_feature/**/
+*.json` record (all 17 matched exactly on `(source.path, source.line)`). Two structural shapes
+explain the zero: 7 are "Class Skills" header records carrying only a `CSKILL:` list token (no
+prose exists to promote — a correctly mechanical record, not a content gap), and 10 are
+internal-chassis records (`VISIBLE:NO` and/or `ABILITY:`/`SERVESAS:` pointers) whose real prose
+lives on a SIBLING corpus record the `has_real_description` gate does not follow by design
+(confirmed for one: `Magus ~ Spell Combat`'s `ABILITY:` token names `Spell Combat Output`, a
+separate record that DOES carry a full `DESC:` paragraph). The remaining 8 of the 25
+(4 `derived`, 4 `ambiguous`) were not individually re-checked — they fail
+`is_display_wiring_class_for_promotion` categorically regardless of description state.
+
+**Bucket-diff, four movement categories:** closure 0, reclassification 0, reachability 0,
+instrument-correction 1 (resolves wave 35 lane C's own flagged-but-unverified item to a
+definitive negative result — no future lane needs to re-run this 17-unit check; not a
+correction of a stated wrong claim, so no `retro.py correction` event logged). Verified via
+`docs/work-inventory.json` untouched this cycle (docs-only diff) and `completion_atlas.py
+--check`'s bucket counts identical before/after (`population=49438 D: 2891`, both times,
+`unclassified=0 overlap=0`).
+
+Receipt: `artifacts/bucket-d-mining/wave36_laneB_shape2_zero_magnitude_subsplit_cycle_receipt.md`.
+`## Open blockers`: none filed — the checked shape is now fully named as mined-to-floor; the
+two named remainders (154 magnitude-bearing Shape 2 units; 19-unit sub-mechanism 1 from wave
+35's own 931-split) are wave 35's own next-cycle plan, unchanged and still open, not a blocker
+this cycle hit.
+
+**Note on this cycle's own base-branch hazard**: this cycle's worktree started off a stale
+`origin/tranche/14` (the fetched remote ref was pinned at wave 33's `7ea9651b87`, three commits
+behind the real, unpushed-to-origin local `tranche/14` branch tip at wave 35's own
+`4379c9be05`). First rebase onto `origin/tranche/14` silently lost wave 35's own content from
+this worktree; caught before writing any figures against it (the receipt's own first draft
+would have cited a stale `179`/`25`/`17` split had wave 35 changed Shape 2 — it had not, so no
+figure in the receipt was actually wrong, but the base itself was). Re-rebased onto the local
+`tranche/14` ref directly (not `origin/tranche/14`) to recover the correct tip; all figures in
+this entry and the receipt are re-confirmed at that corrected tip. Flagged for the next lane:
+`origin/tranche/14` may still be behind local `tranche/14` — check both refs, not just
+`origin/*`, before trusting "fresh" (`workflow-instruction.md §5`'s own protocol names only
+`origin/tranche/14`; this is a real gap in that protocol when a local branch runs ahead of an
+unpushed remote).
+
 ### Cycle — Wave 35 wave-end gate — 1 verify.sh failure fixed, full 40/40 confirmed — complete
 
 **Status: complete, verified.** Wave 35's three lanes merged onto `tranche/14` one at a
