@@ -104,6 +104,55 @@ this entry and the receipt are re-confirmed at that corrected tip. Flagged for t
 `origin/tranche/14`; this is a real gap in that protocol when a local branch runs ahead of an
 unpushed remote).
 
+### Cycle — Wave 36 lane C — disposition trace of wave 35 lane C's 80-unit sub-mechanisms 2–4, one matcher bug fixed, 215 units close — complete
+
+**Status: complete.** Worktree self-heal: started 30 commits behind local
+`tranche/14`'s real tip (`4379c9be05`) — the fetched `origin/tranche/14` ref is
+also stale; rebased cleanly onto the local branch, re-derived
+`completion_atlas.py`'s 4 shifted citation pins (`citation_failures` 4→0).
+
+Traced all 80 units from wave 35 lane C's own sub-mechanisms 2 (creature-type
+collision, 63), 3 (Eidolon, 16), and 4 (Sentinel, 1) against real corpus data,
+sibling records, and the classifier's own code — every one dispositioned, none
+left as "the rest" (full table:
+`artifacts/bucket-d-mining/wave36_laneC_creature_type_collision_disposition_cycle_receipt.md`):
+**case (a), a real matcher bug, fixed**: `"Order of the Dragon"`'s 5 units
+(Cavalier's own real chassis) were short-circuited by a corpus-wide creature-type
+collision (`"dragon"`, the bestiary's own unmodelled `Kind::Class` pseudo-record)
+BEFORE the text-only `class_feature_pool_catalog_holds` promotion every
+non-colliding sibling order (Beast/Cockatrice/Lion/.../Warrior) already reaches
+`text-complete` through ever got a chance to run. Fixed by guarding the
+short-circuit — RED→GREEN plus a negative control, `521/521`
+`cargo test --locked --bin v06_work_inventory` pass, `cargo test --locked --no-run`
+exit 0. **75 of 80 units are case (b)** genuinely-unbuilt companion/subdomain/
+archetype mechanisms (several confirmed directly against the engine's own doc
+comments — Power Over Undead's channel DC, Eidolon's evolution-slot table), named
+precisely per group, none built this cycle. **5 units (Undead Savant Subschool ×2,
+PaDFE ×3) are case (c)**: real misattributions traced to source but not safely
+fixable this cycle (an unreliable corpus signal, or zero achievable bucket
+movement even if reclassified) — named for the next wave, not attempted.
+
+Guarded regen (`corpus_literal_sweep` 48706/51476 CLEAN, `derived_evaluator_
+fixture_check` 1839/2580 0 failed, no `--allow-stamp-loss`) confirms the ONE
+matcher fix closes **215 units** to DONE (`D: 2891→2676`, `DONE: 25027→25242`) —
+**13 inside this cycle's own 80-unit scope**, **202 outside it**: sub-mechanism
+5's own 60-class "genuinely unmodelled" population's zero-magnitude, text-only
+sub-features (Stalwart Defender, Master Spy, Nature Warden, ...) hit the identical
+short-circuit and are now correctly served — every affected class's own
+magnitude-bearing siblings spot-checked and confirmed still correctly
+`engine-does-not-hold`. Honestly reported as an unavoidable, provably-safe
+emergent effect of one narrow code fix, not new scope chosen this cycle. Retro
+correction logged: wave 35's own "Animal Companion... plausibly already exists"
+hypothesis for Ranger/Druid is refuted — both real granting records
+(`Hunter's Bond`/`Nature's Bond ~ Animal Companion`) are ALSO `engine-does-not-hold`.
+
+Movement: closure 215, reclassification 0, reachability 0, instrument-correction
+1 (retro-logged) + 4 citation pins. Next-cycle plan in the receipt: re-derive
+sub-mechanism 5's own now-stale 832-unit figure; fold Pathfinder Delver's 3 PaDFE
+units into its real 13-unit total; the domain-vs-class_feature dual-representation
+pattern (7 units across this cycle's population) needs a real grounding
+mechanism, Epic 3 scope.
+
 ### Cycle — Wave 35 wave-end gate — 1 verify.sh failure fixed, full 40/40 confirmed — complete
 
 **Status: complete, verified.** Wave 35's three lanes merged onto `tranche/14` one at a
