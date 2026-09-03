@@ -32,6 +32,11 @@
 //! [`DOMAIN_POWER_CATALOG`] means transcribing ONE more formula string, not
 //! deriving and independently verifying a new closed-form Rust expression --
 //! the throughput problem `OPERATOR-RULINGS-2026-08-21.md` section 20 names.
+//! SD-34 wave 38 lane A widened [`DomainPowerSpec`] with an OPTIONAL
+//! per-spec `uses_per_day_formula` override (see its own doc comment) for
+//! entries whose corpus formula slot IS the uses-per-day count rather than
+//! a flat bonus -- Construct Subdomain's Animate Servant -- without
+//! touching the shared `3+WIS` default every pre-existing entry still uses.
 //!
 //! this module's own `fixture_check_tests` inline test module (below) is its fixture gate,
 //! written to the SAME rigor `derived_evaluator_fixture_check` uses without
@@ -315,6 +320,38 @@ pub(super) fn domain_power_uses_per_day(modifiers: &AbilityModifiers) -> i16 {
     i16::try_from(value.max(0)).unwrap_or(i16::MAX)
 }
 
+/// SD-34 wave 38 lane A: interprets `spec`'s own uses-per-day formula --
+/// `spec.uses_per_day_formula` when present (a per-spec override needed
+/// when the corpus's own granted-power formula slot IS the uses-per-day
+/// count rather than a flat bonus, see [`DomainPowerSpec::uses_per_day_formula`]),
+/// else [`DOMAIN_POWER_TIMES_FORMULA`] (`3+WIS`), the shared formula every
+/// catalog entry through SD-34 wave 37 used unconditionally via
+/// [`domain_power_uses_per_day`]. Does NOT replace that function: Good's own
+/// specially-integrated branch and Healing's Rebuke Death (which has no
+/// catalog spec at all) keep calling `domain_power_uses_per_day` directly
+/// and are unaffected by this addition -- only the two GENERIC per-spec
+/// dispatch loops (Cleric's `other_catalog_domains`, Inquisitor's single
+/// resolved spec) call this function, since only those iterate over a live
+/// `spec` that might carry an override. Floored at 0, the same PF1 "times
+/// per day" floor `domain_power_uses_per_day` already applies. Unlike that
+/// fixed-arity function (`3+WIS` never references a class level), this one
+/// takes `class_level` because an override formula CAN (Animate Servant's
+/// own does).
+pub(super) fn domain_power_uses_per_day_for(
+    spec: &DomainPowerSpec,
+    class_level: u8,
+    modifiers: &AbilityModifiers,
+) -> i16 {
+    let formula = spec.uses_per_day_formula.unwrap_or(DOMAIN_POWER_TIMES_FORMULA);
+    let expr = parse_pcgen_expr(formula)
+        .unwrap_or_else(|| panic!("catalog uses_per_day formula must parse: {formula}"));
+    let env = domain_power_env(class_level, modifiers);
+    let value = eval_expr(&expr, &env).unwrap_or_else(|| {
+        panic!("catalog uses_per_day formula must resolve under domain_power_env: {formula}")
+    });
+    i16::try_from(value.max(0)).unwrap_or(i16::MAX)
+}
+
 /// One domain this catalog grounds for real: its granted power's magnitude
 /// formula, transcribed verbatim from the corpus, plus enough provenance for
 /// this module's own `fixture_check_tests` inline test module to pin it against the real
@@ -364,6 +401,24 @@ pub(super) struct DomainPowerSpec {
     /// misrepresent a round count as a game bonus); only this power's real,
     /// honestly-labeled uses-per-day is ever computed and reported for it.
     pub grounds_self_application: bool,
+    /// SD-34 wave 38 lane A (wave 37 lane A's own next-cycle plan item 1):
+    /// overrides the shared [`DOMAIN_POWER_TIMES_FORMULA`] (`3+WIS`) uses-
+    /// per-day formula for a spec whose OWN corpus `DESC` formula slot IS
+    /// the uses-per-day count, rather than a flat bonus -- Construct
+    /// Subdomain's Animate Servant, whose `DESC`'s only formula segment is
+    /// `DomainArtificeLVL/4-1`, confirmed the uses-per-day count (not a
+    /// magnitude) by the sibling `"Domain Power ~ Animate Servant"` corpus
+    /// record's own `ASPECT|CheckType|Uses per Day` token, read directly.
+    /// `None` (every entry through wave 37, unchanged) computes uses-per-day
+    /// via the shared `3+WIS` formula exactly as before this field existed;
+    /// `Some(f)` interprets `f` under the SAME [`domain_power_env`] the
+    /// magnitude formula already uses -- so, unlike the fixed `3+WIS`
+    /// (which never references a class level), an override formula CAN
+    /// depend on the granting class's own level. Does not remove or weaken
+    /// the shared default for any pre-existing entry: this is an additive,
+    /// opt-in override, read only by [`domain_power_uses_per_day_for`],
+    /// which the pre-existing per-spec `3+WIS` call sites do not use.
+    pub uses_per_day_formula: Option<&'static str>,
     // Provenance-only: read by this module's own `fixture_check_tests` (`catalog_provenance_
     // matches_the_corpus_records_own_source_citation`, below) against the corpus's own `source`
     // object, never by any PRODUCTION/runtime code path -- `cargo build --lib` (the non-test
@@ -398,6 +453,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         magnitude_label: "sacred bonus",
         effect_duration_phrase: "for 1 round",
         grounds_self_application: true,
+        uses_per_day_formula: None,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 713,
@@ -412,6 +468,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         magnitude_label: "melee damage bonus",
         effect_duration_phrase: "for 1 round",
         grounds_self_application: true,
+        uses_per_day_formula: None,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 747,
@@ -426,6 +483,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         magnitude_label: "enhancement bonus",
         effect_duration_phrase: "for 1 round",
         grounds_self_application: true,
+        uses_per_day_formula: None,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 739,
@@ -457,6 +515,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         // not a buff that persists for a round.
         effect_duration_phrase: "on a single melee attack, which must be declared before the attack roll is made",
         grounds_self_application: true,
+        uses_per_day_formula: None,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 703,
@@ -478,6 +537,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         effect_duration_phrase:
             "for one hour, or until the creature touched elects to apply the bonus to a roll",
         grounds_self_application: true,
+        uses_per_day_formula: None,
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 711,
@@ -520,9 +580,83 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
             magnitude explanation, see `grounds_self_application`)",
         effect_duration_phrase: "",
         grounds_self_application: false,
+        // Death's Kiss's own uses-per-day chains through `DomainDeathTimes`
+        // to the SAME shared `DomainPowerTimes|3+WIS` chain every entry
+        // above rides (confirmed by direct read of
+        // `data/corpus/core_rulebook/class_feature/death/death.json`'s own
+        // `BONUS:VAR|DomainDeathTimes|DomainPowerTimes|TYPE=Domain` token,
+        // SD-34 wave 37 lane A) -- no override needed here.
+        uses_per_day_formula: None,
         upstream_lst: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
         upstream_lst_sha256: "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
         upstream_line: 1807,
+    },
+    // SD-34 wave 38 lane A (wave 37 lane A's own next-cycle plan item 1):
+    // the second APG SUBDOMAIN this catalog grounds, and the first entry
+    // whose corpus `DESC` formula slot is BOTH its ONLY formula segment AND
+    // genuinely the power's uses-per-day count -- not a magnitude at all
+    // (unlike Death's Kiss, whose own formula slot is at least a real
+    // magnitude-shaped number, an effect duration). Confirmed the formula
+    // slot's real meaning by direct read of the sibling `"Domain Power ~
+    // Animate Servant"` corpus record's own `ASPECT|CheckType|Uses per Day`
+    // / `ASPECT|CheckCount|%1|DomainArtificeLVL/4-1` tokens
+    // (`data/corpus/advanced_players_guide/class_feature/domain_power/
+    // animate_servant.json`) -- not assumed from the `DESC` text's prose
+    // alone ("you can use this ability %1 times per day" is itself
+    // unambiguous, and the ASPECT tokens independently confirm it). A real,
+    // legal domain for BOTH classes this catalog serves: Cleric (subdomain
+    // substitution, `data/corpus/advanced_players_guide/domain/
+    // construct_subdomain.json`'s own `PREMULT` gate:
+    // `[PREDOMAIN:1,Construct Subdomain],[PREVARLT:ArtificeDomain,1]`) and
+    // Inquisitor (`data/corpus/advanced_players_guide/class_feature/
+    // inquisitor/inquisitor_domains.json`'s own
+    // `DEFINE:InquisitorDomainConstructSubdomain|0` token, confirmed
+    // present by direct corpus read). Its real effect ("you can give life
+    // to inanimate objects. This ability functions as animate objects
+    // using your cleric level as the caster level") is a spell-like
+    // ability with no self-application buff magnitude at all to ground --
+    // there is no honest number this catalog's magnitude/activation-state
+    // shape could report for it, so `grounds_self_application` stays
+    // `false` here exactly as it does for Death's Kiss, though for a
+    // structurally DIFFERENT reason (Death's Kiss has a real formula that
+    // is merely the wrong SHAPE to be a bonus; Animate Servant has no
+    // bonus-shaped effect to formulate at all).
+    DomainPowerSpec {
+        selection_id: CONSTRUCT_SUBDOMAIN_SELECTION,
+        domain_slug: "construct_subdomain",
+        domain_display_name: "Construct Subdomain",
+        granted_power_name: "Animate Servant",
+        ability_id: ANIMATE_SERVANT_ABILITY_ID,
+        // Verbatim from `data/corpus/advanced_players_guide/class_feature/
+        // construct_subdomain/animate_servant.json`'s own DESC token's
+        // first (and only) `|` segment. Kept here, byte/parse-checked by
+        // this module's own `fixture_check_tests`, purely for provenance --
+        // production code never reads this field as a magnitude
+        // (`grounds_self_application: false` skips that block entirely).
+        // `uses_per_day_formula` below is the field production code
+        // actually reads for this power's real uses-per-day count -- the
+        // SAME string, because this corpus record's only formula slot IS
+        // that count.
+        magnitude_formula: "DomainArtificeLVL/4-1",
+        // Unused in production for the same reason `magnitude_formula`
+        // itself is -- kept honest and test-pinned for provenance, and so
+        // a future cycle that DOES honestly ground this power's real
+        // effect (casting animate objects, a spell-like ability) has a
+        // truthful label already on hand rather than a fabricated one.
+        magnitude_label: "casts of animate objects \
+            (a spell-like ability, not a numeric game bonus -- never \
+            surfaced as a magnitude explanation, see \
+            `grounds_self_application`)",
+        effect_duration_phrase: "",
+        grounds_self_application: false,
+        // SD-34 wave 38 lane A: the field this entry exists to prove real
+        // -- Animate Servant's own corpus formula slot IS its uses-per-day
+        // count, genuinely different from the shared `3+WIS` every other
+        // catalog entry (Death's Kiss included) rides.
+        uses_per_day_formula: Some("DomainArtificeLVL/4-1"),
+        upstream_lst: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+        upstream_lst_sha256: "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+        upstream_line: 1752,
     },
 ];
 
@@ -756,6 +890,128 @@ mod tests {
             );
         }
     }
+
+    /// SD-34 wave 38 lane A: the sibling of `domain_power_catalog_formulas_
+    /// all_parse` for the new `uses_per_day_formula` override field -- every
+    /// catalog entry that carries one must have a formula this grammar can
+    /// actually parse (entries carrying `None` are exempt, since `None`
+    /// never reaches `parse_pcgen_expr` at all -- `domain_power_uses_per_day_for`
+    /// substitutes `DOMAIN_POWER_TIMES_FORMULA` instead).
+    #[test]
+    fn domain_power_catalog_uses_per_day_override_formulas_all_parse() {
+        for spec in DOMAIN_POWER_CATALOG {
+            if let Some(formula) = spec.uses_per_day_formula {
+                assert!(
+                    parse_pcgen_expr(formula).is_some(),
+                    "catalog uses_per_day_formula override must parse: {formula} ({})",
+                    spec.domain_display_name
+                );
+            }
+        }
+    }
+
+    /// SD-34 wave 38 lane A: a regression guard mirroring `death_s_kiss_
+    /// does_not_ground_a_self_application_bonus` -- Animate Servant must be
+    /// catalogued with `grounds_self_application: false` (its real effect
+    /// is a spell-like ability, no bonus to ground) AND a real
+    /// `uses_per_day_formula` override (its corpus formula slot is the
+    /// uses-per-day count, not `3+WIS`); every OTHER entry (Death's Kiss
+    /// included) must keep `uses_per_day_formula: None` -- a future edit
+    /// that widened the override to an entry whose uses/day genuinely IS
+    /// the shared `3+WIS` chain would silently stop testing the shared
+    /// path for that entry.
+    #[test]
+    fn animate_servant_does_not_ground_a_self_application_bonus_and_carries_a_uses_per_day_override()
+     {
+        let spec = resolve_domain_power(CONSTRUCT_SUBDOMAIN_SELECTION)
+            .expect("Construct Subdomain must be catalogued");
+        assert!(
+            !spec.grounds_self_application,
+            "Animate Servant's real effect is a spell-like ability, not a flat bonus -- \
+             grounds_self_application must stay false"
+        );
+        assert_eq!(
+            spec.uses_per_day_formula,
+            Some("DomainArtificeLVL/4-1"),
+            "Animate Servant's own corpus DESC formula slot IS its uses-per-day count"
+        );
+        for other in [
+            GOOD_DOMAIN_SELECTION,
+            WAR_DOMAIN_SELECTION,
+            STRENGTH_DOMAIN_SELECTION,
+            DESTRUCTION_DOMAIN_SELECTION,
+            GLORY_DOMAIN_SELECTION,
+            UNDEAD_SUBDOMAIN_SELECTION,
+        ] {
+            let other_spec = resolve_domain_power(other).expect("must be catalogued");
+            assert_eq!(
+                other_spec.uses_per_day_formula, None,
+                "{} must keep the shared 3+WIS uses-per-day formula (uses_per_day_formula: \
+                 None), unchanged by this cycle's own additive widening",
+                other_spec.domain_display_name
+            );
+        }
+    }
+
+    /// SD-34 wave 38 lane A: the classifier bridge's own pairing must name
+    /// Animate Servant under Construct Subdomain's real display name,
+    /// matching the corpus's own `"Construct Subdomain ~ Animate Servant"`
+    /// key -- proves `domain_power_catalog_group_and_power_names` (consumed
+    /// by `v06_work_inventory`'s classifier) actually carries this entry,
+    /// mirroring `group_and_power_names_bridge_carries_death_s_kiss` above.
+    #[test]
+    fn group_and_power_names_bridge_carries_animate_servant() {
+        let pairs = domain_power_catalog_group_and_power_names();
+        assert!(
+            pairs.contains(&("Construct Subdomain", "Animate Servant")),
+            "expected (\"Construct Subdomain\", \"Animate Servant\") among {pairs:?}"
+        );
+    }
+
+    /// SD-34 wave 38 lane A: `domain_power_uses_per_day_for` must correctly
+    /// dispatch to a spec's own override when one is present, rather than
+    /// always falling back to the shared `3+WIS` -- proven directly against
+    /// `domain_power_uses_per_day`'s own output on the SAME modifiers, which
+    /// must differ from the override's output (a passing test that happened
+    /// to agree by coincidence would not prove the branch was taken).
+    #[test]
+    fn domain_power_uses_per_day_for_uses_the_override_when_present() {
+        let spec = resolve_domain_power(CONSTRUCT_SUBDOMAIN_SELECTION)
+            .expect("Construct Subdomain must be catalogued");
+        let modifiers = AbilityModifiers { wisdom: 1, ..AbilityModifiers::default() };
+        let shared_formula_value = domain_power_uses_per_day(&modifiers);
+        let overridden_value = domain_power_uses_per_day_for(spec, 12, &modifiers);
+        assert_eq!(
+            overridden_value, 2,
+            "DomainArtificeLVL/4-1 at level 12: 12/4-1 = 2, floored at 0"
+        );
+        assert_ne!(
+            overridden_value, shared_formula_value,
+            "the override must produce a DIFFERENT value than the shared 3+WIS formula would \
+             at this Wisdom modifier ({shared_formula_value}), proving the override branch was \
+             genuinely taken rather than silently falling back"
+        );
+    }
+
+    /// SD-34 wave 38 lane A: a spec with NO override (`uses_per_day_formula:
+    /// None`) must still resolve to the shared `3+WIS` formula through
+    /// `domain_power_uses_per_day_for` -- the fallback half of the branch
+    /// `domain_power_uses_per_day_for_uses_the_override_when_present` proves
+    /// the override half of.
+    #[test]
+    fn domain_power_uses_per_day_for_falls_back_to_the_shared_formula_when_absent() {
+        let spec =
+            resolve_domain_power(GOOD_DOMAIN_SELECTION).expect("Good must be catalogued");
+        for wisdom in -5i16..=10 {
+            let modifiers = AbilityModifiers { wisdom, ..AbilityModifiers::default() };
+            assert_eq!(
+                domain_power_uses_per_day_for(spec, 7, &modifiers),
+                domain_power_uses_per_day(&modifiers),
+                "Good has no uses_per_day_formula override -- must match the shared 3+WIS \
+                 formula at every class level, WIS modifier {wisdom}"
+            );
+        }
+    }
 }
 
 /// This module's own fixture gate -- the `derived_evaluator_fixture_check`
@@ -833,6 +1089,17 @@ mod fixture_check_tests {
     // provenance anchor.
     const DEATH_S_KISS_JSON: &str = include_str!(
         "../../../data/corpus/advanced_players_guide/class_feature/undead_subdomain/death_s_kiss.json"
+    );
+    // SD-34 wave 38 lane A addition. Pinned against the SUBDOMAIN-keyed
+    // record (`"Construct Subdomain ~ Animate Servant"`), matching this
+    // catalog entry's own `domain_display_name` -- the sibling `"Domain
+    // Power ~ Animate Servant"` record (a real, separate `.lst` line,
+    // different `upstream_line`, carrying the confirming `ASPECT|CheckType|
+    // Uses per Day` token) is a different corpus key this same formula also
+    // byte-matches, confirmed by direct read, but is not this test's own
+    // provenance anchor.
+    const ANIMATE_SERVANT_JSON: &str = include_str!(
+        "../../../data/corpus/advanced_players_guide/class_feature/construct_subdomain/animate_servant.json"
     );
 
     fn parse(json: &str) -> serde_json::Value {
@@ -918,6 +1185,7 @@ mod fixture_check_tests {
             (DESTRUCTIVE_SMITE_JSON, DESTRUCTION_DOMAIN_SELECTION),
             (TOUCH_OF_GLORY_JSON, GLORY_DOMAIN_SELECTION),
             (DEATH_S_KISS_JSON, UNDEAD_SUBDOMAIN_SELECTION),
+            (ANIMATE_SERVANT_JSON, CONSTRUCT_SUBDOMAIN_SELECTION),
         ] {
             let doc = parse(json);
             let desc = doc["data"]["raw_tokens"]
@@ -957,6 +1225,7 @@ mod fixture_check_tests {
             (DESTRUCTIVE_SMITE_JSON, DESTRUCTION_DOMAIN_SELECTION),
             (TOUCH_OF_GLORY_JSON, GLORY_DOMAIN_SELECTION),
             (DEATH_S_KISS_JSON, UNDEAD_SUBDOMAIN_SELECTION),
+            (ANIMATE_SERVANT_JSON, CONSTRUCT_SUBDOMAIN_SELECTION),
         ] {
             let doc = parse(json);
             let spec = resolve_domain_power(selection_id).expect("must be catalogued");
@@ -1088,5 +1357,59 @@ mod fixture_check_tests {
             pairs.contains(&("Undead Subdomain", "Death's Kiss")),
             "expected (\"Undead Subdomain\", \"Death's Kiss\") among {pairs:?}"
         );
+    }
+
+    /// SD-34 wave 38 lane A: Animate Servant must be catalogued with a real
+    /// `uses_per_day_formula` override, and `grounds_self_application` must
+    /// stay `false` -- a regression guard against a future edit accidentally
+    /// clearing the override back to `None` (which would silently revert
+    /// this power to the WRONG shared `3+WIS` uses-per-day count) or
+    /// flipping `grounds_self_application` to `true` (which would fabricate
+    /// a "+{magnitude}" bonus sentence for a spell-like ability with no
+    /// bonus to ground at all).
+    #[test]
+    fn animate_servant_carries_a_uses_per_day_override_and_no_self_application_bonus() {
+        let spec = resolve_domain_power(CONSTRUCT_SUBDOMAIN_SELECTION)
+            .expect("Construct Subdomain must be catalogued");
+        assert!(
+            !spec.grounds_self_application,
+            "Animate Servant's real effect is a spell-like ability, not a flat bonus -- \
+             grounds_self_application must stay false"
+        );
+        assert_eq!(
+            spec.uses_per_day_formula,
+            Some("DomainArtificeLVL/4-1"),
+            "Animate Servant's own corpus formula slot IS its uses-per-day count"
+        );
+    }
+
+    /// Guarantee 4, Animate Servant's own shape: expected values computed BY
+    /// HAND from the corpus DESC text ("You can use this ability %1 times
+    /// per day.|DomainArtificeLVL/4-1", confirmed the uses-per-day count --
+    /// not a magnitude -- by the sibling record's own `ASPECT|CheckType|Uses
+    /// per Day` token, read directly, not assumed from prose alone), never
+    /// read back from [`eval_expr`] or [`domain_power_uses_per_day_for`]:
+    /// class level divided by 4 (PCGen integer division, truncating toward
+    /// zero), minus 1, floored at 0 overall (PF1's own "times per day"
+    /// floor). A mutated evaluator (e.g. `Div` swapped for `Mul`, or the
+    /// `Sub` in `X-1` swapped for `Add`) fails this test even though it
+    /// would still satisfy the transcription-only tests above.
+    #[test]
+    fn interpreted_uses_per_day_for_animate_servant_matches_a_hand_computed_table_derived_from_pf1_rule_text()
+     {
+        let spec = resolve_domain_power(CONSTRUCT_SUBDOMAIN_SELECTION)
+            .expect("Construct Subdomain must be catalogued");
+        let expected_floor_level_over_4_minus_1_floored_at_0 =
+            |level: u8| -> i16 { (i16::from(level) / 4 - 1).max(0) };
+        for level in [1u8, 4, 7, 8, 11, 12, 16, 20] {
+            let expected = expected_floor_level_over_4_minus_1_floored_at_0(level);
+            let interpreted =
+                domain_power_uses_per_day_for(spec, level, &AbilityModifiers::default());
+            assert_eq!(
+                interpreted, expected,
+                "Animate Servant uses/day at class level {level}: expected \
+                 floor(level/4)-1, floored at 0 overall = {expected}"
+            );
+        }
     }
 }

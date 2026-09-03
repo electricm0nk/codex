@@ -6527,6 +6527,23 @@ const GLORY_DOMAIN_SELECTION: &str = "domain:glory";
 // what would be a plausible-looking but wrong number, rather than fabricate
 // one.
 const UNDEAD_SUBDOMAIN_SELECTION: &str = "domain:undead_subdomain";
+// SD-34 wave 38 lane A (wave 37 lane A's own next-cycle plan item 1): the
+// second APG SUBDOMAIN this catalog grounds. Confirmed a real, legal
+// Cleric/Inquisitor subdomain by direct corpus read
+// (`data/corpus/advanced_players_guide/domain/construct_subdomain.json`'s
+// own `PREMULT` gate: `[PREDOMAIN:1,Construct Subdomain],
+// [PREVARLT:ArtificeDomain,1]` -- selectable once Artifice Domain is
+// available, the same substitution shape Undead Subdomain uses; Inquisitor
+// legality confirmed via `inquisitor_domains.json`'s own
+// `DEFINE:InquisitorDomainConstructSubdomain|0` token). Unlike Undead
+// Subdomain, whose own `DESC` formula slot is a real bonus-shaped number
+// (merely the WRONG shape, an effect duration, to be a self-application
+// bonus), Construct Subdomain's own granted power (Animate Servant) has no
+// bonus-shaped effect at all -- its formula slot IS the power's
+// uses-per-day count, genuinely different from the shared `3+WIS` chain
+// (`domain_power::DomainPowerSpec::uses_per_day_formula`, added alongside
+// this entry).
+const CONSTRUCT_SUBDOMAIN_SELECTION: &str = "domain:construct_subdomain";
 
 /// v0.6 alpha swarm, risks item 8 (Cleric Good domain closure, generalized
 /// task #64 to every real base class whose own domain-choice class feature
@@ -6600,6 +6617,15 @@ const TOUCH_OF_GLORY_ABILITY_ID: &str = "touch_of_glory";
 /// production), so a future cycle that DOES honestly ground its duration
 /// effect has a stable, already-reserved id to activate against.
 const DEATH_S_KISS_ABILITY_ID: &str = "death_s_kiss";
+/// SD-34 wave 38 lane A: Construct Subdomain's Animate Servant
+/// self-application activation id, the `domain_power::DOMAIN_POWER_CATALOG`
+/// sibling of `TOUCH_OF_GOOD_ABILITY_ID` -- kept even though
+/// `grounds_self_application` is `false` for this spec (no activation state
+/// is ever read for it in production; its real effect is casting animate
+/// objects, a spell-like ability with no self-application buff state to
+/// activate), for the same reservation reason `DEATH_S_KISS_ABILITY_ID`
+/// documents.
+const ANIMATE_SERVANT_ABILITY_ID: &str = "animate_servant";
 
 // PF1 Core Rulebook Domains: a cleric gains one domain spell slot per level of
 // cleric spells she can cast, 1st and up. At levels 1-2 this bounded seam supports
@@ -16037,9 +16063,10 @@ fn ground_or_block_inquisitor_domain_power(
             id: "class_feature.inquisitor.domain_powers.unsupported".to_owned(),
             message: "Inquisitor remains blocked on its Domain class feature's granted-power \
                  burden: domain selection and the granted powers of any domain other than Good, \
-                 War, Strength, Destruction, or Glory (whose own granted powers are grounded \
-                 separately when actually chosen, one domain at a time) are not implemented anywhere in this \
-                 codebase, so no Inquisitor domain-power support is claimed. Unlike Cleric, an \
+                 War, Strength, Destruction, Glory, Undead Subdomain, or Construct Subdomain \
+                 (whose own granted powers are grounded separately when actually chosen, one \
+                 domain at a time) are not implemented anywhere in this codebase, so no \
+                 Inquisitor domain-power support is claimed. Unlike Cleric, an \
                  inquisitor's domain never grants bonus spells (PF1 Advanced Player's Guide \
                  Domain: 'An inquisitor does not gain the bonus spells listed for each domain, \
                  nor does she gain bonus spell slots'), so there is no separate domain-spell \
@@ -16117,21 +16144,40 @@ fn ground_or_block_inquisitor_domain_power(
     // SD-31 wave 25 (OPERATOR-RULINGS-2026-08-21.md section 20): interprets
     // the corpus's own shared `3+WIS` formula (`domain_power::DOMAIN_POWER_TIMES_FORMULA`)
     // rather than a hand-written `(3 + wisdom_modifier).max(0)` closed form.
-    let uses_per_day = domain_power_uses_per_day(&AbilityModifiers {
-        wisdom: wisdom_modifier,
-        ..AbilityModifiers::default()
-    });
-    explanations.push(ComputationExplanation {
-        id: domain_power_explanation_id(spec, "uses_per_day"),
-        value: uses_per_day,
-        detail: format!(
+    // SD-34 wave 38 lane A: `domain_power_uses_per_day_for` reads `spec.
+    // uses_per_day_formula` when a spec carries one (Animate Servant), else
+    // falls back to the exact same `3+WIS` value `domain_power_uses_per_day`
+    // computes -- every pre-existing entry's own value is unchanged.
+    let uses_per_day = domain_power_uses_per_day_for(
+        spec,
+        inquisitor_level,
+        &AbilityModifiers { wisdom: wisdom_modifier, ..AbilityModifiers::default() },
+    );
+    let uses_per_day_detail = if let Some(formula) = spec.uses_per_day_formula {
+        format!(
+            "Inquisitor {domain} domain granted power {power} uses per day (PF1 Advanced \
+             Player's Guide {domain}): this power's OWN corpus formula, {formula} (not the \
+             shared 3 + Wisdom modifier chain every other catalogued domain power uses), \
+             evaluated at Inquisitor level {inquisitor_level} and floored at 0. This is \
+             {uses_per_day}. This grounds only the flat daily use count; it performs no \
+             per-use consumption tracking",
+            domain = spec.domain_display_name,
+            power = spec.granted_power_name,
+        )
+    } else {
+        format!(
             "Inquisitor {domain} domain granted power {power} uses per day (PF1 Core Rulebook \
              Domains): 3 + Wisdom modifier, floored at 0. At Wisdom modifier {wisdom_modifier} \
              this is max(3 + {wisdom_modifier}, 0) = {uses_per_day}. This grounds only the flat \
              daily use count; it performs no per-use consumption tracking",
             domain = spec.domain_display_name,
             power = spec.granted_power_name,
-        ),
+        )
+    };
+    explanations.push(ComputationExplanation {
+        id: domain_power_explanation_id(spec, "uses_per_day"),
+        value: uses_per_day,
+        detail: uses_per_day_detail,
     });
 
     // SD-34 wave 37 lane A: the real corpus `DEFINE` token concatenates a
@@ -16161,10 +16207,11 @@ fn ground_or_block_inquisitor_domain_power(
              `DEFINE:InquisitorDomain{define_token_domain}|0`). So a {domain}-domain \
              inquisitor's domain power is genuinely computed rather than deferred. Every domain \
              not in `domain_power::DOMAIN_POWER_CATALOG` (Good, War, Strength, Destruction, \
-             Glory, Undead Subdomain) remains entirely unproven and is still not claimed \
-             anywhere -- selecting one keeps this diagnostic claim-blocking (Path A canonical \
-             narrowing, 2026-07-29, widened SD-31 wave 25, widened again SD-31 wave 26, \
-             widened again SD-34 wave 37, mirroring Cleric's own domain-power seam)",
+             Glory, Undead Subdomain, Construct Subdomain) remains entirely unproven and is \
+             still not claimed anywhere -- selecting one keeps this diagnostic claim-blocking \
+             (Path A canonical narrowing, 2026-07-29, widened SD-31 wave 25, widened again \
+             SD-31 wave 26, widened again SD-34 wave 37, widened again SD-34 wave 38, \
+             mirroring Cleric's own domain-power seam)",
             domain = spec.domain_display_name,
             power = spec.granted_power_name,
         ),
@@ -46963,14 +47010,32 @@ fn explain_cleric_level1_spell_baseline(
                     }
                 }
                 let wisdom_modifier = ability_modifier(input.chosen.ability_scores.wisdom);
-                let uses_per_day = domain_power_uses_per_day(&AbilityModifiers {
-                    wisdom: wisdom_modifier,
-                    ..AbilityModifiers::default()
-                });
-                explanations.push(ComputationExplanation {
-                    id: domain_power_explanation_id(spec, "uses_per_day"),
-                    value: uses_per_day,
-                    detail: format!(
+                // SD-34 wave 38 lane A: `domain_power_uses_per_day_for` reads
+                // `spec.uses_per_day_formula` when a spec carries one
+                // (Animate Servant: `DomainArtificeLVL/4-1`, class-level-
+                // dependent, NOT the shared `3+WIS`), else falls back to the
+                // exact same `3+WIS` formula `domain_power_uses_per_day`
+                // computes -- every pre-existing entry's own value is
+                // unchanged by this call-site swap.
+                let uses_per_day = domain_power_uses_per_day_for(
+                    spec,
+                    cleric_level,
+                    &AbilityModifiers { wisdom: wisdom_modifier, ..AbilityModifiers::default() },
+                );
+                let uses_per_day_detail = if let Some(formula) = spec.uses_per_day_formula {
+                    format!(
+                        "Cleric {domain} domain granted power {power} uses per day (PF1 \
+                         Advanced Player's Guide {domain}): this power's OWN corpus formula, \
+                         {formula} (not the shared 3 + Wisdom modifier chain every other \
+                         catalogued domain power uses), evaluated at Cleric level \
+                         {cleric_level} and floored at 0. This is {uses_per_day}. This grounds \
+                         only the flat daily use count; it performs no per-use consumption \
+                         tracking",
+                        domain = spec.domain_display_name,
+                        power = spec.granted_power_name,
+                    )
+                } else {
+                    format!(
                         "Cleric {domain} domain granted power {power} uses per day (PF1 Core \
                          Rulebook Domains): 3 + Wisdom modifier, floored at 0. At Wisdom \
                          modifier {wisdom_modifier} this is max(3 + {wisdom_modifier}, 0) = \
@@ -46978,7 +47043,12 @@ fn explain_cleric_level1_spell_baseline(
                          performs no per-use consumption tracking",
                         domain = spec.domain_display_name,
                         power = spec.granted_power_name,
-                    ),
+                    )
+                };
+                explanations.push(ComputationExplanation {
+                    id: domain_power_explanation_id(spec, "uses_per_day"),
+                    value: uses_per_day,
+                    detail: uses_per_day_detail,
                 });
             }
             diagnostics.push(ComputationDiagnostic {
@@ -47012,10 +47082,11 @@ fn explain_cleric_level1_spell_baseline(
                 id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
                 message: "Cleric remains blocked on its domain powers burden: domain selection \
                      and the granted powers of any domain other than Good, War, Strength, \
-                     Destruction, or Glory (whose own granted powers are grounded separately \
-                     when actually chosen) are not implemented anywhere in this codebase (e.g. \
-                     Healing's Rebuke Death, whose heal amount is not a flat number), so no \
-                     Cleric domain-power support is claimed for this selection"
+                     Destruction, Glory, Undead Subdomain, or Construct Subdomain (whose own \
+                     granted powers are grounded separately when actually chosen) are not \
+                     implemented anywhere in this codebase (e.g. Healing's Rebuke Death, whose \
+                     heal amount is not a flat number), so no Cleric domain-power support is \
+                     claimed for this selection"
                     .to_owned(),
                 claim_blocking: true,
             });
@@ -59888,10 +59959,11 @@ mod sorcerer_arcane_bloodline_progression_tests {
 #[cfg(test)]
 mod cleric_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, AcquisitionMode, ActiveState, BATTLE_RAGE_ABILITY_ID,
-        CharacterClassLevel, CharacterInput, CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID,
-        DEATH_S_KISS_ABILITY_ID, DESTRUCTION_DOMAIN_SELECTION, DESTRUCTIVE_SMITE_ABILITY_ID,
-        FIGHTER_CLASS_ID, GLORY_DOMAIN_SELECTION, GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION,
+        build_pilot_headless_receipt, AcquisitionMode, ActiveState, ANIMATE_SERVANT_ABILITY_ID,
+        BATTLE_RAGE_ABILITY_ID, CharacterClassLevel, CharacterInput, CLERIC_CLASS_ID,
+        CLERIC_DOMAIN_CHOICE_ID, CONSTRUCT_SUBDOMAIN_SELECTION, DEATH_S_KISS_ABILITY_ID,
+        DESTRUCTION_DOMAIN_SELECTION, DESTRUCTIVE_SMITE_ABILITY_ID, FIGHTER_CLASS_ID,
+        GLORY_DOMAIN_SELECTION, GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION,
         HeadlessReceiptStatus, STRENGTH_DOMAIN_SELECTION, TOUCH_OF_GLORY_ABILITY_ID,
         TOUCH_OF_GOOD_ABILITY_ID, UNDEAD_SUBDOMAIN_SELECTION, WAR_DOMAIN_SELECTION,
     };
@@ -60416,6 +60488,64 @@ mod cleric_dispatch_widening_safety_tests {
             .expect("Death's Kiss uses-per-day explanation must be grounded");
         // `human_cleric_input_with_domains`'s fixture Wisdom modifier is +1 -> 3 + 1 = 4.
         assert_eq!(uses_per_day.value, 4, "{uses_per_day:?}");
+    }
+
+    /// SD-34 wave 38 lane A: a Cleric with Construct Subdomain reaches
+    /// `Computed` through the SAME generic loop as Undead Subdomain -- the
+    /// second APG SUBDOMAIN proven through this seam. Neither a
+    /// "self_application" nor a "not_active" explanation is ever emitted for
+    /// Animate Servant (its real effect, casting animate objects, has no
+    /// bonus at all to ground), and its uses-per-day count comes from its
+    /// OWN `uses_per_day_formula` override (`DomainArtificeLVL/4-1`), NOT
+    /// the shared `3+WIS` chain -- proven by using a Cleric level/Wisdom
+    /// combination where the two formulas disagree.
+    #[test]
+    fn single_class_cleric_with_construct_subdomain_reaches_computed_via_its_own_uses_per_day_formula()
+     {
+        let mut input = human_cleric_input_with_domains(12, &[CONSTRUCT_SUBDOMAIN_SELECTION]);
+        // Even WITH an activation entry present, no bonus explanation may be
+        // emitted -- proves the guard is unconditional, mirroring Death's
+        // Kiss's own proof above.
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: ANIMATE_SERVANT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "{:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.domain.construct_subdomain_animate_servant_self_application"
+                    || e.id == "class_feature.domain.construct_subdomain_animate_servant_not_active"),
+            "Animate Servant must never surface a self_application/not_active bonus \
+             explanation (it has no bonus at all to ground): {:?}",
+            receipt.computation.explanations
+        );
+        let uses_per_day = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.construct_subdomain_animate_servant_uses_per_day")
+            .expect("Animate Servant uses-per-day explanation must be grounded");
+        // DomainArtificeLVL/4-1 at Cleric level 12: 12/4-1 = 2. The fixture's
+        // own Wisdom modifier is +1, so the shared 3+WIS formula would give
+        // 4 -- a DIFFERENT value, proving the override, not the shared
+        // formula, genuinely computed this number.
+        assert_eq!(
+            uses_per_day.value, 2,
+            "DomainArtificeLVL/4-1 at level 12 = 2, NOT the shared 3+WIS value of 4: \
+             {uses_per_day:?}"
+        );
     }
 
     /// A Cleric with an unrecognized domain (not Good or Healing) still
@@ -64803,16 +64933,16 @@ mod sorcerer_draconic_bloodline_dragon_resistances_ac_wiring_tests {
 #[cfg(test)]
 mod inquisitor_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-        DEATH_S_KISS_ABILITY_ID, HeadlessReceiptStatus, FIGHTER_CLASS_ID, GLORY_DOMAIN_SELECTION,
-        GOOD_DOMAIN_SELECTION, INQUISITOR_CLASS_ID, INQUISITOR_DOMAIN_CHOICE_ID,
-        INQUISITOR_JUDGMENT_ABILITY_ID, INQUISITOR_JUDGMENT_CHOICE_ID,
-        INQUISITOR_JUDGMENT_DESTRUCTION_SELECTION_ID, INQUISITOR_JUDGMENT_HEALING_SELECTION_ID,
-        INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID, INQUISITOR_JUDGMENT_PIERCING_SELECTION_ID,
-        INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID, INQUISITOR_JUDGMENT_PURITY_SELECTION_ID,
-        INQUISITOR_JUDGMENT_RESILIENCY_SELECTION_ID, INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID,
-        INQUISITOR_JUDGMENT_SMITING_SELECTION_ID, TOUCH_OF_GLORY_ABILITY_ID,
-        TOUCH_OF_GOOD_ABILITY_ID, UNDEAD_SUBDOMAIN_SELECTION,
+        build_pilot_headless_receipt, ActiveState, ANIMATE_SERVANT_ABILITY_ID, CharacterClassLevel,
+        CharacterInput, CONSTRUCT_SUBDOMAIN_SELECTION, DEATH_S_KISS_ABILITY_ID,
+        HeadlessReceiptStatus, FIGHTER_CLASS_ID, GLORY_DOMAIN_SELECTION, GOOD_DOMAIN_SELECTION,
+        INQUISITOR_CLASS_ID, INQUISITOR_DOMAIN_CHOICE_ID, INQUISITOR_JUDGMENT_ABILITY_ID,
+        INQUISITOR_JUDGMENT_CHOICE_ID, INQUISITOR_JUDGMENT_DESTRUCTION_SELECTION_ID,
+        INQUISITOR_JUDGMENT_HEALING_SELECTION_ID, INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID,
+        INQUISITOR_JUDGMENT_PIERCING_SELECTION_ID, INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID,
+        INQUISITOR_JUDGMENT_PURITY_SELECTION_ID, INQUISITOR_JUDGMENT_RESILIENCY_SELECTION_ID,
+        INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID, INQUISITOR_JUDGMENT_SMITING_SELECTION_ID,
+        TOUCH_OF_GLORY_ABILITY_ID, TOUCH_OF_GOOD_ABILITY_ID, UNDEAD_SUBDOMAIN_SELECTION,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
@@ -65752,6 +65882,66 @@ mod inquisitor_dispatch_widening_safety_tests {
         assert_eq!(
             uses_per_day.value, 4,
             "3 + WIS modifier (+1 from the fixture's WIS 12) = 4: {uses_per_day:?}"
+        );
+    }
+
+    /// SD-34 wave 38 lane A: an Inquisitor who selected Construct Subdomain
+    /// (a real, legal Inquisitor domain --
+    /// `advanced_players_guide/class_feature/inquisitor/inquisitor_domains.json`
+    /// carries `DEFINE:InquisitorDomainConstructSubdomain|0`, confirmed by
+    /// direct corpus read) reaches `Computed` through the SAME generic
+    /// catalog loop as Undead Subdomain, but its uses-per-day comes from
+    /// its OWN `uses_per_day_formula` override (`DomainArtificeLVL/4-1`),
+    /// NOT the shared `3+WIS` chain -- proven the same way the Cleric-side
+    /// test above proves it, by using a class level where the two formulas
+    /// disagree.
+    #[test]
+    fn single_class_inquisitor_with_construct_subdomain_grounds_its_own_uses_per_day_formula() {
+        let mut input = human_inquisitor_input(12);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_DOMAIN_CHOICE_ID.to_owned(),
+            selection_id: CONSTRUCT_SUBDOMAIN_SELECTION.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: ANIMATE_SERVANT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "with Construct Subdomain recorded, Inquisitor's remaining gaps are named without \
+             blocking: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.domain.construct_subdomain_animate_servant_self_application"
+                    || e.id == "class_feature.domain.construct_subdomain_animate_servant_not_active"),
+            "Animate Servant must never surface a self_application/not_active bonus \
+             explanation for Inquisitor either: {:?}",
+            receipt.computation.explanations
+        );
+        let uses_per_day = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.construct_subdomain_animate_servant_uses_per_day")
+            .expect("Animate Servant uses-per-day explanation must be grounded");
+        // DomainArtificeLVL/4-1 at Inquisitor level 12: 12/4-1 = 2. The
+        // fixture's own Wisdom modifier is +1, so the shared 3+WIS formula
+        // would give 4 -- a DIFFERENT value, proving the override, not the
+        // shared formula, genuinely computed this number.
+        assert_eq!(
+            uses_per_day.value, 2,
+            "DomainArtificeLVL/4-1 at level 12 = 2, NOT the shared 3+WIS value of 4: \
+             {uses_per_day:?}"
         );
     }
 

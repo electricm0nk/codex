@@ -11,6 +11,60 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 38 lane A — `DomainPowerSpec` uses-per-day-formula override, Construct Subdomain's Animate Servant closed — complete
+
+**Status: complete.** Closed wave 37 lane A's own named next-cycle item: widened
+`domain_power::DomainPowerSpec` with an optional `uses_per_day_formula: Option<&'static str>`
+field, additive only — every one of the 6 pre-existing catalog entries (Good/War/Strength/
+Destruction/Glory/Death's Kiss) keeps `None` and its own pre-existing computed value, proven
+unchanged by a dedicated fallback-equality test against `domain_power_uses_per_day` across 16
+Wisdom modifiers. Wired the new Construct Subdomain catalog entry with Animate Servant's real
+corpus formula, `DomainArtificeLVL/4-1` — confirmed by direct read of BOTH the class_feature
+record and its "Domain Power ~" sibling (whose own `ASPECT|CheckType|Uses per Day` /
+`ASPECT|CheckCount|%1|DomainArtificeLVL/4-1` tokens independently confirm the formula slot IS
+the uses-per-day count, not a magnitude) that this is genuinely different from the shared
+`3+WIS` every other entry rides. `grounds_self_application: false`, same as Death's Kiss but
+for a structurally different reason documented explicitly in the catalog entry's own comment
+(Death's Kiss has a real formula of the wrong shape; Animate Servant has no bonus-shaped effect
+at all — casting *animate objects* is a spell-like ability).
+
+**Real movement this cycle: 2 units closed to DONE** (`construct_subdomain_animate_servant`,
+`domain_power_animate_servant` — both class_feature dual-representations of Animate Servant).
+**1 of the 3-unit named population honestly NOT closed**: the domain-kind header
+(`advanced_players_guide:domain:construct_subdomain`) stays `engine-does-not-hold` — confirmed
+by direct read it carries no `Domain<X>LVL`/`Domain<X>Times` `BONUS:VAR` chain at all
+(`completeness: "chassis_only"`), the identical structural gap wave 37 lane A already found and
+declined to force for Undead Subdomain's own header. Also widened both dispatch functions'
+own catch-all diagnostic strings (Cleric's `else` branch, Inquisitor's initial `else`) to name
+both SD-34 subdomains — both strings were already stale before this cycle (neither named Undead
+Subdomain either), a pre-existing gap fixed while already inside the function rather than left
+for a future cycle to rediscover.
+
+`population=49438 buckets=10 unclassified=0 overlap=0`, `by_status`: `engine-does-not-hold:
+19065→19063`, `grounded: 4343→4345`. Bucket-level: `B: 11770→11769`, `D: 2661→2660`, `DONE:
+25244→25246` — the two closed units' pre-cycle evidence strings sorted into DIFFERENT non-DONE
+buckets (B and D), a real difference from wave 37 lane A's Death's Kiss closure (both units
+landed in the same bucket that time). `citation_failures=0` throughout — this cycle never
+touched `src/bin/v06_work_inventory.rs`, so no `completion_atlas.py` citation pin needed
+re-deriving (unlike wave 37 lane A, which shifted 4).
+
+RED→GREEN: `26` of 26 `domain_power.rs` tests (7 new against wave 37's own 19), `2` of 2 new
+Cleric/Inquisitor dispatch-safety tests, `1038` of 1038 full `pilot_compute` module tests
+(9 new against wave 37's own 1029, exactly 7+2), `527` of 527 `v06_work_inventory` bin tests
+(0 new — no NEW `classify()` code needed, the existing subdomain-sibling check already covers
+any future catalog entry generically). `cargo test --locked --no-run` (full workspace) exit 0,
+run after the guarded regen. `corpus_literal_sweep`: `48706 examined of 51476 read, 0 findings,
+CLEAN`, unchanged (no corpus records touched — Rust interpreter + catalog logic only). Desktop
+crate not touched, honestly reported skipped.
+
+Full receipt: `artifacts/bucket-d-mining/wave38_laneA_domain_power_uses_per_day_override_animate_servant_cycle_receipt.md`.
+
+Next-cycle plan: domain-kind (`Kind::Domain`) header records reaching `grounded` remains a
+structurally separate, larger question (now confirmed against TWO real headers with no
+`BONUS:VAR` chain at all); no further Animate-Servant-shaped units remain in this catalog's
+named reach, but the wider corpus has not been re-scanned for OTHER domain powers whose formula
+slot is genuinely their own uses-per-day count.
+
 ### Cycle — Wave 37 wave-end gate — dashboard fix, 2 baselines raised, full 40/40 confirmed — complete
 
 **Status: complete.** Integration summary for wave 37's three lanes, all already merged onto
