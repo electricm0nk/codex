@@ -11,6 +11,52 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 38, Lane C — Shape 2's dot-segment magnitude-id matcher gap, 112 units closed (86 DONE + 26 V) — complete
+
+**Status: complete.** Continued wave 37 lane C's own disposition trace. Re-derived bucket D's
+full six-mechanism breakdown fresh (`D: 2661`, matching wave 37's own final state exactly) and
+confirmed sub-mechanisms 3 (eidolon, 16) and 4 (sentinel, 1) have no open items beyond what wave
+36/37 already dispositioned, and sub-mechanism 5 (634/60 classes) is unchanged and presumed
+claimed by lanes A/B this wave. Shape 2 (`class_feature_no_dedicated_magnitude_id_matched_the_
+record_slug`, 179 units / 154 magnitude-bearing) was confirmed untouched by any prior wave — the
+cheapest available shape.
+
+**Real fix, not just a trace.** Read the real engine source first: `pilot_compute/mod.rs` already
+carries ~20 `ground_<class>_class_features` dispatch functions (Antipaladin, Cryptic, Dread,
+Marksman, Aegis, Tactician, Vitalist, Wilder, Kineticist, Medium, Mesmerist, Occultist, Psychic,
+Spiritualist, Magus, Shifter, Vigilante, Soulknife, Psion, Psychic Warrior — a real, already-
+shipped SD-32 card 11 effort with corpus-transcribed formulas and their own tests) whose
+explanation ids follow a `<owner>.<feature_slug>.<magnitude_descriptor>` dot-segment convention
+the classifier's `class_feature_exact_suffix_grounded` had never been taught to recognize — the
+engine genuinely held these records, the classifier simply could not see them. Widened the
+matcher to check the SECOND-TO-LAST dot segment against `feature_slug`, with two safety guards
+found live (not assumed) via a temporary explanation-id dump test before committing: (1)
+`feature_slug != owner`, closing a false match where a bare no-`~` class unit
+(`class_feature:arcanist`/`:bloodrager`/`:brawler`) collided with a generic `class_chassis.
+<class>.caster_level` fact; (2) excluding trailing `unsupported`/`not_modelled` diagnostic-mirror
+markers (175+2 corpus-wide), closing a false match where a value-0 "not independently granted"
+diagnostic mirror (`...corpus_record.uncanny_dodge.unsupported`) collided with a real sibling
+feature's own slug. Both caught and fixed before this cycle's own first-draft regen was
+committed — retro-logged as a self-correction.
+
+**112 units genuinely closed, regen-verified**: `DONE: 25244→25330` (+86, D/X→DONE),
+`V: 289→315` (+26, D/X→literal-verified, a stronger bucket than DONE), `D: 2661→2556` (−105).
+Of Shape 2's own 154-unit magnitude-bearing remainder, **100 closed** (65%); 5 more zero-magnitude
+Shape-2 units closed as a bonus; 5 more closures came from bucket C and 2 from bucket X via the
+same matcher gap reaching those evidence shapes too. 13/13 new+existing
+`class_feature_exact_suffix_grounded_tests` pass (6 new), 533/533 `v06_work_inventory` bin tests
+pass (6 new, 0 regressed), `cargo test --locked --no-run` exit 0 full workspace,
+`completion_atlas.py --check` clean (`citation_failures=0`, 10 pins re-derived).
+
+**54 units honestly left unclosed**, named precisely by class (Unchained Monk 7, Summoner 6,
+Unchained Barbarian 6, Monk 5, Duelist 4, Shadowdancer 4, Unchained Rogue 4, Unchained Summoner 3,
+Assassin/Fighter/Loremaster/Wizard 2 each, 7 singles) — spot-checked (Unchained Monk, Summoner,
+Wizard) and confirmed a genuinely DIFFERENT failure shape (a single-dot-segment word-choice
+synonym gap, e.g. `AC Bonus` vs. the engine's own `armor_class_bonus`, not the dot-segment-
+boundary gap this cycle's fix closes) — not force-fit, named for a dedicated future cycle.
+
+Full receipt: `artifacts/bucket-d-mining/wave38_laneC_shape2_dot_segment_magnitude_id_matcher_cycle_receipt.md`.
+
 ### Cycle — Wave 38, lane B — sub-mechanism 5's top-2 classes scope-checked, not bounded — complete, 0 units closed
 
 **Status: complete (0 units closed, honestly reported).**

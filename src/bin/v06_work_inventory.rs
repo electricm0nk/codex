@@ -9858,6 +9858,28 @@ const CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES: &[&str] = &[
     "limit",
 ];
 
+/// Trailing dot-segment words that mark an explanation id as a DIAGNOSTIC
+/// MIRROR, never a real computed magnitude -- the `class_feature_exact_
+/// suffix_grounded` second-to-last-segment check (SD-34 wave 38 lane C)
+/// must refuse these regardless of what the segment before them says.
+///
+/// `push_deferred_class_features` (`pilot_compute/mod.rs`) and its ~14
+/// sibling `push_*_deferred_diagnostic` functions push the SAME id into
+/// both `diagnostics` (a real "this is blocked" entry) AND `explanations`
+/// (`value: 0`, so it also satisfies `magnitude_token_count`-style checks)
+/// -- every one of the 175 corpus-wide `*.unsupported` ids and the 2
+/// `*.not_modelled` ids found live (`grep -c` against `pilot_compute/mod.rs`
+/// at this cycle's own HEAD) follows this exact shape. Confirmed live, not
+/// assumed: `class_feature.pu.unchained_barbarian.corpus_record.
+/// uncanny_dodge.unsupported` (real id, `push_pu_class_feature_records`'s
+/// `!record.is_granted` branch) has `uncanny_dodge` as its own
+/// second-to-last segment, genuinely equal to a real sibling unit's
+/// `feature_slug` -- without this guard it credited `Unchained Barbarian ~
+/// Uncanny Dodge` as grounded off a value-0 "not independently granted"
+/// marker, losing that unit's own more specific `deferred-with-reason`
+/// diagnostic message for the generic Shape-2 D-bucket evidence instead.
+const CLASS_FEATURE_ID_NON_MAGNITUDE_TRAILING_MARKERS: &[&str] = &["unsupported", "not_modelled"];
+
 /// Retries a failed `id.ends_with(&feature_slug)` check by stripping exactly
 /// one trailing `_<known-suffix-word>` from `id` and re-checking. Returns
 /// `false` (never a fix) when the exact check already passes -- this is a
@@ -9945,6 +9967,34 @@ fn id_matches_feature_slug_after_known_magnitude_suffix_strip(id: &str, feature_
 ///    Requiring the matched id's own trailing dot-segment to EQUAL
 ///    `feature_slug` closes both without touching the (correct, unrelated)
 ///    magnitude-suffix fallback's own separate underscore-stripping logic.
+///
+/// 3. **A second-to-last dot-segment match** (SD-34 wave 38 lane C,
+///    `mine-bucket-d` row 37) -- `ground_antipaladin_class_features` and its
+///    18 sibling dispatch-chain functions (`pilot_compute/mod.rs`, live
+///    since SD-32 card 11 T12: Cryptic/Dread/Marksman/Psychic Warrior/
+///    Soulknife/Aegis/Tactician/Vitalist/Wilder/Kineticist/Medium/
+///    Mesmerist/Occultist/Psychic/Spiritualist/Magus/Shifter/Vigilante/
+///    Psion) emit ids shaped `class_feature.untabled.<owner>.<feature_slug>.
+///    <magnitude_descriptor>` -- a real per-feature explanation id with the
+///    feature's own slug as its OWN dot segment, followed by a THIRD
+///    segment naming which quantity it computes (`dc`, `known`,
+///    `uses_per_day`, `damage_reduction`, ...). Neither check 2 above (which
+///    inspects the id's trailing segment -- here the descriptor, not the
+///    feature) nor `id_matches_feature_slug_after_known_magnitude_suffix_
+///    strip` (which only strips a trailing `_<word>` within a SINGLE dot
+///    segment, never crosses a `.`) recognizes this shape. Checking the
+///    SECOND-TO-LAST segment against `feature_slug` closes it without
+///    depending on `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` recognizing the
+///    descriptor word at all (real per-record magnitude, already gated by
+///    the SAME `owner`/`group` guard above -- this is strictly a wider
+///    RECOGNITION of an existing computation, never a new grounding path).
+///    Confirmed safe against every pre-existing negative case in this
+///    file's own test module before landing (verbatim, not assumed): a
+///    2-segment id belonging to a genuinely DIFFERENT feature of the same
+///    class does not cross-credit, and the existing negation-explanation
+///    regression test (`bloodrage_execution.not_raging` vs. feature_slug
+///    `raging`) stays refused, since its own second-to-last segment is
+///    `bloodrage_execution`, never `raging`.
 fn class_feature_exact_suffix_grounded<'a>(
     explanation_ids: impl Iterator<Item = &'a String>,
     owner: &str,
@@ -9959,7 +10009,52 @@ fn class_feature_exact_suffix_grounded<'a>(
         return false;
     }
     let needle = format!(".{owner}.");
-    explanation_ids.into_iter().any(|id| id.contains(&needle) && id.rsplit('.').next() == Some(feature_slug))
+    explanation_ids.into_iter().any(|id| {
+        id.contains(&needle)
+            && (id.rsplit('.').next() == Some(feature_slug)
+                || {
+                    // Skip the trailing magnitude-descriptor segment, then
+                    // compare the NEXT segment in from the end -- the
+                    // feature's own slug under the 3-segment
+                    // `<owner>.<feature_slug>.<descriptor>` convention.
+                    //
+                    // `feature_slug != owner` guard (SD-34 wave 38 lane C,
+                    // found live, not assumed): without it, a bare/no-`~`
+                    // corpus_key unit (`feature_slug` silently falls back to
+                    // `unit.name`, the SAME single-token shape the
+                    // `suffix_stripped_grounded` fallback above already
+                    // excludes for this exact reason) spuriously matches
+                    // ANY generic `class_chassis.<owner>.<fact>` id -- e.g.
+                    // `class_chassis.arcanist.caster_level`
+                    // (`pilot_compute/mod.rs`'s generic per-class
+                    // caster-level table, `format!("class_chassis.{}.
+                    // caster_level", rule.class_name)`), a real chassis
+                    // fact but NOT this bare unit's own magnitude. Confirmed
+                    // live via a temporary dump test before landing this
+                    // guard: `class_feature:arcanist`/`:bloodrager`/
+                    // `:brawler` (each `feature_slug == owner ==
+                    // "arcanist"`/`"bloodrager"`/`"brawler"`) all
+                    // false-matched this way before the guard was added.
+                    //
+                    // The trailing segment itself must also NOT be a
+                    // `CLASS_FEATURE_ID_NON_MAGNITUDE_TRAILING_MARKERS`
+                    // word -- see that constant's own doc comment for the
+                    // live-confirmed `*.unsupported` diagnostic-mirror
+                    // false match this closes.
+                    feature_slug != owner
+                        && id
+                            .rsplit('.')
+                            .next()
+                            .is_some_and(|last| {
+                                !CLASS_FEATURE_ID_NON_MAGNITUDE_TRAILING_MARKERS.contains(&last)
+                            })
+                        && {
+                            let mut segments = id.rsplit('.');
+                            segments.next();
+                            segments.next() == Some(feature_slug)
+                        }
+                })
+    })
 }
 
 /// Whether a `ComputationDiagnostic` id genuinely names `feature_slug` under
@@ -23561,6 +23656,134 @@ mod class_feature_exact_suffix_grounded_tests {
             "rogue",
             "Rogue",
             "trapfinding_bonus",
+        ));
+    }
+
+    /// SD-34 wave 38 lane C finding (`mine-bucket-d` row 37): a real,
+    /// already-wired per-feature compute function (`ground_antipaladin_
+    /// class_features`, `pilot_compute/mod.rs`, live since SD-32 card 11
+    /// T12) emits ids shaped `class_feature.untabled.<owner>.<feature_slug>.
+    /// <magnitude_descriptor>` -- a THIRD dot segment naming which quantity
+    /// the feature computes (`dc`, `known`, `uses_per_day`, ...), distinct
+    /// from every id shape the four tests above already cover (which are
+    /// all EXACTLY TWO segments after `owner`, or one). Neither the exact
+    /// check (`id.rsplit('.').next() == feature_slug`, which sees the
+    /// magnitude-descriptor segment, not the feature) nor the underscore-
+    /// suffix fallback (which only strips a trailing `_<word>` from a
+    /// SINGLE dot segment, never crosses a dot boundary) recognizes this
+    /// shape, so 7 real, already-grounded Antipaladin features (and, by the
+    /// same convention, sibling units on every other class this dispatch
+    /// chain also covers -- Cryptic/Dread/Marksman/Soulknife/Aegis/
+    /// Tactician/Vitalist/Wilder/Kineticist/Medium/Mesmerist/Occultist/
+    /// Psychic/Spiritualist/Magus/Shifter/Vigilante/Psion) stayed
+    /// `engine-does-not-hold` under `class_feature_no_dedicated_magnitude_
+    /// id_matched_the_record_slug` despite the engine genuinely holding
+    /// and computing them. Id quoted verbatim from `ground_antipaladin_
+    /// class_features`'s own `cruelty.dc` explanation.
+    #[test]
+    fn a_dot_separated_magnitude_descriptor_grounds_via_its_own_feature_segment() {
+        let ids = ["class_feature.untabled.antipaladin.cruelty.dc".to_string()];
+        assert!(class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "antipaladin",
+            "Antipaladin",
+            "cruelty",
+        ));
+    }
+
+    /// The same shape must resolve correctly even when the feature's own
+    /// slug is itself a multi-word underscored phrase (`touch_of_
+    /// corruption`) and the magnitude-descriptor segment is ALSO a
+    /// multi-word underscored phrase (`uses_per_day`) -- proving the new
+    /// check splits on the DOT boundary, not on underscores, so it never
+    /// depends on `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` recognizing the
+    /// descriptor word at all. Id quoted verbatim from the same function's
+    /// `touch_of_corruption.uses_per_day` explanation.
+    #[test]
+    fn a_multi_word_feature_slug_and_a_multi_word_descriptor_both_resolve_on_dot_boundaries() {
+        let ids =
+            ["class_feature.untabled.antipaladin.touch_of_corruption.uses_per_day".to_string()];
+        assert!(class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "antipaladin",
+            "Antipaladin",
+            "touch_of_corruption",
+        ));
+    }
+
+    /// Negative control: the new second-to-last-segment check must NOT
+    /// widen into a bare substring/contains scan. An id genuinely belonging
+    /// to a DIFFERENT feature of the SAME class (real, quoted verbatim --
+    /// `unholy_resilience`'s own explanation) must not credit `cruelty`
+    /// merely because both live under the same `.antipaladin.` owner.
+    #[test]
+    fn a_dot_separated_id_for_a_different_feature_does_not_cross_credit() {
+        let ids =
+            ["class_feature.untabled.antipaladin.unholy_resilience.save_bonus".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "antipaladin",
+            "Antipaladin",
+            "cruelty",
+        ));
+    }
+
+    /// Negative control, the shape the existing `a_negation_explanation_
+    /// cannot_ground_an_active_state_record` test above already proves for
+    /// the OLD trailing-segment check: confirms the NEW second-to-last
+    /// check does not accidentally reopen it. `bloodrage_execution.
+    /// not_raging`'s own second-to-last segment is `bloodrage_execution`,
+    /// never `raging`, so `feature_slug = "raging"` still cannot ground.
+    #[test]
+    fn the_second_to_last_segment_check_does_not_reopen_the_negation_regression() {
+        let ids =
+            ["class_feature.acg.bloodrager.bloodrage_execution.not_raging".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "bloodrager",
+            "Bloodrager",
+            "raging",
+        ));
+    }
+
+    /// Live-confirmed false-positive #1 (found via a temporary explanation-
+    /// id dump, not assumed): a bare/no-`~` corpus_key unit's `feature_slug`
+    /// falls back to `unit.name` and equals `owner` exactly
+    /// (`class_feature:arcanist`, id quoted verbatim from `pilot_compute/
+    /// mod.rs`'s generic per-class `class_chassis.<class>.caster_level`
+    /// table). Without the `feature_slug != owner` guard this credited the
+    /// bare class overview record off a chassis fact that names no
+    /// per-feature magnitude at all.
+    #[test]
+    fn a_generic_class_chassis_fact_cannot_ground_the_bare_class_name_unit() {
+        let ids = ["class_chassis.arcanist.caster_level".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "arcanist",
+            "Arcanist",
+            "arcanist",
+        ));
+    }
+
+    /// Live-confirmed false-positive #2 (found via the same dump): a
+    /// diagnostic-mirror id (`push_pu_class_feature_records`'s
+    /// `!record.is_granted` branch, id quoted verbatim) is pushed into BOTH
+    /// `diagnostics` and `explanations` with `value: 0` -- its own
+    /// second-to-last segment genuinely equals a real feature's slug
+    /// (`uncanny_dodge`), but its trailing segment is the diagnostic-only
+    /// `unsupported` marker, not a magnitude descriptor. Must stay refused
+    /// even though `feature_slug != owner` holds here.
+    #[test]
+    fn a_diagnostic_mirror_id_ending_in_unsupported_cannot_ground_via_its_own_feature_segment() {
+        let ids = [
+            "class_feature.pu.unchained_barbarian.corpus_record.uncanny_dodge.unsupported"
+                .to_string(),
+        ];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "unchained_barbarian",
+            "Unchained Barbarian",
+            "uncanny_dodge",
         ));
     }
 }

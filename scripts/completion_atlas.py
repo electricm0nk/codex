@@ -148,7 +148,21 @@ BUCKET_DEFINITIONS = {
         # first hit that survives inside `simple_kind_verdict` (not a test
         # assertion) -- 10290 -> 10387. Read back and confirmed the new
         # line still literally contains `status: "grounded",`.
-        "citation": {"file": _ENGINE_SRC, "line": 10387, "must_contain": "grounded"},
+        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
+        # own doc comment gained a new numbered point above its function
+        # definition, shifting every construction site below it): the OLD
+        # pin (10387) had gone SILENTLY stale -- `_citation_failures` did
+        # not flag it only because the shifted line 10387 still happened to
+        # contain the substring "grounded" inside an unrelated doc comment
+        # (`// `grounded_magnitude` is the caller's OWN...`), the exact
+        # "passes the string check, wrong construction site" hazard this
+        # file's own comments warn about (`decisions.md §12` L2) -- caught
+        # by reading the line back, not trusted from the string match alone.
+        # Fresh `grep -n 'status: "grounded",'` against the real file,
+        # taking the first hit inside `simple_kind_verdict` (not a test),
+        # 10387 -> 10427, read back and confirmed the real construction
+        # site.
+        "citation": {"file": _ENGINE_SRC, "line": 10482, "must_contain": "grounded"},
     },
     "A": {
         "meaning": "engine has no table for this kind",
@@ -190,7 +204,12 @@ BUCKET_DEFINITIONS = {
         # inserted a 34-line block above this site): fresh `grep -n` for the
         # same unique literal, 12986 -> 13020, line content read back and
         # confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 13020, "must_contain": "has_no_engine_table"},
+        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
+        # widened doc comment + new second-to-last-dot-segment check sit
+        # above this site): fresh `grep -n` for the same unique literal,
+        # 13020 -> 13060, line content read back and confirmed still the
+        # real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 13115, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -228,7 +247,10 @@ BUCKET_DEFINITIONS = {
         # Wave 37 lane A re-derivation (same insertion as bucket A above):
         # fresh `grep -n` for the same unique literal, 12666 -> 12700, line
         # content read back and confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12700, "must_contain": "not_held_by_engine"},
+        # Wave 38 lane C re-derivation (same insertion as bucket A above):
+        # fresh `grep -n` for the same unique literal, 12700 -> 12740, line
+        # content read back and confirmed still the real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 12795, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -266,7 +288,11 @@ BUCKET_DEFINITIONS = {
         # above): fresh `grep -n` for the same unique literal, 12891 ->
         # 12925, line content read back and confirmed still the real
         # construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 12925, "must_contain": "explanation_id"},
+        # Wave 38 lane C re-derivation (same insertion as buckets A/B
+        # above): fresh `grep -n` for the same unique literal, 12925 ->
+        # 12965, line content read back and confirmed still the real
+        # construction site, not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 13020, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -288,7 +314,13 @@ BUCKET_DEFINITIONS = {
         # = '`, 10464 -> 10560 (definition line), the closure body's own
         # `status: "engine-does-not-hold"` line one below at 10561, read
         # back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10561, "must_contain": "engine-does-not-hold"},
+        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
+        # widened doc comment sits above this closure definition, shifting
+        # it): fresh `grep -n 'let engine_does_not_hold = '`, 10561 -> 10600
+        # (definition line), the closure body's own `status:
+        # "engine-does-not-hold"` line one below at 10601, read back and
+        # confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10656, "must_contain": "engine-does-not-hold"},
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
@@ -305,7 +337,11 @@ BUCKET_DEFINITIONS = {
         # merged file, taking the first hit (inside `simple_kind_verdict`,
         # not a per-Kind classify() arm), 10299 -> 10396, line content read
         # back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10396, "must_contain": "ingested-magnitude"},
+        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
+        # widened doc comment sits above this site): fresh `grep -n` for the
+        # first hit inside `simple_kind_verdict`, 10396 -> 10436, line
+        # content read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10491, "must_contain": "ingested-magnitude"},
     },
     "V": {
         "meaning": "verified by proxy, never by the oracle",
@@ -362,7 +398,11 @@ BUCKET_DEFINITIONS = {
         # above): fresh `grep -n` for the same unique literal, 13768 ->
         # 13802, read back and confirmed still the real construction site,
         # not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 13802, "must_contain": "literal-verified"},
+        # Wave 38 lane C re-derivation (same insertion as buckets A/B/C
+        # above): fresh `grep -n` for the same unique literal, 13802 ->
+        # 13842, read back and confirmed still the real construction site,
+        # not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 13897, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
@@ -377,7 +417,11 @@ BUCKET_DEFINITIONS = {
         # `grep -n 'status: "unmeasurable"'` against the actual merged
         # file, taking the first hit, 10551 -> 10648, line content read
         # back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10648, "must_contain": "unmeasurable"},
+        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
+        # widened doc comment sits above this site): fresh `grep -n` for
+        # the first hit, 10648 -> 10688, line content read back and
+        # confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10743, "must_contain": "unmeasurable"},
     },
     "X": {
         "meaning": "deferred with a stated reason",
@@ -392,7 +436,11 @@ BUCKET_DEFINITIONS = {
         # `grep -n 'status: "deferred-with-reason"'` against the actual
         # merged file, taking the first hit, 10511 -> 10608, line content
         # read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10608, "must_contain": "deferred-with-reason"},
+        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
+        # widened doc comment sits above this site): fresh `grep -n` for
+        # the first hit, 10608 -> 10648, line content read back and
+        # confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10703, "must_contain": "deferred-with-reason"},
     },
     "Z": {
         "meaning": "not started",
@@ -407,7 +455,11 @@ BUCKET_DEFINITIONS = {
         # `grep -n 'status: "not-started"'` against the actual merged file
         # -- still the only real hit, 10372 -> 10469, line content read
         # back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10469, "must_contain": "not-started"},
+        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
+        # widened doc comment sits above this site): fresh `grep -n` --
+        # still the only real hit, 10469 -> 10509, line content read back
+        # and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10564, "must_contain": "not-started"},
     },
 }
 
