@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12857,
+        "line": 12934,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,7 +14,7 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12537,
+        "line": 12614,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
@@ -25,7 +25,7 @@
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 12762,
+        "line": 12839,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -36,7 +36,7 @@
     "D": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10517,
+        "line": 10561,
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
@@ -47,7 +47,7 @@
     "DONE": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10343,
+        "line": 10387,
         "must_contain": "grounded"
       },
       "clears": "\u2014",
@@ -58,7 +58,7 @@
     "M": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10352,
+        "line": 10396,
         "must_contain": "ingested-magnitude"
       },
       "clears": "running the compute path (shape engine)",
@@ -69,7 +69,7 @@
     "U": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10604,
+        "line": 10648,
         "must_contain": "unmeasurable"
       },
       "clears": "instrument correction",
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13639,
+        "line": 13716,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -91,7 +91,7 @@
     "X": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10564,
+        "line": 10608,
         "must_contain": "deferred-with-reason"
       },
       "clears": "revisiting the stated condition",
@@ -102,7 +102,7 @@
     "Z": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10425,
+        "line": 10469,
         "must_contain": "not-started"
       },
       "clears": "ordinary work",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "2fb15ced6be68c86bd135b39082c331c92b26bea",
+  "derived_at": "3379febd673125650d10a083c869e82555c7dd58",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -199,8 +199,9 @@
       "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,
       "language_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 103,
       "race_trait_generic_table_holds_zero_magnitude_record_pending_wiring_class_review": 160,
-      "race_trait_record_loaded_but_never_applies": 7,
+      "race_trait_record_loaded_but_never_applies": 6,
       "race_trait_skinwalker_change_shape_option_resolves_real_kin_pool_but_no_activation_mechanism_computes_its_magnitude": 19,
+      "race_trait_template_bonus_language_grant_verified_but_has_no_upstream_activation_gate": 1,
       "skill_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 36,
       "template_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 724,
       "trait_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 6

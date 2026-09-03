@@ -141,12 +141,14 @@ BUCKET_DEFINITIONS = {
         # (+3/+16/+35/+41/+48/+176). This marker sits below the first four
         # breakpoints only (10195 < 11251): cumulative shift +95,
         # 10195 -> 10290. Confirmed by reading the new line's real content.
-        # Wave 35 lanea re-derivation (Skinwalker Change Shape resolver):
-        # fresh `grep -n 'status: "grounded"'` against the current file,
-        # taking the first hit that survives inside `simple_kind_verdict`
-        # (not a test assertion) -- 10290 -> 10343. Read back and confirmed
-        # the new line still literally contains `status: "grounded",`.
-        "citation": {"file": _ENGINE_SRC, "line": 10343, "must_contain": "grounded"},
+        # Wave 35 fold re-derivation (lane A's Skinwalker resolver and lane
+        # B's TEMPLATE bonus-language probe both land in this file; neither
+        # lane's own hand-computed offset is trusted here): fresh `grep -n
+        # 'status: "grounded"'` against the actual merged file, taking the
+        # first hit that survives inside `simple_kind_verdict` (not a test
+        # assertion) -- 10290 -> 10387. Read back and confirmed the new
+        # line still literally contains `status: "grounded",`.
+        "citation": {"file": _ENGINE_SRC, "line": 10387, "must_contain": "grounded"},
     },
     "A": {
         "meaning": "engine has no table for this kind",
@@ -170,11 +172,12 @@ BUCKET_DEFINITIONS = {
         # fresh `grep -n` against the actual merged file for the same
         # unique literal, line content read back and confirmed still the
         # real construction site.
-        # Wave 35 lanea re-derivation: fresh `grep -n` for the same unique
+        # Wave 35 fold re-derivation (both lanes land in this file): fresh
+        # `grep -n` against the actual merged file for the same unique
         # literal (`Kind::Companion => engine_does_not_hold(
-        # "companion_content_has_no_engine_table"),`), 12780 -> 12857, line
+        # "companion_content_has_no_engine_table"),`), 12780 -> 12934, line
         # content read back and confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12857, "must_contain": "has_no_engine_table"},
+        "citation": {"file": _ENGINE_SRC, "line": 12934, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -194,13 +197,14 @@ BUCKET_DEFINITIONS = {
         # Wave 34 merge re-derivation: same treatment as bucket A above --
         # fresh `grep -n` against the actual merged file for the same
         # unique literal, line content read back and confirmed.
-        # Wave 35 lanea re-derivation: fresh `grep -n` for the same unique
+        # Wave 35 fold re-derivation (both lanes land in this file): fresh
+        # `grep -n` against the actual merged file for the same unique
         # literal (`return engine_does_not_hold(
         # "class_feature_option_pool_record_not_held_by_engine");`),
-        # 12460 -> 12537, line content read back and confirmed still the
+        # 12460 -> 12614, line content read back and confirmed still the
         # real construction site (not one of the differently-worded
         # `engine_does_not_hold(...)` calls a few lines above it).
-        "citation": {"file": _ENGINE_SRC, "line": 12537, "must_contain": "not_held_by_engine"},
+        "citation": {"file": _ENGINE_SRC, "line": 12614, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -220,12 +224,13 @@ BUCKET_DEFINITIONS = {
         # Wave 34 merge re-derivation: same treatment as buckets A/B above --
         # fresh `grep -n` against the actual merged file for the same
         # unique literal, line content read back and confirmed.
-        # Wave 35 lanea re-derivation: fresh `grep -n` for the same unique
+        # Wave 35 fold re-derivation (both lanes land in this file): fresh
+        # `grep -n` against the actual merged file for the same unique
         # literal (`engine_does_not_hold(
         # "no_explanation_id_and_no_diagnostic_names_this_feature")`),
-        # 12685 -> 12762, line content read back and confirmed still the
+        # 12685 -> 12839, line content read back and confirmed still the
         # real construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 12762, "must_contain": "explanation_id"},
+        "citation": {"file": _ENGINE_SRC, "line": 12839, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -240,13 +245,14 @@ BUCKET_DEFINITIONS = {
         # read back and confirmed.
         # Wave 33 lane B re-derivation: cumulative shift +95 (+3+16+35+41),
         # 10369 -> 10464.
-        # Wave 35 lanea re-derivation: this cycle's own `RaceTraitProbe`
-        # field + `probe_race_trait_corpus`/`EngineFacts` accessor additions
-        # sit ABOVE this closure definition, shifting it. Fresh `grep -n
-        # 'let engine_does_not_hold = '`, 10464 -> 10517 (the closure
-        # body's own `status: "engine-does-not-hold"` line, one below its
-        # definition line), read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10517, "must_contain": "engine-does-not-hold"},
+        # Wave 35 fold re-derivation (both lanes' own additions -- lane A's
+        # `RaceTraitProbe` skinwalker field/accessor and lane B's TEMPLATE
+        # bonus-language field/accessor -- sit ABOVE this closure
+        # definition, shifting it): fresh `grep -n 'let engine_does_not_hold
+        # = '`, 10464 -> 10560 (definition line), the closure body's own
+        # `status: "engine-does-not-hold"` line one below at 10561, read
+        # back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10561, "must_contain": "engine-does-not-hold"},
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
@@ -258,11 +264,12 @@ BUCKET_DEFINITIONS = {
         # re-derivation: fresh `grep -n`, line content read back and
         # confirmed.
         # Wave 33 lane B re-derivation: cumulative shift +95, 10204 -> 10299.
-        # Wave 35 lanea re-derivation: fresh `grep -n 'status:
-        # "ingested-magnitude"'`, taking the first hit (inside
-        # `simple_kind_verdict`, not a per-Kind classify() arm), 10299 ->
-        # 10352, line content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10352, "must_contain": "ingested-magnitude"},
+        # Wave 35 fold re-derivation (both lanes land in this file): fresh
+        # `grep -n 'status: "ingested-magnitude"'` against the actual
+        # merged file, taking the first hit (inside `simple_kind_verdict`,
+        # not a per-Kind classify() arm), 10299 -> 10396, line content read
+        # back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10396, "must_contain": "ingested-magnitude"},
     },
     "V": {
         "meaning": "verified by proxy, never by the oracle",
@@ -288,7 +295,7 @@ BUCKET_DEFINITIONS = {
         # fresh `grep -n` against the actual merged file for the exact same
         # unique literal, line content read back and confirmed still the
         # real construction site, not a test assertion.
-        # Wave 35 lanea re-derivation: `--check` did not flag this citation
+        # Wave 35 lane A re-derivation: `--check` did not flag this citation
         # (13562 still happened to CONTAIN the substring "literal-verified"
         # after this cycle's own insertions shifted it), but the line it
         # landed on was a doc comment mentioning the literal, not the real
@@ -298,7 +305,14 @@ BUCKET_DEFINITIONS = {
         # (`item.verdict.status = "literal-verified";`), 13562 -> 13639,
         # read back and confirmed this time it IS the real construction
         # site (assignment, not a doc string).
-        "citation": {"file": _ENGINE_SRC, "line": 13639, "must_contain": "literal-verified"},
+        # Wave 35 fold re-derivation: this citation carried no diff-hunk
+        # conflict during lane B's rebase (its own edits sit below this
+        # line, not across it), but its real position still moved once
+        # lane B's insertions landed above it -- never trusted un-checked.
+        # Fresh `grep -n` against the actual merged file for the same
+        # unique literal, 13639 -> 13716, read back and confirmed still the
+        # real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 13716, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
@@ -309,10 +323,11 @@ BUCKET_DEFINITIONS = {
         # not a construction site). Wave 32 re-derivation: fresh `grep -n`,
         # line content read back and confirmed.
         # Wave 33 lane B re-derivation: cumulative shift +95, 10456 -> 10551.
-        # Wave 35 lanea re-derivation: fresh `grep -n 'status:
-        # "unmeasurable"'`, taking the first hit, 10551 -> 10604, line
-        # content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10604, "must_contain": "unmeasurable"},
+        # Wave 35 fold re-derivation (both lanes land in this file): fresh
+        # `grep -n 'status: "unmeasurable"'` against the actual merged
+        # file, taking the first hit, 10551 -> 10648, line content read
+        # back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10648, "must_contain": "unmeasurable"},
     },
     "X": {
         "meaning": "deferred with a stated reason",
@@ -323,10 +338,11 @@ BUCKET_DEFINITIONS = {
         # not a construction site). Wave 32 re-derivation: fresh `grep -n`,
         # line content read back and confirmed.
         # Wave 33 lane B re-derivation: cumulative shift +95, 10416 -> 10511.
-        # Wave 35 lanea re-derivation: fresh `grep -n 'status:
-        # "deferred-with-reason"'`, taking the first hit, 10511 -> 10564,
-        # line content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10564, "must_contain": "deferred-with-reason"},
+        # Wave 35 fold re-derivation (both lanes land in this file): fresh
+        # `grep -n 'status: "deferred-with-reason"'` against the actual
+        # merged file, taking the first hit, 10511 -> 10608, line content
+        # read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10608, "must_contain": "deferred-with-reason"},
     },
     "Z": {
         "meaning": "not started",
@@ -337,10 +353,11 @@ BUCKET_DEFINITIONS = {
         # string, not a construction site). Wave 32 re-derivation: fresh
         # `grep -n`, line content read back and confirmed.
         # Wave 33 lane B re-derivation: cumulative shift +95, 10277 -> 10372.
-        # Wave 35 lanea re-derivation: fresh `grep -n 'status:
-        # "not-started"'` -- still the only real hit in the file, 10372 ->
-        # 10425, line content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 10425, "must_contain": "not-started"},
+        # Wave 35 fold re-derivation (both lanes land in this file): fresh
+        # `grep -n 'status: "not-started"'` against the actual merged file
+        # -- still the only real hit, 10372 -> 10469, line content read
+        # back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 10469, "must_contain": "not-started"},
     },
 }
 
