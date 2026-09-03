@@ -11,6 +11,114 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 35 wave-end gate — 1 verify.sh failure fixed, full 40/40 confirmed — complete
+
+**Status: complete, verified.** Wave 35's three lanes merged onto `tranche/14` one at a
+time, testing between each (three-lane concurrency ceiling respected throughout, no
+concurrent cargo processes — `docs/retro/...proxmox-host-stops-vm-on-guest-oom` guard):
+Lane A `f9dfaa0543` (direct `git merge --ff-only`, already at the tranche tip), Lane B
+`313c082a56`/`3379febd67`/`cebdb5bb49`/`579ac65c14` (rebased onto Lane A, additive
+conflicts resolved in `v06_work_inventory.rs`/`completion_atlas.py`/`progress.md`, guarded
+corpus regen re-run), Lane C `04b0de40c0` (rebased onto Lane B, `completion-atlas.json`
+took the merged-tree side since Lane C's own snapshot was pre-fold by design, docs-only —
+confirmed by `git diff --stat` showing only 4 doc files touched). Final `tranche/14` HEAD:
+`04b0de40c0b6ea39e64eed8836835b5a6abedda8`.
+
+**Real unit counts per lane** (all three lanes' own receipts, re-confirmed this cycle):
+- **Lane A** (Skinwalker Change Shape) — **0 units reach DONE.** 20 units named in wave 33
+  lane B's remainder: 19 get precision-only evidence-string reclassification (each real
+  `TEMPBONUS`-gated Change Shape option now resolves to its verified 9-kin TYPE-pool via a
+  new `skinwalker_change_shape.rs` resolver, wired end-to-end to a real desktop picker
+  section, but stays bucket D because no engine mechanism computes an activated-during-play
+  temporary bonus onto any character sheet yet); `Endurance` (the 20th) stays unchanged,
+  a genuine orphan no kin's `.MOD` row names.
+- **Lane B** (`Human ~ Tribalistic Languages`) — **0 units reach DONE.** The dispatched
+  2-unit remainder re-derived to exactly 1 real unit (`Human ~ Tribalistic` was already
+  `grounded`, logged as a correction); that 1 unit gets a precise
+  `race_trait_template_bonus_language_grant_verified_but_has_no_upstream_activation_gate`
+  evidence string via a new `declared_template_bonus_languages` transcription reader, but
+  stays `Unclassified`/bucket-D-adjacent since the upstream `.lst` record itself carries no
+  `FACT`/`PREFACT`/`ABILITY:...AUTOMATIC...` activation token (a genuine PCGen data gap, not
+  an engine gap).
+- **Lane C** (bucket-D reconnaissance) — **0 closures, read-only mandate.** Re-derived and
+  fully decomposed both of wave 32's named-but-unmined shapes fresh at this wave's HEAD (see
+  table below); one instrument-correction logged (the shape's owning-class count is **70**,
+  not the previously-stated 75 — unit population unchanged).
+
+**Lane C reconnaissance table** (`class_feature_of_unmodelled_corpus_class:*`, 931 units,
+decomposed into 5 named sub-mechanisms summing exactly 19+63+16+1+832=931):
+
+| Sub-mechanism | Units | Disposition |
+|---|---|---|
+| Classifier matcher discards correct attribution (`psychic_warrior`/`rogue`) | 19 | Real chassis exists; RED-test candidate |
+| Miscategorized onto unrelated same-named creature-type records | 63 | Animal 23, Undead 13, Dragon 15, Construct 2, Plant 9, Ooze 1 |
+| Eidolon companion-progression-table records | 16 | Same disposition question, kept separate (real class-shaped record) |
+| Feat-chain record miscategorized via identical collision shape | 1 | `Sentinel Style Feat` |
+| Genuinely unmodelled prestige/base classes | 832 | 60 classes, real Epic 4/5 new-chassis work (`phrenic_slayer` 47, `divine_scion` 46 largest) |
+
+Plus the second shape, `class_feature_no_dedicated_magnitude_id_matched_the_record_slug`
+(179 units), decomposed by its 36 owning already-modelled classes; a 25-unit
+zero-magnitude sub-population flagged (17 already `wiring_class == "display"`) as a
+candidate for the same `DESC:`-token cross-reference method wave 32 already proved out
+elsewhere, not yet run.
+
+**Bucket-D movement measured fresh, before and after this wave's three lanes** (all three
+lanes' own precision-only work touches evidence-string content, never bucket membership):
+`python3 scripts/completion_atlas.py --check` at this cycle's own HEAD —
+`population=49438 buckets=10 unclassified=0 overlap=0` — `DONE: 25027, A: 449, B: 11769,
+C: 4173, D: 2891, M: 4449, V: 289, U: 202, X: 170, Z: 19` — **identical to the wave 34
+wave-end gate's own closing figures.** Net bucket movement this wave: **zero** (0 closures
+to DONE, 0 reclassifications, 0 reachability changes) — Lane A and Lane B both stay
+precision-only per their own receipts' explicit "why this stays bucket D" reasoning, Lane C
+is read-only by mandate. `done_evidence_violations=0`, `missing_clearing_mechanisms=0`,
+`citation_failures=0`.
+
+**Full gate: 1 failure fixed, 3 stale (non-failing) baselines raised.**
+
+1. **site-dashboard-check (stale, caused by this wave).** First full `scripts/verify.sh -j
+   6` run (log `/tmp/codex-verify-4HAbmc`, `duration_seconds=6603`) reported 39/40 PASS,
+   1 FAIL: `site/dashboard/PF1e-dashboard.json is STALE`. Root cause: Lane A/B's unit-level
+   evidence-string changes to `docs/work-inventory.json` (bucket membership unchanged, but
+   per-unit evidence text changed) were never folded into the committed dashboard/status-
+   data projections. Fixed via `./scripts/publish-site-dashboard.sh` (regenerated
+   `site/dashboard/PF1e-dashboard.json`, `site/dashboard/PF1e-dashboard.json.last-good`,
+   `site/dashboard/units/index.json`, `site/status-data.json` — summary/index files only,
+   no per-unit shard content or PI-bearing fields touched).
+
+2. **Three stale (non-failing) test-count baselines**, from this wave's own new tests
+   (Lane A: `race_trait_picker.rs` +1 desktop test, `skinwalker_change_shape.rs` +3 lib
+   tests; Lane B: `race_resolver.rs` +4 lib tests; Lane A's `v06_work_inventory.rs` +4
+   bin-only tests). Fully itemized via `git diff -U0 2fb15ced6b HEAD -- '*.rs' | grep '^+' |
+   grep -c '#\[test\]'` -> 12 added, 0 removed, matching the measured deltas exactly:
+   `BASELINE_ROOT_LIB_TESTS` 3043 -> 3050 (+7 = 4+3, the two `--lib` target files),
+   `BASELINE_ROOT_FULL_TESTS` 8400 -> 8411 (+11 = 7 lib + 4 bin), `BASELINE_DESKTOP_TESTS`
+   572 -> 573 (+1). Updated in `scripts/verify-baselines.env` per this bundle's recurring
+   convention.
+
+A second full `scripts/verify.sh -j 6` re-run after both fixes confirmed **40/40 PASS**
+(log `/tmp/codex-verify-RWCkKW`, `duration_seconds=5212` — ~1h27m, per
+`docs/retro/events/sd31-transcribe.jsonl`'s own entry, `id` prefix
+`1788421768144-sd31-transcribe-cbd799`), all 40 stages green, no stale-baseline notices on
+this run (every measured number now matches its freshly-raised floor exactly). Working
+tree clean of untouched pre-existing litter (docs/bmad-archive-inventory-2026-08-31.md and
+similar — none part of this wave's scope, none touched).
+
+- **Commit SHAs (this cycle):** `04b0de40c0` (Lane C, tranche/14 HEAD carried into this
+  cycle) plus this entry's own commit (site-dashboard regen + baseline raise + this
+  progress.md entry, single commit).
+- **Files touched:** `site/dashboard/PF1e-dashboard.json`,
+  `site/dashboard/PF1e-dashboard.json.last-good`, `site/dashboard/units/index.json`,
+  `site/status-data.json` (regenerated); `scripts/verify-baselines.env` (three stale
+  baselines raised); `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/
+  completion-atlas.json` (`derived_at` stamp advanced to current HEAD, produced by the
+  guarded regen chain inside the dashboard rebuild); `docs/retro/events/sd31-
+  transcribe.jsonl` (this cycle's own two verify.sh run receipts, append-only); this file.
+- **Next-cycle plan:** unchanged from Lane A/B/C's own receipts — Lane C's cheapest-first
+  order (sub-mechanism 1's 19-unit matcher fix, then the 25-unit zero-magnitude sub-split,
+  then the 80-unit disposition trace, then the remaining 154 magnitude-id units, then the
+  832-unit per-class chassis work); Lane A's activation-state mechanism (needs an operator
+  ruling on play-time temporary bonuses); the ingest-pipeline `.MOD`-folding gap.
+
 ### Cycle — Wave 35, Lane C (mine bucket D's two largest untouched shapes) — reconnaissance only, zero closures, both shapes fully decomposed — partial
 
 **Status: partial.** Read-only mining cycle per this cycle's own dispatch
