@@ -12249,7 +12249,7 @@ fn classify(
                 // that name anywhere: if it does, this is a feature of a class
                 // nobody has ingested yet, which is a real `engine-does-not-hold` gap
                 // rather than a mystery.
-                if let Some(corpus_class) = class_feature_owner(
+                let corpus_class_collision = class_feature_owner(
                     &unit.key,
                     facts.corpus_class_names.iter(),
                 )
@@ -12258,27 +12258,58 @@ fn classify(
                         unit.type_facet.as_deref(),
                         facts.corpus_class_names.iter(),
                     )
-                }) {
-                    // SD-34 wave 36 lane A (sub-mechanism 1, `rogue` unit):
-                    // every EARLIER branch in this owner-resolution chain
-                    // checks `facts.class_books` membership before trusting a
-                    // match; this final, `corpus_class_names`-only fallback
-                    // never repeated that check, so a class that genuinely
-                    // IS modelled (its own name just lost the cross-check
-                    // above to a differently-shaped candidate, e.g.
-                    // `"unchained_rogue"` losing to `"rogue"` because the
-                    // corpus never declares a standalone `"Unchained Rogue"`
-                    // class record) could still be reported as unmodelled.
-                    // Compared via `class_name_as_group_text` because
-                    // `facts.class_books` keys carry a mix of space- and
-                    // underscore-joined multi-word names depending on which
-                    // registration loop produced them.
+                });
+                // SD-34 wave 36, two independent lanes each found a real gap
+                // in this early-return and are composed here (`or`-guarded --
+                // either one clearing the collision is enough, neither can
+                // ever fabricate a `grounded` verdict or its own holds-check
+                // result; the actual verdict, if any, still comes from the
+                // unchanged checks below re-running on the exact same unit):
+                //
+                // Lane A (sub-mechanism 1, `rogue` unit): every EARLIER
+                // branch in this owner-resolution chain checks
+                // `facts.class_books` membership before trusting a match;
+                // this final, `corpus_class_names`-only fallback never
+                // repeated that check, so a class that genuinely IS modelled
+                // (its own name just lost the cross-check above to a
+                // differently-shaped candidate, e.g. `"unchained_rogue"`
+                // losing to `"rogue"` because the corpus never declares a
+                // standalone `"Unchained Rogue"` class record) could still be
+                // reported as unmodelled. Compared via `class_name_as_group_
+                // text` because `facts.class_books` keys carry a mix of
+                // space- and underscore-joined multi-word names depending on
+                // which registration loop produced them.
+                //
+                // Lane C (disposition trace, sub-mechanisms 2/4): a
+                // corpus-wide NAME collision (e.g. `"Order of the Dragon"`
+                // colliding with the corpus's own unmodelled `Kind::Class`
+                // "Dragon" bestiary pseudo-class) must never preempt a record
+                // this engine ALREADY safely serves through the text-only
+                // holds-checks immediately below -- every non-colliding
+                // sibling order (`"Order of the Beast"`, `"Order of the
+                // Cockatrice"`, ...) already reaches `text-complete` through
+                // one of those two checks; only a colliding group's records
+                // were short-circuited into a false "unmodelled class" gap
+                // before ever reaching them, purely because the corpus
+                // happens to declare an unrelated (and itself unmodelled)
+                // class whose name shares the collision word. Gated on the
+                // SAME three guards those checks already require.
+                if let Some(corpus_class) = corpus_class_collision {
                     let corpus_class_text = class_name_as_group_text(&corpus_class);
                     let already_modelled = facts
                         .class_books
                         .keys()
                         .any(|modelled| class_name_as_group_text(modelled) == corpus_class_text);
-                    if !already_modelled {
+                    let already_served_despite_collision = text_only
+                        && has_real_description
+                        && is_display_wiring_class_for_promotion(wc_class)
+                        && !universal_sheet_modifier
+                        && (facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)
+                            || facts.class_feature_standalone_catalog_holds(
+                                &unit.source_book,
+                                &unit.key,
+                            ));
+                    if !already_modelled && !already_served_despite_collision {
                         return Verdict {
                             status: "engine-does-not-hold",
                             evidence: format!(
@@ -22986,6 +23017,82 @@ mod class_feature_type_facet_owner_fallback_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:vigilante");
+    }
+
+    /// SD-34 wave-36 lane-C disposition trace, sub-mechanism 2 (`"Order of
+    /// the Dragon"`): `"dragon"` collides with the corpus's own unmodelled
+    /// `Kind::Class` bestiary pseudo-class "Dragon" (real corpus record,
+    /// `bestiary:class:dragon`, itself `engine-does-not-hold` -- confirmed
+    /// live, `docs/work-inventory.json`). Before this fix that collision
+    /// short-circuited straight to `class_feature_of_unmodelled_corpus_
+    /// class:dragon`, even for a text-only record the pool catalog already
+    /// safely renders -- exactly the shape every NON-colliding sibling
+    /// order (`"Order of the Beast"`, `"Order of the Cockatrice"`, ...)
+    /// already reaches `text-complete` through, live on `docs/work-
+    /// inventory.json` today. The record's TRUE owner is Cavalier
+    /// (`type_facet: CavalierClassFeatures.CavalierOrder...`), which
+    /// `class_feature_owner`'s own group-text rule can never recover
+    /// (`"order of the dragon"` neither starts nor ends with `"cavalier "`)
+    /// -- this fix does not need to resolve that owner at all, only decline
+    /// to report a false gap when the SAME text-only holds-check every
+    /// sibling already passes through also holds for this one.
+    #[test]
+    fn a_creature_type_collision_does_not_block_an_already_served_pool_catalog_record() {
+        let mut facts = EngineFacts::default();
+        // "dragon" is a real corpus class name (the bestiary pseudo-class)
+        // but deliberately NOT in `class_books` -- unmodelled, exactly like
+        // the live corpus.
+        facts.corpus_class_names.insert("dragon".to_string());
+        facts.class_feature_pool_catalog.insert(
+            (
+                "advanced_players_guide".to_string(),
+                "Order of the Dragon ~ Edicts".to_string(),
+            ),
+            "Whenever an order of the dragon cavalier uses Survival...".to_string(),
+        );
+        let unit = CorpusUnit {
+            book: "advanced_players_guide".to_string(),
+            source_book: "advanced_players_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Order of the Dragon ~ Edicts".to_string(),
+            name: "Edicts".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "apg_abilities_class.lst".to_string(), line: 243 },
+            magnitude_token_count: 0,
+            type_facet: Some("SpecialQuality".to_string()),
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(verdict.evidence, "class_feature_pool_catalog_serves_a_rendered_description");
+    }
+
+    /// NEGATIVE CONTROL, same fix: a creature-type collision with NO
+    /// pool-catalog (or standalone-catalog) holds-check backing it must
+    /// still report the real gap exactly as before -- the fix declines a
+    /// false gap only when a holds-check independently proves the record is
+    /// already served, never unconditionally.
+    #[test]
+    fn a_creature_type_collision_with_no_holds_check_still_reads_unmodelled_corpus_class() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("dragon".to_string());
+        // Deliberately no `class_feature_pool_catalog` / `class_feature_
+        // standalone_catalog` entry for this key.
+        let unit = CorpusUnit {
+            book: "advanced_players_guide".to_string(),
+            source_book: "advanced_players_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Order of the Dragon ~ Aid Allies".to_string(),
+            name: "Aid Allies".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "apg_abilities_class.lst".to_string(), line: 260 },
+            magnitude_token_count: 0,
+            type_facet: Some("CavalierClassFeatures.SpecialQuality.Extraordinary".to_string()),
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:dragon");
     }
 
     /// NEGATIVE CONTROL: without the type_facet fix, a record with no
