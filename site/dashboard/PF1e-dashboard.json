@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-02T18:02:01Z",
+  "generated_at": "2026-09-03T00:35:26Z",
   "generated_by": "pf1e_dashboard_producer",
   "schema_version": 2,
   "usage": {
-    "captured_at": "2026-09-02T18:00:04Z",
+    "captured_at": "2026-09-03T00:30:02Z",
     "session_used_pct": "?",
     "session_reset": "?",
     "week_all_models_used_pct": "?",
@@ -42,7 +42,7 @@
   ],
   "content_state": {
     "available": true,
-    "generated_at": "2026-09-02T18:15:42Z",
+    "generated_at": "2026-09-03T00:49:07Z",
     "generated_by": "v06_content_state_dump",
     "books": [
       {
@@ -2273,7 +2273,7 @@
         "feats": "X"
       },
       "open_questions": {
-        "feats": "186 feat records ingested and prerequisite-evaluable, but only 45 of them compute a real mechanical effect: adding the other 141 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-02T18:15:42Z]"
+        "feats": "186 feat records ingested and prerequisite-evaluable, but only 45 of them compute a real mechanical effect: adding the other 141 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-03T00:49:07Z]"
       },
       "items": {
         "equipment": [
@@ -5427,8 +5427,8 @@
         "feats": "X"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-09-02T18:15:42Z]",
-        "feats": "172 feat records ingested and prerequisite-evaluable, but only 5 of them compute a real mechanical effect: adding the other 167 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-02T18:15:42Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-09-03T00:49:07Z]",
+        "feats": "172 feat records ingested and prerequisite-evaluable, but only 5 of them compute a real mechanical effect: adding the other 167 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-03T00:49:07Z]"
       },
       "items": {
         "equipment": [
@@ -6270,8 +6270,8 @@
         "feats": "X"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-09-02T18:15:42Z]",
-        "feats": "129 feat records ingested and prerequisite-evaluable, but only 2 of them compute a real mechanical effect: adding the other 127 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-02T18:15:42Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-09-03T00:49:07Z]",
+        "feats": "129 feat records ingested and prerequisite-evaluable, but only 2 of them compute a real mechanical effect: adding the other 127 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-03T00:49:07Z]"
       },
       "items": {
         "equipment": [
@@ -6796,10 +6796,10 @@
         "feats": "O"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-09-02T18:15:42Z]",
-        "classes": "No class records are ingested for this book. [engine content dump 2026-09-02T18:15:42Z]",
-        "spells": "No spell records are ingested for this book. [engine content dump 2026-09-02T18:15:42Z]",
-        "feats": "No feat records are ingested for this book. [engine content dump 2026-09-02T18:15:42Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-09-03T00:49:07Z]",
+        "classes": "No class records are ingested for this book. [engine content dump 2026-09-03T00:49:07Z]",
+        "spells": "No spell records are ingested for this book. [engine content dump 2026-09-03T00:49:07Z]",
+        "feats": "No feat records are ingested for this book. [engine content dump 2026-09-03T00:49:07Z]"
       },
       "items": {
         "equipment": [
@@ -12444,7 +12444,7 @@
         "rest": "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Wizard, Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest.",
         "list": "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Wizard, Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest",
         "source": "engine-state-dump",
-        "generated_at": "2026-09-02T18:02:33Z",
+        "generated_at": "2026-09-03T00:26:07Z",
         "input_posture": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt with the class swapped to the class under test, swept over levels 1-20, plus the canonical per-class choice/spell seeds compose_character_input applies (pf1_adapter.rs). A class counts as computed only when every level in the sweep reaches HeadlessReceiptStatus::Computed.",
         "excluded": [
           "unchained_barbarian",
@@ -14539,18 +14539,18 @@
   },
   "work_inventory": {
     "available": true,
-    "generated_at": "2026-09-02T18:14:06Z",
+    "generated_at": "2026-09-03T00:47:27Z",
     "generated_by": "cargo run --bin v06_work_inventory",
     "corpus_root": "/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game",
     "total_units": 49438,
-    "proven_units": 22974,
+    "proven_units": 23007,
     "by_status": {
       "deferred-with-reason": 170,
-      "engine-does-not-hold": 19315,
-      "grounded": 11566,
+      "engine-does-not-hold": 19282,
+      "grounded": 11567,
       "ingested-magnitude": 6758,
       "not-started": 19,
-      "text-complete": 11408,
+      "text-complete": 11440,
       "unmeasurable": 202
     },
     "by_kind": {
@@ -14585,7 +14585,7 @@
     "wiring_class_note": null,
     "wiring_class_determinator_versions": [],
     "doneness_available": true,
-    "doneness_source_generated_at": "2026-09-02T16:05:43Z",
+    "doneness_source_generated_at": "2026-09-02T22:01:44Z",
     "status_sources_agree": false,
     "doneness_values": [
       "done",
@@ -14604,40 +14604,40 @@
       "deferred": "Ruled out of scope with a recorded reason. Not pending work."
     },
     "by_doneness": {
-      "done": 23347,
+      "done": 23380,
       "held": 2745,
       "in-progress": 3640,
-      "not-started": 19334,
+      "not-started": 19301,
       "unmeasurable": 202,
       "deferred": 170
     },
     "mandate_headline": {
-      "done": 23347,
+      "done": 23380,
       "denominator": 49438,
       "denominator_rule": "all units, all books except beginner_box, incl. unmeasurable, deferred and future_state; nothing subtracted",
       "unmapped_units": 0,
       "secondary_in_scope_measurable": {
-        "done": 23347,
+        "done": 23380,
         "denominator": 49047,
         "rule": "in_scope books only, minus unmeasurable and deferred (the pre-2026-08-15 headline)"
       }
     },
     "by_doneness_kind": {
       "class": {
-        "done": 37,
-        "not-started": 148
+        "done": 38,
+        "not-started": 147
       },
       "class_feature": {
-        "not-started": 13333,
-        "done": 4439,
+        "not-started": 13328,
+        "done": 4444,
         "deferred": 156,
         "held": 115
       },
       "race_trait": {
         "held": 144,
         "in-progress": 672,
-        "done": 1213,
-        "not-started": 532
+        "done": 1240,
+        "not-started": 505
       },
       "feat": {
         "done": 1585,
@@ -14727,10 +14727,10 @@
       }
     },
     "cross_tab": {
-      "computed|grounded": 2959,
-      "computed|engine-does-not-hold": 6249,
-      "display|text-complete": 10797,
-      "display|engine-does-not-hold": 8291,
+      "computed|grounded": 2960,
+      "computed|engine-does-not-hold": 6248,
+      "display|text-complete": 10829,
+      "display|engine-does-not-hold": 8259,
       "static|engine-does-not-hold": 1824,
       "derived|engine-does-not-hold": 2631,
       "ambiguous|engine-does-not-hold": 320,
@@ -14889,8 +14889,8 @@
         },
         "race_trait": {
           "in-progress": 102,
-          "done": 145,
-          "not-started": 54,
+          "done": 152,
+          "not-started": 47,
           "held": 14
         },
         "feat": {
@@ -15031,9 +15031,9 @@
           "not-started": 6
         },
         "race_trait": {
-          "done": 149,
-          "not-started": 25,
+          "done": 156,
           "held": 25,
+          "not-started": 18,
           "in-progress": 44
         },
         "equipment": {
@@ -15070,9 +15070,9 @@
       },
       "bestiary_3": {
         "race_trait": {
-          "not-started": 15,
+          "not-started": 10,
+          "done": 152,
           "in-progress": 66,
-          "done": 147,
           "held": 8
         },
         "equipment": {
@@ -15170,9 +15170,9 @@
           "done": 1
         },
         "race_trait": {
-          "not-started": 23,
-          "done": 109,
+          "done": 110,
           "held": 8,
+          "not-started": 22,
           "in-progress": 6
         },
         "monster_ability": {
@@ -15319,15 +15319,15 @@
           "done": 11
         },
         "class_feature": {
-          "done": 619,
-          "not-started": 701,
+          "done": 624,
+          "not-started": 696,
           "held": 94,
           "deferred": 103
         },
         "race_trait": {
-          "done": 75,
-          "not-started": 12,
+          "done": 82,
           "in-progress": 120,
+          "not-started": 5,
           "held": 1
         },
         "feat": {
@@ -15947,8 +15947,8 @@
       },
       "ultimate_combat": {
         "class": {
-          "done": 1,
-          "not-started": 2
+          "done": 2,
+          "not-started": 1
         },
         "class_feature": {
           "not-started": 1059,
@@ -16249,7 +16249,7 @@
       }
     },
     "mechanically_confirmed_by_kind": {
-      "class": 37,
+      "class": 38,
       "class_feature": 306,
       "feat": 85,
       "spell": 66,
@@ -16261,13 +16261,13 @@
       "monster_ability": 703,
       "monster": 7,
       "skill": 76,
+      "domain": 0,
       "language": 0,
       "ability": 0,
-      "race": 0,
-      "domain": 0,
-      "template": 0,
       "deity": 0,
-      "power": 0
+      "race": 0,
+      "power": 0,
+      "template": 0
     },
     "classifier_reclassified_units": {
       "predicate": "kind=='class_feature' and wiring_class=='display' and status=='grounded' and evidence=='explanation_id_observed_in_a_real_computation', EXCLUDED_BOOKS dropped",
@@ -16559,13 +16559,13 @@
         "units": 2037,
         "by_status": {
           "deferred-with-reason": 2,
-          "engine-does-not-hold": 589,
-          "text-complete": 444,
+          "engine-does-not-hold": 582,
+          "text-complete": 451,
           "grounded": 346,
           "ingested-magnitude": 653,
           "unmeasurable": 3
         },
-        "proven": 790,
+        "proven": 797,
         "by_wiring_class": {
           "display": 759,
           "computed": 690,
@@ -16574,8 +16574,8 @@
           "ambiguous": 6
         },
         "by_doneness": {
-          "done": 1008,
-          "not-started": 589,
+          "done": 1015,
+          "not-started": 582,
           "deferred": 2,
           "in-progress": 377,
           "held": 58,
@@ -16943,12 +16943,12 @@
         "engine_rule_set": "bestiary_2",
         "units": 1439,
         "by_status": {
-          "engine-does-not-hold": 166,
+          "engine-does-not-hold": 159,
           "grounded": 760,
           "ingested-magnitude": 127,
-          "text-complete": 386
+          "text-complete": 393
         },
-        "proven": 1146,
+        "proven": 1153,
         "by_wiring_class": {
           "static": 250,
           "derived": 311,
@@ -16957,8 +16957,8 @@
           "ambiguous": 2
         },
         "by_doneness": {
-          "not-started": 166,
-          "done": 971,
+          "not-started": 159,
+          "done": 978,
           "held": 237,
           "in-progress": 65
         },
@@ -17051,12 +17051,12 @@
         "engine_rule_set": "bestiary_3",
         "units": 1378,
         "by_status": {
-          "engine-does-not-hold": 92,
+          "engine-does-not-hold": 87,
           "grounded": 471,
           "ingested-magnitude": 116,
-          "text-complete": 699
+          "text-complete": 704
         },
-        "proven": 1170,
+        "proven": 1175,
         "by_wiring_class": {
           "display": 783,
           "computed": 136,
@@ -17065,9 +17065,9 @@
           "ambiguous": 12
         },
         "by_doneness": {
-          "not-started": 92,
+          "not-started": 87,
+          "done": 1051,
           "in-progress": 81,
-          "done": 1046,
           "held": 159
         },
         "reconciliation": [
@@ -17282,12 +17282,12 @@
         "engine_rule_set": "bestiary_5",
         "units": 278,
         "by_status": {
-          "engine-does-not-hold": 55,
+          "engine-does-not-hold": 54,
           "grounded": 105,
           "ingested-magnitude": 31,
-          "text-complete": 87
+          "text-complete": 88
         },
-        "proven": 192,
+        "proven": 193,
         "by_wiring_class": {
           "static": 27,
           "display": 119,
@@ -17296,8 +17296,8 @@
           "computed": 98
         },
         "by_doneness": {
-          "not-started": 55,
-          "done": 193,
+          "not-started": 54,
+          "done": 194,
           "held": 22,
           "in-progress": 8
         },
@@ -17813,14 +17813,14 @@
         "engine_rule_set": "core_rulebook",
         "units": 6701,
         "by_status": {
-          "engine-does-not-hold": 1006,
+          "engine-does-not-hold": 994,
           "grounded": 3668,
           "deferred-with-reason": 115,
-          "text-complete": 856,
+          "text-complete": 868,
           "ingested-magnitude": 1046,
           "unmeasurable": 10
         },
-        "proven": 4524,
+        "proven": 4536,
         "by_wiring_class": {
           "computed": 2034,
           "display": 1216,
@@ -17829,8 +17829,8 @@
           "ambiguous": 116
         },
         "by_doneness": {
-          "not-started": 1006,
-          "done": 4357,
+          "not-started": 994,
+          "done": 4369,
           "held": 371,
           "deferred": 115,
           "in-progress": 842,
@@ -19467,14 +19467,14 @@
         "engine_rule_set": "ultimate_combat",
         "units": 2196,
         "by_status": {
-          "engine-does-not-hold": 1074,
-          "grounded": 153,
+          "engine-does-not-hold": 1073,
+          "grounded": 154,
           "deferred-with-reason": 1,
           "text-complete": 717,
           "ingested-magnitude": 249,
           "unmeasurable": 2
         },
-        "proven": 870,
+        "proven": 871,
         "by_wiring_class": {
           "computed": 243,
           "display": 1430,
@@ -19483,8 +19483,8 @@
           "ambiguous": 36
         },
         "by_doneness": {
-          "done": 1039,
-          "not-started": 1074,
+          "done": 1040,
+          "not-started": 1073,
           "deferred": 1,
           "in-progress": 55,
           "held": 25,
@@ -20211,26 +20211,26 @@
   },
   "retrospective": {
     "available": true,
-    "generated_at": "2026-09-02T18:15:47Z",
+    "generated_at": "2026-09-03T00:49:13Z",
     "generated_by": "scripts/retro.py summary",
     "window": "14d",
-    "total_events": 946,
+    "total_events": 924,
     "by_type": {
-      "correction": 260,
-      "deferral": 73,
-      "incident": 93,
+      "correction": 259,
+      "deferral": 71,
+      "incident": 92,
       "near_miss": 8,
       "note": 34,
       "resolution": 45,
       "rework": 8,
-      "verification": 425
+      "verification": 407
     },
     "by_origin": {
-      "agent": 488,
-      "derived": 458
+      "agent": 485,
+      "derived": 439
     },
     "corrections": {
-      "total": 260,
+      "total": 259,
       "by_subject": {
         "15-card-15-class-feature-memo.md": 1,
         "15-card-15-class-feature-memo.md \u00a73": 1,
@@ -20286,7 +20286,6 @@
         "SD-31 todo/sweeps.md S6": 1,
         "SD-32 gate-2-engines/formula_interpreter.corpus-wide.json (committed artifact)": 1,
         "SD-34/SD-35 cost model, before the operator challenged it": 1,
-        "SD31-W16-MONSTER-ABILITY-001 (OPEN-ISSUES.md row 295)": 1,
         "THE-BOX.md \u00a72.1 F2 / wave-28 VISIBILITY-class-feature.md": 1,
         "ability_category identity-collision reading (this cycle's own first pass)": 1,
         "acceptance-and-verification.md AT-32-G1-003 / epic-breakdown.md Epic 1": 1,
@@ -20448,7 +20447,6 @@
         "uncompiled_books_stay_none_test": 1,
         "v06_work_inventory.rs::a_trait_outside_the_flat_slice_stays_ingested_magnitude (as it stood before this cycle)": 1,
         "verify.sh corpus-trap-audit exit contract": 1,
-        "wave-18 dispatch brief": 1,
         "wave-22-race_trait-dispatch-brief": 1,
         "wave-23 dispatch brief": 1,
         "wave-24 dispatch brief": 3,
@@ -20462,6 +20460,7 @@
         "wave-6 dispatch (39-unit residual partition: 23 weapon-shape + 11 skill-combat-shape + 7 eqm-shape)": 1,
         "wave25b-class-feature-grant-interp lane's 'scope' field": 1,
         "wave32_laneC_reconnaissance_cycle_receipt.md / progress.md row 37": 1,
+        "wave33-lane-a-receipt": 1,
         "wave33_laneB_race_trait_never_applies_cycle_receipt.md (its own pre-fold draft)": 1,
         "workflow-instruction.md \u00a73 / kanban.md dispatch ordering": 1,
         "worktree-base": 1,
@@ -20505,7 +20504,6 @@
         "reclosure-epilogue": 1,
         "sd31-orchestrator": 4,
         "sd31-transcribe": 7,
-        "sd31-w17-monster-ability-lane": 1,
         "sd31-w22-racetrait": 1,
         "sd31-w25-race_trait-lane": 1,
         "sd31-w25b-integration": 1,
@@ -20562,6 +20560,7 @@
         "sd34-at-34-e6-001-lane-b": 2,
         "sd34-orchestrator": 2,
         "sd34-orchestrator-verify": 4,
+        "sd34-wave34-lanea": 1,
         "spell": 1,
         "t12-census": 1,
         "t2a-residual-census": 1,
@@ -20588,7 +20587,6 @@
         "wave29-lane4": 1,
         "wave33-laneB": 3,
         "wf_69b5938a-634-4": 2,
-        "wf_78ca9c19-w18-intitem": 1,
         "wf_a45ece26-3fc-4": 1,
         "wf_be4660f2-72a-4-w26-interpreter-shapes": 1
       },
@@ -20642,14 +20640,14 @@
           "subject": "AT-34-E4-002 dispatch brief"
         }
       ],
-      "already_propagated": 128
+      "already_propagated": 127
     },
     "incidents": {
-      "total": 93,
-      "silent": 16,
+      "total": 92,
+      "silent": 15,
       "recurring": [
         {
-          "count": 33,
+          "count": 32,
           "recurrence_key": "disk-full"
         },
         {
@@ -20657,7 +20655,7 @@
           "recurrence_key": "shared-target-dir"
         },
         {
-          "count": 2,
+          "count": 3,
           "recurrence_key": "wrong-base-worktree"
         }
       ]
@@ -20677,7 +20675,7 @@
       }
     },
     "deferrals": {
-      "total": 73
+      "total": 71
     },
     "rework": {
       "total": 8,
@@ -20693,9 +20691,9 @@
       }
     },
     "verification": {
-      "runs": 425,
-      "failed_runs": 157,
-      "fail_rate": 0.3694,
+      "runs": 407,
+      "failed_runs": 155,
+      "fail_rate": 0.3808,
       "by_failing_stage": {
         "clippy": 10,
         "corpus-sweep": 2,
@@ -20705,7 +20703,7 @@
         "desktop": 4,
         "figure-provenance": 3,
         "frontend-test": 4,
-        "pi-sweep": 3,
+        "pi-sweep": 4,
         "preflight-oracle": 115,
         "reach": 4,
         "reachability-audit": 2,
@@ -20720,12 +20718,12 @@
     "git_join": {
       "authors": 2,
       "available": true,
-      "commits": 1039,
-      "events_per_commit": 0.9105,
+      "commits": 1032,
+      "events_per_commit": 0.8953,
       "top_authors": [
         [
           "Todd Hintzmann",
-          1037
+          1030
         ],
         [
           "god-emporer",
@@ -20741,7 +20739,7 @@
   "unit_index": {
     "available": true,
     "schema": 15,
-    "generated_at": "2026-09-02T16:05:43Z",
+    "generated_at": "2026-09-02T22:01:44Z",
     "source_document": "docs/work-inventory.json",
     "shard_base": "units/",
     "fields": [
@@ -20753,7 +20751,7 @@
       "type_facet"
     ],
     "total_units": 49438,
-    "proven_units": 15692,
+    "proven_units": 15725,
     "doneness_unmapped_seen": false,
     "pi_redacted_names": 1483,
     "category_labels_redacted": 4,
@@ -22100,13 +22098,13 @@
       },
       "class": {
         "units": 185,
-        "proven": 37,
+        "proven": 38,
         "by_status": {
-          "grounded": 37,
-          "engine-does-not-hold": 148
+          "grounded": 38,
+          "engine-does-not-hold": 147
         },
         "shard": "PF1e-units-class.json",
-        "bytes": 19771,
+        "bytes": 19759,
         "doneness_unmapped": {},
         "categories": {
           "pc": {
@@ -22120,10 +22118,10 @@
           },
           "base": {
             "label": "Base",
-            "done": 37,
+            "done": 38,
             "held": 0,
             "in-progress": 0,
-            "not-started": 23,
+            "not-started": 22,
             "unmeasurable": 0,
             "deferred": 0
           },
@@ -22168,10 +22166,10 @@
       },
       "class_feature": {
         "units": 18043,
-        "proven": 4440,
+        "proven": 4445,
         "by_status": {
-          "engine-does-not-hold": 13333,
-          "text-complete": 4019,
+          "engine-does-not-hold": 13328,
+          "text-complete": 4024,
           "deferred-with-reason": 156,
           "grounded": 421,
           "oracle-agree": 26,
@@ -22179,7 +22177,7 @@
           "oracle-unverifiable": 6
         },
         "shard": "PF1e-units-class_feature.json",
-        "bytes": 2791841,
+        "bytes": 2791806,
         "doneness_unmapped": {},
         "categories": {
           "specialquality": {
@@ -22265,10 +22263,10 @@
           },
           "rangerclassfeatures": {
             "label": "Ranger Class Features",
-            "done": 159,
+            "done": 160,
             "held": 5,
             "in-progress": 0,
-            "not-started": 121,
+            "not-started": 120,
             "unmeasurable": 0,
             "deferred": 1
           },
@@ -22310,10 +22308,10 @@
           },
           "rogueclassfeatures": {
             "label": "Rogue Class Features",
-            "done": 77,
+            "done": 78,
             "held": 2,
             "in-progress": 0,
-            "not-started": 136,
+            "not-started": 135,
             "unmeasurable": 0,
             "deferred": 0
           },
@@ -22346,10 +22344,10 @@
           },
           "fighterclassfeatures": {
             "label": "Fighter Class Features",
-            "done": 54,
+            "done": 55,
             "held": 1,
             "in-progress": 0,
-            "not-started": 126,
+            "not-started": 125,
             "unmeasurable": 0,
             "deferred": 0
           },
@@ -22364,19 +22362,19 @@
           },
           "paladinclassfeatures": {
             "label": "Paladin Class Features",
-            "done": 96,
+            "done": 97,
             "held": 1,
             "in-progress": 0,
-            "not-started": 80,
+            "not-started": 79,
             "unmeasurable": 0,
             "deferred": 0
           },
           "bardclassfeatures": {
             "label": "Bard Class Features",
-            "done": 63,
+            "done": 64,
             "held": 10,
             "in-progress": 0,
-            "not-started": 101,
+            "not-started": 100,
             "unmeasurable": 0,
             "deferred": 0
           },
@@ -32365,17 +32363,17 @@
       },
       "race_trait": {
         "units": 2561,
-        "proven": 1052,
+        "proven": 1079,
         "by_status": {
           "ingested-magnitude": 812,
           "literal-verified": 152,
-          "engine-does-not-hold": 532,
+          "engine-does-not-hold": 505,
           "grounded": 393,
-          "text-complete": 659,
+          "text-complete": 686,
           "oracle-unverifiable": 13
         },
         "shard": "PF1e-units-race_trait.json",
-        "bytes": 381933,
+        "bytes": 381744,
         "doneness_unmapped": {},
         "categories": {
           "racialtraits": {
@@ -32389,10 +32387,10 @@
           },
           "none": {
             "label": "Uncategorised",
-            "done": 63,
+            "done": 70,
             "held": 21,
             "in-progress": 13,
-            "not-started": 132,
+            "not-started": 125,
             "unmeasurable": 0,
             "deferred": 0
           },
@@ -32434,10 +32432,10 @@
           },
           "adoptiverace": {
             "label": "Adoptive Race",
-            "done": 0,
+            "done": 20,
             "held": 0,
             "in-progress": 0,
-            "not-started": 44,
+            "not-started": 24,
             "unmeasurable": 0,
             "deferred": 0
           },

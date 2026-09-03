@@ -782,11 +782,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 50,
+      "done": 51,
       "partial": 12,
-      "not_started": 22,
+      "not_started": 21,
       "denominator": 84,
-      "pct": 59.5,
+      "pct": 60.7,
       "excluded_from_percentage": 62,
       "standing_breakdown": {
         "unclassified": 62,
@@ -1621,7 +1621,7 @@
         },
         {
           "name": "Skinwalker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Skinwalker (AdoptiveRace)"

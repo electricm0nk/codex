@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-09-02T18:16:48Z",
+  "generated_at": "2026-09-03T00:50:14Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 18910,
+    "done": 18925,
     "partial": 5474,
-    "not_started": 13496,
+    "not_started": 13481,
     "denominator": 37880,
-    "pct": 49.9,
+    "pct": 50.0,
     "excluded_from_percentage": 11558,
     "standing_breakdown": {
       "unclassified": 11558,
@@ -21,11 +21,11 @@
     {
       "id": "core_rulebook",
       "title": "Core Rulebook",
-      "done": 3784,
+      "done": 3786,
       "partial": 1126,
-      "not_started": 628,
+      "not_started": 626,
       "denominator": 5538,
-      "pct": 68.3,
+      "pct": 68.4,
       "excluded_from_percentage": 1163,
       "standing_breakdown": {
         "origin": 5538,
@@ -147,11 +147,11 @@
     {
       "id": "ultimate_combat",
       "title": "Ultimate Combat",
-      "done": 753,
+      "done": 754,
       "partial": 70,
-      "not_started": 648,
+      "not_started": 647,
       "denominator": 1471,
-      "pct": 51.2,
+      "pct": 51.3,
       "excluded_from_percentage": 725,
       "standing_breakdown": {
         "unclassified": 725,
@@ -203,11 +203,11 @@
     {
       "id": "bestiary_2",
       "title": "Bestiary 2",
-      "done": 662,
+      "done": 668,
       "partial": 247,
-      "not_started": 158,
+      "not_started": 152,
       "denominator": 1067,
-      "pct": 62.0,
+      "pct": 62.6,
       "excluded_from_percentage": 372,
       "standing_breakdown": {
         "origin": 1067,
@@ -231,11 +231,11 @@
     {
       "id": "bestiary_3",
       "title": "Bestiary 3",
-      "done": 774,
+      "done": 779,
       "partial": 84,
-      "not_started": 77,
+      "not_started": 72,
       "denominator": 935,
-      "pct": 82.8,
+      "pct": 83.3,
       "excluded_from_percentage": 443,
       "standing_breakdown": {
         "origin": 935,
@@ -343,11 +343,11 @@
     {
       "id": "bestiary_5",
       "title": "Bestiary 5",
-      "done": 122,
+      "done": 123,
       "partial": 18,
-      "not_started": 52,
+      "not_started": 51,
       "denominator": 192,
-      "pct": 63.5,
+      "pct": 64.1,
       "excluded_from_percentage": 86,
       "standing_breakdown": {
         "origin": 192,

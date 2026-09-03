@@ -7379,11 +7379,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 102,
+      "done": 108,
       "partial": 42,
-      "not_started": 20,
+      "not_started": 14,
       "denominator": 164,
-      "pct": 62.2,
+      "pct": 65.9,
       "excluded_from_percentage": 79,
       "standing_breakdown": {
         "unclassified": 79,
@@ -7735,7 +7735,7 @@
         },
         {
           "name": "Dhampir",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Dhampir (AdoptiveRace)"
@@ -7854,7 +7854,7 @@
         },
         {
           "name": "Fetchling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Fetchling"
@@ -7980,7 +7980,7 @@
         },
         {
           "name": "Grippli",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "unclassified",
           "display_name": "Grippli (AdoptiveRace)"
@@ -8071,7 +8071,7 @@
         },
         {
           "name": "Ifrit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Ifrit"
@@ -8554,7 +8554,7 @@
         },
         {
           "name": "Oread",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Oread"
@@ -8974,7 +8974,7 @@
         },
         {
           "name": "Sylph",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Sylph"
@@ -9023,7 +9023,7 @@
         },
         {
           "name": "Undine",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Undine"

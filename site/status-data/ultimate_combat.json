@@ -10838,11 +10838,11 @@
     {
       "kind": "class",
       "label": "Classes",
-      "done": 1,
+      "done": 2,
       "partial": 0,
-      "not_started": 2,
+      "not_started": 1,
       "denominator": 3,
-      "pct": 33.3,
+      "pct": 66.7,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 3
@@ -10857,7 +10857,7 @@
         },
         {
           "name": "Ninja",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Rogue",
           "standing": "origin",
           "display_name": "Ninja"

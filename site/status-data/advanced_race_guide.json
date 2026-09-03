@@ -11442,7 +11442,7 @@
         },
         {
           "name": "Drow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Drow"
@@ -11498,7 +11498,7 @@
         },
         {
           "name": "Dwarf",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dwarf"
@@ -11561,7 +11561,7 @@
         },
         {
           "name": "Elf",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Elf"
@@ -11890,7 +11890,7 @@
         },
         {
           "name": "Gnome",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Gnome"
@@ -11918,7 +11918,7 @@
         },
         {
           "name": "Grippli",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Grippli"
@@ -11939,7 +11939,7 @@
         },
         {
           "name": "Halfling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Halfling"
@@ -12373,7 +12373,7 @@
         },
         {
           "name": "Orc",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Orc"

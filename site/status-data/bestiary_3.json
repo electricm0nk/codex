@@ -7668,11 +7668,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 106,
+      "done": 111,
       "partial": 41,
-      "not_started": 14,
+      "not_started": 9,
       "denominator": 161,
-      "pct": 65.8,
+      "pct": 68.9,
       "excluded_from_percentage": 75,
       "standing_breakdown": {
         "unclassified": 75,
@@ -7919,7 +7919,7 @@
         },
         {
           "name": "Catfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Catfolk (AdoptiveRace)"
@@ -8892,7 +8892,7 @@
         },
         {
           "name": "Ratfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Ratfolk (AdoptiveRace)"
@@ -9116,7 +9116,7 @@
         },
         {
           "name": "Suli",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Suli"
@@ -9214,7 +9214,7 @@
         },
         {
           "name": "Vanara",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Vanara (AdoptiveRace)"
@@ -9235,7 +9235,7 @@
         },
         {
           "name": "Vishkanya",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Vishkanya (AdoptiveRace)"

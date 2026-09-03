@@ -13614,7 +13614,7 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (BardClassFeatures.SpecialQuality)"
@@ -13649,7 +13649,7 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (FighterClassFeatures.SpecialQuality)"
@@ -13670,21 +13670,21 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (PaladinClassFeatures.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (RangerClassFeatures.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (RogueClassFeatures.SpecialQuality)"
@@ -38363,11 +38363,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 20,
+      "done": 22,
       "partial": 109,
-      "not_started": 7,
+      "not_started": 5,
       "denominator": 136,
-      "pct": 14.7,
+      "pct": 16.2,
       "excluded_from_percentage": 72,
       "standing_breakdown": {
         "unclassified": 72,
@@ -38817,14 +38817,14 @@
         },
         {
           "name": "Dwarf",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "unclassified",
           "display_name": "Dwarf"
         },
         {
           "name": "Elf",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "unclassified",
           "display_name": "Elf"
@@ -38936,7 +38936,7 @@
         },
         {
           "name": "Gnome",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "unclassified",
           "display_name": "Gnome"
@@ -38978,21 +38978,21 @@
         },
         {
           "name": "Half-Elf",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Half-Elf"
         },
         {
           "name": "Half-Orc",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Half-Orc"
         },
         {
           "name": "Halfling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "unclassified",
           "display_name": "Halfling"
@@ -39034,7 +39034,7 @@
         },
         {
           "name": "Human",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "unclassified",
           "display_name": "Human"

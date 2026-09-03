@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-02T16:05:43Z",
+  "generated_at": "2026-09-02T22:01:44Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 15692,
+  "proven_units": 15725,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1360,13 +1360,13 @@
     },
     "class": {
       "units": 185,
-      "proven": 37,
+      "proven": 38,
       "by_status": {
-        "grounded": 37,
-        "engine-does-not-hold": 148
+        "grounded": 38,
+        "engine-does-not-hold": 147
       },
       "shard": "PF1e-units-class.json",
-      "bytes": 19771,
+      "bytes": 19759,
       "doneness_unmapped": {},
       "categories": {
         "pc": {
@@ -1380,10 +1380,10 @@
         },
         "base": {
           "label": "Base",
-          "done": 37,
+          "done": 38,
           "held": 0,
           "in-progress": 0,
-          "not-started": 23,
+          "not-started": 22,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1428,10 +1428,10 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4440,
+      "proven": 4445,
       "by_status": {
-        "engine-does-not-hold": 13333,
-        "text-complete": 4019,
+        "engine-does-not-hold": 13328,
+        "text-complete": 4024,
         "deferred-with-reason": 156,
         "grounded": 421,
         "oracle-agree": 26,
@@ -1439,7 +1439,7 @@
         "oracle-unverifiable": 6
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2791841,
+      "bytes": 2791806,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -1525,10 +1525,10 @@
         },
         "rangerclassfeatures": {
           "label": "Ranger Class Features",
-          "done": 159,
+          "done": 160,
           "held": 5,
           "in-progress": 0,
-          "not-started": 121,
+          "not-started": 120,
           "unmeasurable": 0,
           "deferred": 1
         },
@@ -1570,10 +1570,10 @@
         },
         "rogueclassfeatures": {
           "label": "Rogue Class Features",
-          "done": 77,
+          "done": 78,
           "held": 2,
           "in-progress": 0,
-          "not-started": 136,
+          "not-started": 135,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1606,10 +1606,10 @@
         },
         "fighterclassfeatures": {
           "label": "Fighter Class Features",
-          "done": 54,
+          "done": 55,
           "held": 1,
           "in-progress": 0,
-          "not-started": 126,
+          "not-started": 125,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1624,19 +1624,19 @@
         },
         "paladinclassfeatures": {
           "label": "Paladin Class Features",
-          "done": 96,
+          "done": 97,
           "held": 1,
           "in-progress": 0,
-          "not-started": 80,
+          "not-started": 79,
           "unmeasurable": 0,
           "deferred": 0
         },
         "bardclassfeatures": {
           "label": "Bard Class Features",
-          "done": 63,
+          "done": 64,
           "held": 10,
           "in-progress": 0,
-          "not-started": 101,
+          "not-started": 100,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -11625,17 +11625,17 @@
     },
     "race_trait": {
       "units": 2561,
-      "proven": 1052,
+      "proven": 1079,
       "by_status": {
         "ingested-magnitude": 812,
         "literal-verified": 152,
-        "engine-does-not-hold": 532,
+        "engine-does-not-hold": 505,
         "grounded": 393,
-        "text-complete": 659,
+        "text-complete": 686,
         "oracle-unverifiable": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 381933,
+      "bytes": 381744,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
@@ -11649,10 +11649,10 @@
         },
         "none": {
           "label": "Uncategorised",
-          "done": 63,
+          "done": 70,
           "held": 21,
           "in-progress": 13,
-          "not-started": 132,
+          "not-started": 125,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -11694,10 +11694,10 @@
         },
         "adoptiverace": {
           "label": "Adoptive Race",
-          "done": 0,
+          "done": 20,
           "held": 0,
           "in-progress": 0,
-          "not-started": 44,
+          "not-started": 24,
           "unmeasurable": 0,
           "deferred": 0
         },
