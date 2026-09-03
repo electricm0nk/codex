@@ -883,8 +883,8 @@
       "kind": "class_feature",
       "label": "Class Features",
       "done": 371,
-      "partial": 2,
-      "not_started": 1080,
+      "partial": 4,
+      "not_started": 1078,
       "denominator": 1453,
       "pct": 25.5,
       "excluded_from_percentage": 881,
@@ -4969,14 +4969,14 @@
         },
         {
           "name": "Death's Kiss",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Death's Kiss (SpecialQuality.Supernatural.DomainPower)"
         },
         {
           "name": "Death's Kiss",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Death's Kiss (SpecialQuality.Supernatural.DomainPower) #2"

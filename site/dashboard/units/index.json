@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-03T09:46:53Z",
+  "generated_at": "2026-09-03T14:45:13Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 15940,
+  "proven_units": 15942,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,26 +1428,26 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4660,
+      "proven": 4662,
       "by_status": {
-        "engine-does-not-hold": 13113,
+        "engine-does-not-hold": 13111,
         "text-complete": 4239,
         "deferred-with-reason": 156,
-        "grounded": 421,
+        "grounded": 423,
         "oracle-agree": 26,
         "literal-verified": 82,
         "oracle-unverifiable": 6
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2790301,
+      "bytes": 2790277,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
           "label": "Special Qualities",
           "done": 734,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 1156,
+          "not-started": 1154,
           "unmeasurable": 0,
           "deferred": 0
         },
