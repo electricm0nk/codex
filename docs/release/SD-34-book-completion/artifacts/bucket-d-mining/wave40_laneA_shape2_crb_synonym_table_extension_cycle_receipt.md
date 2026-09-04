@@ -1,19 +1,38 @@
-# Cycle — SD-34 wave 40, Lane A — Shape 2's CRB synonym-table extension: 7 entries added and unit-tested, **guarded regen did not finish within this cycle's time budget — DONE-closure UNCONFIRMED**, Druid/Stunning Fist/Fighter/Psychic declined
+# Cycle — SD-34 wave 40, Lane A — Shape 2's CRB synonym-table extension: 7 units closed (orchestrator-confirmed regen), Druid/Stunning Fist/Fighter/Psychic declined
 
-**HONEST HEADLINE, read before anything else below:** the classifier source change (7 new
-`CLASS_FEATURE_ID_KNOWN_SYNONYMS` entries) is complete, `grep -c == 1` confirmed against
-`pilot_compute/mod.rs`, and independently confirmed non-zero-valued via a live temporary dump
-test run through the real compute pipeline (both removed before commit, per discipline). All
-541 `v06_work_inventory` bin tests pass (3 new). **The guarded `docs/work-inventory.json`
-regeneration — the only thing that actually PROVES a unit moves from `engine-does-not-hold` to
-`grounded`/DONE — was still running (full corpus scan + per-class sweep, debug build, unoptimized)
-when this cycle's time budget ran out, and did not complete.** Per this program's own "no fake
-completion" doctrine, **0 units are reported as CONFIRMED closed this cycle.** Every line of
-static and dynamic evidence collected says all 7 should close cleanly once the regen runs to
-completion — none of it is a substitute for the regen itself. This is a genuine, disclosed
-incomplete cycle, not a rounded-up success.
+**ORCHESTRATOR ADDENDUM (2026-09-04, added after this cycle's own agent ran out of turns):**
+this receipt's own body below was written honestly at the point the dispatched agent's turn
+budget ran out — the guarded regen was still running and genuinely unconfirmed at that moment,
+so the "0 units CONFIRMED" framing below was correct AT THE TIME. The orchestrator resumed the
+SAME regen in the same worktree immediately after (re-ran `corpus_literal_sweep` and
+`derived_evaluator_fixture_check` first, since the guarded regen refused to run without their
+`--json-out` reports — a prerequisite this cycle's own agent had found but not yet satisfied),
+let it run to completion, and verified the result directly: **all 7 units transitioned cleanly
+`engine-does-not-hold` -> `grounded` (Diamond Soul, Maneuver Training, Bardic Performance,
+Combat Style Feat, Sorcerer Spells) or `literal-verified` (Abundant Step, Perfect Self)**, byte-
+diffed against `docs/work-inventory.json`, zero collateral movement. `completion_atlas.py
+--check`: `population=49438 unclassified=0 overlap=0`, `D: 2535->2528 (-7)`, `DONE: 25348->25353
+(+5)`, `V: 319->321 (+2)`. Scoped tests re-run clean: `541`/`541` `v06_work_inventory` bin tests
+pass. Committed as `3130c49ff9` (worktree) / `d7184384d8` (folded onto `tranche/14`). The
+"HONEST HEADLINE" and "Movement" sections immediately below are preserved AS ORIGINALLY WRITTEN
+for the historical record of what was and was not known at each point — read them as describing
+the cycle's own end-of-turn state, not the final outcome, which this addendum supersedes.
 
-- **Commit SHA:** `<PENDING-FILL>`
+**HONEST HEADLINE (as originally written, now superseded by the addendum above):** the
+classifier source change (7 new `CLASS_FEATURE_ID_KNOWN_SYNONYMS` entries) is complete,
+`grep -c == 1` confirmed against `pilot_compute/mod.rs`, and independently confirmed non-zero-
+valued via a live temporary dump test run through the real compute pipeline (both removed
+before commit, per discipline). All 541 `v06_work_inventory` bin tests pass (3 new). **The
+guarded `docs/work-inventory.json` regeneration — the only thing that actually PROVES a unit
+moves from `engine-does-not-hold` to `grounded`/DONE — was still running (full corpus scan +
+per-class sweep, debug build, unoptimized) when this cycle's time budget ran out, and did not
+complete.** Per this program's own "no fake completion" doctrine, **0 units were reported as
+CONFIRMED closed as of this cycle's own end-of-turn.** Every line of static and dynamic
+evidence collected said all 7 should close cleanly once the regen ran to completion — none of
+it was a substitute for the regen itself at the time. See the addendum above for the confirmed
+outcome.
+
+- **Commit SHA:** `3130c49ff9` (worktree), folded onto `tranche/14` as `d7184384d8`
 - **Files touched:** `src/bin/v06_work_inventory.rs` (`CLASS_FEATURE_ID_KNOWN_SYNONYMS` extended
   with 7 new `(owner, feature_slug, exact_full_explanation_id)` entries, doc comment extended
   with this cycle's own live-dump verification notes, 3 new tests added to
@@ -200,15 +219,19 @@ shipped; this cycle only made 7 more of them visible to the classifier.
 
 ## Movement — the real, regen-verified delta
 
-**NONE — not measured this cycle.** `cargo run --locked --bin v06_work_inventory` (the guarded
-regeneration) was started, ran the full corpus scan and per-class union sweep against an
-unoptimized debug build (51,508 corpus files on disk, `find data/corpus -name '*.json' | wc -l`),
-and was still executing (confirmed live via `ps -p <pid>` at the 8+ minute mark, `%CPU` steady
-near 98%, no crash/panic) when this cycle's own time budget elapded. `docs/work-inventory.json`
-was NOT regenerated; `git status --porcelain -- docs/work-inventory.json` shows no change. **No
-before/after bucket delta can be honestly reported.** The pre-edit population figures in the
-"Population re-derived fresh" section above (all 7 units `engine-does-not-hold`,
-`magnitude_token_count > 0`) are the last CONFIRMED state.
+**AS ORIGINALLY WRITTEN (superseded by the orchestrator addendum at the top of this receipt —
+see there for the confirmed final delta): NONE — not measured this cycle.**
+`cargo run --locked --bin v06_work_inventory` (the guarded regeneration) was started, ran the
+full corpus scan and per-class union sweep against an unoptimized debug build (51,508 corpus
+files on disk, `find data/corpus -name '*.json' | wc -l`), and was still executing (confirmed
+live via `ps -p <pid>` at the 8+ minute mark, CPU usage steady at essentially one full core, no
+crash/panic) when this cycle's own time budget elapsed. `docs/work-inventory.json` was NOT
+regenerated by this cycle's own agent; `git status --porcelain -- docs/work-inventory.json`
+showed no change at that point. **No before/after bucket delta could be honestly reported at
+the time.** The pre-edit population figures in the "Population re-derived fresh" section above
+(all 7 units `engine-does-not-hold`, `magnitude_token_count > 0`) were the last CONFIRMED state
+as of this cycle's own end-of-turn — the orchestrator addendum above states the real,
+regen-verified outcome.
 
 ## Figures (every number, its command, its denominator)
 

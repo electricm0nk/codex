@@ -928,3 +928,89 @@ promotion case and a per-class-slug control) and 1 renamed pre-existing negative
 passed, 0 failed); `python3 scripts/completion_atlas.py --check` (figures above).
 
 ---
+
+## §22 — Operator ruling, 2026-09-04: bucket D's genuine new-chassis remainder stays in scope for SD-34
+
+**Decision.** The growing "genuine new-chassis, not a classifier fix" remainder inside bucket D
+— confirmed across waves 37-40's own investigations — **stays in scope for SD-34**. It is not
+deferred to a future bundle (an "SD-35"-style split), and it is not to be silently left as "the
+rest" once the cheap classifier-side fixes run out.
+
+**What this remainder actually is, named precisely as of wave 40's own close:**
+- Shape 2's own confirmed new-chassis units (no per-feature compute function exists anywhere):
+  Duelist (4), Shadowdancer (4), Assassin (2), Loremaster (2), Cleric's Aura (1), Paladin's
+  Detect Evil (1), Wizard's Arcane Bond (1) — 15 units, each independently traced against real
+  engine source (wave 39 lane B's own receipt).
+- Sub-mechanism 5 (`class_feature_of_unmodelled_corpus_class`'s own largest split): 634 units
+  across 60 classes, independently investigated twice (wave 37 lane B, wave 38 lane B) and both
+  times found genuinely too large for a single wave-sized cycle — real per-class chassis-
+  building work, not a matcher widening.
+- Three individually-named single-unit gaps needing a genuinely different fix each (Fighter's
+  Weapon Training — a new engine-side explanation id; Psychic's Phrenic Pool — a probe-input
+  widening; Monk's Stunning Fist — a classifier owner/namespace-recognition change), all
+  confirmed and declined-not-attempted across waves 39-40.
+
+**Why this needed a ruling rather than another "pick the cheapest item" wave:** the cheap,
+classifier-side fixes in this area are now largely exhausted (waves 38-40 closed 144 units this
+way in three waves; the confirmed remainder above is qualitatively different work). Continuing
+to dispatch "cheapest next item" waves against this remainder without a scope ruling risked
+either silently treating the 634-unit sub-mechanism-5 population as permanently out of reach, or
+under-scoping a wave against work that genuinely needs real chassis-building effort.
+
+**How to apply.** Future waves against this remainder should be scoped as real feature-building
+work (new `ground_<class>_class_features`-style dispatch functions, following the same
+SD-32-card-11 precedent this whole area already established), not classifier-matcher tweaks.
+Expect materially lower units-closed-per-wave-effort than the classifier-fix waves that preceded
+this ruling — that is the honest shape of the remaining work, not a regression. No further
+operator ruling is needed to keep dispatching against this remainder; this entry is the standing
+authorization.
+
+**CORRECTION, 2026-09-04 (same day, operator-prompted re-audit): the three named single-unit
+"genuinely different fix" gaps above were OVERSTATED — do not trust the "structurally larger"
+framing for any of them without re-checking, and treat the 15/634-unit piles as UNVERIFIED
+difficulty, not confirmed-hard, until someone actually reads the code:**
+- **Monk's Stunning Fist**: the compute is already fully wired and tested
+  (`feat_effects::stunning_fist_facts_from_feats`, emits
+  `feat.standalone.stunning_fist.save_dc` / `.uses_per_day`). `class_feature_known_synonym_
+  grounded` (the literal `CLASS_FEATURE_ID_KNOWN_SYNONYMS` table built in wave 39) does a pure
+  `owner`/`group` + full-string-id lookup with NO requirement that the id contain `.owner.` as a
+  substring — this record's own `group` ("Monk") already satisfies that guard. **A single table
+  entry closes this**, no new mechanism needed. The "needs the classifier's own group==owner
+  guard... a structurally larger change" framing was written against the OLDER
+  `class_feature_exact_suffix_grounded` check only, without re-checking against the synonym
+  table that already supersedes it for exactly this shape.
+- **Fighter's Weapon Training**: the claim "no discrete id — folded directly into a combined
+  total, never pushed as its own `ComputationExplanation`" is **factually wrong**, verified by
+  direct read: `pilot_compute/mod.rs` pushes a real, live `class_feature.fighter.weapon_training`
+  explanation (an exact-match id, no synonym table even needed). It simply never fires during
+  classification because the classifier's own generic per-class sweep never supplies a
+  `FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID` selection — the SAME "needs one canonical default
+  choice" gap `canonical_seeds_for()` already solves for wizard/arcanist/sorcerer/cleric/druid
+  and others. Adding a `"fighter" => (...)` arm to that same existing match statement is the
+  fix, not new engine code.
+- **Psychic's Phrenic Pool**: same root cause as Fighter's — the compute and its explanation id
+  (`class_feature.untabled.psychic.phrenic_pool.value`) already exist and are tested; the
+  generic sweep just never selects a Psychic Discipline. Same `canonical_seeds_for()` fix shape
+  as Fighter's, not a bespoke "probe-input widening."
+
+**What held up on re-check:** Wizard's Arcane Bond (one of the 15), spot-checked in full —
+genuinely no compute exists anywhere for it (confirmed by exhaustive grep, unlike the three
+above). Paladin's Detect Evil and Cleric's Aura were spot-checked only partially (inconclusive)
+— a real antipaladin analog (`detect_good`) already exists for Paladin's own opposite-alignment
+case, which is at minimum suggestive that Detect Evil may follow the identical already-built
+shape rather than needing new work; this was NOT confirmed either way and needs an actual check
+before scoping a wave against it. The 634-unit sub-mechanism-5 population has not been
+re-audited at all since this correction — its own "genuinely too large" framing from waves 37/38
+predates this finding and should be treated as unverified, not confirmed, until it is.
+
+**How to apply, corrected:** before scoping ANY future wave's difficulty against this
+remainder's own prior write-ups, re-verify against the real compute functions first (grep the
+real `pilot_compute/mod.rs`, don't trust a prior wave's "no compute exists" or "needs a
+different kind of fix" claim at face value) — this bundle has now demonstrated a repeatable
+failure mode where a cheap, already-precedented fix (a table entry, or an existing
+`canonical_seeds_for()` match arm) got mischaracterized as bespoke new-feature work. Fighter's
+Weapon Training and Psychic's Phrenic Pool are BOTH now believed to be `canonical_seeds_for()`
+match-arm additions, not real feature-building — re-scope wave 41+ accordingly rather than
+routing them into "Epic 4/5-shaped" effort.
+
+---

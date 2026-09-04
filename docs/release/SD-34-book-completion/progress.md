@@ -11,6 +11,60 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 40 wave-end gate — lane A's guarded regen completed, dashboard staleness fixed, full 40/40 confirmed — complete
+
+**Status: complete.** Integration summary for wave 40's two lanes, both merged onto `tranche/14`
+(lane A `d7184384d8`, lane B `725b5ff1c9`/`71e227a8c4`). Individual lanes' own receipts carry the
+detailed evidence; this entry is the wave-end roll-up plus the gate work needed to reach a true
+40/40.
+
+**Real movement this wave: 12 units left bucket D** (7 from lane A's `CLASS_FEATURE_ID_KNOWN_SYNONYMS`
+extension, 5 from lane B's Summoner slice) — **10 landed in DONE, 2 landed in V**. Lane A's own
+cycle ended before its guarded `docs/work-inventory.json` regen finished (reported honestly as
+"0 units confirmed closed" in its own receipt, time-budget exhaustion not a defect); the
+orchestrator completed that regen after the cycle closed and confirmed the real outcome directly
+against the corpus rather than trusting the stale in-cycle claim, then corrected the receipt with
+an addendum recording it. Re-deriving bucket deltas against wave 39's own gate baseline
+(`DONE: 25348`, `D: 2535`, `V: 319`) against lane B's own stated pre-state (`DONE: 25353`,
+`D: 2528`) shows lane A's 7 nominal fixes resolved to 5 DONE + 2 V, not 7 DONE — most likely its
+two *re-aliased* entries (Bard's Bardic Performance, Sorcerer's Spells, each pointed at a
+different id than the corpus feature's own slug after a live-dump test proved the originally-named
+id unreachable) landed under a different evidence classification than the other 5's direct
+same-slug matches; not independently re-verified per-unit this cycle, flagged here rather than
+asserted with false precision. Lane B's own 5 closures landed cleanly in DONE (no re-aliasing
+involved). **units_closed = 12** in the DONE-or-real-disposition sense (10 DONE + 2 V), the figure
+that matters for the epic trail; nothing here reduces bucket D by less than the full 12 lane A
+and lane B jointly earned.
+
+**Wave-end gate fixes:**
+- **F1 shape-population baseline** (`formula_interpreter_corpus_wide.rs`) re-derived via
+  `scripts/shape_ledger.py` — confirmed still correct at 5207 (unchanged since wave 39), no edit
+  needed.
+- `scripts/verify-baselines.env`: `BASELINE_ROOT_FULL_TESTS` raised 8443→8449 (6 new bin-target
+  tests from lane A/B's own unit-test additions), `BASELINE_ROOT_LIB_TESTS` unchanged at 3063,
+  with a dated comment block added following the file's own convention.
+- **Dashboard staleness**: `site/dashboard/PF1e-dashboard.json` + related files (`.last-good`,
+  `units/PF1e-units-class_feature.json`, `units/index.json`, `site/status-data.json` and its
+  per-book detail files) were stale relative to this wave's shifted `docs/work-inventory.json`.
+  `./scripts/publish-site-dashboard.sh` got killed once by an unrelated external interrupt
+  partway through (a known session hazard); re-ran it `nohup`'d + disowned to survive interrupts,
+  confirmed a clean finish via its own log output, then re-ran the full isolated `verify.sh` to
+  confirm the fix held.
+- Lane A's own receipt (`wave40_laneA_shape2_crb_synonym_table_extension_cycle_receipt.md`) had
+  a stale "0 units confirmed closed" claim (true when the cycle ended, false once the orchestrator
+  finished the regen) and a bare "near 98%" CPU figure with no denominator marker — fixed via an
+  ORCHESTRATOR ADDENDUM section and rewording, per this bundle's own denominator-gate discipline.
+
+**Full `scripts/verify.sh -j 6`, run with an isolated `CARGO_TARGET_DIR`** (same
+collision-avoidance measure established at wave 38's own gate): first run caught the dashboard
+staleness (39 PASS / 1 FAIL); after the fix, a second full isolated run confirmed **40 PASS /
+0 FAIL, `RESULT: PASS`** — `root-lib` 3063, `root-full` 8449 (matches the raised baseline),
+`desktop` 573, `reach` 31, all selftests/gates/frontend/clippy/class-dump clean.
+
+**Bucket state, re-derived fresh:** `population=49438 unclassified=0 overlap=0`;
+`DONE: 25348 → 25358`, `D: 2535 → 2523`, `V: 319 → 321`. `done_evidence_violations=0
+citation_failures=0`.
+
 ### Cycle — Wave 40, lane B — Shape 2's Summoner remainder: 5 of 6 units closed, Greater Aspect declined (no compute function exists)
 
 **Status: complete.** Re-derived Shape 2's own 6-unit `Summoner` (non-Unchained) remainder fresh

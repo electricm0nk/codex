@@ -3415,7 +3415,7 @@
         },
         {
           "name": "Abundant Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.SpecialQuality.Supernatural.Ki.ModifyMovement.Abundant Step",
           "standing": "unclassified",
           "display_name": "Abundant Step"
@@ -4297,7 +4297,7 @@
         },
         {
           "name": "Bardic Performance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialQuality.BardicPerformance.Bardic Performance",
           "standing": "unclassified",
           "display_name": "Bardic Performance (BardClassFeatures.SpecialQuality.BardicPerformance.Bardic Performance)"
@@ -5368,7 +5368,7 @@
         },
         {
           "name": "Combat Style Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Combat Style Feat"
@@ -6005,7 +6005,7 @@
         },
         {
           "name": "Diamond Soul",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MonkClassFeatures.SpecialQuality.Extraordinary.Diamond Soul",
           "standing": "unclassified",
           "display_name": "Diamond Soul"
@@ -8973,7 +8973,7 @@
         },
         {
           "name": "Maneuver Training",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MonkClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Maneuver Training"
@@ -10072,7 +10072,7 @@
         },
         {
           "name": "Perfect Self",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.SpecialQuality.Perfect Self",
           "standing": "unclassified",
           "display_name": "Perfect Self"
@@ -11780,7 +11780,7 @@
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Class Feature.Sorcerer Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spells (Class Feature.Sorcerer Class Feature.SpecialQuality)"

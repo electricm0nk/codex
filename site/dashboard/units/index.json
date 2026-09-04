@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-04T03:59:00Z",
+  "generated_at": "2026-09-04T08:02:10Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16046,
+  "proven_units": 16056,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,18 +1428,18 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4766,
+      "proven": 4776,
       "by_status": {
-        "engine-does-not-hold": 12979,
+        "engine-does-not-hold": 12967,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 527,
+        "grounded": 537,
         "oracle-agree": 26,
-        "literal-verified": 112,
+        "literal-verified": 114,
         "oracle-unverifiable": 6
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2788909,
+      "bytes": 2788781,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -1454,9 +1454,9 @@
         "classfeatures": {
           "label": "Class Features",
           "done": 549,
-          "held": 1,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 772,
+          "not-started": 771,
           "unmeasurable": 0,
           "deferred": 1
         },
@@ -1525,10 +1525,10 @@
         },
         "rangerclassfeatures": {
           "label": "Ranger Class Features",
-          "done": 161,
+          "done": 162,
           "held": 5,
           "in-progress": 0,
-          "not-started": 119,
+          "not-started": 118,
           "unmeasurable": 0,
           "deferred": 1
         },
@@ -1633,10 +1633,10 @@
         },
         "bardclassfeatures": {
           "label": "Bard Class Features",
-          "done": 66,
+          "done": 67,
           "held": 10,
           "in-progress": 0,
-          "not-started": 98,
+          "not-started": 97,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1678,10 +1678,10 @@
         },
         "monkclassfeatures": {
           "label": "Monk Class Features",
-          "done": 47,
-          "held": 4,
+          "done": 49,
+          "held": 6,
           "in-progress": 0,
-          "not-started": 100,
+          "not-started": 96,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2029,10 +2029,10 @@
         },
         "summonerclassfeatures": {
           "label": "Summoner Class Features",
-          "done": 19,
-          "held": 0,
+          "done": 20,
+          "held": 4,
           "in-progress": 0,
-          "not-started": 28,
+          "not-started": 23,
           "unmeasurable": 0,
           "deferred": 0
         },
