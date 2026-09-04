@@ -10100,6 +10100,75 @@ fn class_feature_exact_suffix_grounded<'a>(
 ///   pool; Summon Monster also has a uses-per-day count) -- any one
 ///   suffices to prove the engine holds the record; this table need not
 ///   enumerate every sibling.
+///
+/// **Wave 40 lane A** extends the table with 7 more CRB entries
+/// (`wave39_laneB_shape2_crb_prestige_class_function_check_cycle_receipt.md`'s
+/// own 13-unit "real compute exists but not lane A's shape" table). Every
+/// third field below was re-confirmed live, not just read from source: a
+/// temporary dump test (`wave40_lanea_temp_synonym_candidate_dump`, removed
+/// before this cycle's own commit) ran the real `class_sweep_input` +
+/// `compute_pilot_base_chassis` pipeline this classifier's own union sweep
+/// uses, across every `SWEEP_LEVELS` level, and printed the REAL set of
+/// distinct values each candidate id carries -- catching two false starts
+/// before they were ever added to this table:
+///
+/// - **Monk's Abundant Step / Diamond Soul / Maneuver Training / Perfect
+///   Self** each carry a compound (2-word) suffix past `feature_slug`
+///   (`_caster_level`, `_spell_resistance`, `_cmb_bonus`,
+///   `_damage_reduction`) -- the same PREFIX-of-a-longer-descriptor shape
+///   as `unchained_barbarian`'s `greater_rage`/`mighty_rage` above, just
+///   with 2 words instead of 1. The live dump confirms each carries a real
+///   non-zero value once its own level gate is reached within
+///   `SWEEP_LEVELS` (Abundant Step `{0, 15, 20}`, Diamond Soul
+///   `{0, 25, 30}`, Maneuver Training `{0, 2, 3, 4, 5}`, Perfect Self
+///   `{0, 10}`).
+/// - **Bard's Bardic Performance**: the FIRST candidate read from source
+///   alone, `class_feature.bard.bardic_performance_execution.active`, is a
+///   real `ComputationExplanation` id, but it is only ever pushed when
+///   `input.chosen.class_ability_activations` carries an active Bardic
+///   Performance entry -- something no `SWEEP_LEVELS` pass this classifier
+///   runs ever seeds (`class_sweep_input`/`canonical_seeds_for` build no
+///   such activation for any class). The live dump proves it: that id
+///   never appears in the sweep's own output at all, for any level. Aliased
+///   instead to `class_chassis.bard.bardic_performance_rounds_per_day`
+///   (`feature_slug` `"bardic_performance"` is a literal PREFIX of this
+///   id's own second-to-last segment, the identical shape as
+///   `unchained_barbarian`'s `rage` -> `rage_rounds_per_day` above) --
+///   unconditional, real, confirmed non-zero at every sweep level
+///   (`{3, 11, 21, 31, 41}`).
+/// - **Ranger's Combat Style Feat**: `feature_slug` `"combat_style_feat"`
+///   is a literal PREFIX of `combat_style_feat_pool.slot_count`'s own
+///   second-to-last segment. Confirmed non-zero once the level-2 gate is
+///   reached (`{0, 1, 3, 4, 5}`).
+/// - **Sorcerer's Spells**: the FIRST candidate read from source alone,
+///   `class_spell.sorcerer.known_spells`, is real and unconditionally
+///   pushed, but its value is `known.len()` over
+///   `input.chosen.spells_selected` -- and `canonical_seeds_for("sorcerer")`
+///   seeds no spell selections at all, so the live dump shows this id is
+///   ALWAYS `{0}` across the entire sweep, for every level: the same
+///   "carries no fabricated mechanical value" shape this cycle's own brief
+///   flags for Druid's `nature_bond_choice`, not a safe pick. Aliased
+///   instead to `class_chassis.sorcerer.spontaneous.spell_level_access`
+///   (a different top-level namespace again, `class_chassis` rather than
+///   `class_spell`, but the `group == owner` guard below is namespace-
+///   blind -- it only compares the corpus group text to `owner`, never
+///   inspects the matched id's own prefix), unconditional, confirmed real
+///   and non-zero at every sweep level (`{1, 2, 5, 7, 9}`).
+///
+/// **Druid's Nature Bond is deliberately NOT added.** Its only candidate,
+/// `class_chassis.druid.nature_bond_choice`, is a `+0`-by-design
+/// recognition record (its own doc comment: "carries no fabricated
+/// mechanical value") that is never level-gated and never anything but
+/// `{0}` in the live dump, at every level -- there is no other id anywhere
+/// in `pilot_compute/mod.rs` naming Nature Bond. Adding it here would
+/// credit a `done` unit on a magnitude that was never really computed, the
+/// exact hazard this table's own doc comment exists to keep out. **Monk's
+/// Stunning Fist is also NOT added**: its real id
+/// (`feat.standalone.stunning_fist.save_dc` /
+/// `.uses_per_day`) carries `group: "standalone"`, never `"monk"` -- it
+/// fails the `group == owner` guard structurally, not by a word-spelling
+/// gap, so no table entry (which only recognizes an id STRING, never
+/// relaxes the guard) could ever close it.
 const CLASS_FEATURE_ID_KNOWN_SYNONYMS: &[(&str, &str, &str)] = &[
     ("unchained_monk", "ac_bonus", "class_feature.pu.unchained_monk.armor_class_bonus"),
     ("unchained_monk", "bonus_feat", "class_feature.pu.unchained_monk.bonus_feats_known"),
@@ -10172,6 +10241,43 @@ const CLASS_FEATURE_ID_KNOWN_SYNONYMS: &[(&str, &str, &str)] = &[
         "unchained_summoner",
         "summon_monster",
         "class_feature.pu.unchained_summoner.summon_monster_spell_level",
+    ),
+    // Wave 40 lane A: 7 more CRB entries, see this const's own doc comment
+    // above for the live-dump verification each one carries.
+    (
+        "monk",
+        "abundant_step",
+        "class_chassis.monk.abundant_step_caster_level",
+    ),
+    (
+        "monk",
+        "diamond_soul",
+        "class_chassis.monk.diamond_soul_spell_resistance",
+    ),
+    (
+        "monk",
+        "maneuver_training",
+        "class_chassis.monk.maneuver_training_cmb_bonus",
+    ),
+    (
+        "monk",
+        "perfect_self",
+        "class_chassis.monk.perfect_self_damage_reduction",
+    ),
+    (
+        "bard",
+        "bardic_performance",
+        "class_chassis.bard.bardic_performance_rounds_per_day",
+    ),
+    (
+        "ranger",
+        "combat_style_feat",
+        "class_feature.ranger.combat_style_feat_pool.slot_count",
+    ),
+    (
+        "sorcerer",
+        "spells",
+        "class_chassis.sorcerer.spontaneous.spell_level_access",
     ),
 ];
 
@@ -24036,6 +24142,90 @@ mod class_feature_known_synonym_grounded_tests {
             "Ironskin Monk",
             "ac_bonus",
         ));
+    }
+
+    /// Wave 40 lane A: the 7 CRB entries this cycle adds, pinned as a
+    /// literal manifest -- catches a typo'd id or slug silently landing
+    /// (the generic `every_known_synonym_table_entry_grounds_via_its_own_
+    /// exact_id` test above proves each entry grounds via ITSELF, which
+    /// would still pass even if the wrong id were typo'd consistently in
+    /// both the table and this manifest; this test independently restates
+    /// the exact expected string so a mismatch between the two is caught).
+    #[test]
+    fn wave_40_lane_a_entries_match_the_receipts_own_manifest() {
+        let expected: &[(&str, &str, &str)] = &[
+            ("monk", "abundant_step", "class_chassis.monk.abundant_step_caster_level"),
+            ("monk", "diamond_soul", "class_chassis.monk.diamond_soul_spell_resistance"),
+            ("monk", "maneuver_training", "class_chassis.monk.maneuver_training_cmb_bonus"),
+            ("monk", "perfect_self", "class_chassis.monk.perfect_self_damage_reduction"),
+            (
+                "bard",
+                "bardic_performance",
+                "class_chassis.bard.bardic_performance_rounds_per_day",
+            ),
+            (
+                "ranger",
+                "combat_style_feat",
+                "class_feature.ranger.combat_style_feat_pool.slot_count",
+            ),
+            (
+                "sorcerer",
+                "spells",
+                "class_chassis.sorcerer.spontaneous.spell_level_access",
+            ),
+        ];
+        for entry in expected {
+            assert!(
+                CLASS_FEATURE_ID_KNOWN_SYNONYMS.contains(entry),
+                "expected {entry:?} to be a live table entry",
+            );
+        }
+    }
+
+    /// Bard's Bardic Performance and Sorcerer's Spells each had a FIRST
+    /// candidate id, read from source alone, that the live sweep dump
+    /// proved unsafe (Bard's `.active` never appears in any sweep pass;
+    /// Sorcerer's `known_spells` is always `{0}`) -- proves this table was
+    /// NOT built with either of those two ids, so a future edit
+    /// reintroducing one of them (e.g. "cleaning up" back to the
+    /// source-obvious id) regresses silently without this guard.
+    #[test]
+    fn bard_and_sorcerer_do_not_alias_to_their_own_unsafe_first_candidates() {
+        let unsafe_ids = [
+            "class_feature.bard.bardic_performance_execution.active",
+            "class_spell.sorcerer.known_spells",
+        ];
+        for (_, _, id) in CLASS_FEATURE_ID_KNOWN_SYNONYMS {
+            assert!(
+                !unsafe_ids.contains(id),
+                "{id} was proven unsafe this cycle (never emitted, or always zero) and must not \
+                 be a table entry",
+            );
+        }
+    }
+
+    /// Druid's Nature Bond, Monk's Stunning Fist, Fighter's Weapon
+    /// Training, and Psychic's Phrenic Pool were all investigated this
+    /// cycle and deliberately declined (see this const's own doc comment
+    /// and this cycle's receipt) -- proves none of the four owners was
+    /// silently added for the specific declined feature slug.
+    #[test]
+    fn declined_units_are_not_in_the_table() {
+        let declined: &[(&str, &str)] = &[
+            ("druid", "nature_bond"),
+            ("monk", "stunning_fist"),
+            ("fighter", "weapon_training"),
+            ("psychic", "phrenic_pool"),
+        ];
+        for (owner, slug) in declined {
+            assert!(
+                !CLASS_FEATURE_ID_KNOWN_SYNONYMS
+                    .iter()
+                    .any(|(o, s, _)| o == owner && s == slug),
+                "({owner}, {slug}) was deliberately declined this cycle and must not be a table \
+                 entry",
+            );
+        }
     }
 }
 

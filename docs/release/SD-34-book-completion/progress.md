@@ -11,6 +11,42 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 40, lane A — Shape 2 CRB synonym-table extension: 7 entries added and unit-tested, guarded regen did not finish in time — blocked-escalated, 0 units confirmed closed
+
+**Status: blocked-escalated (time-budget, not authority/scope).** Extended
+`CLASS_FEATURE_ID_KNOWN_SYNONYMS` (`v06_work_inventory.rs`) with 7 more entries targeting wave
+39 lane B's own 13-unit "real compute but not lane A's shape" table: Monk's Abundant Step /
+Diamond Soul / Maneuver Training / Perfect Self (4, compound-suffix shape), Bard's Bardic
+Performance (1, re-aliased to `bardic_performance_rounds_per_day` after a live dump test proved
+lane B's own named `.active` id is UNREACHABLE under this classifier's own sweep fixture — it
+requires an active `class_ability_activations` entry no probe seeds), Ranger's Combat Style Feat
+(1), and Sorcerer's Spells (1, re-aliased to `class_chassis.sorcerer.spontaneous.
+spell_level_access` after the live dump proved lane B's own named `known_spells` id is ALWAYS
+`{0}` in the sweep — the fixture seeds no known-spell selections for Sorcerer). Both re-aliases
+were caught by a temporary live dump test (run through the real `class_sweep_input` +
+`compute_pilot_base_chassis` pipeline, removed before commit) that a `grep -c == 1` alone would
+have missed — both unsafe ids are real, singly-defined `ComputationExplanation`s, just never
+reachable/non-zero under the classifier's own probe. **Declined 2 units with reasons**: Druid's
+Nature Bond (its only id, `nature_bond_choice`, is a permanent `+0`-by-design recognition
+record, confirmed `{0}`-only across every swept level — closing it would credit a fabricated
+magnitude, exactly the hazard this cycle's own brief warned against); Monk's Stunning Fist (its
+real id carries `group: "standalone"`, never `"monk"` — fails the classifier's `group == owner`
+guard structurally, a gap no table entry can bridge). Fighter's Weapon Training and Psychic's
+Phrenic Pool were out of scope per the brief and not attempted.
+
+**Why 0 units are reported as confirmed closed, despite a very high-confidence code change:**
+the guarded `docs/work-inventory.json` regeneration — the only mechanism that actually proves a
+unit moves `engine-does-not-hold` → `grounded`/DONE — was started (`cargo run --locked --bin
+v06_work_inventory`, debug build, full 51,508-file corpus scan + per-class union sweep) and was
+still running past the 8-minute mark with no crash or panic when this cycle's own time budget
+ran out. Per this program's own "no fake completion" doctrine, the cycle reports the true,
+unrounded state: source change complete and unit-tested (541/541 `v06_work_inventory` bin tests
+pass, 3 new), regen-confirmed movement **not yet measured**. `docs/work-inventory.json` and
+`completion-atlas.json` are deliberately NOT touched this cycle (no stale/guessed figures
+committed). Full detail, both re-aliasing investigations, and the exact next-cycle instruction
+(re-run the regen to completion, `--release` build likely faster) are in
+`artifacts/bucket-d-mining/wave40_laneA_shape2_crb_synonym_table_extension_cycle_receipt.md`.
+
 ### Cycle — Wave 39 wave-end gate — a stale-worktree false alarm corrected, dashboard refreshed, full 40/40 confirmed — complete
 
 **Status: complete.** Integration summary for wave 39's two lanes, both already merged onto
