@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 169,
-      "partial": 0,
-      "not_started": 521,
+      "done": 173,
+      "partial": 2,
+      "not_started": 515,
       "denominator": 690,
-      "pct": 24.5,
+      "pct": 25.1,
       "excluded_from_percentage": 245,
       "standing_breakdown": {
         "origin": 690,
@@ -2552,7 +2552,7 @@
         },
         {
           "name": "Frightening Appearance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Frightening Appearance"
@@ -4876,7 +4876,7 @@
         },
         {
           "name": "Seamless Guise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Seamless Guise (Vigilante Class Feature.SpecialQuality.Extraordinary)"
@@ -5359,7 +5359,7 @@
         },
         {
           "name": "Social Talent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Social Talent"
@@ -5660,7 +5660,7 @@
         },
         {
           "name": "Stunning Appearance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Stunning Appearance"
@@ -6220,7 +6220,7 @@
         },
         {
           "name": "Unshakable",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Unshakable (Vigilante Class Feature.SpecialQuality.Extraordinary)"
@@ -6346,14 +6346,14 @@
         },
         {
           "name": "Vigilante Specialization",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Vigilante Specialization"
         },
         {
           "name": "Vigilante Talent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Vigilante Talent"

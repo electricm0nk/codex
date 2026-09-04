@@ -784,11 +784,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 331,
+      "done": 332,
       "partial": 5,
-      "not_started": 1056,
+      "not_started": 1055,
       "denominator": 1392,
-      "pct": 23.8,
+      "pct": 23.9,
       "excluded_from_percentage": 1306,
       "standing_breakdown": {
         "origin": 1392,
@@ -1315,7 +1315,7 @@
         },
         {
           "name": "Animal Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Feature.HunterAnimalCompanion.SpecialQuality.Extraordinary.Animal Companion",
           "standing": "unclassified",
           "display_name": "Animal Companion (Hunter Class Feature.HunterAnimalCompanion.SpecialQuality.Extraordinary.Animal Companion)"
@@ -8651,7 +8651,7 @@
         },
         {
           "name": "Focus Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Warpriest Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Focus Weapon (Warpriest Class Feature.SpecialQuality)"
@@ -11878,7 +11878,7 @@
         },
         {
           "name": "Martial Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Brawler Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Martial Training"

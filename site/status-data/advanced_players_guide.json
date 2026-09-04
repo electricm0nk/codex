@@ -882,11 +882,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 371,
-      "partial": 4,
-      "not_started": 1078,
+      "done": 375,
+      "partial": 9,
+      "not_started": 1069,
       "denominator": 1453,
-      "pct": 25.5,
+      "pct": 25.8,
       "excluded_from_percentage": 881,
       "standing_breakdown": {
         "unclassified": 881,
@@ -1392,14 +1392,14 @@
         },
         {
           "name": "Animate Servant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Animate Servant (SpecialQuality.Supernatural.DomainPower)"
         },
         {
           "name": "Animate Servant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Animate Servant (SpecialQuality.Supernatural.DomainPower) #2"
@@ -2036,7 +2036,7 @@
         },
         {
           "name": "Aura of Depravity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Aura of Depravity"
@@ -3548,7 +3548,7 @@
         },
         {
           "name": "Channel Negative Energy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AntipaladinClassFeatures.SpecialAttack.Supernatural.Channel Energy",
           "standing": "unclassified",
           "display_name": "Channel Negative Energy"
@@ -4668,7 +4668,7 @@
         },
         {
           "name": "Cruelty",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Mercy",
           "standing": "origin",
           "display_name": "Cruelty"
@@ -5389,7 +5389,7 @@
         },
         {
           "name": "Discovery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AlchemistClassFeatures.Internal.ClassFeatures",
           "standing": "unclassified",
           "display_name": "Discovery"
@@ -5914,7 +5914,7 @@
         },
         {
           "name": "Eidolon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.Extraordinary.Eidolon",
           "standing": "unclassified",
           "display_name": "Eidolon (SummonerClassFeatures.SpecialQuality.Extraordinary.Eidolon)"
@@ -6943,7 +6943,7 @@
         },
         {
           "name": "Fiendish Boon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AntipaladinClassFeatures.Internal.ClassFeatures",
           "standing": "origin",
           "display_name": "Fiendish Boon"
@@ -9533,7 +9533,7 @@
         },
         {
           "name": "Life Mysteries",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery",
           "standing": "origin",
           "display_name": "Life Mysteries"
@@ -10422,7 +10422,7 @@
         },
         {
           "name": "Mount",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.SpecialQuality.Extraordinary.Animal Companion.Mount",
           "standing": "unclassified",
           "display_name": "Mount"
@@ -15441,7 +15441,7 @@
         },
         {
           "name": "Touch of Corruption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural.LayOnHands.Lay on Hands",
           "standing": "origin",
           "display_name": "Touch of Corruption"
@@ -15910,14 +15910,14 @@
         },
         {
           "name": "Unholy Champion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Unholy Champion"
         },
         {
           "name": "Unholy Resilience",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Unholy Resilience"

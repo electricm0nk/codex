@@ -11,6 +11,64 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 38 wave-end gate — collision recovery, 2 baselines raised, full 40/40 confirmed — complete
+
+**Status: complete.** Integration summary for wave 38's three lanes, all already merged onto
+`tranche/14`. Individual lanes' own receipts carry the detailed evidence; this entry is the
+roll-up plus the wave-end gate.
+
+**Real movement this wave: 88 units closed to DONE, 26 to V** (`DONE: 25244→25332`,
+`V: 289→315`, `D: 2661→2555`, `C: 4185→4180`, `X: 170→168`, `population=49438` unchanged,
+`unclassified=0 overlap=0`). All real closures came from lanes A and C; lane B closed zero,
+honestly reported, and did genuinely valuable non-closure work:
+
+- **Lane A** (`faca302af1`) — widened `domain_power::DomainPowerSpec` with an additive
+  `uses_per_day_formula` override and closed Construct Subdomain's Animate Servant (2 of the
+  assigned 3 units) with its real corpus formula `DomainArtificeLVL/4-1`. The domain-kind
+  header itself stays honestly unclosed — no `Domain<X>LVL` chain at all, the same gap
+  wave 37 already found for Undead Subdomain.
+- **Lane B** (`674e64db86`) — scope-checked sub-mechanism 5's top two classes
+  (`divine_scion` 45, `phrenic_slayer` 43) in full and found neither genuinely bounded:
+  `divine_scion` is a 34-variant spell-like-ability subsystem, not one formula;
+  `phrenic_slayer`'s cheap zero-magnitude subset is independently, correctly blocked by an
+  already-shipped multi-DESC safety gate. Declined a proven zero-payoff partial build.
+  Retro-logged a correction: sub-mechanism 5 is a MIX of ≥3 disposition shapes, not one.
+- **Lane C** (`d57a03a9d9`) — widened `class_feature_exact_suffix_grounded` to recognize the
+  `<owner>.<feature_slug>.<magnitude_descriptor>` dot-segment convention ~20 already-shipped
+  `ground_<class>_class_features` dispatch functions use, with two safety guards found live
+  before committing (`feature_slug != owner`; excluding `unsupported`/`not_modelled`
+  diagnostic-mirror markers). **112 units closed** (86 DONE + 26 V) — 100 of Shape 2's own
+  154-unit magnitude-bearing remainder, 5 bonus zero-magnitude closures, 7 more from bucket
+  C/X via the same gap. 54 units honestly left unclosed, named precisely by class, confirmed
+  a genuinely DIFFERENT failure shape (word-choice synonym, not dot-segment).
+
+**Incident, recovered:** the original wave-38 workflow task stalled after finding 3 real (but
+routine) `verify.sh` failures — a stale `F1` shape-population test-count baseline
+(`5231→5217`, `src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs`), a stale
+public dashboard, and a `site-dashboard-check` failure — and never resumed. Taken over
+manually: fixed both real issues, then hit a SECOND, unrelated incident — a `verify.sh` run
+was SIGKILLed (`exit 137`) mid-`root-full` from colliding with another concurrent cargo build
+on this shared checkout (two `/tmp/codex-verify-*` log dirs were created 25 seconds apart).
+Recovered by stopping the stalled task and re-running `verify.sh` with an isolated
+`CARGO_TARGET_DIR` scratch dir, taking the build out of contention with any other session's
+shared `target/` writes.
+
+**Wave-end gate fixes:**
+- `site/dashboard` + `site/status-data` regenerated (stale relative to this wave's shifted
+  `docs/work-inventory.json`) via `./scripts/publish-site-dashboard.sh`.
+- `BASELINE_ROOT_LIB_TESTS` 3054→3063 and `BASELINE_ROOT_FULL_TESTS` 8423→8438, itemized by
+  `#[test]` diff against `fb149ce2b1` (+9 lib-target, +6 bin-target, summing exactly — no
+  residual).
+
+**Full `scripts/verify.sh -j 6`, run with an isolated `CARGO_TARGET_DIR` after both fixes:
+40 PASS / 0 FAIL, `RESULT: PASS`**, log `/tmp/codex-verify-8pDIX3`. Every stage from wave 37's
+own baseline is still PASS with the two expected test-count increases and zero other
+regressions.
+
+**Bucket state, re-derived fresh:** `population=49438 overlap=0 unclassified=0` throughout;
+`D: 2661 → 2555`, `DONE: 25244 → 25332`, `V: 289 → 315`. `done_evidence_violations=0
+citation_failures=0`.
+
 ### Cycle — Wave 38, Lane C — Shape 2's dot-segment magnitude-id matcher gap, 112 units closed (86 DONE + 26 V) — complete
 
 **Status: complete.** Continued wave 37 lane C's own disposition trace. Re-derived bucket D's

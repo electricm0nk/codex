@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-03T14:45:13Z",
+  "generated_at": "2026-09-03T21:01:09Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 15942,
+  "proven_units": 16030,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,26 +1428,26 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4662,
+      "proven": 4750,
       "by_status": {
-        "engine-does-not-hold": 13111,
+        "engine-does-not-hold": 12999,
         "text-complete": 4239,
-        "deferred-with-reason": 156,
-        "grounded": 423,
+        "deferred-with-reason": 154,
+        "grounded": 511,
         "oracle-agree": 26,
-        "literal-verified": 82,
+        "literal-verified": 108,
         "oracle-unverifiable": 6
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2790277,
+      "bytes": 2789117,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
           "label": "Special Qualities",
           "done": 734,
-          "held": 2,
+          "held": 4,
           "in-progress": 0,
-          "not-started": 1154,
+          "not-started": 1152,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1516,10 +1516,10 @@
         },
         "oracleclassfeatures": {
           "label": "Oracle Class Features",
-          "done": 48,
+          "done": 49,
           "held": 0,
           "in-progress": 0,
-          "not-started": 246,
+          "not-started": 245,
           "unmeasurable": 0,
           "deferred": 1
         },
@@ -1579,10 +1579,10 @@
         },
         "alchemistclassfeatures": {
           "label": "Alchemist Class Features",
-          "done": 77,
+          "done": 78,
           "held": 0,
           "in-progress": 0,
-          "not-started": 137,
+          "not-started": 136,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1642,10 +1642,10 @@
         },
         "barbarianclassfeatures": {
           "label": "Barbarian Class Features",
-          "done": 82,
+          "done": 83,
           "held": 1,
           "in-progress": 0,
-          "not-started": 88,
+          "not-started": 87,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1669,12 +1669,12 @@
         },
         "cavalierclassfeatures": {
           "label": "Cavalier Class Features",
-          "done": 70,
+          "done": 71,
           "held": 1,
           "in-progress": 0,
           "not-started": 82,
           "unmeasurable": 0,
-          "deferred": 3
+          "deferred": 2
         },
         "monkclassfeatures": {
           "label": "Monk Class Features",
@@ -1714,28 +1714,28 @@
         },
         "brawlerclassfeatures": {
           "label": "Brawler Class Feature",
-          "done": 39,
+          "done": 40,
           "held": 1,
           "in-progress": 0,
-          "not-started": 87,
+          "not-started": 86,
           "unmeasurable": 0,
           "deferred": 0
         },
         "mediumclassfeatures": {
           "label": "Medium Class Features",
-          "done": 48,
-          "held": 0,
+          "done": 50,
+          "held": 5,
           "in-progress": 0,
-          "not-started": 70,
+          "not-started": 63,
           "unmeasurable": 0,
           "deferred": 0
         },
         "magusclassfeatures": {
           "label": "Magus Class Features",
-          "done": 45,
-          "held": 0,
+          "done": 49,
+          "held": 1,
           "in-progress": 0,
-          "not-started": 65,
+          "not-started": 60,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1768,10 +1768,10 @@
         },
         "vigilanteclassfeatures": {
           "label": "Vigilante Class Features",
-          "done": 30,
-          "held": 0,
+          "done": 35,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 75,
+          "not-started": 68,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1813,21 +1813,21 @@
         },
         "mesmeristclassfeatures": {
           "label": "Mesmerist Class Features",
-          "done": 29,
-          "held": 0,
+          "done": 34,
+          "held": 5,
           "in-progress": 0,
-          "not-started": 59,
+          "not-started": 49,
           "unmeasurable": 0,
           "deferred": 0
         },
         "hunterclassfeatures": {
           "label": "Hunter Class Feature",
-          "done": 33,
+          "done": 34,
           "held": 1,
           "in-progress": 0,
           "not-started": 50,
           "unmeasurable": 0,
-          "deferred": 2
+          "deferred": 1
         },
         "socialgraceskillchoice": {
           "label": "Social Grace Skill Choice",
@@ -1876,19 +1876,19 @@
         },
         "occultistclassfeatures": {
           "label": "Occultist Class Feature",
-          "done": 23,
-          "held": 0,
+          "done": 26,
+          "held": 3,
           "in-progress": 0,
-          "not-started": 42,
+          "not-started": 36,
           "unmeasurable": 0,
           "deferred": 0
         },
         "spiritualistclassfeatures": {
           "label": "Spiritualist Class Feature",
-          "done": 39,
-          "held": 0,
+          "done": 41,
+          "held": 1,
           "in-progress": 0,
-          "not-started": 25,
+          "not-started": 22,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1921,10 +1921,10 @@
         },
         "antipaladinclassfeatures": {
           "label": "Antipaladin Class Features",
-          "done": 25,
-          "held": 0,
+          "done": 28,
+          "held": 4,
           "in-progress": 0,
-          "not-started": 34,
+          "not-started": 27,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1975,19 +1975,19 @@
         },
         "vitalistclassfeatures": {
           "label": "Vitalist Class Features",
-          "done": 11,
-          "held": 0,
+          "done": 15,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 42,
+          "not-started": 36,
           "unmeasurable": 0,
           "deferred": 0
         },
         "shifterclassfeatures": {
           "label": "Shifter Class Features",
-          "done": 24,
-          "held": 0,
+          "done": 28,
+          "held": 1,
           "in-progress": 0,
-          "not-started": 27,
+          "not-started": 22,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2029,19 +2029,19 @@
         },
         "summonerclassfeatures": {
           "label": "Summoner Class Features",
-          "done": 18,
+          "done": 19,
           "held": 0,
           "in-progress": 0,
-          "not-started": 29,
+          "not-started": 28,
           "unmeasurable": 0,
           "deferred": 0
         },
         "wilderclassfeatures": {
           "label": "Wilder Class Features",
-          "done": 7,
-          "held": 0,
+          "done": 10,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 40,
+          "not-started": 35,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2101,10 +2101,10 @@
         },
         "marksmanclassfeatures": {
           "label": "Marksman Class Features",
-          "done": 14,
-          "held": 0,
+          "done": 15,
+          "held": 4,
           "in-progress": 0,
-          "not-started": 31,
+          "not-started": 26,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2128,19 +2128,19 @@
         },
         "kineticistclassfeatures": {
           "label": "Kineticist Class Feature",
-          "done": 20,
-          "held": 0,
+          "done": 23,
+          "held": 3,
           "in-progress": 0,
-          "not-started": 20,
+          "not-started": 14,
           "unmeasurable": 0,
           "deferred": 0
         },
         "soulknifeclassfeatures": {
           "label": "Soulknife Class Features",
-          "done": 11,
-          "held": 0,
+          "done": 13,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 28,
+          "not-started": 24,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2164,10 +2164,10 @@
         },
         "tacticianclassfeatures": {
           "label": "Tactician Class Features",
-          "done": 16,
-          "held": 0,
+          "done": 18,
+          "held": 4,
           "in-progress": 0,
-          "not-started": 21,
+          "not-started": 15,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2200,10 +2200,10 @@
         },
         "crypticclassfeatures": {
           "label": "Cryptic Class Features",
-          "done": 15,
-          "held": 0,
+          "done": 17,
+          "held": 4,
           "in-progress": 0,
-          "not-started": 21,
+          "not-started": 15,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2227,10 +2227,10 @@
         },
         "aegisclassfeatures": {
           "label": "Aegis Class Features",
-          "done": 6,
-          "held": 0,
+          "done": 9,
+          "held": 4,
           "in-progress": 0,
-          "not-started": 29,
+          "not-started": 22,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2326,19 +2326,19 @@
         },
         "dreadclassfeatures": {
           "label": "Dread Class Features",
-          "done": 6,
-          "held": 0,
+          "done": 10,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 20,
+          "not-started": 14,
           "unmeasurable": 0,
           "deferred": 0
         },
         "warpriestclassfeatures": {
           "label": "Warpriest Class Feature",
-          "done": 7,
+          "done": 8,
           "held": 0,
           "in-progress": 0,
-          "not-started": 18,
+          "not-started": 17,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2956,10 +2956,10 @@
         },
         "psychicclassfeature": {
           "label": "Psychic Class Feature",
-          "done": 7,
-          "held": 0,
+          "done": 8,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 5,
+          "not-started": 2,
           "unmeasurable": 0,
           "deferred": 0
         },

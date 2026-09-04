@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-09-03T17:25:27Z",
+  "generated_at": "2026-09-03T23:26:37Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 19089,
-    "partial": 5476,
-    "not_started": 13315,
+    "done": 19132,
+    "partial": 5514,
+    "not_started": 13234,
     "denominator": 37880,
-    "pct": 50.4,
+    "pct": 50.5,
     "excluded_from_percentage": 11558,
     "standing_breakdown": {
       "unclassified": 11558,
@@ -35,11 +35,11 @@
     {
       "id": "ultimate_psionics",
       "title": "Ultimate Psionics",
-      "done": 1108,
-      "partial": 485,
-      "not_started": 1670,
+      "done": 1127,
+      "partial": 503,
+      "not_started": 1633,
       "denominator": 3263,
-      "pct": 34.0,
+      "pct": 34.5,
       "excluded_from_percentage": 235,
       "standing_breakdown": {
         "origin": 3263,
@@ -49,11 +49,11 @@
     {
       "id": "advanced_players_guide",
       "title": "Advanced Player's Guide",
-      "done": 1123,
-      "partial": 265,
-      "not_started": 1376,
+      "done": 1127,
+      "partial": 270,
+      "not_started": 1367,
       "denominator": 2764,
-      "pct": 40.6,
+      "pct": 40.8,
       "excluded_from_percentage": 1065,
       "standing_breakdown": {
         "origin": 2764,
@@ -91,9 +91,9 @@
     {
       "id": "advanced_class_guide",
       "title": "Advanced Class Guide",
-      "done": 841,
+      "done": 842,
       "partial": 103,
-      "not_started": 1193,
+      "not_started": 1192,
       "denominator": 2137,
       "pct": 39.4,
       "excluded_from_percentage": 1383,
@@ -105,11 +105,11 @@
     {
       "id": "ultimate_wilderness",
       "title": "Ultimate Wilderness",
-      "done": 738,
+      "done": 741,
       "partial": 137,
-      "not_started": 808,
+      "not_started": 805,
       "denominator": 1683,
-      "pct": 43.9,
+      "pct": 44.0,
       "excluded_from_percentage": 321,
       "standing_breakdown": {
         "origin": 1683,
@@ -133,11 +133,11 @@
     {
       "id": "occult_adventures",
       "title": "Occult Adventures",
-      "done": 661,
-      "partial": 24,
-      "not_started": 887,
+      "done": 673,
+      "partial": 37,
+      "not_started": 862,
       "denominator": 1572,
-      "pct": 42.0,
+      "pct": 42.8,
       "excluded_from_percentage": 213,
       "standing_breakdown": {
         "origin": 1572,
@@ -217,11 +217,11 @@
     {
       "id": "ultimate_intrigue",
       "title": "Ultimate Intrigue",
-      "done": 454,
-      "partial": 27,
-      "not_started": 529,
+      "done": 458,
+      "partial": 29,
+      "not_started": 523,
       "denominator": 1010,
-      "pct": 45.0,
+      "pct": 45.3,
       "excluded_from_percentage": 253,
       "standing_breakdown": {
         "origin": 1010,

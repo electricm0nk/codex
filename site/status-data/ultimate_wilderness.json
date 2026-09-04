@@ -27,11 +27,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 170,
+      "done": 173,
       "partial": 0,
-      "not_started": 554,
+      "not_started": 551,
       "denominator": 724,
-      "pct": 23.5,
+      "pct": 23.9,
       "excluded_from_percentage": 228,
       "standing_breakdown": {
         "unclassified": 228,
@@ -1363,7 +1363,7 @@
         },
         {
           "name": "Defensive Instinct",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Defensive Instinct"
@@ -4674,7 +4674,7 @@
         },
         {
           "name": "Shifter Aspect",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shifter Aspect"
@@ -4800,7 +4800,7 @@
         },
         {
           "name": "Shifter Claws",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shifter Claws"
@@ -5696,7 +5696,7 @@
         },
         {
           "name": "Track",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Track (Shifter Class Feature.SpecialQuality.Extraordinary)"
@@ -6438,7 +6438,7 @@
         },
         {
           "name": "Wild Shape",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural.DruidWildShape",
           "standing": "unclassified",
           "display_name": "Wild Shape (Shifter Class Feature.SpecialQuality.Supernatural.DruidWildShape)"

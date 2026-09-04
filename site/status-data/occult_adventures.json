@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 290,
-      "partial": 0,
-      "not_started": 548,
+      "done": 302,
+      "partial": 13,
+      "not_started": 523,
       "denominator": 838,
-      "pct": 34.6,
+      "pct": 36.0,
       "excluded_from_percentage": 192,
       "standing_breakdown": {
         "unclassified": 192,
@@ -333,7 +333,7 @@
         },
         {
           "name": "Ask the Spirits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MediumClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Ask the Spirits"
@@ -354,7 +354,7 @@
         },
         {
           "name": "Astral Journey",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MediumClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Astral Journey"
@@ -487,7 +487,7 @@
         },
         {
           "name": "Binding Circles",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Binding Circles"
@@ -648,7 +648,7 @@
         },
         {
           "name": "Bold Stare Tracker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.Internal",
           "standing": "origin",
           "display_name": "Bold Stare Tracker"
@@ -795,7 +795,7 @@
         },
         {
           "name": "Burn",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Burn"
@@ -816,7 +816,7 @@
         },
         {
           "name": "Calm Spirit",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Calm Spirit"
@@ -1166,7 +1166,7 @@
         },
         {
           "name": "Consummate Liar",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MesmeristClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Consummate Liar"
@@ -1761,7 +1761,7 @@
         },
         {
           "name": "Elemental Focus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Elemental Focus"
@@ -2048,7 +2048,7 @@
         },
         {
           "name": "Expanded Element",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Expanded Element"
@@ -2363,7 +2363,7 @@
         },
         {
           "name": "Focus Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Focus Powers"
@@ -2608,7 +2608,7 @@
         },
         {
           "name": "Glib Lie",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Glib Lie"
@@ -2734,7 +2734,7 @@
         },
         {
           "name": "Haunt Channeler",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Haunt Channeler"
@@ -2811,7 +2811,7 @@
         },
         {
           "name": "Hypnotic Stare",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Hypnotic Stare"
@@ -2895,7 +2895,7 @@
         },
         {
           "name": "Implements",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Implements"
@@ -2986,7 +2986,7 @@
         },
         {
           "name": "Infusion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Infusion"
@@ -3238,7 +3238,7 @@
         },
         {
           "name": "Kinetic Blast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Kinetic Blast"
@@ -3476,7 +3476,7 @@
         },
         {
           "name": "Location Channel",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MediumClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Location Channel"
@@ -3511,7 +3511,7 @@
         },
         {
           "name": "Magic Item Skill",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Occultist Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Magic Item Skill"
@@ -3532,7 +3532,7 @@
         },
         {
           "name": "Major Amplifications",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Psychic Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Major Amplifications"
@@ -3567,7 +3567,7 @@
         },
         {
           "name": "Manifold Tricks",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Manifold Tricks"
@@ -3959,7 +3959,7 @@
         },
         {
           "name": "Mental Focus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Mental Focus"
@@ -3973,7 +3973,7 @@
         },
         {
           "name": "Mental Potency",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Mental Potency"
@@ -4155,7 +4155,7 @@
         },
         {
           "name": "Mesmerist Tricks Tracker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.Internal",
           "standing": "origin",
           "display_name": "Mesmerist Tricks Tracker"
@@ -4701,7 +4701,7 @@
         },
         {
           "name": "Outside Contact",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Outside Contact"
@@ -4764,7 +4764,7 @@
         },
         {
           "name": "Painful Stare",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Painful Stare"
@@ -4792,7 +4792,7 @@
         },
         {
           "name": "Phantom",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Phantom"
@@ -4813,7 +4813,7 @@
         },
         {
           "name": "Phrenic Amplifications",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Phrenic Amplifications"
@@ -5240,7 +5240,7 @@
         },
         {
           "name": "Psychic Discipline (Ex or Sp)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Psychic Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Psychic Discipline (Ex or Sp)"
@@ -5800,7 +5800,7 @@
         },
         {
           "name": "Shared Consciousness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Shared Consciousness"
@@ -6136,7 +6136,7 @@
         },
         {
           "name": "Spirit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Spirit"
@@ -6220,7 +6220,7 @@
         },
         {
           "name": "Spirit Surge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Spirit Surge"
@@ -6633,7 +6633,7 @@
         },
         {
           "name": "Touch Treatment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Touch Treatment"
@@ -6661,7 +6661,7 @@
         },
         {
           "name": "Towering Ego",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Towering Ego"
@@ -6682,7 +6682,7 @@
         },
         {
           "name": "Trance of Three",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Trance of Three"
@@ -7158,7 +7158,7 @@
         },
         {
           "name": "Wild Talents",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Kineticist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Wild Talents"

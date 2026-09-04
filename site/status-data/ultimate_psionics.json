@@ -1988,11 +1988,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 259,
-      "partial": 0,
-      "not_started": 1118,
+      "done": 278,
+      "partial": 18,
+      "not_started": 1081,
       "denominator": 1377,
-      "pct": 18.8,
+      "pct": 20.2,
       "excluded_from_percentage": 196,
       "standing_breakdown": {
         "origin": 1377,
@@ -2967,7 +2967,7 @@
         },
         {
           "name": "Altered Defense",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "CrypticClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Altered Defense"
@@ -3317,7 +3317,7 @@
         },
         {
           "name": "Astral Repair",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AegisClassFeatures.SpecialQuality.PsiLike",
           "standing": "origin",
           "display_name": "Astral Repair"
@@ -3380,7 +3380,7 @@
         },
         {
           "name": "Augment Suit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AegisClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Augment Suit"
@@ -3415,7 +3415,7 @@
         },
         {
           "name": "Aura of Fear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DreadClassFeatures.SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Aura of Fear"
@@ -3933,7 +3933,7 @@
         },
         {
           "name": "Cannibalize Suit",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AegisClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cannibalize Suit"
@@ -4185,7 +4185,7 @@
         },
         {
           "name": "Collective",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TacticianClassFeatures.SpecialQuality.Supernatural.Collective.ThrallherdLinkMinds",
           "standing": "origin",
           "display_name": "Collective (TacticianClassFeatures.SpecialQuality.Supernatural.Collective.ThrallherdLinkMinds)"
@@ -4206,7 +4206,7 @@
         },
         {
           "name": "Collective",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VitalistClassFeatures.SpecialQuality.Supernatural.Collective.ThrallherdLinkMinds",
           "standing": "origin",
           "display_name": "Collective (VitalistClassFeatures.SpecialQuality.Supernatural.Collective.ThrallherdLinkMinds)"
@@ -4395,7 +4395,7 @@
         },
         {
           "name": "Coordinated Strike",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TacticianClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Coordinated Strike"
@@ -4409,7 +4409,7 @@
         },
         {
           "name": "Cover Fire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MarksmanClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Cover Fire"
@@ -4437,7 +4437,7 @@
         },
         {
           "name": "Craftsman",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AegisClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Craftsman"
@@ -4563,7 +4563,7 @@
         },
         {
           "name": "Damage Reduction",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AegisClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Damage Reduction"
@@ -4745,7 +4745,7 @@
         },
         {
           "name": "Devastating Touch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DreadClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Devastating Touch"
@@ -4899,7 +4899,7 @@
         },
         {
           "name": "Disrupt Pattern",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CrypticClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Disrupt Pattern"
@@ -5214,7 +5214,7 @@
         },
         {
           "name": "Elude Attack",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "WilderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Elude Attack"
@@ -5438,7 +5438,7 @@
         },
         {
           "name": "Enhanced Disruption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "CrypticClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Enhanced Disruption"
@@ -5452,7 +5452,7 @@
         },
         {
           "name": "Enhanced Mind Blade",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SoulknifeClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Enhanced Mind Blade"
@@ -5557,7 +5557,7 @@
         },
         {
           "name": "Evade Arrows",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MarksmanClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Evade Arrows"
@@ -5963,7 +5963,7 @@
         },
         {
           "name": "Favored Weapon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MarksmanClassFeatures.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Favored Weapon"
@@ -6005,7 +6005,7 @@
         },
         {
           "name": "Fear Incarnate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DreadClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Fear Incarnate (DreadClassFeatures.SpecialQuality.Supernatural)"
@@ -6047,7 +6047,7 @@
         },
         {
           "name": "Fearsome Insight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "DreadClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Fearsome Insight"
@@ -6355,7 +6355,7 @@
         },
         {
           "name": "Form Astral Suit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AegisClassFeatures.SpecialQuality.Supernatural.FormAstralSuit",
           "standing": "origin",
           "display_name": "Form Astral Suit (AegisClassFeatures.SpecialQuality.Supernatural.FormAstralSuit)"
@@ -6390,7 +6390,7 @@
         },
         {
           "name": "Form Mind Blade",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SoulknifeClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Form Mind Blade"
@@ -6943,7 +6943,7 @@
         },
         {
           "name": "Health Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VitalistClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Health Sense"
@@ -6985,7 +6985,7 @@
         },
         {
           "name": "Hidden Pattern",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "CrypticClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Hidden Pattern"
@@ -7335,7 +7335,7 @@
         },
         {
           "name": "Improved Share",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TacticianClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Improved Share"
@@ -8154,7 +8154,7 @@
         },
         {
           "name": "Master Strategist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "TacticianClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Master Strategist"
@@ -9876,7 +9876,7 @@
         },
         {
           "name": "Psychic Enervation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WilderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Psychic Enervation"
@@ -9932,7 +9932,7 @@
         },
         {
           "name": "Psychic Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SoulknifeClassFeatures.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Psychic Strike (SoulknifeClassFeatures.SpecialAttack.Supernatural)"
@@ -10128,7 +10128,7 @@
         },
         {
           "name": "Quick Draw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SoulknifeClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Quick Draw"
@@ -10345,7 +10345,7 @@
         },
         {
           "name": "Ranged Specialist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MarksmanClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ranged Specialist"
@@ -10457,7 +10457,7 @@
         },
         {
           "name": "Reconfigure",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AegisClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Reconfigure"
@@ -10555,7 +10555,7 @@
         },
         {
           "name": "Request Aid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VitalistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Request Aid"
@@ -10779,7 +10779,7 @@
         },
         {
           "name": "Shadow Twin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DreadClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shadow Twin"
@@ -11353,14 +11353,14 @@
         },
         {
           "name": "Steal Health",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VitalistClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Steal Health"
         },
         {
           "name": "Steal Life",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "VitalistClassFeatures.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Steal Life"
@@ -11416,7 +11416,7 @@
         },
         {
           "name": "Strategy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TacticianClassFeatures.SpecialQuality.Supernatural.Strategy",
           "standing": "unclassified",
           "display_name": "Strategy"
@@ -11528,7 +11528,7 @@
         },
         {
           "name": "Surge Blast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WilderClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Surge Blast (WilderClassFeatures.SpecialAttack.Supernatural)"
@@ -11542,7 +11542,7 @@
         },
         {
           "name": "Surging Euphoria",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WilderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Surging Euphoria"
@@ -11759,7 +11759,7 @@
         },
         {
           "name": "Teamwork Feats",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TacticianClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Teamwork Feats"
@@ -11955,7 +11955,7 @@
         },
         {
           "name": "Terror",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "DreadClassFeatures.SpecialQuality.Supernatural.CheckList",
           "standing": "unclassified",
           "display_name": "Terror"
@@ -12319,7 +12319,7 @@
         },
         {
           "name": "Transfer Wounds",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "VitalistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Transfer Wounds (VitalistClassFeatures.SpecialQuality.Supernatural)"
@@ -12361,7 +12361,7 @@
         },
         {
           "name": "Trapmaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CrypticClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Trapmaker"
@@ -12473,7 +12473,7 @@
         },
         {
           "name": "Unchanging Pattern",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "CrypticClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Unchanging Pattern"
@@ -12942,7 +12942,7 @@
         },
         {
           "name": "Wild Surge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "WilderClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Wild Surge (WilderClassFeatures.SpecialQuality.Supernatural)"
@@ -12984,7 +12984,7 @@
         },
         {
           "name": "Wind Reader",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MarksmanClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Wind Reader"

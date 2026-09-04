@@ -4129,7 +4129,7 @@
         },
         {
           "name": "Arcane Pool",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.SpecialQuality.Supernatural.Magus Arcane Pool",
           "standing": "unclassified",
           "display_name": "Arcane Pool (MagusClassFeatures.SpecialQuality.Supernatural.Magus Arcane Pool) #2"
@@ -4178,7 +4178,7 @@
         },
         {
           "name": "Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Armor Proficiency"
@@ -4941,7 +4941,7 @@
         },
         {
           "name": "Bonus Feats",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bonus Feats"
@@ -7545,7 +7545,7 @@
         },
         {
           "name": "Fighter Training",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MagusClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Fighter Training"
@@ -10100,7 +10100,7 @@
         },
         {
           "name": "Magus Arcana",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Internal.ClassFeatures.Magus Arcana",
           "standing": "unclassified",
           "display_name": "Magus Arcana"

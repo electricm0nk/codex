@@ -10513,7 +10513,7 @@
         },
         {
           "name": "Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.Rage",
           "standing": "unclassified",
           "display_name": "Rage (BarbarianClassFeatures.ClassFeatures.Rage)"
