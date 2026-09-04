@@ -112,14 +112,14 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "9723672bdfafcd8de537db7bbc435cc88bf02788",
+  "derived_at": "d9f26ada3009b00bd588f4536a454f8b86d200a8",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
   "overlap": 0,
   "population": 49438,
   "re_derive_command": "python3 scripts/completion_atlas.py --check",
-  "stale_derived_at": true,
+  "stale_derived_at": false,
   "sub_causes": {
     "D": {
       "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 210,
