@@ -1,6 +1,6 @@
 # Cycle — SD-34 wave 39, Lane A — Shape 2's word-choice-synonym remainder: a real alias-table fix, all 20 assigned units closed (16 to DONE, 4 to V)
 
-- **Commit SHA:** `<filled below after commit>`
+- **Commit SHA:** `466070109014f9efbc565242a1f376a5feed1300`
 - **Files touched:** `src/bin/v06_work_inventory.rs` (new `CLASS_FEATURE_ID_KNOWN_SYNONYMS`
   alias table, new `class_feature_known_synonym_grounded` matcher function, wired into the
   existing `grounded`/`grounded_strict` boolean chain and both evidence-string ternaries, 5 new
