@@ -2576,11 +2576,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 252,
-      "partial": 1,
-      "not_started": 97,
+      "done": 257,
+      "partial": 2,
+      "not_started": 91,
       "denominator": 350,
-      "pct": 72.0,
+      "pct": 73.4,
       "excluded_from_percentage": 254,
       "standing_breakdown": {
         "origin": 350,
@@ -2729,7 +2729,7 @@
         },
         {
           "name": "AC Bonus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "AC Bonus"
@@ -2988,7 +2988,7 @@
         },
         {
           "name": "Bonus Feat",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bonus Feat"
@@ -4101,7 +4101,7 @@
         },
         {
           "name": "Eidolon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Summoner Class Feature.SpecialQuality.Eidolon",
           "standing": "unclassified",
           "display_name": "Eidolon"
@@ -4206,14 +4206,14 @@
         },
         {
           "name": "Fast Movement",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Barbarian Class Feature.ClassFeatures.SpecialQuality.Extraordinary.ModifyMovement.Fast Movement",
           "standing": "unclassified",
           "display_name": "Fast Movement (Unchained Barbarian Class Feature.ClassFeatures.SpecialQuality.Extraordinary.ModifyMovement.Fast Movement)"
         },
         {
           "name": "Fast Movement",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Fast Movement",
           "standing": "unclassified",
           "display_name": "Fast Movement (Unchained Monk Class Feature.SpecialQuality.Extraordinary.Fast Movement)"
@@ -4255,7 +4255,7 @@
         },
         {
           "name": "Finesse Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Finesse Training"
@@ -4360,7 +4360,7 @@
         },
         {
           "name": "Greater Rage",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Unchained Barbarian Class Feature.ClassFeatures.Internal.ClassFeatures.Rage.Greater Rage",
           "standing": "unclassified",
           "display_name": "Greater Rage"
@@ -4647,14 +4647,14 @@
         },
         {
           "name": "Ki Pool",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality.Supernatural.Ki Pool",
           "standing": "unclassified",
           "display_name": "Ki Pool"
         },
         {
           "name": "Ki Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality.Supernatural.Ki Powers",
           "standing": "origin",
           "display_name": "Ki Powers"
@@ -4934,7 +4934,7 @@
         },
         {
           "name": "Mighty Rage",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Unchained Barbarian Class Feature.ClassFeatures.Internal.ClassFeatures.Rage.Mighty Rage",
           "standing": "unclassified",
           "display_name": "Mighty Rage"
@@ -5179,7 +5179,7 @@
         },
         {
           "name": "Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Barbarian Class Feature.ClassFeatures.Rage",
           "standing": "unclassified",
           "display_name": "Rage (Unchained Barbarian Class Feature.ClassFeatures.Rage)"
@@ -5193,7 +5193,7 @@
         },
         {
           "name": "Rage Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Barbarian Class Feature.ClassFeatures.Internal.ClassFeatures.Rage Powers",
           "standing": "unclassified",
           "display_name": "Rage Powers"
@@ -5312,14 +5312,14 @@
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature",
           "standing": "unclassified",
           "display_name": "Rogue Talents"
         },
         {
           "name": "Rogue's Edge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Rogue's Edge"
@@ -6341,7 +6341,7 @@
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Summoner Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spells"
@@ -6418,14 +6418,14 @@
         },
         {
           "name": "Stunning Fist",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Stunning Fist",
           "standing": "unclassified",
           "display_name": "Stunning Fist"
         },
         {
           "name": "Style Strike",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Style Strike",
           "standing": "origin",
           "display_name": "Style Strike"
@@ -6439,7 +6439,7 @@
         },
         {
           "name": "Summon Monster I",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Summoner Class Feature.SpecialQuality.SpellLike.Summon Monster.Summon Monster SLA",
           "standing": "unclassified",
           "display_name": "Summon Monster I"
@@ -6635,7 +6635,7 @@
         },
         {
           "name": "Unchained Barbarian ~ Uncanny Dodge Tracker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Barbarian Class Feature",
           "standing": "origin",
           "display_name": "Unchained Barbarian ~ Uncanny Dodge Tracker"
@@ -6663,7 +6663,7 @@
         },
         {
           "name": "Unchained Rogue ~ Uncanny Dodge Tracker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature",
           "standing": "origin",
           "display_name": "Unchained Rogue ~ Uncanny Dodge Tracker"

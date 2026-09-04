@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-03T21:01:09Z",
+  "generated_at": "2026-09-04T03:59:00Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16030,
+  "proven_units": 16046,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,18 +1428,18 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4750,
+      "proven": 4766,
       "by_status": {
-        "engine-does-not-hold": 12999,
+        "engine-does-not-hold": 12979,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 511,
+        "grounded": 527,
         "oracle-agree": 26,
-        "literal-verified": 108,
+        "literal-verified": 112,
         "oracle-unverifiable": 6
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2789117,
+      "bytes": 2788909,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -2551,10 +2551,10 @@
         },
         "unchainedmonkclassfeature": {
           "label": "Unchained Monk Class Feature",
-          "done": 10,
-          "held": 0,
+          "done": 14,
+          "held": 3,
           "in-progress": 0,
-          "not-started": 8,
+          "not-started": 1,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2605,10 +2605,10 @@
         },
         "unchainedsummonerclassfeature": {
           "label": "Unchained Summoner Class Feature",
-          "done": 13,
+          "done": 16,
           "held": 0,
           "in-progress": 0,
-          "not-started": 4,
+          "not-started": 1,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2776,10 +2776,10 @@
         },
         "unchainedrogueclassfeature": {
           "label": "Unchained Rogue Class Feature",
-          "done": 4,
+          "done": 8,
           "held": 3,
           "in-progress": 0,
-          "not-started": 6,
+          "not-started": 2,
           "unmeasurable": 0,
           "deferred": 2
         },
@@ -2848,10 +2848,10 @@
         },
         "unchainedbarbarianclassfeature": {
           "label": "Unchained Barbarian Class Feature",
-          "done": 5,
-          "held": 0,
+          "done": 9,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 6,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 3
         },

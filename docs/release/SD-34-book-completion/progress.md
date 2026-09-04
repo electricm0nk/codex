@@ -8,6 +8,70 @@ date: 2026-08-26
 
 # SD-34 Progress
 
+Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
+`kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
+
+### Cycle — Wave 39 wave-end gate — a stale-worktree false alarm corrected, dashboard refreshed, full 40/40 confirmed — complete
+
+**Status: complete.** Integration summary for wave 39's two lanes, both already merged onto
+`tranche/14` (`3109f48ac8`). Individual lanes' own receipts carry the detailed evidence; this
+entry is the roll-up plus a correction to a claim lane A's own receipt makes in good faith but
+which does not hold against the real merged tree.
+
+**Real movement this wave: 20 units closed** (16 to DONE, 4 to V) — all from lane A. Lane B
+closed 0, honestly reported, and did genuinely valuable disposition-trace work:
+
+- **Lane A** (`9737dbfed5`) — built `CLASS_FEATURE_ID_KNOWN_SYNONYMS`, a literal
+  `(owner, feature_slug, exact_full_explanation_id)` alias table plus a matching
+  `class_feature_known_synonym_grounded` matcher, closing all 20 of its assigned units across
+  the four Unchained classes (Monk 7, Barbarian 6, Rogue 4, Summoner 3) — the word-choice-synonym
+  shape wave 38 lane C had spot-checked but not fixed (e.g. `AC Bonus`/`ac_bonus` computed as
+  `armor_class_bonus`). Zero collateral movement, zero regressions.
+- **Lane B** (`cc30825e71`) — corrected the dispatch brief's own arithmetic (the named list is
+  14 classes / 28 units, not "9 classes / 27 units" — it silently omitted Summoner, 6 units, a
+  wave-39-dispatch-script error, retro-logged). Checked all 14 classes/28 units against real
+  engine source directly: 15 units (Duelist, Shadowdancer, Assassin, Loremaster, Cleric's Aura,
+  Paladin's Detect Evil, Wizard's Arcane Bond) have ZERO per-feature compute function — genuine
+  new-chassis scope, not this shape. 13 units (Monk, Fighter, Wizard's Bonus Feats, Bard, Druid,
+  Ranger, Sorcerer, Psychic) have real compute but a DIFFERENT structural wrinkle each (multi-word
+  compound suffix, value-0 recognition-only record, wrong id namespace, folded-into-a-combined-
+  total, numbered-per-level family, or an input-construction gap) — named precisely for a future
+  cycle, correctly declined to touch this cycle to avoid a same-file merge collision with lane A's
+  own in-flight edit (its worktree started strictly before lane A's fix merged, confirmed via
+  `git merge-base --is-ancestor`).
+
+**Correction: lane A's own "159/134 units remain, wave 38's fix is unmerged" claim does not hold
+against the real merged tree — retro-logged here, not a re-litigation of lane A's own honest
+work.** Lane A's worktree branched from a base 59 commits behind local `tranche/14`'s real tip
+(`7ea9651b87`, wave 33 — the recurring stale-worktree-base hazard this bundle has hit on nearly
+every wave since 36), so its own check of Shape 2's population against ITS OWN checkout
+correctly found 154 magnitude-bearing units and no trace of wave 38 lane C's dot-segment-matcher
+fix. But that fix (`d57a03a9d9`) **is** an ancestor of the real `tranche/14` HEAD and its code
+(`CLASS_FEATURE_ID_NON_MAGNITUDE_TRAILING_MARKERS`, the second-to-last-dot-segment check) is
+live in the file right now — confirmed directly (`git merge-base --is-ancestor d57a03a9d9 HEAD`
+→ true; `grep` finds the fix's own code and doc comments in `v06_work_inventory.rs`). Re-derived
+Shape 2's TRUE current population fresh against the real post-fold `docs/work-inventory.json`:
+**34 magnitude-bearing units remain** (not 159/134) — Summoner (6, the omitted class) + lane B's
+own checked 28-unit remainder (Monk 5, Duelist 4, Shadowdancer 4, Assassin 2, Fighter 2,
+Loremaster 2, Wizard 2, Bard/Cleric/Druid/Paladin/Ranger/Sorcerer/Psychic 1 each), summing
+exactly. Nothing needs re-landing; wave 38's fix was never lost, lane A's own worktree just
+never had it.
+
+**Wave-end gate fixes:**
+- `site/dashboard` + `site/status-data` regenerated (stale relative to this wave's shifted
+  `docs/work-inventory.json`) via `./scripts/publish-site-dashboard.sh`.
+- A `progress.md` formatting slip from the merge (the standing "Live cycle-by-cycle record"
+  intro paragraph had landed between lane A's and lane B's entries instead of before both) fixed
+  — cosmetic, no content lost.
+
+**Full `scripts/verify.sh -j 6`, run with an isolated `CARGO_TARGET_DIR`** (the same collision-
+avoidance measure wave 38's wave-end gate established, after a peer-session build collision
+SIGKILLed a verify.sh run once already this session): **40 PASS / 0 FAIL, `RESULT: PASS`.**
+
+**Bucket state, re-derived fresh:** `population=49438 overlap=0 unclassified=0`; `D: 2555 →
+2535`, `DONE: 25332 → 25348`, `V: 315 → 319`. `done_evidence_violations=0
+citation_failures=0`.
+
 ### Cycle — Wave 39, Lane A (mine bucket D, Shape 2 word-choice synonyms) — 20 of 20 assigned units closed — complete
 
 **Status: complete.** Assigned population: Shape 2's word-choice-synonym subset for four classes
@@ -58,9 +122,6 @@ precisely in the receipt: lane B's own 9-class remainder (27 units, unchanged, n
 cycle) plus the ~100-unit `<owner>.<feature_slug>.<descriptor>` dot-segment population wave 38's
 unmerged fix would close (re-landing that fix is real, undone work — an orchestrator decision,
 not this lane's to make unilaterally).
-
-Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
-`kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
 ### Cycle — Wave 39, Lane B — Shape 2's 9-CRB/prestige-class remainder: per-class compute-function check — complete (0 code units closed, by design)
 

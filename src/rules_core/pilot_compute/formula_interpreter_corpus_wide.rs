@@ -728,21 +728,37 @@ mod tests {
     /// data/corpus` against the post-merge, post-regen `docs/
     /// work-inventory.json` (tranche/14 tip `f6def63a64`, orchestrator regen
     /// commit): F1 = 5217 exactly.
+    ///
+    /// **5,217 -> 5,207, a REAL movement (SD-34 wave 39, 2026-09-04,
+    /// closure-cycle verify.sh re-run).** Wave 39 lane A closed all 20 of its
+    /// assigned units (the four Unchained classes' word-choice-synonym gap)
+    /// into `DONE`/`literal-verified` via `CLASS_FEATURE_ID_KNOWN_SYNONYMS`.
+    /// A real share of those 20 carry F1's own defining shape (bare-literal
+    /// magnitude, no per-level/ability/pool expression), so F1's not-done
+    /// population fell too. 5217 - 10 = 5207, confirmed by re-running
+    /// `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json
+    /// --corpus-root data/corpus` against the post-merge, post-regen `docs/
+    /// work-inventory.json` (tranche/14 tip `3109f48ac8`, orchestrator
+    /// wave-end gate): F1 = 5207 exactly.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5217,
-            "F1 population must equal the CURRENT true formula-bearing count (5,217, re-derived \
-             2026-09-03 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
+            f1.population, 5207,
+            "F1 population must equal the CURRENT true formula-bearing count (5,207, re-derived \
+             2026-09-04 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
              `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
-             cycle's own true-at-the-time 5,231 (SD-34 wave 38 closure-cycle -- Lane A + Lane C \
-             closed units into DONE, a real share of them F1-shaped, so F1's not-done population \
-             fell 5,231 -> 5,217, a genuine closure movement, not a re-pin of a wrong prior \
-             count), not the cycle-before-that's own true-at-the-time 5,400 (wave 22's \
+             cycle's own true-at-the-time 5,217 (SD-34 wave 39 closure-cycle -- Lane A closed \
+             its 20 assigned units into DONE, a real share of them F1-shaped, so F1's not-done \
+             population fell 5,217 -> 5,207, a genuine closure movement, not a re-pin of a wrong \
+             prior count), not the cycle-before-that's own true-at-the-time 5,231 (SD-34 wave 38 \
+             closure-cycle -- Lane A + Lane C closed units into DONE, a real share of them \
+             F1-shaped, so F1's not-done population fell 5,231 -> 5,217, a genuine closure \
+             movement, not a re-pin of a wrong prior count), not the cycle-before-that's own \
+             true-at-the-time 5,400 (wave 22's \
              oracle-verdict restamp -- `decisions.md §19` -- booked SD-33's already-computed \
              `oracle-agree`/`oracle-unverifiable` verdicts for thousands of bucket-V units once \
              `58b4f837cc` taught the doneness table the two new statuses; a real share of the \
@@ -753,7 +769,7 @@ mod tests {
              comment and the `AT-34-E3-001-class_feature_owner_matched-cycle` retro correction), \
              not the stale 6,257 pin, not the pre-fold 6,260/6,278, not the pre-regen 6,308 this \
              test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 census (6,032) — \
-             AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001 / SD-34 wave 22/23/38 gate remediation"
+             AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001 / SD-34 wave 22/23/38/39 gate remediation"
         );
     }
 }
