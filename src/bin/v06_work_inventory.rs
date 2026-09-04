@@ -10057,6 +10057,155 @@ fn class_feature_exact_suffix_grounded<'a>(
     })
 }
 
+/// Wave 39 lane A -- Shape 2's 20-unit word-choice-synonym remainder
+/// (`wave38_laneC_shape2_dot_segment_magnitude_id_matcher_cycle_receipt.md`'s
+/// own "Shape 2's remaining 54-unit magnitude-bearing population" section).
+///
+/// `class_feature_exact_suffix_grounded` and `id_matches_feature_slug_
+/// after_known_magnitude_suffix_strip` both require the id's own trailing
+/// dot-segment to be DERIVABLE from `feature_slug` -- an exact match, or a
+/// single trailing `_<known-suffix-word>` strip leaving an exact match.
+/// Neither can bridge an outright word substitution (`Unchained Monk ~ Ki
+/// Pool`'s `feature_slug` is `"ki_pool"`; `ground_unchained_monk_class_
+/// features` computes and emits `"...ki_points"` -- a genuinely different
+/// word, not a suffix of the same word), nor a `feature_slug` that is only
+/// a PREFIX of a real multi-word descriptor
+/// (`"fast_movement"` / `"...fast_movement_bonus_feet"`), nor a
+/// pluralization mismatch riding on an otherwise-real suffix
+/// (`"bonus_feat"` singular / `"...bonus_feats_known"` plural).
+///
+/// Every compute function behind every entry below was already shipped,
+/// already unit-tested, and already emits a real per-record magnitude
+/// (SD-32 card 11's Pathfinder Unchained dispatch family,
+/// `ground_unchained_monk_class_features` /
+/// `ground_unchained_barbarian_class_features` /
+/// `ground_unchained_rogue_class_features` /
+/// `ground_unchained_summoner_class_features`) -- the gap is purely that
+/// the classifier could not recognize the id it already writes. Each
+/// tuple's third field is the exact, full, already-shipped explanation id
+/// string, quoted verbatim from `pilot_compute/mod.rs` by direct read (not
+/// derived from any general rule), so this table can never invent a match
+/// -- it only recognizes ids that already exist. Confirmed, feature by
+/// feature, against the real corpus record and the real compute function
+/// before being added here (this cycle's own receipt names each one):
+///
+/// - `"spells"` -> `unchained_summoner_marker` is the one exception that is
+///   not a same-concept word swap: the corpus record's own (and ONLY)
+///   `raw_bonus_chain` token is `DEFINE:UnchainedSummoner|0` -- byte-
+///   identical to what `unchained_summoner_marker` computes -- so this is
+///   the SAME formula token under a different label, not a guess.
+/// - `"eidolon"` -> `eidolon_companion_level` and `"summon_monster"` ->
+///   `summon_monster_spell_level` each name ONE of several real magnitudes
+///   the class computes for that feature (Eidolon also has an evolution
+///   pool; Summon Monster also has a uses-per-day count) -- any one
+///   suffices to prove the engine holds the record; this table need not
+///   enumerate every sibling.
+const CLASS_FEATURE_ID_KNOWN_SYNONYMS: &[(&str, &str, &str)] = &[
+    ("unchained_monk", "ac_bonus", "class_feature.pu.unchained_monk.armor_class_bonus"),
+    ("unchained_monk", "bonus_feat", "class_feature.pu.unchained_monk.bonus_feats_known"),
+    (
+        "unchained_monk",
+        "fast_movement",
+        "class_feature.pu.unchained_monk.fast_movement_bonus_feet",
+    ),
+    ("unchained_monk", "ki_pool", "class_feature.pu.unchained_monk.ki_points"),
+    ("unchained_monk", "ki_powers", "class_feature.pu.unchained_monk.ki_powers_known"),
+    (
+        "unchained_monk",
+        "stunning_fist",
+        "class_feature.pu.unchained_monk.stunning_fist_monk_level",
+    ),
+    ("unchained_monk", "style_strike", "class_feature.pu.unchained_monk.style_strikes_known"),
+    (
+        "unchained_barbarian",
+        "fast_movement",
+        "class_feature.pu.unchained_barbarian.fast_movement_bonus_feet",
+    ),
+    (
+        "unchained_barbarian",
+        "greater_rage",
+        "class_feature.pu.unchained_barbarian.greater_rage_morale_bonus",
+    ),
+    (
+        "unchained_barbarian",
+        "mighty_rage",
+        "class_feature.pu.unchained_barbarian.mighty_rage_morale_bonus",
+    ),
+    ("unchained_barbarian", "rage", "class_feature.pu.unchained_barbarian.rage_rounds_per_day"),
+    (
+        "unchained_barbarian",
+        "rage_powers",
+        "class_feature.pu.unchained_barbarian.rage_powers_known",
+    ),
+    (
+        "unchained_barbarian",
+        "uncanny_dodge_tracker",
+        "class_feature.pu.unchained_barbarian.uncanny_dodge_tier",
+    ),
+    (
+        "unchained_rogue",
+        "finesse_training",
+        "class_feature.pu.unchained_rogue.finesse_training_weapon_choices",
+    ),
+    ("unchained_rogue", "rogue_talents", "class_feature.pu.unchained_rogue.rogue_talents_known"),
+    (
+        "unchained_rogue",
+        "rogues_edge",
+        "class_feature.pu.unchained_rogue.rogues_edge_skill_unlocks",
+    ),
+    (
+        "unchained_rogue",
+        "uncanny_dodge_tracker",
+        "class_feature.pu.unchained_rogue.uncanny_dodge_tracker_steps",
+    ),
+    (
+        "unchained_summoner",
+        "eidolon",
+        "class_feature.pu.unchained_summoner.eidolon_companion_level",
+    ),
+    (
+        "unchained_summoner",
+        "spells",
+        "class_feature.pu.unchained_summoner.unchained_summoner_marker",
+    ),
+    (
+        "unchained_summoner",
+        "summon_monster",
+        "class_feature.pu.unchained_summoner.summon_monster_spell_level",
+    ),
+];
+
+/// Whether `feature_slug` grounds via `CLASS_FEATURE_ID_KNOWN_SYNONYMS`'s
+/// own literal (owner, feature_slug) -> exact-id table. Same `group ==
+/// owner` guard as `class_feature_exact_suffix_grounded`, for the identical
+/// archetype/variant-qualified reason its own doc comment states --
+/// deliberately redundant with the exact-id match itself (which already
+/// encodes `owner` in the string), kept for defense in depth and to match
+/// every sibling check's own shape. A literal full-string equality check,
+/// never a substring or suffix scan, so this can never widen to match an
+/// id this table does not name -- including any `.corpus_record.` roster
+/// id or `.unsupported`/`.not_modelled` diagnostic-mirror id, none of which
+/// this table's own entries are (every entry names a real
+/// `ComputationExplanation`, confirmed by direct read, never a
+/// `ComputationDiagnostic`).
+fn class_feature_known_synonym_grounded<'a>(
+    mut explanation_ids: impl Iterator<Item = &'a String>,
+    owner: &str,
+    group: &str,
+    feature_slug: &str,
+) -> bool {
+    if !group.eq_ignore_ascii_case(&class_name_as_group_text(owner)) {
+        return false;
+    }
+    let Some((_, _, expected_id)) = CLASS_FEATURE_ID_KNOWN_SYNONYMS
+        .iter()
+        .find(|(o, slug, _)| *o == owner && *slug == feature_slug)
+    else {
+        return false;
+    };
+    explanation_ids.any(|id| id == expected_id)
+}
+
 /// Whether a `ComputationDiagnostic` id genuinely names `feature_slug` under
 /// `owner`, for the "quote the engine's own diagnostic" branch below.
 ///
@@ -12907,8 +13056,24 @@ fn classify(
                             &feature_slug,
                         )
                 });
-            let grounded = exact_suffix_grounded || suffix_stripped_grounded;
-            let grounded_strict = exact_suffix_grounded_strict || suffix_stripped_grounded_strict;
+            // Wave 39 lane A: `CLASS_FEATURE_ID_KNOWN_SYNONYMS`'s own
+            // literal alias table, tried only after both dot-segment checks
+            // above have already failed -- same ordering discipline as the
+            // suffix-strip fallback's own `!exact_suffix_grounded` guard.
+            let synonym_grounded = !exact_suffix_grounded
+                && !suffix_stripped_grounded
+                && class_feature_known_synonym_grounded(
+                    facts.explanation_ids.iter(),
+                    &owner,
+                    group,
+                    &feature_slug,
+                );
+            let synonym_grounded_strict = !exact_suffix_grounded_strict
+                && !suffix_stripped_grounded_strict
+                && class_feature_known_synonym_grounded(non_roster_ids(), &owner, group, &feature_slug);
+            let grounded = exact_suffix_grounded || suffix_stripped_grounded || synonym_grounded;
+            let grounded_strict =
+                exact_suffix_grounded_strict || suffix_stripped_grounded_strict || synonym_grounded_strict;
             if grounded {
                 // SD31-D7-PROSE-003: same promotion as the
                 // `class_feature_effect_wired` branch above, for the sibling
@@ -12927,6 +13092,8 @@ fn classify(
                         status: "text-complete",
                         evidence: if suffix_stripped_grounded {
                             "explanation_id_observed_after_known_magnitude_suffix_strip_and_corpus_record_carries_real_description".to_string()
+                        } else if synonym_grounded {
+                            "explanation_id_observed_via_known_class_feature_synonym_and_corpus_record_carries_real_description".to_string()
                         } else {
                             "explanation_id_observed_and_corpus_record_carries_real_description"
                                 .to_string()
@@ -12946,6 +13113,8 @@ fn classify(
                         status: "grounded",
                         evidence: if suffix_stripped_grounded_strict {
                             "explanation_id_observed_after_known_magnitude_suffix_strip".to_string()
+                        } else if synonym_grounded_strict {
+                            "explanation_id_observed_via_known_class_feature_synonym".to_string()
                         } else {
                             "explanation_id_observed_in_a_real_computation".to_string()
                         },
@@ -23784,6 +23953,88 @@ mod class_feature_exact_suffix_grounded_tests {
             "unchained_barbarian",
             "Unchained Barbarian",
             "uncanny_dodge",
+        ));
+    }
+}
+
+/// Wave 39 lane A: every one of `CLASS_FEATURE_ID_KNOWN_SYNONYMS`'s 20
+/// entries proven to actually ground, plus the negative controls this
+/// function's own guards exist for.
+#[cfg(test)]
+mod class_feature_known_synonym_grounded_tests {
+    use super::*;
+
+    /// Every `(owner, feature_slug, id)` triple in the live table grounds
+    /// when the id is present, using each entry's own real `owner`'s
+    /// spaced group text (`class_name_as_group_text`).
+    #[test]
+    fn every_known_synonym_table_entry_grounds_via_its_own_exact_id() {
+        for (owner, feature_slug, id) in CLASS_FEATURE_ID_KNOWN_SYNONYMS {
+            let ids = [(*id).to_string()];
+            let group = class_name_as_group_text(owner);
+            assert!(
+                class_feature_known_synonym_grounded(ids.iter(), owner, &group, feature_slug),
+                "expected ({owner}, {feature_slug}) to ground via {id}",
+            );
+        }
+    }
+
+    /// An owner/feature_slug pair the table does not name (even a real
+    /// owner from the table) must not ground -- proves the lookup is a
+    /// literal table hit, never a fallback that invents a match.
+    #[test]
+    fn an_unlisted_feature_slug_for_a_known_owner_does_not_ground() {
+        let ids = ["class_feature.pu.unchained_monk.armor_class_bonus".to_string()];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "unchained_monk",
+            "Unchained Monk",
+            "some_feature_not_in_the_table",
+        ));
+    }
+
+    /// A known (owner, feature_slug) pair whose expected id is simply
+    /// absent from `explanation_ids` (the engine never emitted it for this
+    /// character) must not ground -- the table names what to look FOR, it
+    /// does not manufacture the id.
+    #[test]
+    fn a_known_pair_with_the_expected_id_absent_does_not_ground() {
+        let ids: [String; 0] = [];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "unchained_monk",
+            "Unchained Monk",
+            "ac_bonus",
+        ));
+    }
+
+    /// A near-miss id (one extra trailing character) must not ground --
+    /// proves the check is full literal-string equality, never a prefix or
+    /// substring scan that could widen past the table's own exact strings.
+    #[test]
+    fn a_near_miss_id_does_not_ground_via_substring_or_prefix() {
+        let ids = ["class_feature.pu.unchained_monk.armor_class_bonus_level_component"
+            .to_string()];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "unchained_monk",
+            "Unchained Monk",
+            "ac_bonus",
+        ));
+    }
+
+    /// The operator's own worked example, restated for this check: an
+    /// archetype/variant-qualified group must not ground off a base-owner
+    /// table entry's id purely because the substring guard on `owner`
+    /// would otherwise pass.
+    #[test]
+    fn an_archetype_qualified_group_cannot_ground_via_the_synonym_table() {
+        let ids = ["class_feature.pu.unchained_monk.armor_class_bonus".to_string()];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "unchained_monk",
+            "Ironskin Monk",
+            "ac_bonus",
         ));
     }
 }

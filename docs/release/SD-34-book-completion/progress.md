@@ -8,6 +8,57 @@ date: 2026-08-26
 
 # SD-34 Progress
 
+### Cycle — Wave 39, Lane A (mine bucket D, Shape 2 word-choice synonyms) — 20 of 20 assigned units closed — complete
+
+**Status: complete.** Assigned population: Shape 2's word-choice-synonym subset for four classes
+already confirmed to have a per-feature compute function under a different descriptor word than
+the corpus feature's own slug — Unchained Monk (7), Unchained Barbarian (6), Unchained Rogue (4),
+Unchained Summoner (3), 20 units total. Receipt:
+`artifacts/bucket-d-mining/wave39_laneA_shape2_class_feature_synonym_alias_table_cycle_receipt.md`.
+
+**A real, disclosed premise correction, not a self-heal.** This cycle's own worktree rebased
+cleanly from the stale `ea2b3396f2` base onto `origin/tranche/14`'s real tip (`7ea9651b87`, wave
+33 lane D). The dispatch brief's technical source (wave 38 lane C's own receipt) described Shape
+2 as already reduced from 179 to 54 magnitude-bearing units by that lane's own dot-segment-matcher
+fix (`b80ccbffa4`). **That commit was never merged to `origin/tranche/14`** —
+`git merge-base 7ea9651b87 b80ccbffa4` resolves to `7ea9651b87` itself, and the commit carries no
+reachable ref in this checkout; waves 34-38's own bucket-D-mining chain exists only in some other
+worktree that was never pushed. Retro-logged as a `correction`
+(`docs/retro/events/sd34-wave39-lanea.jsonl`). The real Shape 2 magnitude-bearing population at
+this cycle's actual HEAD was 154, not 54 — but the assigned 20-unit, 4-class subset was
+independently re-derived and found identical either way, since the word-choice-synonym gap this
+cycle closes is orthogonal to the dot-segment-crossing gap wave 38's (unmerged) fix addresses.
+
+**The fix.** New `CLASS_FEATURE_ID_KNOWN_SYNONYMS` literal alias table (`src/bin/
+v06_work_inventory.rs`) — 20 `(owner, feature_slug, exact_full_explanation_id)` triples, every
+id confirmed by direct `grep -c == 1` against `pilot_compute/mod.rs` before being added, two of
+them (Barbarian's Uncanny Dodge Tracker, Summoner's Spells) additionally confirmed against the
+real corpus record's own `raw_bonus_chains`/`DEFINE` token to prove they are the SAME formula
+token under a different label, not a guess. New `class_feature_known_synonym_grounded` matcher —
+same `group == owner` archetype guard every sibling check uses, full-string equality only (never
+substring/suffix), wired into the existing `grounded`/`grounded_strict` chains and both
+evidence-string branches with an honest new evidence string. `src/rules_core/pilot_compute/
+mod.rs` itself carries zero diff — every id was already shipped; this cycle only made it visible
+to the classifier.
+
+**Movement (`completion_atlas.py --check`): `population=49438 unclassified=0 overlap=0
+citation_failures=0`.** `D: 2955→2935 (−20)`, corpus-wide `grounded: 4309→4325 (+16)`,
+`literal-verified: 289→293 (+4)`. **Exactly the 20 assigned units moved, zero collateral
+movement** — full before/after unit-set join confirmed only these 20 changed `(status,
+evidence)`. 10 `completion_atlas.py` citation-pin line numbers re-derived (this cycle's own
++149-line insertion shifted every one uniformly). `cargo test --locked --bin v06_work_inventory`
+507/507 (5 new, 0 regressed); `cargo test --locked --no-run` (full workspace) exit 0; desktop
+crate not touched, not run. `corpus_literal_sweep` 48706/51476 CLEAN unchanged;
+`derived_evaluator_fixture_check` 1839/2580 unchanged — no `data/corpus/**` record touched.
+
+**Remainder, honestly re-stated.** After this cycle: 159 Shape-2-evidence units (134
+magnitude-bearing), not the 34 a naive "154 − 20 − 100-already-closed" arithmetic would suggest,
+because the 100-unit wave-38 dot-segment closure never actually landed on this branch. Named
+precisely in the receipt: lane B's own 9-class remainder (27 units, unchanged, not touched this
+cycle) plus the ~100-unit `<owner>.<feature_slug>.<descriptor>` dot-segment population wave 38's
+unmerged fix would close (re-landing that fix is real, undone work — an orchestrator decision,
+not this lane's to make unilaterally).
+
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
