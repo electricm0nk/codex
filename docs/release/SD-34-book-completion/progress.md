@@ -11,6 +11,54 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 39, Lane B — Shape 2's 9-CRB/prestige-class remainder: per-class compute-function check — complete (0 code units closed, by design)
+
+**Status: complete (disposition-trace, 0 closures).** Assigned to check whether each of the 9
+CRB-base/prestige classes named in wave 38 lane C's own "Shape 2's remaining 54-unit" section
+(Monk, Duelist, Shadowdancer, Assassin, Fighter, Loremaster, Wizard, plus
+Bard/Cleric/Druid/Paladin/Ranger/Sorcerer/Psychic) has ANY per-feature compute function at all
+before assuming lane A's own word-choice-synonym shape applies. **Correction against this
+cycle's own dispatch brief** (retro-logged): the named list is actually **14 distinct classes
+summing to 28 units**, not "9 classes / 27 units" — and it silently omits `Summoner` (6 units,
+non-Unchained), named here as unowned by either lane 39 A or B this wave.
+
+Grepped `pilot_compute/mod.rs` and `src/rules_core/rules_tables/` for every one of the 14
+classes' named features, one at a time, real function bodies read directly (not assumed):
+
+- **15 of 28 units have ZERO per-feature compute function anywhere** — Duelist (4), Shadowdancer
+  (4), Assassin (2), Loremaster (2), Cleric's Aura (1), Paladin's Detect Evil (1), Wizard's
+  Arcane Bond (1). Confirmed by direct grep across the whole `rules_core` tree, not just
+  `mod.rs`. Genuinely different (new-chassis) scope, same disposition wave 37/38 lane B already
+  established for sub-mechanism 5.
+- **13 of 28 units DO have real, wired compute functions touching the named feature** — Monk
+  (5), Fighter (2), Wizard's Bonus Feats (1), Bard (1), Druid (1), Ranger (1), Sorcerer (1),
+  Psychic (1) — but NONE matches lane A's own clean single-word-synonym shape. Each carries an
+  additional structural wrinkle: a multi-word compound suffix (Monk ×4, Bard, Ranger), a
+  value-0 recognition-only record standing in for a real magnitude (Wizard's Scribe Scroll,
+  Druid's nature-bond-choice), a wrong top-level id namespace (Sorcerer's `class_spell.*`,
+  Monk's Stunning Fist under `feat.standalone.*`), no discrete id at all (Fighter's Weapon
+  Training, folded into a combined attack total), a numbered-per-level id family instead of one
+  aggregate (Fighter's Bonus Feats), or an input-construction gap unrelated to id spelling
+  (Psychic's Phrenic Pool — the id shape already matches lane C's own convention exactly, but
+  the classifier's generic per-class probe input never makes the discipline choice the
+  function is gated on).
+
+**0 units closed this cycle, by design.** This cycle's own worktree started at `ea2b3396f2`,
+strictly before lane A's wave 39 fix (`4660701090`/`bcc67dfeed`, 20 units,
+`CLASS_FEATURE_ID_KNOWN_SYNONYMS`) merged to `tranche/14` — confirmed by
+`git merge-base --is-ancestor bcc67dfeed tranche/14` → false. Every one of the 13 "real
+compute" units would need a literal alias table entry in that SAME const array and the SAME
+`classify()` branch lane A's own commit edits — the brief's own explicit trigger ("if your
+worktree started before lane A's own fix merged ... prefer disposition-tracing over touching
+the SAME matcher file") is met exactly. Named all 13 precisely, with the exact real id each
+would alias to, so a follow-up cycle after lane A's merge can add them without re-deriving
+anything. Retro-logged a `deferral` (13 units, reason, revisit condition) and a `correction`
+(this cycle's own dispatch-brief figure) — `docs/retro/events/sd34-wave39-laneb.jsonl`.
+
+`population=49438 buckets=10 unclassified=0 overlap=0` unchanged before/after (no
+`docs/work-inventory.json`, `src/`, or `data/corpus/**` file touched this cycle). Full receipt:
+`artifacts/bucket-d-mining/wave39_laneB_shape2_crb_prestige_class_function_check_cycle_receipt.md`.
+
 ### Cycle — Wave 38 wave-end gate — collision recovery, 2 baselines raised, full 40/40 confirmed — complete
 
 **Status: complete.** Integration summary for wave 38's three lanes, all already merged onto
