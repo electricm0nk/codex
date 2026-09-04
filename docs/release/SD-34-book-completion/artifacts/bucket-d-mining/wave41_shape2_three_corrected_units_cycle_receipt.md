@@ -1,6 +1,6 @@
 # Cycle — SD-34 wave 41 — Shape 2's three corrected units (Monk's Stunning Fist, Fighter's Weapon Training, Psychic's Phrenic Pool): 3 of 3 closed
 
-- **Commit SHA:** `<FILL_IN_AFTER_COMMIT>`
+- **Commit SHA:** `b4f33e16d2` (`b4f33e16d2c623c58f0696735c0b2478b9746a8e`)
 - **Files touched:** `src/bin/v06_work_inventory.rs` (`CLASS_FEATURE_ID_KNOWN_SYNONYMS` extended
   with 1 new `("monk", "stunning_fist", "feat.standalone.stunning_fist.save_dc")` entry;
   `canonical_seeds_for()` extended with 2 new match arms, `"fighter"` and `"psychic"`; 2 stale
