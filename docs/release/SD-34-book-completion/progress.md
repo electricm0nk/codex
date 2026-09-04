@@ -11,6 +11,40 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 40, lane B — Shape 2's Summoner remainder: 5 of 6 units closed, Greater Aspect declined (no compute function exists)
+
+**Status: complete.** Re-derived Shape 2's own 6-unit `Summoner` (non-Unchained) remainder fresh
+from `docs/work-inventory.json` (unowned by any wave 39/40 lane before this cycle, named
+explicitly in the dispatch brief). Found a real, wired, level-gated compute function for 5 of
+the 6 (`ground_summoner_slice_a_features`, `pilot_compute/mod.rs`) whose explanation ids follow
+the identical 4-segment compound-suffix shape wave 40 lane A's own 4 Monk chassis entries already
+closed (`class_feature.apg.<owner>.<compound_descriptor>`, an extra `apg` namespace segment
+before `owner`) — extended `CLASS_FEATURE_ID_KNOWN_SYNONYMS` with 5 new `owner: "summoner"`
+entries (Bond Senses, Maker's Call, Merge Forms, Twin Eidolon, Summon Monster). Confirmed each
+two ways per the established discipline: `grep -c` to a single real definition site (plus
+pre-existing, already-passing `pilot_compute`-layer unit tests proving real non-zero values at
+specific levels), AND a temporary live dump through the classifier's own real sweep pipeline
+(`class_sweep_input` + `compute_pilot_base_chassis` across `SWEEP_LEVELS`, removed before
+commit) — no false start this cycle, every source-obvious candidate was also the safe one
+(unlike lane A's Bard/Sorcerer re-aliases). RED→GREEN confirmed for the intended reason (11/11
+`class_feature_known_synonym_grounded_tests` pass, 3 new; 544/544 full bin tests). Guarded regen
+ran to completion this cycle — **5 of 6 units confirmed closed** (`engine-does-not-hold` →
+`grounded`, `DONE: 25353→25358`, `D: 2528→2523`), zero collateral movement, fully attributed by
+naming each unit directly. **Greater Aspect (the 6th unit) correctly declined**: no compute
+function exists anywhere for base (non-Unchained) Summoner's Greater Aspect —
+`ground_summoner_slice_a_features`'s own doc comment states it is deliberately excluded (the
+eidolon evolution-point diversion makes it "a chooser over a shared resource rather than an
+independent fact," not a flat computed quantity) — genuinely unbuilt scope, not a synonym gap;
+retro-logged as a deferral. Also caught and fixed a second, SILENT `completion_atlas.py`
+citation-pin staleness on the `DONE` bucket's own pin (the exact "passes the string check, wrong
+construction site" hazard wave 38 lane C already found once) — 10 total citation pins
+re-derived, `--check` clean (`population=49438 unclassified=0 overlap=0 citation_failures=0`).
+Noted, but out of this cycle's own scope: `scripts/box_ledger.py --check` (an SD-33 instrument,
+not part of SD-34's own per-cycle gate) is pre-existing stale before and after this cycle
+(`uncovered=28228→28223`, the delta matching this cycle's own 5 units, confirming the tool is
+internally consistent even though `THE-BOX.md` itself needs re-deriving by whoever owns that
+debt). Full receipt: `artifacts/bucket-d-mining/wave40_laneB_shape2_summoner_check_cycle_receipt.md`.
+
 ### Cycle — Wave 40, lane A — Shape 2 CRB synonym-table extension: 7 entries added and unit-tested, guarded regen did not finish in time — blocked-escalated, 0 units confirmed closed
 
 **Status: blocked-escalated (time-budget, not authority/scope).** Extended

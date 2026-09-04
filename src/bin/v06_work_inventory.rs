@@ -10279,6 +10279,49 @@ const CLASS_FEATURE_ID_KNOWN_SYNONYMS: &[(&str, &str, &str)] = &[
         "spells",
         "class_chassis.sorcerer.spontaneous.spell_level_access",
     ),
+    // Wave 40 lane B: 5 base-Summoner CRB/APG "Slice A" entries -- see this
+    // const's own doc comment above for the live-dump verification each one
+    // carries. `ground_summoner_slice_a_features` (`pilot_compute/mod.rs`)
+    // computes all five under the `class_feature.apg.summoner.<descriptor>`
+    // namespace, a 4-segment id (`<kind>.apg.<owner>.<descriptor>`) where the
+    // descriptor is a compound word never equal to, nor a single-suffix-word
+    // strip of, `feature_slug` -- the identical compound-suffix shape as
+    // wave 40 lane A's Monk chassis entries, just with an extra `apg`
+    // namespace segment before `owner` (the `.{owner}.` substring needle
+    // still matches, since it is not anchored to the id's start).
+    // `Summoner ~ Greater Aspect` (the 6th unit of this wave's own 6-unit
+    // remainder) is deliberately NOT added: no compute function anywhere in
+    // `pilot_compute/mod.rs` names base Summoner's Aspect/Greater Aspect at
+    // all (`ground_summoner_slice_a_features`'s own doc comment: "Deliberately
+    // does NOT touch Aspect/Greater Aspect: those divert points out of the
+    // eidolon's own evolution pool" -- only Unchained Summoner's Aspect has a
+    // compute function, a different class's different feature) -- genuinely
+    // unbuilt scope, not a synonym gap.
+    (
+        "summoner",
+        "bond_senses",
+        "class_feature.apg.summoner.bond_senses_rounds_per_day",
+    ),
+    (
+        "summoner",
+        "makers_call",
+        "class_feature.apg.summoner.makers_call_uses_per_day",
+    ),
+    (
+        "summoner",
+        "merge_forms",
+        "class_feature.apg.summoner.merge_forms_rounds_per_day",
+    ),
+    (
+        "summoner",
+        "twin_eidolon",
+        "class_feature.apg.summoner.twin_eidolon_minutes_per_day",
+    ),
+    (
+        "summoner",
+        "summon_monster",
+        "class_feature.apg.summoner.summon_monster_uses_per_day",
+    ),
 ];
 
 /// Whether `feature_slug` grounds via `CLASS_FEATURE_ID_KNOWN_SYNONYMS`'s
@@ -24226,6 +24269,75 @@ mod class_feature_known_synonym_grounded_tests {
                  entry",
             );
         }
+    }
+
+    /// Wave 40 lane B: the 5 base-Summoner entries this cycle adds, pinned
+    /// as a literal manifest independent of the table itself -- same
+    /// discipline as `wave_40_lane_a_entries_match_the_receipts_own_manifest`.
+    #[test]
+    fn wave_40_lane_b_entries_match_the_receipts_own_manifest() {
+        let expected: &[(&str, &str, &str)] = &[
+            (
+                "summoner",
+                "bond_senses",
+                "class_feature.apg.summoner.bond_senses_rounds_per_day",
+            ),
+            (
+                "summoner",
+                "makers_call",
+                "class_feature.apg.summoner.makers_call_uses_per_day",
+            ),
+            (
+                "summoner",
+                "merge_forms",
+                "class_feature.apg.summoner.merge_forms_rounds_per_day",
+            ),
+            (
+                "summoner",
+                "twin_eidolon",
+                "class_feature.apg.summoner.twin_eidolon_minutes_per_day",
+            ),
+            (
+                "summoner",
+                "summon_monster",
+                "class_feature.apg.summoner.summon_monster_uses_per_day",
+            ),
+        ];
+        for entry in expected {
+            assert!(
+                CLASS_FEATURE_ID_KNOWN_SYNONYMS.contains(entry),
+                "expected {entry:?} to be a live table entry",
+            );
+        }
+    }
+
+    /// `Summoner ~ Greater Aspect` (this wave's 6th unit) was investigated
+    /// and deliberately declined: no compute function anywhere names it for
+    /// base (non-Unchained) Summoner. Proves it was not silently added.
+    #[test]
+    fn summoner_greater_aspect_is_not_in_the_table() {
+        assert!(
+            !CLASS_FEATURE_ID_KNOWN_SYNONYMS
+                .iter()
+                .any(|(o, s, _)| *o == "summoner" && *s == "greater_aspect"),
+            "(summoner, greater_aspect) was deliberately declined this cycle (no compute function \
+             exists) and must not be a table entry",
+        );
+    }
+
+    /// Guards the specific `owner == "summoner"` group check: base Summoner
+    /// grounds via the table only under the group text `"Summoner"`, never
+    /// `"Unchained Summoner"` (a different owner already in this table with
+    /// its own entries) -- the two must not cross-credit each other's ids.
+    #[test]
+    fn base_summoner_does_not_ground_via_unchained_summoners_own_entries() {
+        let ids = ["class_feature.pu.unchained_summoner.summon_monster_spell_level".to_string()];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "summoner",
+            "Summoner",
+            "summon_monster",
+        ));
     }
 }
 
