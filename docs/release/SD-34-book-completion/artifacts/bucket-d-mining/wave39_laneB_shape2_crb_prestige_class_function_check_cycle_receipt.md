@@ -1,6 +1,6 @@
 # Cycle — SD-34 wave 39, Lane B — Shape 2's 9-CRB/prestige-class remainder: per-class compute-function check, 0 units closed (honest disposition-trace, deferred by design)
 
-- **Commit SHA:** `<FILL_IN_AFTER_COMMIT>`
+- **Commit SHA:** `7b42eb8991` (this receipt's own follow-up fill-in commit; the substantive disposition-trace work landed in the same commit)
 - **Files touched:** this receipt, `progress.md`, `kanban.md`, `docs/retro/events/sd34-wave39-laneb.jsonl` (new). **No `src/` file touched. No `data/corpus/**` file touched. No `docs/work-inventory.json` file touched.**
 - **Identifier audit result:** N/A — no `src/` diff this cycle.
 - **Wired-integration audit result:** N/A — no `src/` diff this cycle.
