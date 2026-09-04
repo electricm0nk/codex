@@ -1,6 +1,6 @@
 # Cycle — SD-34 wave 40, Lane B — Shape 2's Summoner remainder: 5 of 6 units closed via a same-shape synonym-table extension, Greater Aspect declined (no compute function exists)
 
-- **Commit SHA:** `<PENDING-FILL — see this cycle's own final commit>`
+- **Commit SHA:** `725b5ff1c9` (`725b5ff1c90d1512accd817a758d5ecf05ed1290`)
 - **Files touched:** `src/bin/v06_work_inventory.rs` (`CLASS_FEATURE_ID_KNOWN_SYNONYMS` extended
   with 5 new `(owner, feature_slug, exact_full_explanation_id)` entries for `owner: "summoner"`,
   doc comment extended with this cycle's own live-dump verification notes, 3 new tests added to
