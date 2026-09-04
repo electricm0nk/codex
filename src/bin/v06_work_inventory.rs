@@ -5375,9 +5375,13 @@ struct EngineFacts {
     /// suffix)` pairs whose own `"class_feature.fighter.weapon_training..."`
     /// explanation id was genuinely observed via
     /// [`probe_fighter_weapon_training_wiring`]. Same discipline as
-    /// `domain_power_effect_wired` above: `canonical_seeds_for("fighter")`
-    /// never seeds any weapon-training-group choice at all, so the standard
-    /// sweep below never observes any of these on its own.
+    /// `domain_power_effect_wired` above, though wave 41 (`decisions.md
+    /// §22`'s CORRECTION) narrowed the gap this field covers:
+    /// `canonical_seeds_for("fighter")` now seeds tier 1's own group choice
+    /// (so the standard sweep DOES observe tier 1's canonical `Heavy
+    /// Blades` pair on its own), but still seeds nothing for tiers 2-4 or
+    /// for any of the other 13 non-canonical tier-1 groups -- this probe
+    /// remains the only path for the other 55 of these 56 combinations.
     fighter_weapon_training_wired: BTreeSet<(u8, String)>,
     /// `AT-34-E3-001` (mechanism 3 continuation, cycle 3): the 31 canonical
     /// Ranger favored-enemy TYPE strings (`"Aberration"`, `"Humanoid
@@ -6018,6 +6022,32 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
             ],
             Vec::new(),
         ),
+        // Wave 41: `decisions.md §22`'s CORRECTION (2026-09-04) -- Fighter's
+        // Weapon Training already has a real, live `class_feature.fighter.
+        // weapon_training` explanation (`pilot_compute/mod.rs`,
+        // `fighter_weapon_training_attack_bonus`); it never fired during
+        // classification only because the generic per-class sweep never
+        // supplied a `choice:fighter_weapon_training_group` selection. Same
+        // "give the sweep one canonical default choice" gap this function
+        // already closes for every class above -- `group:heavy_blades` is
+        // one of the 14 canonical PF1 weapon-training groups
+        // (`WEAPON_TRAINING_GROUPS`), not a guess.
+        "fighter" => (
+            vec![choice("choice:fighter_weapon_training_group", "group:heavy_blades")],
+            Vec::new(),
+        ),
+        // Wave 41: same root cause and fix shape as Fighter's above --
+        // Psychic's Phrenic Pool (`class_feature.untabled.psychic.
+        // phrenic_pool.value`, `ground_psychic_class_features`) already
+        // computes a real, tested magnitude off whichever Psychic
+        // Discipline the character chose (`choice:psychic_discipline`), but
+        // the generic sweep never supplies one. `discipline:rapport` is one
+        // of the engine's own recognized Charisma-keyed disciplines
+        // (`PSYCHIC_DISCIPLINE_CHA_SELECTION_IDS`).
+        "psychic" => (
+            vec![choice("choice:psychic_discipline", "discipline:rapport")],
+            Vec::new(),
+        ),
         _ => (Vec::new(), Vec::new()),
     }
 }
@@ -6028,6 +6058,83 @@ fn class_sweep_input(fixture: &CharacterInput, class_name: &str, level: u8) -> C
     input.chosen.selected_choices.extend(choices);
     input.chosen.spells_selected.extend(spells);
     input
+}
+
+/// Wave 41: `decisions.md §22`'s CORRECTION (2026-09-04). Fighter's Weapon
+/// Training and Psychic's Phrenic Pool were both wrongly written up as
+/// needing a bespoke fix each; both are actually the SAME "give the sweep
+/// one canonical default choice" gap `canonical_seeds_for()` already solves
+/// for wizard/arcanist/sorcerer/cleric/druid and others. These tests prove
+/// the new `"fighter"` / `"psychic"` arms actually reach the real
+/// `compute_pilot_base_chassis` pipeline via `class_sweep_input` -- the
+/// SAME entry point the corpus-wide union sweep (`main`'s own
+/// `explanation_ids` loop) calls for every modelled class -- rather than
+/// merely returning a plausible-looking `SelectedChoice`.
+#[cfg(test)]
+mod wave_41_canonical_seeds_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Before this cycle, `canonical_seeds_for("fighter")` seeded nothing
+    /// at all (confirmed live: `fighter_weapon_training_probe_generalization_
+    /// tests` had to build its own bespoke selection precisely because the
+    /// standard sweep never supplied one) -- the real, already-wired
+    /// `class_feature.fighter.weapon_training` explanation never appeared
+    /// in `EngineFacts::explanation_ids` as a result. This proves the new
+    /// seed alone -- with no bespoke override, exactly as the corpus-wide
+    /// sweep calls it -- is now sufficient.
+    #[test]
+    fn canonical_seeds_for_fighter_makes_weapon_training_fire_through_the_real_sweep() {
+        let input = class_sweep_input(&fixture(), "fighter", 5);
+        let computation = compute_pilot_base_chassis(&input);
+        let explanation = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.fighter.weapon_training")
+            .expect(
+                "class_feature.fighter.weapon_training must fire once canonical_seeds_for \
+                 supplies a weapon-training group choice",
+            );
+        assert_eq!(explanation.value, 1, "level 5 Fighter, tier-1 rank 1");
+    }
+
+    /// Same shape as Fighter's above: `canonical_seeds_for("psychic")` used
+    /// to seed nothing, so `psychic_discipline_pool_ability` always
+    /// returned `None` for a swept Psychic and `class_feature.untabled.
+    /// psychic.phrenic_pool.value` never appeared in `explanation_ids`.
+    /// `discipline:rapport` is a Charisma-keyed discipline
+    /// (`PSYCHIC_DISCIPLINE_CHA_SELECTION_IDS`); the fixture's own Charisma
+    /// score is asserted only indirectly (a non-zero pool value proves an
+    /// ability modifier was genuinely applied, not defaulted to zero).
+    #[test]
+    fn canonical_seeds_for_psychic_makes_phrenic_pool_fire_through_the_real_sweep() {
+        let input = class_sweep_input(&fixture(), "psychic", 5);
+        let computation = compute_pilot_base_chassis(&input);
+        let explanation = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.untabled.psychic.phrenic_pool.value")
+            .expect(
+                "class_feature.untabled.psychic.phrenic_pool.value must fire once \
+                 canonical_seeds_for supplies a Psychic Discipline choice",
+            );
+        assert!(
+            explanation.value != 0,
+            "phrenic pool at level 5 with a real ability modifier must be non-zero, got {}",
+            explanation.value
+        );
+    }
 }
 
 /// `"Greater Weapon Focus"` -> `"choice:greater_weapon_focus_target"`, the
@@ -7991,15 +8098,20 @@ fn probe_domain_power_effect_wiring(fixture: &CharacterInput) -> BTreeSet<String
 /// `AT-34-E3-001` (`decisions.md §14`, mechanism 3 continuation): the same
 /// live-computation discipline `probe_domain_power_effect_wiring` uses,
 /// applied to `"Weapon Training <tier> <group>"` corpus records.
-/// `canonical_seeds_for("fighter")` never seeds ANY
-/// `choice:fighter_weapon_training_group*` selection at all, so the
-/// standard per-class sweep that fills `EngineFacts::explanation_ids` never
-/// observes even one tier's own selection. This probe selects each of
-/// `fighter_weapon_training_canonical_catalog`'s own `(tier, group, choice
-/// id, selection)` tuples explicitly, one at a time, over the SAME real
-/// `compute_pilot_base_chassis` pipeline every other probe in this file
-/// uses, and keeps only the `(tier, group)` pairs whose own explanation id
-/// was genuinely observed.
+/// Wave 41 (`decisions.md §22`'s CORRECTION, 2026-09-04): `canonical_seeds_
+/// for("fighter")` now seeds a tier-1 `choice:fighter_weapon_training_group`
+/// selection (the fix for the `class_feature.fighter.weapon_training`
+/// classification gap this const's own doc comment describes), but still
+/// seeds nothing for tiers 2-4's own `_group_2`/`_group_3`/`_group_4` choice
+/// ids -- the standard per-class sweep that fills `EngineFacts::
+/// explanation_ids` observes tier 1 alone on its own. This probe still
+/// selects each of `fighter_weapon_training_canonical_catalog`'s own (tier,
+/// group, choice id, selection)` tuples explicitly, one at a time, over the
+/// SAME real `compute_pilot_base_chassis` pipeline every other probe in
+/// this file uses, and keeps only the `(tier, group)` pairs whose own
+/// explanation id was genuinely observed -- still the only path that
+/// credits tiers 2-4, and still the only path for this catalog's other 13
+/// non-canonical tier-1 groups.
 ///
 /// `AT-34-E3-001` (mechanism 3 continuation, cycle 9): widened from testing
 /// only the engine's 4 hardcoded canonical (tier, group) pairs to testing
@@ -10322,6 +10434,22 @@ const CLASS_FEATURE_ID_KNOWN_SYNONYMS: &[(&str, &str, &str)] = &[
         "summon_monster",
         "class_feature.apg.summoner.summon_monster_uses_per_day",
     ),
+    // Wave 41: `decisions.md §22`'s CORRECTION (2026-09-04) -- Monk's
+    // Stunning Fist was declined in wave 40 lane A against the OLDER
+    // `class_feature_exact_suffix_grounded` check alone
+    // (`feat.standalone.stunning_fist.save_dc` carries `group: "standalone"`,
+    // never `"monk"`, so it can never satisfy that check's own `owner`-
+    // substring requirement). This table's own `class_feature_known_
+    // synonym_grounded` has no such requirement on the id ITSELF -- only on
+    // this record's own corpus `group` ("Monk") matching `owner` via
+    // `class_name_as_group_text`, which it already does -- so a single
+    // literal entry closes it. The real compute
+    // (`feat_effects::stunning_fist_facts_from_feats`, wired at
+    // `pilot_compute/mod.rs`) pushes both `feat.standalone.stunning_fist.
+    // save_dc` and `.uses_per_day`; either alone proves the engine holds
+    // this record, so only one is named here (matching every other table
+    // entry's own one-id-per-unit shape).
+    ("monk", "stunning_fist", "feat.standalone.stunning_fist.save_dc"),
 ];
 
 /// Whether `feature_slug` grounds via `CLASS_FEATURE_ID_KNOWN_SYNONYMS`'s
@@ -24247,19 +24375,18 @@ mod class_feature_known_synonym_grounded_tests {
         }
     }
 
-    /// Druid's Nature Bond, Monk's Stunning Fist, Fighter's Weapon
-    /// Training, and Psychic's Phrenic Pool were all investigated this
-    /// cycle and deliberately declined (see this const's own doc comment
-    /// and this cycle's receipt) -- proves none of the four owners was
-    /// silently added for the specific declined feature slug.
+    /// Druid's Nature Bond remains declined (its only id is a permanent
+    /// `+0`-by-design recognition record, unaffected by wave 41's own
+    /// correction) -- proves it was not silently added for its feature
+    /// slug. Fighter's Weapon Training and Psychic's Phrenic Pool are
+    /// checked in the SAME negative shape by
+    /// `fighter_and_psychic_are_fixed_via_canonical_seeds_not_the_synonym_
+    /// table` below (wave 41 resolved both, but via `canonical_seeds_for()`,
+    /// never a table entry) -- kept as a separate test because the reason
+    /// differs (fixed-elsewhere vs. genuinely declined).
     #[test]
     fn declined_units_are_not_in_the_table() {
-        let declined: &[(&str, &str)] = &[
-            ("druid", "nature_bond"),
-            ("monk", "stunning_fist"),
-            ("fighter", "weapon_training"),
-            ("psychic", "phrenic_pool"),
-        ];
+        let declined: &[(&str, &str)] = &[("druid", "nature_bond")];
         for (owner, slug) in declined {
             assert!(
                 !CLASS_FEATURE_ID_KNOWN_SYNONYMS
@@ -24269,6 +24396,44 @@ mod class_feature_known_synonym_grounded_tests {
                  entry",
             );
         }
+    }
+
+    /// Wave 41: `decisions.md §22`'s CORRECTION (2026-09-04) -- Fighter's
+    /// Weapon Training and Psychic's Phrenic Pool were wrongly believed to
+    /// need a bespoke fix each; both are actually fixed by a
+    /// `canonical_seeds_for()` match arm (see that function), never a
+    /// `CLASS_FEATURE_ID_KNOWN_SYNONYMS` entry -- their real explanation ids
+    /// (`class_feature.fighter.weapon_training`,
+    /// `class_feature.untabled.psychic.phrenic_pool.value`) already ground
+    /// via the EXISTING exact-suffix / second-to-last-segment checks the
+    /// instant the sweep observes them, with no synonym needed. Proves
+    /// neither owner/slug pair was also (redundantly, or by mistake) added
+    /// to the table.
+    #[test]
+    fn fighter_and_psychic_are_fixed_via_canonical_seeds_not_the_synonym_table() {
+        let fixed_elsewhere: &[(&str, &str)] =
+            &[("fighter", "weapon_training"), ("psychic", "phrenic_pool")];
+        for (owner, slug) in fixed_elsewhere {
+            assert!(
+                !CLASS_FEATURE_ID_KNOWN_SYNONYMS
+                    .iter()
+                    .any(|(o, s, _)| o == owner && s == slug),
+                "({owner}, {slug}) is fixed via canonical_seeds_for(), not a table entry",
+            );
+        }
+    }
+
+    /// Wave 41: Monk's Stunning Fist -- the third of `decisions.md §22`'s
+    /// three corrected units, and the one genuinely fixed BY a table entry
+    /// (its real id already carries `group: "standalone"`, so no
+    /// `canonical_seeds_for()` seed could ever make the exact-suffix/
+    /// suffix-strip checks recognize it; only this table's own pure
+    /// `(owner, feature_slug)` -> id lookup, gated on the record's own
+    /// corpus `group` rather than the id, can).
+    #[test]
+    fn monk_stunning_fist_grounds_via_the_synonym_table() {
+        let ids = ["feat.standalone.stunning_fist.save_dc".to_string()];
+        assert!(class_feature_known_synonym_grounded(ids.iter(), "monk", "Monk", "stunning_fist"));
     }
 
     /// Wave 40 lane B: the 5 base-Summoner entries this cycle adds, pinned

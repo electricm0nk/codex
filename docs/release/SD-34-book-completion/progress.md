@@ -11,6 +11,58 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 41 — Shape 2's three corrected units (Monk's Stunning Fist, Fighter's Weapon Training, Psychic's Phrenic Pool): 3 of 3 closed — complete
+
+**Status: complete.** `decisions.md §22`'s CORRECTION (2026-09-04) found that three units wave 39
+lane B and wave 40 lane A had written up as needing a "genuinely different, structurally larger"
+fix were actually cheap, already-precedented classifier-visibility gaps once someone re-read the
+real compute functions directly. This cycle implemented all three: Monk's Stunning Fist (one
+`CLASS_FEATURE_ID_KNOWN_SYNONYMS` table entry — `("monk", "stunning_fist", "feat.standalone.
+stunning_fist.save_dc")` — the newer synonym-table matcher has no id-substring requirement the
+record's real `group: "standalone"` id fails, only a `group == owner` guard this record's own
+`"Monk"` group already satisfies), Fighter's Weapon Training and Psychic's Phrenic Pool (two new
+`canonical_seeds_for()` match arms, `"fighter"` seeding `choice:fighter_weapon_training_group ->
+group:heavy_blades` and `"psychic"` seeding `choice:psychic_discipline -> discipline:rapport` —
+the same "give the sweep one canonical default choice" pattern the function already uses for
+wizard/arcanist/sorcerer/cleric/druid and others). `src/rules_core/pilot_compute/mod.rs` carries
+zero diff — every explanation id all three fixes recognize was already shipped and tested; this
+cycle only made them reachable to the classifier's own sweep.
+
+**Real movement: all 3 target units closed.** Guarded regen ran to completion (`cargo run
+--locked --release --bin v06_work_inventory`, after generating both `CORPUS_LITERAL_SWEEP_REPORT`
+and `DERIVED_FIXTURE_CHECK_REPORT` prerequisites fresh — the first attempt correctly refused with
+"this run would drop 9623 of 9623 verification stamps" until both were supplied). Before/after,
+re-derived via `completion_atlas.py --check` on both snapshots plus an independent Python
+`id`→`status` join (both agree): `DONE: 25358→25360 (+2)`, `D: 2523→2520 (−3)`, `V: 321→322
+(+1)`, every other bucket unchanged. Exactly 3 units changed status, zero collateral movement:
+`Fighter ~ Weapon Training` and `Psychic ~ Phrenic Pool` both `engine-does-not-hold` → `grounded`
+(DONE, evidence `explanation_id_observed_in_a_real_computation` — no synonym table needed for
+either); `Monk ~ Stunning Fist` `engine-does-not-hold` → `literal-verified` (V, evidence
+`explanation_id_observed_via_known_class_feature_synonym`). `population=49438 unclassified=0
+overlap=0 done_evidence_violations=0 citation_failures=0`.
+
+4 new tests added (2 real-pipeline tests proving each `canonical_seeds_for()` arm reaches
+`compute_pilot_base_chassis` and fires the intended explanation id; 1 synonym-table positive
+test; 1 negative control proving Fighter/Psychic were NOT also added to the table), 1 existing
+test edited (`declined_units_are_not_in_the_table` narrowed from 4 declined pairs to Druid's
+Nature Bond alone, the only one of the four still genuinely declined). `cargo test --locked --bin
+v06_work_inventory -j 6` → 548/548 pass (4 new), run twice (pre- and post-regen, identical both
+times). `cargo test --locked --lib -j 6` → 3063 passed, 0 failed, 14 ignored (matches baseline
+exactly, no `src/rules_core` file touched). `cargo test --locked --no-run` (full workspace) →
+exit 0. 10 `completion_atlas.py` citation pins re-derived (uniform +128-line shift, each verified
+by content). 3 retro-logged corrections (`docs/retro/events/sd34-wave41.jsonl`) against wave 39
+lane B's and wave 40 lane A's own superseded framing for these exact three units. Full receipt:
+`artifacts/bucket-d-mining/wave41_shape2_three_corrected_units_cycle_receipt.md`.
+
+**Next-cycle plan:** Shape 2's remaining scope is the 15 confirmed genuinely-different
+(new-chassis) units from wave 39 lane B's own table — real Epic 4/5-shaped work per
+`decisions.md §22`'s own standing scope ruling, but per that same section's CORRECTION, re-verify
+each against the real `pilot_compute/mod.rs` before trusting the "no compute exists" framing at
+face value (only Wizard's Arcane Bond, of the 15, was spot-checked in full and held up as
+genuinely unbuilt). Sub-mechanism 5 (634 units/60 classes) remains un-re-audited since the
+CORRECTION and should be treated as unverified difficulty, not confirmed, until someone re-checks
+it the same way this cycle re-checked the three named units.
+
 ### Cycle — Wave 40 wave-end gate — lane A's guarded regen completed, dashboard staleness fixed, full 40/40 confirmed — complete
 
 **Status: complete.** Integration summary for wave 40's two lanes, both merged onto `tranche/14`
