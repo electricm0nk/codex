@@ -79,8 +79,11 @@ ENGINE_SURFACE_CITATIONS = {
     # Piece 1/2's own insertions into this file shifted them further still.
     # Re-grepped fresh against the real construction sites, 11719 -> 14013
     # and 11819 -> 14113.
-    "companion": {"line": 14013, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 14113, "must_contain": "power_content_has_no_engine_table"},
+    # SD-34 wave 45 re-derivation: this cycle's own Phrenic Slayer Favored
+    # Enemy insertions (above both sites) shifted them again, 14013 -> 14093
+    # and 14113 -> 14193.
+    "companion": {"line": 14093, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 14193, "must_contain": "power_content_has_no_engine_table"},
 }
 
 

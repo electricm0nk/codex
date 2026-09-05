@@ -6345,6 +6345,14 @@ const LOREMASTER_CLASS_ID: &str = "class:loremaster";
 /// `"Pathfinder Delver"`/`"PathfinderDelver"` anywhere in this file before
 /// this wave).
 const PATHFINDER_DELVER_CLASS_ID: &str = "class:pathfinder_delver";
+/// SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE, sub-mechanism-5's
+/// "registered prestige class, magnitude-only" remainder): Phrenic Slayer's
+/// own class id, needed by `ground_phrenic_slayer_class_features` below --
+/// the same "real prestige class, registered in `prestige_class_entry_gate`
+/// (source book `ultimate_psionics`, not `core_rulebook`), no `ClassId`-
+/// family enum entry, no chassis dispatch reaches it" gap as Pathfinder
+/// Delver above.
+const PHRENIC_SLAYER_CLASS_ID: &str = "class:phrenic_slayer";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` idiom. Verified against
@@ -9079,6 +9087,12 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // real-owner audit correction (Pathfinder Delver's own Guardbreaker
     // feature, not Ranger's favored-enemy chooser).
     ground_pathfinder_delver_class_features(input, &mut explanations);
+
+    // SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE): Phrenic Slayer's
+    // Favored Enemy record, the first closed slice of sub-mechanism-5's
+    // "registered prestige class, magnitude-only" remainder -- same
+    // unconditional placement as the five prestige-class functions above.
+    ground_phrenic_slayer_class_features(input, &mut explanations);
 
     // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
     // class-feature blocker into three named pillars, and ground Track and
@@ -35020,6 +35034,137 @@ fn ground_pathfinder_delver_class_features(
                  modifies no actual skill, attack, or damage total, and this bonus never \
                  applies if the character already has Ranger's own real Favored Enemy of that \
                  type (this engine does not model that override precondition)"
+            ),
+        });
+    }
+}
+
+/// Ultimate Psionics Phrenic Slayer's 31 Favored Enemy creature-type
+/// sub-records (`up_abilities_class.lst`, `KEY:Phrenic Slayer Favored Enemy
+/// ~ <Type>`, one file per type under `data/corpus/ultimate_psionics/
+/// class_feature/phrenic_slayer_favored_enemy/`): `(slug, display name)`,
+/// verified directly against the real corpus `data.key`/`data.name` fields
+/// for all 31 files (every `name` is byte-identical to the `key`'s own " ~ "
+/// suffix). Each sub-record carries no own `DEFINE`/`BONUS` token -- only a
+/// `%1` DESC substitution and an `ASPECT:Ability Benefit|+%1|
+/// SlayerFavoredEnemy` referencing the SAME shared variable
+/// `ground_phrenic_slayer_class_features`'s base-record explanation grounds.
+/// Shared with `v06_work_inventory.rs`'s
+/// `probe_phrenic_slayer_favored_enemy_wiring` so the id list is a single
+/// source of truth, never duplicated.
+pub const PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS: &[(&str, &str)] = &[
+    ("aberration", "Aberration"),
+    ("animal", "Animal"),
+    ("construct", "Construct"),
+    ("dragon", "Dragon"),
+    ("fey", "Fey"),
+    ("humanoid_aquatic", "Humanoid (Aquatic)"),
+    ("humanoid_dwarf", "Humanoid (Dwarf)"),
+    ("humanoid_elf", "Humanoid (Elf)"),
+    ("humanoid_giant", "Humanoid (Giant)"),
+    ("humanoid_gnoll", "Humanoid (Gnoll)"),
+    ("humanoid_gnome", "Humanoid (Gnome)"),
+    ("humanoid_goblinoid", "Humanoid (Goblinoid)"),
+    ("humanoid_halfling", "Humanoid (Halfling)"),
+    ("humanoid_human", "Humanoid (Human)"),
+    ("humanoid_orc", "Humanoid (Orc)"),
+    ("humanoid_reptilian", "Humanoid (Reptilian)"),
+    ("magical_beast", "Magical Beast"),
+    ("monstrous_humanoid", "Monstrous Humanoid"),
+    ("ooze", "Ooze"),
+    ("outsider_air", "Outsider (Air)"),
+    ("outsider_chaotic", "Outsider (Chaotic)"),
+    ("outsider_earth", "Outsider (Earth)"),
+    ("outsider_evil", "Outsider (Evil)"),
+    ("outsider_fire", "Outsider (Fire)"),
+    ("outsider_good", "Outsider (Good)"),
+    ("outsider_lawful", "Outsider (Lawful)"),
+    ("outsider_native", "Outsider (Native)"),
+    ("outsider_water", "Outsider (Water)"),
+    ("plant", "Plant"),
+    ("undead", "Undead"),
+    ("vermin", "Vermin"),
+];
+
+/// Ultimate Psionics Phrenic Slayer Favored Enemy
+/// (`up_abilities_class.lst:1326`, `KEY:Phrenic Slayer ~ Favored Enemy`):
+/// `DEFINE:SlayerFavoredEnemy|0` / `BONUS:VAR|SlayerFavoredEnemy|
+/// 2*floor((2+PhrenicSlayerLVL)/3)` -- a flat bonus on attack, damage, and
+/// skill checks against the chosen favored-enemy creature type, shared
+/// identically by every one of
+/// [`PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS`]'s 31 creature-type sub-records
+/// (verified directly: `SlayerFavoredEnemy` is defined ONCE, on this base
+/// record; every sub-record's own `ASPECT` references it by name, with no
+/// own `DEFINE`/`BONUS` token). Granted from class level 1
+/// (`up_classes.lst:935`, `1  ABILITY:Phrenic Slayer Class Feature|
+/// AUTOMATIC|Phrenic Slayer ~ Favored Enemy`); `PhrenicSlayerLVL = CL`
+/// (`up_classes.lst:932`, the class's own raw level, no prime-stat
+/// resolution needed). `None` below level 1 (never reachable in practice --
+/// named for the same honesty `duelist_precise_strike_damage_bonus`'s own
+/// level-1 gate states).
+fn phrenic_slayer_favored_enemy_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let level = i16::from(level);
+    Some(2 * ((2 + level) / 3))
+}
+
+/// Grounds Phrenic Slayer's Favored Enemy record (the base fact plus all 31
+/// creature-type sub-records) -- `decisions.md §22`'s WAVE 45 UPDATE, the
+/// first closed slice of sub-mechanism-5's "registered prestige class,
+/// magnitude-only" remainder. Phrenic Slayer has no `ClassId`-family enum
+/// entry (source book `ultimate_psionics`, so `modelled_class_books()`'s
+/// CRB-only prestige loop never registers it either) -- unconditional on
+/// chassis support, called directly from `compute_pilot_base_chassis`,
+/// mirroring `ground_pathfinder_delver_class_features`'s own placement and
+/// reasoning above. This class's four remaining magnitude-bearing features
+/// (Brain Nausea, Lucid Buffer, Power Resistance, Rebound Attack) all key off
+/// `PhrenicSlayerPrimeStat` (which of several possible parent classes'
+/// manifesting ability the character entered through), a genuinely separate
+/// modelling question left out of this cycle's scope -- see the WAVE 45
+/// UPDATE entry for the named remainder.
+fn ground_phrenic_slayer_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == PHRENIC_SLAYER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    let Some(bonus) = phrenic_slayer_favored_enemy_bonus(level) else {
+        return;
+    };
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.ultimate_psionics.phrenic_slayer.favored_enemy.bonus".to_owned(),
+        value: bonus,
+        detail: format!(
+            "Phrenic Slayer level {level} Favored Enemy: a +{bonus} bonus on attack, damage, and \
+             skill checks against the chosen favored-enemy creature type (corpus \
+             `SlayerFavoredEnemy = 2*floor((2+PhrenicSlayerLVL)/3)`). Grounds the shared \
+             magnitude fact only; the choice of WHICH creature type is not modelled"
+        ),
+    });
+
+    for (slug, creature_type) in PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS {
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_feature.ultimate_psionics.phrenic_slayer.favored_enemy_{slug}.bonus"
+            ),
+            value: bonus,
+            detail: format!(
+                "Phrenic Slayer level {level} Favored Enemy ({creature_type}): a +{bonus} bonus \
+                 on attack, damage, and skill checks against {creature_type} (corpus `%1` = \
+                 `SlayerFavoredEnemy`, the identical shared magnitude the base Favored Enemy \
+                 record above already grounds -- this sub-record's own `ASPECT` references the \
+                 SAME variable, and defines no `DEFINE`/`BONUS` token of its own)"
             ),
         });
     }
@@ -75920,6 +76065,128 @@ mod wave44_pathfinder_delver_padfe_tests {
                 explanation_value(&ranger, id),
                 None,
                 "a Ranger must not gain Pathfinder Delver's own PaDFE records: {id}"
+            );
+        }
+    }
+}
+
+/// SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE): Phrenic Slayer's
+/// Favored Enemy record (base + 31 creature-type sub-records), the same
+/// two-layer discipline (`wave43_prestige_class_new_compute_tests`,
+/// `wave44_pathfinder_delver_padfe_tests` above) -- the pure formula first,
+/// including edge cases the fixture cannot exercise, then a reachability
+/// test proving all 32 explanation ids actually surface through the real
+/// pipeline end to end.
+#[cfg(test)]
+mod wave45_phrenic_slayer_favored_enemy_tests {
+    use super::{
+        build_pilot_headless_receipt, phrenic_slayer_favored_enemy_bonus, CharacterClassLevel,
+        CharacterInput, PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    const BASE_ID: &str = "class_feature.ultimate_psionics.phrenic_slayer.favored_enemy.bonus";
+
+    fn all_thirty_two_ids() -> Vec<String> {
+        let mut ids = vec![BASE_ID.to_owned()];
+        for (slug, _) in PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS {
+            ids.push(format!(
+                "class_feature.ultimate_psionics.phrenic_slayer.favored_enemy_{slug}.bonus"
+            ));
+        }
+        ids
+    }
+
+    #[test]
+    fn member_list_has_exactly_thirty_one_creature_types_matching_the_real_corpus() {
+        // Verified directly against `data/corpus/ultimate_psionics/
+        // class_feature/phrenic_slayer_favored_enemy/*.json` -- 31 files,
+        // one per creature type (`ls | wc -l` re-counted directly after an
+        // initial miscount of 30 during this cycle's own investigation).
+        assert_eq!(PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS.len(), 31);
+        assert_eq!(all_thirty_two_ids().len(), 32, "base record + 31 creature types");
+    }
+
+    #[test]
+    fn favored_enemy_bonus_formula_matches_the_corpus_token() {
+        // `SlayerFavoredEnemy = 2*floor((2+PhrenicSlayerLVL)/3)`, granted
+        // from level 1 (`up_classes.lst:935`).
+        assert_eq!(phrenic_slayer_favored_enemy_bonus(1), Some(2), "2*floor(3/3) = 2");
+        assert_eq!(phrenic_slayer_favored_enemy_bonus(2), Some(2), "2*floor(4/3) = 2");
+        assert_eq!(phrenic_slayer_favored_enemy_bonus(3), Some(2), "2*floor(5/3) = 2");
+        assert_eq!(phrenic_slayer_favored_enemy_bonus(4), Some(4), "2*floor(6/3) = 4");
+        assert_eq!(phrenic_slayer_favored_enemy_bonus(6), Some(4), "2*floor(8/3) = 4");
+        assert_eq!(phrenic_slayer_favored_enemy_bonus(7), Some(6), "2*floor(9/3) = 6");
+        assert_eq!(phrenic_slayer_favored_enemy_bonus(9), Some(6), "2*floor(11/3) = 6");
+        assert_eq!(phrenic_slayer_favored_enemy_bonus(10), Some(8), "2*floor(12/3) = 8");
+    }
+
+    #[test]
+    fn all_thirty_two_ids_reach_the_real_pipeline_at_level_one() {
+        let level_1 = character("class:phrenic_slayer", 1);
+        for id in all_thirty_two_ids() {
+            assert_eq!(
+                explanation_value(&level_1, &id),
+                Some(2),
+                "level 1 Phrenic Slayer: 2*floor(3/3) = 2, {id}"
+            );
+        }
+    }
+
+    #[test]
+    fn all_thirty_two_ids_reach_the_real_pipeline_at_a_higher_level() {
+        let level_10 = character("class:phrenic_slayer", 10);
+        for id in all_thirty_two_ids() {
+            assert_eq!(
+                explanation_value(&level_10, &id),
+                Some(8),
+                "level 10 Phrenic Slayer: 2*floor(12/3) = 8, {id}"
+            );
+        }
+    }
+
+    #[test]
+    fn ids_never_leak_onto_an_unrelated_class() {
+        let fighter = character("class:fighter", 10);
+        for id in all_thirty_two_ids() {
+            assert_eq!(
+                explanation_value(&fighter, &id),
+                None,
+                "a Fighter must not gain Phrenic Slayer's Favored Enemy records: {id}"
+            );
+        }
+
+        // A real Ranger (not Phrenic Slayer) must not gain these either --
+        // this is a genuinely separate mechanism from Ranger's own favored
+        // enemy, not a reroute of it.
+        let ranger = character("class:ranger", 10);
+        for id in all_thirty_two_ids() {
+            assert_eq!(
+                explanation_value(&ranger, &id),
+                None,
+                "a Ranger must not gain Phrenic Slayer's own Favored Enemy records: {id}"
             );
         }
     }

@@ -61,9 +61,9 @@ use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_option
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
-    HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
-    compute_pilot_base_chassis, fighter_weapon_training_canonical_catalog,
-    race_ids_with_a_magnitude_consumer,
+    HeadlessReceiptStatus, PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS, PilotBaseChassisComputation,
+    build_pilot_headless_receipt, compute_pilot_base_chassis,
+    fighter_weapon_training_canonical_catalog, race_ids_with_a_magnitude_consumer,
 };
 use codex::rules_core::pilot_compute::untabled_base_class_chassis;
 use codex::rules_core::pilot_compute::crb_untabled_class_chassis;
@@ -5571,6 +5571,20 @@ struct EngineFacts {
     /// class_features`'s own doc comment in `pilot_compute/mod.rs`): the
     /// real owner is Pathfinder Delver's own Guardbreaker feature.
     pathfinder_delver_padfe_wired: BTreeSet<String>,
+    /// SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE, sub-mechanism-5's
+    /// "registered prestige class, magnitude-only" remainder): Phrenic
+    /// Slayer's own class id, `"phrenic_slayer"`, does not appear in
+    /// `modelled_class_books()` (its source book is `ultimate_psionics`, not
+    /// `core_rulebook`, so the CRB-only prestige loop never registers it),
+    /// so the corpus-wide union sweep never runs `class_sweep_input` for it
+    /// either -- the same "no chassis dispatch reaches it" gap as Pathfinder
+    /// Delver's own PaDFE records above, and the same reason this needs its
+    /// own bespoke probe rather than riding the general sweep. Keyed by the
+    /// record's own corpus `key` (`"Phrenic Slayer ~ Favored Enemy"` for the
+    /// base fact, `"Phrenic Slayer Favored Enemy ~ <Type>"` for each of the
+    /// 31 creature-type sub-records), exactly like `pathfinder_delver_
+    /// padfe_wired` above.
+    phrenic_slayer_favored_enemy_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -9492,6 +9506,51 @@ fn probe_pathfinder_delver_padfe_wiring(fixture: &CharacterInput) -> BTreeSet<St
     wired
 }
 
+/// SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE, sub-mechanism-5's
+/// "registered prestige class, magnitude-only" remainder): the real,
+/// separate attribution path for Phrenic Slayer's Favored Enemy record
+/// (base + 31 creature-type sub-records) -- same shape as `probe_
+/// pathfinder_delver_padfe_wiring` immediately above (a real prestige class
+/// registered in `prestige_class_entry_gate` but absent from `modelled_
+/// class_books()` because its source book, `ultimate_psionics`, is not
+/// `core_rulebook`, so no chassis dispatch reaches it via the general
+/// sweep). `PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS` is imported from
+/// `pilot_compute` rather than re-declared here, so the (slug, display
+/// name) list has exactly one source of truth shared with `ground_
+/// phrenic_slayer_class_features`'s own explanation-id construction.
+fn probe_phrenic_slayer_favored_enemy_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    const BASE_ID: &str = "class_feature.ultimate_psionics.phrenic_slayer.favored_enemy.bonus";
+    const BASE_KEY: &str = "Phrenic Slayer ~ Favored Enemy";
+
+    for &level in SWEEP_LEVELS {
+        let input = class_sweep_input(fixture, "phrenic_slayer", level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        if computation.explanations.iter().any(|e| e.id == BASE_ID) {
+            wired.insert(BASE_KEY.to_string());
+        }
+        for (slug, creature_type) in PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS {
+            if computation.explanations.iter().any(|e| {
+                e.id
+                    == format!(
+                        "class_feature.ultimate_psionics.phrenic_slayer.favored_enemy_{slug}.bonus"
+                    )
+            }) {
+                wired.insert(format!("Phrenic Slayer Favored Enemy ~ {creature_type}"));
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -9901,6 +9960,7 @@ fn gather_engine_facts(
         spiritualist_phantom_emotional_focus_wired:
             probe_spiritualist_phantom_emotional_focus_wiring(fixture),
         pathfinder_delver_padfe_wired: probe_pathfinder_delver_padfe_wiring(fixture),
+        phrenic_slayer_favored_enemy_wired: probe_phrenic_slayer_favored_enemy_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -13175,6 +13235,26 @@ fn classify(
                     status: "grounded",
                     evidence: "pathfinder_delver_padfe_probe_observed_a_real_computed_magnitude"
                         .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE): Phrenic
+            // Slayer's Favored Enemy record, same shape as the Pathfinder
+            // Delver PaDFE block immediately above -- `group` here is
+            // `"Phrenic Slayer"` (base record) or `"Phrenic Slayer Favored
+            // Enemy"` (each creature-type sub-record), neither of which is
+            // registered in `facts.class_books` (Phrenic Slayer's source
+            // book is `ultimate_psionics`, not `core_rulebook`).
+            // `probe_phrenic_slayer_favored_enemy_wiring` is the real,
+            // separate attribution path -- see `ground_phrenic_slayer_
+            // class_features`'s own doc comment (`pilot_compute/mod.rs`).
+            if facts.phrenic_slayer_favored_enemy_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence:
+                        "phrenic_slayer_favored_enemy_probe_observed_a_real_computed_magnitude"
+                            .to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };
@@ -23246,6 +23326,110 @@ mod class_feature_text_complete_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:construct");
+    }
+
+    /// SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE): the base
+    /// `"Phrenic Slayer ~ Favored Enemy"` record -- `group` here is
+    /// `"Phrenic Slayer"`, which the corpus genuinely declares as a real
+    /// (unmodelled-by-`class_books`) `Kind::Class`, so without the probe
+    /// this record falls into the same `class_feature_of_unmodelled_
+    /// corpus_class` fallback shape as PaDFE above, just colliding with the
+    /// record's own TRUE class rather than an unrelated bestiary pseudo-
+    /// class.
+    #[test]
+    fn phrenic_slayer_favored_enemy_base_resolves_grounded_never_the_collision() {
+        let mut facts = EngineFacts::default();
+        facts
+            .phrenic_slayer_favored_enemy_wired
+            .insert("Phrenic Slayer ~ Favored Enemy".to_string());
+        // Left ABLE to fire, matching the negative control below, to prove
+        // the probe's early-return check really does win FIRST.
+        facts.corpus_class_names.insert("phrenic slayer".to_string());
+        let unit = class_feature_unit(
+            "ultimate_psionics",
+            "up_abilities_class.lst",
+            1326,
+            "Phrenic Slayer ~ Favored Enemy",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "phrenic_slayer_favored_enemy_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:phrenic_slayer",
+            "must never fall into the Phrenic Slayer collision fallback this wave fixes"
+        );
+    }
+
+    /// The `"Phrenic Slayer Favored Enemy ~ Dragon"` sub-record -- a
+    /// DIFFERENT `group` (`"Phrenic Slayer Favored Enemy"`, not `"Phrenic
+    /// Slayer"`) than the base record above, so both must be proven
+    /// independently; still resolves through the same probe.
+    #[test]
+    fn phrenic_slayer_favored_enemy_dragon_resolves_grounded_never_the_collision() {
+        let mut facts = EngineFacts::default();
+        facts
+            .phrenic_slayer_favored_enemy_wired
+            .insert("Phrenic Slayer Favored Enemy ~ Dragon".to_string());
+        facts.corpus_class_names.insert("phrenic slayer".to_string());
+        let unit = class_feature_unit(
+            "ultimate_psionics",
+            "up_abilities_class.lst",
+            1341,
+            "Phrenic Slayer Favored Enemy ~ Dragon",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "phrenic_slayer_favored_enemy_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:phrenic_slayer",
+            "must never fall into the Phrenic Slayer collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Phrenic Slayer ~ Favored Enemy"`
+    /// record still falls through to the PRE-EXISTING collision finding,
+    /// unchanged.
+    #[test]
+    fn an_unprobed_phrenic_slayer_favored_enemy_base_record_still_falls_into_the_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("phrenic slayer".to_string());
+        let unit = class_feature_unit(
+            "ultimate_psionics",
+            "up_abilities_class.lst",
+            1326,
+            "Phrenic Slayer ~ Favored Enemy",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:phrenic_slayer");
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Phrenic Slayer Favored Enemy ~
+    /// Dragon"` sub-record still falls through to the same PRE-EXISTING
+    /// collision finding, unchanged.
+    #[test]
+    fn an_unprobed_phrenic_slayer_favored_enemy_dragon_record_still_falls_into_the_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("phrenic slayer".to_string());
+        let unit = class_feature_unit(
+            "ultimate_psionics",
+            "up_abilities_class.lst",
+            1341,
+            "Phrenic Slayer Favored Enemy ~ Dragon",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:phrenic_slayer");
     }
 
     /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
