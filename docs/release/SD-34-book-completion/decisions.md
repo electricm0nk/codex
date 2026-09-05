@@ -1211,4 +1211,81 @@ archetype-recognition shape alone); Cerebremancer's "Advance Manifesting" sub-ca
 this wave); sub-mechanism 5's remaining ~500 (of 699) units (un-re-audited since wave 43's own
 wave-end-gate finding).
 
+**WAVE 45 UPDATE, 2026-09-05: sub-mechanism 5's population re-derived fresh (686, not 634 or
+699), cross-referenced against the now-74-entry prestige registry (598 registered / 88 not), and
+Ultimate Psionics Phrenic Slayer's full 32-unit Favored Enemy remainder closed.**
+
+**Fresh population re-derivation.** Neither wave 37/38's 634 nor wave 43/44's 699 held up:
+querying `docs/work-inventory.json` directly for units whose evidence contains
+`class_feature_of_unmodelled_corpus_class` at this cycle's own pre-edit HEAD (`4e96826b5e`)
+returns **686** — both the registry fixture (wave 44's own census-script fix, 62→74 entries) and
+the classifier itself have changed materially since either prior count was written, and this
+population moves every time a classifier-collision item elsewhere in this section closes (it
+shares evidence-string real estate with several of wave 44's own closures).
+
+**Cross-referenced against `tests/fixtures/rules_core/prestige-class-entry-requirements.json`'s
+74 entries** (extract each unit's evidence-suffix slug, check membership against the fixture's own
+`class_id` set): **598 registered / 88 not registered**, summing exactly to 686. The 598
+registered units are exactly the population `decisions.md`'s own standing ruling above already
+names as "registered prestige class... only a per-feature magnitude formula is missing" — this
+wave's own re-derivation confirms that framing still holds at the current, corrected population
+size, not merely at wave 42's smaller 12-unit slice. The 88 not-registered units split cleanly:
+`psychic_detective` (18) and `eidolon` (16) are the SAME two populations wave 44 already named
+and left open (Expanded Arcana choice-pool, Summoner Eidolon/Broodmaster); `animal` (17),
+`phantom` (9), `plant` (9), `undead` (8), `dragon` (8) are unrelated corpus name-collisions with
+bestiary/pseudo-class records sharing a name (a Shaman spirit choice, a rogue-talent set, a
+Ranger-archetype focus choice, a mixed Wizard/Cleric population, and a mixed Cavalier/Ultimate-
+Magic population respectively — none of them prestige classes at all); `gifted_blade` (3) is
+wave 44's own confirmed non-prestige exclusion. None of the 88 is a registered prestige class;
+all are named, none attempted this wave.
+
+**Closed this wave: Ultimate Psionics Phrenic Slayer's full Favored Enemy remainder, 32 of the
+class's 43 sm5 units** (the base record plus all 31 creature-type sub-records) — the exact
+"favored-enemy-style choice" shape this section's own WAVE 42 UPDATE named as precedented
+(`ground_pathfinder_delver_class_features`'s PaDFE bonus, wave 44), needing only
+`PhrenicSlayerLVL` (the class's own raw level, `up_classes.lst:932`) with no cross-class prime-
+stat resolution. `SlayerFavoredEnemy = 2*floor((2+PhrenicSlayerLVL)/3)`
+(`up_abilities_class.lst:1326`), shared identically by every one of the 31 creature-type display
+sub-records (each carrying no own `DEFINE`/`BONUS` token, only an `ASPECT` referencing the base
+record's own variable) — verified not just against the ingested corpus JSON but independently
+cross-checked byte-for-byte against the real, non-ingested PCGen oracle
+(`~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/ultimate_psionics/
+up_abilities_class.lst:1326,1338-1368`), a stronger bar than prior waves in this section applied.
+**A real miscount caught during this cycle's own investigation:** the creature-type population was
+first (wrongly) counted as 30; a direct file-count and a second independent oracle cross-check
+both confirm 31, caught by the new test module's own first assertion (RED for the right reason)
+before any test was allowed to pass. `DONE: 25375→25407 (+32)`, `D: 2493→2461 (−32)`,
+`V: 337 (unchanged — all 32 landed straight in DONE, none in V)` (independently re-derived,
+before/after id-set unchanged at 49438, zero collateral movement — full accounting in
+`artifacts/bucket-d-mining/wave45_registered_prestige_magnitude_formulas_cycle_receipt.md`). Both
+`cargo test --locked --lib` (3095 passed, up from 3090) and the full `cargo test --locked
+--no-fail-fast` integration suite were run this cycle. F1/`shape_ledger.py` census re-derived:
+unchanged at 5196 (0 of the 32 closed units are F1-shaped — 31 are `F0`, 1 is `F5`, verified
+per-id; a separate, older doneness instrument `shape_ledger.py` reuses,
+`scripts/observer/pf1e_dashboard_producer.py`, treats `wiring_class` `display`/`derived` +
+`grounded` as `HELD` not `DONE`, so this cycle's units correctly stay counted in that instrument's
+own population even though `completion_atlas.py`'s SD-34 buckets correctly show them DONE — two
+instruments drawing the line differently, not a defect).
+
+**Phrenic Slayer's own remaining 11 units, named and not attempted:** Advance Astral Suit/Mind
+Blade/Manifesting and their 4 two-and-three-way combinations key off cross-class variables
+(`AegisCL`, `MndBladeLVL`, `ABILITYPOOL|Manifesting Level Advancement`) that depend on which
+parent psionic class granted entry into the prestige class; Brain Nausea, Lucid Buffer, Power
+Resistance, and Rebound Attack all key off `PhrenicSlayerPrimeStat` (a class-specific "prime
+manifesting ability" fact, itself gated on the entry-class choice) — both are genuinely separate
+subsystem-modeling questions from the raw-level-only Favored Enemy record this wave closes, left
+named for a future wave rather than folded in speculatively.
+
+**Sub-mechanism 5's remaining population after this wave: 654 (686 − 32)**, split **566
+registered** (the highest-value remaining target — every one already benefits from the SAME
+`chassis_supported(...) || prestige_class_entry_gate::is_registered(...)` generic grant-level
+mechanism; only per-feature magnitude formulas remain, the identical shape this wave's own
+Phrenic Slayer closure and waves 42-44's own precedent both demonstrate) and **88 not registered**
+(named above by slug, out of scope). This population has now been fresh-re-derived and
+cross-referenced for population make-up in three consecutive waves (43, 44, 45); the "genuinely
+too large for a single wave" framing from waves 37/38 continues to not hold up under scrutiny —
+every population checked so far resolves to precedented, closable small-compute work, not
+open-ended new subsystem modeling, with the sole exception of Summoner Eidolon/Broodmaster and
+Psychic Detective, both already separately named.
+
 ---

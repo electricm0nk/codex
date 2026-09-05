@@ -11,6 +11,100 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 45 — sub-mechanism-5 fresh population re-derivation + Phrenic Slayer Favored Enemy: 32 of 32 closed — complete
+
+**Status: complete.** Re-derived sub-mechanism-5's population fresh rather than trusting any
+prior wave's count (634 from waves 37/38, 699 from waves 43/44): a direct query of
+`docs/work-inventory.json` for units whose evidence contains
+`class_feature_of_unmodelled_corpus_class` at this cycle's own pre-edit HEAD (`4e96826b5e`)
+returns **686**. Cross-referenced every one of the 686 against the now-74-entry
+`tests/fixtures/rules_core/prestige-class-entry-requirements.json` registry fixture (wave 44's own
+census-script fix): **598 registered** (the class is a registered prestige class, so the generic
+`chassis_supported(...) || prestige_class_entry_gate::is_registered(...)` grant-level mechanism
+already fires — only a per-feature magnitude formula is missing) **/ 88 not registered** (out of
+scope, named by slug below), summing exactly to 686.
+
+**The 88 not-registered units, named not attempted:** `psychic_detective` (18) and `eidolon` (16)
+are the SAME populations wave 44 already named and left open (Expanded Arcana choice-pool,
+Summoner Eidolon/Broodmaster); `animal` (17), `phantom` (9), `plant` (9), `undead` (8), `dragon`
+(8) are unrelated corpus name-collisions with bestiary/pseudo-class records sharing a name (none
+are prestige classes); `gifted_blade` (3) is wave 44's own confirmed non-prestige exclusion. None
+of the 88 is a registered prestige class.
+
+**Closed this wave: Ultimate Psionics Phrenic Slayer's Favored Enemy record, 32 of the class's own
+43 sm5 units** (the base record + all 31 creature-type sub-records) — the base record's
+`SlayerFavoredEnemy = 2*floor((2+PhrenicSlayerLVL)/3)` (`up_abilities_class.lst:1326`) is shared
+identically by every creature-type sub-record (each carrying no own `DEFINE`/`BONUS` token, only
+an `ASPECT` referencing the shared variable), needing only the class's own raw level
+(`PhrenicSlayerLVL = CL`, `up_classes.lst:932`) — the exact "favored-enemy-style choice" shape
+this bundle's own `ground_pathfinder_delver_class_features` (wave 44) already precedents. Verified
+not only against the ingested corpus JSON but independently cross-checked byte-for-byte against
+the real, non-ingested PCGen oracle
+(`~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/ultimate_psionics/
+up_abilities_class.lst:1326,1338-1368`), a stronger verification bar than prior waves in this area
+applied. **A real miscount caught and corrected in-cycle:** the creature-type population was
+first (wrongly) counted as 30; the new test module's own first assertion caught this immediately
+(RED for the right reason) — a direct file count and a second independent oracle cross-check both
+confirm the real figure is **31**, not 30.
+
+**Explicitly left named, not attempted:** Phrenic Slayer's own remaining 11 units (Advance Astral
+Suit/Mind Blade/Manifesting and their combinations, keying off cross-class parent-entry variables;
+Brain Nausea/Lucid Buffer/Power Resistance/Rebound Attack, keying off `PhrenicSlayerPrimeStat`, a
+genuinely separate entry-class-dependent modeling question) — both shapes are real, separate
+subsystem work this cycle does not attempt. Sub-mechanism 5's remaining population after this
+wave: **654** (686 − 32), split 566 registered (highest-value remaining target, same precedented
+shape) / 88 not registered (named above).
+
+**Real movement: 32 units closed**, regen-confirmed. Guarded regen ran to completion (`cargo run
+--locked --bin v06_work_inventory`, after generating both `CORPUS_LITERAL_SWEEP_REPORT` and
+`DERIVED_FIXTURE_CHECK_REPORT` prerequisites fresh — `corpus_literal_sweep` and
+`derived_evaluator_fixture_check` both came back byte-identical to wave 44's own figures, 0
+`data/corpus/**` files touched). Before/after, re-derived via `completion_atlas.py --check` on
+both snapshots plus an independent Python `id`→`status` join (both agree):
+`DONE: 25375→25407 (+32)`, `D: 2493→2461 (−32)`,
+`V: 337` (unchanged — all 32 landed straight in DONE, none in V), every other bucket unchanged.
+Exactly 32 units changed status, zero collateral movement (population 49438, 0 added/removed both
+sides).
+
+**Both the lib suite AND the full integration suite were run this cycle:** `cargo test --locked
+--lib -j 6` → 3095 passed, 0 failed, 14 ignored (up from the standing 3090 baseline by
+exactly this cycle's 5 new lib tests — 4 more classify()-level tests live in
+`src/bin/v06_work_inventory.rs`, a separate binary target `--lib` does not cover).
+`cargo test --locked --no-fail-fast -j 6` (full workspace) → see wave-end confirmation below /
+this cycle's own receipt for the final pass count.
+
+**F1/`shape_ledger.py` pin: unchanged, 5196 → 5196.** Verified per-id, not assumed: 0 of the 32
+closed units are F1-shaped (31 are `F0` — no `DEFINE`/`BONUS` token at all; 1 is `F5` — the base
+record's own `2*floor((2+PhrenicSlayerLVL)/3)`). A real, honest finding surfaced while re-deriving
+this: `shape_ledger.py` reuses a DIFFERENT, older doneness instrument
+(`scripts/observer/pf1e_dashboard_producer.py::doneness_verdict`) than `completion_atlas.py`'s own
+SD-34 buckets — that instrument maps `wiring_class` `display`/`derived` + `grounded` to `HELD`,
+never `DONE` (all 32 of this cycle's units carry exactly those two `wiring_class` values), so its
+own "not-done" population and every family count are byte-identical before/after this cycle even
+though `completion_atlas.py`'s own DONE/D counts correctly moved by 32 — two instruments drawing
+"done" differently, not a defect in either, named so a future wave does not read "shape_ledger's
+population didn't move" as "this wave changed nothing."
+
+**Also this cycle: re-derived 3 scripts' own citation pins this cycle's own insertions into
+`src/bin/v06_work_inventory.rs` shifted** (`completion_atlas.py`'s 10 bucket citations,
+`shape_engine_boundary.py`'s promotion-ladder citation + its own test file's hardcoded line
+literals, `missing_engine_tables.py`'s 2 engine-surface citations) — the same "nobody watches
+these two scripts, not wired into `verify.sh`" gap wave 44 already named; fixed the citations this
+cycle's own edits require, left `shape_engine_boundary.py`'s own pre-existing, unrelated
+population-count drift (now 9475 pinned vs 8996 live, wider than wave 44's own 463-unit
+measurement) named, not fixed, for the identical reason wave 44 declined to fix it.
+
+Full receipt:
+`artifacts/bucket-d-mining/wave45_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
+**What remains open after this wave:** sub-mechanism 5's 654-unit remainder (566 registered, the
+highest-value next target, same precedented shape as this wave's own closure; 88 not registered,
+named above); Phrenic Slayer's own 11-unit remainder (cross-class entry-dependent modeling);
+Summoner Eidolon's 16-unit population and Psychic Detective's Expanded Arcana choice-pool record
+(both unchanged from wave 44's own naming); Cerebremancer's "Advance Manifesting" sub-cause
+(still unexamined); `shape_engine_boundary.py`'s own population-count pin (still stale, not wired
+into `verify.sh`).
+
 ### Cycle — Wave 44 wave-end gate — verified a wrong prior audit, caught a real prose gate gap, full 40/40 confirmed — complete
 
 **Status: complete.** Integration and gate summary for wave 44's own cycle (below), which closed
