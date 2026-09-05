@@ -3318,11 +3318,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 166,
-      "partial": 57,
-      "not_started": 327,
+      "done": 170,
+      "partial": 59,
+      "not_started": 321,
       "denominator": 550,
-      "pct": 30.2,
+      "pct": 30.9,
       "excluded_from_percentage": 967,
       "standing_breakdown": {
         "unclassified": 967,
@@ -4857,7 +4857,7 @@
         },
         {
           "name": "Canny Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "Canny Defense"
@@ -5774,7 +5774,7 @@
         },
         {
           "name": "Death Attack",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ClassFeatures.AssassinClassFeatures",
           "standing": "unclassified",
           "display_name": "Death Attack (ClassFeatures.AssassinClassFeatures)"
@@ -6467,7 +6467,7 @@
         },
         {
           "name": "Elaborate Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary.Defensive",
           "standing": "origin",
           "display_name": "Elaborate Defense"
@@ -8273,7 +8273,7 @@
         },
         {
           "name": "Improved Reaction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Improved Reaction"
@@ -8791,7 +8791,7 @@
         },
         {
           "name": "Lore",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ClassFeatures.LoremasterClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Lore"
@@ -10366,7 +10366,7 @@
         },
         {
           "name": "Precise Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.DuelistClassFeatures.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Precise Strike"
@@ -10877,7 +10877,7 @@
         },
         {
           "name": "Save against Poisons",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.AssassinClassFeatures.SpecialQuality.Extraordinary.Defensive",
           "standing": "origin",
           "display_name": "Save against Poisons"
@@ -10989,7 +10989,7 @@
         },
         {
           "name": "Secret Lore",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ClassFeatures.LoremasterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Secret Lore"
@@ -11024,7 +11024,7 @@
         },
         {
           "name": "Shadow Call",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ShadowdancerClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Shadow Call"
@@ -11052,14 +11052,14 @@
         },
         {
           "name": "Shadow Illusion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ShadowdancerClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Shadow Illusion"
         },
         {
           "name": "Shadow Jump",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ShadowdancerClassFeatures.SpecialQuality.Supernatural.ModifyMovement",
           "standing": "unclassified",
           "display_name": "Shadow Jump"
@@ -12088,7 +12088,7 @@
         },
         {
           "name": "Summon Shadow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ShadowdancerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Summon Shadow"

@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-05T01:06:20Z",
+  "generated_at": "2026-09-05T07:09:45Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16060,
+  "proven_units": 16067,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,18 +1428,19 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4780,
+      "proven": 4787,
       "by_status": {
-        "engine-does-not-hold": 12962,
+        "engine-does-not-hold": 12950,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 541,
+        "grounded": 548,
         "oracle-agree": 26,
-        "literal-verified": 115,
-        "oracle-unverifiable": 6
+        "literal-verified": 117,
+        "oracle-unverifiable": 6,
+        "fixture-verified": 3
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2788729,
+      "bytes": 2788625,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -1453,10 +1454,10 @@
         },
         "classfeatures": {
           "label": "Class Features",
-          "done": 549,
-          "held": 2,
+          "done": 554,
+          "held": 5,
           "in-progress": 0,
-          "not-started": 771,
+          "not-started": 763,
           "unmeasurable": 0,
           "deferred": 1
         },
@@ -3010,10 +3011,10 @@
         },
         "shadowdancerclassfeatures": {
           "label": "Shadowdancer Class Features",
-          "done": 6,
-          "held": 0,
+          "done": 8,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 5,
+          "not-started": 1,
           "unmeasurable": 0,
           "deferred": 0
         },

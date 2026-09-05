@@ -11,6 +11,67 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 43 wave-end gate — caught a stale pinned census count, full 40/40 confirmed — complete
+
+**Status: complete.** Integration and gate summary for wave 43's own cycle (below), which closed
+all 12 of its assigned units on commit `f3267fe099` (receipt SHA fill-in `61c56f6525`) on
+`tranche/14`. Independently re-verified by the orchestrator before trusting the cycle's own
+self-report: fresh `python3 scripts/completion_atlas.py --check` plus a direct id→status join
+over `docs/work-inventory.json` confirmed all 12 target ids moved exactly as claimed, zero
+collateral movement. `DONE: 25362→25369 (+7)`, `D: 2518→2506 (−12)`, `V: 322→327 (+5)`,
+`population=49438 unclassified=0 overlap=0 citation_failures=0`. Also confirmed the cycle's own
+claim that it ran the FULL `cargo test --locked --no-fail-fast` integration suite this time
+(the exact step wave 42 skipped, which let a real regression through) — the receipt cites `exit
+0, zero failures across every logged test block`.
+
+**One real gate-catch, self-inflicted and expected, not a code regression.** A full isolated
+`scripts/verify.sh -j 6` run caught `root-lib` FAILING on
+`f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census`
+(`src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs`): the test's pinned census
+count was still 5,207, but wave 43's real closures (Shadowdancer's Shadow Illusion uses/day, a
+literal `1`, F1's own defining bare-literal shape) genuinely moved the true count down by one.
+Confirmed independently via `python3 scripts/shape_ledger.py --inventory
+docs/work-inventory.json --corpus-root data/corpus` → `F1 5206` exactly, matching the test's own
+measured value. Fixed by following the test's own established doc-comment convention (the same
+one that already tracks every prior wave's real F1 movements back to SD-32): added a new
+"5,207 → 5,206, wave 43" paragraph, updated the assertion and the trailing citation line. A
+fresh isolated `verify.sh` retry then confirmed `root-lib PASS (3077 passed)`,
+`root-full PASS (8467 passed across 589 suites, all 543 tests/*.rs suites executed)`, and every
+other check green except the routine, expected `site-dashboard-check` staleness (regenerated via
+`./scripts/publish-site-dashboard.sh`, then re-confirmed current). **True 40/40 confirmed.**
+
+**Also this wave: a rich audit finding on sub-mechanism 5** (`class_feature_of_
+unmodelled_corpus_class`, `src/bin/v06_work_inventory.rs:12871`). The population is actually
+**699 units / 68 owner-slugs**, not the 634/60 `decisions.md §22` had assumed — it has *grown*
+since wave 40, not shrunk, another reason not to trust the old framing at face value. A
+29-unit stratified sample plus mechanism-level verification (registry-fixture membership and
+two collision mechanisms checked against the full 699) found:
+- **426 units (61%)** already belong to a registered prestige class (`prestige_class_entry_
+  gate`'s 62-entry fixture) — the generic grant consumer already fires; only a per-feature
+  magnitude formula is missing, the exact wave-42/43 pattern.
+- **191 units (27%)** are blocked by a real script bug, not a classifier gap:
+  `scripts/census_prestige_class_entry_requirements.py:97-98`'s `prestige_names.setdefault(name,
+  path)` keys purely by display name across the full 158-book oracle, so an older un-ingested
+  oracle book can silently win the race over the real ingested one, dropping 13 real prestige
+  classes (Phrenic Slayer, Thrallherd, Psychic Fist, War Mind, Elocater, Psion Uncarnate,
+  Pyrokineticist, Metamind, Cerebremancer, Pathfinder Savant, Student of War, Pathfinder Delver,
+  Gifted Blade) from the committed registry fixture forever. Confirmed live/reproducible: a
+  fresh script run reproduces the committed fixture byte-for-byte.
+- **48 units (7%)** are a bestiary-type-name classifier collision (Turn Undead/"Undead", Order of
+  the Dragon/"Dragon", Ranger favored-enemy sub-features/"Construct"·"Ooze", Eidolon/Phantom
+  companion progressions) — the same shape as the Turn Undead/Fighter fixes already closed
+  this bundle.
+- **18 units (2.6%)** are an archetype-owner-recognition gap (Psychic Detective, a
+  `VISIBLE:NO` Investigator archetype, not a distinct class).
+- One genuinely uncertain case flagged honestly, not resolved either way: Cerebremancer's
+  "Advance Manifesting" may need the still-missing caster/manifester-level-stacking mechanism, or
+  may be buildable more cheaply by feeding combined levels into the existing
+  `*_power_points_total()` functions — needs its own dedicated check, not a population-wide
+  assumption.
+
+Net: **97-100% of this 699-unit population is cheap-fix or small-precedented**, not
+genuinely-hard as waves 37/38 assumed. Full detail: `decisions.md §22` WAVE 43 UPDATE.
+
 ### Cycle — Wave 43 — Duelist/Shadowdancer/Assassin/Loremaster: 12 of 12 closed (small, precedented new compute) — complete
 
 **Status: complete.** Closed all 12 of the remaining "small-precedented-new-compute" units
