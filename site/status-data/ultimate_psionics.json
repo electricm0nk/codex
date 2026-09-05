@@ -2008,7 +2008,7 @@
         },
         {
           "name": "Aberration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Aberration"
@@ -3002,7 +3002,7 @@
         },
         {
           "name": "Animal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Animal"
@@ -4339,7 +4339,7 @@
         },
         {
           "name": "Construct",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Construct"
@@ -5025,7 +5025,7 @@
         },
         {
           "name": "Dragon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Dragon"
@@ -5942,7 +5942,7 @@
         },
         {
           "name": "Favored Enemy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.Internal",
           "standing": "unclassified",
           "display_name": "Favored Enemy (PhrenicSlayerClassFeatures.Internal)"
@@ -6103,7 +6103,7 @@
         },
         {
           "name": "Fey",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Fey"
@@ -7069,77 +7069,77 @@
         },
         {
           "name": "Humanoid (Aquatic)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Aquatic)"
         },
         {
           "name": "Humanoid (Dwarf)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Dwarf)"
         },
         {
           "name": "Humanoid (Elf)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Elf)"
         },
         {
           "name": "Humanoid (Giant)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Giant)"
         },
         {
           "name": "Humanoid (Gnoll)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Gnoll)"
         },
         {
           "name": "Humanoid (Gnome)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Gnome)"
         },
         {
           "name": "Humanoid (Goblinoid)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Goblinoid)"
         },
         {
           "name": "Humanoid (Halfling)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Halfling)"
         },
         {
           "name": "Humanoid (Human)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Human)"
         },
         {
           "name": "Humanoid (Orc)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Orc)"
         },
         {
           "name": "Humanoid (Reptilian)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Reptilian)"
@@ -7937,7 +7937,7 @@
         },
         {
           "name": "Magical Beast",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Magical Beast"
@@ -8665,7 +8665,7 @@
         },
         {
           "name": "Monstrous Humanoid",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Monstrous Humanoid"
@@ -8833,7 +8833,7 @@
         },
         {
           "name": "Ooze",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Ooze"
@@ -8854,63 +8854,63 @@
         },
         {
           "name": "Outsider (Air)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Air)"
         },
         {
           "name": "Outsider (Chaotic)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Chaotic)"
         },
         {
           "name": "Outsider (Earth)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Earth)"
         },
         {
           "name": "Outsider (Evil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Evil)"
         },
         {
           "name": "Outsider (Fire)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Fire)"
         },
         {
           "name": "Outsider (Good)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Good)"
         },
         {
           "name": "Outsider (Lawful)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Lawful)"
         },
         {
           "name": "Outsider (Native)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Native)"
         },
         {
           "name": "Outsider (Water)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Water)"
@@ -9421,7 +9421,7 @@
         },
         {
           "name": "Plant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Plant"
@@ -12480,7 +12480,7 @@
         },
         {
           "name": "Undead",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Undead"
@@ -12627,7 +12627,7 @@
         },
         {
           "name": "Vermin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Vermin"

@@ -11,6 +11,63 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 45 wave-end gate — full suite exactly re-confirmed, dashboard regen, full 40/40 confirmed — complete
+
+**Status: complete.** Integration and gate summary for wave 45's own cycle (below), which closed
+32 units on commit `c43ffaffa2` (receipt SHA fill-in `af89b3b1a7`) on `tranche/14`.
+Independently re-verified by the orchestrator before trusting the cycle's own self-report: fresh
+`python3 scripts/completion_atlas.py --check` plus a direct id→status join over `docs/
+work-inventory.json` confirmed `DONE: 25375→25407 (+32)`, `D: 2493→2461 (−32)`, zero collateral
+movement, `population=49438 unclassified=0`. The F1/`shape_ledger.py` census was independently
+re-derived: `5196`, exactly matching the cycle's own claim that none of the 32 closed units are
+F1-shaped (31 are `F0`, 1 is `F5`). `python3 scripts/denominator_gate.py --check` run directly:
+`violations=0`, matching the claim.
+
+The actual corpus record was spot-checked directly, not just trusted from the receipt: `data/
+corpus/ultimate_psionics/class_feature/phrenic_slayer/favored_enemy.json` carries
+`BONUS:VAR|SlayerFavoredEnemy|2*floor((2+PhrenicSlayerLVL)/3)` — an exact match to the cycle's
+own cited formula — and `data/corpus/ultimate_psionics/class_feature/phrenic_slayer_favored_
+enemy/` holds exactly 31 files, confirming the cycle's own self-caught 30→31 miscount (it first
+wrongly counted 30 creature-type sub-records, then caught and fixed this before shipping, per its
+own decisions.md addition) is correct.
+
+**Both the lib suite AND the full integration suite were run this cycle, and this time the
+build agent ran the FULL suite a second time itself** rather than leaving the gap wave 44's own
+cycle left open (a single failed run, fixed, but never re-verified end-to-end): `cargo test
+--locked --lib -j 6` → 3095 passed (up from 3090). `cargo test --locked --no-fail-fast -j 6` →
+**8504 passed, 0 failed, 67 ignored, across 590 suites**. A fresh isolated `scripts/verify.sh
+-j 6` (separate scratch `CARGO_TARGET_DIR`) independently re-confirms this **exactly**: `root-lib
+PASS (3095 passed)`, `root-full PASS (8504 passed across 589 suites, all 543 tests/*.rs suites
+executed)`. The one gate failure this run caught was the routine, expected `site-dashboard-check`
+staleness (`docs/work-inventory.json` changed, same self-inflicted pattern every prior wave has
+hit) — regenerated via `./scripts/publish-site-dashboard.sh` and reconfirmed current. **True
+40/40 confirmed.**
+
+**Also this wave: sub-mechanism 5's population was re-derived fresh for the third consecutive
+wave**, correcting both wave 37/38's stale 634 and wave 43/44's stale 699: the true current
+population is **686**, cross-referenced against the now-74-entry prestige-class registry fixture
+into **598 registered / 88 not registered**. The 88 not-registered split cleanly into
+already-named populations (`psychic_detective` 18, `eidolon` 16 — the same two wave 44 already
+flagged) plus five unrelated bestiary/pseudo-class name-collisions (`animal` 17, `phantom` 9,
+`plant` 9, `undead` 8, `dragon` 8 — none of them real prestige classes) plus `gifted_blade` 3
+(wave 44's own confirmed exclusion). None of the 88 is a registered prestige class; none attempted
+this wave. This wave closed 32 of the 598 registered units (Ultimate Psionics Phrenic Slayer's
+full Favored Enemy remainder — the base record plus all 31 creature-type sub-records, sharing one
+formula via the base record's own variable), leaving **566 registered units across dozens of
+other prestige classes as the highest-value next target** — this exact population shape (a
+registered prestige class needing only a magnitude formula) has now been proven repeatedly across
+waves 42, 43, 44, and 45.
+
+**What remains open after this wave:** Phrenic Slayer's own remaining 11 units (Advance Astral
+Suit/Mind Blade/Manifesting and their combinations, plus Brain Nausea/Lucid Buffer/Power
+Resistance/Rebound Attack — all key off cross-class prime-stat/parent-class variables, genuinely
+separate subsystem-modeling questions, not folded in speculatively); the 566 remaining registered
+units across other prestige classes (the next highest-value target); the 88 not-registered units
+(named above by slug); Summoner Eidolon/Broodmaster (16 units) and Psychic Detective's Expanded
+Arcana choice-pool (already named by waves 44/45); and two pre-existing, unrelated stale citation
+pins in `scripts/shape_engine_boundary.py`/`scripts/missing_engine_tables.py` (flagged by waves 44
+and 45 both, not wired into `verify.sh`, not fixed beyond what each wave's own edits required).
+
 ### Cycle — Wave 45 — sub-mechanism-5 fresh population re-derivation + Phrenic Slayer Favored Enemy: 32 of 32 closed — complete
 
 **Status: complete.** Re-derived sub-mechanism-5's population fresh rather than trusting any
