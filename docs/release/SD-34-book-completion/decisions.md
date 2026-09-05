@@ -1013,4 +1013,33 @@ Weapon Training and Psychic's Phrenic Pool are BOTH now believed to be `canonica
 match-arm additions, not real feature-building — re-scope wave 41+ accordingly rather than
 routing them into "Epic 4/5-shaped" effort.
 
+**FURTHER UPDATE, 2026-09-04 (wave 41): all three of the above (Stunning Fist, Fighter's Weapon
+Training, Psychic's Phrenic Pool) are now closed** — `core_rulebook:class_feature:monk_stunning_fist`
+→ `literal-verified` (V), `core_rulebook:class_feature:fighter_weapon_training` and
+`occult_adventures:class_feature:psychic_phrenic_pool` → `grounded` (DONE), independently
+re-verified by the orchestrator against a fresh `docs/work-inventory.json` join, not just taken
+on the fixing agent's word. `DONE: 25358→25360`, `D: 2523→2520`, `V: 321→322`. Full receipt:
+`artifacts/bucket-d-mining/wave41_shape2_three_corrected_units_cycle_receipt.md`.
+
+**Paladin's Detect Evil and Cleric's Aura, now properly checked (real verdict, not a guess):**
+neither matches the cheap classifier-wiring shape that closed the three above — for both, an
+exhaustive grep confirms **no compute function and no `ComputationExplanation` id exist at all**
+anywhere in the engine (unlike Stunning Fist/Weapon Training/Phrenic Pool, where the compute
+already existed and only classifier-visibility was missing). By the strict cheap-fix/genuinely-hard
+binary this maps to genuinely-hard, same bucket as Wizard's Arcane Bond. **But with a real,
+material caveat**: both are pure class-level pass-through magnitudes with an exact, already-built
+structural precedent sitting in the same file family, for the antipaladin (Paladin's own mirror
+class) — `detect_good_caster_level()` and `aura_of_evil_strength_level()` in
+`src/rules_core/rules_tables/apg/antipaladin_features.rs` (built as an SD-32 follow-up
+specifically noted as "mirroring the CRB Paladin's Aura of Good/Detect Evil," but the Paladin/Cleric
+originals were never symmetrically added). Writing `detect_evil_caster_level()` / a Cleric
+aura-strength function is realistically a ~10-line copy-adapt of those two existing functions,
+plus wiring (Paladin currently has no `ground_paladin_class_features`-style push at all; Cleric's
+would extend `explain_cleric_level1_spell_baseline`). **Scope these as "small, precedented new
+compute, citing the antipaladin functions as literal templates" — not as classifier-reachability
+work (like the three above), and not as open-ended Epic 4/5 feature-building (like Arcane Bond).**
+This is a third difficulty tier this bundle has not previously named explicitly; worth watching
+for elsewhere in the 15-unit new-chassis list and the 634-unit sub-mechanism-5 population before
+assuming everything left is one of the two extremes.
+
 ---

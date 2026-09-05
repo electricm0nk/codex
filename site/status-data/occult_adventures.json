@@ -6,8 +6,8 @@
       "kind": "class_feature",
       "label": "Class Features",
       "done": 302,
-      "partial": 13,
-      "not_started": 523,
+      "partial": 14,
+      "not_started": 522,
       "denominator": 838,
       "pct": 36.0,
       "excluded_from_percentage": 192,
@@ -4841,7 +4841,7 @@
         },
         {
           "name": "Phrenic Pool",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Psychic Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Phrenic Pool"

@@ -12039,7 +12039,7 @@
         },
         {
           "name": "Stunning Fist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.SpecialAttack.Extraordinary.Stunning Fist",
           "standing": "unclassified",
           "display_name": "Stunning Fist"
@@ -13110,7 +13110,7 @@
         },
         {
           "name": "Weapon Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Weapon Training (FighterClassFeatures.SpecialQuality.Extraordinary)"

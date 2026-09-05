@@ -11,6 +11,56 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 41 wave-end gate — survived a mid-run machine crash, a self-inflicted denominator-gate slip, and a stale dashboard, full 40/40 confirmed — complete
+
+**Status: complete.** Integration and gate summary for wave 41's own cycle (below), which closed
+all 3 of its assigned units on commit `b4f33e16d2` (receipt SHA fill-in `9fbd0fcd4f`) on
+`tranche/14`. Independently re-verified by the orchestrator before trusting the cycle's own
+self-report: fresh `python3 scripts/completion_atlas.py --check` plus a direct id→status join
+over `docs/work-inventory.json` confirmed `core_rulebook:class_feature:monk_stunning_fist` →
+`literal-verified` (V), `core_rulebook:class_feature:fighter_weapon_training` and
+`occult_adventures:class_feature:psychic_phrenic_pool` → `grounded` (DONE), zero collateral
+movement. `DONE: 25358→25360`, `D: 2523→2520`, `V: 321→322`.
+
+**This wave's own gate work was unusually eventful:**
+- **A real machine crash/reboot hit mid-run**, partway through the first isolated `verify.sh`
+  gate attempt (host uptime reset to a few minutes when checked). Ran a full healthcheck before
+  resuming: all git commits confirmed intact, `git fsck` showed only ordinary dangling-object
+  garbage (no corruption), bucket state re-derived clean, disk healthy, no stray build processes.
+  The crash only cost the scratch `/tmp` build cache (recreated) — no real work was lost. Restarted
+  the gate fresh.
+- **A self-inflicted denominator-gate violation**: this bundle's own wave-40 gate entry (in this
+  same file) had, in the course of *describing* a past denominator-gate fix, literally quoted the
+  old banned bare-percentage phrase it was describing — the scanner doesn't understand quotation
+  context, only pattern-matches. Found via a real `verify.sh` FAIL, fixed by rewording (no digits
+  in the description), confirmed via `python3 scripts/denominator_gate.py --check` standalone
+  before re-running the full gate.
+- **A stale dashboard**: wave 41's regen shifted `docs/work-inventory.json`'s bucket counts but
+  nothing had re-run `./scripts/publish-site-dashboard.sh` since. Regenerated
+  `site/dashboard/*` + `site/status-data*` fresh, confirmed clean.
+- **A stale test-count baseline**: wave 41's 4 new `v06_work_inventory` bin tests pushed
+  `root-full`'s real count past the pinned baseline. Raised `BASELINE_ROOT_FULL_TESTS` 8449→8453
+  in `scripts/verify-baselines.env` (dated comment block, `BASELINE_ROOT_LIB_TESTS` unchanged at
+  3063 — no `src/rules_core` changes this wave).
+
+**Full `scripts/verify.sh -j 6`, run with an isolated `CARGO_TARGET_DIR`** (re-launched twice
+after the crash and once more after the dashboard/baseline fixes): final run confirmed **40 PASS
+/ 0 FAIL, `RESULT: PASS`** — `root-lib` 3063, `root-full` 8453 (matches the raised baseline),
+`desktop` 573, `reach` 31, all selftests/gates/frontend/clippy/class-dump clean.
+
+**Also recorded this cycle** (see `decisions.md §22`'s own "FURTHER UPDATE, 2026-09-04"): a real,
+properly-checked verdict on Paladin's Detect Evil and Cleric's Aura. Neither has any compute
+function or explanation id anywhere in the engine (confirmed by exhaustive grep — genuinely
+different from the three units this wave closed, where the compute already existed). But both
+have an exact structural precedent already built for the antipaladin mirror class
+(`detect_good_caster_level()` / `aura_of_evil_strength_level()` in
+`src/rules_core/rules_tables/apg/antipaladin_features.rs`) — realistically a small, precedented
+new-compute addition, not open-ended feature-building. Named for a future wave, not attempted
+this cycle.
+
+**Bucket state, re-derived fresh:** `population=49438 unclassified=0 overlap=0`; `DONE: 25358 →
+25360`, `D: 2523 → 2520`, `V: 321 → 322`. `done_evidence_violations=0 citation_failures=0`.
+
 ### Cycle — Wave 41 — Shape 2's three corrected units (Monk's Stunning Fist, Fighter's Weapon Training, Psychic's Phrenic Pool): 3 of 3 closed — complete
 
 **Status: complete.** `decisions.md §22`'s CORRECTION (2026-09-04) found that three units wave 39
@@ -104,7 +154,7 @@ and lane B jointly earned.
   confirm the fix held.
 - Lane A's own receipt (`wave40_laneA_shape2_crb_synonym_table_extension_cycle_receipt.md`) had
   a stale "0 units confirmed closed" claim (true when the cycle ended, false once the orchestrator
-  finished the regen) and a bare "near 98%" CPU figure with no denominator marker — fixed via an
+  finished the regen) and a bare percentage CPU figure with no denominator marker — fixed via an
   ORCHESTRATOR ADDENDUM section and rewording, per this bundle's own denominator-gate discipline.
 
 **Full `scripts/verify.sh -j 6`, run with an isolated `CARGO_TARGET_DIR`** (same

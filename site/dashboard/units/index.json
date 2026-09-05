@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-04T08:02:10Z",
+  "generated_at": "2026-09-04T14:19:21Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16056,
+  "proven_units": 16058,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,18 +1428,18 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4776,
+      "proven": 4778,
       "by_status": {
-        "engine-does-not-hold": 12967,
+        "engine-does-not-hold": 12964,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 537,
+        "grounded": 539,
         "oracle-agree": 26,
-        "literal-verified": 114,
+        "literal-verified": 115,
         "oracle-unverifiable": 6
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2788781,
+      "bytes": 2788753,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -1606,10 +1606,10 @@
         },
         "fighterclassfeatures": {
           "label": "Fighter Class Features",
-          "done": 55,
+          "done": 56,
           "held": 1,
           "in-progress": 0,
-          "not-started": 125,
+          "not-started": 124,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1678,10 +1678,10 @@
         },
         "monkclassfeatures": {
           "label": "Monk Class Features",
-          "done": 49,
+          "done": 50,
           "held": 6,
           "in-progress": 0,
-          "not-started": 96,
+          "not-started": 95,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2957,9 +2957,9 @@
         "psychicclassfeature": {
           "label": "Psychic Class Feature",
           "done": 8,
-          "held": 2,
+          "held": 3,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 1,
           "unmeasurable": 0,
           "deferred": 0
         },
