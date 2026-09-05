@@ -11,6 +11,56 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 42 wave-end gate — caught and fixed a real regression from its own narrow testing, full 40/40 confirmed — complete
+
+**Status: complete.** Integration and gate summary for wave 42's own cycle (below), which closed
+both of its assigned units on commit `af674409f5` (receipt SHA fill-in `884c10ef5f`) on
+`tranche/14`. Independently re-verified by the orchestrator before trusting the cycle's own
+self-report: fresh `python3 scripts/completion_atlas.py --check` plus a direct id→status join
+over `docs/work-inventory.json` confirmed `core_rulebook:class_feature:paladin_detect_evil` and
+`core_rulebook:class_feature:cleric_aura` → `grounded` (DONE), zero collateral movement.
+`DONE: 25360→25362`, `D: 2520→2518`.
+
+**A real regression slipped through this cycle's own testing.** The cycle ran only `cargo test
+--locked --lib` and a `--no-run` compile check, never the full `cargo test --locked --no-fail-fast`
+integration suite. A subsequent full isolated `scripts/verify.sh -j 6` gate run caught 10
+pre-existing test targets it broke: `tests/sd18_cleric_level11_widening.rs` through
+`tests/sd18_cleric_level20_widening.rs`, whose `*_is_not_promoted_by_this_slice` negative
+controls had never seen the newly-added `class_feature.cleric.aura.strength_level` explanation.
+Dispatched a recovery agent that re-verified the corpus (`cr_abilities_class.lst:563`): Aura's
+magnitude genuinely has no level gate beyond class level ≥1 and no deity/alignment precondition,
+so the wave-42 compute was correct as written — the 10 tests were stale. Fixed by widening both
+assertions' exclusion lists across all 10 files to also exclude the new id, following the
+identical precedent those same files already established for Weapon and Armor Proficiency and
+Rebuke Death (`d1e0c26e06`). Also checked the sd13/sd20/sd25 Cleric test families for the same
+risk — none affected. All 10 previously-failing targets, plus the full root-full and root-lib
+suites, re-confirmed clean. Committed as `dc7ba7c17f`. **Process lesson carried into wave 43's
+own dispatch instructions: any wave that adds compute must run the FULL integration suite itself,
+not just lib tests, before claiming "zero collateral movement."**
+
+**Also this wave: a real, rigorous re-audit of the remaining 12 units** from the original 15-unit
+"genuinely new-chassis" list (Duelist ×4, Shadowdancer ×4, Assassin ×2, Loremaster ×2) — not yet
+fixed, but the difficulty finding matters for scoping. Headline: **none of the 12 is
+genuinely-hard; all 12 are small-precedented-new-compute**, several with multiple existing
+byte-for-byte-comparable functions already shipped for other classes. Full detail in
+`decisions.md §22`'s "WAVE 42 UPDATE" section. Recommendation: re-scope this population out of
+"genuinely new-chassis" framing entirely, treat it the same as the Paladin/Cleric precedented-add
+track. Only Wizard's Arcane Bond (of the original 15) still holds up as genuinely hard.
+
+**Wave-end gate fixes:**
+- The regression above (fixed, `dc7ba7c17f`).
+- `scripts/verify-baselines.env`: raised `BASELINE_ROOT_LIB_TESTS` 3063→3068 and
+  `BASELINE_ROOT_FULL_TESTS` 8453→8458 (this wave's 7 new tests: formula + reachability +
+  negative-control per unit), dated comment block added following the file's own convention.
+
+**Full `scripts/verify.sh -j 6`, run with an isolated `CARGO_TARGET_DIR`** (re-launched after the
+regression fix and again after the baseline raise): final run confirmed **40 PASS / 0 FAIL,
+`RESULT: PASS`** — `root-lib` 3068, `root-full` 8458 (matches the raised baseline), `desktop`
+573, `reach` 31, all selftests/gates/frontend/clippy/class-dump clean.
+
+**Bucket state, re-derived fresh:** `population=49438 unclassified=0 overlap=0`; `DONE: 25360 →
+25362`, `D: 2520 → 2518`. `done_evidence_violations=0 citation_failures=0`.
+
 ### Cycle — Wave 42 — Paladin's Detect Evil and Cleric's Aura: 2 of 2 closed (small, precedented new compute) — complete
 
 **ORCHESTRATOR ADDENDUM (2026-09-04):** this cycle's own testing ran only `cargo test --locked
