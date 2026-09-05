@@ -4073,7 +4073,7 @@
         },
         {
           "name": "Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.ClassFeatures.ClericClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Aura"
@@ -5991,7 +5991,7 @@
         },
         {
           "name": "Detect Evil",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PaladinClassFeatures.SpecialQuality.SpellLike.Detect Evil",
           "standing": "unclassified",
           "display_name": "Detect Evil"

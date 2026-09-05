@@ -1042,4 +1042,49 @@ This is a third difficulty tier this bundle has not previously named explicitly;
 for elsewhere in the 15-unit new-chassis list and the 634-unit sub-mechanism-5 population before
 assuming everything left is one of the two extremes.
 
+**WAVE 42 UPDATE, 2026-09-04: Paladin's Detect Evil and Cleric's Aura are now CLOSED** — both
+`core_rulebook:class_feature:paladin_detect_evil` and `core_rulebook:class_feature:cleric_aura`
+→ `grounded` (DONE), via two new pure functions (`paladin_detect_evil_caster_level`,
+`cleric_aura_strength_level`) copying the antipaladin precedent exactly, independently
+re-verified by the orchestrator (fresh `completion_atlas.py --check` + a direct id→status join).
+`DONE: 25360→25362`, `D: 2520→2518`. Full receipt:
+`artifacts/bucket-d-mining/wave42_paladin_detect_evil_and_cleric_aura_cycle_receipt.md`.
+
+**Also this wave: a real, rigorous re-audit of the remaining 12 units** from the original 15-unit
+"genuinely new-chassis" list (Duelist ×4, Shadowdancer ×4, Assassin ×2, Loremaster ×2) —
+NOT yet fixed, but the difficulty finding matters for scoping. **Headline: none of the 12 is
+genuinely-hard. All 12 are small-precedented-new-compute**, several with an even stronger
+precedent than Paladin/Cleric had (multiple existing byte-for-byte-comparable functions already
+shipped for other classes, not just one antipaladin mirror). Specifics:
+- All 4 classes (Duelist, Shadowdancer, Assassin, Loremaster) are prestige classes already
+  registered in `prestige_class_entry_gate::is_registered`, and a generic mechanism
+  (`class_feature_grant_consumer::push_generic_class_feature_grant_records`) already fires for
+  all of them — but it only emits the feature's grant LEVEL, never its real magnitude, which is
+  why these 12 units still show `engine-does-not-hold` despite that mechanism running. This is
+  NOT a classifier-visibility gap (unlike wave 41's 3 units) — each genuinely needs one new
+  formula function.
+- Every one of the 12 has a directly comparable existing function already in
+  `pilot_compute/mod.rs` to copy: e.g. Duelist's Precise Strike (`+level` weapon damage) mirrors
+  `swashbuckler_precise_strike_damage` almost verbatim; Assassin's Save Against Poisons formula
+  (`AssassinLVL/2`) is already a literal string in this repo's own test fixtures
+  (`class_feature_grant_consumer.rs:2392`); Shadowdancer's Shadow Illusion/Shadow Call mirror the
+  already-shipped `ground_summoner_slice_a_features` "ground the SLA triple, don't model the
+  effect" split; Loremaster's Secret Lore pool mirrors the already-wired generic pool-choice
+  mechanism (`push_generic_pool_choice_magnitude`).
+- No `ClassId` enum entry or dedicated per-class file exists yet for any of the four prestige
+  classes — the fix shape is 4 new `ground_or_block_<class>_class_features`-style dispatch
+  functions (one per class, following `ground_swashbuckler_deeds`/`ground_summoner_slice_a_features`
+  as the template), not 12 separate ad-hoc additions.
+- **Recommendation for wave 43+: re-scope this 12-unit population OUT of "genuinely new-chassis"
+  framing entirely** and treat it the same as the Paladin/Cleric precedented-add track — it is
+  cheaper than Paladin/Cleric was, not harder, since most units have multiple precedents rather
+  than one. Only Wizard's Arcane Bond (of the original 15) still holds up as genuinely open-ended
+  new-chassis work requiring real subsystem modeling (weapon enhancement bonuses, no precedent
+  anywhere in the engine).
+- The 634-unit sub-mechanism-5 population is still completely unaudited under this scrutiny —
+  four straight small-population checks (3 cheap-fix, 2 precedented-new-compute, 12
+  precedented-new-compute) all landed away from "genuinely hard," so its own "too large to be
+  worth auditing" framing from waves 37/38 should be treated as unverified, not confirmed, same
+  as before.
+
 ---

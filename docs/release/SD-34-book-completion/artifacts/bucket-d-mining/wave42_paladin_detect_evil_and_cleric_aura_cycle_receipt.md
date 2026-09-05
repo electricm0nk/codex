@@ -1,5 +1,42 @@
 # Cycle — SD-34 wave 42 — Paladin's Detect Evil and Cleric's Aura: 2 of 2 closed (small, precedented new compute)
 
+**ORCHESTRATOR ADDENDUM (2026-09-04, added after a downstream regression was caught by a full
+isolated `scripts/verify.sh -j 6` run this cycle's own testing did not include):** this cycle's own
+testing (below) ran only `cargo test --locked --lib` and a `cargo test --locked --no-run` compile
+check — it never ran the full `cargo test --locked --no-fail-fast` integration suite (`tests/*.rs`).
+That gap let a real regression through: adding `class_feature.cleric.aura.strength_level`
+unconditionally inside `explain_cleric_level1_spell_baseline` (exactly as intended — see the
+corpus re-verification below, unchanged) caused 10 pre-existing SD-18 widening tests
+(`tests/sd18_cleric_level11_widening.rs` through `tests/sd18_cleric_level20_widening.rs`) to fail:
+each file's own `*_is_not_promoted_by_this_slice` negative controls (the multiclass control in all
+10 files, plus the level-21-ceiling control in the 7 files that still carry it) assert a closed
+list of cleric explanation ids and had never seen this new id before. **Root cause was NOT a bug in
+the compute function** — re-confirmed against `cr_abilities_class.lst:563`
+(`BONUS:VAR|AlignmentAuraLVL|ClericLVL`) that Aura's strength-level magnitude genuinely has no level
+gate beyond the class feature's own `PREVARGTEQ:Cleric_CFP_Level,1` grant (level >= 1) and no
+deity/alignment precondition on the magnitude itself (only on which of the four aura flavors
+*displays*, a separate burden this engine does not model at all) — so the addition is correct at
+any Cleric level, including a multiclass character with any number of Cleric levels. **The 10 tests
+were what had gone stale**, the exact same shape `d1e0c26e06` (2026-09-01, "AT-34-E6-001 gate lane
+A") already fixed for this same file's `weapon_and_armor_proficiency`/`rebukedeathtimes` carve-outs:
+a negative control written before a later, real, already-tested closure widened the engine's grant
+coverage. Fixed by widening the exclusion list in both assertions across all 10 files (17 sites
+total) to also exclude `class_feature.cleric.aura.strength_level`, following that exact precedent
+rather than inventing a new pattern. Checked whether any OTHER cleric test could be silently
+affected the same way: the sd13 Cleric progression tests (levels 1-10, `sd13_cleric_level*.rs`)
+carry the analogous `*_is_not_promoted_by_this_slice` controls, but every one of them checks only
+the `class_chassis.cleric.` prefix (never `class_feature.cleric.`), so the new
+`class_feature.cleric.aura.strength_level` id was never in scope for those assertions and they were
+never at risk — confirmed by direct read, not assumed. `sd20_levelup_cleric.rs` and
+`sd25_cleric_level_up_explanation_coverage.rs` reference no `class_feature.cleric.` id at all
+(`grep` empty), also unaffected. All 10 previously-failing targets re-run green
+(`cargo test --locked --test sd18_cleric_level{11..20}_widening`, 0 failed across all), the full
+`cargo test --locked --no-fail-fast` root suite re-run clean, and `cargo test --locked --lib`
+re-confirmed clean (see this addendum's own follow-up commit for the exact figures). This is named
+here per this bundle's own "honest addendum, not silent absorption" convention rather than folded
+silently into the body below, which is preserved AS ORIGINALLY WRITTEN for the historical record of
+what this cycle's own testing actually covered at the time.
+
 - **Commit SHA:** `af674409f5` (`af674409f5dc2e1d901063bfe1af783e4961fef2`)
 - **Files touched:** `src/rules_core/pilot_compute/mod.rs` (2 new pure functions —
   `paladin_detect_evil_caster_level`, `cleric_aura_strength_level` — 1 new unconditional-on-race

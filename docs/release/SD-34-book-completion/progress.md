@@ -13,6 +13,25 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ### Cycle — Wave 42 — Paladin's Detect Evil and Cleric's Aura: 2 of 2 closed (small, precedented new compute) — complete
 
+**ORCHESTRATOR ADDENDUM (2026-09-04):** this cycle's own testing ran only `cargo test --locked
+--lib` and a `--no-run` compile check, never the full `cargo test --locked --no-fail-fast`
+integration suite. A subsequent full isolated `scripts/verify.sh -j 6` run caught 10 pre-existing
+SD-18 test targets it missed: `tests/sd18_cleric_level11_widening.rs` through
+`tests/sd18_cleric_level20_widening.rs`, whose `*_is_not_promoted_by_this_slice` negative controls
+had never seen the newly-added `class_feature.cleric.aura.strength_level` id. Re-verified the
+corpus again (`cr_abilities_class.lst:563`): Aura's magnitude genuinely has no level gate beyond
+class level >= 1 and no deity/alignment precondition, so the wave-42 addition was correct as
+written — the 10 tests were stale, the identical shape `d1e0c26e06` already fixed for this same
+file's Weapon and Armor Proficiency/Rebuke Death carve-outs. Fixed by widening both assertions'
+exclusion lists across all 10 files (17 sites) to also exclude the new id, following that exact
+precedent. Also checked the sd13 Cleric progression tests (levels 1-10) and the sd20/sd25 Cleric
+files for the same risk: none are affected, since the sd13 tests check only the
+`class_chassis.cleric.` prefix (never `class_feature.cleric.`) and the sd20/sd25 files reference no
+`class_feature.cleric.` id at all — confirmed by direct read. All 10 previously-failing targets,
+the full root `cargo test --locked --no-fail-fast`, and `cargo test --locked --lib` are all
+re-confirmed clean. Full detail in the receipt's own addendum:
+`artifacts/bucket-d-mining/wave42_paladin_detect_evil_and_cleric_aura_cycle_receipt.md`.
+
 **Status: complete.** `decisions.md §22`'s FURTHER UPDATE (2026-09-04) correctly identified both
 units as genuinely new compute — unlike wave 41's three units, no explanation id existed anywhere
 in the engine for either before this cycle — but noted both are pure class-level pass-throughs

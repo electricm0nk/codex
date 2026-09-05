@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-04T14:19:21Z",
+  "generated_at": "2026-09-05T01:06:20Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16058,
+  "proven_units": 16060,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,18 +1428,18 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4778,
+      "proven": 4780,
       "by_status": {
-        "engine-does-not-hold": 12964,
+        "engine-does-not-hold": 12962,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 539,
+        "grounded": 541,
         "oracle-agree": 26,
         "literal-verified": 115,
         "oracle-unverifiable": 6
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2788753,
+      "bytes": 2788729,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -1625,9 +1625,9 @@
         "paladinclassfeatures": {
           "label": "Paladin Class Features",
           "done": 97,
-          "held": 1,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 79,
+          "not-started": 78,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2362,10 +2362,10 @@
         },
         "extraordinary": {
           "label": "Extraordinary",
-          "done": 16,
+          "done": 17,
           "held": 0,
           "in-progress": 0,
-          "not-started": 8,
+          "not-started": 7,
           "unmeasurable": 0,
           "deferred": 0
         },
