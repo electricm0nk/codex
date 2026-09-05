@@ -9005,6 +9005,11 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
+    // `decisions.md §22`'s "FURTHER UPDATE, 2026-09-04": unlike the burden
+    // separation above, unconditional on race and single-class status --
+    // see `ground_paladin_detect_evil`'s own doc comment.
+    ground_paladin_detect_evil(input, &mut explanations);
+
     // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
     // class-feature blocker into three named pillars, and ground Track and
     // combat style for real (Track as a bounded flat numeric value, combat
@@ -34191,6 +34196,62 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     }
 }
 
+/// Paladin's Detect Evil (`core_rulebook:class_feature:paladin_detect_evil`,
+/// `cr_abilities_class.lst:1356`): `DEFINE:DetectEvilLVL|0` /
+/// `SPELLS:Class|TIMES=ATWILL|CASTERLEVEL=DetectEvilLVL|Detect Evil,11+WIS`
+/// / `BONUS:VAR|DetectEvilLVL|PaladinLVL` -- `DetectEvilLVL` is the
+/// paladin's own class level (no other producer sets it), used as the
+/// at-will spell-like ability's caster level. Race-independent,
+/// level-gate-only, the identical shape as the Antipaladin's own mirror
+/// feature, `rules_tables::apg::antipaladin_features::
+/// detect_good_caster_level` (`decisions.md §22`'s "FURTHER UPDATE,
+/// 2026-09-04": this class had the identical structural precedent already
+/// built for its own mirror class, just never symmetrically added here).
+/// `None` below level 1 -- the class feature's own
+/// `PREVARGTEQ:Paladin_CFP_Level,1` grant gate.
+fn paladin_detect_evil_caster_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Grounds Paladin's Detect Evil for real. Deliberately the only Paladin
+/// class-feature push in this file that runs unconditional on race and
+/// single-class status -- unlike
+/// `explain_paladin_level1_chassis_and_spell_burden_separation`'s own
+/// Human-only/single-class-only gate elsewhere in this file
+/// (`supported_paladin_level`'s own `input.chosen.race_id != HUMAN_RACE_ID`
+/// check), a pure class-level pass-through
+/// (`paladin_detect_evil_caster_level`'s own doc comment) has no reason to
+/// inherit that narrower fixture's scope.
+/// Fires for any character with a Paladin class level, multiclassed or
+/// not, at any level -- `decisions.md §22`'s own note that "Paladin
+/// currently has no `ground_paladin_class_features`-style push at all"
+/// until this cycle.
+fn ground_paladin_detect_evil(input: &CharacterInput, explanations: &mut Vec<ComputationExplanation>) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == PALADIN_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+    if let Some(caster_level) = paladin_detect_evil_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.paladin.detect_evil.caster_level".to_owned(),
+            value: caster_level,
+            detail: format!(
+                "Paladin level {level} Detect Evil: at-will spell-like ability, caster level \
+                 {caster_level} (a pure class-level pass-through; PF1 Core Rulebook \
+                 `cr_abilities_class.lst`'s `BONUS:VAR|DetectEvilLVL|PaladinLVL`)"
+            ),
+        });
+    }
+}
+
 /// The highest paladin spell level with a non-"—" spells-per-day column at
 /// the given paladin level (0 means no spell access yet). Pure function,
 /// race-independent -- mirrors `ranger_spell_level_access` exactly, extracted
@@ -46831,6 +46892,24 @@ fn explain_cleric_level1_spell_baseline(
         .find(|class_level| class_level.class_id == CLERIC_CLASS_ID)
         .map(|class_level| class_level.level)
     {
+        // `decisions.md §22`'s "FURTHER UPDATE, 2026-09-04": a pure
+        // class-level pass-through, so pushed unconditionally here
+        // alongside this function's other unconditional-on-race burdens --
+        // see `cleric_aura_strength_level`'s own doc comment.
+        if let Some(strength_level) = cleric_aura_strength_level(cleric_level) {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.cleric.aura.strength_level".to_owned(),
+                value: strength_level,
+                detail: format!(
+                    "Cleric level {cleric_level} Aura: aura strength level {strength_level} \
+                     (a pure class-level pass-through selecting one of four DESC-prose tiers \
+                     depending on deity alignment: faint at 1, moderate at 2-4, strong at \
+                     5-10, overwhelming at 11+; PF1 Core Rulebook \
+                     `cr_abilities_class.lst`'s `BONUS:VAR|AlignmentAuraLVL|ClericLVL`)"
+                ),
+            });
+        }
+
         // v0.6 alpha swarm, risks item 8 (Cleric Good domain closure,
         // adversarially reviewed 2026-07-25): the domain-powers burden is
         // no longer flatly unconditional for every Cleric -- Good domain's
@@ -47614,6 +47693,30 @@ fn cleric_touch_of_good_bonus(level: u8) -> i16 {
     let spec = resolve_domain_power(GOOD_DOMAIN_SELECTION)
         .expect("Good is always present in DOMAIN_POWER_CATALOG");
     domain_power_magnitude(spec, level, &AbilityModifiers::default())
+}
+
+/// Cleric's Aura (`core_rulebook:class_feature:cleric_aura`,
+/// `cr_abilities_class.lst:563`): `BONUS:VAR|AlignmentAuraLVL|ClericLVL` --
+/// a pure class-level pass-through selecting which of the four
+/// `PREDEITYALIGN`-gated virtual sub-abilities (Aura of Chaos/Evil/Good/Law,
+/// `cr_abilities_class.lst:2874-2877`) displays which DESC-prose tier
+/// (faint at 1, moderate at 2-4, strong at 5-10, overwhelming at 11+) --
+/// the identical shape and tier breakpoints as the Antipaladin's own mirror
+/// feature, `rules_tables::apg::antipaladin_features::
+/// aura_of_evil_strength_level` (`decisions.md §22`'s "FURTHER UPDATE,
+/// 2026-09-04": this class had the identical structural precedent already
+/// built for its own mirror class, just never symmetrically added here).
+/// The alignment-gating itself (which of the four flavors of aura a given
+/// cleric projects) depends on the cleric's deity, which this engine does
+/// not model deity selection for at all; this grounds only the magnitude
+/// that is identical regardless of which of the four is chosen. `None`
+/// below level 1 -- the class feature's own
+/// `PREVARGTEQ:Cleric_CFP_Level,1` grant gate.
+fn cleric_aura_strength_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
 }
 
 /// Whether `input` is a Cleric OR an Inquisitor actively, validly using
@@ -73941,6 +74044,138 @@ mod extra_resource_feat_tests {
                 );
             }
         }
+    }
+}
+
+/// `decisions.md §22`'s "FURTHER UPDATE, 2026-09-04": Paladin's Detect Evil
+/// and Cleric's Aura, both genuinely new compute (no explanation id existed
+/// anywhere in the engine before this cycle), both pure class-level
+/// pass-throughs following the exact structural precedent already built for
+/// the Antipaladin's own mirror features (`aura_of_evil_strength_level` /
+/// `detect_good_caster_level`, `rules_tables::apg::antipaladin_features`).
+/// These tests prove both formulas directly AND prove each explanation id
+/// is actually reachable through the real pipeline end to end -- the same
+/// "unit test the formula, then also prove reachability" discipline wave
+/// 41's own three corrected units were closed under, since a formula this
+/// codebase has repeatedly gotten right in isolation has ALSO repeatedly
+/// turned out unreachable in practice (`decisions.md §22`'s own "cheap
+/// fix... mischaracterized" finding).
+#[cfg(test)]
+mod paladin_detect_evil_and_cleric_aura_tests {
+    use super::{
+        build_pilot_headless_receipt, cleric_aura_strength_level, paladin_detect_evil_caster_level,
+        CharacterClassLevel, CharacterInput,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    #[test]
+    fn paladin_detect_evil_caster_level_is_the_raw_class_level_from_level_one() {
+        assert_eq!(paladin_detect_evil_caster_level(1), Some(1));
+        assert_eq!(paladin_detect_evil_caster_level(20), Some(20));
+        assert_eq!(paladin_detect_evil_caster_level(0), None);
+    }
+
+    #[test]
+    fn cleric_aura_strength_level_is_the_raw_class_level_from_level_one() {
+        assert_eq!(cleric_aura_strength_level(1), Some(1));
+        assert_eq!(cleric_aura_strength_level(11), Some(11));
+        assert_eq!(cleric_aura_strength_level(0), None);
+    }
+
+    /// Reachability proof: a level-1 Paladin's Detect Evil caster level
+    /// must actually appear in a real receipt's explanations, under the
+    /// exact id `core_rulebook:class_feature:paladin_detect_evil`'s own
+    /// classifier slug expects (`class_feature.paladin.detect_evil.
+    /// caster_level`).
+    #[test]
+    fn paladin_detect_evil_reaches_the_real_pipeline_from_level_one() {
+        let level1 = character("class:paladin", 1);
+        assert_eq!(
+            explanation_value(&level1, "class_feature.paladin.detect_evil.caster_level"),
+            Some(1),
+            "a level-1 Paladin must have Detect Evil grounded at caster level 1"
+        );
+
+        let level5 = character("class:paladin", 5);
+        assert_eq!(
+            explanation_value(&level5, "class_feature.paladin.detect_evil.caster_level"),
+            Some(5),
+            "Detect Evil's caster level must track paladin level directly"
+        );
+    }
+
+    /// Reachability proof: a level-1 Cleric's Aura strength level must
+    /// actually appear in a real receipt's explanations, under the exact
+    /// id `core_rulebook:class_feature:cleric_aura`'s own classifier slug
+    /// expects (`class_feature.cleric.aura.strength_level`).
+    #[test]
+    fn cleric_aura_reaches_the_real_pipeline_from_level_one() {
+        let level1 = character("class:cleric", 1);
+        assert_eq!(
+            explanation_value(&level1, "class_feature.cleric.aura.strength_level"),
+            Some(1),
+            "a level-1 Cleric must have Aura grounded at strength level 1"
+        );
+
+        let level11 = character("class:cleric", 11);
+        assert_eq!(
+            explanation_value(&level11, "class_feature.cleric.aura.strength_level"),
+            Some(11),
+            "Aura's strength level must track cleric level directly (overwhelming tier at 11+)"
+        );
+    }
+
+    /// Neither record may leak onto the other class, nor onto an unrelated
+    /// class entirely.
+    #[test]
+    fn neither_record_leaks_onto_an_unrelated_class() {
+        let fighter = character("class:fighter", 5);
+        assert_eq!(
+            explanation_value(&fighter, "class_feature.paladin.detect_evil.caster_level"),
+            None,
+            "a Fighter must not gain Paladin's Detect Evil"
+        );
+        assert_eq!(
+            explanation_value(&fighter, "class_feature.cleric.aura.strength_level"),
+            None,
+            "a Fighter must not gain Cleric's Aura"
+        );
+
+        let paladin = character("class:paladin", 5);
+        assert_eq!(
+            explanation_value(&paladin, "class_feature.cleric.aura.strength_level"),
+            None,
+            "a Paladin must not gain Cleric's own Aura record"
+        );
+
+        let cleric = character("class:cleric", 5);
+        assert_eq!(
+            explanation_value(&cleric, "class_feature.paladin.detect_evil.caster_level"),
+            None,
+            "a Cleric must not gain Paladin's own Detect Evil record"
+        );
     }
 }
 

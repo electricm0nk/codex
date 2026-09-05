@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2520,
+      "count": 2518,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 25360,
+      "count": 25362,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "9fbd0fcd4f67434afcb10ed77f849e4d5c9b34a3",
+  "derived_at": "d570340aae62867ad535b4e99348009160ce42f0",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -123,7 +123,7 @@
   "sub_causes": {
     "D": {
       "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 210,
-      "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 39,
+      "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 37,
       "class_feature_of_unmodelled_corpus_class:adaptive_warrior": 14,
       "class_feature_of_unmodelled_corpus_class:aldori_swordlord": 13,
       "class_feature_of_unmodelled_corpus_class:animal": 17,

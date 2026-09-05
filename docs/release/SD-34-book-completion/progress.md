@@ -11,6 +11,66 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 42 — Paladin's Detect Evil and Cleric's Aura: 2 of 2 closed (small, precedented new compute) — complete
+
+**Status: complete.** `decisions.md §22`'s FURTHER UPDATE (2026-09-04) correctly identified both
+units as genuinely new compute — unlike wave 41's three units, no explanation id existed anywhere
+in the engine for either before this cycle — but noted both are pure class-level pass-throughs
+with an exact structural precedent already built for the Antipaladin (Paladin's own mirror class):
+`aura_of_evil_strength_level`/`detect_good_caster_level`
+(`rules_tables::apg::antipaladin_features`). This cycle re-verified the corpus directly before
+writing anything (`cr_abilities_class.lst:1356`'s `BONUS:VAR|DetectEvilLVL|PaladinLVL`,
+`cr_abilities_class.lst:563`'s `BONUS:VAR|AlignmentAuraLVL|ClericLVL`, both pure level pass-
+throughs gated at class level 1 — the identical shape and gate as their antipaladin precedents)
+and wrote two new pure functions, `paladin_detect_evil_caster_level`/`cleric_aura_strength_level`,
+following that precedent's exact style.
+
+Paladin needed a brand-new, unconditional-on-race grounding function (`ground_paladin_detect_evil`,
+called from the top-level dispatch) since the existing Paladin decomposition
+(`explain_paladin_level1_chassis_and_spell_burden_separation`) is deliberately gated to a narrow
+Human-only/single-class-only fixture — folding a race-independent pass-through into it would have
+silently under-grounded every non-Human or multiclassed Paladin. Cleric's Aura fit its existing
+home cleanly: `explain_cleric_level1_spell_baseline` is already unconditional on race, so the push
+was added directly inside it.
+
+Checked classifier reachability against the real matcher code before assuming a table entry was
+needed: both new ids satisfy `class_feature_exact_suffix_grounded`'s own 3-segment
+`<owner>.<feature_slug>.<descriptor>` shape (already proven live, with no synonym table involved,
+by Paladin's own pre-existing `Divine Grace` closure) — `class_feature.paladin.detect_evil.
+caster_level` and `class_feature.cleric.aura.strength_level` both ground directly.
+`src/bin/v06_work_inventory.rs` carries **zero diff** this cycle — neither a
+`CLASS_FEATURE_ID_KNOWN_SYNONYMS` entry nor a `canonical_seeds_for()` match arm was needed.
+
+7 new tests (2 pure-function, 2 real-pipeline reachability proofs across two levels each, 1
+cross-class-leak negative control), all passing. `cargo test --locked --lib -j 6` → 3068 passed,
+0 failed, 14 ignored, run twice pre- and post-regen (up from the standing 3063 baseline by exactly
+5 new top-level test functions).
+
+**Real movement: both target units closed.** Guarded regen ran to completion (`cargo run --locked
+--bin v06_work_inventory`, after generating both `CORPUS_LITERAL_SWEEP_REPORT` and
+`DERIVED_FIXTURE_CHECK_REPORT` prerequisites fresh — the first attempt correctly refused with "this
+run would drop 9624 of 9624 verification stamps" until both were supplied). Before/after, re-
+derived via `completion_atlas.py --check` on both snapshots plus an independent Python
+`id`→`status` join (both agree): `DONE: 25360→25362 (+2)`, `D: 2520→2518 (−2)`, every other bucket
+unchanged. Exactly 2 units changed status, zero collateral movement: `Paladin ~ Detect Evil` and
+`Cleric ~ Aura` both `engine-does-not-hold` → `grounded` (DONE, evidence
+`explanation_id_observed_in_a_real_computation` for both — the plain exact-suffix rung, no synonym
+table involved). `population=49438 unclassified=0 overlap=0 done_evidence_violations=0
+citation_failures=0`.
+
+Full receipt:
+`artifacts/bucket-d-mining/wave42_paladin_detect_evil_and_cleric_aura_cycle_receipt.md`.
+
+**Next-cycle plan:** Shape 2's new-chassis remainder is now 13 units (Duelist 4, Shadowdancer 4,
+Assassin 2, Loremaster 2, Wizard's Arcane Bond 1) — real Epic 4/5-shaped work per `decisions.md
+§22`'s own standing scope ruling, but per that same section's CORRECTION, re-verify each against
+the real `pilot_compute/mod.rs` before trusting a "no compute exists"/"genuinely different"
+framing at face value — only Wizard's Arcane Bond has been fully spot-checked and held up as
+genuinely unbuilt to date; Paladin's Detect Evil and Cleric's Aura were BOTH previously written up
+in the same "genuinely different, structurally larger" bucket and turned out to be small,
+precedented copies once someone actually read the antipaladin's own file. Sub-mechanism 5 (634
+units/60 classes) remains un-re-audited since `decisions.md §22`'s own correction.
+
 ### Cycle — Wave 41 wave-end gate — survived a mid-run machine crash, a self-inflicted denominator-gate slip, and a stale dashboard, full 40/40 confirmed — complete
 
 **Status: complete.** Integration and gate summary for wave 41's own cycle (below), which closed
