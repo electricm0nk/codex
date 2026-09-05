@@ -1,6 +1,6 @@
 # Cycle — SD-34 wave 43 — Duelist/Shadowdancer/Assassin/Loremaster: 12 of 12 closed (small, precedented new compute)
 
-- **Commit SHA:** `<FILL_IN>`
+- **Commit SHA:** `f3267fe099` (`f3267fe099e456303669f83eb15f5dd5e8ba69fa`)
 - **Files touched:** `src/rules_core/pilot_compute/mod.rs` (14 new pure formula functions, 1 new
   const, 2 new class-id consts (`DUELIST_CLASS_ID`, `LOREMASTER_CLASS_ID`; `ASSASSIN_CLASS_ID`/
   `SHADOWDANCER_CLASS_ID` already existed), 4 new unconditional-on-chassis grounding functions
