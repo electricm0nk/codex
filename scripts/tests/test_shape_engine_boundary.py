@@ -69,7 +69,11 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         units = [_unit("u1", 1, "engine-does-not-hold"), _unit("u2", 1, "grounded")]
         report = SEB.build_report(units)
         self.assertTrue(report["citation_ok"])
-        self.assertEqual(report["promotion_ladder_anchor_line"], 10857)
+        # SD-34 wave 44: Piece 1/2's own insertions into
+        # `src/bin/v06_work_inventory.rs` shifted the promotion ladder
+        # again, 10857 -> 13906 (see `shape_engine_boundary.py`'s own
+        # module doc comment for the re-derivation).
+        self.assertEqual(report["promotion_ladder_anchor_line"], 13906)
         self.assertIn("has_real_description", report["promotion_ladder_source"])
         self.assertIn("class_feature_pool_catalog_holds", report["promotion_ladder_source"])
 
@@ -98,11 +102,11 @@ class TestCitationFailsClosedForTheIntendedReason(unittest.TestCase):
         SEB.PROMOTION_LADDER_LINES.update(self._orig_lines)
 
     def test_wrong_expected_content_is_caught_not_silently_passed(self):
-        # RED: assert a line 10857 must contain text it does not.
-        SEB.PROMOTION_LADDER_LINES[10857] = "this text does not appear on that line"
+        # RED: assert a line 13906 must contain text it does not.
+        SEB.PROMOTION_LADDER_LINES[13906] = "this text does not appear on that line"
         failures = SEB.citation_failures()
         self.assertEqual(len(failures), 1)
-        self.assertIn("10857", failures[0])
+        self.assertIn("13906", failures[0])
         self.assertIn("this text does not appear on that line", failures[0])
 
         with self.assertRaises(SEB.StaleCitationError):
@@ -117,7 +121,7 @@ class TestCitationFailsClosedForTheIntendedReason(unittest.TestCase):
         # GREEN: after tearDown-equivalent restoration mid-test, the real
         # content passes again -- proves the RED above was about content,
         # not a broken test harness.
-        SEB.PROMOTION_LADDER_LINES[10857] = "this text does not appear on that line"
+        SEB.PROMOTION_LADDER_LINES[13906] = "this text does not appear on that line"
         self.assertNotEqual(SEB.citation_failures(), [])
         SEB.PROMOTION_LADDER_LINES.clear()
         SEB.PROMOTION_LADDER_LINES.update(self._orig_lines)
@@ -133,7 +137,7 @@ class TestRenderMarkdownEmbedsReDeriveCommands(unittest.TestCase):
         self.assertIn("python3 -c", md)
         self.assertIn(str(report["magnitude_bearing"]), md)
         self.assertIn(str(report["not_held_by_engine"]), md)
-        self.assertIn("10857", md)
+        self.assertIn("13906", md)
         self.assertIn("denominator", md)
 
 

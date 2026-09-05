@@ -72,8 +72,15 @@ ENGINE_SURFACE_CITATIONS = {
     # intervening cycles' own insertions (AT-34-E3-002 Cleric Domain probe, AT-34-E4-002
     # cycle 4 choice-based trait spine, AT-34-E3-003 bucket-M BASEITEM chase) since the
     # prior re-derivation. Re-grepped fresh against the real construction sites.
-    "companion": {"line": 11719, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 11819, "must_contain": "power_content_has_no_engine_table"},
+    #
+    # SD-34 wave 44 re-derivation: both pins were already stale at HEAD
+    # (before this wave's own edits), never caught because this test is not
+    # wired into `verify.sh` (only invoked via `scripts/tests` discovery).
+    # Piece 1/2's own insertions into this file shifted them further still.
+    # Re-grepped fresh against the real construction sites, 11719 -> 14013
+    # and 11819 -> 14113.
+    "companion": {"line": 14013, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 14113, "must_contain": "power_content_has_no_engine_table"},
 }
 
 

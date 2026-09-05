@@ -754,21 +754,37 @@ mod tests {
     /// docs/work-inventory.json --corpus-root data/corpus` against the
     /// post-merge, post-regen `docs/work-inventory.json` (tranche/14,
     /// orchestrator wave-end gate): F1 = 5206 exactly.
+    ///
+    /// **5,206 -> 5,196, a REAL movement (SD-34 wave 44, 2026-09-05).**
+    /// Wave 44 closed 16 units total (Piece 2's four classifier-collision
+    /// fixes); of those, 10 carry F1's own defining shape -- verified per-id
+    /// via `shape_ledger.py --output`, not assumed from formula-resolution
+    /// shape (Pathfinder Delver's own PaDFE Construct/Ooze/Undead each carry
+    /// a bare single-variable token, `BONUS:VAR|Favored<Type>|TrapSenseBonus`,
+    /// syntactically flat even though `TrapSenseBonus` itself resolves
+    /// through a level-dependent chain elsewhere -- F1 classifies the
+    /// record's OWN token shape, not its full resolution chain; Spiritualist's
+    /// seven `Phantom Emotional Focus ~ <Name>` records are true bare
+    /// literals, `BONUS:VAR|PhantomEmotionalFocus_<Name>|1`). The other 6
+    /// closed units (Cavalier's Order of the Dragon, F2; the five Wizard
+    /// Necromancy School facts, F2/F5) are NOT F1-shaped. 5206 - 10 = 5196,
+    /// confirmed by re-running `python3 scripts/shape_ledger.py --inventory
+    /// docs/work-inventory.json --corpus-root data/corpus` against the
+    /// post-regen `docs/work-inventory.json` (tranche/14, this wave's own
+    /// guarded regen): F1 = 5196 exactly.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5206,
-            "F1 population must equal the CURRENT true formula-bearing count (5,206, re-derived \
+            f1.population, 5196,
+            "F1 population must equal the CURRENT true formula-bearing count (5,196, re-derived \
              2026-09-05 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
              `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
-             cycle's own true-at-the-time 5,207 (SD-34 wave 43 closure-cycle -- all 12 assigned \
-             units closed into DONE/V, a real share of them F1-shaped, so F1's not-done \
-             population fell 5,207 -> 5,206, a genuine closure movement, not a re-pin of a wrong \
-             prior count), not the cycle-before-that's own true-at-the-time 5,217 (SD-34 wave 39 \
+             cycle's own true-at-the-time 5,206 (SD-34 wave 43 closure-cycle), not the \
+             cycle-before-that's own true-at-the-time 5,207 (SD-34 wave 39 \
              closure-cycle -- Lane A closed \
              its 20 assigned units into DONE, a real share of them F1-shaped, so F1's not-done \
              population fell 5,217 -> 5,207, a genuine closure movement, not a re-pin of a wrong \

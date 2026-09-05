@@ -56,13 +56,21 @@ _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 # block down to `:10854-10857` -- re-verified at HEAD 2026-08-28
 # (AT-34-E1-004 re-verification cycle); the anchor below is the CURRENT
 # line, not the one those two docs still print.
+#
+# SD-34 wave 44 re-derivation: Piece 1/2's own insertions into this file
+# (the census-collision classifier fixes and their new compute functions)
+# shifted this block again, 10854 -> 13903. Fresh `grep -n 'if
+# has_real_description'` against the live file, taking the promotion-ladder
+# hit (not the two sibling `has_real_description` checks earlier in the
+# file), line content read back and confirmed still the real construction
+# site.
 PROMOTION_LADDER_LINES = {
-    10854: "if has_real_description",
-    10855: "&& is_display_wiring_class_for_promotion(wc_class)",
-    10856: "&& !universal_sheet_modifier",
-    10857: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
+    13903: "if has_real_description",
+    13904: "&& is_display_wiring_class_for_promotion(wc_class)",
+    13905: "&& !universal_sheet_modifier",
+    13906: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
 }
-PROMOTION_LADDER_ANCHOR_LINE = 10857
+PROMOTION_LADDER_ANCHOR_LINE = 13906
 
 
 class StaleCitationError(RuntimeError):
@@ -127,7 +135,7 @@ def build_report(units: list) -> dict:
     stuck = not_held_by_engine(mag)
 
     ladder_source = "".join(
-        _read_source_lines(_ENGINE_SRC)[10853:10857]  # lines 10854..10857, 0-indexed slice
+        _read_source_lines(_ENGINE_SRC)[13902:13906]  # lines 13903..13906, 0-indexed slice
     )
 
     return {

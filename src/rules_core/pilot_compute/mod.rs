@@ -2751,6 +2751,19 @@ const CAVALIER_ORDER_CHOICE_ID: &str = "choice:cavalier_order";
 /// bonus is flat and self-scoped; five of the six orders' challenge
 /// riders are opponent- or ally-conditioned and stay deferred.
 const ORDER_OF_THE_SWORD_SELECTION: &str = "order:sword";
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): a second Order this
+/// closure grounds, for the same reason Order of the Sword qualified --
+/// verified directly against `apg_abilities_class.lst:243`'s own `KEY:Order
+/// of the Dragon` record: its Survival-check bonus
+/// (`max(1,CavalierLVL/2)`, DESC-sourced) is a flat, self-scoped magnitude,
+/// exactly like Order of the Sword's Sense Motive bonus. The SAME record
+/// also carries `OrderChallengeBonus|CavalierLVL/4` (a melee attack bonus
+/// against the character's own challenge target) and Aid Allies'
+/// `3+(CavalierLVL-2)/6` (an ally-scoped bonus, its own separate corpus
+/// record) -- both stay deferred, same reason the other four orders'
+/// challenge riders do: opponent- or ally-conditioned, not this
+/// character's own unconditional roll.
+const ORDER_OF_THE_DRAGON_SELECTION: &str = "order:dragon";
 /// Challenge's self-applied Armor Class penalty while a challenge is
 /// active.
 ///
@@ -2836,6 +2849,27 @@ fn cavalier_expert_trainer_bonus(level: u8) -> i16 {
 ///
 /// **Evidentiary caveat**: DESC-sourced, like Expert Trainer.
 fn cavalier_order_of_the_sword_sense_motive_bonus(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
+/// Order of the Dragon's own order bonus: a competence bonus on Survival
+/// checks made to provide food/water for allies or protect them from harsh
+/// weather, equal to `1/2 cavalier level (minimum +1)` --
+/// `apg_abilities_class.lst:243`'s own `DESC:...|max(1,CavalierLVL/2)`
+/// substitution argument. The identical formula shape to Order of the
+/// Sword's Sense Motive bonus above (byte-for-byte the same
+/// `max(1,CavalierLVL/2)` expression), grounds for the identical reason: a
+/// flat modifier applying to the character's own roll, DESC-sourced like
+/// Order of the Sword's own bonus.
+///
+/// **Evidentiary caveat**: this record's OTHER magnitude,
+/// `OrderChallengeBonus|CavalierLVL/4` (a circumstance bonus on melee
+/// attack rolls against the character's OWN challenge target), is NOT
+/// grounded here -- it is opponent-conditioned, the same reason the other
+/// four un-grounded orders' challenge riders stay deferred. Aid Allies'
+/// own ally-scoped bonus (a separate corpus record) likewise stays
+/// deferred.
+fn cavalier_order_of_the_dragon_survival_bonus(level: u8) -> i16 {
     (i16::from(level) / 2).max(1)
 }
 
@@ -6303,6 +6337,14 @@ const SHADOWDANCER_CLASS_ID: &str = "class:shadowdancer";
 /// above already names for Assassin/Shadowdancer).
 const DUELIST_CLASS_ID: &str = "class:duelist";
 const LOREMASTER_CLASS_ID: &str = "class:loremaster";
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): Pathfinder Delver's
+/// own class id, needed by `ground_pathfinder_delver_class_features` below
+/// -- the same "real prestige class, no `ClassId`-family enum entry, no
+/// chassis dispatch reaches it" gap as Duelist/Loremaster/Assassin/
+/// Shadowdancer above (confirmed directly: zero hits for
+/// `"Pathfinder Delver"`/`"PathfinderDelver"` anywhere in this file before
+/// this wave).
+const PATHFINDER_DELVER_CLASS_ID: &str = "class:pathfinder_delver";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` idiom. Verified against
@@ -9030,6 +9072,13 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     ground_shadowdancer_class_features(input, &mut explanations);
     ground_assassin_class_features(input, &ability_modifiers, &mut explanations);
     ground_loremaster_class_features(input, &mut explanations);
+
+    // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): a fifth prestige
+    // class in this same "no `ClassId` enum entry" family -- see
+    // `ground_pathfinder_delver_class_features`'s own doc comment for the
+    // real-owner audit correction (Pathfinder Delver's own Guardbreaker
+    // feature, not Ranger's favored-enemy chooser).
+    ground_pathfinder_delver_class_features(input, &mut explanations);
 
     // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
     // class-feature blocker into three named pillars, and ground Track and
@@ -14253,24 +14302,29 @@ fn compute_apg_class_chassis(
 /// Brawler's own diagnostic-honesty fix exactly. That bucket used to be
 /// described here as "permanent" and unconditionally claim-blocking; as
 /// of Path A canonical narrowing (2026-07-29) it stops claim-blocking
-/// once the one canonical Order this codebase grounds is genuinely
-/// recorded, and still claim-blocks in every other posture.
+/// once one of the two canonical Orders this codebase grounds is
+/// genuinely recorded, and still claim-blocks in every other posture.
+/// **SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2) widened this from
+/// one Order to two**: Order of the Dragon's own Survival bonus joins
+/// Order of the Sword's Sense Motive bonus below.
 /// Grounds Cavalier's named class features (task #6, 2026-07-27):
 /// Challenge's uses-per-day pool and self-applied Armor Class penalty,
-/// Expert Trainer, the two feat counts, and Order of the Sword's own
-/// Sense Motive bonus when that Order is recorded.
+/// Expert Trainer, the two feat counts, Order of the Sword's own Sense
+/// Motive bonus when that Order is recorded, and Order of the Dragon's
+/// own Survival bonus when that Order is recorded instead.
 ///
-/// Three of these five magnitudes are DESC-sourced rather than carried on
-/// a `BONUS:` token (Challenge's AC penalty, Expert Trainer, and Order of
-/// the Sword's bonus). That is the weaker Panache-shaped evidentiary
-/// path, named in each record's own detail text rather than presented as
-/// token-verified.
+/// Four of these six magnitudes are DESC-sourced rather than carried on a
+/// `BONUS:` token (Challenge's AC penalty, Expert Trainer, Order of the
+/// Sword's bonus, and Order of the Dragon's bonus). That is the weaker
+/// Panache-shaped evidentiary path, named in each record's own detail
+/// text rather than presented as token-verified.
 ///
-/// Returns whether the one canonical Order this codebase grounds (Order
-/// of the Sword) is genuinely recorded. The caller uses that to decide
-/// whether the `other_features_deferred` diagnostic still claim-blocks --
-/// see `ground_cavalier_mount_and_defer_the_rest` (Path A canonical
-/// narrowing, 2026-07-29).
+/// Returns whether either canonical Order this codebase grounds (Order of
+/// the Sword or Order of the Dragon) is genuinely recorded. The caller
+/// uses that to decide whether the `other_features_deferred` diagnostic
+/// still claim-blocks -- see `ground_cavalier_mount_and_defer_the_rest`
+/// (Path A canonical narrowing, 2026-07-29; widened to two Orders, SD-34
+/// wave 44).
 fn ground_cavalier_named_features(
     input: &CharacterInput,
     level: u8,
@@ -14434,19 +14488,51 @@ fn ground_cavalier_named_features(
                  rolls while mounted) and its By My Honor save bonus are not grounded"
             ),
         });
-    } else {
+    }
+
+    // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): Order of the
+    // Dragon, the second Order this closure grounds -- see
+    // `cavalier_order_of_the_dragon_survival_bonus`'s own doc comment for
+    // the corpus verification.
+    let dragon_order_selected = input
+        .chosen
+        .selected_choices
+        .iter()
+        .any(|c| c.choice_set_id == CAVALIER_ORDER_CHOICE_ID
+            && c.selection_id == ORDER_OF_THE_DRAGON_SELECTION);
+    if dragon_order_selected {
+        let survival_bonus = cavalier_order_of_the_dragon_survival_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.cavalier.order_of_the_dragon.survival_bonus".to_owned(),
+            value: survival_bonus,
+            detail: format!(
+                "Cavalier level {level} with the Order of the Dragon gains a +{survival_bonus} \
+                 bonus (1/2 level, minimum +1) on Survival checks made to provide food and \
+                 water for allies or to protect them from harsh weather. DESC-sourced \
+                 (`apg_abilities_class.lst:243`'s own `max(1,CavalierLVL/2)` substitution \
+                 argument), the identical shape to Order of the Sword's Sense Motive bonus \
+                 above. Grounds standalone: a flat modifier applying to the character's own \
+                 roll. The Order's own OrderChallengeBonus (a circumstance bonus on melee \
+                 attack rolls against this character's challenge target, opponent-conditioned) \
+                 and Aid Allies' own ally-scoped bonus (a separate corpus record) are not \
+                 grounded"
+            ),
+        });
+    }
+
+    if !order_selected && !dragon_order_selected {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.cavalier.order_powers.unsupported".to_owned(),
             message: "Cavalier remains blocked on its Order burden: no recognized Order of the \
-                 Sword choice is present (it is the one canonical Order grounded in this \
-                 codebase; the other five -- Cockatrice, Dragon, Lion, Shield, Star -- carry \
-                 challenge riders that are opponent- or ally-conditioned), so no Order support \
-                 is claimed"
+                 Sword or Order of the Dragon choice is present (these are the two canonical \
+                 Orders grounded in this codebase; the other four -- Cockatrice, Lion, Shield, \
+                 Star -- carry challenge riders that are opponent- or ally-conditioned), so no \
+                 Order support is claimed"
                 .to_owned(),
             claim_blocking: true,
         });
     }
-    order_selected
+    order_selected || dragon_order_selected
 }
 
 fn ground_cavalier_mount_and_defer_the_rest(
@@ -14500,13 +14586,15 @@ fn ground_cavalier_mount_and_defer_the_rest(
              pillar, the Mount, its class-skill list, Challenge's uses-per-day, self-applied \
              Armor Class penalty and its own +level damage bonus, Expert Trainer, the \
              bonus-combat-feat and teamwork-feat counts, and Order of the Sword's own Sense \
-             Motive bonus: Banner and Greater Banner, the charge family (Cavalier's Charge, \
-             Mighty Charge, Supreme Charge), Demanding Challenge, the five non-Sword Orders and \
-             every order's challenge rider, Order of the Sword's own By My Honor, and the \
-             Tactician family's own grant facet (Tactician/Greater Tactician/Master Tactician \
-             each also confer the chosen teamwork feat on allies within 30 feet -- only the \
-             tier COUNT grounds) remain ungrounded. The charge family and every challenge \
-             rider are blocked on real \
+             Motive bonus (or Order of the Dragon's own Survival bonus, whichever Order is \
+             recorded): Banner and Greater Banner, the charge family (Cavalier's Charge, \
+             Mighty Charge, Supreme Charge), Demanding Challenge, the four non-Sword-or-Dragon \
+             Orders (Cockatrice, Lion, Shield, Star) and every order's challenge rider \
+             (including Sword's and Dragon's own riders), Order of the Sword's own By My Honor, \
+             and the Tactician family's own grant facet (Tactician/Greater Tactician/Master \
+             Tactician each also confer the chosen teamwork feat on allies within 30 feet -- \
+             only the tier COUNT grounds) remain ungrounded. The charge family and every \
+             challenge rider are blocked on real \
              missing engine state -- a charge action and a persistent opponent relationship -- \
              not on transcription effort; no class-feature execution is fabricated in this \
              bounded chassis baseline. This message previously claimed Challenge's +level \
@@ -14522,18 +14610,26 @@ fn ground_cavalier_mount_and_defer_the_rest(
 /// The one sentence that differs between this diagnostic's claim-blocking
 /// and non-claim-blocking forms (Path A canonical narrowing, 2026-07-29).
 ///
-/// With Order of the Sword genuinely recorded, Cavalier's remaining gap is
+/// With a canonical Order genuinely recorded, Cavalier's remaining gap is
 /// the same shape Arcanist's own `exploits_deferred` already carries once
 /// Metamagic Knowledge is recognized: a real, named, still-unbuilt
-/// remainder that no longer blocks the claim, because the class's one
-/// corpus-verified canonical chooser option IS grounded and nothing in the
-/// computed output depends on the deferred rest. Without it, the original
-/// claim-blocking posture is preserved byte-for-byte in behavior -- see
-/// `apg_canonical_choice_path_a_tests`, which pins both halves.
-fn cavalier_deferred_remainder_posture(order_of_the_sword_recorded: bool) -> &'static str {
-    if order_of_the_sword_recorded {
-        "This character HAS recorded the one canonical Order this codebase grounds (Order of the \
-         Sword, whose own Sense Motive bonus is computed above), so this remainder is named but \
+/// remainder that no longer blocks the claim, because the class's
+/// corpus-verified canonical chooser options ARE grounded and nothing in
+/// the computed output depends on the deferred rest. Without it, the
+/// original claim-blocking posture is preserved byte-for-byte in behavior
+/// -- see `apg_canonical_choice_path_a_tests`, which pins both halves.
+///
+/// **SD-34 wave 44:** the caller passes a single bool (Sword OR Dragon
+/// recorded), not which specific Order -- so this text deliberately names
+/// BOTH Orders generically rather than asserting a specific one was
+/// picked (asserting "Order of the Sword" unconditionally would be false
+/// prose for a character who recorded Order of the Dragon instead, the
+/// exact fabrication shape this bundle's own doctrine forbids).
+fn cavalier_deferred_remainder_posture(canonical_order_recorded: bool) -> &'static str {
+    if canonical_order_recorded {
+        "This character HAS recorded one of the two canonical Orders this codebase grounds \
+         (Order of the Sword, whose own Sense Motive bonus is computed above, or Order of the \
+         Dragon, whose own Survival bonus is computed above), so this remainder is named but \
          no longer claim-blocking -- the same canonical-narrowing posture Arcanist's own \
          exploits_deferred and Cleric's own domain seam already ship. Every item listed above \
          genuinely remains ungrounded; none of them is silently fabricated."
@@ -27707,6 +27803,32 @@ fn compute_class_chassis(
             ground_psychic_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:spiritualist" {
             ground_spiritualist_class_features(class_level.level, explanations);
+            // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): Shared
+            // Consciousness's own `BONUS:ABILITYPOOL|Phantom Emotional
+            // Focus|1` (`oa_abilities_class.lst:1276`) is a genuine
+            // one-pick pool over the seven `"Phantom Emotional Focus ~
+            // <Name>"` records (Anger/Dedication/Despair/Fear/Hatred/
+            // Jealousy/Zeal), each a bare literal `BONUS:VAR|
+            // PhantomEmotionalFocus_<Name>|1` -- the identical
+            // choose-one-flat-literal shape `push_generic_pool_choice_
+            // magnitude` already resolves for Alchemist Discovery/Rogue
+            // Talent/etc, verified directly against the real corpus tokens
+            // before assuming the audit's "misrouted, not unmodelled"
+            // framing (it was half right: the CLASS routing was the only
+            // real bug, but no existing function names WHICH focus was
+            // picked, so this one small generic-pool call is a genuine,
+            // if cheap, addition).
+            push_generic_pool_choice_magnitude(
+                input,
+                class_level.level,
+                ability_modifiers,
+                "choice:spiritualist_emotional_focus",
+                "Phantom Emotional Focus",
+                "focus:",
+                "class_feature.occult_adventures.spiritualist.phantom_emotional_focus.generic",
+                1,
+                explanations,
+            );
         } else if class_level.class_id == "class:magus" {
             ground_magus_class_features(class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:shifter" {
@@ -34813,6 +34935,91 @@ fn ground_loremaster_class_features(
                  only -- which secret is chosen from the Loremaster Secrets table at each slot, \
                  and the separate `LoremasterSecretsLVL` selectability gate, are the spending \
                  question, not modelled here, mirroring Summoner's own eidolon evolution pool"
+            ),
+        });
+    }
+}
+
+/// PF1 Pathfinder Society's Adventurer's Guide Pathfinder Delver's
+/// Guardbreaker feature (`ag_abilities_class.lst:382`, `KEY:Pathfinder
+/// Delver ~ Guardbreaker`): `BONUS:VAR|FavoredConstruct,FavoredOoze,
+/// FavoredUndead|TrapSenseBonus`, granted from class level 3.
+///
+/// **Real audit correction, resolved by direct corpus read (`decisions.md
+/// §22`, Piece 2 item 3):** the audit that scoped this wave claimed the
+/// real owner of `PaDFE Construct`/`PaDFE Ooze`/`PaDFE Undead` is Ranger,
+/// reachable through Ranger's own open-ended `choice:ranger_favored_enemy`
+/// recognizer. Direct read of `ag_abilities_class.lst:382/390-392` and the
+/// records those tokens chain into disproves that: each `PaDFE <Type>`
+/// record's own `%1` substitution is `Favored<Type>`, a `DEFINE`d variable
+/// set ONLY by Guardbreaker's `BONUS:VAR|FavoredConstruct,FavoredOoze,
+/// FavoredUndead|TrapSenseBonus` -- a Pathfinder-Delver-only class feature,
+/// gated `!PREABILITY:...Favored Enemy (<Type>)` (only applies when the
+/// character does NOT already have Ranger's own real Favored Enemy of that
+/// type). There is no `RangerLVL` or `RangerFavoredEnemy*` variable
+/// anywhere in this record's own token closure -- Ranger's favored-enemy
+/// table is a different, unrelated mechanism this wave leaves untouched.
+///
+/// `TrapSenseBonus` itself resolves through Pathfinder Delver's own level-2
+/// grant (`ag_classes.lst:286`, `ABILITY:...|Rogue ~ Trap Sense` +
+/// `BONUS:VAR|RogueTrapSenseLVL|CL+1`, `CL` = Pathfinder Delver level here)
+/// feeding `Rogue ~ Trap Sense`'s own `BONUS:VAR|TrapSenseBonus|
+/// RogueTrapSenseLVL/3` (`cr_abilities_class.lst:1618`) -- so for a
+/// Pathfinder-Delver-only character (no separate Rogue levels contributing
+/// to the same shared `RogueTrapSenseLVL` variable), `TrapSenseBonus =
+/// (PaDLVL+1)/3`. Granted from class level 3 (Guardbreaker's own grant
+/// gate, `ag_classes.lst:287`); `None` below level 3 (the level-2
+/// `RogueTrapSenseLVL` term is already active by level 3, so no separate
+/// level-2 threshold check is needed here).
+fn pathfinder_delver_padfe_bonus(level: u8) -> Option<i16> {
+    if level < 3 {
+        return None;
+    }
+    let rogue_trap_sense_lvl = i16::from(level) + 1;
+    Some(rogue_trap_sense_lvl / 3)
+}
+
+/// Grounds Pathfinder Delver's three PaDFE (Pathfinder Delver Favored
+/// Enemy) records -- `decisions.md §22`, Piece 2 item 3. Unconditional on
+/// chassis support: Pathfinder Delver has no `ClassId` enum entry, so this
+/// is called directly from `compute_pilot_base_chassis`, mirroring
+/// `ground_duelist_class_features`'s own placement and reasoning above.
+fn ground_pathfinder_delver_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == PATHFINDER_DELVER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    let Some(bonus) = pathfinder_delver_padfe_bonus(level) else {
+        return;
+    };
+
+    for (feature_slug, creature_type) in [
+        ("padfe_construct", "constructs"),
+        ("padfe_ooze", "oozes"),
+        ("padfe_undead", "undead creatures"),
+    ] {
+        explanations.push(ComputationExplanation {
+            id: format!("class_feature.adventurers_guide.pathfinder_delver.{feature_slug}.bonus"),
+            value: bonus,
+            detail: format!(
+                "Pathfinder Delver level {level} Guardbreaker: a +{bonus} bonus on Bluff, \
+                 Knowledge, Perception, Sense Motive, and Survival checks made against \
+                 {creature_type}, and the same bonus on weapon attack and damage rolls against \
+                 them (corpus `Favored{{Construct,Ooze,Undead}} = TrapSenseBonus`, \
+                 `TrapSenseBonus = RogueTrapSenseLVL/3`, `RogueTrapSenseLVL = PaDLVL+1` for a \
+                 Pathfinder-Delver-only character). Grounds only the flat bonus magnitude; it \
+                 modifies no actual skill, attack, or damage total, and this bonus never \
+                 applies if the character already has Ranger's own real Favored Enemy of that \
+                 type (this engine does not model that override precondition)"
             ),
         });
     }
@@ -45589,6 +45796,33 @@ fn wizard_has_canonical_conjuration_selection(input: &CharacterInput) -> bool {
         && opposed.contains(&ABJURATION_SCHOOL_SELECTION)
 }
 
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 1): a fifth canonical
+/// deterministic school selection, alongside Evocation, Abjuration,
+/// Transmutation, and Conjuration above. Necromancy specialized, with
+/// Abjuration and Conjuration as the two opposed schools -- both
+/// already-existing selection constants, reused rather than duplicated (PF1's
+/// only opposition restriction is "not your own specialty school and not
+/// Divination", so any two non-Necromancy, non-Divination schools are legal;
+/// Abjuration/Conjuration is picked simply because both constants already
+/// exist and neither is Necromancy itself).
+fn wizard_has_canonical_necromancy_selection(input: &CharacterInput) -> bool {
+    if choice_selection(input, WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID)
+        != Some(NECROMANCY_SCHOOL_SELECTION)
+    {
+        return false;
+    }
+    let opposed: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == WIZARD_OPPOSED_SCHOOLS_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    opposed.len() == 2
+        && opposed.contains(&ABJURATION_SCHOOL_SELECTION)
+        && opposed.contains(&CONJURATION_SCHOOL_SELECTION)
+}
+
 /// `AT-34-E3-001` (mechanism 2 continuation, cycle 8): the universalist
 /// (no-specialization) selection. Unlike every specialist gate above, PF1's
 /// own rule for a wizard who does not specialize is "need not select an
@@ -46542,6 +46776,229 @@ fn explain_wizard_level1_prepared_spell_baseline(
                      {conjuration_school_lvl}*30 = {dimensional_steps_feet}. Grounds only the \
                      flat feet-per-day magnitude; it teleports no actual character and tracks \
                      no 5-foot-increment consumption"
+                ),
+            });
+        }
+    }
+
+    // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 1): Wizard's Necromancy
+    // arcane school, same shape as the Abjuration/Transmutation/Conjuration
+    // blocks above -- `NecromancySchoolLVL` <- `ArcaneSchoolLVL` <-
+    // `WizardLVL`, and `NecromancyProgressionSchoolLVL` <-
+    // `ArcaneSchoolProgressionLVL` <- `WizardLVL`, verified directly against
+    // `cr_abilities_class.lst`'s `KEY:Necromancy School ~ *` records (and the
+    // two further `Power Over Undead ~ *` channeling records the Power Over
+    // Undead power itself grants -- see below). Explanation ids live under
+    // the shared `class_feature.school.necromancy.*` namespace, matching the
+    // other four schools' precedent.
+    //
+    // **Real audit correction, resolved by direct corpus read (not trusted
+    // from the audit's own prose):** the audit that scoped this wave claimed
+    // `core_rulebook:class_feature:power_over_undead_turn_undead`'s real
+    // owner is Cleric ("Cleric already grounds channel_energy_dice/
+    // channel_energy_uses_per_day, only the DC is missing"). Direct read of
+    // `cr_abilities_class.lst` line 2681 (the exact corpus source line for
+    // this unit) disproves that: `PowerOverUndeadTurnDC`'s own
+    // `BONUS:VAR|PowerOverUndeadTurnDC|10+PowerOverUndeadLVL/2+CHA` sits on
+    // a record whose `TYPE:WizardClassFeatures.SpecialAttack.Supernatural.
+    // NecromancerChanneling` facet and whose `PowerOverUndeadLVL|
+    // NecromancySchoolLVL` feed chain are both Wizard/Necromancy-School-only
+    // -- there is no `ClericLVL` anywhere in this record's own token
+    // closure. Cleric's OWN Channel Positive/Negative Energy DC (a real,
+    // separate, still-open gap on the DISTINCT corpus units
+    // `core_rulebook:class_feature:cleric_channel_positive_energy`/
+    // `cleric_channel_negative_energy`) is left untouched by this wave --
+    // conflating the two would have fabricated a Cleric-attributed
+    // explanation for a Wizard record. The audit's formula-shape claim
+    // (`10+level/2+CHA`, same idiom as `warpriest_channel_energy_dc`) is
+    // still correct; only the owner and the level term (`NecromancySchoolLVL`,
+    // not `ClericLVL`) were wrong.
+    if wizard_has_canonical_necromancy_selection(input) {
+        let necromancy_school_lvl = wizard_level_value;
+        let necromancy_progression_school_lvl = wizard_level_value;
+
+        // Grounded for real: Power Over Undead (`KEY:Necromancy School ~
+        // Power Over Undead`) -- `PowerOverUndeadTimes|3+INT`, unlocked from
+        // level 1 (`PREVARGTEQ:NecromancyProgressionSchoolLVL,1` on the
+        // Necromancy School record's own `ABILITY:` grant line). The same
+        // shared "3 + Intelligence modifier" idiom every other school's
+        // uses-per-day pool above already uses.
+        if necromancy_progression_school_lvl >= 1 {
+            let power_over_undead_times = (3 + ability_modifiers.intelligence).max(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.necromancy.power_over_undead_uses_per_day".to_owned(),
+                value: power_over_undead_times,
+                detail: format!(
+                    "Wizard level {level} Necromancy School power Power Over Undead \
+                     uses-per-day pool (PF1 Core Rulebook Necromancy School): \
+                     PowerOverUndeadTimes resolves to 3 + Intelligence modifier, floored at 0. \
+                     At Intelligence modifier {} this is max(3 + {}, 0) = \
+                     {power_over_undead_times}. Grounds only the flat daily-use count; it \
+                     channels no actual positive or negative energy and tracks no per-use \
+                     consumption",
+                    ability_modifiers.intelligence, ability_modifiers.intelligence
+                ),
+            });
+
+            // Grounded for real: the two channeling sub-records Power Over
+            // Undead itself grants (`KEY` absent on both -- their own display
+            // name IS their key -- `Power Over Undead ~ Turn Undead` and
+            // `Power Over Undead ~ Command Undead`, `cr_abilities_class.lst`
+            // lines 2680-2681), both auto-granted unconditionally alongside
+            // Power Over Undead (each carries its own unconditional
+            // `ABILITY:FEAT|AUTOMATIC|<Turn Undead|Command Undead>`, no
+            // further PRE-gate of its own), so both are gated on the
+            // identical `necromancy_progression_school_lvl >= 1` threshold as
+            // their parent.
+            //
+            // `PowerOverUndeadTurnDC|10+PowerOverUndeadLVL/2+CHA` --
+            // `PowerOverUndeadLVL|NecromancySchoolLVL`, so this reduces to
+            // the same "10+level/2+CHA" idiom `warpriest_channel_energy_dc`
+            // already established, anchored to the Wizard's own Necromancy
+            // School level.
+            let power_over_undead_turn_dc =
+                10 + necromancy_school_lvl / 2 + ability_modifiers.charisma;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.necromancy.power_over_undead_turn_dc".to_owned(),
+                value: power_over_undead_turn_dc,
+                detail: format!(
+                    "Wizard level {level} Necromancy School power Power Over Undead ~ Turn \
+                     Undead save DC (PF1 Core Rulebook Necromancy School): PowerOverUndeadTurnDC \
+                     resolves to 10+PowerOverUndeadLVL/2+CHA, where PowerOverUndeadLVL = \
+                     NecromancySchoolLVL = {necromancy_school_lvl}. At Charisma modifier {} this \
+                     is 10+{necromancy_school_lvl}/2+{} = {power_over_undead_turn_dc}. Grounds \
+                     only the flat save-DC magnitude; it channels no actual positive energy and \
+                     turns no actual undead creature",
+                    ability_modifiers.charisma, ability_modifiers.charisma
+                ),
+            });
+
+            // `PowerOverUndeadCommandDC|10+PowerOverUndeadLVL/2+CHA` -- the
+            // identical formula shape to Turn Undead's own DC above, on the
+            // sibling `Power Over Undead ~ Command Undead` record.
+            let power_over_undead_command_dc = power_over_undead_turn_dc;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.necromancy.power_over_undead_command_dc".to_owned(),
+                value: power_over_undead_command_dc,
+                detail: format!(
+                    "Wizard level {level} Necromancy School power Power Over Undead ~ Command \
+                     Undead save DC (PF1 Core Rulebook Necromancy School): \
+                     PowerOverUndeadCommandDC resolves to 10+PowerOverUndeadLVL/2+CHA, where \
+                     PowerOverUndeadLVL = NecromancySchoolLVL = {necromancy_school_lvl}. At \
+                     Charisma modifier {} this is 10+{necromancy_school_lvl}/2+{} = \
+                     {power_over_undead_command_dc}. Grounds only the flat save-DC magnitude; \
+                     it channels no actual negative energy and commands no actual undead \
+                     creature",
+                    ability_modifiers.charisma, ability_modifiers.charisma
+                ),
+            });
+
+            // `PowerOverUndeadCommandHD|PowerOverUndeadLVL` -- the bare
+            // school level, no further arithmetic encoded in the corpus
+            // formula itself.
+            let power_over_undead_command_hd = necromancy_school_lvl;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.necromancy.power_over_undead_command_hd".to_owned(),
+                value: power_over_undead_command_hd,
+                detail: format!(
+                    "Wizard level {level} Necromancy School power Power Over Undead ~ Command \
+                     Undead hit-dice cap (PF1 Core Rulebook Necromancy School): \
+                     PowerOverUndeadCommandHD resolves to PowerOverUndeadLVL = \
+                     NecromancySchoolLVL = {power_over_undead_command_hd}. Grounds only the \
+                     flat hit-dice-cap magnitude; it commands no actual undead creature"
+                ),
+            });
+        }
+
+        // Grounded for real: Grave Touch (`KEY:Necromancy School ~ Grave
+        // Touch`) -- three flat, non-dice `BONUS:VAR` formulas, all unlocked
+        // from level 1 (`PREVARGTEQ:NecromancyProgressionSchoolLVL,1` on the
+        // Necromancy School record's own `ABILITY:` grant line for Grave
+        // Touch).
+        if necromancy_progression_school_lvl >= 1 {
+            // `NecromancyGraveTouchDuration|max(1,NecromancySchoolLVL/2)`.
+            let grave_touch_duration = (1).max(necromancy_school_lvl / 2);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.necromancy.grave_touch_duration".to_owned(),
+                value: grave_touch_duration,
+                detail: format!(
+                    "Wizard level {level} Necromancy School power Grave Touch shaken-duration \
+                     magnitude (PF1 Core Rulebook Necromancy School): \
+                     NecromancyGraveTouchDuration resolves to max(1,NecromancySchoolLVL/2) = \
+                     max(1,{necromancy_school_lvl}/2) = {grave_touch_duration} rounds. Grounds \
+                     only the flat round-count magnitude; it makes no actual melee touch attack \
+                     and applies no shaken/frightened condition"
+                ),
+            });
+
+            // `NecromancyGraveTouchLimit|NecromancySchoolLVL` -- the bare
+            // school level, the Hit Dice threshold below which a shaken
+            // target becomes frightened instead.
+            let grave_touch_limit = necromancy_school_lvl;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.necromancy.grave_touch_limit".to_owned(),
+                value: grave_touch_limit,
+                detail: format!(
+                    "Wizard level {level} Necromancy School power Grave Touch Hit-Dice \
+                     threshold (PF1 Core Rulebook Necromancy School): NecromancyGraveTouchLimit \
+                     resolves to NecromancySchoolLVL = {grave_touch_limit}. Grounds only the \
+                     flat Hit-Dice-threshold magnitude; it applies no frightened condition to \
+                     any actual target"
+                ),
+            });
+
+            // `NecromancyGraveTouchTimes|ArcaneSchoolPowerTimes` -- the same
+            // shared "3 + Intelligence modifier" idiom every other school's
+            // uses-per-day pool above already uses.
+            let grave_touch_times = (3 + ability_modifiers.intelligence).max(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.necromancy.grave_touch_uses_per_day".to_owned(),
+                value: grave_touch_times,
+                detail: format!(
+                    "Wizard level {level} Necromancy School power Grave Touch uses-per-day pool \
+                     (PF1 Core Rulebook Necromancy School): NecromancyGraveTouchTimes resolves \
+                     to the shared ArcaneSchoolPowerTimes counter, 3 + Intelligence modifier, \
+                     floored at 0. At Intelligence modifier {} this is max(3 + {}, 0) = \
+                     {grave_touch_times}. Grounds only the flat daily-use count; it tracks no \
+                     action economy or per-use consumption",
+                    ability_modifiers.intelligence, ability_modifiers.intelligence
+                ),
+            });
+        }
+
+        // Grounded for real: Life Sight (`KEY:Necromancy School ~ Life
+        // Sight`), gated on the power's own level-8 unlock
+        // (`PREVARGTEQ:NecromancyProgressionSchoolLVL,8` on the Necromancy
+        // School record's own `ABILITY:` grant line for Life Sight).
+        if necromancy_progression_school_lvl >= 8 {
+            // `NecromancyLifeSightRange|10+10*((NecromancySchoolLVL-8)/4)`.
+            let life_sight_range = 10 + 10 * ((necromancy_school_lvl - 8) / 4);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.necromancy.life_sight_range".to_owned(),
+                value: life_sight_range,
+                detail: format!(
+                    "Wizard level {level} Necromancy School power Life Sight blindsight-range \
+                     magnitude in feet (PF1 Core Rulebook Necromancy School): \
+                     NecromancyLifeSightRange resolves to \
+                     10+10*((NecromancySchoolLVL-8)/4) = \
+                     10+10*(({necromancy_school_lvl}-8)/4) = {life_sight_range}. Grounds only \
+                     the flat range magnitude; it grants no actual blindsight sense"
+                ),
+            });
+
+            // `NecromancyLifeSightRounds|NecromancySchoolLVL` -- the bare
+            // school level, no further arithmetic encoded in the corpus
+            // formula itself.
+            let life_sight_rounds = necromancy_school_lvl;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.necromancy.life_sight_rounds".to_owned(),
+                value: life_sight_rounds,
+                detail: format!(
+                    "Wizard level {level} Necromancy School power Life Sight rounds-per-day \
+                     pool (PF1 Core Rulebook Necromancy School): NecromancyLifeSightRounds \
+                     resolves to NecromancySchoolLVL = {life_sight_rounds}. Grounds only the \
+                     flat rounds-per-day magnitude; it grants no actual blindsight sense and \
+                     tracks no round-by-round duration"
                 ),
             });
         }
@@ -55114,6 +55571,58 @@ max_power_level"
         assert_eq!(value("class_feature.untabled.spiritualist.calm_spirit.uses_per_day"), 4);
     }
 
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): the generic
+    /// `"Phantom Emotional Focus"` pool this wave wires -- each of the
+    /// seven real corpus members grounds its own bare literal `1` when
+    /// recorded, and none does when unrecorded (never a fabricated
+    /// default).
+    #[test]
+    fn spiritualist_phantom_emotional_focus_grounds_the_recorded_choice_only() {
+        let mut input = antipaladin_input(1);
+        input.chosen.class_levels[0].class_id = "class:spiritualist".to_owned();
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:spiritualist_emotional_focus".to_owned(),
+            selection_id: "focus:despair".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&input);
+        let despair = computation
+            .explanations
+            .iter()
+            .find(|e| {
+                e.id.starts_with(
+                    "class_feature.occult_adventures.spiritualist.phantom_emotional_focus.generic",
+                ) && e.id.contains("despair")
+            })
+            .unwrap_or_else(|| panic!("expected Despair's own generic-pool explanation, got: {:?}", computation.explanations));
+        assert_eq!(despair.value, 1, "{:?}", despair);
+        assert!(
+            !computation.explanations.iter().any(|e| e.id.contains("zeal")),
+            "an unrecorded emotional focus must not ground: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// An unrecognized emotional-focus selection must ground nothing.
+    #[test]
+    fn spiritualist_phantom_emotional_focus_is_ungrounded_for_an_unrecognized_selection() {
+        let mut input = antipaladin_input(1);
+        input.chosen.class_levels[0].class_id = "class:spiritualist".to_owned();
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:spiritualist_emotional_focus".to_owned(),
+            selection_id: "focus:not_a_real_focus".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation.explanations.iter().any(|e| {
+                e.id.starts_with(
+                    "class_feature.occult_adventures.spiritualist.phantom_emotional_focus.generic",
+                )
+            }),
+            "an unrecognized selection must not ground any value: {:?}",
+            computation.explanations
+        );
+    }
+
     /// SD-32 card 11 (T12), cycle 4: proves `ground_magus_class_features`,
     /// `ground_shifter_class_features`, and `ground_vigilante_class_features`
     /// really run through the real dispatch site -- the three single-class
@@ -56061,6 +56570,221 @@ mod wizard_abjuration_protective_ward_ac_claim_tests {
             "Protective Ward's +2 must NOT be folded into baseline AC yet -- the corrected \
              claim says 'not wired in', not 'wired in': {:?}",
             baseline_ac
+        );
+    }
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 1): direct formula tests
+/// for Wizard's Necromancy arcane school, the fifth school this bundle adds
+/// (mirroring Abjuration/Transmutation/Conjuration/Universal above), plus
+/// the two `Power Over Undead ~ *` channeling records the school's own
+/// Power Over Undead power grants. Same pipeline-level test shape as
+/// `wizard_abjuration_protective_ward_ac_claim_tests` immediately above:
+/// every one of the five schools' own formulas is inlined directly in
+/// `compute_pilot_base_chassis` rather than extracted into a standalone pure
+/// function, so "direct formula test" here means through the real
+/// `compute_pilot_base_chassis` entry point at specific levels, not a
+/// standalone function call -- exactly the existing precedent this file
+/// already established for the other four schools.
+#[cfg(test)]
+mod wave44_necromancy_school_new_compute_tests {
+    use super::{compute_pilot_base_chassis, WIZARD_CLASS_ID};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, CharacterInput, SelectedChoice,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// The fixture's own ability scores give an Intelligence modifier of 0
+    /// (score 10, the Human bonus goes to Strength) and a Charisma modifier
+    /// of -1 (score 8) -- both real, non-hardcoded inputs, so asserting
+    /// against them proves the ability-modifier terms below are read from
+    /// the character, not constants baked into the formula.
+    const FIXTURE_INTELLIGENCE_MODIFIER: i16 = 0;
+    const FIXTURE_CHARISMA_MODIFIER: i16 = -1;
+
+    /// A GE-06-posture Human Wizard at `level`, with the canonical
+    /// Necromancy school + Abjuration/Conjuration opposed-schools selection
+    /// -- `wizard_has_canonical_necromancy_selection`'s own precondition.
+    fn necromancy_wizard(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels[0].class_id = WIZARD_CLASS_ID.to_owned();
+        input.chosen.class_levels[0].level = level;
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_school_specialization".to_owned(),
+            selection_id: "school:necromancy".to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+            selection_id: "school:abjuration".to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+            selection_id: "school:conjuration".to_owned(),
+        });
+        input
+    }
+
+    fn value_of(computation: &super::PilotBaseChassisComputation, id: &str) -> Option<i16> {
+        computation.explanations.iter().find(|e| e.id == id).map(|e| e.value)
+    }
+
+    /// Power Over Undead's own uses-per-day pool: `3+INT`, unlocked from
+    /// level 1 (`PREVARGTEQ:NecromancyProgressionSchoolLVL,1`). At the
+    /// fixture's Intelligence modifier 0 this is exactly 3.
+    #[test]
+    fn power_over_undead_uses_per_day_matches_the_corpus_token() {
+        let computation = compute_pilot_base_chassis(&necromancy_wizard(1));
+        assert_eq!(
+            value_of(&computation, "class_feature.school.necromancy.power_over_undead_uses_per_day"),
+            Some(3 + FIXTURE_INTELLIGENCE_MODIFIER),
+            "{:?}",
+            computation
+        );
+    }
+
+    /// Turn Undead's / Command Undead's save DC: `10+PowerOverUndeadLVL/2+CHA`
+    /// where `PowerOverUndeadLVL = NecromancySchoolLVL` (the Wizard's own
+    /// level, verified directly against `cr_abilities_class.lst` lines
+    /// 2680-2681 -- NOT Cleric's `ClericLVL`, the audit's own mistaken
+    /// premise for this unit). At level 7, Charisma modifier -1: 10+7/2-1 =
+    /// 10+3-1 = 12.
+    #[test]
+    fn power_over_undead_turn_and_command_dc_match_the_corpus_token() {
+        let computation = compute_pilot_base_chassis(&necromancy_wizard(7));
+        let expected = 10 + 7 / 2 + FIXTURE_CHARISMA_MODIFIER;
+        assert_eq!(
+            value_of(&computation, "class_feature.school.necromancy.power_over_undead_turn_dc"),
+            Some(expected),
+            "{:?}",
+            computation
+        );
+        assert_eq!(
+            value_of(&computation, "class_feature.school.necromancy.power_over_undead_command_dc"),
+            Some(expected),
+            "Command Undead's DC must equal Turn Undead's -- the identical corpus formula \
+             shape on the sibling record: {:?}",
+            computation
+        );
+    }
+
+    /// Command Undead's HD cap: the bare `PowerOverUndeadLVL`
+    /// (= `NecromancySchoolLVL` = Wizard level), no further arithmetic.
+    #[test]
+    fn power_over_undead_command_hd_is_the_bare_school_level() {
+        let computation = compute_pilot_base_chassis(&necromancy_wizard(9));
+        assert_eq!(
+            value_of(&computation, "class_feature.school.necromancy.power_over_undead_command_hd"),
+            Some(9),
+            "{:?}",
+            computation
+        );
+    }
+
+    /// Grave Touch: `max(1,NecromancySchoolLVL/2)` duration,
+    /// `NecromancySchoolLVL` HD limit, shared `3+INT` uses-per-day pool. At
+    /// level 1 the duration formula's own floor (`max(1, ...)`) is exercised
+    /// (1/2 floors to 0, raised to 1 by the max).
+    #[test]
+    fn grave_touch_formulas_match_the_corpus_tokens() {
+        let level1 = compute_pilot_base_chassis(&necromancy_wizard(1));
+        assert_eq!(
+            value_of(&level1, "class_feature.school.necromancy.grave_touch_duration"),
+            Some(1),
+            "level 1: max(1, 1/2) = max(1,0) = 1: {:?}",
+            level1
+        );
+        assert_eq!(
+            value_of(&level1, "class_feature.school.necromancy.grave_touch_limit"),
+            Some(1),
+            "{:?}",
+            level1
+        );
+        assert_eq!(
+            value_of(&level1, "class_feature.school.necromancy.grave_touch_uses_per_day"),
+            Some(3 + FIXTURE_INTELLIGENCE_MODIFIER),
+            "{:?}",
+            level1
+        );
+
+        let level6 = compute_pilot_base_chassis(&necromancy_wizard(6));
+        assert_eq!(
+            value_of(&level6, "class_feature.school.necromancy.grave_touch_duration"),
+            Some(3),
+            "level 6: max(1, 6/2) = 3: {:?}",
+            level6
+        );
+        assert_eq!(
+            value_of(&level6, "class_feature.school.necromancy.grave_touch_limit"),
+            Some(6),
+            "{:?}",
+            level6
+        );
+    }
+
+    /// Life Sight is gated at `NecromancyProgressionSchoolLVL,8` -- absent
+    /// below level 8, present from level 8 on with
+    /// `10+10*((NecromancySchoolLVL-8)/4)` range and the bare level as its
+    /// rounds-per-day pool.
+    #[test]
+    fn life_sight_is_gated_at_level_8_and_matches_the_corpus_tokens() {
+        let level7 = compute_pilot_base_chassis(&necromancy_wizard(7));
+        assert_eq!(
+            value_of(&level7, "class_feature.school.necromancy.life_sight_range"),
+            None,
+            "Life Sight must not ground below level 8: {:?}",
+            level7
+        );
+
+        let level8 = compute_pilot_base_chassis(&necromancy_wizard(8));
+        assert_eq!(
+            value_of(&level8, "class_feature.school.necromancy.life_sight_range"),
+            Some(10),
+            "level 8: 10+10*((8-8)/4) = 10+10*0 = 10: {:?}",
+            level8
+        );
+        assert_eq!(
+            value_of(&level8, "class_feature.school.necromancy.life_sight_rounds"),
+            Some(8),
+            "{:?}",
+            level8
+        );
+
+        let level12 = compute_pilot_base_chassis(&necromancy_wizard(12));
+        assert_eq!(
+            value_of(&level12, "class_feature.school.necromancy.life_sight_range"),
+            Some(20),
+            "level 12: 10+10*((12-8)/4) = 10+10*1 = 20: {:?}",
+            level12
+        );
+    }
+
+    /// None of the five new explanation ids fires for a Wizard who selected
+    /// a DIFFERENT specialty school -- the canonical-selection gate must
+    /// actually gate, not fire unconditionally for any Wizard.
+    #[test]
+    fn necromancy_explanations_are_absent_for_a_different_specialist() {
+        let mut input = necromancy_wizard(12);
+        input.chosen.selected_choices.retain(|c| {
+            c.choice_set_id != "choice:wizard_school_specialization"
+                && c.choice_set_id != "choice:wizard_opposed_schools"
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_school_specialization".to_owned(),
+            selection_id: "school:evocation".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.school.necromancy.")),
+            "an Evocation specialist must ground no Necromancy school explanation: {:?}",
+            computation
         );
     }
 }
@@ -75102,6 +75826,105 @@ mod wave43_prestige_class_new_compute_tests {
     }
 }
 
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): Pathfinder Delver's
+/// PaDFE Construct/Ooze/Undead, the same two-layer discipline
+/// (`wave43_prestige_class_new_compute_tests` above) -- the pure formula
+/// first, including edge cases the fixture cannot exercise, then a
+/// reachability test proving the SAME formula's three explanation ids
+/// actually surface through the real pipeline end to end.
+#[cfg(test)]
+mod wave44_pathfinder_delver_padfe_tests {
+    use super::{build_pilot_headless_receipt, pathfinder_delver_padfe_bonus,
+        CharacterClassLevel, CharacterInput};
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    const ALL_THREE_EXPLANATION_IDS: &[&str] = &[
+        "class_feature.adventurers_guide.pathfinder_delver.padfe_construct.bonus",
+        "class_feature.adventurers_guide.pathfinder_delver.padfe_ooze.bonus",
+        "class_feature.adventurers_guide.pathfinder_delver.padfe_undead.bonus",
+    ];
+
+    #[test]
+    fn padfe_bonus_formula_matches_the_corpus_tokens() {
+        // Guardbreaker is granted from level 3; TrapSenseBonus =
+        // RogueTrapSenseLVL/3, RogueTrapSenseLVL = PaDLVL+1 (Pathfinder
+        // Delver's own level-2 grant line, `ag_classes.lst:286`).
+        assert_eq!(pathfinder_delver_padfe_bonus(1), None);
+        assert_eq!(pathfinder_delver_padfe_bonus(2), None, "Guardbreaker itself grants at level 3");
+        assert_eq!(pathfinder_delver_padfe_bonus(3), Some(1), "(3+1)/3 = 1");
+        assert_eq!(pathfinder_delver_padfe_bonus(5), Some(2), "(5+1)/3 = 2");
+        assert_eq!(pathfinder_delver_padfe_bonus(8), Some(3), "(8+1)/3 = 3");
+        assert_eq!(pathfinder_delver_padfe_bonus(20), Some(7), "(20+1)/3 = 7");
+    }
+
+    #[test]
+    fn all_three_padfe_ids_reach_the_real_pipeline() {
+        let below_gate = character("class:pathfinder_delver", 2);
+        for id in ALL_THREE_EXPLANATION_IDS {
+            assert_eq!(
+                explanation_value(&below_gate, id),
+                None,
+                "below Guardbreaker's own level-3 grant gate, {id} must not appear"
+            );
+        }
+
+        let above_gate = character("class:pathfinder_delver", 5);
+        for id in ALL_THREE_EXPLANATION_IDS {
+            assert_eq!(
+                explanation_value(&above_gate, id),
+                Some(2),
+                "level 5 Pathfinder Delver: (5+1)/3 = 2, {id}"
+            );
+        }
+    }
+
+    #[test]
+    fn padfe_ids_never_leak_onto_an_unrelated_class() {
+        let fighter = character("class:fighter", 10);
+        for id in ALL_THREE_EXPLANATION_IDS {
+            assert_eq!(
+                explanation_value(&fighter, id),
+                None,
+                "a Fighter must not gain Pathfinder Delver's PaDFE records: {id}"
+            );
+        }
+
+        // A real Ranger (not Pathfinder Delver) must not gain these either --
+        // this wave's own audit correction found Ranger's favored-enemy
+        // mechanism is NOT the real owner of these three records.
+        let ranger = character("class:ranger", 10);
+        for id in ALL_THREE_EXPLANATION_IDS {
+            assert_eq!(
+                explanation_value(&ranger, id),
+                None,
+                "a Ranger must not gain Pathfinder Delver's own PaDFE records: {id}"
+            );
+        }
+    }
+}
+
 /// v0.6 alpha swarm, task #20 (2026-07-27): class-granted feats must
 /// reach the `feat_effects` producers.
 ///
@@ -75241,7 +76064,7 @@ mod cavalier_named_feature_tests {
     use super::{
         build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
         CAVALIER_CHALLENGE_ABILITY_ID, CAVALIER_CLASS_ID, CAVALIER_ORDER_CHOICE_ID,
-        ORDER_OF_THE_SWORD_SELECTION,
+        ORDER_OF_THE_DRAGON_SELECTION, ORDER_OF_THE_SWORD_SELECTION,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
@@ -75445,6 +76268,81 @@ mod cavalier_named_feature_tests {
                 "level {level}: max(1, level/2)"
             );
         }
+    }
+
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): Order of the
+    /// Dragon, the second Order grounded here, mirroring the Order of the
+    /// Sword proof exactly.
+    #[test]
+    fn order_of_the_dragon_grounds_only_when_explicitly_recorded() {
+        let bare = build_pilot_headless_receipt(&cavalier(1));
+        assert!(
+            bare.computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.cavalier.order_powers.unsupported"
+                    && d.claim_blocking),
+            "a Cavalier with no recorded Order stays blocked on it: {:?}",
+            bare.computation.diagnostics
+        );
+
+        let mut sworn = cavalier(1);
+        sworn.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: CAVALIER_ORDER_CHOICE_ID.to_owned(),
+            selection_id: ORDER_OF_THE_DRAGON_SELECTION.to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&sworn);
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.cavalier.order_powers.unsupported"),
+            "a recognized Order clears the block: {:?}",
+            receipt.computation.diagnostics
+        );
+        // 1/2 level, minimum +1: the floor is what applies at level 1.
+        assert_eq!(
+            value(&sworn, "class_feature.apg.cavalier.order_of_the_dragon.survival_bonus"),
+            Some(1)
+        );
+        for (level, expected) in [(1u8, 1i16), (2, 1), (4, 2), (11, 5), (20, 10)] {
+            assert_eq!(
+                super::cavalier_order_of_the_dragon_survival_bonus(level),
+                expected,
+                "level {level}: max(1, level/2)"
+            );
+        }
+        // Order of the Dragon's OTHER two magnitudes (the challenge-target-
+        // conditioned melee bonus, and Aid Allies' own ally-scoped bonus)
+        // must NOT ground -- only the flat Survival bonus does.
+        assert_eq!(
+            value(&sworn, "class_feature.apg.cavalier.order_of_the_dragon.challenge_bonus"),
+            None,
+            "the opponent-conditioned melee bonus must stay deferred, never fabricated"
+        );
+    }
+
+    /// An unrecognized Order selection must clear neither block -- only
+    /// the two canonically grounded Orders do.
+    #[test]
+    fn an_unrecognized_order_selection_keeps_the_order_powers_block() {
+        let mut input = cavalier(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: CAVALIER_ORDER_CHOICE_ID.to_owned(),
+            selection_id: "order:lion".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.cavalier.order_powers.unsupported"
+                    && d.claim_blocking),
+            "Order of the Lion is not one of the two canonically grounded Orders: {:?}",
+            receipt.computation.diagnostics
+        );
     }
 
     /// Cavalier's real CSKILL list includes all three tracked skills.

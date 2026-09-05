@@ -5528,6 +5528,49 @@ struct EngineFacts {
     /// Performance sub-records: 7 whose formula already existed and 3
     /// (Suggestion, Mass Suggestion, Inspire Greatness) this cycle added.
     bard_bardic_performance_wired: BTreeSet<String>,
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): the corpus key
+    /// `"Order of the Dragon"` (the base record, no `" ~ "` suffix) whose
+    /// own per-order explanation id (`class_feature.apg.cavalier.
+    /// order_of_the_dragon.survival_bonus`) was genuinely observed via
+    /// [`probe_cavalier_order_wiring`], mirroring the wizard-arcane-school
+    /// probe's own shape: the group text `"Order of the Dragon"` can never
+    /// resolve to `"cavalier"` through `class_feature_owner`'s suffix
+    /// matching (it collides instead with the bestiary's unmodelled
+    /// `Kind::Class` "Dragon" pseudo-class), so this probe is the real,
+    /// separate attribution path -- bounded to exactly the one Order
+    /// (Dragon, alongside the pre-existing hand-modelled Sword) the engine
+    /// has a real per-order formula for.
+    cavalier_order_wired: BTreeSet<String>,
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): full corpus keys
+    /// (`"Phantom Emotional Focus ~ Despair"`, ...) whose own real generic
+    /// pool-choice explanation (`push_generic_pool_choice_magnitude`, wired
+    /// this wave for Spiritualist's Shared Consciousness pool) was
+    /// genuinely observed via [`probe_spiritualist_phantom_emotional_focus_wiring`].
+    /// Same shape as the wizard-arcane-school/cavalier-order probes above:
+    /// the group text `"Phantom Emotional Focus"` can never resolve to
+    /// `"spiritualist"` through `class_feature_owner`'s prefix matching (it
+    /// collides instead with the bestiary's unmodelled `Kind::Class`
+    /// "Phantom" pseudo-class), so this probe is the real, separate
+    /// attribution path.
+    spiritualist_phantom_emotional_focus_wired: BTreeSet<String>,
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): full corpus keys
+    /// (`"PaDFE Construct"`, `"PaDFE Ooze"`, `"PaDFE Undead"`) whose own
+    /// real per-record explanation (`ground_pathfinder_delver_class_
+    /// features`) was genuinely observed via
+    /// [`probe_pathfinder_delver_padfe_wiring`]. Same shape as the
+    /// cavalier-order/spiritualist-phantom-emotional-focus probes above:
+    /// each record's own corpus `class` field is literally `"Construct"`/
+    /// `"Ooze"`/`"Undead"`, which can never resolve to `"pathfinder_
+    /// delver"` through `class_feature_owner`'s matching (it collides
+    /// instead with the bestiary's unmodelled `Kind::Class` "Construct"/
+    /// "Ooze"/"Undead" pseudo-classes), so this probe is the real, separate
+    /// attribution path. **Real audit correction**: the audit that scoped
+    /// this wave claimed these three records' real owner is Ranger,
+    /// reachable through Ranger's own open-ended favored-enemy chooser --
+    /// direct corpus read disproved that (see `ground_pathfinder_delver_
+    /// class_features`'s own doc comment in `pilot_compute/mod.rs`): the
+    /// real owner is Pathfinder Delver's own Guardbreaker feature.
+    pathfinder_delver_padfe_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -9014,6 +9057,70 @@ fn probe_wizard_arcane_school_wiring(fixture: &CharacterInput) -> BTreeSet<Strin
             }
         }
 
+        // Necromancy (SD-34 wave 44, `decisions.md §22` Piece 2 item 1): swap
+        // the specialization choice again, opposing Abjuration and
+        // Conjuration (mirrors `wizard_has_canonical_necromancy_selection`'s
+        // own precondition exactly). Both the specialization AND the
+        // opposed-schools choice are swapped here, same as every
+        // non-default specialist swap above.
+        let mut necromancy_input = class_sweep_input(fixture, "wizard", level);
+        necromancy_input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:wizard_school_specialization");
+        necromancy_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_school_specialization".to_string(),
+            selection_id: "school:necromancy".to_string(),
+        });
+        necromancy_input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:wizard_opposed_schools");
+        necromancy_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_string(),
+            selection_id: "school:abjuration".to_string(),
+        });
+        necromancy_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_string(),
+            selection_id: "school:conjuration".to_string(),
+        });
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&necromancy_input)
+        }));
+        if let Ok(computation) = outcome {
+            if computation.explanations.iter().any(|e| {
+                e.id == "class_feature.school.necromancy.power_over_undead_uses_per_day"
+            }) {
+                wired.insert("Necromancy School ~ Power Over Undead".to_string());
+            }
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.school.necromancy.power_over_undead_turn_dc")
+            {
+                wired.insert("Power Over Undead ~ Turn Undead".to_string());
+            }
+            if computation.explanations.iter().any(|e| {
+                e.id == "class_feature.school.necromancy.power_over_undead_command_dc"
+            }) {
+                wired.insert("Power Over Undead ~ Command Undead".to_string());
+            }
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.school.necromancy.grave_touch"))
+            {
+                wired.insert("Necromancy School ~ Grave Touch".to_string());
+            }
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.school.necromancy.life_sight"))
+            {
+                wired.insert("Necromancy School ~ Life Sight".to_string());
+            }
+        }
+
         // Universal (`AT-34-E3-001` mechanism 2 continuation, cycle 8):
         // swap the specialization choice to the "no specialization" arm and
         // CLEAR the opposed-schools choice entirely -- `wizard_has_
@@ -9055,6 +9162,145 @@ fn probe_wizard_arcane_school_wiring(fixture: &CharacterInput) -> BTreeSet<Strin
     wired
 }
 
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 1): real-pipeline
+/// reachability proof for `probe_wizard_arcane_school_wiring`'s new
+/// Necromancy branch -- against the REAL shared fixture and the REAL
+/// `compute_pilot_base_chassis` pipeline (never a synthetic `EngineFacts`),
+/// proving the classifier-collision fix this wave makes actually resolves
+/// end to end, not merely that `classify()` trusts a hand-inserted fact. The
+/// companion `classify()`-level proofs (that a wired key actually reaches
+/// `grounded` and never the `class_feature_of_unmodelled_corpus_class:
+/// undead` collision) live in `class_feature_text_complete_rung_tests`
+/// below, alongside the pre-existing wizard-arcane-school proofs and the
+/// `class_feature_unit` helper they share.
+#[cfg(test)]
+mod wave44_necromancy_school_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Print, don't assume: dumps the real probe's real observed set against
+    /// the real fixture, for this cycle's own re-derivation.
+    #[test]
+    fn print_the_real_observed_set_for_this_cycles_own_receipt() {
+        let wired = probe_wizard_arcane_school_wiring(&fixture());
+        eprintln!("wizard_arcane_school_wired ({} keys):", wired.len());
+        for key in &wired {
+            eprintln!("  {key}");
+        }
+        assert!(
+            wired.contains("Necromancy School ~ Power Over Undead"),
+            "expected the real pipeline to resolve Power Over Undead's own uses-per-day \
+             record: {wired:?}"
+        );
+    }
+
+    /// All five new Necromancy-shaped keys this wave adds are genuinely
+    /// observed against the real fixture and the real compute pipeline --
+    /// including the two `Power Over Undead ~ *` channeling records, whose
+    /// own corpus-record `class` field collides with the bestiary's
+    /// unmodelled `Kind::Class` "Undead" pseudo-class (`decisions.md §22`
+    /// Piece 2 item 1's own bug this wave fixes).
+    #[test]
+    fn all_five_necromancy_shaped_keys_are_wired_end_to_end() {
+        let wired = probe_wizard_arcane_school_wiring(&fixture());
+        for expected in [
+            "Necromancy School ~ Power Over Undead",
+            "Power Over Undead ~ Turn Undead",
+            "Power Over Undead ~ Command Undead",
+            "Necromancy School ~ Grave Touch",
+            "Necromancy School ~ Life Sight",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected {expected:?} to be wired by the real pipeline: {wired:?}"
+            );
+        }
+    }
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): real-pipeline
+/// reachability proof for `probe_cavalier_order_wiring` -- against the REAL
+/// shared fixture and the REAL `compute_pilot_base_chassis` pipeline,
+/// proving Order of the Dragon's classifier fix resolves end to end.
+#[cfg(test)]
+mod wave44_cavalier_order_of_the_dragon_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn order_of_the_dragon_is_wired_end_to_end() {
+        let wired = probe_cavalier_order_wiring(&fixture());
+        assert!(
+            wired.contains("Order of the Dragon"),
+            "expected the real pipeline to resolve Order of the Dragon's own Survival bonus: \
+             {wired:?}"
+        );
+    }
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): real-pipeline
+/// reachability proof for `probe_spiritualist_phantom_emotional_focus_wiring`
+/// -- against the REAL shared fixture and the REAL
+/// `compute_pilot_base_chassis` pipeline, proving all seven Phantom
+/// Emotional Focus records' classifier fix resolves end to end.
+#[cfg(test)]
+mod wave44_spiritualist_phantom_emotional_focus_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn all_seven_emotional_foci_are_wired_end_to_end() {
+        let wired = probe_spiritualist_phantom_emotional_focus_wiring(&fixture());
+        for expected in [
+            "Phantom Emotional Focus ~ Anger",
+            "Phantom Emotional Focus ~ Dedication",
+            "Phantom Emotional Focus ~ Despair",
+            "Phantom Emotional Focus ~ Fear",
+            "Phantom Emotional Focus ~ Hatred",
+            "Phantom Emotional Focus ~ Jealousy",
+            "Phantom Emotional Focus ~ Zeal",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected {expected:?} to be wired by the real pipeline: {wired:?}"
+            );
+        }
+    }
+}
+
 /// `AT-34-E3-001` (`class_feature_option_pool_record_with_magnitude_not_
 /// held_by_engine` mechanism, cycle 5): full `"Bardic Performance ~ <name>"`
 /// corpus_key strings whose own per-performance explanation id was
@@ -9094,6 +9340,149 @@ fn probe_bard_bardic_performance_wiring(fixture: &CharacterInput) -> BTreeSet<St
         ];
         for (corpus_key, needed_id) in PAIRS {
             if ids.contains(needed_id) {
+                wired.insert((*corpus_key).to_string());
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): the real,
+/// separate attribution path for `"Order of the Dragon"` -- its own group
+/// text can never resolve to `"cavalier"` through `class_feature_owner`'s
+/// suffix matching (it instead collides with the bestiary's unmodelled
+/// `Kind::Class` "Dragon" pseudo-class), same shape as the wizard
+/// arcane-school probe above. The canonical per-class sweep that fills
+/// `EngineFacts::explanation_ids` only ever selects Order of the Sword for
+/// Cavalier (`canonical_seeds_for("cavalier")`'s single `"order:sword"`
+/// seed), so it alone could never observe Order of the Dragon's own
+/// explanation -- this probe swaps the selection to `"order:dragon"` over
+/// the SAME real `compute_pilot_base_chassis` pipeline every other probe in
+/// this file uses.
+fn probe_cavalier_order_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &level in SWEEP_LEVELS {
+        let mut input = class_sweep_input(fixture, "cavalier", level);
+        input.chosen.selected_choices.retain(|c| c.choice_set_id != "choice:cavalier_order");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:cavalier_order".to_string(),
+            selection_id: "order:dragon".to_string(),
+        });
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        if let Ok(computation) = outcome
+            && computation.explanations.iter().any(|e| {
+                e.id == "class_feature.apg.cavalier.order_of_the_dragon.survival_bonus"
+            })
+        {
+            wired.insert("Order of the Dragon".to_string());
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): the real, separate
+/// attribution path for `"Phantom Emotional Focus ~ <Name>"` -- its own
+/// group text can never resolve to `"spiritualist"` through
+/// `class_feature_owner`'s prefix matching (it instead collides with the
+/// bestiary's unmodelled `Kind::Class` "Phantom" pseudo-class), same shape
+/// as the cavalier-order probe above. The canonical per-class sweep that
+/// fills `EngineFacts::explanation_ids` never selects any
+/// `choice:spiritualist_emotional_focus` value at all (`canonical_seeds_for`
+/// seeds none), so it alone could never observe any of these seven
+/// records' own generic-pass explanations -- this probe selects EACH real
+/// focus in turn over the SAME real `compute_pilot_base_chassis` pipeline
+/// every other probe in this file uses.
+const SPIRITUALIST_PHANTOM_EMOTIONAL_FOCUS_MEMBERS: &[&str] =
+    &["anger", "dedication", "despair", "fear", "hatred", "jealousy", "zeal"];
+
+fn probe_spiritualist_phantom_emotional_focus_wiring(
+    fixture: &CharacterInput,
+) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &slug in SPIRITUALIST_PHANTOM_EMOTIONAL_FOCUS_MEMBERS {
+        let selection_id = format!("focus:{slug}");
+        for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "spiritualist", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:spiritualist_emotional_focus");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:spiritualist_emotional_focus".to_string(),
+                selection_id: selection_id.clone(),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            if computation.explanations.iter().any(|e| {
+                e.id.starts_with(
+                    "class_feature.occult_adventures.spiritualist.phantom_emotional_focus.generic",
+                ) && e.id.contains(slug)
+            }) {
+                let title_case = {
+                    let mut chars = slug.chars();
+                    match chars.next() {
+                        Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+                        None => String::new(),
+                    }
+                };
+                wired.insert(format!("Phantom Emotional Focus ~ {title_case}"));
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): the real, separate
+/// attribution path for `"PaDFE Construct"`/`"PaDFE Ooze"`/`"PaDFE Undead"`
+/// -- each record's own corpus `class` field can never resolve to
+/// `"pathfinder_delver"` through `class_feature_owner`'s matching (it
+/// instead collides with the bestiary's unmodelled `Kind::Class`
+/// "Construct"/"Ooze"/"Undead" pseudo-classes), same shape as the
+/// cavalier-order/spiritualist-phantom-emotional-focus probes above.
+/// `canonical_seeds_for("pathfinder_delver")` seeds nothing (Pathfinder
+/// Delver's own class features carry no player choice), and the canonical
+/// per-class sweep never selects this class at all before this wave (it
+/// carried zero chassis dispatch), so this probe -- like the others above
+/// -- is the only way `EngineFacts` ever observes these three records'
+/// real explanation ids over the SAME real `compute_pilot_base_chassis`
+/// pipeline every other probe in this file uses.
+fn probe_pathfinder_delver_padfe_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    const PADFE_MEMBERS: &[(&str, &str)] = &[
+        ("padfe_construct", "PaDFE Construct"),
+        ("padfe_ooze", "PaDFE Ooze"),
+        ("padfe_undead", "PaDFE Undead"),
+    ];
+
+    for &level in SWEEP_LEVELS {
+        let input = class_sweep_input(fixture, "pathfinder_delver", level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        for (slug, corpus_key) in PADFE_MEMBERS {
+            if computation.explanations.iter().any(|e| {
+                e.id == format!("class_feature.adventurers_guide.pathfinder_delver.{slug}.bonus")
+            }) {
                 wired.insert((*corpus_key).to_string());
             }
         }
@@ -9508,6 +9897,10 @@ fn gather_engine_facts(
             probe_bard_versatile_performance_generic_member_wiring(fixture),
         wizard_arcane_school_wired: probe_wizard_arcane_school_wiring(fixture),
         bard_bardic_performance_wired: probe_bard_bardic_performance_wiring(fixture),
+        cavalier_order_wired: probe_cavalier_order_wiring(fixture),
+        spiritualist_phantom_emotional_focus_wired:
+            probe_spiritualist_phantom_emotional_focus_wiring(fixture),
+        pathfinder_delver_padfe_wired: probe_pathfinder_delver_padfe_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -12722,6 +13115,65 @@ fn classify(
                 return Verdict {
                     status: "grounded",
                     evidence: "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): Cavalier's
+            // Order of the Dragon, same shape as the wizard arcane-school
+            // block immediately above -- `group` here is `"Order of the
+            // Dragon"`, which can never equal `"cavalier"` (it instead
+            // collides with the bestiary's unmodelled `Kind::Class` "Dragon"
+            // pseudo-class further below), so `class_feature_owner` and its
+            // two fallbacks can never resolve an owner.
+            // `probe_cavalier_order_wiring` is the real, separate
+            // attribution path -- bounded to exactly the one Order
+            // (Dragon, alongside the pre-existing hand-modelled Sword) the
+            // engine has a real per-order formula for.
+            if facts.cavalier_order_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "cavalier_order_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): Spiritualist's
+            // Phantom Emotional Focus pool, same shape as the cavalier-order
+            // block immediately above -- `group` here is `"Phantom
+            // Emotional Focus"`, which can never equal `"spiritualist"` (it
+            // instead collides with the bestiary's unmodelled `Kind::Class`
+            // "Phantom" pseudo-class further below). `probe_spiritualist_
+            // phantom_emotional_focus_wiring` is the real, separate
+            // attribution path.
+            if facts.spiritualist_phantom_emotional_focus_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence:
+                        "spiritualist_phantom_emotional_focus_probe_observed_a_real_computed_magnitude"
+                            .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): Pathfinder
+            // Delver's PaDFE Construct/Ooze/Undead, same shape as the
+            // cavalier-order/spiritualist-phantom-emotional-focus blocks
+            // immediately above -- `group` here is `"Construct"`/`"Ooze"`/
+            // `"Undead"`, which can never equal `"pathfinder_delver"` (it
+            // instead collides with the bestiary's unmodelled `Kind::Class`
+            // "Construct"/"Ooze"/"Undead" pseudo-classes further below).
+            // `probe_pathfinder_delver_padfe_wiring` is the real, separate
+            // attribution path -- see `ground_pathfinder_delver_class_
+            // features`'s own doc comment (`pilot_compute/mod.rs`) for the
+            // real-owner audit correction (Pathfinder Delver's own
+            // Guardbreaker, not Ranger's favored-enemy chooser).
+            if facts.pathfinder_delver_padfe_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "pathfinder_delver_padfe_probe_observed_a_real_computed_magnitude"
                         .to_string(),
                     reason: None,
                     engine_book: engine_book_field,
@@ -22511,6 +22963,289 @@ mod class_feature_text_complete_rung_tests {
             verdict.evidence,
             "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
         );
+    }
+
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 1): the exact real
+    /// bug this wave fixes -- `"Power Over Undead ~ Turn Undead"`'s own
+    /// corpus-record `class` field is literally `"Undead"`, colliding with
+    /// the bestiary's unmodelled `Kind::Class` "Undead" pseudo-class. Before
+    /// this wave's fix, `classify()`'s group-text collision fallback (this
+    /// key's own `" ~ "`-split group, `"Power Over Undead"`, ends with the
+    /// whole word `" Undead"`) short-circuited this record into
+    /// `engine-does-not-hold:class_feature_of_unmodelled_corpus_class:undead`
+    /// before it ever reached the wizard-arcane-school probe check. This
+    /// test proves the probe's own early-return check (populated by the
+    /// REAL, end-to-end-reachable `probe_wizard_arcane_school_wiring`, see
+    /// `wave44_necromancy_school_probe_reachability_tests` above) now wins
+    /// first, so the collision fallback is never reached.
+    #[test]
+    fn power_over_undead_turn_undead_resolves_grounded_never_the_undead_collision() {
+        let mut facts = EngineFacts::default();
+        facts.wizard_arcane_school_wired.insert("Power Over Undead ~ Turn Undead".to_string());
+        // The collision condition is left ABLE to fire (matching the
+        // negative control below) to prove the probe's early-return check
+        // really does win FIRST, rather than merely never being exercised.
+        facts.corpus_class_names.insert("undead".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2681,
+            "Power Over Undead ~ Turn Undead",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:undead",
+            "must never fall into the Undead bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// The sibling `"Power Over Undead ~ Command Undead"` record, same
+    /// collision shape, same proof.
+    #[test]
+    fn power_over_undead_command_undead_resolves_grounded_never_the_undead_collision() {
+        let mut facts = EngineFacts::default();
+        facts.wizard_arcane_school_wired.insert("Power Over Undead ~ Command Undead".to_string());
+        facts.corpus_class_names.insert("undead".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2680,
+            "Power Over Undead ~ Command Undead",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:undead",
+            "must never fall into the Undead bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Power Over Undead ~ *"` record (the
+    /// probe's own `wizard_arcane_school_wired` set is empty here, while
+    /// `corpus_class_names` still carries the bestiary's real "Undead"
+    /// pseudo-class the way `build_facts` always populates it corpus-wide)
+    /// still falls through to the PRE-EXISTING collision finding, unchanged
+    /// -- proving this wave's fix credits nothing it did not actually
+    /// observe, and that the collision fallback this wave's own bug report
+    /// names is still real and still reachable for a genuinely-unwired
+    /// sibling.
+    #[test]
+    fn an_unprobed_power_over_undead_record_still_falls_into_the_undead_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("undead".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2681,
+            "Power Over Undead ~ Turn Undead",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:undead");
+    }
+
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): the exact real
+    /// bug this wave fixes -- `"Order of the Dragon"`'s own corpus-record
+    /// `class` field is literally `"Dragon"`, colliding with the bestiary's
+    /// unmodelled `Kind::Class` "Dragon" pseudo-class. Before this wave's
+    /// fix, `classify()`'s group-text collision fallback (this key's own
+    /// group, `"Order of the Dragon"`, ends with the whole word `"
+    /// Dragon"`) short-circuited this record into
+    /// `engine-does-not-hold:class_feature_of_unmodelled_corpus_class:dragon`
+    /// before it ever reached the Cavalier-order probe check.
+    #[test]
+    fn order_of_the_dragon_resolves_grounded_never_the_dragon_collision() {
+        let mut facts = EngineFacts::default();
+        facts.cavalier_order_wired.insert("Order of the Dragon".to_string());
+        facts.corpus_class_names.insert("dragon".to_string());
+        let unit =
+            class_feature_unit("advanced_players_guide", "apg_abilities_class.lst", 243, "Order of the Dragon", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "expected grounded, evidence={:?}", verdict.evidence
+        );
+        assert_eq!(verdict.evidence, "cavalier_order_probe_observed_a_real_computed_magnitude");
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:dragon",
+            "must never fall into the Dragon bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Order of the Dragon"` record still
+    /// falls through to the PRE-EXISTING collision finding, unchanged.
+    #[test]
+    fn an_unprobed_order_of_the_dragon_record_still_falls_into_the_dragon_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("dragon".to_string());
+        let unit =
+            class_feature_unit("advanced_players_guide", "apg_abilities_class.lst", 243, "Order of the Dragon", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:dragon");
+    }
+
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): the exact real
+    /// bug this wave fixes -- `"Phantom Emotional Focus ~ Despair"`'s own
+    /// corpus-record `class` field is literally `"Phantom"`, colliding with
+    /// the bestiary's unmodelled `Kind::Class` "Phantom" pseudo-class
+    /// (this key's own group, `"Phantom Emotional Focus"`, STARTS WITH the
+    /// whole word `"Phantom "`).
+    #[test]
+    fn phantom_emotional_focus_despair_resolves_grounded_never_the_phantom_collision() {
+        let mut facts = EngineFacts::default();
+        facts
+            .spiritualist_phantom_emotional_focus_wired
+            .insert("Phantom Emotional Focus ~ Despair".to_string());
+        facts.corpus_class_names.insert("phantom".to_string());
+        let unit = class_feature_unit(
+            "occult_adventures",
+            "oa_abilities_class.lst",
+            1298,
+            "Phantom Emotional Focus ~ Despair",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "expected grounded, evidence={:?}", verdict.evidence
+        );
+        assert_eq!(
+            verdict.evidence,
+            "spiritualist_phantom_emotional_focus_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:phantom",
+            "must never fall into the Phantom bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Phantom Emotional Focus ~ *"` record
+    /// still falls through to the PRE-EXISTING collision finding, unchanged.
+    #[test]
+    fn an_unprobed_phantom_emotional_focus_record_still_falls_into_the_phantom_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("phantom".to_string());
+        let unit = class_feature_unit(
+            "occult_adventures",
+            "oa_abilities_class.lst",
+            1298,
+            "Phantom Emotional Focus ~ Despair",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:phantom");
+    }
+
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): the exact real
+    /// bug this wave fixes -- `"PaDFE Construct"`/`"PaDFE Ooze"`/`"PaDFE
+    /// Undead"` carry no `" ~ "` separator, so `classify()`'s group-text
+    /// collision fallback uses the key's own full text as the group --
+    /// `"PaDFE Construct"` ends with the whole word `"Construct"`,
+    /// colliding with the bestiary's unmodelled `Kind::Class` "Construct"
+    /// pseudo-class, the same shape as Power Over Undead/Order of the
+    /// Dragon/Phantom Emotional Focus above. This is the ONE item of the
+    /// four Piece-2 fixes with no classify()-level reachability test in
+    /// mod.rs's own `wave44_pathfinder_delver_padfe_tests` (those prove
+    /// the pipeline explanation ids exist; this proves `classify()`'s new
+    /// early-return check actually wins over the collision fallback).
+    #[test]
+    fn padfe_construct_resolves_grounded_never_the_construct_collision() {
+        let mut facts = EngineFacts::default();
+        facts.pathfinder_delver_padfe_wired.insert("PaDFE Construct".to_string());
+        // Left ABLE to fire, matching the negative control below, to prove
+        // the probe's early-return check really does win FIRST.
+        facts.corpus_class_names.insert("construct".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            390,
+            "PaDFE Construct",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "pathfinder_delver_padfe_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:construct",
+            "must never fall into the Construct bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// The sibling `"PaDFE Ooze"` record, same collision shape, same proof.
+    #[test]
+    fn padfe_ooze_resolves_grounded_never_the_ooze_collision() {
+        let mut facts = EngineFacts::default();
+        facts.pathfinder_delver_padfe_wired.insert("PaDFE Ooze".to_string());
+        facts.corpus_class_names.insert("ooze".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            391,
+            "PaDFE Ooze",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:ooze",
+            "must never fall into the Ooze bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// The sibling `"PaDFE Undead"` record, same collision shape, same
+    /// proof -- a DIFFERENT collision path than Power Over Undead's own
+    /// "Undead" collision above (this one triggers off the key's own full
+    /// text, not a `" ~ "`-split group prefix), so both must be proven
+    /// independently.
+    #[test]
+    fn padfe_undead_resolves_grounded_never_the_undead_collision() {
+        let mut facts = EngineFacts::default();
+        facts.pathfinder_delver_padfe_wired.insert("PaDFE Undead".to_string());
+        facts.corpus_class_names.insert("undead".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            392,
+            "PaDFE Undead",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:undead",
+            "must never fall into the Undead bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"PaDFE Construct"` record still falls
+    /// through to the PRE-EXISTING collision finding, unchanged.
+    #[test]
+    fn an_unprobed_padfe_construct_record_still_falls_into_the_construct_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("construct".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            390,
+            "PaDFE Construct",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:construct");
     }
 
     /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
