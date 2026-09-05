@@ -11,6 +11,85 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 43 — Duelist/Shadowdancer/Assassin/Loremaster: 12 of 12 closed (small, precedented new compute) — complete
+
+**Status: complete.** Closed all 12 of the remaining "small-precedented-new-compute" units
+`decisions.md §22`'s WAVE 42 UPDATE named: Duelist ×4 (Canny Defense, Improved Reaction, Precise
+Strike, Elaborate Defense), Shadowdancer ×4 (Shadow Illusion, Shadow Call, Shadow Jump, Summon
+Shadow), Assassin ×2 (Save against Poisons, Death Attack), Loremaster ×2 (Lore, Secret Lore).
+Re-verified every corpus row directly (`cr_abilities_class.lst`) before writing anything, rather
+than trusting the prior wave's own summary — all 12 confirmed to match exactly. None of the four
+classes has a `ClassId`-family enum entry anywhere in this file (confirmed by direct grep across
+every `ClassId`/`AcgClassId`/`ApgClassId`/`PuClassId` definition), so all four new grounding
+functions (`ground_duelist_class_features`, `ground_shadowdancer_class_features`,
+`ground_assassin_class_features`, `ground_loremaster_class_features`) are called unconditionally
+from `compute_pilot_base_chassis` itself, keyed on the raw `class_id` string — the same shape
+`ground_paladin_detect_evil` (wave 42) already established, not the enum-keyed per-class dispatch
+chain the ten registered ACG/APG/PU classes use.
+
+Wrote 14 new pure formula functions (one or two per unit — Death Attack and Shadow Illusion/Shadow
+Call each ground two facts from one corpus record). Two real corpus discrepancies between DESC
+prose and the computed token were found and resolved by transcribing the literal token (the same
+authoritative-token-over-DESC-prose ruling `warpriest_channel_energy_dc` already established for
+this bundle): Shadow Illusion's uses/day is a literal `1` (`SPELLS:...TIMES=1`), not the
+`floor(level/2)` its own DESC implies; Shadow Jump's daily distance is a literal cumulative
+`20/40/80/160` (four separate `BONUS:VAR|ShadowJump|<N>|PREVARGTEQ:...` tokens summed, the same
+additive multi-threshold idiom `alchemist_poison_resistance_bonus` already models), not the
+DESC's doubling `40/80/160/320` narrative — verified `ShadowJumpProgression` (the record's own
+second `DEFINE`) is never set anywhere else in the corpus, so no separate doubling mechanism was
+missed.
+
+Classifier reachability checked directly for every one of the 15 explanation ids pushed: all four
+owners (`"duelist"`, `"shadowdancer"`, `"assassin"`, `"loremaster"`) were already proven live by
+pre-existing sibling `text-complete` explanations before this cycle touched anything
+(`class_feature.duelist.corpus_record.deflect_arrows`,
+`class_feature.assassin.weapon_and_armor_proficiency`,
+`class_feature.shadowdancer.weapon_and_armor_proficiency`), and Loremaster's owner resolution
+needs nothing beyond the corpus's own group text. No `CLASS_FEATURE_ID_KNOWN_SYNONYMS` entry and
+no `canonical_seeds_for()` arm were needed for any of the 12 — `src/bin/v06_work_inventory.rs`
+carries **zero diff** this cycle. Also confirmed none of the 15 new ids collides with the generic
+`class_feature_grant_consumer` roster's own "granted at level" facts for the same 12 records (the
+`already_computed_slugs` trailing-segment guard that caused wave 42's own Cleric-Aura-shaped
+regression risk): every new id's own trailing descriptor segment (`dodge_bonus`, `save_dc`,
+`pool_size`, ...) differs from the bare feature slug the roster mechanism would generate, so both
+coexist without suppressing each other.
+
+9 new tests (`wave43_prestige_class_new_compute_tests`: 4 direct pure-formula tests covering all
+14 formulas including edge cases the fixture cannot exercise, 4 real-pipeline reachability
+proofs, 1 cross-class-leak negative control over all 15 ids across all 4 classes plus an
+unrelated Fighter), all passing. **Both the lib suite AND the full integration suite were run
+this cycle** — the exact step wave 42's own cycle skipped, which let a real regression through
+undetected until its own wave-end gate: `cargo test --locked --lib -j 6` → 3077 passed, 0 failed,
+14 ignored (up from the standing 3068 baseline by exactly 9 new top-level test functions);
+`cargo test --locked --no-fail-fast` (full workspace) → exit 0, zero failures across every logged
+test block (the aggregate `count_passed` figure was not re-derived a second time this cycle — see
+the receipt's own honest note; `scripts/verify-baselines.env` raised both baselines by the lib-test
+delta, +9, following the identical pattern every prior wave's own history there establishes).
+
+**Real movement: all 12 target units closed**, regen-confirmed. Guarded regen ran to completion
+(`cargo run --locked --bin v06_work_inventory`, after generating both
+`CORPUS_LITERAL_SWEEP_REPORT` and `DERIVED_FIXTURE_CHECK_REPORT` prerequisites fresh — the first
+attempt correctly refused until both were supplied, the same guard every prior wave hit). Before/
+after, re-derived via `completion_atlas.py --check` on both snapshots plus an independent Python
+`id`→`status` join (both agree): `DONE: 25362→25369 (+7)`, `D: 2518→2506 (−12)`,
+`V: 322→327 (+5)`, every other bucket unchanged. Exactly 12 units changed status, zero collateral
+movement. **Not all 12 landed in DONE**: 7 landed `grounded` (DONE — Canny Defense, Shadow
+Illusion, Shadow Call, Shadow Jump, Death Attack, Lore, Secret Lore), 5 landed
+`literal-verified`/`fixture-verified` (bucket **V**, `"verified by proxy, never by the oracle"` —
+Improved Reaction, Precise Strike, Elaborate Defense, Summon Shadow, Save against Poisons), the
+exact same D→V shape wave 41's own cycle hit for Monk's Stunning Fist — a distinct, legitimately-
+resolved bucket per `completion_atlas.py`'s own `BUCKET_ORDER`, not a lesser or failed outcome.
+`population=49438 unclassified=0 overlap=0 done_evidence_violations=0 citation_failures=0`.
+
+Full receipt:
+`artifacts/bucket-d-mining/wave43_duelist_shadowdancer_assassin_loremaster_cycle_receipt.md`.
+
+**Next-cycle plan:** Shape 2's new-chassis remainder is now down to 1 unit — Wizard's Arcane
+Bond — the only unit of the original 15-unit list that holds up as genuinely open-ended
+new-chassis work requiring real subsystem modeling (weapon enhancement bonuses, no precedent
+anywhere in the engine). Sub-mechanism 5 (634 units/60 classes) remains un-re-audited since
+`decisions.md §22`'s own correction.
+
 ### Cycle — Wave 42 wave-end gate — caught and fixed a real regression from its own narrow testing, full 40/40 confirmed — complete
 
 **Status: complete.** Integration and gate summary for wave 42's own cycle (below), which closed

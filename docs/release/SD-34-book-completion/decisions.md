@@ -1087,4 +1087,33 @@ shipped for other classes, not just one antipaladin mirror). Specifics:
   worth auditing" framing from waves 37/38 should be treated as unverified, not confirmed, same
   as before.
 
+**WAVE 43 UPDATE, 2026-09-05: all 12 of the 12-unit remainder named above are now CLOSED** —
+Duelist's Canny Defense / Improved Reaction / Precise Strike / Elaborate Defense, Shadowdancer's
+Shadow Illusion / Shadow Call / Shadow Jump / Summon Shadow, Assassin's Save against Poisons /
+Death Attack, Loremaster's Lore / Secret Lore — via four new `ground_or_block_<class>_class_
+features`-style dispatch functions (`ground_duelist_class_features`, `ground_shadowdancer_class_
+features`, `ground_assassin_class_features`, `ground_loremaster_class_features`), each called
+unconditionally from `compute_pilot_base_chassis` (no `ClassId`-family enum entry exists for any
+of the four, confirmed directly), the same shape wave 42's `ground_paladin_detect_evil`
+established. Two real corpus discrepancies between DESC prose and the computed token were found
+and resolved by transcribing the literal token (Shadow Illusion's uses/day is a literal `1`, not
+DESC's implied `floor(level/2)`; Shadow Jump's daily distance is a literal cumulative
+`20/40/80/160`, not DESC's doubling `40/80/160/320`) — both follow the same authoritative-token-
+over-DESC-prose ruling `warpriest_channel_energy_dc` already established for this bundle, not a
+new precedent. Independently re-verified by the orchestrator (fresh `completion_atlas.py --check`
++ a direct id→status join over 49438 units, confirming exactly these 12 changed and nothing
+else): `DONE: 25362→25369 (+7)`, `D: 2518→2506 (−12)`, `V: 322→327 (+5)` — not all 12 landed in
+DONE; 5 landed in bucket V (`literal-verified`/`fixture-verified`, "verified by proxy, never by
+the oracle"), the same D→V shape wave 41 hit for Monk's Stunning Fist, a legitimately-resolved
+bucket rather than a lesser outcome. Both `cargo test --locked --lib` (3077 passed, up from 3068)
+AND the full `cargo test --locked --no-fail-fast` integration suite were run this cycle — the
+exact step wave 42's own cycle skipped, which is what let that wave's real regression through
+undetected until its own wave-end gate. Full receipt:
+`artifacts/bucket-d-mining/wave43_duelist_shadowdancer_assassin_loremaster_cycle_receipt.md`.
+
+**Shape 2's new-chassis remainder after this cycle: 1 unit — Wizard's Arcane Bond** — the only
+unit of the original 15-unit list that still holds up as genuinely open-ended new-chassis work
+requiring real subsystem modeling (weapon enhancement bonuses, no precedent anywhere in the
+engine). Every other unit named in this section across waves 39-43 is now closed.
+
 ---

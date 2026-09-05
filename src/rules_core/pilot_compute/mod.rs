@@ -6295,6 +6295,14 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 /// `String` field with no enum-membership precondition.
 const ASSASSIN_CLASS_ID: &str = "class:assassin";
 const SHADOWDANCER_CLASS_ID: &str = "class:shadowdancer";
+/// SD-34 wave 43 (`decisions.md §22`'s 12-unit "small-precedented-new-
+/// compute" remainder): Duelist's and Loremaster's own class ids, needed by
+/// `ground_duelist_class_features`/`ground_loremaster_class_features` below
+/// -- neither is a registered `ClassId`-family enum member either (the same
+/// "real prestige class, no chassis dispatch reaches it" gap the comment
+/// above already names for Assassin/Shadowdancer).
+const DUELIST_CLASS_ID: &str = "class:duelist";
+const LOREMASTER_CLASS_ID: &str = "class:loremaster";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` idiom. Verified against
@@ -9009,6 +9017,19 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // separation above, unconditional on race and single-class status --
     // see `ground_paladin_detect_evil`'s own doc comment.
     ground_paladin_detect_evil(input, &mut explanations);
+
+    // SD-34 wave 43 (`decisions.md §22`'s 12-unit "small-precedented-new-
+    // compute" remainder, closing the last 4 of the 15-unit new-chassis
+    // list bar Wizard's Arcane Bond): four prestige classes with NO
+    // `ClassId`-family enum entry at all, so -- exactly like
+    // `ground_paladin_detect_evil` immediately above -- these run
+    // unconditional on chassis support, keyed on the raw `class_id` string
+    // rather than any enum dispatch. See each function's own doc comment
+    // for its corpus citation.
+    ground_duelist_class_features(input, &ability_modifiers, &mut explanations);
+    ground_shadowdancer_class_features(input, &mut explanations);
+    ground_assassin_class_features(input, &ability_modifiers, &mut explanations);
+    ground_loremaster_class_features(input, &mut explanations);
 
     // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
     // class-feature blocker into three named pillars, and ground Track and
@@ -34247,6 +34268,551 @@ fn ground_paladin_detect_evil(input: &CharacterInput, explanations: &mut Vec<Com
                 "Paladin level {level} Detect Evil: at-will spell-like ability, caster level \
                  {caster_level} (a pure class-level pass-through; PF1 Core Rulebook \
                  `cr_abilities_class.lst`'s `BONUS:VAR|DetectEvilLVL|PaladinLVL`)"
+            ),
+        });
+    }
+}
+
+// ---------------------------------------------------------------------------------------------
+// SD-34 wave 43 (`decisions.md §22`'s 12-unit "small-precedented-new-compute" remainder):
+// Duelist, Shadowdancer, Assassin, Loremaster. All four are real prestige classes registered
+// in `prestige_class_entry_gate::is_registered` (confirmed directly against
+// `tests/fixtures/rules_core/prestige-class-entry-requirements.json`), but none is a
+// `ClassId`-family enum member anywhere in this file, so none can reach `compute_class_chassis`'s
+// per-class dispatch chain (Skald/Bloodrager/.../Swashbuckler/... above, or the CRB
+// `table_class_id` chain Paladin/Cleric use). Every function below is therefore called
+// unconditionally from `compute_pilot_base_chassis` itself, keyed on the raw `class_id` string,
+// the identical shape `ground_paladin_detect_evil` (immediately above) already established.
+//
+// Classifier reachability was checked directly (not assumed) for every one of the 12 ids below,
+// the same way wave 42's own receipt did: `class_feature_exact_suffix_grounded`'s 3-segment
+// `<owner>.<feature_slug>.<descriptor>` shape already recognizes an id whose second-to-last dot
+// segment equals the corpus record's own feature slug, gated only on `owner` (`"duelist"`,
+// `"shadowdancer"`, `"assassin"`, `"loremaster"`) matching the record's `group` text -- already
+// PROVEN live for all four owners by their own pre-existing `text-complete` siblings (e.g.
+// `class_feature.duelist.corpus_record.deflect_arrows`,
+// `class_feature.assassin.weapon_and_armor_proficiency`,
+// `class_feature.shadowdancer.weapon_and_armor_proficiency`; Loremaster has no roster/proficiency
+// sibling yet, but its OWN `owner` resolution needs nothing more than the corpus's own
+// `"Loremaster"` group text, which `class_feature_owner` derives generically from
+// `facts.class_books`/`facts.corpus_class_names`, not from any per-class registration list). No
+// `CLASS_FEATURE_ID_KNOWN_SYNONYMS` table entry and no `canonical_seeds_for()` match arm are
+// needed for any of the 12 -- `src/bin/v06_work_inventory.rs` carries zero diff this cycle.
+// ---------------------------------------------------------------------------------------------
+
+/// PF1 Core Rulebook Duelist Canny Defense (`cr_abilities_class.lst:2987`,
+/// `KEY:Duelist ~ Canny Defense`): `DEFINE:CannyDefenseLVL|0` /
+/// `BONUS:VAR|CannyDefenseLVL|DuelistLVL` / `BONUS:COMBAT|AC|
+/// max(0,min(INT,CannyDefenseLVL))|TYPE=Dodge|PREMULT:...` -- a dodge bonus
+/// to AC while wearing light or no armor and wielding a melee weapon, equal
+/// to the LOWER of the duelist's Intelligence bonus and her duelist level,
+/// floored at 0 (a penalty Intelligence never turns this into a penalty).
+/// Granted from class level 1 (`Duelist_CFP_Level,1`, matching Precise
+/// Strike's own grant gate). `None` below level 1.
+fn duelist_canny_defense_dodge_bonus(level: u8, intelligence_modifier: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(0.max(intelligence_modifier.min(i16::from(level))))
+}
+
+/// PF1 Core Rulebook Duelist Improved Reaction (`cr_abilities_class.lst:2988`,
+/// `KEY:Duelist ~ Improved Reaction`): `DEFINE:ImprovedReaction|0` /
+/// `BONUS:VAR|ImprovedReaction|floor((DuelistLVL+4)/6)*2` -- a flat bonus
+/// on initiative checks. Granted from class level 2 (`Duelist_CFP_Level,2`).
+/// `None` below level 2 (the formula is genuinely 0 at level 1 anyway --
+/// `floor(5/6)*2 = 0` -- but the level gate is the honest reason, not the
+/// arithmetic coincidence).
+fn duelist_improved_reaction_initiative_bonus(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    let level = i16::from(level);
+    Some(((level + 4) / 6) * 2)
+}
+
+/// PF1 Core Rulebook Duelist Precise Strike (`cr_abilities_class.lst:2991`,
+/// `KEY:Duelist ~ Precise Strike`): `DEFINE:PreciseStrikeDamage|0` /
+/// `BONUS:VAR|PreciseStrikeDamage|DuelistLVL` -- bonus weapon damage with a
+/// light or one-handed piercing weapon, equal to duelist level. The
+/// identical shape as ACG Swashbuckler's own `swashbuckler_precise_strike_
+/// damage` (this file, above), grounded standalone for the same reason:
+/// this engine computes no weapon-damage total to layer it onto. Granted
+/// from class level 1. `None` below level 1.
+fn duelist_precise_strike_damage_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// PF1 Core Rulebook Duelist Elaborate Defense (`cr_abilities_class.lst:2997`,
+/// `KEY:Duelist ~ Elaborate Defense`): `DEFINE:ElaborateParryLVL|0`
+/// `DEFINE:ElaborateDefense|0` / `BONUS:VAR|ElaborateParryLVL|DuelistLVL`
+/// then `BONUS:VAR|ElaborateDefense|ElaborateParryLVL/3` -- an additional
+/// dodge bonus to AC while fighting defensively or using total defense,
+/// equal to duelist level / 3. Granted from class level 7
+/// (`Duelist_CFP_Level,7`). `None` below level 7.
+fn duelist_elaborate_defense_dodge_bonus(level: u8) -> Option<i16> {
+    if level < 7 {
+        return None;
+    }
+    Some(i16::from(level) / 3)
+}
+
+/// Grounds Duelist's four genuinely new-compute class features
+/// (`decisions.md §22`'s 12-unit remainder). Unconditional on chassis
+/// support -- Duelist has no `ClassId` enum entry, so this is called
+/// directly from `compute_pilot_base_chassis`, mirroring
+/// `ground_paladin_detect_evil`'s own placement and reasoning.
+fn ground_duelist_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == DUELIST_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(dodge) =
+        duelist_canny_defense_dodge_bonus(level, ability_modifiers.intelligence)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.duelist.canny_defense.dodge_bonus".to_owned(),
+            value: dodge,
+            detail: format!(
+                "Duelist level {level} Canny Defense: a +{dodge} dodge bonus to Armor Class \
+                 while wearing light or no armor and wielding a melee weapon (corpus \
+                 `max(0,min(INT,CannyDefenseLVL))`, this character's Intelligence modifier \
+                 {int_mod:+} against duelist level {level}, floored at 0). Grounds the \
+                 magnitude only: no armor-class total exists anywhere in this engine for it to \
+                 layer onto, and the flat-footed/no-shield/melee-weapon preconditions are not \
+                 modelled",
+                int_mod = ability_modifiers.intelligence
+            ),
+        });
+    }
+
+    if let Some(initiative) = duelist_improved_reaction_initiative_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.duelist.improved_reaction.initiative_bonus".to_owned(),
+            value: initiative,
+            detail: format!(
+                "Duelist level {level} Improved Reaction: a +{initiative} bonus on initiative \
+                 checks (corpus `floor((DuelistLVL+4)/6)*2`), stacking with Improved Initiative. \
+                 No initiative total exists anywhere in this engine, so this grounds standalone -- \
+                 the same shape as Inquisitor's Cunning Initiative"
+            ),
+        });
+    }
+
+    if let Some(damage) = duelist_precise_strike_damage_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.duelist.precise_strike.damage_bonus".to_owned(),
+            value: damage,
+            detail: format!(
+                "Duelist level {level} Precise Strike: +{damage} bonus damage with a light or \
+                 one-handed piercing melee weapon (corpus `PreciseStrikeDamage = DuelistLVL`), \
+                 the identical shape ACG Swashbuckler's own Precise Strike deed already grounds. \
+                 Grounds standalone: no weapon-damage total exists anywhere in this engine"
+            ),
+        });
+    }
+
+    if let Some(dodge) = duelist_elaborate_defense_dodge_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.duelist.elaborate_defense.dodge_bonus".to_owned(),
+            value: dodge,
+            detail: format!(
+                "Duelist level {level} Elaborate Defense: an additional +{dodge} dodge bonus to \
+                 Armor Class while fighting defensively or using total defense (corpus \
+                 `ElaborateParryLVL/3`, `ElaborateParryLVL = DuelistLVL`). Grounds standalone: \
+                 this engine models no fighting-defensively/total-defense combat action for it \
+                 to modify"
+            ),
+        });
+    }
+}
+
+/// PF1 Core Rulebook Shadowdancer Shadow Illusion (`cr_abilities_class.lst:3069`,
+/// `KEY:Shadowdancer ~ Shadow Illusion`): `DEFINE:ShadowIllusionLVL|0` /
+/// `SPELLS:Class|TIMES=1|CASTERLEVEL=ShadowIllusionLVL|Silent Image,11+CHA`
+/// / `BONUS:VAR|ShadowIllusionLVL|ShadowdancerLVL` -- a spell-like ability
+/// (functions as Silent Image), caster level equal to shadowdancer level.
+/// **Real corpus discrepancy, resolved deliberately** (the same discipline
+/// Warpriest's own Channel Energy DC precedent already established): the
+/// record's own DESC prose claims "once per day for every two shadowdancer
+/// levels", but the record's own computed `SPELLS:` token is a literal
+/// `TIMES=1` -- a flat, unconditional 1/day, not a formula. The literal
+/// token is what this cycle transcribes, per this bundle's own
+/// authoritative-token-over-DESC-prose ruling. Granted from class level 3
+/// (`Shadowdancer_CFP_Level,3`). `None` below level 3.
+fn shadowdancer_shadow_illusion_caster_level(level: u8) -> Option<i16> {
+    if level < 3 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// See [`shadowdancer_shadow_illusion_caster_level`]'s own doc comment for
+/// why this is a literal `1`, not a level-derived formula.
+const SHADOWDANCER_SHADOW_ILLUSION_USES_PER_DAY: i16 = 1;
+
+/// PF1 Core Rulebook Shadowdancer Shadow Call (`cr_abilities_class.lst:3071`,
+/// `KEY:Shadowdancer ~ Shadow Call`): `DEFINE:ShadowCallLvl|0`
+/// `DEFINE:ShadowCallTimes|0` / `BONUS:VAR|ShadowCallLvl|ShadowDancerLVL`
+/// -- a spell-like ability (functions as Shadow Conjuration), caster level
+/// equal to shadowdancer level. Granted from class level 4
+/// (`Shadowdancer_CFP_Level,4`, the same grant gate as Shadow Jump). `None`
+/// below level 4.
+fn shadowdancer_shadow_call_caster_level(level: u8) -> Option<i16> {
+    if level < 4 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// See [`shadowdancer_shadow_call_caster_level`]'s own doc comment.
+/// `BONUS:VAR|ShadowCallTimes|ShadowDancerLVL/2` -- uses per day. `None`
+/// below level 4, the same grant gate.
+fn shadowdancer_shadow_call_uses_per_day(level: u8) -> Option<i16> {
+    if level < 4 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// PF1 Core Rulebook Shadowdancer Shadow Jump (`cr_abilities_class.lst:3072`,
+/// `KEY:Shadowdancer ~ Shadow Jump`): `DEFINE:ShadowJump|0`
+/// `DEFINE:ShadowJumpProgression|0` / four separate, cumulative
+/// `BONUS:VAR|ShadowJump|<N>|PREVARGTEQ:ShadowdancerLVL,<T>` tokens -- `20`
+/// at level 4, another `20` at level 6, `40` at level 8, `80` at level 10.
+/// Verified directly against the same additive-`BONUS:VAR` idiom this
+/// codebase's own `alchemist_poison_resistance_bonus` already established
+/// for a multi-threshold same-variable chain (each higher threshold's
+/// contribution ADDS to every lower threshold already met, expressed as a
+/// nested if/else returning the cumulative total): `20` (level 4-5), `40`
+/// (level 6-7, `20+20`), `80` (level 8-9, `20+20+40`), `160` (level 10+,
+/// `20+20+40+80`). **Real corpus discrepancy, resolved deliberately**: the
+/// record's own DESC prose describes a doubling progression of `40`/`80`/
+/// `160`/`320` feet (exactly double the literal token sum at every tier) --
+/// the same "authoritative computed token, not DESC prose" discrepancy
+/// Warpriest's Channel Energy DC precedent already resolved one way, so this
+/// transcribes the literal token sum, not the DESC narrative. Granted from
+/// class level 4 (`Shadowdancer_CFP_Level,4`). `None` below level 4.
+fn shadowdancer_shadow_jump_daily_distance_feet(level: u8) -> Option<i16> {
+    if level < 4 {
+        None
+    } else if level < 6 {
+        Some(20)
+    } else if level < 8 {
+        Some(40)
+    } else if level < 10 {
+        Some(80)
+    } else {
+        Some(160)
+    }
+}
+
+/// PF1 Core Rulebook Shadowdancer Summon Shadow (`cr_abilities_class.lst:3070`,
+/// `KEY:Shadowdancer ~ Summon Shadow`): `DEFINE:ShadowCompanionLVL|0` /
+/// `BONUS:VAR|ShadowCompanionLVL|ShadowdancerLVL` -- a flat
+/// level-equivalence fact (the summoned shadow companion's own effective
+/// level, used elsewhere in the record's own DESC for its hit-point and
+/// base-attack/save derivation, none of which this engine models). The
+/// identical "ground the level-equivalence fact, not the companion's own
+/// stat block" shape as ACG Swashbuckler's own `fighter_level_equivalence_
+/// for_feats`. Granted from class level 3 (`Shadowdancer_CFP_Level,3`, the
+/// same grant gate as Shadow Illusion). `None` below level 3.
+fn shadowdancer_summon_shadow_companion_level(level: u8) -> Option<i16> {
+    if level < 3 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Grounds Shadowdancer's four genuinely new-compute class features
+/// (`decisions.md §22`'s 12-unit remainder). Unconditional on chassis
+/// support, the same placement/reasoning as `ground_duelist_class_
+/// features` above.
+fn ground_shadowdancer_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == SHADOWDANCER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(caster_level) = shadowdancer_shadow_illusion_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.shadowdancer.shadow_illusion.caster_level".to_owned(),
+            value: caster_level,
+            detail: format!(
+                "Shadowdancer level {level} Shadow Illusion: spell-like ability (functions as \
+                 Silent Image), caster level {caster_level} (corpus `ShadowIllusionLVL = \
+                 ShadowdancerLVL`). Grounds the caster-level fact only -- the SLA triple idiom \
+                 already established by `ground_summoner_slice_a_features`: no illusion effect, \
+                 spell DC, or Charisma-based save is modelled"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.shadowdancer.shadow_illusion.uses_per_day".to_owned(),
+            value: SHADOWDANCER_SHADOW_ILLUSION_USES_PER_DAY,
+            detail: format!(
+                "Shadowdancer level {level} Shadow Illusion uses per day: \
+                 {SHADOWDANCER_SHADOW_ILLUSION_USES_PER_DAY} (corpus `SPELLS:Class|TIMES=1|...` -- \
+                 a literal, unconditional daily use, NOT the `floor(level/2)` the record's own \
+                 DESC prose describes; see this fact's own compute function doc comment for the \
+                 authoritative-token-over-DESC-prose ruling)"
+            ),
+        });
+    }
+
+    if let Some(caster_level) = shadowdancer_shadow_call_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.shadowdancer.shadow_call.caster_level".to_owned(),
+            value: caster_level,
+            detail: format!(
+                "Shadowdancer level {level} Shadow Call: spell-like ability (functions as Shadow \
+                 Conjuration), caster level {caster_level} (corpus `ShadowCallLvl = \
+                 ShadowDancerLVL`). Grounds the caster-level fact only, the same SLA-triple idiom \
+                 as Shadow Illusion above"
+            ),
+        });
+        if let Some(uses) = shadowdancer_shadow_call_uses_per_day(level) {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.shadowdancer.shadow_call.uses_per_day".to_owned(),
+                value: uses,
+                detail: format!(
+                    "Shadowdancer level {level} Shadow Call uses per day: {uses} (corpus \
+                     `ShadowCallTimes = ShadowDancerLVL/2`). Grounds the per-day budget only"
+                ),
+            });
+        }
+    }
+
+    if let Some(distance) = shadowdancer_shadow_jump_daily_distance_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.shadowdancer.shadow_jump.daily_distance_feet".to_owned(),
+            value: distance,
+            detail: format!(
+                "Shadowdancer level {level} Shadow Jump: {distance} feet of dimension-door-like \
+                 travel per day between areas of dim light or darker (corpus's own four \
+                 cumulative `BONUS:VAR|ShadowJump|<N>|PREVARGTEQ:ShadowdancerLVL,<T>` tokens \
+                 summed; see this fact's own compute function doc comment for the real \
+                 discrepancy against the record's own DESC-prose doubling narrative, resolved by \
+                 transcribing the literal token). Grounds the daily budget only: no per-jump \
+                 accounting or the dim-light precondition is modelled"
+            ),
+        });
+    }
+
+    if let Some(companion_level) = shadowdancer_summon_shadow_companion_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.shadowdancer.summon_shadow.companion_level".to_owned(),
+            value: companion_level,
+            detail: format!(
+                "Shadowdancer level {level} Summon Shadow: the summoned shadow companion's own \
+                 effective level, {companion_level} (corpus `ShadowCompanionLVL = \
+                 ShadowdancerLVL`). Grounds the level-equivalence fact only, the same shape ACG \
+                 Swashbuckler's own fighter-level-equivalence-for-feats fact uses: no companion \
+                 stat block (hit points, base attack, base saves) is derived from it here"
+            ),
+        });
+    }
+}
+
+/// PF1 Core Rulebook Assassin Save against Poisons (`cr_abilities_class.lst:2945`,
+/// `KEY:Assassin ~ Save against Poisons`): `DEFINE:AssassinPoisonSaveBonus|0`
+/// / `BONUS:VAR|AssassinPoisonSaveBonus|AssassinLVL/2` -- a flat bonus on
+/// saving throws against poison. The formula string `AssassinLVL/2` is
+/// already a literal in this repo's own test fixtures
+/// (`class_feature_grant_consumer.rs:2392`). Granted from class level 2
+/// (`Assassin_CFP_Level,2`). `None` below level 2.
+fn assassin_save_against_poisons_bonus(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// PF1 Core Rulebook Assassin Death Attack (`cr_abilities_class.lst:2947`,
+/// `KEY:Assassin ~ Death Attack`): `BONUS:VAR|DeathAttackDC,DeathAttackDuration|
+/// AssassinLVL` -- adds Assassin level to BOTH shared variables the
+/// generic `Death Attack` record (`cr_abilities_class.lst:2869`,
+/// `BONUS:VAR|DeathAttackDC|10+INT`) already seeds. Since PCGen `BONUS:VAR`
+/// tokens on the same variable stack additively, the real save DC is the
+/// SUM of both contributions: `10 + INT + AssassinLVL`, matching the
+/// record's own DESC exactly ("DC 10 + the assassin's class level + the
+/// assassin's Int modifier"). Granted from class level 1
+/// (`Assassin_CFP_Level,1`). `None` below level 1.
+fn assassin_death_attack_save_dc(level: u8, intelligence_modifier: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10 + i16::from(level) + intelligence_modifier)
+}
+
+/// See [`assassin_death_attack_save_dc`]'s own doc comment. `DeathAttackDuration
+/// = AssassinLVL` -- the "+ 1 round per level of the assassin" half of the
+/// paralysis duration ("1d6 rounds plus 1 round per level"); the `1d6` base
+/// is dice notation this engine does not model, the same "grounds the
+/// level-derived bonus, defers the dice" treatment ACG Swashbuckler's own
+/// deed damage formulas already use. Granted from class level 1. `None`
+/// below level 1.
+fn assassin_death_attack_duration_bonus_rounds(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Grounds Assassin's two genuinely new-compute class features
+/// (`decisions.md §22`'s 12-unit remainder). Unconditional on chassis
+/// support, the same placement/reasoning as `ground_duelist_class_
+/// features` above.
+fn ground_assassin_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ASSASSIN_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = assassin_save_against_poisons_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.assassin.save_against_poisons.save_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Assassin level {level} Save against Poisons: a +{bonus} bonus on saving throws \
+                 against poison (corpus `AssassinPoisonSaveBonus = AssassinLVL/2`). Grounds \
+                 standalone: no saving-throw total this engine computes is poison-specific"
+            ),
+        });
+    }
+
+    let int_mod = ability_modifiers.intelligence;
+    if let Some(dc) = assassin_death_attack_save_dc(level, int_mod) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.assassin.death_attack.save_dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Assassin level {level} Death Attack: Fortitude save DC {dc} (10 + assassin \
+                 level {level} + Intelligence modifier {int_mod:+}, the sum of the generic Death \
+                 Attack record's own `10+INT` plus this class's own `+AssassinLVL` contribution \
+                 to the same shared `DeathAttackDC` variable). Grounds the DC only: the sneak- \
+                 attack/3-round-study precondition and the kill-vs-paralysis choice are not \
+                 modelled"
+            ),
+        });
+    }
+    if let Some(duration) = assassin_death_attack_duration_bonus_rounds(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.assassin.death_attack.duration_bonus_rounds".to_owned(),
+            value: duration,
+            detail: format!(
+                "Assassin level {level} Death Attack paralysis duration: 1d6 + {duration} rounds \
+                 (corpus `DeathAttackDuration = AssassinLVL`). Grounds the level-derived bonus \
+                 rounds only; the 1d6 base is dice notation this engine does not model, the same \
+                 dice-deferred treatment ACG Swashbuckler's own deed damage formulas already use"
+            ),
+        });
+    }
+}
+
+/// PF1 Core Rulebook Loremaster Lore (`cr_abilities_class.lst:3020`,
+/// `KEY:Loremaster ~ Lore`): `BONUS:SKILL|TYPE=Knowledge|LoreMasterLVL/2`
+/// -- a flat bonus on all Knowledge skill checks, equal to half loremaster
+/// level. Granted from class level 2 (`Loremaster_CFP_Level,2`), per the
+/// record's own DESC ("At 2nd level..."), matching the class table's own
+/// grant list. `None` below level 2.
+fn loremaster_lore_knowledge_bonus(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// PF1 Core Rulebook Loremaster Secret Lore (`cr_abilities_class.lst:3017`,
+/// `KEY:Loremaster ~ Secret Lore`): `DEFINE:LoremasterSecretsLVL|0`
+/// `DEFINE:LoremasterSecretCount|0` / `BONUS:VAR|LoremasterSecretCount|
+/// (LoreMasterLVL+1)/2` -- the SIZE of the loremaster secrets pool (one
+/// secret at 1st level and every two levels after). Grounds the pool SIZE
+/// only, the same "quantity is a real fact, the choice made with it is a
+/// different question" shape `eidolon_evolution_pool` already established
+/// for Summoner: which of the ten Loremaster Secrets table entries is
+/// chosen at each slot is not modelled here, and neither is
+/// `LoremasterSecretsLVL` (`LoreMasterLVL+INT`, which secrets are
+/// selectable) -- both are the SPENDING question, not the pool-size fact
+/// this cycle grounds. Granted from class level 1 (`Loremaster_CFP_Level,1`).
+/// `None` below level 1.
+fn loremaster_secret_lore_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 1) / 2)
+}
+
+/// Grounds Loremaster's two genuinely new-compute class features
+/// (`decisions.md §22`'s 12-unit remainder). Unconditional on chassis
+/// support, the same placement/reasoning as `ground_duelist_class_
+/// features` above.
+fn ground_loremaster_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == LOREMASTER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = loremaster_lore_knowledge_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.loremaster.lore.knowledge_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Loremaster level {level} Lore: a +{bonus} bonus on all Knowledge skill checks, \
+                 usable untrained (corpus `BONUS:SKILL|TYPE=Knowledge|LoreMasterLVL/2`). Grounds \
+                 standalone: this engine computes no Knowledge-skill total, the same treatment \
+                 Inquisitor's Monster Lore already uses"
+            ),
+        });
+    }
+
+    if let Some(pool) = loremaster_secret_lore_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.loremaster.secret_lore.pool_size".to_owned(),
+            value: pool,
+            detail: format!(
+                "Loremaster level {level} Secret Lore: a pool of {pool} loremaster secrets \
+                 (corpus `LoremasterSecretCount = (LoreMasterLVL+1)/2`). Grounds the pool SIZE \
+                 only -- which secret is chosen from the Loremaster Secrets table at each slot, \
+                 and the separate `LoremasterSecretsLVL` selectability gate, are the spending \
+                 question, not modelled here, mirroring Summoner's own eidolon evolution pool"
             ),
         });
     }
@@ -74176,6 +74742,363 @@ mod paladin_detect_evil_and_cleric_aura_tests {
             None,
             "a Cleric must not gain Paladin's own Detect Evil record"
         );
+    }
+}
+
+/// SD-34 wave 43 (`decisions.md §22`'s 12-unit "small-precedented-new-compute"
+/// remainder): Duelist ×4, Shadowdancer ×4, Assassin ×2, Loremaster ×2. Each
+/// pure formula is unit-tested directly first (proving the arithmetic,
+/// including edge cases the fixture below cannot exercise -- a negative or
+/// high Intelligence modifier for Canny Defense, a range of level bands for
+/// Shadow Jump), then a reachability test proves the SAME formula's
+/// explanation id actually surfaces through the real pipeline end to end,
+/// the identical two-layer discipline `paladin_detect_evil_and_cleric_aura_
+/// tests` above already established.
+#[cfg(test)]
+mod wave43_prestige_class_new_compute_tests {
+    use super::{
+        assassin_death_attack_duration_bonus_rounds, assassin_death_attack_save_dc,
+        assassin_save_against_poisons_bonus, build_pilot_headless_receipt,
+        duelist_canny_defense_dodge_bonus, duelist_elaborate_defense_dodge_bonus,
+        duelist_improved_reaction_initiative_bonus, duelist_precise_strike_damage_bonus,
+        loremaster_lore_knowledge_bonus, loremaster_secret_lore_pool_size,
+        shadowdancer_shadow_call_caster_level, shadowdancer_shadow_call_uses_per_day,
+        shadowdancer_shadow_illusion_caster_level, shadowdancer_shadow_jump_daily_distance_feet,
+        shadowdancer_summon_shadow_companion_level, CharacterClassLevel, CharacterInput,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// This fixture's own Human ability-bonus choice targets Strength, not
+    /// Intelligence (`choice:human_ability_bonus:ability:strength`), so the
+    /// character's Intelligence stays the raw chosen `10` -> modifier `0`.
+    /// Used below to confirm Canny Defense's and Death Attack's own real
+    /// pipeline values, independent of the direct formula tests (which
+    /// exercise non-zero Intelligence modifiers the fixture cannot).
+    const FIXTURE_INTELLIGENCE_MODIFIER: i16 = 0;
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    const ALL_FIFTEEN_EXPLANATION_IDS: &[&str] = &[
+        "class_feature.duelist.canny_defense.dodge_bonus",
+        "class_feature.duelist.improved_reaction.initiative_bonus",
+        "class_feature.duelist.precise_strike.damage_bonus",
+        "class_feature.duelist.elaborate_defense.dodge_bonus",
+        "class_feature.shadowdancer.shadow_illusion.caster_level",
+        "class_feature.shadowdancer.shadow_illusion.uses_per_day",
+        "class_feature.shadowdancer.shadow_call.caster_level",
+        "class_feature.shadowdancer.shadow_call.uses_per_day",
+        "class_feature.shadowdancer.shadow_jump.daily_distance_feet",
+        "class_feature.shadowdancer.summon_shadow.companion_level",
+        "class_feature.assassin.save_against_poisons.save_bonus",
+        "class_feature.assassin.death_attack.save_dc",
+        "class_feature.assassin.death_attack.duration_bonus_rounds",
+        "class_feature.loremaster.lore.knowledge_bonus",
+        "class_feature.loremaster.secret_lore.pool_size",
+    ];
+
+    #[test]
+    fn duelist_formulas_match_the_corpus_tokens() {
+        // Canny Defense: max(0, min(INT, level)), None below level 1.
+        assert_eq!(duelist_canny_defense_dodge_bonus(0, 5), None);
+        assert_eq!(duelist_canny_defense_dodge_bonus(1, 5), Some(1));
+        assert_eq!(duelist_canny_defense_dodge_bonus(5, 2), Some(2));
+        assert_eq!(
+            duelist_canny_defense_dodge_bonus(5, -3),
+            Some(0),
+            "a negative Intelligence modifier must floor at 0, never go negative"
+        );
+
+        // Improved Reaction: floor((level+4)/6)*2, None below level 2.
+        assert_eq!(duelist_improved_reaction_initiative_bonus(1), None);
+        assert_eq!(duelist_improved_reaction_initiative_bonus(2), Some(2));
+        assert_eq!(duelist_improved_reaction_initiative_bonus(7), Some(2));
+        assert_eq!(duelist_improved_reaction_initiative_bonus(8), Some(4));
+
+        // Precise Strike: level, None below level 1.
+        assert_eq!(duelist_precise_strike_damage_bonus(0), None);
+        assert_eq!(duelist_precise_strike_damage_bonus(1), Some(1));
+        assert_eq!(duelist_precise_strike_damage_bonus(20), Some(20));
+
+        // Elaborate Defense: level/3, None below level 7.
+        assert_eq!(duelist_elaborate_defense_dodge_bonus(6), None);
+        assert_eq!(duelist_elaborate_defense_dodge_bonus(7), Some(2));
+        assert_eq!(duelist_elaborate_defense_dodge_bonus(9), Some(3));
+    }
+
+    #[test]
+    fn shadowdancer_formulas_match_the_corpus_tokens() {
+        // Shadow Illusion caster level: raw level, None below level 3.
+        assert_eq!(shadowdancer_shadow_illusion_caster_level(2), None);
+        assert_eq!(shadowdancer_shadow_illusion_caster_level(3), Some(3));
+        assert_eq!(shadowdancer_shadow_illusion_caster_level(20), Some(20));
+
+        // Shadow Call: raw level / level/2, None below level 4.
+        assert_eq!(shadowdancer_shadow_call_caster_level(3), None);
+        assert_eq!(shadowdancer_shadow_call_caster_level(4), Some(4));
+        assert_eq!(shadowdancer_shadow_call_uses_per_day(4), Some(2));
+        assert_eq!(shadowdancer_shadow_call_uses_per_day(5), Some(2));
+        assert_eq!(shadowdancer_shadow_call_uses_per_day(6), Some(3));
+
+        // Shadow Jump: cumulative banded lookup, None below level 4.
+        assert_eq!(shadowdancer_shadow_jump_daily_distance_feet(3), None);
+        assert_eq!(shadowdancer_shadow_jump_daily_distance_feet(4), Some(20));
+        assert_eq!(shadowdancer_shadow_jump_daily_distance_feet(5), Some(20));
+        assert_eq!(shadowdancer_shadow_jump_daily_distance_feet(6), Some(40));
+        assert_eq!(shadowdancer_shadow_jump_daily_distance_feet(7), Some(40));
+        assert_eq!(shadowdancer_shadow_jump_daily_distance_feet(8), Some(80));
+        assert_eq!(shadowdancer_shadow_jump_daily_distance_feet(9), Some(80));
+        assert_eq!(shadowdancer_shadow_jump_daily_distance_feet(10), Some(160));
+        assert_eq!(shadowdancer_shadow_jump_daily_distance_feet(20), Some(160));
+
+        // Summon Shadow: raw level, None below level 3.
+        assert_eq!(shadowdancer_summon_shadow_companion_level(2), None);
+        assert_eq!(shadowdancer_summon_shadow_companion_level(3), Some(3));
+    }
+
+    #[test]
+    fn assassin_formulas_match_the_corpus_tokens() {
+        // Save against Poisons: level/2, None below level 2.
+        assert_eq!(assassin_save_against_poisons_bonus(1), None);
+        assert_eq!(assassin_save_against_poisons_bonus(2), Some(1));
+        assert_eq!(assassin_save_against_poisons_bonus(3), Some(1));
+        assert_eq!(assassin_save_against_poisons_bonus(4), Some(2));
+
+        // Death Attack DC: 10 + level + INT modifier, None below level 1.
+        assert_eq!(assassin_death_attack_save_dc(0, 0), None);
+        assert_eq!(assassin_death_attack_save_dc(1, 0), Some(11));
+        assert_eq!(assassin_death_attack_save_dc(1, 3), Some(14));
+        assert_eq!(assassin_death_attack_save_dc(10, 2), Some(22));
+
+        // Death Attack duration: level, None below level 1.
+        assert_eq!(assassin_death_attack_duration_bonus_rounds(0), None);
+        assert_eq!(assassin_death_attack_duration_bonus_rounds(1), Some(1));
+        assert_eq!(assassin_death_attack_duration_bonus_rounds(10), Some(10));
+    }
+
+    #[test]
+    fn loremaster_formulas_match_the_corpus_tokens() {
+        // Lore: level/2, None below level 2.
+        assert_eq!(loremaster_lore_knowledge_bonus(1), None);
+        assert_eq!(loremaster_lore_knowledge_bonus(2), Some(1));
+        assert_eq!(loremaster_lore_knowledge_bonus(3), Some(1));
+        assert_eq!(loremaster_lore_knowledge_bonus(4), Some(2));
+
+        // Secret Lore pool size: (level+1)/2, None below level 1.
+        assert_eq!(loremaster_secret_lore_pool_size(0), None);
+        assert_eq!(loremaster_secret_lore_pool_size(1), Some(1));
+        assert_eq!(loremaster_secret_lore_pool_size(3), Some(2));
+        assert_eq!(loremaster_secret_lore_pool_size(9), Some(5));
+    }
+
+    #[test]
+    fn duelist_class_features_reach_the_real_pipeline() {
+        let level1 = character("class:duelist", 1);
+        assert_eq!(
+            explanation_value(&level1, "class_feature.duelist.canny_defense.dodge_bonus"),
+            Some(0.max(FIXTURE_INTELLIGENCE_MODIFIER.min(1))),
+            "level 1 Canny Defense must ground at this fixture's real Intelligence modifier"
+        );
+        assert_eq!(
+            explanation_value(&level1, "class_feature.duelist.precise_strike.damage_bonus"),
+            Some(1)
+        );
+        assert_eq!(
+            explanation_value(&level1, "class_feature.duelist.improved_reaction.initiative_bonus"),
+            None,
+            "Improved Reaction is not granted until level 2"
+        );
+        assert_eq!(
+            explanation_value(&level1, "class_feature.duelist.elaborate_defense.dodge_bonus"),
+            None,
+            "Elaborate Defense is not granted until level 7"
+        );
+
+        let level7 = character("class:duelist", 7);
+        assert_eq!(
+            explanation_value(&level7, "class_feature.duelist.precise_strike.damage_bonus"),
+            Some(7)
+        );
+        assert_eq!(
+            explanation_value(&level7, "class_feature.duelist.improved_reaction.initiative_bonus"),
+            Some(2)
+        );
+        assert_eq!(
+            explanation_value(&level7, "class_feature.duelist.elaborate_defense.dodge_bonus"),
+            Some(2)
+        );
+    }
+
+    #[test]
+    fn shadowdancer_class_features_reach_the_real_pipeline() {
+        let level3 = character("class:shadowdancer", 3);
+        assert_eq!(
+            explanation_value(&level3, "class_feature.shadowdancer.shadow_illusion.caster_level"),
+            Some(3)
+        );
+        assert_eq!(
+            explanation_value(&level3, "class_feature.shadowdancer.shadow_illusion.uses_per_day"),
+            Some(1)
+        );
+        assert_eq!(
+            explanation_value(&level3, "class_feature.shadowdancer.summon_shadow.companion_level"),
+            Some(3)
+        );
+        assert_eq!(
+            explanation_value(&level3, "class_feature.shadowdancer.shadow_call.caster_level"),
+            None,
+            "Shadow Call is not granted until level 4"
+        );
+        assert_eq!(
+            explanation_value(&level3, "class_feature.shadowdancer.shadow_jump.daily_distance_feet"),
+            None,
+            "Shadow Jump is not granted until level 4"
+        );
+
+        let level10 = character("class:shadowdancer", 10);
+        assert_eq!(
+            explanation_value(&level10, "class_feature.shadowdancer.shadow_call.caster_level"),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(&level10, "class_feature.shadowdancer.shadow_call.uses_per_day"),
+            Some(5)
+        );
+        assert_eq!(
+            explanation_value(
+                &level10,
+                "class_feature.shadowdancer.shadow_jump.daily_distance_feet"
+            ),
+            Some(160)
+        );
+    }
+
+    #[test]
+    fn assassin_class_features_reach_the_real_pipeline() {
+        let level1 = character("class:assassin", 1);
+        assert_eq!(
+            explanation_value(&level1, "class_feature.assassin.death_attack.save_dc"),
+            Some(10 + 1 + FIXTURE_INTELLIGENCE_MODIFIER)
+        );
+        assert_eq!(
+            explanation_value(&level1, "class_feature.assassin.death_attack.duration_bonus_rounds"),
+            Some(1)
+        );
+        assert_eq!(
+            explanation_value(&level1, "class_feature.assassin.save_against_poisons.save_bonus"),
+            None,
+            "Save against Poisons is not granted until level 2"
+        );
+
+        let level2 = character("class:assassin", 2);
+        assert_eq!(
+            explanation_value(&level2, "class_feature.assassin.save_against_poisons.save_bonus"),
+            Some(1)
+        );
+    }
+
+    #[test]
+    fn loremaster_class_features_reach_the_real_pipeline() {
+        let level1 = character("class:loremaster", 1);
+        assert_eq!(
+            explanation_value(&level1, "class_feature.loremaster.secret_lore.pool_size"),
+            Some(1)
+        );
+        assert_eq!(
+            explanation_value(&level1, "class_feature.loremaster.lore.knowledge_bonus"),
+            None,
+            "Lore is not granted until level 2"
+        );
+
+        let level2 = character("class:loremaster", 2);
+        assert_eq!(
+            explanation_value(&level2, "class_feature.loremaster.lore.knowledge_bonus"),
+            Some(1)
+        );
+        assert_eq!(
+            explanation_value(&level2, "class_feature.loremaster.secret_lore.pool_size"),
+            Some(1)
+        );
+    }
+
+    /// Negative control: none of the 15 explanation ids these four classes
+    /// push may leak onto an unrelated class, nor onto any of the OTHER
+    /// three prestige classes -- the same discipline `paladin_detect_evil_
+    /// and_cleric_aura_tests::neither_record_leaks_onto_an_unrelated_class`
+    /// already established for the two-unit wave 42 cycle, widened to all
+    /// four classes and all fifteen ids here.
+    #[test]
+    fn none_of_the_fifteen_ids_leak_onto_an_unrelated_or_sibling_prestige_class() {
+        let fighter = character("class:fighter", 10);
+        for id in ALL_FIFTEEN_EXPLANATION_IDS {
+            assert_eq!(
+                explanation_value(&fighter, id),
+                None,
+                "a Fighter must not gain any of these fifteen prestige-class records: {id}"
+            );
+        }
+
+        // Each class only ever pushes its OWN records -- spot-checked cross-class,
+        // at a level high enough that every one of the OTHER three classes' own
+        // records would have fired had the dispatch been mis-keyed.
+        let duelist = character("class:duelist", 10);
+        for id in ALL_FIFTEEN_EXPLANATION_IDS {
+            if id.starts_with("class_feature.duelist.") {
+                continue;
+            }
+            assert_eq!(explanation_value(&duelist, id), None, "a Duelist must not gain: {id}");
+        }
+
+        let shadowdancer = character("class:shadowdancer", 10);
+        for id in ALL_FIFTEEN_EXPLANATION_IDS {
+            if id.starts_with("class_feature.shadowdancer.") {
+                continue;
+            }
+            assert_eq!(
+                explanation_value(&shadowdancer, id),
+                None,
+                "a Shadowdancer must not gain: {id}"
+            );
+        }
+
+        let assassin = character("class:assassin", 10);
+        for id in ALL_FIFTEEN_EXPLANATION_IDS {
+            if id.starts_with("class_feature.assassin.") {
+                continue;
+            }
+            assert_eq!(explanation_value(&assassin, id), None, "an Assassin must not gain: {id}");
+        }
+
+        let loremaster = character("class:loremaster", 10);
+        for id in ALL_FIFTEEN_EXPLANATION_IDS {
+            if id.starts_with("class_feature.loremaster.") {
+                continue;
+            }
+            assert_eq!(
+                explanation_value(&loremaster, id),
+                None,
+                "a Loremaster must not gain: {id}"
+            );
+        }
     }
 }
 

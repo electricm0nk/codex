@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2518,
+      "count": 2506,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -51,7 +51,7 @@
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 25362,
+      "count": 25369,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
@@ -84,7 +84,7 @@
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
-      "count": 322,
+      "count": 327,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
       "meaning": "verified by proxy, never by the oracle"
     },
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "884c10ef5f8946470df1a746efb1990609460eda",
+  "derived_at": "36bb70e9007b50223946d7a456e89b842757a250",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -123,7 +123,7 @@
   "sub_causes": {
     "D": {
       "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 210,
-      "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 37,
+      "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 25,
       "class_feature_of_unmodelled_corpus_class:adaptive_warrior": 14,
       "class_feature_of_unmodelled_corpus_class:aldori_swordlord": 13,
       "class_feature_of_unmodelled_corpus_class:animal": 17,
