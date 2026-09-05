@@ -11,6 +11,114 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 44 — census script bug fixed (13 classes, 191 units) + 4 classifier collisions closed — complete
+
+**Status: complete.** Piece 1: fixed a real bug in `scripts/census_prestige_class_entry_
+requirements.py` — `extract()` keyed purely by display name across the full 158-book oracle, so a
+filesystem-order race could let an older, un-ingested predecessor book silently win over the real
+ingested book and drop the entry forever. Fixed by ranking every candidate source by whether its
+own book is ingested BEFORE breaking ties by relative path (never by walk order), proven with a
+new regression test that forces both walk orders against a synthetic corpus reproducing the exact
+collision (`scripts/tests/test_census_prestige_class_entry_requirements.py`, 4 tests). Re-ran
+against the real pinned oracle: population `62 -> 74`. 12 of the originally-named 13 classes
+recovered (Phrenic Slayer, Thrallherd, Psychic Fist, War Mind, Elocater, Psion Uncarnate,
+Pyrokineticist, Metamind, Cerebremancer, Pathfinder Savant, Student of War, Pathfinder Delver);
+**Gifted Blade was NOT recovered** — confirmed directly against the real oracle that it carries
+`TYPE:Psionic VISIBLE:NO`, never `TYPE:...Prestige`, so the audit's own 13-name list was one name
+too long. Diffed the regenerated fixture against its pre-fix committed version: 144 insertions, 0
+deletions — every pre-existing entry byte-identical, zero regressions. 3 of the 12 spot-checked
+directly against the real `.lst` source (Phrenic Slayer, Thrallherd, Cerebremancer): exact match.
+
+Piece 2: closed 4 classifier-collision misattributions, **3 of the 4 audit's real-owner claims
+were WRONG** (found by reading the real corpus record before writing any code, not trusting the
+audit's prose — this bundle's own standing rule):
+- **Not Cleric** — `power_over_undead_turn_undead`/`command_undead` are Wizard's Necromancy School
+  arcane-school power (`TYPE:WizardClassFeatures...`, no `ClericLVL` anywhere), not Cleric's own
+  Channel Energy, which remains a real, separate, still-open gap. Closed 5 Necromancy School facts
+  (Power Over Undead uses/day + Turn/Command DC/HD, Grave Touch, Life Sight) via
+  `wizard_has_canonical_necromancy_selection`.
+- **Order of the Dragon** — audit's formula-shape caution checked out true (`max(1,CavalierLVL/2)`,
+  identical to Order of the Sword's own shape). Closed via
+  `cavalier_order_of_the_dragon_survival_bonus`. Also found and fixed during this cycle's own
+  review (not a shipped oversight): two diagnostic messages unconditionally named only "Order of
+  the Sword," false prose for a character who recorded Order of the Dragon instead — widened to
+  name both Orders generically.
+- **Not Ranger** — PaDFE Construct/Ooze/Undead's `%1` substitution is set ONLY by Pathfinder
+  Delver's own Guardbreaker feature, gated to apply only when the character does NOT already have
+  Ranger's real Favored Enemy of that type; no `RangerLVL` anywhere in the record's own token
+  closure. Closed via `pathfinder_delver_padfe_bonus`/`ground_pathfinder_delver_class_features` (a
+  fifth "no `ClassId` enum entry" prestige-class dispatch, same shape as wave 43's four). This
+  item's own classify()-level reachability coverage (a gap the other three items didn't have) was
+  added this cycle: 3 reachability + 1 negative-control test.
+- **Split finding** — Spiritualist's Phantom Emotional Focus pool (7 records) closed via one new
+  `push_generic_pool_choice_magnitude` call. **Summoner's Eidolon half NOT closed** — audit's
+  "already wired" claim was WRONG: the specific unit is the First Worlder archetype's own
+  master-linked progression trigger, not a base Eidolon fact any existing function grounds.
+  Widening the search found 15 sibling units (`ultimate_magic`'s Broodmaster per-body-size/tier
+  multi-companion progressions) — a materially larger, genuinely harder population. Left named and
+  unclosed.
+
+Psychic Detective (item 5, also-check) confirmed `VISIBLE:NO` (an Investigator archetype, matching
+the audit) but its own magnitude is a choice-pool `ExpandedArcana` slot gated at combined level
+>= 16 — genuinely more involved than a simple owner-reroute. Left named and unclosed, per this
+wave's own explicit permission.
+
+**Real movement: 16 units closed**, regen-confirmed. Guarded regen ran to completion (`cargo run
+--locked --bin v06_work_inventory`, after generating both `CORPUS_LITERAL_SWEEP_REPORT` and
+`DERIVED_FIXTURE_CHECK_REPORT` prerequisites fresh — the first attempt correctly refused until both
+were supplied, the same guard every prior wave hit; `corpus_literal_sweep` and
+`derived_evaluator_fixture_check` both came back byte-identical to wave 43's own figures, 0
+`data/corpus/**` files touched). Before/after, re-derived via `completion_atlas.py --check` on both
+snapshots plus an independent Python `id`→`status` join (both agree): `DONE: 25369→25375 (+6)`,
+`B: 11769→11766 (−3)`, `D: 2506→2493 (−13)`, `V: 327→337 (+10)`, every other bucket unchanged.
+Exactly 16 units changed status, zero collateral movement. Not all 16 landed in DONE: 6 landed
+`grounded` (Order of the Dragon, all 5 Necromancy facts), 10 landed `literal-verified` (3 PaDFE + 7
+Phantom Emotional Focus) — the same D/B→V shape waves 41/43 already hit, a legitimately-resolved
+bucket, not a lesser outcome. `population=49438 unclassified=0 overlap=0
+done_evidence_violations=0 citation_failures=0`.
+
+**Both the lib suite AND the full integration suite were run this cycle** — the exact step wave 42
+skipped, which let a real regression through undetected until its own wave-end gate:
+`cargo test --locked --lib -j 6` → 3090 passed, 0 failed, 14 ignored (up from the standing 3077
+baseline by exactly 13 new tests); `cargo test --locked --no-fail-fast -j 6` (full workspace, 589
+suites — unchanged from wave 43's own suite count) → this cycle's own run (launched before this
+cycle's own F1-pin fix landed) summed to 8490 passed / 1 failed (the stale F1 pin) / 67 ignored;
+with that one test's status independently confirmed fixed via a separate `--lib` rerun (3090
+passed, 0 failed), the true total is 8491 passed, 0 failed. `scripts/verify-baselines.env` raised
+`BASELINE_ROOT_LIB_TESTS` 3077→3090 (the full, safe delta) and `BASELINE_ROOT_FULL_TESTS`
+8467→8480 (a deliberately conservative +13-only raise, not the full +24
+observed — this cycle's own measurement surfaced an unexplained +11 non-lib-crate delta it could
+not attribute to any code change of its own; named as a finding for a future wave rather than
+baked into an enforced gate untested against the orchestrator's own isolated environment).
+
+**F1/`shape_ledger.py` pin re-derived**: `5206 -> 5196` (a real `-10` movement). Verified per-id,
+not assumed: of the 16 closed units, exactly 10 are F1-shaped (Pathfinder Delver's 3 PaDFE records
+— each carries a syntactically-flat bare-variable token even though it resolves through a
+level-dependent chain elsewhere — plus all 7 Phantom Emotional Focus records, true bare literals).
+The other 6 (Order of the Dragon, the 5 Necromancy facts) are F2/F5-shaped, not F1. Updated
+`f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census`'s pin and
+doc-comment history, following the test's own established convention.
+
+**Also this cycle: re-derived 3 scripts' own citation pins that this cycle's own insertions into
+`src/bin/v06_work_inventory.rs` shifted** (`completion_atlas.py`'s 10 bucket citations,
+`shape_engine_boundary.py`'s promotion-ladder citation, `missing_engine_tables.py`'s 2
+engine-surface citations) — two of these three were discovered to have ALREADY been stale at HEAD,
+before this cycle touched anything, never caught because those scripts' own tests are not wired
+into `scripts/verify.sh`. Fixed the citations this cycle's own edits require; named the underlying
+"nobody watches these" gap, and `shape_engine_boundary.py`'s own separate 463-unit-stale
+population-count pin (a different, much older drift, exposed but not fixed this cycle — no
+established multi-wave update convention exists for it the way `shape_ledger.py`'s F1 pin has), as
+findings for a future wave rather than resolved unilaterally.
+
+Full receipt:
+`artifacts/bucket-d-mining/wave44_census_bug_and_classifier_collisions_cycle_receipt.md`.
+
+**Next-cycle plan:** Summoner Eidolon's 16-unit population (1 First Worlder trigger + 15
+Broodmaster multi-companion progressions) and Psychic Detective's Expanded Arcana choice-pool
+record are both named, real, unclosed remainders. Cerebremancer's "Advance Manifesting" and
+sub-mechanism 5's remaining ~500 (of 699) units remain un-re-audited since wave 43's own
+wave-end-gate finding.
+
 ### Cycle — Wave 43 wave-end gate — caught a stale pinned census count, full 40/40 confirmed — complete
 
 **Status: complete.** Integration and gate summary for wave 43's own cycle (below), which closed

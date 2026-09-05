@@ -1116,4 +1116,99 @@ unit of the original 15-unit list that still holds up as genuinely open-ended ne
 requiring real subsystem modeling (weapon enhancement bonuses, no precedent anywhere in the
 engine). Every other unit named in this section across waves 39-43 is now closed.
 
+**WAVE 44 UPDATE, 2026-09-05: a real script bug fixed (13 prestige classes, 191 units,
+recovered into the entry-requirement registry) and 4 of the 5 wave-43-wave-end-gate-audit's
+classifier-collision candidates closed** — `scripts/census_prestige_class_entry_requirements.py`'s
+`extract()` keyed purely by display name across the full 158-book oracle
+(`prestige_names.setdefault(name, path)`), so a filesystem-order race could let an older,
+un-ingested predecessor book silently win over the real ingested book and drop the entry forever.
+Fixed by ranking every candidate source by whether its own book is ingested BEFORE breaking ties
+by relative path, proven with a new regression test that forces both walk orders against a
+synthetic corpus reproducing the exact collision
+(`scripts/tests/test_census_prestige_class_entry_requirements.py`, 4 tests). Re-ran against the
+real pinned oracle: population `62 -> 74`. 12 of the 13 named classes recovered (Phrenic Slayer,
+Thrallherd, Psychic Fist, War Mind, Elocater, Psion Uncarnate, Pyrokineticist, Metamind,
+Cerebremancer, Pathfinder Savant, Student of War, Pathfinder Delver); **Gifted Blade was NOT
+recovered** — it never actually carries a `TYPE:...Prestige` line anywhere in the oracle, the
+audit's own 13-name list was one name too long. Diffed the regenerated fixture against its pre-fix
+committed version: 144 insertions, 0 deletions — every pre-existing entry byte-identical. 3 of the
+12 spot-checked directly against the real `.lst` source (Phrenic Slayer, Thrallherd, Cerebremancer)
+— exact match.
+
+**4 classifier collisions closed, 3 of the 4 audits corrected by direct corpus read before any code
+was written:**
+
+- **Item 1 (`power_over_undead_turn_undead`/`command_undead`) — audit's real-owner claim was
+  WRONG.** Not Cleric: `cr_abilities_class.lst:2681`'s own `TYPE:WizardClassFeatures...` facet and
+  `PowerOverUndeadLVL <- NecromancySchoolLVL <- WizardLVL` chain are Wizard-Necromancy-School-only,
+  no `ClericLVL` anywhere. This is Wizard's Necromancy School arcane-school power (mimics Channel
+  Energy mechanically, which misled the audit), not Cleric's own Channel Positive/Negative Energy —
+  that remains a real, separate, still-open gap (`cleric_channel_positive_energy`/
+  `cleric_channel_negative_energy`), explicitly untouched. Closed 5 facts (uses/day, Turn/Command
+  DC, Command HD, Grave Touch, Life Sight) via `wizard_has_canonical_necromancy_selection`.
+- **Item 2 (`order_of_the_dragon`) — audit's formula-shape caution was correct to raise, and
+  checked out true.** `apg_abilities_class.lst:243`'s Survival bonus is the identical
+  `max(1,CavalierLVL/2)` shape as Order of the Sword's own Sense Motive bonus, verified rather than
+  assumed. Closed via `cavalier_order_of_the_dragon_survival_bonus`. **Also fixed, found during
+  this wave's own review, not shipped as an oversight:** two diagnostic messages and the
+  `cavalier_deferred_remainder_posture` helper unconditionally named only "Order of the Sword" and
+  "the one canonical Order" — false prose for a character who recorded Order of the Dragon instead.
+  Widened to name both Orders generically.
+- **Item 3 (`padfe_construct`/`padfe_ooze`/`padfe_undead`) — audit's real-owner claim was WRONG.**
+  Not Ranger: each PaDFE record's `%1` substitution is set ONLY by Pathfinder Delver's own
+  Guardbreaker feature (`ag_abilities_class.lst:382`), gated to apply only when the character does
+  NOT already have Ranger's real Favored Enemy of that type — no `RangerLVL` anywhere in the
+  record's own token closure. Ranger's `choice:ranger_favored_enemy` recognizer is real and
+  untouched; it was simply never the right attribution path for this record. Closed via
+  `pathfinder_delver_padfe_bonus`/`ground_pathfinder_delver_class_features` (a fifth "no `ClassId`
+  enum entry" prestige-class dispatch, same shape as wave 43's four). This item's own classify()-
+  level reachability coverage was added this cycle (3 reachability + 1 negative-control test) to
+  match the rigor the other three items already had.
+- **Item 4 — split finding.** Spiritualist's Phantom Emotional Focus pool (7 records) closed via
+  one new `push_generic_pool_choice_magnitude` call — the audit's "misrouted, not unmodelled"
+  framing was half right (classifier routing was the bug), but no existing function named which
+  focus was picked, so a small compute addition was genuinely needed too. **Summoner's Eidolon half
+  NOT closed — audit's "already wired" claim was WRONG.**
+  `eidolon_companion_progression_standard`'s real record is the First Worlder archetype's own
+  master-linked progression trigger (`mastervar("FirstWorlderEidolon")`), not one of the base
+  Eidolon facts `ground_summoner_eidolon` already grounds — confirmed by reading all 7 of that
+  function's existing explanations directly. Widening the search found **15 sibling units**
+  (`ultimate_magic`'s per-body-size/per-tier Eidolon evolution progressions) under the identical
+  collision marker — a materially larger, genuinely harder population than the audit's single-unit
+  framing suggested. Left named and unclosed for a future wave.
+
+**Item 5 (also-check), Psychic Detective — NOT attempted, genuinely more involved than the
+archetype-recognition shape alone.** Confirmed `VISIBLE:NO` (an Investigator archetype, matching
+the audit), but the specific unit's own magnitude is a `STACK:YES`/`MULT:YES` Expanded Arcana
+choice-pool slot gated at combined level >= 16 — needs Investigator's own archetype-substitution
+handling checked first, not a simple owner-reroute. Left named and unclosed.
+
+**Verification, independently re-derived by the orchestrator against a fresh `docs/work-
+inventory.json` join, not just taken on the fixing agent's word:** exactly **16 units** changed
+status, zero collateral movement (id-set unchanged at 49438) — `DONE: 25369→25375 (+6)`,
+`B: 11769→11766 (−3)`, `D: 2506→2493 (−13)`, `V: 327→337 (+10)`. Not all 16 landed in DONE: 6
+landed `grounded` (Order of the Dragon, all 5 Necromancy facts), 10 landed `literal-verified` (3
+PaDFE + 7 Phantom Emotional Focus) — the same D/B→V shape waves 41/43 already hit. F1/`shape_
+ledger.py` census re-derived: `5206 -> 5196`, verified per-id (Pathfinder Delver's 3 PaDFE records
+plus all 7 Phantom Emotional Focus records are F1-shaped; Order of the Dragon and the 5 Necromancy
+facts are not). Both `cargo test --locked --lib` (3090 passed, up from 3077) and the full `cargo
+test --locked --no-fail-fast` integration suite were run this cycle.
+
+Every citation this wave's own insertions shifted was re-derived, not just the new compute's own
+tests — `scripts/completion_atlas.py`'s 10 bucket citations, `scripts/shape_engine_boundary.py`'s
+promotion-ladder citation, and `scripts/missing_engine_tables.py`'s two engine-surface citations,
+all stale purely from this wave's own line-number shift (the shape_engine_boundary/
+missing_engine_tables ones were ALSO already stale at HEAD before this wave touched anything,
+never caught because those two scripts' own tests are not wired into `verify.sh` — named as a
+finding for a future wave, not fixed beyond re-deriving the pins this wave's own edits require).
+Full receipt: `artifacts/bucket-d-mining/wave44_census_bug_and_classifier_collisions_cycle_
+receipt.md`.
+
+**What remains open after this wave:** Summoner Eidolon's 16-unit population (1 First Worlder
+trigger + 15 Broodmaster multi-companion progressions, genuinely harder than the audit assumed);
+Psychic Detective's Expanded Arcana choice-pool record (genuinely more involved than the
+archetype-recognition shape alone); Cerebremancer's "Advance Manifesting" sub-cause (unexamined
+this wave); sub-mechanism 5's remaining ~500 (of 699) units (un-re-audited since wave 43's own
+wave-end-gate finding).
+
 ---

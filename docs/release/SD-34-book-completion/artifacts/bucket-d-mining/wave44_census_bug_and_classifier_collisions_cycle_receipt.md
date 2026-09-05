@@ -1,6 +1,8 @@
 # Cycle — SD-34 wave 44 — census script bug fixed + 4 classifier collisions closed (Piece 1 + Piece 2)
 
-- **Commit SHA:** `<TBD — fill in after commit>`
+- **Commit SHA:** `fda3e02a06` (`fda3e02a06c44a6d378ffbe68722e246dcca647a`, feat commit; this
+  receipt's own SHA fill-in landed in a second, docs-only commit immediately after, following
+  this bundle's own established two-commit pattern)
 - **Files touched:** `scripts/census_prestige_class_entry_requirements.py` (Piece 1 fix: prefer an
   ingested-book match over a non-ingested one, deterministically, regardless of `os.walk` order),
   `scripts/tests/test_census_prestige_class_entry_requirements.py` (new regression test, 4 tests),
