@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 302,
+      "done": 307,
       "partial": 14,
-      "not_started": 522,
+      "not_started": 517,
       "denominator": 838,
-      "pct": 36.0,
+      "pct": 36.6,
       "excluded_from_percentage": 192,
       "standing_breakdown": {
         "unclassified": 192,
@@ -228,7 +228,7 @@
         },
         {
           "name": "Anger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Phantom Emotional Focus",
           "standing": "origin",
           "display_name": "Anger"
@@ -1285,7 +1285,7 @@
         },
         {
           "name": "Dedication",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Phantom Emotional Focus",
           "standing": "origin",
           "display_name": "Dedication"
@@ -1327,7 +1327,7 @@
         },
         {
           "name": "Despair",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Phantom Emotional Focus",
           "standing": "origin",
           "display_name": "Despair"
@@ -2202,7 +2202,7 @@
         },
         {
           "name": "Fear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Phantom Emotional Focus",
           "standing": "unclassified",
           "display_name": "Fear"
@@ -2727,7 +2727,7 @@
         },
         {
           "name": "Hatred",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Phantom Emotional Focus",
           "standing": "unclassified",
           "display_name": "Hatred"
@@ -3084,7 +3084,7 @@
         },
         {
           "name": "Jealousy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Phantom Emotional Focus",
           "standing": "origin",
           "display_name": "Jealousy"
@@ -7221,7 +7221,7 @@
         },
         {
           "name": "Zeal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Phantom Emotional Focus",
           "standing": "origin",
           "display_name": "Zeal"

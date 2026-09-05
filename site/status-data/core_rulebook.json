@@ -7601,7 +7601,7 @@
         },
         {
           "name": "Grave Touch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "WizardClassFeatures.SpecialAttack.SpellLike.ArcaneSchoolPower.ArcaneSchoolPowerLVL1",
           "standing": "unclassified",
           "display_name": "Grave Touch (WizardClassFeatures.SpecialAttack.SpellLike.ArcaneSchoolPower.ArcaneSchoolPowerLVL1)"
@@ -8728,7 +8728,7 @@
         },
         {
           "name": "Life Sight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.Sense",
           "standing": "unclassified",
           "display_name": "Life Sight"
@@ -10296,21 +10296,21 @@
         },
         {
           "name": "Power Over Undead",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "WizardClassFeatures.ArcaneSchoolPower.ArcaneSchoolPowerLVL1",
           "standing": "unclassified",
           "display_name": "Power Over Undead"
         },
         {
           "name": "Power Over Undead ~ Command Undead",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialAttack.Supernatural.NecromancerChanneling",
           "standing": "unclassified",
           "display_name": "Power Over Undead ~ Command Undead"
         },
         {
           "name": "Power Over Undead ~ Turn Undead",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialAttack.Supernatural.NecromancerChanneling",
           "standing": "unclassified",
           "display_name": "Power Over Undead ~ Turn Undead"

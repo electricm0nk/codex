@@ -11,6 +11,86 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 44 wave-end gate — verified a wrong prior audit, caught a real prose gate gap, full 40/40 confirmed — complete
+
+**Status: complete.** Integration and gate summary for wave 44's own cycle (below), which closed
+16 units on commit `fda3e02a06` (receipt SHA fill-in `2cfe527121`) on `tranche/14`.
+Independently re-verified by the orchestrator before trusting the cycle's own self-report: fresh
+`python3 scripts/completion_atlas.py --check` plus a direct id→status join over `docs/
+work-inventory.json` confirmed `DONE: 25369→25375 (+6)`, `B: 11769→11766 (−3)`,
+`D: 2506→2493 (−13)`, `V: 327→337 (+10)`, zero collateral movement. The regenerated
+`tests/fixtures/rules_core/prestige-class-entry-requirements.json` was independently re-read
+(not just diffed): 74 entries, all 12 real audit-named classes present, Gifted Blade correctly
+excluded (confirmed directly it never carries a `TYPE:...Prestige` line anywhere in the oracle).
+The F1/`shape_ledger.py` census was independently re-derived: `5206 → 5196` exactly, matching
+the commit's own claim.
+
+**The most important finding this wave: three of the four classifier-collision "real owner"
+claims wave 43's own audit made were WRONG**, caught by this cycle reading the actual corpus
+record before writing any code, not by trusting the prior sample-based audit's prose:
+Power Over Undead/Command Undead is Wizard's Necromancy School arcane power, not Cleric's
+Channel Energy (a real, separate, still-open gap); the PaDFE Construct/Ooze/Undead records
+belong to Pathfinder Delver's own Guardbreaker feature, not Ranger's favored-enemy recognizer;
+and Summoner's Eidolon companion-progression record is the First Worlder archetype's own
+trigger, not one of `ground_summoner_eidolon`'s existing facts as the audit assumed (widening
+the search found 15 further sibling units under the same collision, a materially larger,
+genuinely harder population left named and deferred). Order of the Dragon's own formula-shape
+caution was the one claim that checked out true. This is exactly this bundle's own standing
+discipline working as intended — corpus ground-truth beats a sample-based audit, and this
+wave's own re-verification is not a knock against wave 43's audit (which correctly scoped the
+*population* and flagged its own uncertainty honestly) but a healthy confirmation that "verify a
+subagent's claims against the real corpus" applies to a prior wave's audit output too, not just
+its own build output. Also fixed, found during this wave's own review and not shipped as an
+oversight: two Cavalier diagnostic messages that unconditionally named only "Order of the
+Sword," false prose for a character who recorded Order of the Dragon instead.
+
+**Both the lib suite AND the full integration suite were run this cycle**, closing wave 42's
+own gap for a second consecutive wave: `cargo test --locked --lib -j 6` → 3090 passed (up from
+3077, exactly the wave's own new test functions). The cycle's own full run hit 1 failure (a
+stale F1 pin from its own edits, fixed in-cycle) and did not re-run the full suite a third time
+afterward, instead re-verifying via a fresh lib-only pass — the orchestrator closed that
+specific gap with a fully isolated `scripts/verify.sh -j 6` run (fresh scratch
+`CARGO_TARGET_DIR`): **root-full PASS, 8495 passed across 589 suites, 0 failed, true
+end-to-end confirmation this wave's fixes hold.**
+
+**A second, real, self-inflicted gate catch: `denominator-gate` failed with 4 violations.**
+Four bullet lines in *this bundle's own wave-43 wave-end-gate prose* (written earlier this
+session, above) stated percentages (61%, 27%, 7%, 2.6%) without repeating the denominator (699)
+on the same line `scripts/denominator_gate.py`'s own same-construct rule requires — the 699 was
+stated once, four lines above the bullets, not per-bullet. Fixed directly (documentation
+housekeeping, following this bundle's own "every figure states its denominator" discipline):
+added "of 699" to each bullet. Re-ran `python3 scripts/denominator_gate.py --check` directly →
+`violations=0`. This is the exact anti-pattern this gate exists to catch, caught by the gate
+itself against the orchestrator's own earlier prose — the mechanical control working as
+designed, not a hole in it.
+
+**A third gate item, informational not a failure: `BASELINE_ROOT_FULL_TESTS` was stale.**
+Wave 44's own cycle had flagged an unexplained +11 root-full delta and asked, honestly, for a
+future isolated `verify.sh` run to settle whether it was real or shared-checkout noise. This
+gate's own genuinely-fresh-scratch-dir run answers it: **8495 measured, not 8480 and not even
+the cycle's own observed 8491** — the extra tests are real in a clean environment (not
+shared-checkout noise), though the exact delta is not stable run-to-run and its root cause is
+still not identified (`git diff --stat -- tests/` remains empty across both waves — no test file
+was added or removed). Raised the baseline to the actual re-derived count (8495), documented the
+open mystery honestly in `scripts/verify-baselines.env`'s own dated-comment convention, and left
+it for a future wave to actually root-cause rather than inventing an explanation this cycle
+didn't earn.
+
+Site dashboard regenerated (`./scripts/publish-site-dashboard.sh`) and reconfirmed current.
+**True 40/40 confirmed.**
+
+**What remains open after this wave:** Summoner Eidolon's 16-unit population (1 First Worlder
+trigger + 15 Broodmaster multi-companion progressions, genuinely harder than wave 43's audit
+assumed); Psychic Detective's Expanded Arcana choice-pool (flagged as more involved than a
+simple owner-reroute, not attempted); Cerebremancer's "Advance Manifesting" sub-cause
+(unexamined); sub-mechanism 5's remaining ~500 (of 699) units, most of which are now unblocked
+by the census-script fix and belong to registered prestige classes needing only per-feature
+magnitude formulas — the highest-value next target given three consecutive waves have now
+proven that exact shape; and two pre-existing, unrelated stale pins in
+`scripts/shape_engine_boundary.py`/`scripts/missing_engine_tables.py` (463 units stale, not wired
+into `verify.sh`, flagged by wave 44 for a future wave, not fixed beyond what this wave's own
+edits required).
+
 ### Cycle — Wave 44 — census script bug fixed (13 classes, 191 units) + 4 classifier collisions closed — complete
 
 **Status: complete.** Piece 1: fixed a real bug in `scripts/census_prestige_class_entry_
@@ -154,10 +234,10 @@ unmodelled_corpus_class`, `src/bin/v06_work_inventory.rs:12871`). The population
 since wave 40, not shrunk, another reason not to trust the old framing at face value. A
 29-unit stratified sample plus mechanism-level verification (registry-fixture membership and
 two collision mechanisms checked against the full 699) found:
-- **426 units (61%)** already belong to a registered prestige class (`prestige_class_entry_
-  gate`'s 62-entry fixture) — the generic grant consumer already fires; only a per-feature
-  magnitude formula is missing, the exact wave-42/43 pattern.
-- **191 units (27%)** are blocked by a real script bug, not a classifier gap:
+- **426 units (61% of 699)** already belong to a registered prestige class (`prestige_class_
+  entry_gate`'s 62-entry fixture) — the generic grant consumer already fires; only a
+  per-feature magnitude formula is missing, the exact wave-42/43 pattern.
+- **191 units (27% of 699)** are blocked by a real script bug, not a classifier gap:
   `scripts/census_prestige_class_entry_requirements.py:97-98`'s `prestige_names.setdefault(name,
   path)` keys purely by display name across the full 158-book oracle, so an older un-ingested
   oracle book can silently win the race over the real ingested one, dropping 13 real prestige
@@ -165,11 +245,11 @@ two collision mechanisms checked against the full 699) found:
   Pyrokineticist, Metamind, Cerebremancer, Pathfinder Savant, Student of War, Pathfinder Delver,
   Gifted Blade) from the committed registry fixture forever. Confirmed live/reproducible: a
   fresh script run reproduces the committed fixture byte-for-byte.
-- **48 units (7%)** are a bestiary-type-name classifier collision (Turn Undead/"Undead", Order of
-  the Dragon/"Dragon", Ranger favored-enemy sub-features/"Construct"·"Ooze", Eidolon/Phantom
-  companion progressions) — the same shape as the Turn Undead/Fighter fixes already closed
-  this bundle.
-- **18 units (2.6%)** are an archetype-owner-recognition gap (Psychic Detective, a
+- **48 units (7% of 699)** are a bestiary-type-name classifier collision (Turn Undead/"Undead",
+  Order of the Dragon/"Dragon", Ranger favored-enemy sub-features/"Construct"·"Ooze",
+  Eidolon/Phantom companion progressions) — the same shape as the Turn Undead/Fighter fixes
+  already closed this bundle.
+- **18 units (2.6% of 699)** are an archetype-owner-recognition gap (Psychic Detective, a
   `VISIBLE:NO` Investigator archetype, not a distinct class).
 - One genuinely uncertain case flagged honestly, not resolved either way: Cerebremancer's
   "Advance Manifesting" may need the still-missing caster/manifester-level-stacking mechanism, or

@@ -11248,7 +11248,7 @@
         },
         {
           "name": "Order of the Dragon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.CavalierOrder.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Order of the Dragon"

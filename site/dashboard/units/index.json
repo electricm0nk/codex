@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-05T07:09:45Z",
+  "generated_at": "2026-09-05T14:42:13Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16067,
+  "proven_units": 16073,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,19 +1428,19 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4787,
+      "proven": 4793,
       "by_status": {
-        "engine-does-not-hold": 12950,
+        "engine-does-not-hold": 12934,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 548,
+        "grounded": 554,
         "oracle-agree": 26,
-        "literal-verified": 117,
+        "literal-verified": 127,
         "oracle-unverifiable": 6,
         "fixture-verified": 3
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2788625,
+      "bytes": 2788513,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -1598,10 +1598,10 @@
         },
         "specialattack": {
           "label": "Special Attacks",
-          "done": 61,
+          "done": 64,
           "held": 0,
           "in-progress": 0,
-          "not-started": 141,
+          "not-started": 138,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1652,10 +1652,10 @@
         },
         "wizardclassfeatures": {
           "label": "Wizard Class Features",
-          "done": 31,
-          "held": 5,
+          "done": 33,
+          "held": 8,
           "in-progress": 0,
-          "not-started": 126,
+          "not-started": 121,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1670,10 +1670,10 @@
         },
         "cavalierclassfeatures": {
           "label": "Cavalier Class Features",
-          "done": 71,
+          "done": 72,
           "held": 1,
           "in-progress": 0,
-          "not-started": 82,
+          "not-started": 81,
           "unmeasurable": 0,
           "deferred": 2
         },
@@ -3704,10 +3704,10 @@
         },
         "phantomemotionalfocus": {
           "label": "Phantom Emotional Focus",
-          "done": 0,
+          "done": 7,
           "held": 0,
           "in-progress": 0,
-          "not-started": 7,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
