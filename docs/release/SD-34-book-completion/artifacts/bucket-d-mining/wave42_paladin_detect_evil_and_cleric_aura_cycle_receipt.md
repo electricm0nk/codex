@@ -1,6 +1,6 @@
 # Cycle — SD-34 wave 42 — Paladin's Detect Evil and Cleric's Aura: 2 of 2 closed (small, precedented new compute)
 
-- **Commit SHA:** `PENDING` (filled in a follow-up commit, this bundle's own convention)
+- **Commit SHA:** `af674409f5` (`af674409f5dc2e1d901063bfe1af783e4961fef2`)
 - **Files touched:** `src/rules_core/pilot_compute/mod.rs` (2 new pure functions —
   `paladin_detect_evil_caster_level`, `cleric_aura_strength_level` — 1 new unconditional-on-race
   grounding function, `ground_paladin_detect_evil`, called from the top-level dispatch; 1 new push
