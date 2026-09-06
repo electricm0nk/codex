@@ -3,17 +3,46 @@
   "title": "Monster Codex",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 1,
+      "not_started": 1,
+      "denominator": 2,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 2
+      },
+      "items": [
+        {
+          "name": "Beast Rider",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Beast Rider"
+        },
+        {
+          "name": "Ironskin",
+          "doneness": "partial",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Ironskin"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 9,
       "partial": 0,
-      "not_started": 54,
-      "denominator": 54,
-      "pct": 0.0,
-      "excluded_from_percentage": 13,
+      "not_started": 48,
+      "denominator": 57,
+      "pct": 15.8,
+      "excluded_from_percentage": 15,
       "standing_breakdown": {
-        "origin": 54,
-        "unclassified": 13
+        "origin": 57,
+        "unclassified": 15
       },
       "items": [
         {
@@ -46,7 +75,7 @@
         },
         {
           "name": "Ancient Ways",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Ancient Ways"
@@ -59,25 +88,39 @@
           "display_name": "Apocalypse Mysteries"
         },
         {
-          "name": "Blackstar Bomb*",
+          "name": "Apocalypse Mysteries Class Skills",
           "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Apocalypse Mysteries Class Skills"
+        },
+        {
+          "name": "Blackstar Bomb*",
+          "doneness": "done",
           "type_facet": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier",
           "standing": "origin",
           "display_name": "Blackstar Bomb*"
         },
         {
           "name": "Bloodline Arcana",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality",
           "standing": "unclassified",
           "display_name": "Bloodline Arcana"
         },
         {
           "name": "Bloodline Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Class Feature.Sorcerer Class Feature",
           "standing": "unclassified",
           "display_name": "Bloodline Powers"
+        },
+        {
+          "name": "Bloodline Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodline Tracker"
         },
         {
           "name": "Bomb Trap",
@@ -108,8 +151,15 @@
           "display_name": "Bouda's Eye"
         },
         {
-          "name": "Cold-Blooded",
+          "name": "Class Skills",
           "doneness": "not-started",
+          "type_facet": "Alchemist Class Features.WingedMarauderClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills"
+        },
+        {
+          "name": "Cold-Blooded",
+          "doneness": "done",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleSecondCurse",
           "standing": "origin",
           "display_name": "Cold-Blooded (OracleClassFeatures.SpecialQuality.OracleSecondCurse)"
@@ -172,14 +222,14 @@
         },
         {
           "name": "Destructive Roots",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.ApocalypseRevelation.Supernatural",
           "standing": "origin",
           "display_name": "Destructive Roots"
         },
         {
           "name": "Directed Blast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Alchemist Class Features.GrenadierClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Directed Blast"
@@ -249,7 +299,7 @@
         },
         {
           "name": "Final Revelation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OracleClassFeatures.SpecialQuality.FinalRevelation",
           "standing": "unclassified",
           "display_name": "Final Revelation"
@@ -290,6 +340,13 @@
           "display_name": "Ghoul Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Ghoul Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ghoul Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Ghoulish Aspect",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural",
@@ -309,6 +366,13 @@
           "type_facet": "Archetype.AlchemistArchetype",
           "standing": "origin",
           "display_name": "Grenadier"
+        },
+        {
+          "name": "Hungry Earth",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Hungry Earth"
         },
         {
           "name": "Hyena Shape",
@@ -417,21 +481,21 @@
         },
         {
           "name": "Sipping Pet",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery",
           "standing": "origin",
           "display_name": "Sipping Pet"
         },
         {
           "name": "Spell Blast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OracleClassFeatures.SpecialAttack.OracleRevelation.ApocalypseRevelation.Supernatural",
           "standing": "origin",
           "display_name": "Spell Blast"
         },
         {
           "name": "Staggering Blast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Alchemist Class Features.GrenadierClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Staggering Blast"
@@ -452,7 +516,7 @@
         },
         {
           "name": "Unimpeachable",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Unimpeachable"
@@ -941,11 +1005,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 0,
+      "done": 4,
       "partial": 0,
-      "not_started": 4,
+      "not_started": 0,
       "denominator": 4,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 4
@@ -953,28 +1017,28 @@
       "items": [
         {
           "name": "Burning",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon",
           "standing": "origin",
           "display_name": "Burning"
         },
         {
           "name": "Catalytic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Ammunition",
           "standing": "origin",
           "display_name": "Catalytic"
         },
         {
           "name": "Steaming",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin",
           "display_name": "Steaming"
         },
         {
           "name": "Virulent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon",
           "standing": "origin",
           "display_name": "Virulent"
@@ -985,8 +1049,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 20,
-      "partial": 0,
-      "not_started": 11,
+      "partial": 10,
+      "not_started": 1,
       "denominator": 31,
       "pct": 64.5,
       "excluded_from_percentage": 1,
@@ -1032,7 +1096,7 @@
         },
         {
           "name": "Chain Challenge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Chain Challenge"
@@ -1060,14 +1124,14 @@
         },
         {
           "name": "Draconic Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Draconic Magic"
         },
         {
           "name": "Gnawer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Gnawer"
@@ -1102,7 +1166,7 @@
         },
         {
           "name": "Motivated March",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Motivated March"
@@ -1116,7 +1180,7 @@
         },
         {
           "name": "Pack Rat",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Pack Rat"
@@ -1130,14 +1194,14 @@
         },
         {
           "name": "Scarred Legion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Teamwork",
           "standing": "origin",
           "display_name": "Scarred Legion"
         },
         {
           "name": "Shadow Shroud",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Shadow Shroud"
@@ -1151,7 +1215,7 @@
         },
         {
           "name": "Sharptooth",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Sharptooth"
@@ -1179,7 +1243,7 @@
         },
         {
           "name": "Snipers Lantern",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Snipers Lantern"
@@ -1193,7 +1257,7 @@
         },
         {
           "name": "Staggering Blow",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Staggering Blow"
@@ -1218,6 +1282,35 @@
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Visceral Threat"
+        }
+      ]
+    },
+    {
+      "kind": "language",
+      "label": "Languages",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 2,
+      "standing_breakdown": {
+        "unclassified": 2
+      },
+      "items": [
+        {
+          "name": "Aklo (cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand",
+          "standing": "unclassified",
+          "display_name": "Aklo (cannot speak)"
+        },
+        {
+          "name": "Common (cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand",
+          "standing": "unclassified",
+          "display_name": "Common (cannot speak)"
         }
       ]
     },
@@ -1290,11 +1383,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 1,
-      "partial": 2,
-      "not_started": 8,
+      "done": 2,
+      "partial": 7,
+      "not_started": 2,
       "denominator": 11,
-      "pct": 9.1,
+      "pct": 18.2,
       "excluded_from_percentage": 3,
       "standing_breakdown": {
         "origin": 11,
@@ -1310,28 +1403,28 @@
         },
         {
           "name": "Bat (Sootwing) ~ Paralysis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bat (Sootwing) ~ Paralysis"
         },
         {
           "name": "Cheek Pouches",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Cheek Pouches"
         },
         {
           "name": "Cleanliness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Cleanliness"
         },
         {
           "name": "Ironskin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Ironskin"
@@ -1345,14 +1438,14 @@
         },
         {
           "name": "Lab Rat",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Lab Rat"
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision"
@@ -1366,7 +1459,7 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed"
@@ -1387,7 +1480,7 @@
         },
         {
           "name": "Surface Sprinter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Surface Sprinter"
@@ -1405,8 +1498,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 24,
+      "partial": 24,
+      "not_started": 0,
       "denominator": 24,
       "pct": 0.0,
       "excluded_from_percentage": 0,
@@ -1416,168 +1509,168 @@
       "items": [
         {
           "name": "Air Breathing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Air Breathing"
         },
         {
           "name": "Amplify Stench",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Amplify Stench"
         },
         {
           "name": "Aura of Cannibalism",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Aura of Cannibalism"
         },
         {
           "name": "Blood in the Water",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Blood in the Water"
         },
         {
           "name": "Bouncy Body",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Bouncy Body"
         },
         {
           "name": "Control Vermin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Control Vermin"
         },
         {
           "name": "Dust Ward",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dust Ward"
         },
         {
           "name": "Endothermic Touch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Endothermic Touch"
         },
         {
           "name": "Fleshy Facade",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fleshy Facade"
         },
         {
           "name": "Gift of the Deep",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Gift of the Deep"
         },
         {
           "name": "Hungry Earth",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Hungry Earth"
         },
         {
           "name": "Ice Slick",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Ice Slick"
         },
         {
           "name": "Ironskin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Ironskin"
         },
         {
           "name": "Isolate",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Isolate"
         },
         {
           "name": "Magic Boulder",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Magic Boulder"
         },
         {
           "name": "Mark of the Reptile God",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Mark of the Reptile God"
         },
         {
           "name": "Mud Buddy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Mud Buddy"
         },
         {
           "name": "Scale Spikes",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Scale Spikes"
         },
         {
           "name": "Scale Spikes (Greater)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Scale Spikes (Greater)"
         },
         {
           "name": "Spellsteal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Spellsteal"
         },
         {
           "name": "Sundered Serpent Coil",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Sundered Serpent Coil"
         },
         {
           "name": "Swarm of Fangs",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Swarm of Fangs"
         },
         {
           "name": "Transfer Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Transfer Regeneration"
         },
         {
           "name": "Trial of Fire and Acid",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Trial of Fire and Acid"
