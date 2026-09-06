@@ -3,17 +3,82 @@
   "title": "Ultimate Combat",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 1,
+      "not_started": 3,
+      "denominator": 4,
+      "pct": 0.0,
+      "excluded_from_percentage": 3,
+      "standing_breakdown": {
+        "unclassified": 3,
+        "origin": 4
+      },
+      "items": [
+        {
+          "name": "Gunslinger",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Gunslinger"
+        },
+        {
+          "name": "Gunslinger ~ Class Skill",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Gunslinger ~ Class Skill"
+        },
+        {
+          "name": "Haunted Fey Aspect",
+          "doneness": "partial",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Haunted Fey Aspect"
+        },
+        {
+          "name": "Ninja",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Ninja"
+        },
+        {
+          "name": "Ninja ~ Class Skill",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ninja ~ Class Skill"
+        },
+        {
+          "name": "Samurai",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Samurai"
+        },
+        {
+          "name": "Samurai ~ Class Skill",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Samurai ~ Class Skill"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 3,
+      "done": 327,
       "partial": 0,
-      "not_started": 856,
-      "denominator": 859,
-      "pct": 0.3,
-      "excluded_from_percentage": 553,
+      "not_started": 631,
+      "denominator": 958,
+      "pct": 34.1,
+      "excluded_from_percentage": 578,
       "standing_breakdown": {
-        "origin": 859,
-        "unclassified": 553
+        "origin": 958,
+        "unclassified": 578
       },
       "items": [
         {
@@ -59,22 +124,43 @@
           "display_name": "+2 Insight to Swim"
         },
         {
+          "name": "Ablative Barrier",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Ablative Barrier"
+        },
+        {
           "name": "Able Explorer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Able Explorer"
         },
         {
+          "name": "Absorb Toxicity",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Absorb Toxicity"
+        },
+        {
+          "name": "Abundant Ammunition",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Abundant Ammunition"
+        },
+        {
           "name": "Accurate Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Accurate Strike"
         },
         {
           "name": "Acrobatic Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialAttack.Supernatural.NinjaTrick.NinjaTrickOnly",
           "standing": "origin",
           "display_name": "Acrobatic Master"
@@ -87,6 +173,27 @@
           "display_name": "Acrobatic Steps"
         },
         {
+          "name": "Add Gunslinger Feat",
+          "doneness": "not-started",
+          "type_facet": "Gunslinger Bonus Feat Selection",
+          "standing": "origin",
+          "display_name": "Add Gunslinger Feat"
+        },
+        {
+          "name": "Adjuring Step",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Adjuring Step"
+        },
+        {
+          "name": "Adoration",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "unclassified",
+          "display_name": "Adoration"
+        },
+        {
           "name": "Advanced Ninja Trick",
           "doneness": "not-started",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.IncreaseAdvancedNinjaTrick",
@@ -95,42 +202,42 @@
         },
         {
           "name": "Advanced Talent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talent"
         },
         {
           "name": "Advanced Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Advanced Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #2"
         },
         {
           "name": "Advanced Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #3"
         },
         {
           "name": "Advanced Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #4"
         },
         {
           "name": "Advanced Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #5"
@@ -144,28 +251,28 @@
         },
         {
           "name": "Advanced Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #7"
         },
         {
           "name": "Advanced Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #8"
         },
         {
           "name": "Advanced Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #9"
         },
         {
           "name": "Advanced Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Advanced Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #10"
@@ -179,7 +286,7 @@
         },
         {
           "name": "Advice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Advice"
@@ -197,6 +304,13 @@
           "type_facet": "MonkClassFeatures.FlowingMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Agile Maneuvers"
+        },
+        {
+          "name": "Air Bubble",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Air Bubble"
         },
         {
           "name": "Aldori Style",
@@ -242,17 +356,31 @@
         },
         {
           "name": "Alignment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Alignment"
         },
         {
           "name": "Ambush",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Ambush"
+        },
+        {
+          "name": "Animal Aspect",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Animal Aspect"
+        },
+        {
+          "name": "Animal Aspect (Greater)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Animal Aspect (Greater)"
         },
         {
           "name": "Animal Companion",
@@ -276,6 +404,13 @@
           "display_name": "Animal Companion (DruidClassFeatures.ArchetypeAbility.SpecialQuality.Animal Companion) #3"
         },
         {
+          "name": "Ant Haul (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Ant Haul (Communal)"
+        },
+        {
           "name": "Ape Shaman",
           "doneness": "not-started",
           "type_facet": "Archetype.DruidArchetype.DruidThousandFaces.DruidVenomImmunity.DruidNatureBond",
@@ -291,21 +426,28 @@
         },
         {
           "name": "Arcane Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Arcane Bond (MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Arcane Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Arcane Bond (MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality) #2"
         },
         {
+          "name": "Arcane Cannon",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Arcane Cannon"
+        },
+        {
           "name": "Arcane Cloak",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Arcane Cloak"
@@ -319,7 +461,7 @@
         },
         {
           "name": "Arcane Edge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Arcane Edge"
@@ -340,21 +482,21 @@
         },
         {
           "name": "Arcane Pool",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Arcane Pool"
         },
         {
           "name": "Arcane Redoubt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Arcane Redoubt"
         },
         {
           "name": "Arcane Redoubt, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Arcane Redoubt, Greater"
@@ -452,7 +594,7 @@
         },
         {
           "name": "Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Armor Proficiency (CavalierClassFeatures.ArchetypeAbility.SpecialQuality)"
@@ -466,7 +608,7 @@
         },
         {
           "name": "Armor Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Armor Training (GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
@@ -480,7 +622,7 @@
         },
         {
           "name": "Armor and Weapon Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Armor and Weapon Proficiency"
@@ -557,28 +699,28 @@
         },
         {
           "name": "Aura of Care",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Aura of Care"
         },
         {
           "name": "Auspicious Mark",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Auspicious Mark"
         },
         {
           "name": "Awesome Pennon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Awesome Pennon"
         },
         {
           "name": "Balanced Bashing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Balanced Bashing"
@@ -592,49 +734,49 @@
         },
         {
           "name": "Bane Blade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Bane Blade"
         },
         {
           "name": "Banner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Banner (FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Banner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Banner (SamuraiClassFeatures.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Banner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Banner (CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Banner of Solace",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Banner of Solace"
         },
         {
           "name": "Bardic Performance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.ArchetypeAbility.SpecialQuality.BardBardicPerformance",
           "standing": "unclassified",
           "display_name": "Bardic Performance (BardClassFeatures.ArchetypeAbility.SpecialQuality.BardBardicPerformance)"
         },
         {
           "name": "Bardic Performance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bardic Performance (BardClassFeatures.ArchetypeAbility.SpecialQuality)"
@@ -648,7 +790,7 @@
         },
         {
           "name": "Bastion of Good",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Bastion of Good"
@@ -662,21 +804,21 @@
         },
         {
           "name": "Battle Dance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Battle Dance"
         },
         {
           "name": "Battle Fury",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Battle Fury"
         },
         {
           "name": "Battle Insight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Battle Insight"
@@ -697,7 +839,7 @@
         },
         {
           "name": "Battlefield Presence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Battlefield Presence"
@@ -711,7 +853,7 @@
         },
         {
           "name": "Beastform Mutagen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Beastform Mutagen"
@@ -767,35 +909,42 @@
         },
         {
           "name": "Bestial Climber",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Bestial Climber"
         },
         {
           "name": "Bestial Leaper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Bestial Leaper"
         },
         {
           "name": "Bestial Swimmer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Bestial Swimmer"
         },
         {
+          "name": "Bestow Weapon Proficiency",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Bestow Weapon Proficiency"
+        },
+        {
           "name": "Big Game Hunter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Big Game Hunter"
         },
         {
           "name": "Black Market Connections",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Black Market Connections"
@@ -809,28 +958,28 @@
         },
         {
           "name": "Blade Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Blade Sense"
         },
         {
           "name": "Bleeding Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly.AttackOption",
           "standing": "unclassified",
           "display_name": "Bleeding Attack"
         },
         {
           "name": "Bleeding Blow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Bleeding Blow"
         },
         {
           "name": "Bleeding Wound",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL11.DeedHasCost.Extraordinary",
           "standing": "unclassified",
           "display_name": "Bleeding Wound"
@@ -892,6 +1041,13 @@
           "display_name": "Blinding Bomb"
         },
         {
+          "name": "Bloodline Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodline Tracker"
+        },
+        {
           "name": "Boar Ferocity",
           "doneness": "not-started",
           "type_facet": "MasterOfManyStylesBonusFeat",
@@ -949,7 +1105,7 @@
         },
         {
           "name": "Body Bludgeon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Body Bludgeon"
@@ -963,7 +1119,7 @@
         },
         {
           "name": "Bomb",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bomb"
@@ -1102,6 +1258,13 @@
           "display_name": "Breath Weapon Bomb*"
         },
         {
+          "name": "Brow Gasher",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Brow Gasher"
+        },
+        {
           "name": "Brute Assault",
           "doneness": "not-started",
           "type_facet": "MasterOfManyStylesBonusFeat",
@@ -1145,7 +1308,7 @@
         },
         {
           "name": "Buckler Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Buckler Defense"
@@ -1191,6 +1354,13 @@
           "type_facet": "MonkBonusFeat",
           "standing": "origin",
           "display_name": "Bulette Rampage (MonkBonusFeat)"
+        },
+        {
+          "name": "Bull Rush",
+          "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Bull Rush"
         },
         {
           "name": "Bull Rush Strike",
@@ -1250,14 +1420,21 @@
         },
         {
           "name": "Bullet Deflection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Bullet Deflection"
         },
         {
+          "name": "Bullet Shield",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Bullet Shield"
+        },
+        {
           "name": "Burst Barrier",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Burst Barrier"
@@ -1285,14 +1462,14 @@
         },
         {
           "name": "Careful Aim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Careful Aim"
         },
         {
           "name": "Caster Support",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Caster Support"
@@ -1320,7 +1497,7 @@
         },
         {
           "name": "Celestial Ally",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Celestial Ally"
@@ -1347,22 +1524,36 @@
           "display_name": "Celestial Spirit (PaladinClassFeatures.SpecialQuality.SpellLike) #2"
         },
         {
+          "name": "Certain Grip",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Certain Grip"
+        },
+        {
+          "name": "Chain of Perdition",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Chain of Perdition"
+        },
+        {
           "name": "Challenge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Challenge (CavalierOrderAbility.SpecialQuality)"
         },
         {
           "name": "Challenge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Challenge (CavalierOrderAbility.SpecialQuality) #2"
         },
         {
           "name": "Challenge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Challenge (CavalierOrderAbility.SpecialQuality) #3"
@@ -1418,7 +1609,7 @@
         },
         {
           "name": "Cheat Death",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL19.DeedHasCost.Extraordinary",
           "standing": "unclassified",
           "display_name": "Cheat Death"
@@ -1446,7 +1637,7 @@
         },
         {
           "name": "Chosen Destiny",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Chosen Destiny"
@@ -1460,14 +1651,14 @@
         },
         {
           "name": "Clever Wrestler",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Clever Wrestler"
         },
         {
           "name": "Clipping Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.DeedHasCost",
           "standing": "origin",
           "display_name": "Clipping Shot"
@@ -1516,7 +1707,7 @@
         },
         {
           "name": "Cloak of the Crypt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Cloak of the Crypt"
@@ -1537,7 +1728,7 @@
         },
         {
           "name": "Combat Medic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Combat Medic"
@@ -1557,8 +1748,15 @@
           "display_name": "Combat Trick"
         },
         {
-          "name": "Confounding Blades*",
+          "name": "Commonplace Guns",
           "doneness": "not-started",
+          "type_facet": "OptionalRules.FirearmsRule",
+          "standing": "origin",
+          "display_name": "Commonplace Guns"
+        },
+        {
+          "name": "Confounding Blades*",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Confounding Blades*"
@@ -1635,14 +1833,14 @@
         },
         {
           "name": "Cooperative Combatant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Cooperative Combatant"
         },
         {
           "name": "Counter-Grapple",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Counter-Grapple"
@@ -1774,8 +1972,15 @@
           "display_name": "Crusader"
         },
         {
-          "name": "Crypt Lord",
+          "name": "Crusader SpellCasting Reduction",
           "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Crusader SpellCasting Reduction"
+        },
+        {
+          "name": "Crypt Lord",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Crypt Lord"
@@ -1830,8 +2035,15 @@
           "display_name": "Cursed"
         },
         {
+          "name": "Damp Powder",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Damp Powder"
+        },
+        {
           "name": "Dance of Fury",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Dance of Fury"
@@ -1845,14 +2057,21 @@
         },
         {
           "name": "Darkvision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Supernatural.NinjaTrick.NinjaTrickOnly",
           "standing": "unclassified",
           "display_name": "Darkvision"
         },
         {
+          "name": "Darkvision (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Darkvision (Communal)"
+        },
+        {
           "name": "Dauntless",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Dauntless"
@@ -1866,21 +2085,21 @@
         },
         {
           "name": "Dead Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL7.DeedHasCost.Extraordinary",
           "standing": "unclassified",
           "display_name": "Dead Shot"
         },
         {
           "name": "Deadeye",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL1.DeedHasCost.Extraordinary",
           "standing": "unclassified",
           "display_name": "Deadeye (SpecialQuality.DeedsLVL1.DeedHasCost.Extraordinary)"
         },
         {
           "name": "Deadeye",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Deadeye (GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
@@ -1929,7 +2148,7 @@
         },
         {
           "name": "Deadly Accuracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Deadly Accuracy"
@@ -1943,14 +2162,14 @@
         },
         {
           "name": "Deadly Shuriken",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick",
           "standing": "origin",
           "display_name": "Deadly Shuriken"
         },
         {
           "name": "Deadly Surprise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Deadly Surprise"
@@ -1992,10 +2211,17 @@
         },
         {
           "name": "Deep Walker Camouflage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.RangerCamouflage",
           "standing": "origin",
           "display_name": "Deep Walker Camouflage"
+        },
+        {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
         },
         {
           "name": "Defense against Magic",
@@ -2006,7 +2232,7 @@
         },
         {
           "name": "Defensive Knowledge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.CavalierOrderAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Defensive Knowledge"
@@ -2041,35 +2267,35 @@
         },
         {
           "name": "Deft Palm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Deft Palm"
         },
         {
           "name": "Deities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Deities (SpecialQuality)"
         },
         {
           "name": "Deities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Deities (SpecialQuality) #2"
         },
         {
           "name": "Demanding Challenge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Demanding Challenge"
         },
         {
           "name": "Derring-do",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Derring-do"
@@ -2082,15 +2308,22 @@
           "display_name": "Dervish Dancer"
         },
         {
+          "name": "Destabilize Powder",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Destabilize Powder"
+        },
+        {
           "name": "Destroy Artifact",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Destroy Artifact"
         },
         {
           "name": "Destructive Counterstrike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Destructive Counterstrike"
@@ -2111,7 +2344,7 @@
         },
         {
           "name": "Devoted Blade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Devoted Blade"
@@ -2166,6 +2399,20 @@
           "display_name": "Dirty Maneuvers"
         },
         {
+          "name": "Dirty Trick",
+          "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Dirty Trick"
+        },
+        {
+          "name": "Disarm",
+          "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Disarm"
+        },
+        {
           "name": "Disarming Strike",
           "doneness": "not-started",
           "type_facet": "ManeuverMasterBonusFeat",
@@ -2181,14 +2428,14 @@
         },
         {
           "name": "Discoveries",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Discoveries (ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Discoveries",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Discoveries (ArchetypeAbility.SpecialQuality) #2"
@@ -2209,7 +2456,7 @@
         },
         {
           "name": "Disruptive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.MagusArcana.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Disruptive"
@@ -2293,14 +2540,14 @@
         },
         {
           "name": "Divine Deed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Divine Deed"
         },
         {
           "name": "Divine Epiphany",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Divine Epiphany"
@@ -2432,6 +2679,13 @@
           "display_name": "Domains"
         },
         {
+          "name": "Drag",
+          "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Drag"
+        },
+        {
           "name": "Dragon Ferocity",
           "doneness": "not-started",
           "type_facet": "MasterOfManyStylesBonusFeat",
@@ -2482,21 +2736,21 @@
         },
         {
           "name": "Dragon Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural.BarbarianTotemRagePower",
           "standing": "origin",
           "display_name": "Dragon Totem"
         },
         {
           "name": "Dragon Totem Resilience",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Dragon Totem Resilience"
         },
         {
           "name": "Dragon Totem Wings",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Dragon Totem Wings"
@@ -2552,7 +2806,7 @@
         },
         {
           "name": "Drill Instructor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Drill Instructor"
@@ -2566,10 +2820,17 @@
         },
         {
           "name": "Driver's Fortitude",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Driver's Fortitude"
+        },
+        {
+          "name": "Druid Companion",
+          "doneness": "not-started",
+          "type_facet": "Multiple Companions",
+          "standing": "unclassified",
+          "display_name": "Druid Companion"
         },
         {
           "name": "Druid Domain",
@@ -2692,42 +2953,42 @@
         },
         {
           "name": "Edicts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts (CavalierOrderAbility.SpecialQuality)"
         },
         {
           "name": "Edicts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts (CavalierOrderAbility.SpecialQuality) #2"
         },
         {
           "name": "Edicts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts (CavalierOrderAbility.SpecialQuality) #3"
         },
         {
           "name": "Edicts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts (SpecialQuality)"
         },
         {
           "name": "Edicts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts (SpecialQuality) #5"
         },
         {
           "name": "Effortless Sneak",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Effortless Sneak"
@@ -2797,7 +3058,7 @@
         },
         {
           "name": "Elusive Target",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Elusive Target"
@@ -2845,6 +3106,13 @@
           "display_name": "Elven Battle Torrent (MonkBonusFeat)"
         },
         {
+          "name": "Emerging Guns",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules.FirearmsRule",
+          "standing": "origin",
+          "display_name": "Emerging Guns"
+        },
+        {
           "name": "Emissary",
           "doneness": "not-started",
           "type_facet": "Archetype.CavalierArchetype.CavalierHeavyArmorProficiency.CavalierTactician.CavalierBanner.CavalierGreaterTactician.CavalierGreaterBanner.CavalierSupremeCharge.CavalierBonusFeats",
@@ -2853,7 +3121,7 @@
         },
         {
           "name": "Empower Siege Engine",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Empower Siege Engine"
@@ -2902,7 +3170,7 @@
         },
         {
           "name": "Empyreal Champion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Empyreal Champion"
@@ -2918,8 +3186,15 @@
           "name": "Endure Elements",
           "doneness": "not-started",
           "type_facet": "RogueClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Endure Elements"
+        },
+        {
+          "name": "Endure Elements (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Endure Elements (Communal)"
         },
         {
           "name": "Enduring Blade",
@@ -2929,15 +3204,29 @@
           "display_name": "Enduring Blade"
         },
         {
+          "name": "Energy Siege Shot",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Energy Siege Shot"
+        },
+        {
+          "name": "Energy Siege Shot (Greater)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Energy Siege Shot (Greater)"
+        },
+        {
           "name": "Erratic Charge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Erratic Charge"
         },
         {
           "name": "Esoteric Scholar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Esoteric Scholar"
@@ -2965,7 +3254,7 @@
         },
         {
           "name": "Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick",
           "standing": "unclassified",
           "display_name": "Evasion (NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick)"
@@ -2999,8 +3288,15 @@
           "display_name": "Exotic Weapon Proficiency"
         },
         {
-          "name": "Expert Loading",
+          "name": "Exotic Weapon Proficiency ~ Firearms",
           "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Exotic Weapon Proficiency ~ Firearms"
+        },
+        {
+          "name": "Expert Loading",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL11.DeedHasCost.Extraordinary",
           "standing": "origin",
           "display_name": "Expert Loading"
@@ -3014,31 +3310,38 @@
         },
         {
           "name": "Explosive Missile",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.AlchemistDiscovery.Supernatural",
           "standing": "origin",
           "display_name": "Explosive Missile"
         },
         {
           "name": "Extreme Endurance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Extreme Endurance"
         },
         {
           "name": "Eye Gouge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Eye Gouge"
         },
         {
           "name": "Eyes of the Storm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Eyes of the Storm"
+        },
+        {
+          "name": "Fabricate Bullets",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Fabricate Bullets"
         },
         {
           "name": "Falconer",
@@ -3049,7 +3352,7 @@
         },
         {
           "name": "Fame",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Fame"
@@ -3070,14 +3373,14 @@
         },
         {
           "name": "Fast Musket",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Fast Musket"
         },
         {
           "name": "Fast Stealth",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly",
           "standing": "unclassified",
           "display_name": "Fast Stealth"
@@ -3105,7 +3408,7 @@
         },
         {
           "name": "Fearsome Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Fearsome Strike"
@@ -3121,7 +3424,7 @@
           "name": "Feather Fall",
           "doneness": "not-started",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Feather Fall"
         },
         {
@@ -3132,6 +3435,13 @@
           "display_name": "Feathered Companion"
         },
         {
+          "name": "Fiery Shuriken",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Fiery Shuriken"
+        },
+        {
           "name": "Fighter Training",
           "doneness": "not-started",
           "type_facet": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
@@ -3140,7 +3450,7 @@
         },
         {
           "name": "Fighter Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Fighter Training (MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality) #2"
@@ -3160,8 +3470,15 @@
           "display_name": "Firearm Training"
         },
         {
+          "name": "Flash Fire",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Flash Fire"
+        },
+        {
           "name": "Flat of the Blade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.CavalierOrderAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Flat of the Blade"
@@ -3170,12 +3487,12 @@
           "name": "Fleet",
           "doneness": "not-started",
           "type_facet": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Fleet"
         },
         {
           "name": "Flowing Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Flowing Dodge"
@@ -3210,14 +3527,14 @@
         },
         {
           "name": "Focused Aim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.DeedHasCost",
           "standing": "origin",
           "display_name": "Focused Aim"
         },
         {
           "name": "Foil Casting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Foil Casting"
@@ -3245,7 +3562,7 @@
         },
         {
           "name": "Fortify Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Fortify Bond"
@@ -3307,8 +3624,22 @@
           "display_name": "Frightened"
         },
         {
+          "name": "Frightful Aspect",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL8",
+          "standing": "origin",
+          "display_name": "Frightful Aspect"
+        },
+        {
+          "name": "Frost Fall",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Frost Fall"
+        },
+        {
           "name": "Fuse Style",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Fuse Style"
@@ -3343,14 +3674,14 @@
         },
         {
           "name": "Getaway Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Getaway Master"
         },
         {
           "name": "Ghost Blade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Ghost Blade"
@@ -3448,7 +3779,7 @@
         },
         {
           "name": "Grand Beastform Mutagen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Grand Beastform Mutagen"
@@ -3475,15 +3806,22 @@
           "display_name": "Granted Powers (SpecialQuality) #2"
         },
         {
-          "name": "Greater Banner",
+          "name": "Grapple",
           "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Grapple"
+        },
+        {
+          "name": "Greater Banner",
+          "doneness": "done",
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Greater Banner"
         },
         {
           "name": "Greater Beastform Mutagen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Greater Beastform Mutagen"
@@ -3504,7 +3842,7 @@
         },
         {
           "name": "Greater Defensive Roll",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Greater Defensive Roll"
@@ -3595,7 +3933,7 @@
         },
         {
           "name": "Greater Resolve",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Greater Resolve"
@@ -3616,7 +3954,7 @@
         },
         {
           "name": "Greater Spellshield",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Greater Spellshield"
@@ -3686,7 +4024,7 @@
         },
         {
           "name": "Ground Breaker, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Ground Breaker, Greater"
@@ -3700,7 +4038,7 @@
         },
         {
           "name": "Guide the Battle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Guide the Battle"
@@ -3714,14 +4052,14 @@
         },
         {
           "name": "Gun Tank's Resilience",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.DeedsLVL15",
           "standing": "origin",
           "display_name": "Gun Tank's Resilience"
         },
         {
           "name": "Gun Tank's Resolve",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.DeedsLVL1.DeedHasCost",
           "standing": "origin",
           "display_name": "Gun Tank's Resolve"
@@ -3741,6 +4079,13 @@
           "display_name": "Gun Training Choice"
         },
         {
+          "name": "Guns Everywhere",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules.FirearmsRule",
+          "standing": "origin",
+          "display_name": "Guns Everywhere"
+        },
+        {
           "name": "Gunslinger Battered Gun",
           "doneness": "not-started",
           "type_facet": "GunslingerClassFeatures.SpecialQuality",
@@ -3756,7 +4101,7 @@
         },
         {
           "name": "Gunslinger's Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL1.DeedHasCost.Extraordinary",
           "standing": "origin",
           "display_name": "Gunslinger's Dodge"
@@ -3777,42 +4122,42 @@
         },
         {
           "name": "Half HP",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Half HP"
         },
         {
           "name": "Hammer and Anvil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Hammer and Anvil"
         },
         {
           "name": "Hard Drive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Hard Drive"
         },
         {
           "name": "Hard Minded",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Hard Minded"
         },
         {
           "name": "Hardbuckler",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Hardbuckler"
         },
         {
           "name": "Hardy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Hardy"
@@ -3825,11 +4170,32 @@
           "display_name": "Harsh Training"
         },
         {
+          "name": "Haunted Fey Aspect",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "origin",
+          "display_name": "Haunted Fey Aspect (ArcaneTalentSelection)"
+        },
+        {
+          "name": "Haunted Fey Aspect",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL0",
+          "standing": "origin",
+          "display_name": "Haunted Fey Aspect (MagusSpellblend.MagusSpellBlendLVL0)"
+        },
+        {
           "name": "Have Gun",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Have Gun"
+        },
+        {
+          "name": "Healing Thief",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Healing Thief"
         },
         {
           "name": "Heavy Armor Proficiency",
@@ -3840,14 +4206,21 @@
         },
         {
           "name": "Heroic Defiance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Heroic Defiance"
         },
         {
+          "name": "Heroic Invocation",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL9",
+          "standing": "origin",
+          "display_name": "Heroic Invocation"
+        },
+        {
           "name": "Heroic Recovery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Heroic Recovery"
@@ -3875,14 +4248,14 @@
         },
         {
           "name": "Hide in Plain Sight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Hide in Plain Sight"
         },
         {
           "name": "High Jumper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly",
           "standing": "origin",
           "display_name": "High Jumper"
@@ -3910,7 +4283,7 @@
         },
         {
           "name": "Hold Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Hold Breath"
@@ -3931,14 +4304,14 @@
         },
         {
           "name": "Holy Shield",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Holy Shield"
         },
         {
           "name": "Holy Slinger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Holy Slinger"
@@ -3966,28 +4339,49 @@
         },
         {
           "name": "Honorable Stand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Honorable Stand"
         },
         {
+          "name": "Hostile Juxtaposition",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Hostile Juxtaposition"
+        },
+        {
+          "name": "Hostile Juxtaposition (Greater)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Hostile Juxtaposition (Greater)"
+        },
+        {
+          "name": "Hostile Levitation",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Hostile Levitation"
+        },
+        {
           "name": "Hunter's Aim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Hunter's Aim"
         },
         {
           "name": "Hunter's Blessing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Hunter's Blessing"
         },
         {
           "name": "Hunter's Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Hunter's Bond (RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
@@ -4001,7 +4395,7 @@
         },
         {
           "name": "I Shall Not Be Moved",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.CavalierOrderAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "I Shall Not Be Moved"
@@ -4015,14 +4409,14 @@
         },
         {
           "name": "Iaijutsu Focus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Iaijutsu Focus"
         },
         {
           "name": "Iaijutsu Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Iaijutsu Master"
@@ -4036,10 +4430,17 @@
         },
         {
           "name": "Illiteracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Illiteracy"
+        },
+        {
+          "name": "Illusion of Calm",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Illusion of Calm"
         },
         {
           "name": "Illusive Gnome Bewilderment",
@@ -4085,7 +4486,7 @@
         },
         {
           "name": "Immediate Repositioning",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Immediate Repositioning"
@@ -4120,21 +4521,21 @@
         },
         {
           "name": "Improved Bastion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Improved Bastion"
         },
         {
           "name": "Improved Beastform Mutagen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Improved Beastform Mutagen"
         },
         {
           "name": "Improved Buckler Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Improved Buckler Defense"
@@ -4267,7 +4668,7 @@
         },
         {
           "name": "Improved Tolerance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Improved Tolerance"
@@ -4316,7 +4717,7 @@
         },
         {
           "name": "Indestructible",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Indestructible"
@@ -4330,7 +4731,7 @@
         },
         {
           "name": "Inescapable Grasp",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Inescapable Grasp"
@@ -4344,14 +4745,14 @@
         },
         {
           "name": "Infuriating Aim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Infuriating Aim"
         },
         {
           "name": "Inner Peace",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.CavalierOrderAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Inner Peace"
@@ -4365,7 +4766,7 @@
         },
         {
           "name": "Instantaneous Reconstruction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Instantaneous Reconstruction"
@@ -4379,21 +4780,21 @@
         },
         {
           "name": "Invisible Blade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick",
           "standing": "origin",
           "display_name": "Invisible Blade"
         },
         {
           "name": "Iron Body",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Iron Body"
         },
         {
           "name": "Iron Guts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Iron Guts"
@@ -4497,8 +4898,15 @@
           "display_name": "Jotungrip"
         },
         {
+          "name": "Jury-Rig",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "unclassified",
+          "display_name": "Jury-Rig"
+        },
+        {
           "name": "Keeper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.CavalierOrderAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Keeper"
@@ -4512,7 +4920,7 @@
         },
         {
           "name": "Kensai Chosen Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Kensai Chosen Weapon"
@@ -4547,7 +4955,7 @@
         },
         {
           "name": "Ki Pool",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Ki Pool (SpecialQuality.Extraordinary.RogueTalent)"
@@ -4565,6 +4973,13 @@
           "type_facet": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Ki Weapon"
+        },
+        {
+          "name": "Kinetic Reverberation",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Kinetic Reverberation"
         },
         {
           "name": "Kirin Path",
@@ -4673,14 +5088,14 @@
         },
         {
           "name": "Knockback Smash",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Knockback Smash"
         },
         {
           "name": "Knowledgeable Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Knowledgeable Defense"
@@ -4813,21 +5228,21 @@
         },
         {
           "name": "Last Stand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Last Stand"
         },
         {
           "name": "Leaf on the Wind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Leaf on the Wind"
         },
         {
           "name": "Leaping Lance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Leaping Lance"
@@ -4841,10 +5256,17 @@
         },
         {
           "name": "Lethal Accuracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Lethal Accuracy"
+        },
+        {
+          "name": "Liberating Command",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Liberating Command"
         },
         {
           "name": "Light Steps",
@@ -4855,14 +5277,14 @@
         },
         {
           "name": "Lightning Reload",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL11.Extraordinary",
           "standing": "unclassified",
           "display_name": "Lightning Reload"
         },
         {
           "name": "Lingering Pain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Lingering Pain"
@@ -4953,10 +5375,31 @@
         },
         {
           "name": "Live in Comfort",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Live in Comfort"
+        },
+        {
+          "name": "Locate Weakness",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Locate Weakness"
+        },
+        {
+          "name": "Lock Gaze",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Lock Gaze"
+        },
+        {
+          "name": "Longshot",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Longshot"
         },
         {
           "name": "Lucky",
@@ -5023,42 +5466,63 @@
         },
         {
           "name": "Mage Bullets",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Mage Bullets"
         },
         {
-          "name": "Magus Arcana",
+          "name": "Magic Siege Engine",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Magic Siege Engine"
+        },
+        {
+          "name": "Magic Siege Engine (Greater)",
           "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Magic Siege Engine (Greater)"
+        },
+        {
+          "name": "Magus Arcana",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Magus Arcana (MagusClassFeatures.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Magus Arcana",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Magus Arcana (MagusClassFeatures.ArchetypeAbility.SpecialQuality) #2"
         },
         {
           "name": "Magus Arcana",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Magus Arcana (MagusClassFeatures.ArchetypeAbility.SpecialQuality) #3"
         },
         {
           "name": "Magus Arcana",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Magus Arcana (MagusClassFeatures.ArchetypeAbility.SpecialQuality) #4"
         },
         {
-          "name": "Maneuver Defense",
+          "name": "Magus SpellCasting Reduction",
           "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Magus SpellCasting Reduction"
+        },
+        {
+          "name": "Maneuver Defense",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Maneuver Defense"
@@ -5219,7 +5683,7 @@
         },
         {
           "name": "Master Smith",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Master Smith"
@@ -5247,14 +5711,14 @@
         },
         {
           "name": "Masterful Presence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Masterful Presence"
         },
         {
           "name": "Meditative Maneuver",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Meditative Maneuver"
@@ -5282,7 +5746,7 @@
         },
         {
           "name": "Menacing Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Menacing Stance"
@@ -5302,15 +5766,29 @@
           "display_name": "Merciful Healing"
         },
         {
+          "name": "Mind Blank (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL9",
+          "standing": "origin",
+          "display_name": "Mind Blank (Communal)"
+        },
+        {
           "name": "Miraculous Recovery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Miraculous Recovery"
         },
         {
+          "name": "Mirror Strike",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Mirror Strike"
+        },
+        {
           "name": "Misdirection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Misdirection"
@@ -5363,6 +5841,20 @@
           "type_facet": "MonkClassFeatures.FlowingMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Mobility"
+        },
+        {
+          "name": "Moment of Greatness",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Moment of Greatness (MagusSpellblend.MagusSpellBlendLVL1)"
+        },
+        {
+          "name": "Moment of Greatness",
+          "doneness": "done",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Moment of Greatness (Sorcerer Bloodline Bonus Spell)"
         },
         {
           "name": "Monastic Mount",
@@ -5429,10 +5921,17 @@
         },
         {
           "name": "Mount",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Mount (CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
+        },
+        {
+          "name": "Mount (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Mount (Communal)"
         },
         {
           "name": "Mounted Acrobatics",
@@ -5443,7 +5942,7 @@
         },
         {
           "name": "Mounted Archer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Mounted Archer"
@@ -5527,21 +6026,35 @@
         },
         {
           "name": "Mystic Wisdom",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Mystic Wisdom"
         },
         {
+          "name": "Named Bullet",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Named Bullet"
+        },
+        {
+          "name": "Named Bullet (Greater)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Named Bullet (Greater)"
+        },
+        {
           "name": "Natural Born Liar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Natural Born Liar"
         },
         {
           "name": "Nature Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.ArchetypeAbility.SpecialQuality.NaturesBondAnimalCompanion.NaturesBondDruidDomain",
           "standing": "unclassified",
           "display_name": "Nature Bond (DruidClassFeatures.ArchetypeAbility.SpecialQuality.NaturesBondAnimalCompanion.NaturesBondDruidDomain)"
@@ -5569,7 +6082,7 @@
         },
         {
           "name": "Nauseating Flesh",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AlchemistDiscovery.Extraordinary",
           "standing": "unclassified",
           "display_name": "Nauseating Flesh"
@@ -5590,10 +6103,17 @@
         },
         {
           "name": "Negating Critical",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Negating Critical"
+        },
+        {
+          "name": "Negative Reaction",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Negative Reaction"
         },
         {
           "name": "Nimble",
@@ -5632,10 +6152,17 @@
         },
         {
           "name": "No Escape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "No Escape"
+        },
+        {
+          "name": "No Guns",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules.FirearmsRule",
+          "standing": "origin",
+          "display_name": "No Guns"
         },
         {
           "name": "No Trace",
@@ -5643,6 +6170,20 @@
           "type_facet": "NinjaClassFeatures.ClassFeatures.Extraordinary.SpecialQuality",
           "standing": "origin",
           "display_name": "No Trace"
+        },
+        {
+          "name": "Nondetection (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Nondetection (Communal)"
+        },
+        {
+          "name": "Obsidian Flow",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Obsidian Flow"
         },
         {
           "name": "Octopus Focus",
@@ -5688,7 +6229,7 @@
         },
         {
           "name": "One with the Stone",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.RangerHideInPlainSight",
           "standing": "origin",
           "display_name": "One with the Stone"
@@ -5744,21 +6285,21 @@
         },
         {
           "name": "Order Abilities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Order Abilities (CavalierOrderAbility.SpecialQuality)"
         },
         {
           "name": "Order Abilities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Order Abilities (CavalierOrderAbility.SpecialQuality) #2"
         },
         {
           "name": "Order Abilities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Order Abilities (CavalierOrderAbility.SpecialQuality) #3"
@@ -5832,6 +6373,13 @@
           "type_facet": "MonkBonusFeat",
           "standing": "origin",
           "display_name": "Outslug Weave (MonkBonusFeat)"
+        },
+        {
+          "name": "Overrun",
+          "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Overrun"
         },
         {
           "name": "Overwatch Style",
@@ -5919,10 +6467,17 @@
         },
         {
           "name": "Pain Points",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Pain Points"
+        },
+        {
+          "name": "Paladin Mount",
+          "doneness": "not-started",
+          "type_facet": "Multiple Companions",
+          "standing": "unclassified",
+          "display_name": "Paladin Mount"
         },
         {
           "name": "Panther Claw",
@@ -5982,49 +6537,63 @@
         },
         {
           "name": "Path of Trees",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Path of Trees"
         },
         {
           "name": "Payback",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Payback"
         },
         {
+          "name": "Peacebond",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Peacebond"
+        },
+        {
+          "name": "Pellet Blast",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Pellet Blast"
+        },
+        {
           "name": "Perfect Advantage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Perfect Advantage"
         },
         {
           "name": "Perfect Bastion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Perfect Bastion"
         },
         {
           "name": "Perfect Clarity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Perfect Clarity"
         },
         {
           "name": "Perfect Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Perfect Strike"
         },
         {
           "name": "Perfect Style",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Perfect Style (MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
@@ -6058,18 +6627,46 @@
           "display_name": "Perfect Style 3"
         },
         {
+          "name": "Phantom Chariot",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Phantom Chariot"
+        },
+        {
+          "name": "Phantom Driver",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Phantom Driver"
+        },
+        {
+          "name": "Phantom Steed (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Phantom Steed (Communal)"
+        },
+        {
           "name": "Physical Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Physical Resistance"
         },
         {
           "name": "Piercing Lance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Piercing Lance"
+        },
+        {
+          "name": "Pilfering Hand",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Pilfering Hand"
         },
         {
           "name": "Pinning Knockout",
@@ -6101,7 +6698,7 @@
         },
         {
           "name": "Pistol-Whip",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL3.DeedHasCost.Extraordinary",
           "standing": "unclassified",
           "display_name": "Pistol-Whip"
@@ -6115,21 +6712,21 @@
         },
         {
           "name": "Poison Bomb",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly",
           "standing": "origin",
           "display_name": "Poison Bomb"
         },
         {
           "name": "Poison Conversion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AlchemistDiscovery.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison Conversion"
         },
         {
           "name": "Poison Use",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.ClassFeatures.Poison Use",
           "standing": "unclassified",
           "display_name": "Poison Use"
@@ -6143,14 +6740,14 @@
         },
         {
           "name": "Pool Strike, Arcing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Pool Strike, Arcing"
         },
         {
           "name": "Pool Strike, Clinging",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Pool Strike, Clinging"
@@ -6178,21 +6775,21 @@
         },
         {
           "name": "Prescient Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Prescient Attack"
         },
         {
           "name": "Prescient Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Prescient Defense"
         },
         {
           "name": "Pressure Points",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Supernatural.NinjaTrick.NinjaTrickOnly",
           "standing": "origin",
           "display_name": "Pressure Points"
@@ -6208,8 +6805,50 @@
           "name": "Proficiencies",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Proficiencies"
+        },
+        {
+          "name": "Protection from Arrows (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Protection from Arrows (Communal)"
+        },
+        {
+          "name": "Protection from Chaos (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Protection from Chaos (Communal)"
+        },
+        {
+          "name": "Protection from Energy (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Protection from Energy (Communal)"
+        },
+        {
+          "name": "Protection from Evil (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Protection from Evil (Communal)"
+        },
+        {
+          "name": "Protection from Good (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Protection from Good (Communal)"
+        },
+        {
+          "name": "Protection from Law (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Protection from Law (Communal)"
         },
         {
           "name": "Public Speaker",
@@ -6261,15 +6900,29 @@
           "display_name": "Pummeling Style (MonkBonusFeat)"
         },
         {
+          "name": "Pup Shape",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Pup Shape"
+        },
+        {
+          "name": "Qualm",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Qualm"
+        },
+        {
           "name": "Quick Clear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL1.DeedHasCost.Extraordinary",
           "standing": "unclassified",
           "display_name": "Quick Clear"
         },
         {
           "name": "Quick Recovery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Quick Recovery"
@@ -6283,7 +6936,7 @@
         },
         {
           "name": "Rage Conversion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Rage Conversion"
@@ -6297,42 +6950,42 @@
         },
         {
           "name": "Rage Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rage Powers (BarbarianClassFeatures.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Rage Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rage Powers (BarbarianClassFeatures.ArchetypeAbility.SpecialQuality) #2"
         },
         {
           "name": "Rage Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rage Powers (BarbarianClassFeatures.ArchetypeAbility.SpecialQuality) #3"
         },
         {
           "name": "Rage Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rage Powers (BarbarianClassFeatures.ArchetypeAbility.SpecialQuality) #4"
         },
         {
           "name": "Rage Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rage Powers (BarbarianClassFeatures.ArchetypeAbility.SpecialQuality) #5"
         },
         {
           "name": "Rage Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rage Powers (BarbarianClassFeatures.ArchetypeAbility.SpecialQuality) #6"
@@ -6360,17 +7013,24 @@
         },
         {
           "name": "Rain of Blows",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Rain of Blows"
         },
         {
           "name": "Ranged Spellstrike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Ranged Spellstrike"
+        },
+        {
+          "name": "Ranger Companion",
+          "doneness": "not-started",
+          "type_facet": "Multiple Companions",
+          "standing": "unclassified",
+          "display_name": "Ranger Companion"
         },
         {
           "name": "Rapid Reloader",
@@ -6381,17 +7041,24 @@
         },
         {
           "name": "Razor's Kiss",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Razor's Kiss"
         },
         {
           "name": "Razor-Sharp Chair Leg",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Razor-Sharp Chair Leg"
+        },
+        {
+          "name": "Recoil Fire",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Recoil Fire"
         },
         {
           "name": "Redirection",
@@ -6402,14 +7069,14 @@
         },
         {
           "name": "Reflexive Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Reflexive Dodge"
         },
         {
           "name": "Reforge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Reforge"
@@ -6422,11 +7089,32 @@
           "display_name": "Regenerative Vigor"
         },
         {
+          "name": "Reinforce Armaments",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Reinforce Armaments"
+        },
+        {
+          "name": "Reinforce Armaments (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Reinforce Armaments (Communal)"
+        },
+        {
           "name": "Reliable Maneuver",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Reliable Maneuver"
+        },
+        {
+          "name": "Reloading Hands",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Reloading Hands"
         },
         {
           "name": "Renewed Life",
@@ -6441,6 +7129,20 @@
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Renewed Vitality"
+        },
+        {
+          "name": "Replace All with Wisdom",
+          "doneness": "not-started",
+          "type_facet": "MonkClassFeatures.AttackStatChoice",
+          "standing": "origin",
+          "display_name": "Replace All with Wisdom"
+        },
+        {
+          "name": "Reposition",
+          "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Reposition"
         },
         {
           "name": "Repositioning Strike",
@@ -6471,8 +7173,22 @@
           "display_name": "Resilience of Steel"
         },
         {
+          "name": "Resinous Skin",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Resinous Skin"
+        },
+        {
+          "name": "Resist Energy (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Resist Energy (Communal)"
+        },
+        {
           "name": "Resolute",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SamuraiResolve",
           "standing": "unclassified",
           "display_name": "Resolute"
@@ -6483,6 +7199,27 @@
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Resolve"
+        },
+        {
+          "name": "Returning Weapon",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "unclassified",
+          "display_name": "Returning Weapon"
+        },
+        {
+          "name": "Returning Weapon (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Returning Weapon (Communal)"
+        },
+        {
+          "name": "Ricochet Shot",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Ricochet Shot"
         },
         {
           "name": "Ride-By Attack",
@@ -6500,7 +7237,7 @@
         },
         {
           "name": "Righteous Hunter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Righteous Hunter"
@@ -6514,14 +7251,14 @@
         },
         {
           "name": "Rod Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Rod Mastery"
         },
         {
           "name": "Rod Wielder",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural.MagusArcana.SpecialQuality",
           "standing": "origin",
           "display_name": "Rod Wielder"
@@ -6542,63 +7279,63 @@
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #3"
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #4"
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #5"
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #6"
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #7"
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #8"
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #9"
         },
         {
           "name": "Rogue Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue Talents (RogueClassFeatures.ArchetypeAbility.SpecialQuality) #10"
@@ -6619,21 +7356,21 @@
         },
         {
           "name": "Roof Running",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Roof Running"
         },
         {
           "name": "Rope Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Rope Master"
         },
         {
           "name": "Rumormonger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Rumormonger"
@@ -6731,7 +7468,7 @@
         },
         {
           "name": "Scoundrel's Fortune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Scoundrel's Fortune"
@@ -6765,15 +7502,22 @@
           "display_name": "Second Chance"
         },
         {
+          "name": "See Alignment",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "See Alignment"
+        },
+        {
           "name": "See the Unseen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick",
           "standing": "origin",
           "display_name": "See the Unseen"
         },
         {
           "name": "Self Reliant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Self Reliant"
@@ -6857,7 +7601,7 @@
         },
         {
           "name": "Shake Effects",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Shake Effects"
@@ -6912,8 +7656,15 @@
           "display_name": "Shapeshifter Twist (MonkBonusFeat)"
         },
         {
+          "name": "Share Language (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Share Language (Communal)"
+        },
+        {
           "name": "Shared Precision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Shared Precision"
@@ -6962,14 +7713,14 @@
         },
         {
           "name": "Sharpened Accuracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Sharpened Accuracy"
         },
         {
           "name": "Sheer Toughness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Sheer Toughness"
@@ -6997,7 +7748,7 @@
         },
         {
           "name": "Shield Pool",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Shield Pool"
@@ -7018,7 +7769,7 @@
         },
         {
           "name": "Shield of Blades",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Shield of Blades"
@@ -7053,7 +7804,7 @@
         },
         {
           "name": "Shielded Spell Combat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Shielded Spell Combat"
@@ -7143,6 +7894,20 @@
           "display_name": "Shikigami Style (MonkBonusFeat)"
         },
         {
+          "name": "Shock Shield",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Shock Shield"
+        },
+        {
+          "name": "Shocking Image",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Shocking Image"
+        },
+        {
           "name": "Sickened",
           "doneness": "not-started",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.Mercy.ChannelEnergy",
@@ -7158,14 +7923,14 @@
         },
         {
           "name": "Siege Bomb",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.AlchemistDiscovery.Supernatural",
           "standing": "origin",
           "display_name": "Siege Bomb"
         },
         {
           "name": "Siege Engine Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Siege Engine Bond"
@@ -7298,7 +8063,7 @@
         },
         {
           "name": "Skills",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Skills (MonkClassFeatures.ArchetypeAbility.SpecialQuality) #7"
@@ -7361,7 +8126,7 @@
         },
         {
           "name": "Slinger's Luck",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL15.DeedHasCost.Extraordinary",
           "standing": "origin",
           "display_name": "Slinger's Luck"
@@ -7410,14 +8175,14 @@
         },
         {
           "name": "Slow Metabolism",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly",
           "standing": "origin",
           "display_name": "Slow Metabolism"
         },
         {
           "name": "Slow Reactions",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly",
           "standing": "unclassified",
           "display_name": "Slow Reactions"
@@ -7473,7 +8238,7 @@
         },
         {
           "name": "Smoke Bomb",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly",
           "standing": "origin",
           "display_name": "Smoke Bomb"
@@ -7585,7 +8350,7 @@
         },
         {
           "name": "Snatch Arrows",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.NinjaTrick.NinjaTrickOnly",
           "standing": "unclassified",
           "display_name": "Snatch Arrows (NinjaClassFeatures.SpecialQuality.NinjaTrick.NinjaTrickOnly)"
@@ -7690,28 +8455,28 @@
         },
         {
           "name": "Specialized Knowledge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.CavalierOrderAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Specialized Knowledge"
         },
         {
           "name": "Spell Combat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spell Combat"
         },
         {
           "name": "Spell Sage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spell Sage"
         },
         {
           "name": "Spell Scent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Spell Scent"
@@ -7725,7 +8490,7 @@
         },
         {
           "name": "Spellblast Bombs",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Spellblast Bombs"
@@ -7739,7 +8504,7 @@
         },
         {
           "name": "Spellbreaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.MagusArcana.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spellbreaker (Extraordinary.MagusArcana.SpecialQuality)"
@@ -7767,21 +8532,28 @@
         },
         {
           "name": "Spellstrike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spellstrike (MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Spellstrike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spellstrike (MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality) #2"
         },
         {
+          "name": "Spider Climb (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Spider Climb (Communal)"
+        },
+        {
           "name": "Spinning Lance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Spinning Lance"
@@ -7802,10 +8574,17 @@
         },
         {
           "name": "Spontaneous Casting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spontaneous Casting"
+        },
+        {
+          "name": "Spontaneous Immolation",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Spontaneous Immolation"
         },
         {
           "name": "Spring Attack",
@@ -7858,10 +8637,17 @@
         },
         {
           "name": "Sprint",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Sprint"
+        },
+        {
+          "name": "Stabilize Powder",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Stabilize Powder"
         },
         {
           "name": "Stag Horns",
@@ -7900,7 +8686,7 @@
         },
         {
           "name": "Staggering Assault",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.CavalierOrderAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Staggering Assault"
@@ -7928,7 +8714,7 @@
         },
         {
           "name": "Startling Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL7.Extraordinary",
           "standing": "origin",
           "display_name": "Startling Shot"
@@ -7977,10 +8763,17 @@
         },
         {
           "name": "Steady Aim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Steady Aim"
+        },
+        {
+          "name": "Steal",
+          "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Steal"
         },
         {
           "name": "Stick-Fighting Counter",
@@ -8025,22 +8818,29 @@
           "display_name": "Stick-Fighting Style (MonkBonusFeat)"
         },
         {
+          "name": "Stoneskin (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Stoneskin (Communal)"
+        },
+        {
           "name": "Stranger's Fortune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Stranger's Fortune"
         },
         {
           "name": "Strapped Shield",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Strapped Shield"
         },
         {
           "name": "Strategic Supremacy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Strategic Supremacy"
@@ -8103,7 +8903,7 @@
         },
         {
           "name": "Strike True",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Strike True"
@@ -8117,14 +8917,14 @@
         },
         {
           "name": "Strong Stroke",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Strong Stroke"
         },
         {
           "name": "Strong-Willed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Strong-Willed"
@@ -8229,7 +9029,7 @@
         },
         {
           "name": "Sucker Punch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Sucker Punch"
@@ -8242,8 +9042,22 @@
           "display_name": "Sudden Disguise"
         },
         {
-          "name": "Sunder Enchantment",
+          "name": "Summoner Conduit",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Summoner Conduit"
+        },
+        {
+          "name": "Sunder",
           "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Sunder"
+        },
+        {
+          "name": "Sunder Enchantment",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sunder Enchantment"
@@ -8264,28 +9078,28 @@
         },
         {
           "name": "Superior Reflexes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Superior Reflexes"
         },
         {
           "name": "Superior Tactics",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Superior Tactics"
         },
         {
           "name": "Supreme Aim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Supreme Aim"
         },
         {
           "name": "Sure-Footed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Sure-Footed"
@@ -8299,14 +9113,14 @@
         },
         {
           "name": "Sweeping Maneuver",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Sweeping Maneuver"
         },
         {
           "name": "Sweeping Prank",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Sweeping Prank"
@@ -8362,21 +9176,21 @@
         },
         {
           "name": "Swinging Reposition",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Swinging Reposition"
         },
         {
           "name": "Swoop for the Kill",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Swoop for the Kill"
         },
         {
           "name": "Swooping Charge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.AnimalTrick",
           "standing": "origin",
           "display_name": "Swooping Charge"
@@ -8425,21 +9239,35 @@
         },
         {
           "name": "Sworn Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Sworn Defense"
+        },
+        {
+          "name": "Symbol of Striking",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Symbol of Striking"
         },
         {
           "name": "Tactical Acumen",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
-          "display_name": "Tactical Acumen"
+          "display_name": "Tactical Acumen (PaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
+        },
+        {
+          "name": "Tactical Acumen",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Tactical Acumen (MagusSpellblend.MagusSpellBlendLVL2)"
         },
         {
           "name": "Tactical Advantage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Tactical Advantage"
@@ -8467,7 +9295,7 @@
         },
         {
           "name": "Tactician",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Tactician (CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
@@ -8481,14 +9309,28 @@
         },
         {
           "name": "Takedown",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Takedown"
         },
         {
+          "name": "Tar Pool",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Tar Pool (MagusSpellblend.MagusSpellBlendLVL6)"
+        },
+        {
+          "name": "Tar Pool",
+          "doneness": "done",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Tar Pool (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
           "name": "Targeting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL7.DeedHasCost.Extraordinary",
           "standing": "unclassified",
           "display_name": "Targeting"
@@ -8534,6 +9376,20 @@
           "type_facet": "MonkBonusFeat",
           "standing": "origin",
           "display_name": "Tatzlwyrm Rake (MonkBonusFeat)"
+        },
+        {
+          "name": "Telekinetic Assembly",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Telekinetic Assembly"
+        },
+        {
+          "name": "Telekinetic Charge",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Telekinetic Charge"
         },
         {
           "name": "Terrain Bond",
@@ -8641,6 +9497,13 @@
           "display_name": "Tetori"
         },
         {
+          "name": "Thunder Fire",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Thunder Fire"
+        },
+        {
           "name": "Thunderstriker",
           "doneness": "not-started",
           "type_facet": "Archetype.FighterArchetype.FighterArmorTraining1.FighterArmorTraining2.FighterArmorTraining3.FighterArmorTraining4.FighterArmorMastery.FighterWeaponTraining3.FighterWeaponTraining4",
@@ -8705,17 +9568,24 @@
         },
         {
           "name": "Titanic Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Titanic Rage"
         },
         {
           "name": "Tolerance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Tolerance"
+        },
+        {
+          "name": "Tongues (Communal)",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Tongues (Communal)"
         },
         {
           "name": "Totem Transformation",
@@ -8726,14 +9596,14 @@
         },
         {
           "name": "Totem Transformation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Totem Transformation (DruidClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality) #2"
         },
         {
           "name": "Totem Transformation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Totem Transformation (DruidClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality) #3"
@@ -8760,6 +9630,13 @@
           "display_name": "Totemic Summons (DruidClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality) #3"
         },
         {
+          "name": "Touch Injection",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Touch Injection"
+        },
+        {
           "name": "Touch of the Crypt",
           "doneness": "not-started",
           "type_facet": "AntipaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
@@ -8782,14 +9659,14 @@
         },
         {
           "name": "Tower Shield Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Tower Shield Defense"
         },
         {
           "name": "Tower Shield Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Tower Shield Evasion"
@@ -8838,7 +9715,7 @@
         },
         {
           "name": "Transfixing Charge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Transfixing Charge"
@@ -8852,17 +9729,24 @@
         },
         {
           "name": "Treacherous Blow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Treacherous Blow"
         },
         {
           "name": "Trick Throw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Trick Throw"
+        },
+        {
+          "name": "Trip",
+          "doneness": "not-started",
+          "type_facet": "Canny Foe Selection",
+          "standing": "unclassified",
+          "display_name": "Trip"
         },
         {
           "name": "Tripping Strike",
@@ -8901,14 +9785,14 @@
         },
         {
           "name": "True Grit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "True Grit"
         },
         {
           "name": "True Healer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "True Healer"
@@ -8922,28 +9806,35 @@
         },
         {
           "name": "True Resolve",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "True Resolve"
         },
         {
           "name": "Tumbling Descent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Tumbling Descent"
         },
         {
           "name": "Twin Shot Knockdown",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.DeedHasCost",
           "standing": "origin",
           "display_name": "Twin Shot Knockdown"
         },
         {
+          "name": "Twisted Space",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Twisted Space"
+        },
+        {
           "name": "Ultimate Payback",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Ultimate Payback"
@@ -8971,7 +9862,7 @@
         },
         {
           "name": "Unarmed Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Unarmed Strike"
@@ -9013,7 +9904,7 @@
         },
         {
           "name": "Unbound Steps",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick",
           "standing": "origin",
           "display_name": "Unbound Steps"
@@ -9027,7 +9918,7 @@
         },
         {
           "name": "Unbreakable Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Unbreakable Mind"
@@ -9062,7 +9953,7 @@
         },
         {
           "name": "Undetected Sabotage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly",
           "standing": "origin",
           "display_name": "Undetected Sabotage"
@@ -9075,15 +9966,22 @@
           "display_name": "Undying Champion"
         },
         {
-          "name": "Unflinching",
+          "name": "Unerring Weapon",
           "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Unerring Weapon"
+        },
+        {
+          "name": "Unflinching",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Unflinching (RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Unflinching",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Unflinching (FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
@@ -9118,7 +10016,7 @@
         },
         {
           "name": "Unlimited Endurance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Unlimited Endurance"
@@ -9139,7 +10037,7 @@
         },
         {
           "name": "Unstoppable",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SamuraiResolve",
           "standing": "unclassified",
           "display_name": "Unstoppable"
@@ -9174,14 +10072,14 @@
         },
         {
           "name": "Unwitting Ally",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Unwitting Ally"
         },
         {
           "name": "Up Close and Deadly",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.DeedHasCost",
           "standing": "origin",
           "display_name": "Up Close and Deadly"
@@ -9237,7 +10135,7 @@
         },
         {
           "name": "Utility Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL3.Extraordinary",
           "standing": "origin",
           "display_name": "Utility Shot"
@@ -9295,12 +10193,12 @@
           "name": "Ventriloquism",
           "doneness": "not-started",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Supernatural.NinjaTrick.NinjaTrickOnly",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Ventriloquism"
         },
         {
           "name": "Versatile Challenge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Versatile Challenge"
@@ -9313,29 +10211,43 @@
           "display_name": "Versatile Dance"
         },
         {
-          "name": "Voices of the Spheres",
+          "name": "Very Rare Guns",
           "doneness": "not-started",
+          "type_facet": "OptionalRules.FirearmsRule",
+          "standing": "origin",
+          "display_name": "Very Rare Guns"
+        },
+        {
+          "name": "Voices of the Spheres",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Voices of the Spheres"
         },
         {
           "name": "Volley Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Volley Spell"
         },
         {
+          "name": "Walk through Space",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Walk through Space"
+        },
+        {
           "name": "Wall Climber",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Supernatural.NinjaTrick.NinjaTrickOnly",
           "standing": "origin",
           "display_name": "Wall Climber"
         },
         {
           "name": "Wall Scramble",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Wall Scramble"
@@ -9349,17 +10261,31 @@
         },
         {
           "name": "Warding Charge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Warding Charge"
         },
         {
+          "name": "Warding Weapon",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Warding Weapon"
+        },
+        {
           "name": "Way of the Samurai",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Way of the Samurai"
+        },
+        {
+          "name": "Weaken Powder",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Weaken Powder"
         },
         {
           "name": "Weal's Champion",
@@ -9370,7 +10296,7 @@
         },
         {
           "name": "Weal's Wrath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Weal's Wrath"
@@ -9419,14 +10345,14 @@
         },
         {
           "name": "Weapon Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon Mastery (FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Weapon Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon Mastery (FighterClassFeatures.ArchetypeAbility.SpecialQuality)"
@@ -9461,7 +10387,7 @@
         },
         {
           "name": "Weapon Snatcher",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Weapon Snatcher"
@@ -9573,7 +10499,7 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (FighterClassFeatures.ArchetypeAbility.SpecialQuality) #4"
@@ -9608,7 +10534,7 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (BarbarianClassFeatures.ArchetypeAbility.SpecialQuality) #9"
@@ -9643,56 +10569,56 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (FighterClassFeatures.ArchetypeAbility.SpecialQuality) #14"
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (BarbarianClassFeatures.ArchetypeAbility.SpecialQuality) #15"
         },
         {
           "name": "Weapons of Sin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Weapons of Sin"
         },
         {
           "name": "Whirlwind Maneuver",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Whirlwind Maneuver"
         },
         {
           "name": "Wild Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Wild Empathy (DruidClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Wild Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Wild Empathy (DruidClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality) #2"
         },
         {
           "name": "Wild Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Wild Empathy (DruidClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality) #3"
         },
         {
           "name": "Wild Fighting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Wild Fighting"
@@ -9741,7 +10667,7 @@
         },
         {
           "name": "Wilderness Whispers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Wilderness Whispers"
@@ -9769,21 +10695,21 @@
         },
         {
           "name": "Witch's Bane",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Witch's Bane"
         },
         {
           "name": "Witch's Bane Judgment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Witch's Bane Judgment"
         },
         {
           "name": "Without Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Without Master"
@@ -9832,21 +10758,21 @@
         },
         {
           "name": "World Serpent Spirit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "World Serpent Spirit"
         },
         {
           "name": "World Serpent Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural.BarbarianTotemRagePower",
           "standing": "origin",
           "display_name": "World Serpent Totem"
         },
         {
           "name": "World Serpent Totem Unity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "World Serpent Totem Unity"
@@ -9857,6 +10783,13 @@
           "type_facet": "Archetype.DruidArchetype.DruidTracklessStep.DruidResistNaturesLure.DruidVenomImmunity.DruidTimelessBody",
           "standing": "origin",
           "display_name": "World Walker"
+        },
+        {
+          "name": "Wreath of Blades",
+          "doneness": "done",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Wreath of Blades"
         },
         {
           "name": "Wyvern Fury Style",
@@ -9905,11 +10838,11 @@
     {
       "kind": "class",
       "label": "Classes",
-      "done": 0,
+      "done": 2,
       "partial": 0,
-      "not_started": 3,
+      "not_started": 1,
       "denominator": 3,
-      "pct": 0.0,
+      "pct": 66.7,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 3
@@ -9917,14 +10850,14 @@
       "items": [
         {
           "name": "Gunslinger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC",
           "standing": "origin",
           "display_name": "Gunslinger"
         },
         {
           "name": "Ninja",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Rogue",
           "standing": "origin",
           "display_name": "Ninja"
@@ -10507,7 +11440,7 @@
         },
         {
           "name": "Katana",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.EasternWeapon.Eastern.Melee.Exotic.Slashing.Deadly.OneHanded.Sword.BladeHeavy.Tengu",
           "standing": "unclassified",
           "display_name": "Katana"
@@ -11252,11 +12185,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 13,
-      "partial": 4,
-      "not_started": 6,
+      "done": 18,
+      "partial": 5,
+      "not_started": 0,
       "denominator": 23,
-      "pct": 56.5,
+      "pct": 78.3,
       "excluded_from_percentage": 16,
       "standing_breakdown": {
         "origin": 23,
@@ -11272,21 +12205,21 @@
         },
         {
           "name": "BONE",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BONE"
         },
         {
           "name": "BRONZE",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BRONZE"
         },
         {
           "name": "Blocking",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialWeaponQualities",
           "standing": "origin",
           "display_name": "Blocking"
@@ -11328,14 +12261,14 @@
         },
         {
           "name": "Deadly",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialWeaponQualities",
           "standing": "unclassified",
           "display_name": "Deadly"
         },
         {
           "name": "Distracting",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialWeaponQualities",
           "standing": "unclassified",
           "display_name": "Distracting"
@@ -11391,14 +12324,14 @@
         },
         {
           "name": "Fragile",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialWeaponQualities",
           "standing": "unclassified",
           "display_name": "Fragile"
         },
         {
           "name": "GOLD",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "GOLD"
@@ -11419,28 +12352,28 @@
         },
         {
           "name": "Grapple",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialWeaponQualities",
           "standing": "origin",
           "display_name": "Grapple"
         },
         {
           "name": "Lucky",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OneHandedFirearm.TwoHandedFirearm",
           "standing": "unclassified",
           "display_name": "Lucky"
         },
         {
           "name": "Lucky (Greater)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OneHandedFirearm.TwoHandedFirearm",
           "standing": "unclassified",
           "display_name": "Lucky (Greater)"
         },
         {
           "name": "OBSIDIAN",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "OBSIDIAN"
@@ -11461,42 +12394,42 @@
         },
         {
           "name": "Performance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialWeaponQualities",
           "standing": "unclassified",
           "display_name": "Performance"
         },
         {
           "name": "REACH",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "REACH"
         },
         {
           "name": "Reliable",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OneHandedFirearm.TwoHandedFirearm",
           "standing": "unclassified",
           "display_name": "Reliable"
         },
         {
           "name": "Reliable (Greater)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OneHandedFirearm.TwoHandedFirearm",
           "standing": "unclassified",
           "display_name": "Reliable (Greater)"
         },
         {
           "name": "STONE",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "STONE"
         },
         {
           "name": "Scatter",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialWeaponQualities.Firearm",
           "standing": "unclassified",
           "display_name": "Scatter"
@@ -11524,14 +12457,14 @@
         },
         {
           "name": "Throwing Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin",
           "display_name": "Throwing Shield"
         },
         {
           "name": "Thrown",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Thrown"
@@ -11542,8 +12475,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 208,
-      "partial": 19,
-      "not_started": 34,
+      "partial": 51,
+      "not_started": 2,
       "denominator": 261,
       "pct": 79.7,
       "excluded_from_percentage": 2,
@@ -11568,14 +12501,14 @@
         },
         {
           "name": "Amateur Gunslinger",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Amateur Gunslinger"
         },
         {
           "name": "Arc Slinger",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Arc Slinger"
@@ -11694,7 +12627,7 @@
         },
         {
           "name": "Channeling Scourge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Channeling Scourge"
@@ -11771,7 +12704,7 @@
         },
         {
           "name": "Crane Style",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Crane Style"
@@ -12023,14 +12956,14 @@
         },
         {
           "name": "Djinni Spirit",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Djinni Spirit"
         },
         {
           "name": "Djinni Style",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Djinni Style"
@@ -12065,7 +12998,7 @@
         },
         {
           "name": "Dragon Roar",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Dragon Roar"
@@ -12093,7 +13026,7 @@
         },
         {
           "name": "Earth Child Style",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Earth Child Style"
@@ -12107,14 +13040,14 @@
         },
         {
           "name": "Efreeti Stance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Efreeti Stance"
         },
         {
           "name": "Efreeti Style",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Efreeti Style"
@@ -12156,14 +13089,14 @@
         },
         {
           "name": "Extra Bane",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Extra Bane"
         },
         {
           "name": "Extra Grit",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Grit",
           "standing": "origin",
           "display_name": "Extra Grit"
@@ -12226,7 +13159,7 @@
         },
         {
           "name": "Final Embrace Master",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Final Embrace Master"
@@ -12296,7 +13229,7 @@
         },
         {
           "name": "Guided Hand",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Guided Hand"
@@ -12331,7 +13264,7 @@
         },
         {
           "name": "Haunted Gnome",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Haunted Gnome"
@@ -12366,7 +13299,7 @@
         },
         {
           "name": "Horse Master",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Horse Master"
@@ -12450,7 +13383,7 @@
         },
         {
           "name": "Improved Stalwart",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Improved Stalwart"
@@ -12548,28 +13481,28 @@
         },
         {
           "name": "Leaping Shot Deed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Grit",
           "standing": "origin",
           "display_name": "Leaping Shot Deed"
         },
         {
           "name": "Mantis Style",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Mantis Style"
         },
         {
           "name": "Mantis Torment",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Mantis Torment"
         },
         {
           "name": "Mantis Wisdom",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Mantis Wisdom"
@@ -12583,14 +13516,14 @@
         },
         {
           "name": "Marid Spirit",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Marid Spirit"
         },
         {
           "name": "Marid Style",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Marid Style"
@@ -12653,7 +13586,7 @@
         },
         {
           "name": "Monkey Moves",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Monkey Moves"
@@ -12667,7 +13600,7 @@
         },
         {
           "name": "Monkey Style",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Monkey Style"
@@ -13017,7 +13950,7 @@
         },
         {
           "name": "Sea Legs",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Sea Legs"
@@ -13073,7 +14006,7 @@
         },
         {
           "name": "Shapeshifting Hunter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Shapeshifting Hunter"
@@ -13143,14 +14076,14 @@
         },
         {
           "name": "Snake Sidewind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Snake Sidewind"
         },
         {
           "name": "Snake Style",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Snake Style"
@@ -13227,7 +14160,7 @@
         },
         {
           "name": "Stalwart",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Stalwart"
@@ -13262,7 +14195,7 @@
         },
         {
           "name": "Style Feat Wildcard",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Style",
           "standing": "origin",
           "display_name": "Style Feat Wildcard"
@@ -13325,7 +14258,7 @@
         },
         {
           "name": "Toughness (Vigor/Wounds)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Toughness (Vigor/Wounds)"
@@ -13399,8 +14332,8 @@
       "kind": "race_trait",
       "label": "Race Traits",
       "done": 0,
-      "partial": 0,
-      "not_started": 4,
+      "partial": 4,
+      "not_started": 0,
       "denominator": 4,
       "pct": 0.0,
       "excluded_from_percentage": 0,
@@ -13410,28 +14343,28 @@
       "items": [
         {
           "name": "Gunslinger",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "FavoredClass",
           "standing": "origin",
           "display_name": "Gunslinger"
         },
         {
           "name": "Haunted Fey Aspect",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Haunted Fey Aspect"
         },
         {
           "name": "Ninja",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "FavoredClass",
           "standing": "origin",
           "display_name": "Ninja"
         },
         {
           "name": "Samurai",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "FavoredClass",
           "standing": "origin",
           "display_name": "Samurai"
@@ -13471,6 +14404,35 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Companion (Bird (Owl))"
+        }
+      ]
+    },
+    {
+      "kind": "skill",
+      "label": "Skills",
+      "done": 0,
+      "partial": 2,
+      "not_started": 0,
+      "denominator": 2,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 2
+      },
+      "items": [
+        {
+          "name": "Craft (Siege Engine)",
+          "doneness": "partial",
+          "type_facet": "Intelligence.Craft",
+          "standing": "origin",
+          "display_name": "Craft (Siege Engine)"
+        },
+        {
+          "name": "Profession (Siege Engineer)",
+          "doneness": "partial",
+          "type_facet": "Wisdom.Profession",
+          "standing": "origin",
+          "display_name": "Profession (Siege Engineer)"
         }
       ]
     },
@@ -14516,6 +15478,70 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wreath of Blades"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 1,
+      "not_started": 6,
+      "denominator": 7,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 7
+      },
+      "items": [
+        {
+          "name": "Starting Gold UC ~ Average",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold UC ~ Average"
+        },
+        {
+          "name": "Starting Gold UC ~ Maximum",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold UC ~ Maximum"
+        },
+        {
+          "name": "Starting Gold UC ~ Random",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold UC ~ Random"
+        },
+        {
+          "name": "Starting Gold ~ UC",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold ~ UC"
+        },
+        {
+          "name": "WILD STALKER Has Low Light Vision",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "WILD STALKER Has Low Light Vision"
+        },
+        {
+          "name": "WILD STALKER No Low Light Vision",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "WILD STALKER No Low Light Vision"
+        },
+        {
+          "name": "WILD STALKER Strong Senses",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "WILD STALKER Strong Senses"
         }
       ]
     }

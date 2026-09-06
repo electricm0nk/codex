@@ -5,27 +5,27 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 99,
-      "partial": 8,
-      "not_started": 22,
-      "denominator": 129,
-      "pct": 76.7,
-      "excluded_from_percentage": 61,
+      "done": 112,
+      "partial": 12,
+      "not_started": 0,
+      "denominator": 124,
+      "pct": 90.3,
+      "excluded_from_percentage": 68,
       "standing_breakdown": {
-        "origin": 129,
-        "unclassified": 61
+        "origin": 124,
+        "unclassified": 68
       },
       "items": [
         {
           "name": "Acid Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.MutantSpecialAbility",
           "standing": "origin",
           "display_name": "Acid Resistance"
         },
         {
           "name": "Acidic Pustules",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.MutantSpecialAbility",
           "standing": "origin",
           "display_name": "Acidic Pustules"
@@ -41,7 +41,7 @@
           "name": "Aura of Madness",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Aura of Madness"
         },
         {
@@ -60,7 +60,7 @@
         },
         {
           "name": "Blood Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Blood Rage"
@@ -74,7 +74,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.MutantSpecialAbility",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Extraordinary.MutantSpecialAbility)"
@@ -228,7 +228,7 @@
         },
         {
           "name": "Cyth-V'sug's Unity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cyth-V'sug's Unity"
@@ -244,19 +244,19 @@
           "name": "Damage Reduction",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Damage Reduction (SpecialQuality.Extraordinary)"
         },
         {
           "name": "Damage Reduction",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Damage Reduction (SpecialQuality.Supernatural)"
         },
         {
           "name": "Daughters of Arlantia",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Daughters of Arlantia"
@@ -270,14 +270,14 @@
         },
         {
           "name": "Deformed Arm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MutantDeformity",
           "standing": "origin",
           "display_name": "Deformed Arm"
         },
         {
           "name": "Deformed Leg",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MutantDeformity",
           "standing": "origin",
           "display_name": "Deformed Leg"
@@ -305,7 +305,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.MutantSpecialAbility",
           "standing": "unclassified",
           "display_name": "Disease (SpecialAttack.Supernatural.MutantSpecialAbility)"
@@ -319,7 +319,7 @@
         },
         {
           "name": "Drain Prana",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural q",
           "standing": "origin",
           "display_name": "Drain Prana"
@@ -335,7 +335,7 @@
           "name": "Dust Cloud",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Dust Cloud"
         },
         {
@@ -354,7 +354,7 @@
         },
         {
           "name": "Energy Drain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Energy Drain"
@@ -382,14 +382,14 @@
         },
         {
           "name": "Eye Rays",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Eye Rays"
         },
         {
           "name": "Fast Healing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Fast Healing"
@@ -459,7 +459,7 @@
         },
         {
           "name": "Fungal Rejuvenation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Fungal Rejuvenation"
@@ -475,7 +475,7 @@
           "name": "Gnaw",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Gnaw"
         },
         {
@@ -501,7 +501,7 @@
         },
         {
           "name": "Hungry Gaze",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Hungry Gaze"
@@ -515,7 +515,7 @@
         },
         {
           "name": "Immunity to Bleed Effects",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Bleed Effects"
@@ -543,7 +543,7 @@
         },
         {
           "name": "Immunity to Permanent Wounds",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "unclassified",
           "display_name": "Immunity to Permanent Wounds"
@@ -578,7 +578,7 @@
         },
         {
           "name": "Increased Speed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.MutantSpecialAbility",
           "standing": "origin",
           "display_name": "Increased Speed"
@@ -641,7 +641,7 @@
         },
         {
           "name": "Malevolence",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Malevolence"
@@ -725,7 +725,7 @@
         },
         {
           "name": "Parasitic Bond",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Parasitic Bond"
@@ -774,7 +774,7 @@
         },
         {
           "name": "Possess Corpse",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Possess Corpse"
@@ -788,7 +788,7 @@
         },
         {
           "name": "Powerful Blows",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Powerful Blows"
@@ -872,7 +872,7 @@
         },
         {
           "name": "Resistance to Mind-Affecting ~ Output",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.Resistance",
           "standing": "origin",
           "display_name": "Resistance to Mind-Affecting ~ Output"
@@ -956,14 +956,14 @@
         },
         {
           "name": "Shatter Silence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shatter Silence"
         },
         {
           "name": "Shattered Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MutantDeformity",
           "standing": "origin",
           "display_name": "Shattered Mind"
@@ -1000,7 +1000,7 @@
           "name": "Spell Absorption",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Spell Absorption"
         },
         {
@@ -1062,9 +1062,9 @@
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
-          "type_facet": "SpecialQuality.SpellLike",
+          "type_facet": "SpellLike",
           "standing": "unclassified",
-          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #6"
+          "display_name": "Spell-Like Abilities (SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
@@ -1111,6 +1111,13 @@
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike",
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #13"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.Extraordinary.Supernatural.SpellLike)"
@@ -1124,21 +1131,21 @@
         },
         {
           "name": "Spines",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Spines"
         },
         {
           "name": "Spirit Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Spirit Sense"
         },
         {
           "name": "Spirit Touch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Spirit Touch"
@@ -1215,7 +1222,7 @@
         },
         {
           "name": "Tainted Blood",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Tainted Blood"
@@ -1236,7 +1243,7 @@
         },
         {
           "name": "Thorn Throw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Thorn Throw"
@@ -1327,14 +1334,14 @@
         },
         {
           "name": "Warped Hide",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MutantDeformity",
           "standing": "origin",
           "display_name": "Warped Hide"
         },
         {
           "name": "Weakness to Prayer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Weakness to Prayer"
@@ -1345,6 +1352,13 @@
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Weapon Expertise"
+        },
+        {
+          "name": "Weapon Selection",
+          "doneness": "done",
+          "type_facet": "PetrifiedMaidenWeaponSelection",
+          "standing": "origin",
+          "display_name": "Weapon Selection"
         }
       ]
     },
@@ -1647,43 +1661,116 @@
       "kind": "race_trait",
       "label": "Race Traits",
       "done": 0,
-      "partial": 0,
-      "not_started": 2,
-      "denominator": 2,
+      "partial": 1,
+      "not_started": 0,
+      "denominator": 1,
       "pct": 0.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 1,
       "standing_breakdown": {
-        "unclassified": 2,
-        "origin": 2
+        "unclassified": 1,
+        "origin": 1
       },
       "items": [
         {
           "name": "Paralysis",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAtack.Supernatural",
           "standing": "unclassified",
           "display_name": "Paralysis"
         },
         {
           "name": "Resistance to Mind-Affecting",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Resistance to Mind-Affecting"
-        },
+        }
+      ]
+    },
+    {
+      "kind": "skill",
+      "label": "Skills",
+      "done": 0,
+      "partial": 0,
+      "not_started": 4,
+      "denominator": 4,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 4
+      },
+      "items": [
         {
-          "name": "Spell-Like Abilities",
+          "name": "Perception (Dim Light)",
           "doneness": "not-started",
-          "type_facet": "SpellLike",
-          "standing": "unclassified",
-          "display_name": "Spell-Like Abilities"
-        },
-        {
-          "name": "Weapon Selection",
-          "doneness": "not-started",
-          "type_facet": "PetrifiedMaidenWeaponSelection",
+          "type_facet": "SkillUse",
           "standing": "origin",
-          "display_name": "Weapon Selection"
+          "display_name": "Perception (Dim Light)"
+        },
+        {
+          "name": "Stealth (Cane Fields)",
+          "doneness": "not-started",
+          "type_facet": "SkillUse",
+          "standing": "origin",
+          "display_name": "Stealth (Cane Fields)"
+        },
+        {
+          "name": "Stealth (Dim Light)",
+          "doneness": "not-started",
+          "type_facet": "SkillUse",
+          "standing": "origin",
+          "display_name": "Stealth (Dim Light)"
+        },
+        {
+          "name": "Stealth (Jungle)",
+          "doneness": "not-started",
+          "type_facet": "SkillUse",
+          "standing": "origin",
+          "display_name": "Stealth (Jungle)"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 3,
+      "not_started": 0,
+      "denominator": 3,
+      "pct": 0.0,
+      "excluded_from_percentage": 1,
+      "standing_breakdown": {
+        "origin": 3,
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Blighted Fey",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Blighted Fey"
+        },
+        {
+          "name": "Fungoid",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fungoid"
+        },
+        {
+          "name": "Vetala",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vetala"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
         }
       ]
     }
