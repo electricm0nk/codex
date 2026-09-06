@@ -36252,38 +36252,37 @@ fn ground_divine_scion_class_features(
         // `DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID` surfaces -- a real
         // divine scion has exactly one opposition alignment, never all
         // four at once.
-        if let Some(dr) = divine_scion_opposition_alignment_dr(level) {
-            if let Some(selection) =
+        if let Some(dr) = divine_scion_opposition_alignment_dr(level)
+            && let Some(selection) =
                 choice_selection(input, DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID)
-            {
-                for (slug, display) in [
-                    ("chaotic", "Chaotic"),
-                    ("evil", "Evil"),
-                    ("good", "Good"),
-                    ("lawful", "Lawful"),
-                ] {
-                    if selection != format!("alignment:{slug}") {
-                        continue;
-                    }
-                    explanations.push(ComputationExplanation {
-                        id: format!(
-                            "class_feature.inner_sea_magic.divine_scion.{slug}_opposition_\
-                             alignment.dr"
-                        ),
-                        value: dr,
-                        detail: format!(
-                            "Divine Scion level {level} {display} Opposition Alignment: DR {dr} \
-                             bypassed by {display_lower} creatures (corpus \
-                             `DR:DeificDefenseBonus/{slug}`, restating the same \
-                             `DeificDefenseBonus` magnitude Deific Defense already grounds; \
-                             recorded selection {DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID} -> \
-                             {selection}). Grounds the magnitude only; the record's own separate \
-                             +1 caster-level-check bonus carries no `BONUS` token anywhere and is \
-                             not modelled",
-                            display_lower = display.to_lowercase()
-                        ),
-                    });
+        {
+            for (slug, display) in [
+                ("chaotic", "Chaotic"),
+                ("evil", "Evil"),
+                ("good", "Good"),
+                ("lawful", "Lawful"),
+            ] {
+                if selection != format!("alignment:{slug}") {
+                    continue;
                 }
+                explanations.push(ComputationExplanation {
+                    id: format!(
+                        "class_feature.inner_sea_magic.divine_scion.{slug}_opposition_\
+                         alignment.dr"
+                    ),
+                    value: dr,
+                    detail: format!(
+                        "Divine Scion level {level} {display} Opposition Alignment: DR {dr} \
+                         bypassed by {display_lower} creatures (corpus \
+                         `DR:DeificDefenseBonus/{slug}`, restating the same \
+                         `DeificDefenseBonus` magnitude Deific Defense already grounds; \
+                         recorded selection {DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID} -> \
+                         {selection}). Grounds the magnitude only; the record's own separate \
+                         +1 caster-level-check bonus carries no `BONUS` token anywhere and is \
+                         not modelled",
+                        display_lower = display.to_lowercase()
+                    ),
+                });
             }
         }
     }
@@ -36310,48 +36309,45 @@ fn ground_divine_scion_class_features(
     // `DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID` surfaces -- a real
     // divine scion specializes in exactly one domain, never all 35 at
     // once.
-    if level >= 3 {
-        if let Some(selection) =
+    if level >= 3
+        && let Some(selection) =
             choice_selection(input, DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID)
-        {
-            if let Some((slug, display, uses_per_day)) = DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY
-                .iter()
-                .find(|(slug, _, _)| selection == format!("domain:{slug}"))
-            {
-                let caster_level = total_character_level(input);
-                explanations.push(ComputationExplanation {
-                    id: format!(
-                        "class_feature.inner_sea_magic.divine_scion.{slug}_specialization.\
-                         caster_level"
-                    ),
-                    value: caster_level,
-                    detail: format!(
-                        "Divine Scion {display} Specialization: spell-like ability, caster \
-                         level {caster_level} (corpus `SPELLS:Innate|...|CASTERLEVEL=TL|...`, \
-                         `TL` = this character's total level across every class, \
-                         {caster_level}; recorded selection \
-                         {DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID} -> {selection}). Grounds \
-                         the caster-level fact only -- the SLA triple idiom already established \
-                         by `ground_summoner_slice_a_features`: no spell effect, save DC, or \
-                         secondary skill/save/AC/CMD/concentration bonus is modelled"
-                    ),
-                });
+        && let Some((slug, display, uses_per_day)) = DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY
+            .iter()
+            .find(|(slug, _, _)| selection == format!("domain:{slug}"))
+    {
+        let caster_level = total_character_level(input);
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_feature.inner_sea_magic.divine_scion.{slug}_specialization.\
+                 caster_level"
+            ),
+            value: caster_level,
+            detail: format!(
+                "Divine Scion {display} Specialization: spell-like ability, caster \
+                 level {caster_level} (corpus `SPELLS:Innate|...|CASTERLEVEL=TL|...`, \
+                 `TL` = this character's total level across every class, \
+                 {caster_level}; recorded selection \
+                 {DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID} -> {selection}). Grounds \
+                 the caster-level fact only -- the SLA triple idiom already established \
+                 by `ground_summoner_slice_a_features`: no spell effect, save DC, or \
+                 secondary skill/save/AC/CMD/concentration bonus is modelled"
+            ),
+        });
 
-                if let Some(times) = uses_per_day {
-                    explanations.push(ComputationExplanation {
-                        id: format!(
-                            "class_feature.inner_sea_magic.divine_scion.{slug}_specialization.\
-                             uses_per_day"
-                        ),
-                        value: *times,
-                        detail: format!(
-                            "Divine Scion {display} Specialization uses per day: {times} \
-                             (corpus `SPELLS:Innate|TIMES={times}|...`). Grounds the per-day \
-                             budget only"
-                        ),
-                    });
-                }
-            }
+        if let Some(times) = uses_per_day {
+            explanations.push(ComputationExplanation {
+                id: format!(
+                    "class_feature.inner_sea_magic.divine_scion.{slug}_specialization.\
+                     uses_per_day"
+                ),
+                value: *times,
+                detail: format!(
+                    "Divine Scion {display} Specialization uses per day: {times} \
+                     (corpus `SPELLS:Innate|TIMES={times}|...`). Grounds the per-day \
+                     budget only"
+                ),
+            });
         }
     }
 }
