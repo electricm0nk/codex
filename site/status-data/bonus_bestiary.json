@@ -41,15 +41,15 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 4,
+      "done": 2,
       "partial": 0,
       "not_started": 0,
-      "denominator": 4,
+      "denominator": 2,
       "pct": 100.0,
-      "excluded_from_percentage": 13,
+      "excluded_from_percentage": 15,
       "standing_breakdown": {
-        "unclassified": 13,
-        "origin": 4
+        "unclassified": 15,
+        "origin": 2
       },
       "items": [
         {
@@ -140,7 +140,7 @@
           "name": "Shatter Weapons",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Shatter Weapons"
         },
         {
@@ -154,7 +154,7 @@
           "name": "Statue",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Statue"
         },
         {

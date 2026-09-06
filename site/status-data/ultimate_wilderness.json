@@ -3,22 +3,44 @@
   "title": "Ultimate Wilderness",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 1,
+      "not_started": 0,
+      "denominator": 1,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 1
+      },
+      "items": [
+        {
+          "name": "Racial Traits ~ Ghoran",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Ghoran"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 173,
       "partial": 0,
-      "not_started": 695,
-      "denominator": 695,
-      "pct": 0.0,
-      "excluded_from_percentage": 171,
+      "not_started": 551,
+      "denominator": 724,
+      "pct": 23.9,
+      "excluded_from_percentage": 228,
       "standing_breakdown": {
-        "unclassified": 171,
-        "origin": 695
+        "unclassified": 228,
+        "origin": 724
       },
       "items": [
         {
           "name": "A Thousand Faces",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "A Thousand Faces"
@@ -39,7 +61,7 @@
         },
         {
           "name": "Adroit Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SwashbucklerDeedsLVL3.Extraordinary",
           "standing": "origin",
           "display_name": "Adroit Step"
@@ -74,28 +96,28 @@
         },
         {
           "name": "Alignment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.FiendfleshShifterClassFeatures",
           "standing": "unclassified",
           "display_name": "Alignment (Shifter Class Features.FiendfleshShifterClassFeatures)"
         },
         {
           "name": "Alignment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Witch Class Feature.FloodWalkerClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Alignment (Witch Class Feature.FloodWalkerClassFeatures.SpecialQuality)"
         },
         {
           "name": "Alignment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.RageshaperClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Alignment (Shifter Class Features.RageshaperClassFeatures.SpecialQuality)"
         },
         {
           "name": "Alpine Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkirmisherConditioningSpecialty.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Alpine Training"
@@ -116,7 +138,7 @@
         },
         {
           "name": "Animal Focus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.ForesterClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Animal Focus"
@@ -130,7 +152,7 @@
         },
         {
           "name": "Animal Mask",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Features.AvengingBeastClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Animal Mask"
@@ -172,7 +194,7 @@
         },
         {
           "name": "Archer's Feint",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SwashbucklerDeedsLVL7.Extraordinary",
           "standing": "origin",
           "display_name": "Archer's Feint"
@@ -193,7 +215,7 @@
         },
         {
           "name": "Armor and Weapon Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.FilidhClassFeatures",
           "standing": "unclassified",
           "display_name": "Armor and Weapon Proficiency"
@@ -221,16 +243,16 @@
         },
         {
           "name": "Arrow Champion's Panache",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Swashbuckler Class Features.ArrowChampionClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Arrow Champion's Panache"
         },
         {
           "name": "Ash Storm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Ash Storm"
         },
         {
@@ -487,14 +509,14 @@
         },
         {
           "name": "Astonishing Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Slayer Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Astonishing Strike"
         },
         {
           "name": "Astrology",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Investigator Class Features.StarWatcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Astrology"
@@ -508,7 +530,7 @@
         },
         {
           "name": "Aura of Comfort",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.WildernessWardenClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Aura of Comfort"
@@ -529,7 +551,7 @@
         },
         {
           "name": "Aura of Purity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.WildernessWardenClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Aura of Purity"
@@ -550,7 +572,7 @@
         },
         {
           "name": "Autumn Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural.SeasonRagePower",
           "standing": "origin",
           "display_name": "Autumn Rage"
@@ -564,7 +586,7 @@
         },
         {
           "name": "Avalanche",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Brawler Class Features.LivingAvalancheClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Avalanche"
@@ -606,7 +628,7 @@
         },
         {
           "name": "Basic Leshykinesis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Features.LeshykineticistClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Basic Leshykinesis"
@@ -690,10 +712,17 @@
         },
         {
           "name": "Bloodline Powers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Class Feature.Bloodrager Class Feature",
           "standing": "unclassified",
           "display_name": "Bloodline Powers"
+        },
+        {
+          "name": "Bloodrager ~ Bloodline Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodrager ~ Bloodline Tracker"
         },
         {
           "name": "Bloody Roots",
@@ -710,6 +739,13 @@
           "display_name": "Boaster"
         },
         {
+          "name": "Bolstered Resilience",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "origin",
+          "display_name": "Bolstered Resilience"
+        },
+        {
           "name": "Bonus Feat",
           "doneness": "not-started",
           "type_facet": "Hunter Class Features.ForesterClassFeatures.SpecialQuality.Extraordinary",
@@ -718,7 +754,7 @@
         },
         {
           "name": "Bonus Feats",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Features.PackHunterClassFeatures",
           "standing": "unclassified",
           "display_name": "Bonus Feats (Barbarian Class Features.PackHunterClassFeatures)"
@@ -732,10 +768,45 @@
         },
         {
           "name": "Bonus Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bonus Languages"
+        },
+        {
+          "name": "Bonus Spells",
+          "doneness": "not-started",
+          "type_facet": "Oracle Class Features.ElementalistOracleClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Bonus Spells (Oracle Class Features.ElementalistOracleClassFeatures)"
+        },
+        {
+          "name": "Bonus Spells",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bonus Spells"
+        },
+        {
+          "name": "Bonus Spells",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bonus Spells #3"
+        },
+        {
+          "name": "Bonus Spells",
+          "doneness": "not-started",
+          "type_facet": "Oracle Class Features.RiverSoulClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Bonus Spells (Oracle Class Features.RiverSoulClassFeatures)"
+        },
+        {
+          "name": "Bonus Spells",
+          "doneness": "not-started",
+          "type_facet": "Oracle Class Features.TreeSoulClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Bonus Spells (Oracle Class Features.TreeSoulClassFeatures)"
         },
         {
           "name": "Botanical Plasticity",
@@ -774,7 +845,7 @@
         },
         {
           "name": "Branchwalking",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Slayer Class Features.WoodlandSniperClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Branchwalking"
@@ -788,7 +859,7 @@
         },
         {
           "name": "Breath Siphon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Witch Class Feature.FloodWalkerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Breath Siphon"
@@ -822,15 +893,22 @@
           "display_name": "Burning Renewal"
         },
         {
-          "name": "Call Lightning",
+          "name": "Burst of Nettles",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Burst of Nettles"
+        },
+        {
+          "name": "Call Lightning",
+          "doneness": "done",
           "type_facet": "Bard Class Features.ThundercallerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Call Lightning"
         },
         {
           "name": "Call Lightning Storm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.ThundercallerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Call Lightning Storm"
@@ -844,14 +922,14 @@
         },
         {
           "name": "Camouflage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL11.Extraordinary",
           "standing": "unclassified",
           "display_name": "Camouflage (SpecialQuality.DeedsLVL11.Extraordinary)"
         },
         {
           "name": "Camouflage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.ForesterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Camouflage (Hunter Class Features.ForesterClassFeatures.SpecialQuality.Extraordinary)"
@@ -907,14 +985,14 @@
         },
         {
           "name": "Chimeric Aspect",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Chimeric Aspect"
         },
         {
           "name": "Chimeric Fiend",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.FiendfleshShifterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Chimeric Fiend"
@@ -929,9 +1007,149 @@
         {
           "name": "Class Skills",
           "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.AvengingBeastClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Vigilante Class Features.AvengingBeastClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Gunslinger Class Features.CommandoClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Gunslinger Class Features.CommandoClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.CultivatorClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Bard Class Features.CultivatorClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.DesertRaiderClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Rogue Class Features.DesertRaiderClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.FloodWalkerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Witch Class Feature.FloodWalkerClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Features.ForestPreserverClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Paladin Class Features.ForestPreserverClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.GeomancerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Occultist Class Features.GeomancerClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Features.HuntingPaladinClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Paladin Class Features.HuntingPaladinClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Features.NaturalPhilosopherClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Investigator Class Features.NaturalPhilosopherClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.NaturalistClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Occultist Class Features.NaturalistClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.PatientAmbusherClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Hunter Class Features.PatientAmbusherClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.RiverRatClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Rogue Class Features.RiverRatClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Oracle Class Features.RiverSoulClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Oracle Class Features.RiverSoulClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.SaurianChampionClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Cavalier Class Features.SaurianChampionClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
           "type_facet": "Shifter Class Feature",
           "standing": "unclassified",
-          "display_name": "Class Skills"
+          "display_name": "Class Skills (Shifter Class Feature)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.SlySaboteurClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Rogue Class Features.SlySaboteurClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.SylvanTricksterClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Rogue Class Features.SylvanTricksterClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Oracle Class Features.TreeSoulClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Oracle Class Features.TreeSoulClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.WildernessExplorerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Ranger Class Features.WildernessExplorerClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Features.WildernessWardenClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Paladin Class Features.WildernessWardenClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Swashbuckler Class Features.WildstriderClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Swashbuckler Class Features.WildstriderClassFeatures)"
         },
         {
           "name": "Claws",
@@ -969,6 +1187,13 @@
           "display_name": "Combat Style Feat"
         },
         {
+          "name": "Command Plants",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Command Plants"
+        },
+        {
           "name": "Commando",
           "doneness": "not-started",
           "type_facet": "Archetype.GunslingerArchetype",
@@ -984,7 +1209,7 @@
         },
         {
           "name": "Compression",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.OozemorphClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Compression"
@@ -1005,7 +1230,7 @@
         },
         {
           "name": "Contagious Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Contagious Rage"
@@ -1014,26 +1239,26 @@
           "name": "Control Weather",
           "doneness": "not-started",
           "type_facet": "Ranger Class Features.StormwalkerClassFeatures.SpecialQuality.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Control Weather"
         },
         {
           "name": "Corrupted Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Features.BlightedMyrmidonClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Corrupted Companion"
         },
         {
           "name": "Counter-Interrogation Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkirmisherConditioningSpecialty.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Counter-Interrogation Training"
         },
         {
           "name": "Countercurrent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.RiverDruidClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Countercurrent"
@@ -1082,7 +1307,7 @@
         },
         {
           "name": "Cultural Contact",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.WildernessExplorerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Cultural Contact"
@@ -1110,7 +1335,7 @@
         },
         {
           "name": "Death from Above",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Slayer Class Features.AvalancherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Death from Above"
@@ -1130,8 +1355,15 @@
           "display_name": "Deep Breath"
         },
         {
-          "name": "Defensive Instinct",
+          "name": "Default",
           "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
+        },
+        {
+          "name": "Defensive Instinct",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Defensive Instinct"
@@ -1180,14 +1412,14 @@
         },
         {
           "name": "Desert Walker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.ScarabStalkerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Desert Walker"
         },
         {
           "name": "Detect Evil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.HuntingPaladinClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Detect Evil"
@@ -1198,6 +1430,13 @@
           "type_facet": "Shifter Class Features.RageshaperClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Devastating Form"
+        },
+        {
+          "name": "Diehard",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Diehard"
         },
         {
           "name": "Dinosaur Bond",
@@ -1229,28 +1468,28 @@
         },
         {
           "name": "Disable Magic Device",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Features.SlySaboteurClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Disable Magic Device"
         },
         {
           "name": "Dissipating Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Dissipating Rage"
         },
         {
           "name": "Divinatory Song",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.FilidhClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Divinatory Song"
         },
         {
           "name": "Dizzying Onslaught",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.WildSoulClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Dizzying Onslaught"
@@ -1278,7 +1517,7 @@
         },
         {
           "name": "Dragonbreath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "unclassified",
           "display_name": "Dragonbreath"
@@ -1306,14 +1545,14 @@
         },
         {
           "name": "Dust Devil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Dust Devil"
         },
         {
           "name": "Dust Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Slayer Class Features.DuneRiderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Dust Vision"
@@ -1334,7 +1573,7 @@
         },
         {
           "name": "Earth Hammer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Earth Hammer"
@@ -1362,21 +1601,21 @@
         },
         {
           "name": "Eclipsing Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Eclipsing Rage"
         },
         {
           "name": "Eclipsing Rage, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Eclipsing Rage, Greater"
         },
         {
           "name": "Edicts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts"
@@ -1404,7 +1643,7 @@
         },
         {
           "name": "Elemental Form",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.ElementalistShifterClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Elemental Form (Shifter Class Features.ElementalistShifterClassFeatures.SpecialQuality.Supernatural)"
@@ -1425,16 +1664,16 @@
         },
         {
           "name": "Elemental Revelation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Oracle Class Features.ElementalistOracleClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Elemental Revelation"
         },
         {
           "name": "Elemental Speech",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.ElementalistShifterClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Elemental Speech"
         },
         {
@@ -1460,14 +1699,28 @@
         },
         {
           "name": "End of the Cycle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "End of the Cycle"
         },
         {
-          "name": "Enduring Druid",
+          "name": "Endurance",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Endurance (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Endurance",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.BoasterClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Endurance (Skald Class Features.BoasterClassFeatures)"
+        },
+        {
+          "name": "Enduring Druid",
+          "doneness": "done",
           "type_facet": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Enduring Druid"
@@ -1488,10 +1741,17 @@
         },
         {
           "name": "Enhanced Senses",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Enhanced Senses"
+        },
+        {
+          "name": "Entangle",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Entangle"
         },
         {
           "name": "Entangling Infusion",
@@ -1523,7 +1783,7 @@
         },
         {
           "name": "Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.ForesterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Evasion"
@@ -1537,7 +1797,7 @@
         },
         {
           "name": "Expanded Terrakinesis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Features.TerrakineticistClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Expanded Terrakinesis"
@@ -1551,7 +1811,7 @@
         },
         {
           "name": "Falling Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Slayer Class Features.AvalancherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Falling Dodge"
@@ -1565,7 +1825,7 @@
         },
         {
           "name": "Familiar Symbiosis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magus Class Features.NatureBondedMagusClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Familiar Symbiosis"
@@ -1782,7 +2042,7 @@
         },
         {
           "name": "Feed on Decay",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Features.BlightedMyrmidonClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Feed on Decay"
@@ -1831,7 +2091,7 @@
         },
         {
           "name": "Ferocity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Ferocity (SpecialQuality.Extraordinary)"
@@ -1908,14 +2168,14 @@
         },
         {
           "name": "Fierce Devotion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Features.SaurianChampionClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Fierce Devotion"
         },
         {
           "name": "Fiery Wake",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Fiery Wake"
@@ -1929,14 +2189,14 @@
         },
         {
           "name": "Final Aspect",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Final Aspect"
         },
         {
           "name": "Fire Bomb*",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier",
           "standing": "origin",
           "display_name": "Fire Bomb*"
@@ -1964,14 +2224,14 @@
         },
         {
           "name": "Flash Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.StormwalkerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Flash Shot"
         },
         {
           "name": "Flash Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.StormwalkerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Flash Step"
@@ -2006,7 +2266,7 @@
         },
         {
           "name": "Forbidden Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Fighter Class Features.TribalFighterClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Forbidden Armor"
@@ -2048,7 +2308,7 @@
         },
         {
           "name": "Frightful Boast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skald Class Features.BoasterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Frightful Boast"
@@ -2066,6 +2326,13 @@
           "type_facet": "Alchemist Class Features.IceChemistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Frost Bomb"
+        },
+        {
+          "name": "Fungus Leshy Familiar",
+          "doneness": "not-started",
+          "type_facet": "LeshyTenderChoice2",
+          "standing": "origin",
+          "display_name": "Fungus Leshy Familiar"
         },
         {
           "name": "Fury of Nature",
@@ -2090,7 +2357,7 @@
         },
         {
           "name": "Geographic Lore",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Investigator Class Features.CartographerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Geographic Lore"
@@ -2111,7 +2378,7 @@
         },
         {
           "name": "Geomantic Focus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Features.GeomancerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Geomantic Focus"
@@ -2124,22 +2391,36 @@
           "display_name": "Giant Flytrap"
         },
         {
+          "name": "Gourd Leshy Familiar",
+          "doneness": "not-started",
+          "type_facet": "LeshyTenderChoice1",
+          "standing": "origin",
+          "display_name": "Gourd Leshy Familiar"
+        },
+        {
+          "name": "Great Fortitude",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Great Fortitude (Bloodrager Bloodline Feat)"
+        },
+        {
           "name": "Great Fortitude",
           "doneness": "not-started",
           "type_facet": "Wildborn Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Great Fortitude"
+          "display_name": "Great Fortitude (Wildborn Bonus Feat)"
         },
         {
           "name": "Greater Chimeric Aspect",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Greater Chimeric Aspect"
         },
         {
           "name": "Greater Chimeric Fiend",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.FiendfleshShifterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Greater Chimeric Fiend"
@@ -2153,14 +2434,14 @@
         },
         {
           "name": "Greater Endurance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skald Class Features.BoasterClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Greater Endurance"
         },
         {
           "name": "Green Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Green Empathy (Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Extraordinary)"
@@ -2202,7 +2483,7 @@
         },
         {
           "name": "Green Rebirth",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Features.LeshykineticistClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Green Rebirth"
@@ -2223,10 +2504,17 @@
         },
         {
           "name": "Greensight",
+          "doneness": "done",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Greensight (Bloodrager Bloodline Bonus Spell)"
+        },
+        {
+          "name": "Greensight",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood",
           "standing": "origin",
-          "display_name": "Greensight"
+          "display_name": "Greensight (SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood)"
         },
         {
           "name": "Grim Harvest",
@@ -2244,7 +2532,7 @@
         },
         {
           "name": "Guardian Spirit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.WildernessExplorerClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Guardian Spirit"
@@ -2255,6 +2543,13 @@
           "type_facet": "Archetype.SlayerArchetype",
           "standing": "unclassified",
           "display_name": "Guerrilla"
+        },
+        {
+          "name": "Gun Training",
+          "doneness": "not-started",
+          "type_facet": "CommandoGunTrainingChoice",
+          "standing": "unclassified",
+          "display_name": "Gun Training"
         },
         {
           "name": "Hazard Sense",
@@ -2321,7 +2616,7 @@
         },
         {
           "name": "Hex of Lignification",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ShamanSpiritHex.ShamanWoodHex.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Hex of Lignification"
@@ -2342,14 +2637,14 @@
         },
         {
           "name": "Hide in Plain Sight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL15.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hide in Plain Sight (SpecialQuality.DeedsLVL15.Extraordinary)"
         },
         {
           "name": "Hide in Plain Sight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.ForesterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hide in Plain Sight (Hunter Class Features.ForesterClassFeatures.SpecialQuality.Extraordinary)"
@@ -2384,7 +2679,7 @@
         },
         {
           "name": "Howling Gale",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Howling Gale"
@@ -2398,7 +2693,7 @@
         },
         {
           "name": "Hunt Evil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.HuntingPaladinClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Hunt Evil"
@@ -2433,14 +2728,14 @@
         },
         {
           "name": "Icy Bombs",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Alchemist Class Features.IceChemistClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Icy Bombs"
         },
         {
           "name": "Illiteracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Features.WildbornClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Illiteracy"
@@ -2461,7 +2756,7 @@
         },
         {
           "name": "Improved Avalanche",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Brawler Class Features.LivingAvalancheClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Improved Avalanche"
@@ -2475,14 +2770,14 @@
         },
         {
           "name": "Improved Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.ForesterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Improved Evasion"
         },
         {
           "name": "Improved Familiar Symbiosis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magus Class Features.NatureBondedMagusClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Improved Familiar Symbiosis"
@@ -2503,7 +2798,7 @@
         },
         {
           "name": "Improved Vigor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Features.WastelandMeditantClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Improved Vigor"
@@ -2524,7 +2819,7 @@
         },
         {
           "name": "In the Wind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.AerieProtectorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "In the Wind"
@@ -2545,7 +2840,7 @@
         },
         {
           "name": "Indigenous Spirit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.WildernessExplorerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Indigenous Spirit"
@@ -2559,7 +2854,7 @@
         },
         {
           "name": "Infernal Claws",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.FiendfleshShifterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Infernal Claws"
@@ -2580,21 +2875,21 @@
         },
         {
           "name": "Invincible",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.SummitSentinelClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Invincible"
         },
         {
           "name": "Invoke Decay",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Invoke Decay"
         },
         {
           "name": "Invulnerable Defenses",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.RageshaperClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Invulnerable Defenses"
@@ -2622,14 +2917,14 @@
         },
         {
           "name": "Jungle Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkirmisherConditioningSpecialty.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Jungle Training"
         },
         {
           "name": "Keen Gaze",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SwashbucklerDeedsLVL11.Extraordinary",
           "standing": "origin",
           "display_name": "Keen Gaze"
@@ -2664,21 +2959,21 @@
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.ElementalistShifterClassFeatures",
           "standing": "unclassified",
           "display_name": "Languages"
         },
         {
           "name": "Lasting Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Lasting Breath"
         },
         {
           "name": "Launch Trap",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.PatientAmbusherClassFeatures.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Launch Trap"
@@ -2699,7 +2994,7 @@
         },
         {
           "name": "Leaping Flames",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Leaping Flames"
@@ -2755,10 +3050,24 @@
         },
         {
           "name": "Leshy Speaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.Plant SpeakerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Leshy Speaker"
+        },
+        {
+          "name": "Leshy Stat Bonus",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Leshy Stat Bonus (Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Extraordinary)"
+        },
+        {
+          "name": "Leshy Stat Bonus",
+          "doneness": "not-started",
+          "type_facet": "LeshyTenderChoice1.LeshyTenderChoice2.LeshyTenderChoice3",
+          "standing": "origin",
+          "display_name": "Leshy Stat Bonus (LeshyTenderChoice1.LeshyTenderChoice2.LeshyTenderChoice3)"
         },
         {
           "name": "Leshy Subdomain",
@@ -2776,7 +3085,7 @@
         },
         {
           "name": "Leshy Summoner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Leshy Summoner"
@@ -2811,7 +3120,7 @@
         },
         {
           "name": "Light Infantry Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkirmisherConditioningSpecialty.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Light Infantry Training"
@@ -2832,7 +3141,7 @@
         },
         {
           "name": "Linguistics and Spellcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent",
           "standing": "origin",
           "display_name": "Linguistics and Spellcraft"
@@ -2860,14 +3169,14 @@
         },
         {
           "name": "Living Steel Dolls",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Oracle Class Features.TreeSoulClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Living Steel Dolls"
         },
         {
           "name": "Lizard Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Lizard Stride"
@@ -2881,7 +3190,7 @@
         },
         {
           "name": "Lycanthropic Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.WeretouchedClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Lycanthropic Empathy"
@@ -2895,7 +3204,7 @@
         },
         {
           "name": "Maddening Dance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skald Class Features.BacchanalClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Maddening Dance"
@@ -3021,7 +3330,7 @@
         },
         {
           "name": "Marsh March",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Features.BrutishSwamperClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Marsh March"
@@ -3056,7 +3365,7 @@
         },
         {
           "name": "Metakinesis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Features.WaterDancerClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Metakinesis"
@@ -3168,7 +3477,7 @@
         },
         {
           "name": "Mobile Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Fighter Class Features.SkirmisherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Mobile Mastery"
@@ -3210,7 +3519,7 @@
         },
         {
           "name": "Mudslide",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Mudslide"
@@ -3245,21 +3554,21 @@
         },
         {
           "name": "Natural Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.FilidhClassFeatures",
           "standing": "origin",
           "display_name": "Natural Magic (Bard Class Features.FilidhClassFeatures)"
         },
         {
           "name": "Natural Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Alchemist Class Features.HerbalistClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Natural Magic (Alchemist Class Features.HerbalistClassFeatures.SpecialQuality)"
         },
         {
           "name": "Natural Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magus Class Features.NatureBondedMagusClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Natural Magic (Magus Class Features.NatureBondedMagusClassFeatures.SpecialQuality)"
@@ -3273,14 +3582,14 @@
         },
         {
           "name": "Natural Philosopher's Inspiration",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Investigator Class Features.NaturalPhilosopherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Natural Philosopher's Inspiration"
         },
         {
           "name": "Natural Shield",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.WildernessWardenClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Natural Shield"
@@ -3294,21 +3603,21 @@
         },
         {
           "name": "Nature Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.AerieProtectorClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Nature Bond (Druid Class Features.AerieProtectorClassFeatures.SpecialQuality)"
         },
         {
           "name": "Nature Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Nature Bond (Druid Class Features.SeasonSageClassFeatures.SpecialQuality)"
         },
         {
           "name": "Nature Lore",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.CultivatorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Nature Lore"
@@ -3378,7 +3687,7 @@
         },
         {
           "name": "Nemesis Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.WildSoulClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Nemesis Defense"
@@ -3427,7 +3736,7 @@
         },
         {
           "name": "Oaken Vitality",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Features.GreenKnightClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Oaken Vitality"
@@ -3462,14 +3771,14 @@
         },
         {
           "name": "Omniterrakinesis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Features.TerrakineticistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Omniterrakinesis"
         },
         {
           "name": "One with Nature",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Supernatural",
           "standing": "origin",
           "display_name": "One with Nature"
@@ -3483,14 +3792,14 @@
         },
         {
           "name": "One with the Wild",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.ChameleonAdeptClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "One with the Wild"
         },
         {
           "name": "Ooze Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.OozemorphClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Ooze Empathy"
@@ -3504,7 +3813,7 @@
         },
         {
           "name": "Order Abilities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Order Abilities"
@@ -3525,7 +3834,7 @@
         },
         {
           "name": "Pack Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Pack Rage"
@@ -3553,7 +3862,7 @@
         },
         {
           "name": "Patron Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Features.AvengingBeastClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Patron Spells (Vigilante Class Features.AvengingBeastClassFeatures.SpecialQuality)"
@@ -3561,6 +3870,13 @@
         {
           "name": "Patron Spells",
           "doneness": "not-started",
+          "type_facet": "Witch Class Feature.FloodWalkerClassFeatures",
+          "standing": "origin",
+          "display_name": "Patron Spells (Witch Class Feature.FloodWalkerClassFeatures)"
+        },
+        {
+          "name": "Patron Spells",
+          "doneness": "done",
           "type_facet": "Witch Class Feature.HerbWitchClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Patron Spells (Witch Class Feature.HerbWitchClassFeatures.SpecialQuality)"
@@ -3588,14 +3904,14 @@
         },
         {
           "name": "Photosynthetic Buffer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Features.LeshykineticistClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Photosynthetic Buffer"
         },
         {
           "name": "Phytological Anatomy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Brawler Class Features.VerdantGrapplerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Phytological Anatomy"
@@ -3650,6 +3966,13 @@
           "display_name": "Plant Focus"
         },
         {
+          "name": "Plant Magic",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.CultivatorClassFeatures",
+          "standing": "origin",
+          "display_name": "Plant Magic"
+        },
+        {
           "name": "Plant Master",
           "doneness": "not-started",
           "type_facet": "Archetype.HunterArchetype",
@@ -3672,7 +3995,7 @@
         },
         {
           "name": "Plant Shield",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.PlantMasterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Plant Shield"
@@ -3707,7 +4030,7 @@
         },
         {
           "name": "Poisonous Reaper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.ToxicHerbalistClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Poisonous Reaper"
@@ -3728,10 +4051,17 @@
         },
         {
           "name": "Potent Venom",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.ToxicHerbalistClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Potent Venom"
+        },
+        {
+          "name": "Power Attack",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Power Attack"
         },
         {
           "name": "Power of Nature",
@@ -3763,14 +4093,14 @@
         },
         {
           "name": "Primeval Devotion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Features.SaurianChampionClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Primeval Devotion"
         },
         {
           "name": "Primeval Voice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.DinosaurDruidClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Primeval Voice"
@@ -3784,17 +4114,24 @@
         },
         {
           "name": "Quick Rider",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Features.SaurianChampionClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Quick Rider"
         },
         {
           "name": "Quick Start",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Slayer Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Quick Start"
+        },
+        {
+          "name": "Rage Power",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.BoasterClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Rage Power"
         },
         {
           "name": "Rage Powers",
@@ -3825,6 +4162,13 @@
           "display_name": "Raging Flyer"
         },
         {
+          "name": "Raging Vitality",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "origin",
+          "display_name": "Raging Vitality"
+        },
+        {
           "name": "Raging Whirlwind",
           "doneness": "not-started",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
@@ -3844,6 +4188,13 @@
           "type_facet": "Slayer Class Features.WoodlandSniperClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Ranged Sneak Attack"
+        },
+        {
+          "name": "Ranger Trap",
+          "doneness": "not-started",
+          "type_facet": "CommandoGunTrainingChoice",
+          "standing": "unclassified",
+          "display_name": "Ranger Trap"
         },
         {
           "name": "Rat's Resilience",
@@ -3903,7 +4254,7 @@
         },
         {
           "name": "Retaliation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SwashbucklerDeedsLVL1.DeedHasCost.Extraordinary",
           "standing": "origin",
           "display_name": "Retaliation"
@@ -3917,7 +4268,7 @@
         },
         {
           "name": "River Bound Curse",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Oracle Class Features.RiverSoulClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "River Bound Curse"
@@ -3959,21 +4310,21 @@
         },
         {
           "name": "River Soul Revelation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Oracle Class Features.RiverSoulClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "River Soul Revelation"
         },
         {
           "name": "River Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Witch Class Feature.FloodWalkerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "River Stride"
         },
         {
           "name": "Road Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.RoadKeeperClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Road Bond"
@@ -4036,21 +4387,21 @@
         },
         {
           "name": "Sacred Animal Focus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.ScarabStalkerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Sacred Animal Focus"
         },
         {
           "name": "Sacred Botany",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.ForestPreserverClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sacred Botany"
         },
         {
           "name": "Sacred Claws",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Warpriest Class Features.FeralChampionClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Sacred Claws"
@@ -4071,7 +4422,7 @@
         },
         {
           "name": "Sandstorm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Sandstorm"
@@ -4084,8 +4435,36 @@
           "display_name": "Saurian Champion"
         },
         {
-          "name": "Savage Combatant",
+          "name": "Saurian Champion Mount ~ Large",
           "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Saurian Champion Mount ~ Large"
+        },
+        {
+          "name": "Saurian Champion Mount ~ Medium",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Saurian Champion Mount ~ Medium"
+        },
+        {
+          "name": "Saurian Champion ~ Mount",
+          "doneness": "not-started",
+          "type_facet": "CavalierMountAlternate",
+          "standing": "origin",
+          "display_name": "Saurian Champion ~ Mount"
+        },
+        {
+          "name": "Saurian Champion ~ Mount Bonuses",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Saurian Champion ~ Mount Bonuses"
+        },
+        {
+          "name": "Savage Combatant",
+          "doneness": "done",
           "type_facet": "Cavalier Class Features.SaurianChampionClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Savage Combatant"
@@ -4100,9 +4479,23 @@
         {
           "name": "Scalykind",
           "doneness": "not-started",
+          "type_facet": "Internal.DomainAbility",
+          "standing": "unclassified",
+          "display_name": "Scalykind (Internal.DomainAbility)"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "not-started",
+          "type_facet": "Internal",
+          "standing": "unclassified",
+          "display_name": "Scalykind (Internal)"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "not-started",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
-          "display_name": "Scalykind"
+          "display_name": "Scalykind (InquisitorDomain)"
         },
         {
           "name": "Scamper",
@@ -4189,15 +4582,22 @@
           "display_name": "Season's Veil"
         },
         {
-          "name": "Secrets across Lifetimes",
+          "name": "Seaweed Leshy Familiar",
           "doneness": "not-started",
+          "type_facet": "LeshyTenderChoice3",
+          "standing": "origin",
+          "display_name": "Seaweed Leshy Familiar"
+        },
+        {
+          "name": "Secrets across Lifetimes",
+          "doneness": "done",
           "type_facet": "Druid Class Features.GreenFaithInitiateClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Secrets across Lifetimes"
         },
         {
           "name": "Seed Extract",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Alchemist Class Features.HorticulturistClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Seed Extract"
@@ -4213,7 +4613,7 @@
           "name": "Self-Sufficient",
           "doneness": "not-started",
           "type_facet": "Wildborn Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Self-Sufficient"
         },
         {
@@ -4263,32 +4663,158 @@
           "doneness": "not-started",
           "type_facet": "FavoredClass",
           "standing": "origin",
+          "display_name": "Shifter (FavoredClass)"
+        },
+        {
+          "name": "Shifter",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
           "display_name": "Shifter"
         },
         {
           "name": "Shifter Aspect",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shifter Aspect"
         },
         {
-          "name": "Shifter Claws",
+          "name": "Shifter Claw",
           "doneness": "not-started",
+          "type_facet": "NaturalAttack.NaturalAttackPrimary.Primary",
+          "standing": "origin",
+          "display_name": "Shifter Claw"
+        },
+        {
+          "name": "Shifter Claw 1 (Colossal)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Colossal)"
+        },
+        {
+          "name": "Shifter Claw 1 (Diminutive)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Diminutive)"
+        },
+        {
+          "name": "Shifter Claw 1 (Gargantuan)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Gargantuan)"
+        },
+        {
+          "name": "Shifter Claw 1 (Huge)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Huge)"
+        },
+        {
+          "name": "Shifter Claw 1 (Large)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Large)"
+        },
+        {
+          "name": "Shifter Claw 1 (Medium)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Medium)"
+        },
+        {
+          "name": "Shifter Claw 1 (Small)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Small)"
+        },
+        {
+          "name": "Shifter Claw 1 (Tiny)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Tiny)"
+        },
+        {
+          "name": "Shifter Claw 2 (Colossal)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Colossal)"
+        },
+        {
+          "name": "Shifter Claw 2 (Diminutive)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Diminutive)"
+        },
+        {
+          "name": "Shifter Claw 2 (Gargantuan)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Gargantuan)"
+        },
+        {
+          "name": "Shifter Claw 2 (Huge)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Huge)"
+        },
+        {
+          "name": "Shifter Claw 2 (Large)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Large)"
+        },
+        {
+          "name": "Shifter Claw 2 (Medium)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Medium)"
+        },
+        {
+          "name": "Shifter Claw 2 (Small)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Small)"
+        },
+        {
+          "name": "Shifter Claw 2 (Tiny)",
+          "doneness": "not-started",
+          "type_facet": "NaturalAttack",
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Tiny)"
+        },
+        {
+          "name": "Shifter Claws",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shifter Claws"
         },
         {
           "name": "Shifter's Fury",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Shifter's Fury"
         },
         {
           "name": "Shifter's Slam",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.LeafshifterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Shifter's Slam"
@@ -4315,11 +4841,32 @@
           "display_name": "Shrieker"
         },
         {
+          "name": "Skill Ranks per Level",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.AvengingBeastClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Skill Ranks per Level"
+        },
+        {
+          "name": "Skills",
+          "doneness": "not-started",
+          "type_facet": "Barbarian Class Features.CaveDwellerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Skills (Barbarian Class Features.CaveDwellerClassFeatures)"
+        },
+        {
+          "name": "Skills",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.ChameleonAdeptClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Skills (Hunter Class Features.ChameleonAdeptClassFeatures)"
+        },
+        {
           "name": "Skills",
           "doneness": "not-started",
           "type_facet": "CavalierOrderAbility.SpecialQuality",
           "standing": "unclassified",
-          "display_name": "Skills"
+          "display_name": "Skills (CavalierOrderAbility.SpecialQuality)"
         },
         {
           "name": "Skirmisher",
@@ -4372,7 +4919,7 @@
         },
         {
           "name": "Sniping Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL11.DeedHasCost.Extraordinary",
           "standing": "origin",
           "display_name": "Sniping Shot"
@@ -4386,7 +4933,7 @@
         },
         {
           "name": "Song of Endurance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skald Class Features.BoasterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Song of Endurance"
@@ -4400,7 +4947,7 @@
         },
         {
           "name": "Song of Surmounting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skald Class Features.BoasterClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Song of Surmounting"
@@ -4414,14 +4961,14 @@
         },
         {
           "name": "Song of the Cycle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.FilidhClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Song of the Cycle"
         },
         {
           "name": "Song of the Senses",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skald Class Features.HuntCallerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Song of the Senses"
@@ -4430,26 +4977,26 @@
           "name": "Speak with Plants",
           "doneness": "not-started",
           "type_facet": "Shifter Class Features.VerdantShifterClassFeatures.SpecialQuality.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Speak with Plants"
         },
         {
           "name": "Spellcasting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Features.AvengingBeastClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spellcasting"
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.FlamewardenClassFeatures",
           "standing": "unclassified",
           "display_name": "Spells (Ranger Class Features.FlamewardenClassFeatures)"
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.HuntingPaladinClassFeatures",
           "standing": "unclassified",
           "display_name": "Spells (Paladin Class Features.HuntingPaladinClassFeatures)"
@@ -4457,6 +5004,13 @@
         {
           "name": "Spells",
           "doneness": "not-started",
+          "type_facet": "Ranger Class Features.SummitSentinelClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Spells (Ranger Class Features.SummitSentinelClassFeatures)"
+        },
+        {
+          "name": "Spells",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.WildernessWardenClassFeatures",
           "standing": "unclassified",
           "display_name": "Spells (Paladin Class Features.WildernessWardenClassFeatures)"
@@ -4484,7 +5038,7 @@
         },
         {
           "name": "Spirit Whisperer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Spirit Whisperer"
@@ -4519,7 +5073,7 @@
         },
         {
           "name": "Spring Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural.SeasonRagePower",
           "standing": "origin",
           "display_name": "Spring Rage"
@@ -4533,7 +5087,7 @@
         },
         {
           "name": "Stalwart",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Features.GreenKnightClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Stalwart"
@@ -4577,12 +5131,12 @@
           "name": "Stealthy",
           "doneness": "not-started",
           "type_facet": "Wildborn Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Stealthy"
         },
         {
           "name": "Steam Cloud",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Steam Cloud"
@@ -4603,7 +5157,7 @@
         },
         {
           "name": "Stoking the Embers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.FlamewardenClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Stoking the Embers"
@@ -4624,7 +5178,7 @@
         },
         {
           "name": "Stone's Base",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Stone's Base"
@@ -4687,7 +5241,7 @@
         },
         {
           "name": "Sudden Onset",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.ToxicHerbalistClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sudden Onset"
@@ -4743,7 +5297,7 @@
         },
         {
           "name": "Summon Dinosaur",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.DinosaurDruidClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Summon Dinosaur"
@@ -4771,21 +5325,21 @@
         },
         {
           "name": "Sun at Your Back",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Features.DesertRaiderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sun at Your Back"
         },
         {
           "name": "Sunlight Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sunlight Strike"
         },
         {
           "name": "Sure Footing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sure Footing"
@@ -4812,6 +5366,13 @@
           "display_name": "Swamp"
         },
         {
+          "name": "Swamp Skills",
+          "doneness": "not-started",
+          "type_facet": "Barbarian Class Features.BrutishSwamperClassFeatures",
+          "standing": "origin",
+          "display_name": "Swamp Skills"
+        },
+        {
           "name": "Swamper",
           "doneness": "not-started",
           "type_facet": "Rogue Class Features.RiverRatClassFeatures.SpecialQuality.Extraordinary",
@@ -4820,14 +5381,14 @@
         },
         {
           "name": "Swarmcaller",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Swarmcaller"
         },
         {
           "name": "Swift Switch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SwashbucklerDeedsLVL3.Extraordinary",
           "standing": "origin",
           "display_name": "Swift Switch"
@@ -4862,7 +5423,7 @@
         },
         {
           "name": "Sympathetic Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Features.PackHunterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sympathetic Rage"
@@ -4876,14 +5437,14 @@
         },
         {
           "name": "Take Their Heads",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Features.GreenKnightClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Take Their Heads"
         },
         {
           "name": "Take the High Road",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.RoadKeeperClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Take the High Road"
@@ -4918,14 +5479,14 @@
         },
         {
           "name": "Terrakinesis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Features.TerrakineticistClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Terrakinesis"
         },
         {
           "name": "Terrakinetic Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Features.TerrakineticistClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Terrakinetic Defense"
@@ -4967,7 +5528,7 @@
         },
         {
           "name": "Thorny Bomb*",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.Supernatural.AlchemistBombModifier",
           "standing": "origin",
           "display_name": "Thorny Bomb*"
@@ -5023,7 +5584,7 @@
         },
         {
           "name": "Tight Tunnels",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Features.CaveDwellerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Tight Tunnels"
@@ -5037,7 +5598,7 @@
         },
         {
           "name": "Tireless Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.HuntingPaladinClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Tireless Aura"
@@ -5058,7 +5619,7 @@
         },
         {
           "name": "Tongue of the Sun and Moon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.RiverDruidClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Tongue of the Sun and Moon"
@@ -5076,6 +5637,13 @@
           "type_facet": "Ranger Class Features.FlamewardenClassFeatures.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Touch of Flame"
+        },
+        {
+          "name": "Toughness",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Toughness"
         },
         {
           "name": "Toxic Herbalist",
@@ -5100,14 +5668,14 @@
         },
         {
           "name": "Toxic Touch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.ToxicHerbalistClassFeatures.SpecialQuality.Extraordinary.PoisonUse",
           "standing": "origin",
           "display_name": "Toxic Touch"
         },
         {
           "name": "Toxin Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Toxin Training"
@@ -5128,14 +5696,14 @@
         },
         {
           "name": "Track",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Track (Shifter Class Feature.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Trackless Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Trackless Step"
@@ -5156,7 +5724,7 @@
         },
         {
           "name": "Trap Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DeedsLVL3.DeedHasCost.Extraordinary",
           "standing": "origin",
           "display_name": "Trap Shot"
@@ -5184,7 +5752,7 @@
         },
         {
           "name": "Tree Bound Curse",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Oracle Class Features.TreeSoulClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Tree Bound Curse"
@@ -5235,7 +5803,7 @@
           "name": "Tree Stride",
           "doneness": "not-started",
           "type_facet": "Hunter Class Features.TreestriderClassFeatures.SpecialQuality.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Tree Stride"
         },
         {
@@ -5296,14 +5864,14 @@
         },
         {
           "name": "Tyrant Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Tyrant Totem"
         },
         {
           "name": "Tyrant Totem, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Tyrant Totem, Greater"
@@ -5324,7 +5892,7 @@
         },
         {
           "name": "Unfettered Soul",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.WildSoulClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Unfettered Soul"
@@ -5338,21 +5906,21 @@
         },
         {
           "name": "Unnatural Champion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Antipaladin Class Features.BlightedMyrmidonClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Unnatural Champion"
         },
         {
           "name": "Unrestrained Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Features.RageshaperClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Unrestrained Stride"
         },
         {
           "name": "Unseen Trickster",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Features.FeyPranksterClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Unseen Trickster"
@@ -5442,6 +6010,13 @@
           "display_name": "Verdant Bloodrager Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Verdant Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Verdant Bloodrager Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Verdant Body",
           "doneness": "not-started",
           "type_facet": "Shifter Class Features.VerdantShifterClassFeatures.SpecialQuality.Supernatural",
@@ -5492,7 +6067,7 @@
         },
         {
           "name": "Verdant Voice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.CultivatorClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Verdant Voice"
@@ -5513,28 +6088,28 @@
         },
         {
           "name": "Vermin Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Vermin Empathy"
         },
         {
           "name": "Vermin Whisperer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower.Vermin Domain",
           "standing": "origin",
           "display_name": "Vermin Whisperer"
         },
         {
           "name": "Versatile Weapon Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Swashbuckler Class Features.ArrowChampionClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Versatile Weapon Mastery"
         },
         {
           "name": "Vigor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Features.WastelandMeditantClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Vigor"
@@ -5562,24 +6137,31 @@
         },
         {
           "name": "Voices of Life",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Bard Class Features.FilidhClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Voices of Life"
         },
         {
           "name": "Volcanic Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Volcanic Stride"
         },
         {
           "name": "Volumizer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery.Supernatural",
           "standing": "origin",
           "display_name": "Volumizer"
+        },
+        {
+          "name": "Vulture",
+          "doneness": "not-started",
+          "type_facet": "GreenFaithMarshalDomainSelection.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Vulture"
         },
         {
           "name": "Wall of Terrain",
@@ -5625,7 +6207,7 @@
         },
         {
           "name": "Water Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Features.WaterDancerClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Water Stride"
@@ -5646,7 +6228,7 @@
         },
         {
           "name": "Wave Rush",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.TidalHunterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Wave Rush"
@@ -5688,7 +6270,7 @@
         },
         {
           "name": "Weapon and Armor Proficiencies",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiencies (Shifter Class Feature.SpecialQuality)"
@@ -5703,6 +6285,13 @@
         {
           "name": "Weapon and Armor Proficiency",
           "doneness": "not-started",
+          "type_facet": "Druid Class Features.AerieProtectorClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Druid Class Features.AerieProtectorClassFeatures)"
+        },
+        {
+          "name": "Weapon and Armor Proficiency",
+          "doneness": "not-started",
           "type_facet": "Monk Class Features.MenhirGuardianClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (Monk Class Features.MenhirGuardianClassFeatures.SpecialQuality)"
@@ -5710,6 +6299,27 @@
         {
           "name": "Weapon and Armor Proficiency",
           "doneness": "not-started",
+          "type_facet": "Investigator Class Features.NaturalPhilosopherClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Investigator Class Features.NaturalPhilosopherClassFeatures)"
+        },
+        {
+          "name": "Weapon and Armor Proficiency",
+          "doneness": "not-started",
+          "type_facet": "Shifter Class Features.OozemorphClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Shifter Class Features.OozemorphClassFeatures)"
+        },
+        {
+          "name": "Weapon and Armor Proficiency",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Features.StarWatcherClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Investigator Class Features.StarWatcherClassFeatures)"
+        },
+        {
+          "name": "Weapon and Armor Proficiency",
+          "doneness": "done",
           "type_facet": "Oracle Class Features.TreeSoulClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (Oracle Class Features.TreeSoulClassFeatures.SpecialQuality)"
@@ -5744,14 +6354,14 @@
         },
         {
           "name": "Wild Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.AerieProtectorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Wild Empathy (Druid Class Features.AerieProtectorClassFeatures.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Wild Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Wild Empathy (Shifter Class Feature.SpecialQuality.Extraordinary)"
@@ -5765,7 +6375,7 @@
         },
         {
           "name": "Wild Flurry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Features.MenhirGuardianClassFeatures.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Wild Flurry"
@@ -5808,13 +6418,27 @@
         {
           "name": "Wild Shape",
           "doneness": "not-started",
+          "type_facet": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Wild Shape (Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Supernatural)"
+        },
+        {
+          "name": "Wild Shape",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.RiverDruidClassFeatures.SpecialQuality.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Wild Shape (Druid Class Features.RiverDruidClassFeatures.SpecialQuality.Supernatural)"
+        },
+        {
+          "name": "Wild Shape",
+          "doneness": "not-started",
           "type_facet": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Wild Shape (Druid Class Features.SeasonSageClassFeatures.SpecialQuality)"
         },
         {
           "name": "Wild Shape",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural.DruidWildShape",
           "standing": "unclassified",
           "display_name": "Wild Shape (Shifter Class Feature.SpecialQuality.Supernatural.DruidWildShape)"
@@ -5828,7 +6452,7 @@
         },
         {
           "name": "Wild Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Inquisitor Class Feature.GreenFaithMarshalClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Wild Step"
@@ -5842,7 +6466,7 @@
         },
         {
           "name": "Wild Warrior",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Features.SaurianChampionClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Wild Warrior"
@@ -5863,7 +6487,7 @@
         },
         {
           "name": "Wilderness Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skald Class Features.HuntCallerClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Wilderness Magic"
@@ -5898,14 +6522,14 @@
         },
         {
           "name": "Wind Treader",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.StormwalkerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Wind Treader"
         },
         {
           "name": "Wind at Her Back",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Druid Class Features.AerieProtectorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Wind at Her Back"
@@ -5926,7 +6550,7 @@
         },
         {
           "name": "Winter Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural.SeasonRagePower",
           "standing": "origin",
           "display_name": "Winter Rage"
@@ -6031,7 +6655,7 @@
         },
         {
           "name": "Woodland Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Paladin Class Features.ForestPreserverClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Woodland Stride (Paladin Class Features.ForestPreserverClassFeatures.SpecialQuality.Extraordinary)"
@@ -6045,14 +6669,14 @@
         },
         {
           "name": "Woodland Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magus Class Features.NatureBondedMagusClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Woodland Stride (Magus Class Features.NatureBondedMagusClassFeatures.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Woodland Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Woodland Stride (Shifter Class Feature.SpecialQuality.Extraordinary)"
@@ -6066,7 +6690,7 @@
         },
         {
           "name": "Wrastlin'",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Features.BrutishSwamperClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Wrastlin'"
@@ -6083,11 +6707,11 @@
     {
       "kind": "class",
       "label": "Classes",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1
@@ -6095,7 +6719,7 @@
       "items": [
         {
           "name": "Shifter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC",
           "standing": "origin",
           "display_name": "Shifter"
@@ -6105,11 +6729,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 274,
-      "partial": 16,
+      "done": 283,
+      "partial": 7,
       "not_started": 238,
       "denominator": 528,
-      "pct": 51.9,
+      "pct": 53.6,
       "excluded_from_percentage": 47,
       "standing_breakdown": {
         "origin": 528,
@@ -6419,7 +7043,7 @@
         },
         {
           "name": "Blood Squirt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.HornedLizardRacialTrait",
           "standing": "origin",
           "display_name": "Blood Squirt"
@@ -6489,7 +7113,7 @@
         },
         {
           "name": "Bristles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantCaterpillarRacialTrait",
           "standing": "origin",
           "display_name": "Bristles"
@@ -8974,7 +9598,7 @@
         },
         {
           "name": "Musk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.SkunkRacialTrait.SkunkRacialAbility",
           "standing": "origin",
           "display_name": "Musk"
@@ -9135,7 +9759,7 @@
         },
         {
           "name": "Photophores",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.VampireSquidRacialTrait",
           "standing": "origin",
           "display_name": "Photophores"
@@ -9212,77 +9836,77 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantAssassinBugRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.GiantAssassinBugRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantCaterpillarRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.GiantCaterpillarRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.CreepingPuffballRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.CreepingPuffballRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.EurypteridRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.EurypteridRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.SpecialQuality.PlatypusRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (Extraordinary.SpecialQuality.PlatypusRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.PufferfishRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.PufferfishRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.RashCreeperRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.RashCreeperRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.ReefSnakeRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.ReefSnakeRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.SeaKraitRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.SeaKraitRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.SpittingCobraRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.SpittingCobraRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantWhiptailCentipedeRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.GiantWhiptailCentipedeRacialTrait)"
@@ -9303,7 +9927,7 @@
         },
         {
           "name": "Pollen",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.FloweringLatticeRacialTrait",
           "standing": "origin",
           "display_name": "Pollen"
@@ -9506,7 +10130,7 @@
         },
         {
           "name": "Resistant to Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DweomerCapRacialTrait",
           "standing": "origin",
           "display_name": "Resistant to Spells"
@@ -9667,7 +10291,7 @@
         },
         {
           "name": "Skin Secretions",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.FireSalamanderRacialTrait",
           "standing": "origin",
           "display_name": "Skin Secretions"
@@ -9814,7 +10438,7 @@
         },
         {
           "name": "Spray",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantSkunkRacialTrait",
           "standing": "origin",
           "display_name": "Spray"
@@ -9989,7 +10613,7 @@
         },
         {
           "name": "Toxic Secretion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.PetrifernRacialTrait",
           "standing": "origin",
           "display_name": "Toxic Secretion"
@@ -10140,6 +10764,142 @@
           "type_facet": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Wrecker Feats"
+        }
+      ]
+    },
+    {
+      "kind": "deity",
+      "label": "Deities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 9,
+      "standing_breakdown": {
+        "unclassified": 9
+      },
+      "items": [
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #6"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #7"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #8"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #9"
+        }
+      ]
+    },
+    {
+      "kind": "domain",
+      "label": "Domains",
+      "done": 1,
+      "partial": 2,
+      "not_started": 0,
+      "denominator": 3,
+      "pct": 33.3,
+      "excluded_from_percentage": 3,
+      "standing_breakdown": {
+        "unclassified": 3,
+        "origin": 3
+      },
+      "items": [
+        {
+          "name": "Dragon Subdomain",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Dragon Subdomain"
+        },
+        {
+          "name": "Erosion",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Erosion"
+        },
+        {
+          "name": "Leshy Subdomain",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Leshy Subdomain"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Scalykind"
+        },
+        {
+          "name": "Venom Subdomain",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Venom Subdomain"
+        },
+        {
+          "name": "Vermin",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vermin"
         }
       ]
     },
@@ -11067,8 +11827,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 99,
-      "partial": 13,
-      "not_started": 22,
+      "partial": 32,
+      "not_started": 3,
       "denominator": 134,
       "pct": 73.9,
       "excluded_from_percentage": 3,
@@ -11079,7 +11839,7 @@
       "items": [
         {
           "name": "Advanced Gathlain Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Advanced Gathlain Magic"
@@ -11114,7 +11874,7 @@
         },
         {
           "name": "Aquatic Combatant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Aquatic Combatant"
@@ -11163,7 +11923,7 @@
         },
         {
           "name": "Boon Companion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Boon Companion"
@@ -11198,7 +11958,7 @@
         },
         {
           "name": "Climbing Vine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Climbing Vine"
@@ -11226,14 +11986,14 @@
         },
         {
           "name": "Cover Tracks",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Cover Tracks"
         },
         {
           "name": "Crashing Wave Buffet",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Crashing Wave Buffet"
@@ -11296,7 +12056,7 @@
         },
         {
           "name": "Disruptive Companion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Animal.Combat",
           "standing": "origin",
           "display_name": "Disruptive Companion"
@@ -11331,7 +12091,7 @@
         },
         {
           "name": "Enhanced Gnome Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Enhanced Gnome Magic"
@@ -11380,7 +12140,7 @@
         },
         {
           "name": "False Trail",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "False Trail"
@@ -11394,14 +12154,14 @@
         },
         {
           "name": "Ferocious Beast",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Animal.Combat",
           "standing": "origin",
           "display_name": "Ferocious Beast"
         },
         {
           "name": "Ferocious Feint",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Animal.Combat",
           "standing": "origin",
           "display_name": "Ferocious Feint"
@@ -11450,7 +12210,7 @@
         },
         {
           "name": "Frightful Shape",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Frightful Shape"
@@ -11464,7 +12224,7 @@
         },
         {
           "name": "Greater Gathlain Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Greater Gathlain Magic"
@@ -11499,7 +12259,7 @@
         },
         {
           "name": "Green Tongue",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Green Tongue"
@@ -11597,7 +12357,7 @@
         },
         {
           "name": "Inner Light",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Inner Light"
@@ -11723,7 +12483,7 @@
         },
         {
           "name": "Photosynthetic Healing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Photosynthetic Healing"
@@ -11779,7 +12539,7 @@
         },
         {
           "name": "Seasoned Flier",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Seasoned Flier"
@@ -11821,7 +12581,7 @@
         },
         {
           "name": "Superior Gathlain Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Superior Gathlain Magic"
@@ -11940,7 +12700,7 @@
         },
         {
           "name": "Wild Growth Hex",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Wild Growth Hex"
@@ -12039,13 +12799,63 @@
       ]
     },
     {
-      "kind": "monster_ability",
-      "label": "Monster Abilities",
+      "kind": "language",
+      "label": "Languages",
       "done": 0,
       "partial": 0,
-      "not_started": 1,
-      "denominator": 1,
+      "not_started": 0,
+      "denominator": 0,
       "pct": 0.0,
+      "excluded_from_percentage": 5,
+      "standing_breakdown": {
+        "unclassified": 5
+      },
+      "items": [
+        {
+          "name": "Common (cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand",
+          "standing": "unclassified",
+          "display_name": "Common (cannot speak)"
+        },
+        {
+          "name": "Plantspeech (fungi)",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "Plantspeech (fungi)"
+        },
+        {
+          "name": "Plantspeech (gourds)",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "Plantspeech (gourds)"
+        },
+        {
+          "name": "Plantspeech (seaweed)",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "Plantspeech (seaweed)"
+        },
+        {
+          "name": "Plantspeech (trees)",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "Plantspeech (trees)"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 1,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 1,
+      "pct": 100.0,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "unclassified": 1,
@@ -12054,14 +12864,14 @@
       "items": [
         {
           "name": "Leshy Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Leshy Traits"
         },
         {
           "name": "Plant Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Plant Traits"
@@ -12071,202 +12881,195 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 0,
-      "partial": 0,
-      "not_started": 79,
-      "denominator": 79,
-      "pct": 0.0,
-      "excluded_from_percentage": 24,
+      "done": 13,
+      "partial": 66,
+      "not_started": 1,
+      "denominator": 80,
+      "pct": 16.2,
+      "excluded_from_percentage": 20,
       "standing_breakdown": {
-        "origin": 79,
-        "unclassified": 24
+        "origin": 80,
+        "unclassified": 20
       },
       "items": [
         {
           "name": "+2 Constitution, +2 Charisma, -2 Intelligence",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin",
           "display_name": "+2 Constitution, +2 Charisma, -2 Intelligence"
         },
         {
           "name": "+2 Constitution, +2 Wisdom, -2 Intelligence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Constitution, +2 Wisdom, -2 Intelligence"
         },
         {
           "name": "+2 Dexterity, +2 Charisma",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Dexterity, +2 Charisma"
         },
         {
           "name": "+2 Dexterity, +2 Wisdom, -2 Intelligence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Dexterity, +2 Wisdom, -2 Intelligence"
         },
         {
           "name": "+2 Natural Armor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "+2 Natural Armor"
         },
         {
           "name": "AC Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "AC Bonus"
         },
         {
           "name": "Agile",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Alternate Racial Trait",
           "standing": "unclassified",
           "display_name": "Agile"
         },
         {
           "name": "Bonus Companion Skill Points",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Bonus Companion Skill Points"
         },
         {
           "name": "Bonus Druid Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Bonus Druid Spell (SpecialQuality)"
         },
         {
           "name": "Bonus Druid Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Bonus Druid Spell (SpecialQuality) #2"
         },
         {
           "name": "Bonus Druid Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Bonus Druid Spell (SpecialQuality) #3"
         },
         {
           "name": "Bonus Druid Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Bonus Druid Spell (SpecialQuality) #4"
         },
         {
           "name": "Bonus Druid Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Bonus Druid Spell (SpecialQuality) #5"
         },
         {
           "name": "Burning Hands",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Enhanced Gnome Magic",
           "standing": "unclassified",
           "display_name": "Burning Hands"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape"
         },
         {
           "name": "Climber",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default",
           "standing": "unclassified",
           "display_name": "Climber"
         },
         {
           "name": "Companion Damage Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Companion Damage Bonus"
         },
         {
           "name": "Companion Damage Reduction",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Companion Damage Reduction"
         },
         {
           "name": "Corrosive Touch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Enhanced Gnome Magic",
           "standing": "origin",
           "display_name": "Corrosive Touch"
         },
         {
           "name": "Creator's Legacy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Creator's Legacy"
         },
         {
           "name": "Critical Confirmation Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Critical Confirmation Bonus"
         },
         {
           "name": "Darkvision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Extraordinary.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision"
         },
         {
           "name": "Delicious",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Special Ability.Extraordinary.Weakness",
           "standing": "origin",
           "display_name": "Delicious"
         },
         {
           "name": "Dispel Check Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Dispel Check Bonus"
         },
         {
-          "name": "Fey Traits",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "unclassified",
-          "display_name": "Fey Traits"
-        },
-        {
           "name": "Flighty",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Flighty"
         },
         {
           "name": "Gentle Breeze",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Enhanced Gnome Magic",
           "standing": "origin",
           "display_name": "Gentle Breeze"
@@ -12280,420 +13083,406 @@
         },
         {
           "name": "Grapevine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Alternate Racial Trait",
           "standing": "origin",
           "display_name": "Grapevine"
         },
         {
           "name": "Honey Whisperer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Honey Whisperer"
         },
         {
           "name": "Icicle Dagger",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Enhanced Gnome Magic",
           "standing": "origin",
           "display_name": "Icicle Dagger"
         },
         {
           "name": "Intense Curiosity",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Intense Curiosity"
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Language)"
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Racial Language)"
         },
         {
           "name": "Leshy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Racial Type",
           "standing": "origin",
           "display_name": "Leshy"
         },
         {
-          "name": "Leshy Traits",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "unclassified",
-          "display_name": "Leshy Traits"
-        },
-        {
           "name": "Light Dependent",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Special Ability.Weakness",
           "standing": "origin",
           "display_name": "Light Dependent"
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Extraordinary.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision"
         },
         {
           "name": "Martial Recollection",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.SpecialQuality.Special Quality.Extraordinary",
           "standing": "origin",
           "display_name": "Martial Recollection"
         },
         {
           "name": "Medium",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Size",
           "standing": "unclassified",
           "display_name": "Medium"
         },
         {
           "name": "Mesmerist Plant Trick",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Mesmerist Plant Trick"
         },
         {
           "name": "Movement Bonus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Movement Bonus"
         },
         {
           "name": "Natural Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Natural Magic"
         },
         {
           "name": "Normal Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed"
         },
         {
           "name": "Oratory Check Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Oratory Check Bonus"
         },
         {
           "name": "Otherworldly Gossip",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Otherworldly Gossip"
         },
         {
           "name": "Pass without Trace",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.SpellLike",
           "standing": "unclassified",
           "display_name": "Pass without Trace"
         },
         {
           "name": "Past-Life Knowledge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
           "standing": "unclassified",
           "display_name": "Past-Life Knowledge"
         },
         {
           "name": "Plant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Type",
           "standing": "unclassified",
           "display_name": "Plant"
         },
         {
-          "name": "Plant Traits",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "unclassified",
-          "display_name": "Plant Traits"
-        },
-        {
           "name": "Plantspeech",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Extraordinary",
           "standing": "origin",
           "display_name": "Plantspeech"
         },
         {
           "name": "Poisonous",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Alternate Racial Trait",
           "standing": "origin",
           "display_name": "Poisonous"
         },
         {
           "name": "Rogue Enemy ~ Aberration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Aberration"
         },
         {
           "name": "Rogue Enemy ~ Animal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Animal"
         },
         {
           "name": "Rogue Enemy ~ Construct",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Construct"
         },
         {
           "name": "Rogue Enemy ~ Dragon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Dragon"
         },
         {
           "name": "Rogue Enemy ~ Fey",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Fey"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Aquatic)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Aquatic)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Dwarf)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Dwarf)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Elf)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Elf)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Giant)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Giant)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Gnoll)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Gnoll)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Gnome)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Gnome)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Goblinoid)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Goblinoid)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Halfling)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Halfling)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Human)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Human)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Orc)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Orc)"
         },
         {
           "name": "Rogue Enemy ~ Humanoid (Reptilian)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Humanoid (Reptilian)"
         },
         {
           "name": "Rogue Enemy ~ Magical Beast",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Magical Beast"
         },
         {
           "name": "Rogue Enemy ~ Monstrous Humanoid",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Monstrous Humanoid"
         },
         {
           "name": "Rogue Enemy ~ Ooze",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Ooze"
         },
         {
           "name": "Rogue Enemy ~ Outsider (Air)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Outsider (Air)"
         },
         {
           "name": "Rogue Enemy ~ Outsider (Chaotic)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Outsider (Chaotic)"
         },
         {
           "name": "Rogue Enemy ~ Outsider (Earth)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Outsider (Earth)"
         },
         {
           "name": "Rogue Enemy ~ Outsider (Evil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Outsider (Evil)"
         },
         {
           "name": "Rogue Enemy ~ Outsider (Fire)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Outsider (Fire)"
         },
         {
           "name": "Rogue Enemy ~ Outsider (Good)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Outsider (Good)"
         },
         {
           "name": "Rogue Enemy ~ Outsider (Lawful)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Outsider (Lawful)"
         },
         {
           "name": "Rogue Enemy ~ Outsider (Native)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Outsider (Native)"
         },
         {
           "name": "Rogue Enemy ~ Outsider (Water)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Outsider (Water)"
         },
         {
           "name": "Rogue Enemy ~ Plant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Plant"
         },
         {
           "name": "Rogue Enemy ~ Undead",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Undead"
         },
         {
           "name": "Rogue Enemy ~ Vermin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Rogue Enemy ~ Vermin"
         },
         {
           "name": "Seed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Seed"
         },
         {
           "name": "Shocking Grasp",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Enhanced Gnome Magic",
           "standing": "origin",
           "display_name": "Shocking Grasp"
         },
         {
           "name": "Skald Skill Bonuses",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Skald Skill Bonuses"
         },
         {
           "name": "Slow Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Slow Speed (RacialTraits.Gathlain Racial Trait.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Slow Speed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Racial Speed",
           "standing": "unclassified",
           "display_name": "Slow Speed (RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Racial Speed)"
@@ -12707,98 +13496,98 @@
         },
         {
           "name": "Speak with Plants (trees only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Speak with Plants (trees only)"
         },
         {
           "name": "Spell Duration Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Spell Duration Bonus (SpecialQuality)"
         },
         {
           "name": "Spell Duration Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Spell Duration Bonus (SpecialQuality) #2"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities"
         },
         {
           "name": "Spelleater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Spelleater"
         },
         {
           "name": "Swamp Leshy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Alternate Racial Trait",
           "standing": "origin",
           "display_name": "Swamp Leshy"
         },
         {
           "name": "Titled",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Titled"
         },
         {
           "name": "Tree Dialect",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Tree Dialect"
         },
         {
           "name": "Tree-Born",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Tree-Born"
         },
         {
           "name": "Unassuming Foliage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default",
           "standing": "origin",
           "display_name": "Unassuming Foliage"
         },
         {
           "name": "Verdant Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Supernatural",
           "standing": "origin",
           "display_name": "Verdant Burst"
         },
         {
           "name": "Vine Leshy Toxin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialAttack.Vine Leshy Racial Trait",
           "standing": "origin",
           "display_name": "Vine Leshy Toxin"
         },
         {
           "name": "Wild Empathy Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Wild Empathy Bonus"
         },
         {
           "name": "Wild Shape Armor Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Wild Shape Armor Bonus"
@@ -12837,11 +13626,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 0,
-      "partial": 0,
-      "not_started": 57,
+      "done": 46,
+      "partial": 11,
+      "not_started": 0,
       "denominator": 57,
-      "pct": 0.0,
+      "pct": 80.7,
       "excluded_from_percentage": 4,
       "standing_breakdown": {
         "origin": 57,
@@ -12850,430 +13639,627 @@
       "items": [
         {
           "name": "Alpha Instinct",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Alpha Instinct"
         },
         {
           "name": "Animal Growth (Reptiles Only)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Animal Growth (Reptiles Only)"
         },
         {
           "name": "Animal Shapes (Reptiles Only)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "unclassified",
           "display_name": "Animal Shapes (Reptiles Only)"
         },
         {
           "name": "Aquatic Cavalry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Aquatic Cavalry"
         },
         {
           "name": "Bleed for Your Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Bleed for Your Master"
         },
         {
           "name": "Callback",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Callback"
         },
         {
           "name": "Callback (Greater)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Callback (Greater)"
         },
         {
           "name": "Cave Fangs",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Cave Fangs"
         },
         {
           "name": "Companion Transposition",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Companion Transposition"
         },
         {
           "name": "Delectable Flesh",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Delectable Flesh"
         },
         {
           "name": "Earth Tremor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Earth Tremor"
         },
         {
           "name": "Echo",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Echo"
         },
         {
           "name": "Explosion of Rot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Explosion of Rot"
         },
         {
           "name": "Fey Form I",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Form I"
         },
         {
           "name": "Fey Form II",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Form II"
         },
         {
           "name": "Fey Form III",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Form III"
         },
         {
           "name": "Fey Form IV",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Form IV"
         },
         {
           "name": "Fey Gate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Gate"
         },
         {
           "name": "Flashfire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Flashfire"
         },
         {
           "name": "Forest's Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Forest's Sense"
         },
         {
           "name": "Grasping Vine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Grasping Vine"
         },
         {
           "name": "Green Caress",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Green Caress"
         },
         {
           "name": "Greensight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Greensight"
         },
         {
           "name": "Hidden Spring",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Hidden Spring"
         },
         {
           "name": "Iron Stake",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Iron Stake"
         },
         {
           "name": "Leshy Swarm",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Leshy Swarm"
         },
         {
           "name": "Magical Beast Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Magical Beast Shape"
         },
         {
           "name": "Merge with Familiar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Merge with Familiar"
         },
         {
           "name": "Mirage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Mirage"
         },
         {
           "name": "Ooze Form I",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Ooze Form I"
         },
         {
           "name": "Ooze Form II",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Ooze Form II"
         },
         {
           "name": "Ooze Form III",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Ooze Form III"
         },
         {
           "name": "Pouncing Fury",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Pouncing Fury"
         },
         {
           "name": "Replay Tracks",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine.Psychic",
           "standing": "origin",
           "display_name": "Replay Tracks"
         },
         {
           "name": "Ropeweave",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine.Psychic",
           "standing": "origin",
           "display_name": "Ropeweave"
         },
         {
           "name": "Scamper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Scamper"
         },
         {
           "name": "Sea Stallion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sea Stallion"
         },
         {
           "name": "Sea Steed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sea Steed"
         },
         {
           "name": "Sea of Dust",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sea of Dust"
         },
         {
           "name": "Seed Spies",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Seed Spies"
         },
         {
           "name": "Shapechanger's Gift",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Shapechanger's Gift"
         },
         {
           "name": "Shapechanger's Gift (Greater)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Shapechanger's Gift (Greater)"
         },
         {
           "name": "Signs of the Land",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Signs of the Land"
         },
         {
           "name": "Sky Steed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sky Steed"
         },
         {
           "name": "Snowball",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Snowball"
         },
         {
           "name": "Soothing Mud",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Soothing Mud"
         },
         {
           "name": "Sturdy Tree Fort",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sturdy Tree Fort"
         },
         {
           "name": "Tail Current",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Tail Current"
         },
         {
           "name": "Tailwind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Tailwind"
         },
         {
           "name": "Tamer's Lash",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Tamer's Lash"
         },
         {
           "name": "Tidal Surge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Tidal Surge"
         },
         {
           "name": "Verminous Transformation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Verminous Transformation"
         },
         {
           "name": "Vigilant Rest",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Vigilant Rest"
         },
         {
           "name": "Vine Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Vine Strike"
         },
         {
           "name": "Waft",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Waft"
         },
         {
           "name": "Wandering Weather",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Wandering Weather"
         },
         {
           "name": "Wing Bounty",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Wing Bounty"
         },
         {
           "name": "Wing Thorns",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Wing Thorns"
         },
         {
           "name": "Winter Grasp",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Winter Grasp"
         },
         {
           "name": "With the Wind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "With the Wind"
         },
         {
           "name": "Wooden Wing Shield",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Wooden Wing Shield"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 17,
+      "not_started": 9,
+      "denominator": 26,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 26
+      },
+      "items": [
+        {
+          "name": "Add Swim Speed",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Add Swim Speed"
+        },
+        {
+          "name": "Elementalist Shifter Bonus Languages",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Elementalist Shifter Bonus Languages"
+        },
+        {
+          "name": "Ghoran",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ghoran"
+        },
+        {
+          "name": "Increase Swim Speed",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Increase Swim Speed"
+        },
+        {
+          "name": "IsGhoran",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsGhoran"
+        },
+        {
+          "name": "Shifter Bonus Languages",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Bonus Languages"
+        },
+        {
+          "name": "Shifter Claw 1 (Colossal)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Colossal)"
+        },
+        {
+          "name": "Shifter Claw 1 (Diminutive)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Diminutive)"
+        },
+        {
+          "name": "Shifter Claw 1 (Gargantuan)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Gargantuan)"
+        },
+        {
+          "name": "Shifter Claw 1 (Huge)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Huge)"
+        },
+        {
+          "name": "Shifter Claw 1 (Large)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Large)"
+        },
+        {
+          "name": "Shifter Claw 1 (Medium)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Medium)"
+        },
+        {
+          "name": "Shifter Claw 1 (Small)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Small)"
+        },
+        {
+          "name": "Shifter Claw 1 (Tiny)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 1 (Tiny)"
+        },
+        {
+          "name": "Shifter Claw 2 (Colossal)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Colossal)"
+        },
+        {
+          "name": "Shifter Claw 2 (Diminutive)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Diminutive)"
+        },
+        {
+          "name": "Shifter Claw 2 (Gargantuan)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Gargantuan)"
+        },
+        {
+          "name": "Shifter Claw 2 (Huge)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Huge)"
+        },
+        {
+          "name": "Shifter Claw 2 (Large)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Large)"
+        },
+        {
+          "name": "Shifter Claw 2 (Medium)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Medium)"
+        },
+        {
+          "name": "Shifter Claw 2 (Small)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Small)"
+        },
+        {
+          "name": "Shifter Claw 2 (Tiny)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shifter Claw 2 (Tiny)"
+        },
+        {
+          "name": "Starting Gold UW ~ Average",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold UW ~ Average"
+        },
+        {
+          "name": "Starting Gold UW ~ Maximum",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold UW ~ Maximum"
+        },
+        {
+          "name": "Starting Gold UW ~ Random",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold UW ~ Random"
+        },
+        {
+          "name": "Starting Gold ~ UW",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold ~ UW"
         }
       ]
     }
