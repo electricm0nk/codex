@@ -1,8 +1,8 @@
 # Cycle — SD-34 wave 47 — Divine Scion's magnitude-only remainder: 43 of 45 units closed, one real correction found and fixed mid-recovery
 
-- **Commit SHA:** `PENDING_FEAT_SHA` (`PENDING_FEAT_SHA`, feat commit; this receipt's own SHA
-  fill-in lands in a second, docs-only commit immediately after, following this bundle's own
-  established two-commit pattern)
+- **Commit SHA:** `24666d0667` (`24666d066794e1fc578c4a11cf3913cced8ee2e2`, feat commit; this
+  receipt's own SHA fill-in lands in a second, docs-only commit immediately after, following this
+  bundle's own established two-commit pattern)
 - **Recovery context.** This wave's own build agent (`sd34-wave47.workflow.js`) ran for ~48
   minutes, wrote real, substantial code (a `probe_divine_scion_wiring` function and
   `divine_scion_wired` `EngineFacts` field in `src/bin/v06_work_inventory.rs`, and a
