@@ -1288,4 +1288,67 @@ every population checked so far resolves to precedented, closable small-compute 
 open-ended new subsystem modeling, with the sole exception of Summoner Eidolon/Broodmaster and
 Psychic Detective, both already separately named.
 
+**WAVE 46 UPDATE, 2026-09-05: sub-mechanism-5 re-derived fresh a fourth consecutive time (654,
+exactly matching wave 45's own post-cycle figure -- unlike every prior re-derivation in this
+section, no drift found this time), and 20 units closed across seven registered prestige
+classes.**
+
+**Fresh re-derivation, unchanged from wave 45's close.** `654` total, split `566` registered / `88`
+not registered, identical to wave 45's own post-cycle split — the registry fixture and classifier
+have not moved since wave 45 closed. The 88 not-registered units are the same population wave 45
+named by slug, re-confirmed unchanged.
+
+**Population grouped by owning prestige class: 58 distinct classes** among the 566 registered
+units, from 45 (Divine Scion) down to 1 (Sentinel). Phrenic Slayer's own remaining 11 units stay
+explicitly out of scope (cross-class prime-stat/parent-entry dependency, unchanged from wave 45).
+**A real, useful negative finding from this wave's own scan:** at least 9 Ultimate Psionics
+prestige classes (Sighted Seeker, Thrallherd, Psion Uncarnate, Cerebremancer, Metamind, Elocater,
+Psicrystal Imprinter, Soul Archer, Metaforge) carry the IDENTICAL `AS`/`MB`/`MBAS`/`Ma`/`MaAS`/
+`MaMB`/`MaMBAS` cross-class-manifester-level shape Phrenic Slayer's own excluded 11 units already
+carry — confirmed by direct read, not assumed from the naming pattern alone. This is the same
+underlying subsystem-modeling question repeated across at least 10 classes now, not 10 separate
+questions; a future wave scoping real work against it should treat it as one question.
+
+**Closed this wave: 20 units across seven prestige classes**, every formula read directly from
+its own corpus record (three of the seven needed the class's own level-table file too, not just
+the class_feature record's own tokens — the same cross-file idiom wave 44 established for
+Pathfinder Delver's Guardbreaker), independently cross-checked against the real, non-ingested
+PCGen oracle:
+- **Pathfinder Delver** (extends wave 44's dispatch, no new `ClassId`): Guardbreaker's own record,
+  Master Explorer, Thrilling Escape, Vigilant Combatant, Fortunate Soul, True Seeing — 6 units, all
+  self-contained on the class's own raw level.
+- **Argent Dramaturge**: Argent Performance (rounds + save DC, the "10 + level + ability modifier"
+  idiom) and Dramaturgical Flourish (pool size) — 2 units.
+- **Horizon Walker**: Favored Terrain, Terrain Mastery, Terrain Dominance — 3 pool-size-only units.
+- **Nature Warden**: Companion Bond, Survivalist — 2 raw-level-tracking units (Woodforging, the
+  class's third open unit, carries no magnitude token at all and is left unattempted).
+- **Rage Prophet**: Rage Prophet Mystery, Ragecaster — 2 raw-level-tracking units (Spirit Warrior,
+  the class's third open unit, same no-magnitude-token shape as Woodforging, left unattempted).
+- **Holy Vindicator**: Stigmata — 1 unit (Channel Smite, a bonus-feat grant with no magnitude
+  token, left unattempted).
+- **Stalwart Defender**: AC Bonus, Damage Reduction, Defensive Powers, Defensive Stance — 4 units
+  (Increased Damage Reduction, a pool-member magnitude needing untracked selection state, and
+  Renewed Defense, dice notation this engine does not parse, both left unattempted).
+
+Every new formula was written against real pure-formula tests plus a real-pipeline reachability
+test (26 new lib tests, 15 new bin-level tests), `DONE: 25407→25419 (+12)`,
+`D: 2461→2441 (−20)`, `V: 337→345 (+8)` — not all 20 landed in DONE; 8 landed in bucket V
+(`literal-verified`, "verified by proxy, never by the oracle"), the same D→V shape waves
+41/43/44 already hit, a legitimately-resolved bucket rather than a lesser outcome — independently
+re-derived by the orchestrator against a fresh `completion_atlas.py --check` + direct id→status
+join over 49438 units, confirming exactly these 20 changed and nothing else. Both `cargo test
+--locked --lib` (3121 passed, up from 3095) and the full `cargo test --locked --no-fail-fast`
+integration suite were run this cycle (run to completion twice against the fully-settled tree,
+identically 8545 passed / 0 failed / 67 ignored both times). F1/`shape_ledger.py` census
+re-derived: `5196 → 5193`, verified per-id (3 of the 20 closed units are F1-shaped — Nature
+Warden's Companion Bond and Pathfinder Delver's Thrilling Escape/Fortunate Soul; the other 17 are
+F0/F2/F4/F5), `formula_interpreter_corpus_wide.rs`'s own pinned census test updated to match. Full
+receipt: `artifacts/bucket-d-mining/wave46_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
+**Sub-mechanism 5's remaining population after this wave: 634 (654 − 20)**, split **546
+registered** (across 55 remaining prestige classes; at least 9 confirmed AS/MB/Ma-shaped classes
+are genuinely harder, same bucket as Phrenic Slayer's own remaining 11; several large
+heterogeneous classes like Divine Scion (45 units) remain real but slower closable work) and **88
+not registered** (unchanged, named above).
+
 ---

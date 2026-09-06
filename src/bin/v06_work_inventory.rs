@@ -5585,6 +5585,36 @@ struct EngineFacts {
     /// 31 creature-type sub-records), exactly like `pathfinder_delver_
     /// padfe_wired` above.
     phrenic_slayer_favored_enemy_wired: BTreeSet<String>,
+    /// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): Pathfinder
+    /// Delver's own six-unit extension (Guardbreaker's own record,
+    /// Master Explorer, Thrilling Escape, Vigilant Combatant, Fortunate
+    /// Soul, True Seeing) -- same "no chassis dispatch reaches it" gap and
+    /// same corpus-`key`-keyed shape as `pathfinder_delver_padfe_wired`
+    /// above.
+    pathfinder_delver_wave46_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Argent Dramaturge's two magnitude-bearing class
+    /// features (Argent Performance, Dramaturgical Flourish), keyed by the
+    /// record's own corpus `key`.
+    argent_dramaturge_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Horizon Walker's three pool-size class features
+    /// (Favored Terrain, Terrain Mastery, Terrain Dominance), keyed by the
+    /// record's own corpus `key`.
+    horizon_walker_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Nature Warden's two magnitude-bearing class features
+    /// (Companion Bond, Survivalist), keyed by the record's own corpus
+    /// `key`.
+    nature_warden_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Rage Prophet's two magnitude-bearing class features
+    /// (Rage Prophet Mystery, Ragecaster), keyed by the record's own
+    /// corpus `key`.
+    rage_prophet_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Holy Vindicator's one magnitude-bearing class
+    /// feature (Stigmata), keyed by the record's own corpus `key`.
+    holy_vindicator_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Stalwart Defender's four magnitude-bearing class
+    /// features (AC Bonus, Damage Reduction, Defensive Powers, Defensive
+    /// Stance), keyed by the record's own corpus `key`.
+    stalwart_defender_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -9551,6 +9581,515 @@ fn probe_phrenic_slayer_favored_enemy_wiring(fixture: &CharacterInput) -> BTreeS
     wired
 }
 
+/// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): shared probe body
+/// for every one of this wave's seven single-owner-record class-feature
+/// blocks below -- each has exactly one explanation id per corpus record
+/// (no shared many-member magnitude the way `PHRENIC_SLAYER_FAVORED_ENEMY_
+/// MEMBERS` or the Pathfinder Delver PADFE block do), so a single generic
+/// probe body, parameterised by `(explanation_id, corpus_key)` pairs, real
+/// pipeline unchanged. Same real `compute_pilot_base_chassis` entry point,
+/// same panic-guard discipline, as every other probe in this file.
+fn probe_wave46_single_owner_class_features(
+    fixture: &CharacterInput,
+    class_slug: &str,
+    members: &[(&str, &str)],
+) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &level in SWEEP_LEVELS {
+        let input = class_sweep_input(fixture, class_slug, level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        for (id, corpus_key) in members {
+            if computation.explanations.iter().any(|e| e.id == *id) {
+                wired.insert((*corpus_key).to_string());
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// Pathfinder Delver's own six-unit extension -- `decisions.md §22`'s WAVE
+/// 46 UPDATE. Same real, separate attribution path as `probe_pathfinder_
+/// delver_padfe_wiring` above (no chassis dispatch reaches this class
+/// otherwise); Guardbreaker's own record is distinct from the three PaDFE
+/// sub-records that probe already covers.
+fn probe_pathfinder_delver_wave46_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "pathfinder_delver",
+        &[
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.guardbreaker.bonus",
+                "Pathfinder Delver ~ Guardbreaker",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.master_explorer.skill_bonus",
+                "Pathfinder Delver ~ Master Explorer",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.thrilling_escape.\
+                 uses_per_day",
+                "Pathfinder Delver ~ Thrilling Escape",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.vigilant_combatant.\
+                 initiative_bonus",
+                "Pathfinder Delver ~ Vigilant Combatant",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.fortunate_soul.uses_per_day",
+                "Pathfinder Delver ~ Fortunate Soul",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.true_seeing.caster_level",
+                "Pathfinder Delver ~ True Seeing",
+            ),
+        ],
+    )
+}
+
+/// Argent Dramaturge -- `decisions.md §22`'s WAVE 46 UPDATE. A real
+/// prestige class registered in `prestige_class_entry_gate` (source book
+/// `adventurers_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_argent_dramaturge_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "argent_dramaturge",
+        &[
+            (
+                "class_feature.adventurers_guide.argent_dramaturge.argent_performance.rounds",
+                "Argent Dramaturge ~ Argent Performance",
+            ),
+            (
+                "class_feature.adventurers_guide.argent_dramaturge.dramaturgical_flourish.\
+                 pool_size",
+                "Argent Dramaturge ~ Dramaturgical Flourish",
+            ),
+        ],
+    )
+}
+
+/// Horizon Walker -- `decisions.md §22`'s WAVE 46 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_horizon_walker_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "horizon_walker",
+        &[
+            (
+                "class_feature.advanced_players_guide.horizon_walker.favored_terrain.pool_size",
+                "Horizon Walker ~ Favored Terrain",
+            ),
+            (
+                "class_feature.advanced_players_guide.horizon_walker.terrain_mastery.pool_size",
+                "Horizon Walker ~ Terrain Mastery",
+            ),
+            (
+                "class_feature.advanced_players_guide.horizon_walker.terrain_dominance.\
+                 pool_size",
+                "Horizon Walker ~ Terrain Dominance",
+            ),
+        ],
+    )
+}
+
+/// Nature Warden -- `decisions.md §22`'s WAVE 46 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_nature_warden_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "nature_warden",
+        &[
+            (
+                "class_feature.advanced_players_guide.nature_warden.companion_bond.level",
+                "Nature Warden ~ Companion Bond",
+            ),
+            (
+                "class_feature.advanced_players_guide.nature_warden.survivalist.level",
+                "Nature Warden ~ Survivalist",
+            ),
+        ],
+    )
+}
+
+/// Rage Prophet -- `decisions.md §22`'s WAVE 46 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_rage_prophet_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "rage_prophet",
+        &[
+            (
+                "class_feature.advanced_players_guide.rage_prophet.rage_prophet_mystery.level",
+                "Rage Prophet ~ Rage Prophet Mystery",
+            ),
+            (
+                "class_feature.advanced_players_guide.rage_prophet.ragecaster.level",
+                "Rage Prophet ~ Ragecaster",
+            ),
+        ],
+    )
+}
+
+/// Holy Vindicator -- `decisions.md §22`'s WAVE 46 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_holy_vindicator_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "holy_vindicator",
+        &[(
+            "class_feature.advanced_players_guide.holy_vindicator.stigmata.bonus",
+            "Holy Vindicator ~ Stigmata",
+        )],
+    )
+}
+
+/// Stalwart Defender -- `decisions.md §22`'s WAVE 46 UPDATE. A real
+/// prestige class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_stalwart_defender_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "stalwart_defender",
+        &[
+            (
+                "class_feature.advanced_players_guide.stalwart_defender.ac_bonus.dodge_bonus",
+                "Stalwart Defender ~ AC Bonus",
+            ),
+            (
+                "class_feature.advanced_players_guide.stalwart_defender.damage_reduction.value",
+                "Stalwart Defender ~ Damage Reduction",
+            ),
+            (
+                "class_feature.advanced_players_guide.stalwart_defender.defensive_powers.\
+                 pool_size",
+                "Stalwart Defender ~ Defensive Powers",
+            ),
+            (
+                "class_feature.advanced_players_guide.stalwart_defender.defensive_stance.\
+                 duration_rounds",
+                "Stalwart Defender ~ Defensive Stance",
+            ),
+        ],
+    )
+}
+
+/// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): real-pipeline
+/// reachability proof for every one of this wave's seven probe functions --
+/// against the REAL shared fixture and the REAL `compute_pilot_base_
+/// chassis` pipeline (via `class_sweep_input`, the same entry point the
+/// corpus-wide union sweep uses for every modelled class), proving each
+/// new/extended class-feature block resolves end to end, not merely that
+/// the pure formula functions return the right numbers in isolation.
+#[cfg(test)]
+mod wave46_registered_prestige_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn pathfinder_delver_wave46_extension_is_wired_end_to_end() {
+        let wired = probe_pathfinder_delver_wave46_wiring(&fixture());
+        for expected in [
+            "Pathfinder Delver ~ Guardbreaker",
+            "Pathfinder Delver ~ Master Explorer",
+            "Pathfinder Delver ~ Thrilling Escape",
+            "Pathfinder Delver ~ Vigilant Combatant",
+            "Pathfinder Delver ~ Fortunate Soul",
+            "Pathfinder Delver ~ True Seeing",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn argent_dramaturge_is_wired_end_to_end() {
+        let wired = probe_argent_dramaturge_wiring(&fixture());
+        for expected in
+            ["Argent Dramaturge ~ Argent Performance", "Argent Dramaturge ~ Dramaturgical Flourish"]
+        {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn horizon_walker_is_wired_end_to_end() {
+        let wired = probe_horizon_walker_wiring(&fixture());
+        for expected in [
+            "Horizon Walker ~ Favored Terrain",
+            "Horizon Walker ~ Terrain Mastery",
+            "Horizon Walker ~ Terrain Dominance",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn nature_warden_is_wired_end_to_end() {
+        let wired = probe_nature_warden_wiring(&fixture());
+        for expected in ["Nature Warden ~ Companion Bond", "Nature Warden ~ Survivalist"] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn rage_prophet_is_wired_end_to_end() {
+        let wired = probe_rage_prophet_wiring(&fixture());
+        for expected in ["Rage Prophet ~ Rage Prophet Mystery", "Rage Prophet ~ Ragecaster"] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn holy_vindicator_is_wired_end_to_end() {
+        let wired = probe_holy_vindicator_wiring(&fixture());
+        assert!(
+            wired.contains("Holy Vindicator ~ Stigmata"),
+            "expected the real pipeline to resolve Holy Vindicator's Stigmata: {wired:?}"
+        );
+    }
+
+    #[test]
+    fn stalwart_defender_is_wired_end_to_end() {
+        let wired = probe_stalwart_defender_wiring(&fixture());
+        for expected in [
+            "Stalwart Defender ~ AC Bonus",
+            "Stalwart Defender ~ Damage Reduction",
+            "Stalwart Defender ~ Defensive Powers",
+            "Stalwart Defender ~ Defensive Stance",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    // NOTE: unlike a `probe_*_wired.contains(...)`-shaped negative control,
+    // there is no meaningful "probe returns empty for an unrelated fixture"
+    // case to test here -- every one of this wave's seven probes (like
+    // `probe_pathfinder_delver_padfe_wiring`/`probe_phrenic_slayer_favored_
+    // enemy_wiring` before them) builds its OWN class-specific input via
+    // `class_sweep_input(fixture, "<slug>", level)`, which overwrites
+    // `class_levels` outright regardless of what the passed-in fixture
+    // carries -- so every probe call always sweeps its own named class.
+    // The real negative control -- that none of this wave's new
+    // explanation ids leak onto an UNRELATED class -- is already proven at
+    // the explanation-id level by `mod.rs`'s own
+    // `wave46_registered_prestige_magnitude_formulas_tests::
+    // none_of_the_twenty_ids_leak_onto_an_unrelated_class`, and at the
+    // `classify()`-dispatch level by this module's own `an_unprobed_
+    // stalwart_defender_ac_bonus_record_never_falls_grounded_through_
+    // this_check` below.
+}
+
+/// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): `classify()`-level
+/// proof that each new probe's early-return check actually wins, using
+/// `EngineFacts::default()` with the field manually populated -- the same
+/// discipline `wave44_pathfinder_delver_padfe_probe_classify_tests`-style
+/// modules elsewhere in this file already establish (proves the DISPATCH
+/// chain, independent of whether the probe itself observes the right
+/// explanation ids, which the reachability module above already proves).
+#[cfg(test)]
+mod wave46_registered_prestige_classify_tests {
+    use super::*;
+
+    fn class_feature_unit(book: &str, file: &str, line: usize, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: book.to_string(),
+            kind: Kind::ClassFeature,
+            key: key.to_string(),
+            name: key.split(" ~ ").nth(1).unwrap_or(key).to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    #[test]
+    fn pathfinder_delver_master_explorer_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .pathfinder_delver_wave46_wired
+            .insert("Pathfinder Delver ~ Master Explorer".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            379,
+            "Pathfinder Delver ~ Master Explorer",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "pathfinder_delver_wave46_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    #[test]
+    fn argent_dramaturge_argent_performance_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .argent_dramaturge_wired
+            .insert("Argent Dramaturge ~ Argent Performance".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            24,
+            "Argent Dramaturge ~ Argent Performance",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "argent_dramaturge_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    #[test]
+    fn horizon_walker_favored_terrain_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.horizon_walker_wired.insert("Horizon Walker ~ Favored Terrain".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1295,
+            "Horizon Walker ~ Favored Terrain",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "horizon_walker_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn nature_warden_survivalist_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.nature_warden_wired.insert("Nature Warden ~ Survivalist".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1429,
+            "Nature Warden ~ Survivalist",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "nature_warden_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn rage_prophet_ragecaster_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.rage_prophet_wired.insert("Rage Prophet ~ Ragecaster".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1443,
+            "Rage Prophet ~ Ragecaster",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "rage_prophet_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn holy_vindicator_stigmata_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.holy_vindicator_wired.insert("Holy Vindicator ~ Stigmata".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1278,
+            "Holy Vindicator ~ Stigmata",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "holy_vindicator_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn stalwart_defender_ac_bonus_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.stalwart_defender_wired.insert("Stalwart Defender ~ AC Bonus".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1451,
+            "Stalwart Defender ~ AC Bonus",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "stalwart_defender_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed record of one of this wave's own new
+    /// keys still falls through to whatever the pre-existing classify()
+    /// logic gives it (never a false `grounded`).
+    #[test]
+    fn an_unprobed_stalwart_defender_ac_bonus_record_never_falls_grounded_through_this_check() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1451,
+            "Stalwart Defender ~ AC Bonus",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_ne!(
+            verdict.evidence,
+            "stalwart_defender_probe_observed_a_real_computed_magnitude",
+            "an unprobed record must never resolve through this wave's own new check"
+        );
+    }
+}
+
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -9961,6 +10500,13 @@ fn gather_engine_facts(
             probe_spiritualist_phantom_emotional_focus_wiring(fixture),
         pathfinder_delver_padfe_wired: probe_pathfinder_delver_padfe_wiring(fixture),
         phrenic_slayer_favored_enemy_wired: probe_phrenic_slayer_favored_enemy_wiring(fixture),
+        pathfinder_delver_wave46_wired: probe_pathfinder_delver_wave46_wiring(fixture),
+        argent_dramaturge_wired: probe_argent_dramaturge_wiring(fixture),
+        horizon_walker_wired: probe_horizon_walker_wiring(fixture),
+        nature_warden_wired: probe_nature_warden_wiring(fixture),
+        rage_prophet_wired: probe_rage_prophet_wiring(fixture),
+        holy_vindicator_wired: probe_holy_vindicator_wiring(fixture),
+        stalwart_defender_wired: probe_stalwart_defender_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -13255,6 +13801,83 @@ fn classify(
                     evidence:
                         "phrenic_slayer_favored_enemy_probe_observed_a_real_computed_magnitude"
                             .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): Pathfinder
+            // Delver's own six-unit extension (Guardbreaker's own record,
+            // Master Explorer, Thrilling Escape, Vigilant Combatant,
+            // Fortunate Soul, True Seeing) -- same shape as `pathfinder_
+            // delver_padfe_wired` above (`group` here equals `"Pathfinder
+            // Delver"`, which never matches through `facts.class_books`
+            // since this class carries no `ClassId`-family enum entry).
+            if facts.pathfinder_delver_wave46_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence:
+                        "pathfinder_delver_wave46_probe_observed_a_real_computed_magnitude"
+                            .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 46: five more prestige classes in the same
+            // "registered in `prestige_class_entry_gate`, no `ClassId`
+            // enum entry, no chassis dispatch reaches it" family as
+            // Pathfinder Delver/Phrenic Slayer above -- see each `ground_
+            // <class>_class_features`'s own doc comment (`pilot_compute/
+            // mod.rs`) for its corpus citations.
+            if facts.argent_dramaturge_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "argent_dramaturge_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.horizon_walker_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "horizon_walker_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.nature_warden_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "nature_warden_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.rage_prophet_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "rage_prophet_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.holy_vindicator_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "holy_vindicator_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.stalwart_defender_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "stalwart_defender_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };

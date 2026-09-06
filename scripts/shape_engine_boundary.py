@@ -76,13 +76,22 @@ _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 # re-derived this cycle (same finding wave 44 named and left open: this
 # script's own `not_held_by_engine` pin is stale by hundreds of units,
 # unrelated to this cycle's own scope, not wired into `verify.sh`).
+#
+# SD-34 wave 46 re-derivation: this cycle's own six new `EngineFacts` fields,
+# seven new probe functions, and `classify()` early-return block (all
+# inserted above this site) shifted this block again, 13983 -> 14606. Fresh
+# `grep -n 'if has_real_description'` against the live file -- three hits
+# again -- taking the one whose own next three lines match this block's
+# remaining conditions verbatim, line content read back and confirmed still
+# the real construction site. Population count NOT re-derived this cycle,
+# same reason as wave 44/45's own choice.
 PROMOTION_LADDER_LINES = {
-    13983: "if has_real_description",
-    13984: "&& is_display_wiring_class_for_promotion(wc_class)",
-    13985: "&& !universal_sheet_modifier",
-    13986: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
+    14606: "if has_real_description",
+    14607: "&& is_display_wiring_class_for_promotion(wc_class)",
+    14608: "&& !universal_sheet_modifier",
+    14609: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
 }
-PROMOTION_LADDER_ANCHOR_LINE = 13986
+PROMOTION_LADDER_ANCHOR_LINE = 14609
 
 
 class StaleCitationError(RuntimeError):
@@ -147,7 +156,7 @@ def build_report(units: list) -> dict:
     stuck = not_held_by_engine(mag)
 
     ladder_source = "".join(
-        _read_source_lines(_ENGINE_SRC)[13982:13986]  # lines 13983..13986, 0-indexed slice
+        _read_source_lines(_ENGINE_SRC)[14605:14609]  # lines 14606..14609, 0-indexed slice
     )
 
     return {

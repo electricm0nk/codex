@@ -82,8 +82,12 @@ ENGINE_SURFACE_CITATIONS = {
     # SD-34 wave 45 re-derivation: this cycle's own Phrenic Slayer Favored
     # Enemy insertions (above both sites) shifted them again, 14013 -> 14093
     # and 14113 -> 14193.
-    "companion": {"line": 14093, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 14193, "must_contain": "power_content_has_no_engine_table"},
+    # SD-34 wave 46 re-derivation: this cycle's own six new `EngineFacts`
+    # fields, seven new probe functions, and `classify()` early-return block
+    # (all above both sites) shifted them again, 14093 -> 14716 and
+    # 14193 -> 14816.
+    "companion": {"line": 14716, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 14816, "must_contain": "power_content_has_no_engine_table"},
 }
 
 

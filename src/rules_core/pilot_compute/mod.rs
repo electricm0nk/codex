@@ -6353,6 +6353,20 @@ const PATHFINDER_DELVER_CLASS_ID: &str = "class:pathfinder_delver";
 /// family enum entry, no chassis dispatch reaches it" gap as Pathfinder
 /// Delver above.
 const PHRENIC_SLAYER_CLASS_ID: &str = "class:phrenic_slayer";
+/// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): the class ids
+/// `ground_pathfinder_delver_class_features`'s six-unit extension and the
+/// five new `ground_<class>_class_features` functions below need -- the
+/// SAME "real prestige class, registered in `prestige_class_entry_gate`,
+/// no `ClassId`-family enum entry, no chassis dispatch reaches it" gap as
+/// Pathfinder Delver/Phrenic Slayer above. Every one matches its own entry
+/// in `tests/fixtures/rules_core/prestige-class-entry-requirements.json`
+/// exactly (`class:<slug>`).
+const ARGENT_DRAMATURGE_CLASS_ID: &str = "class:argent_dramaturge";
+const HORIZON_WALKER_CLASS_ID: &str = "class:horizon_walker";
+const NATURE_WARDEN_CLASS_ID: &str = "class:nature_warden";
+const RAGE_PROPHET_CLASS_ID: &str = "class:rage_prophet";
+const HOLY_VINDICATOR_CLASS_ID: &str = "class:holy_vindicator";
+const STALWART_DEFENDER_CLASS_ID: &str = "class:stalwart_defender";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` idiom. Verified against
@@ -9093,6 +9107,17 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // "registered prestige class, magnitude-only" remainder -- same
     // unconditional placement as the five prestige-class functions above.
     ground_phrenic_slayer_class_features(input, &mut explanations);
+
+    // SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): five more
+    // prestige classes in the same "registered, no `ClassId` enum entry,
+    // magnitude-only" remainder -- same unconditional placement as the
+    // Pathfinder Delver/Phrenic Slayer functions above.
+    ground_argent_dramaturge_class_features(input, &ability_modifiers, &mut explanations);
+    ground_horizon_walker_class_features(input, &mut explanations);
+    ground_nature_warden_class_features(input, &mut explanations);
+    ground_rage_prophet_class_features(input, &mut explanations);
+    ground_holy_vindicator_class_features(input, &mut explanations);
+    ground_stalwart_defender_class_features(input, &ability_modifiers, &mut explanations);
 
     // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
     // class-feature blocker into three named pillars, and ground Track and
@@ -35012,31 +35037,205 @@ fn ground_pathfinder_delver_class_features(
         return;
     };
 
-    let Some(bonus) = pathfinder_delver_padfe_bonus(level) else {
-        return;
-    };
+    if let Some(bonus) = pathfinder_delver_padfe_bonus(level) {
+        for (feature_slug, creature_type) in [
+            ("padfe_construct", "constructs"),
+            ("padfe_ooze", "oozes"),
+            ("padfe_undead", "undead creatures"),
+        ] {
+            explanations.push(ComputationExplanation {
+                id: format!(
+                    "class_feature.adventurers_guide.pathfinder_delver.{feature_slug}.bonus"
+                ),
+                value: bonus,
+                detail: format!(
+                    "Pathfinder Delver level {level} Guardbreaker: a +{bonus} bonus on Bluff, \
+                     Knowledge, Perception, Sense Motive, and Survival checks made against \
+                     {creature_type}, and the same bonus on weapon attack and damage rolls \
+                     against them (corpus `Favored{{Construct,Ooze,Undead}} = TrapSenseBonus`, \
+                     `TrapSenseBonus = RogueTrapSenseLVL/3`, `RogueTrapSenseLVL = PaDLVL+1` for \
+                     a Pathfinder-Delver-only character). Grounds only the flat bonus \
+                     magnitude; it modifies no actual skill, attack, or damage total, and this \
+                     bonus never applies if the character already has Ranger's own real \
+                     Favored Enemy of that type (this engine does not model that override \
+                     precondition)"
+                ),
+            });
+        }
 
-    for (feature_slug, creature_type) in [
-        ("padfe_construct", "constructs"),
-        ("padfe_ooze", "oozes"),
-        ("padfe_undead", "undead creatures"),
-    ] {
+        // SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): Guardbreaker's
+        // OWN record (`ag_abilities_class.lst:382` -- `KEY:Pathfinder Delver
+        // ~ Guardbreaker`, `BONUS:VAR|FavoredConstruct,FavoredOoze,
+        // FavoredUndead|TrapSenseBonus`) is a distinct corpus unit from the
+        // three PaDFE sub-records above (which only reference the SAME
+        // `TrapSenseBonus` variable via their own `Favored<Type>` `ASPECT`).
+        // Same magnitude, same level gate, its own explanation id.
         explanations.push(ComputationExplanation {
-            id: format!("class_feature.adventurers_guide.pathfinder_delver.{feature_slug}.bonus"),
+            id: "class_feature.adventurers_guide.pathfinder_delver.guardbreaker.bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Pathfinder Delver level {level} Guardbreaker: a +{bonus} bonus on Bluff, \
-                 Knowledge, Perception, Sense Motive, and Survival checks made against \
-                 {creature_type}, and the same bonus on weapon attack and damage rolls against \
-                 them (corpus `Favored{{Construct,Ooze,Undead}} = TrapSenseBonus`, \
-                 `TrapSenseBonus = RogueTrapSenseLVL/3`, `RogueTrapSenseLVL = PaDLVL+1` for a \
-                 Pathfinder-Delver-only character). Grounds only the flat bonus magnitude; it \
-                 modifies no actual skill, attack, or damage total, and this bonus never \
-                 applies if the character already has Ranger's own real Favored Enemy of that \
-                 type (this engine does not model that override precondition)"
+                "Pathfinder Delver level {level} Guardbreaker: sets `FavoredConstruct`, \
+                 `FavoredOoze`, and `FavoredUndead` to `TrapSenseBonus` ({bonus}) -- the same \
+                 magnitude the three PaDFE sub-records above ground, on the granting record \
+                 itself (corpus `BONUS:VAR|FavoredConstruct,FavoredOoze,FavoredUndead|\
+                 TrapSenseBonus`, `ag_abilities_class.lst:382`)"
             ),
         });
     }
+
+    if let Some(bonus) = pathfinder_delver_master_explorer_skill_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_delver.master_explorer.skill_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pathfinder Delver level {level} Master Explorer: a +{bonus} bonus on Disable \
+                 Device and Perception checks (corpus `PaDSkillBonus = max(1,CL/2)`, granted \
+                 level 1, `ag_classes.lst:285`). Grounds standalone: this engine computes no \
+                 Disable-Device/Perception-skill total"
+            ),
+        });
+    }
+
+    if let Some(times) = pathfinder_delver_thrilling_escape_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_delver.thrilling_escape.uses_per_day"
+                .to_owned(),
+            value: times,
+            detail: format!(
+                "Pathfinder Delver level {level} Thrilling Escape: usable {times}/day (corpus \
+                 `PaDEscapeTimes`, a cumulative `+1` at levels 3, 7, and 9, `ag_classes.lst:\
+                 287,291,292`). Grounds standalone: this engine tracks no per-day use budget \
+                 for it"
+            ),
+        });
+    }
+
+    if let Some(initiative) = pathfinder_delver_vigilant_combatant_initiative_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_delver.vigilant_combatant.\
+                 initiative_bonus"
+                .to_owned(),
+            value: initiative,
+            detail: format!(
+                "Pathfinder Delver level {level} Vigilant Combatant: a +{initiative} bonus on \
+                 initiative checks (corpus `PaDInitiative = CL/2`, granted level 4, \
+                 `ag_classes.lst:288`). No initiative total exists anywhere in this engine, so \
+                 this grounds standalone -- the same shape as Duelist's own Improved Reaction"
+            ),
+        });
+    }
+
+    if let Some(times) = pathfinder_delver_fortunate_soul_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_delver.fortunate_soul.uses_per_day"
+                .to_owned(),
+            value: times,
+            detail: format!(
+                "Pathfinder Delver level {level} Fortunate Soul: usable {times}/day (corpus \
+                 `PaDFortunateTimes`, a cumulative `+1` at levels 6 and 10, `ag_classes.lst:\
+                 290,293`). Grounds standalone: this engine tracks no per-day use budget for it"
+            ),
+        });
+    }
+
+    if let Some(caster_level) = pathfinder_delver_true_seeing_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_delver.true_seeing.caster_level"
+                .to_owned(),
+            value: caster_level,
+            detail: format!(
+                "Pathfinder Delver level {level} True Seeing: 1/day spell-like ability \
+                 (functions as true seeing), caster level {caster_level} (corpus `SPELLS:\
+                 Pathfinder Delver|TIMES=1|CASTERLEVEL=PaDLvl|True Seeing,...`, `PaDLvl = CL`, \
+                 granted level 9, `ag_classes.lst:292`). Grounds the caster level and the \
+                 literal `1`/day use count only; no spell-effect total exists anywhere in this \
+                 engine for it to layer onto"
+            ),
+        });
+    }
+}
+
+/// Pathfinder Delver Master Explorer (`ag_abilities_class.lst:379`,
+/// `KEY:Pathfinder Delver ~ Master Explorer`): `DEFINE:PaDSkillBonus|0`,
+/// consumed by `BONUS:SKILL|Disable Device,Perception|PaDSkillBonus`. The
+/// formula itself -- `BONUS:VAR|PaDSkillBonus|max(1,CL/2)` -- lives on the
+/// class's own level-1 grant row (`ag_classes.lst:285`), the SAME
+/// cross-file "class-table BONUS:VAR sets the variable the class_feature
+/// record's own DEFINE only defaults to 0" idiom `pathfinder_delver_padfe_
+/// bonus` above already establishes for this class (`TrapSenseBonus`).
+/// Granted from class level 1. `None` below level 1.
+fn pathfinder_delver_master_explorer_skill_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let level = i16::from(level);
+    Some(std::cmp::max(1, level / 2))
+}
+
+/// Pathfinder Delver Thrilling Escape (`ag_abilities_class.lst:381`,
+/// `KEY:Pathfinder Delver ~ Thrilling Escape`): `DEFINE:PaDEscapeTimes|0`.
+/// `ag_classes.lst` grants a cumulative `BONUS:VAR|PaDEscapeTimes|1` three
+/// separate times -- level 3 (`line 287`, alongside Guardbreaker), level 7
+/// (`line 291`), and level 9 (`line 292`, alongside True Seeing) -- so the
+/// real running total is 1 (levels 3-6), 2 (levels 7-8), 3 (level 9+).
+/// `None` below level 3 (never granted).
+fn pathfinder_delver_thrilling_escape_uses_per_day(level: u8) -> Option<i16> {
+    if level < 3 {
+        return None;
+    }
+    let mut times = 1;
+    if level >= 7 {
+        times += 1;
+    }
+    if level >= 9 {
+        times += 1;
+    }
+    Some(times)
+}
+
+/// Pathfinder Delver Vigilant Combatant (`ag_abilities_class.lst:384`,
+/// `KEY:Pathfinder Delver ~ Vigilant Combatant`): `DEFINE:PaDInitiative|0`,
+/// consumed by `BONUS:COMBAT|Initiative|PaDInitiative`. The formula --
+/// `BONUS:VAR|PaDInitiative|CL/2` -- lives on the class's own level-4 grant
+/// row (`ag_classes.lst:288`), the same cross-file idiom as Master Explorer
+/// above. Granted from class level 4. `None` below level 4.
+fn pathfinder_delver_vigilant_combatant_initiative_bonus(level: u8) -> Option<i16> {
+    if level < 4 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// Pathfinder Delver Fortunate Soul (`ag_abilities_class.lst:386`,
+/// `KEY:Pathfinder Delver ~ Fortunate Soul`): `DEFINE:PaDFortunateTimes|0`.
+/// `ag_classes.lst` grants a cumulative `BONUS:VAR|PaDFortunateTimes|1`
+/// twice -- level 6 (`line 290`) and level 10 (`line 293`, alongside Nick
+/// of Time) -- so the real running total is 1 (levels 6-9), 2 (level 10).
+/// `None` below level 6 (never granted).
+fn pathfinder_delver_fortunate_soul_uses_per_day(level: u8) -> Option<i16> {
+    if level < 6 {
+        return None;
+    }
+    let mut times = 1;
+    if level >= 10 {
+        times += 1;
+    }
+    Some(times)
+}
+
+/// Pathfinder Delver True Seeing (`ag_abilities_class.lst:387`,
+/// `KEY:Pathfinder Delver ~ True Seeing`): `SPELLS:Pathfinder Delver|\
+/// TIMES=1|CASTERLEVEL=PaDLvl|True Seeing,16+max(INT,WIS,CHA)`, granted at
+/// class level 9 (`ag_classes.lst:292`). `PaDLvl = CL` (the class's own
+/// raw level, `ag_classes.lst:279`, `BONUS:VAR|PaDLVL|CL`) -- the same
+/// "raw class level" caster-level idiom Shadowdancer's own Shadow
+/// Illusion/Shadow Call already established. `None` below level 9.
+fn pathfinder_delver_true_seeing_caster_level(level: u8) -> Option<i16> {
+    if level < 9 {
+        return None;
+    }
+    Some(i16::from(level))
 }
 
 /// Ultimate Psionics Phrenic Slayer's 31 Favored Enemy creature-type
@@ -35165,6 +35364,601 @@ fn ground_phrenic_slayer_class_features(
                  `SlayerFavoredEnemy`, the identical shared magnitude the base Favored Enemy \
                  record above already grounds -- this sub-record's own `ASPECT` references the \
                  SAME variable, and defines no `DEFINE`/`BONUS` token of its own)"
+            ),
+        });
+    }
+}
+
+/// Argent Dramaturge Argent Performance (`ag_abilities_class.lst:24`,
+/// `KEY:Argent Dramaturge ~ Argent Performance`): `DEFINE:
+/// ArgentPerformanceRounds|0` / `BONUS:VAR|ArgentPerformanceRounds|
+/// ArgentDramaturgeLVL*2` -- rounds of bardic-performance-style use per day,
+/// the same "level*2" idiom Bard's own bardic performance rounds already use.
+/// Granted from class level 1 (no `PREVARGTEQ` gate on this token). `None`
+/// below level 1.
+fn argent_dramaturge_argent_performance_rounds(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) * 2)
+}
+
+/// Argent Dramaturge Argent Performance's save DC (same record):
+/// `DEFINE:ArgentPerformanceDC|0` / `BONUS:VAR|ArgentPerformanceDC|
+/// 10+ArgentDramaturgeLVL+CHA` -- the classic "10 + level factor + ability
+/// modifier" save-DC idiom (`warpriest_channel_energy_dc`'s own shape),
+/// `CHA` here being the Charisma MODIFIER (this codebase's established
+/// convention for a bare ability abbreviation inside a `BONUS:VAR` DC
+/// formula, matching `warpriest_channel_energy_dc`'s own Wisdom-modifier
+/// parameter). Granted from class level 1. `None` below level 1.
+fn argent_dramaturge_argent_performance_dc(level: u8, charisma_modifier: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10 + i16::from(level) + charisma_modifier)
+}
+
+/// Argent Dramaturge Dramaturgical Flourish (`ag_abilities_class.lst:25`,
+/// `KEY:Argent Dramaturge ~ Dramaturgical Flourish`): `BONUS:ABILITYPOOL|
+/// Dramaturgical Flourish Choice|ArgentDramaturgeLVL/2` -- the SIZE of the
+/// dramaturgical-flourish choice pool (one flourish at 2nd level and every
+/// two levels after), the same "grounds the pool SIZE only" shape
+/// `loremaster_secret_lore_pool_size` already established; which flourish
+/// is chosen from the list is not modelled. `None` below level 1 (the
+/// formula itself yields 0 below level 2, no separate gate needed).
+fn argent_dramaturge_dramaturgical_flourish_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// Grounds Argent Dramaturge's two magnitude-bearing class features --
+/// `decisions.md §22`'s WAVE 46 UPDATE, sub-mechanism-5's "registered
+/// prestige class, magnitude-only" remainder. Unconditional on chassis
+/// support (no `ClassId`-family enum entry for this class), same placement
+/// as `ground_phrenic_slayer_class_features` above.
+fn ground_argent_dramaturge_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ARGENT_DRAMATURGE_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(rounds) = argent_dramaturge_argent_performance_rounds(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.argent_dramaturge.argent_performance.rounds"
+                .to_owned(),
+            value: rounds,
+            detail: format!(
+                "Argent Dramaturge level {level} Argent Performance: usable {rounds} rounds \
+                 per day (corpus `ArgentPerformanceRounds = ArgentDramaturgeLVL*2`, shared with \
+                 bardic performance rounds). Grounds standalone: this engine tracks no shared \
+                 bardic-performance-rounds pool for it to add into"
+            ),
+        });
+    }
+
+    if let Some(dc) =
+        argent_dramaturge_argent_performance_dc(level, ability_modifiers.charisma)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.argent_dramaturge.argent_performance.dc"
+                .to_owned(),
+            value: dc,
+            detail: format!(
+                "Argent Dramaturge level {level} Argent Performance save DC {dc} (corpus \
+                 `ArgentPerformanceDC = 10+ArgentDramaturgeLVL+CHA`, this character's Charisma \
+                 modifier {cha_mod:+}). Grounds the DC magnitude only; no save is actually \
+                 rolled by this engine",
+                cha_mod = ability_modifiers.charisma
+            ),
+        });
+    }
+
+    if let Some(pool) = argent_dramaturge_dramaturgical_flourish_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.argent_dramaturge.dramaturgical_flourish.\
+                 pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Argent Dramaturge level {level} Dramaturgical Flourish: a pool of {pool} \
+                 dramaturgical flourishes (corpus `ArgentDramaturgeLVL/2`). Grounds the pool \
+                 SIZE only -- which flourish is chosen is not modelled"
+            ),
+        });
+    }
+}
+
+/// Horizon Walker Favored Terrain (`apg_abilities_class.lst:1295`,
+/// `KEY:Horizon Walker ~ Favored Terrain`): `DEFINE:
+/// HorizonWalkerFavoredTerrainLVL|0` / `BONUS:VAR|
+/// HorizonWalkerFavoredTerrainLVL|HorizonWalkerLVL` / `BONUS:VAR|
+/// FavoredTerrainPool|(2*(HorizonWalkerFavoredTerrainLVL+1))/3` -- the SIZE
+/// of the favored-terrain pool granted alongside the ranger-style favored
+/// terrain chooser (`VISIBLE:NO`, an internal bookkeeping record; no
+/// `PREVARGTEQ` gate, active from level 1). Grounds the pool SIZE only,
+/// the same shape `loremaster_secret_lore_pool_size` already established.
+/// `None` below level 1.
+fn horizon_walker_favored_terrain_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let hw_level = i16::from(level);
+    Some((2 * (hw_level + 1)) / 3)
+}
+
+/// Horizon Walker Terrain Mastery (`apg_abilities_class.lst:1313`,
+/// `KEY:Horizon Walker ~ Terrain Mastery`): `BONUS:ABILITYPOOL|Terrain
+/// Mastery Selection|HorizonWalkerLVL/2` -- the SIZE of the terrain-mastery
+/// choice pool (one terrain mastered at 2nd level and every two levels
+/// after). No `PREVARGTEQ` gate; the formula itself yields 0 below level 2.
+/// `None` below level 1.
+fn horizon_walker_terrain_mastery_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// Horizon Walker Terrain Dominance (`apg_abilities_class.lst:1337`,
+/// `KEY:Horizon Walker ~ Terrain Dominance`): `BONUS:ABILITYPOOL|Terrain
+/// Dominance Selection|HorizonWalkerLVL/3` -- the SIZE of the
+/// terrain-dominance choice pool (one dominance at 3rd level and every
+/// three levels after). No `PREVARGTEQ` gate; the formula itself yields 0
+/// below level 3. `None` below level 1.
+fn horizon_walker_terrain_dominance_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 3)
+}
+
+/// Grounds Horizon Walker's three pool-size class features --
+/// `decisions.md §22`'s WAVE 46 UPDATE. Unconditional on chassis support
+/// (no `ClassId`-family enum entry for this class), same placement as
+/// `ground_phrenic_slayer_class_features` above.
+fn ground_horizon_walker_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == HORIZON_WALKER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = horizon_walker_favored_terrain_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.horizon_walker.favored_terrain.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Horizon Walker level {level} Favored Terrain: a pool of {pool} (corpus \
+                 `FavoredTerrainPool = (2*(HorizonWalkerFavoredTerrainLVL+1))/3`, \
+                 `HorizonWalkerFavoredTerrainLVL = HorizonWalkerLVL`). Grounds the pool SIZE \
+                 only -- which terrain is chosen is not modelled"
+            ),
+        });
+    }
+
+    if let Some(pool) = horizon_walker_terrain_mastery_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.horizon_walker.terrain_mastery.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Horizon Walker level {level} Terrain Mastery: a pool of {pool} (corpus \
+                 `HorizonWalkerLVL/2`). Grounds the pool SIZE only -- which terrain is mastered \
+                 is not modelled"
+            ),
+        });
+    }
+
+    if let Some(pool) = horizon_walker_terrain_dominance_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.horizon_walker.terrain_dominance.\
+                 pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Horizon Walker level {level} Terrain Dominance: a pool of {pool} (corpus \
+                 `HorizonWalkerLVL/3`). Grounds the pool SIZE only -- which terrain gains \
+                 dominance is not modelled"
+            ),
+        });
+    }
+}
+
+/// Nature Warden Companion Bond (`apg_abilities_class.lst:1421`,
+/// `KEY:Nature Warden ~ Companion Bond`): `DEFINE:CompanionBondLVL|0`,
+/// with the formula `BONUS:VAR|CompanionBondLVL|NatureWardenLVL` living on
+/// the class's own level-1 grant row (`apg_classes.lst:460`), the same
+/// cross-file "class-table BONUS:VAR sets the variable" idiom
+/// `pathfinder_delver_padfe_bonus` established for Pathfinder Delver.
+/// Grounds the raw level-tracking magnitude (nature warden levels stack
+/// with animal-companion-granting class levels for the companion's own
+/// progression, a companion-progression fact this engine does not model
+/// beyond the magnitude itself). Granted from class level 1. `None` below
+/// level 1.
+fn nature_warden_companion_bond_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Nature Warden Survivalist (`apg_abilities_class.lst:1429`,
+/// `KEY:Nature Warden ~ Survivalist`): `BONUS:VAR|SurvivalistLVL|
+/// NatureWardenLVL`, in the record's own tokens (no external class-table
+/// lookup needed, unlike Companion Bond above). A raw level-tracking
+/// magnitude; the qualitative "no penalty for improvised weapons"/
+/// "masterwork treatment" effects it gates are not modelled beyond the
+/// magnitude itself. Granted from class level 1. `None` below level 1.
+fn nature_warden_survivalist_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Grounds Nature Warden's two magnitude-bearing class features --
+/// `decisions.md §22`'s WAVE 46 UPDATE. Unconditional on chassis support
+/// (no `ClassId`-family enum entry for this class), same placement as
+/// `ground_phrenic_slayer_class_features` above. Woodforging (this class's
+/// third open sm5 unit) carries no `DEFINE`/`BONUS` token anywhere in the
+/// corpus (`wiring_class: "display"`, `display:no_magnitude_token`) --
+/// left named, not attempted, this cycle.
+fn ground_nature_warden_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == NATURE_WARDEN_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bond_level) = nature_warden_companion_bond_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.nature_warden.companion_bond.level"
+                .to_owned(),
+            value: bond_level,
+            detail: format!(
+                "Nature Warden level {level} Companion Bond: `CompanionBondLVL` = {bond_level} \
+                 (corpus `CompanionBondLVL = NatureWardenLVL`). Grounds the raw level-tracking \
+                 magnitude only; this engine does not model the animal-companion \
+                 level-stacking effect it feeds"
+            ),
+        });
+    }
+
+    if let Some(survivalist_level) = nature_warden_survivalist_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.nature_warden.survivalist.level".to_owned(),
+            value: survivalist_level,
+            detail: format!(
+                "Nature Warden level {level} Survivalist: `SurvivalistLVL` = \
+                 {survivalist_level} (corpus `SurvivalistLVL = NatureWardenLVL`). Grounds the \
+                 raw level-tracking magnitude only; the qualitative improvised-weapon/\
+                 masterwork effects it gates are not modelled"
+            ),
+        });
+    }
+}
+
+/// Rage Prophet Rage Prophet Mystery (`apg_abilities_class.lst:1440`,
+/// `KEY:Rage Prophet ~ Rage Prophet Mystery`): `BONUS:VAR|
+/// RageProphetMysteryLVL|RageProphetLVL`, in the record's own tokens. A raw
+/// level-tracking magnitude; which extra spirit-guide spell is learned at
+/// each even level is not modelled. Granted from class level 1. `None`
+/// below level 1.
+fn rage_prophet_mystery_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Rage Prophet Ragecaster (`apg_abilities_class.lst:1443`,
+/// `KEY:Rage Prophet ~ Ragecaster`): `BONUS:VAR|RagecasterLVL|
+/// RageProphetLVL`, in the record's own tokens. A raw level-tracking
+/// magnitude; the moment-of-clarity caster-level boost and Constitution-
+/// to-DC effects it gates are not modelled. Granted from class level 1.
+/// `None` below level 1.
+fn rage_prophet_ragecaster_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Grounds Rage Prophet's two magnitude-bearing class features --
+/// `decisions.md §22`'s WAVE 46 UPDATE. Unconditional on chassis support
+/// (no `ClassId`-family enum entry for this class), same placement as
+/// `ground_phrenic_slayer_class_features` above. Spirit Warrior (this
+/// class's third open sm5 unit) carries no `DEFINE`/`BONUS` token anywhere
+/// in the corpus (`wiring_class: "display"`) -- left named, not attempted,
+/// this cycle.
+fn ground_rage_prophet_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == RAGE_PROPHET_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(mystery_level) = rage_prophet_mystery_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.rage_prophet.rage_prophet_mystery.level"
+                .to_owned(),
+            value: mystery_level,
+            detail: format!(
+                "Rage Prophet level {level} Rage Prophet Mystery: `RageProphetMysteryLVL` = \
+                 {mystery_level} (corpus `RageProphetMysteryLVL = RageProphetLVL`). Grounds the \
+                 raw level-tracking magnitude only; which spirit-guide spell is learned is not \
+                 modelled"
+            ),
+        });
+    }
+
+    if let Some(ragecaster_level) = rage_prophet_ragecaster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.rage_prophet.ragecaster.level".to_owned(),
+            value: ragecaster_level,
+            detail: format!(
+                "Rage Prophet level {level} Ragecaster: `RagecasterLVL` = {ragecaster_level} \
+                 (corpus `RagecasterLVL = RageProphetLVL`). Grounds the raw level-tracking \
+                 magnitude only; the moment-of-clarity caster-level boost and Constitution-to-DC \
+                 effects it gates are not modelled"
+            ),
+        });
+    }
+}
+
+/// Holy Vindicator Stigmata (`apg_abilities_class.lst:1278`,
+/// `KEY:Holy Vindicator ~ Stigmata`): `DEFINE:StigmataLVL|0` /
+/// `BONUS:VAR|StigmataLVL|floor(HolyVindicatorLVL/2)` -- a sacred/profane
+/// bonus (on the vindicator's own choice of attack, damage, AC, caster
+/// level checks, or saves) equal to half class level, the same "half
+/// level, floored" idiom `duelist_elaborate_defense_dodge_bonus` already
+/// established. Granted from class level 1 (no `PREVARGTEQ` gate). `None`
+/// below level 1.
+fn holy_vindicator_stigmata_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// Grounds Holy Vindicator's one magnitude-bearing class feature --
+/// `decisions.md §22`'s WAVE 46 UPDATE. Unconditional on chassis support
+/// (no `ClassId`-family enum entry for this class), same placement as
+/// `ground_phrenic_slayer_class_features` above. Channel Smite (this
+/// class's other open sm5 unit) is a bonus-feat grant with no magnitude
+/// token at all (`wiring_class: "display"`) -- left named, not attempted,
+/// this cycle.
+fn ground_holy_vindicator_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == HOLY_VINDICATOR_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = holy_vindicator_stigmata_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.holy_vindicator.stigmata.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Holy Vindicator level {level} Stigmata: a +{bonus} sacred or profane bonus \
+                 (corpus `StigmataLVL = floor(HolyVindicatorLVL/2)`). Grounds the magnitude \
+                 only: this engine computes no attack/damage/AC/caster-level/save total for it \
+                 to layer onto, and the player's own choice of which total it applies to is not \
+                 modelled"
+            ),
+        });
+    }
+}
+
+/// Stalwart Defender AC Bonus (`apg_abilities_class.lst:1451`,
+/// `KEY:Stalwart Defender ~ AC Bonus`): `DEFINE:StalwartDefenderDodgeACBonus|0`
+/// / `BONUS:VAR|StalwartDefenderDodgeACBonus|
+/// 1+(StalwartDefenderLVL>=4)+(StalwartDefenderLVL>=7)+(StalwartDefenderLVL>=10)`
+/// -- a step table transcribed literally (each `(SDL>=N)` term is 0 or 1):
+/// +1 at level 1, +2 at level 4, +3 at level 7, +4 at level 10. Granted
+/// from class level 1. `None` below level 1.
+fn stalwart_defender_ac_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let mut bonus = 1;
+    if level >= 4 {
+        bonus += 1;
+    }
+    if level >= 7 {
+        bonus += 1;
+    }
+    if level >= 10 {
+        bonus += 1;
+    }
+    Some(bonus)
+}
+
+/// Stalwart Defender Damage Reduction (`apg_abilities_class.lst:1470`,
+/// `KEY:Stalwart Defender ~ Damage Reduction`): `DEFINE:DamageReductionLVL|0`
+/// / `BONUS:VAR|DamageReductionLVL|
+/// (StalwartDefenderLVL>4)+(StalwartDefenderLVL>6)+(StalwartDefenderLVL>6)+
+/// (StalwartDefenderLVL>9)+(StalwartDefenderLVL>9)` -- transcribed literally
+/// (the `>6` and `>9` terms each appear twice in the corpus token, i.e. DR
+/// increases by 2 at levels 7 and 10, not 1): DR 0 below level 5, DR 1
+/// (levels 5-6), DR 3 (levels 7-9), DR 5 (level 10+). `None` below level 1
+/// (DR 0 is not worth grounding as a fact).
+fn stalwart_defender_damage_reduction(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let mut dr = 0;
+    if level > 4 {
+        dr += 1;
+    }
+    if level > 6 {
+        dr += 2;
+    }
+    if level > 9 {
+        dr += 2;
+    }
+    Some(dr)
+}
+
+/// Stalwart Defender Defensive Powers (`apg_abilities_class.lst:1453`,
+/// `KEY:Stalwart Defender ~ Defensive Powers`): `DEFINE:DefensivePowerLVL|0`
+/// / `BONUS:ABILITYPOOL|Defensive Stance Power|DefensivePowerLVL` /
+/// `BONUS:VAR|DefensivePowerLVL|StalwartDefenderLVL/2` -- the SIZE of the
+/// defensive-power choice pool (one power at 2nd level and every two
+/// levels after), the same "grounds the pool SIZE only" shape
+/// `loremaster_secret_lore_pool_size` already established. `None` below
+/// level 1 (the formula itself yields 0 below level 2).
+fn stalwart_defender_defensive_powers_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// Stalwart Defender Defensive Stance (`apg_abilities_class.lst:1452`,
+/// `KEY:Stalwart Defender ~ Defensive Stance`): `DEFINE:
+/// DefensiveStanceDuration|0` / `BONUS:VAR|DefensiveStanceDuration|4+CON` /
+/// `BONUS:VAR|DefensiveStanceDuration|(StalwartDefenderLVL-1)*2` -- rounds
+/// per day the stance can be maintained: `4 + Constitution modifier` at
+/// level 1, plus 2 more rounds per level thereafter. `CON` here is the
+/// Constitution MODIFIER (this codebase's established convention, matching
+/// `warpriest_channel_energy_dc`'s own ability-modifier parameter). Granted
+/// from class level 1. `None` below level 1.
+fn stalwart_defender_defensive_stance_duration_rounds(
+    level: u8,
+    constitution_modifier: i16,
+) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(4 + constitution_modifier + (i16::from(level) - 1) * 2)
+}
+
+/// Grounds Stalwart Defender's four magnitude-bearing class features --
+/// `decisions.md §22`'s WAVE 46 UPDATE. Unconditional on chassis support
+/// (no `ClassId`-family enum entry for this class), same placement as
+/// `ground_phrenic_slayer_class_features` above. This class's two other
+/// open sm5 units are NOT attempted this cycle: Increased Damage
+/// Reduction is a `Defensive Stance Power` pool MEMBER (`BONUS:VAR|
+/// DamageReductionLVL|1`, selectable up to twice) whose own magnitude
+/// depends on a real recorded pool selection this engine does not track
+/// for this class's pool; Renewed Defense heals `%1d8 + %2` (`CL/2`,
+/// `CON`) -- dice notation this engine's `formula_interpreter.rs` does not
+/// parse, the same "grounds the level-derived factor only, never the
+/// die roll" boundary as Assassin's Death Attack, left unattempted here
+/// rather than guessed at.
+fn ground_stalwart_defender_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == STALWART_DEFENDER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = stalwart_defender_ac_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.stalwart_defender.ac_bonus.dodge_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Stalwart Defender level {level} AC Bonus: a +{bonus} dodge bonus to Armor \
+                 Class (corpus `StalwartDefenderDodgeACBonus = \
+                 1+(SDL>=4)+(SDL>=7)+(SDL>=10)`). Grounds the magnitude only: no armor-class \
+                 total exists anywhere in this engine for it to layer onto"
+            ),
+        });
+    }
+
+    if let Some(dr) = stalwart_defender_damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.stalwart_defender.damage_reduction.value"
+                .to_owned(),
+            value: dr,
+            detail: format!(
+                "Stalwart Defender level {level} Damage Reduction {dr}/- (corpus \
+                 `DamageReductionLVL = (SDL>4)+(SDL>6)+(SDL>6)+(SDL>9)+(SDL>9)`, transcribed \
+                 literally). Grounds the magnitude only: no damage-reduction total exists \
+                 anywhere in this engine for it to layer onto"
+            ),
+        });
+    }
+
+    if let Some(pool) = stalwart_defender_defensive_powers_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.stalwart_defender.defensive_powers.\
+                 pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Stalwart Defender level {level} Defensive Powers: a pool of {pool} (corpus \
+                 `DefensivePowerLVL = StalwartDefenderLVL/2`). Grounds the pool SIZE only -- \
+                 which defensive power is chosen is not modelled"
+            ),
+        });
+    }
+
+    if let Some(rounds) = stalwart_defender_defensive_stance_duration_rounds(
+        level,
+        ability_modifiers.constitution,
+    ) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.stalwart_defender.defensive_stance.\
+                 duration_rounds"
+                .to_owned(),
+            value: rounds,
+            detail: format!(
+                "Stalwart Defender level {level} Defensive Stance: usable {rounds} rounds per \
+                 day (corpus `DefensiveStanceDuration = 4+CON+(SDL-1)*2`, this character's \
+                 Constitution modifier {con_mod:+}). Grounds the per-day round budget only; \
+                 this engine tracks no active-stance state or its combat bonuses",
+                con_mod = ability_modifiers.constitution
             ),
         });
     }
@@ -76187,6 +76981,432 @@ mod wave45_phrenic_slayer_favored_enemy_tests {
                 explanation_value(&ranger, &id),
                 None,
                 "a Ranger must not gain Phrenic Slayer's own Favored Enemy records: {id}"
+            );
+        }
+    }
+}
+
+/// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): six more units on
+/// Pathfinder Delver's own remainder (extending `ground_pathfinder_delver_
+/// class_features`) plus five new prestige classes (Argent Dramaturge,
+/// Horizon Walker, Nature Warden, Rage Prophet, Holy Vindicator, Stalwart
+/// Defender) -- the same two-layer discipline every prior wave's own test
+/// module in this file established: the pure formula first (including edge
+/// cases the fixture cannot exercise), then a reachability test proving
+/// every explanation id actually surfaces through the real
+/// `build_pilot_headless_receipt` pipeline end to end, plus a negative
+/// control proving none of them leak onto an unrelated class.
+#[cfg(test)]
+mod wave46_registered_prestige_magnitude_formulas_tests {
+    use super::{
+        argent_dramaturge_argent_performance_dc, argent_dramaturge_argent_performance_rounds,
+        argent_dramaturge_dramaturgical_flourish_pool_size, build_pilot_headless_receipt,
+        holy_vindicator_stigmata_bonus, horizon_walker_favored_terrain_pool_size,
+        horizon_walker_terrain_dominance_pool_size, horizon_walker_terrain_mastery_pool_size,
+        nature_warden_companion_bond_level, nature_warden_survivalist_level,
+        pathfinder_delver_fortunate_soul_uses_per_day, pathfinder_delver_master_explorer_skill_bonus,
+        pathfinder_delver_thrilling_escape_uses_per_day, pathfinder_delver_true_seeing_caster_level,
+        pathfinder_delver_vigilant_combatant_initiative_bonus, rage_prophet_mystery_level,
+        rage_prophet_ragecaster_level, stalwart_defender_ac_bonus,
+        stalwart_defender_damage_reduction, stalwart_defender_defensive_powers_pool_size,
+        stalwart_defender_defensive_stance_duration_rounds, CharacterClassLevel, CharacterInput,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// This fixture's own ability scores: STR 16 (+2 human bonus, not
+    /// relevant here), DEX 14, CON 14, INT 10, WIS 12, CHA 8 -- the Human
+    /// ability-bonus choice targets Strength, so Constitution and Charisma
+    /// stay exactly as rolled. Modifiers: CON 14 -> +2, CHA 8 -> -1. Used to
+    /// confirm Argent Dramaturge's DC and Stalwart Defender's Defensive
+    /// Stance duration against the real pipeline, independent of the direct
+    /// formula tests (which exercise other modifier values the fixture
+    /// cannot).
+    const FIXTURE_CONSTITUTION_MODIFIER: i16 = 2;
+    const FIXTURE_CHARISMA_MODIFIER: i16 = -1;
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    const ALL_TWENTY_EXPLANATION_IDS: &[&str] = &[
+        "class_feature.adventurers_guide.pathfinder_delver.guardbreaker.bonus",
+        "class_feature.adventurers_guide.pathfinder_delver.master_explorer.skill_bonus",
+        "class_feature.adventurers_guide.pathfinder_delver.thrilling_escape.uses_per_day",
+        "class_feature.adventurers_guide.pathfinder_delver.vigilant_combatant.initiative_bonus",
+        "class_feature.adventurers_guide.pathfinder_delver.fortunate_soul.uses_per_day",
+        "class_feature.adventurers_guide.pathfinder_delver.true_seeing.caster_level",
+        "class_feature.adventurers_guide.argent_dramaturge.argent_performance.rounds",
+        "class_feature.adventurers_guide.argent_dramaturge.argent_performance.dc",
+        "class_feature.adventurers_guide.argent_dramaturge.dramaturgical_flourish.pool_size",
+        "class_feature.advanced_players_guide.horizon_walker.favored_terrain.pool_size",
+        "class_feature.advanced_players_guide.horizon_walker.terrain_mastery.pool_size",
+        "class_feature.advanced_players_guide.horizon_walker.terrain_dominance.pool_size",
+        "class_feature.advanced_players_guide.nature_warden.companion_bond.level",
+        "class_feature.advanced_players_guide.nature_warden.survivalist.level",
+        "class_feature.advanced_players_guide.rage_prophet.rage_prophet_mystery.level",
+        "class_feature.advanced_players_guide.rage_prophet.ragecaster.level",
+        "class_feature.advanced_players_guide.holy_vindicator.stigmata.bonus",
+        "class_feature.advanced_players_guide.stalwart_defender.ac_bonus.dodge_bonus",
+        "class_feature.advanced_players_guide.stalwart_defender.damage_reduction.value",
+        "class_feature.advanced_players_guide.stalwart_defender.defensive_stance.duration_rounds",
+    ];
+
+    // ---- Pathfinder Delver's six-unit extension ----
+
+    #[test]
+    fn master_explorer_skill_bonus_matches_the_corpus_token() {
+        // `PaDSkillBonus = max(1,CL/2)`, granted level 1 (`ag_classes.lst:285`).
+        assert_eq!(pathfinder_delver_master_explorer_skill_bonus(1), Some(1));
+        assert_eq!(pathfinder_delver_master_explorer_skill_bonus(2), Some(1));
+        assert_eq!(pathfinder_delver_master_explorer_skill_bonus(5), Some(2));
+        assert_eq!(pathfinder_delver_master_explorer_skill_bonus(10), Some(5));
+    }
+
+    #[test]
+    fn thrilling_escape_uses_per_day_matches_the_corpus_token() {
+        // Cumulative `PaDEscapeTimes`: +1 at level 3, 7, 9.
+        assert_eq!(pathfinder_delver_thrilling_escape_uses_per_day(2), None);
+        assert_eq!(pathfinder_delver_thrilling_escape_uses_per_day(3), Some(1));
+        assert_eq!(pathfinder_delver_thrilling_escape_uses_per_day(6), Some(1));
+        assert_eq!(pathfinder_delver_thrilling_escape_uses_per_day(7), Some(2));
+        assert_eq!(pathfinder_delver_thrilling_escape_uses_per_day(8), Some(2));
+        assert_eq!(pathfinder_delver_thrilling_escape_uses_per_day(9), Some(3));
+        assert_eq!(pathfinder_delver_thrilling_escape_uses_per_day(10), Some(3));
+    }
+
+    #[test]
+    fn vigilant_combatant_initiative_bonus_matches_the_corpus_token() {
+        // `PaDInitiative = CL/2`, granted level 4 (`ag_classes.lst:288`).
+        assert_eq!(pathfinder_delver_vigilant_combatant_initiative_bonus(3), None);
+        assert_eq!(pathfinder_delver_vigilant_combatant_initiative_bonus(4), Some(2));
+        assert_eq!(pathfinder_delver_vigilant_combatant_initiative_bonus(5), Some(2));
+        assert_eq!(pathfinder_delver_vigilant_combatant_initiative_bonus(10), Some(5));
+    }
+
+    #[test]
+    fn fortunate_soul_uses_per_day_matches_the_corpus_token() {
+        // Cumulative `PaDFortunateTimes`: +1 at level 6, 10.
+        assert_eq!(pathfinder_delver_fortunate_soul_uses_per_day(5), None);
+        assert_eq!(pathfinder_delver_fortunate_soul_uses_per_day(6), Some(1));
+        assert_eq!(pathfinder_delver_fortunate_soul_uses_per_day(9), Some(1));
+        assert_eq!(pathfinder_delver_fortunate_soul_uses_per_day(10), Some(2));
+    }
+
+    #[test]
+    fn true_seeing_caster_level_matches_the_corpus_token() {
+        // Granted level 9 (`ag_classes.lst:292`); `PaDLvl = CL`.
+        assert_eq!(pathfinder_delver_true_seeing_caster_level(8), None);
+        assert_eq!(pathfinder_delver_true_seeing_caster_level(9), Some(9));
+        assert_eq!(pathfinder_delver_true_seeing_caster_level(10), Some(10));
+    }
+
+    // ---- Argent Dramaturge ----
+
+    #[test]
+    fn argent_performance_rounds_matches_the_corpus_token() {
+        // `ArgentPerformanceRounds = ArgentDramaturgeLVL*2`.
+        assert_eq!(argent_dramaturge_argent_performance_rounds(1), Some(2));
+        assert_eq!(argent_dramaturge_argent_performance_rounds(5), Some(10));
+        assert_eq!(argent_dramaturge_argent_performance_rounds(10), Some(20));
+    }
+
+    #[test]
+    fn argent_performance_dc_matches_the_corpus_token() {
+        // `ArgentPerformanceDC = 10+ArgentDramaturgeLVL+CHA`.
+        assert_eq!(argent_dramaturge_argent_performance_dc(1, 3), Some(14));
+        assert_eq!(argent_dramaturge_argent_performance_dc(1, -1), Some(10));
+        assert_eq!(argent_dramaturge_argent_performance_dc(10, 0), Some(20));
+    }
+
+    #[test]
+    fn dramaturgical_flourish_pool_size_matches_the_corpus_token() {
+        // `ArgentDramaturgeLVL/2`.
+        assert_eq!(argent_dramaturge_dramaturgical_flourish_pool_size(1), Some(0));
+        assert_eq!(argent_dramaturge_dramaturgical_flourish_pool_size(5), Some(2));
+        assert_eq!(argent_dramaturge_dramaturgical_flourish_pool_size(10), Some(5));
+    }
+
+    // ---- Horizon Walker ----
+
+    #[test]
+    fn favored_terrain_pool_size_matches_the_corpus_token() {
+        // `FavoredTerrainPool = (2*(HorizonWalkerFavoredTerrainLVL+1))/3`,
+        // `HorizonWalkerFavoredTerrainLVL = HorizonWalkerLVL`.
+        assert_eq!(horizon_walker_favored_terrain_pool_size(1), Some(1));
+        assert_eq!(horizon_walker_favored_terrain_pool_size(5), Some(4));
+        assert_eq!(horizon_walker_favored_terrain_pool_size(10), Some(7));
+    }
+
+    #[test]
+    fn terrain_mastery_pool_size_matches_the_corpus_token() {
+        // `HorizonWalkerLVL/2`.
+        assert_eq!(horizon_walker_terrain_mastery_pool_size(1), Some(0));
+        assert_eq!(horizon_walker_terrain_mastery_pool_size(5), Some(2));
+        assert_eq!(horizon_walker_terrain_mastery_pool_size(10), Some(5));
+    }
+
+    #[test]
+    fn terrain_dominance_pool_size_matches_the_corpus_token() {
+        // `HorizonWalkerLVL/3`.
+        assert_eq!(horizon_walker_terrain_dominance_pool_size(1), Some(0));
+        assert_eq!(horizon_walker_terrain_dominance_pool_size(5), Some(1));
+        assert_eq!(horizon_walker_terrain_dominance_pool_size(10), Some(3));
+    }
+
+    // ---- Nature Warden ----
+
+    #[test]
+    fn companion_bond_and_survivalist_level_are_the_raw_class_level() {
+        assert_eq!(nature_warden_companion_bond_level(1), Some(1));
+        assert_eq!(nature_warden_companion_bond_level(10), Some(10));
+        assert_eq!(nature_warden_survivalist_level(1), Some(1));
+        assert_eq!(nature_warden_survivalist_level(10), Some(10));
+    }
+
+    // ---- Rage Prophet ----
+
+    #[test]
+    fn mystery_and_ragecaster_level_are_the_raw_class_level() {
+        assert_eq!(rage_prophet_mystery_level(1), Some(1));
+        assert_eq!(rage_prophet_mystery_level(10), Some(10));
+        assert_eq!(rage_prophet_ragecaster_level(1), Some(1));
+        assert_eq!(rage_prophet_ragecaster_level(10), Some(10));
+    }
+
+    // ---- Holy Vindicator ----
+
+    #[test]
+    fn stigmata_bonus_matches_the_corpus_token() {
+        // `StigmataLVL = floor(HolyVindicatorLVL/2)`.
+        assert_eq!(holy_vindicator_stigmata_bonus(1), Some(0));
+        assert_eq!(holy_vindicator_stigmata_bonus(5), Some(2));
+        assert_eq!(holy_vindicator_stigmata_bonus(10), Some(5));
+    }
+
+    // ---- Stalwart Defender ----
+
+    #[test]
+    fn ac_bonus_matches_the_corpus_token() {
+        // `StalwartDefenderDodgeACBonus = 1+(SDL>=4)+(SDL>=7)+(SDL>=10)`.
+        assert_eq!(stalwart_defender_ac_bonus(1), Some(1));
+        assert_eq!(stalwart_defender_ac_bonus(3), Some(1));
+        assert_eq!(stalwart_defender_ac_bonus(4), Some(2));
+        assert_eq!(stalwart_defender_ac_bonus(7), Some(3));
+        assert_eq!(stalwart_defender_ac_bonus(10), Some(4));
+    }
+
+    #[test]
+    fn damage_reduction_matches_the_corpus_token() {
+        // `DamageReductionLVL = (SDL>4)+(SDL>6)+(SDL>6)+(SDL>9)+(SDL>9)`,
+        // transcribed literally (the `>6`/`>9` terms are each counted twice).
+        assert_eq!(stalwart_defender_damage_reduction(4), Some(0));
+        assert_eq!(stalwart_defender_damage_reduction(5), Some(1));
+        assert_eq!(stalwart_defender_damage_reduction(6), Some(1));
+        assert_eq!(stalwart_defender_damage_reduction(7), Some(3));
+        assert_eq!(stalwart_defender_damage_reduction(9), Some(3));
+        assert_eq!(stalwart_defender_damage_reduction(10), Some(5));
+    }
+
+    #[test]
+    fn defensive_powers_pool_size_matches_the_corpus_token() {
+        // `DefensivePowerLVL = StalwartDefenderLVL/2`.
+        assert_eq!(stalwart_defender_defensive_powers_pool_size(1), Some(0));
+        assert_eq!(stalwart_defender_defensive_powers_pool_size(5), Some(2));
+        assert_eq!(stalwart_defender_defensive_powers_pool_size(10), Some(5));
+    }
+
+    #[test]
+    fn defensive_stance_duration_matches_the_corpus_token() {
+        // `DefensiveStanceDuration = 4+CON+(SDL-1)*2`.
+        assert_eq!(stalwart_defender_defensive_stance_duration_rounds(1, 2), Some(6));
+        assert_eq!(stalwart_defender_defensive_stance_duration_rounds(1, -1), Some(3));
+        assert_eq!(stalwart_defender_defensive_stance_duration_rounds(5, 2), Some(14));
+        assert_eq!(stalwart_defender_defensive_stance_duration_rounds(10, 2), Some(24));
+    }
+
+    // ---- Reachability: all twenty ids surface through the real pipeline ----
+
+    #[test]
+    fn pathfinder_delver_ids_reach_the_real_pipeline_at_level_ten() {
+        let character = character("class:pathfinder_delver", 10);
+        let expected: &[(&str, i16)] = &[
+            // `TrapSenseBonus = RogueTrapSenseLVL/3`, `RogueTrapSenseLVL = PaDLVL+1`:
+            // at level 10, (10+1)/3 = 3.
+            ("class_feature.adventurers_guide.pathfinder_delver.guardbreaker.bonus", 3),
+            ("class_feature.adventurers_guide.pathfinder_delver.master_explorer.skill_bonus", 5),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.thrilling_escape.uses_per_day",
+                3,
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.vigilant_combatant.\
+                 initiative_bonus",
+                5,
+            ),
+            ("class_feature.adventurers_guide.pathfinder_delver.fortunate_soul.uses_per_day", 2),
+            ("class_feature.adventurers_guide.pathfinder_delver.true_seeing.caster_level", 10),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&character, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn argent_dramaturge_ids_reach_the_real_pipeline_at_level_five() {
+        let character = character("class:argent_dramaturge", 5);
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.adventurers_guide.argent_dramaturge.argent_performance.rounds"
+            ),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.adventurers_guide.argent_dramaturge.argent_performance.dc"
+            ),
+            Some(10 + 5 + FIXTURE_CHARISMA_MODIFIER)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.adventurers_guide.argent_dramaturge.dramaturgical_flourish.\
+                 pool_size"
+            ),
+            Some(2)
+        );
+    }
+
+    #[test]
+    fn horizon_walker_ids_reach_the_real_pipeline_at_level_five() {
+        let character = character("class:horizon_walker", 5);
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.horizon_walker.favored_terrain.pool_size"
+            ),
+            Some(4)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.horizon_walker.terrain_mastery.pool_size"
+            ),
+            Some(2)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.horizon_walker.terrain_dominance.pool_size"
+            ),
+            Some(1)
+        );
+    }
+
+    #[test]
+    fn nature_warden_ids_reach_the_real_pipeline_at_level_five() {
+        let character = character("class:nature_warden", 5);
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.nature_warden.companion_bond.level"
+            ),
+            Some(5)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.nature_warden.survivalist.level"
+            ),
+            Some(5)
+        );
+    }
+
+    #[test]
+    fn rage_prophet_ids_reach_the_real_pipeline_at_level_five() {
+        let character = character("class:rage_prophet", 5);
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.rage_prophet.rage_prophet_mystery.level"
+            ),
+            Some(5)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.rage_prophet.ragecaster.level"
+            ),
+            Some(5)
+        );
+    }
+
+    #[test]
+    fn holy_vindicator_id_reaches_the_real_pipeline_at_level_five() {
+        let character = character("class:holy_vindicator", 5);
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.holy_vindicator.stigmata.bonus"
+            ),
+            Some(2)
+        );
+    }
+
+    #[test]
+    fn stalwart_defender_ids_reach_the_real_pipeline_at_level_ten() {
+        let character = character("class:stalwart_defender", 10);
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.stalwart_defender.ac_bonus.dodge_bonus"
+            ),
+            Some(4)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.stalwart_defender.damage_reduction.value"
+            ),
+            Some(5)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.advanced_players_guide.stalwart_defender.defensive_stance.\
+                 duration_rounds"
+            ),
+            Some(4 + FIXTURE_CONSTITUTION_MODIFIER + 9 * 2)
+        );
+    }
+
+    #[test]
+    fn none_of_the_twenty_ids_leak_onto_an_unrelated_class() {
+        let fighter = character("class:fighter", 10);
+        for id in ALL_TWENTY_EXPLANATION_IDS {
+            assert_eq!(
+                explanation_value(&fighter, id),
+                None,
+                "a Fighter must not gain any of this wave's 20 new-class-feature ids: {id}"
             );
         }
     }

@@ -772,18 +772,50 @@ mod tests {
     /// docs/work-inventory.json --corpus-root data/corpus` against the
     /// post-regen `docs/work-inventory.json` (tranche/14, this wave's own
     /// guarded regen): F1 = 5196 exactly.
+    ///
+    /// **5,196 unchanged through SD-34 wave 45** (Phrenic Slayer's Favored
+    /// Enemy closure, 32 units: 31 `F0`, 1 `F5`, verified per-id -- zero
+    /// F1-shaped, so this pin was correctly left untouched that cycle).
+    ///
+    /// **5,196 -> 5,193, a REAL movement (SD-34 wave 46, 2026-09-05).**
+    /// Wave 46 closed 20 units across seven prestige classes (Pathfinder
+    /// Delver's own six-unit extension, Argent Dramaturge, Horizon Walker,
+    /// Nature Warden, Rage Prophet, Holy Vindicator, Stalwart Defender); of
+    /// those, exactly 3 carry F1's own defining shape -- verified per-id via
+    /// `shape_ledger.py --output` against the PRE-cycle inventory snapshot
+    /// (not assumed from formula-resolution shape): Nature Warden's
+    /// Companion Bond (`BONUS:VAR|CompanionBondLVL|NatureWardenLVL`, a bare
+    /// single-variable token, the same "F1 classifies the record's OWN
+    /// token shape, not its full resolution chain" idiom wave 44's own
+    /// PaDFE entry above established) and Pathfinder Delver's Thrilling
+    /// Escape / Fortunate Soul (each a bare `DEFINE:<X>|0` with no `BONUS`
+    /// token of its own in the record -- the cumulative `+1` formula lives
+    /// on the class's own level-table file, `ag_classes.lst`, entirely
+    /// outside this record's own tokens, so `shape_ledger.py`'s per-record
+    /// token scan reads only the bare `DEFINE` default and classifies it
+    /// F1). The other 17 closed units (Horizon Walker's three pool sizes,
+    /// Nature Warden's Survivalist, Rage Prophet's two units, Stalwart
+    /// Defender's four units, Argent Dramaturge's two units, Holy
+    /// Vindicator's Stigmata, and four more Pathfinder Delver units) are F0,
+    /// F2, F4, or F5 -- NOT F1-shaped. 5196 - 3 = 5193, confirmed by
+    /// re-running `python3 scripts/shape_ledger.py --inventory docs/
+    /// work-inventory.json --corpus-root data/corpus` against the post-regen
+    /// `docs/work-inventory.json` (tranche/14, this wave's own guarded
+    /// regen): F1 = 5193 exactly.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5196,
-            "F1 population must equal the CURRENT true formula-bearing count (5,196, re-derived \
+            f1.population, 5193,
+            "F1 population must equal the CURRENT true formula-bearing count (5,193, re-derived \
              2026-09-05 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
              `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
-             cycle's own true-at-the-time 5,206 (SD-34 wave 43 closure-cycle), not the \
+             cycle's own true-at-the-time 5,196 (SD-34 waves 44/45 closure-cycles, unchanged \
+             through wave 45's own zero-F1 closure), not the cycle-before-that's own \
+             true-at-the-time 5,206 (SD-34 wave 43 closure-cycle), not the \
              cycle-before-that's own true-at-the-time 5,207 (SD-34 wave 39 \
              closure-cycle -- Lane A closed \
              its 20 assigned units into DONE, a real share of them F1-shaped, so F1's not-done \
@@ -803,7 +835,8 @@ mod tests {
              comment and the `AT-34-E3-001-class_feature_owner_matched-cycle` retro correction), \
              not the stale 6,257 pin, not the pre-fold 6,260/6,278, not the pre-regen 6,308 this \
              test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 census (6,032) — \
-             AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001 / SD-34 wave 22/23/38/39/43 gate remediation"
+             AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001 / SD-34 wave 22/23/38/39/43/44/46 gate \
+             remediation"
         );
     }
 }
