@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-09-06T04:09:22Z",
+  "generated_at": "2026-09-06T14:01:23Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 19159,
+    "done": 19200,
     "partial": 5521,
-    "not_started": 13200,
+    "not_started": 13159,
     "denominator": 37880,
-    "pct": 50.6,
+    "pct": 50.7,
     "excluded_from_percentage": 11558,
     "standing_breakdown": {
       "unclassified": 11558,

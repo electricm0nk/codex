@@ -11,6 +11,56 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 47 wave-end gate — mid-gate server reboot survived cleanly, one real clippy follow-up fixed, full 40/40 confirmed — complete
+
+**Status: complete.** Gate/closure summary for wave 47's own cycle (above), which closed 43 of
+Divine Scion's 45 sub-mechanism-5 units on commit `24666d0667` (receipt SHA fill-in `fa356e6db7`)
+on `tranche/14` — a recovery of a prior build agent's stalled run, with one real
+`ABILITYPOOL`-choice-gating bug found and fixed. Independently re-verified by the orchestrator
+before trusting the recovery cycle's own self-report: read the full commit diff, spot-checked
+the choice-gating fix directly against the real, non-ingested PCGen oracle
+(`ism_classes.lst:103`/`:104`, `ism_abilities_class.lst:35`/`:47`) confirming Opposition Alignment
+and Domain Specialization really are `ABILITYPOOL` one-of-N choices, and independently
+re-confirmed the cycle's own bucket deltas via a fresh `python3 scripts/completion_atlas.py
+--check` (`DONE: 25419→25458 (+39)`, `D: 2441→2398 (−43)`, `V: 345→349 (+4)`, `population=49438
+unclassified=0`) and `python3 scripts/denominator_gate.py --check` (`violations=0`), both matching
+exactly.
+
+**The server rebooted once mid-gate — no work was lost, and the gate was re-run cleanly from
+scratch.** After the recovery commit landed, the host running this VM rebooted unexpectedly
+(cause not determined from inside the guest — a full `sar`/`journalctl` investigation this
+session found normal memory and load right up to the last logged sample before a total gap,
+consistent with a host-level stop rather than a guest-visible OOM or crash). Both wave 47 commits
+survived on disk untouched; the only casualty was the in-flight isolated `verify.sh` run and its
+disposable `/tmp` scratch build cache, both trivially restarted.
+
+**One real follow-up fix needed: 3 clippy `collapsible_if` warnings in the recovered Divine Scion
+code**, against this bundle's own zero-warning ceiling. Dispatched as a small, separate Workflow
+(not fixed directly by the orchestrator, per this bundle's own content-change discipline): commit
+`e600c3c2470cd7c836d3ca7e2b9714bbc8aabd0c` collapsed the three nested `if let` blocks
+(`ground_divine_scion_class_features`, lines ~36255/36313/36314) into Rust `if let ... && let
+...` chains, per clippy's own suggestion — pure control-flow flattening, independently verified by
+the orchestrator as a no-behavior-change diff (read in full) and via the orchestrator's own
+separate `cargo clippy --locked --tests -j 6` run confirming genuinely 0 warnings (not just
+trusting the fix cycle's own claim).
+
+**Both the lib suite and the full integration suite were re-confirmed genuinely end-to-end, in a
+freshly-isolated `scripts/verify.sh -j 6` run (separate scratch `CARGO_TARGET_DIR`) launched
+AFTER the clippy fix landed:** `root-lib PASS (3134 passed)`, `root-full PASS (8562 passed across
+589 suites, all 543 tests/*.rs suites executed)` — an EXACT match to the recovery cycle's own
+pre-reboot claim, confirming the reboot and clippy fix changed nothing behaviorally. The one gate
+failure the first post-reboot run caught was the routine, expected `site-dashboard-check`
+staleness (regenerated via `./scripts/publish-site-dashboard.sh`, reconfirmed current) plus the
+clippy warnings above — both fixed, both reconfirmed clean on the final run. **True 40/40
+confirmed.**
+
+**What remains open after this wave:** sub-mechanism 5's population is **591** (634 − 43), split
+across 54 remaining registered prestige classes (Divine Scion's own 2-unit True Scion remainder
+is the only piece of that class left) and 88 not-registered units (unchanged); the ≥10-class
+AS/MB/Ma cross-class-manifester-level population (unchanged, untouched this wave); this wave's
+own generalizable finding (check every already-excluded sibling unit for the identical
+`ABILITYPOOL` shape before assuming a new record is safely unconditional) stands for future waves.
+
 ### Cycle — Wave 47 — Divine Scion's magnitude-only remainder: 43 of 45 units closed, one real correction found and fixed mid-recovery — complete
 
 **Status: complete.** This cycle recovered a prior build agent's stalled work: that agent

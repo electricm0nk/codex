@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-06T00:32:30Z",
+  "generated_at": "2026-09-06T07:01:16Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16117,
+  "proven_units": 16156,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,19 +1428,19 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4837,
+      "proven": 4876,
       "by_status": {
-        "engine-does-not-hold": 12882,
+        "engine-does-not-hold": 12839,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 598,
+        "grounded": 637,
         "oracle-agree": 26,
-        "literal-verified": 135,
+        "literal-verified": 139,
         "oracle-unverifiable": 6,
         "fixture-verified": 3
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2787953,
+      "bytes": 2787469,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -2066,10 +2066,10 @@
         },
         "divinescionclassfeatures": {
           "label": "Divine Scion Class Features",
-          "done": 1,
+          "done": 44,
           "held": 0,
           "in-progress": 0,
-          "not-started": 45,
+          "not-started": 2,
           "unmeasurable": 0,
           "deferred": 0
         },
