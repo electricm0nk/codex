@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-09-05T22:31:17Z",
+  "generated_at": "2026-09-06T04:09:22Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 19150,
-    "partial": 5518,
-    "not_started": 13212,
+    "done": 19159,
+    "partial": 5521,
+    "not_started": 13200,
     "denominator": 37880,
     "pct": 50.6,
     "excluded_from_percentage": 11558,
@@ -49,11 +49,11 @@
     {
       "id": "advanced_players_guide",
       "title": "Advanced Player's Guide",
-      "done": 1128,
-      "partial": 270,
-      "not_started": 1366,
+      "done": 1131,
+      "partial": 272,
+      "not_started": 1361,
       "denominator": 2764,
-      "pct": 40.8,
+      "pct": 40.9,
       "excluded_from_percentage": 1065,
       "standing_breakdown": {
         "origin": 2764,

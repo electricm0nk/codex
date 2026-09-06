@@ -11,6 +11,59 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 46 wave-end gate — full suite exactly re-confirmed, one real subsystem-shape finding, full 40/40 confirmed — complete
+
+**Status: complete.** Integration and gate summary for wave 46's own cycle (below), which closed
+20 units on commit `2296746fb9` (receipt SHA fill-in `29e38c838f`) on `tranche/14`.
+Independently re-verified by the orchestrator before trusting the cycle's own self-report: fresh
+`python3 scripts/completion_atlas.py --check` plus a direct id→status join over `docs/
+work-inventory.json` confirmed `DONE: 25407→25419 (+12)`, `D: 2461→2441 (−20)`,
+`V: 337→345 (+8)`, zero collateral movement, `population=49438 unclassified=0`. The F1/`shape_
+ledger.py` census was independently re-derived: `5193`, exactly matching the cycle's own claim
+(3 of the 20 closed units are F1-shaped). `python3 scripts/denominator_gate.py --check` run
+directly: `violations=0`, matching the claim.
+
+Two actual corpus records were spot-checked directly, not just trusted from the receipt:
+Argent Dramaturge's Argent Performance (`ArgentPerformanceRounds = ArgentDramaturgeLVL*2`,
+`ArgentPerformanceDC = 10+ArgentDramaturgeLVL+CHA`) and Pathfinder Delver's Guardbreaker
+(referencing Rogue's own `TrapSenseBonus` variable directly) — both matched the actual
+`pilot_compute/mod.rs` functions and their tests exactly.
+
+**Closed this wave, 20 units across seven prestige classes**, every formula read directly from
+its own corpus record (three of the seven needed the class's own level-table file too):
+Pathfinder Delver (6, extending wave 44's dispatch), Argent Dramaturge (2), Horizon Walker (3),
+Nature Warden (2), Rage Prophet (2), Holy Vindicator (1), Stalwart Defender (4). 12 landed in
+DONE, 8 landed in bucket V (`literal-verified`), the same D→V shape waves 41/43/44/45 already
+hit — a legitimately-resolved bucket, not a lesser outcome. A handful of units within these same
+classes were correctly left unattempted and named (no magnitude token at all, pool-selection
+state this engine does not track, or dice notation this engine does not parse).
+
+**The most valuable finding this wave: at least 9 other Ultimate Psionics prestige classes
+(Sighted Seeker, Thrallherd, Psion Uncarnate, Cerebremancer, Metamind, Elocater, Psicrystal
+Imprinter, Soul Archer, Metaforge) carry the IDENTICAL cross-class-manifester-level shape already
+excluded for Phrenic Slayer's own remaining 11 units** — confirmed by direct read of each
+class's own corpus record, not assumed from the naming pattern. This collapses what looked like
+~10 separate hard subsystem questions into one: a future wave scoping real work against
+cross-class manifester-level stacking should treat it as a single, well-defined subsystem
+question, not ten unrelated investigations.
+
+**Both the lib suite AND the full integration suite were run this cycle, confirmed genuinely
+end-to-end.** The build agent ran the full suite to completion TWICE, identically (8545 passed,
+0 failed, 67 ignored, 590 suites both times) — a first run was correctly killed and re-run after
+a citation fix + F1 pin update landed mid-cycle, rather than trusted stale. A fresh isolated
+`scripts/verify.sh -j 6` (separate scratch `CARGO_TARGET_DIR`) independently re-confirms this
+**exactly**: `root-lib PASS (3121 passed)`, `root-full PASS (8545 passed across 589 suites, all
+543 tests/*.rs suites executed)`. The one gate failure this run caught was the routine, expected
+`site-dashboard-check` staleness — regenerated via `./scripts/publish-site-dashboard.sh` and
+reconfirmed current. **True 40/40 confirmed.**
+
+**What remains open after this wave:** sub-mechanism 5's population is **634** (654 − 20), split
+**546 registered** across 55 remaining prestige classes — including the now-collapsed
+cross-class-manifester-level group (Phrenic Slayer's own 11 + at least 9 sibling classes, one
+subsystem question) and several large heterogeneous classes (Divine Scion, 45 units, the largest
+single remaining class) — and **88 not registered** (unchanged, named in prior waves' own gate
+entries by slug).
+
 ### Cycle — Wave 46 — seven registered prestige classes' magnitude-only remainder: 20 of 20 units closed — complete
 
 **Status: complete.** Re-derived sub-mechanism-5's population fresh rather than trusting wave 45's

@@ -882,11 +882,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 376,
-      "partial": 9,
-      "not_started": 1068,
+      "done": 379,
+      "partial": 11,
+      "not_started": 1063,
       "denominator": 1453,
-      "pct": 25.9,
+      "pct": 26.1,
       "excluded_from_percentage": 881,
       "standing_breakdown": {
         "unclassified": 881,
@@ -902,7 +902,7 @@
         },
         {
           "name": "AC Bonus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "AC Bonus"
@@ -3954,7 +3954,7 @@
         },
         {
           "name": "Companion Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Companion Bond"
@@ -4766,7 +4766,7 @@
         },
         {
           "name": "Damage Reduction",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Damage Reduction"
@@ -5102,14 +5102,14 @@
         },
         {
           "name": "Defensive Powers",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Defensive Powers"
         },
         {
           "name": "Defensive Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Defensive Stance"
@@ -6677,7 +6677,7 @@
         },
         {
           "name": "Favored Terrain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.ClassFeatures",
           "standing": "unclassified",
           "display_name": "Favored Terrain (Internal.ClassFeatures)"
@@ -12081,7 +12081,7 @@
         },
         {
           "name": "Rage Prophet Mystery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Extra",
           "standing": "origin",
           "display_name": "Rage Prophet Mystery"
@@ -12102,7 +12102,7 @@
         },
         {
           "name": "Ragecaster",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ragecaster"
@@ -14293,7 +14293,7 @@
         },
         {
           "name": "Stigmata",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Stigmata"
@@ -14727,7 +14727,7 @@
         },
         {
           "name": "Survivalist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Survivalist (ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary)"
@@ -14867,7 +14867,7 @@
         },
         {
           "name": "Terrain Dominance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Terrain Dominance"
@@ -14993,7 +14993,7 @@
         },
         {
           "name": "Terrain Mastery",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Terrain Mastery"
