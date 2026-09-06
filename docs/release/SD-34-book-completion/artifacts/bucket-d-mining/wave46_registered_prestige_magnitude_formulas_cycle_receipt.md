@@ -1,8 +1,8 @@
 # Cycle — SD-34 wave 46 — seven registered prestige classes' magnitude-only remainder, 20 of 20 units closed
 
-- **Commit SHA:** `<FEAT_COMMIT_SHA>` (feat commit; this receipt's own SHA fill-in lands in a
-  second, docs-only commit immediately after, following this bundle's own established
-  two-commit pattern)
+- **Commit SHA:** `2296746fb9` (`2296746fb9fec808e193162158f9441036739dde`, feat commit; this
+  receipt's own SHA fill-in lands in a second, docs-only commit immediately after, following
+  this bundle's own established two-commit pattern)
 - **Files touched:** `src/rules_core/pilot_compute/mod.rs` (6 new class-id consts
   `ARGENT_DRAMATURGE_CLASS_ID`/`HORIZON_WALKER_CLASS_ID`/`NATURE_WARDEN_CLASS_ID`/
   `RAGE_PROPHET_CLASS_ID`/`HOLY_VINDICATOR_CLASS_ID`/`STALWART_DEFENDER_CLASS_ID`; 6 new pure
