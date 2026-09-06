@@ -80,7 +80,11 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         # seven new probe functions, and `classify()` early-return block
         # shifted it again, 13986 -> 14609 (see `shape_engine_boundary.py`'s
         # own module doc comment).
-        self.assertEqual(report["promotion_ladder_anchor_line"], 14609)
+        # SD-34 wave 47: this cycle's own Divine Scion `EngineFacts` field,
+        # choice-gating consts, rewritten probe function, and `classify()`
+        # early-return block shifted it again, 14609 -> 14923 (see
+        # `shape_engine_boundary.py`'s own module doc comment).
+        self.assertEqual(report["promotion_ladder_anchor_line"], 14923)
         self.assertIn("has_real_description", report["promotion_ladder_source"])
         self.assertIn("class_feature_pool_catalog_holds", report["promotion_ladder_source"])
 
@@ -144,7 +148,7 @@ class TestRenderMarkdownEmbedsReDeriveCommands(unittest.TestCase):
         self.assertIn("python3 -c", md)
         self.assertIn(str(report["magnitude_bearing"]), md)
         self.assertIn(str(report["not_held_by_engine"]), md)
-        self.assertIn("14609", md)
+        self.assertIn("14923", md)
         self.assertIn("denominator", md)
 
 

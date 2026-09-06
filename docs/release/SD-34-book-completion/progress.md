@@ -11,6 +11,79 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 47 — Divine Scion's magnitude-only remainder: 43 of 45 units closed, one real correction found and fixed mid-recovery — complete
+
+**Status: complete.** This cycle recovered a prior build agent's stalled work: that agent
+(`sd34-wave47.workflow.js`) ran ~48 minutes, wrote real, substantial code targeting Divine Scion
+(a 45-unit `inner_sea_magic` prestige class from sub-mechanism 5's own remainder), then stalled
+without committing, writing a receipt, or running any verification. This cycle read the FULL
+uncommitted diff against the real corpus records directly (never trusting the diff's own
+comments), found one genuine correctness bug, fixed it, finished the wiring, wrote/adjusted
+tests, and completed every verification step the stalled agent never ran.
+
+**The bug found and fixed:** the recovered draft's `ground_divine_scion_class_features` ground
+all 35 per-domain Domain Specialization sub-records AND all 4 Opposition Alignment DR records
+unconditionally, for every Divine Scion character simultaneously — but both are real
+`ABILITYPOOL`-gated one-of-N choices (`ism_classes.lst:103`/`:104`'s own pool-size-1 grants,
+`ism_abilities_class.lst:35`/`:47`'s own `# ... choices` section headers, confirmed against the
+real, non-ingested PCGen oracle), the exact shape this codebase already gates everywhere else via
+`choice_selection(input, CHOICE_ID)` — and the exact shape the recovered draft's own doc comment
+correctly excluded True Scion Charisma/Wisdom under, without noticing its two siblings shared it.
+Fixed with two new choice-set-id consts
+(`DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID`/`DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID`); a
+real Divine Scion character's receipt now surfaces exactly the one domain and one alignment it
+recorded, never all 39 at once. `probe_divine_scion_wiring` was rewritten to sweep every
+candidate domain/alignment selection in turn (the same `probe_cleric_domain_generic_member_wiring`
+idiom already used for Cleric Domain), so the corpus-wide census still correctly finds all 43
+keys reachable — the fix changes correctness, not this wave's own closure count.
+
+**Closed this wave: 43 of Divine Scion's 45 sub-mechanism-5 units** — Domain Specialization's own
+pool-size record, Divine Wrath, Deific Defense, Weapon and Armor Proficiency, all four Opposition
+Alignment DR records, and all 35 per-domain Domain Specialization sub-records — every formula
+verified directly against the real corpus JSON and independently cross-checked against the real,
+non-ingested PCGen oracle (all 35 domains' own uses-per-day tokens cross-checked exhaustively,
+not sampled). True Scion Charisma/Wisdom (2 units) remain named, not attempted — a real
+`ABILITYPOOL|True Scion|1` mutually-exclusive choice this engine does not yet track a selection
+for, unchanged from the recovered draft's own honest scoping.
+
+**Real movement: 43 units closed**, regen-confirmed. Before/after, re-derived via
+`completion_atlas.py --check` on both snapshots plus an independent Python `id`→`status` join
+(both agree): `DONE: 25419→25458 (+39)`, `D: 2441→2398 (−43)`, `V: 345→349 (+4)` — 39 landed
+`grounded` (all `wiring_class: computed`), 4 landed `literal-verified` (all `wiring_class:
+static`, each swept and verified by `corpus_literal_sweep`). Exactly 43 units changed status,
+zero collateral movement (population 49438, 0 added/removed both sides); True Scion
+Charisma/Wisdom confirmed still `engine-does-not-hold`.
+
+**Both the lib suite AND the full integration suite were run this cycle — the full suite run
+TWICE end to end, against the fully-settled tree.** `cargo test --locked --lib -j 6` → 3134
+passed, 0 failed, 14 ignored (up from the standing 3121 baseline by exactly this cycle's 13 new
+lib tests). `cargo test --locked --no-fail-fast -j 6` (full workspace), run to completion twice
+(a first run before the F1/shape_ledger pin update below, a real `.rs` edit, then a second, final
+run against the fully-settled tree) → **8562 passed, 0 failed, 67 ignored, across 589 suites,
+identically both times** (up from the standing 8545 baseline by exactly +17 = the same 13 new
+lib tests, counted again since root-full runs the lib suite too, plus 4 new bin tests).
+
+**F1/`shape_ledger.py` pin: moved, 5193 → 5155.** Verified per-id, not assumed: 38 of the 43
+closed units are F1-shaped (all 4 unconditional records plus 34 of the 35 domain records — each
+one's own secondary skill/save/combat bonus token is a bare literal); the other 5 are not (4
+`F0` — the four Opposition Alignment records' own `DR:` token is not recognized by this
+classifier's token scan at all; 1 `F8` — Void Specialization's own `BONUS:CONCENTRATION` token,
+a residual per the classifier's own documented blind spot). `formula_interpreter_corpus_wide.rs`'s
+own pinned census test updated to match (5193 → 5155), following its own established dated
+doc-comment convention.
+
+**What remains open after this wave:** sub-mechanism 5's remaining population (**591**, 634 −
+43), split across the remaining 54 registered prestige classes (Divine Scion no longer among the
+large ones — only its own 2-unit True Scion remainder is left) and the 88 not-registered units
+(unchanged, named in prior waves' own gate entries by slug); the ≥10-class AS/MB/Ma cross-class-
+manifester-level population (unchanged, untouched this wave); a generalizable finding for future
+waves against this same population: before grounding any corpus record shaped `# <X> choices` /
+granted via `BONUS:ABILITYPOOL|<X>|1`, check whether the class's OTHER already-excluded units
+share the identical `ABILITYPOOL` shape — the exact defect this wave's own correction fixed.
+
+Full receipt:
+`artifacts/bucket-d-mining/wave47_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
 ### Cycle — Wave 46 wave-end gate — full suite exactly re-confirmed, one real subsystem-shape finding, full 40/40 confirmed — complete
 
 **Status: complete.** Integration and gate summary for wave 46's own cycle (below), which closed

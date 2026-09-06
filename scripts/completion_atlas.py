@@ -189,7 +189,13 @@ BUCKET_DEFINITIONS = {
         # block all sit above this site): fresh `grep -n 'status:
         # "grounded",'`, first hit inside `simple_kind_verdict`, 11361 ->
         # 11907, read back and confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 11907, "must_contain": "grounded"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion `EngineFacts`
+        # field, choice-gating consts, rewritten probe function, and
+        # `classify()` early-return block all sit above this site): fresh
+        # `grep -n 'status: "grounded",'`, first hit inside
+        # `simple_kind_verdict`, 11907 -> 12204, read back and confirmed
+        # still the real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 12204, "must_contain": "grounded"},
     },
     "A": {
         "meaning": "engine has no table for this kind",
@@ -249,7 +255,11 @@ BUCKET_DEFINITIONS = {
         # block all sit above this site): fresh `grep -n` for the same
         # unique literal, 14093 -> 14716, line content read back and
         # confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 14716, "must_contain": "has_no_engine_table"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
+        # above this site): fresh `grep -n` for the same unique literal,
+        # 14716 -> 15030, line content read back and confirmed still the
+        # real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 15030, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -303,7 +313,11 @@ BUCKET_DEFINITIONS = {
         # block all sit above this site): fresh `grep -n` for the same
         # unique literal, 13753 -> 14376, line content read back and
         # confirmed still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 14376, "must_contain": "not_held_by_engine"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
+        # above this site): fresh `grep -n` for the same unique literal,
+        # 14376 -> 14690, line content read back and confirmed still the
+        # real construction site.
+        "citation": {"file": _ENGINE_SRC, "line": 14690, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -359,7 +373,11 @@ BUCKET_DEFINITIONS = {
         # block all sit above this site): fresh `grep -n` for the same
         # unique literal, 13998 -> 14621, line content read back and
         # confirmed still the real construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 14621, "must_contain": "explanation_id"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
+        # above this site): fresh `grep -n` for the same unique literal,
+        # 14621 -> 14935, line content read back and confirmed still the
+        # real construction site, not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 14935, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -404,7 +422,14 @@ BUCKET_DEFINITIONS = {
         # engine_does_not_hold = '`, 11534 -> 12080 (definition line), the
         # closure body's own `status: "engine-does-not-hold"` line one below
         # at 12081, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12081, "must_contain": "engine-does-not-hold"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion `EngineFacts`
+        # field, choice-gating consts, rewritten probe function, and
+        # `classify()` early-return block all sit above this closure
+        # definition): fresh `grep -n 'let engine_does_not_hold = '`,
+        # 12080 -> 12377 (definition line), the closure body's own `status:
+        # "engine-does-not-hold"` line one below at 12378, read back and
+        # confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12378, "must_contain": "engine-does-not-hold"},
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
@@ -439,7 +464,11 @@ BUCKET_DEFINITIONS = {
         # block all sit above this site): fresh `grep -n` for the first hit
         # inside `simple_kind_verdict`, 11370 -> 11916, line content read
         # back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 11916, "must_contain": "ingested-magnitude"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
+        # sit above this site): fresh `grep -n` for the first hit inside
+        # `simple_kind_verdict`, 11916 -> 12213, line content read back and
+        # confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12213, "must_contain": "ingested-magnitude"},
     },
     "V": {
         "meaning": "verified by proxy, never by the oracle",
@@ -516,7 +545,11 @@ BUCKET_DEFINITIONS = {
         # block all sit above this site): fresh `grep -n` for the same
         # unique literal, 14875 -> 15498, read back and confirmed still the
         # real construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 15498, "must_contain": "literal-verified"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
+        # sit above this site): fresh `grep -n` for the same unique literal,
+        # 15498 -> 15812, read back and confirmed still the real
+        # construction site, not a test assertion.
+        "citation": {"file": _ENGINE_SRC, "line": 15812, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
@@ -547,7 +580,10 @@ BUCKET_DEFINITIONS = {
         # fields, seven new probe functions, and `classify()` early-return
         # block all sit above this site): fresh `grep -n` for the first hit,
         # 11622 -> 12168, line content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12168, "must_contain": "unmeasurable"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
+        # sit above this site): fresh `grep -n 'status: "unmeasurable"'`,
+        # first hit, 12168 -> 12465, line content read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12465, "must_contain": "unmeasurable"},
     },
     "X": {
         "meaning": "deferred with a stated reason",
@@ -578,7 +614,11 @@ BUCKET_DEFINITIONS = {
         # fields, seven new probe functions, and `classify()` early-return
         # block all sit above this site): fresh `grep -n` for the first hit,
         # 11582 -> 12128, line content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12128, "must_contain": "deferred-with-reason"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
+        # sit above this site): fresh `grep -n 'status:
+        # "deferred-with-reason"'`, first hit, 12128 -> 12425, line content
+        # read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12425, "must_contain": "deferred-with-reason"},
     },
     "Z": {
         "meaning": "not started",
@@ -608,7 +648,11 @@ BUCKET_DEFINITIONS = {
         # fields, seven new probe functions, and `classify()` early-return
         # block sit above this site): fresh `grep -n` -- still the only real
         # hit, 11443 -> 11989, line content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 11989, "must_contain": "not-started"},
+        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
+        # sit above this site): fresh `grep -n 'status: "not-started"'`,
+        # still the only real hit, 11989 -> 12286, line content read back
+        # and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12286, "must_contain": "not-started"},
     },
 }
 

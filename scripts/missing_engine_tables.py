@@ -86,8 +86,12 @@ ENGINE_SURFACE_CITATIONS = {
     # fields, seven new probe functions, and `classify()` early-return block
     # (all above both sites) shifted them again, 14093 -> 14716 and
     # 14193 -> 14816.
-    "companion": {"line": 14716, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 14816, "must_contain": "power_content_has_no_engine_table"},
+    # SD-34 wave 47 re-derivation: this cycle's own Divine Scion
+    # `EngineFacts` field, choice-gating consts, rewritten probe function,
+    # and `classify()` early-return block (all above both sites) shifted
+    # them again, 14716 -> 15030 and 14816 -> 15130.
+    "companion": {"line": 15030, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 15130, "must_contain": "power_content_has_no_engine_table"},
 }
 
 

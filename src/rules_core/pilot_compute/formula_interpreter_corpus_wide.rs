@@ -802,19 +802,34 @@ mod tests {
     /// work-inventory.json --corpus-root data/corpus` against the post-regen
     /// `docs/work-inventory.json` (tranche/14, this wave's own guarded
     /// regen): F1 = 5193 exactly.
+    ///
+    /// SD-34 wave 47 re-derivation: Divine Scion's 43 closed units include
+    /// 38 F1-shaped ones (each domain's own `BONUS:SKILL`/`BONUS:SAVE`
+    /// secondary-effect token is a bare literal, e.g. `4` or `2` --
+    /// verified per-id against `shape_ledger.py --output`, run against the
+    /// PRE-cycle inventory snapshot since a unit that leaves the not-done
+    /// population no longer appears in a post-regen scan), 4 F0 (the four
+    /// Opposition Alignment records' own `DR:` token is not recognized by
+    /// this classifier's token scan at all -- `no_formula_tokens`), and 1
+    /// F8 (Void Specialization's own `BONUS:CONCENTRATION` token, a residual
+    /// shape). 38 leave the not-done population: 5193 - 38 = 5155,
+    /// confirmed by re-running `python3 scripts/shape_ledger.py --inventory
+    /// docs/work-inventory.json --corpus-root data/corpus` against the
+    /// post-regen `docs/work-inventory.json`: F1 = 5155 exactly.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5193,
-            "F1 population must equal the CURRENT true formula-bearing count (5,193, re-derived \
-             2026-09-05 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
+            f1.population, 5155,
+            "F1 population must equal the CURRENT true formula-bearing count (5,155, re-derived \
+             2026-09-06 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
              `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
-             cycle's own true-at-the-time 5,196 (SD-34 waves 44/45 closure-cycles, unchanged \
-             through wave 45's own zero-F1 closure), not the cycle-before-that's own \
+             cycle's own true-at-the-time 5,193 (SD-34 wave 46 closure-cycle), not the \
+             cycle-before-that's own true-at-the-time 5,196 (SD-34 waves 44/45 closure-cycles, \
+             unchanged through wave 45's own zero-F1 closure), not the cycle-before-that's own \
              true-at-the-time 5,206 (SD-34 wave 43 closure-cycle), not the \
              cycle-before-that's own true-at-the-time 5,207 (SD-34 wave 39 \
              closure-cycle -- Lane A closed \

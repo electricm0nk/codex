@@ -1351,4 +1351,108 @@ are genuinely harder, same bucket as Phrenic Slayer's own remaining 11; several 
 heterogeneous classes like Divine Scion (45 units) remain real but slower closable work) and **88
 not registered** (unchanged, named above).
 
+**WAVE 47 UPDATE, 2026-09-06: a stalled prior build agent's Divine Scion work was recovered,
+ONE real correctness bug found and fixed, and 43 of Divine Scion's 45 sub-mechanism-5 units
+closed.**
+
+**Recovery context.** This wave's own dispatched build agent (`sd34-wave47.workflow.js`) ran for
+~48 minutes and wrote real, substantial code targeting Divine Scion (source book
+`inner_sea_magic`, 45 sub-mechanism-5 units, the single largest remaining class wave 46 named) —
+a `probe_divine_scion_wiring` function and `divine_scion_wired` `EngineFacts` field in
+`v06_work_inventory.rs`, and a `ground_divine_scion_class_features` implementation plus a full
+test module in `pilot_compute/mod.rs` — then stalled without committing, writing a receipt, or
+running any verification. This cycle read the FULL uncommitted diff against the real corpus
+records directly (never trusting the diff's own comments or the prior agent's characterization of
+its own work, the same distrust this bundle applies to every prior wave's own self-report), found
+one genuine correctness bug, fixed it, finished the wiring, verified/rewrote the tests, and
+completed every verification step the stalled agent never ran.
+
+**The bug, found by reading the real oracle rather than trusting the recovered draft's own doc
+comments.** The recovered draft's `ground_divine_scion_class_features` ground all 35 per-domain
+Domain Specialization sub-records AND all 4 Opposition Alignment DR records unconditionally, for
+every Divine Scion character simultaneously, regardless of which domain or opposition alignment
+the character actually has. Both are real `ABILITYPOOL`-gated one-of-N choices — confirmed
+against the real, non-ingested PCGen oracle
+(`~/workspace/repos/pcgen/data/pathfinder/paizo/campaign_setting/inner_sea_magic/
+ism_classes.lst:103`/`:104`'s own `BONUS:ABILITYPOOL|Opposition Alignment|1` / `BONUS:ABILITYPOOL|
+Domain Specialization|1`, pool SIZE 1, and `ism_abilities_class.lst`'s own section headers at
+lines 35 and 47, reading literally `# Opposition Alignment choices` and `# Domain Specialization
+choices`) — the exact shape this codebase already gates everywhere else via a real
+`choice_selection(input, CHOICE_ID)` check (`SORCERER_BLOODLINE_CHOICE_ID`,
+`CLERIC_DOMAIN_CHOICE_ID`, `BLOODRAGER_BLOODLINE_CHOICE_ID`, `RANGER_COMBAT_STYLE_CHOICE_ID`, and
+roughly 30 other call sites). The recovered draft's OWN doc comment correctly excluded True Scion
+Charisma/Wisdom citing this exact reasoning ("a genuine pool-selection-state question this engine
+does not yet track") — but did not notice its own two siblings, Domain Specialization and
+Opposition Alignment, carried the identical `ABILITYPOOL` shape, and ground them unconditionally
+instead. This is exactly the class of defect this bundle's own standing doctrine (`§2a`'s "a shape
+engine computes a number; it does not complete a record", and the ruling this file opened under
+-- "a wrong computed number looks like a right one") exists to catch: a computed value that looks
+right (a real formula, a real corpus citation, real passing tests) but is factually wrong for any
+real character querying it.
+
+**The fix.** Two new choice-set-id consts
+(`DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID`/`DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID`),
+following the `"domain:<slug>"`/`"alignment:<slug>"` selection-id convention already established
+elsewhere. `ground_divine_scion_class_features` now gates the per-domain block and the
+per-alignment DR block on `choice_selection(input, <CHOICE_ID>)` matching the recorded selection —
+a real character's own receipt now surfaces exactly the ONE domain and ONE alignment it actually
+recorded, never all 39 (35 + 4) simultaneously. The 4 genuinely unconditional single-owner facts
+(Domain Specialization's own pool-SIZE, Divine Wrath, Deific Defense, Weapon and Armor
+Proficiency) are untouched. `probe_divine_scion_wiring` (used both by the corpus-wide census
+sweep and this wave's own reachability tests) was rewritten to sweep every one of the 35 domain
+selections and 4 alignment selections in turn, collecting the union of corpus keys the real
+pipeline resolves — the same `probe_cleric_domain_generic_member_wiring` idiom this file already
+uses for Cleric Domain/Sorcerer Bloodline, adapted for a hand-rolled (not generic-pool-group)
+grounding function. `canonical_seeds_for` gained a `"divine_scion"` arm (`domain:fire` /
+`alignment:evil`), the same "give the sweep one canonical default choice" convention already used
+for wizard/cleric/sorcerer/fighter/psychic and others.
+
+**Net effect on this wave's own closure count: none** — all 43 corpus keys the recovered draft
+targeted still resolve reachable, because reachability at the corpus-wide census level means "the
+real pipeline resolves this key for SOME real character configuration," not "every character has
+it," the same existence-based semantics Cleric Domain's own ~9-domain population already
+established (confirmed directly: none of Cleric Domain's own per-domain records are grounded
+unconditionally for every cleric either). What changed is CORRECTNESS: a real Divine Scion
+character's own receipt now shows exactly the domain/alignment they recorded, not a fabricated
+39-facts-at-once answer.
+
+**Closed this wave: 43 of Divine Scion's 45 sub-mechanism-5 units** — Domain Specialization's own
+pool-size record, Divine Wrath, Deific Defense, Weapon and Armor Proficiency, all four Opposition
+Alignment DR records (Chaotic/Evil/Good/Lawful), and all 35 per-domain Domain Specialization
+sub-records (Air through Weather) — every formula verified directly against the real corpus JSON
+and independently cross-checked against the real, non-ingested PCGen oracle; all 35 domains' own
+uses-per-day tokens were cross-checked EXHAUSTIVELY (not sampled) against the raw `.lst` file and
+matched exactly. **True Scion Charisma/Wisdom (2 units) remain named, not attempted**, unchanged
+from the recovered draft's own honest scoping: a real `ABILITYPOOL|True Scion|1` mutually-exclusive
+choice between an ability-score bump to Charisma or Wisdom, each also re-stating the same
+`DomainSpecBonus`/`DivineWrathBonus`/`DeificDefenseBonus` increments already excluded above — a
+genuine pool-selection-state question this engine does not yet track for this specific choice.
+
+Independently re-derived by the orchestrator against a fresh `docs/work-inventory.json` join, not
+just taken on the fixing agent's word: exactly **43 units** changed status, zero collateral
+movement (id-set unchanged at 49438) — `DONE: 25419→25458 (+39)`, `D: 2441→2398 (−43)`,
+`V: 345→349 (+4)`. 39 landed `grounded` (all 35 per-domain records + all 4 Opposition Alignment
+records, every one `wiring_class: computed`); 4 landed `literal-verified` (the 4 unconditional
+records, every one `wiring_class: static` and swept-verified) — the same D→V shape waves
+41/43/44/45/46 already hit. F1/`shape_ledger.py` census re-derived: `5193 → 5155`, verified
+per-id (38 of the 43 closed units are F1-shaped; the other 5 are 4 `F0` + 1 `F8`). Both
+`cargo test --locked --lib` (3134 passed, up from 3121) and the full `cargo test --locked
+--no-fail-fast` integration suite were run this cycle (run to completion twice against the fully-
+settled tree — the F1 pin update is a real `.rs` edit — identically 8562 passed / 0 failed / 67
+ignored both times). Full receipt:
+`artifacts/bucket-d-mining/wave47_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
+**A generalizable finding for future waves against this same sub-mechanism-5 population:** before
+grounding ANY corpus record shaped `# <X> choices` / granted via `BONUS:ABILITYPOOL|<X>|1`, check
+whether the class's OTHER already-excluded units (like True Scion here) share the identical
+`ABILITYPOOL` shape — a wave that correctly excludes one such choice but grounds a sibling choice
+unconditionally is the exact defect this cycle's own correction fixed. Grep the raw oracle's own
+section-header comments (`# ... choices`) as a cheap first signal before scoping a future wave.
+
+**Sub-mechanism 5's remaining population after this wave: 591 (634 − 43)**, split across the
+remaining 54 registered prestige classes (Divine Scion no longer among the large ones — only its
+own 2-unit True Scion remainder is left) and the 88 not-registered units (unchanged, named
+above). The ≥10-class AS/MB/Ma cross-class-manifester-level population is unchanged, untouched
+this wave.
+
 ---

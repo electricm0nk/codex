@@ -6367,6 +6367,32 @@ const NATURE_WARDEN_CLASS_ID: &str = "class:nature_warden";
 const RAGE_PROPHET_CLASS_ID: &str = "class:rage_prophet";
 const HOLY_VINDICATOR_CLASS_ID: &str = "class:holy_vindicator";
 const STALWART_DEFENDER_CLASS_ID: &str = "class:stalwart_defender";
+/// SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): same "registered
+/// prestige class, no `ClassId`-family enum entry, no chassis dispatch
+/// reaches it" gap as the six wave-46 classes above. Matches `tests/
+/// fixtures/rules_core/prestige-class-entry-requirements.json`'s own entry
+/// exactly (`class:divine_scion`, source book `inner_sea_magic`).
+const DIVINE_SCION_CLASS_ID: &str = "class:divine_scion";
+/// SD-34 wave 47 CORRECTION (`decisions.md §22`): the real oracle
+/// (`ism_classes.lst:103`, `BONUS:ABILITYPOOL|Opposition Alignment|1`) and
+/// `ism_abilities_class.lst:35`'s own `# Opposition Alignment choices`
+/// section header both confirm this is a genuine one-of-four
+/// mutually-exclusive `ABILITYPOOL` selection -- the SAME "real pool
+/// selection this engine must gate on, not assume" shape
+/// `SORCERER_BLOODLINE_CHOICE_ID` / `CLERIC_DOMAIN_CHOICE_ID` already
+/// establish, not the "single-owner, unconditional" shape this wave's own
+/// first draft wrongly applied to all four alignment DR records at once.
+const DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID: &str =
+    "choice:divine_scion_opposition_alignment";
+/// SD-34 wave 47 CORRECTION (`decisions.md §22`): the real oracle
+/// (`ism_classes.lst:104`, `BONUS:ABILITYPOOL|Domain Specialization|1`) and
+/// `ism_abilities_class.lst:47`'s own `# Domain Specialization choices`
+/// section header both confirm this is a genuine one-of-35
+/// mutually-exclusive `ABILITYPOOL` selection -- same correction and same
+/// precedent as `DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID` immediately
+/// above.
+const DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID: &str =
+    "choice:divine_scion_domain_specialization";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` idiom. Verified against
@@ -9118,6 +9144,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     ground_rage_prophet_class_features(input, &mut explanations);
     ground_holy_vindicator_class_features(input, &mut explanations);
     ground_stalwart_defender_class_features(input, &ability_modifiers, &mut explanations);
+    ground_divine_scion_class_features(input, &mut explanations);
 
     // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
     // class-feature blocker into three named pillars, and ground Track and
@@ -35961,6 +35988,371 @@ fn ground_stalwart_defender_class_features(
                 con_mod = ability_modifiers.constitution
             ),
         });
+    }
+}
+
+/// Total character level ("`TL`" in PCGen formula syntax) -- the sum of
+/// every class level this character has taken, not just the prestige
+/// class currently being swept. The same "total character level" global
+/// `explain_undine_formula_race_trait` already established as a supported
+/// `formula_interpreter` variable; extracted here as its own pure helper
+/// since Divine Scion's own Domain Specialization sub-records key their
+/// caster level directly on `TL`, not on `DivineScionLVL`.
+fn total_character_level(input: &CharacterInput) -> i16 {
+    let total: i64 = input.chosen.class_levels.iter().map(|c| i64::from(c.level)).sum();
+    i16::try_from(total).unwrap_or(i16::MAX)
+}
+
+/// Divine Scion Domain Specialization's own pool-choice base record
+/// (`ism_abilities_class.lst:30`, `KEY:Divine Scion ~ Domain
+/// Specialization`): `DEFINE:DomainSpecBonus|0` / `BONUS:ABILITYPOOL|Domain
+/// Specialization|1` -- the SIZE of the domain-specialization choice pool,
+/// literally and unconditionally 1 (a divine scion specializes in exactly
+/// one domain granted by her deity), the same "grounds the pool SIZE only"
+/// shape `loremaster_secret_lore_pool_size` already established. Granted
+/// automatically at class level 3 (`ism_classes.lst:104`). `None` below
+/// level 3.
+fn divine_scion_domain_specialization_pool_size(level: u8) -> Option<i16> {
+    if level < 3 {
+        return None;
+    }
+    Some(1)
+}
+
+/// Divine Scion Divine Wrath (`ism_abilities_class.lst:31`, `KEY:Divine
+/// Scion ~ Divine Wrath`): `DEFINE:DivineWrathBonus|0` /
+/// `BONUS:VAR|DivineWrathBonus|1` -- a flat +1 damage per die against
+/// creatures matching the divine scion's own opposition alignment,
+/// granted automatically at class level 4 (`ism_classes.lst:105`). True
+/// Scion's own further `BONUS:VAR|DivineWrathBonus|1` increment (raising
+/// this to +2) is NOT modelled here -- True Scion Charisma/Wisdom are this
+/// class's own two remaining, mutually-exclusive open sm5 units, left
+/// unattempted this cycle (a real `ABILITYPOOL|True Scion|1` choice this
+/// engine does not yet track a selection for). `None` below level 4.
+fn divine_scion_divine_wrath_bonus(level: u8) -> Option<i16> {
+    if level < 4 {
+        return None;
+    }
+    Some(1)
+}
+
+/// Divine Scion Deific Defense (`ism_abilities_class.lst:32`, `KEY:Divine
+/// Scion ~ Deific Defense`): `DEFINE:DeificDefenseBonus|0` /
+/// `BONUS:VAR|DeificDefenseBonus|2` -- a flat DR 2, bypassed by attacks
+/// with the divine scion's own opposition alignment subtype, granted
+/// automatically at class level 7 (`ism_classes.lst:106`). True Scion's
+/// own further `BONUS:VAR|DeificDefenseBonus|3` increment (raising this to
+/// DR 5) is NOT modelled here, the same True-Scion boundary `divine_
+/// scion_divine_wrath_bonus` above already documents. `None` below level
+/// 7.
+fn divine_scion_deific_defense_bonus(level: u8) -> Option<i16> {
+    if level < 7 {
+        return None;
+    }
+    Some(2)
+}
+
+/// Divine Scion's four Opposition Alignment records (Chaotic/Evil/Good/
+/// Lawful, `ism_abilities_class.lst:37-40`): each carries a single `DR`
+/// token restating the SAME `DeificDefenseBonus` magnitude `divine_scion_
+/// deific_defense_bonus` already grounds, e.g. `DR:DeificDefenseBonus/
+/// evil|PREABILITY:1,CATEGORY=Special Ability,Divine Scion ~ Deific
+/// Defense` -- gated on already having Deific Defense, itself
+/// auto-granted at the identical class level 7. Reuses that value
+/// directly rather than re-deriving it; each record's own separate
+/// prose-only "+1 bonus on caster level checks to overcome spell
+/// resistance" clause carries no `BONUS` token anywhere in the corpus and
+/// is not modelled. `None` below level 7. The MAGNITUDE is the same
+/// regardless of which of the four is the character's own opposition
+/// alignment (this is the pure per-alignment formula; WHICH of the four
+/// records actually fires for a given character is a separate,
+/// `DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID`-gated question resolved by
+/// `ground_divine_scion_class_features` below, corrected this cycle -- see
+/// that function's own doc comment).
+fn divine_scion_opposition_alignment_dr(level: u8) -> Option<i16> {
+    divine_scion_deific_defense_bonus(level)
+}
+
+/// Divine Scion Weapon and Armor Proficiency (`ism_abilities_class.lst:29`,
+/// `KEY:Divine Scion ~ Weapon and Armor Proficiency`): `BONUS:VAR|
+/// GreatWeapFocusQualify,WeapSpecQualify,GreatWeapSpecQualify|1` -- a flat
+/// internal qualifying flag (waives the Fighter-level prerequisite for
+/// Greater Weapon Focus/Weapon Specialization/Greater Weapon
+/// Specialization), granted automatically at class level 1
+/// (`ism_classes.lst:103`). Grounds the flag magnitude only: this engine
+/// applies no feat-prerequisite waiver logic for it to feed into. `None`
+/// below level 1.
+fn divine_scion_weapon_and_armor_proficiency_qualify_flag(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1)
+}
+
+/// Divine Scion Domain Specialization's own 35 per-domain sub-records
+/// (`ism_abilities_class.lst:49-83`), each `SPELLS:Innate|
+/// TIMES=<1|3|ATWILL>|CASTERLEVEL=TL|<spell name>,<DC>` -- the per-domain
+/// spell-like ability's uses-per-day literal, or `None` for the five
+/// domains whose spell is `TIMES=ATWILL` (Chaos/Evil/Good/Law/Magic, each
+/// a constant `Detect <Alignment/Magic>` effect) -- the same "`ATWILL` has
+/// no discrete per-day count to ground" boundary `paladin_detect_evil`
+/// already established. Verified against the real, non-ingested PCGen
+/// oracle (`ism_abilities_class.lst`) for all 35 domains, not just the
+/// ingested corpus JSON. Caster level for every domain is uniformly `TL`
+/// (total character level, via `total_character_level` above) -- no
+/// per-domain difference there, only the uses-per-day
+/// literal (or its absence) varies by domain. Each domain's own secondary
+/// skill/save/AC/CMD/concentration bonus (always a flat, alignment-typed
+/// constant) is NOT modelled -- the same "ground the SLA triple, don't
+/// model the effect" split `ground_shadowdancer_class_features` already
+/// established; here even the "triple" narrows to caster level (+
+/// uses-per-day when numeric), since the DC itself is never grounded for
+/// any SPELLS-shaped record in this engine. This table lists every
+/// domain's own formula so any one of them can be resolved once selected
+/// (`ground_divine_scion_class_features` gates WHICH domain actually
+/// applies on `DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID`, corrected
+/// this cycle -- a real character only ever has ONE of these 35 active,
+/// the `ism_abilities_class.lst:47` `# Domain Specialization choices`
+/// section header's own words).
+const DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY: &[(&str, &str, Option<i16>)] = &[
+    ("air", "Air", Some(1)),
+    ("animal", "Animal", Some(1)),
+    ("artifice", "Artifice", Some(3)),
+    ("chaos", "Chaos", None),
+    ("charm", "Charm", Some(3)),
+    ("community", "Community", Some(1)),
+    ("darkness", "Darkness", Some(3)),
+    ("death", "Death", Some(3)),
+    ("destruction", "Destruction", Some(3)),
+    ("earth", "Earth", Some(3)),
+    ("evil", "Evil", None),
+    ("fire", "Fire", Some(1)),
+    ("glory", "Glory", Some(1)),
+    ("good", "Good", None),
+    ("healing", "Healing", Some(1)),
+    ("knowledge", "Knowledge", Some(3)),
+    ("law", "Law", None),
+    ("liberation", "Liberation", Some(3)),
+    ("luck", "Luck", Some(3)),
+    ("madness", "Madness", Some(3)),
+    ("magic", "Magic", None),
+    ("nobility", "Nobility", Some(1)),
+    ("plant", "Plant", Some(1)),
+    ("protection", "Protection", Some(1)),
+    ("repose", "Repose", Some(3)),
+    ("rune", "Rune", Some(3)),
+    ("scalykind", "Scalykind", Some(1)),
+    ("strength", "Strength", Some(3)),
+    ("sun", "Sun", Some(1)),
+    ("travel", "Travel", Some(3)),
+    ("trickery", "Trickery", Some(1)),
+    ("void", "Void", Some(1)),
+    ("war", "War", Some(3)),
+    ("water", "Water", Some(1)),
+    ("weather", "Weather", Some(1)),
+];
+
+/// Grounds Divine Scion's 43 magnitude-bearing class features --
+/// `decisions.md §22`'s WAVE 47 UPDATE, sub-mechanism-5's "registered
+/// prestige class, magnitude-only" remainder. Unconditional on chassis
+/// support (no `ClassId`-family enum entry for this class, source book
+/// `inner_sea_magic`), same placement as `ground_phrenic_slayer_class_
+/// features` above.
+///
+/// **CORRECTION, same cycle (recovered from a stalled prior run and
+/// verified against the real oracle before this function was committed):**
+/// the first draft of this function ground all four Opposition Alignment
+/// DR records and all 35 Domain Specialization per-domain records
+/// unconditionally, for every Divine Scion character simultaneously. Both
+/// are real `ABILITYPOOL`-gated one-of-N choices, not single-owner
+/// unconditional grants -- `ism_abilities_class.lst:35`'s own `# Opposition
+/// Alignment choices` and `:47`'s own `# Domain Specialization choices`
+/// section headers say so directly, and `ism_classes.lst:103`/`:104` grant
+/// `BONUS:ABILITYPOOL|Opposition Alignment|1` / `BONUS:ABILITYPOOL|Domain
+/// Specialization|1` (pool SIZE 1: exactly one of each is ever active on a
+/// real character), the exact shape `SORCERER_BLOODLINE_CHOICE_ID` /
+/// `CLERIC_DOMAIN_CHOICE_ID` / `choice_selection` already gate everywhere
+/// else in this file. Fixed here: the per-alignment DR block and the
+/// per-domain block below now each gate on their own
+/// `DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID` /
+/// `DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID` selection, exactly one
+/// member surfaces per real character, and the corpus-wide reachability
+/// proof (`v06_work_inventory.rs`'s `probe_divine_scion_wiring`) sweeps
+/// every one of the 4 + 35 candidate selections in turn (the same
+/// `probe_cleric_domain_generic_member_wiring` idiom) rather than reading
+/// a single fixture's own accidental silence as "always grounded."
+///
+/// **True Scion Charisma/Wisdom (this class's own remaining two sm5
+/// units) are NOT attempted this cycle**: they are a real
+/// `ABILITYPOOL|True Scion|1` mutually-exclusive choice between an
+/// ability-score bump to Charisma or Wisdom (each also re-stating the
+/// SAME `DomainSpecBonus`/`DivineWrathBonus`/`DeificDefenseBonus`
+/// increments already excluded above) -- left named for a future wave
+/// rather than guessed at.
+fn ground_divine_scion_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == DIVINE_SCION_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = divine_scion_domain_specialization_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_magic.divine_scion.domain_specialization.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Divine Scion level {level} Domain Specialization: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Domain Specialization|1`). Grounds the pool SIZE only -- \
+                 which domain is specialized in is not modelled"
+            ),
+        });
+    }
+
+    if let Some(bonus) = divine_scion_divine_wrath_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_magic.divine_scion.divine_wrath.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Divine Scion level {level} Divine Wrath: +{bonus} damage per die against \
+                 creatures matching the divine scion's own opposition alignment (corpus \
+                 `DivineWrathBonus = 1`). Grounds the magnitude only: no damaging-spell total \
+                 exists anywhere in this engine for it to layer onto; True Scion's own further \
+                 increment is not modelled (see this function's own doc comment)"
+            ),
+        });
+    }
+
+    if let Some(bonus) = divine_scion_deific_defense_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_magic.divine_scion.deific_defense.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Divine Scion level {level} Deific Defense: DR {bonus}/(opposition alignment) \
+                 (corpus `DeificDefenseBonus = 2`). Grounds the magnitude only: no damage- \
+                 reduction total exists anywhere in this engine for it to layer onto; True \
+                 Scion's own further increment is not modelled"
+            ),
+        });
+
+        // `divine_scion_opposition_alignment_dr` is a pure re-export of
+        // `divine_scion_deific_defense_bonus` (see its own doc comment) --
+        // called explicitly here (rather than reusing `bonus` directly) so
+        // the function has a real call site to pure-formula test against.
+        //
+        // CORRECTION (see this function's own doc comment): only the ONE
+        // alignment the character actually recorded via
+        // `DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID` surfaces -- a real
+        // divine scion has exactly one opposition alignment, never all
+        // four at once.
+        if let Some(dr) = divine_scion_opposition_alignment_dr(level) {
+            if let Some(selection) =
+                choice_selection(input, DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID)
+            {
+                for (slug, display) in [
+                    ("chaotic", "Chaotic"),
+                    ("evil", "Evil"),
+                    ("good", "Good"),
+                    ("lawful", "Lawful"),
+                ] {
+                    if selection != format!("alignment:{slug}") {
+                        continue;
+                    }
+                    explanations.push(ComputationExplanation {
+                        id: format!(
+                            "class_feature.inner_sea_magic.divine_scion.{slug}_opposition_\
+                             alignment.dr"
+                        ),
+                        value: dr,
+                        detail: format!(
+                            "Divine Scion level {level} {display} Opposition Alignment: DR {dr} \
+                             bypassed by {display_lower} creatures (corpus \
+                             `DR:DeificDefenseBonus/{slug}`, restating the same \
+                             `DeificDefenseBonus` magnitude Deific Defense already grounds; \
+                             recorded selection {DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID} -> \
+                             {selection}). Grounds the magnitude only; the record's own separate \
+                             +1 caster-level-check bonus carries no `BONUS` token anywhere and is \
+                             not modelled",
+                            display_lower = display.to_lowercase()
+                        ),
+                    });
+                }
+            }
+        }
+    }
+
+    if let Some(flag) = divine_scion_weapon_and_armor_proficiency_qualify_flag(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_magic.divine_scion.weapon_and_armor_proficiency.\
+                 qualify_flag"
+                .to_owned(),
+            value: flag,
+            detail: format!(
+                "Divine Scion level {level} Weapon and Armor Proficiency: a qualifying flag \
+                 (corpus `BONUS:VAR|GreatWeapFocusQualify,WeapSpecQualify,\
+                 GreatWeapSpecQualify|1`) waiving the Fighter-level prerequisite for Greater \
+                 Weapon Focus/Weapon Specialization/Greater Weapon Specialization. Grounds the \
+                 flag magnitude only: this engine applies no feat-prerequisite waiver logic for \
+                 it to feed into"
+            ),
+        });
+    }
+
+    // CORRECTION (see this function's own doc comment): only the ONE
+    // domain the character actually recorded via
+    // `DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID` surfaces -- a real
+    // divine scion specializes in exactly one domain, never all 35 at
+    // once.
+    if level >= 3 {
+        if let Some(selection) =
+            choice_selection(input, DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID)
+        {
+            if let Some((slug, display, uses_per_day)) = DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY
+                .iter()
+                .find(|(slug, _, _)| selection == format!("domain:{slug}"))
+            {
+                let caster_level = total_character_level(input);
+                explanations.push(ComputationExplanation {
+                    id: format!(
+                        "class_feature.inner_sea_magic.divine_scion.{slug}_specialization.\
+                         caster_level"
+                    ),
+                    value: caster_level,
+                    detail: format!(
+                        "Divine Scion {display} Specialization: spell-like ability, caster \
+                         level {caster_level} (corpus `SPELLS:Innate|...|CASTERLEVEL=TL|...`, \
+                         `TL` = this character's total level across every class, \
+                         {caster_level}; recorded selection \
+                         {DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID} -> {selection}). Grounds \
+                         the caster-level fact only -- the SLA triple idiom already established \
+                         by `ground_summoner_slice_a_features`: no spell effect, save DC, or \
+                         secondary skill/save/AC/CMD/concentration bonus is modelled"
+                    ),
+                });
+
+                if let Some(times) = uses_per_day {
+                    explanations.push(ComputationExplanation {
+                        id: format!(
+                            "class_feature.inner_sea_magic.divine_scion.{slug}_specialization.\
+                             uses_per_day"
+                        ),
+                        value: *times,
+                        detail: format!(
+                            "Divine Scion {display} Specialization uses per day: {times} \
+                             (corpus `SPELLS:Innate|TIMES={times}|...`). Grounds the per-day \
+                             budget only"
+                        ),
+                    });
+                }
+            }
+        }
     }
 }
 
@@ -77407,6 +77799,376 @@ mod wave46_registered_prestige_magnitude_formulas_tests {
                 explanation_value(&fighter, id),
                 None,
                 "a Fighter must not gain any of this wave's 20 new-class-feature ids: {id}"
+            );
+        }
+    }
+}
+
+/// SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): Divine Scion's 43
+/// magnitude-bearing class features -- the same two-layer discipline every
+/// prior wave's own test module in this file established: the pure
+/// formula first (including edge cases the fixture cannot exercise), then
+/// a reachability test proving every explanation id actually surfaces
+/// through the real `build_pilot_headless_receipt` pipeline end to end,
+/// plus a negative control proving none of them leak onto an unrelated
+/// class.
+#[cfg(test)]
+mod wave47_divine_scion_class_features_tests {
+    use super::{
+        build_pilot_headless_receipt, divine_scion_deific_defense_bonus,
+        divine_scion_divine_wrath_bonus, divine_scion_domain_specialization_pool_size,
+        divine_scion_opposition_alignment_dr,
+        divine_scion_weapon_and_armor_proficiency_qualify_flag, total_character_level,
+        CharacterClassLevel, CharacterInput, DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID,
+        DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY,
+        DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID,
+    };
+    use crate::rules_core::character_input::{SelectedChoice, load_character_input_fixture};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    /// Same as `character`, but with a recorded Domain Specialization
+    /// and/or Opposition Alignment choice -- the CORRECTION this cycle
+    /// made necessary: neither the 35 per-domain records nor the 4
+    /// per-alignment DR records surface at all without one (see
+    /// `ground_divine_scion_class_features`'s own doc comment).
+    fn character_with_choices(
+        level: u8,
+        domain: Option<&str>,
+        alignment: Option<&str>,
+    ) -> CharacterInput {
+        let mut input = character("class:divine_scion", level);
+        if let Some(domain) = domain {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID.to_owned(),
+                selection_id: format!("domain:{domain}"),
+            });
+        }
+        if let Some(alignment) = alignment {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID.to_owned(),
+                selection_id: format!("alignment:{alignment}"),
+            });
+        }
+        input
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    const ALL_STATIC_EXPLANATION_IDS: &[&str] = &[
+        "class_feature.inner_sea_magic.divine_scion.domain_specialization.pool_size",
+        "class_feature.inner_sea_magic.divine_scion.divine_wrath.bonus",
+        "class_feature.inner_sea_magic.divine_scion.deific_defense.bonus",
+        "class_feature.inner_sea_magic.divine_scion.weapon_and_armor_proficiency.qualify_flag",
+        "class_feature.inner_sea_magic.divine_scion.chaotic_opposition_alignment.dr",
+        "class_feature.inner_sea_magic.divine_scion.evil_opposition_alignment.dr",
+        "class_feature.inner_sea_magic.divine_scion.good_opposition_alignment.dr",
+        "class_feature.inner_sea_magic.divine_scion.lawful_opposition_alignment.dr",
+        "class_feature.inner_sea_magic.divine_scion.fire_specialization.caster_level",
+        "class_feature.inner_sea_magic.divine_scion.fire_specialization.uses_per_day",
+        "class_feature.inner_sea_magic.divine_scion.chaos_specialization.caster_level",
+    ];
+
+    // ---- Pure formula ----
+
+    #[test]
+    fn domain_specialization_pool_size_matches_the_corpus_token() {
+        // `BONUS:ABILITYPOOL|Domain Specialization|1`, granted level 3
+        // (`ism_classes.lst:104`) -- literally, unconditionally 1.
+        assert_eq!(divine_scion_domain_specialization_pool_size(2), None);
+        assert_eq!(divine_scion_domain_specialization_pool_size(3), Some(1));
+        assert_eq!(divine_scion_domain_specialization_pool_size(10), Some(1));
+    }
+
+    #[test]
+    fn divine_wrath_bonus_matches_the_corpus_token() {
+        // `DivineWrathBonus = 1`, granted level 4 (`ism_classes.lst:105`).
+        assert_eq!(divine_scion_divine_wrath_bonus(3), None);
+        assert_eq!(divine_scion_divine_wrath_bonus(4), Some(1));
+        assert_eq!(divine_scion_divine_wrath_bonus(10), Some(1));
+    }
+
+    #[test]
+    fn deific_defense_and_opposition_alignment_dr_match_the_corpus_token() {
+        // `DeificDefenseBonus = 2`, granted level 7 (`ism_classes.lst:106`);
+        // the four Opposition Alignment DR records restate the identical
+        // magnitude.
+        assert_eq!(divine_scion_deific_defense_bonus(6), None);
+        assert_eq!(divine_scion_deific_defense_bonus(7), Some(2));
+        assert_eq!(divine_scion_deific_defense_bonus(10), Some(2));
+        assert_eq!(divine_scion_opposition_alignment_dr(6), None);
+        assert_eq!(divine_scion_opposition_alignment_dr(7), Some(2));
+        assert_eq!(divine_scion_opposition_alignment_dr(10), Some(2));
+    }
+
+    #[test]
+    fn weapon_and_armor_proficiency_qualify_flag_matches_the_corpus_token() {
+        // `BONUS:VAR|GreatWeapFocusQualify,WeapSpecQualify,
+        // GreatWeapSpecQualify|1`, granted level 1 (`ism_classes.lst:103`).
+        assert_eq!(divine_scion_weapon_and_armor_proficiency_qualify_flag(0), None);
+        assert_eq!(divine_scion_weapon_and_armor_proficiency_qualify_flag(1), Some(1));
+        assert_eq!(divine_scion_weapon_and_armor_proficiency_qualify_flag(10), Some(1));
+    }
+
+    #[test]
+    fn total_character_level_sums_every_class_not_just_the_swept_one() {
+        let mut input = character("class:divine_scion", 3);
+        // A multiclassed character: 3 levels of Divine Scion plus 7 of an
+        // earlier class -- `TL` must be the SUM (10), not the swept
+        // class's own level (3) alone.
+        input.chosen.class_levels.push(CharacterClassLevel {
+            class_id: "class:cleric".to_owned(),
+            level: 7,
+        });
+        assert_eq!(total_character_level(&input), 10);
+    }
+
+    #[test]
+    fn domain_specialization_uses_per_day_table_matches_the_real_oracle() {
+        // Verified directly against `ism_abilities_class.lst`'s own 35
+        // `SPELLS:Innate|TIMES=<1|3|ATWILL>|...` tokens (lines 49-83), not
+        // just the ingested corpus JSON.
+        assert_eq!(DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY.len(), 35);
+        let atwill: Vec<&str> = DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY
+            .iter()
+            .filter(|(_, _, times)| times.is_none())
+            .map(|(slug, _, _)| *slug)
+            .collect();
+        assert_eq!(atwill, vec!["chaos", "evil", "good", "law", "magic"]);
+        let times_of = |slug: &str| {
+            DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY
+                .iter()
+                .find(|(s, _, _)| *s == slug)
+                .and_then(|(_, _, times)| *times)
+        };
+        assert_eq!(times_of("air"), Some(1));
+        assert_eq!(times_of("artifice"), Some(3));
+        assert_eq!(times_of("scalykind"), Some(1));
+        assert_eq!(times_of("war"), Some(3));
+    }
+
+    // ---- Reachability: the real pipeline, at level 10 (every gate open) ----
+
+    #[test]
+    fn divine_scion_unconditional_static_ids_reach_the_real_pipeline_at_level_ten() {
+        // No Domain Specialization/Opposition Alignment choice recorded at all
+        // -- these four facts are unconditional single-owner grants, so they
+        // still surface (see `ground_divine_scion_class_features`'s own doc
+        // comment for why the OTHER 39 do not).
+        let character = character("class:divine_scion", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.inner_sea_magic.divine_scion.domain_specialization.pool_size", 1),
+            ("class_feature.inner_sea_magic.divine_scion.divine_wrath.bonus", 1),
+            ("class_feature.inner_sea_magic.divine_scion.deific_defense.bonus", 2),
+            (
+                "class_feature.inner_sea_magic.divine_scion.weapon_and_armor_proficiency.\
+                 qualify_flag",
+                1,
+            ),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&character, id), Some(*value), "{id}");
+        }
+    }
+
+    /// CORRECTION (this cycle): none of the 4 Opposition Alignment DR
+    /// records or the 35 Domain Specialization per-domain records surface
+    /// for a character with no recorded choice -- the first draft of this
+    /// wave wrongly grounded all of them unconditionally. This is the RED
+    /// this cycle's own fix turns GREEN.
+    #[test]
+    fn divine_scion_choice_gated_ids_are_absent_with_no_recorded_selection() {
+        let character = character("class:divine_scion", 10);
+        for id in [
+            "class_feature.inner_sea_magic.divine_scion.chaotic_opposition_alignment.dr",
+            "class_feature.inner_sea_magic.divine_scion.evil_opposition_alignment.dr",
+            "class_feature.inner_sea_magic.divine_scion.good_opposition_alignment.dr",
+            "class_feature.inner_sea_magic.divine_scion.lawful_opposition_alignment.dr",
+            "class_feature.inner_sea_magic.divine_scion.fire_specialization.caster_level",
+            "class_feature.inner_sea_magic.divine_scion.fire_specialization.uses_per_day",
+            "class_feature.inner_sea_magic.divine_scion.chaos_specialization.caster_level",
+        ] {
+            assert_eq!(
+                explanation_value(&character, id),
+                None,
+                "{id}: a real divine scion has exactly one domain/alignment, never all of them \
+                 and never none of them silently defaulted"
+            );
+        }
+    }
+
+    #[test]
+    fn divine_scion_opposition_alignment_dr_surfaces_only_the_recorded_alignment() {
+        let evil = character_with_choices(10, None, Some("evil"));
+        assert_eq!(
+            explanation_value(
+                &evil,
+                "class_feature.inner_sea_magic.divine_scion.evil_opposition_alignment.dr"
+            ),
+            Some(2)
+        );
+        for other in [
+            "class_feature.inner_sea_magic.divine_scion.chaotic_opposition_alignment.dr",
+            "class_feature.inner_sea_magic.divine_scion.good_opposition_alignment.dr",
+            "class_feature.inner_sea_magic.divine_scion.lawful_opposition_alignment.dr",
+        ] {
+            assert_eq!(
+                explanation_value(&evil, other),
+                None,
+                "{other}: recording Evil must not also surface the other three"
+            );
+        }
+    }
+
+    #[test]
+    fn divine_scion_domain_caster_level_is_total_character_level_not_class_level() {
+        // Single-classed sweep: `TL` == the swept class's own level, 10.
+        let character = character_with_choices(10, Some("fire"), None);
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.inner_sea_magic.divine_scion.fire_specialization.caster_level"
+            ),
+            Some(10)
+        );
+        // Recording Fire must not also surface Chaos's own caster-level fact.
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.inner_sea_magic.divine_scion.chaos_specialization.caster_level"
+            ),
+            None
+        );
+    }
+
+    #[test]
+    fn divine_scion_uses_per_day_is_present_for_numeric_times_and_absent_for_atwill() {
+        let fire = character_with_choices(10, Some("fire"), None);
+        assert_eq!(
+            explanation_value(
+                &fire,
+                "class_feature.inner_sea_magic.divine_scion.fire_specialization.uses_per_day"
+            ),
+            Some(1)
+        );
+        let artifice = character_with_choices(10, Some("artifice"), None);
+        assert_eq!(
+            explanation_value(
+                &artifice,
+                "class_feature.inner_sea_magic.divine_scion.artifice_specialization.\
+                 uses_per_day"
+            ),
+            Some(3)
+        );
+        let chaos = character_with_choices(10, Some("chaos"), None);
+        assert_eq!(
+            explanation_value(
+                &chaos,
+                "class_feature.inner_sea_magic.divine_scion.chaos_specialization.uses_per_day"
+            ),
+            None,
+            "ATWILL domains ground no uses_per_day fact, the same boundary \
+             `paladin_detect_evil` already established"
+        );
+        // Chaos's OWN caster-level fact still grounds even though it has no
+        // uses-per-day fact.
+        assert_eq!(
+            explanation_value(
+                &chaos,
+                "class_feature.inner_sea_magic.divine_scion.chaos_specialization.caster_level"
+            ),
+            Some(10)
+        );
+    }
+
+    #[test]
+    fn divine_scion_ids_are_absent_below_their_own_level_gates() {
+        // Level 2: below every gate (3/4/7) except the level-1 proficiency flag.
+        // Choices recorded regardless, to isolate the level gate from the
+        // choice gate this cycle's correction added.
+        let character = character_with_choices(2, Some("fire"), Some("evil"));
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.inner_sea_magic.divine_scion.weapon_and_armor_proficiency.\
+                 qualify_flag"
+            ),
+            Some(1)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.inner_sea_magic.divine_scion.domain_specialization.pool_size"
+            ),
+            None
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.inner_sea_magic.divine_scion.fire_specialization.caster_level"
+            ),
+            None
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.inner_sea_magic.divine_scion.divine_wrath.bonus"
+            ),
+            None
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.inner_sea_magic.divine_scion.deific_defense.bonus"
+            ),
+            None
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.inner_sea_magic.divine_scion.evil_opposition_alignment.dr"
+            ),
+            None,
+            "level 2 is below Deific Defense's own level-7 gate, regardless of the \
+             recorded alignment choice"
+        );
+    }
+
+    #[test]
+    fn none_of_the_static_ids_leak_onto_an_unrelated_class() {
+        let mut fighter = character("class:fighter", 10);
+        fighter.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID.to_owned(),
+            selection_id: "domain:fire".to_owned(),
+        });
+        fighter.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID.to_owned(),
+            selection_id: "alignment:evil".to_owned(),
+        });
+        for id in ALL_STATIC_EXPLANATION_IDS {
+            assert_eq!(
+                explanation_value(&fighter, id),
+                None,
+                "a Fighter must not gain any of Divine Scion's new class-feature ids: {id}, \
+                 even with Divine Scion's own choices recorded"
             );
         }
     }

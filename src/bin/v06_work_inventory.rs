@@ -5615,6 +5615,15 @@ struct EngineFacts {
     /// features (AC Bonus, Damage Reduction, Defensive Powers, Defensive
     /// Stance), keyed by the record's own corpus `key`.
     stalwart_defender_wired: BTreeSet<String>,
+    /// SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): Divine Scion's
+    /// 43 magnitude-bearing class features (Domain Specialization's own
+    /// pool-size base record, Divine Wrath, Deific Defense, Weapon and
+    /// Armor Proficiency, all four Opposition Alignment DR records, and 35
+    /// per-domain Domain Specialization sub-records), keyed by the
+    /// record's own corpus `key`. True Scion Charisma/Wisdom (this class's
+    /// remaining two sm5 units) are NOT covered here -- see `ground_
+    /// divine_scion_class_features`'s own doc comment.
+    divine_scion_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -6133,6 +6142,26 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
         // (`PSYCHIC_DISCIPLINE_CHA_SELECTION_IDS`).
         "psychic" => (
             vec![choice("choice:psychic_discipline", "discipline:rapport")],
+            Vec::new(),
+        ),
+        // Wave 47 CORRECTION (`decisions.md §22`): Divine Scion's Domain
+        // Specialization and Opposition Alignment are both real
+        // `ABILITYPOOL`-gated one-of-N choices (`ism_abilities_class.
+        // lst:35`/`:47`'s own "choices" section headers,
+        // `ism_classes.lst:103`/`:104`'s own pool-size-1 grants), the exact
+        // same "give the sweep one canonical default choice" gap this
+        // function already closes for Cleric domain/Sorcerer bloodline/
+        // etc above -- without this arm the standard corpus-wide sweep
+        // would see NEITHER of the 39 choice-gated Divine Scion facts
+        // (`ground_divine_scion_class_features`'s own doc comment).
+        // `domain:fire`/`alignment:evil` are two of the real recognized
+        // selections (`DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY`,
+        // the four opposition alignments in `pilot_compute/mod.rs`).
+        "divine_scion" => (
+            vec![
+                choice("choice:divine_scion_domain_specialization", "domain:fire"),
+                choice("choice:divine_scion_opposition_alignment", "alignment:evil"),
+            ],
             Vec::new(),
         ),
         _ => (Vec::new(), Vec::new()),
@@ -9791,6 +9820,135 @@ fn probe_stalwart_defender_wiring(fixture: &CharacterInput) -> BTreeSet<String> 
     )
 }
 
+/// The 35 real PF1 domains Divine Scion's own Domain Specialization can
+/// specialize in (`ism_abilities_class.lst:49-83`, verified directly
+/// against the real oracle -- see `pilot_compute::mod.rs`'s own
+/// `DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY`, which this list's
+/// slugs match exactly). Kept as this probe's own local correspondence
+/// table -- the same "probe-local list, never importing the engine's own
+/// internals" convention `CORE_RULEBOOK_SORCERER_BLOODLINE_ADJECTIVES` /
+/// `CORE_RULEBOOK_BARD_VERSATILE_PERFORMANCE_MEMBERS` above already
+/// establish.
+const DIVINE_SCION_DOMAIN_SPECIALIZATION_SLUGS: &[&str] = &[
+    "air", "animal", "artifice", "chaos", "charm", "community", "darkness", "death",
+    "destruction", "earth", "evil", "fire", "glory", "good", "healing", "knowledge", "law",
+    "liberation", "luck", "madness", "magic", "nobility", "plant", "protection", "repose",
+    "rune", "scalykind", "strength", "sun", "travel", "trickery", "void", "war", "water",
+    "weather",
+];
+
+/// Divine Scion -- `decisions.md §22`'s WAVE 47 UPDATE, CORRECTED same
+/// cycle. A real prestige class registered in `prestige_class_entry_gate`
+/// (source book `inner_sea_magic`, not `core_rulebook`), no `ClassId`-
+/// family enum entry, no chassis dispatch reaches it otherwise. 43
+/// members total: 4 genuinely unconditional single-owner grants (Domain
+/// Specialization's own pool-size base record, Divine Wrath, Deific
+/// Defense, Weapon and Armor Proficiency -- proven the same
+/// `probe_wave46_single_owner_class_features` way every wave-46 class
+/// above already does), plus 4 Opposition Alignment DR records and 35
+/// per-domain Domain Specialization sub-records that are each a genuine
+/// `ABILITYPOOL` one-of-N CHOICE (`ism_abilities_class.lst:35`/`:47`'s own
+/// "choices" section headers, `ism_classes.lst:103`/`:104`'s own
+/// pool-size-1 grants) -- **CORRECTION**: this wave's first draft wrongly
+/// grounded all four alignments and all 35 domains unconditionally, for
+/// every Divine Scion character simultaneously (see `pilot_compute::mod.
+/// rs`'s `ground_divine_scion_class_features` doc comment for the full
+/// story). Fixed here by sweeping every one of the 39 candidate selections
+/// in turn -- the same `probe_cleric_domain_generic_member_wiring` /
+/// `probe_sorcerer_bloodline_generic_member_wiring` idiom immediately
+/// above, adapted for a hand-rolled (not generic-pool-group) grounding
+/// function -- so a genuinely-reachable-once-selected record is never
+/// conflated with one that was merely asserted unconditionally. True
+/// Scion Charisma/Wisdom are NOT among these 43 -- see that same doc
+/// comment for why.
+fn probe_divine_scion_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = probe_wave46_single_owner_class_features(
+        fixture,
+        "divine_scion",
+        &[
+            (
+                "class_feature.inner_sea_magic.divine_scion.domain_specialization.pool_size",
+                "Divine Scion ~ Domain Specialization",
+            ),
+            (
+                "class_feature.inner_sea_magic.divine_scion.divine_wrath.bonus",
+                "Divine Scion ~ Divine Wrath",
+            ),
+            (
+                "class_feature.inner_sea_magic.divine_scion.deific_defense.bonus",
+                "Divine Scion ~ Deific Defense",
+            ),
+            (
+                "class_feature.inner_sea_magic.divine_scion.weapon_and_armor_proficiency.\
+                 qualify_flag",
+                "Divine Scion ~ Weapon and Armor Proficiency",
+            ),
+        ],
+    );
+
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    const ALIGNMENTS: &[(&str, &str)] = &[
+        ("chaotic", "Divine Scion ~ Chaotic Opposition Alignment"),
+        ("evil", "Divine Scion ~ Evil Opposition Alignment"),
+        ("good", "Divine Scion ~ Good Opposition Alignment"),
+        ("lawful", "Divine Scion ~ Lawful Opposition Alignment"),
+    ];
+    for (slug, corpus_key) in ALIGNMENTS {
+        let id = format!(
+            "class_feature.inner_sea_magic.divine_scion.{slug}_opposition_alignment.dr"
+        );
+        for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "divine_scion", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:divine_scion_opposition_alignment");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:divine_scion_opposition_alignment".to_string(),
+                selection_id: format!("alignment:{slug}"),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            if computation.explanations.iter().any(|e| e.id == id) {
+                wired.insert((*corpus_key).to_string());
+            }
+        }
+    }
+
+    for slug in DIVINE_SCION_DOMAIN_SPECIALIZATION_SLUGS {
+        let display = format!("{}{}", slug[..1].to_uppercase(), &slug[1..]);
+        let corpus_key = format!("Divine Scion ~ {display} Specialization");
+        let id = format!(
+            "class_feature.inner_sea_magic.divine_scion.{slug}_specialization.caster_level"
+        );
+        for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "divine_scion", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:divine_scion_domain_specialization");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:divine_scion_domain_specialization".to_string(),
+                selection_id: format!("domain:{slug}"),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            if computation.explanations.iter().any(|e| e.id == id) {
+                wired.insert(corpus_key.clone());
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): real-pipeline
 /// reachability proof for every one of this wave's seven probe functions --
 /// against the REAL shared fixture and the REAL `compute_pilot_base_
@@ -10090,6 +10248,144 @@ mod wave46_registered_prestige_classify_tests {
     }
 }
 
+
+/// SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): real-pipeline
+/// reachability proof for Divine Scion's probe -- against the REAL shared
+/// fixture and the REAL `compute_pilot_base_chassis` pipeline (via
+/// `class_sweep_input`, the same entry point the corpus-wide union sweep
+/// uses for every modelled class), proving the new class-feature block
+/// resolves end to end, not merely that the pure formula functions return
+/// the right numbers in isolation. CORRECTED same cycle: 39 of these 43
+/// members are real one-of-N choices, so this assertion holds only because
+/// `probe_divine_scion_wiring` itself now sweeps every candidate
+/// domain/alignment selection in turn (see that function's own doc
+/// comment) -- the union across every possible character, never a claim
+/// that one character has all 43 simultaneously.
+#[cfg(test)]
+mod wave47_divine_scion_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn divine_scion_is_wired_end_to_end() {
+        let wired = probe_divine_scion_wiring(&fixture());
+        for expected in [
+            "Divine Scion ~ Domain Specialization",
+            "Divine Scion ~ Divine Wrath",
+            "Divine Scion ~ Deific Defense",
+            "Divine Scion ~ Weapon and Armor Proficiency",
+            "Divine Scion ~ Chaotic Opposition Alignment",
+            "Divine Scion ~ Evil Opposition Alignment",
+            "Divine Scion ~ Good Opposition Alignment",
+            "Divine Scion ~ Lawful Opposition Alignment",
+            "Divine Scion ~ Fire Specialization",
+            "Divine Scion ~ Chaos Specialization",
+            "Divine Scion ~ Weather Specialization",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+        // All 43 members resolve, not just this sample.
+        assert_eq!(wired.len(), 43, "expected all 43 Divine Scion members wired: {wired:?}");
+    }
+
+    // NOTE: no meaningful "probe returns empty for an unrelated fixture"
+    // case exists here either -- same reason `wave46_registered_prestige_
+    // probe_reachability_tests`'s own doc comment above already gives
+    // (`class_sweep_input` always overwrites `class_levels` to the named
+    // class regardless of the fixture passed in). The real negative
+    // control is `mod.rs`'s own `none_of_the_static_ids_leak_onto_an_
+    // unrelated_class`, plus this module's own classify()-dispatch
+    // negative control below.
+}
+
+/// SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): `classify()`-level
+/// proof that Divine Scion's new probe check actually wins, using
+/// `EngineFacts::default()` with the field manually populated -- the same
+/// discipline `wave46_registered_prestige_classify_tests` already
+/// establishes.
+#[cfg(test)]
+mod wave47_divine_scion_classify_tests {
+    use super::*;
+
+    fn class_feature_unit(book: &str, file: &str, line: usize, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: book.to_string(),
+            kind: Kind::ClassFeature,
+            key: key.to_string(),
+            name: key.split(" ~ ").nth(1).unwrap_or(key).to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    #[test]
+    fn divine_scion_domain_specialization_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.divine_scion_wired.insert("Divine Scion ~ Domain Specialization".to_string());
+        let unit = class_feature_unit(
+            "inner_sea_magic",
+            "ism_abilities_class.lst",
+            30,
+            "Divine Scion ~ Domain Specialization",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "divine_scion_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn divine_scion_fire_specialization_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.divine_scion_wired.insert("Divine Scion ~ Fire Specialization".to_string());
+        let unit = class_feature_unit(
+            "inner_sea_magic",
+            "ism_abilities_class.lst",
+            60,
+            "Divine Scion ~ Fire Specialization",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "divine_scion_probe_observed_a_real_computed_magnitude");
+    }
+
+    /// NEGATIVE CONTROL: an unprobed record of one of this wave's own new
+    /// keys still falls through to whatever the pre-existing classify()
+    /// logic gives it (never a false `grounded`).
+    #[test]
+    fn an_unprobed_divine_scion_record_never_falls_grounded_through_this_check() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "inner_sea_magic",
+            "ism_abilities_class.lst",
+            30,
+            "Divine Scion ~ Domain Specialization",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_ne!(
+            verdict.evidence,
+            "divine_scion_probe_observed_a_real_computed_magnitude",
+            "an unprobed record must never resolve through this wave's own new check"
+        );
+    }
+}
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -10507,6 +10803,7 @@ fn gather_engine_facts(
         rage_prophet_wired: probe_rage_prophet_wiring(fixture),
         holy_vindicator_wired: probe_holy_vindicator_wiring(fixture),
         stalwart_defender_wired: probe_stalwart_defender_wiring(fixture),
+        divine_scion_wired: probe_divine_scion_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -13877,6 +14174,23 @@ fn classify(
                 return Verdict {
                     status: "grounded",
                     evidence: "stalwart_defender_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): Divine
+            // Scion, the same "registered in `prestige_class_entry_gate`,
+            // no `ClassId` enum entry, no chassis dispatch reaches it"
+            // family as the six wave-46 classes immediately above -- see
+            // `ground_divine_scion_class_features`'s own doc comment
+            // (`pilot_compute/mod.rs`) for its corpus citations. True Scion
+            // Charisma/Wisdom (this class's own remaining two sm5 units)
+            // are NOT covered by this probe -- left named, not attempted.
+            if facts.divine_scion_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "divine_scion_probe_observed_a_real_computed_magnitude"
                         .to_string(),
                     reason: None,
                     engine_book: engine_book_field,
