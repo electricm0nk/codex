@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-07
 **Branch:** `tranche/14`
-**Commit:** `WAVE51_COMMIT_SHA`
+**Commit:** `244a4dce65`
 **Scope granted:** Core Rulebook + Ultimate Campaign only, buckets B + C + D + M.
 
 ---
