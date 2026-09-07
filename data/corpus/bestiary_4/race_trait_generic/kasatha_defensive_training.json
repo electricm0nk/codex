@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Kasathas have a +2 dodge bonus to Armor Class.",
     "key": "Kasatha ~ Defensive Training",
     "name": "Defensive Training",
-    "description": "Kasathas have a +2 dodge bonus to Armor Class.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,18 +35,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_abilities_race.lst",
-    "sha256": "53b266361b5a459401cf5e5e62de82ba990116851b84abeee70bf96e907c6971",
-    "line": 18,
-    "record_key": "Kasatha ~ Defensive Training"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_abilities_race.lst",
+    "record_key": "Kasatha ~ Defensive Training",
+    "sha256": "53b266361b5a459401cf5e5e62de82ba990116851b84abeee70bf96e907c6971"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

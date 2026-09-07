@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "The afflicted spellcaster's throat or mouth is magically constricted. The spellcaster can barely make her words heard, and then only with great effort. A creature under this affect can only make itself heard by others by spending a swift action to focus its will on speech. Casting spells with a verbal component has a 20%% chance of spell failure, and the save DCs of any spells she casts with the language-dependent descriptor are reduced by 4. Spell-like abilities are not affected by this spellblight because they lack verbal components. Shouting and screaming is impossible while the creature is affected by this spellblight. A heal spell or similar effect cures this spellblight, as does casting the shout spell, though doing so is still affected by the spellblight's effects.",
     "key": "Spellblight ~ Caster Croak",
     "name": "Caster Croak",
-    "description": "The afflicted spellcaster's throat or mouth is magically constricted. The spellcaster can barely make her words heard, and then only with great effort. A creature under this affect can only make itself heard by others by spending a swift action to focus its will on speech. Casting spells with a verbal component has a 20%% chance of spell failure, and the save DCs of any spells she casts with the language-dependent descriptor are reduced by 4. Spell-like abilities are not affected by this spellblight because they lack verbal components. Shouting and screaming is impossible while the creature is affected by this spellblight. A heal spell or similar effect cures this spellblight, as does casting the shout spell, though doing so is still affected by the spellblight's effects.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
-    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
-    "line": 7,
-    "record_key": "Spellblight ~ Caster Croak"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "record_key": "Spellblight ~ Caster Croak",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

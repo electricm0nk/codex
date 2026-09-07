@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "From the moment you could walk and talk, the ruins of ancient civilizations have fascinated you. Because of this, you have special insight into geography as well as expertise in exploring lost places. You gain a +1 trait bonus on Knowledge (geography) and Knowledge (dungeoneering) checks. One of these skills (your choice) is always a class skill for you.",
     "key": "Trait ~ Scholar of Ruins",
     "name": "Scholar of Ruins",
-    "description": "From the moment you could walk and talk, the ruins of ancient civilizations have fascinated you. Because of this, you have special insight into geography as well as expertise in exploring lost places. You gain a +1 trait bonus on Knowledge (geography) and Knowledge (dungeoneering) checks. One of these skills (your choice) is always a class skill for you.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,20 +56,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 206,
-    "record_key": "Trait ~ Scholar of Ruins"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 206,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Trait ~ Scholar of Ruins",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

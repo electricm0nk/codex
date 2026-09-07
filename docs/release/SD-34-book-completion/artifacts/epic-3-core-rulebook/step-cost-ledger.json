@@ -1,0 +1,255 @@
+{
+  "criterion": "AT-34-E3-004",
+  "population": "core_rulebook, 6701 units total (docs/release/SD-34-book-completion/content-unit-inventory.md)",
+  "denominator_note": "wall time and unit counts below are per-BUCKET, re-derived from the ATLAS PARTITION of core_rulebook units ONLY (python3 scripts/completion_atlas.py --book core_rulebook --check), not corpus-wide. This differs from step-cost-ledger.derived.json (an earlier, explicitly-marked-PARTIAL input authored by an orchestrator pass), which measured corpus-wide unit closure by commit shape (generic vs narrow) rather than by atlas bucket letter for one book. That file remains as a secondary cross-check; this file is the criterion's own evidence artifact.",
+  "measurement_method": {
+    "wall_time": "commit-to-commit timestamp span for every commit touching docs/work-inventory.json between the tranche/14 cut (ea2b3396f2) and this cycle's own HEAD, via `git log --reverse --format=%ct ea2b3396f2..HEAD -- docs/work-inventory.json`. This is a MEASURED span, not an estimate -- but it is an UPPER bound on any single cycle's true engineering time because it also carries queue/dispatch overhead between cycles (same caveat step-cost-ledger.derived.json already states).",
+    "units_cleared": "for each commit, docs/work-inventory.json was checked out at that SHA (`git show <sha>:docs/work-inventory.json`) and partitioned with the live `completion_atlas.partition(units, book='core_rulebook')` function -- the same code the standing gate runs, not a re-implementation. Bucket deltas are the difference in bucket counts between consecutive commits.",
+    "bucket_attribution": "each commit classified to a bucket by its own commit-message epic/bucket tag (AT-34-E3-001 -> B, AT-34-E3-002 -> C, AT-34-E3-003 'bucket U' -> U). Commits from Epic 1/Epic 2 (the rename, table-wiring) are reported separately as scaffolding, excluded from Epic 3's own totals.",
+    "redrive_command": "git log --reverse --format='%H|%ct|%s' ea2b3396f2..HEAD -- docs/work-inventory.json for commits/timestamps; then per commit, git show <sha>:docs/work-inventory.json fed through completion_atlas.partition(json.load(fh)['units'], book='core_rulebook') for bucket counts. The full per-commit output is committed alongside this file as step-cost-ledger-raw-commits.json -- every wall_min/bucket_delta figure above is aggregated from it."
+  },
+  "buckets_cleared_so_far": {
+    "B": {
+      "cycles": 29,
+      "wall_minutes_total": 2432.3,
+      "wall_hours_total": 40.54,
+      "net_bucket_count_reduction_core_rulebook": 503,
+      "units_reached_DONE_core_rulebook": 235,
+      "units_per_hour_reaching_DONE": 5.8,
+      "dominant_mechanism": {
+        "name": "AT-34-E3-001 option-pool-with-magnitude cycle 8",
+        "wall_minutes": 617.4,
+        "cycles": 1
+      },
+      "mechanism_breakdown": {
+        "AT-34-E3-001 option-pool-with-magnitude cycle 8": {
+          "wall_minutes": 617.4,
+          "cycles": 1
+        },
+        "AT-34-E3-001 owner-matched cycle 6": {
+          "wall_minutes": 253.6,
+          "cycles": 1
+        },
+        "AT-34-E3-001 class_absent_from_ClassId_ALL_and_book_class_id_enums": {
+          "wall_minutes": 147.4,
+          "cycles": 1
+        },
+        "AT-34-E3-001 companion_absent": {
+          "wall_minutes": 124.7,
+          "cycles": 2
+        },
+        "AT-34-E3-001 vacuous-placeholder sub-cause": {
+          "wall_minutes": 93.6,
+          "cycles": 1
+        },
+        "AT-34-E3-001 owner-matched cycle 5": {
+          "wall_minutes": 93.5,
+          "cycles": 1
+        },
+        "AT-34-E3-001 owner-matched cycle 4": {
+          "wall_minutes": 86.3,
+          "cycles": 1
+        },
+        "AT-34-E3-001 class_feature_option_pool_with_magnitude": {
+          "wall_minutes": 85.0,
+          "cycles": 1
+        },
+        "class_feature_owner_matched cycle 7": {
+          "wall_minutes": 71.4,
+          "cycles": 1
+        },
+        "AT-34-E3-001 class_feature_option_pool_record_not_held_by_engine": {
+          "wall_minutes": 70.7,
+          "cycles": 1
+        },
+        "AT-34-E3-001 race_trait_race_not_modelled": {
+          "wall_minutes": 70.0,
+          "cycles": 1
+        },
+        "AT-34-E3-001 option-pool-with-magnitude cycle 6": {
+          "wall_minutes": 69.6,
+          "cycles": 1
+        },
+        "AT-34-E3-001 class_feature_option_pool_with_magnitude cycle 3": {
+          "wall_minutes": 56.1,
+          "cycles": 1
+        },
+        "AT-34-E3-001 race_trait_absent_from_race_traits": {
+          "wall_minutes": 52.7,
+          "cycles": 1
+        },
+        "AT-34-E3-001 option-pool cycle 6": {
+          "wall_minutes": 52.6,
+          "cycles": 1
+        },
+        "AT-34-E3-001 class_feature_option_pool cycle 7": {
+          "wall_minutes": 51.2,
+          "cycles": 1
+        },
+        "AT-34-E3-001 class_feature_option_pool": {
+          "wall_minutes": 48.6,
+          "cycles": 1
+        },
+        "AT-34-E3-001 companion_absent_from_core_rulebook_companion_tables": {
+          "wall_minutes": 45.2,
+          "cycles": 1
+        },
+        "AT-34-E3-001 cycle 1": {
+          "wall_minutes": 44.8,
+          "cycles": 1
+        },
+        "AT-34-E3-001 deity_content_absent_from_deity_table_in_core_rulebook": {
+          "wall_minutes": 42.7,
+          "cycles": 1
+        },
+        "AT-34-E3-001 domain mechanism": {
+          "wall_minutes": 40.3,
+          "cycles": 1
+        },
+        "AT-34-E3-001 option-pool-with-magnitude cycle 5": {
+          "wall_minutes": 35.4,
+          "cycles": 1
+        },
+        "AT-34-E3-001 wizard-arcane-school cycle 4": {
+          "wall_minutes": 34.3,
+          "cycles": 1
+        },
+        "AT-34-E3-001 companion_absent cycle 4": {
+          "wall_minutes": 31.6,
+          "cycles": 1
+        },
+        "AT-34-E3-001 weapon-training sub-cause": {
+          "wall_minutes": 31.4,
+          "cycles": 1
+        },
+        "AT-34-E3-001 option_pool_record_not_held cycle 5": {
+          "wall_minutes": 30.6,
+          "cycles": 1
+        },
+        "option-pool-with-magnitude cycle 7": {
+          "wall_minutes": 29.4,
+          "cycles": 1
+        },
+        "merge: tranche/14": {
+          "wall_minutes": 22.2,
+          "cycles": 1
+        }
+      },
+      "commit_shas": [
+        "a72c6787e6",
+        "6eab21d761",
+        "ae25d75d7d",
+        "1eeba6bb4d",
+        "9934711054",
+        "8e7aecc855",
+        "f98c6abddc",
+        "ae0f387dd3",
+        "04377a287d",
+        "9a0d75a9b7",
+        "6040c33306",
+        "b93fb51a3e",
+        "186471f8d4",
+        "c3202a90ce",
+        "0302b44ae8",
+        "1de361c850",
+        "dbf97940fd",
+        "faae8dd497",
+        "cb0ba2286e",
+        "b4eadc9cbf",
+        "986e954d87",
+        "385b049cfe",
+        "49d72f5e03",
+        "df94dd024c",
+        "516c4b003c",
+        "12c95c519c",
+        "eff925305f",
+        "6a87278d87",
+        "30fa0e6653"
+      ],
+      "meaning": "table exists, record not in it (BUCKET_DEFINITIONS['B'])",
+      "starting_population_core_rulebook": 970,
+      "current_remaining_core_rulebook": 532,
+      "closure_vs_reclassification": "of the 503 units that LEFT bucket B, 235 reached DONE (real closure) and 268 moved to another unfinished bucket (D, V, X, or M) -- reclassification, not closure. Movement recorded per `decisions.md \u00a712` L10: a count that drops because measurement changed is not closure."
+    },
+    "C": {
+      "cycles": 1,
+      "wall_minutes_total": 61.0,
+      "wall_hours_total": 1.02,
+      "net_bucket_count_reduction_core_rulebook": 42,
+      "units_reached_DONE_core_rulebook": 0,
+      "units_per_hour_reaching_DONE": 0.0,
+      "dominant_mechanism": {
+        "name": "ground Favored Enemy/Favored Terrain display records off their sibling Bonus records",
+        "wall_minutes": 61.0,
+        "cycles": 1
+      },
+      "mechanism_breakdown": {
+        "ground Favored Enemy/Favored Terrain display records off their sibling Bonus records": {
+          "wall_minutes": 61.0,
+          "cycles": 1
+        }
+      },
+      "commit_shas": [
+        "6e09fcaf5a"
+      ],
+      "meaning": "held and computed, never surfaced (BUCKET_DEFINITIONS['C'])",
+      "starting_population_core_rulebook": 414,
+      "current_remaining_core_rulebook": 372,
+      "closure_vs_reclassification": "all 42 units that left bucket C in this cycle moved to bucket V (verified-by-proxy), not DONE -- the Favored Enemy/Terrain grounding wired a compute path but the result still awaits the oracle harness, not the player-facing surface check that would make it DONE. This is reclassification (A->B->C->V is forward movement) not closure."
+    },
+    "U": {
+      "cycles": 2,
+      "wall_minutes_total": 71.5,
+      "wall_hours_total": 1.19,
+      "net_bucket_count_reduction_core_rulebook": 48,
+      "units_reached_DONE_core_rulebook": 48,
+      "units_per_hour_reaching_DONE": 40.28,
+      "dominant_mechanism": {
+        "name": "bucket U ruling cycle 1",
+        "wall_minutes": 45.9,
+        "cycles": 1
+      },
+      "mechanism_breakdown": {
+        "bucket U ruling cycle 1": {
+          "wall_minutes": 45.9,
+          "cycles": 1
+        },
+        "bucket U cycle 2": {
+          "wall_minutes": 25.6,
+          "cycles": 1
+        }
+      },
+      "commit_shas": [
+        "d3a36ba9d6",
+        "36db23a053"
+      ],
+      "meaning": "instrument cannot express a verdict (BUCKET_DEFINITIONS['U'])",
+      "starting_population_core_rulebook": 58,
+      "current_remaining_core_rulebook": 10,
+      "closure_vs_reclassification": "both cycles' 48 units reached DONE directly -- real closure by instrument correction (a rendering defect and a ruling), not reclassification."
+    }
+  },
+  "buckets_not_yet_cleared": {
+    "D": {
+      "remaining_core_rulebook": 382,
+      "note": "no dedicated D-clearing cycle has run; its count moved only as a side effect of B/C cycles reclassifying units into it (per-sub-cause work is AT-34-E3-003 scope, not yet started for D)."
+    },
+    "M": {
+      "remaining_core_rulebook": 1048,
+      "note": "no dedicated M-clearing cycle has run yet (AT-34-E3-003 scope)."
+    },
+    "V": {
+      "remaining_core_rulebook": 2793,
+      "note": "no dedicated V-clearing (oracle-harness) cycle has run yet for core_rulebook -- V is fed BY other buckets' work (e.g. bucket C's 42 units above) faster than it is being drained. Flagged as the epic's largest remaining population and, per epic-breakdown.md, the bucket 'most likely to dominate this epic's wall time.'"
+    },
+    "X": {
+      "remaining_core_rulebook": 116,
+      "note": "no dedicated X-revisit cycle has run yet; its count grew from B-cycle deferrals (e.g. cb0ba2286e alone deferred 95 units to X)."
+    }
+  },
+  "scaffolding_commits_excluded_from_epic3_totals": {
+    "0099df7a1e (AT-34-E1-005 rename)": "119 minutes to first commit after cut is not comparable -- includes the whole rename+regenerate cycle, not epic-3 bucket work",
+    "0dd52ccb65 (AT-34-E2-004 table wiring)": "278.1 wall minutes, bucket A -> 0 for both vehicle books -- Epic 2 scope, not Epic 3"
+  },
+  "headline_finding": "Bucket B's per-mechanism spread (22 to 617 wall-minutes per cycle, a 28x range across 29 cycles) is the load-bearing number for Epic 5's pricing: a SINGLE blended 'units/hour' figure across bucket B would misrepresent every mechanism. The dominant driver by wall time is class_feature_option_pool_with_magnitude's cycle 8 (617.4 min, 2 units) -- a live domain-power probe requiring per-unit verification rather than a batch-groundable pattern; the cheapest driver is 'AT-34-E3-001 domain mechanism' (1 unit in 40.3 min) and 'merge: tranche/14' reconciliation (22.2 min, 3 units, batch pattern already proven). Bucket U is far cheaper per unit closed (40.28 units/hour) than bucket B (5.8 units/hour) because both U cycles were instrument corrections applying to a class of units at once, not per-record grounding."
+}

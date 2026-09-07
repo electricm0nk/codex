@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:39Z",
   "data": {
+    "description": null,
     "key": "Codex-Named Unit (class_inner_sea_magic_ism_classes_lst_62)",
     "name": "Codex-Named Unit (class_inner_sea_magic_ism_classes_lst_62)",
-    "description": null,
     "raw_tokens": [
       {
         "key": "NAMEISPI",
@@ -73,23 +72,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_classes.lst",
-    "sha256": "936a953215de47086f4f08d03e7d50405eb18a3b706609fbef690f1efce76e7b",
-    "line": 62,
-    "record_key": "Codex-Named Unit (class_inner_sea_magic_ism_classes_lst_62)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:39Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_magic:ism_classes.lst:62"
-  }
+    "coordinate": "inner_sea_magic:ism_classes.lst:62",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 62,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_classes.lst",
+    "record_key": "Codex-Named Unit (class_inner_sea_magic_ism_classes_lst_62)",
+    "sha256": "936a953215de47086f4f08d03e7d50405eb18a3b706609fbef690f1efce76e7b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

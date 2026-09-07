@@ -345,6 +345,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.273"),
         owners: &["Familiar (Snapping Turtle)"],
+        cross_book_owners: &[],
         source_file: "b2_abilities_familiar_race.lst",
         source_line: 6,
     },

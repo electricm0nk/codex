@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Ghorans were originally created to survive and thrive in a magic-blasted wasteland, and over the centuries some ghorans have adapted greater abilities to overcome magic in general. Once per day, the ghoran can cast dispel magic as a spell-like ability, with a caster level equal to the ghoran's character level. If the ghoran's favored class is a spellcasting class, the ghoran gains a +2 racial bonus on dispel checks.&nl;This replaces past-life knowledge and nature magic.",
     "key": "Ghoran ~ Spelleater",
     "name": "Spelleater",
-    "description": "Ghorans were originally created to survive and thrive in a magic-blasted wasteland, and over the centuries some ghorans have adapted greater abilities to overcome magic in general. Once per day, the ghoran can cast dispel magic as a spell-like ability, with a caster level equal to the ghoran's character level. If the ghoran's favored class is a spellcasting class, the ghoran gains a +2 racial bonus on dispel checks.&nl;This replaces past-life knowledge and nature magic.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
-    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
-    "line": 87,
-    "record_key": "Ghoran ~ Spelleater"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 87,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "record_key": "Ghoran ~ Spelleater",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
 }

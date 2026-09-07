@@ -66,13 +66,12 @@
 //! `tests/sd18_wizard_level13_widening.rs` to a "level 15 is not promoted"
 //! boundary in the same commit.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation};
 
 const WIZARD_LEVEL13_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_wizard_level13_sd18_widening_deterministic_input.txt"
@@ -85,34 +84,6 @@ const WIZARD_LEVEL14_FIXTURE: &str = include_str!(
 const FIGHTER_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
 );
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 // ----- Base attack bonus at level 14 genuinely rises -----
 
@@ -286,9 +257,21 @@ fn wizard_level_21_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
+            .any(|e| (e.id.starts_with("class_chassis.wizard.")
                 || e.id.starts_with("class_feature.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard"),
+                || e.id == "class_chassis.spell_baseline.wizard")
+                // SD-34 decisions.md section 18 (`bfe90f020a`, 2026-08-29) widened the
+                // anti-fabrication gate BY CONSTRUCTION for Wizard: class_feature_grant_
+                // consumer now emits a real, citation-backed class_feature.wizard.
+                // corpus_record.* id for any grant fact with a renderable corpus record,
+                // at any Wizard level -- that commit widened the sd13_* acceptance tests
+                // it named but never reached these later sd18_* widening siblings. Same
+                // carve-out, same reasoning, applied here.
+                && !e.id.starts_with("class_feature.wizard.corpus_record.")
+                // AT-34-E3-001 cycle 6 (`49d72f5e03`, 2026-08-28) grounded Wizard Weapon
+                // and Armor Proficiency unconditionally (real PF1 content, any level) --
+                // pre-existing, already-tested, not promotion by this slice.
+                && e.id != "class_feature.wizard.weapon_and_armor_proficiency"),
         "level-21 Wizard must not gain any bounded wizard explanation: {:?}",
         computation.explanations
     );

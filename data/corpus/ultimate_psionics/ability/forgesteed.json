@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your mount has been reconstructed using some combination of minerals, metals, or crystal, and it is always in the form of a horse.  This mount does not eat, breathe, or sleep.  Should your mount die, you must spend one week in the process of creating and bonding with a new forgeborn mount.",
     "key": "Forgesteed Rider ~ Forgesteed",
     "name": "Forgesteed",
-    "description": "Your mount has been reconstructed using some combination of minerals, metals, or crystal, and it is always in the form of a horse.  This mount does not eat, breathe, or sleep.  Should your mount die, you must spend one week in the process of creating and bonding with a new forgeborn mount.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
-    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
-    "line": 39,
-    "record_key": "Forgesteed Rider ~ Forgesteed"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "record_key": "Forgesteed Rider ~ Forgesteed",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

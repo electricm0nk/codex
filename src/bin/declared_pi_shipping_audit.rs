@@ -200,8 +200,8 @@ fn audit_shipped_records(corpus_root: &Path, data_corpus_root: &Path) -> Vec<Vio
         // `pi_field: "description"` -- regardless of which screen
         // triggered the redaction -- not only the `declared.description`
         // subset.
-        if redacted_license && redacted_field {
-            if let Some(raw_tokens) = doc.get("data").and_then(|d| d.get("raw_tokens")).and_then(Value::as_array) {
+        if redacted_license && redacted_field
+            && let Some(raw_tokens) = doc.get("data").and_then(|d| d.get("raw_tokens")).and_then(Value::as_array) {
                 for token in raw_tokens {
                     if token.get("key").and_then(Value::as_str) != Some("DESC") {
                         continue;
@@ -220,7 +220,6 @@ fn audit_shipped_records(corpus_root: &Path, data_corpus_root: &Path) -> Vec<Vio
                     }
                 }
             }
-        }
     }
     violations
 }

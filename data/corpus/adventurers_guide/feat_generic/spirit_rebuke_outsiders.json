@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "Your insight and force of will can tame dangerous spirits.",
     "key": "Spirit Rebuke (Outsiders)",
     "name": "Spirit Rebuke (Outsiders)",
-    "description": "Your insight and force of will can tame dangerous spirits.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -45,20 +44,23 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
-    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
-    "line": 65,
-    "record_key": "Spirit Rebuke (Outsiders)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 65,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "record_key": "Spirit Rebuke (Outsiders)",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

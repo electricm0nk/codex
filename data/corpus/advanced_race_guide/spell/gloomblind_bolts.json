@@ -88,6 +88,7 @@
   "wiring_class_signals": [
     "computed:pre_guard",
     "derived:prose_expr",
+    "derived:prose_formula_segment",
     "derived:range_keyword"
   ]
 }

@@ -20,6 +20,10 @@ const appRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 // again the same way. Confirmed still complete at the 0.10.0 -> 0.11.0
 // tranche/11 bump (SD31-E10-F1-001): all 7 entries below were re-grepped
 // fresh against the live tree rather than trusted from this list.
+// The 0.11.0 -> 0.12.0/0.13.0 tranche cuts each missed this fixture entirely
+// (only caught here at the 0.11.0 -> 0.14.0 tranche/14 bump, SD-34
+// AT-34-E6-001, gate-remediation wave 23) — all 7 entries re-grepped fresh
+// against the live tree again rather than trusted from this list.
 const FIXTURE_FILES = [
   'src/testerWorkbench/loadTesterWorkbenchSurface.test.ts',
   'src/testerWorkbench/status/createWorkbenchStatus.test.ts',
@@ -38,15 +42,16 @@ function readPackageJsonVersion(): string {
 // The exact pre-bump literal these fixtures carried before the most recent
 // version bump. Kept one bump behind on purpose: it is the literal a
 // half-applied bump would leave behind, so it is the one worth naming
-// explicitly. Updated to 0.10.0 by SD-31's tranche/11 version-bump cycle
-// (SD31-E10-F1-001; the version files moved 0.10.0 -> 0.11.0 on the
-// already-cut tranche/11 branch — a bundle's own closure does not move the
-// tranche digit, only a NEW tranche/N cut does). The prior value named here
-// was 'Codex 0.9.0-test', from the tranche/10 cut. Some files also carry
-// unrelated arbitrary version placeholders (e.g. '0.0.0-test') for isolated
-// formatter tests — those aren't "the current build" fixture and must not be
-// flagged here.
-const STALE_LABEL = 'Codex 0.10.0-test';
+// explicitly. Updated to 0.11.0 by SD-34's tranche/14 version-bump cycle
+// (AT-34-E6-001; the version files moved 0.11.0 -> 0.14.0 on the
+// already-cut tranche/14 branch — a bundle's own closure does not move the
+// tranche digit, only a NEW tranche/N cut does; two intervening tranches,
+// tranche/12 and tranche/13, each missed this fixture list, which is exactly
+// why this test exists). The prior value named here was 'Codex 0.10.0-test',
+// from the tranche/11 cut. Some files also carry unrelated arbitrary version
+// placeholders (e.g. '0.0.0-test') for isolated formatter tests — those
+// aren't "the current build" fixture and must not be flagged here.
+const STALE_LABEL = 'Codex 0.11.0-test';
 
 function verifiesFixturesCarryCurrentTrancheBuildLabel() {
   const pkgVersion = readPackageJsonVersion();

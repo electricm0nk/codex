@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:25:21Z",
   "data": {
+    "description": "The draconic companion has acid resistance %1.|DraconicCompanionResistanceBonus",
     "key": "Draconic Companion ~ Acid Resistance",
     "name": "Acid Resistance",
-    "description": "The draconic companion has acid resistance %1.|DraconicCompanionResistanceBonus",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -39,22 +39,22 @@
         "key": "SOURCEPAGE",
         "value": "p.188"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
     "line": 485,
-    "record_key": "Draconic Companion ~ Acid Resistance"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Draconic Companion ~ Acid Resistance",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

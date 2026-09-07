@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You gain access to a blessed forge at the monastery. You gain a +5 sacred bonus on any Craft or Spellcraft checks made when building any metal armor or weapon (magical or otherwise) with the forge. The item's construction time is divided by half.",
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_152)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_152)",
-    "description": "You gain access to a blessed forge at the monastery. You gain a +5 sacred bonus on any Craft or Spellcraft checks made when building any metal armor or weapon (magical or otherwise) with the forge. The item's construction time is divided by half.",
     "raw_tokens": [
       {
         "key": "NAMEISPI",
@@ -37,23 +36,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
-    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
-    "line": 152,
-    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_152)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_magic:ism_abilities_other.lst:152"
-  }
+    "coordinate": "inner_sea_magic:ism_abilities_other.lst:152",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 152,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_152)",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

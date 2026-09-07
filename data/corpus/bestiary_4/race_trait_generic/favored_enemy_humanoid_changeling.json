@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Changelings. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidChangeling",
     "key": "Favored Enemy ~ Humanoid (Changeling)",
     "name": "Humanoid (Changeling)",
-    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Changelings. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidChangeling",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
-    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e",
     "line": 26,
-    "record_key": "Favored Enemy ~ Humanoid (Changeling)"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
+    "record_key": "Favored Enemy ~ Humanoid (Changeling)",
+    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

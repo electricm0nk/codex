@@ -4,7 +4,7 @@
 //!
 //! # Why this binary exists
 //!
-//! `docs/work-inventory.json` classifies a `feat` unit as `not-ingested`
+//! `docs/work-inventory.json` classifies a `feat` unit as `engine-does-not-hold`
 //! (`evidence: "feat_key_absent_from_catalog"`) when the book has a compiled
 //! rule set but `feats_all::all_feat_tables()` holds no record matching the
 //! corpus record's `KEY:` or its display name. Those are real gaps inside
@@ -67,10 +67,10 @@ struct BookInput {
     files: &'static [&'static str],
 }
 
-/// Every book that carries at least one `not-ingested` feat unit, with the
+/// Every book that carries at least one `engine-does-not-hold` feat unit, with the
 /// exact files those units come from. Derived from
 /// `docs/work-inventory.json`'s own `source_file` field over the
-/// `status == "not-ingested"` feat population — not guessed from a directory
+/// `status == "engine-does-not-hold"` feat population — not guessed from a directory
 /// glob, so a file with no gap is never re-parsed and cannot introduce a row
 /// nobody asked for.
 const BOOK_INPUTS: &[BookInput] = &[
@@ -125,7 +125,7 @@ const BOOK_INPUTS: &[BookInput] = &[
         // own, `v06_work_inventory` enumerates them as `ultimate_intrigue`
         // units, and this engine models no campaign activation to gate on.
         // Filing them under `Ui` is the accurate book attribution; excluding
-        // them would leave three units `not-ingested` forever with no lane
+        // them would leave three units `engine-does-not-hold` forever with no lane
         // that could ever close them.
         files: &["pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_feats_oa.lst"],
     },
@@ -209,7 +209,7 @@ const BOOK_INPUTS: &[BookInput] = &[
     // `COMPILED_RULE_SETS` for another kind (`Isi`: familiars + abilities,
     // `Botd2`: monsters) that never had a feat table of their own, same
     // shape as the five-book lane above. `docs/work-inventory.json`'s
-    // remaining `feat` `not-ingested` population for these two books is
+    // remaining `feat` `engine-does-not-hold` population for these two books is
     // `origin: "declared"` (real standalone records, not a `.MOD`-only
     // artifact) and neither file's records carry `NAMEISPI:YES`, re-derived
     // by direct read of both files.
@@ -247,7 +247,7 @@ const BOOK_INPUTS: &[BookInput] = &[
     // this is a pure config addition: no new `RuleSetId`, no `v06_work_
     // inventory.rs` edit. Re-derived directly against `docs/work-
     // inventory.json`'s own `feat_key_absent_from_catalog` evidence for this
-    // book: every one of its 24 not-ingested feat units carries `CATEGORY:
+    // book: every one of its 24 engine-does-not-hold feat units carries `CATEGORY:
     // FEAT` in the raw row (checked by direct read, not assumed) -- genuine
     // player feats, not the `.MOD`/`VISIBLE:EXPORT` continuation shape found
     // blocking `horror_adventures`/`mythic_adventures` (see this cycle's own
@@ -260,7 +260,7 @@ const BOOK_INPUTS: &[BookInput] = &[
     },
     // Same shape as `Isc` immediately above: `RuleSetId::Isg` already exists
     // and is already wired (added for this book's equipment/monster
-    // content). Re-derived directly: every one of this book's not-ingested
+    // content). Re-derived directly: every one of this book's engine-does-not-hold
     // feat units carries `CATEGORY:FEAT` in the raw row.
     BookInput {
         rule_set: RuleSetId::Isg,
@@ -347,7 +347,7 @@ fn parse_lst(text: &str) -> Vec<ParsedRecord> {
         // enforces (proven live: a level-1 non-mythic search for "Accursed
         // Hex" surfaced both the correctly-gated real feat AND a second,
         // fully-selectable "Accursed Hex (Mythic)"). Skipping it here means
-        // its unit correctly lands in the `not-ingested` gap population
+        // its unit correctly lands in the `engine-does-not-hold` gap population
         // instead of a bogus `done` credit -- it is real PCGen content, not
         // retracted, just not independently selectable, matching every
         // other `VISIBLE:EXPORT`/`VISIBLE:DISPLAY`-shaped exclusion this
@@ -509,7 +509,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // check is `set.contains(unit.key) || set.contains(unit.name)` against a
     // set built from `entry.key` alone, then tested against both. Mirroring
     // that asymmetry exactly is what makes this generator's output set
-    // precisely the classifier's `not-ingested` set; the equipment lane
+    // precisely the classifier's `engine-does-not-hold` set; the equipment lane
     // recorded a 28-row divergence from getting it wrong in the other
     // direction, so it is checked here by count, not by assertion.
     //
@@ -604,14 +604,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         header,
         "//! Corpus `feat` records that belong to an ALREADY-COMPILED book whose\n\
          //! hand-authored per-book feat table does not hold them — the\n\
-         //! `not-ingested` population of `docs/work-inventory.json`'s `feat` kind,\n\
+         //! `engine-does-not-hold` population of `docs/work-inventory.json`'s `feat` kind,\n\
          //! closed corpus-wide.\n\
          //!\n\
          //! **GENERATED — do not edit by hand.** Regenerate with\n\
          //! `PCGEN_CORPUS_ROOT=<pcgen>/data cargo run --locked --bin gen_feat_gap_tables`.\n\
          //! The generator applies `v06_work_inventory`'s own record predicate for\n\
          //! `Kind::Feat`, so a row here is exactly a row that inventory reported\n\
-         //! `not-ingested`.\n\
+         //! `engine-does-not-hold`.\n\
          //!\n\
          //! `description` is the record's `DESC:` joined with its `BENEFIT:` when\n\
          //! both are present, and `None` when it carries neither — never a\n\

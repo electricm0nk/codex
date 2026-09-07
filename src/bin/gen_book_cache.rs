@@ -532,6 +532,33 @@ fn write_record<T: serde::Serialize>(path: &Path, record: &CorpusRecordV1<T>) {
     fs::write(path, json).unwrap_or_else(|e| panic!("failed to write {path:?}: {e}"));
 }
 
+/// Where an equipment record with this slug already lives, if anywhere --
+/// checked at BOTH the flat `equipment/<slug>.json` layout the PU
+/// equipmods writer defaults to and the categorized
+/// `equipment/<category_slug>/<slug>.json` layout `advanced_race_guide`'s
+/// own equipment block uses (and that a manual reclassification, e.g.
+/// `b34bf2b4f0`'s "git mv, kind-misclassified by directory" fix, may have
+/// already moved a PU record to).
+///
+/// AT-34-E6-001 gate-lane-a: before this function existed, the write guard
+/// checked only the flat layout, so a record already relocated to the
+/// categorized layout was invisible to it -- the very next regen silently
+/// wrote a duplicate flat copy beside the relocated original (PU's 4
+/// ABP+0 equipmods records, `sd27_equipment_modifier_price_matches_corpus_
+/// cost_token.rs`). This never nests a NEW file; it only recognizes an
+/// existing one so a regen does not recreate a duplicate.
+fn existing_equipment_record_path(out_root: &Path, category_slug: &str, slug: &str) -> Option<PathBuf> {
+    let flat = out_root.join("equipment").join(format!("{slug}.json"));
+    if flat.exists() {
+        return Some(flat);
+    }
+    let nested = out_root.join("equipment").join(category_slug).join(format!("{slug}.json"));
+    if nested.exists() {
+        return Some(nested);
+    }
+    None
+}
+
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`), the
 /// same bounded, documented substring scan `scripts/apg_license_retrofit.py`
 /// already applied to the 4 in-scope books: the 20 canonical core
@@ -704,6 +731,20 @@ fn gen_pathfinder_unchained() {
     }
 
     // ---- Equipment (equipmods) ----
+    //
+    // AT-34-E6-001 gate-lane-a (wave-24 diagnosis, this cycle's fix): the
+    // write guard below used to check only the flat `equipment/<slug>.json`
+    // path this loop writes to. `b34bf2b4f0` ("git mv, kind-misclassified
+    // by directory, 4 units") had already relocated 4 ABP+0 equipmods
+    // records to `equipment/equipmods/<slug>.json` -- the categorized
+    // layout `advanced_race_guide`'s own equipment block uses -- but the
+    // flat-only guard could not see them there, so the very next regen in
+    // that same cycle silently re-wrote all 4 back into the flat directory,
+    // producing a genuine duplicate corpus key per record
+    // (`sd27_equipment_modifier_price_matches_corpus_cost_token.rs`).
+    // `existing_equipment_record_path` checks BOTH layouts so a regen
+    // recognizes an already-relocated record instead of recreating a flat
+    // duplicate beside it.
     let equipmods_file = load_corpus_file(&root, "pu_equipmods.lst");
     let mut equipment_written = 0u32;
     let mut equipment_unattributed: Vec<String> = Vec::new();
@@ -757,8 +798,13 @@ fn gen_pathfinder_unchained() {
                 let path = out_root.join("equipment").join(format!("{slug}.json"));
                 // `SD31-E6-F9-005`-shaped guard: a file already on disk
                 // (including one `enrich_equipment_raw_tokens.rs` has since
-                // written `raw_tokens` into) is left completely untouched.
-                if !path.exists() {
+                // written `raw_tokens` into) is left completely untouched --
+                // checked at EITHER the flat layout this loop writes to or
+                // the categorized `equipment/equipmods/` layout a prior
+                // reclassification (`b34bf2b4f0`) may have already moved it
+                // to, so a regen never recreates a flat duplicate beside an
+                // already-relocated record.
+                if existing_equipment_record_path(&out_root, "equipmods", &slug).is_none() {
                     write_record(&path, &record);
                 }
                 equipment_written += 1;
@@ -2967,5 +3013,59 @@ mod tests {
         // rather than a panic so a future caller with an unexpected path
         // shape degrades to the pre-fix behavior instead of crashing.
         assert_eq!(wiring_class_file_arg("inner_sea_gods", "isg_races_b4.lst"), "isg_races_b4.lst");
+    }
+
+    // AT-34-E6-001 gate-lane-a wave-24/this-cycle: `gen_pathfinder_unchained`'s
+    // equipmods write guard (`if !path.exists()`) only ever checked the flat
+    // `equipment/<slug>.json` layout it writes to. `b34bf2b4f0` (`git mv`,
+    // "kind-misclassified by directory") had already relocated 4 ABP+0
+    // equipmods records to the categorized `equipment/equipmods/<slug>.json`
+    // layout ARG's own equipment block uses -- but the flat guard could not
+    // see them there, so the very next regen in the same cycle re-wrote all
+    // 4 back into the flat directory, producing a genuine duplicate corpus
+    // key per record (`sd27_equipment_modifier_price_matches_corpus_cost_
+    // token.rs::the_newly_reachable_books_have_no_duplicate_corpus_keys`).
+    // `existing_equipment_record_path` is the fix: it must find a record at
+    // EITHER candidate layout, so the write site can skip re-creating a
+    // flat duplicate beside an already-nested file.
+    fn temp_test_dir(label: &str) -> PathBuf {
+        let dir = std::env::temp_dir().join(format!(
+            "gen_book_cache_{label}_{}_{}",
+            std::process::id(),
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()
+        ));
+        std::fs::create_dir_all(dir.join("equipment/equipmods")).unwrap();
+        dir
+    }
+
+    #[test]
+    fn existing_equipment_record_path_finds_a_record_nested_under_its_category_slug() {
+        let out_root = temp_test_dir("finds_nested");
+        let nested = out_root.join("equipment/equipmods/0_abp_enhancement_to_armor.json");
+        std::fs::write(&nested, "{}").unwrap();
+
+        assert_eq!(
+            existing_equipment_record_path(&out_root, "equipmods", "0_abp_enhancement_to_armor"),
+            Some(nested),
+            "a record already relocated to equipment/<category>/ must be found, not just the flat layout"
+        );
+        let _ = std::fs::remove_dir_all(&out_root);
+    }
+
+    #[test]
+    fn existing_equipment_record_path_finds_a_record_in_the_flat_layout() {
+        let out_root = temp_test_dir("finds_flat");
+        let flat = out_root.join("equipment/some_slug.json");
+        std::fs::write(&flat, "{}").unwrap();
+
+        assert_eq!(existing_equipment_record_path(&out_root, "equipmods", "some_slug"), Some(flat));
+        let _ = std::fs::remove_dir_all(&out_root);
+    }
+
+    #[test]
+    fn existing_equipment_record_path_is_none_when_neither_layout_has_the_slug() {
+        let out_root = temp_test_dir("finds_neither");
+        assert_eq!(existing_equipment_record_path(&out_root, "equipmods", "nothing_here"), None);
+        let _ = std::fs::remove_dir_all(&out_root);
     }
 }

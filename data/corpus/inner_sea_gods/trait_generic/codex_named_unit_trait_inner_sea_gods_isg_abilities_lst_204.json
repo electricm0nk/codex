@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:22:49Z",
   "data": {
+    "description": "You were born with a blessing of the Dawnflower. Once per day, you can use light as a spell-like ability. Your caster level is equal to your character level.",
     "key": "Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_204)",
     "name": "Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_204)",
-    "description": "You were born with a blessing of the Dawnflower. Once per day, you can use light as a spell-like ability. Your caster level is equal to your character level.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,23 +40,26 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 204,
-    "record_key": "Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_204)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T18:22:49Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities.lst:204"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities.lst:204",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 204,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_204)",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:spells"
+  ]
 }

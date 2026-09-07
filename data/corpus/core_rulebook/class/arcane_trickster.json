@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:33:12Z",
   "data": {
     "key": "Arcane Trickster",
     "name": "Arcane Trickster",
@@ -68,18 +66,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
-    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
-    "line": 345,
-    "record_key": "Arcane Trickster"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_class_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:33:12Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 345,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+    "record_key": "Arcane Trickster",
+    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

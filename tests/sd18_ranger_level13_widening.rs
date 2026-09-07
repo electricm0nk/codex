@@ -83,13 +83,12 @@
 //! Barbarian/Bard/Cleric/Druid/Fighter/Monk/Paladin/Rogue level-N-to-
 //! level-(N+1) sibling-fix precedent exactly.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const RANGER_LEVEL12_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_ranger_level12_sd18_camouflage_deterministic_input.txt"
@@ -111,38 +110,6 @@ const FAVORED_TERRAIN_3_CHOICE_ID: &str = "class_chassis.ranger.favored_terrain_
 const FAVORED_TERRAIN_3_ID: &str = "class_feature.ranger.favored_terrain_3";
 const FAVORED_TERRAIN_BONUS_INCREASE_2_CHOICE_ID: &str =
     "class_chassis.ranger.favored_terrain_bonus_increase_2_choice";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 fn values_with_prefix(
     computation: &PilotBaseChassisComputation,
@@ -459,8 +426,16 @@ fn ranger_level_21_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
+            .any(|e| (e.id.starts_with("class_chassis.ranger.")
+                || e.id.starts_with("class_feature.ranger."))
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Ranger's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.ranger.weapon_and_armor_proficiency"),
         "level-21 Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );
@@ -497,8 +472,16 @@ fn multiclass_ranger_level13_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
+            .any(|e| (e.id.starts_with("class_chassis.ranger.")
+                || e.id.starts_with("class_feature.ranger."))
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Ranger's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.ranger.weapon_and_armor_proficiency"),
         "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );

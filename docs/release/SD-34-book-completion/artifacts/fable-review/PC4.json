@@ -1,0 +1,92 @@
+{
+  "lane": "PC4",
+  "findings": [
+    {
+      "id": "PC4-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "severity": "P1",
+      "category": "bug",
+      "title": "Chooser 'recognized' flag ignores the generic pool-group pass, so claim_blocking and the diagnostic message can contradict records the same run already emitted",
+      "evidence": "Three ACG classes in this chunk share one shape: (1) call push_generic_pool_group_selection_magnitude/_description_magnitude (defined at lines 41254 and 41372, outside this chunk) which grounds real ComputationExplanation records for MANY chooser selections beyond the hand-modeled ones, then (2) compute a `<x>_recognized: bool` that checks ONLY the hand-modeled selection(s), and use that bool for both the diagnostic's claim_blocking and its prose ('no recognized ... choice is present'). Warpriest: generic passes at lines 20152-20186 ground content for up to 36 other Blessing groups; `blessing_recognized` at lines 20242-20243 checks only Destruction/Strength; push_warpriest_other_features_deferred_diagnostic (604-646) then emits claim_blocking:true and 'remains blocked ... no recognized Destruction or Strength Blessing choice is present' even when the player's actual Blessing (e.g. Earth) was just grounded by the generic pass a few lines earlier in the same explanations Vec. Shaman: identical shape at lines 22547-22651 (`spirit_recognized`) and 22842-22882. Bloodrager: identical shape at lines 24852-24863 and 25009-25098 (`bloodline_recognized`, checked against ARCANE_BLOODRAGER_BLOODLINE_SELECTION only, while the generic pass at 24852 grounds the other 9 bloodlines 'purely additive'). A doc comment at line ~41324 confirms this same generic-pool-group pass is wired for six pools total (Cleric Domain, Sorcerer Bloodline, Bloodrager Bloodline, Oracle Mystery, Warpriest Blessing, Shaman Spirit), so the other three (owned by different lanes) are worth the identical check.",
+      "fix_description": "Have push_generic_pool_group_selection_magnitude/_description_magnitude report (return bool, or a count of matched records) whether the player's actual selection was recognized by the generic pool, and OR that into blessing_recognized/spirit_recognized/bloodline_recognized (and the sibling booleans likely present for Cleric/Sorcerer/Oracle) before it drives claim_blocking and the diagnostic prose.",
+      "risk_notes": "Touches claim_blocking semantics for three classes' 'other features deferred' diagnostics -- a behavior change to what counts as a supported build, not a pure refactor, so report_only regardless of the mechanical-deletion bar.",
+      "proposed_action": "report_only",
+      "confidence": "medium"
+    },
+    {
+      "id": "PC4-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "severity": "P2",
+      "category": "duplication",
+      "line_start": 24832,
+      "line_end": 24987,
+      "title": "Same four-call diagnostic tail is copy-pasted three times inside ground_or_block_bloodrager_bloodrage, with visibly inconsistent indentation at the copies",
+      "evidence": "The sequence `push_bloodrager_spellcasting_deferred_diagnostic(...); push_bloodrager_other_features_deferred_diagnostic(...); ground_bloodrager_spell_tables(...); ground_or_block_bloodrager_known_spells(...);` appears verbatim three times in one function: lines 24883-24891 (not-raging early return), lines 24912-24920 (rounds-exceeded early return, note the extra two-space indent drift on 24913-24920 versus the surrounding block -- a copy-paste tell), and lines 24978-24986 (final fallthrough after the raging/not-raging match). All three call sites pass the identical arguments (input, bloodrager_level, explanations, diagnostics).",
+      "fix_description": "Remove the two early `return`s and let both branches fall through to one shared tail call after the match (or extract the four-call sequence into one local closure/helper invoked once), matching how sibling classes in the same file (e.g. Warpriest, Shaman) structure their own single-tail dispatch.",
+      "risk_notes": "Changing control flow (removing early returns) needs a check that no branch-specific diagnostic ordering is asserted by a test; low risk since the four calls are argument-identical in all three call sites.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "PC4-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "severity": "P2",
+      "category": "duplication",
+      "line_start": 19729,
+      "line_end": 22398,
+      "title": "Near-identical 'unmet_<class>_..._conditions / ground_<class>_prepared_...' pairs repeated per class instead of one parameterized posture-validator",
+      "evidence": "Within this chunk alone, five classes each carry the same two-function shape: filter input.chosen.spells_selected by source_class_id+AcquisitionMode, validate recorded-vs-prepared, resolve each spell's level via a per-class parser, sum consumed-vs-total slots per spell level, and push an identically-worded unmet-reasons Vec, then a sibling `ground_*` function re-derives the same recorded/prepared lists and re-emits near-identical ComputationExplanation records. Instances: unmet_warpriest_spellbook_conditions/ground_warpriest_prepared_spellbook (19729-19905), unmet_investigator_extract_conditions/ground_investigator_prepared_extracts (21634-21817), unmet_shaman_prepared_spell_conditions/ground_shaman_prepared_spells (22290-22398), plus unmet_arcanist_spellbook_conditions/ground_arcanist_prepared_spellbook just above this chunk's start and unmet_hunter_known_spell_conditions/ground_hunter_known_spells (26606-26710) using the KNOWN-not-prepared variant of the same shape. Several doc comments explicitly say 'mirrors X's own shape exactly.'",
+      "fix_description": "Extract one generic prepared/known-spell posture validator parameterized by (class_id, casting ability field, per-spell-id level resolver fn, base-slots-per-day table fn, id-prefix strings), and have each class call it instead of hand-rolling its own copy. cross_chunk lists the exact per-class function names/signatures so other lanes owning Cleric/Oracle/Wizard/Sorcerer/Witch/Druid can confirm the same shape recurs there.",
+      "risk_notes": "High-value but cross-cutting refactor touching every spellcasting ACG/APG/CRB class; must preserve each class's own genuine differences (2-slot-per-prepared-spell for opposed schools, KNOWN vs PREPARED semantics, orison/cantrip-column handling) called out in the very doc comments cited above, so this is report_only, not a mechanical change.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "PC4-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "severity": "P2",
+      "category": "structure",
+      "line_start": 19580,
+      "line_end": 27154,
+      "title": "Nine ACG classes (Arcanist tail, Warpriest, Swashbuckler, Investigator, Shaman, Skald, Bloodrager, Brawler, Hunter) are natural per-class submodule seams inside one 78.5k-line file",
+      "evidence": "Each class in this range is a self-contained unit following one naming convention -- `<class>_<feature>` pure functions, `ground_or_block_<class>_class_features`/`ground_<class>_remaining_features`, and `push_<class>_other_features_deferred_diagnostic` -- with no cross-class helper calls except the shared generic-pool-group and spell-list utilities. Each unit is 500-1500 lines (e.g. Warpriest 19674-20646, Swashbuckler 20649-21446, Investigator 21448-22173, Shaman 22175-22882, Skald 23065-24162, Bloodrager 24439-25637, Brawler 25638-26366, Hunter 26367-27159) and is dispatched from one central match in compute_acg_class_chassis (22892-23063).",
+      "fix_description": "Extract each class into its own file under a `rules_core/pilot_compute/acg/` submodule (mirroring the existing `acg`/`apg` rules_tables split already used elsewhere in this codebase), re-exporting the dispatch entry points compute_acg_class_chassis calls. Pure mechanical move with no logic change.",
+      "risk_notes": "Large diff surface (visibility/import changes across ~9000 lines) even though each move is mechanical; must preserve doc-comment cross-references between classes (e.g. Warpriest's Sacred Weapon comment references Monk's ladder) which currently work via same-file visibility.",
+      "proposed_action": "report_only",
+      "confidence": "medium"
+    },
+    {
+      "id": "PC4-5",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "severity": "P3",
+      "category": "bloat",
+      "line_start": 19698,
+      "line_end": 26474,
+      "title": "Five to six near-identical 20-arm level-to-slots match tables could collapse into one const 2D lookup shared by a table-driven helper",
+      "evidence": "warpriest_base_spells_per_day (19698-19722), shaman_base_spells_per_day_table (22194-22238), investigator_base_extracts_per_day (21572-21595), hunter_spells_known_table (26405-26429), and hunter_base_spells_per_day_table (26450-26474) are each a `match level { 1 => [...], 2 => [...], ..., 20 => [...], _ => [...] }` over `[Option<i16>; N]`, differing only in N and the literal cell values -- roughly 25 lines of match-arm boilerplate per table, ~125 lines total in this chunk alone (more exist for other classes elsewhere in the file).",
+      "fix_description": "Replace each with a `const TABLE: [[i16; N]; 20]` (using a sentinel like -1 or a bitmask for 'inaccessible' columns) plus one shared `fn slots_per_day_from_table(table: &[[i16; N]; 20], level: u8) -> [Option<i16>; N]` indexing helper, cutting each site to the literal data plus a one-line call.",
+      "risk_notes": "Purely mechanical for cargo-check-provable equivalence per table, but each table is a hand-verified corpus transcription with its own doc-comment caveats (e.g. Shaman's deliberate level-11 divergence) that must survive the refactor untouched -- report_only given the volume of tables involved and the instruction to keep table-shape changes out of auto_fix.",
+      "proposed_action": "report_only",
+      "confidence": "medium"
+    },
+    {
+      "id": "PC4-6",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "severity": "P3",
+      "category": "bloat",
+      "line_start": 20188,
+      "line_end": 20243,
+      "title": "blessing_selections.contains(...) is evaluated redundantly instead of reusing the matches already computed a few lines above",
+      "evidence": "`blessing_selections.contains(&STRENGTH_BLESSING_SELECTION)` and `.contains(&DESTRUCTION_BLESSING_SELECTION)` are each evaluated twice: once in the if/else-if branches at lines 20195 and 20198, and again when computing `blessing_recognized` at lines 20242-20243.",
+      "fix_description": "Compute `has_strength`/`has_destruction` booleans once above the branches and reuse them for both the dispatch and the `blessing_recognized` computation.",
+      "risk_notes": "Purely cosmetic; contains() over a short Vec is cheap, so this is a readability nit rather than a performance concern.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "notes": "Assigned range 19600-27055 snapped to enclosing top-level items: read 19580 (start of fn ground_or_block_arcanist_metamagic_knowledge, which encloses line 19600) through 27154 (end of the #[cfg(test)] hunter_remaining_features_tests module plus the four HUNTER_* level constants immediately following it, so the chunk boundary lands cleanly before fn ground_hunter_remaining_features's body). File is not generated (first lines are a hand-written //! module doc, no GENERATED FILE marker). This span covers the tail of Arcanist plus the full Warpriest, Swashbuckler, Investigator, Shaman, and Skald/Bloodrager/Brawler/Hunter (through their class-feature grounding functions and one inline test module) ACG-class sections and the compute_acg_class_chassis dispatch match. Only one #[cfg(test)] module falls in range (hunter_remaining_features_tests, 27055-27147); skimmed its 5 tests rather than reading line-by-line, consistent with the test-skim instruction. No unchecked unwrap()/expect() on external/untrusted data was found in range -- the few expect() calls found (lines ~19623, ~20483/26837 by rough offset) are all guarded by a preceding conditional that already establishes the invariant they assert. No dead/unreachable branches were found. The dominant defect class in this chunk is NOT crash-risk but three self-consistency smells that recur systematically across classes: (1) a chooser 'recognized' bool that under-counts what the generic pool-group pass already grounded (PC4-1), (2) copy-pasted diagnostic tails inside one function (PC4-2), and (3) a repeated hand-rolled spell/extract posture-validation shape across five-plus classes (PC4-3) -- all reported above."
+  }
+}

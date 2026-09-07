@@ -38,11 +38,12 @@
 //! preserves the Fighter negative control and the multiclass negative
 //! control.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::load;
 
 const BARD_LEVEL1_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_bard_level1_sd13_deterministic_input.txt");
@@ -61,18 +62,6 @@ const FIGHTER_FIXTURE: &str = include_str!(
 
 const KNOWN_PREFIX: &str = "class_chassis.bard.spontaneous.spells_known.";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.bard.spontaneous_known_and_per_day.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn known_values(fixture: &str) -> Vec<(String, i16)> {
     let input = load(fixture);

@@ -79,6 +79,14 @@ export interface LoadSavedCharacterResponse {
    */
   selectedAlternateTraitKeys: string[];
   /**
+   * **AT-34-E4-002**: the character's full persisted `chosen.selected_traits`,
+   * verbatim — not just traits added this session. Same shape of gap, and
+   * same fix, as `selectedFeats`: without it a re-opened trait picker would
+   * show no checkboxes checked, and a mutation refresh that dropped it would
+   * silently clear a saved character's trait choices.
+   */
+  selectedTraits: string[];
+  /**
    * **This character's racial traits, resolved and rendered for *it*.**
    *
    * `selectedAlternateTraitKeys` carries the choice; this carries what the

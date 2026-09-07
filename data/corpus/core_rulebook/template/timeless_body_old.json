@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:17Z",
   "data": {
     "key": "Timeless Body ~ Old",
     "name": "Timeless Body ~ Old",
@@ -20,20 +19,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
-    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b",
-    "line": 20,
-    "record_key": "Timeless Body ~ Old"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:17Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "record_key": "Timeless Body ~ Old",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

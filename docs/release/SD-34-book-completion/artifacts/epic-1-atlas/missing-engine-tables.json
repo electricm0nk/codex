@@ -1,0 +1,35 @@
+{
+  "kinds": {
+    "companion": {
+      "by_book": {
+        "bestiary": 28
+      },
+      "count": 28,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 16442,
+        "must_contain": "companion_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": [
+        "bestiary"
+      ]
+    },
+    "power": {
+      "by_book": {
+        "ultimate_psionics": 421
+      },
+      "count": 421,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 16542,
+        "must_contain": "power_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": [
+        "ultimate_psionics"
+      ]
+    }
+  },
+  "population": 449,
+  "re_derive_command": "python3 scripts/missing_engine_tables.py --check",
+  "source": "docs/work-inventory.json (status == engine-does-not-hold, evidence contains 'has_no_engine_table')"
+}

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:37Z",
   "data": {
+    "description": null,
     "key": "Reptoid",
     "name": "Reptoid",
-    "description": null,
     "raw_tokens": [
       {
         "key": "STARTFEATS",
@@ -65,20 +64,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_pc.lst",
-    "sha256": "0a5a37389090ae8096bd0badce3a3d059ef19b61791f9096cb4b085a5903c73d",
-    "line": 13,
-    "record_key": "Reptoid"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:37Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_pc.lst",
+    "record_key": "Reptoid",
+    "sha256": "0a5a37389090ae8096bd0badce3a3d059ef19b61791f9096cb4b085a5903c73d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Spirit Phantom Focus ~ Wind",
     "name": "Wind",
-    "description": null,
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
-    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b",
-    "line": 16,
-    "record_key": "Spirit Phantom Focus ~ Wind"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "record_key": "Spirit Phantom Focus ~ Wind",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

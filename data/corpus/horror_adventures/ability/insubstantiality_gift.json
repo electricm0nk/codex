@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your body sometimes shifts or blurs momentarily before resuming the appearance of solidity. You gain a + %1 deflection bonus to your AC. You have a 20%% chance to ignore (treat as a normal hit) confirmed critical hits and precision-based damage (such as sneak attack damage) from any weapon unless it has the ghost touch weapon special ability.|ShadowboundInsubstantialityAC",
     "key": "Shadowbound Corruption ~ Insubstantiality Gift",
     "name": "Insubstantiality Gift",
-    "description": "Your body sometimes shifts or blurs momentarily before resuming the appearance of solidity. You gain a + %1 deflection bonus to your AC. You have a 20%% chance to ignore (treat as a normal hit) confirmed critical hits and precision-based damage (such as sneak attack damage) from any weapon unless it has the ghost touch weapon special ability.|ShadowboundInsubstantialityAC",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 827,
-    "record_key": "Shadowbound Corruption ~ Insubstantiality Gift"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 827,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Shadowbound Corruption ~ Insubstantiality Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

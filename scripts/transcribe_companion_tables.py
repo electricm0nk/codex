@@ -75,6 +75,7 @@ IMPORTABLE = (
     "CompanionAbilityDelivery",
     "CompanionAbilityFacet",
     "CompanionAbilityRecord",
+    "CompanionClassRecord",
     "CompanionDescriptionVariant",
     "CompanionRecord",
     "NaturalAttack",
@@ -91,6 +92,13 @@ def rust_str(value: str) -> str:
 
 def rust_opt(value: str | None) -> str:
     return f"Some({rust_str(value)})" if value is not None else "None"
+
+
+def rust_pair_slice(pairs: list[tuple[str, str]]) -> str:
+    """Emit `&[(&str, &str)]` for Shape 8 cross-book ownership grants."""
+    if not pairs:
+        return "&[]"
+    return "&[" + ", ".join(f"({rust_str(a)}, {rust_str(b)})" for a, b in pairs) + "]"
 
 
 def rust_slice(values: list[str]) -> str:
@@ -415,6 +423,46 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str], list[tuple[str, l
     return text, variables, []
 
 
+def tokens_all(row: list[str], prefix: str) -> list[str]:
+    """Every field's payload starting with `prefix`, in row order.
+
+    `classify_companion_rows.token` returns only the FIRST match -- right for
+    every single-valued token this transcriber reads, wrong for `ABILITY:`,
+    which a `*_classes_companion.lst` row states more than once (`Vermin
+    Companion` carries two: `Special Ability|...` and `Internal|...`).
+    """
+    return [f[len(prefix) :] for f in row if f.startswith(prefix)]
+
+
+def parse_hit_dice(row: list[str]) -> int | None:
+    raw = token(row, "HD:")
+    return int(raw) if raw is not None and raw.isdigit() else None
+
+
+def parse_class_row(row: list[str]) -> dict:
+    """One `*_classes_companion.lst` row -> `CompanionClassRecord` fields.
+
+    Handles BOTH shapes this file carries: a `CLASS:<name>` header row (most
+    fields populated) and a bare `###Block: Level Advancement` line (`key` is
+    a level number, every field but `ability_grants` empty) -- see
+    `companion_chassis::CompanionClassRecord`'s own doc for why the tokenizer
+    treats the second as a record in its own right.
+    """
+    return {
+        "output_name": token(row, "OUTPUTNAME:"),
+        "hit_dice": parse_hit_dice(row),
+        "max_level": token(row, "MAXLEVEL:"),
+        "type_segments": parse_type_segments(row),
+        "visible_no": token(row, "VISIBLE:") == "NO",
+        "source_page": token(row, "SOURCEPAGE:"),
+        "ability_grants": tokens_all(row, "ABILITY:"),
+        "fact_class_type": next(
+            (f[len("FACT:ClassType|") :] for f in row if f.startswith("FACT:ClassType|")),
+            None,
+        ),
+    }
+
+
 def transcribe(book: str) -> str:
     directory = book_dirs()[book]
     inventory = json.load(open("docs/work-inventory.json", encoding="utf-8"))
@@ -440,39 +488,34 @@ def transcribe(book: str) -> str:
         (u for u in units if row_shape(u["source_file"]) == "ability"),
         key=lambda u: u["source_line"],
     )
-    # ---- class-row screen (`decisions.md §65.1`) ----
+    # ---- class-row build (`decisions.md §65.1`, `§17`) ----
     #
-    # Until round 8 this was a `raise SystemExit(... "Widen it deliberately.")`.
-    # It was written as a refusal so that the FIRST book carrying the shape could
-    # not be ingested by accident, and it did its job: three books
-    # (`core_rulebook` 2, `ultimate_magic` 3, `book_of_the_damned_volume_1` 2)
-    # stopped here rather than silently shipping something.
+    # Through `AT-34-E3-001` cycle 4 this was DROP-AND-NAME: a `raise
+    # SystemExit` until round 8, then a screen that named the rows and left
+    # them `engine-does-not-hold` rather than modelling them. Round 8's own
+    # comment (kept below, now historical) declared a genuine level-
+    # progression record type as the eventual fix and deliberately did not
+    # build it. This cycle builds it: `CompanionClassRecord` (`companion_
+    # chassis.rs`) is neither a creature (no `SIZE:`, no `MOVE:`, no natural
+    # attacks) nor an ability (no `DESC:`) — it carries `HD:`/`MAXLEVEL:`/
+    # `ABILITY:` grants verbatim and computes nothing, the same discipline
+    # `CompanionRecord::monster_class`'s own doc states for the identical
+    # shape read from the creature side.
     #
-    # Widened deliberately now, and the deliberate answer is DROP-AND-NAME, not
-    # "model them". A `*_classes_companion.lst` row is a PCGen monster CLASS --
-    # the hit-dice progression a creature row's `MONSTERCLASS:` token names. It
-    # has no `SIZE:`, no `MOVE:`, no natural attacks; it is not a creature and it
-    # is not an ability. Transcribing one into `CompanionRecord` would emit a
-    # card whose every modelled field is empty, which is precisely the stub class
-    # the `.COPY=` screens above exist to prevent. Modelling it properly is a NEW
-    # RECORD TYPE (a level progression table), which `§63`'s closing note said a
-    # round taking one "should declare up front" -- this round does not take it.
-    #
-    # This changes NO book's shipped output: `classify_companion_rows.py` has
-    # always counted these rows as excluded, so the lane's reachable remainder
-    # already assumed they do not ship. The screen makes the transcriber agree
-    # with the classifier instead of halting in front of it. No filtering of
-    # `units` is needed either -- `row_shape` sorts a `_classes_` file into
-    # neither `creatures` nor `abilities` above, so these rows were already out
-    # of both tables. The only thing that was missing was saying so.
-    classes = sorted(
-        u["corpus_key"] for u in units if row_shape(u["source_file"]) == "class"
+    # `row_shape` sorts a `_classes_` file into neither `creatures` nor
+    # `abilities` above, so these units were always out of both tables; they
+    # are gathered here into their own list instead, sorted by source line
+    # exactly like the two lists above.
+    class_units = sorted(
+        (u for u in units if row_shape(u["source_file"]) == "class"),
+        key=lambda u: u["source_line"],
     )
+    classes = [u["corpus_key"] for u in class_units]
     if classes:
         print(
-            f"{book}: {len(classes)} `*_classes_companion.lst` CLASS row(s) NOT transcribed "
-            "(a monster class is a hit-dice progression, not a creature and not an "
-            "ability): " + ", ".join(classes),
+            f"{book}: {len(classes)} `*_classes_companion.lst` CLASS row(s) transcribed as "
+            "CompanionClassRecord (a level progression -- not a creature, not an ability): "
+            + ", ".join(classes),
             file=sys.stderr,
         )
     if not creatures:
@@ -693,6 +736,216 @@ def transcribe(book: str) -> str:
                         creature_ability_keys[creature].append(target)
                         changed = True
 
+    # Shape 7, BOOK-WIDE grant (`AT-34-E3-001`, `decisions.md §66`). Shapes 1-6
+    # all attribute ownership from something a CREATURE ROW itself states
+    # (`ABILITY:`, `PRERACE:`, a namespaced `KEY:` prefix, a granting row, a
+    # relay row, an `OUTPUTNAME:`). Core Rulebook's own "Animal Companion"
+    # progression table -- the generic feat pool (`Animal Companion Feat ~
+    # …`), trick/training pool (`Animal Trick ~ …`, `Animal Training ~ …`) and
+    # by-level bonus table (`Animal Companion ~ …`, `Companion ~ …`,
+    # `Companion Stat ~ …`) -- is never claimed by any ONE creature row,
+    # because the corpus states it exactly once, generically, for the whole
+    # `CLASS:Companion` chassis (`cr_classes_companion.lst`) every one of this
+    # book's registered creatures shares (every row here carries
+    # `MONSTERCLASS:Companion:…`). That is a true, corpus-backed fact about
+    # ALL of them, not an invented link to one: PF1's own Animal Companion
+    # rules (CRB p.52-55) grant this identical table to every companion,
+    # regardless of species. `BOOK_WIDE_GRANTS` is an exact, closed key set —
+    # never a prefix heuristic — so a future unrelated orphan can never
+    # silently ride this shape.
+    BOOK_WIDE_GRANTS: dict[str, set[str]] = {
+        "core_rulebook": {
+            "+2 to Dexterity and Constitution",
+            "Animal Companion Feat ~ Acrobatic",
+            "Animal Companion Feat ~ Agile Maneuvers",
+            "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+            "Animal Companion Feat ~ Armor Proficiency (Light)",
+            "Animal Companion Feat ~ Armor Proficiency (Medium)",
+            "Animal Companion Feat ~ Athletic",
+            "Animal Companion Feat ~ Blind-Fight",
+            "Animal Companion Feat ~ Combat Reflexes",
+            "Animal Companion Feat ~ Diehard",
+            "Animal Companion Feat ~ Dodge",
+            "Animal Companion Feat ~ Endurance",
+            "Animal Companion Feat ~ Feat",
+            "Animal Companion Feat ~ GM Feat",
+            "Animal Companion Feat ~ Great Fortitude",
+            "Animal Companion Feat ~ Improved Bull Rush",
+            "Animal Companion Feat ~ Improved Initiative",
+            "Animal Companion Feat ~ Improved Natural Armor",
+            "Animal Companion Feat ~ Improved Natural Attack",
+            "Animal Companion Feat ~ Improved Overrun",
+            "Animal Companion Feat ~ Intimidating Prowess",
+            "Animal Companion Feat ~ Iron Will",
+            "Animal Companion Feat ~ Lightning Reflexes",
+            "Animal Companion Feat ~ Mobility",
+            "Animal Companion Feat ~ Power Attack",
+            "Animal Companion Feat ~ Run",
+            "Animal Companion Feat ~ Skill Focus",
+            "Animal Companion Feat ~ Spring Attack",
+            "Animal Companion Feat ~ Stealthy",
+            "Animal Companion Feat ~ Toughness",
+            "Animal Companion Feat ~ Weapon Finesse",
+            "Animal Companion Feat ~ Weapon Focus",
+            "Animal Companion ~ AC Bonus",
+            "Animal Companion ~ Ability Score Increase",
+            "Animal Companion ~ Bonus Tricks",
+            "Animal Companion ~ Devotion",
+            "Animal Companion ~ Evasion",
+            "Animal Companion ~ Improved Evasion",
+            "Animal Companion ~ Link",
+            "Animal Companion ~ Multiattack",
+            "Animal Companion ~ Share Spells",
+            "Animal Companion ~ Spell Resistance",
+            "Animal Companion ~ Stat Bonus",
+            "Animal Training ~ Combat Training",
+            "Animal Training ~ Fighting",
+            "Animal Training ~ Guarding",
+            "Animal Training ~ Heavy Labor",
+            "Animal Training ~ Hunting",
+            "Animal Training ~ Performance",
+            "Animal Training ~ Riding",
+            "Animal Trick ~ Air Walk",
+            "Animal Trick ~ Attack",
+            "Animal Trick ~ Attack II",
+            "Animal Trick ~ Come",
+            "Animal Trick ~ Defend",
+            "Animal Trick ~ Down",
+            "Animal Trick ~ Fetch",
+            "Animal Trick ~ Guard",
+            "Animal Trick ~ Heel",
+            "Animal Trick ~ Perform",
+            "Animal Trick ~ Seek",
+            "Animal Trick ~ Stay",
+            "Animal Trick ~ Track",
+            "Animal Trick ~ Work",
+            "Base Companion ~ Animal Companion",
+            "Base Companion ~ Special Mount",
+            "Companion Advancement",
+            "Companion Skills",
+            "Companion Stat ~ CHA",
+            "Companion Stat ~ CON",
+            "Companion Stat ~ DEX",
+            "Companion Stat ~ INT",
+            "Companion Stat ~ STR",
+            "Companion Stat ~ WIS",
+            "Companion ~ Ability Score Increase",
+            "Companion ~ Bonus Tricks",
+            "Companion ~ Devotion",
+            "Companion ~ Evasion",
+            "Companion ~ Improved Evasion",
+            "Companion ~ Link",
+            "Companion ~ Multiattack",
+            "Companion ~ Share Spells",
+            "Companion ~ Spell Resistance (AC)",
+            "Companion ~ Spell Resistance (SM)",
+        },
+    }
+    book_wide_applied = 0
+    # `sorted(...)`, not raw `set` iteration: CPython randomizes `str` hash
+    # seeds per process, so an un-sorted set walk here made every `ability_keys`
+    # list this shape touches (and every `creature_ability_keys[creature]` list
+    # downstream) reorder run to run with no corpus reason -- found this cycle
+    # by diffing two back-to-back regenerations of the SAME unmodified book and
+    # getting a non-empty diff (`git diff` after a second run showed 76-element
+    # `ability_keys` lists reshuffled, same elements). `owners[key]` (assembled
+    # via `sorted(creature_keys)` two lines below) was already immune; this key
+    # loop was the one unsorted set walk left in the whole pass.
+    for key in sorted(BOOK_WIDE_GRANTS.get(book, set())):
+        if key not in owners or owners[key]:
+            continue
+        for creature in sorted(creature_keys):
+            owners[key].append(creature)
+            creature_ability_keys[creature].append(key)
+        book_wide_applied += 1
+    if book_wide_applied:
+        print(
+            f"{book}: {book_wide_applied} ability row(s) attributed to ALL "
+            f"{len(creature_keys)} registered creatures (Shape 7, book-wide grant)",
+            file=sys.stderr,
+        )
+
+    # Shape 8, CROSS-BOOK ownership (`AT-34-E3-001`, `decisions.md §67`). Every
+    # shape above (1-7) attributes an ability to a creature registered under
+    # THIS SAME book. Core Rulebook's `ce_abilities_familiar_cr.lst` pool is a
+    # real exception the source material itself creates: the ability rules
+    # (Magic chapter) are stated in Core Rulebook while the 11 familiar
+    # creature stat blocks are stated in Bestiary (`ce_races_familiar_cr.lst`
+    # declares `SOURCELONG:Bestiary`) -- two real halves of one PF1 mechanic,
+    # split across two real books, neither row misattributed.
+    #
+    # `CROSS_BOOK_GRANTS` is an exact, closed key set exactly like
+    # `BOOK_WIDE_GRANTS` above -- never a prefix or shape heuristic -- and each
+    # entry additionally names its owner book and the EXACT closed set of
+    # owner creature keys, so a future unrelated orphan can never silently
+    # ride this shape. Applied only to keys still unowned after shapes 1-7 (an
+    # ability already owned some other way is never re-attributed here).
+    CROSS_BOOK_GRANTS: dict[str, dict[str, tuple[str, tuple[str, ...]]]] = {
+        "core_rulebook": {
+            key: (
+                "beastiary",
+                (
+                    "Bat", "Cat", "Hawk", "Lizard", "Monkey", "Owl", "Rat", "Raven",
+                    "Toad", "Viper", "Weasel",
+                ),
+            )
+            for key in (
+                "Familiar Alertness Choice ~ Alertness Active",
+                "Familiar Alertness Choice ~ Alertness Inactive",
+                "Familiar ~ Alertness",
+                "Familiar ~ Deliver Touch Spells",
+                "Familiar ~ Empathic Link",
+                "Familiar ~ Improved Evasion",
+                "Familiar ~ Intelligence Score",
+                "Familiar ~ Natural Armor Bonus",
+                "Familiar ~ Scry on Familiar",
+                "Familiar ~ Share Spells",
+                "Familiar ~ Speak One Language",
+                "Familiar ~ Speak with Animals of Its Kind",
+                "Familiar ~ Speak with Master",
+                "Familiar ~ Spell Resistance",
+            )
+        },
+    }
+    # Keyed the same as `owners` -- every ability key, most mapping to `[]`.
+    cross_book_owners: dict[str, list[tuple[str, str]]] = {u["corpus_key"]: [] for u in abilities}
+    cross_book_applied = 0
+    for key, (owner_book, owner_creatures) in CROSS_BOOK_GRANTS.get(book, {}).items():
+        if key not in owners or owners[key]:
+            continue
+        # Verify each named creature is a REAL, currently-registered creature
+        # of the owner book -- read directly from that book's own ingested
+        # corpus, never assumed from this closed list alone. A grant naming a
+        # creature the owner book does not register is a defect in this
+        # table, not a fact about the corpus, and must fail closed.
+        owner_dir = os.path.join("data", "corpus", owner_book, "companion")
+        registered: set[str] = set()
+        if os.path.isdir(owner_dir):
+            for fname in os.listdir(owner_dir):
+                if not fname.endswith(".json"):
+                    continue
+                with open(os.path.join(owner_dir, fname), encoding="utf-8") as fh:
+                    doc = json.load(fh)
+                corpus_key = doc.get("data", {}).get("corpus_key")
+                if corpus_key:
+                    registered.add(corpus_key)
+        missing = [c for c in owner_creatures if c not in registered]
+        if missing:
+            raise SystemExit(
+                f"{book}: Shape 8 cross-book grant for {key!r} names {missing} which "
+                f"{owner_book} does not register at {owner_dir} -- widen or fix the grant"
+            )
+        for creature in owner_creatures:
+            cross_book_owners[key].append((owner_book, creature))
+        cross_book_applied += 1
+    if cross_book_applied:
+        print(
+            f"{book}: {cross_book_applied} ability row(s) attributed via Shape 8 "
+            f"cross-book ownership to {len(next(iter(CROSS_BOOK_GRANTS.get(book, {}).values()))[1])} "
+            "creature(s) of another registered book",
+            file=sys.stderr,
+        )
+
     # Only ability rows WITH an owner are registered.  A row no creature row of
     # this book reaches is a record that would load and never be shown, so it is
     # dropped from the emitted table and named in the module doc below.
@@ -704,7 +957,7 @@ def transcribe(book: str) -> str:
     # §50`): **transcribe the linked subset, and carry the orphans as an
     # `OPEN_FINDINGS` entry naming their remedy** rather than emitting
     # unreachable rows or skipping the book entirely.  The dropped rows keep
-    # their honest `not-ingested` status in the work inventory — this function
+    # their honest `engine-does-not-hold` status in the work inventory — this function
     # never touches that — so the shortfall stays a stated claim a reader can
     # check rather than a silent omission.
 
@@ -760,6 +1013,7 @@ def transcribe(book: str) -> str:
         abilities = [u for u in abilities if u["corpus_key"] not in dropped]
         for key in dropped:
             owners.pop(key, None)
+            cross_book_owners.pop(key, None)
         for creature_key, keys in creature_ability_keys.items():
             creature_ability_keys[creature_key] = [k for k in keys if k not in dropped]
         print(
@@ -819,6 +1073,7 @@ def transcribe(book: str) -> str:
         abilities = [u for u in abilities if u["corpus_key"] not in delta_keys]
         for key in delta_keys:
             owners.pop(key, None)
+            cross_book_owners.pop(key, None)
         # A creature must never name a record this table does not define --
         # `companion_chassis`'s `the_chassis_link_resolves_in_both_directions_
         # for_every_book` asserts exactly that, in both directions.
@@ -830,7 +1085,7 @@ def transcribe(book: str) -> str:
             file=sys.stderr,
         )
 
-    orphans = sorted(k for k, v in owners.items() if not v)
+    orphans = sorted(k for k, v in owners.items() if not v and not cross_book_owners.get(k))
     orphan_keys = set(orphans)
     if orphans:
         abilities = [u for u in abilities if u["corpus_key"] not in orphan_keys]
@@ -860,7 +1115,7 @@ def transcribe(book: str) -> str:
     # The disposition is `§61.2`'s, already settled one round earlier for
     # Ultimate Wilderness's archetype rows: a row this chassis is the wrong
     # SHAPE for is dropped, named here and in the module doc, and left honestly
-    # `not-ingested` in `docs/work-inventory.json` -- never shipped as a card
+    # `engine-does-not-hold` in `docs/work-inventory.json` -- never shipped as a card
     # with nothing on it.
     #
     # The predicate is `reach_gate::companions_reach`'s own ability payload rule
@@ -882,6 +1137,7 @@ def transcribe(book: str) -> str:
         abilities = [u for u in abilities if u["corpus_key"] not in empty_keys]
         for key in empty_keys:
             owners.pop(key, None)
+            cross_book_owners.pop(key, None)
         # Same both-directions obligation the delta screen carries: a creature
         # must never name a record this table does not define.
         for creature_key, keys in creature_ability_keys.items():
@@ -919,7 +1175,7 @@ def transcribe(book: str) -> str:
     # first book with a `_companion` AND a `_familiar` file per shape, where the
     # old line claimed all 31 creature rows came from the 16-row file
     # (`decisions.md §56.2`).
-    for shape_name, rows in (("creature", creatures), ("ability", abilities)):
+    for shape_name, rows in (("creature", creatures), ("ability", abilities), ("class", class_units)):
         for source_file in sorted({u["source_file"] for u in rows}):
             n = sum(1 for u in rows if u["source_file"] == source_file)
             out.append(f"//!   * `{source_file}` -- {n} companion {shape_name} rows")
@@ -998,7 +1254,7 @@ def transcribe(book: str) -> str:
         # the reach gate's denominator entirely. The honest record of it is
         # this list plus the book's `mod.rs` (`decisions.md §61.2`).
         out.append(
-            "//! These rows keep their `not-ingested` status in"
+            "//! These rows keep their `engine-does-not-hold` status in"
         )
         out.append(
             "//! `docs/work-inventory.json`, which is where the shortfall is counted; they"
@@ -1065,30 +1321,27 @@ def transcribe(book: str) -> str:
         out.append(
             "//! no chassis in this program models yet -- the disposition is `§61.2`'s:"
         )
-        out.append("//! dropped, named here, left honestly `not-ingested`:")
+        out.append("//! dropped, named here, left honestly `engine-does-not-hold`:")
         for key in empty:
             out.append(f"//!   * `{key}`")
     if classes:
         out.append("//!")
         out.append(
-            "//! NOT transcribed -- `*_classes_companion.lst` CLASS rows (`decisions.md"
+            "//! `*_classes_companion.lst` CLASS rows, transcribed as `CompanionClassRecord`"
         )
         out.append(
-            "//! §65.1`). A PCGen monster class is the hit-dice progression a creature"
+            "//! (`AT-34-E3-001`, `decisions.md §17`) rather than dropped. A PCGen monster"
         )
         out.append(
-            "//! row's `MONSTERCLASS:` token names -- it states no `SIZE:`, no `MOVE:` and"
+            "//! class is the hit-dice progression a creature row's `MONSTERCLASS:` token"
         )
         out.append(
-            "//! no natural attacks, so every field this chassis models transcribes empty."
+            "//! names -- it states no `SIZE:`, no `MOVE:` and no natural attacks, so it is"
         )
         out.append(
-            "//! Modelling it is a new record type (a level progression table), not a wider"
+            "//! neither a creature nor an ability; every field is carried verbatim and"
         )
-        out.append(
-            "//! predicate on this one. Left honestly `not-ingested`; the creature rows that"
-        )
-        out.append("//! name them ship, and carry the token verbatim:")
+        out.append("//! nothing is computed from it:")
         for key in classes:
             out.append(f"//!   * `{key}`")
     if gated:
@@ -1234,6 +1487,31 @@ def transcribe(book: str) -> str:
         )
         out.append(f"        source_page: {rust_opt(token(row, 'SOURCEPAGE:'))},")
         out.append(f"        owners: {rust_slice(owners[unit['corpus_key']])},")
+        out.append(
+            "        cross_book_owners: "
+            f"{rust_pair_slice(cross_book_owners.get(unit['corpus_key'], []))},"
+        )
+        out.append(f"        source_file: {rust_str(unit['source_file'])},")
+        out.append(f"        source_line: {unit['source_line']},")
+        out.append("    },")
+    out.append("];")
+    out.append("")
+    out.append(f"/// Every {book} `*_classes_companion.lst` row ({len(class_units)} rows).")
+    out.append("pub(super) static COMPANION_CLASSES: &[CompanionClassRecord] = &[")
+    for unit in class_units:
+        row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
+        fields = parse_class_row(row)
+        out.append("    CompanionClassRecord {")
+        out.append(f"        key: {rust_str(unit['corpus_key'])},")
+        out.append(f"        output_name: {rust_opt(fields['output_name'])},")
+        hd = fields["hit_dice"]
+        out.append(f"        hit_dice: {'Some(' + str(hd) + ')' if hd is not None else 'None'},")
+        out.append(f"        max_level: {rust_opt(fields['max_level'])},")
+        out.append(f"        type_segments: {rust_slice(fields['type_segments'])},")
+        out.append(f"        visible_no: {'true' if fields['visible_no'] else 'false'},")
+        out.append(f"        source_page: {rust_opt(fields['source_page'])},")
+        out.append(f"        ability_grants: {rust_slice(fields['ability_grants'])},")
+        out.append(f"        fact_class_type: {rust_opt(fields['fact_class_type'])},")
         out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")

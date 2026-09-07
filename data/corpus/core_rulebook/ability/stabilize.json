@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Stabilize",
     "name": "Stabilize",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -77,20 +76,23 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
-    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
-    "line": 722,
-    "record_key": "Stabilize"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 722,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "record_key": "Stabilize",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
 }

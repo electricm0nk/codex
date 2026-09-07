@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Having trained from a young age, you're capable of amazing feats of daring. You gain a +1 bonus on Acrobatics checks, and you take only a -2 penalty instead of the normal -5 penalty when using the Climb skill to attempt an accelerated climb.",
     "key": "Trait ~ Acrobat",
     "name": "Acrobat",
-    "description": "Having trained from a young age, you're capable of amazing feats of daring. You gain a +1 bonus on Acrobatics checks, and you take only a -2 penalty instead of the normal -5 penalty when using the Climb skill to attempt an accelerated climb.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
-    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
-    "line": 187,
-    "record_key": "Trait ~ Acrobat"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 187,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "record_key": "Trait ~ Acrobat",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

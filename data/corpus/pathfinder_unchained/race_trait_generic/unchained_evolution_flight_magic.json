@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "For 2 additional evolution points, the eidolon flies by means of magic. It loses its wings, but its maneuverability increases to perfect. If the eidolon flies by magic, this is a supernatural ability. The eidolon can increase its fly speed by spending additional evolution points, gaining a 20-foot increase to its fly speed for each additional point spent.",
     "key": "Unchained Evolution ~ Flight (Magic)",
     "name": "Flight (Magic)",
-    "description": "For 2 additional evolution points, the eidolon flies by means of magic. It loses its wings, but its maneuverability increases to perfect. If the eidolon flies by magic, this is a supernatural ability. The eidolon can increase its fly speed by spending additional evolution points, gaining a 20-foot increase to its fly speed for each additional point spent.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,18 +51,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 225,
-    "record_key": "Unchained Evolution ~ Flight (Magic)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 225,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Unchained Evolution ~ Flight (Magic)",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

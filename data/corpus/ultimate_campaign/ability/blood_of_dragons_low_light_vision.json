@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Blood of Dragons ~ Low-Light Vision",
     "name": "Blood of Dragons ~ Low-Light Vision",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -21,20 +20,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
-    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
-    "line": 245,
-    "record_key": "Blood of Dragons ~ Low-Light Vision"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 245,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "record_key": "Blood of Dragons ~ Low-Light Vision",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

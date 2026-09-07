@@ -105,7 +105,7 @@
 //! An ability reaches a player only underneath its monster, so a row no monster
 //! row of this book claims would load and never be shown — the
 //! record-that-is-never-seen class `decisions.md §44.2` is about. They stay
-//! `not-ingested`, which is their honest status, and are cited by line in
+//! `engine-does-not-hold`, which is their honest status, and are cited by line in
 //! `monster_data.rs`'s generated header.
 //!
 //! One of them is worth naming because it changed the transcriber.

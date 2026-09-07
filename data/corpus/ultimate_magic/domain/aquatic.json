@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:10Z",
   "data": {
     "key": "Aquatic",
     "name": "Aquatic",
@@ -60,20 +59,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
-    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01",
-    "line": 11,
-    "record_key": "Aquatic"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "record_key": "Aquatic",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

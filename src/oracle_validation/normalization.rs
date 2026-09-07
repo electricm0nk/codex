@@ -98,12 +98,11 @@ pub fn normalize_dimension_value(
                 }
             }
             NormalizationRuleKind::IntegerCoercion => {
-                if let Some(s) = value_string.as_ref() {
-                    if let Ok(parsed) = s.parse::<i16>() {
+                if let Some(s) = value_string.as_ref()
+                    && let Ok(parsed) = s.parse::<i16>() {
                         value_i16 = Some(parsed);
                         value_string = None;
                     }
-                }
             }
         }
     }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Creates earthquake.",
     "key": "Rumble ~ Prepared",
     "name": "Rumble",
-    "description": "Creates earthquake.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
-    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
-    "line": 491,
-    "record_key": "Rumble ~ Prepared"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 491,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "record_key": "Rumble ~ Prepared",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

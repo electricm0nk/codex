@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:08Z",
   "data": {
     "key": "Aboleth",
     "name": "Aboleth",
@@ -12,20 +11,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_languages_aboleth.lst",
-    "sha256": "2f000c1a8e936bd2ac0f6a44d397280c6e1444020ddd95dca88dff643c824d3a",
-    "line": 4,
-    "record_key": "Aboleth"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:08Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_languages_aboleth.lst",
+    "record_key": "Aboleth",
+    "sha256": "2f000c1a8e936bd2ac0f6a44d397280c6e1444020ddd95dca88dff643c824d3a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

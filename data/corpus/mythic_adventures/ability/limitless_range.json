@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Multiply the range increment on all of your ranged and thrown weapons by 5 feet, and these weapons no longer have a maximum range increment for you. You can throw any melee weapon as if it had a range increment of 20 feet--this increment isn't multiplied by 5, but the weapon doesn't have a maximum range increment.",
     "key": "Mythic Path Ability ~ Limitless Range",
     "name": "Limitless Range",
-    "description": "Multiply the range increment on all of your ranged and thrown weapons by 5 feet, and these weapons no longer have a maximum range increment for you. You can throw any melee weapon as if it had a range increment of 20 feet--this increment isn't multiplied by 5, but the weapon doesn't have a maximum range increment.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 200,
-    "record_key": "Mythic Path Ability ~ Limitless Range"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 200,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Limitless Range",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

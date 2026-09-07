@@ -1,12 +1,12 @@
 //! Corpus equipment and equipment-modifier records that belong to an
 //! ALREADY-COMPILED book whose hand-authored per-book table does not hold
-//! them — the `not-ingested` population of `docs/work-inventory.json`'s
+//! them — the `engine-does-not-hold` population of `docs/work-inventory.json`'s
 //! `equipment`/`equipment_modifier` kinds, closed corpus-wide.
 //!
 //! **GENERATED — do not edit by hand.** Regenerate with
 //! `PCGEN_CORPUS_ROOT=<pcgen>/data cargo run --locked --bin gen_equipment_gap_tables`.
 //! The generator applies `v06_work_inventory`'s own record predicate, so a
-//! row here is exactly a row that inventory reported `not-ingested`.
+//! row here is exactly a row that inventory reported `engine-does-not-hold`.
 //!
 //! `cost_gp`/`weight_lbs` are `None` when the corpus record carries no such
 //! token, or carries a PCGen formula this table deliberately does not

@@ -103,6 +103,13 @@ const LOADED_BOOKS: &[&str] = &[
     // omission -- edited in the same commit that adds the book to
     // `RACE_CORPUS_BOOKS`, per this file's own standing rule above.
     "bestiary_6",
+    // SD-32 `decisions.md §25` cycle 2 (2026-08-23): Bestiary 3's 5
+    // Adopted-Race selector records, loaded purely for those 5 rows (zero
+    // chassis, zero standard-tier traits of its own -- see
+    // `race_catalog.rs::RACE_CORPUS_BOOKS`'s own doc comment). SIXTH time
+    // this exact test has caught this exact omission -- re-derived and
+    // added here 2026-09-01, gate-remediation cycle.
+    "bestiary_3",
 ];
 
 fn corpus_dirs() -> Vec<(&'static str, PathBuf)> {

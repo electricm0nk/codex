@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "As a swift action, you can expend one use of mythic power to gain fast healing %1 for 1 minute. This ability can be taken a second time at 3rd tier or higher and a third time at 6th tier or higher. Each additional time you take this ability, the fast healing increases by 5.|Ability_MythicFastHealing_Rate",
     "key": "Mythic Path Ability ~ Fast Healing",
     "name": "Fast Healing",
-    "description": "As a swift action, you can expend one use of mythic power to gain fast healing %1 for 1 minute. This ability can be taken a second time at 3rd tier or higher and a third time at 6th tier or higher. Each additional time you take this ability, the fast healing increases by 5.|Ability_MythicFastHealing_Rate",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,20 +64,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 170,
-    "record_key": "Mythic Path Ability ~ Fast Healing"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 170,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Fast Healing",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

@@ -32,10 +32,10 @@
 //! Per-cycle input/output is captured in
 //! `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_5/multiclass-fixture.md`.
 
-use codex::rules_core::character_input::{
-    CharacterClassLevel, CharacterInput, load_character_input_fixture,
-};
+use codex::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
+mod common;
+use common::load;
 
 const FIGHTER9_WIZARD1_LV10_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter9_wizard1_sd24_multiclass_lv10_input.txt"
@@ -43,18 +43,6 @@ const FIGHTER9_WIZARD1_LV10_FIXTURE: &str = include_str!(
 const WIZARD9_FIGHTER1_LV10_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_wizard9_fighter1_sd24_multiclass_lv10_input.txt"
 );
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 /// A solo clone of `base`'s own posture (feats/choices/abilities), at a
 /// single `class_id`/`level` -- the same isolated-clone technique

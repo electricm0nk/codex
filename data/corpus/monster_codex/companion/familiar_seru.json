@@ -184,8 +184,8 @@
     "record_key": "Familiar (Seru)",
     "sha256": "544fc08dc13e63406123ca461fa6a68116f4fd58bb3f78647aa35a9019d6aaad"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus"
+    "static:literal_magnitudes_only"
   ]
 }

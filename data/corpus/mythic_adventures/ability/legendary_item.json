@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You gain a legendary item. This item grants %1 abilities. At 3rd tier, you can select this ability again, causing the item to become a lesser artifact. At 6th tier, you can select this ability again; the item then becomes a greater artifact.|min(10,min(Ability_LegendaryItem_AbilityCount,MythicLevel))",
     "key": "Mythic Path Ability ~ Legendary Item",
     "name": "Legendary Item",
-    "description": "You gain a legendary item. This item grants %1 abilities. At 3rd tier, you can select this ability again, causing the item to become a lesser artifact. At 6th tier, you can select this ability again; the item then becomes a greater artifact.|min(10,min(Ability_LegendaryItem_AbilityCount,MythicLevel))",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,20 +64,23 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 196,
-    "record_key": "Mythic Path Ability ~ Legendary Item"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 196,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Legendary Item",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
 }

@@ -12,7 +12,7 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 31,
+  "records_processed": 34,
   "records_redacted": 0,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "Every field of all 31 records written by this run (14 monsters + 17 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "RECONCILED SD34-AT-34-E6-001, 2026-09-01: gate-lane-a wave-24 diagnosed this book's stated records_processed/records_redacted as stale against the live corpus (sd27_book_license_record_counts.rs); records_processed re-derived from disk to 34 (was 31), re-derived from disk (find data/corpus/bonus_bestiary -mindepth 2 -name '*.json' ! -name LICENSE.json -not -path '*/_parity/*' | wc -l = 34; per-kind: class: 3, monster: 14, monster_ability: 17). records_processed is 34, records_redacted is 0. Prior note follows, unedited. Every field of all 31 records written by this run (14 monsters + 17 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

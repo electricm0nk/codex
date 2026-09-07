@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Wyrwoods have the construct type.",
     "key": "Wyrwood ~ Type",
     "name": "Construct",
-    "description": "Wyrwoods have the construct type.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,18 +51,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
-    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d",
-    "line": 15,
-    "record_key": "Wyrwood ~ Type"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "record_key": "Wyrwood ~ Type",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

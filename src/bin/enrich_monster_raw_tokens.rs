@@ -59,236 +59,36 @@
 //! value to [`codex::rules_core::shape_b_v1::REDACTED_PI_MARKER`] before it
 //! is written into `raw_tokens`, mirroring `cache_gen::ultimate_equipment`
 //! (`SD31-PI-REPAIR-001`)'s own two-contract pattern.
+//!
+//! **R8-04 consolidation:** the file walk, citation resolution, and
+//! PI-screen-then-write sequence now live in
+//! `codex::rules_core::cache_gen::enrich_raw_tokens_shared` (shared with
+//! `enrich_companion_raw_tokens.rs`/`enrich_monster_ability_raw_tokens.rs`/
+//! `enrich_spell_raw_tokens.rs` — see that module's doc comment for which
+//! axes are configurable and why). This bin is the one that sets
+//! `mark_redacted_root: true` -- the only one of the four that stamps
+//! `license`/`pi_field`/`pi_marker` at the record root when a field was
+//! redacted.
 
-use std::env;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
-use codex::rules_core::corpus_literal_sweep::token_closure;
-use codex::rules_core::pi_screening::{classify_field, declared_product_identity};
-use codex::rules_core::shape_b_v1::REDACTED_PI_MARKER;
-use codex::rules_core::wiring_class::build_mod_index;
-use serde_json::{json, Value};
-use std::collections::{BTreeMap, BTreeSet};
+use codex::rules_core::cache_gen::enrich_raw_tokens_shared::{
+    self as shared, EnrichConfig, Outcome,
+};
 
-fn pcgen_data_root() -> PathBuf {
-    if let Ok(v) = env::var("PCGEN_CORPUS_ROOT") {
-        return PathBuf::from(v);
-    }
-    let home = env::var("HOME").expect("HOME must be set to locate the default PCGen corpus checkout");
-    PathBuf::from(home).join("workspace/repos/pcgen/data")
-}
+const KIND_SUBDIR: &str = "monster";
 
-/// Every `monster` JSON under a book's `monster/` directory, walked
-/// recursively (matches `enrich_monster_ability_raw_tokens.rs`'s own
-/// `find_monster_ability_json_files` shape).
-fn find_monster_json_files(book_dir: &Path) -> Vec<PathBuf> {
-    let dir = book_dir.join("monster");
-    let mut out = Vec::new();
-    let mut stack = vec![dir];
-    while let Some(dir) = stack.pop() {
-        let Ok(entries) = fs::read_dir(&dir) else { continue };
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if path.is_dir() {
-                stack.push(path);
-            } else if path.extension().and_then(|e| e.to_str()) == Some("json") {
-                out.push(path);
-            }
-        }
-    }
-    out.sort();
-    out
-}
-
-/// The corpus-relative book directory a `source.path` citation belongs to:
-/// its first four path segments (`<system>/<publisher>/<line>/<book>`) —
-/// byte-identical to `corpus_literal_sweep`'s own `book_dir_of`, duplicated
-/// here (not imported: that function is private to that binary, not part
-/// of the library) rather than reinvented, so this tool and the verifier
-/// that checks its output always agree about which book a citation
-/// belongs to.
-///
-/// `dreamscarred_press` (`ultimate_psionics`, `path_of_war`,
-/// `psionics_expanded`, `psionics_unleashed`) ships with no `<line>` tier —
-/// its oracle layout is `<system>/<publisher>/<book>/<file>`, three
-/// directory segments, not four. `corpus_literal_sweep`'s own `book_dir_of`
-/// (`src/bin/corpus_literal_sweep.rs`) already special-cases this; this
-/// copy had drifted out of sync with it and silently treated every
-/// `dreamscarred_press` monster citation as a `CitationMiss` instead —
-/// confirmed live: all 21 `ultimate_psionics` `monster` records (and, in
-/// `enrich_monster_ability_raw_tokens.rs`'s own copy, all 13
-/// `ultimate_psionics` `monster_ability` records) sat at `held` for want of
-/// this one branch, corpus-wide `0` false negatives elsewhere (SD-31 wave
-/// 20).
-fn book_dir_of(source_path: &str) -> Option<String> {
-    let segments: Vec<&str> = source_path.split('/').filter(|s| !s.is_empty()).collect();
-    if segments.len() >= 5 {
-        return Some(segments[..4].join("/"));
-    }
-    if segments.len() == 4 && segments[1] == "dreamscarred_press" {
-        return Some(segments[..3].join("/"));
-    }
-    None
-}
-
-/// One book's `.MOD` rows, keyed by the record name they target — the same
-/// derivation `corpus_literal_sweep`'s own `Sweep::mod_index` performs,
-/// duplicated here (not imported: that method is a private impl on a
-/// binary-local struct, not part of the library).
-fn mod_index_for_book(data_root: &Path, book_dir: &str) -> BTreeMap<String, Vec<String>> {
-    let mut book_paths = BTreeMap::new();
-    book_paths.insert(book_dir.to_string(), data_root.join(book_dir));
-    build_mod_index(&book_paths).into_iter().map(|((_, name), rows)| (name, rows)).collect()
-}
-
-enum Outcome {
-    Enriched { redacted_fields: usize },
-    DroppedPi(String),
-    NoLstCitation,
-    AlreadyEnriched,
-    CitationMiss(String),
-}
-
-/// Split one closure field (`"COST:150"`, `"DESC:some text: with colons"`)
-/// into a `{key, value}` pair on the FIRST colon. Round-trips exactly for
-/// any field that carries at least one colon — every PCGen `TAG:VALUE`
-/// token does, by construction of the format this closure was built from.
-fn split_token_field(field: &str) -> Option<(&str, &str)> {
-    field.split_once(':')
-}
-
-/// PI-screen one closure field's value: blacklist term scan
-/// ([`classify_field`]) union'd with the row's own `DESCISPI:YES`
-/// declaration for `DESC`-keyed fields specifically — mirrors
-/// `pi_screening::classify_optional_field_declared`'s "union, never a
-/// substitution" rule, applied per-token rather than to one whole-record
-/// description field, since a monster chassis row's free text (if any)
-/// lives inside individual closure tokens, not a single `data.description`.
-fn screen_field_value(key: &str, value: &str, declared_description: bool) -> (String, bool) {
-    if key.eq_ignore_ascii_case("DESC") && declared_description {
-        return (REDACTED_PI_MARKER.to_string(), true);
-    }
-    let (license, ..) = classify_field(key, value);
-    if license == codex::rules_core::shape_b_v1::License::PiRedacted {
-        return (REDACTED_PI_MARKER.to_string(), true);
-    }
-    (value.to_string(), false)
-}
-
-fn enrich_one(
-    path: &Path,
-    data_root: &Path,
-    mod_index_cache: &mut BTreeMap<String, BTreeMap<String, Vec<String>>>,
-) -> Outcome {
-    let text = fs::read_to_string(path).unwrap_or_else(|e| panic!("read {path:?}: {e}"));
-    let mut root: Value = serde_json::from_str(&text).unwrap_or_else(|e| panic!("parse {path:?} as JSON: {e}"));
-
-    {
-        let data = root.get("data").unwrap_or_else(|| panic!("{path:?}: no top-level \"data\" object"));
-        if data.get("raw_tokens").is_some() {
-            return Outcome::AlreadyEnriched;
-        }
-    }
-
-    let source = root["source"].clone();
-    if source.get("kind").and_then(Value::as_str) != Some("lst_token") {
-        return Outcome::NoLstCitation;
-    }
-    let lst_rel_path = source["path"].as_str().expect("lst_token source must carry a path").to_string();
-    let line = source["line"].as_u64().expect("lst_token source must carry a line") as usize;
-    let Some(book_dir) = book_dir_of(&lst_rel_path) else {
-        return Outcome::CitationMiss(format!(
-            "{lst_rel_path} is not <system>/<publisher>/<line>/<book>/<file>-shaped"
-        ));
-    };
-    let mod_index = mod_index_cache
-        .entry(book_dir.clone())
-        .or_insert_with(|| mod_index_for_book(data_root, &book_dir));
-
-    let lst_full_path = data_root.join(&lst_rel_path);
-    let Ok(lst_text) = fs::read_to_string(&lst_full_path) else {
-        return Outcome::CitationMiss(format!("cited LST file not found: {lst_full_path:?}"));
-    };
-    let lines: Vec<&str> = lst_text.split('\n').collect();
-    if line == 0 || line > lines.len() {
-        return Outcome::CitationMiss(format!(
-            "{lst_rel_path} has {} lines, record claims line {line}",
-            lines.len()
-        ));
-    }
-    let base_row = lines[line - 1];
-
-    let data_obj_ref = root.get("data").and_then(Value::as_object).expect("checked above");
-    let mut identities: BTreeSet<String> = BTreeSet::new();
-    for candidate in [data_obj_ref.get("key"), data_obj_ref.get("name"), data_obj_ref.get("corpus_key")] {
-        if let Some(name) = candidate.and_then(Value::as_str) {
-            identities.insert(name.to_string());
-        }
-    }
-    if let Some(record_key) = source.get("record_key").and_then(Value::as_str) {
-        identities.insert(record_key.to_string());
-    }
-
-    let closure = token_closure(base_row, &identities, mod_index, None);
-    if closure.is_empty() {
-        return Outcome::CitationMiss(format!(
-            "{lst_rel_path}:{line}: base row carries no tab-separated fields at all -- \
-             a genuinely malformed citation, not a missing token set"
-        ));
-    }
-
-    let mut pairs: Vec<(&str, &str)> = Vec::with_capacity(closure.len());
-    for field in &closure {
-        let Some(pair) = split_token_field(field) else {
-            return Outcome::CitationMiss(format!(
-                "{lst_rel_path}:{line}: closure field {field:?} carries no ':' -- cannot be \
-                 decomposed into a {{key,value}} pair that round-trips"
-            ));
-        };
-        pairs.push(pair);
-    }
-
-    // `declared_product_identity` reads the WHOLE closure (base row + every
-    // `.MOD` row targeting this record's own identities within the same
-    // book), never just the base row alone -- a `.MOD` row can add a
-    // declaration the base row never carried.
-    let declared = declared_product_identity(pairs.iter().copied());
-    if declared.name {
-        fs::remove_file(path).unwrap_or_else(|e| panic!("remove {path:?}: {e}"));
-        return Outcome::DroppedPi(format!(
-            "{lst_rel_path}:{line} (record_key={:?}) declares NAMEISPI:YES in its own closure -- \
-             a name cannot be redacted, dropped per decisions.md §50.3",
-            source.get("record_key").and_then(Value::as_str).unwrap_or("?")
-        ));
-    }
-
-    let mut raw_tokens: Vec<Value> = Vec::with_capacity(pairs.len());
-    let mut redacted_fields = 0usize;
-    for (key, value) in &pairs {
-        let (stored, redacted) = screen_field_value(key, value, declared.description);
-        if redacted {
-            redacted_fields += 1;
-        }
-        raw_tokens.push(json!({ "key": key, "value": stored }));
-    }
-
-    let data_obj = root.get_mut("data").and_then(Value::as_object_mut).expect("checked above");
-    data_obj.insert("raw_tokens".to_string(), Value::Array(raw_tokens));
-    if redacted_fields > 0 {
-        let root_obj = root.as_object_mut().expect("record root is an object");
-        root_obj.insert("license".to_string(), json!("PI-REDACTED"));
-        root_obj.insert("pi_field".to_string(), json!("raw_tokens"));
-        root_obj.insert("pi_marker".to_string(), json!("redacted"));
-    }
-
-    let new_json = serde_json::to_string_pretty(&root).expect("serialize enriched record");
-    fs::write(path, new_json + "\n").unwrap_or_else(|e| panic!("write {path:?}: {e}"));
-    Outcome::Enriched { redacted_fields }
-}
+const CONFIG: EnrichConfig = EnrichConfig {
+    book_dir_of: shared::book_dir_of_with_dreamscarred_press,
+    identity_fields: &["key", "name", "corpus_key"],
+    screen: shared::screen_field_value,
+    mark_redacted_root: true,
+    remove_file_on_name_pi: true,
+};
 
 fn main() {
-    let data_root = pcgen_data_root();
+    let data_root = shared::pcgen_data_root();
     let corpus_root = PathBuf::from("data/corpus");
 
     let mut total_enriched = 0u32;
@@ -298,7 +98,7 @@ fn main() {
     let mut total_already = 0u32;
     let mut misses: Vec<String> = Vec::new();
     let mut drops: Vec<String> = Vec::new();
-    let mut mod_index_cache: BTreeMap<String, BTreeMap<String, Vec<String>>> = BTreeMap::new();
+    let mut mod_index_cache = std::collections::BTreeMap::new();
 
     let Ok(book_entries) = fs::read_dir(&corpus_root) else {
         eprintln!("enrich_monster_raw_tokens: no {corpus_root:?} directory found");
@@ -309,13 +109,13 @@ fn main() {
 
     for book_dir in &book_dirs {
         let book_name = book_dir.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
-        let files = find_monster_json_files(book_dir);
+        let files = shared::find_kind_json_files(book_dir, KIND_SUBDIR);
         if files.is_empty() {
             continue;
         }
         let mut book_enriched = 0u32;
         for file in &files {
-            match enrich_one(file, &data_root, &mut mod_index_cache) {
+            match shared::enrich_one(file, &data_root, &mut mod_index_cache, &CONFIG) {
                 Outcome::Enriched { redacted_fields } => {
                     total_enriched += 1;
                     book_enriched += 1;
@@ -328,6 +128,9 @@ fn main() {
                 Outcome::NoLstCitation => total_no_citation += 1,
                 Outcome::AlreadyEnriched => total_already += 1,
                 Outcome::CitationMiss(msg) => misses.push(format!("{}: {}", file.display(), msg)),
+                Outcome::NameIsProductIdentity => {
+                    unreachable!("CONFIG.remove_file_on_name_pi is true; NameIsProductIdentity is never produced")
+                }
             }
         }
         eprintln!("{book_name}: {} monster files scanned, {book_enriched} enriched", files.len());
@@ -356,6 +159,10 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use codex::rules_core::shape_b_v1::REDACTED_PI_MARKER;
+    use serde_json::Value;
+    use std::collections::BTreeSet;
+    use std::path::Path;
 
     /// A throwaway `PCGEN_CORPUS_ROOT`-shaped book directory plus a
     /// throwaway `data/corpus`-shaped monster JSON, both under
@@ -395,12 +202,17 @@ mod tests {
         }
     }
 
+    fn enrich(path: &Path, data_root: &Path) -> Outcome {
+        let mut cache = std::collections::BTreeMap::new();
+        shared::enrich_one(path, data_root, &mut cache, &CONFIG)
+    }
+
     // ----- book_dir_of -----
 
     #[test]
     fn book_dir_of_resolves_a_standard_five_segment_publisher_path() {
         assert_eq!(
-            book_dir_of("pathfinder/paizo/roleplaying_game/core_essentials/ce_races.lst"),
+            shared::book_dir_of_with_dreamscarred_press("pathfinder/paizo/roleplaying_game/core_essentials/ce_races.lst"),
             Some("pathfinder/paizo/roleplaying_game/core_essentials".to_string())
         );
     }
@@ -415,55 +227,61 @@ mod tests {
     #[test]
     fn book_dir_of_resolves_the_four_segment_dreamscarred_press_shape() {
         assert_eq!(
-            book_dir_of("pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst"),
+            shared::book_dir_of_with_dreamscarred_press("pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst"),
             Some("pathfinder/dreamscarred_press/ultimate_psionics".to_string())
         );
     }
 
     #[test]
     fn book_dir_of_refuses_a_four_segment_path_from_a_non_dreamscarred_publisher() {
-        assert_eq!(book_dir_of("pathfinder/paizo/roleplaying_game/x_races.lst"), None);
+        assert_eq!(
+            shared::book_dir_of_with_dreamscarred_press("pathfinder/paizo/roleplaying_game/x_races.lst"),
+            None
+        );
     }
 
     // ----- split_token_field -----
 
     #[test]
     fn split_token_field_splits_on_the_first_colon_only() {
-        assert_eq!(split_token_field("SIZE:L"), Some(("SIZE", "L")));
-        assert_eq!(split_token_field("SOURCEPAGE:p.15: see errata"), Some(("SOURCEPAGE", "p.15: see errata")));
+        assert_eq!(shared::split_token_field("SIZE:L"), Some(("SIZE", "L")));
+        assert_eq!(
+            shared::split_token_field("SOURCEPAGE:p.15: see errata"),
+            Some(("SOURCEPAGE", "p.15: see errata"))
+        );
     }
 
     #[test]
     fn split_token_field_refuses_a_field_with_no_colon() {
-        assert_eq!(split_token_field("NoColonAtAll"), None);
+        assert_eq!(shared::split_token_field("NoColonAtAll"), None);
     }
 
     // ----- screen_field_value -----
 
     #[test]
     fn screen_field_value_passes_through_a_clean_value() {
-        let (stored, redacted) = screen_field_value("SIZE", "L", false);
+        let (stored, redacted) = shared::screen_field_value("SIZE", "L", false);
         assert_eq!(stored, "L");
         assert!(!redacted);
     }
 
     #[test]
     fn screen_field_value_redacts_a_blacklist_term_hit_on_any_key() {
-        let (stored, redacted) = screen_field_value("SPECIALS", "Blessed by Iomedae", false);
+        let (stored, redacted) = shared::screen_field_value("SPECIALS", "Blessed by Iomedae", false);
         assert_eq!(stored, REDACTED_PI_MARKER);
         assert!(redacted);
     }
 
     #[test]
     fn screen_field_value_redacts_a_desc_field_when_description_is_declared_even_without_a_blacklist_hit() {
-        let (stored, redacted) = screen_field_value("DESC", "A perfectly ordinary sentence.", true);
+        let (stored, redacted) = shared::screen_field_value("DESC", "A perfectly ordinary sentence.", true);
         assert_eq!(stored, REDACTED_PI_MARKER);
         assert!(redacted);
     }
 
     #[test]
     fn screen_field_value_leaves_a_non_desc_field_alone_even_when_description_is_declared() {
-        let (stored, redacted) = screen_field_value("SIZE", "L", true);
+        let (stored, redacted) = shared::screen_field_value("SIZE", "L", true);
         assert_eq!(stored, "L");
         assert!(!redacted);
     }
@@ -483,8 +301,7 @@ mod tests {
             "ankheg.json",
             r#"{"data":{"name":"Ankheg","key":"beastiary1:monster:ankheg"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_races.lst","line":1,"record_key":"Ankheg"}}"#,
         );
-        let mut cache = BTreeMap::new();
-        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        let outcome = enrich(&json_path, &scratch.data_root);
         assert!(matches!(outcome, Outcome::Enriched { redacted_fields: 0 }));
 
         let written: Value = serde_json::from_str(&fs::read_to_string(&json_path).unwrap()).unwrap();
@@ -507,8 +324,7 @@ mod tests {
             "ankheg.json",
             r#"{"data":{"name":"Ankheg","key":"beastiary1:monster:ankheg"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_races.lst","line":1,"record_key":"Ankheg"}}"#,
         );
-        let mut cache = BTreeMap::new();
-        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        let outcome = enrich(&json_path, &scratch.data_root);
         assert!(matches!(outcome, Outcome::Enriched { .. }));
 
         let written: Value = serde_json::from_str(&fs::read_to_string(&json_path).unwrap()).unwrap();
@@ -531,8 +347,7 @@ mod tests {
             "demon_lord_dagon.json",
             r#"{"data":{"name":"Demon Lord (Dagon)","key":"bestiary_4:monster:demon_lord_dagon"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_races.lst","line":1,"record_key":"Demon Lord (Dagon)"}}"#,
         );
-        let mut cache = BTreeMap::new();
-        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        let outcome = enrich(&json_path, &scratch.data_root);
         assert!(matches!(outcome, Outcome::DroppedPi(_)), "expected a drop, not an enrich");
         assert!(!json_path.exists(), "a NAMEISPI:YES record must be removed from disk, never shipped");
     }
@@ -548,8 +363,7 @@ mod tests {
             "demon_lord_dagon.json",
             r#"{"data":{"name":"Demon Lord (Dagon)","key":"bestiary_4:monster:demon_lord_dagon"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_races.lst","line":1,"record_key":"Demon Lord (Dagon)"}}"#,
         );
-        let mut cache = BTreeMap::new();
-        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        let outcome = enrich(&json_path, &scratch.data_root);
         assert!(matches!(outcome, Outcome::DroppedPi(_)));
         assert!(!json_path.exists());
     }
@@ -565,8 +379,7 @@ mod tests {
             "herald.json",
             r#"{"data":{"name":"Herald","key":"x_book:monster:herald"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_races.lst","line":1,"record_key":"Herald"}}"#,
         );
-        let mut cache = BTreeMap::new();
-        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        let outcome = enrich(&json_path, &scratch.data_root);
         assert!(matches!(outcome, Outcome::Enriched { redacted_fields: 1 }));
 
         let written: Value = serde_json::from_str(&fs::read_to_string(&json_path).unwrap()).unwrap();
@@ -589,8 +402,7 @@ mod tests {
             r#"{"data":{"key":"K","raw_tokens":[{"key":"SIZE","value":"L"}]},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_races.lst","line":1}}"#,
         );
         let before = fs::read_to_string(&json_path).unwrap();
-        let mut cache = BTreeMap::new();
-        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        let outcome = enrich(&json_path, &scratch.data_root);
         assert!(matches!(outcome, Outcome::AlreadyEnriched));
         assert_eq!(fs::read_to_string(&json_path).unwrap(), before, "already-enriched records must not be rewritten");
     }
@@ -603,8 +415,7 @@ mod tests {
             "ghost.json",
             r#"{"data":{"key":"Ghost Monster"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_races.lst","line":99}}"#,
         );
-        let mut cache = BTreeMap::new();
-        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        let outcome = enrich(&json_path, &scratch.data_root);
         assert!(matches!(outcome, Outcome::CitationMiss(_)));
         let after: Value = serde_json::from_str(&fs::read_to_string(&json_path).unwrap()).unwrap();
         assert!(after["data"].get("raw_tokens").is_none());
@@ -617,8 +428,7 @@ mod tests {
             "web.json",
             r#"{"data":{"key":"Web Second Source Monster"},"source":{"kind":"web_second_source"}}"#,
         );
-        let mut cache = BTreeMap::new();
-        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        let outcome = enrich(&json_path, &scratch.data_root);
         assert!(matches!(outcome, Outcome::NoLstCitation));
     }
 
@@ -627,7 +437,7 @@ mod tests {
         let scratch = Scratch::new("flatscan");
         scratch.write_json("a.json", "{}");
         scratch.write_json("b.json", "{}");
-        let found = find_monster_json_files(&scratch.corpus_root.join("x_book"));
+        let found = shared::find_kind_json_files(&scratch.corpus_root.join("x_book"), KIND_SUBDIR);
         assert_eq!(found.len(), 2);
     }
 }

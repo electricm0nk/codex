@@ -442,6 +442,40 @@ pub struct CreateCharacterRequest {
     /// rather than guessing.
     #[serde(default)]
     pub companion_species: Option<String>,
+    /// **AT-34-E4-002**: the character's chosen trait/drawback selections,
+    /// as `trait_effects`' own wire ids (`"trait:trait_acrobat"`) --
+    /// exactly what `list_available_character_traits`'s response carries
+    /// as each option's `id`, so the picker round-trips its own
+    /// identifiers unchanged (the same shape
+    /// `selected_alternate_trait_keys` already established). Passed
+    /// through verbatim into `ChosenCharacterState.selected_traits`, the
+    /// same "trusted, unvalidated wire list" precedent `selected_feats`
+    /// already follows for creation-time selections -- an id this crate
+    /// does not recognize is simply inert everywhere it is read
+    /// (`trait_effects::skill_bonuses_from_traits`'s own "omit rather than
+    /// fabricate" discipline), never a blocked save. `#[serde(default)]`
+    /// so an omitted field (every pre-existing saved payload, and every
+    /// caller that sends none) keeps working unchanged.
+    #[serde(default)]
+    pub selected_traits: Vec<String>,
+    /// **AT-34-E4-002 (second slice)**: the player's resolved choice for
+    /// each *fixed-choice* `%LIST` trait named in `selected_traits`
+    /// (`trait_effects::SKILL_CHOICE_TRAIT_BONUSES`) -- one
+    /// `SelectedChoiceDto { choice_set_id, selection_id }` per such trait,
+    /// with `choice_set_id` exactly `list_available_character_traits`'s
+    /// own `choiceSetId` for that option and `selection_id` one of its
+    /// `skillOptions`. Appended to `chosen.selected_choices` verbatim --
+    /// the same generic `SelectedChoice` channel `LevelUpCharacterRequest
+    /// ::additional_choices` already uses, not a new mechanism. A flat
+    /// trait needs no entry here (`choice_set_id` is `None` for it).
+    /// `#[serde(default)]` so every pre-existing caller (every flat-only
+    /// trait selection, and every payload predating this field) keeps
+    /// working unchanged. An entry whose `choice_set_id`/`selection_id`
+    /// pair is not a real, corpus-declared option for that trait is
+    /// simply inert (`skill_choice_bonuses_from_traits`'s own "omit
+    /// rather than fabricate" discipline), never a blocked save.
+    #[serde(default)]
+    pub trait_skill_choices: Vec<SelectedChoiceDto>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -549,6 +583,13 @@ pub struct LoadSavedCharacterResponse {
     /// character's racial-trait choices, so the picker would reopen empty and
     /// the sheet would show a Dwarf with darkvision 90 and no reason why.
     pub selected_alternate_trait_keys: Vec<String>,
+    /// **AT-34-E4-002**: the character's full persisted
+    /// `chosen.selected_traits`, verbatim — not just traits added this
+    /// session. Same shape of gap, and same fix, as `selected_feats`:
+    /// without it the trait picker would reopen with no selections
+    /// checked, and a mutation refresh that omitted it would silently
+    /// clear a saved character's trait choices on the next round trip.
+    pub selected_traits: Vec<String>,
     /// **This character's racial traits, resolved and rendered for *it*.**
     ///
     /// [`selected_alternate_trait_keys`](Self::selected_alternate_trait_keys)
@@ -764,9 +805,14 @@ pub enum CreateCharacterResponse {
         // serializes identically to `T` via serde, so the wire shape to the TS
         // boundary is unchanged.
         summary: Box<CharacterSummaryDto>,
-        snapshot: PilotSnapshotDto,
+        // Boxed for the same `clippy::large_enum_variant` reason as `summary`
+        // above -- boxing `summary`/`corpus_derived` alone still left a
+        // 248-vs-24-byte gap against `Blocked`, `PilotSnapshotDto` being the
+        // remaining bulk. `Box<T>` serializes identically to `T` via serde,
+        // so the wire shape to the TS boundary is unchanged.
+        snapshot: Box<PilotSnapshotDto>,
         #[serde(rename = "corpusDerived")]
-        corpus_derived: CorpusDerivedDto,
+        corpus_derived: Box<CorpusDerivedDto>,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
@@ -1086,6 +1132,14 @@ pub enum SavedCharacterMutationOp {
 /// One row of the `mutate_saved_character` operation table.
 #[derive(Debug, Clone, Copy)]
 pub struct SavedCharacterMutationOpDescriptor {
+    // Not yet read by any assertion (no dispatch-shape test currently
+    // matches a row's declared `op` against its position/enum coverage,
+    // per this struct's own doc above) -- kept as the row's own identity
+    // field, one real `SavedCharacterMutationOp` variant per table row,
+    // not bloat left over from a removal. Genuine false positive for
+    // `dead_code`: the table is read structurally (iterated, counted,
+    // matched by `name`) elsewhere, just never yet by this one field.
+    #[allow(dead_code)]
     pub op: SavedCharacterMutationOp,
     /// The operation name, matching its `#[tauri::command]` function name
     /// once wired.
@@ -1372,8 +1426,8 @@ pub(crate) fn create_character_at_root(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(&snapshot),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        snapshot: Box::new(map_snapshot_dto(&snapshot)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
     })
 }
 
@@ -1446,8 +1500,8 @@ pub fn clone_character(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(&snapshot),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        snapshot: Box::new(map_snapshot_dto(&snapshot)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
     })
 }
 
@@ -1504,6 +1558,11 @@ pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), St
         // fabricated-default this file's other seeds are each argued down to.
         selected_alternate_trait_keys: Vec::new(),
         companion_species: None,
+        // The starter character takes no traits either: same "no
+        // fabricated default" reasoning as the alternate-trait comment
+        // immediately above.
+        selected_traits: Vec::new(),
+        trait_skill_choices: Vec::new(),
     };
 
     let character_input = compose_character_input(&request);
@@ -1599,6 +1658,7 @@ pub(crate) fn load_saved_character_at_root(
         explanations,
         weapon_damage,
         selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
+        selected_traits: envelope.character_input.chosen.selected_traits.clone(),
         resolved_racial_traits: resolve_racial_traits_for_character(&envelope.character_input),
     })
 }
@@ -1916,13 +1976,20 @@ pub fn add_equipment_selection(
 pub enum PurchaseEquipmentResponse {
     Purchased {
         summary: Box<CharacterSummaryDto>,
-        snapshot: PilotSnapshotDto,
+        // Same `PilotSnapshotDto`-is-the-remaining-bulk reasoning as
+        // `CreateCharacterResponse::Saved`'s own `snapshot` field.
+        snapshot: Box<PilotSnapshotDto>,
         // Same reasoning as `CreateCharacterResponse::Saved`'s own
         // `corpus_derived` field: a per-field rename, not an enum-wide
         // `rename_all`, which would also lowercase the `"Purchased"`/
-        // `"Blocked"` tag values themselves.
+        // `"Blocked"` tag values themselves. Boxed for the same
+        // `clippy::large_enum_variant` reason as `summary` -- `Box<T>`
+        // serializes identically to `T` via serde, and this field is moved
+        // straight through from an already-boxed `CreateCharacterResponse::
+        // Saved.corpus_derived`, so keeping both boxed avoids an unbox/rebox
+        // at the move site too.
         #[serde(rename = "corpusDerived")]
-        corpus_derived: CorpusDerivedDto,
+        corpus_derived: Box<CorpusDerivedDto>,
         money: CharacterMoneyDto,
     },
     Blocked {
@@ -2031,9 +2098,15 @@ pub(crate) fn purchase_equipment_at_root(
 pub enum AttachEquipmentModifierResponse {
     Attached {
         summary: Box<CharacterSummaryDto>,
-        snapshot: PilotSnapshotDto,
+        // Same `PilotSnapshotDto`-is-the-remaining-bulk reasoning as
+        // `CreateCharacterResponse::Saved`'s own `snapshot` field.
+        snapshot: Box<PilotSnapshotDto>,
+        // Boxed for the same `clippy::large_enum_variant` reason as
+        // `summary` -- see `CreateCharacterResponse::Saved`'s own
+        // `corpus_derived` field for the full rationale; this field is
+        // moved straight through from that already-boxed source.
         #[serde(rename = "corpusDerived")]
-        corpus_derived: CorpusDerivedDto,
+        corpus_derived: Box<CorpusDerivedDto>,
         money: CharacterMoneyDto,
     },
     Blocked {
@@ -3599,6 +3672,11 @@ pub struct ChosenCharacterStateDto {
     pub equipment_selections: Vec<EquipmentSelectionImportDto>,
     #[serde(default)]
     pub selected_choices: Vec<SelectedChoiceDto>,
+    /// **AT-34-E4-002**: `trait_effects` wire ids
+    /// (`"trait:trait_acrobat"`). `#[serde(default)]` so an import file
+    /// exported before this field existed keeps importing unchanged.
+    #[serde(default)]
+    pub selected_traits: Vec<String>,
     #[serde(default)]
     pub spells_selected: Vec<SpellSelectionImportDto>,
 }
@@ -3684,6 +3762,7 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
                     selection_id: choice.selection_id,
                 })
                 .collect(),
+            selected_traits: dto.chosen.selected_traits,
             spells_selected: dto
                 .chosen
                 .spells_selected
@@ -3761,6 +3840,7 @@ fn character_input_to_dto(input: &CharacterInput) -> CharacterInputDto {
                     selection_id: choice.selection_id.clone(),
                 })
                 .collect(),
+            selected_traits: input.chosen.selected_traits.clone(),
             spells_selected: input
                 .chosen
                 .spells_selected
@@ -3830,8 +3910,8 @@ fn import_character_from_json(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(&snapshot),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        snapshot: Box::new(map_snapshot_dto(&snapshot)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
     })
 }
 
@@ -4941,6 +5021,8 @@ mod tests {
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
             companion_species: None,
+            selected_traits: Vec::new(),
+            trait_skill_choices: Vec::new(),
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }
@@ -6417,7 +6499,7 @@ mod tests {
                 race_id: "race:human".to_owned(),
                 class_summary: "class:fighter:1".to_owned(),
             }),
-            snapshot: PilotSnapshotDto {
+            snapshot: Box::new(PilotSnapshotDto {
                 ability_modifiers: AbilityModifiersDto {
                     strength: 0,
                     dexterity: 0,
@@ -6439,8 +6521,8 @@ mod tests {
                 damage_reduction: None,
                 companion: None,
                 spellbook: None,
-            },
-            corpus_derived: CorpusDerivedDto {
+            }),
+            corpus_derived: Box::new(CorpusDerivedDto {
                 school_coverage: Vec::new(),
                 equipped_items: Vec::new(),
                 equipment_effects: EquipmentEffectsDto {
@@ -6455,7 +6537,7 @@ mod tests {
                 encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
                 unresolved_equipment_item_ids: Vec::new(),
-            },
+            }),
             money: money_dto_from_total(0),
         };
 
@@ -6511,7 +6593,7 @@ mod tests {
         // SD-29 `epic-4-proven-equip-mod`: +584 corpus gap-lane Equipmods rows
         // (CRB 332 + UPsi 113 + ACG 48 + APG 37 + UC 20 + ARG 14 + UE 10 + UI 7
         // + UW 3), every one of them an `equipment_modifier` unit
-        // `docs/work-inventory.json` reported `not-ingested` until this cycle.
+        // `docs/work-inventory.json` reported `engine-does-not-hold` until this cycle.
         // The point of this test is the assertion BELOW, not this count: an
         // offered row the attach gate refuses is a dead affordance, and 584
         // newly offered rows is 584 new chances to ship one.
@@ -7997,7 +8079,7 @@ mod tests {
                 race_id: "race:human".to_owned(),
                 class_summary: "class:fighter:1".to_owned(),
             }),
-            snapshot: PilotSnapshotDto {
+            snapshot: Box::new(PilotSnapshotDto {
                 ability_modifiers: AbilityModifiersDto {
                     strength: 0,
                     dexterity: 0,
@@ -8019,8 +8101,8 @@ mod tests {
                 damage_reduction: None,
                 companion: None,
                 spellbook: None,
-            },
-            corpus_derived: CorpusDerivedDto {
+            }),
+            corpus_derived: Box::new(CorpusDerivedDto {
                 school_coverage: Vec::new(),
                 equipped_items: Vec::new(),
                 equipment_effects: EquipmentEffectsDto {
@@ -8035,7 +8117,7 @@ mod tests {
                 encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
                 unresolved_equipment_item_ids: Vec::new(),
-            },
+            }),
         };
 
         let value = serde_json::to_value(&response).expect("response should serialize");
@@ -8215,7 +8297,7 @@ mod tests {
                 race_id: "race:human".to_owned(),
                 class_summary: "class:fighter:1".to_owned(),
             }),
-            snapshot: PilotSnapshotDto {
+            snapshot: Box::new(PilotSnapshotDto {
                 ability_modifiers: AbilityModifiersDto {
                     strength: 0,
                     dexterity: 0,
@@ -8237,8 +8319,8 @@ mod tests {
                 damage_reduction: None,
                 companion: None,
                 spellbook: None,
-            },
-            corpus_derived: CorpusDerivedDto {
+            }),
+            corpus_derived: Box::new(CorpusDerivedDto {
                 school_coverage: Vec::new(),
                 equipped_items: Vec::new(),
                 equipment_effects: EquipmentEffectsDto {
@@ -8253,7 +8335,7 @@ mod tests {
                 encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
                 unresolved_equipment_item_ids: Vec::new(),
-            },
+            }),
             money: money_dto_from_total(0),
         };
 
@@ -9030,15 +9112,11 @@ mod tests {
             .collect();
 
         assert!(
-            class_records
-                .iter()
-                .any(|id| *id == "class_feature.fighter.bravery"),
+            class_records.contains(&"class_feature.fighter.bravery"),
             "a level-5 Fighter must carry its Bravery record: {class_records:?}"
         );
         assert!(
-            class_records
-                .iter()
-                .any(|id| *id == "class_feature.fighter.armor_training"),
+            class_records.contains(&"class_feature.fighter.armor_training"),
             "a level-5 Fighter must carry its Armor Training record: {class_records:?}"
         );
         // `class_feature.fighter.weapon_training` is deliberately NOT

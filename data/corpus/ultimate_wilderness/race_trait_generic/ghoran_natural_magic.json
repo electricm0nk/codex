@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Ghorans with a Charisma score of 11 or higher gain the following spell-like abilities: 1/day--detect poison, goodberry (created berries bud from the ghoran's own body), and purify food and drink. The caster level is equal to the ghoran's level. The DC for these spells is equal to 10 + the spell's level + the ghoran's Charisma bonus.",
     "key": "Ghoran ~ Natural Magic",
     "name": "Natural Magic",
-    "description": "Ghorans with a Charisma score of 11 or higher gain the following spell-like abilities: 1/day--detect poison, goodberry (created berries bud from the ghoran's own body), and purify food and drink. The caster level is equal to the ghoran's level. The DC for these spells is equal to 10 + the spell's level + the ghoran's Charisma bonus.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,18 +51,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
-    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb",
-    "line": 20,
-    "record_key": "Ghoran ~ Natural Magic"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
+    "record_key": "Ghoran ~ Natural Magic",
+    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

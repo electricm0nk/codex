@@ -206,7 +206,9 @@
 
 use std::collections::BTreeMap;
 
-use crate::rules_core::character_input::CharacterInput;
+use crate::rules_core::character_input::{
+    AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SkillAllocation,
+};
 use crate::rules_core::pilot_compute::{
     compute_pilot_base_chassis, AbilityModifiers, ComputationDiagnostic,
 };
@@ -224,9 +226,24 @@ pub type SkillId = String;
 /// imported, only matched by value).
 const FIGHTER_CLASS_ID: &str = "class:fighter";
 
-/// The bounded, cited Fighter class-skill posture. See the module doc
-/// comment's "Class-skill data source" section for the citation.
-const GROUNDED_FIGHTER_CLASS_SKILLS: &[&str] = &["skill:climb", "skill:intimidate", "skill:swim"];
+/// **AT-34-E3-003 (bucket M, `skill_content_table_holds_record_magnitude_
+/// not_yet_computed`, `decisions.md §2a`): Fighter's REAL, FULL class-skill
+/// list, superseding the old 3-skill bounded slice.** Every entry is
+/// Fighter's own literal `CSKILL:` token, read directly from
+/// `rules_tables::crb::class_skill_tables::CLASS_SKILL_LISTS`'s
+/// `"class:fighter"` row -- a table this repo already built and verified
+/// byte-for-byte against `cr_abilities_class.lst:2835`
+/// (`class_skill_lists_match_their_own_corpus_records`), not re-derived or
+/// re-typed here. Falls back to an empty slice (never a fabricated one) if
+/// that row is ever renamed or removed -- a real closed-list lookup, never
+/// a name pattern.
+fn full_fighter_class_skills() -> &'static [&'static str] {
+    crate::rules_core::rules_tables::crb::class_skill_tables::CLASS_SKILL_LISTS
+        .iter()
+        .find(|list| list.owner_id == FIGHTER_CLASS_ID)
+        .map(|list| list.skills)
+        .unwrap_or(&[])
+}
 
 /// v0.6 alpha swarm: Wizard and Rogue both now reach `Computed` for real
 /// characters (this file's own recognition was still Fighter-only). Matches
@@ -254,35 +271,236 @@ const GROUNDED_ROGUE_CLASS_SKILLS: &[&str] = &[
     "skill:disable_device",
 ];
 
-/// Wizard's real class-skill list -- verified against the real PCGen
-/// corpus, `cr_abilities_class.lst:2565` ("The wizard's class skills are
-/// Appraise (Int), Craft (Int), Fly (Dex), Knowledge (all) (Int),
-/// Linguistics (Int), Profession (Wis), and Spellcraft (Int)"): checked,
-/// not assumed, and confirmed to have ZERO overlap with this module's five
-/// bounded, recognized skills (Climb, Intimidate, Swim, Diplomacy, Disable
-/// Device). Wizard is therefore intentionally grounded with an EMPTY
-/// class-skill contribution -- this is a real, checked finding ("Wizard
-/// genuinely has none of these five as class skills"), not an omission.
-/// Recognizing Wizard here (even with nothing to contribute) still matters:
-/// it flips `has_grounded_class_skill_posture` in `allocate_skill_ranks`
-/// from "unknown, don't guess" to "known, confirmed cross-class" for a
-/// Wizard's allocations in this bounded skill set -- see that function's
-/// own doc comment.
-const GROUNDED_WIZARD_CLASS_SKILLS: &[&str] = &[];
+/// **AT-34-E3-003: Wizard's REAL, FULL class-skill list**, superseding the
+/// old always-empty 5-skill-intersection slice. Verified against the real
+/// PCGen corpus record itself --
+/// `data/corpus/core_rulebook/class_feature/wizard/class_skills.json`
+/// (`cr_abilities_class.lst:2565`), whose own `ABILITY:` token reads
+/// `"Class Skill|AUTOMATIC|Appraise|Craft|Fly|Knowledge|Linguistics|
+/// Profession|Spellcraft"` and whose `DESC:` states the two bare-family
+/// entries explicitly: "Knowledge (all) (Int)" and "Craft (Int)" /
+/// "Profession (Wis)" with no subtype named, i.e. every subskill of that
+/// family. `CLASS_SKILL_LISTS` (`rules_tables::crb::class_skill_tables`)
+/// does not carry a Wizard row (Wizard is not one of its 9 transcribed
+/// classes), so this list is transcribed here directly from the same
+/// corpus file, in the same `TYPE=<Family>` wildcard convention
+/// [`is_full_class_skill`] already expands for Fighter.
+const FULL_WIZARD_CLASS_SKILLS: &[&str] = &[
+    "Appraise",
+    "TYPE=Craft",
+    "Fly",
+    "TYPE=Knowledge",
+    "Linguistics",
+    "TYPE=Profession",
+    "Spellcraft",
+];
 
 /// PF1 core rule: flat trained bonus for any class skill with at least 1
 /// rank invested. A system-wide constant, not per-class/per-book table
 /// data — see the module doc comment's closing section.
 const TRAINED_CLASS_SKILL_BONUS: i8 = 3;
 
-/// The bounded, cited set of skills this module recognizes as "Trained
-/// Only" — a character with zero ranks invested in one of these cannot
-/// attempt the check at all. See the module doc comment's "PF1
-/// untrained-use rule" section for the citation and what this is and is
-/// not (only skills in this module's bounded ability-key universe can
-/// ever appear here; widening it further is future Epic-4 cycle
-/// territory).
-const TRAINED_ONLY_SKILLS: &[&str] = &["skill:disable_device"];
+/// **AT-34-E3-003: the module's own already-stated, previously-unimplemented
+/// "Trained Only" roster**, per the module doc comment's "PF1 untrained-use
+/// rule" section: "Disable Device, Handle Animal, all Knowledge subtypes,
+/// Linguistics, Profession, Sleight of Hand, Spellcraft, Use Magic Device" --
+/// the Core Rulebook's own skill-summary table (`cr_skills.lst`'s
+/// `USEUNTRAINED:NO` token, confirmed present on exactly these skills'
+/// records and absent from every other skill's). Only `skill:disable_device`
+/// was actually enforced before this cycle; the rest of this doc-comment's
+/// own list is implemented now, not widened past what it already named.
+const TRAINED_ONLY_SKILLS: &[&str] = &[
+    "skill:disable_device",
+    "skill:handle_animal",
+    "skill:linguistics",
+    "skill:sleight_of_hand",
+    "skill:spellcraft",
+    "skill:use_magic_device",
+];
+
+/// Every core_rulebook `Knowledge (<subtype>)` skill's `skill:` wire id
+/// (`skillIdFor`'s convention, mirrored in
+/// `apps/desktop/src/characterHub/skillsModel.ts`), transcribed from
+/// `data/corpus/core_rulebook/skill/*.json`'s own 10 `Knowledge (...)`
+/// records. Used both as `TRAINED_ONLY_SKILLS`'s "all Knowledge subtypes"
+/// member test and as [`is_full_class_skill`]'s `TYPE=Knowledge` wildcard
+/// expansion (Wizard's own class-skill grant).
+const KNOWLEDGE_SKILL_IDS: &[&str] = &[
+    "skill:knowledge_arcana",
+    "skill:knowledge_dungeoneering",
+    "skill:knowledge_engineering",
+    "skill:knowledge_geography",
+    "skill:knowledge_history",
+    "skill:knowledge_local",
+    "skill:knowledge_nature",
+    "skill:knowledge_nobility",
+    "skill:knowledge_planes",
+    "skill:knowledge_religion",
+];
+
+/// Every core_rulebook `Craft (<subtype>)` skill's wire id, transcribed
+/// from `data/corpus/core_rulebook/skill/*.json`'s 23 `Craft (...)`
+/// records (excluding the separate `Craft (Untrained)` catch-all record,
+/// a different PCGen shape with no `BONUS:SKILL` class-skill token at
+/// all). Used by [`is_full_class_skill`]'s `TYPE=Craft` wildcard
+/// expansion (Fighter, Rogue, and Wizard all grant this family).
+const CRAFT_SKILL_IDS: &[&str] = &[
+    "skill:craft_alchemy",
+    "skill:craft_armor",
+    "skill:craft_baskets",
+    "skill:craft_blacksmithing",
+    "skill:craft_books",
+    "skill:craft_bows",
+    "skill:craft_calligraphy",
+    "skill:craft_carpentry",
+    "skill:craft_cloth",
+    "skill:craft_clothing",
+    "skill:craft_gemcutting",
+    "skill:craft_glass",
+    "skill:craft_jewelry",
+    "skill:craft_leather",
+    "skill:craft_locks",
+    "skill:craft_paintings",
+    "skill:craft_pottery",
+    "skill:craft_sculptures",
+    "skill:craft_ships",
+    "skill:craft_shoes",
+    "skill:craft_stonemasonry",
+    "skill:craft_traps",
+    "skill:craft_weapons",
+];
+
+/// Every core_rulebook `Perform (<subtype>)` skill's wire id, transcribed
+/// from `data/corpus/core_rulebook/skill/*.json`'s 9 `Perform (...)`
+/// records (excluding `Perform (Untrained)`, same shape exclusion as
+/// [`CRAFT_SKILL_IDS`]). Used by [`is_full_class_skill`]'s `TYPE=Perform`
+/// wildcard expansion (Rogue's own class-skill grant).
+const PERFORM_SKILL_IDS: &[&str] = &[
+    "skill:perform_act",
+    "skill:perform_comedy",
+    "skill:perform_dance",
+    "skill:perform_keyboard_instruments",
+    "skill:perform_oratory",
+    "skill:perform_percussion_instruments",
+    "skill:perform_sing",
+    "skill:perform_string_instruments",
+    "skill:perform_wind_instruments",
+];
+
+/// Every core_rulebook `Profession (<subtype>)` skill's wire id,
+/// transcribed from `data/corpus/core_rulebook/skill/*.json`'s 31
+/// `Profession (...)` records (excluding `Profession (Untrained)`, same
+/// shape exclusion as [`CRAFT_SKILL_IDS`]). Used both as
+/// `TRAINED_ONLY_SKILLS`'s "Profession" member test and as
+/// [`is_full_class_skill`]'s `TYPE=Profession` wildcard expansion
+/// (Fighter, Rogue, and Wizard all grant this family).
+const PROFESSION_SKILL_IDS: &[&str] = &[
+    "skill:profession_architect",
+    "skill:profession_baker",
+    "skill:profession_barrister",
+    "skill:profession_brewer",
+    "skill:profession_butcher",
+    "skill:profession_clerk",
+    "skill:profession_cook",
+    "skill:profession_courtesan",
+    "skill:profession_driver",
+    "skill:profession_engineer",
+    "skill:profession_farmer",
+    "skill:profession_fisherman",
+    "skill:profession_gambler",
+    "skill:profession_gardener",
+    "skill:profession_herbalist",
+    "skill:profession_innkeeper",
+    "skill:profession_librarian",
+    "skill:profession_merchant",
+    "skill:profession_midwife",
+    "skill:profession_miller",
+    "skill:profession_miner",
+    "skill:profession_porter",
+    "skill:profession_sailor",
+    "skill:profession_scribe",
+    "skill:profession_shepherd",
+    "skill:profession_soldier",
+    "skill:profession_soothsayer",
+    "skill:profession_stable_master",
+    "skill:profession_tanner",
+    "skill:profession_trapper",
+    "skill:profession_woodcutter",
+];
+
+/// Whether `skill_id` matches the literal, un-prefixed corpus `CSKILL:`
+/// entry `name` once normalized to the `skill:` wire convention
+/// (`apps/desktop/src/characterHub/skillsModel.ts`'s `skillIdFor`, mirrored
+/// here byte-for-byte: lowercase, strip parens, collapse any run of
+/// non-alphanumeric characters to one underscore, trim leading/trailing
+/// underscores).
+fn normalize_skill_display_name(name: &str) -> SkillId {
+    let mut normalized = String::with_capacity(name.len() + 6);
+    normalized.push_str("skill:");
+    let mut pending_sep = false;
+    for ch in name.chars() {
+        if ch == '(' || ch == ')' {
+            continue;
+        }
+        if ch.is_ascii_alphanumeric() {
+            if pending_sep && normalized.len() > "skill:".len() {
+                normalized.push('_');
+            }
+            normalized.push(ch.to_ascii_lowercase());
+            pending_sep = false;
+        } else {
+            pending_sep = true;
+        }
+    }
+    normalized
+}
+
+fn normalized_skill_id_matches(name: &str, skill_id: &str) -> bool {
+    normalize_skill_display_name(name) == skill_id
+}
+
+/// The family member-id list a `TYPE=<Family>` corpus wildcard token
+/// expands to, or `None` for a family this module does not (yet) carry an
+/// enumerated roster for.
+///
+/// `pub(crate)` (AT-34-E4-002, third slice): `trait_effects.rs`'s
+/// `FAMILY_CHOICE_TRAIT_BONUSES` reuses this exact same corpus-backed
+/// enumeration as the closed, legal option set for a trait whose
+/// `CHOOSE:SKILL` token names a `TYPE=<Family>` subtype family
+/// (`trait_artisan`, `trait_mentored`, `trait_simple_disciple`,
+/// `trait_talented`) rather than a fixed list of concrete skill names --
+/// this module already treats `TYPE=Craft`/`TYPE=Perform`/`TYPE=Profession`
+/// as closed, corpus-enumerated universes for class-skill-wildcard
+/// purposes, so a second, independent "open text entry" chooser for the
+/// same three families would silently disagree with what this module
+/// itself already considers legal.
+pub(crate) fn skill_family_member_ids(family: &str) -> Option<&'static [&'static str]> {
+    match family {
+        "Craft" => Some(CRAFT_SKILL_IDS),
+        "Knowledge" => Some(KNOWLEDGE_SKILL_IDS),
+        "Perform" => Some(PERFORM_SKILL_IDS),
+        "Profession" => Some(PROFESSION_SKILL_IDS),
+        _ => None,
+    }
+}
+
+/// Whether `skill_id` is a class skill under `raw_list` (a `CLASS_SKILL_
+/// LISTS`-shaped literal entry list: bare skill names and/or `TYPE=<Family>`
+/// wildcard tokens, exactly as transcribed from the corpus's own `CSKILL:`/
+/// `ABILITY:` token). A `TYPE=<Family>` entry matches every id in that
+/// family's member list ([`skill_family_member_ids`]); a bare name matches
+/// only after the same normalization the corpus-verification tests already
+/// use ([`normalized_skill_id_matches`]). Returns `false` (never a
+/// fabricated match) for a family this module has no member list for.
+fn is_full_class_skill(raw_list: &[&str], skill_id: &str) -> bool {
+    raw_list.iter().any(|entry| {
+        if let Some(family) = entry.strip_prefix("TYPE=") {
+            skill_family_member_ids(family).is_some_and(|members| members.contains(&skill_id))
+        } else {
+            normalized_skill_id_matches(entry, skill_id)
+        }
+    })
+}
 
 /// [`ComputationDiagnostic::id`] for a class skill's raw allocated ranks
 /// exceeding its `character level + 3` cap. See the module doc comment's
@@ -342,9 +560,13 @@ pub struct SkillTotal {
     pub ranks: u8,
     pub ability_modifier: i8,
     pub class_skill_bonus: i8,
-    /// Not yet populated by this cycle (armor-check-penalty and similar
-    /// contributions are Epic 5's territory; a future integration cycle
-    /// composes them in). Always `0` until then.
+    /// **AT-34-E4-002**: now carries the real, computed trait bonus for
+    /// this skill (`trait_effects::skill_bonuses_from_traits`), when the
+    /// character selected a recognized flat-`BONUS:SKILL` trait targeting
+    /// it. Armor-check-penalty and other non-trait `misc_modifier`
+    /// contributions remain Epic 5's territory and are not yet composed
+    /// in; `0` for any character with no trait bonus on this skill,
+    /// exactly the prior behavior.
     pub misc_modifier: i8,
     pub total_modifier: i8,
 }
@@ -354,27 +576,55 @@ pub struct SkillTotal {
 /// `None` for any skill id outside that bounded universe — callers must
 /// not fabricate a modifier in that case.
 fn skill_key_ability_modifier(skill_id: &str, ability_modifiers: &AbilityModifiers) -> Option<i16> {
+    let AbilityModifiers { strength, dexterity, constitution: _, intelligence, wisdom, charisma } =
+        *ability_modifiers;
+    // **AT-34-E3-003: every one of the Core Rulebook's 35 skill categories,
+    // not the original 5-skill bounded slice.** Every `KEYSTAT:` below is
+    // read directly from `data/corpus/core_rulebook/skill/*.json`'s own
+    // `KEYSTAT` token (each record independently confirmed against the
+    // live corpus, not carried over from any other source) -- the same
+    // `skill_ability_key_matches_the_live_corpus_for_every_skill` test
+    // below re-derives this table from that corpus at test time so a
+    // future corpus edit that moved a `KEYSTAT:` would fail loudly here,
+    // never silently disagree with the character sheet.
+    if let Some(family) = skill_id.strip_prefix("skill:craft_") {
+        return (!family.is_empty()).then_some(intelligence);
+    }
+    if let Some(family) = skill_id.strip_prefix("skill:knowledge_") {
+        return (!family.is_empty()).then_some(intelligence);
+    }
+    if let Some(family) = skill_id.strip_prefix("skill:perform_") {
+        return (!family.is_empty()).then_some(charisma);
+    }
+    if let Some(family) = skill_id.strip_prefix("skill:profession_") {
+        return (!family.is_empty()).then_some(wisdom);
+    }
     match skill_id {
-        "skill:climb" | "skill:swim" => Some(ability_modifiers.strength),
-        "skill:intimidate" => Some(ability_modifiers.charisma),
-        // Cross-class-only for the grounded Fighter posture (Diplomacy is
-        // not in Fighter's class-skill list; see the module doc comment's
-        // "PF1 cross-class rule" section for the citation). Charisma-keyed
-        // per `cr_skills.lst:35`.
-        "skill:diplomacy" => Some(ability_modifiers.charisma),
-        // Trained-only (see `TRAINED_ONLY_SKILLS` and the module doc
-        // comment's "PF1 untrained-use rule" section). Dexterity-keyed
-        // per `cr_skills.lst:36`.
-        "skill:disable_device" => Some(ability_modifiers.dexterity),
+        "skill:acrobatics" | "skill:disable_device" | "skill:escape_artist" | "skill:fly"
+        | "skill:ride" | "skill:sleight_of_hand" | "skill:stealth" => Some(dexterity),
+        "skill:appraise" | "skill:linguistics" | "skill:spellcraft" => Some(intelligence),
+        "skill:bluff" | "skill:diplomacy" | "skill:disguise" | "skill:handle_animal"
+        | "skill:intimidate" | "skill:use_magic_device" => Some(charisma),
+        "skill:climb" | "skill:swim" => Some(strength),
+        "skill:heal" | "skill:perception" | "skill:sense_motive" | "skill:survival" => {
+            Some(wisdom)
+        }
         _ => None,
     }
 }
 
 /// Whether `skill_id` is one of this module's bounded, cited "Trained
 /// Only" skills. See [`TRAINED_ONLY_SKILLS`] and the module doc comment's
-/// "PF1 untrained-use rule" section.
+/// "PF1 untrained-use rule" section. The doc comment's roster names two
+/// whole families ("all Knowledge subtypes", "Profession") rather than
+/// enumerating every subtype id twice in this file -- family membership is
+/// checked the same way [`is_full_class_skill`] checks a `TYPE=` wildcard,
+/// against the same [`KNOWLEDGE_SKILL_IDS`]/[`PROFESSION_SKILL_IDS`]
+/// rosters, never a separate, driftable copy.
 fn is_trained_only_skill(skill_id: &str) -> bool {
     TRAINED_ONLY_SKILLS.contains(&skill_id)
+        || KNOWLEDGE_SKILL_IDS.contains(&skill_id)
+        || PROFESSION_SKILL_IDS.contains(&skill_id)
 }
 
 /// The character's total level across every class (PF1's "character
@@ -407,26 +657,66 @@ fn class_skill_max_ranks(character_level: u16) -> u8 {
     (character_level + 3) as u8
 }
 
+/// Expands a `CLASS_SKILL_LISTS`-shaped raw entry list (bare names and/or
+/// `TYPE=<Family>` wildcard tokens) into the concrete `skill:` ids it
+/// grants, deduplicated. A `TYPE=<Family>` entry expands to every id in
+/// [`skill_family_member_ids`]'s roster for that family (never a guessed
+/// enumeration -- families this module has no roster for contribute
+/// nothing, same as an unrecognized bare name would); a bare name expands
+/// to its own normalized id ([`normalize_skill_display_name`]).
+fn expand_raw_class_skill_list(raw_list: &[&str]) -> Vec<SkillId> {
+    let mut expanded = Vec::new();
+    for entry in raw_list {
+        if let Some(family) = entry.strip_prefix("TYPE=") {
+            if let Some(members) = skill_family_member_ids(family) {
+                for member in members {
+                    if !expanded.iter().any(|existing: &SkillId| existing == member) {
+                        expanded.push((*member).to_string());
+                    }
+                }
+            }
+            continue;
+        }
+        let id = normalize_skill_display_name(entry);
+        if !expanded.contains(&id) {
+            expanded.push(id);
+        }
+    }
+    expanded
+}
+
 /// The character's class-skill set: the union, across every class the
 /// character has levels in, of that class's grounded class-skill
-/// posture. v0.6 alpha swarm: widened from Fighter-only to also recognize
-/// Rogue (real contribution: all five bounded skills) and Wizard
-/// (grounded, but a genuinely empty contribution -- see
-/// `GROUNDED_WIZARD_CLASS_SKILLS`'s own doc comment) now that both reach
-/// `Computed` for real characters. Every other class still contributes
+/// posture.
+///
+/// **AT-34-E3-003 (`decisions.md §2a`): Fighter and Wizard now contribute
+/// their REAL, FULL class-skill lists** ([`full_fighter_class_skills`] /
+/// [`FULL_WIZARD_CLASS_SKILLS`], expanded via
+/// [`expand_raw_class_skill_list`]) rather than the old 3-skill/always-empty
+/// bounded slices -- see those constants' own doc comments for the corpus
+/// citation each entry traces to. **Rogue is deliberately left at its
+/// existing bounded 5-skill posture** in this cycle: `pilot_compute_corpus
+/// ::has_supported_class_chassis` (the gate `resolve_unified_pilot_snapshot`
+/// checks before this module's output ever reaches a real character sheet)
+/// recognizes only Fighter and Wizard chassis, so widening Rogue's list
+/// here would add a class-skill claim this module could not yet prove
+/// reaches a player -- a real widening, staged for whenever Rogue joins
+/// that supported-chassis set. Every other class still contributes
 /// nothing, same bounded-caution philosophy as before.
 fn class_skill_set(input: &CharacterInput) -> Vec<SkillId> {
     let mut class_skills: Vec<SkillId> = Vec::new();
     for class_level in &input.chosen.class_levels {
-        let grounded: &[&str] = match class_level.class_id.as_str() {
-            FIGHTER_CLASS_ID => GROUNDED_FIGHTER_CLASS_SKILLS,
-            ROGUE_CLASS_ID => GROUNDED_ROGUE_CLASS_SKILLS,
-            WIZARD_CLASS_ID => GROUNDED_WIZARD_CLASS_SKILLS,
-            _ => &[],
+        let grounded: Vec<SkillId> = match class_level.class_id.as_str() {
+            FIGHTER_CLASS_ID => expand_raw_class_skill_list(full_fighter_class_skills()),
+            ROGUE_CLASS_ID => {
+                GROUNDED_ROGUE_CLASS_SKILLS.iter().map(|s| (*s).to_string()).collect()
+            }
+            WIZARD_CLASS_ID => expand_raw_class_skill_list(FULL_WIZARD_CLASS_SKILLS),
+            _ => Vec::new(),
         };
         for skill_id in grounded {
-            if !class_skills.iter().any(|existing| existing == skill_id) {
-                class_skills.push((*skill_id).to_string());
+            if !class_skills.contains(&skill_id) {
+                class_skills.push(skill_id);
             }
         }
     }
@@ -474,6 +764,87 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     // posture at all gets no cross-class treatment, same bounded-caution
     // philosophy `class_skill_set` already follows.
     let has_grounded_class_skill_posture = has_grounded_class_skill_posture(input);
+
+    // **AT-34-E4-002**: the character's real, computed trait skill bonuses
+    // (the 31-of-59 `ultimate_campaign` flat `BONUS:SKILL` traits --
+    // `trait_effects`'s own doc comment names the exact shape and what is
+    // deliberately not yet covered). Empty for any character with no
+    // `selected_traits` or none this module recognizes -- byte-identical
+    // to pre-cycle behavior for every existing fixture.
+    let mut trait_skill_bonuses =
+        crate::rules_core::trait_effects::skill_bonuses_from_traits(&input.chosen.selected_traits);
+    // Second slice: fixed-choice `%LIST` traits (`trait_effects`'s own
+    // "Second slice" doc-comment section) -- summed into the same map, not
+    // double-applied, because `no_trait_id_appears_in_both_tables` proves
+    // no trait id is ever a member of both tables.
+    for (skill_id, bonus) in crate::rules_core::trait_effects::skill_choice_bonuses_from_traits(
+        &input.chosen.selected_traits,
+        &input.chosen.selected_choices,
+    ) {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
+    // Third slice (`AT-34-E4-002`): `%LIST` traits whose `CHOOSE:SKILL`
+    // names an open `TYPE=<Family>` subtype family (Craft/Perform/
+    // Profession) rather than a fixed list of concrete skills -- folded
+    // into the same map, not double-applied, because a trait id can only
+    // ever be a member of one of the three tables (enforced by
+    // `no_trait_id_appears_in_more_than_one_table`).
+    for (skill_id, bonus) in crate::rules_core::trait_effects::family_choice_bonuses_from_traits(
+        &input.chosen.selected_traits,
+        &input.chosen.selected_choices,
+    ) {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
+    // Sixth slice (`AT-34-E4-002`): `BONUS:SKILL` traits whose magnitude
+    // is an ability-score-difference formula (`max(A,B)-B`), evaluated
+    // via the crate's real `formula_interpreter::PcgenFormulaEvaluator`
+    // against `chassis.ability_modifiers` -- folded into the same map,
+    // never double-applied, because a trait id can only ever appear in
+    // one of the four tables (enforced by
+    // `no_ability_diff_trait_id_appears_in_any_other_skill_table`).
+    for (skill_id, bonus) in crate::rules_core::trait_effects::ability_diff_skill_bonuses_from_traits(
+        &input.chosen.selected_traits,
+        &chassis.ability_modifiers,
+    ) {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
+    // Seventh slice (`AT-34-E4-002`): `Trait ~ Trustworthy`'s SEPARATE,
+    // different-skill flat `BONUS:SKILL|Diplomacy|1` token -- its own
+    // situational Bluff clause grounds through a different channel
+    // entirely (`pilot_compute::ground_orphan_trait_facts`'s standalone-
+    // fact vector, never a skill total). Folded into the same map, never
+    // double-applied, because a trait id can only ever appear in one of
+    // the five tables (enforced by
+    // `no_situational_trait_id_appears_in_any_other_skill_table`).
+    for (skill_id, bonus) in
+        crate::rules_core::trait_effects::situational_flat_skill_bonuses_from_traits(
+            &input.chosen.selected_traits,
+        )
+    {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
+    // Eighth slice (`AT-34-E4-002`): `Trait ~ Eldritch Delver`'s separate
+    // flat multi-skill `BONUS:SKILL|Knowledge (dungeoneering),Knowledge
+    // (history)|1` token -- its own `BONUS:CASTERLEVEL|SUBSCHOOL` half
+    // grounds through a different channel entirely
+    // (`pilot_compute::ground_orphan_trait_facts`'s standalone-fact
+    // vector, never a skill total). Folded into the same map, never
+    // double-applied, because a trait id can only ever appear in one of
+    // the six tables (kept in its own dedicated table specifically so it
+    // is never a member of `FLAT_SKILL_TRAIT_BONUSES` -- see that table's
+    // own doc comment).
+    for (skill_id, bonus) in
+        crate::rules_core::trait_effects::caster_level_skill_bonuses_from_traits(
+            &input.chosen.selected_traits,
+        )
+    {
+        let slot = trait_skill_bonuses.entry(skill_id).or_insert(0);
+        *slot = slot.saturating_add(bonus);
+    }
 
     let mut totals = BTreeMap::new();
     let mut untrained_use = BTreeMap::new();
@@ -551,7 +922,8 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         };
 
         let ability_modifier = ability_mod as i8;
-        let misc_modifier = 0;
+        let misc_modifier =
+            trait_skill_bonuses.get(&allocation.skill_id).copied().unwrap_or(0);
         let total_modifier = ranks as i8 + ability_modifier + class_skill_bonus + misc_modifier;
 
         if ranks == 0 {
@@ -575,6 +947,48 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         );
     }
 
+    // **AT-34-E4-002**: a trait's flat skill bonus applies whether or not
+    // the character has invested any ranks in the skill (PF1 traits are
+    // not rank-gated the way class-skill/cross-class caps are) -- a
+    // character who took Acrobat but has 0 Acrobatics ranks must still
+    // see the +1, not silently lose it because no `skill_allocations`
+    // entry exists for it yet. Mirrors the untrained-use rule immediately
+    // above: a trained-only skill (`is_trained_only_skill`) with no ranks
+    // still cannot be attempted at all, trait bonus or not, so it is
+    // correctly omitted here too -- never a fabricated total for a skill
+    // the character cannot use.
+    for (skill_id, bonus) in &trait_skill_bonuses {
+        if totals.contains_key(skill_id) {
+            // Already handled by the allocation loop above (which already
+            // folded this same `trait_skill_bonuses` value into its own
+            // `misc_modifier`) -- do not double-count.
+            continue;
+        }
+        if is_trained_only_skill(skill_id) {
+            continue;
+        }
+        let Some(ability_mod) = skill_key_ability_modifier(skill_id, &chassis.ability_modifiers)
+        else {
+            // Outside the bounded, cited skill universe: no known
+            // ability-key mapping. Omit rather than fabricate, same as
+            // the allocation loop above.
+            continue;
+        };
+        let ability_modifier = ability_mod as i8;
+        let total_modifier = ability_modifier + bonus;
+        untrained_use.insert(skill_id.clone(), ability_modifier);
+        totals.insert(
+            skill_id.clone(),
+            SkillTotal {
+                ranks: 0,
+                ability_modifier,
+                class_skill_bonus: 0,
+                misc_modifier: *bonus,
+                total_modifier,
+            },
+        );
+    }
+
     SkillTotals {
         totals,
         class_skills,
@@ -582,6 +996,91 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         untrained_use,
         diagnostics,
     }
+}
+
+/// Whether `skill_id` is a class skill for `class_id` under this module's
+/// class-skill lists (Fighter and Wizard now full, per [`class_skill_set`]'s
+/// own doc comment; Rogue at its existing bounded 5-skill list). `false`
+/// for any other class -- a real, checkable fact, never a fabricated one
+/// for a class this module carries no data for.
+pub fn is_class_skill_for(class_id: &str, skill_id: &str) -> bool {
+    match class_id {
+        FIGHTER_CLASS_ID => is_full_class_skill(full_fighter_class_skills(), skill_id),
+        WIZARD_CLASS_ID => is_full_class_skill(FULL_WIZARD_CLASS_SKILLS, skill_id),
+        ROGUE_CLASS_ID => GROUNDED_ROGUE_CLASS_SKILLS.contains(&skill_id),
+        _ => false,
+    }
+}
+
+/// **AT-34-E3-003's own fixture-execution instrument.** Given a skill and a
+/// class this module recognizes, actually BUILDS a minimal level-1
+/// character of that class with exactly 1 rank allocated to that skill,
+/// runs it through the real [`allocate_skill_ranks`] engine, and returns
+/// the genuine, computed `class_skill_bonus` this module's engine produces
+/// -- never an assertion that it "should" be 3, an executed check that it
+/// IS. Returns `None` for a class/skill pair [`is_class_skill_for`] does
+/// not recognize (nothing to fixture-check). This is the same shape the
+/// module doc comment's "PF1 core rule reused as-is" section already
+/// documents as a fixed, system-wide constant
+/// ([`TRAINED_CLASS_SKILL_BONUS`]) -- this function proves that constant is
+/// genuinely reachable for `skill_id` through a real class, not merely
+/// declared. Used by `v06_work_inventory.rs`'s `Kind::Skill` classifier
+/// (`AT-34-E3-003`) to ground a corpus record's class-skill-bonus magnitude
+/// only when this fixture actually executes and agrees, never on the
+/// classifier's own say-so.
+pub fn class_skill_bonus_is_grounded(class_id: &str, skill_id: &str) -> Option<i8> {
+    if !is_class_skill_for(class_id, skill_id) {
+        return None;
+    }
+    let input = CharacterInput {
+        case_id: None,
+        source_package_id: "at_34_e3_003_fixture".to_owned(),
+        chosen: ChosenCharacterState {
+            race_id: "race:human".to_owned(),
+            class_levels: vec![CharacterClassLevel { class_id: class_id.to_owned(), level: 1 }],
+            ability_scores: AbilityScores {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 10,
+                wisdom: 10,
+                charisma: 10,
+            },
+            selected_feats: Vec::new(),
+            skill_allocations: vec![SkillAllocation { skill_id: skill_id.to_owned(), ranks: 1 }],
+            equipment_selections: Vec::new(),
+            selected_choices: Vec::new(),
+            selected_traits: Vec::new(),
+            spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
+        },
+        selection_provenance: Vec::new(),
+    };
+    allocate_skill_ranks(&input).totals.get(skill_id).map(|total| total.class_skill_bonus)
+}
+
+/// **AT-34-E3-003's classifier-facing entry point.** Takes a corpus skill
+/// record's own display name (e.g. `"Acrobatics"`, `"Craft (Alchemy)"` --
+/// exactly the string `v06_work_inventory.rs`'s `Kind::Skill` unit carries
+/// as `unit.name`), normalizes it the SAME way [`class_skill_set`]'s own
+/// `TYPE=` expansion does ([`normalize_skill_display_name`]), and checks
+/// it against every class this module recognizes at all (Fighter, Rogue,
+/// Wizard -- [`FIGHTER_CLASS_ID`], [`ROGUE_CLASS_ID`], [`WIZARD_CLASS_ID`]),
+/// in that fixed order so the result is deterministic when more than one
+/// recognized class shares the skill. Returns the first
+/// [`class_skill_bonus_is_grounded`] hit -- a real, fixture-executed
+/// `class_skill_bonus`, never an assumed `3` -- or `None` when no class
+/// this module has real data for treats the skill as a class skill (most
+/// often because the skill belongs only to a class this module's bounded
+/// posture does not yet cover, e.g. Bard's `Perform`).
+pub fn skill_bonus_is_grounded_for_display_name(display_name: &str) -> Option<i8> {
+    let skill_id = normalize_skill_display_name(display_name);
+    for class_id in [FIGHTER_CLASS_ID, ROGUE_CLASS_ID, WIZARD_CLASS_ID] {
+        if let Some(bonus) = class_skill_bonus_is_grounded(class_id, &skill_id) {
+            return Some(bonus);
+        }
+    }
+    None
 }
 
 /// v0.6 alpha swarm: this module's class-skill recognition was still
@@ -624,6 +1123,7 @@ mod wizard_and_rogue_class_skill_grounding_tests {
                 }],
                 equipment_selections: Vec::new(),
                 selected_choices: Vec::new(),
+                selected_traits: Vec::new(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
             },
@@ -645,7 +1145,21 @@ mod wizard_and_rogue_class_skill_grounding_tests {
             .expect("recognized skill must be present");
         assert_eq!(diplomacy.ranks, 1, "cross-class cap at level 1 is ceil((1+1)/2) = 1");
         assert_eq!(diplomacy.class_skill_bonus, 0, "Wizard has no class-skill bonus on Diplomacy");
-        assert!(totals.class_skills.is_empty(), "Wizard's grounded class-skill list is empty");
+        // AT-34-E3-003: Wizard's class-skill list is no longer the always-
+        // empty 5-skill-intersection slice -- it now carries Wizard's REAL
+        // full list (Appraise/Craft/Fly/Knowledge/Linguistics/Profession/
+        // Spellcraft), so this must assert the real, still-true fact
+        // (Diplomacy specifically is not on it) rather than the list being
+        // empty overall.
+        assert!(
+            !totals.class_skills.is_empty(),
+            "Wizard's grounded class-skill list now has real content (Appraise, Craft, Fly, \
+             Knowledge, Linguistics, Profession, Spellcraft)"
+        );
+        assert!(
+            !totals.class_skills.iter().any(|s| s == "skill:diplomacy"),
+            "Diplomacy is still genuinely not a Wizard class skill"
+        );
         assert!(totals.cross_class_penalty_applied);
         assert!(
             totals
@@ -707,5 +1221,183 @@ mod wizard_and_rogue_class_skill_grounding_tests {
             "a legal class-skill allocation must not be flagged: {:?}",
             totals.diagnostics
         );
+    }
+}
+
+/// AT-34-E3-003 (bucket M, `decisions.md §2a`): Fighter and Wizard's newly
+/// FULL class-skill lists, including the `TYPE=Craft`/`TYPE=Knowledge`/
+/// `TYPE=Profession` wildcard expansions -- one real, executed fixture per
+/// claim, never an assertion the classifier trusts unverified.
+#[cfg(test)]
+mod at_34_e3_003_full_class_skill_list_tests {
+    use super::{allocate_skill_ranks, class_skill_bonus_is_grounded, is_class_skill_for};
+    use crate::rules_core::character_input::{
+        AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SkillAllocation,
+    };
+
+    fn single_class_with_skill(class_id: &str, level: u8, skill_id: &str, ranks: u8) -> CharacterInput {
+        CharacterInput {
+            case_id: None,
+            source_package_id: "test".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel { class_id: class_id.to_owned(), level }],
+                ability_scores: AbilityScores {
+                    strength: 10,
+                    dexterity: 10,
+                    constitution: 10,
+                    intelligence: 16,
+                    wisdom: 12,
+                    charisma: 10,
+                },
+                selected_feats: Vec::new(),
+                skill_allocations: vec![SkillAllocation { skill_id: skill_id.to_owned(), ranks }],
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                selected_traits: Vec::new(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn fighter_gets_the_class_skill_bonus_on_a_directly_named_skill_the_old_slice_omitted() {
+        // Real gap this test guards: Handle Animal is a real Fighter class
+        // skill (`cr_abilities_class.lst:2835`) that the old 3-skill
+        // bounded slice never recognized at all.
+        let input = single_class_with_skill("class:fighter", 1, "skill:handle_animal", 1);
+        let totals = allocate_skill_ranks(&input);
+        let total = totals.totals.get("skill:handle_animal").expect("skill:handle_animal should be recognized");
+        assert_eq!(total.class_skill_bonus, 3, "Handle Animal is a real Fighter class skill");
+        assert!(totals.class_skills.iter().any(|s| s == "skill:handle_animal"));
+    }
+
+    #[test]
+    fn fighter_type_craft_wildcard_grants_every_craft_subtype_the_class_skill_bonus() {
+        for skill_id in ["skill:craft_alchemy", "skill:craft_weapons", "skill:craft_armor"] {
+            let input = single_class_with_skill("class:fighter", 1, skill_id, 1);
+            let totals = allocate_skill_ranks(&input);
+            let total = totals.totals.get(skill_id).unwrap_or_else(|| panic!("{skill_id} should be recognized"));
+            assert_eq!(
+                total.class_skill_bonus, 3,
+                "{skill_id} is granted by Fighter's TYPE=Craft wildcard"
+            );
+            assert_eq!(total.ability_modifier, 3, "{skill_id} is Intelligence-keyed (INT 16 -> +3)");
+        }
+    }
+
+    #[test]
+    fn fighter_type_profession_wildcard_grants_every_profession_subtype() {
+        let input = single_class_with_skill("class:fighter", 1, "skill:profession_merchant", 1);
+        let totals = allocate_skill_ranks(&input);
+        let total = totals.totals.get("skill:profession_merchant").expect("recognized skill");
+        assert_eq!(total.class_skill_bonus, 3, "granted by Fighter's TYPE=Profession wildcard");
+    }
+
+    #[test]
+    fn wizard_type_knowledge_wildcard_grants_every_knowledge_subtype() {
+        for skill_id in ["skill:knowledge_arcana", "skill:knowledge_religion"] {
+            let input = single_class_with_skill("class:wizard", 1, skill_id, 1);
+            let totals = allocate_skill_ranks(&input);
+            let total = totals.totals.get(skill_id).unwrap_or_else(|| panic!("{skill_id} should be recognized"));
+            assert_eq!(total.class_skill_bonus, 3, "{skill_id} is granted by Wizard's TYPE=Knowledge wildcard");
+        }
+    }
+
+    #[test]
+    fn wizard_type_craft_and_profession_wildcards_grant_every_subtype() {
+        let input = single_class_with_skill("class:wizard", 1, "skill:craft_locks", 1);
+        let totals = allocate_skill_ranks(&input);
+        assert_eq!(totals.totals.get("skill:craft_locks").unwrap().class_skill_bonus, 3);
+
+        let input = single_class_with_skill("class:wizard", 1, "skill:profession_scribe", 1);
+        let totals = allocate_skill_ranks(&input);
+        assert_eq!(totals.totals.get("skill:profession_scribe").unwrap().class_skill_bonus, 3);
+    }
+
+    #[test]
+    fn trained_only_family_skills_cannot_be_attempted_at_zero_ranks() {
+        // AT-34-E3-003 widens TRAINED_ONLY_SKILLS to the module doc
+        // comment's own already-documented full roster: "all Knowledge
+        // subtypes" and "Profession" (both families), plus Handle Animal,
+        // Linguistics, Sleight of Hand, Spellcraft, Use Magic Device.
+        for skill_id in [
+            "skill:knowledge_arcana",
+            "skill:profession_baker",
+            "skill:handle_animal",
+            "skill:linguistics",
+            "skill:sleight_of_hand",
+            "skill:spellcraft",
+            "skill:use_magic_device",
+        ] {
+            let input = single_class_with_skill("class:wizard", 1, skill_id, 0);
+            let totals = allocate_skill_ranks(&input);
+            assert!(
+                !totals.totals.contains_key(skill_id),
+                "{skill_id} is trained-only and must not appear at 0 ranks"
+            );
+        }
+    }
+
+    #[test]
+    fn a_non_trained_only_skill_still_reports_untrained_use_at_zero_ranks() {
+        // Guards against `TRAINED_ONLY_SKILLS`'s widening accidentally
+        // sweeping in a skill that should remain usable untrained --
+        // Survival (Wisdom-keyed, not trained-only) still reports a raw
+        // ability-modifier total at 0 ranks.
+        let input = single_class_with_skill("class:wizard", 1, "skill:survival", 0);
+        let totals = allocate_skill_ranks(&input);
+        assert!(totals.untrained_use.contains_key("skill:survival"));
+    }
+
+    #[test]
+    fn class_skill_bonus_is_grounded_actually_executes_the_engine_not_just_asserts() {
+        // The classifier's own fixture-execution instrument (AT-34-E3-003):
+        // a real class/skill pair returns the real, computed bonus.
+        assert_eq!(
+            class_skill_bonus_is_grounded("class:fighter", "skill:handle_animal"),
+            Some(3)
+        );
+        assert_eq!(class_skill_bonus_is_grounded("class:wizard", "skill:knowledge_planes"), Some(3));
+        // A real class this module recognizes, but a skill genuinely not
+        // in its list, is honestly None -- never a fabricated 3.
+        assert_eq!(class_skill_bonus_is_grounded("class:fighter", "skill:appraise"), None);
+        // A class this module carries no data for at all is also honestly
+        // None.
+        assert_eq!(class_skill_bonus_is_grounded("class:cleric", "skill:heal"), None);
+    }
+
+    #[test]
+    fn is_class_skill_for_matches_class_skill_bonus_is_grounded() {
+        assert!(is_class_skill_for("class:fighter", "skill:handle_animal"));
+        assert!(!is_class_skill_for("class:fighter", "skill:appraise"));
+        assert!(!is_class_skill_for("class:cleric", "skill:heal"));
+    }
+
+    #[test]
+    fn skill_bonus_is_grounded_for_display_name_normalizes_and_checks_every_recognized_class() {
+        // `v06_work_inventory.rs`'s `Kind::Skill` classifier calls this with
+        // the corpus record's own display name, exactly as it appears in
+        // `cr_skills.lst` -- never a pre-normalized `skill:` id. "Handle
+        // Animal" is a real Fighter class skill (see
+        // `class_skill_bonus_is_grounded`'s own fighter/handle_animal
+        // case), so the display-name entry point must reach the identical
+        // real, fixture-executed answer.
+        assert_eq!(
+            super::skill_bonus_is_grounded_for_display_name("Handle Animal"),
+            Some(3)
+        );
+        // A parenthesized subtype name normalizes the same way
+        // `class_skill_set`'s own `TYPE=Knowledge` expansion does.
+        assert_eq!(
+            super::skill_bonus_is_grounded_for_display_name("Knowledge (Planes)"),
+            Some(3)
+        );
+        // A skill no recognized class (Fighter/Rogue/Wizard) treats as a
+        // class skill -- Perform is Bard-only, a class this module carries
+        // no data for -- is honestly None, never a fabricated 3.
+        assert_eq!(super::skill_bonus_is_grounded_for_display_name("Perform (Sing)"), None);
     }
 }

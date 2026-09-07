@@ -1,0 +1,100 @@
+{
+  "criterion": "AT-34-E5-003",
+  "generated_at_head": "bc39ff9d56fd40d48ec286e9bb9bb5a7847fddf3",
+  "re_derive_command": "python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_power_table_cost.py",
+  "population": {
+    "kind": "power",
+    "book": "ultimate_psionics",
+    "count": 421,
+    "cross_checks": [
+      "docs/work-inventory.json: status==engine-does-not-hold AND evidence contains 'has_no_engine_table' AND kind=='power'",
+      "artifacts/epic-1-atlas/missing-engine-tables.json: kinds.power.count",
+      "data/corpus/ultimate_psionics/power/*.json file count (live directory listing)",
+      "artifacts/epic-5-forward-plan/capability-register.json: capabilities[power_engine_table].population"
+    ],
+    "note": "all four independent sources agree at 421 -- single book, single kind, matches epic-breakdown.md's own population statement exactly."
+  },
+  "reason_not_built": {
+    "ruling": "decisions.md \u00a77",
+    "summary": "power's 421 units all sit inside a 3,498-unit book (ultimate_psionics) that occupies 7 other non-DONE buckets besides A. Building the table would clear bucket A but bank no CLOSED BOOK to prove it, so it is priced here for the successor bundle's cleanest opening move instead of built inside SD-34's own two-book scope (core_rulebook, ultimate_campaign)."
+  },
+  "rate_derivation": {
+    "source": "artifacts/epic-2-tables/table-build-rate.json (AT-34-E2-003)",
+    "method": "table-build-rate.json's own finding: marginal cost is dominated by whether the kind's corpus directory name matches its kind name, not by record count (ability, 4337 records, and domain, 183 records, cost nearly the same because both use the unmodified generic loader; trait's mismatched directory, trait_generic, is the one dearer case). power's directory (data/corpus/ultimate_psionics/power/) matches its kind name exactly -- confirmed live above -- so it is priced against the 6 kinds that also matched (ability, template, deity, domain, skill, language), NOT against trait's dearer, mismatched-directory tier.",
+    "matched_directory_kinds": [
+      "ability",
+      "template",
+      "deity",
+      "domain",
+      "skill",
+      "language"
+    ],
+    "matched_kinds_marginal_lines": {
+      "ability": 7,
+      "template": 7,
+      "deity": 7,
+      "domain": 2,
+      "skill": 2,
+      "language": 2
+    },
+    "matched_kinds_est_wall_seconds": {
+      "ability": 172,
+      "template": 172,
+      "deity": 172,
+      "domain": 49,
+      "skill": 49,
+      "language": 49
+    },
+    "excluded_comparators": {
+      "trait": {
+        "reason": "directory mismatch (trait_generic vs trait) -- the one dearer tier; power's directory matches, so this tier is excluded as the wrong shape.",
+        "marginal_lines_measured": 12,
+        "est_wall_time_seconds": 295
+      },
+      "companion": {
+        "reason": "pre-existing table (SD-29) -- this bundle's only companion cost was a fail-closed proof, not a table build; not a build-cost comparator at all."
+      }
+    },
+    "projected_marginal_lines_range": [
+      2,
+      7
+    ],
+    "projected_wall_time_seconds_range": [
+      49,
+      172
+    ],
+    "confidence_note": "DOUBLE-ESTIMATE, marked per AGENTS.md rule 9: table-build-rate.json's own per-table wall times are already pro-rated ESTIMATEs (no table was independently stopwatched -- all 7 new kinds landed in one shared-loader commit), not independent measurements. This range projects power onto that same estimate, one level removed from a real timing. It is NOT a point estimate -- reporting the range domain/skill/language..ability/template/deity's own spread produced is honest; collapsing it to one number would fabricate precision the underlying data does not carry."
+  },
+  "book_still_needs_after_power_exists": {
+    "book": "ultimate_psionics",
+    "book_total_units": 3498,
+    "live_bucket_counts": {
+      "B": 711,
+      "D": 465,
+      "C": 289,
+      "DONE": 803,
+      "M": 427,
+      "V": 372,
+      "U": 10,
+      "A": 421
+    },
+    "occupied_non_done_buckets_before": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "M",
+      "U",
+      "V"
+    ],
+    "occupied_non_done_buckets_after_power": [
+      "B",
+      "C",
+      "D",
+      "M",
+      "U",
+      "V"
+    ],
+    "instrument_correction_note": "decisions.md \u00a77 (authored earlier in this bundle) states ultimate_psionics has 'all eight non-DONE buckets occupied' (A=852, B=769, C=304, D=356, M=168, V=322, U=10 -- summing to 2,781, not matching live bucket B/M's current split). Re-derived live at HEAD (decisions.md \u00a712 L2 -- never carry a number forward), this book occupies 7 non-DONE buckets (A, B, C, D, M, U, V), not 8 -- neither X nor Z has any unit here. The bucket split has moved since \u00a77 was written (A/B/M's live counts differ from the cited ones) though the book's total (3,498) and power's population (421) have not. Building `power` clears bucket A to 0 and leaves 6 non-DONE buckets still occupied (B, C, D, M, U, V) -- the table alone does not close the book, matching the criterion's own bar."
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "lane": "R14",
+  "findings": [
+    {
+      "id": "R14-01",
+      "file": "src/rules_core/spellbook.rs",
+      "line_start": 313,
+      "line_end": 330,
+      "severity": "P1",
+      "category": "bug",
+      "title": "Bonus-spell-slot formula uses the wrong PF1 Table 1-3 threshold, and the module's own test suite locks in the wrong answer",
+      "evidence": "`compute_spellbook_coverage` grants a bonus slot at spell level L whenever `modifier >= level` (line 314), with count `(modifier - level) / 4 + 1`. PF1 Core Rulebook Table 1-3 (\"Ability Modifiers and Bonus Spells\") actually gates level L's FIRST bonus slot at `modifier >= 2*L - 1`, not `modifier >= L` -- e.g. a level-2 bonus slot needs modifier +3 (Int 16-17), not +2. The struct doc at lines 116-121 states the wrong rule as fact (\"gains one bonus slot of level L when M >= L\"), and `tests/sd20_spellbook_illusion.rs::bonus_slots_from_ability_are_computed_for_a_high_casting_ability` (and the identical test in `sd20_spellbook_abjuration.rs`/`sd20_spellbook_conjuration.rs`) asserts a +4 modifier grants one bonus slot at EACH of levels 1-4; the real table only grants bonus slots at levels 1-2 for a +4 modifier. A caster with Int/Wis/Cha 18 currently gets fabricated 3rd/4th-level bonus spell slots. `SpellbookCoverage.bonus_slots_from_ability` is not yet rendered by any desktop view model (`PilotSpellbookViewModel` deliberately omits it per `pilot_view_model.rs` line ~86), so no live UI currently shows the wrong number, but the wrong value and its enshrined-correct test would ship the moment a future cycle wires it in.",
+      "fix_description": "Change the gate to `modifier >= 2 * i16::from(level) - 1` and correct the struct doc comment; then correct the three test assertions (Int 18 / +4 should show bonus slots only at levels 1 and 2, one each) rather than at levels 1-4.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Confidence is medium because it rests on the reviewer's recollection of the printed PF1 Table 1-3 rather than a corpus/oracle citation available in-repo; verify against the actual table or the PCGen bonus-spell computation before changing game math. Not exercised by any live desktop surface today, so no runtime regression risk from leaving it as-is in the short term, but every consumer (tests, future view-model wiring) inherits the wrong number until fixed."
+    },
+    {
+      "id": "R14-02",
+      "file": "src/saved_character/local_store.rs",
+      "line_start": 32,
+      "line_end": 80,
+      "severity": "P1",
+      "category": "hazard",
+      "title": "Saved-character writes are two sequential non-atomic `fs::write` calls with no temp-file+rename, risking a corrupted/inconsistent save on interruption",
+      "evidence": "`SavedCharacterStore::save` (lines 68-77) writes `envelope.txt` then `authoritative_character_input.txt` via plain `fs::write`, which truncates-then-writes in place (not atomic on any platform) and is not wrapped in any temp-file/rename or rollback. A crash, power loss, or disk-full error between the two writes (or mid-write of either file) leaves the saved-character directory in a state `SavedCharacterStore::load` cannot cleanly parse, or with `envelope.txt` pointing at a newer revision than the truncated/garbled `authoritative_character_input.txt` actually holds -- silent data loss/corruption for the single most valuable artifact in the app (a player's character). The identical pattern (`fs::write` directly to the final path, no atomicity) repeats in `src/campaign/local_store.rs` (line 69, campaign config) and `src/homebrew_authoring/package_store.rs` (line 49, package files), so this is a systemic gap across every local persistence boundary in this lane's scope, not a one-off.",
+      "fix_description": "Write each file to a sibling temp path in the same directory, then `fs::rename` it into place (rename is atomic on the same filesystem); write `authoritative_character_input.txt` before `envelope.txt` (or vice versa consistently) so a partial save fails toward the OLD envelope + OLD/whatever-input rather than a NEW envelope pointing at a missing/garbled input.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Fixing persistence-layer atomicity touches the on-disk format contract multiple tests assert against (temp-dir fixtures read the files back immediately); needs test coverage for the interrupted-write case, not a one-line patch."
+    },
+    {
+      "id": "R14-03",
+      "file": "src/rules_core/contract.rs",
+      "line_start": 331,
+      "line_end": 341,
+      "severity": "P2",
+      "category": "dead_code",
+      "title": "PilotReceipt.feats is wired to the superseded catalog-presence-only prerequisite check, not SD-27's real per-token evaluator -- but PilotReceipt itself is unreachable from any desktop command",
+      "evidence": "`to_pilot_receipt` builds each `ResolvedFeat` via `feat_prereqs::evaluate_feat_prerequisites` (contract.rs:337) and `compute_feat_effects` (contract.rs:338) -- the original SD-20 functions (`feat_prereqs.rs` lines 142/217) whose own module doc (feat_prereqs.rs lines 51-72) admits: \"[SD-20 functions] answer exactly one question -- 'is this feat id in the CRB catalog under this category?' ... Nothing new calls them; `evaluate_catalog_feat_prerequisites` does not route through them,\" referring to the real SD-27 PRE-token evaluator (`evaluate_catalog_feat_prerequisites` / `evaluate_feat_key_prerequisites`, feat_prereqs.rs lines 334/389) that actually checks BAB/ability/other-feat prerequisites. So `PilotReceipt.feats[].prerequisites.is_eligible` is `true` for any selected feat merely present in the catalog, regardless of real prerequisites -- reproducing the exact bug SD-27 was built to fix (module doc's own example: \"a Fighter 1 with +1 BAB could take Improved Two-Weapon Fighting\"). Severity is capped at P2 because `apps/desktop/src-tauri/src/pf1_adapter.rs` (line ~1270) itself documents that `contract::PilotReceipt` is \"a struct no desktop command ever calls\" -- the live feat picker in `character_hub.rs` calls `evaluate_feat_key_prerequisites` (the real evaluator) directly, bypassing `contract.rs` entirely. `oracle_validation/selected_parity_dimensions.rs` does consume `PilotReceipt` but does not read `.feats`.",
+      "fix_description": "Either route `to_pilot_receipt`'s feat wiring through `evaluate_catalog_feat_prerequisites`/`evaluate_feat_key_prerequisites` (the real evaluator), or delete the dead SD-20 `evaluate_feat_prerequisites`/`compute_feat_effects` functions and this call site together if `PilotReceipt.feats` is being retired.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "No live-UI regression risk today (struct is unreachable from any desktop command per the codebase's own comment), but any future re-wiring of PilotReceipt into a real surface would silently ship this exact prerequisite-bypass bug unless caught here."
+    },
+    {
+      "id": "R14-04",
+      "file": "src/rules_core/cache_gen",
+      "line_start": 1,
+      "line_end": 1,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "Per-book cache_gen generators duplicate the same helper-function family (sha256_file, write_json, slugify, find_exact_first_column, find_by_key_field, name_or_key_is_pi) across up to 13 of the 14 non-mod.rs files",
+      "evidence": "Same shape as the bin-family duplication elsewhere in this repo. `grep`-verified: `sha256_file` appears in 12/13 generator files (all but `equipment_copy_citation_repair.rs`), `write_json` in 10/13, `fn slugify` in 10/13, `name_or_key_is_pi`/`find_exact_first_column`/`find_by_key_field` in 5/13 each. Byte-for-byte identical `sha256_file` bodies confirmed via md5sum across `acg.rs`, `beastiary1.rs`, `class_feature.rs`, `equipment_gap.rs`, and `ultimate_equipment.rs` (5 files, one md5 hash); `apg.rs`'s copy differs only in its doc comment. `acg.rs` and `apg.rs` additionally share near-identical `book_dir`, `write_json`, `slugify`, `generate_classes`/`generate_spells`/`generate_equipment` skeletons and byte-identical unit-test names (`slugify_handles_parens_and_collisions`, `write_json_never_overwrites_an_existing_file`, etc.) -- confirmed by diffing function signature lists.",
+      "fix_description": "Extract a `cache_gen::common` module (or add these functions to `cache_gen/mod.rs`, which already exists as the shared home for `WiringClassIndex`) carrying `sha256_file`, `write_json`, `slugify`, `find_exact_first_column`, `find_by_key_field`, and `name_or_key_is_pi` once, with each per-book generator importing rather than redefining them.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "None of these files carry the GENERATED marker (checked directly), so they are in-scope for cleanup; per ground rules this is report_only regardless since it touches cache_gen (not explicitly excluded, but I cannot run cargo check as a read-only reviewer to prove the mechanical extraction)."
+    },
+    {
+      "id": "R14-05",
+      "file": "src/rules_core/support_state_matrix.rs",
+      "line_start": 941,
+      "line_end": 7471,
+      "severity": "P2",
+      "category": "structure",
+      "title": "seeded_current_truth() is a single 6,531-line function -- the entire file body after its 7 type declarations",
+      "evidence": "The file is 7,471 lines total but declares only 7 items (4 enums, 2 structs, 1 function) -- `grep -c '^pub fn|^fn|^pub struct|^struct|^pub enum|^enum'` returns 7. `pub fn seeded_current_truth()` starts at line 941 and the file's closing `}` at line 7471 belongs to it (no other top-level `fn` appears in that span). This one function builds and returns a single `Vec<SupportStateRow>` literal interleaved with extensive per-row justification prose (867 comment-only lines counted separately). The file is live (consumed by `apps/desktop/src-tauri/src/support_state_matrix_bridge.rs` for the desktop dashboard), so this is not dead weight, but a 6,500+-line function is a real extraction seam: every edit (adding one class/book's row) requires navigating the entire function body, and any future refactor of `SupportStateRow` risks a merge/diff blast radius across the whole file.",
+      "fix_description": "Split into per-book or per-class helper functions (e.g. `crb_class_rows()`, `apg_class_rows()`, `race_rows()`) each returning a `Vec<SupportStateRow>`, composed with `.extend()`/`.chain()` inside a much shorter `seeded_current_truth()`. Pure mechanical extraction with no behavior change.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Read-only reviewer cannot run cargo check to prove the split is behavior-preserving, so left report_only even though it is a good auto_fix candidate in principle."
+    },
+    {
+      "id": "R14-06",
+      "file": "src/rules_core/pilot_compute/formula_interpreter.rs",
+      "line_start": 419,
+      "line_end": 465,
+      "severity": "P2",
+      "category": "structure",
+      "title": "Extensibility review of the two named strategic engines: formula_interpreter.rs and bonus_stack_reader.rs",
+      "evidence": "Requested extensibility assessment. `formula_interpreter.rs`: adding a new formula function (e.g. real PCGen's `var()`, `count()`, `mastervar()`, all explicitly named as refused-not-implemented in the module doc, lines 128-131) requires exactly three co-located touch points in one file: (1) a new `Expr` variant (enum at line 419), (2) a new arm in `parse_call`'s single flat `match name.as_str()` (line 579+, e.g. the `\"min\"|\"max\"|\"floor\"|\"ceil\"|\"abs\"` arm at line 730), and (3) a matching arm in the evaluator's `match name.as_str()` (line 919+). This is a clean, contained three-touch-point pattern with no scattered string-literal duplication of the reserved-name list (only one enumeration of `{min, max, floor, ceil, abs, if, classlevel, skillinfo}`, in the module doc and `parse_call` itself) -- good extensibility for a hand-rolled recursive-descent interpreter, though each new function's arity/type checking is inlined per-arm rather than table-driven, so a new family duplicates some boilerplate rather than declaring `(name, arity, impl)` once. `bonus_stack_reader.rs` is narrower: it recognizes exactly one PRE-tag kind (`PrevarGteqGate`, a concrete struct, not an enum) hardcoded through `extract_addends`/`parse_prevargteq`/`evaluate_stack`'s `qualifies` match (lines 66-204). Its own module doc (lines 34-38) already discloses a second real PRE-tag kind exists in the corpus (`PREABILITY` on `ward.json`'s `WitchHexDC_Ward`) and is refused. Adding that second PRE-tag kind requires generalizing `PrevarGteqGate` from a struct into an enum (a real, non-trivial restructuring of all three functions), not just adding a match arm -- a materially higher extension cost than formula_interpreter's pattern.",
+      "fix_description": "No fix needed for formula_interpreter.rs (structure is sound). For bonus_stack_reader.rs, when a second PRE-tag kind is actually needed, budget for restructuring `PrevarGteqGate` into a `Gate` enum with one variant per recognized PRE-tag kind before starting, rather than patching the struct.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Structural/extensibility assessment as requested, not a defect report."
+    },
+    {
+      "id": "R14-07",
+      "file": "src/rules_core/spellbook.rs",
+      "line_start": 202,
+      "line_end": 293,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "compute_spellbook_coverage's 9-school match repeats an identical 11-line wrapping block once per school",
+      "evidence": "Each of the 9 `Pf1SchoolId` arms (lines 203-292) calls its own `<school>::resolve_<school>_spell_effect(&selection.spell_id)` and then `.map(|effect| SpellEffect { spell_id: effect.spell_id, school, level: effect.level, effect_text: effect.effect_text, table_cell: effect.table_cell })` -- byte-identical except the function name and the `school` value already known from the outer match. ~90 lines total for what is structurally a 9-line lookup table plus one shared wrapper.",
+      "fix_description": "Match only to obtain the raw `Option<SchoolSpellEffect>` per arm, then apply the `SpellEffect{...}` wrap once, outside the match, using the already-bound `school` variable.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Purely mechanical, but left report_only since cargo check cannot be run in this read-only review."
+    },
+    {
+      "id": "R14-08",
+      "file": "src/rules_core/level_up.rs",
+      "line_start": 182,
+      "line_end": 269,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "compute_level_up_grants and compute_level_up_grants_for_class duplicate the same 11-class dispatch table",
+      "evidence": "Both functions (lines 182-223 and 246-269) contain the identical 11-arm class-id-to-per-class-function dispatch, differing only in how the class id is extracted (from a single-element `class_levels` slice pattern vs. a direct `leveling_class_id` parameter) and in the unrecognized-class fallback comment. The module's own doc (lines 225-245) explains why the OLD function was left unchanged (its ~50 existing call sites were outside the criterion's file-touch grant) rather than why the duplication itself is necessary.",
+      "fix_description": "`compute_level_up_grants` could delegate to `compute_level_up_grants_for_class(character, &class_level.class_id, from_level, to_level)` inside its `[class_level] =>` arm, removing the second copy of the 11-arm match while preserving the existing signature and all ~50 call sites.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Behavior-preserving in principle (both arms already return `LevelUpPlan::default()` for the same unrecognized-class fallback), but cargo check cannot be run in this read-only review to confirm."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 34,
+    "files_skipped_generated": 0,
+    "notes": "Scope was ~118 files across src/rules_core (top-level, cache_gen, equipment_effects, level_up, spellbook, feat_prereqs subdirs), src/pcgen_import (incl. lst_parser), src/oracle_validation, src/homebrew_authoring, src/campaign, src/saved_character, src/lib.rs, plus the two explicitly-named pilot_compute strategic engines. No file in scope carried a 'GENERATED FILE' marker (checked by reading headers, not filename): 0 of ~118 skipped. Verified via mod.rs cross-reference that every rules_core top-level module and every cache_gen submodule is declared and non-dead (no orphaned .rs files); spot-checked corpus_literal_sweep/pi_table_sweep/shape_b_v1/codex_neutral_name/pilot_failure/party_cr/encounters/description_completion/pcgen_desc for dead-module status -- all are live, widely referenced. Given the scope's scale (several files exceed 5,000-7,000 lines), the very largest carriers (support_state_matrix.rs 7,471 lines, derived_evaluator_fixture_check.rs 6,069, feat_effects.rs 5,064, race_resolver.rs 3,568, trait_effects.rs 3,134, cache_gen/class_feature.rs 3,371, pcgen_import/corpus_traps.rs ~2,000) were reviewed via targeted structural greps (function/panic/unwrap/expect density, header doc comments, full read of flagged spans) rather than a full line-by-line read of every line; all non-test unwrap/expect/panic call sites found across the sampled files were confirmed to sit inside #[cfg(test)] modules or immediately after an invariant-establishing call (e.g. open_record before active_entry.expect), so none were reported as findings. Small/medium files (level_up.rs, spellbook.rs, contract.rs's relevant sections, lib.rs, mod.rs files, campaign/saved_character/homebrew_authoring mod.rs headers) were read in full or near-full."
+  }
+}

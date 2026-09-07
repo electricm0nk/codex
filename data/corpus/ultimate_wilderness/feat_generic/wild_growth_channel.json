@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "When you channel positive energy, you cause vines to grow and ensnare enemies.",
     "key": "Wild Growth Channel",
     "name": "Wild Growth Channel",
-    "description": "When you channel positive energy, you cause vines to grow and ensnare enemies.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
-    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
-    "line": 109,
-    "record_key": "Wild Growth Channel"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 109,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "record_key": "Wild Growth Channel",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
 }

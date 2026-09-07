@@ -38,6 +38,10 @@ pub mod companion_chassis;
 pub mod crb;
 pub mod equipment_gap_tables;
 pub mod feat_gap_tables;
+/// Runtime engine tables for Epic 2's seven new-built kinds (`ability`,
+/// `template`, `trait`, `deity`, `domain`, `skill`, `language`) --
+/// `AT-34-E2-001`. `companion`'s table is `companion_chassis`, above.
+pub mod simple_kind_tables;
 pub mod feats_all;
 pub mod horror_adventures;
 pub mod inner_sea_bestiary;
@@ -239,7 +243,7 @@ pub enum RuleSetId {
     /// **This rule set compiles the book's `companion` family and nothing
     /// else.** B2's 782 `monster` / `monster_ability` units belong to the
     /// monster lane (`decisions.md §46`); registering this rule set moves them
-    /// from `not-started` to `not-ingested`, which states the engine's real
+    /// from `not-started` to `engine-does-not-hold`, which states the engine's real
     /// relationship to the book more precisely and claims nothing about them.
     B2,
     /// Bestiary 3. SD-29 Epic 5 extend, round 5 (monster lane;

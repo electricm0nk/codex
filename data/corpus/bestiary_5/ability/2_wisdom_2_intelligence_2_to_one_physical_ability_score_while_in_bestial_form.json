@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Skinwalker ~ Ability Scores",
     "name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form",
-    "description": null,
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,20 +52,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_arg.lst",
-    "sha256": "95170e77a0bfbda598fb2bc72ef272cb37cf6cfba290dc904139e2cf03b02a4e",
-    "line": 6,
-    "record_key": "Skinwalker ~ Ability Scores"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_arg.lst",
+    "record_key": "Skinwalker ~ Ability Scores",
+    "sha256": "95170e77a0bfbda598fb2bc72ef272cb37cf6cfba290dc904139e2cf03b02a4e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

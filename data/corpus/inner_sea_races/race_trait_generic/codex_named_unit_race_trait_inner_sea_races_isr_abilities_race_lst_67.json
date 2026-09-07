@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:57:29Z",
   "data": {
+    "description": "[redacted PI]",
     "key": "Codex-Named Unit (race_trait_inner_sea_races_isr_abilities_race_lst_67)",
     "name": "Codex-Named Unit (race_trait_inner_sea_races_isr_abilities_race_lst_67)",
-    "description": "[redacted PI]",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -61,23 +60,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
-    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
-    "line": 67,
-    "record_key": "Codex-Named Unit (race_trait_inner_sea_races_isr_abilities_race_lst_67)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:57:29Z",
   "license": "PI-REDACTED",
   "pi_field": "description,name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_races:isr_abilities_race.lst:67"
-  }
+    "coordinate": "inner_sea_races:isr_abilities_race.lst:67",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 67,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "record_key": "Codex-Named Unit (race_trait_inner_sea_races_isr_abilities_race_lst_67)",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

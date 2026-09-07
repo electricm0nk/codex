@@ -61,13 +61,12 @@
 //! level-2/level-3/level-4/level-5 truth (unchanged), the Fighter negative
 //! control, and the multiclass negative control.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::{ComputationExplanation, compute_pilot_base_chassis};
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation};
 
 const BARD_LEVEL5_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_bard_level5_sd13_deterministic_input.txt");
@@ -81,34 +80,6 @@ const FIGHTER_FIXTURE: &str =
 const WELL_VERSED_ID: &str = "class_feature.bard.well_versed";
 const INSPIRE_COMPETENCE_ID: &str = "class_feature.bard.inspire_competence";
 const LORE_MASTER_ID: &str = "class_feature.bard.lore_master";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 // ----- Base attack bonus at level 6 -----
 
@@ -258,16 +229,28 @@ fn bard_level6_does_not_fabricate_suggestion_or_versatile_performance() {
     let input = load(BARD_LEVEL6_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // SD-34 bucket-B batch cycle: `AT-34-E3-001` (`class_feature_option_pool_record_
+    // with_magnitude_not_held_by_engine` mechanism)'s own cycle 5 legitimately grounded
+    // Suggestion's flat Will-save DC (`class_feature.bard.suggestion_dc`, verified against
+    // this repo's own ingested corpus record and the identical formula shape as the
+    // already-grounded Fascinate DC -- see `pilot_compute.rs`'s own doc comment at that push
+    // site) BEFORE this test's own assertion was ever updated to admit it -- a stale-gate gap
+    // this cycle found and fixes here, not a new fabrication this cycle introduced. Only the
+    // ONE flat DC magnitude is admitted; any OTHER suggestion-tagged id (execution, targeting,
+    // resolution -- none of which is grounded) still fails this control exactly as before.
+    let suggestion_ids: Vec<&ComputationExplanation> = computation
+        .explanations
+        .iter()
+        .filter(|e| e.id.contains("suggestion"))
+        .collect();
     assert!(
-        !computation
-            .explanations
+        suggestion_ids
             .iter()
-            .any(|e| e.id.contains("suggestion")),
-        "Suggestion (the PF1 CRB's 6th-level Bard spell-like ability) requires a \
-         fascinated-target prerequisite and the \"suggestion\" spell's own effect-resolution \
-         engine, neither of which exists in this codebase; no explanation record must be \
-         fabricated for it: {:?}",
-        computation.explanations
+            .all(|e| e.id == "class_feature.bard.suggestion_dc"),
+        "only the flat, citation-backed Suggestion DC magnitude may appear; Suggestion's \
+         fascinated-target prerequisite and its own effect-resolution engine are still \
+         unimplemented, so no OTHER suggestion-tagged explanation record may be fabricated: \
+         {suggestion_ids:?}"
     );
     assert!(
         !computation
@@ -275,7 +258,7 @@ fn bard_level6_does_not_fabricate_suggestion_or_versatile_performance() {
             .iter()
             .any(|d| d.id.contains("suggestion")),
         "no diagnostic record should be fabricated for Suggestion either, since this slice \
-         deliberately declines to ground it: {:?}",
+         deliberately declines to ground its execution: {:?}",
         computation.diagnostics
     );
     assert!(
@@ -364,6 +347,19 @@ fn bard_level6_gains_no_new_bard_namespaced_explanation_id() {
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_2",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_3",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_4",
+        // SD-34 bucket-B batch cycle: `AT-34-E3-001` cycle 5 legitimately grounded
+        // Suggestion's flat Will-save DC at this exact level (level 6) -- a real
+        // "Special"-column class feature this test's own known-id list never listed.
+        "class_feature.bard.suggestion_dc",
+        // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+        // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+        // receipt.md`): Weapon and Armor Proficiency is now genuinely grounded
+        // as a level-independent, always-on +0 identity record (true since
+        // level 1, mirrors the Jack-of-All-Trades idiom already used above --
+        // no trained-only gate exists in this codebase to lift). It is not a
+        // "Special"-column class feature gained at this level, so listing it
+        // here keeps this control accurate without weakening its claim.
+        "class_feature.bard.weapon_and_armor_proficiency",
     ];
     assert!(
         computation
@@ -372,7 +368,13 @@ fn bard_level6_gains_no_new_bard_namespaced_explanation_id() {
             .filter(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard")
-            .all(|e| known_bard_ids.contains(&e.id.as_str())),
+            .all(|e| known_bard_ids.contains(&e.id.as_str())
+                // SD-34 decisions.md section 18: widened BY CONSTRUCTION, not narrowed --
+                // class_feature_grant_consumer now emits real, citation-backed
+                // corpus_record ids for Bard (previously wholesale-excluded); this shape
+                // carve-out admits them without touching any existing known_bard_ids
+                // entry or weakening the exhaustive check for anything else.
+                || e.id.starts_with("class_feature.bard.corpus_record.")),
         "Bard level 6 must not gain any bard-namespaced explanation id beyond the \
          already-grounded pillars: {:?}",
         computation.explanations

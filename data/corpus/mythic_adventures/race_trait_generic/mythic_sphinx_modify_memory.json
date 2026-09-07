@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "A mythic rakshasa can expend one use of mythic power as a swift action to modify the memory of a creature whose mind it is reading, as the modify memory spell (CL 18th). The creature can resist with a successful DC 20 Will save. The save DC is Charisma-based.",
     "key": "Mythic Sphinx ~ Modify Memory",
     "name": "Modify Memory",
-    "description": "A mythic rakshasa can expend one use of mythic power as a swift action to modify the memory of a creature whose mind it is reading, as the modify memory spell (CL 18th). The creature can resist with a successful DC 20 Will save. The save DC is Charisma-based.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,18 +27,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
-    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
-    "line": 245,
-    "record_key": "Mythic Sphinx ~ Modify Memory"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 245,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "record_key": "Mythic Sphinx ~ Modify Memory",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
 }

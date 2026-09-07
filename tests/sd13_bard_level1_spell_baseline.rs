@@ -40,18 +40,25 @@
 //! Human race seam on the spell-bearing path.
 
 use codex::rules_core::character_input::{
-    AcquisitionMode, ActiveState, CharacterInput, ClassAbilityActivation, SpellSelection,
-    load_character_input_fixture,
+    AcquisitionMode,
+    ActiveState,
+    ClassAbilityActivation,
+    SpellSelection,
 };
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
-    PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
+    ComputationDiagnostic,
+    HeadlessReceiptStatus,
+    PilotBaseChassisComputation,
+    build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const BARD_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_bard_level1_sd13_deterministic_input.txt");
@@ -65,34 +72,6 @@ const FASCINATE_AFFECTED_CREATURES_ID: &str = "class_chassis.bard.fascinate_affe
 const INSPIRE_COMPETENCE_ID: &str = "class_feature.bard.inspire_competence";
 const SPELL_LEVEL_ACCESS_ID: &str = "class_chassis.bard.spontaneous.spell_level_access";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.bard.spontaneous_known_and_per_day.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 fn claim_blocking<'a>(
     computation: &'a PilotBaseChassisComputation,
@@ -113,10 +92,6 @@ fn claim_blocking<'a>(
         "diagnostic '{id}' must be claim-blocking: {diag:?}"
     );
     diag
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
 }
 
 // ----- Direct runtime evidence: the spell-bearing identity is acknowledged -----
@@ -237,7 +212,17 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
                     && !explanation.id.contains("bardic")
                     && !explanation.id.contains("music")
                     && !explanation.id.contains("inspire")
-                    && !explanation.id.contains("fascinate")),
+                    && !explanation.id.contains("fascinate"))
+                // SD-34 bucket-B batch cycle (this gate was missed by the same-shaped
+                // carve-out `sd13_bard_level4..8_progression.rs` already applied
+                // elsewhere): `class_feature_grant_consumer` now emits real,
+                // citation-backed `class_feature.bard.corpus_record.*` roster ids for
+                // Bard (`decisions.md` section 18) -- a flat "this class feature exists,
+                // granted from level N" fact, never a fabricated spell/performance
+                // MAGNITUDE. This additive prefix carve-out admits that shape without
+                // touching any existing `allowed_ids` entry or weakening this control
+                // for any spell/bardic-tagged id outside that one namespace.
+                || explanation.id.starts_with("class_feature.bard.corpus_record."),
             "no fabricated spell or bardic-class-feature explanation is allowed beyond the \
              +0 recognition and the grounded flat pillars: {explanation:?}"
         );

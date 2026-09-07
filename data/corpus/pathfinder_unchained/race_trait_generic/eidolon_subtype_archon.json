@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Summoned from heaven, archon eidolons are the embodiments of righteousness. They often take on powerful, graceful forms, rippling with muscles but refined in their movements. Archon eidolons are totally dedicated to the cause of good, and have little patience for those who violate their oaths and ideals-including the summoner who called them. Archons will do whatever it takes to stop the advance of evil and protect the innocent.",
     "key": "Eidolon Subtype ~ Archon",
     "name": "Archon",
-    "description": "Summoned from heaven, archon eidolons are the embodiments of righteousness. They often take on powerful, graceful forms, rippling with muscles but refined in their movements. Archon eidolons are totally dedicated to the cause of good, and have little patience for those who violate their oaths and ideals-including the summoner who called them. Archons will do whatever it takes to stop the advance of evil and protect the innocent.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 28,
-    "record_key": "Eidolon Subtype ~ Archon"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Eidolon Subtype ~ Archon",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -433,7 +433,31 @@ mod tests {
         // same test's own RED-run assertion output against the pinned
         // oracle -- `raw_leaks` stays 187 (no new raw PCGen-syntax leak),
         // so both are rendering-only rewrites, not new leaks.
-        assert_eq!(changed.len(), 201, "exactly the leaking/rewritten records (SD31-W10-INTEGRATE-001: 200 - 2, the two excluded VISIBLE:EXPORT Mythic twins, + 1 SD-32 inner_sea_taverns row + 2 SD-32 T9 onboarding rows)");
+        // `AT-34-E3-003` bucket-U cycle 2 (2026-08-28, `36db23a053`,
+        // `decisions.md §17`): 201 -> 187, -14. `render_pcgen_desc` had no
+        // exemption for a bare `%` immediately preceded by a DIGIT ("75%
+        // chance...") -- unlike `leaked_pcgen_syntax`'s own correct
+        // digit-preceded exemption -- so it silently dropped the literal
+        // percent sign, making `served` differ from a `raw` string that was
+        // already clean, and wrongly counting the record as "rewritten".
+        // The fix mirrors that exemption in the render path (confirmed by
+        // this commit's own new unit test,
+        // `pcgen_desc::tests::a_digit_preceded_percent_sign_is_a_literal_
+        // sign_not_a_drop`). The 14 that dropped out of `changed`, named
+        // exactly (re-derived from this test's own RED-run diff against the
+        // exact-name pin below, not guessed): `Arcane Armor Training`,
+        // `Empower Spell-Like Ability ~ Ability`, `~ Spell`, `Greater
+        // Mesmerizing Feint`, `Hover`, `Lingering Spell-Like Ability`,
+        // `Messenger Of Fate`, `Mirror Kin`, `Phantom Fortification`,
+        // `Protector of the People`, `Reject Poison`, `Seeping Darkness`,
+        // `Spirit Sense`, `Tavern Regular` -- every one a feat whose corpus
+        // `DESC:`/`BENEFIT:` text carries a literal `N%` and nothing else
+        // `render_pcgen_desc` needed to rewrite, so it now renders
+        // byte-identical to its already-clean raw text.
+        // `raw_leaks` above is untouched: none of these 14 was ever a real
+        // leak (`leaked_pcgen_syntax` already exempted digit-preceded `%`),
+        // only the render path was wrongly disagreeing with it.
+        assert_eq!(changed.len(), 187, "exactly the leaking/rewritten records (AT-34-E3-003 bucket-U cycle 2, `36db23a053`: 201 - 14, the digit-preceded bare-`%` render-path defect fix)");
         // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 UC + 14 UM + 34 new
         // UPsi records. Every served description for all 185 is
         // confirmed leak-free by this same test's per-record
@@ -461,7 +485,6 @@ mod tests {
                 "Ambush Awareness",
                 "Animal Call",
                 "Aquatic Combatant",
-                "Arcane Armor Training",
                 "Arcane Strike",
                 "Battle Cry",
                 "Battlefield Healer",
@@ -497,8 +520,6 @@ mod tests {
                 "Earth Child Topple",
                 "Eidolon Mount",
                 "Empower Power",
-                "Empower Spell-Like Ability ~ Ability",
-                "Empower Spell-Like Ability ~ Spell",
                 "Energized Wild Shape",
                 "Expert Cartographer",
                 "Extended Bane",
@@ -517,7 +538,6 @@ mod tests {
                 "Greater Beast Hunter",
                 "Greater Hunter's Bond",
                 "Greater Intuitive Shot",
-                "Greater Mesmerizing Feint",
                 "Greater Spring Attack",
                 "Greater Whip Mastery",
                 "Gruesome Slaughter",
@@ -529,7 +549,6 @@ mod tests {
                 "Hex Strike",
                 "Hide Worker",
                 "Horse Master",
-                "Hover",
                 "Impact Critical Shot",
                 "Improved Beast Hunter",
                 "Improved Charging Hurler",
@@ -542,7 +561,6 @@ mod tests {
                 "Intuitive Shot",
                 "Learn Ranger Trap",
                 "Life Lure",
-                "Lingering Spell-Like Ability",
                 "Master Siege Engineer",
                 "Menacing Bane",
                 "Merciful Bane",
@@ -550,8 +568,6 @@ mod tests {
                 // `Messenger Of Fate` DESC/BENEFIT join differs from either
                 // raw field alone (the same rendering-only shape as the
                 // other gap-row entries in this list, not a new leak).
-                "Messenger Of Fate",
-                "Mirror Kin",
                 "Modified Blast",
                 "Monastic Legacy",
                 "Monkey Moves",
@@ -572,14 +588,12 @@ mod tests {
                 "Painful Anchor",
                 "Paralyzing Strike",
                 "Passing Trick",
-                "Phantom Fortification",
                 "Photosynthetic Healing",
                 "Pinpoint Poisoner",
                 "Piranha Strike",
                 "Planar Wanderer",
                 "Prone Slinger",
                 "Prophetic Visionary",
-                "Protector of the People",
                 "Psionic Bull Rush",
                 "Psionic Disarm",
                 "Psionic Overrun",
@@ -600,7 +614,6 @@ mod tests {
                 // SD-32 T9 onboarding (card 11): inner_sea_gods's own
                 // `Reject Poison` DESC/BENEFIT join differs from either raw
                 // field alone, same rendering-only shape as the entry above.
-                "Reject Poison",
                 "Remote Bomb",
                 "Resilient Eidolon",
                 "Revelation Strike",
@@ -609,7 +622,6 @@ mod tests {
                 "River Raider",
                 "School Strike",
                 "Scion of the Land",
-                "Seeping Darkness",
                 "Selective Power",
                 "Shapeshifting Hunter",
                 "Siege Engineer",
@@ -622,7 +634,6 @@ mod tests {
                 "Snap Shot",
                 "Sorcerous Strike",
                 "Spinning Throw",
-                "Spirit Sense",
                 "Stage Combatant",
                 "Staggering Fist",
                 "Street Sweep",
@@ -632,7 +643,6 @@ mod tests {
                 "Subtle Enchantments",
                 "Superior Scryer",
                 "Sword and Pistol",
-                "Tavern Regular",
                 "Thrill of the Hunt",
                 "Tiger Style",
                 "Toughened Suit",

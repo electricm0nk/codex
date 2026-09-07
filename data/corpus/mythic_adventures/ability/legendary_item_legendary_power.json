@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "All legendary items contain a pool of power--at least two uses that recharge each day. This power is called legendary power, and it works differently than mythic power. Any creature bearing the item can expend the items uses of legendary power, whether or not that creature is mythic. These uses of legendary power can be expended only to activate the legendary item's abilities. If the item's bearer isn't bonded to the item, she can expend the item's legendary power only to use its legendary surge ability.",
     "key": "Legendary Item ~ Legendary Power",
     "name": "Legendary Item ~ Legendary Power",
-    "description": "All legendary items contain a pool of power--at least two uses that recharge each day. This power is called legendary power, and it works differently than mythic power. Any creature bearing the item can expend the items uses of legendary power, whether or not that creature is mythic. These uses of legendary power can be expended only to activate the legendary item's abilities. If the item's bearer isn't bonded to the item, she can expend the item's legendary power only to use its legendary surge ability.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 621,
-    "record_key": "Legendary Item ~ Legendary Power"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 621,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Legendary Item ~ Legendary Power",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:22:49Z",
   "data": {
+    "description": "Your position in society grants you special insight into others, and special consideration or outright awe from others.Choose one of the following skills: Diplomacy, Intimidate, or Sense Motive. You gain a +1 trait bonus on that skill, and it is always a class skill for you.",
     "key": "Trait ~ Influence",
     "name": "Influence",
-    "description": "Your position in society grants you special insight into others, and special consideration or outright awe from others.Choose one of the following skills: Diplomacy, Intimidate, or Sense Motive. You gain a +1 trait bonus on that skill, and it is always a class skill for you.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
-    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
-    "line": 200,
-    "record_key": "Trait ~ Influence"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T18:22:49Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 200,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "record_key": "Trait ~ Influence",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

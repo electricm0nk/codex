@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Grows to Huge size (adjusting its Strength, Constitution, Dexterity, natural armor bonus, and size modifier to attacks and AC as detailed on page 296 of the Bestiary, and increasing the damage of all of its attacks as detailed on page 297 of this book). If the eidolon has the biped base form, its reach increases to 15 feet (10 feet for all other base forms). The eidolon must have the Large evolution and at least 10 Hit Dice to select this evolution.",
     "key": "Unfettered Eidolon Evolution ~ Huge",
     "name": "Huge",
-    "description": "Grows to Huge size (adjusting its Strength, Constitution, Dexterity, natural armor bonus, and size modifier to attacks and AC as detailed on page 296 of the Bestiary, and increasing the damage of all of its attacks as detailed on page 297 of this book). If the eidolon has the biped base form, its reach increases to 15 feet (10 feet for all other base forms). The eidolon must have the Large evolution and at least 10 Hit Dice to select this evolution.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 1741,
-    "record_key": "Unfettered Eidolon Evolution ~ Huge"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1741,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Unfettered Eidolon Evolution ~ Huge",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

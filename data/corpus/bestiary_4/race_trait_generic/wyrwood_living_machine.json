@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Through generations of refining the techniques of creation, many young wyrwoods have become closer to organic beings than constructs. These wyrwoods are constructs with the living machine subtype. They gain a Constitution score and can be targeted by spells and effects that target living creatures or constructs, as well as those that require a Fortitude save. They are no longer immune to ability damage, ability drain, energy drain, exhaustion, or fatigue. Wyrwoods with this trait require sleep, but they do not need to breathe or eat. They are not destroyed when reduced to 0 hit points, instead becoming unconscious and stable. They are destroyed when reduced to a negative number of hit points equal to their Constitution score. They can be raised or resurrected when destroyed.",
     "key": "Wyrwood ~ Living Machine",
     "name": "Living Machine",
-    "description": "Through generations of refining the techniques of creation, many young wyrwoods have become closer to organic beings than constructs. These wyrwoods are constructs with the living machine subtype. They gain a Constitution score and can be targeted by spells and effects that target living creatures or constructs, as well as those that require a Fortitude save. They are no longer immune to ability damage, ability drain, energy drain, exhaustion, or fatigue. Wyrwoods with this trait require sleep, but they do not need to breathe or eat. They are not destroyed when reduced to 0 hit points, instead becoming unconscious and stable. They are destroyed when reduced to a negative number of hit points equal to their Constitution score. They can be raised or resurrected when destroyed.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,18 +39,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
-    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d",
-    "line": 33,
-    "record_key": "Wyrwood ~ Living Machine"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "record_key": "Wyrwood ~ Living Machine",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

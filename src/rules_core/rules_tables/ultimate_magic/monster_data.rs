@@ -32,7 +32,7 @@
 //!   * `um_abilities_race.lst:19`
 //!   * `um_abilities_race.lst:20`
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
 /// Every ultimate_magic monster stat block (0 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[

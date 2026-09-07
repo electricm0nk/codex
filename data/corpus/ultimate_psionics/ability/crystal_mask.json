@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Equipment ~ Crystal Mask",
     "name": "Crystal Mask",
-    "description": null,
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
-    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
-    "line": 291,
-    "record_key": "Equipment ~ Crystal Mask"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 291,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "record_key": "Equipment ~ Crystal Mask",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "At 1st level and every 2 levels thereafter, the devil binder's eidolon gains the following spell-like abilities: Protection from Chaos (1st), Scorching Ray (3rd), Suggestion (5th), Charm Monster (7th), Dominate Person (9th), Planar Binding (Devils Only) (11th), Greater Teleport (13th), Power Word Stun (15th), Meteor Swarm (17th). Each of these spell-like abilities is usable once per day, and the eidolon's caster level is equal to the devil binder's summoner level. When the eidolon casts planar binding this way, the devil binder is considered to be the spell's caster instead. At 19th level, the devil binder's eidolon can use each of its infernal arcana spell-like abilities three times per day.",
     "key": "Devil Binder ~ Infernal Arcana",
     "name": "Infernal Arcana",
-    "description": "At 1st level and every 2 levels thereafter, the devil binder's eidolon gains the following spell-like abilities: Protection from Chaos (1st), Scorching Ray (3rd), Suggestion (5th), Charm Monster (7th), Dominate Person (9th), Planar Binding (Devils Only) (11th), Greater Teleport (13th), Power Word Stun (15th), Meteor Swarm (17th). Each of these spell-like abilities is usable once per day, and the eidolon's caster level is equal to the devil binder's summoner level. When the eidolon casts planar binding this way, the devil binder is considered to be the spell's caster instead. At 19th level, the devil binder's eidolon can use each of its infernal arcana spell-like abilities three times per day.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 62,
-    "record_key": "Devil Binder ~ Infernal Arcana"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 62,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Devil Binder ~ Infernal Arcana",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
 }

@@ -1,0 +1,122 @@
+{
+  "lane": "H2",
+  "lane_title": "Denominator Backstop",
+  "timestamp": "2026-08-31",
+  "census_findings": [
+    {
+      "id": "census-001",
+      "category": "census",
+      "severity": "P1",
+      "title": "src/ Rust codebase: 438 files",
+      "short_summary": "438 .rs files in src/ (measured by find src -name '*.rs' -type f | wc -l)",
+      "evidence": "438 = 352 (rules_core) + 56 (bin) + 14 (pcgen_import) + 7 (oracle_validation) + 4 (homebrew_authoring) + 2 (campaign) + 2 (saved_character) + 1 (lib.rs)",
+      "context": "Total source code files across all src/ subdirectories"
+    },
+    {
+      "id": "census-002",
+      "category": "census",
+      "severity": "P1",
+      "title": "src/ Rust codebase: 421,065 total lines",
+      "short_summary": "421,065 lines in src/ (measured by wc -l $(find src -name '*.rs' -type f) | tail -1)",
+      "evidence": "421,065 = 352,463 (rules_core) + 55,250 (bin) + 7,995 (pcgen_import) + 1,885 (homebrew_authoring) + 1,743 (oracle_validation) + 877 (campaign) + 841 (saved_character) + 11 (lib.rs)",
+      "context": "Total lines of code in src/"
+    },
+    {
+      "id": "census-003",
+      "category": "census",
+      "severity": "P1",
+      "title": "rules_core subdirectory: 352 files, 352,463 lines",
+      "short_summary": "352 .rs files and 352,463 lines in src/rules_core (measured by find src/rules_core -name '*.rs' -type f | wc -l and wc -l)",
+      "evidence": "352 files (83.3% of src/ total), 352,463 lines (83.7% of src/ total)",
+      "context": "Core business logic for character building and rules evaluation"
+    },
+    {
+      "id": "census-004",
+      "category": "census",
+      "severity": "P1",
+      "title": "bin subdirectory: 56 files, 55,250 lines",
+      "short_summary": "56 .rs files and 55,250 lines in src/bin (measured by find src/bin -name '*.rs' -type f | wc -l and wc -l)",
+      "evidence": "56 binary entry points including generators, auditors, and utilities (12.8% of src/ file count, 13.1% of src/ lines)",
+      "context": "Stand-alone executable tools and utility binaries"
+    },
+    {
+      "id": "census-005",
+      "category": "census",
+      "severity": "P1",
+      "title": "Tauri desktop app: 36 files, 47,072 lines",
+      "short_summary": "36 .rs files and 47,072 lines in apps/desktop/src-tauri/src (measured by find apps/desktop/src-tauri/src -name '*.rs' -type f | wc -l and wc -l)",
+      "evidence": "36 files in separate Cargo workspace (apps/desktop/src-tauri is workspace root)",
+      "context": "Character Hub desktop UI backend (separate from main src/ crate)"
+    },
+    {
+      "id": "census-006",
+      "category": "census",
+      "severity": "P1",
+      "title": "Test suite: 543 files, 187,008 lines",
+      "short_summary": "543 .rs files and 187,008 lines in tests/ (measured by find tests -name '*.rs' -type f | wc -l and wc -l)",
+      "evidence": "543 test files: 483 with SD-prefix, 60 with other prefixes (ge06, v06, golden_case, etc.)",
+      "context": "Integration and system tests organized by release deliverable (SD) and feature area"
+    },
+    {
+      "id": "census-007",
+      "category": "census",
+      "severity": "P1",
+      "title": "Test files by SD release family",
+      "short_summary": "SD-13: 175 files; SD-18: 117 files; SD-20: 57 files; SD-22: 30 files; SD-27: 29 files; SD-19: 16 files; SD-24: 15 files (measured by find tests -name 'sdNN*.rs' -type f | wc -l for each)",
+      "evidence": "Major families: SD-13 (175), SD-18 (117), SD-20 (57), SD-22 (30), SD-27 (29); smaller: SD-19 (16), SD-24 (15), SD-26 (10), SD-25 (9), SD-21 (4), SD-31 (4), SD-17 (11), SD-14 (1), SD-28 (1), SD-29 (1), SD-30 (1), SD-49 (1), SD-governance (1); other (60)",
+      "context": "483 of 543 total test files are prefixed with SD release tags"
+    },
+    {
+      "id": "census-008",
+      "category": "census",
+      "severity": "P1",
+      "title": "Scripts: 164 Python, 23 shell scripts",
+      "short_summary": "164 .py files and 23 .sh files in scripts/ (measured by find scripts -name '*.py' -type f | wc -l and find scripts -name '*.sh' -type f | wc -l)",
+      "evidence": "187 total script files (164 Python, 23 shell)",
+      "context": "Automation, code generation, and maintenance scripts"
+    },
+    {
+      "id": "census-009",
+      "category": "census",
+      "severity": "P1",
+      "title": "Test functions: 3,833 in src/, 4,597 in tests/",
+      "short_summary": "8,430 #[test] functions total (3,833 in src/, 4,597 in tests/) (measured by grep -r '#\\[test\\]' src/ | wc -l and grep -r '#\\[test\\]' tests/ | wc -l)",
+      "evidence": "3,833 unit/module tests in src/, 4,597 integration tests in tests/ (54.5% unit, 45.5% integration)",
+      "context": "Comprehensive test coverage split between unit tests and integration/system tests"
+    },
+    {
+      "id": "census-010",
+      "category": "census",
+      "severity": "P1",
+      "title": "Binary entry points: 56 in src/bin",
+      "short_summary": "56 binary files declared as entry points in src/bin (measured by find src/bin -maxdepth 1 -type f -name '*.rs' | wc -l)",
+      "evidence": "56 distinct binaries including: gen_* generators (15), ingest_* importers (6), enrich_* enrichers (8), e5/e6 evaluation tools (14), utility tools (13)",
+      "context": "Executable tools for code generation, data import, evaluation, and validation"
+    },
+    {
+      "id": "census-011",
+      "category": "census",
+      "severity": "P1",
+      "title": "No files marked as GENERATED FILE",
+      "short_summary": "No .rs or .json files in codebase have 'GENERATED FILE' marker in first lines (measured by find data -type f \\( -name '*.json' -o -name '*.rs' \\) -exec head -1 {} \\; | grep -i 'GENERATED FILE' | wc -l)",
+      "evidence": "0 files with GENERATED FILE marker found in data/ or elsewhere",
+      "context": "All source files are source-of-record (no generated code to skip)"
+    },
+    {
+      "id": "census-012",
+      "category": "census",
+      "severity": "P1",
+      "title": "Subdirectory line distribution in src/",
+      "short_summary": "rules_core: 352,463 lines (83.7%); bin: 55,250 lines (13.1%); pcgen_import: 7,995 lines (1.9%); homebrew_authoring: 1,885 lines (0.4%); oracle_validation: 1,743 lines (0.4%); campaign: 877 lines (0.2%); saved_character: 841 lines (0.2%); lib.rs: 11 lines (<0.1%)",
+      "evidence": "Measured by wc -l for each subdirectory",
+      "context": "Concentration of code: 83.7% in rules_core, balance in infrastructure and utilities"
+    }
+  ],
+  "lane_summary": {
+    "total_findings": 12,
+    "files_reviewed": 0,
+    "files_skipped_generated": 0,
+    "methodology": "Census-only: measured source code metrics via find/wc/grep without inspecting file contents except for first-line GENERATED FILE marker check",
+    "notes": "H2 lane establishes baseline denominator metrics for SD-34 review. All measurements are read-only census counts of: source files and lines (src/ split by subdirectory + apps/desktop/src-tauri), test files and lines (tests/ split by SD family), scripts (.py and .sh), #[test] functions, and binary entry points. No code defects found; lane reports baseline census only."
+  }
+}

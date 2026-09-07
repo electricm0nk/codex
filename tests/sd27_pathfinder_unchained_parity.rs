@@ -171,9 +171,9 @@ fn pcgen_gradle_wrapper_is_runnable(pcgen_repo_dir: &Path) -> bool {
     #[cfg(unix)]
     {
         use std::os::unix::fs::PermissionsExt;
-        return std::fs::metadata(&gradlew)
+        std::fs::metadata(&gradlew)
             .map(|meta| (meta.permissions().mode() & 0o111) != 0)
-            .unwrap_or(false);
+            .unwrap_or(false)
     }
     #[cfg(not(unix))]
     {

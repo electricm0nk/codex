@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:08Z",
   "data": {
     "key": "D'ziriak",
     "name": "D'ziriak",
@@ -12,20 +11,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_languages.lst",
-    "sha256": "5846bf0668c9f21689ebe870447b066632dfb3a322754f659a1f2dd6a8fabdb5",
-    "line": 6,
-    "record_key": "D'ziriak"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:08Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_languages.lst",
+    "record_key": "D'ziriak",
+    "sha256": "5846bf0668c9f21689ebe870447b066632dfb3a322754f659a1f2dd6a8fabdb5"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

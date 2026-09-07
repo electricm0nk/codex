@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:08Z",
   "data": {
     "key": "Truespeech",
     "name": "Truespeech",
@@ -12,20 +11,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_languages.lst",
-    "sha256": "3d45adfeff3766f3165be21a7a8366a8877358687362333959cda7fdfa9b9e8e",
-    "line": 14,
-    "record_key": "Truespeech"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:08Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_languages.lst",
+    "record_key": "Truespeech",
+    "sha256": "3d45adfeff3766f3165be21a7a8366a8877358687362333959cda7fdfa9b9e8e"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

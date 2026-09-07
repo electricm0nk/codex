@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "[not implemeted] You retrained one or more class features. This ability tracks each 5 days spent to retrain a class feature.",
     "key": "Retrain ~ Class Feature",
     "name": "Class Feature",
-    "description": "[not implemeted] You retrained one or more class features. This ability tracks each 5 days spent to retrain a class feature.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
-    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643",
-    "line": 19,
-    "record_key": "Retrain ~ Class Feature"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
+    "record_key": "Retrain ~ Class Feature",
+    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
 }

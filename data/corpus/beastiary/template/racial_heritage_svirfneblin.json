@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:15Z",
   "data": {
     "key": "Racial Heritage ~ Svirfneblin",
     "name": "Svirfneblin",
@@ -24,20 +23,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/svirfneblin/svirfneblin_templates.lst",
-    "sha256": "b5191f6a83e417cdaf25406171786efc894738e45ff4bdd8ff1576e00a980fe0",
-    "line": 9,
-    "record_key": "Racial Heritage ~ Svirfneblin"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:15Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/svirfneblin/svirfneblin_templates.lst",
+    "record_key": "Racial Heritage ~ Svirfneblin",
+    "sha256": "b5191f6a83e417cdaf25406171786efc894738e45ff4bdd8ff1576e00a980fe0"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

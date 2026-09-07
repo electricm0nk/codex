@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "At 20th level, plant eidolons gain a +8 resistance bonus on saving throws against mind- affecting effects. They lose their resistance (electricity) and resistance (sonic) evolutions and instead gain the immunity (electricity) and immunity (sonic) evolutions.",
     "key": "Plant ~ Unchained Eidolon LVL20",
     "name": "Eidolon Progession Lv.20",
-    "description": "At 20th level, plant eidolons gain a +8 resistance bonus on saving throws against mind- affecting effects. They lose their resistance (electricity) and resistance (sonic) evolutions and instead gain the immunity (electricity) and immunity (sonic) evolutions.",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -47,22 +47,22 @@
         "key": "ASPECT",
         "value": "SaveBonus|+8 resistance bonus on saving throws against mind-affecting effects."
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
-    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b",
     "line": 28,
-    "record_key": "Plant ~ Unchained Eidolon LVL20"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
+    "record_key": "Plant ~ Unchained Eidolon LVL20",
+    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:33:12Z",
   "data": {
     "key": "Magus",
     "name": "Magus",
@@ -116,18 +114,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes.lst",
-    "sha256": "37ee634a6ab299054039df25ee5a009ae92c7596da79fd30d2f2c42b593b9d9a",
-    "line": 8,
-    "record_key": "Magus"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_class_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:33:12Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes.lst",
+    "record_key": "Magus",
+    "sha256": "37ee634a6ab299054039df25ee5a009ae92c7596da79fd30d2f2c42b593b9d9a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ]
 }

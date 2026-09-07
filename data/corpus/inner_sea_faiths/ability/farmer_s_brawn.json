@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, you treat your carrying capacity as though your Strength ability score were 3 points higher than it actually is. Once per day, as long as you are wearing light, medium, or no armor, you can lift up to two unconscious or dead Medium or smaller creatures and their equipment onto your shoulders and still move up to your base speed, ignoring the added weight of your fallen comrades. You cannot both attack and move in the same round while carrying one or more creatures in this way. You can carry your companions in this way for %1 rounds; afterward, they encumber you as normal.|TL",
     "key": "Evangelist Boon ~ Kurgess ~ Farmer's Brawn",
     "name": "Farmer's Brawn",
-    "description": "If you have performed your daily obedience, you treat your carrying capacity as though your Strength ability score were 3 points higher than it actually is. Once per day, as long as you are wearing light, medium, or no armor, you can lift up to two unconscious or dead Medium or smaller creatures and their equipment onto your shoulders and still move up to your base speed, ignoring the added weight of your fallen comrades. You cannot both attack and move in the same round while carrying one or more creatures in this way. You can carry your companions in this way for %1 rounds; afterward, they encumber you as normal.|TL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
-    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
-    "line": 249,
-    "record_key": "Evangelist Boon ~ Kurgess ~ Farmer's Brawn"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 249,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "record_key": "Evangelist Boon ~ Kurgess ~ Farmer's Brawn",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

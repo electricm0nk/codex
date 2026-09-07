@@ -80,6 +80,6 @@
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_ability_scaling",
-    "display:no_magnitude_token"
+    "static:literal_magnitudes_only"
   ]
 }

@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Vishkanyas. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidVishkanya",
     "key": "Favored Enemy ~ Humanoid (Vishkanya)",
     "name": "Humanoid (Vishkanya)",
-    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Vishkanyas. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidVishkanya",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
-    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627",
     "line": 33,
-    "record_key": "Favored Enemy ~ Humanoid (Vishkanya)"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+    "record_key": "Favored Enemy ~ Humanoid (Vishkanya)",
+    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

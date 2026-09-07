@@ -268,13 +268,12 @@ pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhanc
             // bonus`, deliberately keeps unrecognized), never a single
             // literal proficiency name PCGen's own `getProfName(eq)`
             // would compare a specific weapon's proficiency against.
-            if !name.starts_with("TYPE.") && is_roll_shape && qualifiers.len() >= 3 {
-                if let Ok(bonus_value) = qualifiers[2].parse::<i16>() {
+            if !name.starts_with("TYPE.") && is_roll_shape && qualifiers.len() >= 3
+                && let Ok(bonus_value) = qualifiers[2].parse::<i16>() {
                     matched = true;
                     weapon_prof_scope = Some(name.to_string());
                     apply(&qualifiers[1], bonus_value);
                 }
-            }
         }
     }
 

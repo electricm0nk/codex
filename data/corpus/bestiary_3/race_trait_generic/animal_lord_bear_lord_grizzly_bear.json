@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Bear lords have broad shoulders, sharp teeth, and thick fingers. Bear lords gain the following additional ability.",
     "key": "Animal Lord ~ Bear Lord (Grizzly Bear)",
     "name": "Bear Lord (Grizzly Bear)",
-    "description": "Bear lords have broad shoulders, sharp teeth, and thick fingers. Bear lords gain the following additional ability.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -117,18 +115,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 337,
-    "record_key": "Animal Lord ~ Bear Lord (Grizzly Bear)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 337,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Animal Lord ~ Bear Lord (Grizzly Bear)",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

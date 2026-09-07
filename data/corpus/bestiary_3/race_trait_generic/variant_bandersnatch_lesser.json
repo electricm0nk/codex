@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Smaller or younger bandersnatches are still fearsome predators in their own right. A lesser bandersnatch is Huge, with 4 fewer Hit Dice than a typical bandersnatch. Reduce its physical ability scores by 4 each and its Wisdom and Charisma by 2 each. A lesser bandersnatch lacks quick recovery and deals 1d8+4 points of damage with its quill defense and pain abilities. Lesser bandersnatches never have any additional variant powers.",
     "key": "Variant Bandersnatch ~ Lesser",
     "name": "Lesser Bandersnatch (-4 CR)",
-    "description": "Smaller or younger bandersnatches are still fearsome predators in their own right. A lesser bandersnatch is Huge, with 4 fewer Hit Dice than a typical bandersnatch. Reduce its physical ability scores by 4 each and its Wisdom and Charisma by 2 each. A lesser bandersnatch lacks quick recovery and deals 1d8+4 points of damage with its quill defense and pain abilities. Lesser bandersnatches never have any additional variant powers.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
     "line": 464,
-    "record_key": "Variant Bandersnatch ~ Lesser"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Variant Bandersnatch ~ Lesser",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

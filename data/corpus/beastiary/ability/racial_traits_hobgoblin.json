@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Racial Traits ~ Hobgoblin",
     "name": "Racial Traits ~ Hobgoblin",
-    "description": null,
     "raw_tokens": [
       {
         "key": "DEFINE",
@@ -17,20 +16,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/hobgoblin/hobgoblin_abilities_globalvar.lst",
-    "sha256": "4f00a7983fc059fd7e9d3e9291eaa4f42be34a89c5808c3aae85f20340c2a05d",
-    "line": 10,
-    "record_key": "Racial Traits ~ Hobgoblin"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/hobgoblin/hobgoblin_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Hobgoblin",
+    "sha256": "4f00a7983fc059fd7e9d3e9291eaa4f42be34a89c5808c3aae85f20340c2a05d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

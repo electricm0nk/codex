@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Add the selected spell to one of your classes' spell list. You can automatically scribe this spell into your spellbook, teach the spell to your familiar (if you are a witch), or learn the spell in place of a spell of an equal level that you already know (if you are a spontaneous spellcaster).",
     "key": "Mantis Magic Scribe ~ Secret Society",
     "name": "Mantis Magic (Scribe)",
-    "description": "Add the selected spell to one of your classes' spell list. You can automatically scribe this spell into your spellbook, teach the spell to your familiar (if you are a witch), or learn the spell in place of a spell of an equal level that you already know (if you are a spontaneous spellcaster).",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
-    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
-    "line": 179,
-    "record_key": "Mantis Magic Scribe ~ Secret Society"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 179,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Mantis Magic Scribe ~ Secret Society",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

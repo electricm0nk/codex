@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "%1 times per day, you can summon a rat swarm or a wolf, as if using summon nature's ally II with a caster level equal to your character level. The creature serves you for 10 minutes or until destroyed.|(VampirismManifestationLevel+1)/2",
     "key": "Vampirism Corruption ~ Children of the Night Gift",
     "name": "Children of the Night Gift",
-    "description": "%1 times per day, you can summon a rat swarm or a wolf, as if using summon nature's ally II with a caster level equal to your character level. The creature serves you for 10 minutes or until destroyed.|(VampirismManifestationLevel+1)/2",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,23 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 894,
-    "record_key": "Vampirism Corruption ~ Children of the Night Gift"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 894,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Vampirism Corruption ~ Children of the Night Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

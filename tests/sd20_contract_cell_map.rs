@@ -32,6 +32,7 @@ fn fighter_level_1_input() -> CharacterInput {
         case_id: Some("sd20_contract_cell_map".to_string()),
         source_package_id: "sd20_contract_cell_map".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             // "class:fighter" (not the bare "fighter" some sibling SD-19/SD-20
             // fixtures use) is required to hit `compute_fighter_chassis`'s

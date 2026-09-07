@@ -1,0 +1,30 @@
+# Build parallelism is capped because this repo is built on a Proxmox guest whose host
+# STOPS THE VM when it believes the guest has consumed its whole RAM allocation.
+#
+# CORRECTION to an earlier version of this comment, which claimed the guest ran out of
+# anonymous memory: it did not, and the claim came from reading the wrong sysstat column.
+# On 2026-08-30 MemFree fell 64.0G -> 1.3G between 20:00 and 21:00, but MemAvailable never
+# moved off 160.7G -- the whole drop was page cache growing 93G -> 155G. Reclaimable to
+# Linux; still guest-physical pages the host never gets back without ballooning. The box
+# was stopped at 22:12.
+#
+# Page cache is therefore the primary cause, and /usr/local/sbin/pagecache-guard.sh (root
+# cron, every 5 min) is the primary fix. This `jobs` cap is the secondary one: it bounds
+# concurrent rustc memory and slows the rate at which build artifacts fill the cache.
+#
+# The cause is build fan-out, not any one build. Dispatch waves run up to three lanes at
+# once, each invoking `cargo test` over a ~600-target workspace. Cargo defaults `jobs` to
+# the CPU count -- 24 here -- so three lanes could hold ~72 concurrent rustc processes,
+# and a single rustc linking a large test binary can take well over a gigabyte.
+#
+# 6 keeps a three-lane wave at ~18 concurrent compilations instead of ~72, which fits with
+# headroom. Wall-clock cost is real but small next to losing an entire wave: wave 13 lost
+# 38 minutes and wave 17 died mid-flight.
+#
+# Raise this ONLY after re-checking the memory trend under a full three-lane wave:
+#   sar -r -f /var/log/sysstat/sa$(date +%d) | grep -E 'AM|PM'
+# and confirming free memory stays comfortably above a few GB at the peak. A single-lane
+# run can safely override for speed with `cargo build -j 24` on the command line, which
+# takes precedence over this file.
+[build]
+jobs = 6

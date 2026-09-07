@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You gain a +1 trait bonus on Intimidate checks and Intimidate is a class skill for you. You gain a +2 trait bonus on Diplomacy checks when interacting with hags.",
     "key": "Trait ~ Creepy",
     "name": "Creepy",
-    "description": "You gain a +1 trait bonus on Intimidate checks and Intimidate is a class skill for you. You gain a +2 trait bonus on Diplomacy checks when interacting with hags.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
-    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
-    "line": 49,
-    "record_key": "Trait ~ Creepy"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 49,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "record_key": "Trait ~ Creepy",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

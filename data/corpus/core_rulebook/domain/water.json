@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:18:10Z",
   "data": {
     "key": "Water",
     "name": "Water",
@@ -44,20 +43,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
-    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
-    "line": 43,
-    "record_key": "Water"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "record_key": "Water",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

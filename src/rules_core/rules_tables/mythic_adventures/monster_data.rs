@@ -40,7 +40,7 @@
 //!   * `ma_abilities_race.lst:362`
 //!   * `ma_abilities_race.lst:363`
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
 /// Every mythic_adventures monster stat block (0 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[

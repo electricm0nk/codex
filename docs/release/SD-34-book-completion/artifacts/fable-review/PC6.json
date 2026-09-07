@@ -1,0 +1,100 @@
+{
+  "lane": "PC6",
+  "findings": [
+    {
+      "id": "PC6-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 34637,
+      "line_end": 36007,
+      "severity": "P2",
+      "category": "bloat",
+      "title": "Ranger favored-enemy/favored-terrain/combat-style bonus-feat blocks are ~1400 lines of near-identical per-tier if-let arms",
+      "evidence": "explain_ranger_level1_chassis_and_class_feature_separation contains 5 near-identical combat-style bonus-feat blocks (34637-34897, one per tier 2/6/10/14/18), 5 near-identical favored-enemy selection+bonus blocks (34926-35505, one per interval 1/5/10/15/20), and 4 near-identical favored-terrain blocks (35607-36007, tiers 3/8/13/18). Each block repeats the same choice_selection -> match-to-restricted-name -> push ComputationExplanation shape, differing only in level thresholds, choice-id constants, and a hardcoded option list. E.g. lines 34702-34751 (2nd combat-style bonus feat) vs 34763-34812 (3rd) vs 34828-34854 (4th) are structurally identical modulo the swapped constant names.",
+      "fix_description": "Replace the per-tier arms with one table of (interval_level, choice_id, restricted_option_list_or_open_ended) tuples consumed by a single loop/helper, mirroring the pattern already used for barbarian_rage_tier/monk_unarmed_strike_damage_die elsewhere in the file. Would collapse ~1400 lines to well under 200 while keeping every id/detail string derivable from the tuple.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Each explanation id and detail string is treated as a public contract read by v06_work_inventory's classifier (per in-file comments elsewhere in this chunk), so any refactor must preserve exact ids/values -- not mechanically provable by cargo check alone, needs a snapshot/receipt diff."
+    },
+    {
+      "id": "PC6-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 34399,
+      "line_end": 40336,
+      "severity": "P2",
+      "category": "structure",
+      "title": "Three giant single-class functions in this chunk are natural submodule-extraction seams",
+      "evidence": "explain_ranger_level1_chassis_and_class_feature_separation spans 34399-36757 (~2360 lines), explain_barbarian_level1_chassis spans 37171-37802 (631 lines), explain_monk_level1_chassis spans 38568-40336 (~1768 lines) -- all inside one 78,506-line mod.rs. The file's own later comment (around line 42196, ground_class_weapon_and_armor_proficiency's doc) explicitly references an existing `class_slayer.rs` module as precedent for splitting class-specific logic out of this file.",
+      "fix_description": "Extract each class's explain_/supported_/ground_*-level1_chassis function family (plus its private helpers, e.g. barbarian_rage_tier, monk_unarmed_strike_damage_die) into class_ranger.rs / class_barbarian.rs / class_monk.rs alongside the already-existing class_slayer.rs, re-exporting through pilot_compute::mod.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Pure code-motion if done via `pub(crate)` re-exports with no logic changes; still needs a full workspace build to confirm no accidental visibility breakage, which this read-only lane cannot run."
+    },
+    {
+      "id": "PC6-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 40510,
+      "line_end": 41554,
+      "severity": "P3",
+      "category": "structure",
+      "title": "Generic pool-magnitude resolver infrastructure is a self-contained ~1050-line unit that could be its own module",
+      "evidence": "resolve_class_feature_bonus_var, pool_header_record_by_normalized_suffix, pool_group_header_vars_merged, pool_member_terminal_targets_and_resolved_vars, resolve_pool_member_sole_magnitude, resolve_pool_member_all_magnitudes, formula_names_identifier, resolve_pool_selection_corpus_key, push_generic_pool_choice_magnitude, push_generic_pool_group_selection_magnitude, generic_pool_group_selection_observed_keys, push_generic_pool_group_selection_description_magnitude, real_pool_group_for_selection_slug, strip_prefix_case_insensitive (lines 40510-41554) form a cohesive, class-agnostic corpus-resolution layer sandwiched between per-class explain_* functions (Rogue before and after it), with no CharacterInput-shape dependency beyond generic string keys.",
+      "fix_description": "Extract into a dedicated class_feature_pool_resolver.rs module; the per-class callers (push_generic_pool_choice_magnitude/push_generic_pool_group_selection_magnitude call sites elsewhere in the file) would import it instead of relying on same-file visibility.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "None of these functions are pub outside the crate today (pub(crate) at most); a naive extraction needs visibility review across the whole 78k-line file, out of this lane's read-only scope to verify."
+    },
+    {
+      "id": "PC6-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 41341,
+      "line_end": 41355,
+      "severity": "P3",
+      "category": "hazard",
+      "title": "generic_pool_group_selection_observed_keys recovers structured data by substring-scanning free-text explanation detail strings",
+      "evidence": "The function greps every ComputationExplanation.detail for the literal marker \"corpus key `\" and slices out the text up to the next backtick, to recover which corpus keys were genuinely emitted this run (used by v06_work_inventory's completion-atlas classifier per the doc comment at 41319-41340). The two emitting call sites' format strings live ~120 and ~940 lines away (push_generic_pool_choice_magnitude line ~41222, push_generic_pool_group_selection_magnitude line ~41304).",
+      "fix_description": "Carry the corpus key as a real struct field (or a side-channel Vec<String> returned alongside explanations) instead of parsing it back out of prose meant for humans; the doc comment already argues this was a deliberate choice to avoid reconstructing the id-slug scheme, but a typed field would remove the have-to-keep-two-format-strings-in-sync risk entirely.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "If either emitting format string's wording changes (e.g. someone rewords \"corpus key\" or changes the backtick quoting) this silently returns fewer keys with no compiler or type-level signal -- only a downstream count drift, which per repo history (see docs/release/SD-34 notes on 'field name is not its meaning') has previously been mistaken for a real regression rather than a string-format break."
+    },
+    {
+      "id": "PC6-5",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 35235,
+      "line_end": 35263,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "A third ComputationExplanation record duplicates an already-pushed value purely to satisfy a downstream classifier's suffix matching",
+      "evidence": "class_feature.ranger.favored_enemy (35250-35263) pushes the exact same favored_enemy_bonus value already pushed twice above under class_chassis.ranger.favored_enemy_skill_bonus (35206) and class_chassis.ranger.favored_enemy_attack_damage_bonus (35220), solely because v06_work_inventory.rs's CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES list does not recognize the \"_skill_bonus\"/\"_attack_damage_bonus\"/\"_choice\" suffixes those two ids end in (per the comment's own admission).",
+      "fix_description": "Fix the classifier's suffix list (or its matching predicate) to recognize the two existing ids, removing the need for a third, value-duplicating explanation record whose only job is to be found by a naming convention.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Out of this file's scope (fix lives in v06_work_inventory.rs / scripts/completion_atlas.py territory, both excluded from auto_fix by the review's own ground rules); flagging for correlation only."
+    },
+    {
+      "id": "PC6-6",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 39793,
+      "line_end": 39796,
+      "severity": "P3",
+      "category": "bug",
+      "title": "Redundant .expect() re-derives a value the enclosing if-condition already proved Some",
+      "evidence": "if recognized_bonus_feat_name == Some(\"Catch Off-Guard\") || recognized_bonus_feat_name == Some(\"Throw Anything\") { let feat_name = recognized_bonus_feat_name.expect(\"checked above\"); ... }",
+      "fix_description": "Rewrite as `if let Some(feat_name @ (\"Catch Off-Guard\" | \"Throw Anything\")) = recognized_bonus_feat_name { ... }` to remove the panic-shaped call entirely; behaviorally identical today since the condition guarantees Some, so purely a clarity fix.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "No live risk -- the expect cannot actually panic given the guard -- purely a style/simplification note."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "cross_chunk": [
+      "Duplicate-candidate quintet per partial-caster class (found here for Paladin at 34050-34248 and Ranger at 36757-36940, both in this chunk's boundary region -- check other chunks for Cleric/Druid/Bard/Sorcerer/Wizard equivalents): fn X_spell_level_access(level: u8) -> i16; fn X_base_spells_per_day_table(level: u8) -> [Option<i16>; 4]; fn X_total_spells_per_day(level: u8, ability_modifier: i16) -> [Option<i16>; 4]; fn unmet_X_prepared_spell_conditions(input: &CharacterInput, level: u8, ability_modifiers: &AbilityModifiers) -> Vec<String>; fn ground_X_prepared_spells(input: &CharacterInput, level: u8, ability_modifiers: &AbilityModifiers, explanations: &mut Vec<ComputationExplanation>)",
+      "Duplicate-candidate per-class level gate: fn supported_X_level(input: &CharacterInput) -> Option<u8> -- identical single-class-slice-match shape seen in this chunk for Sorcerer (36952), Barbarian (36972), Monk (38229), Rogue (40336); doc comments name Fighter/Paladin/Rogue/Cleric/Bard/Druid siblings living elsewhere in the file -- strong candidate for one generic fn supported_single_class_level(input, class_id, max_level) -> Option<u8> helper.",
+      "Duplicate-candidate restricted-choice bonus-feat recognition idiom: the archery/two-weapon-combat combat-style bonus-feat blocks in this chunk (34637-34897, ranger) match choice_selection(...) against a hardcoded FEAT_SELECTION constant list per tier -- check other chunks for a structurally identical idiom on Fighter bonus feats, Slayer talents, or other restricted-list class-feature choices that might share a helper.",
+      "fn resolve_class_feature_bonus_var(record_key: &str, class_level_var: &str, target_var: &str, level: u8, ability_modifiers: &AbilityModifiers) -> Option<i16> (40510) vs the generic pool_member_terminal_targets_and_resolved_vars/resolve_pool_member_sole_magnitude family (40983-41065) -- both resolve a class-feature record's BONUS:VAR chain to a target value; coexistence is explicitly documented as intentional (bespoke single-target vs generic multi-target), but worth checking whether other chunks introduce a third near-duplicate resolver."
+    ],
+    "notes": "Reviewed lines 34399-42315 (snapped from the assigned 35000-42316 to the enclosing top-level items: start at fn explain_ranger_level1_chassis_and_class_feature_separation, end at fn ground_class_weapon_and_armor_proficiency, immediately before the #[cfg(test)] mod base_class_weapon_and_armor_proficiency_tests boundary at line 42316). Skimmed (not read line-by-line) the ~230-line Paladin spell block at 34050-34248 for cross_chunk correlation only, since it sits just above my assigned start. File header does not contain 'GENERATED FILE'; 0 of 1 files in scope were skipped as generated. No unwrap()/panic!/todo!/unimplemented! found in-range via grep except one safe .expect() (finding PC6-6) and two benign unwrap_or(0) numeric defaults (lines ~36870, ~38151) used only for display formatting after the real value was already validated upstream, not correctness hazards. Manually traced the favored-enemy/favored-terrain bonus-increase-stacking boolean arithmetic (lines 34926-36007) across all 4-5 interval tiers for copy-paste drift (a real risk shape given the volume of near-identical arms) and found it internally consistent -- no correctness bug found there despite the heavy duplication, so the top finding is bloat/duplication (P2), not a P1 correctness defect. Did not find any dead/unreachable branches, silent-fallback-hiding-real-errors, or unchecked-unwrap-on-external-data pattern in this range. Test module at 42316 onward is out of assigned range; skimmed only its opening use-statement line to confirm the top-level-item boundary."
+  }
+}

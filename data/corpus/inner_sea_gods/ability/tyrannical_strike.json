@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "At 8th level, as an immediate action upon successfully hitting an opponent with a melee attack, you can choose to forgo the damage (but not any other effects of the attack) to instead affect the creature you hit as a greater command spell, with a caster level equal of %1. You can use this ability %2 times per day.|DomainLawLVL|DomainLawLVL/4-1",
     "key": "Domain Power ~ Tyrannical Strike",
     "name": "Tyrannical Strike",
-    "description": "At 8th level, as an immediate action upon successfully hitting an opponent with a melee attack, you can choose to forgo the damage (but not any other effects of the attack) to instead affect the creature you hit as a greater command spell, with a caster level equal of %1. You can use this ability %2 times per day.|DomainLawLVL|DomainLawLVL/4-1",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 281,
-    "record_key": "Domain Power ~ Tyrannical Strike"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 281,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Domain Power ~ Tyrannical Strike",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

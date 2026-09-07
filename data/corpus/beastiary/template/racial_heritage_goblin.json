@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:15Z",
   "data": {
     "key": "Racial Heritage ~ Goblin",
     "name": "Goblin",
@@ -24,20 +23,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_templates.lst",
-    "sha256": "79dc5bf63610afcbe392e7ebc58265d84bf073618b2639c1be94d0ca3a6eee41",
-    "line": 9,
-    "record_key": "Racial Heritage ~ Goblin"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:15Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_templates.lst",
+    "record_key": "Racial Heritage ~ Goblin",
+    "sha256": "79dc5bf63610afcbe392e7ebc58265d84bf073618b2639c1be94d0ca3a6eee41"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

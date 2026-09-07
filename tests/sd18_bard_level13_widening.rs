@@ -45,13 +45,12 @@
 //! (unchanged), the Fighter negative control, and the multiclass negative
 //! control.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation};
 
 const BARD_LEVEL12_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_bard_level12_sd18_widening_deterministic_input.txt"
@@ -70,34 +69,6 @@ const LORE_MASTER_ID: &str = "class_feature.bard.lore_master";
 const JACK_OF_ALL_TRADES_ID: &str = "class_feature.bard.jack_of_all_trades";
 const WELL_VERSED_ID: &str = "class_feature.bard.well_versed";
 const SOOTHING_PERFORMANCE_ID: &str = "class_feature.bard.soothing_performance";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 // ----- Base attack bonus and saves stay unchanged at level 13 (integer-division coincidences) -----
 
@@ -309,7 +280,15 @@ fn bard_level_21_is_not_promoted_by_this_slice() {
                 // unconditionally, regardless of level bound or
                 // single-class status (mirrors the spell-posture
                 // classes' and Barbarian's gate-ordering fix)
-                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"),
+                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Bard's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.bard.weapon_and_armor_proficiency"),
         "level-21 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
@@ -353,7 +332,15 @@ fn multiclass_bard_level13_is_not_promoted_by_this_slice() {
                 // unconditionally, regardless of level bound or
                 // single-class status (mirrors the spell-posture
                 // classes' and Barbarian's gate-ordering fix)
-                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"),
+                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Bard's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.bard.weapon_and_armor_proficiency"),
         "multiclass Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );

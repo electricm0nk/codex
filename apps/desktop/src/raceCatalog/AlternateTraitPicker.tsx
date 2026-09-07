@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type {
+  AdoptedRaceOptionDto,
+  AdoptiveParentageOptionDto,
   AlternateRacialTraitsResponse,
   RacePickerDto,
   RaceSelectionResponse,
+  SkinwalkerChangeShapeOptionDto,
 } from '../boundary/loadAlternateRacialTraits';
 import type { CharacterSummaryDto } from '../boundary/loadListSavedCharacters';
 import {
@@ -15,11 +18,16 @@ import {
 } from './alternateTraitPickerRuntime';
 import {
   blocksByAlternateKey,
+  describeAdoptedRaceGrants,
+  describeAdoptionOptions,
+  describeAdoptiveParentageGrants,
   describeBlock,
   describeCharacterContext,
   describePicker,
   describeReplacement,
   describeSelectionOutcome,
+  describeSkinwalkerChangeShapeGrants,
+  describeSkinwalkerChangeShapeOptions,
   descriptionsByTraitKey,
   orderRacesByAlternateCount,
   selectionWarnings,
@@ -83,6 +91,19 @@ export function AlternateTraitPicker() {
   const [characterId, setCharacterId] = useState<string>('');
   const [heldFeats, setHeldFeats] = useState<string[]>([]);
   const [characterError, setCharacterError] = useState<string | null>(null);
+  // Adoptive Parentage / Adopted Race options: two independent single-select
+  // pickers, one per option kind. Both `text_only` — the whole bar for
+  // reaching a player is the description rendered below once selected.
+  const [parentageKey, setParentageKey] = useState<string | null>(null);
+  const [adoptedRaceKey, setAdoptedRaceKey] = useState<string | null>(null);
+  // Skinwalker `Change Shape` kin pools: a third independent single-select
+  // picker. Unlike the two above, these options carry REAL magnitude (a
+  // `TEMPBONUS` each grant applies once activated during play) that this
+  // screen does not compute — naming the real, available benefits is the
+  // whole bar this section clears today; see
+  // `codex::rules_core::skinwalker_change_shape` module doc for the
+  // remaining gap.
+  const [skinwalkerKinKey, setSkinwalkerKinKey] = useState<string | null>(null);
 
   useEffect(() => {
     if (!alternateTraitPickerAvailable()) {
@@ -94,6 +115,9 @@ export function AlternateTraitPicker() {
         setMenu(response);
         const first = orderRacesByAlternateCount(response.races)[0];
         setRaceKey((current) => current ?? first?.raceKey ?? null);
+        setParentageKey((current) => current ?? response.adoptiveParentageOptions[0]?.key ?? null);
+        setAdoptedRaceKey((current) => current ?? response.adoptedRaceOptions[0]?.key ?? null);
+        setSkinwalkerKinKey((current) => current ?? response.skinwalkerChangeShapeOptions[0]?.key ?? null);
       })
       .catch((cause: unknown) => {
         setError(cause instanceof Error ? cause.message : 'Unknown alternate racial traits failure');
@@ -170,6 +194,22 @@ export function AlternateTraitPicker() {
   const characterLabel = useMemo(
     () => characters.find((candidate) => candidate.characterId === characterId)?.displayLabel ?? null,
     [characters, characterId],
+  );
+
+  const parentageOptions = menu?.adoptiveParentageOptions ?? [];
+  const adoptedRaceOptions = menu?.adoptedRaceOptions ?? [];
+  const selectedParentage: AdoptiveParentageOptionDto | null = useMemo(
+    () => parentageOptions.find((option) => option.key === parentageKey) ?? null,
+    [parentageOptions, parentageKey],
+  );
+  const selectedAdoptedRace: AdoptedRaceOptionDto | null = useMemo(
+    () => adoptedRaceOptions.find((option) => option.key === adoptedRaceKey) ?? null,
+    [adoptedRaceOptions, adoptedRaceKey],
+  );
+  const skinwalkerOptions = menu?.skinwalkerChangeShapeOptions ?? [];
+  const selectedSkinwalkerOption: SkinwalkerChangeShapeOptionDto | null = useMemo(
+    () => skinwalkerOptions.find((option) => option.key === skinwalkerKinKey) ?? null,
+    [skinwalkerOptions, skinwalkerKinKey],
   );
 
   function onToggle(key: string) {
@@ -367,6 +407,133 @@ export function AlternateTraitPicker() {
             })}
           </div>
         </div>
+      </div>
+
+      <div style={{ marginTop: '1.5rem' }}>
+        <h3 style={{ fontSize: '0.9rem', margin: '0 0 0.4rem' }}>Adoptive Parentage &amp; Adopted Race options</h3>
+        <p style={{ ...muted, margin: '0 0 0.5rem' }}>{describeAdoptionOptions(menu)}</p>
+        <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)' }}>
+          <div>
+            <h4 style={{ fontSize: '0.82rem', margin: '0 0 0.4rem' }}>
+              Adoptive Parentage ({parentageOptions.length})
+            </h4>
+            <p style={{ ...muted, margin: '0 0 0.4rem' }}>
+              A Human character who replaces Bonus Feat with the &quot;Adoptive Parentage&quot; alternate
+              trait picks one of these — which other race raised them.
+            </p>
+            {parentageOptions.length === 0 ? (
+              <p style={{ ...muted, margin: '0.5rem 0' }}>No Adoptive Parentage options loaded.</p>
+            ) : (
+              <>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.5rem' }}>
+                  {parentageOptions.map((option) => (
+                    <button
+                      key={option.key}
+                      type="button"
+                      onClick={() => setParentageKey(option.key)}
+                      style={pillStyle(option.key === parentageKey)}
+                    >
+                      {option.name}
+                    </button>
+                  ))}
+                </div>
+                {selectedParentage ? (
+                  <div style={{ ...panel, padding: '0.6rem 0.9rem' }}>
+                    <span style={{ fontWeight: 700 }}>{selectedParentage.name}</span>
+                    <span style={{ ...muted, marginLeft: '0.5rem' }}>{selectedParentage.book}</span>
+                    <p style={{ margin: '0.3rem 0 0' }}>{selectedParentage.description}</p>
+                    <p style={{ ...muted, color: 'var(--color-accent)', margin: '0.3rem 0 0' }}>
+                      {describeAdoptiveParentageGrants(selectedParentage)}
+                    </p>
+                  </div>
+                ) : null}
+              </>
+            )}
+          </div>
+
+          <div>
+            <h4 style={{ fontSize: '0.82rem', margin: '0 0 0.4rem' }}>
+              Adopted Race selectors ({adoptedRaceOptions.length})
+            </h4>
+            <p style={{ ...muted, margin: '0 0 0.4rem' }}>
+              A character of the named race's own type may pick one trait from that race's real Trait
+              pool.
+            </p>
+            {adoptedRaceOptions.length === 0 ? (
+              <p style={{ ...muted, margin: '0.5rem 0' }}>No Adopted Race selectors loaded.</p>
+            ) : (
+              <>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.5rem' }}>
+                  {adoptedRaceOptions.map((option) => (
+                    <button
+                      key={option.key}
+                      type="button"
+                      onClick={() => setAdoptedRaceKey(option.key)}
+                      style={pillStyle(option.key === adoptedRaceKey)}
+                    >
+                      {option.adoptedRace}
+                    </button>
+                  ))}
+                </div>
+                {selectedAdoptedRace ? (
+                  <div style={{ ...panel, padding: '0.6rem 0.9rem' }}>
+                    <span style={{ fontWeight: 700 }}>{selectedAdoptedRace.name}</span>
+                    <span style={{ ...muted, marginLeft: '0.5rem' }}>{selectedAdoptedRace.book}</span>
+                    <p style={{ ...muted, color: 'var(--color-accent)', margin: '0.3rem 0 0' }}>
+                      {describeAdoptedRaceGrants(selectedAdoptedRace)}
+                    </p>
+                    {selectedAdoptedRace.grants.map((grant) => (
+                      <div key={grant.key} style={{ borderTop: '1px solid var(--color-border)', margin: '0.4rem 0 0', padding: '0.4rem 0 0' }}>
+                        <span style={{ fontWeight: 600 }}>{grant.name}</span>
+                        <span style={{ ...muted, marginLeft: '0.5rem' }}>{grant.book}</span>
+                        <p style={{ ...muted, margin: '0.2rem 0 0' }}>
+                          {grant.description ?? 'No corpus description ingested for this grant.'}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ marginTop: '1.5rem' }}>
+        <h3 style={{ fontSize: '0.9rem', margin: '0 0 0.4rem' }}>Skinwalker Change Shape</h3>
+        <p style={{ ...muted, margin: '0 0 0.5rem' }}>{describeSkinwalkerChangeShapeOptions(menu)}</p>
+        <p style={{ ...muted, margin: '0 0 0.5rem' }}>
+          Each Skinwalker kin gains one of these benefits while in bestial form. This screen names the
+          real options each kin's own Change Shape trait offers; it does not yet compute the chosen
+          benefit's bonus on the character sheet.
+        </p>
+        {skinwalkerOptions.length === 0 ? (
+          <p style={{ ...muted, margin: '0.5rem 0' }}>No Skinwalker Change Shape kin pools loaded.</p>
+        ) : (
+          <>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.5rem' }}>
+              {skinwalkerOptions.map((option) => (
+                <button
+                  key={option.key}
+                  type="button"
+                  onClick={() => setSkinwalkerKinKey(option.key)}
+                  style={pillStyle(option.key === skinwalkerKinKey)}
+                >
+                  {option.kin}
+                </button>
+              ))}
+            </div>
+            {selectedSkinwalkerOption ? (
+              <div style={{ ...panel, padding: '0.6rem 0.9rem' }}>
+                <span style={{ fontWeight: 700 }}>{selectedSkinwalkerOption.name}</span>
+                <span style={{ ...muted, marginLeft: '0.5rem' }}>{selectedSkinwalkerOption.book}</span>
+                <p style={{ ...muted, color: 'var(--color-accent)', margin: '0.3rem 0 0' }}>
+                  {describeSkinwalkerChangeShapeGrants(selectedSkinwalkerOption)}
+                </p>
+              </div>
+            ) : null}
+          </>
+        )}
       </div>
     </>
   );

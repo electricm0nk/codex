@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:25:21Z",
   "data": {
+    "description": "The imp gains telepathy with a range of 50 feet, allowing it to communicate with any intelligent creature.",
     "key": "Imp Companion Trick ~ Telepathy",
     "name": "Telepathy",
-    "description": "The imp gains telepathy with a range of 50 feet, allowing it to communicate with any intelligent creature.",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,22 +31,22 @@
         "key": "BONUS",
         "value": "VAR|TelepathyRange|-50"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_companion.lst",
-    "sha256": "e6870bc32ad79bf360b1260e7ef454d98cced32fb23c0eae92262f3dea1ce4a9",
     "line": 15,
-    "record_key": "Imp Companion Trick ~ Telepathy"
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_companion.lst",
+    "record_key": "Imp Companion Trick ~ Telepathy",
+    "sha256": "e6870bc32ad79bf360b1260e7ef454d98cced32fb23c0eae92262f3dea1ce4a9"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:37Z",
   "data": {
+    "description": null,
     "key": "Kasatha",
     "name": "Kasatha",
-    "description": null,
     "raw_tokens": [
       {
         "key": "SORTKEY",
@@ -53,20 +52,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_races.lst",
-    "sha256": "5bc41359228f8f625a133cc7bc7c9f72559597b8490d79abd32afa81a80b46b3",
-    "line": 6,
-    "record_key": "Kasatha"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:37Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_races.lst",
+    "record_key": "Kasatha",
+    "sha256": "5bc41359228f8f625a133cc7bc7c9f72559597b8490d79abd32afa81a80b46b3"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

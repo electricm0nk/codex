@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Div Bloodline",
     "name": "Div Bloodline",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -29,20 +28,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_psand.lst",
-    "sha256": "cab3edfe077ad4f94fd742aaf5738f72934223d4e71368c270ea21c84dbe07ca",
-    "line": 4,
-    "record_key": "Div Bloodline"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_psand.lst",
+    "record_key": "Div Bloodline",
+    "sha256": "cab3edfe077ad4f94fd742aaf5738f72934223d4e71368c270ea21c84dbe07ca"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

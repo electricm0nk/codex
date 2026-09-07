@@ -116,7 +116,7 @@ mod tests {
 
     #[test]
     fn form_astral_suit_custom_points_combines_two_stacking_bonus_var_rows() {
-        assert_eq!(form_astral_suit_custom_points(1), Some(2 + 1 + 0));
+        assert_eq!(form_astral_suit_custom_points(1), Some(2 + 1));
         assert_eq!(form_astral_suit_custom_points(20), Some(2 + 20 + 4));
         assert_eq!(form_astral_suit_custom_points(0), None);
     }

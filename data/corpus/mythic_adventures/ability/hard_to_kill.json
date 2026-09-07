@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Whenever you're below 0 hit points, you automatically stabilize without needing to attempt a Constitution check. If you have an ability that allows you to act while below 0 hit points, you still lose hit points for taking actions, as specified by that ability. Bleed damage still causes you to lose hit points when below 0 hit points. In addition, you don't die until your total number of negative hit points is equal to or greater than double your Constitution score.",
     "key": "Mythic Ability ~ Hard to Kill",
     "name": "Hard to Kill",
-    "description": "Whenever you're below 0 hit points, you automatically stabilize without needing to attempt a Constitution check. If you have an ability that allows you to act while below 0 hit points, you still lose hit points for taking actions, as specified by that ability. Bleed damage still causes you to lose hit points when below 0 hit points. In addition, you don't die until your total number of negative hit points is equal to or greater than double your Constitution score.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 56,
-    "record_key": "Mythic Ability ~ Hard to Kill"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Ability ~ Hard to Kill",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
 }

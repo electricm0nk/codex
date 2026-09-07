@@ -84,8 +84,110 @@ export interface RacePickerDto {
   alternates: AlternateTraitDto[];
 }
 
+/** A trait an {@link AdoptiveParentageOptionDto} grants, already ingested. */
+export interface AdoptiveParentageGrantDto {
+  key: string;
+  name: string;
+}
+
+/**
+ * One "Adoptive Parentage" option (`decisions.md §16` item 2): a member of
+ * `Human ~ Adoptive Parentage`'s CHOOSE pool. A Human character replaces
+ * Bonus Feat with that alternate trait (one of `RacePickerDto.alternates`
+ * for `Human`, elsewhere on this same response), then picks one of these —
+ * "you were adopted and raised by <race>". Not race-scoped the way
+ * `RacePickerDto` is: picking one is a Human character's choice of which
+ * other race raised them, not a trait of the race named here.
+ */
+export interface AdoptiveParentageOptionDto {
+  /** The corpus key, e.g. "Dwarf" — also the adopted race's own name. */
+  key: string;
+  name: string;
+  book: string;
+  adoptedRace: string;
+  /** Real corpus `DESC:` prose, verbatim — a fixed sentence, never rendered. */
+  description: string;
+  /** The already-ingested traits this option grants. Empty is a real answer. */
+  grants: AdoptiveParentageGrantDto[];
+}
+
+/** One Trait an {@link AdoptedRaceOptionDto} can grant, from the real Trait pool. */
+export interface AdoptedRaceTraitGrantDto {
+  key: string;
+  name: string;
+  description: string | null;
+  book: string;
+}
+
+/**
+ * One "Adopted Race" selector (`decisions.md §25`): a character of the named
+ * race's own type may pick ONE trait from that race's real Trait pool
+ * (`kind: trait`, a different content kind from this response's own
+ * `race_trait` population).
+ */
+export interface AdoptedRaceOptionDto {
+  key: string;
+  name: string;
+  book: string;
+  adoptedRace: string;
+  /**
+   * The real Trait pool this option offers. Empty is a legitimate, honestly
+   * reported answer for a race whose Trait pool is not (yet) ingested — never
+   * papered over with a fabricated trait.
+   */
+  grants: AdoptedRaceTraitGrantDto[];
+  /**
+   * `true` for a row whose `CHOOSE:` token could not be read at all — a
+   * malformed-row finding surfaced rather than treated as "empty pool".
+   */
+  malformedChooseToken: boolean;
+}
+
+/** One Trait a {@link SkinwalkerChangeShapeOptionDto} can grant. */
+export interface SkinwalkerChangeShapeGrantDto {
+  key: string;
+  name: string;
+  /**
+   * Honestly `null` for every one of these — the record carries no `DESC:`
+   * token of its own. `name` is the real, non-fabricated corpus text
+   * ("Change Shape (2 Claw Attacks)", "Change Shape (Bite Attack)", ...).
+   */
+  description: string | null;
+}
+
+/**
+ * One Skinwalker kin's `Change Shape` master trait (SD-34 wave 33 lane B's
+ * own named 20-unit remainder), resolved against its real option pool.
+ * Structurally the closest existing row is {@link AdoptedRaceOptionDto} — a
+ * selector paired with its real pool members.
+ */
+export interface SkinwalkerChangeShapeOptionDto {
+  key: string;
+  name: string;
+  book: string;
+  /** The kin this pool belongs to, e.g. `"Werebear-Kin"`. */
+  kin: string;
+  /** Real option records this kin's pool resolves to. Never empty. */
+  grants: SkinwalkerChangeShapeGrantDto[];
+}
+
 export interface AlternateRacialTraitsResponse {
   races: RacePickerDto[];
+  /**
+   * `Human ~ Adoptive Parentage`'s CHOOSE pool, resolved. See
+   * {@link AdoptiveParentageOptionDto}.
+   */
+  adoptiveParentageOptions: AdoptiveParentageOptionDto[];
+  /**
+   * The "Adopted Race" selectors (`decisions.md §25`), resolved against the
+   * real Trait pool. See {@link AdoptedRaceOptionDto}.
+   */
+  adoptedRaceOptions: AdoptedRaceOptionDto[];
+  /**
+   * Skinwalker's nine `Change Shape` kin pools, resolved. See
+   * {@link SkinwalkerChangeShapeOptionDto}.
+   */
+  skinwalkerChangeShapeOptions: SkinwalkerChangeShapeOptionDto[];
   /** Corpus files the adapter could not read. Empty in a healthy checkout. */
   diagnostics: string[];
   /** Corpus-quality findings the backend refuses to hide. */

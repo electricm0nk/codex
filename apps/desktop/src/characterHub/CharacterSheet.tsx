@@ -2859,6 +2859,8 @@ export function CharacterSheet(props: {
         // The mutation did not touch racial traits, so the character's
         // existing choices carry through unchanged rather than being reset.
         selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
+        // Nor character traits (AT-34-E4-002) — same carry-forward reasoning.
+        selectedTraits: props.detail?.selectedTraits ?? [],
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
         chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
@@ -2916,6 +2918,8 @@ export function CharacterSheet(props: {
         // The mutation did not touch racial traits, so the character's
         // existing choices carry through unchanged rather than being reset.
         selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
+        // Nor character traits (AT-34-E4-002) — same carry-forward reasoning.
+        selectedTraits: props.detail?.selectedTraits ?? [],
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
         chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],

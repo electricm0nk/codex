@@ -38,6 +38,10 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
     // The preview character takes no alternate racial trait. Inventing one
     // would put a swap on a sample sheet that no engine resolved.
     selectedAlternateTraitKeys: [],
+    // AT-34-E4-002: the preview character takes no traits either, same
+    // "no fabricated default" reasoning as the alternate-trait comment
+    // above.
+    selectedTraits: [],
     // And no racial-trait resolution: every sentence in one is *rendered* by
     // the engine from the corpus row's own `DESC:` tokens against this
     // character's feats. Hand-writing a sample here would put corpus-looking

@@ -34,6 +34,7 @@ mod rule_system_adapter;
 mod spell_catalog;
 mod stub_adapter;
 mod support_state_matrix_bridge;
+mod trait_picker;
 mod update;
 
 use serde::Serialize;
@@ -73,6 +74,7 @@ use race_catalog::list_race_catalog;
 use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
 use spell_catalog::{list_spell_catalog, list_spells};
 use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
+use trait_picker::list_available_character_traits;
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
 };
@@ -254,6 +256,7 @@ fn main() {
             list_race_creation_roster,
             list_alternate_racial_traits,
             resolve_race_alternate_selection,
+            list_available_character_traits,
             corpus_ingest_diagnostic
         ])
         .run(tauri::generate_context!())

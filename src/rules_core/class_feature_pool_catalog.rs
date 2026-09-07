@@ -63,7 +63,7 @@
 //! "Rogue ". `v06_work_inventory.rs`'s `class_feature_owner` (and its
 //! `type_facet` fallback) therefore resolve `None` for every Rage Power
 //! record, which used to route the WHOLE pool through a hard-coded
-//! `not_ingested` regardless of this catalog. `classify()`'s "no owner
+//! `engine_does_not_hold` regardless of this catalog. `classify()`'s "no owner
 //! resolved" branch now ALSO consults `class_feature_pool_catalog_holds`
 //! before falling back (`SD31-W23-POOLMEMBER-002`), mirroring the check the
 //! "owner resolved" branch already had — without that fix, registering
@@ -145,6 +145,18 @@ fn is_registered_pool_group(key: &str) -> bool {
     key.contains(" ~ ")
 }
 
+/// `true` for a `class_feature` corpus `key` that is NOT itself `"
+/// ~ "`-group-qualified -- i.e. a standalone, single-record feature
+/// (`"Timeless Body"`, `"Uncanny Dodge"`) rather than one member of an
+/// option pool. Mutually exclusive with [`is_registered_pool_group`] by
+/// construction (a key either contains `" ~ "` or it does not), so
+/// [`load_standalone_class_feature_catalog`] can never serve a record
+/// [`load_pool_catalog`] already does, and vice versa -- the two catalogs
+/// partition the corpus's `class_feature` keys, they never overlap.
+fn is_standalone_class_feature(key: &str) -> bool {
+    !key.contains(" ~ ")
+}
+
 /// Literal stub/placeholder markers found injected directly into some
 /// `occult_adventures` `class_feature` records' `description` field itself
 /// (e.g. `Sha'ir ~ Jin`'s real corpus row: `"[not implemented]At 1st
@@ -185,7 +197,7 @@ fn carries_unimplemented_marker(description: &str) -> bool {
 /// owning class immediately followed by "level"/"levels" (optionally
 /// possessive), regardless of whether this engine happens to compute the
 /// referenced value. A false "not served" here costs nothing new -- the
-/// record simply stays `not_ingested`, exactly where it was before this
+/// record simply stays `engine_does_not_hold`, exactly where it was before this
 /// cycle; a false "text-complete" would be a new, wrong answer (`§1a`).
 fn carries_class_specific_level_phrase(description: &str, class_name: &str) -> bool {
     if class_name.trim().is_empty() {
@@ -285,23 +297,66 @@ fn has_no_engine_effect_token(raw_tokens: &Value) -> bool {
 /// (e.g. `Rage Power ~ Elemental Blood (Greater)`'s real oracle row: `DESC:
 /// While raging, the barbarian gains` followed by four separate `DESC:
 /// ...a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1` / `...a swim
-/// speed of 60 feet.|PREVAREQ:BloodRage Cold,1` / ... segments). The
-/// upstream ingestion this module reads (`cache_gen::class_feature`,
-/// outside this module's file territory) keeps only the FIRST `DESC:`
-/// token's text as `data.description` -- for most such records that first
-/// segment already carries an unresolvable `%N` (caught by the existing
-/// render-and-refuse gate) or a real engine-effect token (caught by
-/// [`has_no_engine_effect_token`]), but `Elemental Blood, Greater`'s lead-in
-/// clause is a plain, syntax-clean sentence FRAGMENT with neither -- it
-/// rendered "While raging, the barbarian gains" verbatim on a live character
-/// sheet, a truncated sentence with no missing-`%N`/leaked-syntax signal at
-/// all. Refused structurally here: any record whose row carries more than
+/// speed of 60 feet.|PREVAREQ:BloodRage Cold,1` / ... segments).
+///
+/// Refused structurally here: any record whose row carries more than
 /// one `DESC:` field is, by construction, showing only a fragment of what
 /// the oracle actually states, regardless of whether that fragment happens
-/// to read as a complete sentence.
+/// to read as a complete sentence -- UNLESS [`shipped_description_is_the_
+/// already_regenerated_safe_multi_desc_join`] proves this specific
+/// record's shipped `data.description` has already been caught up (see
+/// that function's own doc comment for why the proof, not just the shape,
+/// gates the exception).
 fn raw_tokens_carry_more_than_one_desc_segment(raw_tokens: &Value) -> bool {
     let Some(tokens) = raw_tokens.as_array() else { return false };
     tokens.iter().filter(|t| t.get("key").and_then(|k| k.as_str()) == Some("DESC")).count() > 1
+}
+
+/// The `AT-34-E3-001 class_feature_option_pool` cycle's own narrow fix,
+/// sub-cause 8: `Martial Weapon Proficiency Output` (standalone) and
+/// `Octopus Wild Shape ~ Poison` (pool) each carry a genuine sequential
+/// DESC continuation with no mechanical reason for the split -- unlike
+/// `Rage Power ~ Elemental Blood (Greater)`'s PREVAREQ-gated alternative
+/// branches, joining every segment IS this record's real, complete
+/// description. `cache_gen::class_feature::generate`'s own `desc_value`
+/// (a different file, this package's disjoint-file-touch convention) now
+/// performs that join at ingest time for exactly this safe shape, so a
+/// record whose `data.description` has been regenerated since carries the
+/// FULL joined text already.
+///
+/// **Why this function re-derives the join instead of trusting the shape
+/// alone.** Corpus-wide, many OTHER multi-DESC records share the same
+/// "no PREVAREQ/PREVARGTEQ gate" shape but have NOT been regenerated --
+/// their shipped `data.description` is still the stale, first-segment-only
+/// value the old `desc_value` produced. Gating on shape alone (relaxing
+/// [`raw_tokens_carry_more_than_one_desc_segment`] to skip every
+/// ungated multi-DESC row) was tried and reverted: it silently served
+/// ~186 other records' stale, truncated `data.description` across
+/// multiple books and mechanisms this cycle does not own -- exactly the
+/// silent-truncation defect this module exists to prevent, reopened at
+/// corpus scale. Re-deriving the expected join from `raw_tokens` directly
+/// and requiring it to match the ALREADY-SHIPPED `data.description` proves
+/// ingest has actually caught up for this one record; every other
+/// not-yet-regenerated record fails the equality check and stays refused,
+/// unchanged from before this cycle.
+fn shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+    raw_tokens: &Value,
+    shipped_description: &str,
+) -> bool {
+    let Some(tokens) = raw_tokens.as_array() else { return false };
+    let segments: Vec<&str> = tokens
+        .iter()
+        .filter(|t| t.get("key").and_then(|k| k.as_str()) == Some("DESC"))
+        .filter_map(|t| t.get("value").and_then(|v| v.as_str()))
+        .collect();
+    if segments.len() <= 1 {
+        return false;
+    }
+    if segments[1..].iter().any(|s| s.contains("PREVAREQ") || s.contains("PREVARGTEQ")) {
+        return false;
+    }
+    let expected_join = segments.iter().map(|s| s.trim()).collect::<Vec<_>>().join(" ");
+    expected_join == shipped_description
 }
 
 /// A gap in `render_pcgen_desc`'s own `dropped_args` reporting, found while
@@ -448,15 +503,18 @@ fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
     }
 }
 
-/// Reads every already-ingested `class_feature` cache record under
-/// `<repo_root>/data/corpus/*/class_feature/**/*.json` whose `data.class`
-/// names a [`REGISTERED_POOL_GROUPS`] entry, keeping only the ones whose
-/// description renders with nothing missing (see the module doc's
-/// render-and-refuse gate). Reads a NEW tree of nothing — every record
-/// already lives in the committed `data/corpus/` cache
-/// `cache_gen::class_feature::generate` writes; this module adds no new
-/// corpus data of its own, only a new reading of what already exists.
-pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
+/// Shared walk-and-render pipeline behind both [`load_pool_catalog`] and
+/// [`load_standalone_class_feature_catalog`] -- every safety gate (render-
+/// and-refuse, engine-effect-token, archetype-lock, multi-`DESC:`, bare-`%N`,
+/// the unimplemented-marker guard, the class-level-scaled-phrase guard) is
+/// identical for both; the two public entry points differ ONLY in
+/// `key_filter`, which is exactly what makes them a true partition (see
+/// [`is_standalone_class_feature`]'s doc comment) rather than two
+/// independently-drifting copies of the same logic.
+fn load_class_feature_catalog(
+    repo_root: &Path,
+    key_filter: impl Fn(&str) -> bool,
+) -> Vec<PoolCatalogEntry> {
     let corpus_root = repo_root.join("data/corpus");
     let mut out = Vec::new();
     let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
@@ -495,7 +553,7 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             // untouched by that fix, so `"Rogue Talent ~ Ledge Walker"` still
             // splits to `"Rogue Talent"` exactly as before.
             let group = key.split(" ~ ").next().unwrap_or(key);
-            if !is_registered_pool_group(key) {
+            if !key_filter(key) {
                 continue;
             }
             if CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS.contains(&key) {
@@ -518,7 +576,9 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             if is_archetype_locked(&data["raw_tokens"]) {
                 continue;
             }
-            if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"]) {
+            if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"])
+                && !shipped_description_is_the_already_regenerated_safe_multi_desc_join(&data["raw_tokens"], raw_desc)
+            {
                 continue;
             }
             if raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc) {
@@ -556,6 +616,284 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
     out
 }
 
+/// Reads every already-ingested `class_feature` cache record under
+/// `<repo_root>/data/corpus/*/class_feature/**/*.json` whose `data.class`
+/// names a [`REGISTERED_POOL_GROUPS`] entry, keeping only the ones whose
+/// description renders with nothing missing (see the module doc's
+/// render-and-refuse gate). Reads a NEW tree of nothing — every record
+/// already lives in the committed `data/corpus/` cache
+/// `cache_gen::class_feature::generate` writes; this module adds no new
+/// corpus data of its own, only a new reading of what already exists.
+pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
+    load_class_feature_catalog(repo_root, is_registered_pool_group)
+}
+
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism): the sibling of [`load_pool_catalog`] for STANDALONE
+/// `class_feature` records (a bare feature name, never a `" ~ "`-qualified
+/// option-pool member) -- e.g. `"Timeless Body"`, `"Uncanny Dodge"`,
+/// `"Woodland Stride"`. These records reach `Kind::ClassFeature`'s "no
+/// owner resolved" branch in `v06_work_inventory.rs` for the same reason
+/// Rage Power records used to (their bare name shares no prefix/suffix
+/// with a modelled class's own name, since a shared multi-class feature
+/// like Evasion or Uncanny Dodge is not owned by any single class) — and
+/// until this catalog existed, that branch had no way to prove any of them
+/// genuinely reaches a rendered description, exactly the gap `Kind::
+/// ClassFeature`'s own doc comment names ("no generic class_feature catalog
+/// exists anywhere in this engine"). Every safety gate below is IDENTICAL
+/// to [`load_pool_catalog`]'s own (render-and-refuse, engine-effect-token,
+/// archetype-lock, multi-`DESC:`, bare-`%N`) — a record carrying a real
+/// mechanical token (`AUTO`, `ABILITY`, `BONUS`, ...) is refused here
+/// exactly as it would be for an option-pool member, so a genuinely
+/// mechanical, still-needs-computation record (e.g. `Armor Prof ~ Heavy`'s
+/// `AUTO:ARMORPROF|...` — which is ALSO `" ~ "`-qualified and therefore
+/// never reaches this catalog at all, [`is_standalone_class_feature`]'s own
+/// mutual-exclusion with [`is_registered_pool_group`]) can never be
+/// misreported `text-complete` by this addition.
+pub fn load_standalone_class_feature_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
+    load_class_feature_catalog(repo_root, is_standalone_class_feature)
+}
+
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism, vacuous-placeholder sub-cause, `atlas-defects.md` — an
+/// unpredicted verdict shape decisions.md §2 requires logging before
+/// deciding disposition). PCGen's own `_abilities_class.lst` source carries
+/// three `CATEGORY:Class` rows whose ENTIRE content is a `KEY`, a
+/// `CATEGORY`, and a `TYPE` token — no `DESC:`, no
+/// `AUTO:`/`ABILITY:`/`BONUS:`/`CHOOSE:`, no mechanical token of any kind
+/// (`data.description` is JSON `null`, `data.raw_tokens` has exactly 3
+/// entries). These are PCGen's own "no selection" placeholder rows for a
+/// `CHOOSE` menu's default entry (the record's own `class` field is
+/// literally `"Empty Selection"`, PCGen's own convention name) — not a
+/// Pathfinder rules feature at all, so there is genuinely nothing to
+/// compute and nothing to display, and the corpus itself proves it
+/// (verified by
+/// `vacuous_placeholder_rows_are_genuinely_empty_in_the_committed_corpus`
+/// below, over the live `data/corpus/` files, not merely asserted here).
+///
+/// A hardcoded, closed list — never a shape-matched predicate — is
+/// deliberate: this mechanism's own Cycle 2 receipt records a near-miss
+/// where gating a sibling rung on record SHAPE ALONE (rather than a
+/// proven, closed set) would have promoted 188 unrelated corpus-wide
+/// records before being caught and reverted pre-commit. A corpus-wide
+/// structural scan for "description null, raw_tokens ⊆ {KEY, CATEGORY,
+/// TYPE}" independently confirmed 41 matches spanning 6 other books (witch
+/// hex sub-features, uncanny-dodge trackers, BWBI wondrous-item slots,
+/// ...) that are NOT vacuous — this table can only ever match the 3 exact
+/// keys named here, none of those 41.
+pub const VACUOUS_PLACEHOLDER_CLASS_FEATURES: &[(&str, &str)] = &[
+    (
+        "Empty Selection ~ Standard Barbarian",
+        "PCGen's own CHOOSE-menu \"no selection\" placeholder row for the Barbarian class; no DESC, no mechanical token; not a Pathfinder rules feature.",
+    ),
+    (
+        "Empty Selection ~ Standard Monk",
+        "PCGen's own CHOOSE-menu \"no selection\" placeholder row for the Monk class; no DESC, no mechanical token; not a Pathfinder rules feature.",
+    ),
+    (
+        "Empty Selection ~ Standard Rogue",
+        "PCGen's own CHOOSE-menu \"no selection\" placeholder row for the Rogue class; no DESC, no mechanical token; not a Pathfinder rules feature.",
+    ),
+];
+
+/// Looks up [`VACUOUS_PLACEHOLDER_CLASS_FEATURES`] by key, returning the
+/// stated reason when it matches. `v06_work_inventory.rs`'s `Kind::
+/// ClassFeature` arm consults this immediately before its final
+/// `class_feature_option_pool_record_not_held_by_engine` fallback, exactly
+/// mirroring `uca_feat_tables::DEFERRED_WITH_REASON`'s established named-
+/// list pattern (never a live shape scan) for the identical reason.
+pub fn vacuous_placeholder_reason(key: &str) -> Option<&'static str> {
+    VACUOUS_PLACEHOLDER_CLASS_FEATURES.iter().find(|(k, _)| *k == key).map(|(_, reason)| *reason)
+}
+
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism, cycle 5, proficiency/grant-possession-tracking sub-cause,
+/// weapon-proficiency shard). `description: null` internal chassis rows
+/// ("Weapon Proficiencies ~ Bard", "~ Druid", "~ Rogue") whose sole content
+/// is an `AUTO:WEAPONPROF|<list>` token naming that class's proficient
+/// weapons.
+///
+/// **This is not a name-pattern guess.** Four prior cycles' own warning
+/// (Cycle 2's 188-record near-miss from gating on record SHAPE alone) means
+/// each entry below was read against the REAL corpus token AND the real,
+/// already-shipped, already-tested
+/// [`crate::rules_core::rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES`]
+/// table (built and cited independently, for combat's own
+/// `character_is_proficient_with`, long before this mechanism existed) —
+/// only kept when the corpus record's own named-weapon list is a BYTE-FOR-
+/// BYTE set match (verified below,
+/// `weapon_proficiency_grant_class_table_matches_are_exact` proves it
+/// against the live corpus, not merely asserted here) for that class's
+/// table row. Two superficially-identical siblings were read and REJECTED:
+///
+/// - `"Weapon Proficiencies ~ Cleric"` grants `AUTO:WEAPONPROF|DEITYWEAPONS`
+///   — Cleric's real weapon proficiency here is her deity's favored weapon,
+///   a selection-dependent fact `CLASS_WEAPON_PROFICIENCIES`'s Cleric row
+///   (`tiers: [Simple], named: []`) does not model at all. Not a match.
+/// - `"Weapon Proficiencies ~ Monk"` grants seventeen named entries, the
+///   last of which is literally `"Flurry of Blows"` (a class feature name,
+///   not a weapon — a PCGen data quirk) where the table's own Monk row
+///   substitutes `"Unarmed Strike"` in that slot. Sixteen of seventeen
+///   match; the set is NOT identical, so this is left unclosed rather than
+///   force a near-match.
+///
+/// A held record here still carries `description: null` (nothing to
+/// display — that is `Kind::ClassFeature`'s OTHER, unrelated
+/// `has_real_description` precondition, a display-bucket concern per
+/// `decisions.md §2a`, not this mechanism's). This only answers "does the
+/// engine hold a real fact for this record's own content" — yes, verified,
+/// via a table that already computes real combat proficiency checks today.
+pub const WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES: &[(&str, &str)] = &[
+    ("Weapon Proficiencies ~ Bard", "class:bard"),
+    ("Weapon Proficiencies ~ Druid", "class:druid"),
+    ("Weapon Proficiencies ~ Rogue", "class:rogue"),
+];
+
+/// Looks up [`WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`] by key,
+/// returning the class id the record's own weapon list was verified
+/// against. `v06_work_inventory.rs`'s `Kind::ClassFeature` arm consults
+/// this immediately before its final
+/// `class_feature_option_pool_record_not_held_by_engine` fallback, mirroring
+/// [`vacuous_placeholder_reason`]'s own named-list pattern (never a live
+/// shape scan) for the identical reason.
+pub fn weapon_proficiency_grant_class_id(key: &str) -> Option<&'static str> {
+    WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES.iter().find(|(k, _)| *k == key).map(|(_, c)| *c)
+}
+
+/// `AT-34-E3-001` cycle 6, armor/shield-flavored slice of the proficiency/
+/// mechanical-grant possession-tracking sub-cause cycle 5's own next-cycle
+/// plan named. Sibling of
+/// [`WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`], but for the DISPLAY-
+/// bearing `"Weapon and Armor Proficiency ~ <Class>"` combined records
+/// (`VISIBLE:DISPLAY`, a real `DESC:`) rather than the internal weapon-only
+/// chassis rows that mechanism's own cycle 5 covers — a DIFFERENT corpus
+/// key per class, so closing this record does not re-close cycle 5's own
+/// three.
+///
+/// **Each entry requires BOTH halves to verify, not just armor.** A
+/// combined record's weapon-side content must be an EXACT set match
+/// against
+/// [`crate::rules_core::rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES`]
+/// AND its armor/shield-side content an exact match against
+/// [`crate::rules_core::rules_tables::crb::weapon_tables::CLASS_ARMOR_PROFICIENCIES`]
+/// (verified against the live corpus record for both,
+/// `weapon_and_armor_proficiency_grant_class_table_matches_are_exact`
+/// below) before this table names the class at all. Two classes with a
+/// combined record in the same corpus directory were investigated and
+/// correctly excluded:
+///
+/// - Druid's own `"Weapon and Armor Proficiency ~ Druid"` `AUTO:WEAPONPROF`
+///   list is missing `Scythe` against BOTH its own dedicated `"Weapon
+///   Proficiencies ~ Druid"` record (cycle 5's own match) and
+///   `CLASS_WEAPON_PROFICIENCIES`'s Druid row — nine weapons named where
+///   ten are expected. A real corpus-internal discrepancy between two
+///   records naming the same class's proficiency, not a near-match to
+///   force through.
+/// - Monk repeats cycle 5's own established `"Flurry of Blows"`/`"Unarmed
+///   Strike"` mismatch (its combined record carries the identical
+///   `AUTO:WEAPONPROF` list as the standalone record cycle 5 already
+///   rejected).
+pub const WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES: &[(&str, &str)] = &[
+    ("Weapon and Armor Proficiency ~ Bard", "class:bard"),
+    ("Weapon and Armor Proficiency ~ Fighter", "class:fighter"),
+    ("Weapon and Armor Proficiency ~ Paladin", "class:paladin"),
+    ("Weapon and Armor Proficiency ~ Ranger", "class:ranger"),
+    ("Weapon and Armor Proficiency ~ Rogue", "class:rogue"),
+];
+
+/// Looks up [`WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`] by
+/// key, returning the class id both the weapon and armor/shield halves
+/// were verified against. `v06_work_inventory.rs`'s `Kind::ClassFeature`
+/// arm consults this immediately after [`weapon_proficiency_grant_class_id`],
+/// mirroring its own named-list pattern (never a live shape scan) for the
+/// identical reason.
+pub fn weapon_and_armor_proficiency_grant_class_id(key: &str) -> Option<&'static str> {
+    WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES
+        .iter()
+        .find(|(k, _)| *k == key)
+        .map(|(_, c)| *c)
+}
+
+/// `AT-34-E3-001` cycle 7, class-skill-list slice of the "class-skill/
+/// companion-mount attribution" sub-cause cycles 5-6 both named as a
+/// genuine new-subsystem investment. Maps each of the 9 CRB base classes'
+/// own `"Class Skills ~ <Class>"` internal chassis record, plus `"Jack of
+/// All Trades ~ Class Skills"`, to the owner id
+/// `crate::rules_core::rules_tables::crb::class_skill_tables::class_skill_list`
+/// was independently verified against (byte-for-byte, its own module's
+/// `class_skill_lists_match_their_own_corpus_records` test). Closed,
+/// named-key list — never a shape predicate — mirroring
+/// [`WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`]'s own
+/// pattern.
+///
+/// The remaining 3 units of that 13-unit sub-cause (`Companion ~ Animal
+/// Companion`, `Companion ~ Special Mount`, `Special Mount ~ Standard
+/// Choices`) are a DIFFERENT corpus shape (`FOLLOWERS:`/`COMPANIONLIST:`,
+/// not `CSKILL:`) and are deliberately absent from this table — named in
+/// this cycle's own receipt remainder, not silently folded in here.
+pub const CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES: &[(&str, &str)] = &[
+    ("Class Skills ~ Barbarian", "class:barbarian"),
+    ("Class Skills ~ Bard", "class:bard"),
+    ("Class Skills ~ Cleric", "class:cleric"),
+    ("Class Skills ~ Druid", "class:druid"),
+    ("Class Skills ~ Fighter", "class:fighter"),
+    ("Class Skills ~ Monk", "class:monk"),
+    ("Class Skills ~ Paladin", "class:paladin"),
+    ("Class Skills ~ Ranger", "class:ranger"),
+    ("Class Skills ~ Rogue", "class:rogue"),
+    ("Jack of All Trades ~ Class Skills", "class_feature:jack_of_all_trades"),
+];
+
+/// Looks up [`CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES`] by key,
+/// returning the owner id the record's own `CSKILL` content was verified
+/// against. `v06_work_inventory.rs`'s `Kind::ClassFeature` arm consults
+/// this immediately after [`weapon_and_armor_proficiency_grant_class_id`],
+/// mirroring its own named-list pattern (never a live shape scan) for the
+/// identical reason.
+pub fn class_skill_list_grant_owner_id(key: &str) -> Option<&'static str> {
+    CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES.iter().find(|(k, _)| *k == key).map(|(_, o)| *o)
+}
+
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism), wizard-opposition-school-spell-tracking sub-cause (cycle 8's
+/// own receipt named this a "genuinely new, unbuilt engine subsystem" of
+/// 9 units: `"<School> Wizard Spells"`, `description: null`,
+/// `CATEGORY:Internal`, `SPELLKNOWN:CLASS|Wizard=0|<spells>`).
+///
+/// **Not a new, standalone subsystem after all — a join of two
+/// already-shipped, already-tested tables.**
+/// [`crate::rules_core::rules_tables::crb::wizard_spell_list::wizard_school_zero_level_spells`]
+/// combines `WIZARD_SPELL_LIST`'s own Wizard-specific spell level (already
+/// isolated from `SPELL_LIST`'s minimum-across-classes level, see that
+/// table's own module doc comment) with `SPELL_LIST`'s own `school` field
+/// to reproduce, byte-for-byte, every one of these 9 corpus records' own
+/// `SPELLKNOWN` spell list — verified directly against the live corpus in
+/// `wizard_school_spell_list_key_owner_matches_are_exact` below, mirroring
+/// [`WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`]'s own verification
+/// discipline (never a name-pattern guess). Owner is `"class:wizard"` for
+/// all 9 — Wizard is the only class either source table's own scope
+/// covers for these keys.
+pub const WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER: &[(&str, &str)] = &[
+    ("Abjuration Wizard Spells", "class:wizard"),
+    ("Conjuration Wizard Spells", "class:wizard"),
+    ("Divination Wizard Spells", "class:wizard"),
+    ("Enchantment Wizard Spells", "class:wizard"),
+    ("Evocation Wizard Spells", "class:wizard"),
+    ("Illusion Wizard Spells", "class:wizard"),
+    ("Necromancy Wizard Spells", "class:wizard"),
+    ("Transmutation Wizard Spells", "class:wizard"),
+    ("Universal Wizard Spells", "class:wizard"),
+];
+
+/// Looks up [`WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER`] by key, returning the
+/// owner id the record's own `SPELLKNOWN` spell list was verified against.
+/// `v06_work_inventory.rs`'s `Kind::ClassFeature` arm consults this
+/// immediately after [`class_skill_list_grant_owner_id`], mirroring its own
+/// named-list pattern (never a live shape scan) for the identical reason.
+pub fn wizard_school_spell_list_key_owner(key: &str) -> Option<&'static str> {
+    WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER.iter().find(|(k, _)| *k == key).map(|(_, o)| *o)
+}
+
 /// `(book, key) -> description` for every entry the catalog holds — the
 /// shape `v06_work_inventory.rs`'s `EngineFacts` (and `Kind::ClassFeature`'s
 /// classify arm) actually consults, mirroring `feat_served_descriptions`'
@@ -570,6 +908,241 @@ mod tests {
 
     fn repo_root() -> PathBuf {
         PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    /// Proves `VACUOUS_PLACEHOLDER_CLASS_FEATURES`' own claim against the
+    /// REAL, committed corpus — not merely asserted in a doc comment. RED
+    /// if the corpus ever gains real content for one of these keys (a
+    /// genuine PCGen data update), which is exactly when this table must
+    /// be revisited (`decisions.md §2`'s "cleared by revisiting the stated
+    /// condition"). Also RED if a fourth `empty_selection/*.json` file
+    /// ever appears uncovered by the table.
+    #[test]
+    fn vacuous_placeholder_rows_are_genuinely_empty_in_the_committed_corpus() {
+        let dir = repo_root().join("data/corpus/core_rulebook/class_feature/empty_selection");
+        let mut found = std::collections::BTreeSet::new();
+        for entry in std::fs::read_dir(&dir).expect("empty_selection/ dir exists") {
+            let entry = entry.expect("readable dir entry");
+            let text = std::fs::read_to_string(entry.path()).expect("readable corpus json");
+            let json: Value = serde_json::from_str(&text).expect("valid corpus json");
+            let key = json["data"]["key"].as_str().expect("data.key present").to_string();
+            assert!(
+                VACUOUS_PLACEHOLDER_CLASS_FEATURES.iter().any(|(k, _)| *k == key),
+                "unexpected key under empty_selection/, not covered by the closed list: {key}"
+            );
+            assert!(
+                json["data"]["description"].is_null(),
+                "{key} now carries a real description -- revisit this table, decisions.md §2"
+            );
+            let token_keys: std::collections::BTreeSet<&str> = json["data"]["raw_tokens"]
+                .as_array()
+                .expect("raw_tokens is an array")
+                .iter()
+                .map(|t| t["key"].as_str().expect("token key present"))
+                .collect();
+            assert_eq!(
+                token_keys,
+                std::collections::BTreeSet::from(["KEY", "CATEGORY", "TYPE"]),
+                "{key} carries a token beyond the placeholder's structural KEY/CATEGORY/TYPE -- \
+                 revisit this table, decisions.md §2"
+            );
+            found.insert(key);
+        }
+        assert_eq!(
+            found.len(),
+            VACUOUS_PLACEHOLDER_CLASS_FEATURES.len(),
+            "every key in VACUOUS_PLACEHOLDER_CLASS_FEATURES must have exactly one corpus file, \
+             and vice versa"
+        );
+    }
+
+    /// Proves `WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`'s own claim
+    /// against BOTH the live corpus AND the live
+    /// `weapon_tables::CLASS_WEAPON_PROFICIENCIES` table — not merely
+    /// asserted in a doc comment. RED if either side ever changes such
+    /// that the sets stop matching exactly (which is exactly when this
+    /// table must be revisited, `decisions.md §2`'s "cleared by revisiting
+    /// the stated condition").
+    #[test]
+    fn weapon_proficiency_grant_class_table_matches_are_exact() {
+        use crate::rules_core::rules_tables::crb::weapon_tables;
+        let dir = repo_root().join("data/corpus/core_rulebook/class_feature/weapon_proficiencies");
+        for (key, class_id) in WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES {
+            let file_stub = key
+                .rsplit(' ')
+                .next()
+                .expect("key has a class-name suffix")
+                .to_lowercase();
+            let path = dir.join(format!("weapon_proficiencies_{file_stub}.json"));
+            let text = std::fs::read_to_string(&path)
+                .unwrap_or_else(|e| panic!("readable corpus json at {path:?}: {e}"));
+            let json: Value = serde_json::from_str(&text).expect("valid corpus json");
+            assert_eq!(json["data"]["key"].as_str(), Some(*key), "corpus file's own key must match");
+            assert!(
+                json["data"]["description"].is_null(),
+                "{key} now carries a real description -- this record may now qualify for a \
+                 different, display-bearing rung; revisit this table"
+            );
+            let auto_token = json["data"]["raw_tokens"]
+                .as_array()
+                .expect("raw_tokens is an array")
+                .iter()
+                .find(|t| t["key"].as_str() == Some("AUTO"))
+                .unwrap_or_else(|| panic!("{key} carries no AUTO token"))["value"]
+                .as_str()
+                .expect("AUTO token has a string value")
+                .to_string();
+            let corpus_weapons: std::collections::BTreeSet<String> = auto_token
+                .strip_prefix("WEAPONPROF|")
+                .unwrap_or_else(|| panic!("{key}'s AUTO token is not a WEAPONPROF grant: {auto_token}"))
+                .split('|')
+                .filter(|w| *w != "TYPE=Auto")
+                .map(|w| w.to_string())
+                .collect();
+            let table_row = weapon_tables::class_weapon_proficiency(class_id)
+                .unwrap_or_else(|| panic!("{class_id} must be a real row in CLASS_WEAPON_PROFICIENCIES"));
+            let table_weapons: std::collections::BTreeSet<String> =
+                table_row.named.iter().map(|w| w.to_string()).collect();
+            assert_eq!(
+                corpus_weapons, table_weapons,
+                "{key}'s corpus AUTO:WEAPONPROF list must be an EXACT set match for \
+                 {class_id}'s named list in CLASS_WEAPON_PROFICIENCIES -- a near-match must stay \
+                 unclosed (Monk's own \"Flurry of Blows\"/\"Unarmed Strike\" mismatch is exactly \
+                 why this table only names Bard/Druid/Rogue)"
+            );
+        }
+    }
+
+    /// The two records that superficially resemble
+    /// `WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`'s members (same
+    /// `weapon_proficiencies/` directory) but were investigated and
+    /// correctly excluded must stay excluded — RED if a future edit widens
+    /// the lookup by name-pattern rather than by verified content.
+    #[test]
+    fn weapon_proficiency_grant_class_table_matches_excludes_cleric_and_monk() {
+        assert_eq!(weapon_proficiency_grant_class_id("Weapon Proficiencies ~ Cleric"), None);
+        assert_eq!(weapon_proficiency_grant_class_id("Weapon Proficiencies ~ Monk"), None);
+    }
+
+    /// Proves `WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`'s
+    /// own claim against BOTH the live corpus AND both live tables — not
+    /// merely asserted in a doc comment. RED if either table, or the
+    /// corpus record, ever changes such that a listed class's weapon OR
+    /// armor content stops being an exact set match (`decisions.md §2`'s
+    /// "cleared by revisiting the stated condition").
+    #[test]
+    fn weapon_and_armor_proficiency_grant_class_table_matches_are_exact() {
+        use crate::rules_core::rules_tables::crb::weapon_tables;
+        let dir = repo_root().join("data/corpus/core_rulebook/class_feature/weapon_and_armor_proficiency");
+        for (key, class_id) in WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES {
+            let class_name = key.rsplit(' ').next().expect("key has a class-name suffix");
+            let mut matched_file = None;
+            for entry in std::fs::read_dir(&dir).expect("dir exists") {
+                let entry = entry.expect("readable dir entry");
+                let text = std::fs::read_to_string(entry.path()).expect("readable corpus json");
+                let json: Value = serde_json::from_str(&text).expect("valid corpus json");
+                if json["data"]["key"].as_str() == Some(*key) {
+                    matched_file = Some(json);
+                    break;
+                }
+            }
+            let json = matched_file.unwrap_or_else(|| panic!("no corpus file found for key {key}"));
+            assert!(
+                !json["data"]["description"].is_null(),
+                "{key} must carry a real description -- this table is only for the DISPLAY-\
+                 bearing combined records, not the internal weapon-only chassis rows"
+            );
+            let tokens = json["data"]["raw_tokens"].as_array().expect("raw_tokens is an array");
+
+            // Weapon-side: named list (if any) must be an exact set match.
+            let named_weapons: std::collections::BTreeSet<String> = tokens
+                .iter()
+                .find(|t| t["key"].as_str() == Some("AUTO"))
+                .and_then(|t| t["value"].as_str())
+                .and_then(|v| v.strip_prefix("WEAPONPROF|"))
+                .map(|list| {
+                    list.split('|')
+                        .filter(|w| !w.starts_with("TYPE=") && !w.starts_with('!'))
+                        .map(|w| w.to_string())
+                        .collect()
+                })
+                .unwrap_or_default();
+            let table_row = weapon_tables::class_weapon_proficiency(class_id)
+                .unwrap_or_else(|| panic!("{class_id} must be a real row in CLASS_WEAPON_PROFICIENCIES"));
+            let table_named: std::collections::BTreeSet<String> =
+                table_row.named.iter().map(|w| w.to_string()).collect();
+            assert_eq!(named_weapons, table_named, "{key} named weapon list must match exactly");
+
+            // Armor-side: verified independently by
+            // `class_armor_proficiency_tests` in `weapon_tables.rs`
+            // against this SAME corpus file. Re-derive it here too so a
+            // caller reading only this test still sees the full claim.
+            let armor_row = weapon_tables::class_armor_proficiency(class_id)
+                .unwrap_or_else(|| panic!("{class_id} must be a real row in CLASS_ARMOR_PROFICIENCIES"));
+            let ability_tokens: Vec<String> = tokens
+                .iter()
+                .filter(|t| t["key"].as_str() == Some("ABILITY"))
+                .map(|t| t["value"].as_str().unwrap_or_default().to_string())
+                .collect();
+            let has = |needle: &str| ability_tokens.iter().any(|v| v.contains(needle));
+            assert_eq!(has("Armor Prof ~ Light"), armor_row.light, "{key} light armor");
+            assert_eq!(has("Armor Prof ~ Medium"), armor_row.medium, "{key} medium armor");
+            assert_eq!(has("Armor Prof ~ Heavy"), armor_row.heavy, "{key} heavy armor");
+            assert_eq!(has("Shield Prof ~ Tower"), armor_row.tower_shield, "{key} tower shield");
+            let has_plain_shield_prof =
+                ability_tokens.iter().any(|v| v.split('|').any(|part| part == "Shield Prof"));
+            assert_eq!(has_plain_shield_prof, armor_row.shield, "{key} shield (non-tower)");
+            let _ = class_name;
+        }
+    }
+
+    /// Druid and Monk both have a combined `"Weapon and Armor Proficiency
+    /// ~ <Class>"` record in the same corpus directory but were
+    /// investigated and correctly excluded (see the table's own doc
+    /// comment) -- RED if a future edit widens the lookup by name-pattern
+    /// rather than by verified content.
+    #[test]
+    fn weapon_and_armor_proficiency_grant_class_table_matches_excludes_druid_and_monk() {
+        assert_eq!(weapon_and_armor_proficiency_grant_class_id("Weapon and Armor Proficiency ~ Druid"), None);
+        assert_eq!(weapon_and_armor_proficiency_grant_class_id("Weapon and Armor Proficiency ~ Monk"), None);
+    }
+
+    /// Proves `CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES`'s own claim: for
+    /// every listed key, `class_skill_tables::class_skill_list(owner_id)`
+    /// is a real row (already independently verified against the live
+    /// corpus by that module's own test) -- this test only proves the
+    /// KEY -> owner_id mapping itself is complete and correct, not a
+    /// duplicate re-derivation of the skill-list content.
+    #[test]
+    fn class_skill_list_grant_owner_table_matches_resolve_to_real_rows() {
+        use crate::rules_core::rules_tables::crb::class_skill_tables;
+        for (key, owner_id) in CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES {
+            assert_eq!(class_skill_list_grant_owner_id(key), Some(*owner_id));
+            assert!(
+                class_skill_tables::class_skill_list(owner_id).is_some(),
+                "{owner_id} (from key {key}) must be a real row in CLASS_SKILL_LISTS"
+            );
+        }
+        assert_eq!(CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES.len(), 10);
+    }
+
+    /// A key this table does not cover (the 3-unit companion/mount
+    /// sibling this cycle deliberately left unclosed) returns `None`.
+    #[test]
+    fn class_skill_list_grant_owner_id_excludes_companion_mount_records() {
+        assert_eq!(class_skill_list_grant_owner_id("Companion ~ Animal Companion"), None);
+        assert_eq!(class_skill_list_grant_owner_id("Companion ~ Special Mount"), None);
+        assert_eq!(class_skill_list_grant_owner_id("Special Mount ~ Standard Choices"), None);
+    }
+
+    #[test]
+    fn vacuous_placeholder_reason_matches_only_the_named_three_keys() {
+        for (key, _) in VACUOUS_PLACEHOLDER_CLASS_FEATURES {
+            assert!(vacuous_placeholder_reason(key).is_some());
+        }
+        assert!(vacuous_placeholder_reason("Timeless Body").is_none());
+        assert!(vacuous_placeholder_reason("Channel Negative Energy").is_none());
+        assert!(vacuous_placeholder_reason("Empty Selection ~ Standard Fighter").is_none());
     }
 
     #[test]
@@ -832,10 +1405,41 @@ mod tests {
         let entries = load_pool_catalog(&repo_root());
         assert!(
             !entries.iter().any(|e| e.key == "Rage Power ~ Elemental Blood (Greater)"),
-            "a record whose row carries more than one DESC: field must never reach the catalog \
-             (only the first segment is ingested, which can be a syntax-clean sentence fragment)"
+            "a record whose row carries a PREVAREQ/PREVARGTEQ-gated choice-branch DESC segment \
+             must never reach the catalog (only one branch applies per character; joining all \
+             of them would show every alternative as if simultaneously true)"
         );
         assert!(entries.iter().any(|e| e.book == "advanced_class_guide" && e.pool_group == "Rage Power"));
+    }
+
+    /// `AT-34-E3-001 class_feature_option_pool` cycle, sub-cause 8: the SAFE
+    /// multi-DESC shape (no PREVAREQ/PREVARGTEQ gate on any segment beyond
+    /// the first) must reach the catalog now that `cache_gen::class_
+    /// feature::generate` joins it into `data.description` directly --
+    /// `Martial Weapon Proficiency Output` and `Octopus Wild Shape ~
+    /// Poison` are the two real corpus records this closes.
+    #[test]
+    fn a_safe_multi_desc_continuation_reaches_the_standalone_catalog() {
+        let entries = load_standalone_class_feature_catalog(&repo_root());
+        let martial = entries
+            .iter()
+            .find(|e| e.key == "Martial Weapon Proficiency Output")
+            .expect("Martial Weapon Proficiency Output must reach the standalone catalog");
+        assert!(martial.description.contains("You understand how to use your martial weapons"));
+        assert!(martial.description.contains("You make attack rolls with all your martial weapons"));
+        assert!(!martial.description.contains('|'), "no pipe-arg tail may leak into prose");
+    }
+
+    #[test]
+    fn a_safe_multi_desc_continuation_with_a_display_condition_tail_reaches_the_pool_catalog() {
+        let entries = load_pool_catalog(&repo_root());
+        let poison = entries
+            .iter()
+            .find(|e| e.key == "Octopus Wild Shape ~ Poison")
+            .expect("Octopus Wild Shape ~ Poison must reach the pool catalog");
+        assert!(poison.description.starts_with("Bite-injury"));
+        assert!(poison.description.contains("Calling upon the venomous powers"));
+        assert!(!poison.description.contains('|'), "the |PRERULE:... tail must not leak into prose");
     }
 
     #[test]
@@ -854,6 +1458,32 @@ mod tests {
             {"key": "SOURCEPAGE", "value": "p.2"},
         ]);
         assert!(!raw_tokens_carry_more_than_one_desc_segment(&unrelated_repeat));
+    }
+
+    #[test]
+    fn shipped_description_is_the_already_regenerated_safe_multi_desc_join_requires_an_exact_match() {
+        let two_plain = serde_json::json!([
+            {"key": "DESC", "value": "a"},
+            {"key": "DESC", "value": "b"},
+        ]);
+        // Not yet regenerated: shipped description is still just the first
+        // segment -- stays refused.
+        assert!(!shipped_description_is_the_already_regenerated_safe_multi_desc_join(&two_plain, "a"));
+        // Regenerated: shipped description is the full safe join.
+        assert!(shipped_description_is_the_already_regenerated_safe_multi_desc_join(&two_plain, "a b"));
+        // A choice-branch-gated row never has a safe join, regardless of
+        // what the shipped description says.
+        let choice_gated = serde_json::json!([
+            {"key": "DESC", "value": "While raging, the barbarian gains"},
+            {"key": "DESC", "value": " a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1"},
+        ]);
+        assert!(!shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+            &choice_gated,
+            "While raging, the barbarian gains a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1"
+        ));
+        // A single-DESC row has nothing to join.
+        let one = serde_json::json!([{"key": "DESC", "value": "a"}]);
+        assert!(!shipped_description_is_the_already_regenerated_safe_multi_desc_join(&one, "a"));
     }
 
     /// No served description leaks unresolved PCGen syntax onto the screen
@@ -1006,6 +1636,463 @@ mod tests {
         // The original two groups must still be served -- no regression.
         assert!(groups.remove("Rogue Talent"));
         assert!(groups.remove("Rage Power"));
+    }
+
+    /// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+    /// mechanism): real, currently-shipped standalone CRB features with a
+    /// clean-rendering, mechanically-inert description -- the exact shape
+    /// this catalog exists to serve. Six real oracle keys, each hand-read
+    /// against its own `data/corpus/core_rulebook/class_feature/**/*.json`
+    /// row before being listed here.
+    #[test]
+    fn standalone_catalog_serves_real_prose_only_crb_features() {
+        let entries = load_standalone_class_feature_catalog(&repo_root());
+        let index = pool_catalog_index(&entries);
+        for key in [
+            "Timeless Body",
+            "Uncanny Dodge",
+            "Woodland Stride",
+            "Evasion Output",
+            "Improved Evasion",
+            "Blank Weapon Block OS",
+        ] {
+            assert!(
+                index.contains_key(&("core_rulebook".to_string(), key.to_string())),
+                "expected the standalone catalog to serve {key:?}"
+            );
+        }
+    }
+
+    /// The render-and-refuse / engine-effect-token gates must refuse a
+    /// standalone record exactly as they refuse an option-pool one: `Armor
+    /// Prof ~ Heavy` (`" ~ "`-qualified, so it can never reach THIS catalog
+    /// at all -- proven separately below) and `Channel Negative Energy`
+    /// (a real oracle row whose `description` is `null`, so `has_real_
+    /// description` fails upstream regardless of this catalog) must not be
+    /// served.
+    #[test]
+    fn standalone_catalog_refuses_records_with_no_real_description_or_an_engine_effect_token() {
+        let entries = load_standalone_class_feature_catalog(&repo_root());
+        let index = pool_catalog_index(&entries);
+        assert!(!index.contains_key(&("core_rulebook".to_string(), "Channel Negative Energy".to_string())));
+        assert!(!index.contains_key(&("core_rulebook".to_string(), "Evasion".to_string())));
+    }
+
+    /// [`is_standalone_class_feature`] and [`is_registered_pool_group`] must
+    /// partition the corpus's `class_feature` keys, never overlap --
+    /// otherwise a record could ride BOTH catalogs, which would let a fix
+    /// scoped to one mechanism's population silently also move another
+    /// mechanism's (`decisions.md §14`'s nine-way split is only meaningful
+    /// if each unit belongs to exactly one).
+    #[test]
+    fn pool_and_standalone_catalogs_never_overlap() {
+        let pool = load_pool_catalog(&repo_root());
+        let standalone = load_standalone_class_feature_catalog(&repo_root());
+        let pool_keys: std::collections::BTreeSet<(&str, &str)> =
+            pool.iter().map(|e| (e.book.as_str(), e.key.as_str())).collect();
+        for entry in &standalone {
+            assert!(
+                !pool_keys.contains(&(entry.book.as_str(), entry.key.as_str())),
+                "{:?}/{:?} appears in both catalogs",
+                entry.book,
+                entry.key
+            );
+        }
+    }
+
+    /// `AT-34-E3-001`'s `class_feature_owner_matched_by_name_but_record_
+    /// not_held_by_engine` mechanism (`decisions.md §14`, 346 of 1,006
+    /// `core_rulebook` bucket-B units at this cycle's start): re-derives,
+    /// from the live `docs/work-inventory.json` and the live corpus this
+    /// module already reads, WHY each unit in this mechanism's population
+    /// is not served by [`load_pool_catalog`] -- the exact gate this
+    /// module's own filter (`load_class_feature_catalog`) refuses it at,
+    /// walked in the SAME order that function checks them, so the count is
+    /// never a re-narration.
+    ///
+    /// **Every gate below is load-bearing, not this cycle's own
+    /// invention** -- each was hand-verified against a real corpus finding
+    /// by an earlier cycle (this file's own doc comments cite them). This
+    /// test proves the negative the receipt reports: none of the 346 is a
+    /// narrow catalog-widening bug this cycle can close without either (a)
+    /// new engine wiring for a genuinely mechanical/computed record, or (b)
+    /// new ingest work for a record with no player-facing description at
+    /// all. The seven buckets below are that population's exact partition
+    /// (`decisions.md §15`: a named remainder, not "the rest").
+    #[test]
+    fn class_feature_owner_matched_but_not_held_346_sub_causes_are_named_and_sum_exactly() {
+        let repo_root = repo_root();
+        let inventory_text = std::fs::read_to_string(repo_root.join("docs/work-inventory.json"))
+            .expect("docs/work-inventory.json is readable");
+        let inventory: Value =
+            serde_json::from_str(&inventory_text).expect("docs/work-inventory.json is valid JSON");
+        let units = inventory["units"].as_array().expect("units is an array");
+        let mechanism_units: Vec<(String, String)> = units
+            .iter()
+            .filter(|u| {
+                u["book"].as_str() == Some("core_rulebook")
+                    && u["status"].as_str() == Some("engine-does-not-hold")
+                    && u["evidence"].as_str()
+                        == Some("class_feature_owner_matched_by_name_but_record_not_held_by_engine")
+            })
+            .map(|u| {
+                (
+                    u["book"].as_str().unwrap_or_default().to_string(),
+                    u["corpus_key"].as_str().unwrap_or_default().to_string(),
+                )
+            })
+            .collect();
+        let population = mechanism_units.len();
+
+        let corpus_root = repo_root.join("data/corpus");
+        let mut reasons: BTreeMap<&'static str, u32> = BTreeMap::new();
+        for (book, key) in &mechanism_units {
+            let cf_dir = corpus_root.join(book).join("class_feature");
+            let mut files = Vec::new();
+            walk_json_files(&cf_dir, &mut files);
+            let mut found = None;
+            for file in &files {
+                let Ok(text) = std::fs::read_to_string(file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                if doc["data"]["key"].as_str() == Some(key.as_str()) {
+                    found = Some(doc);
+                    break;
+                }
+            }
+            let Some(doc) = found else {
+                *reasons.entry("no_corpus_record_found").or_default() += 1;
+                continue;
+            };
+            let data = &doc["data"];
+            let raw_desc = data["description"].as_str();
+            let Some(raw_desc) = raw_desc else {
+                // No `DESC:` at all -- a genuinely internal, never
+                // player-facing bookkeeping row (`ADD:SPELLCASTER`,
+                // `SPELLKNOWN`, `SPELLLEVEL`, ...). Real ingest work
+                // (writing a description that does not exist upstream) or
+                // a reclassification, not a catalog fix.
+                *reasons.entry("description_is_null_internal_bookkeeping").or_default() += 1;
+                continue;
+            };
+            if !is_real_description_value(raw_desc) {
+                *reasons.entry("description_not_real_value").or_default() += 1;
+                continue;
+            }
+            if carries_unimplemented_marker(raw_desc) {
+                *reasons.entry("carries_unimplemented_marker").or_default() += 1;
+                continue;
+            }
+            let owning_class = data["class"].as_str().unwrap_or("");
+            if carries_class_specific_level_phrase(raw_desc, owning_class) {
+                // Prose states a value that scales with the OWNING class's
+                // level (e.g. "200 gp per wizard level") -- Decision 7
+                // condition 2 ("nothing to compute") genuinely fails; this
+                // needs a real per-character computation, not a serve.
+                *reasons.entry("class_specific_level_phrase").or_default() += 1;
+                continue;
+            }
+            if !has_no_engine_effect_token(&data["raw_tokens"]) {
+                // Carries a real mechanical token (`ADD`, `ABILITY`,
+                // `AUTO`, `BONUS`, `DEFINE`, `SPELLS`, ...) alongside its
+                // description -- a genuine mechanic, not prose-only.
+                *reasons.entry("engine_effect_token_present").or_default() += 1;
+                continue;
+            }
+            if is_archetype_locked(&data["raw_tokens"]) {
+                *reasons.entry("archetype_locked").or_default() += 1;
+                continue;
+            }
+            if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"])
+                && !shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+                    &data["raw_tokens"],
+                    raw_desc,
+                )
+            {
+                // Every one of these, hand-checked this cycle, carries a
+                // genuine `PRE*`-gated alternative-branch shape (mutually
+                // exclusive choices or level bands), not the `class_
+                // feature_option_pool` cycle's safe sequential-continuation
+                // shape -- joining them would show every branch at once,
+                // the exact silent-truncation-turned-over-disclosure defect
+                // that gate exists to prevent.
+                *reasons.entry("multi_desc_segment_not_regenerated").or_default() += 1;
+                continue;
+            }
+            if raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc) {
+                *reasons.entry("bare_percent_reference").or_default() += 1;
+                continue;
+            }
+            let rendered = render_pcgen_desc(raw_desc);
+            if !rendered.dropped_args.is_empty() {
+                *reasons.entry("dropped_pcgen_args").or_default() += 1;
+                continue;
+            }
+            if leaked_pcgen_syntax(&rendered.text).is_some() {
+                *reasons.entry("leaked_pcgen_syntax").or_default() += 1;
+                continue;
+            }
+            // Passes every gate this catalog runs -- genuinely already
+            // SERVED by `load_pool_catalog`/`pool_catalog_index`. Every one
+            // hand-sampled this cycle (`Sorcerer Bonus Spell L4 ~ Elemental
+            // Body I`, `Sorcerer Bonus Spell L1 ~ Bless`, ...) is still
+            // blocked at `classify()`'s own promotion gate: either its
+            // `wiring_class` is not `"display"` (`computed`/`ambiguous`/
+            // `static`/`derived` -- a real magnitude/scaling signal the
+            // catalog's render-and-refuse gate alone cannot see), or its
+            // prose trips `closure_states_universal_sheet_modifier`'s
+            // `"size bonus"` cue (a per-character numeric effect, not
+            // static flavor text). Both gates are `classify()`'s, deliberate
+            // and correct per Decision 7 -- a text-complete promotion for
+            // either shape would misreport a record that still needs a
+            // real computation as merely displayed.
+            *reasons.entry("catalog_serves_it_but_classify_wiring_class_gate_blocks_promotion")
+                .or_default() += 1;
+        }
+
+        let total: u32 = reasons.values().sum();
+        assert_eq!(
+            total as usize, population,
+            "the seven named sub-causes must partition the WHOLE mechanism population \
+             exactly, decisions.md §15 -- got {reasons:?} summing to {total} against a \
+             population of {population}"
+        );
+        for (k, v) in &reasons {
+            eprintln!("AT-34-E3-001 class_feature_owner_matched sub-cause: {v} | {k}");
+        }
+    }
+
+    /// Proves `WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER`'s own claim against BOTH
+    /// the live corpus AND the live
+    /// `wizard_spell_list::wizard_school_zero_level_spells` join — not
+    /// merely asserted in a doc comment. RED if either side ever changes
+    /// such that the sets stop matching exactly (`decisions.md §2`'s
+    /// "cleared by revisiting the stated condition").
+    #[test]
+    fn wizard_school_spell_list_key_owner_matches_are_exact() {
+        use crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
+        use crate::rules_core::rules_tables::crb::wizard_spell_list::wizard_school_zero_level_spells;
+        let dir = repo_root().join("data/corpus/core_rulebook/class_feature");
+        let schools: &[(&str, &str, Pf1SchoolId)] = &[
+            ("Abjuration Wizard Spells", "abjuration_wizard_spells", Pf1SchoolId::Abjuration),
+            ("Conjuration Wizard Spells", "conjuration_wizard_spells", Pf1SchoolId::Conjuration),
+            ("Divination Wizard Spells", "divination_wizard_spells", Pf1SchoolId::Divination),
+            ("Enchantment Wizard Spells", "enchantment_wizard_spells", Pf1SchoolId::Enchantment),
+            ("Evocation Wizard Spells", "evocation_wizard_spells", Pf1SchoolId::Evocation),
+            ("Illusion Wizard Spells", "illusion_wizard_spells", Pf1SchoolId::Illusion),
+            ("Necromancy Wizard Spells", "necromancy_wizard_spells", Pf1SchoolId::Necromancy),
+            ("Transmutation Wizard Spells", "transmutation_wizard_spells", Pf1SchoolId::Transmutation),
+            ("Universal Wizard Spells", "universal_wizard_spells", Pf1SchoolId::Universal),
+        ];
+        assert_eq!(
+            schools.len(),
+            WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER.len(),
+            "every WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER entry must be checked here, and vice versa"
+        );
+        for (key, dir_stub, school) in schools {
+            assert_eq!(wizard_school_spell_list_key_owner(key), Some("class:wizard"));
+            let path = dir.join(dir_stub).join(format!("{dir_stub}.json"));
+            let text = std::fs::read_to_string(&path)
+                .unwrap_or_else(|e| panic!("readable corpus json at {path:?}: {e}"));
+            let json: Value = serde_json::from_str(&text).expect("valid corpus json");
+            assert_eq!(json["data"]["key"].as_str(), Some(*key), "corpus file's own key must match");
+            assert!(
+                json["data"]["description"].is_null(),
+                "{key} now carries a real description -- this record may now qualify for a \
+                 different, display-bearing rung; revisit this table"
+            );
+            let spellknown = json["data"]["raw_tokens"]
+                .as_array()
+                .expect("raw_tokens is an array")
+                .iter()
+                .find(|t| t["key"].as_str() == Some("SPELLKNOWN"))
+                .unwrap_or_else(|| panic!("{key} carries no SPELLKNOWN token"))["value"]
+                .as_str()
+                .expect("SPELLKNOWN token has a string value")
+                .to_string();
+            let corpus_spells: std::collections::BTreeSet<String> = spellknown
+                .split('|')
+                .nth(2)
+                .unwrap_or_else(|| panic!("{key}'s SPELLKNOWN token has a spell-list segment"))
+                .split(',')
+                .map(|s| s.trim().to_string())
+                .collect();
+            let table_spells: std::collections::BTreeSet<String> =
+                wizard_school_zero_level_spells(*school).into_iter().map(|s| s.to_string()).collect();
+            assert_eq!(
+                table_spells, corpus_spells,
+                "{key}: the wizard_spell_list/spell_list join disagrees with the real corpus \
+                 SPELLKNOWN token"
+            );
+        }
+    }
+
+    /// `AT-34-E3-001` cycle 9's own re-derivation: the dispatch's own
+    /// inherited claim of a 161/81 excluded/non-excluded split against this
+    /// mechanism's 242-unit `core_rulebook` population did NOT match a
+    /// direct query against the live corpus (218 excluded / 24
+    /// non-excluded, re-derived by `docs/release/SD-34-book-completion/
+    /// artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_9.md`).
+    /// This test proves that split mechanically, reusing this file's own
+    /// sibling test's exact gate-walk (so it can never independently drift
+    /// from what `load_pool_catalog` actually refuses each unit for).
+    ///
+    /// **The excluded-class literal below is a frozen snapshot, not a live
+    /// import.** `class_feature_grant_consumer`'s own
+    /// `ANTI_FABRICATION_GATE_EXCLUDED_CLASSES` (the gate this cycle's
+    /// dispatch brief and `decisions.md §18` both name) was renamed and
+    /// repurposed to `LEVEL_UP_PILLAR_FILTERED_CLASSES` (Druid/Monk only)
+    /// by a sibling lane's SAME-wave, concurrently-landed `§18` fix
+    /// (anti-fabrication is now enforced by corpus-citation, not a class
+    /// allowlist), then REMOVED entirely by a later bucket-B batch cycle
+    /// (Druid/Monk widened the same way) -- importing either constant is
+    /// no longer possible, so this test keeps its own frozen, hand-written
+    /// copy of the ORIGINAL seven-class definition and characterizes THIS
+    /// mechanism's population split by that definition regardless of what
+    /// production code currently excludes.
+    ///
+    /// **242 -> 239 (SD-34 wave-9 shared regeneration, prior cycle):**
+    /// `docs/work-inventory.json` was regenerated once, after this
+    /// characterization was first written; 3 excluded-class units left
+    /// this mechanism's population (moved status by the SAME-wave
+    /// citation-gate widening for Wizard/Bard/Paladin/Cleric/Sorcerer, not
+    /// by this test's own lane) -- confirmed live, not merely inferred: a
+    /// fresh per-class re-group against the CURRENT `docs/work-
+    /// inventory.json` gives Sorcerer 137, Cleric 38 (was 39), Monk 25,
+    /// Wizard 5 (was 7), Paladin 5, Bard 4, Druid 1 -- **215**, not 218
+    /// (Monk and Druid are BYTE-FOR-BYTE unchanged, matching wave-9's own
+    /// "0 Druid/Monk movement confirmed" finding; only Cleric and Wizard
+    /// moved). The non-excluded 24 (below) are confirmed UNCHANGED by the
+    /// same re-group. This is an instrument-correction to a STALE pinned
+    /// count this test's own prior author never re-checked after the
+    /// regeneration landed -- re-derive again with the query in this
+    /// test's own body before trusting either number further.
+    ///
+    /// **This lane owns only the non-excluded remainder** (a sibling lane
+    /// owns the 215 excluded-class units, gated on an operator ruling on
+    /// `OPEN-ISSUES.md` rows 330/338 this test does not decide). Of the 24
+    /// non-excluded units: 18 carry no corpus description at all (the
+    /// zero-description internal-bookkeeping sub-cause `atlas-defects.md`
+    /// already names as the OPEN definitional question -- left in bucket B,
+    /// never reclassified into X or U by this test or this cycle); the
+    /// remaining 6 carry a REAL description but are correctly refused by
+    /// one of this catalog's own pre-existing, independently-tested safety
+    /// gates (an unresolvable `%N` argument, a class-level-scaled phrase,
+    /// or a genuine mechanical token such as `ABILITY`/`SELECT`) -- each of
+    /// those 6 already has its own dedicated live-corpus regression test in
+    /// this module (`bleeding_attack_is_refused_for_an_unresolvable_
+    /// percent_argument`, the Knockback/Finesse-Rogue/Skill-Mastery/
+    /// Improved-Evasion cases this file's doc comments cite). None of the
+    /// 24 is a narrow catalog-widening bug this cycle can close: every one
+    /// needs either real per-character grant/formula wiring (a talent pick
+    /// actually consumed by `pilot_compute`, a sneak-attack-dice-scaled
+    /// damage formula) or new ingest work no engine change can supply.
+    #[test]
+    fn class_feature_owner_matched_non_excluded_remainder_is_24_and_named_by_subcause() {
+        // Frozen snapshot of `class_feature_grant_consumer::ANTI_FABRICATION_GATE_EXCLUDED_
+        // CLASSES` as it stood for the whole of this wave's `docs/work-inventory.json` (see
+        // this fn's own doc comment for why a live import is no longer possible).
+        const ANTI_FABRICATION_GATE_EXCLUDED_CLASSES: [&str; 7] =
+            ["wizard", "bard", "paladin", "cleric", "sorcerer", "druid", "monk"];
+
+        let repo_root = repo_root();
+        let inventory_text = std::fs::read_to_string(repo_root.join("docs/work-inventory.json"))
+            .expect("docs/work-inventory.json is readable");
+        let inventory: Value =
+            serde_json::from_str(&inventory_text).expect("docs/work-inventory.json is valid JSON");
+        let units = inventory["units"].as_array().expect("units is an array");
+        let mechanism_units: Vec<String> = units
+            .iter()
+            .filter(|u| {
+                u["book"].as_str() == Some("core_rulebook")
+                    && u["status"].as_str() == Some("engine-does-not-hold")
+                    && u["evidence"].as_str()
+                        == Some("class_feature_owner_matched_by_name_but_record_not_held_by_engine")
+            })
+            .map(|u| u["corpus_key"].as_str().unwrap_or_default().to_string())
+            .collect();
+
+        let corpus_root = repo_root.join("data/corpus/core_rulebook/class_feature");
+        let mut files = Vec::new();
+        walk_json_files(&corpus_root, &mut files);
+        let mut by_key: BTreeMap<String, Value> = BTreeMap::new();
+        for file in &files {
+            let Ok(text) = std::fs::read_to_string(file) else { continue };
+            let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+            if let Some(k) = doc["data"]["key"].as_str() {
+                by_key.insert(k.to_string(), doc);
+            }
+        }
+
+        let mut excluded = 0u32;
+        let mut null_desc = 0u32;
+        let mut real_desc_refused = 0u32;
+        let mut real_desc_unrefused_unexpected: Vec<String> = Vec::new();
+
+        for key in &mechanism_units {
+            let doc = by_key.get(key).unwrap_or_else(|| panic!("no corpus record for {key}"));
+            let data = &doc["data"];
+            let owner = data["class"].as_str().unwrap_or_default().to_ascii_lowercase();
+            if ANTI_FABRICATION_GATE_EXCLUDED_CLASSES.contains(&owner.as_str()) {
+                excluded += 1;
+                continue;
+            }
+            let Some(raw_desc) = data["description"].as_str() else {
+                null_desc += 1;
+                continue;
+            };
+            // Non-excluded, real-description unit: it must be refused by
+            // one of the catalog's own gates, never silently unaccounted
+            // for -- the same gate walk the sibling 346-population test
+            // above runs, restricted to just this record.
+            let owning_class = data["class"].as_str().unwrap_or("");
+            let refused = !is_real_description_value(raw_desc)
+                || carries_unimplemented_marker(raw_desc)
+                || carries_class_specific_level_phrase(raw_desc, owning_class)
+                || !has_no_engine_effect_token(&data["raw_tokens"])
+                || is_archetype_locked(&data["raw_tokens"])
+                || (raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"])
+                    && !shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+                        &data["raw_tokens"],
+                        raw_desc,
+                    ))
+                || raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc)
+                || !render_pcgen_desc(raw_desc).dropped_args.is_empty()
+                || leaked_pcgen_syntax(&render_pcgen_desc(raw_desc).text).is_some();
+            if refused {
+                real_desc_refused += 1;
+            } else {
+                real_desc_unrefused_unexpected.push(key.clone());
+            }
+        }
+
+        assert!(
+            real_desc_unrefused_unexpected.is_empty(),
+            "found a non-excluded, real-description unit this cycle's gate walk does NOT \
+             refuse -- this WOULD be a narrow catalog-widening closure, re-investigate: \
+             {real_desc_unrefused_unexpected:?}"
+        );
+        // Re-derived 2026-09-01 against `docs/work-inventory.json` at this cycle's HEAD (this
+        // test's own live query above, re-run standalone): 215 -> 213. `mechanism_units.len()`
+        // itself moved 239 -> 237 (two units no longer carry `status ==
+        // "engine-does-not-hold"` with this evidence string; the EXCLUDED-CLASS ROSTER, the 7
+        // names above, is unchanged and not the cause -- only membership in `mechanism_units`
+        // shrank). `null_desc`/`real_desc_refused` below are unaffected (18/6 still hold live).
+        // Wave 50 re-derivation: 213 -> 138. `classify()`'s `Kind::ClassFeature` owner-matched
+        // arm gained two new rungs this wave (Core Domain/Sorcerer Domain, Sorcerer Bonus Spell
+        // L1-L9 -- both genuinely proseless, set-shaped internal chassis grants, `decisions.md
+        // §22` wave-50 update) that promote 75 `core_rulebook` units straight to `grounded`
+        // rather than the `class_feature_owner_matched_by_name_but_record_not_held_by_engine`
+        // evidence this test's own `mechanism_units` filter reads -- all 75 have `class: "Cleric"`
+        // or `class: "Sorcerer"`, both already in the excluded-class roster above (31 Core
+        // Domain + 22 Sorcerer Domain + 22 Sorcerer Bonus Spell = 75, 213 - 75 = 138, confirmed
+        // by re-running this test's own live query standalone post-regen). This lane's OWN
+        // owned population (`null_desc`/`real_desc_refused` below, neither Cleric nor Sorcerer
+        // was ever counted there) is unaffected -- still 18/6, still summing to 24.
+        assert_eq!(excluded, 138, "excluded-class population (sibling lane's, do not touch)");
+        assert_eq!(null_desc, 18, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
+        assert_eq!(real_desc_refused, 6, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
+        assert_eq!(excluded + null_desc + real_desc_refused, mechanism_units.len() as u32);
+        assert_eq!(null_desc + real_desc_refused, 24, "this lane's own owned population");
     }
 }
 

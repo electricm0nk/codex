@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:17Z",
   "data": {
     "key": "Race ~ Dwarf",
     "name": "Dwarf",
@@ -20,20 +19,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_templates.lst",
-    "sha256": "50d174c7774cc084356193fd9ed4eaa8da3e257fa7db5df5b1ed91b34f9b047e",
-    "line": 3,
-    "record_key": "Race ~ Dwarf"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:17Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 3,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_templates.lst",
+    "record_key": "Race ~ Dwarf",
+    "sha256": "50d174c7774cc084356193fd9ed4eaa8da3e257fa7db5df5b1ed91b34f9b047e"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

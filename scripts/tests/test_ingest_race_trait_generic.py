@@ -66,7 +66,7 @@ class LoadUnitsUsesLiveJoinNotStatusFieldTests(unittest.TestCase):
     """The regression this test guards: `docs/work-inventory.json`'s own
     `status` field has drifted from the live corpus join before (finding
     5/6, cited in the module doc comment) -- a unit already carrying a real
-    corpus record but still stamped `status: not-ingested` in the inventory
+    corpus record but still stamped `status: engine-does-not-hold` in the inventory
     must NOT be re-transcribed, because `load_units` filters on the ledger's
     `join_status`, never on `status`."""
 
@@ -85,19 +85,19 @@ class LoadUnitsUsesLiveJoinNotStatusFieldTests(unittest.TestCase):
                             "id": "book:race_trait:stale-but-ingested",
                             "kind": "race_trait",
                             "book": "book",
-                            "status": "not-ingested",
+                            "status": "engine-does-not-hold",
                         },
                         {
                             "id": "book:race_trait:genuinely-open",
                             "kind": "race_trait",
                             "book": "book",
-                            "status": "not-ingested",
+                            "status": "engine-does-not-hold",
                         },
                         {
                             "id": "book:class_feature:wrong-kind",
                             "kind": "class_feature",
                             "book": "book",
-                            "status": "not-ingested",
+                            "status": "engine-does-not-hold",
                         },
                     ]
                 },

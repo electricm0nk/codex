@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You can cause a creature to become shaken as a melee touch attack. This effect persists for %1 rounds. Creatures shaken by this ability radiate an aura of evil, as if they were an evil outsider. Multiple touches do not stack, but they do add to the duration. You can use this ability %2 times per day.|DevilBinderCorruptingTouchDuration|InfernalAffinityTimes",
     "key": "Infernal Affinity ~ Corrupting Touch",
     "name": "Corrupting Touch",
-    "description": "You can cause a creature to become shaken as a melee touch attack. This effect persists for %1 rounds. Creatures shaken by this ability radiate an aura of evil, as if they were an evil outsider. Multiple touches do not stack, but they do add to the duration. You can use this ability %2 times per day.|DevilBinderCorruptingTouchDuration|InfernalAffinityTimes",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,20 +56,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 66,
-    "record_key": "Infernal Affinity ~ Corrupting Touch"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 66,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Infernal Affinity ~ Corrupting Touch",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

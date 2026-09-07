@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Racial Traits ~ Half-Orc",
     "name": "Racial Traits ~ Half-Orc",
-    "description": null,
     "raw_tokens": [
       {
         "key": "DEFINE",
@@ -17,20 +16,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_abilities_globalvar.lst",
-    "sha256": "55b03f58936ffb5f52ed18abc606749f50d8cd5de364f3ac0f0c2bc129cc36d9",
-    "line": 10,
-    "record_key": "Racial Traits ~ Half-Orc"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Half-Orc",
+    "sha256": "55b03f58936ffb5f52ed18abc606749f50d8cd5de364f3ac0f0c2bc129cc36d9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

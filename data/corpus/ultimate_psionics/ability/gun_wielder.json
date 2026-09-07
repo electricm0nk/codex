@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You gain a battered gun identical to the one gained by the gunslinger.",
     "key": "Kaigun ~ Gun Wielder",
     "name": "Gun Wielder",
-    "description": "You gain a battered gun identical to the one gained by the gunslinger.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
-    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
-    "line": 35,
-    "record_key": "Kaigun ~ Gun Wielder"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "record_key": "Kaigun ~ Gun Wielder",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

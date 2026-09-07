@@ -1066,6 +1066,21 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         }
     }
 
+    // **AT-34-E4-002 (second slice)**: the player's own resolved choice
+    // for each fixed-choice `%LIST` trait, passed through verbatim -- the
+    // same "trusted wire list" precedent `selected_feats`/`selected_traits`
+    // already follow. An entry that is not a real, corpus-declared
+    // (choice_set_id, selection_id) pair for the trait it names is simply
+    // inert wherever it is read (`trait_effects::
+    // skill_choice_bonuses_from_traits`'s own "omit rather than
+    // fabricate" discipline), never a blocked save.
+    for choice in &request.trait_skill_choices {
+        selected_choices.push(SelectedChoice {
+            choice_set_id: choice.choice_set_id.clone(),
+            selection_id: choice.selection_id.clone(),
+        });
+    }
+
     let dodge_is_granted_by_a_seeded_slot = selected_choices.iter().any(|choice| {
         choice.selection_id == DODGE_FEAT_SELECTION
             && (choice.choice_set_id == HUMAN_BONUS_FEAT_CHOICE_ID
@@ -1136,6 +1151,12 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                 },
             ],
             selected_choices,
+            // **AT-34-E4-002**: passed through verbatim from the request,
+            // the same "trusted wire list" precedent `selected_feats`
+            // (above) already follows -- see `CreateCharacterRequest::
+            // selected_traits`'s own doc comment for why no validation
+            // blocks the save here.
+            selected_traits: request.selected_traits.clone(),
             spells_selected,
             class_ability_activations: Vec::new(),
         },
@@ -1443,8 +1464,8 @@ pub(crate) fn mutate_saved_character_at_root(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(&snapshot),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        snapshot: Box::new(map_snapshot_dto(&snapshot)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
     })
 }
 
@@ -1884,6 +1905,8 @@ mod tests {
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
             companion_species: None,
+            selected_traits: Vec::new(),
+            trait_skill_choices: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         }
     }

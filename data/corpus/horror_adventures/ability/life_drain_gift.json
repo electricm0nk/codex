@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You gain a slam attack, a primary natural attack that deals 1d6 points of bludgeoning damage if your size is Medium (1d4 if Small). If you confirm a critical hit with this attack, you inflict 1 temporary negative level on the target. The DC to remove this negative level is equal to the standard corruption ability DC.",
     "key": "Vampirism Corruption ~ Life Drain Gift",
     "name": "Life Drain Gift",
-    "description": "You gain a slam attack, a primary natural attack that deals 1d6 points of bludgeoning damage if your size is Medium (1d4 if Small). If you confirm a critical hit with this attack, you inflict 1 temporary negative level on the target. The DC to remove this negative level is equal to the standard corruption ability DC.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 926,
-    "record_key": "Vampirism Corruption ~ Life Drain Gift"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 926,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Vampirism Corruption ~ Life Drain Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

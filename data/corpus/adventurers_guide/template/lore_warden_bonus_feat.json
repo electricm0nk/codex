@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:13Z",
   "data": {
     "key": "Lore Warden Bonus Feat",
     "name": "Lore Warden Bonus Feat",
@@ -20,20 +19,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_templates.lst",
-    "sha256": "5e9d10789d33dce65c644f7bf256c66287fbc40be2c91a3bf7c4983dbaf7026b",
-    "line": 11,
-    "record_key": "Lore Warden Bonus Feat"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:13Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_templates.lst",
+    "record_key": "Lore Warden Bonus Feat",
+    "sha256": "5e9d10789d33dce65c644f7bf256c66287fbc40be2c91a3bf7c4983dbaf7026b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -83,8 +83,8 @@
     "record_key": "Hammer (Polarity)",
     "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
   },
-  "wiring_class": "display",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "static:literal_magnitudes_only"
   ]
 }

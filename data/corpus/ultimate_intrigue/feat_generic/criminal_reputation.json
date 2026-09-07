@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "Your acts of audacious larceny have endeared you to the criminal underworld.",
     "key": "Criminal Reputation",
     "name": "Criminal Reputation",
-    "description": "Your acts of audacious larceny have endeared you to the criminal underworld.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -45,20 +44,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
-    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
-    "line": 31,
-    "record_key": "Criminal Reputation"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 31,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "record_key": "Criminal Reputation",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

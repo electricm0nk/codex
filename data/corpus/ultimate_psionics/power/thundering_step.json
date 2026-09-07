@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:11:36Z",
   "data": {
     "key": "Thundering Step",
     "name": "Thundering Step",
@@ -60,18 +58,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
-    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a",
-    "line": 450,
-    "record_key": "Thundering Step"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:11:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 450,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Thundering Step",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

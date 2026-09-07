@@ -16,53 +16,23 @@
 //! level-5+ Fighter burden (weapon training begins at level 5), no spell burden,
 //! no non-Fighter positive support, and no general feat/prerequisite engine.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationExplanation, HeadlessReceiptStatus, PilotBaseChassisComputation,
-    build_pilot_headless_receipt, compute_pilot_base_chassis,
+    HeadlessReceiptStatus,
+    build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
     EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const LEVEL_4_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level4_sd13_deterministic_input.txt");
 const LEVEL_3_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level3_sd13_deterministic_input.txt");
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 // ----- Milestone: level 4 is no longer blanket-blocked -----
 

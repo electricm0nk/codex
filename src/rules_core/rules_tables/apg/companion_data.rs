@@ -14,7 +14,7 @@
 //! NOT transcribed -- ability rows no creature row of this book owns, so
 //! nothing could ever reach them on screen. Dropped rather than emitted
 //! unreachable (`decisions.md §50`, adopted from the monster lane; §56.1).
-//! These rows keep their `not-ingested` status in
+//! These rows keep their `engine-does-not-hold` status in
 //! `docs/work-inventory.json`, which is where the shortfall is counted; they
 //! are NOT a `reach_gate` `OPEN_FINDINGS` entry, because that list is keyed by
 //! FAMILY and this book's `companions` family does reach a player:
@@ -431,6 +431,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Eidolon"],
+        cross_book_owners: &[],
         source_file: "apg_abilities_companion.lst",
         source_line: 67,
     },
@@ -446,6 +447,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Eidolon"],
+        cross_book_owners: &[],
         source_file: "apg_abilities_companion.lst",
         source_line: 68,
     },
@@ -461,6 +463,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Eidolon"],
+        cross_book_owners: &[],
         source_file: "apg_abilities_companion.lst",
         source_line: 69,
     },
@@ -476,6 +479,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Fox)"],
+        cross_book_owners: &[],
         source_file: "apg_abilities_companion.lst",
         source_line: 98,
     },
@@ -491,6 +495,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Crab (Giant King))"],
+        cross_book_owners: &[],
         source_file: "apg_abilities_companion.lst",
         source_line: 122,
     },
@@ -506,6 +511,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Fox)"],
+        cross_book_owners: &[],
         source_file: "apg_abilities_companion.lst",
         source_line: 239,
     },
@@ -521,6 +527,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Crab (Giant King))"],
+        cross_book_owners: &[],
         source_file: "apg_abilities_companion.lst",
         source_line: 261,
     },
@@ -536,6 +543,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Crab (Giant King))", "Familiar (Octopus)"],
+        cross_book_owners: &[],
         source_file: "apg_abilities_companion.lst",
         source_line: 270,
     },

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You are able to point out the weak points in an enemy's defenses, and your allies benefit from your tactical insight. As a swift action, you can expend one use of mythic power to designate a single opponent within 30 feet of you. All allies within 30 feet of that opponent gain the sneak attack ability when attacking it, and can thus deal +%1d6 points of damage when flanking that opponent or when the opponent is otherwise denied its Dexterity bonus to AC. This sneak attack damage stacks with sneak attack damage from other sources. This ability lasts %2 rounds. You can take this ability up to four times. Each time you take it, the sneak attack damage from this ability increases by 1d6.|Ability_DeadlyGuidance_Dice|HalfMythicLevel",
     "key": "Mythic Path Ability ~ Deadly Guidance",
     "name": "Deadly Guidance",
-    "description": "You are able to point out the weak points in an enemy's defenses, and your allies benefit from your tactical insight. As a swift action, you can expend one use of mythic power to designate a single opponent within 30 feet of you. All allies within 30 feet of that opponent gain the sneak attack ability when attacking it, and can thus deal +%1d6 points of damage when flanking that opponent or when the opponent is otherwise denied its Dexterity bonus to AC. This sneak attack damage stacks with sneak attack damage from other sources. This ability lasts %2 rounds. You can take this ability up to four times. Each time you take it, the sneak attack damage from this ability increases by 1d6.|Ability_DeadlyGuidance_Dice|HalfMythicLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,20 +64,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 144,
-    "record_key": "Mythic Path Ability ~ Deadly Guidance"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 144,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Deadly Guidance",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

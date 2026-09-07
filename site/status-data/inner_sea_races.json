@@ -76,11 +76,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 68,
-      "partial": 2,
+      "done": 69,
+      "partial": 1,
       "not_started": 0,
       "denominator": 70,
-      "pct": 97.1,
+      "pct": 98.6,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 70,
@@ -229,7 +229,7 @@
         },
         {
           "name": "Dueling Bokken",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Magic.Resizable.EasternWeapon.Eastern.Melee.Exotic.Specific.Bludgeoning.Deadly.OneHanded.Sword.BladeHeavy.Tengu",
           "standing": "origin",
           "display_name": "Dueling Bokken"
@@ -597,8 +597,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 45,
-      "partial": 0,
-      "not_started": 6,
+      "partial": 1,
+      "not_started": 5,
       "denominator": 51,
       "pct": 88.2,
       "excluded_from_percentage": 21,
@@ -798,7 +798,7 @@
         },
         {
           "name": "Elemental Strike",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Elemental Strike"
@@ -1159,11 +1159,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 58,
-      "partial": 19,
-      "not_started": 42,
+      "done": 63,
+      "partial": 34,
+      "not_started": 22,
       "denominator": 119,
-      "pct": 48.7,
+      "pct": 52.9,
       "excluded_from_percentage": 23,
       "standing_breakdown": {
         "origin": 119,
@@ -1172,7 +1172,7 @@
       "items": [
         {
           "name": "+2 Intelligence, +2 Charisma, -2 Constitution",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Changeling Racial Trait.SpecialQuality.Racial Ability Scores",
           "standing": "origin",
           "display_name": "+2 Intelligence, +2 Charisma, -2 Constitution"
@@ -1207,7 +1207,7 @@
         },
         {
           "name": "Beast Talker",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Beast Talker"
@@ -1256,7 +1256,7 @@
         },
         {
           "name": "Crawling Skin (Blood Hag)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
           "standing": "origin",
           "display_name": "Crawling Skin (Blood Hag)"
@@ -1270,7 +1270,7 @@
         },
         {
           "name": "Dead Eyes (Mute Hag)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
           "standing": "origin",
           "display_name": "Dead Eyes (Mute Hag)"
@@ -1354,7 +1354,7 @@
         },
         {
           "name": "Disgusting",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ghoran Racial Trait.SpecialQuality.Special Quality.Special Ability",
           "standing": "origin",
           "display_name": "Disgusting"
@@ -1410,7 +1410,7 @@
         },
         {
           "name": "Evasive Maneuvers",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Evasive Maneuvers"
@@ -1424,21 +1424,21 @@
         },
         {
           "name": "Frostlaced Flesh (Winter Hag)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
           "standing": "origin",
           "display_name": "Frostlaced Flesh (Winter Hag)"
         },
         {
           "name": "Hag Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Changeling Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Hag Magic"
         },
         {
           "name": "Heir to Undying Nobility",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Heir to Undying Nobility"
@@ -1487,7 +1487,7 @@
         },
         {
           "name": "Insidious Telepathy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Lashunta Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Insidious Telepathy"
@@ -1501,7 +1501,7 @@
         },
         {
           "name": "Into the Wind (Storm Hag)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
           "standing": "origin",
           "display_name": "Into the Wind (Storm Hag)"
@@ -1711,21 +1711,21 @@
         },
         {
           "name": "Mostly Human",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Mostly Human"
         },
         {
           "name": "Mountaineer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Samsaran Racial Trait.SpecialQuality.Special Quality",
           "standing": "unclassified",
           "display_name": "Mountaineer"
         },
         {
           "name": "Nimbus of Vitality",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality.Special Ability",
           "standing": "origin",
           "display_name": "Nimbus of Vitality"
@@ -1760,7 +1760,7 @@
         },
         {
           "name": "Oppressive",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Syrinx Racial Trait.SpecialQuality.Special Quality.Special Ability",
           "standing": "origin",
           "display_name": "Oppressive"
@@ -1823,14 +1823,14 @@
         },
         {
           "name": "Repair Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Repair Magic"
         },
         {
           "name": "Repairing Nanites",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Android Racial Trait.SpecialQuality.Special Quality.Special Ability",
           "standing": "origin",
           "display_name": "Repairing Nanites"
@@ -1963,7 +1963,7 @@
         },
         {
           "name": "Spell-Like Ability",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spell-Like Ability"
@@ -1984,14 +1984,14 @@
         },
         {
           "name": "Stalwart Watcher Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Special Attack",
           "standing": "origin",
           "display_name": "Stalwart Watcher Output"
         },
         {
           "name": "Stealthy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Kasatha Racial Trait.SpecialQuality.Special Quality",
           "standing": "unclassified",
           "display_name": "Stealthy"
@@ -2005,14 +2005,14 @@
         },
         {
           "name": "Transitional Lore",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Triaxian Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Transitional Lore"
         },
         {
           "name": "Tremorsense",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Trox Racial Trait.SpecialQuality.Special Quality",
           "standing": "unclassified",
           "display_name": "Tremorsense"
@@ -2075,7 +2075,7 @@
         },
         {
           "name": "Vampire Hunter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialAttack.Special Attack",
           "standing": "origin",
           "display_name": "Vampire Hunter"
@@ -2145,7 +2145,7 @@
         },
         {
           "name": "Witchborn",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Changeling Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
           "standing": "origin",
           "display_name": "Witchborn"
@@ -2170,8 +2170,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 29,
+      "partial": 29,
+      "not_started": 0,
       "denominator": 29,
       "pct": 0.0,
       "excluded_from_percentage": 0,
@@ -2181,203 +2181,203 @@
       "items": [
         {
           "name": "Air of Authority",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Air of Authority"
         },
         {
           "name": "Bleaching Resistance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Bleaching Resistance"
         },
         {
           "name": "Burn Corruption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Burn Corruption"
         },
         {
           "name": "Carve Passage",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Carve Passage"
         },
         {
           "name": "Champion's Bout",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Champion's Bout"
         },
         {
           "name": "Damnation of Memory",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Damnation of Memory"
         },
         {
           "name": "Elemental Mastery",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Elemental Mastery"
         },
         {
           "name": "Fable Tapestry",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Fable Tapestry"
         },
         {
           "name": "Fire's Friend",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Fire's Friend"
         },
         {
           "name": "Fleshwarping Swarm",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Fleshwarping Swarm"
         },
         {
           "name": "Lament of Summer's Last Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Lament of Summer's Last Breath"
         },
         {
           "name": "Lost Locale",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Lost Locale"
         },
         {
           "name": "Lost Passage",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Lost Passage"
         },
         {
           "name": "Mantle of the Magic Warriors",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Mantle of the Magic Warriors"
         },
         {
           "name": "Martial Telekinesis",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Martial Telekinesis"
         },
         {
           "name": "Miasmal Dread",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Miasmal Dread"
         },
         {
           "name": "Murderous Crow",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Murderous Crow"
         },
         {
           "name": "Overlook",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Overlook"
         },
         {
           "name": "Probe History",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Probe History"
         },
         {
           "name": "Respectful Quiet",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Respectful Quiet"
         },
         {
           "name": "Shadow of Doubt",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Shadow of Doubt"
         },
         {
           "name": "Siege Scatter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Siege Scatter"
         },
         {
           "name": "Summon Giant Ally I",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Giant Ally I"
         },
         {
           "name": "Summon Giant Ally II",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Giant Ally II"
         },
         {
           "name": "Summon Giant Ally III",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Giant Ally III"
         },
         {
           "name": "Summon Kami",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Kami"
         },
         {
           "name": "Suppressing Stone",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Suppressing Stone"
         },
         {
           "name": "Wall of Brine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Wall of Brine"
         },
         {
           "name": "Zephyr's Fleetness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Zephyr's Fleetness"
@@ -2465,11 +2465,11 @@
     {
       "kind": "trait",
       "label": "Traits",
-      "done": 0,
-      "partial": 0,
-      "not_started": 92,
+      "done": 61,
+      "partial": 29,
+      "not_started": 2,
       "denominator": 92,
-      "pct": 0.0,
+      "pct": 66.3,
       "excluded_from_percentage": 4,
       "standing_breakdown": {
         "origin": 92,
@@ -2478,21 +2478,21 @@
       "items": [
         {
           "name": "Acknowledged Scion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Dhampir Race Trait",
           "standing": "origin",
           "display_name": "Acknowledged Scion"
         },
         {
           "name": "Adrenaline Rush",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Gnome Race Trait",
           "standing": "origin",
           "display_name": "Adrenaline Rush"
         },
         {
           "name": "Aerial Harrier",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Strix Race Trait",
           "standing": "origin",
           "display_name": "Aerial Harrier"
@@ -2506,280 +2506,280 @@
         },
         {
           "name": "Augmented Spell Poisons",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Vishkanya Race Trait",
           "standing": "origin",
           "display_name": "Augmented Spell Poisons"
         },
         {
           "name": "Bifurcated Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Half-Elf Race Trait",
           "standing": "origin",
           "display_name": "Bifurcated Magic"
         },
         {
           "name": "Brimstone Seer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Orc Race Trait",
           "standing": "origin",
           "display_name": "Brimstone Seer"
         },
         {
           "name": "Bully Burner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Goblin Race Trait",
           "standing": "origin",
           "display_name": "Bully Burner"
         },
         {
           "name": "Bureaucracy Navigator",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Bureaucracy Navigator"
         },
         {
           "name": "Canopy Shooter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Grippli Race Trait",
           "standing": "origin",
           "display_name": "Canopy Shooter"
         },
         {
           "name": "Carrying Voice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Sylph Race Trait",
           "standing": "origin",
           "display_name": "Carrying Voice"
         },
         {
           "name": "Celestial Contact",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Aasimar Race Trait",
           "standing": "origin",
           "display_name": "Celestial Contact"
         },
         {
           "name": "Commanding",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Commanding"
         },
         {
           "name": "Covered Sniper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Kasatha Race Trait",
           "standing": "origin",
           "display_name": "Covered Sniper"
         },
         {
           "name": "Creepy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.ChangelingRaceTrait",
           "standing": "origin",
           "display_name": "Creepy"
         },
         {
           "name": "Disciplined Body",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.VudraniRaceTrait",
           "standing": "origin",
           "display_name": "Disciplined Body"
         },
         {
           "name": "Dragon Friend",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Triaxian Race Trait",
           "standing": "origin",
           "display_name": "Dragon Friend"
         },
         {
           "name": "Efficient Packer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Gnome Race Trait",
           "standing": "origin",
           "display_name": "Efficient Packer"
         },
         {
           "name": "Effortless Aid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Effortless Aid"
         },
         {
           "name": "Elemental Caller",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Suli Race Trait",
           "standing": "origin",
           "display_name": "Elemental Caller"
         },
         {
           "name": "Enduring Spellcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Enduring Spellcraft"
         },
         {
           "name": "Experimental Escapee",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Android Race Trait",
           "standing": "origin",
           "display_name": "Experimental Escapee"
         },
         {
           "name": "Experimental Rebel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Half-Elf Race Trait",
           "standing": "origin",
           "display_name": "Experimental Rebel"
         },
         {
           "name": "Favored Champion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.ShoantiRaceTrait",
           "standing": "origin",
           "display_name": "Favored Champion"
         },
         {
           "name": "Fierce Flanker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Wyvaran Race Trait",
           "standing": "origin",
           "display_name": "Fierce Flanker"
         },
         {
           "name": "Fleshwarp Exposure",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Drow Race Trait",
           "standing": "origin",
           "display_name": "Fleshwarp Exposure"
         },
         {
           "name": "Friend to Animals",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Human Race Trait",
           "standing": "origin",
           "display_name": "Friend to Animals"
         },
         {
           "name": "Frustrating",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Gathlain Race Trait",
           "standing": "origin",
           "display_name": "Frustrating"
         },
         {
           "name": "Generous",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Generous"
         },
         {
           "name": "Genie Heir",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Geniekin Race Trait",
           "standing": "origin",
           "display_name": "Genie Heir"
         },
         {
           "name": "Gruff Watcher",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Gruff Watcher"
         },
         {
           "name": "Guarded",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Merfolk Race Trait",
           "standing": "origin",
           "display_name": "Guarded"
         },
         {
           "name": "Gunworker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Dwarf Race Trait",
           "standing": "origin",
           "display_name": "Gunworker"
         },
         {
           "name": "Hard to Pin Down",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Hard to Pin Down"
         },
         {
           "name": "Honored Provider",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Ghoran Race Trait",
           "standing": "origin",
           "display_name": "Honored Provider"
         },
         {
           "name": "Hot Headed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Ifrit Race Trait",
           "standing": "origin",
           "display_name": "Hot Headed"
         },
         {
           "name": "Idealized Campaigner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Aasimar Race Trait",
           "standing": "origin",
           "display_name": "Idealized Campaigner"
         },
         {
           "name": "Inciter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Hobgoblin Race Trait",
           "standing": "origin",
           "display_name": "Inciter"
         },
         {
           "name": "Ingratiating",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.ChelaxianRaceTrait",
           "standing": "origin",
           "display_name": "Ingratiating"
         },
         {
           "name": "Insular",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Elf Race Trait",
           "standing": "origin",
           "display_name": "Insular"
         },
         {
           "name": "Intrepid Volunteer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Halfling Race Trait",
           "standing": "origin",
           "display_name": "Intrepid Volunteer"
         },
         {
           "name": "Jungle Opportunist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Catfolk Race Trait",
           "standing": "origin",
           "display_name": "Jungle Opportunist"
         },
         {
           "name": "Kami Respect",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Kitsune Race Trait",
           "standing": "origin",
           "display_name": "Kami Respect"
         },
         {
           "name": "Loner of the Rocks",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Oread Race Trait",
           "standing": "origin",
           "display_name": "Loner of the Rocks"
@@ -2793,357 +2793,357 @@
         },
         {
           "name": "Magic Survivor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Trox Race Trait",
           "standing": "origin",
           "display_name": "Magic Survivor"
         },
         {
           "name": "Marked by Nature's Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Skinwalker Race Trait",
           "standing": "origin",
           "display_name": "Marked by Nature's Magic"
         },
         {
           "name": "Memory Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Gillman Race Trait",
           "standing": "origin",
           "display_name": "Memory Mastery"
         },
         {
           "name": "Minor Wishcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Geniekin Race Trait",
           "standing": "origin",
           "display_name": "Minor Wishcraft"
         },
         {
           "name": "Mistrusted",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Half-Orc Race Trait",
           "standing": "origin",
           "display_name": "Mistrusted"
         },
         {
           "name": "Murky Allegiance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Fetchling Race Trait",
           "standing": "origin",
           "display_name": "Murky Allegiance"
         },
         {
           "name": "My Word Is My Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "My Word Is My Bond"
         },
         {
           "name": "Nagaji Nationalist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Nagaji Race Trait",
           "standing": "origin",
           "display_name": "Nagaji Nationalist"
         },
         {
           "name": "Nearly Blinded",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Nearly Blinded"
         },
         {
           "name": "Obsessed with Success",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.ChelaxianRaceTrait",
           "standing": "origin",
           "display_name": "Obsessed with Success"
         },
         {
           "name": "Oral Historian",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.ShoantiRaceTrait",
           "standing": "origin",
           "display_name": "Oral Historian"
         },
         {
           "name": "Persecuted Expatriate (Asura-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Asura-Spawn)"
         },
         {
           "name": "Persecuted Expatriate (Daemon-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Daemon-Spawn)"
         },
         {
           "name": "Persecuted Expatriate (Demodand-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Demodand-Spawn)"
         },
         {
           "name": "Persecuted Expatriate (Demon-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Demon-Spawn)"
         },
         {
           "name": "Persecuted Expatriate (Devil-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Devil-Spawn)"
         },
         {
           "name": "Persecuted Expatriate (Div-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Div-Spawn)"
         },
         {
           "name": "Persecuted Expatriate (Kyton-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Kyton-Spawn)"
         },
         {
           "name": "Persecuted Expatriate (Oni-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Oni-Spawn)"
         },
         {
           "name": "Persecuted Expatriate (Qlippoth-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Qlippoth-Spawn)"
         },
         {
           "name": "Persecuted Expatriate (Rakshasa-Spawn)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
           "standing": "origin",
           "display_name": "Persecuted Expatriate (Rakshasa-Spawn)"
         },
         {
           "name": "Plague Survivor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Human Race Trait",
           "standing": "origin",
           "display_name": "Plague Survivor"
         },
         {
           "name": "Planetary Traveler",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Elf Race Trait",
           "standing": "origin",
           "display_name": "Planetary Traveler"
         },
         {
           "name": "Practiced Gambler",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Practiced Gambler"
         },
         {
           "name": "Promising Peacemaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Half-Orc Race Trait",
           "standing": "origin",
           "display_name": "Promising Peacemaker"
         },
         {
           "name": "Ratfolk Avenger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Ratfolk Race Trait",
           "standing": "origin",
           "display_name": "Ratfolk Avenger"
         },
         {
           "name": "Resilient Construction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Wyrwood Race Trait",
           "standing": "origin",
           "display_name": "Resilient Construction"
         },
         {
           "name": "River Trader",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "River Trader"
         },
         {
           "name": "Scheming Survivor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Drow Race Trait",
           "standing": "origin",
           "display_name": "Scheming Survivor"
         },
         {
           "name": "Seafaring Slayer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Tengu Race Trait",
           "standing": "origin",
           "display_name": "Seafaring Slayer"
         },
         {
           "name": "Secret-Keeper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Svirfneblin Race Trait",
           "standing": "origin",
           "display_name": "Secret-Keeper"
         },
         {
           "name": "Sharp Wits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.VudraniRaceTrait",
           "standing": "origin",
           "display_name": "Sharp Wits"
         },
         {
           "name": "Sky Quester",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Dwarf Race Trait",
           "standing": "origin",
           "display_name": "Sky Quester"
         },
         {
           "name": "Tattooed Focus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Tattooed Focus"
         },
         {
           "name": "Tempestuous Combatant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Tempestuous Combatant"
         },
         {
           "name": "Tribal Guide",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Kobold Race Trait",
           "standing": "origin",
           "display_name": "Tribal Guide"
         },
         {
           "name": "Trickster",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Vanara Race Trait",
           "standing": "origin",
           "display_name": "Trickster"
         },
         {
           "name": "Vermin Driver",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Duergar Race Trait",
           "standing": "origin",
           "display_name": "Vermin Driver"
         },
         {
           "name": "Vexed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Kobold Race Trait",
           "standing": "origin",
           "display_name": "Vexed"
         },
         {
           "name": "Walls of Half-Truths",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Samsaran Race Trait",
           "standing": "origin",
           "display_name": "Walls of Half-Truths"
         },
         {
           "name": "Water Lurker",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Wayang Race Trait",
           "standing": "origin",
           "display_name": "Water Lurker"
         },
         {
           "name": "Water Shaping",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Undine Race Trait",
           "standing": "origin",
           "display_name": "Water Shaping"
         },
         {
           "name": "Weapon Training",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Weapon Training"
         },
         {
           "name": "Weathered Patience",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Weathered Patience"
         },
         {
           "name": "Winged Aloofness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.RaceTrait.Syrinx Race Trait",
           "standing": "origin",
           "display_name": "Winged Aloofness"
         },
         {
           "name": "Witness to Nature's Cruelty",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Witness to Nature's Cruelty"
         },
         {
           "name": "Zealous",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Zealous"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "[redacted PI]",
           "standing": "unclassified",
           "display_name": "[redacted PI] ([redacted PI])"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Halfling Race Trait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.RaceTrait.Halfling Race Trait)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Lashunta Race Trait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.RaceTrait.Lashunta Race Trait)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "unclassified",
           "display_name": "[redacted PI] ([redacted PI]) #4"

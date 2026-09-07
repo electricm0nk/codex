@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "A soulbound familiar's alignment is always at least partially neutral, although it can also be chaotic, evil, good, or lawful, depending on the creature whose soul provided the fragment rather than on the master's alignment (unless the master donates a fragment of her own soul).",
     "key": "Soulbound Familiar ~ Alignment Variation",
     "name": "Alignment Variation",
-    "description": "A soulbound familiar's alignment is always at least partially neutral, although it can also be chaotic, evil, good, or lawful, depending on the creature whose soul provided the fragment rather than on the master's alignment (unless the master donates a fragment of her own soul).",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -79,22 +79,23 @@
         "key": "SOURCEPAGE",
         "value": "p.213"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 627,
-    "record_key": "Soulbound Familiar ~ Alignment Variation"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:20:31Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 627,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Soulbound Familiar ~ Alignment Variation",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You work to track criminals of war down and punish them for their offenses.",
     "key": "Inquisitor Archetype ~ Shadow Hunter",
     "name": "Shadow Hunter",
-    "description": "You work to track criminals of war down and punish them for their offenses.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -61,20 +60,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
-    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
-    "line": 56,
-    "record_key": "Inquisitor Archetype ~ Shadow Hunter"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "record_key": "Inquisitor Archetype ~ Shadow Hunter",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

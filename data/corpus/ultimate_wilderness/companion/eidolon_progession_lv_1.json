@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "At 1st level, plant eidolons gain low-light vision as well as the resistance (electricity) and resistance (sonic) evolutions.",
     "key": "Plant ~ Unchained Eidolon LVL01",
     "name": "Eidolon Progession Lv.1",
-    "description": "At 1st level, plant eidolons gain low-light vision as well as the resistance (electricity) and resistance (sonic) evolutions.",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -43,22 +43,22 @@
         "key": "BONUS",
         "value": "VAR|Pool_EidolonResistance|-1|PREVARGTEQ:RemoveEidolonResistanceForImmunity,0"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
-    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b",
-    "line": 23,
-    "record_key": "Plant ~ Unchained Eidolon LVL01"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:20:31Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
+    "record_key": "Plant ~ Unchained Eidolon LVL01",
+    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

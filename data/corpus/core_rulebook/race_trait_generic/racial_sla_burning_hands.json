@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": null,
     "key": "Racial SLA ~ Burning Hands",
     "name": "Burning Hands",
-    "description": null,
     "raw_tokens": [
       {
         "key": "KEY",
@@ -85,18 +83,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
-    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
-    "line": 200,
-    "record_key": "Racial SLA ~ Burning Hands"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 200,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "record_key": "Racial SLA ~ Burning Hands",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
 }

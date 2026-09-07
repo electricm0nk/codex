@@ -64,7 +64,6 @@
 //!   URLs/fetch date/identity-match basis).
 
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use serde::Serialize;
 
@@ -223,9 +222,8 @@ pub struct CacheRecord<T: Serialize> {
 /// gap this cycle's own receipt names explicitly (its `blanket_ogl()` path
 /// screens no field at all, not even `description`) -- see this cycle's
 /// receipt's generator-audit table.
-fn name_or_key_is_pi(values: &[&str]) -> bool {
-    values.iter().any(|v| pi_screening::blacklist_term_hit_including_concatenated(v).is_some())
-}
+/// Hoisted to `cache_gen` (R14-04): identical across `acg`/`apg`/`beastiary1`.
+use super::name_or_key_is_pi;
 
 // ---------------------------------------------------------------------
 // Content-kind data shapes
@@ -284,29 +282,13 @@ fn book_dir(corpus_root: &Path) -> PathBuf {
 /// Real sha256 of `path`'s current on-disk content, via the system
 /// `sha256sum` tool (mirrors `cache_gen::apg`/`cache_gen::acg`'s own
 /// `sha256_file` -- no `sha2` crate dependency exists in this
-/// workspace).
-pub fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// workspace). Hoisted to `cache_gen` (R14-04).
+pub use super::sha256_file;
 
 /// Finds `record_name` as an exact match on a line's first tab-delimited
 /// column in `lst_path`. Real corpus lookup, not a value parse -- only
-/// the line number is used.
-fn find_exact_first_column(lst_path: &Path, record_name: &str) -> std::io::Result<Option<u32>> {
-    let content = std::fs::read_to_string(lst_path)?;
-    for (idx, line) in content.lines().enumerate() {
-        let first_col = line.split('\t').next().unwrap_or("");
-        if first_col == record_name {
-            return Ok(Some((idx + 1) as u32));
-        }
-    }
-    Ok(None)
-}
+/// the line number is used. Hoisted to `cache_gen` (R14-04).
+use super::find_exact_first_column;
 
 // ---------------------------------------------------------------------
 // Generation report
@@ -335,34 +317,14 @@ impl From<std::io::Error> for GenerationError {
 }
 
 /// SD-32 Epic 5 protective sweep -- see `cache_gen::acg::write_json`'s
-/// identical doc comment; same shape, same fix.
-fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<()> {
-    std::fs::create_dir_all(out_dir)?;
-    let path = out_dir.join(format!("{slug}.json"));
-    if path.exists() {
-        return Ok(());
-    }
-    let json = serde_json::to_string_pretty(record)
-        .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
-    std::fs::write(path, json)
-}
+/// identical doc comment; same shape, same fix. Hoisted to `cache_gen`
+/// (R14-04) as `write_json_unit`, imported back under this file's
+/// original local name.
+use super::write_json_unit as write_json;
 
-fn slugify(name: &str) -> String {
-    let mut slug: String = name
-        .to_lowercase()
-        .chars()
-        .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
-        .collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    if slug.is_empty() {
-        "unnamed".to_string()
-    } else {
-        slug
-    }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_or_unnamed`, imported back
+/// under this file's original local name.
+use super::slugify_or_unnamed as slugify;
 
 // ---------------------------------------------------------------------
 // Monsters

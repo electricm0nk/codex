@@ -1,0 +1,81 @@
+{
+  "lane": "R13",
+  "findings": [
+    {
+      "id": "R13-1",
+      "file": "scripts/tests/",
+      "severity": "P2",
+      "category": "census",
+      "title": "46 of 56 python test files in scripts/tests/ (incl. the oracle harness's own test_oracle_harness.py) are never run by any automated gate",
+      "evidence": "scripts/verify.sh names exactly 9 python test files across its selftest stages (test_pf1e_dashboard_producer.py, test_pi_redaction.py, test_provenance.py, test_build_public_status.py, test_reachability_audit.py, test_ground_truth_evidence_guard.py, test_sample_ground_truth_units.py, test_supersession_register_gate.py, test_shape_coverage_standing_gate.py) and all 7 test_*.sh files (grep -oE 'test_[a-zA-Z0-9_]+\\.(py|sh)' scripts/verify.sh | sort -u). scripts/tests/ holds 56 test_*.py files total, so 46 of 56 (82%) -- including scripts/tests/test_oracle_harness.py, the harness's own comparison-logic proof -- have no verify.sh stage and no `grep -n test_oracle_harness scripts/verify.sh` hit. .github/workflows/*.yml never invokes verify.sh or python unittest either (only jsonschema/check_release_manifest.py). The only place these 46 files are proven to run at all is one-off manual invocations documented in per-cycle receipts under .claude/worktrees/**/docs/release/**/artifacts (e.g. `python3 -m unittest scripts.tests.test_box_ledger -v` quoted in AT-33-E1-004_cycle_receipt.md), i.e. a human running the exact command by hand during the cycle that wrote the test, never again automatically.",
+      "fix_description": "Add a verify.sh stage (or a single `python3 -m unittest discover -s scripts/tests -p 'test_*.py'` stage with the existing '0 cases ran = fail' guard pattern) that sweeps every scripts/tests/test_*.py file, not just the 9 explicitly named ones, so a regression in an ungated module (oracle harness included) is caught before it ships rather than only when someone happens to re-run that file's exact historical command.",
+      "risk_notes": "Discovery-mode unittest can surface import-time side effects across 56 files at once (network/filesystem assumptions some fixtures already guard against per their own docstrings) -- needs a dry run before wiring into the gate, not a blind swap.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "R13-2",
+      "file": "scripts/oracle_harness/charbuild_remainder_run_one.sh",
+      "line_start": 10,
+      "line_end": 18,
+      "severity": "P2",
+      "category": "hazard",
+      "title": "No oracle-checkout presence/pin check before invoking BatchExporter; absent checkout crashes raw, off-pin checkout is invisible",
+      "evidence": "The script only does `cd \"$PCGEN_REPO_DIR/build/install/pcgen\"` then `exec java ...` -- no call to scripts/fetch-pcgen-oracle.sh --check and no comparison against scripts/pcgen-oracle-pin.env's PCGEN_ORACLE_SHA. Reproduced live: `PCGEN_REPO_DIR=/nonexistent-path bash scripts/oracle_harness/charbuild_remainder_run_one.sh a b c d` -> `line 14: cd: /nonexistent-path/build/install/pcgen: No such file or directory`, exit 1 -- a raw bash message with no pointer to `scripts/fetch-pcgen-oracle.sh`. Worse: if the checkout is PRESENT but off-pin (drifted mid-run of the batch this script's own docstring describes as N parallel invocations), the script has no way to notice at all -- it silently runs BatchExporter against whatever commit happens to be checked out and the resulting .txt export is indistinguishable from one produced at the pin. `scripts/verify.sh`'s preflight-oracle stage checks the pin once, upstream of this script, but nothing re-checks it per-invocation, and this script (and derive_spell_casting_ability_mapping.py's fixture generation via charbuild_remainder_generate.py) are run standalone outside verify.sh during SD-33/34 remediation waves.",
+      "fix_description": "Have the script call `scripts/fetch-pcgen-oracle.sh --check --dest \"$PCGEN_REPO_DIR\"` (or read scripts/pcgen-oracle-pin.env and compare `git -C \"$PCGEN_REPO_DIR\" rev-parse HEAD` itself) before the `cd`, and fail with a message naming both the missing/off-pin checkout and `scripts/fetch-pcgen-oracle.sh` as the fix, the same way fetch-pcgen-oracle.sh's own error messages do.",
+      "risk_notes": "Adds one extra `git rev-parse` per invocation to a script meant to run many times in parallel for a single batch -- cheap, but the pin check should happen once per batch (in the caller) rather than being duplicated per-unit if that overhead matters at scale.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "R13-3",
+      "file": "scripts/oracle_harness/derive_spell_casting_ability_mapping.py",
+      "line_start": 105,
+      "line_end": 122,
+      "severity": "P3",
+      "category": "hazard",
+      "title": "Derivation runs against whatever SHA is checked out with no pin comparison; off-pin drift is recorded but never flagged",
+      "evidence": "main() only checks `os.path.isdir(repo_dir)` (line 107) before deriving; `pinned_sha()` (line 48) reads the checkout's actual HEAD and writes it to the output JSON's `pcgen_oracle_sha_at_derivation` field (line 122), but the function never reads scripts/pcgen-oracle-pin.env's PCGEN_ORACLE_SHA to compare against it. An off-pin checkout produces a mapping that looks identical in shape to an on-pin one; the only way to notice the drift is a human diffing `pcgen_oracle_sha_at_derivation` against the pin file by hand.",
+      "fix_description": "Read scripts/pcgen-oracle-pin.env's PCGEN_ORACLE_SHA (same file fetch-pcgen-oracle.sh already parses) and print a WARNING to stderr (or refuse) when `pinned_sha(repo_dir)` disagrees with it, instead of only recording the observed SHA for later manual comparison.",
+      "risk_notes": "Low blast radius -- this is a one-shot dev tool re-run per remediation wave, not something invoked per-unit, and its own docstring already documents provenance via the recorded SHA.",
+      "proposed_action": "report_only",
+      "confidence": "medium"
+    },
+    {
+      "id": "R13-4",
+      "file": "scripts/oracle_harness/campaign_key.py",
+      "line_start": 59,
+      "line_end": 71,
+      "severity": "P3",
+      "category": "structure",
+      "title": "campaign_key.py, charbuild_remainder_generate.py, and derive_spell_casting_ability_mapping.py have zero test coverage",
+      "evidence": "`grep -rln campaign_key scripts/tests/` and equivalent greps for `charbuild_remainder_generate`/`derive_spell_casting_ability_mapping` all return empty. Only compare.py and oracle_export.py are exercised, by scripts/tests/test_oracle_harness.py. campaign_key.py's own docstring frames CAMPAIGN_KEY_OVERRIDES as fixing a whole failure class every prior ultimate_psionics lane hit (`oracle_harness_ultimate_psionics_campaign_load_failure`) -- a 2-line lookup function (campaign_line_value) with a single real override entry, cheap to pin with 2-3 asserts (override case, pass-through case), currently protected only by the prose in its own module docstring.",
+      "fix_description": "Add a small scripts/tests/test_campaign_key.py asserting `campaign_line_value(\"Ultimate Psionics\") == \"DSP - Ultimate Psionics\"` and `campaign_line_value(\"Core Rulebook\") == \"Core Rulebook\"` (pass-through), so a future edit to CAMPAIGN_KEY_OVERRIDES or the lookup logic itself is caught the same way compare.py's logic already is.",
+      "risk_notes": "Pure addition, no existing behavior touched.",
+      "proposed_action": "report_only",
+      "confidence": "high"
+    },
+    {
+      "id": "R13-5",
+      "file": "scripts/oracle_harness/oracle_export.py",
+      "line_start": 1,
+      "line_end": 38,
+      "severity": "P3",
+      "category": "structure",
+      "title": "Portability seam for a second oracle: comparison core is already oracle-neutral; the PCGen-specific surface is isolated to 4 files",
+      "evidence": "compare.py's compare_unit/run_comparison operate on plain (ours, oracle) values and an already-parsed dict, with no PCGen-specific logic. oracle_export.parse_oracle_export (lines 13-32) is a generic KEY=VALUE-per-line parser with no PCGen-specific tokens hardcoded -- the only PCGen coupling is the module's docstring/name and run.py's single hardcoded `--oracle-export` flag that always calls `OE.load_oracle_export`. The genuinely PCGen-specific code is confined to 4 files: campaign_key.py (PCGen campaign KEY:/CAMPAIGN: quirk), derive_spell_casting_ability_mapping.py (reads PCGen's own .lst SPELLSTAT: syntax), and charbuild_remainder_generate.py/charbuild_remainder_run_one.sh (write .pcg fixtures and shell out to PCGen's BatchExporter/java entry point directly).",
+      "fix_description": "For a second oracle: add a new `<name>_export.py` module exposing `load_<name>_export(path) -> dict` that either already emits KEY=VALUE text or adapts the oracle's native output into that same flat dict shape, add a `--oracle-format {pcgen,<name>}` selector to run.py that picks the parser (compare.run_comparison already accepts a pre-parsed dict, so no change needed there), and write a parallel fixture-generation script alongside charbuild_remainder_generate.py for that oracle's native character-file format. No change to compare.py's comparison logic is required.",
+      "risk_notes": "Report-only architecture note, no defect.",
+      "proposed_action": "report_only",
+      "confidence": "medium"
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 33,
+    "files_skipped_generated": 0,
+    "notes": "oracle_harness: all 33 non-cache files read/inspected (16 fixture .pcg/.ftl/.pcc/.lst files, 6 .py modules, 1 .sh script, 1 JSON derivation output, __init__.py); 0 of 33 carried a GENERATED FILE marker. __pycache__/ dirs under both scopes are gitignored (git check-ignore confirms), not tracked, no finding. scripts/tests/: enumerated all 63 test_*.{py,sh} files (56 py + 7 sh); ran an AST sweep across all 56 python test files for test methods with no assert-like call (found only 2, both legitimate 'must not raise' exception-propagation checks in test_provenance.py, not true no-op tests); cross-referenced all 63 against scripts/verify.sh's stage wiring to find the ungated-test census (R13-1); spot-sampled ~10 files across PI/race-trait/derive-fixture clusters for duplicated-fixture risk and found none beyond the templated derive_*_fixtures.py family (excluded from auto_fix by ground rules, and legitimately non-duplicate content on inspection). Verified R13-2 live by reproducing the absent-checkout crash. No P1 correctness bugs found in the core compare.py/oracle_export.py/run.py comparison pipeline -- it is well-documented, deliberately tested for the 'unverifiable is not silently agree' invariant (decisions.md §7), and its own test file (test_oracle_harness.py) is well-constructed, though R13-1 notes that file itself is not CI-gated.",
+    "cross_chunk": [
+      "R13-1 (scripts/tests/ verify.sh gating gap) is a repo-wide test-infrastructure finding, not scoped to oracle_harness alone -- other review lanes touching scripts/*.py producers/audits should know their own self-tests may share this same ungated status; worth a single follow-up rather than N per-lane duplicates."
+    ]
+  }
+}

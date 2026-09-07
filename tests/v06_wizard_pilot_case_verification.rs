@@ -139,9 +139,9 @@ fn pcgen_gradle_wrapper_is_runnable(pcgen_repo_dir: &Path) -> bool {
     #[cfg(unix)]
     {
         use std::os::unix::fs::PermissionsExt;
-        return std::fs::metadata(&gradlew)
+        std::fs::metadata(&gradlew)
             .map(|meta| (meta.permissions().mode() & 0o111) != 0)
-            .unwrap_or(false);
+            .unwrap_or(false)
     }
     #[cfg(not(unix))]
     {
@@ -219,7 +219,7 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
         return;
     }
 
-    let pcg = pilot_case_pcg_fixture();
+    let _pcg = pilot_case_pcg_fixture();
     // --- Codex side: real, computed selected parity dimensions, via the
     // corpus-aware PilotReceipt (from_pilot_receipt) so durability/encumbrance
     // are genuinely compared against PCGen rather than left MissingFromCodex. ---

@@ -162,8 +162,8 @@
     "record_key": "Seru",
     "sha256": "80f24ceace9f3ad0ac120a959781688b5e9fd072a258b48b1638f79a1cde8800"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus"
+    "static:literal_magnitudes_only"
   ]
 }

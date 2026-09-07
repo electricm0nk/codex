@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:57:27Z",
   "data": {
+    "description": "[redacted PI]",
     "key": "Duelist of the Roaring Falls",
     "name": "Duelist of the Roaring Falls",
-    "description": "[redacted PI]",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
-    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
-    "line": 28,
-    "record_key": "Duelist of the Roaring Falls"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:57:27Z",
   "license": "PI-REDACTED",
   "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "record_key": "Duelist of the Roaring Falls",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
 }

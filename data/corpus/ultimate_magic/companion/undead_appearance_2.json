@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "You appear as an undead creature, and mimic some of an undead creature's abilities and weaknesses. Negative energy heals you, and positive energy (including a cleric's channel energy ability) harms you. Spells and effects that target undead or have specific effects against undead (such as Command Undead, hold undead, and searing light) affect you as if you were undead. You gain a +2 bonus on saves against disease, exhaustion, fatigue, paralysis, poison, sleep effects, and stunning. Although you appear undead, you are still an outsider.|PREVAREQ:EidUndeadAppearanceCount,1",
     "key": "Temp Evolution ~ Undead Appearance",
     "name": "Undead Appearance",
-    "description": "You appear as an undead creature, and mimic some of an undead creature's abilities and weaknesses. Negative energy heals you, and positive energy (including a cleric's channel energy ability) harms you. Spells and effects that target undead or have specific effects against undead (such as Command Undead, hold undead, and searing light) affect you as if you were undead. You gain a +2 bonus on saves against disease, exhaustion, fatigue, paralysis, poison, sleep effects, and stunning. Although you appear undead, you are still an outsider.|PREVAREQ:EidUndeadAppearanceCount,1",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -91,22 +91,23 @@
         "key": "SOURCEPAGE",
         "value": "p.77"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
-    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
-    "line": 218,
-    "record_key": "Temp Evolution ~ Undead Appearance"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:20:31Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 218,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Temp Evolution ~ Undead Appearance",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:18Z",
   "data": {
     "key": "Fleshwarped",
     "name": "Fleshwarped",
@@ -32,20 +31,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_templates.lst",
-    "sha256": "76e6f759939e4b35d6292b8104908d561c36f01e90bd5aecfa66f244c627f5d7",
-    "line": 6,
-    "record_key": "Fleshwarped"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_templates.lst",
+    "record_key": "Fleshwarped",
+    "sha256": "76e6f759939e4b35d6292b8104908d561c36f01e90bd5aecfa66f244c627f5d7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

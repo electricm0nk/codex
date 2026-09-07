@@ -13,7 +13,7 @@
 //! NOT transcribed -- ability rows no creature row of this book owns, so
 //! nothing could ever reach them on screen. Dropped rather than emitted
 //! unreachable (`decisions.md §50`, adopted from the monster lane; §56.1).
-//! These rows keep their `not-ingested` status in
+//! These rows keep their `engine-does-not-hold` status in
 //! `docs/work-inventory.json`, which is where the shortfall is counted; they
 //! are NOT a `reach_gate` `OPEN_FINDINGS` entry, because that list is keyed by
 //! FAMILY and this book's `companions` family does reach a player:
@@ -203,6 +203,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Puffball)"],
+        cross_book_owners: &[],
         source_file: "arg_abilities_companion.lst",
         source_line: 9,
     },
@@ -218,6 +219,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Sapling Treant)"],
+        cross_book_owners: &[],
         source_file: "arg_abilities_companion.lst",
         source_line: 10,
     },
@@ -233,6 +235,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Crawling Vine)"],
+        cross_book_owners: &[],
         source_file: "arg_abilities_companion.lst",
         source_line: 11,
     },
@@ -248,6 +251,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Carnivorous Flower)"],
+        cross_book_owners: &[],
         source_file: "arg_abilities_companion.lst",
         source_line: 56,
     },
@@ -263,6 +267,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "CON", amount: 4 }],
         source_page: None,
         owners: &["Companion (Crawling Vine)"],
+        cross_book_owners: &[],
         source_file: "arg_abilities_companion.lst",
         source_line: 57,
     },
@@ -278,6 +283,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Puffball)"],
+        cross_book_owners: &[],
         source_file: "arg_abilities_companion.lst",
         source_line: 58,
     },
@@ -293,6 +299,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "DEX", amount: -2 }],
         source_page: None,
         owners: &["Companion (Sapling Treant)"],
+        cross_book_owners: &[],
         source_file: "arg_abilities_companion.lst",
         source_line: 59,
     },

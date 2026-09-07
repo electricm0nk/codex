@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:18:09Z",
   "data": {
     "key": "Dragon Subdomain",
     "name": "Dragon Subdomain",
@@ -72,20 +71,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_domains.lst",
-    "sha256": "8bd9c25d265755949bbf401885e4e1e17621d4d5aed66544a8680dd442f85ed8",
-    "line": 7,
-    "record_key": "Dragon Subdomain"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:09Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_domains.lst",
+    "record_key": "Dragon Subdomain",
+    "sha256": "8bd9c25d265755949bbf401885e4e1e17621d4d5aed66544a8680dd442f85ed8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

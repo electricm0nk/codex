@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "A mascot is the heart and soul of its team. At first, the team consists of only the familiar and its master, but at 3rd level and every 3 levels thereafter, a mascot can add an additional member to its team. A mascot's empathic link extends to all members of its team. A mascot can add or remove one team member over the course of a day. This alters empathic link.",
     "key": "Mascot ~ Affinity for My Team",
     "name": "Affinity for My Team",
-    "description": "A mascot is the heart and soul of its team. At first, the team consists of only the familiar and its master, but at 3rd level and every 3 levels thereafter, a mascot can add an additional member to its team. A mascot's empathic link extends to all members of its team. A mascot can add or remove one team member over the course of a day. This alters empathic link.",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -27,22 +27,23 @@
         "key": "SOURCEPAGE",
         "value": "p.211"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 585,
-    "record_key": "Mascot ~ Affinity for My Team"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:20:31Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 585,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Mascot ~ Affinity for My Team",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
 }

@@ -26,7 +26,7 @@
 //!   * `oa_abilities_race.lst:189`
 //!   * `oa_abilities_race.lst:190`
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, Speed, StatAdjustment};
 
 /// Every occult_adventures monster stat block (1 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[

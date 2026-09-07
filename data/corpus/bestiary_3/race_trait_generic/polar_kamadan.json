@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "A polar kamadan has white fur with black spots like a snow leopard. Its snakes are furred as well. A polar kamadan has the advanced creature template and batlike wings that grant it a fly speed of 60 ft. (average). The breath weapon of a polar kamadan is particularly cold-those who succumb to it also suffer 1d4 points of Dexterity damage from numbness.",
     "key": "Polar Kamadan",
     "name": "Polar Kamadan (CR +2)",
-    "description": "A polar kamadan has white fur with black spots like a snow leopard. Its snakes are furred as well. A polar kamadan has the advanced creature template and batlike wings that grant it a fly speed of 60 ft. (average). The breath weapon of a polar kamadan is particularly cold-those who succumb to it also suffer 1d4 points of Dexterity damage from numbness.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
     "line": 1107,
-    "record_key": "Polar Kamadan"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Polar Kamadan",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

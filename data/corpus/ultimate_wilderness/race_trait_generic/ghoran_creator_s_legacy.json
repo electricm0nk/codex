@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Infused with the druidic magic of their creator, ghorans quickly take to nature-based spells and spellcasting. Ghoran bloodragers and sorcerers with the verdant bloodline treat their Charisma score as 2 points higher for sorcerer spells and class abilities. Ghoran clerics and druids with the Plant domain use their domain powers and spells at +1 caster level. This doesn't give the ghoran early access to level-based powers; it affects only powers that could already be used without this trait.&nl;This replaces past-life knowledge.",
     "key": "Ghoran ~ Creator's Legacy",
     "name": "Creator's Legacy",
-    "description": "Infused with the druidic magic of their creator, ghorans quickly take to nature-based spells and spellcasting. Ghoran bloodragers and sorcerers with the verdant bloodline treat their Charisma score as 2 points higher for sorcerer spells and class abilities. Ghoran clerics and druids with the Plant domain use their domain powers and spells at +1 caster level. This doesn't give the ghoran early access to level-based powers; it affects only powers that could already be used without this trait.&nl;This replaces past-life knowledge.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
-    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
-    "line": 85,
-    "record_key": "Ghoran ~ Creator's Legacy"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 85,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "record_key": "Ghoran ~ Creator's Legacy",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

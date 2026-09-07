@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Starting at 4th level, so long as the sentinel carries his deity's favored weapon, he gains a +2 sacred or profane bonus on initiative checks. The weapon doesn't need to be carried in hand, but must at least be on his person and accessible enough that he can wield it with no greater than a move action. At 8th level, this bonus increases to +4.",
     "key": "Sentinel ~ Divine Quickness",
     "name": "Divine Quickness",
-    "description": "Starting at 4th level, so long as the sentinel carries his deity's favored weapon, he gains a +2 sacred or profane bonus on initiative checks. The weapon doesn't need to be carried in hand, but must at least be on his person and accessible enough that he can wield it with no greater than a move action. At 8th level, this bonus increases to +4.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 114,
-    "record_key": "Sentinel ~ Divine Quickness"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 114,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Sentinel ~ Divine Quickness",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

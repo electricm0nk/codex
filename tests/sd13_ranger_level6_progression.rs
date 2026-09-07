@@ -48,13 +48,12 @@
 //! Ranger level-1/level-2/level-3/level-4/level-5 truth, the Fighter negative
 //! control, and the multiclass negative control.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const RANGER_LEVEL6_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_ranger_level6_sd13_deterministic_input.txt");
@@ -79,38 +78,6 @@ const ENDURANCE_ID: &str = "class_feature.ranger.endurance";
 const FAVORED_TERRAIN_ID: &str = "class_feature.ranger.favored_terrain";
 const HUNTERS_BOND_ID: &str = "class_feature.ranger.hunters_bond";
 const HUNTERS_BOND_ALLY_BONUS_ID: &str = "class_chassis.ranger.hunters_bond_ally_bonus";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 // ----- Base attack bonus at level 6 -----
 

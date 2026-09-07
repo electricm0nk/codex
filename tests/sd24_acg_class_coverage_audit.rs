@@ -538,6 +538,7 @@ fn minimal_input_for(class_id: AcgClassId) -> CharacterInput {
         case_id: Some(format!("sd24_acg_class_coverage_audit.{}", class_id.name())),
         source_package_id: "pf1.advanced_class_guide".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "race:human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: format!("class:{}", class_id.name()),

@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:16Z",
   "data": {
     "key": "Race ~ Oread",
     "name": "Oread",
@@ -20,20 +19,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/oread/oread_templates.lst",
-    "sha256": "24b43772a00be0593d3928a3598952193e6e2c7e1645a26c82ed867bd06cdda2",
-    "line": 4,
-    "record_key": "Race ~ Oread"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/oread/oread_templates.lst",
+    "record_key": "Race ~ Oread",
+    "sha256": "24b43772a00be0593d3928a3598952193e6e2c7e1645a26c82ed867bd06cdda2"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

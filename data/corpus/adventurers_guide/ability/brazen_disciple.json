@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "[redacted PI]",
     "key": "Unchained Monk Archetype ~ Brazen Disciple",
     "name": "Brazen Disciple",
-    "description": "[redacted PI]",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -117,20 +116,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 53,
-    "record_key": "Unchained Monk Archetype ~ Brazen Disciple"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "description",
   "pi_marker": "redacted",
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 53,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Unchained Monk Archetype ~ Brazen Disciple",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

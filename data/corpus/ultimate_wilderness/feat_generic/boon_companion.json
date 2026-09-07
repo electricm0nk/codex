@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "Your bond with your animal companion or familiar is unusually close.",
     "key": "Boon Companion",
     "name": "Boon Companion",
-    "description": "Your bond with your animal companion or familiar is unusually close.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -53,20 +52,23 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
-    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
-    "line": 21,
-    "record_key": "Boon Companion"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "record_key": "Boon Companion",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

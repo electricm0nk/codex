@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You grew up among the outcasts and outlaws of your society, learning to forage and survive in an urban environment. Select one of the following skills - Disable Device, Escape Artist, or Sleight of Hand. You gain a +1 trait bonus on that skill, and it is always a class skill for you.",
     "key": "Trait ~ Vagabond Child",
     "name": "Vagabond Child (urban)",
-    "description": "You grew up among the outcasts and outlaws of your society, learning to forage and survive in an urban environment. Select one of the following skills - Disable Device, Escape Artist, or Sleight of Hand. You gain a +1 trait bonus on that skill, and it is always a class skill for you.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,20 +52,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 218,
-    "record_key": "Trait ~ Vagabond Child"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 218,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Trait ~ Vagabond Child",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

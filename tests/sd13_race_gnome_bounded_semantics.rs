@@ -21,26 +21,15 @@
 //! training, illusion resistance, hatred, keen senses, Gnome Magic, or weapon
 //! familiarity math.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::load;
 
 const GNOME_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_gnome_fighter_level1_sd13_deterministic_input.txt");
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn has_explanation(
     computation: &codex::rules_core::pilot_compute::PilotBaseChassisComputation,

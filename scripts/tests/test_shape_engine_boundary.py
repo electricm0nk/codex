@@ -1,0 +1,185 @@
+#!/usr/bin/env python3
+"""Tests for `scripts/shape_engine_boundary.py` (SD-34 Epic 1, AT-34-E1-004).
+
+Proves the load-bearing claim: a shape engine turns a formula string into a
+number and does not place/attach/display the record -- that gate is the
+engine's four-condition promotion ladder in `src/bin/v06_work_inventory.rs`,
+whose line-cited content is re-verified, not assumed, on every run.
+
+Uses small synthetic inventory fixtures for the counting logic, same
+precedent as `test_completion_atlas.py` / `test_missing_engine_tables.py`.
+The citation check is exercised against the real, live source file (there is
+only one `v06_work_inventory.rs` to cite), including a genuine RED->GREEN
+mutation proof that the fail-closed path fires for the intended reason.
+"""
+
+import os
+import sys
+import unittest
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
+import shape_engine_boundary as SEB  # noqa: E402
+
+
+def _unit(id_, magnitude_tokens, status):
+    return {"id": id_, "magnitude_token_count": magnitude_tokens, "status": status}
+
+
+class TestMagnitudeBearing(unittest.TestCase):
+    def test_zero_token_units_excluded(self):
+        units = [_unit("u1", 0, "engine-does-not-hold"), _unit("u2", 2, "grounded")]
+        self.assertEqual([u["id"] for u in SEB.magnitude_bearing(units)], ["u2"])
+
+    def test_missing_field_treated_as_zero(self):
+        units = [{"id": "u1", "status": "grounded"}, _unit("u2", 1, "grounded")]
+        self.assertEqual([u["id"] for u in SEB.magnitude_bearing(units)], ["u2"])
+
+    def test_multiple_tokens_still_counted_once(self):
+        units = [_unit("u1", 5, "grounded")]
+        self.assertEqual(len(SEB.magnitude_bearing(units)), 1)
+
+
+class TestNotHeldByEngine(unittest.TestCase):
+    def test_only_engine_does_not_hold_status_counts(self):
+        units = [
+            _unit("u1", 1, "engine-does-not-hold"),
+            _unit("u2", 1, "grounded"),
+            _unit("u3", 1, "literal-verified"),
+            _unit("u4", 1, "ingested-magnitude"),
+        ]
+        self.assertEqual([u["id"] for u in SEB.not_held_by_engine(units)], ["u1"])
+
+    def test_scoped_to_the_magnitude_bearing_population_passed_in(self):
+        # A zero-token engine-does-not-hold unit is not part of "the shape engine's
+        # own feedstock" -- callers are expected to pass `magnitude_bearing()`
+        # output in, not the raw unit list.
+        mag = SEB.magnitude_bearing(
+            [_unit("u1", 0, "engine-does-not-hold"), _unit("u2", 1, "engine-does-not-hold")]
+        )
+        self.assertEqual([u["id"] for u in SEB.not_held_by_engine(mag)], ["u2"])
+
+
+class TestBuildReportOnLiveSource(unittest.TestCase):
+    """The citation must resolve against the real, committed
+    `src/bin/v06_work_inventory.rs` -- this is the whole point of the
+    instrument, so it is not faked with a fixture."""
+
+    def test_citation_resolves_at_head(self):
+        units = [_unit("u1", 1, "engine-does-not-hold"), _unit("u2", 1, "grounded")]
+        report = SEB.build_report(units)
+        self.assertTrue(report["citation_ok"])
+        # SD-34 wave 44: Piece 1/2's own insertions into
+        # `src/bin/v06_work_inventory.rs` shifted the promotion ladder
+        # again, 10857 -> 13906 (see `shape_engine_boundary.py`'s own
+        # module doc comment for the re-derivation).
+        # SD-34 wave 45: this cycle's own Phrenic Slayer Favored Enemy
+        # insertions shifted it again, 13906 -> 13986 (see
+        # `shape_engine_boundary.py`'s own module doc comment).
+        # SD-34 wave 46: this cycle's own six new `EngineFacts` fields,
+        # seven new probe functions, and `classify()` early-return block
+        # shifted it again, 13986 -> 14609 (see `shape_engine_boundary.py`'s
+        # own module doc comment).
+        # SD-34 wave 47: this cycle's own Divine Scion `EngineFacts` field,
+        # choice-gating consts, rewritten probe function, and `classify()`
+        # early-return block shifted it again, 14609 -> 14923 (see
+        # `shape_engine_boundary.py`'s own module doc comment).
+        # SD-34 wave 48: this cycle's own Twilight Talon/Golden Legionnaire
+        # `EngineFacts` fields, probe functions, and choice-seed arm shifted
+        # it again, 14923 -> 15273 (see `shape_engine_boundary.py`'s own
+        # module doc comment).
+        # SD-34 wave 48 CORRECTION (same cycle, before commit): the 15273
+        # figure above was derived against a pre-clippy-fix snapshot; the
+        # cycle's own `type TwilightTalonTattooTierMember` alias shifted it
+        # by a further uniform +4, 15273 -> 15277 -- caught re-running this
+        # test AFTER the clippy fix (see `shape_engine_boundary.py`'s own
+        # module doc comment).
+        # SD-34 wave 51: the citation was ALREADY stale at HEAD before this
+        # wave touched anything (waves 49/50 shifted it and re-derived only
+        # `completion_atlas.py`'s citations), and this wave's own edits shifted
+        # it further: 15277 -> 16274 (see `shape_engine_boundary.py`'s own
+        # module doc comment for the full re-derivation).
+        self.assertEqual(report["promotion_ladder_anchor_line"], 16274)
+        self.assertIn("has_real_description", report["promotion_ladder_source"])
+        self.assertIn("class_feature_pool_catalog_holds", report["promotion_ladder_source"])
+
+    def test_citation_failures_empty_at_head(self):
+        self.assertEqual(SEB.citation_failures(), [])
+
+    def test_live_counts_match_the_committed_fact(self):
+        # The exact numbers `technical-design.md §3` / `decisions.md §2a`
+        # state as fact, re-derived from the real committed inventory.
+        units = SEB._load_units()
+        mag = SEB.magnitude_bearing(units)
+        self.assertEqual(len(mag), 26396)
+        # SD-34 wave 51: `9475` was stale, and had been carried as a KNOWN,
+        # deliberately-deferred open item since wave 44 (`progress.md`, wave 45
+        # entry: "left `shape_engine_boundary.py`'s own pre-existing, unrelated
+        # population-count drift (now 9475 pinned vs 8996 live) named, not
+        # fixed"). Closed here rather than carried a seventh wave: a red pin in
+        # this file is not harmless, because it keeps the WHOLE instrument's
+        # test red, which is exactly how its promotion-ladder citation went two
+        # further waves (49, 50) without anyone noticing it had gone stale too.
+        # Re-derived live, and confirmed NOT moved by this wave's own work:
+        # `not_held_by_engine` is 8784 in BOTH this wave's before and after
+        # `docs/work-inventory.json` snapshots (this wave closes 102
+        # `engine-does-not-hold` units, but every one carries
+        # `magnitude_token_count == 0`, so none of them is in the
+        # magnitude-bearing population this figure counts over at all).
+        self.assertEqual(len(SEB.not_held_by_engine(mag)), 8784)
+
+
+class TestCitationFailsClosedForTheIntendedReason(unittest.TestCase):
+    """RED->GREEN: prove the fail-closed path fires because the cited
+    line's CONTENT stopped matching -- not because of an unrelated error
+    (`risks-and-open-questions.md §10`)."""
+
+    def setUp(self):
+        self._orig_lines = dict(SEB.PROMOTION_LADDER_LINES)
+
+    def tearDown(self):
+        SEB.PROMOTION_LADDER_LINES.clear()
+        SEB.PROMOTION_LADDER_LINES.update(self._orig_lines)
+
+    def test_wrong_expected_content_is_caught_not_silently_passed(self):
+        # RED: assert a line 13906 must contain text it does not.
+        SEB.PROMOTION_LADDER_LINES[13906] = "this text does not appear on that line"
+        failures = SEB.citation_failures()
+        self.assertEqual(len(failures), 1)
+        self.assertIn("13906", failures[0])
+        self.assertIn("this text does not appear on that line", failures[0])
+
+        with self.assertRaises(SEB.StaleCitationError):
+            SEB.build_report([_unit("u1", 1, "engine-does-not-hold")])
+
+    def test_out_of_range_line_is_caught(self):
+        SEB.PROMOTION_LADDER_LINES[99999999] = "unreachable"
+        failures = SEB.citation_failures()
+        self.assertTrue(any("out of range" in f for f in failures))
+
+    def test_restored_lines_pass_again_GREEN(self):
+        # GREEN: after tearDown-equivalent restoration mid-test, the real
+        # content passes again -- proves the RED above was about content,
+        # not a broken test harness.
+        SEB.PROMOTION_LADDER_LINES[13906] = "this text does not appear on that line"
+        self.assertNotEqual(SEB.citation_failures(), [])
+        SEB.PROMOTION_LADDER_LINES.clear()
+        SEB.PROMOTION_LADDER_LINES.update(self._orig_lines)
+        self.assertEqual(SEB.citation_failures(), [])
+
+
+class TestRenderMarkdownEmbedsReDeriveCommands(unittest.TestCase):
+    def test_every_figure_carries_a_command(self):
+        units = [_unit("u1", 1, "engine-does-not-hold"), _unit("u2", 1, "grounded")]
+        report = SEB.build_report(units)
+        md = SEB.render_markdown(report)
+        self.assertIn("python3 scripts/shape_engine_boundary.py --check", md)
+        self.assertIn("python3 -c", md)
+        self.assertIn(str(report["magnitude_bearing"]), md)
+        self.assertIn(str(report["not_held_by_engine"]), md)
+        self.assertIn("16274", md)
+        self.assertIn("denominator", md)
+
+
+if __name__ == "__main__":
+    unittest.main()

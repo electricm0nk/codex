@@ -71,13 +71,12 @@
 //! and `tests/sd18_sorcerer_level12_widening.rs` to a "level 14 is not
 //! promoted" boundary in the same commit.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation};
 
 const SORCERER_LEVEL12_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_sorcerer_level12_sd18_widening_deterministic_input.txt"
@@ -93,34 +92,6 @@ const FIGHTER_FIXTURE: &str = include_str!(
 
 const PER_DAY_PREFIX: &str = "class_chassis.sorcerer.spontaneous.base_spells_per_day.";
 const KNOWN_PREFIX: &str = "class_chassis.sorcerer.spontaneous.spells_known.";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 fn values_with_prefix(
     computation: &PilotBaseChassisComputation,
@@ -328,9 +299,16 @@ fn sorcerer_level13_does_not_fabricate_any_bloodline_entry() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.to_lowercase().contains("bloodline_feat")
+            .any(|e| (e.id.to_lowercase().contains("bloodline_feat")
                 || e.id.to_lowercase().contains("bloodline_power")
-                || e.id.to_lowercase().contains("bloodline_spell")),
+                || e.id.to_lowercase().contains("bloodline_spell"))
+                // AT-34-E3-001 owner-matched cycle 5 (`cb0ba2286e`, 2026-08-28) grounded
+                // the Bloodline Feat pool's bounded slot-count tracker (real, tested,
+                // pre-existing content -- see mod.rs's own
+                // sorcerer_bloodline_feat_pool_slot_count_* tests). It is a generic pool
+                // size, never a specific named bloodline feat/power/spell entry -- not
+                // the fabrication this test guards against.
+                && e.id != "class_feature.sorcerer.bloodline_feat_pool.slot_count"),
         "level-13 Sorcerer must not fabricate a bloodline-feat/bloodline-spell record — the \
          Special column's \"Bloodline feat, bloodline spell\" grants are bloodline-specific and \
          stay named by the existing blocker, not grounded here: {:?}",

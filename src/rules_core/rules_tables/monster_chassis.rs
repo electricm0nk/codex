@@ -48,7 +48,7 @@
 //! from round 3 on is `kanban.md`'s — **transcribe the linked subset, and carry
 //! the orphans as an `OPEN_FINDINGS` entry naming their remedy** — rather than
 //! emitting rows that cannot be reached or skipping the book entirely. Those
-//! rows stay `not-ingested` in the work inventory, which is their honest status.
+//! rows stay `engine-does-not-hold` in the work inventory, which is their honest status.
 //!
 //! That predicate is a ceiling on the lane, not a preference — 1,327 of the
 //! 4,233 remaining units are orphan ability rows, and 703 of those sit in ten

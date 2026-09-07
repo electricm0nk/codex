@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:14Z",
   "data": {
     "key": "Bonus Language ~ Sphinx",
     "name": "Bonus Language ~ Sphinx",
@@ -16,20 +15,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates_language_sphinx.lst",
-    "sha256": "0c2c51e4536ef3b34934c9c7d0c50ba54cece3e01a2acd2565a293cf872e94fb",
-    "line": 6,
-    "record_key": "Bonus Language ~ Sphinx"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:14Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates_language_sphinx.lst",
+    "record_key": "Bonus Language ~ Sphinx",
+    "sha256": "0c2c51e4536ef3b34934c9c7d0c50ba54cece3e01a2acd2565a293cf872e94fb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

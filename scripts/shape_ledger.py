@@ -833,7 +833,7 @@ def classify_unit(
     # `join_status` alone does not do this -- `matched` already collapses
     # "real family found" and "every present token still fell through to
     # F0" into one bucket, which is exactly the conflation §27a calls out.
-    #   - "not_ingested"   : join found no corpus record at all (join_status
+    #   - "engine_does_not_hold"   : join found no corpus record at all (join_status
     #                        "no_record"). Not row-17's population yet --
     #                        `decisions.md §27`/`kanban.md` row 17 sequences
     #                        AFTER `no_record` reaches zero.
@@ -870,7 +870,7 @@ def classify_unit(
     #                        population.
     if family == FAMILY_F0_NO_FORMULA:
         if join_status == "no_record":
-            f0_reached_by = "not_ingested"
+            f0_reached_by = "engine_does_not_hold"
         elif join_status == "no_formula_tokens":
             f0_reached_by = "measured_empty"
         elif pi_redacted_formula:
@@ -930,7 +930,7 @@ def build_ledger(
     meta = _family_metadata()
     counts: dict[str, int] = {}
     join_status_counts: dict[str, int] = {}
-    # decisions.md §27a / row 17: F0's own three-way split (not_ingested /
+    # decisions.md §27a / row 17: F0's own three-way split (engine_does_not_hold /
     # measured_empty / fallthrough), plus the PI-redaction sub-count within
     # fallthrough -- see classify_unit's docstring for what each means.
     f0_breakdown: dict[str, int] = {}
@@ -1022,7 +1022,7 @@ def main(argv: list[str] | None = None) -> int:
     f0_total = ledger["families"].get(FAMILY_F0_NO_FORMULA, {}).get("count", 0)
     fallthrough = f0b.get("fallthrough", 0)
     print(f"F0 breakdown ({f0_total} total, decisions.md §27a -- row 17's real population lives here):")
-    print(f"  not_ingested       {f0b.get('not_ingested', 0):>7}  -- no corpus record yet; not row 17's population (sequenced after no_record==0)")
+    print(f"  engine_does_not_hold       {f0b.get('engine_does_not_hold', 0):>7}  -- no corpus record yet; not row 17's population (sequenced after no_record==0)")
     print(f"  measured_empty     {f0b.get('measured_empty', 0):>7}  -- real corpus record, genuinely zero DEFINE/BONUS tokens (F0 by measurement)")
     print(f"  fallthrough        {fallthrough:>7}  -- corpus record matched with formula tokens present, but every one failed to classify (F0 by 'nothing else matched' -- row 17's population)")
     print(f"    of which PI-redacted formula value: {ledger.get('f0_fallthrough_pi_redacted', 0)}")

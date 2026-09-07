@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "The eidolon grows an additional pair of limbs. These limbs can take one of two forms. They can be made into legs, complete with feet. Each pair of legs increases the eidolon's base speed by 10 feet. Alternatively, they can be made into arms, complete with hands. The eidolon does not gain any additional natural attacks for an additional pair of arms, but it can take other evolutions that add additional attacks (such as claws or slam). Arms that have hands can be used to wield weapons, if the eidolon is proficient. This evolution can be selected more than once.",
     "key": "Unchained Evolution ~ Limbs / Arms",
     "name": "Limbs (Arms)",
-    "description": "The eidolon grows an additional pair of limbs. These limbs can take one of two forms. They can be made into legs, complete with feet. Each pair of legs increases the eidolon's base speed by 10 feet. Alternatively, they can be made into arms, complete with hands. The eidolon does not gain any additional natural attacks for an additional pair of arms, but it can take other evolutions that add additional attacks (such as claws or slam). Arms that have hands can be used to wield weapons, if the eidolon is proficient. This evolution can be selected more than once.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,18 +55,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 230,
-    "record_key": "Unchained Evolution ~ Limbs / Arms"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 230,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Unchained Evolution ~ Limbs / Arms",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
 }

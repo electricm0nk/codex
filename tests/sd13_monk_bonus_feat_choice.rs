@@ -18,11 +18,13 @@
 //! like Arcane Bond stayed unproven after the Sorcerer bloodline choice was
 //! grounded.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, PilotBaseChassisComputation,
+    ComputationDiagnostic,
+    PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
+mod common;
+use common::{load, explanation};
 
 const MONK_FIXTURE_DEFLECT_ARROWS: &str =
     include_str!("fixtures/rules_core/pf1_human_monk_level1_sd13_deterministic_input.txt");
@@ -32,34 +34,6 @@ const MONK_FIXTURE_COMBAT_REFLEXES: &str = include_str!(
 const MONK_FIXTURE_UNRECOGNIZED_CHOICE: &str = include_str!(
     "fixtures/rules_core/pf1_human_monk_level1_sd13_bonus_feat_unrecognized.txt"
 );
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 fn claim_blocking<'a>(
     computation: &'a PilotBaseChassisComputation,

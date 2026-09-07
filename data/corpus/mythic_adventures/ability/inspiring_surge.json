@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your surge inspires non-mythic allies to greater acts of martial daring. Each time you use your surge ability, each non-mythic ally within 30 feet gains a +%1 bonus on attack rolls and damage rolls for the next weapon attack it makes before the start of your next turn. An ally must be able to see and hear you to gain the bonus. You can take this ability up to three times. When you take it the second time, the bonus on attack and damage rolls increases to a number equal to half your tier. When you take it a third time, the bonus on attack and damage rolls increases to a number equal to your tier instead of half your tier.|Ability_InspiringSurge_Bonus",
     "key": "Mythic Path Ability ~ Inspiring Surge",
     "name": "Inspiring Surge",
-    "description": "Your surge inspires non-mythic allies to greater acts of martial daring. Each time you use your surge ability, each non-mythic ally within 30 feet gains a +%1 bonus on attack rolls and damage rolls for the next weapon attack it makes before the start of your next turn. An ally must be able to see and hear you to gain the bonus. You can take this ability up to three times. When you take it the second time, the bonus on attack and damage rolls increases to a number equal to half your tier. When you take it a third time, the bonus on attack and damage rolls increases to a number equal to your tier instead of half your tier.|Ability_InspiringSurge_Bonus",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -69,20 +68,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 192,
-    "record_key": "Mythic Path Ability ~ Inspiring Surge"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 192,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Inspiring Surge",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

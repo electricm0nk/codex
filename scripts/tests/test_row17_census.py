@@ -75,17 +75,17 @@ class BuildCensusFixtureTest(unittest.TestCase):
         #      placeholder population.
         #   4. fallthrough -- a genuine, non-PI parse failure; still row
         #      17's real, actionable population.
-        #   5. not_ingested (no corpus record at all)
+        #   5. engine_does_not_hold (no corpus record at all)
         units = [
-            {"id": "b:spell:derived", "kind": "spell", "book": "b", "status": "not-ingested",
+            {"id": "b:spell:derived", "kind": "spell", "book": "b", "status": "engine-does-not-hold",
              "wiring_class": "static", "source_file": "real.lst", "source_line": 1},
-            {"id": "b:spell:empty", "kind": "spell", "book": "b", "status": "not-ingested",
+            {"id": "b:spell:empty", "kind": "spell", "book": "b", "status": "engine-does-not-hold",
              "wiring_class": "static", "source_file": "empty.lst", "source_line": 1},
-            {"id": "b:trait:redacted", "kind": "trait", "book": "b", "status": "not-ingested",
+            {"id": "b:trait:redacted", "kind": "trait", "book": "b", "status": "engine-does-not-hold",
              "wiring_class": "static", "source_file": "red.lst", "source_line": 1},
-            {"id": "b:feat:malformed", "kind": "feat", "book": "b", "status": "not-ingested",
+            {"id": "b:feat:malformed", "kind": "feat", "book": "b", "status": "engine-does-not-hold",
              "wiring_class": "static", "source_file": "bad.lst", "source_line": 1},
-            {"id": "b:spell:missing", "kind": "spell", "book": "b", "status": "not-ingested",
+            {"id": "b:spell:missing", "kind": "spell", "book": "b", "status": "engine-does-not-hold",
              "wiring_class": "static", "source_file": "missing.lst", "source_line": 1},
         ]
         _write_inventory(self.inventory_path, units)
@@ -121,7 +121,7 @@ class BuildCensusFixtureTest(unittest.TestCase):
         self.assertEqual(t["measured_pi_redacted"], 1)
         self.assertEqual(t["fallthrough"], 1)
         self.assertEqual(t["fallthrough_pi_redacted"], 0)
-        self.assertEqual(t["not_ingested"], 1)
+        self.assertEqual(t["engine_does_not_hold"], 1)
         self.assertEqual(t["provisional_default_in_not_done_population"], 0)
         self.assertEqual(t["row17_honest_size"], 1)  # just the (non-PI) fallthrough unit
 
@@ -206,7 +206,7 @@ class BuildCensusFixtureTest(unittest.TestCase):
         with open(self.inventory_path) as fh:
             doc = json.load(fh)
         doc["units"].append({
-            "id": "b:trait:provisional", "kind": "trait", "book": "b", "status": "not-ingested",
+            "id": "b:trait:provisional", "kind": "trait", "book": "b", "status": "engine-does-not-hold",
             "wiring_class": "static", "source_file": "prov.lst", "source_line": 1,
         })
         _write_inventory(self.inventory_path, doc["units"])

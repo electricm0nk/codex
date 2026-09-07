@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Ghorans have tough, rugged skin.",
     "key": "Ghoran ~ +2 Natural Armor",
     "name": "+2 Natural Armor",
-    "description": "Ghorans have tough, rugged skin.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,18 +35,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
-    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb",
-    "line": 18,
-    "record_key": "Ghoran ~ +2 Natural Armor"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
+    "record_key": "Ghoran ~ +2 Natural Armor",
+    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

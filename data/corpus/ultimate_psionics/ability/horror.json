@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You are able to form a creature created from distilled fears and nightmares.  Creating a horror takes one minute of concentration to complete and the horror remains until dismissed by you.  This horror functions as a summoner's eidolon using your class level as the summoner level, with the following exceptions.  A horror is a mindless construct like an astral construct and not an outsider, so it is subject to effects like dismiss ectoplasm instead of effects like banishment.  Commanding a horror is the same as commanding an astral construct.  A horror disperses if you are rendered unconscious or die.  You can allow your horror to use your terrors, but such uses still count against your daily limit.",
     "key": "Nightmare Constructor ~ Horror",
     "name": "Horror",
-    "description": "You are able to form a creature created from distilled fears and nightmares.  Creating a horror takes one minute of concentration to complete and the horror remains until dismissed by you.  This horror functions as a summoner's eidolon using your class level as the summoner level, with the following exceptions.  A horror is a mindless construct like an astral construct and not an outsider, so it is subject to effects like dismiss ectoplasm instead of effects like banishment.  Commanding a horror is the same as commanding an astral construct.  A horror disperses if you are rendered unconscious or die.  You can allow your horror to use your terrors, but such uses still count against your daily limit.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
-    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
-    "line": 12,
-    "record_key": "Nightmare Constructor ~ Horror"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "record_key": "Nightmare Constructor ~ Horror",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ]
 }

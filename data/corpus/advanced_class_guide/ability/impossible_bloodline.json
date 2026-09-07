@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Impossible Bloodline",
     "name": "Impossible Bloodline",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -29,20 +28,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_cob.lst",
-    "sha256": "3334d8b8c73a1220d3403ddd628f479bd74e3ef4dc94d995fff6103106cc8530",
-    "line": 4,
-    "record_key": "Impossible Bloodline"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_cob.lst",
+    "record_key": "Impossible Bloodline",
+    "sha256": "3334d8b8c73a1220d3403ddd628f479bd74e3ef4dc94d995fff6103106cc8530"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

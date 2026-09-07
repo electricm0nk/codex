@@ -1,0 +1,702 @@
+[
+  {
+    "sha": "0099df7a1e",
+    "ts": 1787800779,
+    "wall_min": 104.0,
+    "subject": "fix(sd34): AT-34-E1-005 -- rename not-ingested status to engine-does-not-hold",
+    "bucket_delta_core_rulebook": {
+      "C": 370,
+      "B": 970,
+      "D": 119,
+      "A": 934
+    },
+    "counts_after": {
+      "B": 970,
+      "DONE": 1150,
+      "C": 370,
+      "D": 119,
+      "V": 2582,
+      "X": 6,
+      "M": 512,
+      "U": 58,
+      "A": 934
+    }
+  },
+  {
+    "sha": "0dd52ccb65",
+    "ts": 1787817464,
+    "wall_min": 278.1,
+    "subject": "feat(sd34): AT-34-E2-004 -- wire Epic 2's 8 tables into classify(), bucket A reaches zero for both vehicle books",
+    "bucket_delta_core_rulebook": {
+      "M": 409,
+      "B": 65,
+      "D": 293,
+      "V": 152,
+      "DONE": 15,
+      "A": -934
+    },
+    "counts_after": {
+      "B": 1035,
+      "DONE": 1165,
+      "C": 370,
+      "D": 412,
+      "V": 2734,
+      "X": 6,
+      "M": 921,
+      "U": 58
+    }
+  },
+  {
+    "sha": "a72c6787e6",
+    "ts": 1787820153,
+    "wall_min": 44.8,
+    "subject": "fix(sd34): AT-34-E3-001 cycle 1 -- close the simple-kind-table reattribution gap in bucket B",
+    "bucket_delta_core_rulebook": {
+      "M": 7,
+      "B": -29,
+      "D": 22
+    },
+    "counts_after": {
+      "B": 1006,
+      "DONE": 1165,
+      "C": 370,
+      "D": 434,
+      "V": 2734,
+      "X": 6,
+      "M": 928,
+      "U": 58
+    }
+  },
+  {
+    "sha": "6eab21d761",
+    "ts": 1787822570,
+    "wall_min": 40.3,
+    "subject": "fix(sd34): AT-34-E3-001 domain mechanism -- PI-safe coordinate resolve, 1/1 cleared",
+    "bucket_delta_core_rulebook": {
+      "M": 1,
+      "B": -1
+    },
+    "counts_after": {
+      "B": 1005,
+      "DONE": 1165,
+      "C": 370,
+      "D": 434,
+      "V": 2734,
+      "X": 6,
+      "M": 929,
+      "U": 58
+    }
+  },
+  {
+    "sha": "ae25d75d7d",
+    "ts": 1787825732,
+    "wall_min": 52.7,
+    "subject": "fix(sd34): AT-34-E3-001 race_trait_absent_from_race_traits -- close bucket B mechanism, 9/9",
+    "bucket_delta_core_rulebook": {
+      "B": -9,
+      "D": 9
+    },
+    "counts_after": {
+      "B": 996,
+      "DONE": 1165,
+      "C": 370,
+      "D": 443,
+      "V": 2734,
+      "X": 6,
+      "M": 929,
+      "U": 58
+    }
+  },
+  {
+    "sha": "1eeba6bb4d",
+    "ts": 1787834579,
+    "wall_min": 147.4,
+    "subject": "fix(sd34): AT-34-E3-001 class_absent_from_ClassId_ALL_and_book_class_id_enums -- close bucket B mechanism, 17/17",
+    "bucket_delta_core_rulebook": {
+      "C": 58,
+      "B": -1,
+      "D": -94,
+      "DONE": 37
+    },
+    "counts_after": {
+      "D": 349,
+      "DONE": 1202,
+      "C": 428,
+      "B": 995,
+      "V": 2734,
+      "X": 6,
+      "M": 929,
+      "U": 58
+    }
+  },
+  {
+    "sha": "9934711054",
+    "ts": 1787837143,
+    "wall_min": 42.7,
+    "subject": "fix(sd34): AT-34-E3-001 deity_content_absent_from_deity_table_in_core_rulebook -- close bucket B mechanism, 21/21",
+    "bucket_delta_core_rulebook": {
+      "B": -21,
+      "DONE": 21
+    },
+    "counts_after": {
+      "D": 349,
+      "DONE": 1223,
+      "C": 428,
+      "B": 974,
+      "V": 2734,
+      "X": 6,
+      "M": 929,
+      "U": 58
+    }
+  },
+  {
+    "sha": "8e7aecc855",
+    "ts": 1787841386,
+    "wall_min": 70.7,
+    "subject": "fix(sd34): AT-34-E3-001 class_feature_option_pool_record_not_held_by_engine -- partial closure 63->57, remainder decomposed into 7 named sub-causes",
+    "bucket_delta_core_rulebook": {
+      "B": -6,
+      "DONE": 6
+    },
+    "counts_after": {
+      "D": 349,
+      "DONE": 1229,
+      "C": 428,
+      "B": 968,
+      "V": 2734,
+      "X": 6,
+      "M": 929,
+      "U": 58
+    }
+  },
+  {
+    "sha": "f98c6abddc",
+    "ts": 1787844304,
+    "wall_min": 48.6,
+    "subject": "fix(sd34): AT-34-E3-001 class_feature_option_pool -- close multi-DESC ingest truncation sub-cause, 57->55",
+    "bucket_delta_core_rulebook": {
+      "B": -2,
+      "DONE": 2
+    },
+    "counts_after": {
+      "D": 349,
+      "DONE": 1231,
+      "C": 428,
+      "B": 966,
+      "V": 2734,
+      "X": 6,
+      "M": 929,
+      "U": 58
+    }
+  },
+  {
+    "sha": "ae0f387dd3",
+    "ts": 1787847015,
+    "wall_min": 45.2,
+    "subject": "fix(sd34): AT-34-E3-001 companion_absent_from_core_rulebook_companion_tables -- Shape 7 book-wide grant, 100->28",
+    "bucket_delta_core_rulebook": {
+      "B": -72,
+      "V": 3,
+      "DONE": 69
+    },
+    "counts_after": {
+      "D": 349,
+      "DONE": 1300,
+      "C": 428,
+      "B": 894,
+      "V": 2737,
+      "X": 6,
+      "M": 929,
+      "U": 58
+    }
+  },
+  {
+    "sha": "04377a287d",
+    "ts": 1787851214,
+    "wall_min": 70.0,
+    "subject": "fix(sd34): AT-34-E3-001 race_trait_race_not_modelled -- generic race_trait_generic/ table fallback, 132->0 (core_rulebook)",
+    "bucket_delta_core_rulebook": {
+      "M": 119,
+      "B": -132,
+      "D": 3,
+      "V": 10
+    },
+    "counts_after": {
+      "D": 352,
+      "DONE": 1300,
+      "C": 428,
+      "B": 762,
+      "V": 2747,
+      "X": 6,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "9a0d75a9b7",
+    "ts": 1787856314,
+    "wall_min": 85.0,
+    "subject": "fix(sd34): AT-34-E3-001 class_feature_option_pool_with_magnitude -- live domain-power probe, 333->328 (core_rulebook)",
+    "bucket_delta_core_rulebook": {
+      "B": -5,
+      "V": 1,
+      "DONE": 4
+    },
+    "counts_after": {
+      "D": 352,
+      "DONE": 1304,
+      "C": 428,
+      "B": 757,
+      "V": 2748,
+      "X": 6,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "6040c33306",
+    "ts": 1787861931,
+    "wall_min": 93.6,
+    "subject": "fix(sd34): AT-34-E3-001 vacuous-placeholder sub-cause -- close 3 PCGen \"no selection\" rows, 55->52 (core_rulebook)",
+    "bucket_delta_core_rulebook": {
+      "B": -3,
+      "X": 3
+    },
+    "counts_after": {
+      "D": 352,
+      "DONE": 1304,
+      "C": 428,
+      "B": 754,
+      "V": 2748,
+      "X": 9,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "b93fb51a3e",
+    "ts": 1787863817,
+    "wall_min": 31.4,
+    "subject": "fix(sd34): AT-34-E3-001 weapon-training sub-cause -- close 4 Fighter canonical records, 328->324 (core_rulebook)",
+    "bucket_delta_core_rulebook": {
+      "B": -4,
+      "DONE": 4
+    },
+    "counts_after": {
+      "D": 352,
+      "DONE": 1308,
+      "C": 428,
+      "B": 750,
+      "V": 2748,
+      "X": 9,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "186471f8d4",
+    "ts": 1787868127,
+    "wall_min": 71.8,
+    "subject": "fix(sd34): AT-34-E3-001 companion_absent -- build Shape 8 cross-book ownership, close 14 familiar-pool rows, 28->14 (core_rulebook)",
+    "bucket_delta_core_rulebook": {
+      "B": -14,
+      "V": 1,
+      "DONE": 13
+    },
+    "counts_after": {
+      "D": 352,
+      "DONE": 1321,
+      "C": 428,
+      "B": 736,
+      "V": 2749,
+      "X": 9,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "c3202a90ce",
+    "ts": 1787871495,
+    "wall_min": 56.1,
+    "subject": "fix(sd34): AT-34-E3-001 class_feature_option_pool_with_magnitude cycle 3 -- Favored Enemy/Terrain Bonus, 324->282",
+    "bucket_delta_core_rulebook": {
+      "B": -42,
+      "DONE": 42
+    },
+    "counts_after": {
+      "D": 352,
+      "DONE": 1363,
+      "C": 428,
+      "B": 694,
+      "V": 2749,
+      "X": 9,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "0302b44ae8",
+    "ts": 1787876674,
+    "wall_min": 86.3,
+    "subject": "fix(sd34): AT-34-E3-001 owner-matched cycle 4 -- ground Sorcerer/Wizard weapon-and-armor proficiency, 346->344",
+    "bucket_delta_core_rulebook": {
+      "B": -2,
+      "DONE": 2
+    },
+    "counts_after": {
+      "D": 352,
+      "DONE": 1365,
+      "C": 428,
+      "B": 692,
+      "V": 2749,
+      "X": 9,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "1de361c850",
+    "ts": 1787878730,
+    "wall_min": 34.3,
+    "subject": "fix(sd34): AT-34-E3-001 wizard-arcane-school cycle 4 -- ground Evocation/Abjuration powers, 282->277",
+    "bucket_delta_core_rulebook": {
+      "B": -5,
+      "V": 1,
+      "DONE": 4
+    },
+    "counts_after": {
+      "D": 352,
+      "DONE": 1369,
+      "C": 428,
+      "B": 687,
+      "V": 2750,
+      "X": 9,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "dbf97940fd",
+    "ts": 1787880567,
+    "wall_min": 30.6,
+    "subject": "fix(sd34): AT-34-E3-001 option_pool_record_not_held cycle 5 -- wire the already-shipped weapon-proficiency table, 52->49",
+    "bucket_delta_core_rulebook": {
+      "B": -3,
+      "D": 3
+    },
+    "counts_after": {
+      "D": 355,
+      "DONE": 1369,
+      "C": 428,
+      "B": 684,
+      "V": 2750,
+      "X": 9,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "faae8dd497",
+    "ts": 1787882465,
+    "wall_min": 31.6,
+    "subject": "fix(sd34): AT-34-E3-001 companion_absent cycle 4 -- close 12 grant-token-only rows via verified predicate, 14->2",
+    "bucket_delta_core_rulebook": {
+      "B": -12,
+      "X": 12
+    },
+    "counts_after": {
+      "D": 355,
+      "DONE": 1369,
+      "C": 428,
+      "B": 672,
+      "V": 2750,
+      "X": 21,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "cb0ba2286e",
+    "ts": 1787888078,
+    "wall_min": 93.5,
+    "subject": "fix(sd34): AT-34-E3-001 owner-matched cycle 5 -- ground Sorcerer Bloodline Feat + Ranger Combat Style Feat pools, 344->251",
+    "bucket_delta_core_rulebook": {
+      "C": -2,
+      "B": -93,
+      "X": 95
+    },
+    "counts_after": {
+      "D": 355,
+      "DONE": 1369,
+      "C": 426,
+      "B": 579,
+      "V": 2750,
+      "X": 116,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "b4eadc9cbf",
+    "ts": 1787890199,
+    "wall_min": 35.4,
+    "subject": "fix(sd34): AT-34-E3-001 option-pool-with-magnitude cycle 5 -- ground all 10 Bardic Performance sub-records, 277->267",
+    "bucket_delta_core_rulebook": {
+      "B": -10,
+      "V": 1,
+      "DONE": 9
+    },
+    "counts_after": {
+      "D": 355,
+      "DONE": 1378,
+      "C": 426,
+      "B": 569,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "986e954d87",
+    "ts": 1787893356,
+    "wall_min": 52.6,
+    "subject": "fix(sd34): AT-34-E3-001 option-pool cycle 6 -- ground Bard/Fighter/Paladin/Ranger/Rogue weapon+armor proficiency, 49->44",
+    "bucket_delta_core_rulebook": {
+      "B": -5,
+      "D": 5
+    },
+    "counts_after": {
+      "D": 360,
+      "DONE": 1378,
+      "C": 426,
+      "B": 564,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "385b049cfe",
+    "ts": 1787896531,
+    "wall_min": 52.9,
+    "subject": "fix(sd34): AT-34-E3-001 companion_absent -- build CompanionClassRecord, 2->0 (core_rulebook)",
+    "bucket_delta_core_rulebook": {
+      "B": -2,
+      "DONE": 2
+    },
+    "counts_after": {
+      "D": 360,
+      "DONE": 1380,
+      "C": 426,
+      "B": 562,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "49d72f5e03",
+    "ts": 1787911745,
+    "wall_min": 253.6,
+    "subject": "fix(sd34): AT-34-E3-001 owner-matched cycle 6 -- ground Cleric/Assassin/Shadowdancer weapon-and-armor proficiency, 251->248",
+    "bucket_delta_core_rulebook": {
+      "B": -3,
+      "DONE": 3
+    },
+    "counts_after": {
+      "D": 360,
+      "DONE": 1383,
+      "C": 426,
+      "B": 559,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "df94dd024c",
+    "ts": 1787915923,
+    "wall_min": 69.6,
+    "subject": "fix(sd34): AT-34-E3-001 option-pool-with-magnitude cycle 6 -- ground Wizard Transmutation School, 267->261",
+    "bucket_delta_core_rulebook": {
+      "B": -3,
+      "DONE": 3
+    },
+    "counts_after": {
+      "D": 360,
+      "DONE": 1386,
+      "C": 426,
+      "B": 556,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "516c4b003c",
+    "ts": 1787917256,
+    "wall_min": 22.2,
+    "subject": "merge: tranche/14 -- reconcile AT-34-E3-001 option-pool-with-magnitude cycle 6 with owner-matched cycle 6",
+    "bucket_delta_core_rulebook": {
+      "B": -3,
+      "DONE": 3
+    },
+    "counts_after": {
+      "D": 360,
+      "DONE": 1389,
+      "C": 426,
+      "B": 553,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "12c95c519c",
+    "ts": 1787920327,
+    "wall_min": 51.2,
+    "subject": "fix(sd34): AT-34-E3-001 class_feature_option_pool cycle 7 -- close class-skill-list sub-cause, 44->34",
+    "bucket_delta_core_rulebook": {
+      "B": -10,
+      "D": 10
+    },
+    "counts_after": {
+      "D": 370,
+      "DONE": 1389,
+      "C": 426,
+      "B": 543,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 58
+    }
+  },
+  {
+    "sha": "d3a36ba9d6",
+    "ts": 1787923079,
+    "wall_min": 45.9,
+    "subject": "fix(sd34): AT-34-E3-003 -- bucket U ruling cycle 1, decisions.md \u00a717",
+    "bucket_delta_core_rulebook": {
+      "DONE": 40,
+      "U": -40
+    },
+    "counts_after": {
+      "D": 370,
+      "DONE": 1429,
+      "C": 426,
+      "B": 543,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 18
+    }
+  },
+  {
+    "sha": "eff925305f",
+    "ts": 1787927364,
+    "wall_min": 71.4,
+    "subject": "fix(sd34): AT-34-E3-001 -- class_feature_owner_matched cycle 7, widen prestige-class chassis gate, 248->242",
+    "bucket_delta_core_rulebook": {
+      "C": -12,
+      "B": -6,
+      "D": 12,
+      "DONE": 6
+    },
+    "counts_after": {
+      "D": 382,
+      "DONE": 1435,
+      "C": 414,
+      "B": 537,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 18
+    }
+  },
+  {
+    "sha": "6a87278d87",
+    "ts": 1787929129,
+    "wall_min": 29.4,
+    "subject": "fix(sd34): AT-34-E3-001 -- option-pool-with-magnitude cycle 7, ground Wizard Conjuration School, 261->258",
+    "bucket_delta_core_rulebook": {
+      "B": -3,
+      "DONE": 3
+    },
+    "counts_after": {
+      "D": 382,
+      "DONE": 1438,
+      "C": 414,
+      "B": 534,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 18
+    }
+  },
+  {
+    "sha": "30fa0e6653",
+    "ts": 1787966174,
+    "wall_min": 617.4,
+    "subject": "fix(sd34): AT-34-E3-001 option-pool-with-magnitude cycle 8 -- ground Wizard Universal School (no-specialization arm), 258->256",
+    "bucket_delta_core_rulebook": {
+      "B": -2,
+      "DONE": 2
+    },
+    "counts_after": {
+      "D": 382,
+      "DONE": 1440,
+      "C": 414,
+      "B": 532,
+      "V": 2751,
+      "X": 116,
+      "M": 1048,
+      "U": 18
+    }
+  },
+  {
+    "sha": "6e09fcaf5a",
+    "ts": 1787969834,
+    "wall_min": 61.0,
+    "subject": "fix(sd34): AT-34-E3-002 -- ground Favored Enemy/Favored Terrain display records off their sibling Bonus records, core_rulebook bucket C 414->372 (partial)",
+    "bucket_delta_core_rulebook": {
+      "C": -42,
+      "V": 42
+    },
+    "counts_after": {
+      "D": 382,
+      "DONE": 1440,
+      "C": 372,
+      "B": 532,
+      "V": 2793,
+      "X": 116,
+      "M": 1048,
+      "U": 18
+    }
+  },
+  {
+    "sha": "36db23a053",
+    "ts": 1787971367,
+    "wall_min": 25.6,
+    "subject": "fix(sd34): AT-34-E3-003 -- bucket U cycle 2, fix render_pcgen_desc bare-percent-after-digit defect",
+    "bucket_delta_core_rulebook": {
+      "DONE": 8,
+      "U": -8
+    },
+    "counts_after": {
+      "D": 382,
+      "DONE": 1448,
+      "C": 372,
+      "B": 532,
+      "V": 2793,
+      "X": 116,
+      "M": 1048,
+      "U": 10
+    }
+  }
+]

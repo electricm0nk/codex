@@ -29,10 +29,9 @@
 //! named-but-unproven exactly as before. School specialization choice recognition, the
 //! specialist bonus slot, Intense Spells, and Force Missile are unaffected.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    BaseSaves, ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::{BaseSaves, compute_pilot_base_chassis};
+mod common;
+use common::{load, explanation, has_explanation};
 
 const WIZARD_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_wizard_level1_sd13_deterministic_input.txt");
@@ -41,38 +40,6 @@ const BASE_ATTACK_ID: &str = "class_chassis.wizard.base_attack_bonus";
 const BASE_SAVE_FORTITUDE_ID: &str = "class_chassis.wizard.base_save.fortitude";
 const BASE_SAVE_REFLEX_ID: &str = "class_chassis.wizard.base_save.reflex";
 const BASE_SAVE_WILL_ID: &str = "class_chassis.wizard.base_save.will";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 // ----- Grounded: the base attack bonus pillar -----
 

@@ -41,13 +41,12 @@
 //! level-1..level-11 truth (unchanged), the Fighter negative control, and
 //! the multiclass negative control.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation};
 
 const CLERIC_LEVEL11_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_cleric_level11_sd18_widening_deterministic_input.txt"
@@ -60,34 +59,6 @@ const CLERIC_LEVEL12_FIXTURE: &str = include_str!(
 const FIGHTER_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
 );
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 // ----- Base attack bonus and saves genuinely rise at level 12 -----
 
@@ -287,7 +258,30 @@ fn cleric_level_21_is_not_promoted_by_this_slice() {
                 // unconditionally, regardless of level bound or
                 // single-class status (mirrors every other class's
                 // gate-ordering fix)
-                && e.id != "class_feature.domain.good_touch_of_good_not_active"),
+                && e.id != "class_feature.domain.good_touch_of_good_not_active"
+                // AT-34-E3-001 cycle 6 (`49d72f5e03`, 2026-08-28) grounded Cleric
+                // Weapon and Armor Proficiency unconditionally (real PF1 content,
+                // any Cleric level, any multiclass mix -- not gated the way this
+                // widening slice is), and the generic domain-power pass grounds
+                // Healing domain's Rebuke Death uses-per-day the same way Good
+                // domain's Touch of Good already is above (both domains are
+                // selected in this fixture and "not level-gated, still fire" per
+                // this file's own doc comment). Neither is promotion by THIS
+                // slice's widening; both are pre-existing, already-tested closures.
+                && e.id != "class_feature.cleric.weapon_and_armor_proficiency"
+                && e.id != "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes"
+                // WAVE 42 REGRESSION FIX (2026-09-04, decisions.md §wave-42-addendum): wave 42
+                // (`af674409f5`/`884c10ef5f`) grounded Cleric's Aura strength-level pass-through
+                // unconditionally at any Cleric level >= 1 (`cr_abilities_class.lst:563`'s
+                // `BONUS:VAR|AlignmentAuraLVL|ClericLVL` carries no level gate beyond the class
+                // feature's own grant gate, `PREVARGTEQ:Cleric_CFP_Level,1`, and no deity/
+                // alignment precondition on the MAGNITUDE itself -- only on which of the four
+                // aura flavors displays, which this engine does not model at all). Real PF1
+                // content, any Cleric level, any multiclass mix -- not gated the way this
+                // widening slice is, mirroring the Weapon and Armor Proficiency and Rebuke Death
+                // carve-outs immediately above (same shape, same file, `d1e0c26e06`). Not
+                // promotion by THIS slice's widening; a pre-existing, already-tested closure.
+                && e.id != "class_feature.cleric.aura.strength_level"),
         "level-21 Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
@@ -331,7 +325,30 @@ fn multiclass_cleric_level12_is_not_promoted_by_this_slice() {
                 // unconditionally, regardless of level bound or
                 // single-class status (mirrors every other class's
                 // gate-ordering fix)
-                && e.id != "class_feature.domain.good_touch_of_good_not_active"),
+                && e.id != "class_feature.domain.good_touch_of_good_not_active"
+                // AT-34-E3-001 cycle 6 (`49d72f5e03`, 2026-08-28) grounded Cleric
+                // Weapon and Armor Proficiency unconditionally (real PF1 content,
+                // any Cleric level, any multiclass mix -- not gated the way this
+                // widening slice is), and the generic domain-power pass grounds
+                // Healing domain's Rebuke Death uses-per-day the same way Good
+                // domain's Touch of Good already is above (both domains are
+                // selected in this fixture and "not level-gated, still fire" per
+                // this file's own doc comment). Neither is promotion by THIS
+                // slice's widening; both are pre-existing, already-tested closures.
+                && e.id != "class_feature.cleric.weapon_and_armor_proficiency"
+                && e.id != "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes"
+                // WAVE 42 REGRESSION FIX (2026-09-04, decisions.md §wave-42-addendum): wave 42
+                // (`af674409f5`/`884c10ef5f`) grounded Cleric's Aura strength-level pass-through
+                // unconditionally at any Cleric level >= 1 (`cr_abilities_class.lst:563`'s
+                // `BONUS:VAR|AlignmentAuraLVL|ClericLVL` carries no level gate beyond the class
+                // feature's own grant gate, `PREVARGTEQ:Cleric_CFP_Level,1`, and no deity/
+                // alignment precondition on the MAGNITUDE itself -- only on which of the four
+                // aura flavors displays, which this engine does not model at all). Real PF1
+                // content, any Cleric level, any multiclass mix -- not gated the way this
+                // widening slice is, mirroring the Weapon and Armor Proficiency and Rebuke Death
+                // carve-outs immediately above (same shape, same file, `d1e0c26e06`). Not
+                // promotion by THIS slice's widening; a pre-existing, already-tested closure.
+                && e.id != "class_feature.cleric.aura.strength_level"),
         "multiclass Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );

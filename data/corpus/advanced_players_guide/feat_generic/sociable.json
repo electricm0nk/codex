@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "You have a way of helping others to get along.",
     "key": "Sociable",
     "name": "Sociable",
-    "description": "You have a way of helping others to get along.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
-    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4",
-    "line": 183,
-    "record_key": "Sociable"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 183,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "record_key": "Sociable",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
 }

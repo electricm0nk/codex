@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:08Z",
   "data": {
     "key": "Vegepygmy",
     "name": "Vegepygmy",
@@ -12,20 +11,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_languages.lst",
-    "sha256": "9ec59b85e940f9eb0d19aae7f7c85e87331d2fcaf946c1324b416bd495ec1847",
-    "line": 9,
-    "record_key": "Vegepygmy"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:08Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_languages.lst",
+    "record_key": "Vegepygmy",
+    "sha256": "9ec59b85e940f9eb0d19aae7f7c85e87331d2fcaf946c1324b416bd495ec1847"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

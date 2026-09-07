@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:15Z",
   "data": {
     "key": "Race ~ Kobold",
     "name": "Kobold",
@@ -20,20 +19,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kobold/kobold_templates.lst",
-    "sha256": "3e6f151ca501cbe9eed4de7643309d81d53eee79b60207e33f05256602cf65d2",
-    "line": 4,
-    "record_key": "Race ~ Kobold"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:15Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kobold/kobold_templates.lst",
+    "record_key": "Race ~ Kobold",
+    "sha256": "3e6f151ca501cbe9eed4de7643309d81d53eee79b60207e33f05256602cf65d2"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Racial Traits ~ Tengu",
     "name": "Racial Traits ~ Tengu",
-    "description": null,
     "raw_tokens": [
       {
         "key": "DEFINE",
@@ -17,20 +16,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tengu/tengu_abilities_globalvar.lst",
-    "sha256": "e8e2f7a239de1c662819516b4a52cf218c8928d9eaf0509fd1e32502ece0c34a",
-    "line": 10,
-    "record_key": "Racial Traits ~ Tengu"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tengu/tengu_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Tengu",
+    "sha256": "e8e2f7a239de1c662819516b4a52cf218c8928d9eaf0509fd1e32502ece0c34a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

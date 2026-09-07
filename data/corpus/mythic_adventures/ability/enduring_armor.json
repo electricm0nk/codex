@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You are protected by armor made of force. This armor grants you an armor bonus to AC equal to %1. This ability is an abjuration effect with a spell level of %2. If this armor is dispelled or otherwise ended, you can reactivate it as a swift action.|Ability_EnduringArmor_ACBonus|MythicLevel",
     "key": "Mythic Path Ability ~ Enduring Armor",
     "name": "Enduring Armor",
-    "description": "You are protected by armor made of force. This armor grants you an armor bonus to AC equal to %1. This ability is an abjuration effect with a spell level of %2. If this armor is dispelled or otherwise ended, you can reactivate it as a swift action.|Ability_EnduringArmor_ACBonus|MythicLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 163,
-    "record_key": "Mythic Path Ability ~ Enduring Armor"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 163,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Enduring Armor",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
 }

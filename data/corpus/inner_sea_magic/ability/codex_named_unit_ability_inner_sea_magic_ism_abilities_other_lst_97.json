@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You gain access to an arcane version of a druid spell. This spell is two levels higher than its druid version. You must be able to cast spells of that level in order to learn the spell. If you prepare arcane spells, this new spell is recorded in your spellbook or learned by your familiar as appropriate. If you cast arcane spell spontaneously, this new spell replaces a spell you already know of the appropriate spell slot.",
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_97)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_97)",
-    "description": "You gain access to an arcane version of a druid spell. This spell is two levels higher than its druid version. You must be able to cast spells of that level in order to learn the spell. If you prepare arcane spells, this new spell is recorded in your spellbook or learned by your familiar as appropriate. If you cast arcane spell spontaneously, this new spell replaces a spell you already know of the appropriate spell slot.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,23 +52,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
-    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
-    "line": 97,
-    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_97)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_magic:ism_abilities_other.lst:97"
-  }
+    "coordinate": "inner_sea_magic:ism_abilities_other.lst:97",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 97,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_97)",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

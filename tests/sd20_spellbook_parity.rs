@@ -307,6 +307,7 @@ fn spellbook_abjuration_parity_fixture_round_trips_through_the_real_engine() {
         case_id: Some("sd20_spellbook_parity".to_string()),
         source_package_id: "sd20_spellbook_parity".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: character_json.get("race_id").as_str().to_owned(),
             class_levels,
             ability_scores,

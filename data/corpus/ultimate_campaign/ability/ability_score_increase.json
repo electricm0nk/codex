@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You retrained one or more ability score increase gained at level 4, 8, 12, 16 or 20.",
     "key": "Retrain ~ Ability Score Increase",
     "name": "Ability Score Increase",
-    "description": "You retrained one or more ability score increase gained at level 4, 8, 12, 16 or 20.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,23 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
-    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643",
-    "line": 12,
-    "record_key": "Retrain ~ Ability Score Increase"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
+    "record_key": "Retrain ~ Ability Score Increase",
+    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

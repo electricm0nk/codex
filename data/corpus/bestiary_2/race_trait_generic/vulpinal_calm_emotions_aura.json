@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "A vulpinal's aura acts like a calm emotions spell with a radius of 30 feet.  Any creature entering this area must make a Will save (DC %1) to resist the effect.  A creature that makes its save is immune to that vulpinal's aura for 24 hours.|VulpinalCalmEmotionsAuraDC",
     "key": "Vulpinal ~ Calm Emotions Aura",
     "name": "Calm Emotions Aura",
-    "description": "A vulpinal's aura acts like a calm emotions spell with a radius of 30 feet.  Any creature entering this area must make a Will save (DC %1) to resist the effect.  A creature that makes its save is immune to that vulpinal's aura for 24 hours.|VulpinalCalmEmotionsAuraDC",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 69,
-    "record_key": "Vulpinal ~ Calm Emotions Aura"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 69,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Vulpinal ~ Calm Emotions Aura",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, you radiate an aura of the pure essence of magic. You can use this ability %1 rounds per day. These rounds don't need to be consecutive, and you can activate and deactivate your aura as a free action. You and any allies within 20 feet of you increase your caster levels by 1d4. Roll this die when you activate this ability and use the same value for all who gain this benefit. The increase affects spell qualities (such as duration and number of targets) that rely on caster level, as well as caster level checks made to overcome spell resistance. The bonus caster levels don't grant higher-level spell slots or cause the recipients to learn new spells.|1+min(5,TL/4)",
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_284)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_284)",
-    "description": "If you have performed your daily obedience, you radiate an aura of the pure essence of magic. You can use this ability %1 rounds per day. These rounds don't need to be consecutive, and you can activate and deactivate your aura as a free action. You and any allies within 20 feet of you increase your caster levels by 1d4. Roll this die when you activate this ability and use the same value for all who gain this benefit. The increase affects spell qualities (such as duration and number of targets) that rely on caster level, as well as caster level checks made to overcome spell resistance. The bonus caster levels don't grant higher-level spell slots or cause the recipients to learn new spells.|1+min(5,TL/4)",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,23 +28,26 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
-    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
-    "line": 284,
-    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_284)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:284"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:284",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 284,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_284)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

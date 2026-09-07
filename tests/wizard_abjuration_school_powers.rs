@@ -52,10 +52,9 @@
 //! precedent -- positioning the namespace correctly for when Arcanist's own
 //! half (via School Understanding) is built later.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
+mod common;
+use common::{load, explanation, has_explanation};
 
 const LEVEL1_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_wizard_level1_abjuration_school_input.txt");
@@ -76,38 +75,6 @@ const PROTECTIVE_WARD_DURATION_ID: &str =
 const PROTECTIVE_WARD_DEFLECTION_BONUS_ID: &str =
     "class_feature.school.abjuration.protective_ward_deflection_bonus";
 const ENERGY_ABSORPTION_ID: &str = "class_feature.school.abjuration.energy_absorption";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 // ----- Resistance: flat 5 from level 1, stacks to flat 10 at level 11+ -----
 

@@ -329,6 +329,7 @@ mod tests {
                         selection_id: "ability:strength".to_owned(),
                     },
                 ],
+                selected_traits: Vec::new(),
                 spells_selected: vec![
                     SpellSelection {
                         spell_id: "Alarm".to_owned(),

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:57:27Z",
   "data": {
+    "description": "You are able to spontaneously cast spells you have mastered more frequently than your peers.",
     "key": "Extra Spontaneous Spell Mastery",
     "name": "Extra Spontaneous Spell Mastery",
-    "description": "You are able to spontaneously cast spells you have mastered more frequently than your peers.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -49,20 +48,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
-    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
-    "line": 32,
-    "record_key": "Extra Spontaneous Spell Mastery"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:57:27Z",
   "license": "PI-REDACTED",
   "pi_field": "raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "record_key": "Extra Spontaneous Spell Mastery",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

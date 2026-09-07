@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "Your martial training makes you a dangerous and elusive target for giants.",
     "key": "Earth Child Style",
     "name": "Earth Child Style",
-    "description": "Your martial training makes you a dangerous and elusive target for giants.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -53,20 +52,23 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
-    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
-    "line": 101,
-    "record_key": "Earth Child Style"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 101,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "record_key": "Earth Child Style",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
 }

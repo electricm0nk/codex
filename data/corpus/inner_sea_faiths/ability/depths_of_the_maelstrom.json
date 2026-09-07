@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, three times per day as an immediate action, when you step into any natural body of water, you can cause water within a 30-foot radius of where you stand to churn. You are unaffected by this churning. Any other creature wading or swimming in this water must attempt Swim checks as if the water were one category rougher; wading creatures must attempt DC 10 Swim checks, creatures swimming in calm water must make DC 15 Swim checks, creatures swimming in rough water must attempt DC 20 Swim checks, and creatures swimming in stormy water must attempt DC 25 Swim checks. If the water has a natural current, that current becomes fast moving. If the current was already fast moving, the DC of the Swim or Strength check to avoid going under increases to 15 + half your Hit Dice. This effect lasts for %1 rounds or until you leave the water, whichever is first.|TL",
     "key": "Evangelist Boon ~ Naderi ~ Depths of the Maelstrom",
     "name": "Depths of the Maelstrom",
-    "description": "If you have performed your daily obedience, three times per day as an immediate action, when you step into any natural body of water, you can cause water within a 30-foot radius of where you stand to churn. You are unaffected by this churning. Any other creature wading or swimming in this water must attempt Swim checks as if the water were one category rougher; wading creatures must attempt DC 10 Swim checks, creatures swimming in calm water must make DC 15 Swim checks, creatures swimming in rough water must attempt DC 20 Swim checks, and creatures swimming in stormy water must attempt DC 25 Swim checks. If the water has a natural current, that current becomes fast moving. If the current was already fast moving, the DC of the Swim or Strength check to avoid going under increases to 15 + half your Hit Dice. This effect lasts for %1 rounds or until you leave the water, whichever is first.|TL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
-    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
-    "line": 294,
-    "record_key": "Evangelist Boon ~ Naderi ~ Depths of the Maelstrom"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 294,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "record_key": "Evangelist Boon ~ Naderi ~ Depths of the Maelstrom",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

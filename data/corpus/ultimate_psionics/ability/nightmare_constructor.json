@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You turn fears into reality.",
     "key": "Dread Archetype ~ Nightmare Constructor",
     "name": "Nightmare Constructor",
-    "description": "You turn fears into reality.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -85,20 +84,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
-    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
-    "line": 10,
-    "record_key": "Dread Archetype ~ Nightmare Constructor"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "record_key": "Dread Archetype ~ Nightmare Constructor",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

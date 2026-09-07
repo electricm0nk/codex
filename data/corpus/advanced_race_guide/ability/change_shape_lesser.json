@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Assume the shape of a single humanoid race of your size, you can't change the shape, +10 racial bonus to appear as a member of that race; changing takes a standard action. Otherwise functions as Change Shape, Greater.",
     "key": "Builder Racial Trait ~ Change Shape (Lesser)",
     "name": "Change Shape (Lesser)",
-    "description": "Assume the shape of a single humanoid race of your size, you can't change the shape, +10 racial bonus to appear as a member of that race; changing takes a standard action. Otherwise functions as Change Shape, Greater.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
-    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
-    "line": 327,
-    "record_key": "Builder Racial Trait ~ Change Shape (Lesser)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 327,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Change Shape (Lesser)",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

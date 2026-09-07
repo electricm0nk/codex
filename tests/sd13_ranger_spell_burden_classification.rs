@@ -61,16 +61,20 @@
 //! uses, since this file's own fixture can't reach that gate at all (it
 //! fails the unrelated combat/skill posture first).
 
-use codex::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+use codex::rules_core::character_input::CharacterInput;
 use codex::rules_core::pilot_compute::{
-    build_pilot_headless_receipt, compute_pilot_base_chassis,
-    ComputationExplanation, HeadlessReceiptStatus, PilotBaseChassisComputation,
+    build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
+    HeadlessReceiptStatus,
+    PilotBaseChassisComputation,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
     seeded_current_truth, EvidenceFreshness, EvidenceTier, SupportState,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const RANGER_LEVEL1_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_ranger_level1_sd13_deterministic_input.txt");
@@ -78,44 +82,12 @@ const RANGER_LEVEL1_FIXTURE: &str =
 const PALADIN_LEVEL1_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_paladin_level1_sd13_deterministic_input.txt");
 
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
 // (A `claim_blocking` helper used to live here. The blanket
 // `class_spell.hybrid.ranger.unsupported` diagnostic it was written to pin was
 // retired on 2026-07-28 -- Rangers have no `CAST:` row before class level 4, so
 // a level-1 Ranger's absent spell posture is a satisfied condition -- leaving
 // the helper with no callers. See
 // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.)
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 fn has_diagnostic(computation: &PilotBaseChassisComputation, id: &str) -> bool {
     computation.diagnostics.iter().any(|d| d.id == id)

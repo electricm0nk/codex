@@ -1,0 +1,65 @@
+{
+  "lane": "B1",
+  "task": "SD-35 backlog assessment - number audit of forward-plan.json / ordered-plan.json / power-table-cost.json",
+  "headline_finding": "forward-plan.json's own arithmetic reproduces exactly from its own data, and its priced-to-DONE and priced-to-V tiers are still live-accurate. But its single biggest number -- the 45.7% / 13,383-unit UNPRICED tier -- is severely stale: a corpus-wide oracle-harness widening (git log 'wave-9' through 'wave-22 shared regeneration' commits, plus AT-34-E3-005 'bucket-v-widen') has moved 6,572 of those units out of bucket V and 342 out of bucket M straight to DONE since forward-plan.json was last regenerated, dropping live unpriced units to 6,469 (28.9% of a now-smaller 22,369-unit remaining population), not 13,383 (45.7% of 29,283).",
+  "reproduces_from_own_data": {
+    "total_units_35_books_42472": true,
+    "remaining_29283": true,
+    "unpriced_13383_45.7pct": "arithmetic reproduces (D+M+V+X+Z sums to 13383, 13383/29283=45.7%); the underlying bucket counts themselves are stale (see staleness)",
+    "priced_to_done_range_1952_6782h": true,
+    "priced_to_v_not_done_3981_96.39h": true,
+    "source_ledger_figures_B_C_U": "MEASURED figures (5.8/1.667 u/hr B, 41.3 u/hr C, 40.28 u/hr U) confirmed byte-for-byte against artifacts/epic-3-core-rulebook/step-cost-ledger.json and artifacts/epic-4-ultimate-campaign/step-cost-ledger.json"
+  },
+  "staleness": {
+    "forward_plan_generated_at_head": "fef202a5668519a37185998ea8835fc8841db808 (last regenerated in commit 153411f1b8, 2026-08-30 salvage)",
+    "commits_since_regeneration_touching_work_inventory": 13,
+    "live_vs_plan_35_book_totals": {
+      "total_units": {"plan": 42472, "live": 42472, "delta": 0},
+      "done_units": {"plan": 13189, "live": 20103, "delta": 6914},
+      "remaining_non_done": {"plan": 29283, "live": 22369, "delta": -6914, "delta_pct_of_stated": -23.6}
+    },
+    "live_vs_plan_bucket_totals": {
+      "A": {"plan": 449, "live": 449, "delta": 0},
+      "B": {"plan": 11299, "live": 11299, "delta": 0},
+      "C": {"plan": 3981, "live": 3981, "delta": 0},
+      "D": {"plan": 2587, "live": 2587, "delta": 0},
+      "M": {"plan": 3977, "live": 3635, "delta": -342},
+      "U": {"plan": 171, "live": 171, "delta": 0},
+      "V": {"plan": 6747, "live": 175, "delta": -6572},
+      "X": {"plan": 53, "live": 53, "delta": 0},
+      "Z": {"plan": 19, "live": 19, "delta": 0}
+    },
+    "per_book_bucket_level_check": "abs(live-plan) summed across all 35 books is exactly 0 for A,B,C,D,U,X,Z and exactly 342/6572 for M/V respectively -- confirms drift is confined entirely to M and V, not offsetting shifts elsewhere",
+    "recomputed_unpriced_tier_live": {"units": 6469, "pct_of_live_remaining_22369": 28.9},
+    "priced_to_done_and_priced_to_v_tiers": "UNCHANGED live vs plan (A+B+U=11919, C=3981) -- the 1,952-6,782h range and 96.39h figure are NOT stale",
+    "books_affected": "33 of 35 books changed (ultimate_equipment -1265, advanced_players_guide -579, ultimate_magic -517, ... down to inner_sea_faiths -2); only bestiary_5-adjacent two books (bestiary_6, inner_sea_faiths shown, others) unaffected in the tail",
+    "ordered_plan_and_power_table_cost": {
+      "ordered_plan_generated_at_head": "2eb47cdea96244b4ea8217c69e7248fd3d8593f6 (before forward-plan.json's own last regeneration at fef202a566...) -- never regenerated after the 2026-08-30 salvage; already 81 units off forward-plan.json's own book totals at 7 of 35 books (advanced_players_guide +2, inner_sea_races +1, ultimate_equipment +40, bestiary_2 +19, bestiary_3 +1, bestiary_4 +16, bestiary_5 +2) before the further 6,914-unit V/M drift is even counted -- doubly stale.",
+      "power_table_cost_generated_at_head": "bc39ff9d56fd40d48ec286e9bb9bb5a7847fddf3",
+      "power_table_cost_421_units_ultimate_psionics_kind_power": "still reproduces live (ultimate_psionics live bucket A = 421, unchanged) -- NOT stale, because the drift is confined to M/V, and this artifact only prices bucket A"
+    },
+    "kanban_progress_cross_check": {
+      "kanban_rows": 36,
+      "complete": 20,
+      "in_progress": 7,
+      "not_started": 2,
+      "partial": 7,
+      "source": "docs/release/SD-34-book-completion/kanban.md"
+    }
+  },
+  "rate_input_classification": [
+    {"bucket": "A", "metric": "seconds_per_table_build", "value": 136.857, "n": 7, "provenance": "MEASURED", "caveat": "table-build cost only, ESTIMATE per Epic 2's own measurement_note (pro-rated marginal lines against one shared wall time), not per-unit"},
+    {"bucket": "B", "metric": "units_per_hour_reaching_DONE", "range": [1.667, 5.8], "n": "2 (core_rulebook 29 cycles/503 units/235 DONE; ultimate_campaign 1 cycle/5 units/3 DONE)", "provenance": "MEASURED", "caveat": "thin_sample=true; 3.5x divergence between the two measurements attributed to sample-size artifact, not book-shape"},
+    {"bucket": "C", "metric": "units_per_hour_net_reclassified", "value": 41.3, "n": 1, "provenance": "MEASURED", "caveat": "n=1 mechanism, core_rulebook only; measures wiring-to-V not wiring-to-DONE (0.0 units/hour reach DONE)"},
+    {"bucket": "U", "metric": "units_per_hour_reaching_DONE", "value": 40.28, "n": 2, "provenance": "MEASURED", "caveat": "both cycles were whole-class instrument corrections, not per-record labor"},
+    {"bucket": "D", "metric": null, "n": 0, "provenance": "ASSUMED (explicitly UNMEASURED, no rate asserted)"},
+    {"bucket": "M", "metric": null, "n": 0, "provenance": "ASSUMED (explicitly UNMEASURED, no rate asserted) -- despite this, 342 M units moved to DONE corpus-wide since the plan was built, meaning a real rate now exists in the wave-regeneration commits that forward-plan.json has not captured"},
+    {"bucket": "V", "metric": null, "n": 0, "provenance": "ASSUMED (explicitly UNMEASURED, no rate asserted) -- same caveat as M, at far larger scale: 6,572 V units cleared to DONE corpus-wide via oracle-harness widening, an unmeasured-but-now-observable rate the plan has not incorporated"},
+    {"bucket": "X", "metric": null, "n": 0, "provenance": "ASSUMED"},
+    {"bucket": "Z", "metric": null, "n": 0, "provenance": "ASSUMED"}
+  ],
+  "gaps": [
+    "No cycle receipt or ledger yet exists quantifying the wave-9..wave-22 shared-regeneration mechanism's own units/hour rate for V or M -- the mechanism that produced the 6,572+342 unit drop is visible in commit messages and the resulting work-inventory.json, but its own per-unit cost is not captured in any artifact this lane read, so a MEASURED V/M rate cannot yet be reported even though the units have visibly moved",
+    "Did not verify ordered-plan.json's or power-table-cost.json's verify_*.py scripts by execution (read-only constraint); relied on direct JSON-to-live-inventory comparison instead, which is a stronger check for the numeric-drift question this audit targets"
+  ]
+}

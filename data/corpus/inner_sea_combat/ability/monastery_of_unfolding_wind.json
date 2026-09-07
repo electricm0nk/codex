@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Monastery of Unfolding Wind",
     "name": "Monastery of Unfolding Wind",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -21,20 +20,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
-    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
-    "line": 56,
-    "record_key": "Monastery of Unfolding Wind"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "record_key": "Monastery of Unfolding Wind",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

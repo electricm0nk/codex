@@ -59,7 +59,7 @@
 //!
 //! An ability with no owner reaches no screen: the catalog renders an ability
 //! underneath its monster. Shipping one would be the record-that-loads-and-is-
-//! never-shown `decisions.md §44.2` was written about. `not-ingested` is their
+//! never-shown `decisions.md §44.2` was written about. `engine-does-not-hold` is their
 //! honest status.
 //!
 //! # The first book whose monsters live in TWO files, and why that mattered

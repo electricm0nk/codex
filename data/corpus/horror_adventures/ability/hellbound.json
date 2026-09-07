@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "The pit of Hell waits for your damned soul. Your diabolic patron's portfolio determines what makes your corruption progress. When an opportunity to carry out a significant action that matches the devil's portfolio comes up, you are tempted to take it. The action might include oppressing people using your authority or tempting someone closer to lawful evil. You must succeed at a Will save (DC %1) or succumb to temptation and perform the action. What counts as significant is up to the GM. Usually, an act that wouldn't harm anyone doesn't count. If something prevents you from performing this act, the GM chooses a time over the next week when you're compelled to further the cause of lawful evil.|15+HellboundManifestationLevel",
     "key": "Corruption ~ Hellbound",
     "name": "Hellbound",
-    "description": "The pit of Hell waits for your damned soul. Your diabolic patron's portfolio determines what makes your corruption progress. When an opportunity to carry out a significant action that matches the devil's portfolio comes up, you are tempted to take it. The action might include oppressing people using your authority or tempting someone closer to lawful evil. You must succeed at a Will save (DC %1) or succumb to temptation and perform the action. What counts as significant is up to the GM. Usually, an act that wouldn't harm anyone doesn't count. If something prevents you from performing this act, the GM chooses a time over the next week when you're compelled to further the cause of lawful evil.|15+HellboundManifestationLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 290,
-    "record_key": "Corruption ~ Hellbound"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 290,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Corruption ~ Hellbound",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

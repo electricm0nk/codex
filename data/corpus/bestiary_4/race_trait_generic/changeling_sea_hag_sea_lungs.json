@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "The changeling can hold her breath for a number of rounds equal to 3 x her Constitution before she risks drowning.&nl;(%1 rounds)|Changeling_SeaLungs_Duration",
     "key": "Changeling ~ Sea Hag Sea Lungs",
     "name": "Sea Lungs (Sea Hag)",
-    "description": "The changeling can hold her breath for a number of rounds equal to 3 x her Constitution before she risks drowning.&nl;(%1 rounds)|Changeling_SeaLungs_Duration",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,18 +39,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
-    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e",
-    "line": 37,
-    "record_key": "Changeling ~ Sea Hag Sea Lungs"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
+    "record_key": "Changeling ~ Sea Hag Sea Lungs",
+    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:16Z",
   "data": {
     "key": "Race ~ Ifrit",
     "name": "Ifrit",
@@ -20,20 +19,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ifrit/ifrit_templates.lst",
-    "sha256": "52d2a80b4965a5f3e65adb34067e20b4171aaf8d98adca67843027f18998891c",
-    "line": 4,
-    "record_key": "Race ~ Ifrit"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ifrit/ifrit_templates.lst",
+    "record_key": "Race ~ Ifrit",
+    "sha256": "52d2a80b4965a5f3e65adb34067e20b4171aaf8d98adca67843027f18998891c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

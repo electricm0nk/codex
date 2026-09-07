@@ -35,9 +35,11 @@
 //! table), but which classes get which classification is now read from the
 //! ingested table rather than re-declared.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::CharacterInput;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
+mod common;
+use common::load;
 
 const FIGHTER9_WIZARD1_LV10_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter9_wizard1_sd24_multiclass_lv10_input.txt"
@@ -48,18 +50,6 @@ const WIZARD9_FIGHTER1_LV10_FIXTURE: &str = include_str!(
 const FIGHTER4_WIZARD1_SPLIT_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter4_wizard1_sd24_multiclass_split_input.txt"
 );
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 /// This class-id string's `class_tables::ClassId`, per the fixed Fighter+
 /// Wizard multiclass scope (SD-24 Epic 5).

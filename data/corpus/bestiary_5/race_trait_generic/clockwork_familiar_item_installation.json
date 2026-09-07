@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Each clockwork familiar possesses the ability to carry a magic item in its body. This specific item type is chosen at the time of the construct's creation, and cannot be changed. While the creature cannot activate or use the item, it gains certain constant abilities from the resonant magic fields, and can drain the item's magic as a free action in order to gain additional magical effects. In addition, any clockwork construct can drain a single charge or spell level from its installed item to heal itself for 1d6 hit points as a standard action. Removing a spent item and installing a new one is a full-round action.",
     "key": "Clockwork Familiar ~ Item Installation",
     "name": "Item Installation",
-    "description": "Each clockwork familiar possesses the ability to carry a magic item in its body. This specific item type is chosen at the time of the construct's creation, and cannot be changed. While the creature cannot activate or use the item, it gains certain constant abilities from the resonant magic fields, and can drain the item's magic as a free action in order to gain additional magical effects. In addition, any clockwork construct can drain a single charge or spell level from its installed item to heal itself for 1d6 hit points as a standard action. Removing a spent item and installing a new one is a full-round action.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,18 +31,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
-    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c",
     "line": 26,
-    "record_key": "Clockwork Familiar ~ Item Installation"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Clockwork Familiar ~ Item Installation",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

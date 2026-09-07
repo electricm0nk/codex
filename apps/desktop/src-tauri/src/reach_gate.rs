@@ -380,6 +380,12 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // itself a selectable thing (`ARCHETYPE_CHOICE_ID`), not provenance
     // attached to another record.
     ("ArchetypeSwapEntry", "archetypes"),
+    // AT-34-E3-003 (`decisions.md §2a`) widened Fighter/Wizard's class-skill posture from a
+    // hardcoded placeholder to the real, corpus-cited `CLASS_SKILL_LISTS` table
+    // (`crb/class_skill_tables.rs`), which `skill_allocation.rs`'s `full_fighter_class_skills`
+    // reads directly and which reaches the player through the character sheet's own skill
+    // totals -- the same "skills" family the corpus-directory table above already names.
+    ("ClassSkillList", "skills"),
 ];
 
 /// Element types that are real ingested data but are **not** an independent
@@ -392,6 +398,12 @@ const SUPPORTING_RECORD_TYPES: &[(&str, &str)] = &[
         "ClassWeaponProficiency",
         "a per-class facet of crb/weapons, not a separate record family: it says which of \
          WEAPON_TABLE's weapons a class may use, and has no identity of its own to render",
+    ),
+    (
+        "ClassArmorProficiency",
+        "the armor half of the same crb/weapon_tables.rs pair as ClassWeaponProficiency \
+         directly above, same file, same shape, same reason: it says which of ARMOR_TABLE's \
+         armor categories a class may wear, and has no identity of its own to render",
     ),
     (
         "GroundedAttack",
@@ -623,15 +635,15 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("bestiary_3", "bestiary_3"),
     // SD-29 Epic 5 extend, round 6 (monster lane). Bestiary 4 carries an 86-unit
     // `race_trait` family too, but this rule set compiles the two monster
-    // families and those units stay `not-ingested`, which is their honest state.
+    // families and those units stay `engine-does-not-hold`, which is their honest state.
     ("bestiary_4", "bestiary_4"),
     // SD-29 Epic 5 extend, round 7 (monster lane). Same again. Inner Sea
     // Bestiary carries a 4-unit `race_trait` family too; this rule set compiles
-    // the two monster families and those units stay `not-ingested`.
+    // the two monster families and those units stay `engine-does-not-hold`.
     ("inner_sea_bestiary", "inner_sea_bestiary"),
     // SD-29 Epic 5 extend, round 9 (monster lane). Inner Sea Gods. The book
     // carries a large `race_trait` family too; this rule set compiles the two
-    // monster families and those units stay `not-ingested`, which is their
+    // monster families and those units stay `engine-does-not-hold`, which is their
     // honest state.
     ("inner_sea_gods", "inner_sea_gods"),
     // SD-29 Epic 7 extend, round 6 (companion lane). Ultimate Wilderness. The
@@ -3150,6 +3162,39 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          `Suli ~ Trusted Mediator`: none available project-side; the upstream data itself omits \
          the flag. Do NOT close any of the six by deleting the record.",
     ),
+    (
+        "crb",
+        "race_traits",
+        "AT-34-E3-001 (2026-08-27): 74 of Core Rulebook's 76 ingested race-trait records reach a \
+         player through `list_alternate_racial_traits` and `resolve_race_alternate_selection` -- \
+         the 7 newly-ingested `Adopted Race ~ <Race>` selectors resolve through this cycle's \
+         `adopted_race_choose_selectors`/`trait_pool` path with real payload (each names a \
+         `<Race> Race Trait` pool this corpus genuinely populates -- 4 real grants apiece for \
+         Dwarf/Elf/Gnome/Half-Elf/Half-Orc/Human, 3 for Halfling -- see `race_trait_picker.rs`'s \
+         own `the_menu_command_carries_all_twentyone_adopted_race_options_twenty_with_real_\
+         grants`). TWO do not: `Human Ethnicity ~ None` and `Human Ethnicity ~ Unknown` \
+         (`cr_abilities_race.lst:157`/`:158`). \
+         \
+         **These are not a swap, not a CHOOSE-pool selector, and no existing picker wiring would \
+         make them reach a player.** Each carries `CATEGORY:Background`, `TYPE:HumanEthnicity`, \
+         and no `PREFACT`/default gate of any kind -- pure flavor placeholders for \"no ethnicity \
+         chosen\" (`race_resolver.rs`'s own `unclassified_traits()` census pins both by name with \
+         the identical characterization). `race_resolver::classify` correctly leaves both \
+         `TraitRole::Unclassified`, the role that never applies to a picker, the same role Monster \
+         Codex's `Oversized Goblin` and Inner Sea Races' six unreached rows above already carry \
+         for the identical reason (a readable gate this classifier would apply them by, and \
+         neither has one). \
+         \
+         REMEDY: a `HumanEthnicity` category picker -- a race-flavor choice with no mechanical \
+         grant, surfaced only for the Human race. That is a new, mechanically-inert UI surface \
+         (there is nothing to compute; the row's whole content is its own name), not a missing \
+         wire in the existing alternate-trait or Adopted-Race-selector protocols, and it is \
+         outside AT-34-E3-001's scope (ingesting the two placeholder rows for shape-coverage, \
+         `decisions.md §14`'s `race_trait_absent_from_race_traits` mechanism). Do NOT close this \
+         by deleting the records: both are real, oracle-cited corpus content \
+         (`cr_abilities_race.lst`) that Gate 1's DoD requires shipped and shape-measured even \
+         though no selection can reach either one yet.",
+    ),
     // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 406 records (403 + 3 Slayer archetypes, SD31-E4-F1-001)
     // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
     // the swap correctly in compute output for the wired slots (Alchemist's
@@ -3785,6 +3830,18 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Mostly Human ~ Undine ~ Languages",
             "Suli ~ Trusted Mediator",
         ],
+    ),
+    (
+        "crb",
+        "race_traits",
+        // AT-34-E3-001 (2026-08-27): `cr_abilities_race.lst`'s two
+        // Human-ethnicity placeholder rows, ingested this cycle
+        // (`is_human_ethnicity_placeholder`). `CATEGORY:Background`, no
+        // `PREFACT`/default gate of any kind -- pure flavor placeholders for
+        // "no ethnicity chosen", `TraitRole::Unclassified`. No picker
+        // surfaces a `HumanEthnicity`-category choice today. Remedy in
+        // OPEN_FINDINGS above.
+        &["Human Ethnicity ~ None", "Human Ethnicity ~ Unknown"],
     ),
     // SD28-C4.8/§60/§63: all 406 archetype-swap records across 7 books (403 + 3 Slayer archetypes, SD31-E4-F1-001) --
     // every key, because none reaches a player through any surface today
@@ -6769,7 +6826,7 @@ mod tests {
     /// and `monsters` kinds, corpus-wide -- not scoped to the hand-modelled
     /// subsets `RaceId::ALL` (7 CRB races) / `beastiary1::MonsterId::ALL`
     /// (46 Bestiary-1 stat blocks) that a prior wave's own unit tests
-    /// covered (`SD-31-corpus-closure-grind/todo/sweeps.md` S1/S2,
+    /// covered (`SD-31-corpus-closure-grind/`, tracked-sweeps list `sweeps.md`, S1/S2,
     /// `artifacts/MEASURE-TWICE.md` T1: "Race/monster: partial only ...
     /// the other 280 chassis-served monster entries and 31 non-CRB races
     /// were never checked for this shape").

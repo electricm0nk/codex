@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, you can manifest an illusory robe that absorbs hostile spells for %1 rounds. These rounds don't need to be consecutive, and you can activate or deactivate the robe as a free action. The robe functions as a lesser globe of invulnerability except that it only excludes hostile spell effects of 3rd level or lower. Any spell that would force you to attempt a saving throw; cause you to take hit point damage, negative levels, ability drain, or ability damage; or end your life is considered hostile for the purposes of this effect. Unlike a lesser globe of invulnerability, you can move normally while cloaked in the robes.|1+min(5,TL/4)",
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_278)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_278)",
-    "description": "If you have performed your daily obedience, you can manifest an illusory robe that absorbs hostile spells for %1 rounds. These rounds don't need to be consecutive, and you can activate or deactivate the robe as a free action. The robe functions as a lesser globe of invulnerability except that it only excludes hostile spell effects of 3rd level or lower. Any spell that would force you to attempt a saving throw; cause you to take hit point damage, negative levels, ability drain, or ability damage; or end your life is considered hostile for the purposes of this effect. Unlike a lesser globe of invulnerability, you can move normally while cloaked in the robes.|1+min(5,TL/4)",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,23 +32,26 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
-    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
-    "line": 278,
-    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_278)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:278"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:278",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 278,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_278)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

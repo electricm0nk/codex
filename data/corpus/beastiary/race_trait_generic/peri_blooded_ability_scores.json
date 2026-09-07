@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Masters of fire magic, emberkin feel the dual pull of their peri forebear as well as that of a fallen angel further down their ancestry, and wrestle with their urges to do both good and evil.",
     "key": "Peri-Blooded ~ Ability Scores",
     "name": "+2 Intelligence, +2 Charisma",
-    "description": "Masters of fire magic, emberkin feel the dual pull of their peri forebear as well as that of a fallen angel further down their ancestry, and wrestle with their urges to do both good and evil.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,18 +39,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
-    "sha256": "b0df1e60ce6ee7ac82342e430304020abd174aaa065cca5b608a0a2f4ab0ea9e",
-    "line": 79,
-    "record_key": "Peri-Blooded ~ Ability Scores"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 79,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
+    "record_key": "Peri-Blooded ~ Ability Scores",
+    "sha256": "b0df1e60ce6ee7ac82342e430304020abd174aaa065cca5b608a0a2f4ab0ea9e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -1,4 +1,4 @@
-import type { AbilityScoresDto, CreateCharacterRequest } from '../boundary/loadCreateCharacter';
+import type { AbilityScoresDto, CreateCharacterRequest, TraitSkillChoiceDto } from '../boundary/loadCreateCharacter';
 import type { AbilityKey } from './characterHubModel';
 
 /**
@@ -86,6 +86,22 @@ export interface CreateCharacterFormFields {
    * placeholder.
    */
   selectedAlternateTraitKeys?: readonly string[];
+  /**
+   * Character trait/drawback ids the player picked
+   * (`"trait:trait_acrobat"`, from `loadCharacterTraits`). Optional so
+   * every existing caller and test composes unchanged; an absent field
+   * means "took none", the real and common answer for a form the picker
+   * has not been wired into yet.
+   */
+  selectedTraits?: readonly string[];
+  /**
+   * The player's resolved skill choice for each *fixed-choice* `%LIST`
+   * trait named in `selectedTraits` (AT-34-E4-002, second slice). Optional
+   * so every existing caller and test composes unchanged; an absent field
+   * means "no choice-based trait was taken", the real and common answer
+   * when `selectedTraits` names only flat traits or none at all.
+   */
+  traitSkillChoices?: readonly TraitSkillChoiceDto[];
 }
 
 export interface ComposeCreateCharacterRequestDependencies {
@@ -112,5 +128,7 @@ export function composeCreateCharacterRequest(
     abilityBonusTarget: fields.abilityBonusTarget,
     savedAt: deps.now(),
     selectedAlternateTraitKeys: [...(fields.selectedAlternateTraitKeys ?? [])],
+    selectedTraits: [...(fields.selectedTraits ?? [])],
+    traitSkillChoices: [...(fields.traitSkillChoices ?? [])],
   };
 }

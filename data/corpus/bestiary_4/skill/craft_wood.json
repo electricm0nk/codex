@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Craft (Wood)",
     "name": "Craft (Wood)",
@@ -40,18 +38,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_skills.lst",
-    "sha256": "d85e7841d73065b1a8acf15bf780106c58c5ddff5549ba59f75cc07c85a44ada",
-    "line": 7,
-    "record_key": "Craft (Wood)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:11:34Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_skills.lst",
+    "record_key": "Craft (Wood)",
+    "sha256": "d85e7841d73065b1a8acf15bf780106c58c5ddff5549ba59f75cc07c85a44ada"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
 }

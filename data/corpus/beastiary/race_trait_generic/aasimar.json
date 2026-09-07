@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": null,
     "key": "Aasimar",
     "name": "Aasimar",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -53,18 +51,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race.lst",
-    "sha256": "81f71066c67433e4b6734fc591aaa6b8df7eb833af1a08a2e86117432e778ae0",
-    "line": 10,
-    "record_key": "Aasimar"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race.lst",
+    "record_key": "Aasimar",
+    "sha256": "81f71066c67433e4b6734fc591aaa6b8df7eb833af1a08a2e86117432e778ae0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ]
 }

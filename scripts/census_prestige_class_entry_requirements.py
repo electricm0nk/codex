@@ -23,7 +23,14 @@ Method, mechanical rather than curated:
 4. Keep only classes whose source file sits under a book directory this
    repo has actually ingested (`data/corpus/<book>/` exists) -- gating logic
    for a book with no ingested corpus data at all would be untestable
-   fiction, not a real mechanism.
+   fiction, not a real mechanism. When the same display name appears in more
+   than one oracle source file (an older, un-ingested predecessor book and
+   the newer ingested book that superseded it are the common case -- e.g.
+   `psionics_unleashed`/`psionics_expanded` predecessors of the ingested
+   `ultimate_psionics`), an ingested-book match always wins over a
+   non-ingested one, regardless of `os.walk`'s filesystem-dependent
+   iteration order; ties between two ingested matches break deterministically
+   by relative path, never by walk order.
 
 Run: `PCGEN_CORPUS_ROOT=<oracle>/data python3 scripts/census_prestige_class_entry_requirements.py`
 (or let the script resolve `$PCGEN_CORPUS_ROOT`/`$PCGEN_REPO_DIR` itself, matching every other
@@ -76,7 +83,14 @@ def slugify(name: str) -> str:
 
 def extract(corpus_root: Path, repo_root: Path) -> dict[str, dict]:
     books = ingested_books(repo_root)
-    prestige_names: dict[str, Path] = {}
+    # A display name can appear in more than one oracle source file -- most
+    # often an older, un-ingested predecessor book and the newer ingested
+    # book that superseded it (e.g. `psionics_unleashed`/`psionics_expanded`
+    # predecessors of the ingested `ultimate_psionics`). Collect every
+    # candidate path per name instead of keeping only the first one `os.walk`
+    # happens to visit: `os.walk` iteration order is filesystem-dependent,
+    # not something this script may use to decide which file is authoritative.
+    prestige_paths: dict[str, list[Path]] = {}
     class_lines: dict[tuple[Path, str], list[str]] = {}
 
     for dirpath, _dirs, files in os.walk(corpus_root):
@@ -95,18 +109,33 @@ def extract(corpus_root: Path, repo_root: Path) -> dict[str, dict]:
                 name = fields[0][len("CLASS:"):]
                 class_lines.setdefault((path, name), []).append(line)
                 if re.search(r"TYPE:[^\t]*Prestige", line):
-                    prestige_names.setdefault(name, path)
+                    candidates = prestige_paths.setdefault(name, [])
+                    if path not in candidates:
+                        candidates.append(path)
 
     result: dict[str, dict] = {}
-    for name, path in sorted(prestige_names.items()):
+    for name, candidates in sorted(prestige_paths.items()):
+        # An ingested-book match must always win over a non-ingested one,
+        # regardless of `os.walk` order: rank every candidate by whether its
+        # own book is ingested, then break ties deterministically (by
+        # relative path) rather than by walk order, so a re-run is stable.
+        ranked: list[tuple[bool, str, Path, str]] = []
+        for path in candidates:
+            try:
+                rel = path.relative_to(corpus_root)
+            except ValueError:
+                rel = path
+            parts = rel.parts
+            matched_book = next((p for p in parts if p in books), None)
+            ranked.append((matched_book is None, str(rel), path, matched_book))
+        ranked.sort(key=lambda item: (item[0], item[1]))
+        is_non_ingested, _rel_str, path, matched_book = ranked[0]
+        if is_non_ingested:
+            continue
         try:
             rel = path.relative_to(corpus_root)
         except ValueError:
             rel = path
-        parts = rel.parts
-        matched_book = next((p for p in parts if p in books), None)
-        if matched_book is None:
-            continue
         pre_tokens = []
         for line in class_lines.get((path, name), []):
             for field in line.split("\t")[1:]:

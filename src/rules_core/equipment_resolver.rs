@@ -812,7 +812,7 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // `equipment_gap_tables`; it has no hand-authored table at all.
         assert_eq!(count(EQUIPMENT_BOOK_UW), 127);
         // 6,146 hand-authored + 769 corpus gap rows. The +769 is exactly
-        // `docs/work-inventory.json`'s `not-ingested` equipment /
+        // `docs/work-inventory.json`'s `engine-does-not-hold` equipment /
         // equipment_modifier population across the nine already-compiled
         // books; `tests/equipment_gap_tables.rs` pins the per-book split.
         // `SD31-E6-F10-003`: the gap lane's own row count grew by 421

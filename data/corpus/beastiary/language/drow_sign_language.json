@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:08Z",
   "data": {
     "key": "Drow Sign Language",
     "name": "Drow Sign Language",
@@ -12,20 +11,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_languages.lst",
-    "sha256": "7f08f6a5709c2d025285077d3d480dffb404cf410f54540a9f7480375ad7de54",
-    "line": 6,
-    "record_key": "Drow Sign Language"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:08Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_languages.lst",
+    "record_key": "Drow Sign Language",
+    "sha256": "7f08f6a5709c2d025285077d3d480dffb404cf410f54540a9f7480375ad7de54"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

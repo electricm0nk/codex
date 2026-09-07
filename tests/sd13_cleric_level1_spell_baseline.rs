@@ -33,18 +33,21 @@
 //! spellbook content, no spells prepared, no general spell slots per day, no spell DCs,
 //! no bonus spells, and it grounds no Cleric level 2+.
 
-use codex::rules_core::character_input::{
-    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
-};
+use codex::rules_core::character_input::{AcquisitionMode, SpellSelection};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
-    PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
+    ComputationDiagnostic,
+    HeadlessReceiptStatus,
+    PilotBaseChassisComputation,
+    build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const CLERIC_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_cleric_level1_sd13_deterministic_input.txt");
@@ -61,34 +64,6 @@ const DOMAIN_SPELL_SLOT_ID: &str = "class_chassis.cleric.domain_spell_slot";
 // (Touch of Good, Good domain, can now genuinely close).
 const DOMAIN_BLOCKER_ID: &str = "class_feature.cleric.healing_domain.rebuke_death.unsupported";
 const PREPARED_BLOCKER_ID: &str = "class_spell.cleric.prepared_divine.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 fn claim_blocking<'a>(
     computation: &'a PilotBaseChassisComputation,
@@ -109,10 +84,6 @@ fn claim_blocking<'a>(
         "diagnostic '{id}' must be claim-blocking: {diag:?}"
     );
     diag
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
 }
 
 /// (v0.6 alpha swarm, risks item 8) PREPARED_BLOCKER_ID is no longer
@@ -213,6 +184,11 @@ fn cleric_level1_fabricates_no_spell_math() {
                 // class_spell.cleric.* namespaces).
                 || explanation.id.starts_with("class_chassis.cleric.")
                 || explanation.id.starts_with("class_spell.cleric.")
+                // SD-34 decisions.md section 18: widened BY CONSTRUCTION, not narrowed --
+                // class_feature_grant_consumer now emits real, citation-backed corpus_record
+                // ids for Cleric (previously wholesale-excluded); this shape carve-out admits
+                // them without weakening the substring check for anything else.
+                || explanation.id.starts_with("class_feature.cleric.corpus_record.")
                 || !explanation.id.contains("spell"),
             "no fabricated spell explanation is allowed beyond the +0 recognition and the honest \
              grounded cleric class-chassis/class-spell records: {explanation:?}"

@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:11Z",
   "data": {
     "key": "Erosion",
     "name": "Erosion",
@@ -60,20 +59,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_domains.lst",
-    "sha256": "b2f97a67e5a1d0671916f982443913c453e92e1cadbc3a94795340f1f4593112",
-    "line": 6,
-    "record_key": "Erosion"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_domains.lst",
+    "record_key": "Erosion",
+    "sha256": "b2f97a67e5a1d0671916f982443913c453e92e1cadbc3a94795340f1f4593112"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

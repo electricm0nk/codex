@@ -19,7 +19,7 @@ async function main() {
 
 function autoEvidenceResolvesFromSurface() {
   const auto = captureAutoEvidence(makeSurface());
-  assertEqual(auto.buildLabel, 'Codex 0.11.0-test', 'auto build label');
+  assertEqual(auto.buildLabel, 'Codex 0.14.0-test', 'auto build label');
   assertEqual(auto.channelSupportLabel, 'alpha · Linux first-class', 'auto channel/support label');
   assertEqual(auto.platformLabel, 'Linux', 'auto platform label');
   assertEqual(auto.currentWorkflow, 'Character-preview authoring check / Authored / Computed', 'auto workflow');

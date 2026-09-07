@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "Your link with your eidolon is strong enough that it can remain with you for a short time after you fall unconscious or are killed.",
     "key": "Resilient Eidolon",
     "name": "Resilient Eidolon",
-    "description": "Your link with your eidolon is strong enough that it can remain with you for a short time after you fall unconscious or are killed.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
-    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
-    "line": 104,
-    "record_key": "Resilient Eidolon"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 104,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Resilient Eidolon",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

@@ -112,8 +112,8 @@
     "record_key": "Elan",
     "sha256": "43c5f5c05027fb8b10b6f593b4adaeec437e249fb9948c426407a0bdf14bc59d"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:cr"
+    "static:literal_magnitudes_only"
   ]
 }

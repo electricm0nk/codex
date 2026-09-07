@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "You strike with the caustic forces from within the earth.",
     "key": "Shaitan Style",
     "name": "Shaitan Style",
-    "description": "You strike with the caustic forces from within the earth.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
-    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
-    "line": 276,
-    "record_key": "Shaitan Style"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 276,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "record_key": "Shaitan Style",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
 }

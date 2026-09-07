@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can summon a lillend azata. You gain telepathy with the lillend to a range of 100 feet. The lillend follows your commands perfectly for %1 minutes before vanishing back to its home on Elysium. The lillend doesn't follow any commands that would cause it to take evil or overly lawful actions, and the creature could even attack you if the command is particularly egregious.|TL",
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_121)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_121)",
-    "description": "If you have performed your daily obedience, once per day as a standard action, you can summon a lillend azata. You gain telepathy with the lillend to a range of 100 feet. The lillend follows your commands perfectly for %1 minutes before vanishing back to its home on Elysium. The lillend doesn't follow any commands that would cause it to take evil or overly lawful actions, and the creature could even attack you if the command is particularly egregious.|TL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,23 +28,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
-    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
-    "line": 121,
-    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_121)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:121"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:121",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 121,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_121)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

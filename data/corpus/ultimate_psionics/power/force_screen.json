@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "Force Screen",
     "name": "Force Screen",
@@ -68,18 +66,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
-    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a",
-    "line": 230,
-    "record_key": "Force Screen"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:11:35Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 230,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "record_key": "Force Screen",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus",
+    "derived:prose_expr"
+  ]
 }

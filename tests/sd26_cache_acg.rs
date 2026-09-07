@@ -138,7 +138,19 @@ fn assert_shape_b_record(path: &Path, record: &Value) {
 
 #[test]
 fn class_cache_has_all_ten_real_acg_classes_with_full_chassis() {
-    let records = load_all("class");
+    // Re-derived 2026-09-01: `data/corpus/advanced_class_guide/class/` carries an 11th file,
+    // `ex_warpriest.json` (`record_key: "Ex-Warpriest"`, `VISIBLE:NO` in its own raw tokens,
+    // `data.class_id: null`) -- PCGen's own internal, non-selectable helper class definition
+    // (used only to track a `WarpriestLVL` DEFINE variable via `BONUS:VAR|WarpriestLVL|CL`),
+    // never a real playable 11th ACG class. Its `class_id` is null precisely because the
+    // generator never assigns one to a `VISIBLE:NO` record; the per-record loop below would
+    // panic on `.unwrap()` if it were iterated, which is further confirmation this record was
+    // never meant to reach this test's roster. Excluded by that same real, structural marker
+    // rather than a name-based skip.
+    let records: Vec<(PathBuf, Value)> = load_all("class")
+        .into_iter()
+        .filter(|(_, record)| record["data"]["class_id"].as_str().is_some())
+        .collect();
     assert_eq!(records.len(), 10, "expected exactly the 10 real ACG classes (decisions.md §11.4/Q4, re-measured this cycle -- Alchemist is APG-only, excluded per rules_tables::acg::mod's own roster correction)");
 
     let mut seen_ids = HashSet::new();
@@ -185,9 +197,14 @@ fn class_cache_line_citations_match_the_real_corpus_exactly() {
         ("swashbuckler", 347),
         ("warpriest", 364),
     ];
+    // `ex_warpriest.json` (see class_cache_has_all_ten_real_acg_classes_with_full_chassis's
+    // own comment above) has no class_id -- PCGen's own VISIBLE:NO internal helper record,
+    // never a real playable class this citation check names.
     let records: std::collections::HashMap<String, Value> = load_all("class")
         .into_iter()
-        .map(|(_, v)| (v["data"]["class_id"].as_str().unwrap().to_string(), v))
+        .filter_map(|(_, v)| {
+            v["data"]["class_id"].as_str().map(|id| (id.to_string(), v.clone()))
+        })
         .collect();
     for (class_id, line) in expected_lines {
         let record = records.get(*class_id).unwrap_or_else(|| panic!("missing class record {class_id}"));

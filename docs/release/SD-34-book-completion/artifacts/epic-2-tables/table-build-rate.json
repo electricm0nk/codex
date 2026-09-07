@@ -1,0 +1,122 @@
+{
+  "criterion": "AT-34-E2-003",
+  "population": "8 of 8 Epic 2 kinds: ability, template, trait, deity, domain, skill, language (all new this bundle, commit 052a9182bf), companion (pre-existing table from SD-29, only its fail-closed proof is new this bundle, commit b7507f3817)",
+  "measurement_note": "All 7 new-table kinds were built through ONE shared generic loader (`load_simple_kind_table` in src/rules_core/rules_tables/simple_kind_tables.rs) in a single commit (052a9182bf). Per-table wall-clock time was NOT independently measured -- there were not 7 separate build sessions to time, and inventing 7 distinct stopwatch readings for one shared implementation would fabricate precision that does not exist (AGENTS.md rule 9). What IS measured and re-derivable: (1) real commit-to-commit wall time for each cycle as a whole, (2) exact marginal lines added per kind via git/grep on the committed file, which is the real cost differentiator the spread depends on. Per-table wall time below is therefore explicitly marked ESTIMATE, pro-rated from measured marginal lines against the measured cycle wall time -- never presented as independently timed.",
+  "measured_cycle_wall_time": {
+    "AT-34-E2-001_cycle_seconds": 1359,
+    "AT-34-E2-001_cycle_command": "git log --format=%ci -1 660129880d; git log --format=%ci -1 052a9182bf  # 2026-08-27 02:09:38-0400 -> 02:32:17-0400 = 0:22:39",
+    "AT-34-E2-002_cycle_seconds": 779,
+    "AT-34-E2-002_cycle_command": "git log --format=%ci -1 052a9182bf; git log --format=%ci -1 b7507f3817  # 02:32:17-0400 -> 02:45:16-0400 = 0:12:59",
+    "caveat": "these are whole-cycle wall times (implementation + tests + receipt + docs for ALL kinds in that cycle together), not a per-table figure -- reported here because they are the only genuinely measured timestamps this bundle produced, per rule 9 (mark or omit, never fabricate)."
+  },
+  "tables": [
+    {
+      "kind": "ability",
+      "status": "new_this_bundle",
+      "records_held": 4337,
+      "marginal_lines_measured": 7,
+      "marginal_lines_command": "1 line in SEVEN_KIND_DIRS (simple_kind_tables.rs:43) + 6-line kind_holds_named_record! macro invocation (lines 214-219)",
+      "shared_infra_lines_used": 208,
+      "shared_infra_note": "generic loader, struct defs, transcript_line, kind_dir_for, and 4 shared test helpers -- built ONCE, reused by all 7 new kinds. Measured as 247 total file lines minus the 39 lines that are kind-specific across all 7 kinds.",
+      "test_lines": 6,
+      "dominant_cost_driver": "shared generic loader (amortized, not ability-specific)",
+      "cheaper_or_dearer_than_others": "typical -- no directory-name mismatch, standard record shape, one macro-generated test",
+      "est_wall_time_seconds": 172,
+      "est_wall_time_method": "ESTIMATE: pro-rata of AT-34-E2-001's measured 1359s cycle time by this kind's 7 marginal lines / 39 total marginal lines across the 7 new kinds"
+    },
+    {
+      "kind": "template",
+      "status": "new_this_bundle",
+      "records_held": 2248,
+      "marginal_lines_measured": 7,
+      "marginal_lines_command": "1 line in SEVEN_KIND_DIRS (line 44) + 6-line macro invocation (lines 220-225)",
+      "shared_infra_lines_used": 208,
+      "test_lines": 6,
+      "dominant_cost_driver": "shared generic loader (amortized, not template-specific)",
+      "cheaper_or_dearer_than_others": "typical -- same shape as ability",
+      "est_wall_time_seconds": 172,
+      "est_wall_time_method": "ESTIMATE: same pro-rata method as ability"
+    },
+    {
+      "kind": "trait",
+      "status": "new_this_bundle",
+      "records_held": 487,
+      "marginal_lines_measured": 12,
+      "marginal_lines_command": "1 line in SEVEN_KIND_DIRS (line 45) + 1-line macro invocation (line 226) + 7-line dedicated regression test trait_kind_resolves_to_the_trait_generic_directory (lines 171-178) + 3 lines of module-doc explaining the trait_generic hazard (lines 15,19; kind_dir_for doc line 41)",
+      "shared_infra_lines_used": 208,
+      "test_lines": 8,
+      "dominant_cost_driver": "the trait_generic directory-name mismatch (workflow-instruction.md §4's 'a shallow glob lies' hazard) -- required an explicit kind_dir_for override plus a dedicated regression test pinning it, RED-confirmed by temporarily reverting the mapping",
+      "cheaper_or_dearer_than_others": "DEARER -- the one kind whose corpus directory name (trait_generic) disagrees with its kind name (trait); every other kind's directory matches its kind name exactly and needed no override or dedicated regression test",
+      "est_wall_time_seconds": 295,
+      "est_wall_time_method": "ESTIMATE: same pro-rata method; highest of the 7 because it carries the largest marginal-line share (12 of 39)"
+    },
+    {
+      "kind": "deity",
+      "status": "new_this_bundle",
+      "records_held": 459,
+      "marginal_lines_measured": 7,
+      "marginal_lines_command": "1 line in SEVEN_KIND_DIRS (line 46) + 6-line macro invocation (lines 227-232)",
+      "shared_infra_lines_used": 208,
+      "test_lines": 6,
+      "dominant_cost_driver": "shared generic loader (amortized, not deity-specific)",
+      "cheaper_or_dearer_than_others": "typical, but its sample record is PI-masked ('Codex-Named Unit') -- no extra code cost, just a different assertion string",
+      "est_wall_time_seconds": 172,
+      "est_wall_time_method": "ESTIMATE: same pro-rata method as ability"
+    },
+    {
+      "kind": "domain",
+      "status": "new_this_bundle",
+      "records_held": 183,
+      "marginal_lines_measured": 2,
+      "marginal_lines_command": "1 line in SEVEN_KIND_DIRS (line 47) + 1-line macro invocation (line 233)",
+      "shared_infra_lines_used": 208,
+      "test_lines": 1,
+      "dominant_cost_driver": "shared generic loader (amortized, not domain-specific)",
+      "cheaper_or_dearer_than_others": "CHEAPER -- single-line macro invocation, no directory quirk, smallest marginal footprint of the 7",
+      "est_wall_time_seconds": 49,
+      "est_wall_time_method": "ESTIMATE: same pro-rata method; lowest of the 7 because it carries the smallest marginal-line share (2 of 39, tied with skill and language)"
+    },
+    {
+      "kind": "skill",
+      "status": "new_this_bundle",
+      "records_held": 149,
+      "marginal_lines_measured": 2,
+      "marginal_lines_command": "1 line in SEVEN_KIND_DIRS (line 48) + 1-line macro invocation (line 234)",
+      "shared_infra_lines_used": 208,
+      "test_lines": 1,
+      "dominant_cost_driver": "shared generic loader (amortized, not skill-specific)",
+      "cheaper_or_dearer_than_others": "CHEAPER -- tied with domain and language for smallest marginal footprint",
+      "est_wall_time_seconds": 49,
+      "est_wall_time_method": "ESTIMATE: same pro-rata method as domain"
+    },
+    {
+      "kind": "language",
+      "status": "new_this_bundle",
+      "records_held": 136,
+      "marginal_lines_measured": 2,
+      "marginal_lines_command": "1 line in SEVEN_KIND_DIRS (line 49) + 1-line macro invocation (line 235)",
+      "shared_infra_lines_used": 208,
+      "test_lines": 1,
+      "dominant_cost_driver": "shared generic loader (amortized, not language-specific)",
+      "cheaper_or_dearer_than_others": "CHEAPER -- tied with domain and skill for smallest marginal footprint",
+      "est_wall_time_seconds": 49,
+      "est_wall_time_method": "ESTIMATE: same pro-rata method as domain"
+    },
+    {
+      "kind": "companion",
+      "status": "pre_existing_sd29",
+      "records_held": "4 in the one sampled book (inner_sea_combat); full COMPANION_BOOKS registry spans 9 books",
+      "marginal_lines_measured": 0,
+      "marginal_lines_note": "the table itself (rules_tables::companion_chassis) predates this bundle entirely -- SD-29. This bundle's ONLY companion cost is AT-34-E2-002's fail-closed proof: 21 lines (one dedicated test, companion_resolve_refuses_a_fabricated_key_it_never_defaults, in commit b7507f3817), all test, zero production lines.",
+      "fail_closed_proof_lines": 21,
+      "dominant_cost_driver": "none -- table build cost is zero this bundle; the only cost is proving an existing implementation already fails closed",
+      "cheaper_or_dearer_than_others": "CHEAPEST of all 8 -- the only kind requiring no table-build work at all, only a proof",
+      "est_wall_time_seconds": 0,
+      "est_wall_time_method": "not applicable to AT-34-E2-001 (table pre-exists); its 21-line fail-closed test falls inside AT-34-E2-002's separately measured 779s cycle, not decomposed further for the same reason as above"
+    }
+  ],
+  "spread": {
+    "marginal_lines_range": "2 (domain/skill/language) to 12 (trait) -- a 6x spread across the 7 new-table kinds, plus companion at 0 (pre-existing)",
+    "finding": "The single most important number for pricing `power` (Epic 5) is NOT a blended average across 8 tables -- it is that per-kind marginal cost here is dominated by whether the kind's corpus directory name matches its kind name (2-line kinds) or not (trait's 12 lines), NOT by record count: `ability` (4,337 records) and `domain` (183 records) cost nearly the same (7 vs 2 marginal lines) because both reuse the same generic loader unmodified. `power`'s true cost driver for Epic 5's pricing is therefore: does `power`'s corpus shape (ultimate_psionics) match this generic per-(book,key)-record loader, or does it need its own shape handling the way `trait` did -- record count alone does not predict cost."
+  }
+}

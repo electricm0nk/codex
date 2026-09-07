@@ -78,7 +78,7 @@ function bodyHasSevenSectionsInContractOrder() {
     assert(composed.draft.markdownBody.includes(`## ${heading}`), `markdown body keeps the ${heading} section`);
   }
   // Build metadata must never be omitted when available.
-  assert(composed.draft.markdownBody.includes('Codex 0.11.0-test'), 'build label present in body');
+  assert(composed.draft.markdownBody.includes('Codex 0.14.0-test'), 'build label present in body');
   assert(composed.draft.markdownBody.includes('alpha · Linux first-class'), 'channel/support label present in body');
   assert(composed.draft.markdownBody.includes('Linux'), 'platform present in body');
   assert(

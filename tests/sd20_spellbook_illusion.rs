@@ -65,6 +65,7 @@ fn wizard_input_with_color_spray_prepared(intelligence: i16) -> CharacterInput {
         case_id: Some("sd20_spellbook_illusion".to_string()),
         source_package_id: "sd20_spellbook_illusion".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "class:wizard".to_string(),

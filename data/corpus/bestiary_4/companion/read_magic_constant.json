@@ -59,8 +59,8 @@
     "record_key": "Read Magic ~ Constant",
     "sha256": "818d474333f914f8a18e72ce4f6f1f5a34078d1aa0a7e895300210a21afa2100"
   },
-  "wiring_class": "display",
+  "wiring_class": "derived",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "derived:spells"
   ]
 }

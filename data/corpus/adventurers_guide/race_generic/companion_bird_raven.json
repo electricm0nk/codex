@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:37Z",
   "data": {
+    "description": null,
     "key": "Companion (Bird (Raven))",
     "name": "Companion (Bird (Raven))",
-    "description": null,
     "raw_tokens": [
       {
         "key": "SORTKEY",
@@ -117,20 +116,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_races.lst",
-    "sha256": "66d482bb2e6df9db251b81915fd1730a875cbafd1fca4303991f2ac549db366d",
-    "line": 1,
-    "record_key": "Companion (Bird (Raven))"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:37Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 1,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_races.lst",
+    "record_key": "Companion (Bird (Raven))",
+    "sha256": "66d482bb2e6df9db251b81915fd1730a875cbafd1fca4303991f2ac549db366d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

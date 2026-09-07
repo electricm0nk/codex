@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:14Z",
   "data": {
     "key": "Bonus Language ~ Drow Sign Language",
     "name": "Bonus Language ~ Drow Sign Language",
@@ -16,20 +15,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_templates_language.lst",
-    "sha256": "ecd058efc932a2be3eabdfd5db38bbdde1ea5b677d70d7dd4cdc5deb85a0eb8e",
-    "line": 6,
-    "record_key": "Bonus Language ~ Drow Sign Language"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:14Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_templates_language.lst",
+    "record_key": "Bonus Language ~ Drow Sign Language",
+    "sha256": "ecd058efc932a2be3eabdfd5db38bbdde1ea5b677d70d7dd4cdc5deb85a0eb8e"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:17Z",
   "data": {
     "key": "Fleshdreg (Gluttony)",
     "name": "Fleshdreg (Gluttony)",
@@ -16,20 +15,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
-    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
-    "line": 111,
-    "record_key": "Fleshdreg (Gluttony)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:17Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 111,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "record_key": "Fleshdreg (Gluttony)",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

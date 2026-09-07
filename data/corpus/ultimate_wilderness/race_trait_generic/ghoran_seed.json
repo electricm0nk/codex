@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "As a full-round action, a ghoran can expel the seed from an orifice in its abdomen. If planted in fertile ground and left undisturbed for 2d6 days, the seed grows into a healthy duplicate of the original ghoran, save that the duplicate can reallocate all skill ranks upon sprouting. Once a ghoran expels this seed, it gains 1 negative level, and it dies as soon as the duplicate sprouts. This duplicate replaces the previous ghoran character.",
     "key": "Ghoran ~ Seed",
     "name": "Seed",
-    "description": "As a full-round action, a ghoran can expel the seed from an orifice in its abdomen. If planted in fertile ground and left undisturbed for 2d6 days, the seed grows into a healthy duplicate of the original ghoran, save that the duplicate can reallocate all skill ranks upon sprouting. Once a ghoran expels this seed, it gains 1 negative level, and it dies as soon as the duplicate sprouts. This duplicate replaces the previous ghoran character.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,18 +51,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
-    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb",
-    "line": 21,
-    "record_key": "Ghoran ~ Seed"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
+    "record_key": "Ghoran ~ Seed",
+    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

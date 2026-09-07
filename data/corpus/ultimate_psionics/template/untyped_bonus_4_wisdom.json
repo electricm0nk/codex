@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T16:43:18Z",
   "data": {
     "key": "Untyped bonus +4 Wisdom",
     "name": "Untyped bonus +4 Wisdom",
@@ -20,20 +19,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_templates.lst",
-    "sha256": "c67dfca046c23c836a03d8dce00cde3d293bb0fc35f4058a5f6d807cbaf43dde",
-    "line": 153,
-    "record_key": "Untyped bonus +4 Wisdom"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 153,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_templates.lst",
+    "record_key": "Untyped bonus +4 Wisdom",
+    "sha256": "c67dfca046c23c836a03d8dce00cde3d293bb0fc35f4058a5f6d807cbaf43dde"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

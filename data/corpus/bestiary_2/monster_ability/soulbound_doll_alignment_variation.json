@@ -68,8 +68,9 @@
     "record_key": "Soulbound Doll ~ Alignment Variation",
     "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
   },
-  "wiring_class": "display",
+  "wiring_class": "computed",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "computed:pre_guard",
+    "derived:spells"
   ]
 }

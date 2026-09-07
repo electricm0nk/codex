@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Unicorn Bloodline",
     "name": "Unicorn Bloodline",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -61,20 +60,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_heog.lst",
-    "sha256": "b65ecb24acec398e84f01d1a8d9e8630b9d8494a27e5afdc86e7a5c383be9c95",
-    "line": 3,
-    "record_key": "Unicorn Bloodline"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 3,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_heog.lst",
+    "record_key": "Unicorn Bloodline",
+    "sha256": "b65ecb24acec398e84f01d1a8d9e8630b9d8494a27e5afdc86e7a5c383be9c95"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

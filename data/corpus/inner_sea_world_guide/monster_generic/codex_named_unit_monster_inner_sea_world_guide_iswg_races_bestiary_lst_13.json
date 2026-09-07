@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:38Z",
   "data": {
+    "description": null,
     "key": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_13)",
     "name": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_13)",
-    "description": null,
     "raw_tokens": [
       {
         "key": "NAMEISPI",
@@ -105,23 +104,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races_bestiary.lst",
-    "sha256": "d72743ae54143c507ef6cea069fca77c519e4d44b89432cca21b64fff8d29593",
-    "line": 13,
-    "record_key": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_13)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:38Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_world_guide:iswg_races_bestiary.lst:13"
-  }
+    "coordinate": "inner_sea_world_guide:iswg_races_bestiary.lst:13",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races_bestiary.lst",
+    "record_key": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_13)",
+    "sha256": "d72743ae54143c507ef6cea069fca77c519e4d44b89432cca21b64fff8d29593"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

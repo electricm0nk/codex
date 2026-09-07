@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "The eidolon gains powerful muscles that allow it to crush those it grapples. Whenever the eidolon successfully grapples a foe using the grab evolution, it deals additional damage equal to the amount of damage dealt by the attack the grab evolution is tied to.",
     "key": "Unchained Evolution ~ Constrict",
     "name": "Constrict",
-    "description": "The eidolon gains powerful muscles that allow it to crush those it grapples. Whenever the eidolon successfully grapples a foe using the grab evolution, it deals additional damage equal to the amount of damage dealt by the attack the grab evolution is tied to.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,18 +55,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 222,
-    "record_key": "Unchained Evolution ~ Constrict"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 222,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Unchained Evolution ~ Constrict",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

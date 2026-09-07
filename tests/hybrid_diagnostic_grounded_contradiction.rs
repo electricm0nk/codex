@@ -36,27 +36,16 @@
 //! while still positively confirming the grounded explanations are present
 //! and real (non-placeholder, capable of nonzero values).
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
+mod common;
+use common::load;
 
 const PALADIN_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_paladin_level1_sd13_deterministic_input.txt");
 const RANGER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_ranger_level1_sd13_deterministic_input.txt");
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn explanation<'a>(
     computation: &'a PilotBaseChassisComputation,

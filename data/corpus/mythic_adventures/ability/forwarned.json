@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You can always act in the surprise round, but you are still considered flat-footed until you take an action. In addition, you receive a +%1 bonus on initiative rolls.|DivinationForwarnedBonus",
     "key": "Flexible School Power ~ Divination ~ Forwarned",
     "name": "Forwarned",
-    "description": "You can always act in the surprise round, but you are still considered flat-footed until you take an action. In addition, you receive a +%1 bonus on initiative rolls.|DivinationForwarnedBonus",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 457,
-    "record_key": "Flexible School Power ~ Divination ~ Forwarned"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 457,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Flexible School Power ~ Divination ~ Forwarned",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

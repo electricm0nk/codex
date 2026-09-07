@@ -158,15 +158,13 @@ pub fn repair_book(
     for file in &files {
         let Ok(text) = std::fs::read_to_string(file) else { continue };
         let Ok(json): Result<Value, _> = serde_json::from_str(&text) else { continue };
-        if let Some(source) = json.get("source") {
-            if source.get("kind").and_then(Value::as_str) == Some("lst_token") {
-                if let (Some(p), Some(l)) =
+        if let Some(source) = json.get("source")
+            && source.get("kind").and_then(Value::as_str) == Some("lst_token")
+                && let (Some(p), Some(l)) =
                     (source.get("path").and_then(Value::as_str), source.get("line").and_then(Value::as_u64))
                 {
                     *citation_counts.entry((p.to_string(), l as u32)).or_insert(0) += 1;
                 }
-            }
-        }
         parsed.push((file.clone(), json));
     }
 

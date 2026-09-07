@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "A rare few gathlains are born with the knowledge of an ancient way of speech that allows them to communicate with trees. Once per day, they can cast speak with plants (trees only) as a spell-like ability with a caster level equal to the gathlain's character level.",
     "key": "Gathlain ~ Tree Dialect",
     "name": "Tree Dialect",
-    "description": "A rare few gathlains are born with the knowledge of an ancient way of speech that allows them to communicate with trees. Once per day, they can cast speak with plants (trees only) as a spell-like ability with a caster level equal to the gathlain's character level.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
-    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
-    "line": 56,
-    "record_key": "Gathlain ~ Tree Dialect"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "record_key": "Gathlain ~ Tree Dialect",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

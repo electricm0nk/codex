@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "You are able to navigate the streets and personalities of whatever locale you run across.",
     "key": "Street Smarts",
     "name": "Street Smarts",
-    "description": "You are able to navigate the streets and personalities of whatever locale you run across.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
-    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
-    "line": 99,
-    "record_key": "Street Smarts"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 99,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "record_key": "Street Smarts",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

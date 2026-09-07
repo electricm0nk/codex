@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "As a standard action, you can activate a gaze attack with a 30-foot range. This is an active gaze attack that can target a single creature within range. The target must make a Will save (DC %1). Those that fail take 1d6+ points of nonlethal damage and are fascinated until the beginning of your next turn. You can use this ability %2 times per day. This is a mind-affecting effect.|DomainScalykindDC|DomainScalykindTimes|PREVARLT:DomainScalykindLVL,2",
     "key": "Domain Power ~ Venomous Stare",
     "name": "Venomous Stare",
-    "description": "As a standard action, you can activate a gaze attack with a 30-foot range. This is an active gaze attack that can target a single creature within range. The target must make a Will save (DC %1). Those that fail take 1d6+ points of nonlethal damage and are fascinated until the beginning of your next turn. You can use this ability %2 times per day. This is a mind-affecting effect.|DomainScalykindDC|DomainScalykindTimes|PREVARLT:DomainScalykindLVL,2",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 287,
-    "record_key": "Domain Power ~ Venomous Stare"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 287,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Domain Power ~ Venomous Stare",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

@@ -521,9 +521,9 @@ fn every_fixture_clears_the_real_production_bar_check() {
             let reason = report
                 .failures
                 .get(&f.unit_id)
-                .or_else(|| report.not_ingested.get(&f.unit_id))
+                .or_else(|| report.engine_does_not_hold.get(&f.unit_id))
                 .cloned()
-                .unwrap_or_else(|| "not reported cleared, failed, or not-ingested at all -- \
+                .unwrap_or_else(|| "not reported cleared, failed, or engine-does-not-hold at all -- \
                      unexpected report shape".to_string());
             uncleared.push(format!("{}: {reason}", f.unit_id));
         }

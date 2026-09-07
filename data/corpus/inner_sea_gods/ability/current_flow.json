@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "As a free action, you can increase either your land or swim speed by 10 feet. While swimming, you gain a +%1 bonus on Swim checks. These effects last for %2 rounds. You can use this ability %3 times per day.|max(1,DomainWaterLVL/2|WIS|DomainWaterTimes",
     "key": "Domain Power ~ Current Flow",
     "name": "Current Flow",
-    "description": "As a free action, you can increase either your land or swim speed by 10 feet. While swimming, you gain a +%1 bonus on Swim checks. These effects last for %2 rounds. You can use this ability %3 times per day.|max(1,DomainWaterLVL/2|WIS|DomainWaterTimes",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 276,
-    "record_key": "Domain Power ~ Current Flow"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 276,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Domain Power ~ Current Flow",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

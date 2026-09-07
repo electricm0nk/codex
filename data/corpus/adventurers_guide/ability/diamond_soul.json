@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "A student of perfection can spend 2 points from his ki pool as a swift action to gain spell resistance %1. This spell resistance lasts for %2 rounds.|10+StudentOfPerfectionLVL|StudentOfPerfectionLVL",
     "key": "Student of Perfection ~ Diamond Soul",
     "name": "Diamond Soul",
-    "description": "A student of perfection can spend 2 points from his ki pool as a swift action to gain spell resistance %1. This spell resistance lasts for %2 rounds.|10+StudentOfPerfectionLVL|StudentOfPerfectionLVL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 16,
-    "record_key": "Student of Perfection ~ Diamond Soul"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Student of Perfection ~ Diamond Soul",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

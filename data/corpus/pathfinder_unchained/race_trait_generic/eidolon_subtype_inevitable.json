@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Implacable and ceaseless in their fight against chaos and those who break natural laws, inevitables make loyal, if literal-minded, companions for lawful summoners. Summoners of inevitables generally get along well with axiomites, who share their understanding of the process of forging and modifying an inevitable. Inevitable eidolons appear as a mixture between clockwork constructs and idealized humanoid statues.",
     "key": "Eidolon Subtype ~ Inevitable",
     "name": "Inevitable",
-    "description": "Implacable and ceaseless in their fight against chaos and those who break natural laws, inevitables make loyal, if literal-minded, companions for lawful summoners. Summoners of inevitables generally get along well with axiomites, who share their understanding of the process of forging and modifying an inevitable. Inevitable eidolons appear as a mixture between clockwork constructs and idealized humanoid statues.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 35,
-    "record_key": "Eidolon Subtype ~ Inevitable"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Eidolon Subtype ~ Inevitable",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

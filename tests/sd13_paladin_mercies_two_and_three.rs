@@ -29,11 +29,12 @@
 //! and the level-6/9 sibling controls (pinning slot 1's values) stay
 //! green untouched.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::load;
 
 const PALADIN_LEVEL10_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_paladin_level10_sd13_deterministic_input.txt");
@@ -48,18 +49,6 @@ const FIGHTER_FIXTURE: &str = include_str!(
 
 const SLOT_2_ID: &str = "class_chassis.paladin.mercy_2_choice";
 const SLOT_3_ID: &str = "class_chassis.paladin.mercy_3_choice";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
 
 fn detail_of(fixture: &str, id: &str) -> Option<String> {
     let input = load(fixture);

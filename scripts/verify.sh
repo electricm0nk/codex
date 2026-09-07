@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -598,7 +598,24 @@ run_site_dashboard_selftest() {
 # ---------------------------------------------------------------------------
 
 run_site_dashboard_check() {
-    stage_start "site-dashboard-check — scripts/publish-site-dashboard.sh --check"
+    # Own outer timeout wrapper (AT-34-E6-001 wave-27; same `${VAR:-default}`
+    # shape `corpus-trap-audit` above already uses, and the exact gap that
+    # stage's own comment names this stage for): `publish-site-dashboard.sh
+    # --check` invokes the real producer, which bounds each of its three
+    # state-dump binaries individually (`v06_class_state_dump`,
+    # `v06_content_state_dump` at the shared `PF1E_CLASS_STATE_TIMEOUT`
+    # default 600s each; `v06_work_inventory` at its own, wider
+    # `PF1E_WORK_INVENTORY_TIMEOUT` default 950s -- see that constant's own
+    # comment in pf1e_dashboard_producer.py for the 757s measurement behind
+    # it) but neither `verify.sh` nor the script it calls ever bounded the
+    # STAGE as a whole. Sum of all three cold: ~2150s worst case; rounded up
+    # with slack for the public-status projection's own `--check` and
+    # process overhead, not tightened further since this lane does not run
+    # the real producer to remeasure the full-stage wall time (forbidden by
+    # this cycle's own brief -- "do NOT run the inventory regenerator or the
+    # dashboard producer from a lane").
+    local timeout_s="${SITE_DASHBOARD_CHECK_TIMEOUT_S:-2400}"
+    stage_start "site-dashboard-check — timeout ${timeout_s}s scripts/publish-site-dashboard.sh --check"
     local log="$LOG_DIR/site-dashboard-check.log"
     local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
 
@@ -607,8 +624,18 @@ run_site_dashboard_check() {
         return
     fi
 
-    ( cd "$REPO_ROOT" && exec "$script" --check ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" "$script" --check ) >"$log" 2>&1
     local status=$?
+
+    if (( status == 124 )); then
+        stage_fail site-dashboard-check "timed out after ${timeout_s}s bounding its own runtime — the producer did not finish, and neither did any stale-cache fallback silently paper over it (PF1E_DASHBOARD_STRICT_TIMEOUT=1 in --check mode) — $log"
+        return
+    fi
+
+    if (( status == 3 )); then
+        stage_fail site-dashboard-check "a state-dump binary timed out inside the producer (StateDumpTimeout, loud by design under --check) before the stage's own ${timeout_s}s outer bound was reached — $log"
+        return
+    fi
 
     if (( status != 0 )); then
         stage_fail site-dashboard-check "exit $status — $log"
@@ -1132,6 +1159,54 @@ run_denominator_gate() {
     fi
 
     stage_pass denominator-gate "files_checked=${checked:-?} violations=0"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: figure-provenance
+#
+# Runs `scripts/denominator_gate.py --check-provenance` -- `AT-34-E1-006`
+# (`docs/release/SD-34-book-completion/epic-breakdown.md`), enforcing
+# `AGENTS.md` rule 9: a figure with no re-derive command reachable from it
+# is not a figure, it is a recollection. Wired alongside `denominator-gate`
+# in the same script, not as a standalone tool. Default target is this
+# package's own artifacts (`PROVENANCE_DEFAULT_GLOBS` -- deliberately not
+# SD-33's folder, which this bundle may not write to). `FIGURE_PROVENANCE_PATHS`
+# (space-separated globs) overrides the default, the same `${VAR:-default}`
+# shape `DENOMINATOR_GATE_PATHS` already uses. The PASS line states the
+# figure population examined, closing `workflow-instruction.md §12` row 15
+# ("a vacuous pass is not a pass").
+# ---------------------------------------------------------------------------
+
+run_figure_provenance() {
+    stage_start "figure-provenance — python3 scripts/denominator_gate.py --check-provenance"
+    local log="$LOG_DIR/figure-provenance.log"
+    local script="$REPO_ROOT/scripts/denominator_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail figure-provenance "script missing at scripts/denominator_gate.py"
+        return
+    fi
+
+    local -a paths=()
+    if [[ -n "${FIGURE_PROVENANCE_PATHS:-}" ]]; then
+        # shellcheck disable=SC2206
+        paths=( ${FIGURE_PROVENANCE_PATHS} )
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check-provenance "${paths[@]}" ) >"$log" 2>&1
+    local status=$?
+
+    local checked figures violations
+    checked=$(sed -n 's/^files_checked=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    figures=$(sed -n 's/^figures_examined=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    violations=$(sed -n 's/^violations=\([0-9]*\)$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail figure-provenance "violations=${violations:-?} of figures_examined=${figures:-?} (files_checked=${checked:-?}) — $log"
+        return
+    fi
+
+    stage_pass figure-provenance "files_checked=${checked:-?} figures_examined=${figures:-?} violations=0"
 }
 
 # ---------------------------------------------------------------------------
@@ -1857,6 +1932,155 @@ run_corpus_sweep() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: corpus-trap-audit-selftest
+#
+# Runs scripts/tests/test_corpus_trap_audit_baseline.sh — the detection
+# self-test for the comparator `corpus-trap-audit` below decides its verdict
+# with. Same reasoning as corpus-sweep-selftest: this gate must stay green
+# over SD-33's registered inherited debt while failing instantly on a
+# `wiring-class-mismatch` recurrence, and a comparator that lost its ability
+# to say NO would look identical from the outside. `SD30-CARRY-001` drove
+# that same check to 0 on 2026-08-14 and it regressed to 7,015 defects
+# unnoticed, because nothing re-ran it.
+#
+# QUICK as well as FULL: synthetic payloads only, never reads the corpus.
+# ---------------------------------------------------------------------------
+
+run_corpus_trap_audit_selftest() {
+    stage_start "corpus-trap-audit-selftest — scripts/tests/test_corpus_trap_audit_baseline.sh"
+    local log="$LOG_DIR/corpus-trap-audit-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_corpus_trap_audit_baseline.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail corpus-trap-audit-selftest "self-test script missing at scripts/tests/test_corpus_trap_audit_baseline.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail corpus-trap-audit-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail corpus-trap-audit-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass corpus-trap-audit-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: corpus-trap-audit
+#
+# Runs `v06_corpus_trap_report --audit --json` -- `AT-34-E1-007`
+# (`docs/release/SD-34-book-completion/epic-breakdown.md`), closing a gap
+# `forward-scope-register.md` C1.8 carried unclosed through SD-31, SD-32,
+# and SD-33: this cross-checks every already-ingested `data/corpus/**`
+# record's `wiring_class` and citation against a fresh re-derivation from
+# the real PCGen `.lst` source it cites, catching drift a stale cache
+# value cannot self-report. FULL only (needs the real PCGen corpus,
+# `PCGEN_CORPUS_ROOT`), placed next to `corpus-sweep`, same dependency and
+# the same "fail loudly, never skip" posture on an absent corpus.
+#
+# **Own timeout wrapper is part of this stage's deliverable**
+# (`epic-breakdown.md`'s AT-34-E1-007 evidence, citing
+# `forward-scope-register.md D1.2`: a sibling stage,
+# `site-dashboard-check`, hung for two full 600s producer timeouts with
+# *no* wrapper in either `verify.sh` or the script it called, across three
+# separate diffs, before anyone noticed). `CORPUS_TRAP_AUDIT_TIMEOUT_S`
+# overrides the default, the same `${VAR:-default}` shape every other
+# tunable in this file already uses.
+#
+# **Population is computed independently of the binary's own output**, the
+# same reasoning `corpus-sweep`'s own independent `examined`/`tokens`
+# parse and `pi-sweep`'s CLEAN-token guard already carry: this stage's
+# `find`-based count of every `data/corpus/<book>/<kind>/*.json` file
+# mirrors `audit_ingested_cache`'s own book/kind/record walk
+# (`src/pcgen_import/corpus_traps.rs`) exactly -- a vacuous PASS naming no
+# population fails the stage (`workflow-instruction.md §12` row 15).
+# ---------------------------------------------------------------------------
+
+run_corpus_trap_audit() {
+    local timeout_s="${CORPUS_TRAP_AUDIT_TIMEOUT_S:-300}"
+    stage_start "corpus-trap-audit — timeout ${timeout_s}s cargo run --locked --bin v06_corpus_trap_report -- --audit --json"
+    local log="$LOG_DIR/corpus-trap-audit.log"
+
+    # Independent population count: same 3-level book/kind/record walk
+    # `audit_ingested_cache` performs, computed here rather than trusted
+    # from the binary's own report.
+    local population
+    population=$(find "$REPO_ROOT/data/corpus" -mindepth 3 -maxdepth 3 -type f -name '*.json' 2>/dev/null | wc -l | tr -d ' ')
+
+    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" cargo run --locked --quiet -j "$JOBS" --bin v06_corpus_trap_report -- --audit --json ) >"$log" 2>&1
+    local status=$?
+
+    if (( status == 124 )); then
+        stage_fail corpus-trap-audit "timed out after ${timeout_s}s bounding its own runtime; population=${population:-?} not fully examined — $log"
+        return
+    fi
+    if (( status == 1 )); then
+        stage_fail corpus-trap-audit "usage/IO error (exit 1) — corpus absent or PCGEN_CORPUS_ROOT misconfigured, not a skip — $log"
+        return
+    fi
+
+    # Per-kind verdict, not an aggregate `defects == 0`. SD-34
+    # `decisions.md` §13 rules the four trap kinds SD-33 registered in
+    # `forward-scope-register.md` D1.1 to stay REGISTERED, NOT ABSORBED --
+    # reported at their own counts, by name, every run -- while leaving
+    # AT-34-E1-007's `exits 0` bar unchanged. An aggregate check cannot hold
+    # both: it is blind to which kind moved, so it stays red forever over
+    # registered debt and tells nobody anything, decaying into exactly the
+    # unwired gate this stage exists to end. The comparator is a ratchet on
+    # named kinds -- an unregistered kind, a kind above its pin, or a kind
+    # below its pin all FAIL -- and it is itself covered by
+    # `corpus-trap-audit-selftest`, which mutation-proves its ability to say
+    # NO. That is strictly more information than the aggregate it replaces.
+    local verdict
+    verdict=$(python3 "$REPO_ROOT/scripts/corpus_trap_audit_baseline.py" "$log" 2>&1)
+    local verdict_status=$?
+
+    local tally
+    tally=$(sed -n 's/^tally=//p' <<<"$verdict")
+
+    if (( verdict_status == 1 )); then
+        stage_fail corpus-trap-audit "could not parse --json output ($(sed -n 's/^PARSE_ERROR=//p' <<<"$verdict" | head -1)) — $log"
+        return
+    fi
+
+    # The binary exits 2 while any DEFECT stands, including registered debt.
+    # 0 and 2 both hand the verdict to the comparator; anything else is the
+    # stage's own problem and fails here.
+    if (( status != 0 && status != 2 )); then
+        stage_fail corpus-trap-audit "unexpected exit $status — ${tally:-no tally} — $log"
+        return
+    fi
+
+    if (( verdict_status != 0 )); then
+        local why
+        why=$(sed -n 's/^reason=//p' <<<"$verdict" | paste -sd '; ' -)
+        stage_fail corpus-trap-audit "records_examined=${population:-?} ${tally} — ${why} — $log"
+        return
+    fi
+
+    # A pass naming no population is vacuous (`workflow-instruction.md §12`
+    # row 15) -- the same guard the population count above exists for.
+    if [[ -z "${population:-}" || "${population:-0}" -eq 0 ]]; then
+        stage_fail corpus-trap-audit "examined 0 records — a vacuous pass is not a pass — $log"
+        return
+    fi
+
+    stage_pass corpus-trap-audit "records_examined=${population} ${tally} — all defect kinds at their registered counts"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: supersession-gate
 #
 # Runs `scripts/supersession_register_gate.py` against the committed
@@ -1998,13 +2222,16 @@ for stage in "${SELECTED[@]}"; do
         shape-coverage-standing-gate-selftest) run_shape_coverage_standing_gate_selftest ;;
         shape-coverage-standing-gate) run_shape_coverage_standing_gate ;;
         denominator-gate)    run_denominator_gate ;;
+        figure-provenance)   run_figure_provenance ;;
         pi-sweep)            run_pi_sweep ;;
         declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;
         reclaim-selftest)    run_reclaim_selftest ;;
         driver-selftest)     run_driver_selftest ;;
         corpus-sweep-selftest) run_corpus_sweep_selftest ;;
+        corpus-trap-audit-selftest) run_corpus_trap_audit_selftest ;;
         corpus-sweep)        run_corpus_sweep ;;
+        corpus-trap-audit)   run_corpus_trap_audit ;;
         supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;

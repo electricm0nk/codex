@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "The eidolon gains a pair of spinnerets, giving it the ability to spin webs. The eidolon can use these webs to support itself plus one creature of up to the same size. It can throw webbing as a ranged touch attack up to eight times per day, entangling a creature up to one size larger than the eidolon. The webbing has a range of 50 feet and a 10-foot range increment. Creatures entangled by the web can escape with a successful Escape Artist check, or with a Strength check at a -4 penalty. The DC of these checks is equal to 10 + 1/2 the eidolon's Hit Dice + the eidolon's Constitution modifier. The webs have a hardness of 0 and a number of hits points equal to the eidolon's total Hit Dice. The eidolon can climb its own webs at its climb speed and can pinpoint the location of any creature touching its webs.",
     "key": "Unchained Evolution ~ Web",
     "name": "Web",
-    "description": "The eidolon gains a pair of spinnerets, giving it the ability to spin webs. The eidolon can use these webs to support itself plus one creature of up to the same size. It can throw webbing as a ranged touch attack up to eight times per day, entangling a creature up to one size larger than the eidolon. The webbing has a range of 50 feet and a 10-foot range increment. Creatures entangled by the web can escape with a successful Escape Artist check, or with a Strength check at a -4 penalty. The DC of these checks is equal to 10 + 1/2 the eidolon's Hit Dice + the eidolon's Constitution modifier. The webs have a hardness of 0 and a number of hits points equal to the eidolon's total Hit Dice. The eidolon can climb its own webs at its climb speed and can pinpoint the location of any creature touching its webs.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 248,
-    "record_key": "Unchained Evolution ~ Web"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 248,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Unchained Evolution ~ Web",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

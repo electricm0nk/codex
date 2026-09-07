@@ -1,0 +1,157 @@
+{
+  "lane": "PC5",
+  "findings": [
+    {
+      "id": "PC5-1",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 27272,
+      "line_end": 27305,
+      "severity": "P2",
+      "category": "bug",
+      "title": "Hunter's other_features_deferred record never reaches the Character Sheet's 'Not computed' lane",
+      "evidence": "ground_hunter_animal_companion_and_defer_the_rest pushes `class_feature.acg.hunter.other_features_deferred.unsupported` via `diagnostics.push(...)` only (lines 27273-27305). This file's own `push_deferred_class_features` helper (defined at line 30517, doc comment 30492-30516) exists precisely to fix this: its doc comment states that until it existed, four Pathfinder Unchained classes pushed the identical kind of record on the diagnostic channel only and 'reached no player' because the Character Sheet's Class-Features 'Not computed' lane reads `LoadSavedCharacterResponse.explanations`, not diagnostics -- 'the lane was therefore dead code and the deferral invisible'. Hunter's own call site (in this chunk) was never migrated to `push_deferred_class_features`, so the exact same defect the file documents fixing for Unchained Barbarian/Monk/Rogue/Summoner (lines 30464-30489, 30850-30885, 31046-31070, 31293-31327, all of which DO call push_deferred_class_features) still applies to Hunter.",
+      "failure_scenario": "A player builds a Hunter character above the corpus gates named in the deferred message (Animal Focus catalog gap, casting execution, Nature Training). The engine computes correctly and would want to tell the player what remains unmodelled, but the Character Sheet's Class Features 'Not computed' lane shows nothing for Hunter, silently understating what the engine has NOT proven -- the identical player-visible gap this file's own doc comment names as the reason push_deferred_class_features was created.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "The same diagnostic-only idiom (`diagnostics.push` with an `other_features_deferred.unsupported` id and no matching explanation) recurs at ~13 other class call sites earlier in the file (cavalier, alchemist, inquisitor, oracle, witch, warpriest, swashbuckler, investigator, shaman, skald, bloodrager, brawler -- lines 14348-26322, outside this chunk), so Hunter is one instance of a repo-wide, not chunk-local, gap; fixing needs a single migration pass across all of them plus a receipt-shape regression test, not a local patch."
+    },
+    {
+      "id": "PC5-2",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 32610,
+      "line_end": 32758,
+      "severity": "P2",
+      "category": "duplication",
+      "title": "explain_fighter_favored_class_bonus_choice duplicates explain_other_classes_favored_class_bonus_choice's per-class logic byte-for-byte",
+      "evidence": "explain_fighter_favored_class_bonus_choice(input: &CharacterInput, explanations: &mut Vec<ComputationExplanation>) at 32610-32669 hand-writes the identical three-way match (bonus:hp / bonus:skill_rank / unrecognized) that explain_other_classes_favored_class_bonus_choice(input: &CharacterInput, explanations: &mut Vec<ComputationExplanation>) at 32690-32758 already generalizes over a `CLASS_GATES: &[(&str, &str, fn(&CharacterInput) -> Option<u8>)]` table (barbarian/monk/paladin/rogue/wizard). The generic function's own emitted id, `format!(\"class_chassis.{class_key}.favored_class_bonus_choice\")`, is byte-identical to Fighter's hardcoded `\"class_chassis.fighter.favored_class_bonus_choice\"` when class_key=\"fighter\" -- so adding `(\"fighter\", \"Fighter\", supported_fighter_level)` to CLASS_GATES would let the generic function subsume Fighter's dedicated one with no observable receipt change. Both functions are live (called back-to-back at lines 8908-8909).",
+      "failure_scenario": "Not a runtime failure -- a maintenance hazard: the favored-class-bonus rule (PF1 Core Rulebook pg. 31) is now encoded in two places that must be kept in sync by hand. A future correction to the rule's wording or the +1 magnitude applied to one function (as already happened once, per the generalized function's own doc comment noting it was written 'rather than five near-duplicates of Fighter's own function') can silently miss the other, producing a receipt where Fighter's wording drifts from the other six classes' wording for the identical rule.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Folding Fighter into CLASS_GATES is a small, mechanical-looking change, but the ground rules exclude auto_fix for anything beyond a pure deletion; this also touches a receipt id emitted from a Fighter-specific code path that other tests may pin against a specific function/line, so it should go through review rather than being auto-applied."
+    },
+    {
+      "id": "PC5-3",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 28423,
+      "line_end": 32523,
+      "severity": "P2",
+      "category": "bloat",
+      "title": "~20 near-identical ground_<class>_class_features functions repeat the same push-explanation boilerplate ~150 times",
+      "evidence": "ground_antipaladin_class_features (28423), ground_cryptic_class_features (28597), ground_dread_class_features (28700), ground_marksman_class_features (28804), ground_psychic_warrior_class_features (28907), ground_soulknife_class_features (28990), ground_aegis_class_features (29038), ground_tactician_class_features (29117), ground_vitalist_class_features (29230), ground_wilder_class_features (29341), ground_kineticist_class_features (29437), ground_medium_class_features (29505), ground_mesmerist_class_features (29590), ground_occultist_class_features (29727), ground_psychic_class_features (29853), ground_spiritualist_class_features (29907), ground_magus_class_features (29943), ground_shifter_class_features (30012), ground_vigilante_class_features (30080), ground_psion_class_features (30180) each repeat the identical shape roughly 3-13 times per function: `if let Some(v) = <module>::<fn>(level, ...) { explanations.push(ComputationExplanation { id: \"class_feature.untabled.<class>.<feature>\".to_owned(), value: v, detail: format!(\"<Class> level {level} <Feature>: ...\") }); }`. Roughly 150 near-identical push blocks across ~4,100 lines.",
+      "failure_scenario": "No functional failure; this is a bloat/maintenance-cost finding. A rule-formula-text correction (as several nearby comments describe happening, e.g. the psion/tactician/vitalist 'shape-3 magnitudes' follow-ups) has to be applied by hand to whichever of the ~150 copy-pasted blocks it affects, and there is no compiler check that a new class's block follows the same id-naming convention (`class_feature.untabled.<class>.<slug>`) as its 19 siblings.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "A declarative table of (id_suffix, compute fn, label/formula-string) driving one generic loop would collapse most of this, but the compute functions have differing arities (some take level only, some level+one ability modifier, some level+two), so the collapse is a genuine refactor, not mechanical -- report only."
+    },
+    {
+      "id": "PC5-4",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 32099,
+      "line_end": 32271,
+      "severity": "P3",
+      "category": "bloat",
+      "title": "Ten near-identical Fighter bonus-feat-slot blocks duplicate a pattern the same function already expresses as a table two hundred lines later",
+      "evidence": "explain_fighter_class_features (32051) repeats `if level >= N && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_N_BONUS_FEAT_CHOICE_ID) { explanations.push(...) }` ten times (levels 2,4,6,8,10,12,14,16,18,20; lines 32099-32271), varying only N and the prerequisite-narration sentence. The SAME function later expresses the structurally identical weapon-training tiers 2-4 as a `const LATER_TIERS: [(u8, i16, &str, &str); 3]` array consumed by one `for` loop (lines 32418-32462), showing the file already has the idiom on hand.",
+      "failure_scenario": "No functional failure -- a bloat/consistency finding. Adding a hypothetical 11th bonus-feat level would require another hand-copied 13-line block instead of one array row.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "The ten blocks are not byte-identical (some carry an extra prerequisite-narration clause naming a specific canonical feat), so collapsing to a table needs each clause to travel in the table as its own string field."
+    },
+    {
+      "id": "PC5-5",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 32273,
+      "line_end": 32344,
+      "severity": "P3",
+      "category": "bloat",
+      "title": "Four Fighter armor-training rank branches are structurally identical, differing only in per-rank constants",
+      "evidence": "`else if armor_training.rank == 4 {...} else if == 3 {...} else if == 2 {...} else if == 1 {...}` (lines 32273-32344) each compute `effective_chain_shirt_armor_check_penalty(level)` and `CHAIN_SHIRT_MAX_DEX + armor_training.max_dex_increase`, then push a `class_feature.fighter.armor_training` explanation whose only per-branch differences are the FIGHTER_ARMOR_TRAINING_N_LEVEL / ARMOR_TRAINING_N_ARMOR_CHECK_REDUCTION / ARMOR_TRAINING_N_MAX_DEX_INCREASE constants and a 'already capped ... so no further reduction is visible' clause present only for ranks 3 and 4.",
+      "failure_scenario": "No functional failure -- bloat only. A future correction to the shared 'reduces...raises...' sentence template needs four hand-edits instead of one.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Collapsing needs the rank-specific constants and the rank>=3 extra clause to travel together in one small per-rank table."
+    },
+    {
+      "id": "PC5-6",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 27345,
+      "line_end": 27696,
+      "severity": "P3",
+      "category": "structure",
+      "title": "compute_class_chassis's ~20-arm class-id string-equality cascade is a natural registry-table extraction seam",
+      "evidence": "Inside the `untabled_base_class_chassis::resolve` branch (27426-27545), a chain of ~20 `else if class_level.class_id == \"class:X\" { ground_X_class_features(...) }` string comparisons (27503-27543) dispatches to each per-class grounding function. The whole outer function is itself a long if/else-if chain across seven different resolution strategies (table_class_id, ApgClassId, AcgClassId, PuClassId, UcClassId, untabled_base_class_chassis, generic_class_chassis, crb_untabled_class_chassis, prestige_class_entry_gate).",
+      "failure_scenario": "No functional failure today -- a structure/risk finding. Adding a 21st untabled class requires remembering to add a new `else if` arm inside this specific function; nothing enforces that every class in `push_untabled_base_class_feature_records`'s roster also gets a grounding arm here, so a class could silently get its generic feature roster but never its per-feature magnitude grounding.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "A `class_id -> fn(...)` lookup table (similar in spirit to CASTER_LEVEL_RULES a few hundred lines later in this same file) would make a missing arm a data-completeness question rather than an easy-to-forget code edit, but this is a genuine refactor of a large dispatch function, not mechanical."
+    },
+    {
+      "id": "PC5-7",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 28232,
+      "line_end": 28248,
+      "severity": "P3",
+      "category": "duplication",
+      "title": "pu_feature_slug is a self-documented duplicate of v06_work_inventory.rs's class_feature_engine_join_slug",
+      "evidence": "The doc comment on `push_untabled_base_class_feature_records` (28376-28390) states verbatim: 'Reuses [`pu_feature_slug`] for the id's slug segment: the transform is not Pathfinder-Unchained-specific despite the name (`class_feature_engine_join_slug` in `v06_work_inventory.rs` is the identical rule, duplicated there because that file is a `bin`, not a library, and cannot import this one).'",
+      "failure_scenario": "No functional failure -- a self-acknowledged, deliberate duplicate. If the apostrophe-swallowing rule in `is_intraword_punctuation` (28275-28277) is ever extended (e.g. a new intraword punctuation mark is ingested from a new book), the identical rule in `v06_work_inventory.rs` needs the identical edit and nothing enforces that the two stay byte-identical.",
+      "proposed_action": "report_only",
+      "confidence": "high",
+      "risk_notes": "Cross-file duplicate; flagged in lane_summary.cross_chunk for correlation with whichever lane covers v06_work_inventory.rs. A shared crate/lib extraction would remove the duplication but is out of this chunk's scope."
+    },
+    {
+      "id": "PC5-8",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 30373,
+      "line_end": 30390,
+      "severity": "P3",
+      "category": "hazard",
+      "title": "Two .expect() calls encode a cross-module invariant that the type system does not enforce",
+      "evidence": "`barbarian_features::rage_temporary_hit_point_multiplier(level).expect(\"Rage is granted wherever Greater Rage is\")` (line ~30374) and the identical pattern with \"Mighty Rage\" (line ~30389), inside `ground_unchained_barbarian_class_features`, assume that whenever `greater_rage_morale_bonus`/`mighty_rage_morale_bonus` return `Some`, `rage_temporary_hit_point_multiplier` also returns `Some` at the same level -- an invariant that lives only in the two modules' independent gate constants, not in a shared type.",
+      "failure_scenario": "If `barbarian_features`'s Greater Rage / Mighty Rage level gate ever changes independently of `rage_temporary_hit_point_multiplier`'s own threshold (e.g. a future corpus-accuracy fix to one but not the other), this becomes a runtime panic while building a live character receipt, rather than a compile error or a handled `None`.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Low likelihood (both are hand-verified against the same corpus rows today per the surrounding comments), but the failure mode if it does drift is a panic in production receipt-building code, which is worse than a silently-wrong number would be for triage."
+    },
+    {
+      "id": "PC5-9",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 27853,
+      "line_end": 31328,
+      "severity": "P3",
+      "category": "structure",
+      "title": "The Pathfinder-Unchained class-feature cluster is a self-contained ~3,500-line block and a natural submodule seam",
+      "evidence": "Lines 27853-31328 form one cohesive cluster -- citation helpers (pu_class_feature_citation/pu_class_feature_cited_key), the resolved-description machinery (PU_RESOLVED_DESCRIPTION_MARKER, PuResolvableDescription, PU_RESOLVABLE_DESCRIPTIONS, pu_resolved_description), pu_display_values, the PuClassFeatureRecord normalization, push_pu_class_feature_records, and the four ground_unchained_*_class_features functions -- that reads and writes only ComputationExplanation/ComputationDiagnostic plus rules_tables::pathfinder_unchained types, with no other coupling to the rest of mod.rs beyond CharacterInput/AbilityModifiers.",
+      "failure_scenario": "Not a bug -- an organizational observation. Its size inside a single 78,506-line file makes it harder to locate and review in isolation than a dedicated `pathfinder_unchained_features.rs` submodule would be.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Pure move/extraction; would need `pub(super)` or re-export adjustments for the handful of items the rest of mod.rs calls (the four ground_unchained_* functions and push_pu_class_feature_records)."
+    },
+    {
+      "id": "PC5-10",
+      "file": "src/rules_core/pilot_compute/mod.rs",
+      "line_start": 28413,
+      "line_end": 30225,
+      "severity": "P3",
+      "category": "structure",
+      "title": "The 'SD-32 card 11 T12' untabled-base-class-feature cluster (ten classes across five books) is another natural submodule seam",
+      "evidence": "Lines 28413-30225 group the ten `ground_<class>_class_features` functions for ultimate_psionics (antipaladin, cryptic, dread, marksman, psychic_warrior, soulknife, aegis, tactician, vitalist, wilder, psion), occult_adventures (kineticist, medium, mesmerist, occultist, psychic, spiritualist), ultimate_magic (magus), and ultimate_wilderness (shifter) -- all sharing the identical push-explanation idiom (finding PC5-3) and no coupling to the rest of mod.rs beyond CharacterInput/AbilityModifiers/ComputationExplanation.",
+      "failure_scenario": "Not a bug -- organizational. Same rationale as PC5-9: easier independent review as its own module.",
+      "proposed_action": "report_only",
+      "confidence": "medium",
+      "risk_notes": "Overlaps functions already listed in PC5-3; listed separately here because the extraction-seam boundary (this whole cluster) is a distinct, coarser-grained recommendation than the per-function bloat finding."
+    }
+  ],
+  "lane_summary": {
+    "files_reviewed": 1,
+    "files_skipped_generated": 0,
+    "notes": "Reviewed src/rules_core/pilot_compute/mod.rs lines 27055-35050 (assigned range 27055-35000, extended ~50 lines to sample into explain_ranger_level1_chassis_and_class_feature_separation, a single top-level fn that starts at 34399 and runs to roughly line 36750 -- well past this lane's boundary. That function's body (Ranger favored-enemy choice recognition, sampled at lines 34980-35050) repeats the same choice-recognition/explanation-push idiom already documented in findings PC5-2/PC5-4 and is not separately re-reported here to avoid double-counting; whichever lane owns lines 35000+ should treat 34399-36750 as one unit when attributing findings to it, since it is split across lane boundaries by line count alone. No file in this range began with 'GENERATED FILE' (0 of 1 files skipped). All content in range is hand-written production Rust plus one inline #[cfg(test)] module (hunter_remaining_features_tests, 27055-27147), which was skimmed (5 tests sampled) rather than read exhaustively per instructions; no defects found in it. The chunk is dominated by one architectural pattern: dozens of per-class 'ground_<class>_class_features' functions built on an identical push-one-explanation-per-Some(value) idiom, repeated at a scale (~150 call sites in this chunk alone) that is itself the chunk's single largest bloat signal, plus one systemic correctness gap (the diagnostic-only 'other_features_deferred' idiom, PC5-1) that this same file's own doc comments confirm was already identified and fixed for 4 of the ~17 classes using it, but not for the rest."
+    ,
+    "cross_chunk": [
+      "DUPLICATE-CANDIDATE HELPER SHAPE: `fn ground_<class>_class_features(level: u8, [ability_modifiers: &AbilityModifiers], [input: &CharacterInput], explanations: &mut Vec<ComputationExplanation>[, diagnostics: &mut Vec<ComputationDiagnostic>])` -- appears ~20+ times in this chunk (antipaladin, cryptic, dread, marksman, psychic_warrior, soulknife, aegis, tactician, vitalist, wilder, kineticist, medium, mesmerist, occultist, psychic, spiritualist, magus, shifter, vigilante, psion, plus the 4 pu_* variants with a diagnostics param and push_deferred_class_features call). If other chunks contain more functions matching this exact shape (a per-class fn that loops `if let Some(v) = <module>::<feature_fn>(level, ...) { explanations.push(ComputationExplanation{id: format!(\"class_feature.<ns>.<class>.<feature>\"), value: v, detail: format!(...)}) }`), they are the same duplicate-candidate family and should be reported together for a single collapse recommendation.",
+      "DUPLICATE-CANDIDATE HELPER SHAPE: `fn push_<class>_other_features_deferred_diagnostic(...)` / inline `diagnostics.push(ComputationDiagnostic{id: \"class_feature.<ns>.<class>.other_features_deferred.unsupported\", ...})` with NO matching `explanations.push` -- confirmed present (outside this chunk, found via repo-wide grep from within this lane) at approximately: cavalier (~14348), alchemist (~15133, fn push_alchemist_other_features_deferred_diagnostic at 15081), inquisitor (~16128, fn at 16113), oracle (~17806, fn at 17799), witch (~19145, fn at 19131), warpriest (~20642, fn at 20604), swashbuckler (~21415, fn at 21411), investigator (~22169, fn at 22115), shaman (~22854, fn at 22842), skald (~24111, fn at 24109), bloodrager (~25151, fn at 25093), brawler (~26322), and hunter (~27274, this chunk, PC5-1). Contrast: unchained_barbarian/monk/rogue/summoner (30465/30851/31047/31293, this chunk) already use the fixed `push_deferred_class_features` helper (30517) that pushes BOTH diagnostics and explanations. Whichever lane(s) cover lines ~14000-27055 own the other 12 occurrences and should correlate this as one systemic gap, not 13 independent findings.",
+      "DUPLICATE-CANDIDATE FUNCTION PAIR (confirmed same-file, both call sites live): `explain_fighter_favored_class_bonus_choice(input: &CharacterInput, explanations: &mut Vec<ComputationExplanation>)` (line 32610) vs `explain_other_classes_favored_class_bonus_choice(input: &CharacterInput, explanations: &mut Vec<ComputationExplanation>)` (line 32690) -- see PC5-2. Fully resolved within this chunk; listed here only because it is the clearest concrete instance of the ground_<class>_class_features-style duplication family and may help calibrate similar pairs other lanes find.",
+      "DUPLICATE-CANDIDATE ACROSS FILES: `fn pu_feature_slug(key: &str) -> String` (mod.rs:28232) is stated by its own caller's doc comment to be byte-identical in rule to `class_feature_engine_join_slug` in `v06_work_inventory.rs` (a `bin`, not importable). Whichever lane covers v06_work_inventory.rs should cross-check that function's signature/body against pu_feature_slug's (case-fold + alnum-only + swallow apostrophe/U+2019 + underscore-separate + trim trailing underscore) to confirm they have not silently drifted."
+    ]
+  }
+}

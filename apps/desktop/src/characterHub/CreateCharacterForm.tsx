@@ -41,6 +41,7 @@ import type {
   AlternateRacialTraitsResponse,
   RaceSelectionResponse,
 } from '../boundary/loadAlternateRacialTraits';
+import { loadCharacterTraits, type CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
 import type { CreateCharacterOutcomeSurface } from './buildCreateCharacterOutcomeSurface';
 import {
   ABILITY_SCORE_METHOD_OPTIONS,
@@ -289,6 +290,21 @@ function CreateCharacterFields(props: {
   const [alternateMenuError, setAlternateMenuError] = useState<string | null>(null);
   const [selectedAlternateTraitKeys, setSelectedAlternateTraitKeys] = useState<string[]>([]);
   const [alternateResolution, setAlternateResolution] = useState<RaceSelectionResponse | null>(null);
+  // AT-34-E4-002: character traits/drawbacks, taken at creation. Real, real
+  // computed skill bonuses (`trait_effects::skill_bonuses_from_traits`), for
+  // exactly the `ultimate_campaign` traits `list_available_character_traits`
+  // returns -- no other trait shape is offered here, because no other shape
+  // computes anything yet.
+  const [traitOptions, setTraitOptions] = useState<CharacterTraitOptionDto[] | null>(null);
+  const [traitOptionsError, setTraitOptionsError] = useState<string | null>(null);
+  const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
+  // AT-34-E4-002 (second slice): the player's resolved skill choice for
+  // each selected fixed-choice `%LIST` trait, keyed by trait id. A trait
+  // with no entry here yet (just checked, choice not made) submits no
+  // `traitSkillChoices` entry for it -- `skill_choice_bonuses_from_traits`
+  // honestly contributes nothing for a trait with no recorded choice,
+  // never a first-guessed default (see that function's own doc comment).
+  const [traitSkillChoices, setTraitSkillChoices] = useState<Record<string, string>>({});
 
   const selectedClass = CLASS_OPTIONS.find((option) => option.id === classId) ?? CLASS_OPTIONS[0];
   const selectedRace = races.find((option) => option.id === raceId) ?? races[0];
@@ -427,6 +443,58 @@ function CreateCharacterFields(props: {
     };
   }, [raceId, selectedAlternateTraitKeys]);
 
+  // The character trait/drawback menu, loaded once, the same shape the
+  // alternate-racial-trait menu above uses. A failure is shown rather than
+  // swallowed: the rest of the form still works, and the player is told why
+  // the trait list is absent instead of concluding none exist.
+  useEffect(() => {
+    let live = true;
+    loadCharacterTraits()
+      .then((options) => {
+        if (live) {
+          setTraitOptions(options);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setTraitOptionsError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  function toggleTrait(id: string) {
+    const wasSelected = selectedTraits.includes(id);
+    setSelectedTraits((current) =>
+      wasSelected ? current.filter((existing) => existing !== id) : [...current, id]
+    );
+    if (wasSelected) {
+      // Unchecking a choice-based trait drops its recorded skill choice too
+      // -- an unselected trait must never leave a stale choice behind that
+      // a later re-check could silently pick back up.
+      setTraitSkillChoices((current) => {
+        const { [id]: _removed, ...rest } = current;
+        return rest;
+      });
+    } else {
+      // Checking a choice-based trait defaults its choice to the first
+      // `skillOptions` entry, so a submit before the player touches the
+      // dropdown still records a real, in-list choice rather than none at
+      // all -- the option is still visibly a `<select>` the player can
+      // change, this only avoids an accidentally-empty submission.
+      const option = traitOptions?.find((candidate) => candidate.id === id);
+      if (option !== undefined && option.skillOptions.length > 0) {
+        setTraitSkillChoices((current) => ({ ...current, [id]: option.skillOptions[0]!.skillId }));
+      }
+    }
+  }
+
+  function setTraitSkillChoice(traitId: string, skillId: string) {
+    setTraitSkillChoices((current) => ({ ...current, [traitId]: skillId }));
+  }
+
   const alternateTraitRows = buildAlternateTraitRows(
     alternateMenu,
     raceId,
@@ -514,6 +582,20 @@ function CreateCharacterFields(props: {
       // `applyFloatingAbilityAllocation` — this is the seam that was missing
       // entirely, which cost Half-Elf and Half-Orc their +2.
       const finalAbilityScores = applyFloatingAbilityAllocation(adjustedAbilityScores, allocation, raceId);
+      // AT-34-E4-002 (second slice): one `traitSkillChoices` entry per
+      // selected trait that both is choice-based (`choiceSetId !== null`)
+      // and has a recorded skill choice. A choice-based trait somehow
+      // selected with no recorded choice yet (should not happen --
+      // `toggleTrait` seeds a default the moment it is checked) is simply
+      // omitted rather than sent with a fabricated skill.
+      const resolvedTraitSkillChoices = selectedTraits.flatMap((traitId) => {
+        const option = traitOptions?.find((candidate) => candidate.id === traitId);
+        const skillId = traitSkillChoices[traitId];
+        if (option?.choiceSetId == null || skillId === undefined) {
+          return [];
+        }
+        return [{ choiceSetId: option.choiceSetId, selectionId: skillId }];
+      });
       const request = composeCreateCharacterRequest(
         {
           displayLabel,
@@ -523,6 +605,8 @@ function CreateCharacterFields(props: {
           abilityScores: finalAbilityScores,
           abilityBonusTarget: deriveAbilityBonusTarget(),
           selectedAlternateTraitKeys,
+          selectedTraits,
+          traitSkillChoices: resolvedTraitSkillChoices,
         },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
       );
@@ -831,6 +915,136 @@ function CreateCharacterFields(props: {
                 </p>
               ))}
             </>
+          )}
+
+          {/* AT-34-E4-002: character traits/drawbacks. Every option here
+              genuinely computes -- `list_available_character_traits` returns
+              only the 53 `ultimate_campaign` traits whose `BONUS:SKILL`,
+              `BONUS:SAVE`, `BONUS:SITUATION`, `BONUS:COMBAT|INITIATIVE`/
+              `BONUS:CONCENTRATION|ALLSPELLS`, ability-score-difference
+              formula, or mixed caster-level+skill this crate's
+              `trait_effects` compute paths really apply (31 flat skill + 5
+              fixed-choice skill + 4 open-family skill + 2 flat save + 3
+              situational + 3 initiative/concentration + 4
+              ability-substitution + 1 caster-level+skill). No wider trait
+              roster is offered, because no wider roster computes anything
+              yet. */}
+          <p
+            style={{
+              ...LABEL_STYLE,
+              borderTop: '1px solid var(--color-border)',
+              color: 'var(--color-text)',
+              fontSize: '0.95rem',
+              marginTop: '0.5rem',
+              paddingTop: '1rem',
+            }}
+          >
+            Traits
+          </p>
+          {traitOptionsError !== null ? (
+            <p style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.78rem', margin: 0 }}>
+              Traits are unavailable: {traitOptionsError}
+            </p>
+          ) : traitOptions === null ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>Loading traits…</p>
+          ) : (
+            <div
+              style={{
+                border: '1px solid var(--color-border)',
+                borderRadius: 8,
+                maxHeight: 320,
+                overflowY: 'auto',
+                padding: '0.35rem 0.5rem',
+              }}
+            >
+              {traitOptions.map((option) => {
+                const isChoiceBased = option.skillOptions.length > 0;
+                const isSelected = selectedTraits.includes(option.id);
+                return (
+                  <div key={option.id} style={{ padding: '0.3rem 0' }}>
+                    <label
+                      style={{
+                        alignItems: 'flex-start',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        gap: '0.5rem',
+                      }}
+                      title={option.description}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleTrait(option.id)}
+                        style={{ marginTop: '0.2rem' }}
+                      />
+                      <span style={{ minWidth: 0 }}>
+                        <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{option.name}</span>
+                        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
+                          {' '}
+                          ·{' '}
+                          {[
+                            // The primary half: a skill/save/choice bonus
+                            // (also covers the eighth slice's flat-skill
+                            // half, which additionally carries an
+                            // `otherPillars` entry below rather than
+                            // dropping one half to fit the other).
+                            option.abilitySubstitution !== null
+                              ? `${option.skills.join(', ')} (ability-based${
+                                  option.abilitySubstitution.flatBonus !== 0
+                                    ? `, +${option.abilitySubstitution.flatBonus} flat`
+                                    : ''
+                                })`
+                              : option.skills.length > 0 || option.save !== null || isChoiceBased
+                                ? `${option.bonus >= 0 ? `+${option.bonus}` : option.bonus} ${
+                                    isChoiceBased
+                                      ? `choice of ${option.skillOptions.map((choice) => choice.name).join(', ')}`
+                                      : option.save !== null
+                                        ? `${option.save} save`
+                                        : option.skills.join(', ')
+                                  }`
+                                : null,
+                            // Any additional non-skill, non-save pillar
+                            // (fifth-slice initiative/concentration
+                            // options, and the eighth slice's
+                            // caster-level half).
+                            option.otherPillars.length > 0
+                              ? option.otherPillars
+                                  .map((pillar) => `${pillar.bonus >= 0 ? `+${pillar.bonus}` : pillar.bonus} ${pillar.label}`)
+                                  .join(', ')
+                              : null,
+                          ]
+                            .filter((part): part is string => part !== null)
+                            .join('; ')}
+                        </span>
+                        <span
+                          style={{
+                            color: 'var(--color-text-secondary)',
+                            display: 'block',
+                            fontSize: '0.72rem',
+                          }}
+                        >
+                          {option.description}
+                        </span>
+                      </span>
+                    </label>
+                    {isChoiceBased && isSelected ? (
+                      <select
+                        aria-label={`${option.name} skill choice`}
+                        value={traitSkillChoices[option.id] ?? option.skillOptions[0]!.skillId}
+                        onChange={(event) => setTraitSkillChoice(option.id, event.target.value)}
+                        style={{ fontSize: '0.78rem', marginLeft: '1.6rem', marginTop: '0.25rem' }}
+                      >
+                        {option.skillOptions.map((choice) => (
+                          <option key={choice.skillId} value={choice.skillId}>
+                            {choice.name}
+                          </option>
+                        ))}
+                      </select>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
 

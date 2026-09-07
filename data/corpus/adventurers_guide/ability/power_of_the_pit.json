@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your form becomes infused with vile power. You gain immunity to fire and poison. You also gain resistance to acid 10 and cold 10, and the ability to see perfectly in darkness of any kind to a range of 60 feet.",
     "key": "Infernal Affinity ~ Power of the Pit",
     "name": "Power of the Pit",
-    "description": "Your form becomes infused with vile power. You gain immunity to fire and poison. You also gain resistance to acid 10 and cold 10, and the ability to see perfectly in darkness of any kind to a range of 60 feet.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 70,
-    "record_key": "Infernal Affinity ~ Power of the Pit"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Infernal Affinity ~ Power of the Pit",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

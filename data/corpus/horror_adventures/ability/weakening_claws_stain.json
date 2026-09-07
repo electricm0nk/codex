@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You take a -2 penalty on Disable Device checks, Sleight of Hand checks, and attacks with manufactured weapons. Your spells with somatic or emotion (Pathfinder RPG Occult Adventures 144) components have a failure chance of 5%%. If you have a spell failure chance from other sources, add the chances together.",
     "key": "Accursed Corruption ~ Weakening Claws Stain",
     "name": "Weakening Claws Stain",
-    "description": "You take a -2 penalty on Disable Device checks, Sleight of Hand checks, and attacks with manufactured weapons. Your spells with somatic or emotion (Pathfinder RPG Occult Adventures 144) components have a failure chance of 5%%. If you have a spell failure chance from other sources, add the chances together.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 92,
-    "record_key": "Accursed Corruption ~ Weakening Claws Stain"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 92,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Accursed Corruption ~ Weakening Claws Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

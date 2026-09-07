@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Attuned to The Heartstaff",
     "key": "Heartstaff Attunement",
     "name": "Heartstaff Attunement",
-    "description": "Attuned to The Heartstaff",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -65,20 +64,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
-    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
-    "line": 210,
-    "record_key": "Heartstaff Attunement"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 210,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "record_key": "Heartstaff Attunement",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

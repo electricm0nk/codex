@@ -48,8 +48,8 @@
     "record_key": "Clockwork Dragon ~ Adamantine Weapons",
     "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:dr"
+    "static:literal_magnitudes_only"
   ]
 }

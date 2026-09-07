@@ -122,6 +122,20 @@ CLASS_STATE_MAX_AGE_SECONDS = int(
 CLASS_STATE_BUILD_TIMEOUT_SECONDS = int(
     os.environ.get("PF1E_CLASS_STATE_TIMEOUT", "600")
 )
+# `v06_work_inventory --summary` alone was measured at ~757s wall time on a
+# confirmed-quiet box (SD-34 AT-34-E6-001 wave-26 receipt: 44Gi free, load
+# 2.80/24, zero other cargo processes) -- over the shared 600s cap above by a
+# fixed ~157s shortfall, not a load spike, and the code on both sides of that
+# measurement (the cap and the binary being timed) is unchanged at this
+# cycle's HEAD. It gets its own, wider, deliberately-reviewed timeout
+# (757s + ~25% margin, rounded) separate from the shared cap the two cheaper
+# dumps (`v06_class_state_dump`, `v06_content_state_dump`) still use --
+# AT-34-E6-001 wave-27: this is the "mechanical control" the wave-26 receipt
+# named as the next owner's obligation, done alongside the loud-failure fix
+# below rather than as a substitute for it.
+WORK_INVENTORY_BUILD_TIMEOUT_SECONDS = int(
+    os.environ.get("PF1E_WORK_INVENTORY_TIMEOUT", "950")
+)
 # A private target dir keeps this refresh from fighting the swarm's agents
 # over the shared checkout's target/ lock.
 DEFAULT_CLASS_STATE_TARGET_DIR = os.environ.get(
@@ -496,8 +510,33 @@ def _resolve_cargo() -> str | None:
     return None
 
 
+class StateDumpTimeout(RuntimeError):
+    """A state-dump binary's subprocess call exceeded its timeout while
+    `PF1E_DASHBOARD_STRICT_TIMEOUT=1` was set.
+
+    Only `scripts/publish-site-dashboard.sh --check` (the `site-dashboard-
+    check` verify.sh gate) opts into this. A live regeneration -- the cron
+    renderer, or an interactive `./scripts/publish-site-dashboard.sh` --
+    leaves strict mode off on purpose: `_load_cached_dump`'s stale-cache
+    fallback exists so the PUBLIC site never renders a blank panel over one
+    slow build. But that same fallback, unconditional, is exactly what let
+    `--check` report a feed "current" after silently comparing two outputs
+    both built from the same stale cache -- a gate that passes on stale data
+    lies about the site being fresh. `--check` needs the opposite bias: a
+    timeout there must surface as a loud failure, not a quiet stale-cache
+    hit, so the stage either has fresh data or says plainly it could not get
+    it (SD-34 AT-34-E6-001 wave-27)."""
+
+
+def _strict_timeout_mode() -> bool:
+    return os.environ.get("PF1E_DASHBOARD_STRICT_TIMEOUT") == "1"
+
+
 def _run_state_dump(
-    bin_name: str, repo_root: str, bin_args: list[str] | None = None
+    bin_name: str,
+    repo_root: str,
+    bin_args: list[str] | None = None,
+    timeout_seconds: int | None = None,
 ) -> dict | None:
     """Run one of the engine's own state-dump binaries and return its JSON.
 
@@ -508,9 +547,22 @@ def _run_state_dump(
     one implementation rather than three that can drift.
 
     `bin_args` are passed after `--` to the binary itself; the work inventory
-    uses it for `--summary`.
+    uses it for `--summary`. `timeout_seconds` defaults to the shared
+    `CLASS_STATE_BUILD_TIMEOUT_SECONDS` cap; `load_work_inventory` passes its
+    own, wider `WORK_INVENTORY_BUILD_TIMEOUT_SECONDS` instead -- see that
+    constant's own comment for why.
+
+    Raises `StateDumpTimeout` on a subprocess timeout when
+    `PF1E_DASHBOARD_STRICT_TIMEOUT=1`; otherwise returns `None`, the same as
+    every other failure mode this function absorbs, and prints a message to
+    stderr either way -- a timeout is never silent, only its return shape
+    differs by caller.
     """
     import subprocess
+
+    timeout_s = (
+        timeout_seconds if timeout_seconds is not None else CLASS_STATE_BUILD_TIMEOUT_SECONDS
+    )
 
     root = pathlib.Path(repo_root)
     if not (root / "Cargo.toml").exists():
@@ -539,8 +591,14 @@ def _run_state_dump(
             env=env,
             capture_output=True,
             text=True,
-            timeout=CLASS_STATE_BUILD_TIMEOUT_SECONDS,
+            timeout=timeout_s,
         )
+    except subprocess.TimeoutExpired as exc:
+        msg = f"pf1e-producer: {bin_name} timed out after {timeout_s}s"
+        if _strict_timeout_mode():
+            raise StateDumpTimeout(msg) from exc
+        print(msg, file=sys.stderr)
+        return None
     except (OSError, subprocess.SubprocessError) as exc:
         print(f"pf1e-producer: {bin_name} failed to run: {exc}", file=sys.stderr)
         return None
@@ -565,6 +623,7 @@ def _load_cached_dump(
     repo_root: str,
     max_age_seconds: int,
     bin_args: list[str] | None = None,
+    timeout_seconds: int | None = None,
 ) -> dict | None:
     """The engine's own truth for `bin_name`, refreshed when it ages out.
 
@@ -572,6 +631,13 @@ def _load_cached_dump(
     engine. A STALE cache is deliberately preferred over None: a blank panel
     renders as "not started", which is the exact failure this whole mechanism
     exists to prevent.
+
+    That preference is deliberately NOT extended to a build that times out
+    while `PF1E_DASHBOARD_STRICT_TIMEOUT=1` (`--check` mode): `_run_state_dump`
+    raises `StateDumpTimeout` in that case instead of returning `None`, and
+    this function does not catch it -- it propagates straight to the caller,
+    because silently serving `cached` here is precisely the "gate passes on
+    stale data" defect this strict mode exists to end.
     """
     cache = pathlib.Path(cache_path)
     cached = None
@@ -587,7 +653,7 @@ def _load_cached_dump(
     if cached is not None and fresh_enough:
         return cached
 
-    produced = _run_state_dump(bin_name, repo_root, bin_args)
+    produced = _run_state_dump(bin_name, repo_root, bin_args, timeout_seconds=timeout_seconds)
     if produced is None:
         return cached
     try:
@@ -627,6 +693,7 @@ def load_work_inventory(
         repo_root,
         max_age_seconds,
         bin_args=["--summary"],
+        timeout_seconds=WORK_INVENTORY_BUILD_TIMEOUT_SECONDS,
     )
 
 
@@ -1621,11 +1688,11 @@ def build_pf1e_dashboard(
     # in a genuinely-attempted status.
     #
     # The status vocabulary (`status_vocabulary` on the same document) has
-    # SIX values, and "not landed yet" is two of them, not one: `not-ingested`
+    # SIX values, and "not landed yet" is two of them, not one: `engine-does-not-hold`
     # ("the book IS ingested but the engine holds no record matching this
     # unit's identity -- a real gap inside a started book") AND `not-started`
     # ("the book has no compiled rule set at all -- nothing about this unit
-    # has been attempted"). A first pass here excluded only `not-ingested`
+    # has been attempted"). A first pass here excluded only `engine-does-not-hold`
     # and silently counted every `not-started` unit as landed, which is the
     # exact inversion of what `not-started` means -- caught by checking
     # against a book known to be genuinely untouched (`bestiary_2`, all
@@ -1638,7 +1705,7 @@ def build_pf1e_dashboard(
     # `work_inventory_panel()`'s own narrower `proven` figure
     # (`grounded`/`text-complete` only), which is answering a different
     # question (fully proven) than this one (any real attempt at all).
-    _NOT_LANDED_STATUSES = {"not-ingested", "not-started", "unknown"}
+    _NOT_LANDED_STATUSES = {"engine-does-not-hold", "not-started", "unknown"}
     _wi_for_status = load_work_inventory()
     _landed_units_by_book: dict[str, int] = {}
     if _wi_for_status:
@@ -1711,7 +1778,7 @@ def build_pf1e_dashboard(
         # `_book_has_landed_units()`, the same `work-inventory` per-book
         # `by_status` authority `work_inventory_panel()`'s own `proven`
         # figure is built from -- a book only reads `in-progress` once at
-        # least one of its units has moved off `not-ingested`.
+        # least one of its units has moved off `engine-does-not-hold`.
         #
         # Three real, distinguishable facts, not collapsed into one label:
         #   "unassigned"  -- no SD-N channel at all (does not occur in this
@@ -3740,7 +3807,7 @@ DONENESS_VALUES = (
 # its probe lands AND is confirmed reaching a nonzero `grounded` count under
 # the `computed` class for that kind") neither belongs in this tuple any
 # longer. `companion`'s cap was already inert regardless (its `computed`
-# population is a strict `{grounded, not-ingested}` two-way split with no
+# population is a strict `{grounded, engine-does-not-hold}` two-way split with no
 # `in-progress`-shaped status to cap -- `build_companion_catalog()` in
 # `apps/desktop/src-tauri/src/companion_catalog.rs` is a proven bijection
 # over `companion_chassis::COMPANION_BOOKS`, own test
@@ -3814,7 +3881,7 @@ DONENESS_MEANING = {
         "exist at all."
     ),
     DONENESS_NOT_STARTED: (
-        "No record in the engine -- `not-ingested` (the book is in play, this "
+        "No record in the engine -- `engine-does-not-hold` (the book is in play, this "
         "unit is not) or `not-started` (the book has not been worked)."
     ),
     DONENESS_UNMEASURABLE: (
@@ -3956,7 +4023,7 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
     """The (wiring_class, status) table `doneness_verdict()` caps by kind."""
     if status == "deferred-with-reason":
         return DONENESS_DEFERRED
-    if status in ("not-ingested", "not-started"):
+    if status in ("engine-does-not-hold", "not-started"):
         return DONENESS_NOT_STARTED
     # An `unknown`/`unmeasurable` status cannot be measured against any bar,
     # classifiable or not -- checked first, ahead of both the ambiguous check
@@ -3989,7 +4056,7 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
     # the determinator could not tell how the unit is wired in, so there is no
     # class-specific bar to check its evidence against. Trace the ACTUAL
     # control flow to see what can still be sitting here: `deferred-with-
-    # reason`, `not-ingested`/`not-started` and `unknown` have all already
+    # reason`, `engine-does-not-hold`/`not-started` and `unknown` have all already
     # returned above, so the only statuses that can reach this line are
     # `grounded`, `text-complete` and `ingested-magnitude` -- i.e. every
     # remaining case IS real evidence of some tier, never a status this
@@ -4051,7 +4118,8 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
         # away and the unit reads `held` anyway -- so `held` is the one verdict that does not
         # depend on which tool ran last. (Launch-readiness remediation Step 4D, blocker B6.)
         if status in ("grounded", "text-complete", "ingested-magnitude",
-                      "literal-verified", "fixture-verified"):
+                      "literal-verified", "fixture-verified",
+                      "oracle-agree", "oracle-unverifiable"):
             return DONENESS_HELD
         raise ValueError(f"doneness: unmapped {wiring_class!r} + {status!r}")
     if wiring_class == "display":
@@ -4107,7 +4175,30 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
         # observation, not a literal/evaluator check). Operator directive
         # 2026-08-13 ("add the done rung for static and derived"), answering
         # SD-32 decisions.md §2's open question.
-        if status in ("literal-verified", "fixture-verified"):
+        # `oracle-agree`/`oracle-unverifiable` (SD-34 AT-34-E3-005, 2026-08-31)
+        # are REFINEMENTS of these two words, never a separate tier: the
+        # inventory's own vocabulary defines each as "a `literal-verified`/
+        # `fixture-verified` unit whose id carries a real <verdict> in the
+        # consolidated bucket-V oracle ledger", and
+        # `src/bin/v06_work_inventory.rs` treats all four as one family in a
+        # single list. So the unit had already met static's bar (the literal
+        # byte-compared clean) or derived's (the evaluator matched its pinned
+        # fixture) BEFORE the oracle looked at it.
+        #
+        # `oracle-agree` is strictly stronger -- a real PCGen round-trip
+        # matched the engine's own computed value exactly.
+        #
+        # `oracle-unverifiable` is NOT weaker. It means the oracle could not
+        # check the unit at all (`no_bonus_chain`, `no_probe_surface`,
+        # `oracle_export_no_spellname_line`) -- a limitation of the oracle,
+        # not evidence against the unit, whose own literal/evaluator proof is
+        # untouched. Downgrading it would punish a record for an instrument's
+        # blind spot, which is the same over-correction round 3 made and
+        # round 4 undid. A `disagree` verdict is the case that WOULD be
+        # evidence against, and it is deliberately never mapped to either
+        # word -- it leaves the status alone so the unit stays outstanding.
+        if status in ("literal-verified", "fixture-verified",
+                      "oracle-agree", "oracle-unverifiable"):
             return DONENESS_DONE
         if status in ("ingested-magnitude", "grounded", "text-complete"):
             return DONENESS_HELD
@@ -4995,4 +5086,12 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except StateDumpTimeout as exc:
+        # PF1E_DASHBOARD_STRICT_TIMEOUT=1 (set only by `publish-site-
+        # dashboard.sh --check`) turned a state-dump timeout into a raise
+        # instead of a silent stale-cache fallback -- surface it as a clean,
+        # loud, non-zero-exit failure rather than an unhandled traceback.
+        print(f"pf1e-producer: {exc}", file=sys.stderr)
+        sys.exit(3)

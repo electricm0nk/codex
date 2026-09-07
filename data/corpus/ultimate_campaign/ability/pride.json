@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You can't abide challenges to your dignity, authority, or honor. When someone threatens, accuses, or challenges you, you take a -2 penalty on Diplomacy checks and Sense Motive checks involving that creature until the creature apologizes to you.",
     "key": "Drawback ~ Pride",
     "name": "Pride",
-    "description": "You can't abide challenges to your dignity, authority, or honor. When someone threatens, accuses, or challenges you, you take a -2 penalty on Diplomacy checks and Sense Motive checks involving that creature until the creature apologizes to you.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_drawbacks.lst",
-    "sha256": "639ac624d4a49ce7d5125c407a7c6150d20450678d57d92b69577b5ebef2c7c1",
-    "line": 25,
-    "record_key": "Drawback ~ Pride"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_drawbacks.lst",
+    "record_key": "Drawback ~ Pride",
+    "sha256": "639ac624d4a49ce7d5125c407a7c6150d20450678d57d92b69577b5ebef2c7c1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

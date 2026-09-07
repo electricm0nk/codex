@@ -37,18 +37,21 @@
 //! spells/feats at 3rd+ level. The row stays `Partial` and the spontaneous spell burden
 //! stays untouched.
 
-use codex::rules_core::character_input::{
-    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
-};
+use codex::rules_core::character_input::{AcquisitionMode, SpellSelection};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
-    PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
+    ComputationDiagnostic,
+    HeadlessReceiptStatus,
+    PilotBaseChassisComputation,
+    build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const SORCERER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_sorcerer_level1_sd13_deterministic_input.txt");
@@ -61,34 +64,6 @@ const ARCANE_BOND_BLOCKER_ID: &str =
 const RETIRED_BLOODLINE_POWER_BLOCKER_ID: &str =
     "class_feature.sorcerer.bloodline_power.unsupported";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.sorcerer.spontaneous.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 fn claim_blocking<'a>(
     computation: &'a PilotBaseChassisComputation,
@@ -109,10 +84,6 @@ fn claim_blocking<'a>(
         "diagnostic '{id}' must be claim-blocking: {diag:?}"
     );
     diag
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
 }
 
 // ----- Direct runtime evidence: the spell-bearing identity is acknowledged -----
@@ -212,6 +183,21 @@ fn sorcerer_level1_fabricates_no_spell_math() {
                 // valid (this fixture has zero known spells, so the record honestly
                 // reports 0, not a fabricated value).
                 || explanation.id == "class_spell.sorcerer.known_spells"
+                // SD-34 decisions.md section 18: widened BY CONSTRUCTION, not narrowed --
+                // class_feature_grant_consumer now emits real, citation-backed corpus_record
+                // ids for Sorcerer (previously wholesale-excluded); this shape carve-out
+                // admits them without weakening the substring check for anything else.
+                || explanation.id.starts_with("class_feature.sorcerer.corpus_record.")
+                // SD-34 bucket-B batch cycle: found stale, unrelated to this cycle's own
+                // three mechanisms -- the pre-existing (SD-32 T12 Epic 8, `decisions.md
+                // §17`) generic bloodline-power pass emits one real, citation-backed
+                // `class_feature.sorcerer.bloodline.generic.<bloodline>.<power>.<var>` id per
+                // corpus power the selected bloodline carries; several real PCGen var names
+                // (e.g. `SorcererBloodlineFeatImprovedCounterspell`) contain "spell" as a
+                // substring, tripping this stale substring catch-all. Scoped by prefix, same
+                // shape as the corpus_record carve-out above, admitting only this one
+                // namespace.
+                || explanation.id.starts_with("class_feature.sorcerer.bloodline.generic.")
                 || !explanation.id.contains("spell"),
             "no fabricated spell explanation is allowed beyond the +0 recognition and the \
              access-ladder record: {explanation:?}"

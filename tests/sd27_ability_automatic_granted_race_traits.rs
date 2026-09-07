@@ -204,6 +204,31 @@ fn heritage_grant_edges() -> impl Iterator<Item = (String, String)> {
     })
 }
 
+/// The 7 `Human ~ Adoptive Parentage` CHOOSE-pool members ARG ships as bare
+/// race-name rows (`Drow`/`Dwarf`/`Elf`/`Gnome`/`Grippli`/`Halfling`/`Orc`,
+/// `arg_abilities_race.lst`, e.g. `data/corpus/advanced_race_guide/
+/// race_trait/dwarf/dwarf.json`), each granting its adopted race's own
+/// `<Race> ~ Weapon Familiarity` and `<Race> ~ Languages` rows via a single
+/// `ABILITY:...|AUTOMATIC|<Race> ~ Weapon Familiarity|<Race> ~ Languages`
+/// token (`race_resolver.rs`'s own doc comment on `Unclassified`, and its
+/// `no_corpus_trait_is_left_without_a_readable_gate` test, name and pin this
+/// exact shape — the granting row is *itself* gated by `Human`'s CHOOSE pool,
+/// which `classify()` correctly does not treat as a readable default/replace
+/// gate, and `adopted_race_choose_selectors`/`trait_pool::
+/// resolve_adopted_race_options` are the real readers). Of the 7, only
+/// `Grippli`'s target rows live outside this file's 3-book `corpus()` (its
+/// race chassis is `bestiary_2`), so only 6 races' edges are visible here —
+/// `known.contains(granted)` correctly drops the 7th rather than fabricating
+/// an edge to an unloaded record.
+fn adoptive_parentage_grant_edges() -> impl Iterator<Item = (String, String)> {
+    const RACES: &[&str] = &["Drow", "Dwarf", "Elf", "Gnome", "Halfling", "Orc"];
+    RACES.iter().flat_map(|race| {
+        ["Weapon Familiarity", "Languages"]
+            .into_iter()
+            .map(move |row| (format!("{race} ~ {row}"), race.to_string()))
+    })
+}
+
 /// Derived, not transcribed: scan every loaded race-trait record's `ABILITY:`
 /// tokens for `AUTOMATIC` grants that name another *loaded race-trait record*,
 /// and require the result to be exactly the two known edges.
@@ -258,6 +283,7 @@ fn the_ability_automatic_grant_shape_is_exactly_two_records_corpus_wide() {
     .into_iter()
     .map(|(a, b)| (a.to_owned(), b.to_owned()))
     .chain(heritage_grant_edges())
+    .chain(adoptive_parentage_grant_edges())
     .collect();
 
     assert_eq!(
@@ -268,15 +294,65 @@ fn the_ability_automatic_grant_shape_is_exactly_two_records_corpus_wide() {
     );
 }
 
-/// The residue: after this shape is read, no loaded race-trait record is left
-/// without a gate the resolver understands.
+/// The residue is not empty any more, and — since SD-32 `decisions.md §25`
+/// cycle 2 / AT-34-E3-001 — never will be by design. This test's original
+/// name (`no_loaded_race_trait_record_is_unclassified_any_more`) asserted
+/// `unclassified_traits()` was empty; that was true when this file was
+/// written (2026-07-31) and stopped being true once a real, understood
+/// residue shape started landing on purpose. `race_resolver.rs`'s own
+/// module docs and its `no_corpus_trait_is_left_without_a_readable_gate`
+/// test name and pin three CHOOSE-pool-gated shapes that `classify()`
+/// **correctly** leaves `Unclassified` rather than inventing a fifth
+/// `TraitRole` for — each is gated by a CHOOSE pool on a *different*
+/// record, resolved by a dedicated reader
+/// (`adopted_race_choose_selectors`/`adoptive_parentage_options`/
+/// `trait_pool::resolve_adopted_race_options`), never by
+/// `RaceCorpus::resolve`:
+///
+/// 1. `"Adopted Race ~ <Race>"` selector rows — `core_rulebook`'s own 7
+///    (`AT-34-E3-001`, 2026-08-27; a `selector_only` `BookSource`, the same
+///    pattern already proven for `bestiary_2`/`_3`/`_5`/`_6`, which this
+///    file's 3-book `corpus()` does not load).
+/// 2. `Human ~ Adoptive Parentage`'s 7 bare-race-name CHOOSE-pool members
+///    (`advanced_race_guide`, SD-32 card-11 T2b, 2026-08-23) — gated by
+///    `Human`'s own `CHOOSE:ABILITYSELECTION|Adoptive Parentage|ANY` pool,
+///    not by any gate of their own.
+/// 3. `core_rulebook`'s 2 `Human Ethnicity ~ {None,Unknown}` flavor
+///    placeholders (`AT-34-E3-001`, `is_human_ethnicity_placeholder`) —
+///    `CATEGORY:Background`, no `PREFACT`/default gate of any kind.
+///
+/// This test does NOT assert emptiness (an assertion the corpus's own
+/// documented architecture now makes permanently false for this 3-book
+/// scope) — it asserts the residue is EXACTLY this named, understood set,
+/// derived from the corpus rather than transcribed, so a record landing
+/// here for any OTHER reason (a genuine new gap, the kind
+/// `Unclassified` exists to surface per the module's own doc comment)
+/// still fails loudly, and so does one of these 16 silently disappearing.
 #[test]
-fn no_loaded_race_trait_record_is_unclassified_any_more() {
+fn every_unclassified_race_trait_record_is_a_named_choose_pool_residue() {
     let corpus = corpus();
-    let stranded: Vec<&str> =
-        corpus.unclassified_traits().into_iter().map(|t| t.data.key.as_str()).collect();
-    assert!(
-        stranded.is_empty(),
-        "records with no readable gate remain: {stranded:?}"
+    let stranded: BTreeSet<String> =
+        corpus.unclassified_traits().into_iter().map(|t| t.data.key.clone()).collect();
+
+    let adopted_race_selectors = ["Dwarf", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Halfling", "Human"]
+        .into_iter()
+        .map(|race| format!("Adopted Race ~ {race}"));
+    let adoptive_parentage_pool_members =
+        ["Drow", "Dwarf", "Elf", "Gnome", "Grippli", "Halfling", "Orc"].into_iter().map(str::to_string);
+    let human_ethnicity_placeholders =
+        ["Human Ethnicity ~ None", "Human Ethnicity ~ Unknown"].into_iter().map(str::to_string);
+
+    let expected: BTreeSet<String> = adopted_race_selectors
+        .chain(adoptive_parentage_pool_members)
+        .chain(human_ethnicity_placeholders)
+        .collect();
+
+    assert_eq!(
+        stranded, expected,
+        "the corpus's documented Unclassified residue (CHOOSE-pool-gated rows resolved by a \
+         dedicated reader, never by RaceCorpus::resolve -- race_resolver.rs's own module docs \
+         name this shape) changed; a NEW entry is a real gap needing investigation, a MISSING \
+         one means a record this list names was reclassified or removed and this test must \
+         shrink to match"
     );
 }

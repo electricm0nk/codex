@@ -80,6 +80,41 @@ fn weight_and_cost_from_record(record: &EquipmentRecord) -> (Option<f64>, Option
     (token_value("WT"), token_value("COST"))
 }
 
+/// `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): whether
+/// resolving `item_id` against `corpus` finds a real, parseable `WT:`
+/// weight token -- the exact gate [`compute_encumbrance`] itself already
+/// applies before counting an item as carried (see that function's own
+/// doc comment: "Weight is what makes an item *carried* for encumbrance
+/// purposes... Cost is supplementary"). `COST:` alone, with no `WT:`, is
+/// deliberately NOT sufficient here for the same reason `compute_
+/// encumbrance` does not count it alone: nothing in this crate sums a
+/// loadout's cost independent of its weight-anchored per-item entry.
+///
+/// **Not a new compute path.** `compute_encumbrance` is already called by
+/// `pilot_compute_corpus::compute_pilot_with_corpus` and `contract::
+/// build_pilot_receipt`, and its own per-item weight/cost breakdown is
+/// already rendered on the real character sheet
+/// (`apps/desktop/src-tauri/src/character_hub.rs`'s `CarriedItem`/
+/// `EncumbranceComputation` DTO fields, `costGp` included). A record whose
+/// own corpus line carries only `COST:`/`WT:` magnitude tokens (no
+/// `BONUS:`/`TEMPBONUS:`/`DAMAGE:`/... chain of any kind) was never
+/// observed by `v06_work_inventory`'s equipment wiring probe
+/// (`equipment_key_is_wired`) because that probe only reads
+/// `ResolvedEquipmentEffect`'s combat/skill/ability fields plus
+/// `damage_total::resolve_base_damage_dice` -- never this module. This
+/// function widens what the probe OBSERVES, the same shape `damage_total::
+/// resolve_base_damage_dice`'s own doc comment already established for the
+/// weapon-damage case (`AT-34-E3-003` cycle 4) and the `TEMPBONUS:` fallback
+/// established for `SKILL`/`STAT`/`COMBAT|AC` (cycles 3/5): it does not
+/// change what counts as an answer, `compute_encumbrance`'s own gate is
+/// unchanged and untouched.
+pub fn equipment_key_resolves_a_carried_weight(item_id: &str, corpus: &SourcePackageContent) -> bool {
+    let Some((record, _table_cell)) = equipment_id_resolve(item_id, RuleSetId::Crb, corpus) else {
+        return false;
+    };
+    weight_and_cost_from_record(record).0.is_some()
+}
+
 /// Max light/medium/heavy load in pounds for one Strength score, per PF1's
 /// Table: Carrying Capacity (see module doc comment for the cited source).
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -545,5 +580,55 @@ Dogslicer\tKEY:Dogslicer\tTYPE:Weapon.Resizable.Melee.Slashing.Goblin\tCOST:8\tW
         let computation = compute_encumbrance(&equipment_selections, &corpus, 1, SizeCategory::Medium);
 
         assert_eq!(computation.level, EncumbranceLevel::OverHeavyCapacity);
+    }
+
+    /// `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): real
+    /// corpus record (`core_rulebook:equipment:horn_of_valhalla_brass`,
+    /// `data/corpus/core_rulebook/equipment/magic_items/
+    /// horn_of_valhalla_brass.json`'s own `raw_tokens`, verbatim) whose
+    /// only `MAGNITUDE_TOKENS` fields are `COST:`/`WT:` -- no `BONUS:`,
+    /// `TEMPBONUS:`, or any other chain. A real, already-wired consumer
+    /// (`compute_encumbrance`) resolves its weight; the probe must now
+    /// observe that.
+    #[test]
+    fn equipment_key_resolves_a_carried_weight_true_for_a_real_cost_wt_only_record() {
+        const HORN_TEXT: &str = "\
+Horn of Valhalla (Brass)\tKEY:Horn of Valhalla (Brass)\tTYPE:Magic.Wondrous.Instrument.Wind\tCOST:50000\tWT:2\n";
+        let corpus = corpus_from(HORN_TEXT);
+        assert!(equipment_key_resolves_a_carried_weight("Horn of Valhalla (Brass)", &corpus));
+    }
+
+    /// Negative control: a record with no `WT:` token at all (only
+    /// `COST:`) must NOT be reported as resolving a carried weight --
+    /// `compute_encumbrance` itself would mark it unresolved (weight is
+    /// the required field, cost alone is supplementary), so the probe
+    /// widening must not diverge from the real consumer's own gate.
+    #[test]
+    fn equipment_key_resolves_a_carried_weight_false_when_only_cost_is_present() {
+        const COST_ONLY_TEXT: &str =
+            "Masterwork (Weapon)\tKEY:Special Quality ~ Masterwork ~ Weapon\tTYPE:MasterworkQuality.Weapon\tCOST:0\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\n";
+        let corpus = corpus_from(COST_ONLY_TEXT);
+        // This particular real record has WT missing on its own line
+        // (equipmods carry no weight of their own); assert the false
+        // path against a record that genuinely has COST but no WT.
+        const NO_WT_TEXT: &str =
+            "Legendary Intelligent Item / Align (CG)\tKEY:Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Good\tTYPE:Mythic.Intelligent.Alignment\tCOST:0\tBONUS:VAR|IntItemAlignment|20\n";
+        let corpus2 = corpus_from(NO_WT_TEXT);
+        assert!(!equipment_key_resolves_a_carried_weight(
+            "Special Quality ~ Masterwork ~ Weapon",
+            &corpus
+        ));
+        assert!(!equipment_key_resolves_a_carried_weight(
+            "Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Good",
+            &corpus2
+        ));
+    }
+
+    /// Negative control: an item ID absent from the corpus entirely must
+    /// not resolve.
+    #[test]
+    fn equipment_key_resolves_a_carried_weight_false_when_unresolvable() {
+        let corpus = corpus_from(FIXTURE_TEXT);
+        assert!(!equipment_key_resolves_a_carried_weight("item:not_a_real_item", &corpus));
     }
 }

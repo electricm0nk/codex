@@ -60,6 +60,7 @@ fn human_cleric_input(level: u8) -> CharacterInput {
         case_id: Some("sd20_levelup_cleric".to_string()),
         source_package_id: "sd20_levelup_cleric".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "race:human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "class:cleric".to_string(),

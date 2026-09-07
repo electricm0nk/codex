@@ -14,59 +14,29 @@
 //! It also preserves the accepted Fighter 1-3 truth, the Rogue blocked negative
 //! control, and the Human race/interaction truth.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationExplanation, HeadlessReceiptStatus,
-    PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
+    HeadlessReceiptStatus,
+    build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const PALADIN_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_paladin_level1_sd13_deterministic_input.txt");
 const RANGER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_ranger_level1_sd13_deterministic_input.txt");
 
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
 // (A `claim_blocking` helper used to live here. Both blanket hybrid burden
 // diagnostics this file pinned have since been retired -- the class-feature one
 // first, then the later-spell one on 2026-07-28 -- so every remaining assertion
 // in this file checks for a diagnostic's ABSENCE and the helper had no callers
 // left. See `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.)
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 // ----- Direct runtime evidence: the hybrid chassis identity is acknowledged -----
 

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:39Z",
   "data": {
+    "description": null,
     "key": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_186)",
     "name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_186)",
-    "description": null,
     "raw_tokens": [
       {
         "key": "NAMEISPI",
@@ -73,23 +72,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_classes.lst",
-    "sha256": "9326f2b4410218d6865654b045c06f8ee50a13f4669fde4cecf332ce72c5601e",
-    "line": 186,
-    "record_key": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_186)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:39Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "adventurers_guide:ag_classes.lst:186"
-  }
+    "coordinate": "adventurers_guide:ag_classes.lst:186",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 186,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_classes.lst",
+    "record_key": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_186)",
+    "sha256": "9326f2b4410218d6865654b045c06f8ee50a13f4669fde4cecf332ce72c5601e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

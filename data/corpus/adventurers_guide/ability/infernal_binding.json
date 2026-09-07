@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "A devil binder must select an eidolon of the devil subtype. The devil binder's eidolon never increases its maximum number of attacks, and its base attack bonus is equal to half its Hit Dice. At 4th level and every 4 levels thereafter, the eidolon's Charisma score increases by 2. This alters the summoner's eidolon.",
     "key": "Devil Binder ~ Infernal Binding",
     "name": "Infernal Binding",
-    "description": "A devil binder must select an eidolon of the devil subtype. The devil binder's eidolon never increases its maximum number of attacks, and its base attack bonus is equal to half its Hit Dice. At 4th level and every 4 levels thereafter, the eidolon's Charisma score increases by 2. This alters the summoner's eidolon.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 61,
-    "record_key": "Devil Binder ~ Infernal Binding"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Devil Binder ~ Infernal Binding",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ]
 }

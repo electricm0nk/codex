@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Shabti who are killed are exceptionally difficult to return to life. Anyone who attempts to return a shabti to life using raise dead, resurrection, or a similar spell must succeed at a caster level check (DC %1). If it fails, the spell fails and the caster can't return the shabti to life for the next 24 hours (though the caster can try again after this period).|10+TL",
     "key": "Shabti ~ Shattered Soul",
     "name": "Shattered Soul",
-    "description": "Shabti who are killed are exceptionally difficult to return to life. Anyone who attempts to return a shabti to life using raise dead, resurrection, or a similar spell must succeed at a caster level check (DC %1). If it fails, the spell fails and the caster can't return the shabti to life for the next 24 hours (though the caster can try again after this period).|10+TL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,18 +27,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
-    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
-    "line": 214,
-    "record_key": "Shabti ~ Shattered Soul"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 214,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "record_key": "Shabti ~ Shattered Soul",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

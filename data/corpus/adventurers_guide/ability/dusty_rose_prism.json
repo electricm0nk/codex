@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Wayfinder Ioun Stone / Dusty rose Prism",
     "name": "Dusty rose Prism",
-    "description": null,
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
-    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b",
-    "line": 88,
-    "record_key": "Wayfinder Ioun Stone / Dusty rose Prism"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 88,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "record_key": "Wayfinder Ioun Stone / Dusty rose Prism",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
 }

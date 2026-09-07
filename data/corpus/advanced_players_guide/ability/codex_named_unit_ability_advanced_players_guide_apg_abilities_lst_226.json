@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "[redacted PI]",
     "key": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_226)",
     "name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_226)",
-    "description": "[redacted PI]",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,23 +52,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 226,
-    "record_key": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_226)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "description,name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "advanced_players_guide:apg_abilities.lst:226"
-  }
+    "coordinate": "advanced_players_guide:apg_abilities.lst:226",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 226,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_226)",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

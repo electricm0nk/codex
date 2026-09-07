@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, once per day, you can channel the effects of dictum through your weapon, though you don't need to cast (or even know) the spell. You must declare your use of this ability before rolling your attack. On a hit, the target is affected as if caught in the area of dictum as cast by a cleric of %1 level equal to your Hit Dice (maximum 20). If the target is lawful or its Hit Dice exceeds yours, it is unaffected. If your attack misses or the creature is unaffected, the  dictum  effect is wasted.|min(20,TL)",
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_36)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_36)",
-    "description": "If you have performed your daily obedience, once per day, you can channel the effects of dictum through your weapon, though you don't need to cast (or even know) the spell. You must declare your use of this ability before rolling your attack. On a hit, the target is affected as if caught in the area of dictum as cast by a cleric of %1 level equal to your Hit Dice (maximum 20). If the target is lawful or its Hit Dice exceeds yours, it is unaffected. If your attack misses or the creature is unaffected, the  dictum  effect is wasted.|min(20,TL)",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,23 +28,26 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
-    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
-    "line": 36,
-    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_36)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:36"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:36",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_36)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

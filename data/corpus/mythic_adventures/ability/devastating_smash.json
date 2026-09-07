@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Whenever you attack a construct or object, treat its hardness (or damage reduction in the case of constructs) as 10 less than normal. Add +%1 to damage rolls against constructs and objects. If you expend one use of mythic power as part of an attack against a construct or object, you treat its hardness (or damage reduction) as 0 and add +%1 to damage instead.|MythicLevel|2*MythicLevel",
     "key": "Mythic Path Ability ~ Devastating Smash",
     "name": "Devastating Smash",
-    "description": "Whenever you attack a construct or object, treat its hardness (or damage reduction in the case of constructs) as 10 less than normal. Add +%1 to damage rolls against constructs and objects. If you expend one use of mythic power as part of an attack against a construct or object, you treat its hardness (or damage reduction) as 0 and add +%1 to damage instead.|MythicLevel|2*MythicLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 147,
-    "record_key": "Mythic Path Ability ~ Devastating Smash"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 147,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Devastating Smash",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

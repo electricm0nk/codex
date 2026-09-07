@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "A caster with nameless dread believes strange beings from far dimensions or the blackness between the stars are hounding her and sapping her sanity. Every time the caster uses a spell or a spell-like ability, she sees a glimpse of her nameless pursuers. She must succeed at a concentration check (DC 15 + twice the spell's level), or become shaken for 1 round per level of the spell. If already shaken, the spellcaster becomes frightened for the duration of the original effect or the duration of the new effect, whichever is greater. If she is already frightened, she becomes panicked (and cannot cast) for the duration of the current effect or the duration of the new effect, whichever is greater. Each time a spellcaster becomes panicked, there is a 5%% chance she will become permanently insane (as the insanity spell, or the GM may choose a form of insanity listed on pages 250-251 of the GameMastery Guide). A spellcaster suffering from nameless dread is particularly adept at wielding spells with the fear or chaos descriptor. When she casts a spell with that descriptor, the save DC for that spell is increased by 1, and she gains a +1 competence bonus on all caster level checks made to bypass spell resistance. Spells that suppress fear work on nameless dread. Those that remove fear effects suppress the effects of nameless dread (and its benefits to spellcasting) for 1 hour.",
     "key": "Spellblight ~ Nameless Dread",
     "name": "Nameless Dread",
-    "description": "A caster with nameless dread believes strange beings from far dimensions or the blackness between the stars are hounding her and sapping her sanity. Every time the caster uses a spell or a spell-like ability, she sees a glimpse of her nameless pursuers. She must succeed at a concentration check (DC 15 + twice the spell's level), or become shaken for 1 round per level of the spell. If already shaken, the spellcaster becomes frightened for the duration of the original effect or the duration of the new effect, whichever is greater. If she is already frightened, she becomes panicked (and cannot cast) for the duration of the current effect or the duration of the new effect, whichever is greater. Each time a spellcaster becomes panicked, there is a 5%% chance she will become permanently insane (as the insanity spell, or the GM may choose a form of insanity listed on pages 250-251 of the GameMastery Guide). A spellcaster suffering from nameless dread is particularly adept at wielding spells with the fear or chaos descriptor. When she casts a spell with that descriptor, the save DC for that spell is increased by 1, and she gains a +1 competence bonus on all caster level checks made to bypass spell resistance. Spells that suppress fear work on nameless dread. Those that remove fear effects suppress the effects of nameless dread (and its benefits to spellcasting) for 1 hour.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
-    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
-    "line": 19,
-    "record_key": "Spellblight ~ Nameless Dread"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "record_key": "Spellblight ~ Nameless Dread",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ]
 }

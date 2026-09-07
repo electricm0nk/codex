@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "A frumious bandersnatch seethes with barely repressed rage and anger. If it misses with its Bite attack or falls below half of its hit points, it succumbs to such uncontrollable fury that it bursts into flame. While engulfed in these flames, a frumious bandersnatch is affected as by a haste spell (this effect cannot be dispelled) and causes an additional 2d6 points of fire damage with each of its melee attacks and its quill defense ability. The fury lasts for 5 rounds, after which the bandersnatch cannot enter a fury again for another 5 rounds.  frumious bandersnatch has fire resistance 30.",
     "key": "Variant Bandersnatch ~ Frumious",
     "name": "Frumious Bandersnatch (+2 CR)",
-    "description": "A frumious bandersnatch seethes with barely repressed rage and anger. If it misses with its Bite attack or falls below half of its hit points, it succumbs to such uncontrollable fury that it bursts into flame. While engulfed in these flames, a frumious bandersnatch is affected as by a haste spell (this effect cannot be dispelled) and causes an additional 2d6 points of fire damage with each of its melee attacks and its quill defense ability. The fury lasts for 5 rounds, after which the bandersnatch cannot enter a fury again for another 5 rounds.  frumious bandersnatch has fire resistance 30.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
     "line": 463,
-    "record_key": "Variant Bandersnatch ~ Frumious"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Variant Bandersnatch ~ Frumious",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

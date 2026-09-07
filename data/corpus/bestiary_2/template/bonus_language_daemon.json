@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:16Z",
   "data": {
     "key": "Bonus Language ~ Daemon",
     "name": "Bonus Language ~ Daemon",
@@ -16,20 +15,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates_pc.lst",
-    "sha256": "a2bc1c92c24cab192b79b5478576297c58c093b0e44be10fe2f2f60c51d47d9a",
-    "line": 19,
-    "record_key": "Bonus Language ~ Daemon"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates_pc.lst",
+    "record_key": "Bonus Language ~ Daemon",
+    "sha256": "a2bc1c92c24cab192b79b5478576297c58c093b0e44be10fe2f2f60c51d47d9a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

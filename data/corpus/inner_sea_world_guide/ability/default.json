@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Default",
     "name": "Default",
-    "description": null,
     "raw_tokens": [
       {
         "key": "BONUS",
@@ -13,20 +12,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities.lst",
-    "sha256": "2511c7b8fccf3910275a707666bbcedb94b791550fae506dc1b2098e48560cff",
-    "line": 6,
-    "record_key": "Default"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities.lst",
+    "record_key": "Default",
+    "sha256": "2511c7b8fccf3910275a707666bbcedb94b791550fae506dc1b2098e48560cff"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

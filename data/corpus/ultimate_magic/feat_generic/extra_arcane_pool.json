@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "You have learned how to draw more power from your arcane pool.",
     "key": "Extra Arcane Pool",
     "name": "Extra Arcane Pool",
-    "description": "You have learned how to draw more power from your arcane pool.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -49,20 +48,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
-    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
-    "line": 42,
-    "record_key": "Extra Arcane Pool"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Extra Arcane Pool",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

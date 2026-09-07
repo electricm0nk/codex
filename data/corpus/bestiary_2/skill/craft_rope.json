@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Craft (Rope)",
     "name": "Craft (Rope)",
@@ -36,18 +34,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_skills.lst",
-    "sha256": "b7391ac7ce33a999b036f3fddbaca99bfae96d32a79b6fea96d90f00df4486ae",
-    "line": 8,
-    "record_key": "Craft (Rope)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:11:33Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_skills.lst",
+    "record_key": "Craft (Rope)",
+    "sha256": "b7391ac7ce33a999b036f3fddbaca99bfae96d32a79b6fea96d90f00df4486ae"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
 }

@@ -100,9 +100,31 @@
 //! independently correct) with `benefit: None` -- the engine's own
 //! diagnostic (`corpus_ingest_diagnostic`, `wiring_class`) names the
 //! defect with a file:line citation rather than silently omitting the
-//! row. Honest target for this book: **21 text-complete + 2
-//! deferred-with-reason = 23 accounted**, not 23 text-complete, and not
-//! the first pass's 20+3.
+//! row. Honest target for this MODULE: **21 of 23 join real `BENEFIT:`
+//! text (`benefit: Some(..)`), 2 are `deferred-with-reason`** -- not 23
+//! joined, and not the first pass's 20+3.
+//!
+//! **Correction, `AT-34-E4-001` (SD-34): this is not the same claim as the
+//! live atlas's `status`.** This module's own earlier wording called the
+//! 21 "text-complete", which reads as the atlas bucket of that name. It
+//! is not: `v06_work_inventory::classify` (via
+//! `feat_desc_leaks_pi_or_upstream_marker`) demotes all 21 to
+//! `unmeasurable`, because their SERVED (joined) description still opens
+//! with the upstream `[Not Implemented]` editorial marker this module
+//! documents above -- and that demotion is deliberate and
+//! corpus-wide-consistent (`SD31-E2-F3-002` fixed a case-sensitivity gap
+//! that let these exact 21 records previously reach `done` while a
+//! byte-identical uppercase shape elsewhere did not; it chose uniform
+//! demotion, not uniform promotion). Whether "marker + substantial real
+//! mechanical prose" should ever read as complete is a genuine,
+//! corpus-wide policy question (~392 marker occurrences project-wide,
+//! `wiring_class::editorial_not_implemented_marker_is_detected_in_every_shipped_form`'s
+//! own citation), not one this book's module doc gets to settle by
+//! restating its own target as though it were the classifier's verdict.
+//! See `feats_all::tests::uca_u_bucket_records_still_carry_the_editorial_marker_in_served_form`
+//! for the mechanical proof, and
+//! `artifacts/epic-4-ultimate-campaign/AT-34-E4-001_cycle_receipt.md` for
+//! the full disposition of all 23 of this book's `U`/`X` units.
 //!
 //! **`PRETEXT:`, not a formal `PRE`-family token, on all 23.** Every
 //! record's prerequisite is prose ("Prerequisite:You must have..."),

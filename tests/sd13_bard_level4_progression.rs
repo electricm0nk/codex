@@ -44,13 +44,12 @@
 //! accepted Bard level-1/level-2/level-3 truth (unchanged), the Fighter
 //! negative control, and the multiclass negative control.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation};
 
 const BARD_LEVEL3_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_bard_level3_sd13_deterministic_input.txt");
@@ -64,34 +63,6 @@ const FIGHTER_FIXTURE: &str =
 const WELL_VERSED_ID: &str = "class_feature.bard.well_versed";
 const INSPIRE_COMPETENCE_ID: &str = "class_feature.bard.inspire_competence";
 const LORE_MASTER_ID: &str = "class_feature.bard.lore_master";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 // ----- Base attack bonus at level 4 -----
 
@@ -313,6 +284,15 @@ fn bard_level4_does_not_fabricate_a_new_class_feature() {
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_2",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_3",
         "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_4",
+        // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+        // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+        // receipt.md`): Weapon and Armor Proficiency is now genuinely grounded
+        // as a level-independent, always-on +0 identity record (true since
+        // level 1, mirrors the Jack-of-All-Trades idiom already used above --
+        // no trained-only gate exists in this codebase to lift). It is not a
+        // "Special"-column class feature gained at this level, so listing it
+        // here keeps this control accurate without weakening its claim.
+        "class_feature.bard.weapon_and_armor_proficiency",
     ];
     assert!(
         computation
@@ -321,7 +301,13 @@ fn bard_level4_does_not_fabricate_a_new_class_feature() {
             .filter(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard")
-            .all(|e| known_bard_ids.contains(&e.id.as_str())),
+            .all(|e| known_bard_ids.contains(&e.id.as_str())
+                // SD-34 decisions.md section 18: widened BY CONSTRUCTION, not narrowed --
+                // class_feature_grant_consumer now emits real, citation-backed
+                // corpus_record ids for Bard (previously wholesale-excluded); this shape
+                // carve-out admits them without touching any existing known_bard_ids
+                // entry or weakening the exhaustive check for anything else.
+                || e.id.starts_with("class_feature.bard.corpus_record.")),
         "Bard level 4 must not gain any bard-namespaced explanation id beyond the \
          already-grounded pillars (PF1 CRB level-4 Special column is blank): {:?}",
         computation.explanations

@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "artifact": "retrospective event log",
+  "purpose": "Record what version control cannot: what nearly landed wrong, who caught it, what was consciously not done, and what had to be redone. Version control records what landed. It says nothing about the times in one session that a stated figure was wrong and a teammate corrected it -- and that pattern is more useful for improving the workflow than any individual fix.",
+
+  "contract": [
+    "Machine-written as events occur. An event is emitted by the actor or the tool at the moment the thing happens, never narrated afterward from memory.",
+    "No event is ever fabricated or backfilled from prose. A hand-maintained artifact drifts and then actively misleads; a log written from recollection would be the least reliable of all, because the account being checked is the same account doing the writing.",
+    "Anything mechanically derivable from an existing signal is derived, not asked for. `derived: true` marks those, with `source` naming the mechanism.",
+    "Facts that already live in version control are NOT copied here. Commits, authors and merges are joined at query time (see `vcs_join` in the summary) so the log never becomes a second, staler copy of history."
+  ],
+
+  "storage": {
+    "format": "JSON Lines, one event object per line, append-only. Lines are never edited or deleted; a correction to an event is a new event carrying `corrects: <event id>`.",
+    "path": "<events-dir>/<actor-slug>.jsonl",
+    "why_sharded": "A single shared file is the wrong shape here for two independently sufficient reasons. (1) Many concurrent agents can work in sibling checkouts; an append-only file touched by all of them conflicts on nearly every merge, and the resolution -- take both sides -- is exactly the thing a human should never be asked to do repeatedly. Distinct filenames per actor never conflict. (2) A shared scratch artifact is a single point of contention: two writers can clobber each other's lines. Sharding removes the shared write target rather than coordinating access to it.",
+    "atomicity": "Each event is written with a single O_APPEND write() of one complete line, so two processes appending to the same shard interleave whole lines, never partial ones.",
+    "ordering": "Order within a shard is emission order. Global order is by `ts`. Nothing depends on global order being total; `ts` collisions are ordered by `id`."
+  },
+
+  "envelope": {
+    "description": "Fields present on every event regardless of type. All are filled automatically by the emitter unless noted.",
+    "fields": {
+      "id": "Unique event id: <unix-ms>-<actor-slug>-<6 hex>. Sortable and collision-free across concurrent shards.",
+      "ts": "UTC ISO-8601 timestamp with a trailing Z, at emission.",
+      "type": "One of `event_types` below.",
+      "actor": "Who emitted the event. Resolved from --actor, then $RETRO_ACTOR, then the checkout directory name, then the version-control user name. For a `correction` this is the person or agent who CAUGHT the error; `subject` is who was wrong.",
+      "actor_source": "`flag` | `env` | `worktree` | `git-config`: how `actor` was arrived at. A name the actor declared and a name scraped off a directory are not equally meaningful, and by the time a retrospective is run the checkout may be gone and the difference is unrecoverable from the name alone.",
+      "origin": "`agent` | `human` | `derived`. Set to `derived` automatically whenever `derived` is true.",
+      "source": "The mechanism that wrote the line: `cli`, a verification script, version control, or another tool name. Distinguishes a typed-out event from a machine-observed one.",
+      "derived": "true when the event was computed from an existing signal rather than asserted by an actor. Derived events are the trustworthy ones; the summary reports the split.",
+      "summary": "One line, present tense, no more than ~120 chars. The only field a human reads when scanning.",
+      "repo": "{branch, head, worktree} captured at emission, so an event can be placed against the tree state it describes.",
+      "task": "Optional free-form task or brief id.",
+      "tags": "Optional list of free-form tags for slicing.",
+      "corrects": "Optional id of an earlier event this one supersedes. The log is append-only, so this is how a mistake in the log itself is fixed.",
+      "dedupe_key": "Optional. When present, an emit whose key already exists in the target shard is a no-op. Makes derived and repeated emission idempotent, so a scheduled job or a re-run cannot inflate counts."
+    },
+    "required": ["id", "ts", "type", "actor", "origin", "source", "derived", "summary"]
+  },
+
+  "event_types": {
+    "correction": {
+      "why": "The highest-value type and the reason this log exists. Example: four different reviewers correct four different figures a lead stated confidently in one session -- a part count, a unit-price total, a supplier count, and a defect-rate baseline that had already propagated into every status update written that day. Each correction is right. None of it is recoverable from version control, and the pattern across the four is worth more than any one fix.",
+      "required": ["subject", "claimed", "actual", "verified_by"],
+      "optional": {
+        "claimed_value": "Numeric form of `claimed`, when the claim was a number. Enables magnitude-of-error stats.",
+        "actual_value": "Numeric form of `actual`.",
+        "blast_radius": "Where the wrong figure had already propagated before it was caught (e.g. 'every status update sent this week'). This is what separates a typo from a systemic error.",
+        "artifact": "File, doc or message the claim appeared in.",
+        "caught_before": "What the correction landed ahead of: `brief`, `implementation`, `merge`, `release`, or `nothing (already shipped)`."
+      },
+      "field_notes": {
+        "subject": "Who or what stated the wrong fact -- a role (`lead`), an agent name, or an artifact. Deliberately separate from `actor`, because 'who is wrong repeatedly' and 'who catches things' are two different findings and both matter.",
+        "verified_by": "How the true value was established: the command run, the file read, the count taken. A correction without this is an assertion competing with another assertion."
+      }
+    },
+
+    "incident": {
+      "why": "Environmental and coordination failures that cost real time and recur. Example classes: shared disk filling up; a shared build directory silently feeding one worker another worker's compiled artifacts, producing plausible but wrong results; a shared scratch directory clobbering an in-progress file; a worker starting from the wrong base branch; two processes writing to one branch and losing work.",
+      "required": ["impact", "detected_by"],
+      "optional": {
+        "resolution": "What actually cleared it.",
+        "recurrence_key": "Stable slug for the CLASS of incident (`disk-full`, `shared-target-dir`, `wrong-base-checkout`). The summary clusters on this, which is how 'this happened twice' becomes visible instead of reading as two unrelated lines.",
+        "actors_affected": "Count or list of agents hit.",
+        "time_lost_minutes": "Rough cost, if known.",
+        "used_percent": "Resource usage at the time, for pressure-shaped incidents a monitoring script derives automatically.",
+        "silent": "true when the failure produced plausible-looking wrong results rather than an error. Silent incidents are the expensive ones and are counted separately."
+      },
+      "derived_source": "A verification script can emit a `disk-pressure` incident when the filesystem holding the workspace is at or above a threshold at the end of a run. That check lives there because a full build or test run is often the largest resource consumer, so the end of a run is both the moment the fact is most likely to be true and the moment nobody would think to record it. The dedupe key is per day per resource, so the count reads as days under pressure rather than as how often anyone ran the check."
+    },
+
+    "near_miss": {
+      "why": "Verification caught something before it escaped. Example instances: a branch that failed to build was merged anyway; a batch of failing tests was signed off; a full test run reported green having actually run a fraction of the suites; a test was found blessing the very bug it existed to catch. A near-miss rate that falls while the merge rate holds is the signal that verification stopped biting.",
+      "required": ["would_have", "caught_by"],
+      "optional": {
+        "escaped": "true when it was NOT caught in time and had to be fixed after the fact. Default false. An escaped near-miss is the strongest possible argument for a new gate.",
+        "gate": "Named verification stage or review step that caught it (e.g. a CI stage name, `code review`, `sibling agent`).",
+        "would_have_reached": "How far it would have got: `branch`, `staging`, `release`.",
+        "gap": "What was missing that let it get that far, if identified."
+      }
+    },
+
+    "deferral": {
+      "why": "Work consciously not done, with the reason, so a later cycle does not rediscover it as an unexplained gap and pay to re-decide it. Without this, every deferral looks identical to an oversight.",
+      "required": ["what", "reason"],
+      "optional": {
+        "revisit": "The condition or milestone that should bring it back.",
+        "blocked_by": "What would have to be true first.",
+        "scope": "Rough size, if estimated.",
+        "tracked_at": "Pointer to wherever it is formally recorded, if anywhere."
+      }
+    },
+
+    "rework": {
+      "why": "Something had to be redone. Rework is largely invisible in version-control history -- a rebase, an amend or a squash can erase it entirely, and a branch can show zero revert-shaped commits despite work demonstrably having been redone. Cause frequency is the input to deciding what to change.",
+      "required": ["what", "cause"],
+      "optional": {
+        "first_attempt": "Commit sha, branch or ref of the discarded attempt, if it still exists.",
+        "cost": "Free-form cost (commits, hours, cycles).",
+        "avoidable_by": "The check or piece of information that would have prevented it."
+      }
+    },
+
+    "verification": {
+      "why": "Emitted automatically by a verification script on every run, passing or failing. Fully derived: no actor decides to record it, so the denominator (how often verification runs and passes) is honest, and failing stages are recorded even when the fix is quick enough that nobody would have thought it worth writing down.",
+      "required": ["mode", "result"],
+      "optional": {
+        "stages_passed": "List of stage names that passed.",
+        "stages_failed": "List of stage names that failed.",
+        "log_dir": "Where the stage logs were written.",
+        "duration_seconds": "Wall-clock duration of the run."
+      }
+    },
+
+    "note": {
+      "why": "Escape hatch for a real observation that fits none of the above. Kept deliberately unstructured and reported separately in the summary: a rising note count means the vocabulary is missing a type, which is itself a finding about this log.",
+      "required": [],
+      "optional": {}
+    },
+
+    "resolution": {
+      "why": "Closes an earlier event -- most importantly a `deferral` -- without editing or deleting the line it resolves. The log is append-only (`storage.format` above), so marking something resolved has to be a new event, not a mutation of the old one. Without this type, an 'open deferrals' count has no resolution signal to compute from and can silently misreport the tail of recently emitted deferrals as though that were the whole open set. A `resolution` event makes `open` mean unresolved, independent of any display limit.",
+      "required": ["resolves", "how"],
+      "optional": {
+        "outcome": "Free-form: what actually happened -- closed as planned, superseded, turned out not to apply."
+      },
+      "field_notes": {
+        "resolves": "The `id` of the event being closed out -- almost always a `deferral`'s id, but the field is generic (the summary treats any event whose id appears as some `resolution.resolves` value as resolved) so a `near_miss` or `incident` can be closed out the same way instead of the vocabulary growing a second, parallel mechanism later.",
+        "how": "What actually closed it: the command run, the doc section, the decision that made the deferred work moot. Held to the same bar as a correction's `verified_by` -- 'I think it's done' is not a resolution."
+      }
+    }
+  },
+
+  "not_recorded_here": {
+    "commits_and_merges": "version control already has them, exactly and immutably. The summary joins against the version-control log for the window instead of storing them.",
+    "current_status_or_progress": "Point-in-time state belongs in whatever generated status artifact the project already regenerates wholesale (a dashboard, an inventory file). An event log that also carries status becomes a second dashboard, and stale dashboards are the failure mode this log exists to avoid.",
+    "opinions_without_a_check": "A correction whose `verified_by` is 'I think' is not a correction."
+  }
+}

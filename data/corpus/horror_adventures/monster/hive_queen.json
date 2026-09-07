@@ -158,8 +158,8 @@
     "record_key": "Hive Queen",
     "sha256": "09976b6c9e77606c0b7d76da9fff38a80148242e22f02896d0c44bdaa3140d89"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus"
+    "static:literal_magnitudes_only"
   ]
 }

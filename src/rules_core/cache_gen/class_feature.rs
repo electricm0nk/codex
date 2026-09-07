@@ -143,7 +143,6 @@
 
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use serde::Serialize;
 use serde_json::Value;
@@ -311,7 +310,7 @@ pub fn units_from_inventory_json(json_text: &str) -> Result<Vec<ClassFeatureSour
 /// `"Vigilante"`) -- the SAME population `v06_work_inventory.rs`'s
 /// `corpus_class_names` fact builds (its own doc comment: "Every class
 /// name the corpus declares anywhere, so a class feature of an
-/// un-ingested class ... is reported as a real `not-ingested` gap rather
+/// un-ingested class ... is reported as a real `engine-does-not-hold` gap rather
 /// than as an unclassifiable mystery"), read here from the same
 /// already-committed `docs/work-inventory.json` rather than re-walking
 /// raw PCGen `*_class.lst` files a second time (SD-32 card 11, T2a/T12
@@ -504,40 +503,14 @@ fn resolve_book_file(book_dir: &Path, file: &str) -> Option<PathBuf> {
     }
 }
 
-pub fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// Hoisted to `cache_gen` (R14-04); re-exported here as
+/// `class_feature::sha256_file` since `class_feature_grants.rs` reaches
+/// it by that path.
+pub use super::sha256_file;
 
-fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
-    let mut slug: String = name
-        .to_lowercase()
-        .chars()
-        .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
-        .collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
-    if !used.contains(&slug) {
-        used.insert(slug.clone());
-        return slug;
-    }
-    let mut n = 2;
-    loop {
-        let candidate = format!("{slug}-{n}");
-        if !used.contains(&candidate) {
-            used.insert(candidate.clone());
-            return candidate;
-        }
-        n += 1;
-    }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_dedup`, imported back
+/// under this file's original local name.
+use super::slugify_dedup as slugify;
 
 /// Reads [`DeclaredProductIdentity`] off the real corpus line at
 /// `lst_path:line` (1-indexed), matching `cache_gen::ultimate_equipment`'s
@@ -567,8 +540,49 @@ fn row_tokens(row: &str) -> Vec<RawToken> {
         .collect()
 }
 
+/// `true` when a DESC segment's own `|`-tail carries a PREVAREQ/PREVARGTEQ
+/// gate -- PCGen's per-character-choice branch-selection syntax (`Rage
+/// Power ~ Elemental Blood (Greater)`'s real oracle row: a lead-in clause
+/// followed by four separate `...|PREVAREQ:BloodRage Acid,1` / `...
+/// |PREVAREQ:BloodRage Cold,1` / ... segments, one per element the
+/// character picked -- only ONE branch ever applies to a given character).
+/// Joining a segment carrying this gate onto the description would show
+/// every alternative as if all applied simultaneously, so [`desc_value`]
+/// must never do so (`AT-34-E3-001 class_feature_option_pool` cycle,
+/// sub-cause 8; `class_feature_pool_catalog.rs`'s own
+/// `raw_tokens_carry_an_unjoinable_choice_branch_desc` independently
+/// refuses this same shape, reproduced rather than shared per this
+/// package's disjoint-file-touch convention, `declared_pi_at`'s own doc
+/// comment).
+fn desc_segment_is_a_choice_branch(segment: &str) -> bool {
+    segment.contains("PREVAREQ") || segment.contains("PREVARGTEQ")
+}
+
+/// Reads `data.description` from a row's DESC token(s).
+///
+/// PCGen ships a handful of records with MULTIPLE `DESC:` tab fields on the
+/// same row. Two real shapes exist (verified against the actual corpus,
+/// `AT-34-E3-001 class_feature_option_pool` cycle, sub-cause 8):
+///   - a genuine sequential continuation split across fields for no
+///     mechanical reason (`Martial Weapon Proficiency Output`'s two DESC
+///     fields; `Octopus Wild Shape ~ Poison`'s lead-in plus its own fuller
+///     mechanical clause) -- the combined text IS the real, complete
+///     description PCGen shows, so every such segment is joined with a
+///     single space. Each segment is trimmed first so a stray leading/
+///     trailing space in the raw `.lst` row cannot produce a double space.
+///   - PREVAREQ/PREVARGTEQ-gated alternative branches (`Rage Power ~
+///     Elemental Blood (Greater)`'s four elemental clauses) -- NOT safe to
+///     join (see [`desc_segment_is_a_choice_branch`]): only the FIRST
+///     segment is kept, unchanged from this function's original behavior,
+///     so an already-shipped record of this shape regenerates
+///     byte-identical.
 fn desc_value(tokens: &[RawToken]) -> Option<String> {
-    tokens.iter().find(|t| t.key == "DESC").map(|t| t.value.clone())
+    let segments: Vec<&str> = tokens.iter().filter(|t| t.key == "DESC").map(|t| t.value.as_str()).collect();
+    let first = *segments.first()?;
+    if segments.len() == 1 || segments[1..].iter().any(|s| desc_segment_is_a_choice_branch(s)) {
+        return Some(first.to_string());
+    }
+    Some(segments.iter().map(|s| s.trim()).collect::<Vec<_>>().join(" "))
 }
 
 /// One resolved fact from `cache_gen::class_feature_grants`' own output
@@ -1875,6 +1889,83 @@ mod tests {
         assert_eq!(desc_value(&[]), None);
     }
 
+    /// `AT-34-E3-001 class_feature_option_pool` cycle, sub-cause 8: a real
+    /// row with TWO plain DESC fields and no choice-branch gate on either
+    /// (`Martial Weapon Proficiency Output`'s exact shape) must be joined
+    /// into one complete description, not truncated to the first field.
+    #[test]
+    fn desc_value_joins_a_safe_two_segment_continuation() {
+        let tokens = vec![
+            RawToken {
+                key: "DESC".to_string(),
+                value: "You understand how to use your martial weapons in combat.".to_string(),
+            },
+            RawToken {
+                key: "DESC".to_string(),
+                value: "You make attack rolls with all your martial weapons normally (without the \
+                        non-proficient penalty)."
+                    .to_string(),
+            },
+        ];
+        assert_eq!(
+            desc_value(&tokens).as_deref(),
+            Some(
+                "You understand how to use your martial weapons in combat. You make attack rolls \
+                 with all your martial weapons normally (without the non-proficient penalty)."
+            )
+        );
+    }
+
+    /// `Octopus Wild Shape ~ Poison`'s exact shape: the second segment
+    /// carries its own trailing `|PRERULE:...` display-condition tail, not
+    /// a PREVAREQ/PREVARGTEQ choice-branch gate, so it is still safe to
+    /// join -- the tail lands at the very end of the joined string, where
+    /// `render_pcgen_desc`'s own `strip_trailing_qualifiers` already knows
+    /// how to strip it (the same convention a single-DESC record with a
+    /// `|PRERULE:...` tail already relies on).
+    #[test]
+    fn desc_value_joins_a_safe_continuation_whose_last_segment_carries_a_display_condition_tail() {
+        let tokens = vec![
+            RawToken {
+                key: "DESC".to_string(),
+                value: "Bite-injury; save Fort DC 13; frequency 1/round for 6 rounds; effect 1 Str; \
+                        cure 1 save."
+                    .to_string(),
+            },
+            RawToken {
+                key: "DESC".to_string(),
+                value: "Calling upon the venomous powers of natural predators, you infect the \
+                        subject with a horrible poison.|PRERULE:1,DisplayFullSpell"
+                    .to_string(),
+            },
+        ];
+        let joined = desc_value(&tokens).expect("two safe segments must join");
+        assert!(joined.starts_with("Bite-injury"));
+        assert!(joined.contains("Calling upon the venomous powers"));
+    }
+
+    /// `Rage Power ~ Elemental Blood (Greater)`'s exact shape: a lead-in
+    /// clause followed by PREVAREQ-gated alternative branches -- only one
+    /// branch applies per character, so joining all of them would show
+    /// every alternative as if simultaneously true. Must stay truncated to
+    /// the first segment, byte-identical to this function's pre-fix
+    /// behavior.
+    #[test]
+    fn desc_value_refuses_to_join_a_choice_branch_gated_multi_desc_row() {
+        let tokens = vec![
+            RawToken { key: "DESC".to_string(), value: "While raging, the barbarian gains".to_string() },
+            RawToken {
+                key: "DESC".to_string(),
+                value: " a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1".to_string(),
+            },
+            RawToken {
+                key: "DESC".to_string(),
+                value: " a swim speed of 60 feet.|PREVAREQ:BloodRage Cold,1".to_string(),
+            },
+        ];
+        assert_eq!(desc_value(&tokens).as_deref(), Some("While raging, the barbarian gains"));
+    }
+
     #[test]
     fn slugify_handles_collisions() {
         let mut used = BTreeSet::new();
@@ -2990,7 +3081,7 @@ mod tests {
             "a bare subdomain grant must resolve the same owners as Core Domain ~: {owners:?}"
         );
         assert!(
-            owners.get("Agile Feet").is_none(),
+            !owners.contains_key("Agile Feet"),
             "a .MOD line naming a foreign feat category must not be read as a domain grant point: {owners:?}"
         );
 

@@ -174,9 +174,8 @@
     "record_key": "Qallupilluk",
     "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:dr"
+    "static:literal_magnitudes_only"
   ]
 }

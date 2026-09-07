@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "A mithral golem is immune to any spell or spell-like ability that allows spell resistance.  In addition, certain spells and effects function differently against a mithral golem, as noted below.  A slow spell cast on the golem causes it to lose its quickness ability for 1d6 rounds.  A haste spell heals the golem of 1d6 points of damage per level of the caster (maximum 10d6).  Hititng a mithral golem in fluid form with any spell of 6th level or higher with the cold descriptor causes the golem to take 10d6 damage (no save) and lose the use of its fluid form ability for 24 hours.",
     "key": "Mithral Golem ~ Immunity to Magic",
     "name": "Immunity to Magic",
-    "description": "A mithral golem is immune to any spell or spell-like ability that allows spell resistance.  In addition, certain spells and effects function differently against a mithral golem, as noted below.  A slow spell cast on the golem causes it to lose its quickness ability for 1d6 rounds.  A haste spell heals the golem of 1d6 points of damage per level of the caster (maximum 10d6).  Hititng a mithral golem in fluid form with any spell of 6th level or higher with the cold descriptor causes the golem to take 10d6 damage (no save) and lose the use of its fluid form ability for 24 hours.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,18 +31,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 622,
-    "record_key": "Mithral Golem ~ Immunity to Magic"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 622,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mithral Golem ~ Immunity to Magic",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
 }

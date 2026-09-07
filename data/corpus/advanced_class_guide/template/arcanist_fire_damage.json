@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:13Z",
   "data": {
     "key": "Arcanist ~ Fire Damage",
     "name": "Arcanist ~ Fire Damage",
@@ -12,20 +11,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst",
-    "sha256": "089a3c6958b30fa81dd066355de5fe92a518c6e9df7f3b5374f0560fd40a9ee9",
-    "line": 8,
-    "record_key": "Arcanist ~ Fire Damage"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:13Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst",
+    "record_key": "Arcanist ~ Fire Damage",
+    "sha256": "089a3c6958b30fa81dd066355de5fe92a518c6e9df7f3b5374f0560fd40a9ee9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

@@ -52,7 +52,6 @@
 
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use serde::Serialize;
 
@@ -142,14 +141,8 @@ pub(crate) const BOOK_SPECS: &[BookSpec] = &[
     },
 ];
 
-fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// Hoisted to `cache_gen` (R14-04).
+use super::sha256_file;
 
 /// One tab-delimited field's `(TOKEN, value)` split, or `None` for a field
 /// with no `:` (never occurs on a well-formed PCGen row's non-identity
@@ -162,9 +155,12 @@ fn split_token(field: &str) -> Option<(String, String)> {
     field.split_once(':').map(|(k, v)| (k.to_string(), v.to_string()))
 }
 
+/// `(key, name, description, raw_tokens, declared_pi)`, `parse_mod_row`'s own return shape.
+type ParsedModRow = (String, String, Option<String>, Vec<RawToken>, pi_screening::DeclaredProductIdentity);
+
 /// Parses one `.lst` line already known to be a `.MOD` row carrying a
 /// `CLASSES:` token: `(key, name, description, raw_tokens, declared_pi)`.
-fn parse_mod_row(line: &str) -> Option<(String, String, Option<String>, Vec<RawToken>, pi_screening::DeclaredProductIdentity)> {
+fn parse_mod_row(line: &str) -> Option<ParsedModRow> {
     let fields: Vec<&str> = line.split('\t').collect();
     let first = fields.first()?.trim();
     if first.is_empty() || !first.ends_with(".MOD") {
@@ -203,43 +199,17 @@ fn parse_mod_row(line: &str) -> Option<(String, String, Option<String>, Vec<RawT
     Some((key, name, description, raw_tokens, declared))
 }
 
-fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
-    let mut slug: String =
-        name.to_lowercase().chars().map(|c| if c.is_ascii_alphanumeric() { c } else { '_' }).collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
-    if !used.contains(&slug) {
-        used.insert(slug.clone());
-        return slug;
-    }
-    let mut n = 2;
-    loop {
-        let candidate = format!("{slug}-{n}");
-        if !used.contains(&candidate) {
-            used.insert(candidate.clone());
-            return candidate;
-        }
-        n += 1;
-    }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_dedup`, imported back
+/// under this file's original local name.
+use super::slugify_dedup as slugify;
 
 /// Writes `record` to `<out_dir>/<slug>.json`, UNLESS a file already exists
 /// there (mirrors every sibling `cache_gen` generator's no-clobber write
-/// discipline).
-fn write_json(out_dir: &Path, slug: &str, record: &CacheRecord) -> std::io::Result<bool> {
-    std::fs::create_dir_all(out_dir)?;
-    let path = out_dir.join(format!("{slug}.json"));
-    if path.exists() {
-        return Ok(false);
-    }
-    let json = serde_json::to_string_pretty(record)
-        .expect("CacheRecord is a plain-data shape; serialization cannot fail");
-    std::fs::write(path, json)?;
-    Ok(true)
-}
+/// discipline). Hoisted to `cache_gen` (R14-04) as `write_json_bool`
+/// (generalized over any `Serialize` record, not just this file's
+/// concrete `CacheRecord`), imported back under this file's original
+/// local name.
+use super::write_json_bool as write_json;
 
 #[derive(Debug, Default)]
 pub struct GenerationReport {

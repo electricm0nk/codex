@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "When killed, a star archon explodes in a blinding flash of energy that deals 50 points of damage (half fire, half holy damage) to anything within 100 feet (Reflex DC %1 half).  The slain archon reincarnates 1d4 rounds later as an advanced shield archon.|StarArchonExplosiveRebirthDC",
     "key": "Star Archon ~ Explosive Rebirth",
     "name": "Explosive Rebirth",
-    "description": "When killed, a star archon explodes in a blinding flash of energy that deals 50 points of damage (half fire, half holy damage) to anything within 100 feet (Reflex DC %1 half).  The slain archon reincarnates 1d4 rounds later as an advanced shield archon.|StarArchonExplosiveRebirthDC",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 122,
-    "record_key": "Star Archon ~ Explosive Rebirth"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 122,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Star Archon ~ Explosive Rebirth",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

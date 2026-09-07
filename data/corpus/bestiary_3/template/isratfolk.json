@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:16Z",
   "data": {
     "key": "IsRatfolk",
     "name": "IsRatfolk",
@@ -16,20 +15,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_templates.lst",
-    "sha256": "411809f9b2afdbd081e39ebf95bdaa839b205c88e46d5b7f86dbfe200e18a45a",
-    "line": 5,
-    "record_key": "IsRatfolk"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_templates.lst",
+    "record_key": "IsRatfolk",
+    "sha256": "411809f9b2afdbd081e39ebf95bdaa839b205c88e46d5b7f86dbfe200e18a45a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

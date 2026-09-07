@@ -87,6 +87,7 @@ fn human_barbarian_input(level: u8) -> CharacterInput {
         case_id: Some("sd25_barbarian_residue_audit".to_string()),
         source_package_id: "sd25_barbarian_residue_audit".to_string(),
         chosen: ChosenCharacterState {
+            selected_traits: Vec::new(),
             race_id: "race:human".to_string(),
             class_levels: vec![CharacterClassLevel {
                 class_id: "class:barbarian".to_string(),
@@ -242,8 +243,8 @@ fn every_newly_granted_barbarian_explanation_surfaces_as_a_real_levelup_grant_at
             .iter()
             .find(|explanation| explanation.id == RAGE_ROUNDS_PER_DAY_EXPLANATION_ID)
             .map(|explanation| explanation.value);
-        if let (Some(from_value), Some(to_value)) = (from_rage_rounds, to_rage_rounds) {
-            if from_value != to_value {
+        if let (Some(from_value), Some(to_value)) = (from_rage_rounds, to_rage_rounds)
+            && from_value != to_value {
                 let surfaced_pool = plan
                     .resource_pool_change
                     .pools
@@ -257,6 +258,5 @@ fn every_newly_granted_barbarian_explanation_surfaces_as_a_real_levelup_grant_at
                     plan.resource_pool_change.pools
                 );
             }
-        }
     }
 }

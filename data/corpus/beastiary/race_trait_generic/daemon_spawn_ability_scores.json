@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Bearing the blood of angels, these aasimars often appear androgynous.",
     "key": "Daemon-Spawn ~ Ability Scores",
     "name": "+2 Dexterity, +2 Intelligence, -2 Wisdom",
-    "description": "Bearing the blood of angels, these aasimars often appear androgynous.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
-    "sha256": "c5e0157cc152a160d6fb535fed312baccbc96ef1e560687b570b267dd1c041ca",
-    "line": 40,
-    "record_key": "Daemon-Spawn ~ Ability Scores"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
+    "record_key": "Daemon-Spawn ~ Ability Scores",
+    "sha256": "c5e0157cc152a160d6fb535fed312baccbc96ef1e560687b570b267dd1c041ca"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

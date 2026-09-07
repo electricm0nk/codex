@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Whenever you roll damage for a melee or ranged attack with a weapon or alchemical item, you can treat any natural 1s on the damage dice as if they were the highest possible number on those dice. You can select this ability up to three times. The second time you select it, treat 1s and 2s as the highest value. The third time, treat 1s, 2s, and 3s as the highest value. [Treat %1s or lower as the highest value]|Fickle_Attack_Count",
     "key": "Mythic Path Ability ~ Fickle Attack",
     "name": "Fickle Attack",
-    "description": "Whenever you roll damage for a melee or ranged attack with a weapon or alchemical item, you can treat any natural 1s on the damage dice as if they were the highest possible number on those dice. You can select this ability up to three times. The second time you select it, treat 1s and 2s as the highest value. The third time, treat 1s, 2s, and 3s as the highest value. [Treat %1s or lower as the highest value]|Fickle_Attack_Count",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,20 +56,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 321,
-    "record_key": "Mythic Path Ability ~ Fickle Attack"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 321,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Fickle Attack",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

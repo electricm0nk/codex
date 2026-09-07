@@ -1,10 +1,13 @@
 import type {
+  AdoptedRaceOptionDto,
+  AdoptiveParentageOptionDto,
   AlternateRacialTraitsResponse,
   AlternateTraitDto,
   BlockedAlternateDto,
   RacePickerDto,
   RaceSelectionResponse,
   RenderedTraitDescriptionDto,
+  SkinwalkerChangeShapeOptionDto,
   SuppressionDto,
 } from '../boundary/loadAlternateRacialTraits';
 
@@ -222,4 +225,78 @@ export function selectionWarnings(selection: RaceSelectionResponse | null): stri
     warnings.push(`Flag ${flag} fired but replaced and granted nothing in the loaded books.`);
   }
   return warnings;
+}
+
+// --- Adoptive Parentage / Adopted Race options ------------------------------
+//
+// Both option kinds are `text_only`: neither carries a magnitude, so their
+// whole bar for reaching a player is a real rendered description on a real
+// screen — SD-34 wave 33 lane B's own next-cycle plan item 1. Both are
+// resolved backend-side (`adoptive_parentage_options`/
+// `resolve_adopted_race_options`); this module only presents what arrived.
+
+/**
+ * The header line for the options section, derived from what the backend
+ * actually served rather than a compiled-in count.
+ */
+export function describeAdoptionOptions(response: AlternateRacialTraitsResponse): string {
+  const parentageCount = response.adoptiveParentageOptions.length;
+  const adoptedCount = response.adoptedRaceOptions.length;
+  const parentageWord = parentageCount === 1 ? 'Adoptive Parentage option' : 'Adoptive Parentage options';
+  const adoptedWord = adoptedCount === 1 ? 'Adopted Race selector' : 'Adopted Race selectors';
+  return `${parentageCount} ${parentageWord}, ${adoptedCount} ${adoptedWord}`;
+}
+
+/**
+ * What one "Adoptive Parentage" option grants, in a sentence. Empty is a
+ * legitimate, honestly reported answer for a race this project has not (yet)
+ * ingested standard traits for — never papered over with an invented grant.
+ */
+export function describeAdoptiveParentageGrants(option: AdoptiveParentageOptionDto): string {
+  if (option.grants.length === 0) {
+    return 'Grants nothing already ingested for this race.';
+  }
+  return `Grants ${option.grants.map((grant) => grant.name).join(', ')}.`;
+}
+
+/**
+ * What one "Adopted Race" selector's real Trait pool offers, in a sentence.
+ *
+ * Three real cases, none collapsed into another: a malformed `CHOOSE:` token
+ * is a corpus finding (not "empty pool"); a genuinely empty pool — the
+ * `Rougarou` selector, the sole honest zero among the 21 real oracle rows —
+ * is reported as exactly that; everything else names the real pool.
+ */
+export function describeAdoptedRaceGrants(option: AdoptedRaceOptionDto): string {
+  if (option.malformedChooseToken) {
+    return "Corpus finding: this selector's CHOOSE token could not be read, so its pool cannot be shown.";
+  }
+  if (option.grants.length === 0) {
+    return `No ingested Trait pool for ${option.adoptedRace} — this selector offers nothing to pick from today.`;
+  }
+  return `Choose one: ${option.grants.map((grant) => grant.name).join(', ')}.`;
+}
+
+/**
+ * The header line for the Skinwalker `Change Shape` section, derived from
+ * what the backend actually served rather than a compiled-in count.
+ */
+export function describeSkinwalkerChangeShapeOptions(response: AlternateRacialTraitsResponse): string {
+  const kinCount = response.skinwalkerChangeShapeOptions.length;
+  const kinWord = kinCount === 1 ? 'kin' : 'kins';
+  return `${kinCount} Skinwalker ${kinWord}`;
+}
+
+/**
+ * What one Skinwalker kin's `Change Shape` pool offers, in a sentence. Real
+ * magnitude (a `TEMPBONUS` each option applies once activated during play)
+ * is not computed by this screen — naming the real, available benefits is
+ * the whole bar this row clears; see `codex::rules_core::skinwalker_change_shape`
+ * module doc for the remaining gap (no on-sheet activation exists yet).
+ */
+export function describeSkinwalkerChangeShapeGrants(option: SkinwalkerChangeShapeOptionDto): string {
+  if (option.grants.length === 0) {
+    return `No ingested option pool for ${option.kin} — this pool offers nothing to pick from today.`;
+  }
+  return `Choose one: ${option.grants.map((grant) => grant.name).join(', ')}.`;
 }

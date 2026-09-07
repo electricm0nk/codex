@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Racial Traits ~ Duergar",
     "name": "Racial Traits ~ Duergar",
-    "description": null,
     "raw_tokens": [
       {
         "key": "DEFINE",
@@ -17,20 +16,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/duergar/duergar_abilities_globalvar.lst",
-    "sha256": "60db6d26acbe9df6d86a495f30ea73a846e532e4630aa093c69296ed0b8954cb",
-    "line": 10,
-    "record_key": "Racial Traits ~ Duergar"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/duergar/duergar_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Duergar",
+    "sha256": "60db6d26acbe9df6d86a495f30ea73a846e532e4630aa093c69296ed0b8954cb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

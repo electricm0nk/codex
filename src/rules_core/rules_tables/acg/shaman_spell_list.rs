@@ -471,7 +471,7 @@ mod tests {
     /// not-yet-ingested entries, which are real Shaman spells whose base
     /// records this repo does not carry.
     #[test]
-    fn every_shaman_spell_key_is_real_or_explicitly_listed_as_not_ingested() {
+    fn every_shaman_spell_key_is_real_or_explicitly_listed_as_engine_does_not_hold() {
         for (key, _) in SHAMAN_SPELL_LIST {
             let known = SPELL_LIST.iter().any(|entry| entry.key == *key)
                 || apg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
@@ -485,23 +485,23 @@ mod tests {
         }
     }
 
-    /// The converse direction: every declared not-ingested entry must
+    /// The converse direction: every declared engine-does-not-hold entry must
     /// actually be on the list and actually be unresolvable. This is what
     /// makes the gap shrink loudly if corpus ingestion later widens.
     #[test]
-    fn the_not_ingested_list_is_accurate_in_both_directions() {
+    fn the_engine_does_not_hold_list_is_accurate_in_both_directions() {
         assert_eq!(SHAMAN_SPELLS_NOT_INGESTED.len(), 21);
         for key in SHAMAN_SPELLS_NOT_INGESTED {
             assert!(
                 shaman_spell_level(key).is_some(),
-                "{key} is declared not-ingested but is not on the Shaman list at all"
+                "{key} is declared engine-does-not-hold but is not on the Shaman list at all"
             );
             let resolves = SPELL_LIST.iter().any(|entry| entry.key == *key)
                 || apg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
                 || acg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key);
             assert!(
                 !resolves,
-                "{key} is declared not-ingested but now resolves -- corpus ingestion widened, \
+                "{key} is declared engine-does-not-hold but now resolves -- corpus ingestion widened, \
                  shrink SHAMAN_SPELLS_NOT_INGESTED"
             );
         }

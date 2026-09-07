@@ -51,6 +51,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "CON", amount: 4 }],
         source_page: None,
         owners: &["Companion (Devolved Humanoid)"],
+        cross_book_owners: &[],
         source_file: "ha_abilities_companion.lst",
         source_line: 3,
     },

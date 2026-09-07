@@ -117,6 +117,7 @@ use codex::rules_core::race_resolver::{
     adopted_race_choose_selectors, adoptive_parentage_options, load_race_corpus, RaceCorpus, RaceTraitRecord,
     TraitRole,
 };
+use codex::rules_core::skinwalker_change_shape::skinwalker_change_shape_options;
 use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_options};
 
 use crate::authoring_workbench::codex_repo_root;
@@ -308,6 +309,39 @@ pub struct AdoptedRaceOptionDto {
     pub malformed_choose_token: bool,
 }
 
+/// One real option a Skinwalker kin's `Change Shape` pool resolves to. See
+/// `codex::rules_core::skinwalker_change_shape` module doc for why
+/// `description` is honestly `None` for every one of these — the record
+/// carries no `DESC:` token of its own; `name` is the real corpus text.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SkinwalkerChangeShapeGrantDto {
+    pub key: String,
+    pub name: String,
+    pub description: Option<String>,
+}
+
+/// One Skinwalker kin's `Change Shape` master trait, resolved against its
+/// real option pool (`codex::rules_core::skinwalker_change_shape`,
+/// wave 33 lane B's own named 20-unit remainder). Structurally the closest
+/// existing row is [`AdoptedRaceOptionDto`] (a selector paired with its real
+/// pool members) — kept as a separate DTO because the pool-membership
+/// source differs (a cited static table, not a `TYPE:` token read directly
+/// off each member; see that module's own doc comment for why).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SkinwalkerChangeShapeOptionDto {
+    pub key: String,
+    pub name: String,
+    pub book: String,
+    /// The kin this pool belongs to (`"Werebear-Kin"`), read off the
+    /// master's own `ABILITY:` token, never hand-typed.
+    pub kin: String,
+    /// Real option records this kin's pool resolves to. Never empty for any
+    /// of the 9 real kins this project resolves.
+    pub grants: Vec<SkinwalkerChangeShapeGrantDto>,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AlternateRacialTraitsResponse {
@@ -319,6 +353,10 @@ pub struct AlternateRacialTraitsResponse {
     /// against the real Trait pool. See [`AdoptedRaceOptionDto`]. Additive
     /// field — a consumer that does not read it is unaffected.
     pub adopted_race_options: Vec<AdoptedRaceOptionDto>,
+    /// Skinwalker's nine `Change Shape` kin pools, resolved. See
+    /// [`SkinwalkerChangeShapeOptionDto`]. Additive field — a consumer that
+    /// does not read it is unaffected.
+    pub skinwalker_change_shape_options: Vec<SkinwalkerChangeShapeOptionDto>,
     /// Corpus files that could not be read, plus any failure to locate the
     /// corpus at all. Empty in a healthy checkout.
     pub diagnostics: Vec<String>,
@@ -868,13 +906,46 @@ fn build_menu(corpus: &RaceCorpus) -> AlternateRacialTraitsResponse {
         Err(_) => Vec::new(),
     };
 
+    // SD-34 wave 33/35 (bucket-D mining): Skinwalker's nine `Change Shape`
+    // kin pools (`codex::rules_core::skinwalker_change_shape`), resolved
+    // over the SAME loaded `corpus` this function already holds — no
+    // second corpus root or pool load needed, unlike the Adopted Race
+    // shape above, because pool membership here comes from a cited static
+    // table rather than a second content kind.
+    let skinwalker_change_shape_options: Vec<SkinwalkerChangeShapeOptionDto> =
+        skinwalker_change_shape_options(corpus)
+            .into_iter()
+            .map(|option| SkinwalkerChangeShapeOptionDto {
+                key: option.key,
+                name: option.name,
+                book: book_code(&option.book_id),
+                kin: option.kin,
+                grants: option
+                    .grants
+                    .into_iter()
+                    .map(|grant| SkinwalkerChangeShapeGrantDto {
+                        key: grant.key,
+                        name: grant.name,
+                        description: grant.description,
+                    })
+                    .collect(),
+            })
+            .collect();
+
     let diagnostics =
         corpus.diagnostics().iter().map(|diagnostic| format!("{}: {}", diagnostic.path, diagnostic.message)).collect();
 
     let mut findings = multi_flag_gate_findings(corpus);
     findings.extend(preability_guard_findings(corpus));
 
-    AlternateRacialTraitsResponse { races, adoptive_parentage_options, adopted_race_options, diagnostics, findings }
+    AlternateRacialTraitsResponse {
+        races,
+        adoptive_parentage_options,
+        adopted_race_options,
+        skinwalker_change_shape_options,
+        diagnostics,
+        findings,
+    }
 }
 
 /// Resolves one race against a chosen alternate set, by calling
@@ -1047,6 +1118,7 @@ fn menu_or_error() -> AlternateRacialTraitsResponse {
             races: Vec::new(),
             adoptive_parentage_options: Vec::new(),
             adopted_race_options: Vec::new(),
+            skinwalker_change_shape_options: Vec::new(),
             diagnostics: vec![format!("race corpus unavailable: {err}")],
             findings: Vec::new(),
         },
@@ -2298,30 +2370,45 @@ mod tests {
         }
     }
 
-    /// SD-32 `decisions.md §25` cycle 2: the menu command carries all 14 real
-    /// "Adopted Race" selectors this cycle's new `selector_only`
-    /// `BookSource`s ingested, correctly book-coded, and none flagged
-    /// malformed (every real oracle row's `CHOOSE:` token parses).
+    /// SD-32 `decisions.md §25` cycle 2: the menu command carries all 21 real
+    /// "Adopted Race" selectors ingested corpus-wide -- the original 14
+    /// `inner_sea_races` (ISR) selectors, plus AT-34-E3-001's 7
+    /// `core_rulebook` (CRB) selectors (2026-08-27,
+    /// `ingest_race_traits.rs`'s new `selector_only` `BookSource`) -- all
+    /// correctly book-coded, and none flagged malformed (every real oracle
+    /// row's `CHOOSE:` token parses).
     ///
-    /// **13 of 14 resolve a real grant, via a real `kind: trait` write.**
-    /// `epic-6-kind-trait` cycle 2 built this resolver against a temporary
-    /// `ability/`-directory fallback because `shape_ledger.py`'s kind-blind
-    /// join blocked the real `--kind trait` ingest. Cycle 3 (this cycle): a
-    /// sibling cycle fixed that join and ran `ingest_generic_kind.py --kind
-    /// trait` for real; `trait_pool::load_trait_pool`'s fallback is retired
-    /// (see that module's own doc comment), and this test now proves the 13
-    /// real grants resolve from `data/corpus/inner_sea_races/trait_generic/`
-    /// -- the modelled `kind: trait` schema `decisions.md §25` specifies --
-    /// with no fallback read anywhere in the path. Rougarou is honestly 0:
-    /// cycle 1's own corpus-wide scan proved no book anywhere grants a
-    /// Rougarou Race Trait (`race_resolver.rs`'s own `rougarou` chassis
-    /// comment: no `Rougarou_Replace*` flag is ever set `True` anywhere in
-    /// the pinned oracle), re-confirmed this cycle by re-running the same
-    /// scan against the freshly-bootstrapped oracle (§0 below / this cycle's
-    /// receipt) -- a hard impossibility of source data (`decisions.md §27b`),
+    /// **20 of 21 resolve at least one real grant, via a real `kind: trait`
+    /// write.** `epic-6-kind-trait` cycle 2 built this resolver against a
+    /// temporary `ability/`-directory fallback because `shape_ledger.py`'s
+    /// kind-blind join blocked the real `--kind trait` ingest. Cycle 3 fixed
+    /// that join and ran `ingest_generic_kind.py --kind trait` for real;
+    /// `trait_pool::load_trait_pool`'s fallback is retired (see that
+    /// module's own doc comment). The original 13 ISR selectors each pick
+    /// from a single-member pool (their own named race trait, e.g. Oread's
+    /// `Loner of the Rocks`). AT-34-E3-001's 7 CRB selectors are a different
+    /// shape: `<Race> Race Trait` (e.g. `TYPE:Trait.RaceTrait.Elf Race
+    /// Trait`) is PF1e's *general* chargen-Trait race tag, carrying every
+    /// `advanced_players_guide`/`inner_sea_races` Trait book-authored FOR
+    /// that race, not one dedicated ISR pool member -- so
+    /// `resolve_adopted_race_options` (which returns the WHOLE pool, not a
+    /// single pick) resolves each to several real grants, re-derived per
+    /// race directly from the corpus books `RACE_CORPUS_BOOKS` loads
+    /// (`grep -rl 'RaceTrait.<Race> Race Trait'` over
+    /// `core_rulebook,beastiary,advanced_race_guide,advanced_players_guide,
+    /// monster_codex,inner_sea_races,horror_adventures,bestiary_{2,3,5,6}`,
+    /// deliberately excluding `ultimate_campaign`'s own matching trait
+    /// files, which `RACE_CORPUS_BOOKS` never loads):
+    /// Dwarf 4, Elf 4, Gnome 4, Half-Elf 4, Half-Orc 4, Halfling 3, Human 4.
+    ///
+    /// **Rougarou remains the sole honest zero.** Cycle 1's own corpus-wide
+    /// scan proved no book anywhere grants a Rougarou Race Trait
+    /// (`race_resolver.rs`'s own `rougarou` chassis comment: no
+    /// `Rougarou_Replace*` flag is ever set `True` anywhere in the pinned
+    /// oracle), a hard impossibility of source data (`decisions.md §27b`),
     /// not a gap.
     #[test]
-    fn the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_with_real_grants() {
+    fn the_menu_command_carries_all_twentyone_adopted_race_options_twenty_with_real_grants() {
         let menu = menu();
         let keys: Vec<&str> = menu.adopted_race_options.iter().map(|o| o.key.as_str()).collect();
         assert_eq!(
@@ -2329,8 +2416,15 @@ mod tests {
             vec![
                 "Adopted Race ~ Catfolk",
                 "Adopted Race ~ Dhampir",
+                "Adopted Race ~ Dwarf",
+                "Adopted Race ~ Elf",
                 "Adopted Race ~ Fetchling",
+                "Adopted Race ~ Gnome",
                 "Adopted Race ~ Grippli",
+                "Adopted Race ~ Half-Elf",
+                "Adopted Race ~ Half-Orc",
+                "Adopted Race ~ Halfling",
+                "Adopted Race ~ Human",
                 "Adopted Race ~ Ifrit",
                 "Adopted Race ~ Oread",
                 "Adopted Race ~ Ratfolk",
@@ -2343,26 +2437,74 @@ mod tests {
                 "Adopted Race ~ Vishkanya",
             ]
         );
+        // (key, expected grant count, expected grant books) -- `None` book
+        // set means "every book named is legal", used only for the 7 CRB
+        // multi-member pools whose members are drawn from more than one
+        // book; the 13 single-member ISR pools keep the original exact
+        // `["ISR"]` pin.
+        const EXPECTED: &[(&str, usize)] = &[
+            ("Adopted Race ~ Catfolk", 1),
+            ("Adopted Race ~ Dhampir", 1),
+            ("Adopted Race ~ Dwarf", 4),
+            ("Adopted Race ~ Elf", 4),
+            ("Adopted Race ~ Fetchling", 1),
+            ("Adopted Race ~ Gnome", 4),
+            ("Adopted Race ~ Grippli", 1),
+            ("Adopted Race ~ Half-Elf", 4),
+            ("Adopted Race ~ Half-Orc", 4),
+            ("Adopted Race ~ Halfling", 3),
+            ("Adopted Race ~ Human", 4),
+            ("Adopted Race ~ Ifrit", 1),
+            ("Adopted Race ~ Oread", 1),
+            ("Adopted Race ~ Ratfolk", 1),
+            ("Adopted Race ~ Rougarou", 0),
+            ("Adopted Race ~ Skinwalker", 1),
+            ("Adopted Race ~ Suli", 1),
+            ("Adopted Race ~ Sylph", 1),
+            ("Adopted Race ~ Undine", 1),
+            ("Adopted Race ~ Vanara", 1),
+            ("Adopted Race ~ Vishkanya", 1),
+        ];
+        const CRB_MULTI_MEMBER: &[&str] = &[
+            "Adopted Race ~ Dwarf",
+            "Adopted Race ~ Elf",
+            "Adopted Race ~ Gnome",
+            "Adopted Race ~ Half-Elf",
+            "Adopted Race ~ Half-Orc",
+            "Adopted Race ~ Halfling",
+            "Adopted Race ~ Human",
+        ];
+        assert_eq!(EXPECTED.len(), 21, "every key above must have an entry here");
         for option in &menu.adopted_race_options {
             assert!(!option.malformed_choose_token, "{:?}: every real oracle row must parse cleanly", option.key);
-            if option.key == "Adopted Race ~ Rougarou" {
-                assert!(option.grants.is_empty(), "Rougarou's pool is genuinely, corpus-wide empty");
-                continue;
-            }
+            let (_, expected_count) = EXPECTED
+                .iter()
+                .find(|(key, _)| *key == option.key.as_str())
+                .unwrap_or_else(|| panic!("{:?}: no expected-count entry", option.key));
             assert_eq!(
                 option.grants.len(),
-                1,
-                "{:?}: exactly 1 real inner_sea_races pool member expected",
+                *expected_count,
+                "{:?}: expected {expected_count} real pool member(s)",
                 option.key
             );
-            let grant = &option.grants[0];
-            assert!(!grant.name.trim().is_empty(), "{:?}: grant must carry a real name", option.key);
-            assert_eq!(grant.book, "ISR", "{:?}: the real pool member's own book", option.key);
-            assert!(
-                grant.description.as_deref().is_some_and(|d| !d.trim().is_empty()),
-                "{:?}: grant must carry real corpus prose",
-                option.key
-            );
+            for grant in &option.grants {
+                assert!(!grant.name.trim().is_empty(), "{:?}: grant must carry a real name", option.key);
+                assert!(
+                    grant.description.as_deref().is_some_and(|d| !d.trim().is_empty()),
+                    "{:?}: grant must carry real corpus prose",
+                    option.key
+                );
+                if !CRB_MULTI_MEMBER.contains(&option.key.as_str()) {
+                    assert_eq!(grant.book, "ISR", "{:?}: the real pool member's own book", option.key);
+                } else {
+                    assert!(
+                        grant.book == "ISR" || grant.book == "APG",
+                        "{:?}: {:?} is a book RACE_CORPUS_BOOKS does not load for the CRB Race Trait pool",
+                        option.key,
+                        grant.book
+                    );
+                }
+            }
         }
         // The one real corpus prose sample, pinned by exact text so a future
         // regeneration that silently changed the content would be caught.
@@ -2376,6 +2518,79 @@ mod tests {
             )
         );
         let books: BTreeSet<&str> = menu.adopted_race_options.iter().map(|o| o.book.as_str()).collect();
-        assert_eq!(books, BTreeSet::from(["B2", "B3", "B5", "B6"]));
+        assert_eq!(books, BTreeSet::from(["B2", "B3", "B5", "B6", "CRB"]));
+    }
+
+    /// SD-34 wave 33 lane B's own named 20-unit remainder, item 2
+    /// (`wave33_laneB_race_trait_never_applies_cycle_receipt.md`): the real
+    /// Tauri command surface carries all 9 Skinwalker `Change Shape` kin
+    /// pools, each with real, non-fabricated grants, the SAME resolver
+    /// `probe_race_trait_corpus` calls (`codex::rules_core::
+    /// skinwalker_change_shape::skinwalker_change_shape_options`) --
+    /// never re-implemented here.
+    #[test]
+    fn the_menu_command_carries_all_nine_skinwalker_change_shape_kin_pools_with_real_grants() {
+        let menu = menu();
+        let keys: Vec<&str> = menu.skinwalker_change_shape_options.iter().map(|o| o.key.as_str()).collect();
+        assert_eq!(
+            keys,
+            vec![
+                "Werebat-Kin ~ Change Shape",
+                "Werebear-Kin ~ Change Shape",
+                "Wereboar-Kin ~ Change Shape",
+                "Werecrocodile-Kin ~ Change Shape",
+                "Wereraptor-Kin ~ Change Shape",
+                "Wererat-Kin ~ Change Shape",
+                "Wereshark-Kin ~ Change Shape",
+                "Weretiger-Kin ~ Change Shape",
+                "Werewolf-Kin ~ Change Shape",
+            ]
+        );
+        const EXPECTED: &[(&str, &str, usize)] = &[
+            ("Werebat-Kin ~ Change Shape", "Werebat-Kin", 4),
+            ("Werebear-Kin ~ Change Shape", "Werebear-Kin", 4),
+            ("Wereboar-Kin ~ Change Shape", "Wereboar-Kin", 4),
+            ("Werecrocodile-Kin ~ Change Shape", "Werecrocodile-Kin", 3),
+            ("Wereraptor-Kin ~ Change Shape", "Wereraptor-Kin", 4),
+            ("Wererat-Kin ~ Change Shape", "Wererat-Kin", 4),
+            ("Wereshark-Kin ~ Change Shape", "Wereshark-Kin", 4),
+            ("Weretiger-Kin ~ Change Shape", "Weretiger-Kin", 4),
+            ("Werewolf-Kin ~ Change Shape", "Werewolf-Kin", 3),
+        ];
+        assert_eq!(EXPECTED.len(), 9, "every key above must have an entry here");
+        for option in &menu.skinwalker_change_shape_options {
+            assert_eq!(option.book, "B5", "every Skinwalker kin master row is a Bestiary 5 record");
+            let (_, expected_kin, expected_count) = EXPECTED
+                .iter()
+                .find(|(key, _, _)| *key == option.key.as_str())
+                .unwrap_or_else(|| panic!("{:?}: no expected entry", option.key));
+            assert_eq!(option.kin, *expected_kin, "{:?}: the kin read off its own ABILITY token", option.key);
+            assert_eq!(
+                option.grants.len(),
+                *expected_count,
+                "{:?}: expected {expected_count} real pool member(s), found {:?}",
+                option.key,
+                option.grants.iter().map(|g| g.key.as_str()).collect::<Vec<_>>()
+            );
+            for grant in &option.grants {
+                assert!(!grant.name.trim().is_empty(), "{:?}: grant must carry a real name", option.key);
+                // Honestly `None` for all 20 real records -- see this DTO's
+                // own doc comment. Asserted rather than left unchecked, so a
+                // future re-ingest that starts carrying a real `DESC:` here
+                // is a deliberate decision to update this pin, not a silent
+                // drift.
+                assert!(grant.description.is_none(), "{:?}: {:?} unexpectedly carries a description", option.key, grant.key);
+            }
+        }
+        // The one real cross-kin sample, pinned by exact key: `Bite` is
+        // shared by 8 of the 9 kins (every one but Wereboar-Kin).
+        let bite_sharing_kins: Vec<&str> = menu
+            .skinwalker_change_shape_options
+            .iter()
+            .filter(|option| option.grants.iter().any(|g| g.key == "Skinwalker ~ Change Shape (Bite)"))
+            .map(|option| option.kin.as_str())
+            .collect();
+        assert_eq!(bite_sharing_kins.len(), 8, "Bite is a real option for every kin but Wereboar-Kin");
+        assert!(!bite_sharing_kins.contains(&"Wereboar-Kin"));
     }
 }

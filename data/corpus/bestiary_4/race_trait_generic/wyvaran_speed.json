@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Wyvarans have a base speed of 30 feet.",
     "key": "Wyvaran ~ Speed",
     "name": "Normal Speed",
-    "description": "Wyvarans have a base speed of 30 feet.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_abilities_race.lst",
-    "sha256": "f9263c1e5ec38c272aea979b35614055b3d7ae8ce582325efc216270053d6fed",
-    "line": 17,
-    "record_key": "Wyvaran ~ Speed"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_abilities_race.lst",
+    "record_key": "Wyvaran ~ Speed",
+    "sha256": "f9263c1e5ec38c272aea979b35614055b3d7ae8ce582325efc216270053d6fed"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -158,15 +158,17 @@ pub struct DamageRollBaseDice {
 /// structured `DiceExpression`.
 ///
 /// Returns `None` when the item does not resolve against the corpus at
-/// all, or resolves but carries no `DAMAGE:` token (e.g. armor, or any
-/// other non-weapon item) — both are honest absence, not a fabricated
-/// dice expression.
+/// all, or resolves (directly, or via a `BASEITEM:` chase — see
+/// `base_item_damage_dice_token` below) but carries no `DAMAGE:` token
+/// anywhere in that chain (e.g. armor, or any other non-weapon item) —
+/// both are honest absence, not a fabricated dice expression.
 pub fn resolve_base_damage_dice(
     weapon_item_id: &str,
     corpus: &SourcePackageContent,
 ) -> Option<DamageRollBaseDice> {
     let (record, table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let base_dice = damage_dice_token(record)?;
+    let base_dice =
+        damage_dice_token(record).or_else(|| base_item_damage_dice_token(record, corpus))?;
     let weapon_record_key = equipment_key_token(record)
         .unwrap_or(&record.name)
         .to_string();
@@ -185,6 +187,34 @@ fn damage_dice_token(record: &EquipmentRecord) -> Option<DiceExpression> {
         .iter()
         .find(|token| token.key == "DAMAGE")
         .and_then(|token| DiceExpression::parse(&token.value))
+}
+
+/// `AT-34-E3-003` (bucket `M`, equipment sub-cause
+/// `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does`): a
+/// PCGen alias row states no mechanical tokens of its own at all beyond a
+/// `BASEITEM:` reference — the real corpus convention for "this record's
+/// own stats are its base item's stats." `Crossbow (Light)`
+/// (`core_rulebook/cr_equip_arms_armor.lst`) is the live instance: its own
+/// row carries `BASEITEM:Light Crossbow (Base)` and no `DAMAGE:` token,
+/// while `Light Crossbow (Base)` carries the real `DAMAGE:1d8`.
+/// `equipment_id_resolve` already parses `BASEITEM:` into a token (via
+/// `KNOWN_TAGS`); this function is the first thing to chase it, one hop,
+/// through the SAME resolver `resolve_base_damage_dice` already calls for
+/// its primary lookup — not a new resolution mechanism, a second call to
+/// the existing one. A `BASEITEM:` naming a record that does not resolve,
+/// or a chain more than one hop deep, returns `None` rather than guessing
+/// or recursing.
+fn base_item_damage_dice_token(
+    record: &EquipmentRecord,
+    corpus: &SourcePackageContent,
+) -> Option<DiceExpression> {
+    let base_item_key = record
+        .tokens
+        .iter()
+        .find(|token| token.key == "BASEITEM")
+        .map(|token| token.value.as_str())?;
+    let (base_record, _) = equipment_id_resolve(base_item_key, RuleSetId::Crb, corpus)?;
+    damage_dice_token(base_record)
 }
 
 /// The Pathfinder RPG single-die weapon-damage-size progression table
@@ -870,6 +900,76 @@ mod tests {
         let corpus = corpus_from(text);
 
         assert!(resolve_base_damage_dice("Leather Armor (Base)", &corpus).is_none());
+    }
+
+    /// `AT-34-E3-003` (bucket `M`, equipment sub-cause
+    /// `equipment_own_line_has_no_magnitude_but_closure_wiring_class_does`):
+    /// a real CRB record, `Crossbow (Light)`, carries no `DAMAGE:` token on
+    /// its own row at all — its only mechanically relevant token is
+    /// `BASEITEM:Light Crossbow (Base)`, PCGen's own "inherit this record's
+    /// stats" convention. `equipment_id_resolve` (the same resolver every
+    /// prior work-unit in this file already uses) already parses `BASEITEM`
+    /// into a real token; nothing previously chased it to a second record.
+    /// The real base record, `Light Crossbow (Base)`
+    /// (`core_rulebook/cr_equip_arms_armor.lst`), carries `DAMAGE:1d8` —
+    /// confirmed live: `python3 -c "import json; j=json.load(open(
+    /// 'data/corpus/core_rulebook/equipment/arms_armor/light_crossbow_base.json'));
+    /// print([t for t in j['data']['raw_tokens'] if t['key']=='DAMAGE'])"` →
+    /// `[{'key': 'DAMAGE', 'value': '1d8'}]`. Before this fix,
+    /// `resolve_weapon_damage_breakdown` (this function's real consumer,
+    /// feeding the desktop app's `WeaponDamageBreakdown`) returned `None`
+    /// for a player who selected `Crossbow (Light)` on their sheet — a real
+    /// player-facing gap, not only a bucket-M classifier miss.
+    #[test]
+    fn baseitem_alias_chases_to_its_base_records_damage_dice() {
+        let text = "Light Crossbow\tKEY:Light Crossbow (Base)\tTYPE:Weapon.Ranged.Martial\tCOST:35\tWT:4\tCRITMULT:x2\tCRITRANGE:19\tDAMAGE:1d8\n\
+                    Crossbow, Light\tKEY:Crossbow (Light)\tBASEITEM:Light Crossbow (Base)\tEQMOD:Material ~ Wood\n";
+        let corpus = corpus_from(text);
+
+        let resolved = resolve_base_damage_dice("Crossbow (Light)", &corpus)
+            .expect("Crossbow (Light) must chase BASEITEM to its base record's DAMAGE token");
+        assert_eq!(
+            resolved.base_dice,
+            DiceExpression {
+                count: 1,
+                die_size: 8
+            }
+        );
+        // The record's own identity is preserved even though the dice came
+        // from its BASEITEM -- this is still the alias the player selected.
+        assert_eq!(resolved.weapon_record_key, "Crossbow (Light)");
+    }
+
+    /// Negative control: a `BASEITEM:` naming a record that does not
+    /// resolve against the corpus at all must stay `None`, never panic or
+    /// silently fabricate a value.
+    #[test]
+    fn baseitem_naming_an_unresolvable_record_stays_none() {
+        let text =
+            "Ghost Item\tKEY:Ghost Item\tBASEITEM:Nonexistent Base Record\tTYPE:Weapon.Melee\n";
+        let corpus = corpus_from(text);
+
+        assert!(resolve_base_damage_dice("Ghost Item", &corpus).is_none());
+    }
+
+    /// A record with its own real `DAMAGE:` token must use that value, not
+    /// fall through to a `BASEITEM:` chase it does not need — the fallback
+    /// only fires when the record's own row has nothing.
+    #[test]
+    fn a_records_own_damage_token_wins_over_its_baseitem() {
+        let text = "Base Weapon\tKEY:Base Weapon\tDAMAGE:1d4\tTYPE:Weapon.Melee\n\
+                    Overridden\tKEY:Overridden\tBASEITEM:Base Weapon\tDAMAGE:2d6\tTYPE:Weapon.Melee\n";
+        let corpus = corpus_from(text);
+
+        let resolved =
+            resolve_base_damage_dice("Overridden", &corpus).expect("Overridden must resolve");
+        assert_eq!(
+            resolved.base_dice,
+            DiceExpression {
+                count: 2,
+                die_size: 6
+            }
+        );
     }
 
     #[test]

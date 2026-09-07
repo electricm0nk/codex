@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:09Z",
   "data": {
     "key": "Nagaji",
     "name": "Nagaji",
@@ -12,20 +11,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/nagaji/nagaji_languages.lst",
-    "sha256": "ed1666d2f2966f44f75e3ec46958b0d4a7035a1d5d736bf25446dc9ac54dfa04",
-    "line": 6,
-    "record_key": "Nagaji"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:09Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/nagaji/nagaji_languages.lst",
+    "record_key": "Nagaji",
+    "sha256": "ed1666d2f2966f44f75e3ec46958b0d4a7035a1d5d736bf25446dc9ac54dfa04"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

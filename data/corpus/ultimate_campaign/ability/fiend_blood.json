@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "The blood of fiends taints your line, manifesting physically, though it may be barely noticeable. Choose one of the following skills: Bluff, Intimidate, or Knowledge (planes). You gain a +1 trait bonus on checks with that skill, and it is always a class skill for you.",
     "key": "Trait ~ Fiend Blood",
     "name": "Fiend Blood",
-    "description": "The blood of fiends taints your line, manifesting physically, though it may be barely noticeable. Choose one of the following skills: Bluff, Intimidate, or Knowledge (planes). You gain a +1 trait bonus on checks with that skill, and it is always a class skill for you.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
-    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
-    "line": 235,
-    "record_key": "Trait ~ Fiend Blood"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 235,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "record_key": "Trait ~ Fiend Blood",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

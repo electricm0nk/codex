@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Racial Traits ~ Merfolk",
     "name": "Racial Traits ~ Merfolk",
-    "description": null,
     "raw_tokens": [
       {
         "key": "DEFINE",
@@ -17,20 +16,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/merfolk/merfolk_abilities_globalvar.lst",
-    "sha256": "d7d65923e9203a8e29f9a34600c6f4279c9fe660327bfa8510683c71566c7b7a",
-    "line": 10,
-    "record_key": "Racial Traits ~ Merfolk"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/merfolk/merfolk_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Merfolk",
+    "sha256": "d7d65923e9203a8e29f9a34600c6f4279c9fe660327bfa8510683c71566c7b7a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

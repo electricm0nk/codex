@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Even the smallest of handholds and outcroppings are more than sufficient for your purposes. You automatically succeed at all Acrobatics checks to walk along narrow ledges. Your Acrobatics checks never take a penalty because of obstructed, slippery, sloped, or unsteady surfaces, and you can move at full speed across such surfaces with no penalty. You also gain a +10 bonus to CMD against trip attacks.",
     "key": "Mythic Path Ability ~ Impeccable Balance",
     "name": "Impeccable Balance",
-    "description": "Even the smallest of handholds and outcroppings are more than sufficient for your purposes. You automatically succeed at all Acrobatics checks to walk along narrow ledges. Your Acrobatics checks never take a penalty because of obstructed, slippery, sloped, or unsteady surfaces, and you can move at full speed across such surfaces with no penalty. You also gain a +10 bonus to CMD against trip attacks.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 186,
-    "record_key": "Mythic Path Ability ~ Impeccable Balance"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 186,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Impeccable Balance",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

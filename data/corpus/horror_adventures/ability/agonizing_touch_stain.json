@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Both of your hands wither to nearly skeletal appendages, and your emotions dim towards the coldness of undeath. You take a -2 penalty on attacks with manufactured weapons. Your spells with somatic or emotion (Occult Adventures 144) components have a 5%% failure chance. This stacks with any spell failure chances you incur from other sources.",
     "key": "Lich Corruption ~ Agonizing Touch Stain",
     "name": "Agonizing Touch Stain",
-    "description": "Both of your hands wither to nearly skeletal appendages, and your emotions dim towards the coldness of undeath. You take a -2 penalty on attacks with manufactured weapons. Your spells with somatic or emotion (Occult Adventures 144) components have a 5%% failure chance. This stacks with any spell failure chances you incur from other sources.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 471,
-    "record_key": "Lich Corruption ~ Agonizing Touch Stain"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 471,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lich Corruption ~ Agonizing Touch Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

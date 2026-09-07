@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-27T14:53:22Z",
   "data": {
     "key": "Martial Weapon Proficiency Output",
     "name": "Martial Weapon Proficiency",
     "class": null,
-    "description": "You understand how to use your martial weapons in combat.",
+    "description": "You understand how to use your martial weapons in combat. You make attack rolls with all your martial weapons normally (without the non-proficient penalty).",
     "raw_tokens": [
       {
         "key": "KEY",

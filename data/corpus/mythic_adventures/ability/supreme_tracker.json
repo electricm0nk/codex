@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have something that carries a creature's scent (such as a personal item or piece of flesh), you can expend one use of mythic power to create a supernatural bond that allows you track that individual. As a free action, you can sense the creature's general direction and distance, as well as know whether it is alive, dead, destroyed, dying, or undead. The creature must be on the same plane as you for this ability to function. For the purpose of spells and effects that block scrying and divination, your caster level for this effect is %1. At 6th tier, you can track the creature if it's on a different plane than you.|Ability_SupremeTracker_CL",
     "key": "Mythic Path Ability ~ Supreme Tracker",
     "name": "Supreme Tracker",
-    "description": "If you have something that carries a creature's scent (such as a personal item or piece of flesh), you can expend one use of mythic power to create a supernatural bond that allows you track that individual. As a free action, you can sense the creature's general direction and distance, as well as know whether it is alive, dead, destroyed, dying, or undead. The creature must be on the same plane as you for this ability to function. For the purpose of spells and effects that block scrying and divination, your caster level for this effect is %1. At 6th tier, you can track the creature if it's on a different plane than you.|Ability_SupremeTracker_CL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 263,
-    "record_key": "Mythic Path Ability ~ Supreme Tracker"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 263,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Supreme Tracker",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

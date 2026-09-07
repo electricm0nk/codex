@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:17Z",
   "data": {
     "key": "Familiar ~ Augmented Animal",
     "name": "Familiar Type",
@@ -28,20 +27,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates_familiar_cr.lst",
-    "sha256": "f107c407d796e0ddf4852600ae23e4048ae7bb8be879cb376358cbdf9f08c849",
-    "line": 4,
-    "record_key": "Familiar ~ Augmented Animal"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:17Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates_familiar_cr.lst",
+    "record_key": "Familiar ~ Augmented Animal",
+    "sha256": "f107c407d796e0ddf4852600ae23e4048ae7bb8be879cb376358cbdf9f08c849"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

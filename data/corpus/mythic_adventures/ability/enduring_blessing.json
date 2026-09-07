@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Whenever you cast a spell with a duration of 10 minutes per level or longer upon one willing target, you can change that spell's duration to 24 hours. If the spell has other duration conditions, those still apply (for example, the duration of stoneskin changes to 24 hours or until discharged). A creature can't be subject to more than one spell affected by this ability at a time; if another is cast upon the creature, the first one ends. You can select this ability a second time at 6th tier or higher. The second time you select it, you can use it on spells with a duration of 1 minute per level or longer.",
     "key": "Mythic Path Ability ~ Enduring Blessing",
     "name": "Enduring Blessing",
-    "description": "Whenever you cast a spell with a duration of 10 minutes per level or longer upon one willing target, you can change that spell's duration to 24 hours. If the spell has other duration conditions, those still apply (for example, the duration of stoneskin changes to 24 hours or until discharged). A creature can't be subject to more than one spell affected by this ability at a time; if another is cast upon the creature, the first one ends. You can select this ability a second time at 6th tier or higher. The second time you select it, you can use it on spells with a duration of 1 minute per level or longer.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 318,
-    "record_key": "Mythic Path Ability ~ Enduring Blessing"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 318,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Enduring Blessing",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
 }

@@ -54,16 +54,20 @@
 //! school-power math, and no opposed-school preparation-cost bookkeeping, and it
 //! grounds no Wizard level 2+.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
-    PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
+    ComputationDiagnostic,
+    HeadlessReceiptStatus,
+    PilotBaseChassisComputation,
+    build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const WIZARD_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_wizard_level1_sd13_deterministic_input.txt");
@@ -75,34 +79,6 @@ const SPECIALIST_BONUS_SLOT_EXPLANATION_ID: &str = "class_chassis.wizard.special
 const SCHOOL_POWERS_BLOCKER_ID: &str =
     "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported";
 const PREPARED_BLOCKER_ID: &str = "class_spell.wizard.prepared_spellbook.unsupported";
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
 
 fn claim_blocking<'a>(
     computation: &'a PilotBaseChassisComputation,
@@ -123,10 +99,6 @@ fn claim_blocking<'a>(
         "diagnostic '{id}' must be claim-blocking: {diag:?}"
     );
     diag
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
 }
 
 // ----- Direct runtime evidence: the prepared spell-bearing identity is acknowledged -----
@@ -199,6 +171,11 @@ fn wizard_level1_fabricates_no_spell_math() {
             explanation.id == RECOGNITION_ID
                 || explanation.id == SPECIALIST_BONUS_SLOT_EXPLANATION_ID
                 || explanation.id.starts_with("class_chassis.wizard.spell_save_dc.")
+                // SD-34 decisions.md section 18: widened BY CONSTRUCTION, not narrowed --
+                // class_feature_grant_consumer now emits real, citation-backed corpus_record
+                // ids for Wizard (previously wholesale-excluded); this shape carve-out admits
+                // them without weakening the substring check for anything else.
+                || explanation.id.starts_with("class_feature.wizard.corpus_record.")
                 || !explanation.id.contains("spell"),
             "no fabricated spell explanation is allowed beyond the +0 recognition, the flat \
              specialist bonus slot count, and the real spell-save-DC records: {explanation:?}"

@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": null,
     "key": "Skinwalker ~ Change Shape (Darkvision)",
     "name": "Change Shape (Darkvision)",
-    "description": null,
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,18 +31,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race.lst",
-    "sha256": "85db848be3900cc747ef7038cb2e8d480f209cc9b9683399fce207d5407516ee",
-    "line": 63,
-    "record_key": "Skinwalker ~ Change Shape (Darkvision)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 63,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race.lst",
+    "record_key": "Skinwalker ~ Change Shape (Darkvision)",
+    "sha256": "85db848be3900cc747ef7038cb2e8d480f209cc9b9683399fce207d5407516ee"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ]
 }

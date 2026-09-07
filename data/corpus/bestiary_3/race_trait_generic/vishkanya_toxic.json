@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "%1 times per day (a number equal to his Constitution modifier (minimum 1/day)), a vishkanya can envenom a weapon that he wields with his toxic saliva or blood (using blood requires the vishkanya to be injured when he uses this ability). Applying venom in this way is a swift action.|max(CON,1)",
     "key": "Vishkanya ~ Toxic",
     "name": "Toxic",
-    "description": "%1 times per day (a number equal to his Constitution modifier (minimum 1/day)), a vishkanya can envenom a weapon that he wields with his toxic saliva or blood (using blood requires the vishkanya to be injured when he uses this ability). Applying venom in this way is a swift action.|max(CON,1)",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,18 +39,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
-    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627",
-    "line": 23,
-    "record_key": "Vishkanya ~ Toxic"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+    "record_key": "Vishkanya ~ Toxic",
+    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

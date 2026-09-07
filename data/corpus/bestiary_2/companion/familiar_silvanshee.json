@@ -220,9 +220,8 @@
     "record_key": "Familiar (Silvanshee)",
     "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:dr"
+    "static:literal_magnitudes_only"
   ]
 }

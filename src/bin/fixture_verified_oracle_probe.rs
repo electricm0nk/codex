@@ -74,7 +74,9 @@ const SPELL_PROBE_ABILITY_SCORE: i16 = 18;
 /// and every `fixture-verified` unit this binary will encounter), the
 /// PCGen-facing display name for `.pcg` `CLASS:`/`SOURCE:` lines, and the
 /// per-class spell-level lookup function.
-const SPELL_PROBE_CASTING_CLASSES: &[(&str, &str, fn(&str) -> Option<u8>)] = &[
+/// (`class:<id>`, PCGen display name, spell-level lookup fn) per row below.
+type SpellProbeCastingClass = (&'static str, &'static str, fn(&str) -> Option<u8>);
+const SPELL_PROBE_CASTING_CLASSES: &[SpellProbeCastingClass] = &[
     ("class:wizard", "Wizard", wizard_spell_list::wizard_spell_level),
     ("class:cleric", "Cleric", cleric_spell_list::cleric_spell_level),
     ("class:druid", "Druid", druid_spell_list::druid_spell_level),
@@ -249,6 +251,7 @@ fn try_real_spell_save_dc(
             skill_allocations: Vec::new(),
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
+            selected_traits: Vec::new(),
             spells_selected: vec![SpellSelection {
                 spell_id: name.to_string(),
                 source_class_id: class_key.to_string(),
@@ -663,6 +666,7 @@ fn main() {
                         skill_allocations: Vec::new(),
                         equipment_selections: Vec::new(),
                         selected_choices: Vec::new(),
+                        selected_traits: Vec::new(),
                         spells_selected: vec![SpellSelection {
                             spell_id: name.clone(),
                             source_class_id: class_key.to_string(),

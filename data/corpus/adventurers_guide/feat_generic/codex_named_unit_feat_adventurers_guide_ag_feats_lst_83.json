@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "You are a master at breaking even the toughest of objects.",
     "key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_83)",
     "name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_83)",
-    "description": "You are a master at breaking even the toughest of objects.",
     "raw_tokens": [
       {
         "key": "NAMEISPI",
@@ -45,23 +44,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
-    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
-    "line": 83,
-    "record_key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_83)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "adventurers_guide:ag_feats.lst:83"
-  }
+    "coordinate": "adventurers_guide:ag_feats.lst:83",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 83,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "record_key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_83)",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
 }

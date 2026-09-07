@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your dulled emotions are more difficult to affect with magic. You gain a +%1 bonus on Will saves against emotion effects, and if you have this manifestation's stain, you don't need to roll twice and take the lower result against them. This doesn't apply to emotion effects that cause rage, hatred, or anger.|PrometheanShatteredMindBonus",
     "key": "Promethean Corruption ~ Shattered Mind Gift",
     "name": "Shattered Mind Gift",
-    "description": "Your dulled emotions are more difficult to affect with magic. You gain a +%1 bonus on Will saves against emotion effects, and if you have this manifestation's stain, you don't need to roll twice and take the lower result against them. This doesn't apply to emotion effects that cause rage, hatred, or anger.|PrometheanShatteredMindBonus",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 784,
-    "record_key": "Promethean Corruption ~ Shattered Mind Gift"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 784,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Promethean Corruption ~ Shattered Mind Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

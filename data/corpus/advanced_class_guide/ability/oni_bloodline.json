@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Oni Bloodline",
     "name": "Oni Bloodline",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -29,20 +28,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_dep.lst",
-    "sha256": "c3768236976f64023f79542ed81ef397bbe7f838acb3ff15b07d511b40a28bad",
-    "line": 4,
-    "record_key": "Oni Bloodline"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_dep.lst",
+    "record_key": "Oni Bloodline",
+    "sha256": "c3768236976f64023f79542ed81ef397bbe7f838acb3ff15b07d511b40a28bad"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

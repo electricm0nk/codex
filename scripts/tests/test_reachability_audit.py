@@ -51,7 +51,7 @@ _spec.loader.exec_module(audit_mod)
 _STANDARD_STATUS_VOCAB = {
     "grounded": "", "literal-verified": "", "fixture-verified": "",
     "ingested-magnitude": "", "text-complete": "", "deferred-with-reason": "",
-    "not-ingested": "", "not-started": "", "unknown": "",
+    "engine-does-not-hold": "", "not-started": "", "unknown": "",
 }
 
 
@@ -67,7 +67,7 @@ class FabricatedDeadEndTest(unittest.TestCase):
     """The audit must be proven able to fail before it is trusted."""
 
     def test_fabricated_unmapped_wiring_class_is_reported(self):
-        # `not-started`/`not-ingested`/`unknown`/`deferred-with-reason` are
+        # `not-started`/`engine-does-not-hold`/`unknown`/`deferred-with-reason` are
         # handled generically ahead of the per-wiring_class dispatch in
         # `_doneness_verdict_uncapped()` (they resolve for ANY wiring_class,
         # bogus or not) -- only an EVIDENTIARY status (`grounded`,

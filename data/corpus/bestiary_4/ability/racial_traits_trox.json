@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Racial Traits ~ Trox",
     "name": "Racial Traits ~ Trox",
-    "description": null,
     "raw_tokens": [
       {
         "key": "DEFINE",
@@ -17,20 +16,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/trox/trox_abilities_globalvar.lst",
-    "sha256": "c694ae8103f0bbef0ebca532c75f6a91ee19d1d32cf14d56b2d5a59cc027f9a4",
-    "line": 10,
-    "record_key": "Racial Traits ~ Trox"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/trox/trox_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Trox",
+    "sha256": "c694ae8103f0bbef0ebca532c75f6a91ee19d1d32cf14d56b2d5a59cc027f9a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

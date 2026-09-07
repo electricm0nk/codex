@@ -1635,6 +1635,7 @@ mod tests {
                 skill_allocations: Vec::new(),
                 equipment_selections,
                 selected_choices: Vec::new(),
+                selected_traits: Vec::new(),
                 spells_selected: Vec::new(),
                 class_ability_activations: Vec::new(),
             },

@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "These skinwalkers are usually communal and defer readily to their superiors. They prefer dwelling in areas of dense foliage, such as jungles or forests. They often have little trust for those not in their immediate clan.",
     "key": "Werebat-Kin ~ Ability Scores",
     "name": "+2 Intelligence, -2 Wisdom, +2 Dexterity While in Bestial Form",
-    "description": "These skinwalkers are usually communal and defer readily to their superiors. They prefer dwelling in areas of dense foliage, such as jungles or forests. They often have little trust for those not in their immediate clan.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
-    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
-    "line": 19,
-    "record_key": "Werebat-Kin ~ Ability Scores"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "record_key": "Werebat-Kin ~ Ability Scores",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

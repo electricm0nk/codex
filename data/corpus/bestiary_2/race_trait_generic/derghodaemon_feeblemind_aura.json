@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "By grinding and clicking its mandibles and chitinous plates together (a free action), a derghodaemon can affect all creatures within 30 feet as if by a feeblemind spell.  Daemons are immune to this effect, but all other creatures must make a DC %1 Will save to resist the effects.  A creature that makes this save is immune to the effect for 24 hours.  A creature that fails remains affected as long as the derghodaemon continues to maintain the aura and the subject remains within 30 feet of the derghodaemon.  Once either condition ends, the victim of this effect can attempt a new DC %1 Will save once per minute to recover from the effect; otherwise, it can be cured by a heal, limited wish, miracle, or wish spell.  A derghodaemon cannot use its spell-like abilities or rend attack in any round in which it uses its feeblemind aura.  This is a sonic mind-affecting effect.|DerghodaemonFeeblemindDC",
     "key": "Derghodaemon ~ Feeblemind Aura",
     "name": "Feeblemind Aura",
-    "description": "By grinding and clicking its mandibles and chitinous plates together (a free action), a derghodaemon can affect all creatures within 30 feet as if by a feeblemind spell.  Daemons are immune to this effect, but all other creatures must make a DC %1 Will save to resist the effects.  A creature that makes this save is immune to the effect for 24 hours.  A creature that fails remains affected as long as the derghodaemon continues to maintain the aura and the subject remains within 30 feet of the derghodaemon.  Once either condition ends, the victim of this effect can attempt a new DC %1 Will save once per minute to recover from the effect; otherwise, it can be cured by a heal, limited wish, miracle, or wish spell.  A derghodaemon cannot use its spell-like abilities or rend attack in any round in which it uses its feeblemind aura.  This is a sonic mind-affecting effect.|DerghodaemonFeeblemindDC",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 288,
-    "record_key": "Derghodaemon ~ Feeblemind Aura"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 288,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Derghodaemon ~ Feeblemind Aura",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

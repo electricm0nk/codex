@@ -369,8 +369,9 @@ pub fn scan_ledger_rows(
     corpus_root: &Path,
 ) -> CorpusWideReport {
     let mut report = CorpusWideReport::default();
-    let mut book_indices: BTreeMap<String, BTreeMap<(String, u64), Vec<(String, String)>>> =
-        BTreeMap::new();
+    // Per-book (kind, line) -> [(field, formula)] index, built once and reused below.
+    type BookIndex = BTreeMap<(String, u64), Vec<(String, String)>>;
+    let mut book_indices: BTreeMap<String, BookIndex> = BTreeMap::new();
 
     for row in rows {
         let family_entry = report.families.entry(row.family.clone()).or_default();
@@ -413,11 +414,10 @@ pub fn scan_ledger_rows(
         } else {
             family_entry.refused_units += 1;
             report.total_refused_units += 1;
-            if let Some(sample) = refusal {
-                if family_entry.refusal_samples.len() < 15 {
+            if let Some(sample) = refusal
+                && family_entry.refusal_samples.len() < 15 {
                     family_entry.refusal_samples.push(sample);
                 }
-            }
         }
     }
 
@@ -629,28 +629,260 @@ mod tests {
     /// `AT-33-E6-001` attempt-11 receipt's corrected 50/39 fold-attribution
     /// split: `were*_kin_*`-named bestiary_5 ids missed by a
     /// `'skinwalker' in id` substring test are fold output too), the other
-    /// two are the regen's disclosed unrelated drift. Re-derived
-    /// 2026-08-26 via `python3 scripts/shape_ledger.py --inventory
-    /// docs/work-inventory.json --corpus-root data/corpus`, run **after**
-    /// the last commit that writes `docs/work-inventory.json` — the rule
-    /// this re-pin exists to make mechanical: run the suite after the last
-    /// write that can move it, not before.
+    /// two are the regen's disclosed unrelated drift.
+    ///
+    /// **6,257 -> 5,563 was ITSELF WRONG, discovered by SD-34 `AT-34-E3-001`'s
+    /// Domain Power cycle (2026-08-27).** The 5,563 re-pin (previous cycle,
+    /// same day) claimed this test's own live `run_corpus_wide_scan` value
+    /// matched `python3 scripts/shape_ledger.py --inventory
+    /// docs/work-inventory.json --corpus-root data/corpus`'s F1 rollup at
+    /// commit `ae25d75d7d`. It did not: running that identical command
+    /// directly against `git show ae25d75d7d:docs/work-inventory.json`
+    /// returns **5,445**, not 5,563 — confirmed twice, independently, before
+    /// this cycle's own edits touched anything (the committed file at the
+    /// cycle's own start SHA already scores 5,445) and again after this
+    /// cycle's own Domain Power grounding fix (5 `core_rulebook`
+    /// `class_feature` units left bucket B for `DONE`/`V`, none of them
+    /// F1-shaped — their formulas are `max(.../2,1)`/bare-LVL, F5/F2 shapes,
+    /// never F1's bare-literal shape) landed and `docs/work-inventory.json`
+    /// was regenerated again: still 5,445. So this cycle's own edits moved
+    /// **zero** F1-population units; the 5,563 pin was a bad re-derivation,
+    /// not a stale one, and the true, currently-live number — both before
+    /// and after this cycle — is 5,445. `scripts/retro.py correction`
+    /// records this (`AT-34-E3-001-class_feature_owner_matched-cycle`
+    /// claimed 5,563; actual 5,445).
+    ///
+    /// **5,445 -> 5,402, a REAL movement, not a re-derivation correction
+    /// (SD-34 `AT-34-E3-001` mechanism-3 cycle 3, 2026-08-27).** This
+    /// re-pin's own denominator is `shape_ledger.py`'s "not-done units
+    /// considered" population (27,273 before this cycle), which EXCLUDES
+    /// every unit whose `docs/work-inventory.json` `status` is already a
+    /// done rung -- so a unit leaving bucket B for `DONE` legitimately
+    /// leaves F1's population too, if its own corpus formula happens to be
+    /// F1-shaped. This cycle's own fix (`probe_ranger_favored_enemy_bonus_
+    /// wiring` / `probe_ranger_favored_terrain_bonus_wiring`, `src/bin/
+    /// v06_work_inventory.rs`) grounded exactly 43 `"Favored Enemy/Terrain
+    /// Bonus ~ <type>"` records corpus-wide (42 `core_rulebook` + 1
+    /// `advanced_players_guide`), every one of which carries a bare-literal
+    /// `BONUS:VAR|Favored<Type>|2` token -- F1's own defining shape (a bare
+    /// literal magnitude, no per-level/ability/pool expression). 5445 - 43 =
+    /// 5402, confirmed by re-running `python3 scripts/shape_ledger.py
+    /// --inventory docs/work-inventory.json --corpus-root data/corpus`
+    /// against the regenerated file: F1 = 5402 exactly. Re-run **after** the
+    /// last commit that writes `docs/work-inventory.json` — the rule this
+    /// re-pin exists to make mechanical, restated for whichever cycle next
+    /// regenerates the file.
+    ///
+    /// **5,402 -> 5,401, a REAL movement (SD-34 `AT-34-E3-001` mechanism-2
+    /// cycle 4, 2026-08-27).** This cycle's own fix
+    /// (`probe_wizard_arcane_school_wiring`, `src/bin/v06_work_inventory.rs`)
+    /// grounded 5 wizard arcane-school records corpus-wide (all
+    /// `core_rulebook`): `Evocation School ~ {Intense Spells, Force
+    /// Missile}` and `Abjuration School ~ {Resistance, Protective Ward,
+    /// Energy Absorption}`. Of those five, exactly ONE
+    /// (`Abjuration School ~ Resistance`, `BONUS:VAR|AbjurationResistanceBonus|5`)
+    /// carries F1's own defining shape (a bare-literal magnitude token, no
+    /// per-level/ability/pool expression); the other four carry per-level
+    /// (`AbjurationSchoolLVL*3`), ability-modifier (`3 + Intelligence
+    /// modifier`), or referenced-variable (`ArcaneSchoolPowerTimes`,
+    /// `(AbjurationSchoolLVL/5)+1`) formulas, never F1-shaped to begin with.
+    /// 5402 - 1 = 5401, confirmed by re-running `python3 scripts/
+    /// shape_ledger.py --inventory docs/work-inventory.json --corpus-root
+    /// data/corpus` against the regenerated file: F1 = 5401 exactly.
+    ///
+    /// **5,401 -> 5,400, a REAL movement (SD-34 `AT-34-E3-001` mechanism-4
+    /// cycle 5, 2026-08-27).** This cycle built `companion_chassis::
+    /// CompanionClassRecord`, a genuine new record type for
+    /// `*_classes_companion.lst` rows, and registered it for its three real
+    /// corpus-wide consumers (`core_rulebook` 2, `ultimate_magic` 3,
+    /// `book_of_the_damned_volume_1` 2 — 7 rows, all closed this cycle). Of
+    /// those 7, exactly ONE (`ultimate_magic:companion:black_blade`,
+    /// `BONUS:HP|CURRENTMAX|5`) carries F1's own defining shape — a
+    /// bare-literal magnitude token, no per-level/ability/pool expression —
+    /// and moved from `engine-does-not-hold` to `literal-verified` (a
+    /// done-tier rung `shape_ledger.py`'s "not-done units considered"
+    /// population excludes). The other 6, read directly off the same
+    /// `*_classes_companion.lst` rows (`shape_ledger.py`'s own report
+    /// excludes done-tier units, so they cannot be re-checked through its
+    /// output once closed): `Companion`, `Shadow Companion`, `Vermin
+    /// Companion` and `Imp Companion` each carry a
+    /// `classlevel("APPLIEDAS=NONEPIC")`-derived `BONUS:COMBAT`/`BONUS:SAVE`
+    /// token (F6-shaped), and the two bare-numbered level-advancement rows
+    /// keyed `"1"` (`um_classes_companion.lst:13`,
+    /// `botd1_classes_companion.lst:8`) carry only an `ABILITY:` token, no
+    /// `DEFINE:`/`BONUS:` at all (F0-shaped) — none of the 6 was ever
+    /// F1-shaped. 5401 - 1 = 5400, confirmed by re-running `python3 scripts/
+    /// shape_ledger.py --inventory docs/work-inventory.json --corpus-root
+    /// data/corpus` against the regenerated file: F1 = 5400 exactly.
+    ///
+    /// **5,231 -> 5,217, a REAL movement (SD-34 wave 38, 2026-09-03,
+    /// closure-cycle verify.sh re-run).** Wave 38 closed Lane A (Animate
+    /// Servant uses-per-day override) and Lane C (Shape 2's dot-segment
+    /// magnitude-id matcher gap, 112 units) into `DONE`. `shape_ledger.py`'s
+    /// "not-done units considered" population excludes done-tier units by
+    /// construction, so any of those newly-closed units that happen to carry
+    /// F1's own defining shape (a bare-literal magnitude token, no
+    /// per-level/ability/pool expression) leaves F1's not-done population
+    /// too. 5231 - 14 = 5217, confirmed by re-running `python3 scripts/
+    /// shape_ledger.py --inventory docs/work-inventory.json --corpus-root
+    /// data/corpus` against the post-merge, post-regen `docs/
+    /// work-inventory.json` (tranche/14 tip `f6def63a64`, orchestrator regen
+    /// commit): F1 = 5217 exactly.
+    ///
+    /// **5,217 -> 5,207, a REAL movement (SD-34 wave 39, 2026-09-04,
+    /// closure-cycle verify.sh re-run).** Wave 39 lane A closed all 20 of its
+    /// assigned units (the four Unchained classes' word-choice-synonym gap)
+    /// into `DONE`/`literal-verified` via `CLASS_FEATURE_ID_KNOWN_SYNONYMS`.
+    /// A real share of those 20 carry F1's own defining shape (bare-literal
+    /// magnitude, no per-level/ability/pool expression), so F1's not-done
+    /// population fell too. 5217 - 10 = 5207, confirmed by re-running
+    /// `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json
+    /// --corpus-root data/corpus` against the post-merge, post-regen `docs/
+    /// work-inventory.json` (tranche/14 tip `3109f48ac8`, orchestrator
+    /// wave-end gate): F1 = 5207 exactly.
+    ///
+    /// **5,207 -> 5,206, a REAL movement (SD-34 wave 43, 2026-09-05,
+    /// closure-cycle verify.sh re-run).** Wave 43 closed all 12 of its
+    /// assigned units (Duelist/Shadowdancer/Assassin/Loremaster) into
+    /// `DONE`/`V`. Of those, Shadowdancer's Shadow Illusion uses/day is a
+    /// literal `1` (confirmed against the corpus token directly, overriding
+    /// its own DESC prose's `floor(level/2)` -- see the same cycle's
+    /// commit `f3267fe099`) -- F1's own defining shape (a bare-literal
+    /// magnitude token, no per-level/ability/pool expression) -- so F1's
+    /// not-done population fell too. 5207 - 1 = 5206, confirmed by
+    /// re-running `python3 scripts/shape_ledger.py --inventory \
+    /// docs/work-inventory.json --corpus-root data/corpus` against the
+    /// post-merge, post-regen `docs/work-inventory.json` (tranche/14,
+    /// orchestrator wave-end gate): F1 = 5206 exactly.
+    ///
+    /// **5,206 -> 5,196, a REAL movement (SD-34 wave 44, 2026-09-05).**
+    /// Wave 44 closed 16 units total (Piece 2's four classifier-collision
+    /// fixes); of those, 10 carry F1's own defining shape -- verified per-id
+    /// via `shape_ledger.py --output`, not assumed from formula-resolution
+    /// shape (Pathfinder Delver's own PaDFE Construct/Ooze/Undead each carry
+    /// a bare single-variable token, `BONUS:VAR|Favored<Type>|TrapSenseBonus`,
+    /// syntactically flat even though `TrapSenseBonus` itself resolves
+    /// through a level-dependent chain elsewhere -- F1 classifies the
+    /// record's OWN token shape, not its full resolution chain; Spiritualist's
+    /// seven `Phantom Emotional Focus ~ <Name>` records are true bare
+    /// literals, `BONUS:VAR|PhantomEmotionalFocus_<Name>|1`). The other 6
+    /// closed units (Cavalier's Order of the Dragon, F2; the five Wizard
+    /// Necromancy School facts, F2/F5) are NOT F1-shaped. 5206 - 10 = 5196,
+    /// confirmed by re-running `python3 scripts/shape_ledger.py --inventory
+    /// docs/work-inventory.json --corpus-root data/corpus` against the
+    /// post-regen `docs/work-inventory.json` (tranche/14, this wave's own
+    /// guarded regen): F1 = 5196 exactly.
+    ///
+    /// **5,196 unchanged through SD-34 wave 45** (Phrenic Slayer's Favored
+    /// Enemy closure, 32 units: 31 `F0`, 1 `F5`, verified per-id -- zero
+    /// F1-shaped, so this pin was correctly left untouched that cycle).
+    ///
+    /// **5,196 -> 5,193, a REAL movement (SD-34 wave 46, 2026-09-05).**
+    /// Wave 46 closed 20 units across seven prestige classes (Pathfinder
+    /// Delver's own six-unit extension, Argent Dramaturge, Horizon Walker,
+    /// Nature Warden, Rage Prophet, Holy Vindicator, Stalwart Defender); of
+    /// those, exactly 3 carry F1's own defining shape -- verified per-id via
+    /// `shape_ledger.py --output` against the PRE-cycle inventory snapshot
+    /// (not assumed from formula-resolution shape): Nature Warden's
+    /// Companion Bond (`BONUS:VAR|CompanionBondLVL|NatureWardenLVL`, a bare
+    /// single-variable token, the same "F1 classifies the record's OWN
+    /// token shape, not its full resolution chain" idiom wave 44's own
+    /// PaDFE entry above established) and Pathfinder Delver's Thrilling
+    /// Escape / Fortunate Soul (each a bare `DEFINE:<X>|0` with no `BONUS`
+    /// token of its own in the record -- the cumulative `+1` formula lives
+    /// on the class's own level-table file, `ag_classes.lst`, entirely
+    /// outside this record's own tokens, so `shape_ledger.py`'s per-record
+    /// token scan reads only the bare `DEFINE` default and classifies it
+    /// F1). The other 17 closed units (Horizon Walker's three pool sizes,
+    /// Nature Warden's Survivalist, Rage Prophet's two units, Stalwart
+    /// Defender's four units, Argent Dramaturge's two units, Holy
+    /// Vindicator's Stigmata, and four more Pathfinder Delver units) are F0,
+    /// F2, F4, or F5 -- NOT F1-shaped. 5196 - 3 = 5193, confirmed by
+    /// re-running `python3 scripts/shape_ledger.py --inventory docs/
+    /// work-inventory.json --corpus-root data/corpus` against the post-regen
+    /// `docs/work-inventory.json` (tranche/14, this wave's own guarded
+    /// regen): F1 = 5193 exactly.
+    ///
+    /// SD-34 wave 47 re-derivation: Divine Scion's 43 closed units include
+    /// 38 F1-shaped ones (each domain's own `BONUS:SKILL`/`BONUS:SAVE`
+    /// secondary-effect token is a bare literal, e.g. `4` or `2` --
+    /// verified per-id against `shape_ledger.py --output`, run against the
+    /// PRE-cycle inventory snapshot since a unit that leaves the not-done
+    /// population no longer appears in a post-regen scan), 4 F0 (the four
+    /// Opposition Alignment records' own `DR:` token is not recognized by
+    /// this classifier's token scan at all -- `no_formula_tokens`), and 1
+    /// F8 (Void Specialization's own `BONUS:CONCENTRATION` token, a residual
+    /// shape). 38 leave the not-done population: 5193 - 38 = 5155,
+    /// confirmed by re-running `python3 scripts/shape_ledger.py --inventory
+    /// docs/work-inventory.json --corpus-root data/corpus` against the
+    /// post-regen `docs/work-inventory.json`: F1 = 5155 exactly.
+    ///
+    /// **5,155 -> 5,124, a REAL movement (SD-34 wave 49, 2026-09-06/07).**
+    /// The wave's own receipt (`docs/release/SD-34-book-completion/artifacts/
+    /// bucket-d-mining/wave49_registered_prestige_magnitude_formulas_cycle_
+    /// receipt.md`) originally claimed this pin unchanged ("touches no
+    /// corpus data, so no drift is expected") -- that claim was WRONG, caught
+    /// by a follow-up run of this exact test; the receipt carries its own
+    /// correction note. Wave 49 closed 129 units across 33 registered
+    /// prestige classes; comparing `shape_ledger.py --output` run against the
+    /// PRE-cycle inventory snapshot (HEAD at wave 48's own close) to the
+    /// post-cycle snapshot, keyed by each unit's doneness verdict
+    /// (`pf1e_dashboard_producer.doneness_verdict`), shows exactly 72 units
+    /// leave the not-done population (31 `F1`, 22 `F2`, 7 `F4`, 7 `F5`, 4
+    /// `F0`, 1 `F8`) -- the other 60 of the 132 total status-changed ids land
+    /// on a `held` verdict, not `done`, and so correctly stay IN the
+    /// not-done population, unmoved. The 31 F1-shaped ones (bare-literal-
+    /// magnitude tokens, verified per-id, not assumed from formula-resolution
+    /// shape: e.g. Asavir's elemental-blessing/mount grants, Mammoth Rider's
+    /// Gigantic Steed and Steed's Reach, Steel Falcon's Talmandor's
+    /// Blessing/Chainbreaker, Lion Blade's Sneak Attack/Silent Soul/
+    /// Expeditious Advance, Master Chymist's Brutality, Battle Herald's
+    /// Teamwork Feat, and 20 more across the same wave's 33 classes) leave
+    /// the not-done population once wave 49's own real compute functions
+    /// (`wiring_class: computed` -> `grounded`) or byte-verified literal
+    /// stamps (`wiring_class: static` -> `literal-verified`) close them:
+    /// 5155 - 31 = 5124, confirmed by re-running `python3 scripts/
+    /// shape_ledger.py --inventory docs/work-inventory.json --corpus-root
+    /// data/corpus` against the post-regen `docs/work-inventory.json`: F1 =
+    /// 5124 exactly.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 6257,
-            "F1 population must equal the CURRENT true formula-bearing count (6,257, re-derived \
-             2026-08-26 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
-             --corpus-root data/corpus`, run AFTER the `cef0ca1b39` fold-inventory regen of \
-             `docs/work-inventory.json` -- see this test's own doc comment), not the pre-regen \
-             6,260 (2026-08-26, `6e2f2f076b` fold-skinwalker, invalidated one commit later by \
-             `cef0ca1b39` regenerating the inventory without a lib re-run), not the pre-fold 6,278 \
-             (2026-08-25, AT-33-E6-001), not the pre-regen 6,308 this test pinned on 2026-08-24, \
-             and not SD-32's frozen 2026-08-14 census (6,032) — \
-             AT-33-E3-002 / AT-33-E6-001"
+            f1.population, 5124,
+            "F1 population must equal the CURRENT true formula-bearing count (5,124, re-derived \
+             2026-09-07 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
+             --corpus-root data/corpus`, run AFTER the last commit that writes \
+             `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
+             cycle's own true-at-the-time 5,155 (SD-34 wave 47/48 closure-cycles, unchanged \
+             through wave 48's own zero-F1 closure), not the cycle-before-that's own \
+             true-at-the-time 5,193 (SD-34 wave 46 closure-cycle), not the \
+             cycle-before-that's own true-at-the-time 5,196 (SD-34 waves 44/45 closure-cycles, \
+             unchanged through wave 45's own zero-F1 closure), not the cycle-before-that's own \
+             true-at-the-time 5,206 (SD-34 wave 43 closure-cycle), not the \
+             cycle-before-that's own true-at-the-time 5,207 (SD-34 wave 39 \
+             closure-cycle -- Lane A closed \
+             its 20 assigned units into DONE, a real share of them F1-shaped, so F1's not-done \
+             population fell 5,217 -> 5,207, a genuine closure movement, not a re-pin of a wrong \
+             prior count), not the cycle-before-that's own true-at-the-time 5,231 (SD-34 wave 38 \
+             closure-cycle -- Lane A + Lane C closed units into DONE, a real share of them \
+             F1-shaped, so F1's not-done population fell 5,231 -> 5,217, a genuine closure \
+             movement, not a re-pin of a wrong prior count), not the cycle-before-that's own \
+             true-at-the-time 5,400 (wave 22's \
+             oracle-verdict restamp -- `decisions.md §19` -- booked SD-33's already-computed \
+             `oracle-agree`/`oracle-unverifiable` verdicts for thousands of bucket-V units once \
+             `58b4f837cc` taught the doneness table the two new statuses; a real share of the \
+             newly-DONE units were F1-shaped, so F1's not-done population fell 5,400 -> 5,231, \
+             a genuine closure movement, not a re-pin of a wrong prior count), not the \
+             cycle-before-that's own true-at-the-time 5,401, not the previous cycle's own WRONG \
+             5,563 re-pin (a bad re-derivation, not a stale one -- see this test's own doc \
+             comment and the `AT-34-E3-001-class_feature_owner_matched-cycle` retro correction), \
+             not the stale 6,257 pin, not the pre-fold 6,260/6,278, not the pre-regen 6,308 this \
+             test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 census (6,032) — \
+             AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001 / SD-34 wave 22/23/38/39/43/44/46 gate \
+             remediation"
         );
     }
 }

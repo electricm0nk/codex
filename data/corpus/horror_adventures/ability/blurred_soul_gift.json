@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Spells that affect a limited number of targets can fail when targeting you unless the caster selects you as two separate targets. Against such spells that target you only once, you have spell resistance %1. A spellcaster who finishes casting a spell that targets you only once and succeeds at a caster level check against your spell resistance notices the interference and can attempt a DC 25 Spellcraft check to realize she needs to target you twice to circumvent it with future spells.|11+(PossessedManifestationLevel*2)",
     "key": "Possessed Corruption ~ Blurred Soul Gift",
     "name": "Blurred Soul Gift",
-    "description": "Spells that affect a limited number of targets can fail when targeting you unless the caster selects you as two separate targets. Against such spells that target you only once, you have spell resistance %1. A spellcaster who finishes casting a spell that targets you only once and succeeds at a caster level check against your spell resistance notices the interference and can attempt a DC 25 Spellcraft check to realize she needs to target you twice to circumvent it with future spells.|11+(PossessedManifestationLevel*2)",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 633,
-    "record_key": "Possessed Corruption ~ Blurred Soul Gift"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 633,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Possessed Corruption ~ Blurred Soul Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

@@ -42,13 +42,12 @@
 //! Sorcerer level-1..level-8 truth (unchanged), the Fighter negative
 //! control, and the multiclass negative control.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
-};
+use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
+mod common;
+use common::{load, explanation, has_explanation};
 
 const SORCERER_LEVEL8_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_sorcerer_level8_sd13_deterministic_input.txt");
@@ -59,38 +58,6 @@ const SORCERER_LEVEL9_FIXTURE: &str =
 const FIGHTER_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
 );
-
-fn load(fixture: &str) -> CharacterInput {
-    let result = load_character_input_fixture(fixture);
-    assert!(
-        result.diagnostics.is_empty(),
-        "fixture should load cleanly: {:?}",
-        result.diagnostics
-    );
-    result
-        .character_input
-        .expect("valid fixture should produce a character input record")
-}
-
-fn explanation<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationExplanation {
-    computation
-        .explanations
-        .iter()
-        .find(|e| e.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected explanation id '{id}', got {:?}",
-                computation.explanations
-            )
-        })
-}
-
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 // ----- Base attack bonus at level 9 -----
 
@@ -240,13 +207,21 @@ fn sorcerer_level9_does_not_fabricate_the_ninth_level_bloodline_entries() {
     let input = load(SORCERER_LEVEL9_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // SD-34 bucket-B batch cycle: found stale, unrelated to this cycle's own three
+    // mechanisms -- same fix as `sd13_sorcerer_level10_progression.rs`'s own sibling test:
+    // the pre-existing (SD-32 T12 Epic 8, `decisions.md §17`) generic bloodline-power pass
+    // legitimately emits real, citation-backed `class_feature.sorcerer.bloodline.generic.*`
+    // ids (including real PCGen var names containing "new_arcana"/"bloodline_power"-shaped
+    // substrings) for the fixture's selected Arcane bloodline -- never a fabricated
+    // per-character magnitude. Scoped by prefix, same shape as that sibling test's own fix.
     assert!(
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.to_lowercase().contains("new_arcana")
-                || e.id.to_lowercase().contains("bloodline_power")
-                || e.id.to_lowercase().contains("bloodline_spell")),
+            .any(|e| !e.id.starts_with("class_feature.sorcerer.bloodline.generic.")
+                && (e.id.to_lowercase().contains("new_arcana")
+                    || e.id.to_lowercase().contains("bloodline_power")
+                    || e.id.to_lowercase().contains("bloodline_spell"))),
         "level-9 Sorcerer must not fabricate any bloodline-power/bloodline-spell record (both \
          9th-level entries are bloodline-specific, not flat): {:?}",
         computation.explanations

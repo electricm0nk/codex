@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "Select one spell. You cast that spell with greater than normal power.",
     "key": "Spell Specialization (Divination)",
     "name": "Spell Specialization (Divination)",
-    "description": "Select one spell. You cast that spell with greater than normal power.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -61,20 +60,23 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
-    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
-    "line": 122,
-    "record_key": "Spell Specialization (Divination)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 122,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Spell Specialization (Divination)",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "1/day unarmed strikes with elbows or hands, or attacks with weapons in those hands, deal +1d6 cold damage.  Lasts %1 rounds.|ElementalAssaultDuration",
     "key": "Builder Racial Trait ~ Elemental Assault (Cold)",
     "name": "Elemental Assault (Cold)",
-    "description": "1/day unarmed strikes with elbows or hands, or attacks with weapons in those hands, deal +1d6 cold damage.  Lasts %1 rounds.|ElementalAssaultDuration",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
-    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
-    "line": 476,
-    "record_key": "Builder Racial Trait ~ Elemental Assault (Cold)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 476,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Elemental Assault (Cold)",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

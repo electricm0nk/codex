@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-27T09:38:59Z",
+  "data": {
+    "key": "Human Ethnicity ~ Unknown",
+    "name": "Unknown",
+    "race_key": "Human",
+    "category": "Background",
+    "type_tokens": [
+      "HumanEthnicity"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human Ethnicity ~ Unknown"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Background"
+      },
+      {
+        "key": "TYPE",
+        "value": "HumanEthnicity"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 158,
+    "record_key": "Human Ethnicity ~ Unknown"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

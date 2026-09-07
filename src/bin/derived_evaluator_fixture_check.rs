@@ -56,11 +56,11 @@ fn main() -> ExitCode {
         let verified: Vec<String> =
             report.cleared.iter().map(|id| format!("{:?}", id)).collect();
         let body = format!(
-            "{{\"fixtures_total\":{},\"cleared\":{},\"failed\":{},\"not_ingested\":{},\"verified\":[{}]}}\n",
+            "{{\"fixtures_total\":{},\"cleared\":{},\"failed\":{},\"engine_does_not_hold\":{},\"verified\":[{}]}}\n",
             report.fixtures_total,
             report.cleared.len(),
             report.failures.len(),
-            report.not_ingested.len(),
+            report.engine_does_not_hold.len(),
             verified.join(",")
         );
         if let Err(e) = std::fs::write(path, body) {
@@ -82,7 +82,7 @@ fn main() -> ExitCode {
             report.cleared.len(),
             report.fixtures_total,
             report.failures.len(),
-            report.not_ingested.len()
+            report.engine_does_not_hold.len()
         );
         for (id, reason) in &report.failures {
             println!("{LABEL}: FAIL {id}: {reason}");

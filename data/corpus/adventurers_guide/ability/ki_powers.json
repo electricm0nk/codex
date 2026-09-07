@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "At 2nd level and every 2 levels thereafter, a student of perfection can select one ki power. This ki power must be open to all students of perfection or appropriate to his chosen school. All other prerequisites must be met. Unless otherwise noted, a student of perfection cannot select an individual ki power more than once.",
     "key": "Student of Perfection ~ Ki Powers",
     "name": "Ki Powers",
-    "description": "At 2nd level and every 2 levels thereafter, a student of perfection can select one ki power. This ki power must be open to all students of perfection or appropriate to his chosen school. All other prerequisites must be met. Unless otherwise noted, a student of perfection cannot select an individual ki power more than once.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 8,
-    "record_key": "Student of Perfection ~ Ki Powers"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Student of Perfection ~ Ki Powers",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ]
 }

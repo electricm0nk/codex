@@ -1,0 +1,16 @@
+kind=ability location=data/corpus/*/ability/*.json records=4824 sample=(advanced_class_guide, "Aberrant Bloodline") -> HELD name="Aberrant Bloodline" source=pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_other.lst:21 raw_tokens=8
+kind=ability location=data/corpus/*/ability/*.json records=4824 sample=(advanced_class_guide, "___a_key_no_corpus_record_carries___") -> REFUSED (absent key)
+kind=template location=data/corpus/*/template/*.json records=2248 sample=(advanced_class_guide, "Arcanist SpellBook") -> HELD name="Arcanist SpellBook" source=pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst:12 raw_tokens=2
+kind=template location=data/corpus/*/template/*.json records=2248 sample=(advanced_class_guide, "___a_key_no_corpus_record_carries___") -> REFUSED (absent key)
+kind=trait location=data/corpus/*/trait_generic/*.json records=487 sample=(advanced_players_guide, "Trait ~ Adopted") -> HELD name="Adopted" source=pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:109 raw_tokens=6
+kind=trait location=data/corpus/*/trait_generic/*.json records=487 sample=(advanced_players_guide, "___a_key_no_corpus_record_carries___") -> REFUSED (absent key)
+kind=deity location=data/corpus/*/deity/*.json records=459 sample=(bestiary_6, "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_21)") -> HELD name="Codex-Named Unit (deity_bestiary_6_b6_deities_lst_21)" source=pathfinder/paizo/roleplaying_game/bestiary_6/b6_deities.lst:21 raw_tokens=11
+kind=deity location=data/corpus/*/deity/*.json records=459 sample=(bestiary_6, "___a_key_no_corpus_record_carries___") -> REFUSED (absent key)
+kind=domain location=data/corpus/*/domain/*.json records=183 sample=(advanced_class_guide, "Battle (Spirit)") -> HELD name="Battle (Spirit)" source=pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_domains.lst:5 raw_tokens=1
+kind=domain location=data/corpus/*/domain/*.json records=183 sample=(advanced_class_guide, "___a_key_no_corpus_record_carries___") -> REFUSED (absent key)
+kind=skill location=data/corpus/*/skill/*.json records=149 sample=(bestiary_2, "Craft (Rope)") -> HELD name="Craft (Rope)" source=pathfinder/paizo/roleplaying_game/bestiary_2/b2_skills.lst:8 raw_tokens=7
+kind=skill location=data/corpus/*/skill/*.json records=149 sample=(bestiary_2, "___a_key_no_corpus_record_carries___") -> REFUSED (absent key)
+kind=language location=data/corpus/*/language/*.json records=136 sample=(advanced_race_guide, "Xenophobic") -> HELD name="Xenophobic" source=pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_languages.lst:6 raw_tokens=1
+kind=language location=data/corpus/*/language/*.json records=136 sample=(advanced_race_guide, "___a_key_no_corpus_record_carries___") -> REFUSED (absent key)
+kind=companion location=rules_tables::companion_chassis::COMPANION_BOOKS records=4 sample=(inner_sea_combat, "Companion (Worg)") -> HELD name="Companion (Worg)"
+kind=companion location=rules_tables::companion_chassis::COMPANION_BOOKS records=4 sample=(inner_sea_combat, "___a_key_no_corpus_record_carries___") -> REFUSED (absent key)

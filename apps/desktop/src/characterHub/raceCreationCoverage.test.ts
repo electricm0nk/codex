@@ -287,8 +287,8 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
   );
   assertEqual(
     loadTraits().length,
-    596,
-    'race trait records across all three books (CRB 67 + B1 108 + ARG 421; ARG 156 -> 201 by ' +
+    605,
+    'race trait records across all three books (CRB 76 + B1 108 + ARG 421; ARG 156 -> 201 by ' +
       'SD-31 Epic 1-F2, 2026-08-15, 201 -> 259 by SD-31-E6-F4-002\'s own 6-race chassis batch, ' +
       '259 -> 283 by SD-31-E6-F4-003\'s own 24-record alternate-trait batch for those same 6 ' +
       'races, both 2026-08-16, 283 -> 321 by SD31-E6-F4-004\'s own 4-race chassis batch ' +
@@ -303,15 +303,25 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
       'data/corpus/core_essentials/race_trait/, which this test never loaded; 414 -> 421 by ' +
       'SD-32 card-11 T2b lane, 2026-08-23 (decisions.md 16 item 2): the 7 ' +
       '`Human ~ Adoptive Parentage` CHOOSE-pool members, Drow/Dwarf/Elf/Gnome/Grippli/' +
-      'Halfling/Orc)',
+      'Halfling/Orc; 596 -> 605 by SD-34 AT-34-E3-001\'s race_trait_absent_from_race_traits ' +
+      'mechanism, 2026-08-27 (`ae25d75d7d`): 9 new core_rulebook rows -- 7 ' +
+      '`Adopted Race ~ <Race>` selectors (Dwarf/Elf/Gnome/Half-Elf/Half-Orc/Halfling/Human) ' +
+      'plus 2 `Human Ethnicity ~ None`/`~ Unknown` placeholder rows, a fifth row shape the ' +
+      'CRB parser had never recognised before)',
   );
   const standard = loadStandardTraits();
-  assertEqual(standard.length, 175, 'standard racial trait records (CRB 67 + B1 108)');
+  assertEqual(standard.length, 184, 'standard racial trait records (CRB 76 + B1 108; CRB 67 -> 76 by ' +
+    'SD-34 AT-34-E3-001\'s race_trait_absent_from_race_traits mechanism, 2026-08-27 (`ae25d75d7d`), ' +
+    'see loadTraits() assertion above for the 9-record breakdown)');
   const defaults = standard.filter((t) => t.is_racial_default);
-  // 173, not 175: two Duergar spell-like-ability rows carry no
-  // `<Race> Racial Default` type token, so the resolver classifies them
-  // `Unclassified` and never auto-applies them. Named here so the
-  // two-record gap is a stated fact rather than an unexplained count.
+  // 173, not 184: eleven standard-tier records carry no `<Race> Racial
+  // Default` type token, so the resolver classifies them `Unclassified` and
+  // never auto-applies them. Two are the original Duergar spell-like-ability
+  // rows; the other nine are AT-34-E3-001's CRB additions (2026-08-27,
+  // `ae25d75d7d`) -- 7 `Adopted Race ~ <Race>` CHOOSE selectors and 2
+  // `Human Ethnicity ~ *` placeholders, none of which is a default trait
+  // either. Named here so the gap is a stated fact rather than an
+  // unexplained count.
   assertEqual(defaults.length, 173, 'racial default trait records across the 18 races');
   assertEqual(
     standard
@@ -319,8 +329,11 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
       .map((t) => t.key)
       .sort()
       .join('; '),
-    'Duergar ~ Spell-Like Ability ~ Enlarge Person; Duergar ~ Spell-Like Ability ~ Invisibility',
-    'the two standard records that are not racial defaults'
+    'Adopted Race ~ Dwarf; Adopted Race ~ Elf; Adopted Race ~ Gnome; Adopted Race ~ Half-Elf; ' +
+      'Adopted Race ~ Half-Orc; Adopted Race ~ Halfling; Adopted Race ~ Human; ' +
+      'Duergar ~ Spell-Like Ability ~ Enlarge Person; Duergar ~ Spell-Like Ability ~ Invisibility; ' +
+      'Human Ethnicity ~ None; Human Ethnicity ~ Unknown',
+    'the eleven standard records that are not racial defaults'
   );
   const argDefaults = readJsonRecords<TraitRecord>(
     join(CORPUS_ROOT, 'advanced_race_guide', 'race_trait')

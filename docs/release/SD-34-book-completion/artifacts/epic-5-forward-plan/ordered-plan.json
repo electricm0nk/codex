@@ -1,0 +1,614 @@
+{
+  "criterion": "AT-34-E5-004",
+  "re_derive_command": "python3 docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/build_ordered_plan.py",
+  "generated_at_head": "2eb47cdea96244b4ea8217c69e7248fd3d8593f6",
+  "source_artifact": "docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/forward-plan.json",
+  "population": {
+    "books_count": 35,
+    "books_with_priced_to_done_units": 19,
+    "books_with_zero_priced_to_done_units": 16
+  },
+  "ordering_basis": "Ascending by the midpoint of each book's priced-to-DONE projected-cost range, where priced-to-DONE = the sum of its bucket A + bucket B + bucket U projected_cost_hours (the only three buckets with a measured rate that reaches DONE; bucket C's only measured rate reaches V, not DONE, and buckets D/M/V/X/Z carry no rate at all -- see forward-plan.json's measured_rates). This ranks the PRICED SLICE of each book's remaining work, never the whole remaining population; every row states the priced slice's own fraction of that book's total remaining units so a low rank is never misread as 'this book finishes soonest'. Books with zero priced-to-DONE units have no real cost to sort by and are listed separately, alphabetically, not interleaved into the ranking.",
+  "ranked_by_priced_to_done_cost": [
+    {
+      "book": "advanced_players_guide",
+      "remaining_non_done": 2956,
+      "priced_to_done_units": 1,
+      "priced_to_done_units_pct_of_remaining": 0.0,
+      "unpriced_units": 2955,
+      "unpriced_units_pct_of_remaining": 100.0,
+      "priced_to_done_hours_low": 0.025,
+      "priced_to_done_hours_high": 0.025,
+      "priced_to_done_hours_midpoint": 0.025,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V",
+        "X"
+      ],
+      "rank": 1
+    },
+    {
+      "book": "inner_sea_taverns",
+      "remaining_non_done": 7,
+      "priced_to_done_units": 1,
+      "priced_to_done_units_pct_of_remaining": 14.3,
+      "unpriced_units": 6,
+      "unpriced_units_pct_of_remaining": 85.7,
+      "priced_to_done_hours_low": 0.025,
+      "priced_to_done_hours_high": 0.025,
+      "priced_to_done_hours_midpoint": 0.025,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "U"
+      ],
+      "rank": 2
+    },
+    {
+      "book": "bestiary",
+      "remaining_non_done": 1635,
+      "priced_to_done_units": 28,
+      "priced_to_done_units_pct_of_remaining": 1.7,
+      "unpriced_units": 1607,
+      "unpriced_units_pct_of_remaining": 98.3,
+      "priced_to_done_hours_low": 0.038,
+      "priced_to_done_hours_high": 0.038,
+      "priced_to_done_hours_midpoint": 0.038,
+      "single_bucket": false,
+      "buckets_present": [
+        "A",
+        "B",
+        "M",
+        "V"
+      ],
+      "rank": 3
+    },
+    {
+      "book": "ultimate_combat",
+      "remaining_non_done": 1463,
+      "priced_to_done_units": 2,
+      "priced_to_done_units_pct_of_remaining": 0.1,
+      "unpriced_units": 1461,
+      "unpriced_units_pct_of_remaining": 99.9,
+      "priced_to_done_hours_low": 0.05,
+      "priced_to_done_hours_high": 0.05,
+      "priced_to_done_hours_midpoint": 0.05,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V",
+        "X"
+      ],
+      "rank": 4
+    },
+    {
+      "book": "ultimate_intrigue",
+      "remaining_non_done": 948,
+      "priced_to_done_units": 2,
+      "priced_to_done_units_pct_of_remaining": 0.2,
+      "unpriced_units": 946,
+      "unpriced_units_pct_of_remaining": 99.8,
+      "priced_to_done_hours_low": 0.05,
+      "priced_to_done_hours_high": 0.05,
+      "priced_to_done_hours_midpoint": 0.05,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V"
+      ],
+      "rank": 5
+    },
+    {
+      "book": "advanced_race_guide",
+      "remaining_non_done": 1411,
+      "priced_to_done_units": 3,
+      "priced_to_done_units_pct_of_remaining": 0.2,
+      "unpriced_units": 1408,
+      "unpriced_units_pct_of_remaining": 99.8,
+      "priced_to_done_hours_low": 0.074,
+      "priced_to_done_hours_high": 0.074,
+      "priced_to_done_hours_midpoint": 0.074,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V",
+        "X"
+      ],
+      "rank": 6
+    },
+    {
+      "book": "inner_sea_races",
+      "remaining_non_done": 253,
+      "priced_to_done_units": 3,
+      "priced_to_done_units_pct_of_remaining": 1.2,
+      "unpriced_units": 250,
+      "unpriced_units_pct_of_remaining": 98.8,
+      "priced_to_done_hours_low": 0.074,
+      "priced_to_done_hours_high": 0.074,
+      "priced_to_done_hours_midpoint": 0.074,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "U",
+        "V"
+      ],
+      "rank": 7
+    },
+    {
+      "book": "ultimate_wilderness",
+      "remaining_non_done": 1461,
+      "priced_to_done_units": 3,
+      "priced_to_done_units_pct_of_remaining": 0.2,
+      "unpriced_units": 1458,
+      "unpriced_units_pct_of_remaining": 99.8,
+      "priced_to_done_hours_low": 0.074,
+      "priced_to_done_hours_high": 0.074,
+      "priced_to_done_hours_midpoint": 0.074,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V",
+        "X"
+      ],
+      "rank": 8
+    },
+    {
+      "book": "advanced_class_guide",
+      "remaining_non_done": 2718,
+      "priced_to_done_units": 4,
+      "priced_to_done_units_pct_of_remaining": 0.1,
+      "unpriced_units": 2714,
+      "unpriced_units_pct_of_remaining": 99.9,
+      "priced_to_done_hours_low": 0.099,
+      "priced_to_done_hours_high": 0.099,
+      "priced_to_done_hours_midpoint": 0.099,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V",
+        "X"
+      ],
+      "rank": 9
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "remaining_non_done": 550,
+      "priced_to_done_units": 5,
+      "priced_to_done_units_pct_of_remaining": 0.9,
+      "unpriced_units": 545,
+      "unpriced_units_pct_of_remaining": 99.1,
+      "priced_to_done_hours_low": 0.124,
+      "priced_to_done_hours_high": 0.124,
+      "priced_to_done_hours_midpoint": 0.124,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V"
+      ],
+      "rank": 10
+    },
+    {
+      "book": "monster_codex",
+      "remaining_non_done": 159,
+      "priced_to_done_units": 6,
+      "priced_to_done_units_pct_of_remaining": 3.8,
+      "unpriced_units": 153,
+      "unpriced_units_pct_of_remaining": 96.2,
+      "priced_to_done_hours_low": 0.149,
+      "priced_to_done_hours_high": 0.149,
+      "priced_to_done_hours_midpoint": 0.149,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V"
+      ],
+      "rank": 11
+    },
+    {
+      "book": "ultimate_magic",
+      "remaining_non_done": 2458,
+      "priced_to_done_units": 6,
+      "priced_to_done_units_pct_of_remaining": 0.2,
+      "unpriced_units": 2452,
+      "unpriced_units_pct_of_remaining": 99.8,
+      "priced_to_done_hours_low": 0.149,
+      "priced_to_done_hours_high": 0.149,
+      "priced_to_done_hours_midpoint": 0.149,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V",
+        "X"
+      ],
+      "rank": 12
+    },
+    {
+      "book": "inner_sea_temples",
+      "remaining_non_done": 65,
+      "priced_to_done_units": 8,
+      "priced_to_done_units_pct_of_remaining": 12.3,
+      "unpriced_units": 57,
+      "unpriced_units_pct_of_remaining": 87.7,
+      "priced_to_done_hours_low": 0.199,
+      "priced_to_done_hours_high": 0.199,
+      "priced_to_done_hours_midpoint": 0.199,
+      "single_bucket": false,
+      "buckets_present": [
+        "D",
+        "M",
+        "U"
+      ],
+      "rank": 13
+    },
+    {
+      "book": "adventurers_guide",
+      "remaining_non_done": 1062,
+      "priced_to_done_units": 9,
+      "priced_to_done_units_pct_of_remaining": 0.8,
+      "unpriced_units": 1053,
+      "unpriced_units_pct_of_remaining": 99.2,
+      "priced_to_done_hours_low": 0.223,
+      "priced_to_done_hours_high": 0.223,
+      "priced_to_done_hours_midpoint": 0.223,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V",
+        "X"
+      ],
+      "rank": 14
+    },
+    {
+      "book": "ultimate_psionics",
+      "remaining_non_done": 2695,
+      "priced_to_done_units": 431,
+      "priced_to_done_units_pct_of_remaining": 16.0,
+      "unpriced_units": 2264,
+      "unpriced_units_pct_of_remaining": 84.0,
+      "priced_to_done_hours_low": 0.286,
+      "priced_to_done_hours_high": 0.286,
+      "priced_to_done_hours_midpoint": 0.286,
+      "single_bucket": false,
+      "buckets_present": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V"
+      ],
+      "rank": 15
+    },
+    {
+      "book": "inner_sea_gods",
+      "remaining_non_done": 979,
+      "priced_to_done_units": 12,
+      "priced_to_done_units_pct_of_remaining": 1.2,
+      "unpriced_units": 967,
+      "unpriced_units_pct_of_remaining": 98.8,
+      "priced_to_done_hours_low": 0.298,
+      "priced_to_done_hours_high": 0.298,
+      "priced_to_done_hours_midpoint": 0.298,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "U",
+        "V"
+      ],
+      "rank": 16
+    },
+    {
+      "book": "mythic_adventures",
+      "remaining_non_done": 842,
+      "priced_to_done_units": 15,
+      "priced_to_done_units_pct_of_remaining": 1.8,
+      "unpriced_units": 827,
+      "unpriced_units_pct_of_remaining": 98.2,
+      "priced_to_done_hours_low": 0.372,
+      "priced_to_done_hours_high": 0.372,
+      "priced_to_done_hours_midpoint": 0.372,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "U",
+        "V"
+      ],
+      "rank": 17
+    },
+    {
+      "book": "inner_sea_combat",
+      "remaining_non_done": 327,
+      "priced_to_done_units": 38,
+      "priced_to_done_units_pct_of_remaining": 11.6,
+      "unpriced_units": 289,
+      "unpriced_units_pct_of_remaining": 88.4,
+      "priced_to_done_hours_low": 0.943,
+      "priced_to_done_hours_high": 0.943,
+      "priced_to_done_hours_midpoint": 0.943,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "U",
+        "V",
+        "X"
+      ],
+      "rank": 18
+    },
+    {
+      "book": "ultimate_equipment",
+      "remaining_non_done": 1477,
+      "priced_to_done_units": 43,
+      "priced_to_done_units_pct_of_remaining": 2.9,
+      "unpriced_units": 1434,
+      "unpriced_units_pct_of_remaining": 97.1,
+      "priced_to_done_hours_low": 1.068,
+      "priced_to_done_hours_high": 1.068,
+      "priced_to_done_hours_midpoint": 1.068,
+      "single_bucket": false,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "U",
+        "V"
+      ],
+      "rank": 19
+    }
+  ],
+  "unrankable_zero_priced_to_done_units": [
+    {
+      "book": "beginner_box",
+      "remaining_non_done": 19,
+      "buckets_present": [
+        "Z"
+      ],
+      "single_bucket": true,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['Z'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "bestiary_2",
+      "remaining_non_done": 608,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "bestiary_3",
+      "remaining_non_done": 487,
+      "buckets_present": [
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "bestiary_4",
+      "remaining_non_done": 707,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "bestiary_5",
+      "remaining_non_done": 105,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "bestiary_6",
+      "remaining_non_done": 35,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "bonus_bestiary",
+      "remaining_non_done": 17,
+      "buckets_present": [
+        "B",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "book_of_the_damned_volume_1",
+      "remaining_non_done": 54,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "book_of_the_damned_volume_2",
+      "remaining_non_done": 273,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "horror_adventures",
+      "remaining_non_done": 995,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'C', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "inner_sea_bestiary",
+      "remaining_non_done": 91,
+      "buckets_present": [
+        "B",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "inner_sea_faiths",
+      "remaining_non_done": 105,
+      "buckets_present": [
+        "B",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "inner_sea_intrigue",
+      "remaining_non_done": 227,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'C', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "inner_sea_magic",
+      "remaining_non_done": 451,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "V"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'C', 'D', 'M', 'V'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "occult_adventures",
+      "remaining_non_done": 1312,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "V",
+        "X"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'C', 'D', 'M', 'V', 'X'] which carry no measured rate reaching DONE"
+    },
+    {
+      "book": "pathfinder_unchained",
+      "remaining_non_done": 412,
+      "buckets_present": [
+        "B",
+        "C",
+        "D",
+        "M",
+        "V",
+        "X"
+      ],
+      "single_bucket": false,
+      "reason": "zero units in buckets A/B/U (the only rate-to-DONE buckets); every remaining unit is in ['B', 'C', 'D', 'M', 'V', 'X'] which carry no measured rate reaching DONE"
+    }
+  ],
+  "single_bucket_books": [
+    {
+      "book": "beginner_box",
+      "bucket": "Z",
+      "unit_count": 19,
+      "mechanism": "ordinary ingestion-to-grounded work (no dedicated SD-34 cycle measured this bucket)",
+      "priced": false
+    }
+  ],
+  "notes": "single_bucket_books is a book-SHAPE property (exactly one non-DONE bucket occupies the book's entire remaining population), independent of whether that bucket is priced. It intentionally may include a book that also appears in unrankable_zero_priced_to_done_units, if that book's sole remaining bucket has no measured rate (a single-bucket book is still the cheapest possible SHAPE to close -- one mechanism clears the whole book -- even before a rate exists to price it, which is exactly how ultimate_campaign (Epic 4's vehicle book) was found)."
+}

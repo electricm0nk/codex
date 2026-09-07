@@ -129,8 +129,8 @@ pub fn append_to_character_at_root(
             success: true,
             character: Some(AppendedCharacterDto {
                 summary: *summary,
-                snapshot,
-                corpus_derived,
+                snapshot: *snapshot,
+                corpus_derived: *corpus_derived,
             }),
             error: None,
         },
@@ -318,6 +318,8 @@ mod tests {
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
             companion_species: None,
+            selected_traits: Vec::new(),
+            trait_skill_choices: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         };
         let character_input = compose_character_input(&request);

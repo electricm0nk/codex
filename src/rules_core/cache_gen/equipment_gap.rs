@@ -12,7 +12,7 @@
 //!
 //! `equipment_gap_tables` itself is a SEPARATE, already-shipped lever
 //! from any per-book hand-authored table: it is the corpus-wide
-//! `not-ingested` residue for 8 already-compiled books' `equipment`/
+//! `engine-does-not-hold` residue for 8 already-compiled books' `equipment`/
 //! `equipment_modifier` kinds -- generated once by `gen_equipment_gap_tables`
 //! against the real PCGen oracle and checked in as plain Rust data, but
 //! (before this cycle) never dumped to `data/corpus/`, so neither
@@ -92,7 +92,6 @@
 
 use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
-use std::process::Command;
 
 use serde::{Deserialize, Serialize};
 
@@ -225,7 +224,7 @@ pub(crate) fn book_routing(short_code: &str) -> Option<(&'static str, &'static s
         "ISTEM" => Some(("inner_sea_temples", "pathfinder/paizo/campaign_setting/inner_sea_temples")),
         "ISM" => Some(("inner_sea_magic", "pathfinder/paizo/campaign_setting/inner_sea_magic")),
         // SD-32 T9 residual: `adventurers_guide` had no `BOOK_INPUTS` entry at
-        // all (115 `not-ingested` equipment units, none captured). Added
+        // all (115 `engine-does-not-hold` equipment units, none captured). Added
         // alongside this routing arm; see `gen_equipment_gap_tables.rs`'s
         // `EQUIPMENT_BOOK_AG` `BookInput`.
         "AG" => Some(("adventurers_guide", "pathfinder/paizo/roleplaying_game/adventurers_guide")),
@@ -254,14 +253,8 @@ pub(crate) fn book_routing(short_code: &str) -> Option<(&'static str, &'static s
     }
 }
 
-pub fn sha256_file(path: &Path) -> std::io::Result<String> {
-    let output = Command::new("sha256sum").arg(path).output()?;
-    if !output.status.success() {
-        return Err(std::io::Error::other(format!("sha256sum failed for {}", path.display())));
-    }
-    let text = String::from_utf8_lossy(&output.stdout);
-    Ok(text.split_whitespace().next().unwrap_or_default().to_string())
-}
+/// Hoisted to `cache_gen` (R14-04).
+pub use super::sha256_file;
 
 fn list_lst_files_flat(dir: &Path) -> Vec<PathBuf> {
     let mut out: Vec<PathBuf> = std::fs::read_dir(dir)
@@ -412,11 +405,10 @@ fn try_files(files: &[PathBuf], book_dir: &Path, key: &str, name: &str) -> Optio
     if let Some(hit) = resolve(key) {
         return Some(hit);
     }
-    if key != name {
-        if let Some(hit) = resolve(name) {
+    if key != name
+        && let Some(hit) = resolve(name) {
             return Some(hit);
         }
-    }
     None
 }
 
@@ -558,31 +550,9 @@ pub fn resolve_name_or_rename(
     (codex_name, codex_key, true, rename_info, divergence)
 }
 
-pub(crate) fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
-    let mut slug: String = name
-        .to_lowercase()
-        .chars()
-        .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
-        .collect();
-    while slug.contains("__") {
-        slug = slug.replace("__", "_");
-    }
-    let slug = slug.trim_matches('_').to_string();
-    let slug = if slug.is_empty() { "unnamed".to_string() } else { slug };
-    if !used.contains(&slug) {
-        used.insert(slug.clone());
-        return slug;
-    }
-    let mut n = 2;
-    loop {
-        let candidate = format!("{slug}-{n}");
-        if !used.contains(&candidate) {
-            used.insert(candidate.clone());
-            return candidate;
-        }
-        n += 1;
-    }
-}
+/// Hoisted to `cache_gen` (R14-04) as `slugify_dedup`, imported back
+/// under this file's original local name.
+pub(crate) use super::slugify_dedup as slugify;
 
 /// Writes `record` to `<out_dir>/<slug>.json` -- UNLESS a file already
 /// exists there, in which case it is left untouched and `Ok(false)` is
@@ -612,17 +582,9 @@ pub(crate) fn existing_source_line(out_dir: &Path, slug: &str) -> Option<u32> {
     value.get("source")?.get("line")?.as_u64().map(|n| n as u32)
 }
 
-pub(crate) fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<bool> {
-    std::fs::create_dir_all(out_dir)?;
-    let path = out_dir.join(format!("{slug}.json"));
-    if path.exists() {
-        return Ok(false);
-    }
-    let json = serde_json::to_string_pretty(record)
-        .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
-    std::fs::write(path, json)?;
-    Ok(true)
-}
+/// Hoisted to `cache_gen` (R14-04) as `write_json_bool`, imported back
+/// under this file's original local name.
+pub(crate) use super::write_json_bool as write_json;
 
 #[derive(Debug, Default)]
 pub struct GenerationReport {
@@ -924,15 +886,14 @@ pub fn generate(
         // Disambiguate ONLY when the citation line genuinely differs --
         // when it matches, this is an ordinary idempotent rerun of the
         // SAME row, and must keep skipping exactly as before.
-        if let Some(existing_line) = existing_source_line(&write_dir, &slug) {
-            if existing_line != line {
+        if let Some(existing_line) = existing_source_line(&write_dir, &slug)
+            && existing_line != line {
                 report.disambiguated_collision.push(format!(
                     "{book_id}:{} (line {line}, was slug of the line-{existing_line} record)",
                     record_key
                 ));
                 slug = slugify(&record_key, used);
             }
-        }
         let wrote = write_json(&write_dir, &slug, &record)
             .map_err(|_| GenerationError::CorpusUnreachable(book_out.clone()))?;
         if !wrote {
@@ -1464,11 +1425,10 @@ mod tests {
         let mut used2: BTreeSet<String> = BTreeSet::new();
         let mut slug2 = slugify("Intelligent Item ~ Purpose / Slay All", &mut used2);
         let rerun_line: u32 = 446;
-        if let Some(existing_line) = existing_source_line(&dir, &slug2) {
-            if existing_line != rerun_line {
+        if let Some(existing_line) = existing_source_line(&dir, &slug2)
+            && existing_line != rerun_line {
                 slug2 = slugify("Intelligent Item ~ Purpose / Slay All", &mut used2);
             }
-        }
         assert_eq!(slug2, "intelligent_item_purpose_slay_all");
 
         std::fs::remove_dir_all(&dir).ok();
@@ -1553,7 +1513,7 @@ mod tests {
     /// collision shape and does not silently re-point any other already-
     /// correct citation. Requires a real PCGen oracle checkout
     /// (`PCGEN_CORPUS_ROOT`); `#[ignore]`d by default like this crate's
-    /// other oracle-backed audits (`sd24_equipment_coverage_audit`, etc.),
+    /// other oracle-backed audits (`tests/sd24_equipment_coverage_audit.rs`, etc.),
     /// run explicitly:
     /// `PCGEN_CORPUS_ROOT=... cargo test --locked --lib
     /// equipment_gap::tests::find_citation_full_population_regression -- --ignored --nocapture`

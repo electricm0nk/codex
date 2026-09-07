@@ -28,8 +28,8 @@ per book:**
 
 **Row 17's honest size** (`decisions.md §27a`, no bare totals per `§12c`):
 the `fallthrough` count is the actionable population row 17 must
-re-categorize once `no_record` (the `not_ingested` bucket below) reaches
-zero — `measured_empty` and `not_ingested` are NOT row 17's population
+re-categorize once `no_record` (the `engine_does_not_hold` bucket below) reaches
+zero — `measured_empty` and `engine_does_not_hold` are NOT row 17's population
 (the former is a real answer already; the latter cannot be categorized
 until it is ingested).
 
@@ -94,15 +94,15 @@ def build_census(inventory_path: str, corpus_root: str) -> dict:
             "measured_pi_redacted": 0,
             "fallthrough": 0,
             "fallthrough_pi_redacted": 0,
-            "not_ingested": 0,
+            "engine_does_not_hold": 0,
         }
     )
     for row in ledger["rows"]:
         key = (row["kind"], row["book"])
         bucket = per_kb[key]
         reached_by = row.get("f0_reached_by")
-        if reached_by == "not_ingested":
-            bucket["not_ingested"] += 1
+        if reached_by == "engine_does_not_hold":
+            bucket["engine_does_not_hold"] += 1
         elif reached_by == "measured_empty":
             bucket["measured_empty"] += 1
         elif reached_by == "measured_pi_redacted":
@@ -147,7 +147,7 @@ def build_census(inventory_path: str, corpus_root: str) -> dict:
         "measured_pi_redacted": f0b.get("measured_pi_redacted", 0),
         "fallthrough": f0b.get("fallthrough", 0),
         "fallthrough_pi_redacted": ledger.get("f0_fallthrough_pi_redacted", 0),
-        "not_ingested": f0b.get("not_ingested", 0),
+        "engine_does_not_hold": f0b.get("engine_does_not_hold", 0),
         "provisional_default_total": len(provisional_hits),
         "provisional_default_in_not_done_population": len(provisional_in_population),
         "provisional_default_missing_reason": len(provisional_missing_reason),
@@ -190,7 +190,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"    ROW 17 HONEST SIZE            {t['row17_honest_size']:>7}")
     print()
     print(f"  excluded from row 17 (sequencing, decisions.md §27/§20):")
-    print(f"    not_ingested (no_record)      {t['not_ingested']:>7}   -- row 17 starts only after this reaches 0")
+    print(f"    engine_does_not_hold (no_record)      {t['engine_does_not_hold']:>7}   -- row 17 starts only after this reaches 0")
     print()
     if t["provisional_default_missing_reason"]:
         print(

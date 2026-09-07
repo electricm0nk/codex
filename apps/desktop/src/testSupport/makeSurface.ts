@@ -19,7 +19,7 @@ export function makeSurface(
     surfaceLabel: 'Developer diagnostics',
     headline: 'Connected to the app backend',
     lead: 'lead',
-    buildLabel: 'Codex 0.11.0-test',
+    buildLabel: 'Codex 0.14.0-test',
     channelLabel: 'alpha',
     platformLabel: 'Linux',
     supportTierLabel: 'Linux first-class · macOS second-class · Windows third-class',
@@ -46,7 +46,7 @@ export function makeSurface(
     provenanceRefs: [],
     notes: ['note'],
     status: {
-      build: { label: 'Codex 0.11.0-test', version: '0.11.0-test' },
+      build: { label: 'Codex 0.14.0-test', version: '0.14.0-test' },
       channel: {
         testerFacingLabel: 'alpha',
         operatorBranch: 'develop',

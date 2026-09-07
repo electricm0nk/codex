@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Many gathlains excitedly share every last bit of gossip they can find. These gathlains gain a +2 racial bonus on Diplomacy checks to gather information and on checks with one Knowledge skill of the gathlain's choice. Once the choice of Knowledge skill is made, it can't be changed.",
     "key": "Gathlain ~ Otherworldly Gossip",
     "name": "Otherworldly Gossip",
-    "description": "Many gathlains excitedly share every last bit of gossip they can find. These gathlains gain a +2 racial bonus on Diplomacy checks to gather information and on checks with one Knowledge skill of the gathlain's choice. Once the choice of Knowledge skill is made, it can't be changed.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -73,18 +71,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
-    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
-    "line": 53,
-    "record_key": "Gathlain ~ Otherworldly Gossip"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 53,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "record_key": "Gathlain ~ Otherworldly Gossip",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

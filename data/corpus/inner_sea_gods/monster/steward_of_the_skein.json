@@ -163,9 +163,8 @@
     "record_key": "Steward of the Skein",
     "sha256": "3b8742b6d620ef3ed9e8b6170b4413872d594c5d5b857ba99919dfd2f8173494"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:dr"
+    "static:literal_magnitudes_only"
   ]
 }
