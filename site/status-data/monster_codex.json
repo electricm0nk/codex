@@ -35,8 +35,8 @@
       "kind": "class_feature",
       "label": "Class Features",
       "done": 9,
-      "partial": 0,
-      "not_started": 48,
+      "partial": 1,
+      "not_started": 47,
       "denominator": 57,
       "pct": 15.8,
       "excluded_from_percentage": 15,
@@ -369,7 +369,7 @@
         },
         {
           "name": "Hungry Earth",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Hungry Earth"

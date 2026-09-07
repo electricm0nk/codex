@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 139,
-      "partial": 186,
-      "not_started": 105,
+      "done": 229,
+      "partial": 195,
+      "not_started": 6,
       "denominator": 430,
-      "pct": 32.3,
+      "pct": 53.3,
       "excluded_from_percentage": 41,
       "standing_breakdown": {
         "origin": 430,
@@ -536,7 +536,7 @@
         },
         {
           "name": "Acrobatics",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Acrobatics"
@@ -592,7 +592,7 @@
         },
         {
           "name": "Appraise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Appraise"
@@ -662,7 +662,7 @@
         },
         {
           "name": "Belt of Dwarvenkind ~ Languages",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Belt of Dwarvenkind ~ Languages"
@@ -746,7 +746,7 @@
         },
         {
           "name": "Bluff",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bluff"
@@ -851,7 +851,7 @@
         },
         {
           "name": "Climb",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Climb"
@@ -942,175 +942,175 @@
         },
         {
           "name": "Craft",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft"
         },
         {
           "name": "Craft (Alchemy)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Alchemy)"
         },
         {
           "name": "Craft (Armor)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Armor)"
         },
         {
           "name": "Craft (Baskets)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Baskets)"
         },
         {
           "name": "Craft (Blacksmithing)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Blacksmithing)"
         },
         {
           "name": "Craft (Books)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Books)"
         },
         {
           "name": "Craft (Bows)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Bows)"
         },
         {
           "name": "Craft (Calligraphy)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Calligraphy)"
         },
         {
           "name": "Craft (Carpentry)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Carpentry)"
         },
         {
           "name": "Craft (Cloth)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Cloth)"
         },
         {
           "name": "Craft (Clothing)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Clothing)"
         },
         {
           "name": "Craft (Gemcutting)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Gemcutting)"
         },
         {
           "name": "Craft (Glass)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Glass)"
         },
         {
           "name": "Craft (Jewelry)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Jewelry)"
         },
         {
           "name": "Craft (Leather)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Leather)"
         },
         {
           "name": "Craft (Locks)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Locks)"
         },
         {
           "name": "Craft (Paintings)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Paintings)"
         },
         {
           "name": "Craft (Pottery)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Pottery)"
         },
         {
           "name": "Craft (Sculptures)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Sculptures)"
         },
         {
           "name": "Craft (Ships)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Ships)"
         },
         {
           "name": "Craft (Shoes)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Shoes)"
         },
         {
           "name": "Craft (Stonemasonry)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Stonemasonry)"
         },
         {
           "name": "Craft (Traps)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Traps)"
         },
         {
           "name": "Craft (Untrained)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Untrained)"
         },
         {
           "name": "Craft (Weapons)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Weapons)"
@@ -1215,7 +1215,7 @@
         },
         {
           "name": "Default",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Default"
@@ -1292,21 +1292,21 @@
         },
         {
           "name": "Diplomacy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Diplomacy"
         },
         {
           "name": "Disable Device",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Disable Device"
         },
         {
           "name": "Disguise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Disguise"
@@ -1516,7 +1516,7 @@
         },
         {
           "name": "Escape Artist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Escape Artist"
@@ -1614,7 +1614,7 @@
         },
         {
           "name": "Handle Animal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Handle Animal"
@@ -1684,7 +1684,7 @@
         },
         {
           "name": "Intimidate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Intimidate"
@@ -1733,84 +1733,84 @@
         },
         {
           "name": "Knowledge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Knowledge"
         },
         {
           "name": "Knowledge (Arcana)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Arcana)"
         },
         {
           "name": "Knowledge (Dungeoneering)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Dungeoneering)"
         },
         {
           "name": "Knowledge (Engineering)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Engineering)"
         },
         {
           "name": "Knowledge (Geography)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Geography)"
         },
         {
           "name": "Knowledge (History)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (History)"
         },
         {
           "name": "Knowledge (Local)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Local)"
         },
         {
           "name": "Knowledge (Nature)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Nature)"
         },
         {
           "name": "Knowledge (Nobility)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Nobility)"
         },
         {
           "name": "Knowledge (Planes)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Planes)"
         },
         {
           "name": "Knowledge (Religion)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Religion)"
         },
         {
           "name": "Knowledge (Untrained)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Knowledge (Untrained)"
@@ -1859,7 +1859,7 @@
         },
         {
           "name": "Linguistics",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Linguistics"
@@ -2076,84 +2076,84 @@
         },
         {
           "name": "Perception",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perception"
         },
         {
           "name": "Perform",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform"
         },
         {
           "name": "Perform (Act)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (Act)"
         },
         {
           "name": "Perform (Comedy)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (Comedy)"
         },
         {
           "name": "Perform (Dance)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (Dance)"
         },
         {
           "name": "Perform (Keyboard Instruments)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (Keyboard Instruments)"
         },
         {
           "name": "Perform (Oratory)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (Oratory)"
         },
         {
           "name": "Perform (Percussion Instruments)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (Percussion Instruments)"
         },
         {
           "name": "Perform (Sing)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (Sing)"
         },
         {
           "name": "Perform (String Instruments)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (String Instruments)"
         },
         {
           "name": "Perform (Untrained)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (Untrained)"
         },
         {
           "name": "Perform (Wind Instruments)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform (Wind Instruments)"
@@ -2230,224 +2230,224 @@
         },
         {
           "name": "Profession",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession"
         },
         {
           "name": "Profession (Architect)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Architect)"
         },
         {
           "name": "Profession (Baker)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Baker)"
         },
         {
           "name": "Profession (Barrister)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Barrister)"
         },
         {
           "name": "Profession (Brewer)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Brewer)"
         },
         {
           "name": "Profession (Butcher)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Butcher)"
         },
         {
           "name": "Profession (Clerk)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Clerk)"
         },
         {
           "name": "Profession (Cook)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Cook)"
         },
         {
           "name": "Profession (Courtesan)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Courtesan)"
         },
         {
           "name": "Profession (Driver)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Driver)"
         },
         {
           "name": "Profession (Engineer)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Engineer)"
         },
         {
           "name": "Profession (Farmer)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Farmer)"
         },
         {
           "name": "Profession (Fisherman)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Fisherman)"
         },
         {
           "name": "Profession (Gambler)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Gambler)"
         },
         {
           "name": "Profession (Gardener)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Gardener)"
         },
         {
           "name": "Profession (Herbalist)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Herbalist)"
         },
         {
           "name": "Profession (Innkeeper)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Innkeeper)"
         },
         {
           "name": "Profession (Librarian)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Librarian)"
         },
         {
           "name": "Profession (Merchant)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Merchant)"
         },
         {
           "name": "Profession (Midwife)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Midwife)"
         },
         {
           "name": "Profession (Miller)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Miller)"
         },
         {
           "name": "Profession (Miner)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Miner)"
         },
         {
           "name": "Profession (Porter)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Porter)"
         },
         {
           "name": "Profession (Sailor)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Sailor)"
         },
         {
           "name": "Profession (Scribe)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Scribe)"
         },
         {
           "name": "Profession (Shepherd)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Shepherd)"
         },
         {
           "name": "Profession (Soldier)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Soldier)"
         },
         {
           "name": "Profession (Soothsayer)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Soothsayer)"
         },
         {
           "name": "Profession (Stable Master)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Stable Master)"
         },
         {
           "name": "Profession (Tanner)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Tanner)"
         },
         {
           "name": "Profession (Trapper)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Trapper)"
         },
         {
           "name": "Profession (Woodcutter)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Woodcutter)"
@@ -2587,7 +2587,7 @@
         },
         {
           "name": "Ride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ride"
@@ -2664,7 +2664,7 @@
         },
         {
           "name": "Sense Motive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sense Motive"
@@ -2846,7 +2846,7 @@
         },
         {
           "name": "Sleight of Hand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sleight of Hand"
@@ -2895,7 +2895,7 @@
         },
         {
           "name": "Spellcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spellcraft"
@@ -2916,7 +2916,7 @@
         },
         {
           "name": "Stealth",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Stealth"
@@ -2986,14 +2986,14 @@
         },
         {
           "name": "Survival",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Survival"
         },
         {
           "name": "Swim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Swim"
@@ -3245,7 +3245,7 @@
         },
         {
           "name": "Use Magic Device",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Use Magic Device"
@@ -3319,8 +3319,8 @@
       "kind": "class_feature",
       "label": "Class Features",
       "done": 170,
-      "partial": 59,
-      "not_started": 321,
+      "partial": 97,
+      "not_started": 283,
       "denominator": 550,
       "pct": 30.9,
       "excluded_from_percentage": 967,
@@ -3555,7 +3555,7 @@
         },
         {
           "name": "Air",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Air (Internal.DomainAbility)"
@@ -3632,7 +3632,7 @@
         },
         {
           "name": "Animal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Animal (Internal.DomainAbility)"
@@ -4010,7 +4010,7 @@
         },
         {
           "name": "Artifice",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Artifice (Internal.DomainAbility)"
@@ -4787,21 +4787,21 @@
         },
         {
           "name": "Burning Hands (Acid)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Burning Hands (Acid)"
         },
         {
           "name": "Burning Hands (Cold)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Burning Hands (Cold)"
         },
         {
           "name": "Burning Hands (Electricity)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Burning Hands (Electricity)"
@@ -4997,7 +4997,7 @@
         },
         {
           "name": "Chaos",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Chaos (Internal.DomainAbility)"
@@ -5032,7 +5032,7 @@
         },
         {
           "name": "Charm",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Charm (Internal.DomainAbility)"
@@ -5431,7 +5431,7 @@
         },
         {
           "name": "Community",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Community (Internal.DomainAbility)"
@@ -5473,7 +5473,7 @@
         },
         {
           "name": "Confusion, Lesser",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Confusion, Lesser"
@@ -5753,7 +5753,7 @@
         },
         {
           "name": "Death",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Death (Internal.DomainAbility)"
@@ -6096,7 +6096,7 @@
         },
         {
           "name": "Dispel Magic, Greater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Dispel Magic, Greater"
@@ -6425,7 +6425,7 @@
         },
         {
           "name": "Earth",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Earth (Internal.DomainAbility)"
@@ -6810,7 +6810,7 @@
         },
         {
           "name": "Evil",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Evil (Internal.DomainAbility)"
@@ -7272,7 +7272,7 @@
         },
         {
           "name": "Fire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Fire (Internal.DomainAbility)"
@@ -7335,7 +7335,7 @@
         },
         {
           "name": "Fire Shield (warm)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Fire Shield (warm)"
@@ -7517,7 +7517,7 @@
         },
         {
           "name": "Glory",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Glory (Internal.DomainAbility)"
@@ -7545,7 +7545,7 @@
         },
         {
           "name": "Good",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Good (Internal.DomainAbility)"
@@ -7755,7 +7755,7 @@
         },
         {
           "name": "Healing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Healing (Internal.DomainAbility)"
@@ -7804,7 +7804,7 @@
         },
         {
           "name": "Heroism, Greater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Heroism, Greater"
@@ -8602,7 +8602,7 @@
         },
         {
           "name": "Knowledge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Knowledge (Internal.DomainAbility)"
@@ -8630,7 +8630,7 @@
         },
         {
           "name": "Law",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Law (Internal.DomainAbility)"
@@ -8693,7 +8693,7 @@
         },
         {
           "name": "Liberation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Liberation (Internal.DomainAbility)"
@@ -8833,7 +8833,7 @@
         },
         {
           "name": "Luck",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Luck (Internal.DomainAbility)"
@@ -8854,7 +8854,7 @@
         },
         {
           "name": "Madness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Madness (Internal.DomainAbility)"
@@ -8882,7 +8882,7 @@
         },
         {
           "name": "Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Magic (Internal.DomainAbility)"
@@ -8924,7 +8924,7 @@
         },
         {
           "name": "Magic Weapon, Greater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Magic Weapon, Greater"
@@ -9799,7 +9799,7 @@
         },
         {
           "name": "Nobility",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Nobility (Internal.DomainAbility)"
@@ -10149,14 +10149,14 @@
         },
         {
           "name": "Planar Binding (Devils and Fiendish Creatures Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Planar Binding (Devils and Fiendish Creatures Only)"
         },
         {
           "name": "Planar Binding, Greater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Planar Binding, Greater"
@@ -10170,7 +10170,7 @@
         },
         {
           "name": "Plant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Plant (Internal.DomainAbility)"
@@ -10282,7 +10282,7 @@
         },
         {
           "name": "Polymorph, Greater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Polymorph, Greater"
@@ -10394,7 +10394,7 @@
         },
         {
           "name": "Protection",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Protection (Internal.DomainAbility)"
@@ -10436,7 +10436,7 @@
         },
         {
           "name": "Prying Eyes, Greater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Prying Eyes, Greater"
@@ -10688,7 +10688,7 @@
         },
         {
           "name": "Repose",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Repose (Internal.DomainAbility)"
@@ -10856,7 +10856,7 @@
         },
         {
           "name": "Rune",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Rune (Internal.DomainAbility)"
@@ -10912,21 +10912,21 @@
         },
         {
           "name": "Scorching Ray (Acid)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Scorching Ray (Acid)"
         },
         {
           "name": "Scorching Ray (Cold)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Scorching Ray (Cold)"
         },
         {
           "name": "Scorching Ray (Electricity)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Scorching Ray (Electricity)"
@@ -11045,7 +11045,7 @@
         },
         {
           "name": "Shadow Evocation, Greater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Shadow Evocation, Greater"
@@ -11150,7 +11150,7 @@
         },
         {
           "name": "Shout, Greater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Shout, Greater"
@@ -11437,154 +11437,154 @@
         },
         {
           "name": "Sorcerer Domain ~ Air",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Air"
         },
         {
           "name": "Sorcerer Domain ~ Animal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Animal"
         },
         {
           "name": "Sorcerer Domain ~ Chaos",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Chaos"
         },
         {
           "name": "Sorcerer Domain ~ Death",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Death"
         },
         {
           "name": "Sorcerer Domain ~ Destruction",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Destruction"
         },
         {
           "name": "Sorcerer Domain ~ Earth",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Earth"
         },
         {
           "name": "Sorcerer Domain ~ Evil",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Evil"
         },
         {
           "name": "Sorcerer Domain ~ Fire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Fire"
         },
         {
           "name": "Sorcerer Domain ~ Good",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Good"
         },
         {
           "name": "Sorcerer Domain ~ Healing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Healing"
         },
         {
           "name": "Sorcerer Domain ~ Knowledge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Knowledge"
         },
         {
           "name": "Sorcerer Domain ~ Law",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Law"
         },
         {
           "name": "Sorcerer Domain ~ Luck",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Luck"
         },
         {
           "name": "Sorcerer Domain ~ Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Magic"
         },
         {
           "name": "Sorcerer Domain ~ Plant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Plant"
         },
         {
           "name": "Sorcerer Domain ~ Protection",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Protection"
         },
         {
           "name": "Sorcerer Domain ~ Strength",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Strength"
         },
         {
           "name": "Sorcerer Domain ~ Sun",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Sun"
         },
         {
           "name": "Sorcerer Domain ~ Travel",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Travel"
         },
         {
           "name": "Sorcerer Domain ~ Trickery",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Trickery"
         },
         {
           "name": "Sorcerer Domain ~ War",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ War"
         },
         {
           "name": "Sorcerer Domain ~ Water",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Water"
@@ -11983,7 +11983,7 @@
         },
         {
           "name": "Strength",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Strength (Internal.DomainAbility)"
@@ -12060,7 +12060,7 @@
         },
         {
           "name": "Suggestion, Mass",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Suggestion, Mass"
@@ -12081,7 +12081,7 @@
         },
         {
           "name": "Summon Monster VIII (Elementals Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Elementals Only)"
@@ -12102,7 +12102,7 @@
         },
         {
           "name": "Sun",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Sun (Internal.DomainAbility)"
@@ -12200,7 +12200,7 @@
         },
         {
           "name": "Teleport, Greater",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Teleport, Greater"
@@ -12487,7 +12487,7 @@
         },
         {
           "name": "Travel",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Travel (Internal.DomainAbility)"
@@ -12515,7 +12515,7 @@
         },
         {
           "name": "Trickery",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Trickery (Internal.DomainAbility)"
@@ -12886,7 +12886,7 @@
         },
         {
           "name": "Wall Of Thorns",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Wall Of Thorns"
@@ -12921,7 +12921,7 @@
         },
         {
           "name": "War",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "War (Internal.DomainAbility)"
@@ -12970,7 +12970,7 @@
         },
         {
           "name": "Water",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Water (Internal.DomainAbility)"
@@ -13005,7 +13005,7 @@
         },
         {
           "name": "Waves Of Fatigue",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Waves Of Fatigue"
@@ -13705,7 +13705,7 @@
         },
         {
           "name": "Weather",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Weather (Internal.DomainAbility)"
@@ -38194,8 +38194,8 @@
       "kind": "language",
       "label": "Languages",
       "done": 0,
-      "partial": 0,
-      "not_started": 20,
+      "partial": 20,
+      "not_started": 0,
       "denominator": 20,
       "pct": 0.0,
       "excluded_from_percentage": 2,
@@ -38206,154 +38206,154 @@
       "items": [
         {
           "name": "Abyssal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read.Planar",
           "standing": "origin",
           "display_name": "Abyssal"
         },
         {
           "name": "Aklo",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Aklo"
         },
         {
           "name": "Aquan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read.Elemental",
           "standing": "origin",
           "display_name": "Aquan"
         },
         {
           "name": "Auran",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read.Elemental",
           "standing": "origin",
           "display_name": "Auran"
         },
         {
           "name": "Celestial",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read.Planar",
           "standing": "origin",
           "display_name": "Celestial"
         },
         {
           "name": "Common",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read.ModernHumanLanguage.HumanRegional.Human",
           "standing": "origin",
           "display_name": "Common"
         },
         {
           "name": "Draconic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Draconic"
         },
         {
           "name": "Druidic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read.Secret",
           "standing": "origin",
           "display_name": "Druidic"
         },
         {
           "name": "Dwarven",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Dwarven"
         },
         {
           "name": "Elven",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Elven"
         },
         {
           "name": "Giant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Giant"
         },
         {
           "name": "Gnoll",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Gnoll"
         },
         {
           "name": "Gnome",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Gnome"
         },
         {
           "name": "Goblin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Goblin"
         },
         {
           "name": "Halfling",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Halfling"
         },
         {
           "name": "Ignan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read.Elemental",
           "standing": "origin",
           "display_name": "Ignan"
         },
         {
           "name": "Infernal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read.Planar",
           "standing": "origin",
           "display_name": "Infernal"
         },
         {
           "name": "Orc",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Orc"
         },
         {
           "name": "Read Lips",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken",
           "standing": "origin",
           "display_name": "Read Lips"
         },
         {
           "name": "Sylvan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Sylvan"
         },
         {
           "name": "Terran",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read.Elemental",
           "standing": "origin",
           "display_name": "Terran"
         },
         {
           "name": "Undercommon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Undercommon"
@@ -38363,11 +38363,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 22,
-      "partial": 109,
-      "not_started": 5,
+      "done": 126,
+      "partial": 8,
+      "not_started": 2,
       "denominator": 136,
-      "pct": 16.2,
+      "pct": 92.6,
       "excluded_from_percentage": 72,
       "standing_breakdown": {
         "unclassified": 72,
@@ -38474,77 +38474,77 @@
         },
         {
           "name": "Aid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Aid"
         },
         {
           "name": "Alter Self",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Alter Self"
         },
         {
           "name": "Animate Dead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Animate Dead"
         },
         {
           "name": "Animate Objects",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Animate Objects"
         },
         {
           "name": "Animate Objects (Small or Smaller)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Animate Objects (Small or Smaller)"
         },
         {
           "name": "Arcane Mark",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Arcane Mark"
         },
         {
           "name": "Augury",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Augury"
         },
         {
           "name": "Bear's Endurance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Bear's Endurance"
         },
         {
           "name": "Bleed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Bleed"
         },
         {
           "name": "Blindness/Deafness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Blindness/Deafness"
         },
         {
           "name": "Blur",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Blur"
@@ -38558,56 +38558,56 @@
         },
         {
           "name": "Burning Hands",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Burning Hands"
         },
         {
           "name": "Calm Animals",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Calm Animals"
         },
         {
           "name": "Charm Animal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Charm Animal"
         },
         {
           "name": "Charm Animal (aquatic animals only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Charm Animal (aquatic animals only)"
         },
         {
           "name": "Charm Person",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Charm Person"
         },
         {
           "name": "Chill Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Chill Touch"
         },
         {
           "name": "Command",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Command"
         },
         {
           "name": "Commune",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Commune"
@@ -38621,42 +38621,42 @@
         },
         {
           "name": "Comprehend Languages",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Comprehend Languages"
         },
         {
           "name": "Continual Flame",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Continual Flame"
         },
         {
           "name": "Create Water",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Create Water"
         },
         {
           "name": "Curse Water",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Curse Water"
         },
         {
           "name": "Dancing Lights",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Dancing Lights"
         },
         {
           "name": "Darkness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Darkness"
@@ -38677,35 +38677,35 @@
         },
         {
           "name": "Daylight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Daylight"
         },
         {
           "name": "Daze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Daze"
         },
         {
           "name": "Death Knell",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Death Knell"
         },
         {
           "name": "Deathwatch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Deathwatch"
         },
         {
           "name": "Deeper Darkness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Deeper Darkness"
@@ -38726,56 +38726,56 @@
         },
         {
           "name": "Detect Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Detect Evil"
         },
         {
           "name": "Detect Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Detect Magic"
         },
         {
           "name": "Detect Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Detect Poison"
         },
         {
           "name": "Detect Secret Doors",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Detect Secret Doors"
         },
         {
           "name": "Detect Thoughts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Detect Thoughts"
         },
         {
           "name": "Detect Undead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Detect Undead"
         },
         {
           "name": "Disguise Self",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Disguise Self"
         },
         {
           "name": "Disguise Self (humanoid only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Disguise Self (humanoid only)"
@@ -38789,7 +38789,7 @@
         },
         {
           "name": "Displacement",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Displacement"
@@ -38803,14 +38803,14 @@
         },
         {
           "name": "Doom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Doom"
         },
         {
           "name": "Dream",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Dream"
@@ -38859,35 +38859,35 @@
         },
         {
           "name": "Enlarge Person",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Enlarge Person"
         },
         {
           "name": "Enlarge Person (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Enlarge Person (self only)"
         },
         {
           "name": "Entangle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Entangle"
         },
         {
           "name": "Erase",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Erase"
         },
         {
           "name": "Faerie Fire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Faerie Fire"
@@ -38901,35 +38901,35 @@
         },
         {
           "name": "Feather Fall",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Feather Fall"
         },
         {
           "name": "Flare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Flare"
         },
         {
           "name": "Fog Cloud",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Fog Cloud"
         },
         {
           "name": "Ghost Sound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Ghost Sound"
         },
         {
           "name": "Glitterdust",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Glitterdust"
@@ -38950,14 +38950,14 @@
         },
         {
           "name": "Goodberry",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Goodberry"
         },
         {
           "name": "Grease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Grease"
@@ -38971,7 +38971,7 @@
         },
         {
           "name": "Guidance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Guidance"
@@ -39027,7 +39027,7 @@
         },
         {
           "name": "Hideous Laughter",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Hideous Laughter"
@@ -39076,7 +39076,7 @@
         },
         {
           "name": "Inflict Light Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Inflict Light Wounds"
@@ -39090,21 +39090,21 @@
         },
         {
           "name": "Invisibility",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Invisibility"
         },
         {
           "name": "Invisibility (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Invisibility (self only)"
         },
         {
           "name": "Jump",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Jump"
@@ -39188,14 +39188,14 @@
         },
         {
           "name": "Levitate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Levitate"
         },
         {
           "name": "Light",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Light"
@@ -39223,35 +39223,35 @@
         },
         {
           "name": "Lullaby",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Lullaby"
         },
         {
           "name": "Mage Hand",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Mage Hand"
         },
         {
           "name": "Magic Fang",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Magic Fang"
         },
         {
           "name": "Magic Stone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Magic Stone"
         },
         {
           "name": "Make Whole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Make Whole"
@@ -39293,28 +39293,28 @@
         },
         {
           "name": "Mending",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Mending"
         },
         {
           "name": "Message",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Message"
         },
         {
           "name": "Minor Image",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Minor Image"
         },
         {
           "name": "Misdirection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Misdirection"
@@ -39328,21 +39328,21 @@
         },
         {
           "name": "No Race Trait Available",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "No Race Trait Available"
         },
         {
           "name": "Nondetection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Nondetection"
         },
         {
           "name": "Nondetection (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Nondetection (self only)"
@@ -39356,7 +39356,7 @@
         },
         {
           "name": "None",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Region",
           "standing": "origin",
           "display_name": "None (Region)"
@@ -39391,7 +39391,7 @@
         },
         {
           "name": "Obscuring Mist",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Obscuring Mist"
@@ -39405,7 +39405,7 @@
         },
         {
           "name": "Open/Close",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Open/Close"
@@ -39426,77 +39426,77 @@
         },
         {
           "name": "Pass without Trace",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Pass without Trace"
         },
         {
           "name": "Plane Shift (self only/to Shadow or Material Plane)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Plane Shift (self only/to Shadow or Material Plane)"
         },
         {
           "name": "Plane Shift (to Shadow or Material Plane)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Plane Shift (to Shadow or Material Plane)"
         },
         {
           "name": "Prestidigitation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Prestidigitation"
         },
         {
           "name": "Produce Flame",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Produce Flame"
         },
         {
           "name": "Purify Food and Drink",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Purify Food and Drink"
         },
         {
           "name": "Pyrotechnics",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Pyrotechnics"
         },
         {
           "name": "Rage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Rage"
         },
         {
           "name": "Read Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Read Magic"
         },
         {
           "name": "Reduce Person",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Reduce Person"
         },
         {
           "name": "Remove Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Remove Disease"
@@ -39510,56 +39510,56 @@
         },
         {
           "name": "Sanctuary",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Sanctuary"
         },
         {
           "name": "Scare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Scare"
         },
         {
           "name": "See Invisibility",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "See Invisibility"
         },
         {
           "name": "Shadow Walk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Shadow Walk"
         },
         {
           "name": "Shadow Walk (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Shadow Walk (self only)"
         },
         {
           "name": "Shatter",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Shatter"
         },
         {
           "name": "Shield Other",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Shield Other"
         },
         {
           "name": "Silent Image",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Silent Image"
@@ -39608,56 +39608,56 @@
         },
         {
           "name": "Speak with Animals",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Speak with Animals"
         },
         {
           "name": "Speak with Animals (aquatic animals only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Speak with Animals (aquatic animals only)"
         },
         {
           "name": "Speak with Animals (birds or other flying animals only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Speak with Animals (birds or other flying animals only)"
         },
         {
           "name": "Speak with Animals (pigs and boars only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Speak with Animals (pigs and boars only)"
         },
         {
           "name": "Speak with Animals (rodents only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Speak with Animals (rodents only)"
         },
         {
           "name": "Speak with Dead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Speak with Dead"
         },
         {
           "name": "Speak with Plants",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Speak with Plants"
         },
         {
           "name": "Spider Climb",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Spider Climb"
@@ -39671,21 +39671,21 @@
         },
         {
           "name": "Stabilize",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Stabilize"
         },
         {
           "name": "Stone Shape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Stone Shape"
         },
         {
           "name": "Stone Tell",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Stone Tell"
@@ -39706,21 +39706,21 @@
         },
         {
           "name": "Summon Monster III (lantern archon only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Summon Monster III (lantern archon only)"
         },
         {
           "name": "Summon Nature's Ally I (dolphins only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Summon Nature's Ally I (dolphins only)"
         },
         {
           "name": "Summon Nature's Ally II",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Summon Nature's Ally II"
@@ -39734,7 +39734,7 @@
         },
         {
           "name": "Touch of Fatigue",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Touch of Fatigue"
@@ -39748,28 +39748,28 @@
         },
         {
           "name": "Unknown",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Region",
           "standing": "origin",
           "display_name": "Unknown (Region)"
         },
         {
           "name": "Unseen Servant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Unseen Servant"
         },
         {
           "name": "Veil (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Veil (self only)"
         },
         {
           "name": "Ventriloquism",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Ventriloquism"
@@ -39811,21 +39811,21 @@
         },
         {
           "name": "Web",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Web"
         },
         {
           "name": "Whispering Wind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "unclassified",
           "display_name": "Whispering Wind"
         },
         {
           "name": "Zone of Truth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Zone of Truth"
@@ -39835,11 +39835,11 @@
     {
       "kind": "skill",
       "label": "Skills",
-      "done": 76,
-      "partial": 19,
-      "not_started": 15,
+      "done": 84,
+      "partial": 26,
+      "not_started": 0,
       "denominator": 110,
-      "pct": 69.1,
+      "pct": 76.4,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 110
@@ -40029,7 +40029,7 @@
         },
         {
           "name": "Craft (Untrained)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Craft",
           "standing": "origin",
           "display_name": "Craft (Untrained)"
@@ -40057,7 +40057,7 @@
         },
         {
           "name": "Disable Device",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Disable Device"
@@ -40092,7 +40092,7 @@
         },
         {
           "name": "Handle Animal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Handle Animal"
@@ -40183,7 +40183,7 @@
         },
         {
           "name": "Knowledge (Untrained)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Intelligence.Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Untrained)"
@@ -40197,7 +40197,7 @@
         },
         {
           "name": "Linguistics",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Linguistics"
@@ -40267,7 +40267,7 @@
         },
         {
           "name": "Perform (Untrained)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Charisma.Perform",
           "standing": "origin",
           "display_name": "Perform (Untrained)"
@@ -40491,7 +40491,7 @@
         },
         {
           "name": "Profession (Untrained)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Wisdom.Profession",
           "standing": "origin",
           "display_name": "Profession (Untrained)"
@@ -40526,7 +40526,7 @@
         },
         {
           "name": "Sleight of Hand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sleight of Hand"
@@ -40540,7 +40540,7 @@
         },
         {
           "name": "Spellcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spellcraft"
@@ -40568,42 +40568,42 @@
         },
         {
           "name": "Untrained Charisma",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Charisma"
         },
         {
           "name": "Untrained Dexterity",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Dexterity"
         },
         {
           "name": "Untrained Intelligence",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Intelligence"
         },
         {
           "name": "Untrained Strength",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Strength"
         },
         {
           "name": "Untrained Wisdom",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Wisdom"
         },
         {
           "name": "Use Magic Device",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Use Magic Device"
@@ -45285,8 +45285,8 @@
       "kind": "template",
       "label": "Templates",
       "done": 36,
-      "partial": 96,
-      "not_started": 115,
+      "partial": 210,
+      "not_started": 1,
       "denominator": 247,
       "pct": 14.6,
       "excluded_from_percentage": 15,
@@ -45500,147 +45500,147 @@
         },
         {
           "name": "Basic Level 1",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 1"
         },
         {
           "name": "Basic Level 10",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 10"
         },
         {
           "name": "Basic Level 11",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 11"
         },
         {
           "name": "Basic Level 12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 12"
         },
         {
           "name": "Basic Level 13",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 13"
         },
         {
           "name": "Basic Level 14",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 14"
         },
         {
           "name": "Basic Level 15",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 15"
         },
         {
           "name": "Basic Level 16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 16"
         },
         {
           "name": "Basic Level 17",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 17"
         },
         {
           "name": "Basic Level 18",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 18"
         },
         {
           "name": "Basic Level 19",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 19"
         },
         {
           "name": "Basic Level 2",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 2"
         },
         {
           "name": "Basic Level 20",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 20"
         },
         {
           "name": "Basic Level 3",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 3"
         },
         {
           "name": "Basic Level 4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 4"
         },
         {
           "name": "Basic Level 5",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 5"
         },
         {
           "name": "Basic Level 6",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 6"
         },
         {
           "name": "Basic Level 7",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 7"
         },
         {
           "name": "Basic Level 8",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 8"
         },
         {
           "name": "Basic Level 9",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 9"
         },
         {
           "name": "Basic NPC",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic NPC"
@@ -45654,161 +45654,161 @@
         },
         {
           "name": "Bonus Language ~ Abyssal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Abyssal"
         },
         {
           "name": "Bonus Language ~ Aklo",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Aklo"
         },
         {
           "name": "Bonus Language ~ All",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ All"
         },
         {
           "name": "Bonus Language ~ Any Human Language",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Any Human Language"
         },
         {
           "name": "Bonus Language ~ Any Spoken",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Any Spoken"
         },
         {
           "name": "Bonus Language ~ Aquan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Aquan"
         },
         {
           "name": "Bonus Language ~ Auran",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Auran"
         },
         {
           "name": "Bonus Language ~ Celestial",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Celestial"
         },
         {
           "name": "Bonus Language ~ Common",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Common"
         },
         {
           "name": "Bonus Language ~ Draconic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Draconic"
         },
         {
           "name": "Bonus Language ~ Dwarven",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Dwarven"
         },
         {
           "name": "Bonus Language ~ Elven",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Elven"
         },
         {
           "name": "Bonus Language ~ Giant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Giant"
         },
         {
           "name": "Bonus Language ~ Gnoll",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Gnoll"
         },
         {
           "name": "Bonus Language ~ Gnome",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Gnome"
         },
         {
           "name": "Bonus Language ~ Goblin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Bonus Language ~ Goblin"
         },
         {
           "name": "Bonus Language ~ Halfling",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Halfling"
         },
         {
           "name": "Bonus Language ~ Ignan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Ignan"
         },
         {
           "name": "Bonus Language ~ Infernal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Infernal"
         },
         {
           "name": "Bonus Language ~ Orc",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Bonus Language ~ Orc"
         },
         {
           "name": "Bonus Language ~ Sylvan",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Sylvan"
         },
         {
           "name": "Bonus Language ~ Terran",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Terran"
         },
         {
           "name": "Bonus Language ~ Undercommon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Undercommon"
@@ -45850,21 +45850,21 @@
         },
         {
           "name": "Dwarf",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Race Builder Subtype",
           "standing": "unclassified",
           "display_name": "Dwarf (Race Builder Subtype)"
         },
         {
           "name": "Dwarf",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dwarf"
         },
         {
           "name": "Dwarf",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Racial Heritage",
           "standing": "unclassified",
           "display_name": "Dwarf (Racial Heritage)"
@@ -45878,14 +45878,14 @@
         },
         {
           "name": "Elf",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Elf"
         },
         {
           "name": "Elf",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Racial Heritage",
           "standing": "unclassified",
           "display_name": "Elf (Racial Heritage)"
@@ -45913,14 +45913,14 @@
         },
         {
           "name": "Familiar Speaks One Language",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Familiar Speaks One Language"
         },
         {
           "name": "Familiar Type",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Familiar Type"
@@ -45962,21 +45962,21 @@
         },
         {
           "name": "Gnome",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Race Builder Subtype",
           "standing": "unclassified",
           "display_name": "Gnome (Race Builder Subtype)"
         },
         {
           "name": "Gnome",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Gnome"
         },
         {
           "name": "Gnome",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Racial Heritage",
           "standing": "unclassified",
           "display_name": "Gnome (Racial Heritage)"
@@ -45997,189 +45997,189 @@
         },
         {
           "name": "Half-Orc",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Half-Orc"
         },
         {
           "name": "Halfling",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Race Builder Subtype",
           "standing": "unclassified",
           "display_name": "Halfling (Race Builder Subtype)"
         },
         {
           "name": "Halfling",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Halfling"
         },
         {
           "name": "Halfling",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Racial Heritage",
           "standing": "unclassified",
           "display_name": "Halfling (Racial Heritage)"
         },
         {
           "name": "Heroic Level 1",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 1"
         },
         {
           "name": "Heroic Level 10",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 10"
         },
         {
           "name": "Heroic Level 11",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 11"
         },
         {
           "name": "Heroic Level 12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 12"
         },
         {
           "name": "Heroic Level 13",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 13"
         },
         {
           "name": "Heroic Level 14",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 14"
         },
         {
           "name": "Heroic Level 15",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 15"
         },
         {
           "name": "Heroic Level 16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 16"
         },
         {
           "name": "Heroic Level 17",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 17"
         },
         {
           "name": "Heroic Level 18",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 18"
         },
         {
           "name": "Heroic Level 19",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 19"
         },
         {
           "name": "Heroic Level 2",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 2"
         },
         {
           "name": "Heroic Level 20",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 20"
         },
         {
           "name": "Heroic Level 3",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 3"
         },
         {
           "name": "Heroic Level 4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 4"
         },
         {
           "name": "Heroic Level 5",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 5"
         },
         {
           "name": "Heroic Level 6",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 6"
         },
         {
           "name": "Heroic Level 7",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 7"
         },
         {
           "name": "Heroic Level 8",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 8"
         },
         {
           "name": "Heroic Level 9",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 9"
         },
         {
           "name": "Heroic NPC",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic NPC"
         },
         {
           "name": "Human",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Race Builder Subtype",
           "standing": "unclassified",
           "display_name": "Human (Race Builder Subtype)"
         },
         {
           "name": "Human",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Human"
@@ -46193,42 +46193,42 @@
         },
         {
           "name": "Inherent Ability Bonus (Charisma)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Charisma)"
         },
         {
           "name": "Inherent Ability Bonus (Constitution)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Constitution)"
         },
         {
           "name": "Inherent Ability Bonus (Dexterity)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Dexterity)"
         },
         {
           "name": "Inherent Ability Bonus (Intelligence)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Intelligence)"
         },
         {
           "name": "Inherent Ability Bonus (Strength)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Strength)"
         },
         {
           "name": "Inherent Ability Bonus (Wisdom)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Wisdom)"
@@ -46445,42 +46445,42 @@
         },
         {
           "name": "IsDwarf",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsDwarf"
         },
         {
           "name": "IsElf",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsElf"
         },
         {
           "name": "IsGnome",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsGnome"
         },
         {
           "name": "IsHalfOrc",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsHalfOrc"
         },
         {
           "name": "IsHalfling",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsHalfling"
         },
         {
           "name": "IsHuman",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsHuman"
@@ -46494,133 +46494,133 @@
         },
         {
           "name": "PC Level 10",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 10"
         },
         {
           "name": "PC Level 11",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 11"
         },
         {
           "name": "PC Level 12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 12"
         },
         {
           "name": "PC Level 13",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 13"
         },
         {
           "name": "PC Level 14",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 14"
         },
         {
           "name": "PC Level 15",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 15"
         },
         {
           "name": "PC Level 16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 16"
         },
         {
           "name": "PC Level 17",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 17"
         },
         {
           "name": "PC Level 18",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 18"
         },
         {
           "name": "PC Level 19",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 19"
         },
         {
           "name": "PC Level 2",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 2"
         },
         {
           "name": "PC Level 20",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 20"
         },
         {
           "name": "PC Level 3",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 3"
         },
         {
           "name": "PC Level 4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 4"
         },
         {
           "name": "PC Level 5",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 5"
         },
         {
           "name": "PC Level 6",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 6"
         },
         {
           "name": "PC Level 7",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 7"
         },
         {
           "name": "PC Level 8",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 8"
         },
         {
           "name": "PC Level 9",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 9"
@@ -46683,7 +46683,7 @@
         },
         {
           "name": "Shadowdancer Darkvision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shadowdancer Darkvision"
@@ -46718,28 +46718,28 @@
         },
         {
           "name": "Starting Gold CRB ~ Average",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Starting Gold CRB ~ Average"
         },
         {
           "name": "Starting Gold CRB ~ Maximum",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Starting Gold CRB ~ Maximum"
         },
         {
           "name": "Starting Gold CRB ~ Random",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Starting Gold CRB ~ Random"
         },
         {
           "name": "Starting Gold ~ CRB",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Starting Gold ~ CRB"
@@ -46753,56 +46753,56 @@
         },
         {
           "name": "TestChoose",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "TestChoose"
         },
         {
           "name": "TestDiminutive",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestDiminutive"
         },
         {
           "name": "TestHuge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestHuge"
         },
         {
           "name": "TestLarge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestLarge"
         },
         {
           "name": "TestMedium",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestMedium"
         },
         {
           "name": "TestSmall",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestSmall"
         },
         {
           "name": "TestTiny",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestTiny"
         },
         {
           "name": "Timeless Body",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Timeless Body"
@@ -46830,7 +46830,7 @@
         },
         {
           "name": "Timeless Body ~ Venerable",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Timeless Body ~ Venerable"
@@ -46851,14 +46851,14 @@
         },
         {
           "name": "Wealth by NPC Level",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wealth by NPC Level"
         },
         {
           "name": "Wealth by PC Level",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wealth by PC Level"
@@ -47124,7 +47124,7 @@
         },
         {
           "name": "Wizard Spellbook",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wizard Spellbook"

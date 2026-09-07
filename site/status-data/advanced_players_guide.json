@@ -883,8 +883,8 @@
       "kind": "class_feature",
       "label": "Class Features",
       "done": 384,
-      "partial": 13,
-      "not_started": 1056,
+      "partial": 81,
+      "not_started": 988,
       "denominator": 1453,
       "pct": 26.4,
       "excluded_from_percentage": 881,
@@ -4059,126 +4059,126 @@
         },
         {
           "name": "Core Domain ~ Agathion Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Agathion Subdomain"
         },
         {
           "name": "Core Domain ~ Ancestors Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Ancestors Subdomain"
         },
         {
           "name": "Core Domain ~ Arcane Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Arcane Subdomain"
         },
         {
           "name": "Core Domain ~ Archon Subdomain (Good)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Archon Subdomain (Good)"
         },
         {
           "name": "Core Domain ~ Archon Subdomain (Law)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Archon Subdomain (Law)"
         },
         {
           "name": "Core Domain ~ Ash Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Ash Subdomain"
         },
         {
           "name": "Core Domain ~ Azata Subdomain (Chaos)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Azata Subdomain (Chaos)"
         },
         {
           "name": "Core Domain ~ Azata Subdomain (Good)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Azata Subdomain (Good)"
         },
         {
           "name": "Core Domain ~ Blood Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Blood Subdomain"
         },
         {
           "name": "Core Domain ~ Catastrophe Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Catastrophe Subdomain"
         },
         {
           "name": "Core Domain ~ Caves Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Caves Subdomain"
         },
         {
           "name": "Core Domain ~ Cloud Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Cloud Subdomain"
         },
         {
           "name": "Core Domain ~ Construct Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Construct Subdomain"
         },
         {
           "name": "Core Domain ~ Curse Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Curse Subdomain"
         },
         {
           "name": "Core Domain ~ Daemon Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Daemon Subdomain"
         },
         {
           "name": "Core Domain ~ Day Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Day Subdomain"
         },
         {
           "name": "Core Domain ~ Decay Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Decay Subdomain"
         },
         {
           "name": "Core Domain ~ Deception Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Deception Subdomain"
@@ -4192,35 +4192,35 @@
         },
         {
           "name": "Core Domain ~ Demon Subdomain (Chaos)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Demon Subdomain (Chaos)"
         },
         {
           "name": "Core Domain ~ Demon Subdomain (Evil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Demon Subdomain (Evil)"
         },
         {
           "name": "Core Domain ~ Devil Subdomain (Evil)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Devil Subdomain (Evil)"
         },
         {
           "name": "Core Domain ~ Devil Subdomain (Law)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Devil Subdomain (Law)"
         },
         {
           "name": "Core Domain ~ Divine Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Divine Subdomain"
@@ -4234,49 +4234,49 @@
         },
         {
           "name": "Core Domain ~ Family Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Family Subdomain"
         },
         {
           "name": "Core Domain ~ Fate Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Fate Subdomain"
         },
         {
           "name": "Core Domain ~ Feather Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Feather Subdomain"
         },
         {
           "name": "Core Domain ~ Ferocity Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Ferocity Subdomain"
         },
         {
           "name": "Core Domain ~ Freedom Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Freedom Subdomain"
         },
         {
           "name": "Core Domain ~ Fur Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Fur Subdomain"
         },
         {
           "name": "Core Domain ~ Growth Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Growth Subdomain"
@@ -4290,7 +4290,7 @@
         },
         {
           "name": "Core Domain ~ Home Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Home Subdomain"
@@ -4304,119 +4304,119 @@
         },
         {
           "name": "Core Domain ~ Ice Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Ice Subdomain"
         },
         {
           "name": "Core Domain ~ Inevitable Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Inevitable Subdomain"
         },
         {
           "name": "Core Domain ~ Insanity Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Insanity Subdomain"
         },
         {
           "name": "Core Domain ~ Language Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Language Subdomain"
         },
         {
           "name": "Core Domain ~ Leadership Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Leadership Subdomain"
         },
         {
           "name": "Core Domain ~ Light Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Light Subdomain"
         },
         {
           "name": "Core Domain ~ Loss Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Loss Subdomain"
         },
         {
           "name": "Core Domain ~ Love Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Love Subdomain"
         },
         {
           "name": "Core Domain ~ Lust Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Lust Subdomain"
         },
         {
           "name": "Core Domain ~ Martyr Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Martyr Subdomain"
         },
         {
           "name": "Core Domain ~ Memory Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Memory Subdomain"
         },
         {
           "name": "Core Domain ~ Metal Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Metal Subdomain"
         },
         {
           "name": "Core Domain ~ Murder Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Murder Subdomain"
         },
         {
           "name": "Core Domain ~ Night Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Night Subdomain"
         },
         {
           "name": "Core Domain ~ Nightmare Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Nightmare Subdomain"
         },
         {
           "name": "Core Domain ~ Oceans Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Oceans Subdomain"
         },
         {
           "name": "Core Domain ~ Protean Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Protean Subdomain"
@@ -4430,91 +4430,91 @@
         },
         {
           "name": "Core Domain ~ Rage Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Rage Subdomain"
         },
         {
           "name": "Core Domain ~ Resolve Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Resolve Subdomain"
         },
         {
           "name": "Core Domain ~ Restoration Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Restoration Subdomain"
         },
         {
           "name": "Core Domain ~ Resurrection Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Resurrection Subdomain"
         },
         {
           "name": "Core Domain ~ Revolution Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Revolution Subdomain"
         },
         {
           "name": "Core Domain ~ Seasons Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Seasons Subdomain"
         },
         {
           "name": "Core Domain ~ Smoke Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Smoke Subdomain"
         },
         {
           "name": "Core Domain ~ Souls Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Souls Subdomain"
         },
         {
           "name": "Core Domain ~ Storms Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Storms Subdomain"
         },
         {
           "name": "Core Domain ~ Tactics Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Tactics Subdomain"
         },
         {
           "name": "Core Domain ~ Thievery Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Thievery Subdomain"
         },
         {
           "name": "Core Domain ~ Thought Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Thought Subdomain"
         },
         {
           "name": "Core Domain ~ Toil Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Toil Subdomain"
@@ -4528,21 +4528,21 @@
         },
         {
           "name": "Core Domain ~ Undead Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Undead Subdomain"
         },
         {
           "name": "Core Domain ~ Wards Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Wards Subdomain"
         },
         {
           "name": "Core Domain ~ Wind Subdomain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Wind Subdomain"
@@ -5935,7 +5935,7 @@
         },
         {
           "name": "Elemental Aura (Cold Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Elemental Aura (Cold Only)"
@@ -10219,7 +10219,7 @@
         },
         {
           "name": "Meteor Swarm (Dealing Cold Damage)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Meteor Swarm (Dealing Cold Damage)"
@@ -14538,14 +14538,14 @@
         },
         {
           "name": "Summon Monster III (Reptiles Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Summon Monster III (Reptiles Only)"
         },
         {
           "name": "Summon Monster VII (Reptiles Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Summon Monster VII (Reptiles Only)"
