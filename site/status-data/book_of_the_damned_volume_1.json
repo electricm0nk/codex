@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 2,
-      "partial": 0,
-      "not_started": 6,
+      "done": 3,
+      "partial": 3,
+      "not_started": 2,
       "denominator": 8,
-      "pct": 25.0,
+      "pct": 37.5,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 8,
@@ -18,21 +18,21 @@
       "items": [
         {
           "name": "Channel Hellfire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Channel Hellfire"
         },
         {
           "name": "Damned",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.Weakness",
           "standing": "unclassified",
           "display_name": "Damned"
         },
         {
           "name": "Hellfire Ray",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Hellfire Ray"
@@ -46,7 +46,7 @@
         },
         {
           "name": "Heresy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Heresy"
@@ -67,14 +67,14 @@
         },
         {
           "name": "Infernal Charisma",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Infernal Charisma"
         },
         {
           "name": "Infernal Transport",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Infernal Transport"
