@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-06T00:32:30Z",
+  "generated_at": "2026-09-07T04:18:15Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16117,
+  "proven_units": 16261,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,36 +1428,36 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4837,
+      "proven": 4981,
       "by_status": {
-        "engine-does-not-hold": 12882,
+        "engine-does-not-hold": 12691,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 598,
+        "grounded": 742,
         "oracle-agree": 26,
-        "literal-verified": 135,
+        "literal-verified": 182,
         "oracle-unverifiable": 6,
         "fixture-verified": 3
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2787953,
+      "bytes": 2786037,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
           "label": "Special Qualities",
-          "done": 734,
-          "held": 7,
+          "done": 741,
+          "held": 15,
           "in-progress": 0,
-          "not-started": 1149,
+          "not-started": 1134,
           "unmeasurable": 0,
           "deferred": 0
         },
         "classfeatures": {
           "label": "Class Features",
-          "done": 560,
-          "held": 9,
+          "done": 595,
+          "held": 35,
           "in-progress": 0,
-          "not-started": 753,
+          "not-started": 692,
           "unmeasurable": 0,
           "deferred": 1
         },
@@ -1481,10 +1481,10 @@
         },
         "none": {
           "label": "Uncategorised",
-          "done": 23,
-          "held": 43,
+          "done": 24,
+          "held": 44,
           "in-progress": 0,
-          "not-started": 705,
+          "not-started": 703,
           "unmeasurable": 0,
           "deferred": 1
         },
@@ -1544,10 +1544,10 @@
         },
         "clericclassfeatures": {
           "label": "Cleric Class Features",
-          "done": 80,
+          "done": 81,
           "held": 30,
           "in-progress": 0,
-          "not-started": 143,
+          "not-started": 142,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1589,19 +1589,19 @@
         },
         "internal": {
           "label": "Internal",
-          "done": 10,
+          "done": 12,
           "held": 2,
           "in-progress": 0,
-          "not-started": 195,
+          "not-started": 193,
           "unmeasurable": 0,
           "deferred": 0
         },
         "specialattack": {
           "label": "Special Attacks",
           "done": 64,
-          "held": 0,
+          "held": 3,
           "in-progress": 0,
-          "not-started": 138,
+          "not-started": 135,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2066,10 +2066,10 @@
         },
         "divinescionclassfeatures": {
           "label": "Divine Scion Class Features",
-          "done": 1,
+          "done": 44,
           "held": 0,
           "in-progress": 0,
-          "not-started": 45,
+          "not-started": 2,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2562,18 +2562,18 @@
         "bodysnatcherclassfeatures": {
           "label": "Body Snatcher Class Features",
           "done": 6,
-          "held": 0,
+          "held": 3,
           "in-progress": 0,
-          "not-started": 12,
+          "not-started": 9,
           "unmeasurable": 0,
           "deferred": 0
         },
         "metamorphclassfeatures": {
           "label": "Metamorph Class Features",
-          "done": 4,
-          "held": 0,
+          "done": 5,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 14,
+          "not-started": 11,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2615,10 +2615,10 @@
         },
         "adaptivewarriorclassfeatures": {
           "label": "Adaptive Warrior Class Features",
-          "done": 4,
-          "held": 0,
+          "done": 8,
+          "held": 1,
           "in-progress": 0,
-          "not-started": 13,
+          "not-started": 8,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2688,9 +2688,9 @@
         "psychicfistclassfeatures": {
           "label": "Psychic Fist Class Features",
           "done": 2,
-          "held": 0,
+          "held": 3,
           "in-progress": 0,
-          "not-started": 14,
+          "not-started": 11,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2732,10 +2732,10 @@
         },
         "mammothriderclassfeatures": {
           "label": "Mammoth Rider Class Features",
-          "done": 9,
-          "held": 0,
+          "done": 13,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 6,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2750,19 +2750,19 @@
         },
         "lionbladeclassfeatures": {
           "label": "Lion Blade Class Features",
-          "done": 7,
+          "done": 10,
           "held": 0,
           "in-progress": 0,
-          "not-started": 8,
+          "not-started": 5,
           "unmeasurable": 0,
           "deferred": 0
         },
         "cyphermageclassfeatures": {
           "label": "Cyphermage Class Features",
-          "done": 0,
+          "done": 2,
           "held": 0,
           "in-progress": 0,
-          "not-started": 15,
+          "not-started": 13,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2795,10 +2795,10 @@
         },
         "warmindclassfeatures": {
           "label": "War Mind Class Features",
-          "done": 2,
-          "held": 0,
+          "done": 4,
+          "held": 1,
           "in-progress": 0,
-          "not-started": 13,
+          "not-started": 10,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2831,10 +2831,10 @@
         },
         "pathfindersavantclassfeatures": {
           "label": "Pathfinder Savant Class Features",
-          "done": 6,
-          "held": 0,
+          "done": 9,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 8,
+          "not-started": 3,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2867,10 +2867,10 @@
         },
         "darktempestclassfeatures": {
           "label": "Dark Tempest Class Features",
-          "done": 11,
-          "held": 0,
+          "done": 12,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 3,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2903,10 +2903,10 @@
         },
         "pyrokineticistclassfeatures": {
           "label": "Pyrokineticist Class Features",
-          "done": 2,
-          "held": 0,
+          "done": 5,
+          "held": 5,
           "in-progress": 0,
-          "not-started": 11,
+          "not-started": 3,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -2948,10 +2948,10 @@
         },
         "enchantingcourtesanclassfeatures": {
           "label": "Enchanting Courtesan Class Features",
-          "done": 7,
-          "held": 0,
+          "done": 8,
+          "held": 1,
           "in-progress": 0,
-          "not-started": 5,
+          "not-started": 3,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -3498,9 +3498,9 @@
         "ulfenguardclassfeature": {
           "label": "Ulfen Guard Class Feature",
           "done": 7,
-          "held": 0,
+          "held": 1,
           "in-progress": 0,
-          "not-started": 1,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -3776,10 +3776,10 @@
         },
         "mysticarcherclassfeatures": {
           "label": "Mystic Archer Class Features",
-          "done": 0,
-          "held": 0,
+          "done": 4,
+          "held": 3,
           "in-progress": 0,
-          "not-started": 7,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -5424,45 +5424,45 @@
         "twilighttalontattoo4": {
           "label": "Twilight Talon Tattoo 4",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "twilighttalontattoo2": {
           "label": "Twilight Talon Tattoo 2",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "twilighttalontattoo6": {
           "label": "Twilight Talon Tattoo 6",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "twilighttalontattoo10": {
           "label": "Twilight Talon Tattoo 10",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "twilighttalontattoo8": {
           "label": "Twilight Talon Tattoo 8",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },

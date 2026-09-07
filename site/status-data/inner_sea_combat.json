@@ -50,8 +50,8 @@
       "kind": "class_feature",
       "label": "Class Features",
       "done": 62,
-      "partial": 0,
-      "not_started": 85,
+      "partial": 1,
+      "not_started": 84,
       "denominator": 147,
       "pct": 42.2,
       "excluded_from_percentage": 169,
@@ -986,7 +986,7 @@
         },
         {
           "name": "Guard Dedications",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Guard Dedications"

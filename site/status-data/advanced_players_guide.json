@@ -882,11 +882,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 379,
-      "partial": 11,
-      "not_started": 1063,
+      "done": 384,
+      "partial": 13,
+      "not_started": 1056,
       "denominator": 1453,
-      "pct": 26.1,
+      "pct": 26.4,
       "excluded_from_percentage": 881,
       "standing_breakdown": {
         "unclassified": 881,
@@ -1035,7 +1035,7 @@
         },
         {
           "name": "Advanced Mutagen",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Special Quality.Supernatural",
           "standing": "origin",
           "display_name": "Advanced Mutagen"
@@ -1854,7 +1854,7 @@
         },
         {
           "name": "Art of Deception",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Art of Deception"
@@ -3051,7 +3051,7 @@
         },
         {
           "name": "Bomb-Thrower",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Bomb-Thrower"
@@ -3296,7 +3296,7 @@
         },
         {
           "name": "Brutality",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Special Quality.Extraordinary",
           "standing": "origin",
           "display_name": "Brutality"
@@ -6425,7 +6425,7 @@
         },
         {
           "name": "Extracts per Day",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Extra",
           "standing": "origin",
           "display_name": "Extracts per Day"
@@ -8959,7 +8959,7 @@
         },
         {
           "name": "Inspiring Command",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Inspiring Command (SpecialQuality.Extraordinary)"
@@ -10639,7 +10639,7 @@
         },
         {
           "name": "Mutate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Special Quality.Supernatural",
           "standing": "origin",
           "display_name": "Mutate"
@@ -13523,7 +13523,7 @@
         },
         {
           "name": "Slippery Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Slippery Mind"
@@ -13656,7 +13656,7 @@
         },
         {
           "name": "Sneak Attack",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Sneak Attack (ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary)"
@@ -14846,7 +14846,7 @@
         },
         {
           "name": "Teamwork Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extra",
           "standing": "unclassified",
           "display_name": "Teamwork Feat"

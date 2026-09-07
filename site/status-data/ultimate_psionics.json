@@ -1988,11 +1988,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 278,
-      "partial": 18,
-      "not_started": 1081,
+      "done": 290,
+      "partial": 36,
+      "not_started": 1051,
       "denominator": 1377,
-      "pct": 20.2,
+      "pct": 21.1,
       "excluded_from_percentage": 196,
       "standing_breakdown": {
         "origin": 1377,
@@ -2932,7 +2932,7 @@
         },
         {
           "name": "Alter Metamorphosis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MetamorphClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Alter Metamorphosis"
@@ -3597,7 +3597,7 @@
         },
         {
           "name": "Blindsense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MysticArcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Blindsense (MysticArcherClassFeatures.SpecialQuality.Supernatural)"
@@ -3611,7 +3611,7 @@
         },
         {
           "name": "Blindsight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MysticArcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Blindsight (MysticArcherClassFeatures.SpecialQuality.Supernatural)"
@@ -3681,14 +3681,14 @@
         },
         {
           "name": "Body Thief",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Body Thief"
         },
         {
           "name": "Bolt of Fire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialAttack.Psilike",
           "standing": "origin",
           "display_name": "Bolt of Fire"
@@ -3975,7 +3975,7 @@
         },
         {
           "name": "Chain of Defensive Posture",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WarMindClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Chain of Defensive Posture"
@@ -3989,7 +3989,7 @@
         },
         {
           "name": "Chain of Personal Superiority",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WarMindClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Chain of Personal Superiority"
@@ -4276,7 +4276,7 @@
         },
         {
           "name": "Combine Fighting Styles",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Combine Fighting Styles"
@@ -4402,7 +4402,7 @@
         },
         {
           "name": "Counter Fighting Style",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Counter Fighting Style"
@@ -4570,14 +4570,14 @@
         },
         {
           "name": "Dark Tempest ~ Blade Skills",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dark Tempest ~ Blade Skills"
         },
         {
           "name": "Dark Tempest ~ Expanded Power List",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dark Tempest ~ Expanded Power List"
@@ -4640,7 +4640,7 @@
         },
         {
           "name": "Death Is Only the Beginning",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Death Is Only the Beginning"
@@ -4983,7 +4983,7 @@
         },
         {
           "name": "Diverse Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DarkTempestClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Diverse Training"
@@ -5319,7 +5319,7 @@
         },
         {
           "name": "Enduring Body",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "WarMindClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Enduring Body"
@@ -5585,7 +5585,7 @@
         },
         {
           "name": "Examine Technique",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Examine Technique"
@@ -5830,7 +5830,7 @@
         },
         {
           "name": "Extended Examination",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Extended Examination"
@@ -6131,7 +6131,7 @@
         },
         {
           "name": "Fire Adaptation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PyrokineticistClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Fire Adaptation"
@@ -6453,7 +6453,7 @@
         },
         {
           "name": "Free Shift",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MetamorphClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Free Shift"
@@ -6789,7 +6789,7 @@
         },
         {
           "name": "Hand Afire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PyrokineticistClassFeatures.SpecialAttack.Psilike",
           "standing": "origin",
           "display_name": "Hand Afire"
@@ -6964,7 +6964,7 @@
         },
         {
           "name": "Heightened Senses",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MysticArcherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Heightened Senses"
@@ -7426,7 +7426,7 @@
         },
         {
           "name": "Inevitable Strike",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MysticArcherClassFeatures.SpecialAttack.Psilike",
           "standing": "origin",
           "display_name": "Inevitable Strike (MysticArcherClassFeatures.SpecialAttack.Psilike)"
@@ -7461,7 +7461,7 @@
         },
         {
           "name": "Infused Body",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PsychicFistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Infused Body (PsychicFistClassFeatures.SpecialQuality.Supernatural)"
@@ -7727,7 +7727,7 @@
         },
         {
           "name": "Ki Power",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PsychicFistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ki Power"
@@ -7818,7 +7818,7 @@
         },
         {
           "name": "Leech Heat",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PyrokineticistClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Leech Heat"
@@ -8007,7 +8007,7 @@
         },
         {
           "name": "Manipulate Blaze",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PyrokineticistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Manipulate Blaze"
@@ -8238,7 +8238,7 @@
         },
         {
           "name": "Melding Exchange",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Melding Exchange"
@@ -8294,7 +8294,7 @@
         },
         {
           "name": "Mesmerizing Glow",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PsychicFistClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Mesmerizing Glow"
@@ -8399,7 +8399,7 @@
         },
         {
           "name": "Mimic Skill",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Mimic Skill"
@@ -8707,7 +8707,7 @@
         },
         {
           "name": "Natural Shifter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MetamorphClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Natural Shifter"
@@ -8777,7 +8777,7 @@
         },
         {
           "name": "Nimbus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialQuality.Psilike",
           "standing": "origin",
           "display_name": "Nimbus"
@@ -9295,7 +9295,7 @@
         },
         {
           "name": "Penetrating Fire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Penetrating Fire"
@@ -9526,7 +9526,7 @@
         },
         {
           "name": "Power Strike",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "DarkTempestClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Power Strike"
@@ -9925,7 +9925,7 @@
         },
         {
           "name": "Psychic Strike",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "DarkTempestClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Psychic Strike (DarkTempestClassFeatures.SpecialQuality.Supernatural)"
@@ -10338,7 +10338,7 @@
         },
         {
           "name": "Ranged Sneak Attack",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "MysticArcherClassFeatures.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Ranged Sneak Attack"
@@ -12382,7 +12382,7 @@
         },
         {
           "name": "Tremorsense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MysticArcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Tremorsense (MysticArcherClassFeatures.SpecialQuality.Supernatural)"
@@ -12508,7 +12508,7 @@
         },
         {
           "name": "Unhindered Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MysticArcherClassFeatures.SpecialQuality.Psilike",
           "standing": "origin",
           "display_name": "Unhindered Vision"
@@ -12844,7 +12844,7 @@
         },
         {
           "name": "Weapon Afire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "PyrokineticistClassFeatures.SpecialAttack.Psilike",
           "standing": "origin",
           "display_name": "Weapon Afire"
