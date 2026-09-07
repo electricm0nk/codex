@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-07T04:18:15Z",
+  "generated_at": "2026-09-07T13:06:14Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16261,
+  "proven_units": 16821,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -21,15 +21,16 @@
   "kinds": {
     "ability": {
       "units": 4337,
-      "proven": 1424,
+      "proven": 1526,
       "by_status": {
         "ingested-magnitude": 1483,
         "oracle-unverifiable": 745,
         "text-complete": 1424,
-        "engine-does-not-hold": 685
+        "engine-does-not-hold": 583,
+        "grounded": 102
       },
       "shard": "PF1e-units-ability.json",
-      "bytes": 582464,
+      "bytes": 581240,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -43,10 +44,10 @@
         },
         "none": {
           "label": "Uncategorised",
-          "done": 212,
-          "held": 17,
+          "done": 295,
+          "held": 26,
           "in-progress": 98,
-          "not-started": 244,
+          "not-started": 152,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -448,10 +449,10 @@
         },
         "knowledge": {
           "label": "Knowledge",
-          "done": 0,
+          "done": 10,
           "held": 0,
           "in-progress": 0,
-          "not-started": 10,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1428,19 +1429,19 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4981,
+      "proven": 5155,
       "by_status": {
-        "engine-does-not-hold": 12691,
+        "engine-does-not-hold": 12517,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 742,
+        "grounded": 916,
         "oracle-agree": 26,
         "literal-verified": 182,
         "oracle-unverifiable": 6,
         "fixture-verified": 3
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2786037,
+      "bytes": 2783949,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -1482,9 +1483,9 @@
         "none": {
           "label": "Uncategorised",
           "done": 24,
-          "held": 44,
+          "held": 130,
           "in-progress": 0,
-          "not-started": 703,
+          "not-started": 617,
           "unmeasurable": 0,
           "deferred": 1
         },
@@ -1554,9 +1555,9 @@
         "sorcererbloodlinebonusspell": {
           "label": "Sorcerer Bloodline Bonus Spell",
           "done": 126,
-          "held": 0,
+          "held": 50,
           "in-progress": 0,
-          "not-started": 124,
+          "not-started": 74,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1590,9 +1591,9 @@
         "internal": {
           "label": "Internal",
           "done": 12,
-          "held": 2,
+          "held": 40,
           "in-progress": 0,
-          "not-started": 193,
+          "not-started": 155,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -9285,20 +9286,21 @@
     },
     "language": {
       "units": 136,
-      "proven": 0,
+      "proven": 22,
       "by_status": {
-        "engine-does-not-hold": 136
+        "engine-does-not-hold": 114,
+        "grounded": 22
       },
       "shard": "PF1e-units-language.json",
-      "bytes": 15686,
+      "bytes": 15422,
       "doneness_unmapped": {},
       "categories": {
         "spoken": {
           "label": "Spoken",
           "done": 0,
-          "held": 0,
+          "held": 22,
           "in-progress": 0,
-          "not-started": 104,
+          "not-started": 82,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -11626,17 +11628,17 @@
     },
     "race_trait": {
       "units": 2561,
-      "proven": 1079,
+      "proven": 1197,
       "by_status": {
-        "ingested-magnitude": 812,
+        "ingested-magnitude": 697,
         "literal-verified": 152,
-        "engine-does-not-hold": 505,
-        "grounded": 393,
+        "engine-does-not-hold": 502,
+        "grounded": 511,
         "text-complete": 686,
         "oracle-unverifiable": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 381744,
+      "bytes": 380558,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
@@ -11651,9 +11653,9 @@
         "none": {
           "label": "Uncategorised",
           "done": 70,
-          "held": 21,
+          "held": 22,
           "in-progress": 13,
-          "not-started": 125,
+          "not-started": 124,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -11668,9 +11670,9 @@
         },
         "racialspelllikeability": {
           "label": "Racial Spell-Like Ability",
-          "done": 0,
+          "done": 114,
           "held": 1,
-          "in-progress": 136,
+          "in-progress": 22,
           "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
@@ -12650,9 +12652,9 @@
         "region": {
           "label": "Region",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -13012,50 +13014,50 @@
     },
     "skill": {
       "units": 149,
-      "proven": 83,
+      "proven": 98,
       "by_status": {
         "ingested-magnitude": 29,
-        "grounded": 76,
-        "engine-does-not-hold": 37,
+        "grounded": 91,
+        "engine-does-not-hold": 22,
         "text-complete": 7
       },
       "shard": "PF1e-units-skill.json",
-      "bytes": 16768,
+      "bytes": 16588,
       "doneness_unmapped": {},
       "categories": {
         "intelligence": {
           "label": "Intelligence",
-          "done": 36,
-          "held": 0,
+          "done": 37,
+          "held": 1,
           "in-progress": 7,
-          "not-started": 19,
+          "not-started": 17,
           "unmeasurable": 0,
           "deferred": 0
         },
         "wisdom": {
           "label": "Wisdom",
           "done": 32,
-          "held": 0,
+          "held": 1,
           "in-progress": 5,
-          "not-started": 1,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "charisma": {
           "label": "Charisma",
-          "done": 3,
+          "done": 4,
           "held": 0,
           "in-progress": 13,
-          "not-started": 1,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "none": {
           "label": "Uncategorised",
-          "done": 0,
-          "held": 0,
+          "done": 6,
+          "held": 5,
           "in-progress": 0,
-          "not-started": 12,
+          "not-started": 1,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -13269,41 +13271,42 @@
     },
     "template": {
       "units": 2248,
-      "proven": 1,
+      "proven": 130,
       "by_status": {
-        "engine-does-not-hold": 1816,
+        "engine-does-not-hold": 1687,
         "ingested-magnitude": 305,
         "oracle-unverifiable": 126,
+        "grounded": 129,
         "text-complete": 1
       },
       "shard": "PF1e-units-template.json",
-      "bytes": 228444,
+      "bytes": 226896,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
           "done": 127,
-          "held": 36,
+          "held": 151,
           "in-progress": 223,
-          "not-started": 1740,
+          "not-started": 1625,
           "unmeasurable": 0,
           "deferred": 0
         },
         "racebuildersubtype": {
           "label": "Race Builder Subtype",
           "done": 0,
-          "held": 0,
+          "held": 4,
           "in-progress": 0,
-          "not-started": 41,
+          "not-started": 37,
           "unmeasurable": 0,
           "deferred": 0
         },
         "racialheritage": {
           "label": "Racial Heritage",
           "done": 0,
-          "held": 0,
+          "held": 4,
           "in-progress": 0,
-          "not-started": 29,
+          "not-started": 25,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -13337,9 +13340,9 @@
         "testchoosetemplate": {
           "label": "Test Choose Template",
           "done": 0,
-          "held": 0,
+          "held": 6,
           "in-progress": 0,
-          "not-started": 6,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         }

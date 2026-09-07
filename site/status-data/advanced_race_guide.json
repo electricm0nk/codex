@@ -2486,8 +2486,8 @@
       "kind": "class_feature",
       "label": "Class Features",
       "done": 180,
-      "partial": 0,
-      "not_started": 314,
+      "partial": 1,
+      "not_started": 313,
       "denominator": 494,
       "pct": 36.4,
       "excluded_from_percentage": 214,
@@ -5298,7 +5298,7 @@
         },
         {
           "name": "Miasmatic Form",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Miasmatic Form (Sorcerer Bloodline Bonus Spell)"

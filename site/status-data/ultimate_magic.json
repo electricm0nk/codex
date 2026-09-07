@@ -3599,8 +3599,8 @@
       "kind": "class_feature",
       "label": "Class Features",
       "done": 91,
-      "partial": 0,
-      "not_started": 1062,
+      "partial": 7,
+      "not_started": 1055,
       "denominator": 1153,
       "pct": 7.9,
       "excluded_from_percentage": 625,
@@ -3793,7 +3793,7 @@
         },
         {
           "name": "Age Resistance (Greater)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Age Resistance (Greater) (Sorcerer Bloodline Bonus Spell)"
@@ -5893,7 +5893,7 @@
         },
         {
           "name": "Create Demiplane",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Create Demiplane (Sorcerer Bloodline Bonus Spell)"
@@ -6201,7 +6201,7 @@
         },
         {
           "name": "Defensive Shock",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Defensive Shock (Sorcerer Bloodline Bonus Spell)"
@@ -6782,7 +6782,7 @@
         },
         {
           "name": "Echolocation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Echolocation (Sorcerer Bloodline Bonus Spell)"
@@ -9512,7 +9512,7 @@
         },
         {
           "name": "Joyful Rapture",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Joyful Rapture (Sorcerer Bloodline Bonus Spell)"
@@ -11122,7 +11122,7 @@
         },
         {
           "name": "Overwhelming Presence",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Overwhelming Presence (Sorcerer Bloodline Bonus Spell)"
@@ -11934,7 +11934,7 @@
         },
         {
           "name": "Prediction of Failure",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Prediction of Failure (Sorcerer Bloodline Bonus Spell)"
@@ -14027,7 +14027,7 @@
         },
         {
           "name": "Surmount Affliction",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Surmount Affliction"
