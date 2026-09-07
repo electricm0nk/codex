@@ -66,18 +66,18 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: this branch was cut as tranche/14 (SD-34 bundle cut, from
-  // tranche/13's tip 571307724f after SD-33's closure PR #377 merged to
-  // develop `ea2b3396f2`; the prior anchor was tranche/13 for SD-33, and
-  // tranche/11 for SD-31). The tranche digit only advances when a NEW
+  // Anchor: this branch was cut as tranche/15 (SD-35 bundle cut, from
+  // develop `fe5ae6cd4a` after SD-34's PRs #382/#383 merged, operator
+  // directive 2026-09-07; the prior anchor was tranche/14 for SD-34, and
+  // tranche/13 for SD-33). The tranche digit only advances when a NEW
   // tranche/N branch is cut for the next bundle, not automatically at a
   // bundle's own closure while still on the same tranche branch
   // (../SD-22/decisions.md §2 + ../SD-21/decisions.md §18's
-  // tranche-promotion rule; SD-34 decisions.md §11 pins this bundle's value
-  // at `0.14.<build>`). Each anchor here only holds until the next tranche
-  // promotion lands — update alongside the version bump, not as a
-  // follow-on fix.
-  assert(pkg.startsWith('0.14.'), `version "${pkg}" must keep major=0, tranche=14 on tranche/14`);
+  // tranche-promotion rule). Each anchor here only holds until the next
+  // tranche promotion lands — update alongside the version bump (all of
+  // package.json, tauri.conf.json, src-tauri/Cargo.toml + Cargo.lock, and
+  // the workflow stamp, in ONE commit), not as a follow-on fix.
+  assert(pkg.startsWith('0.15.'), `version "${pkg}" must keep major=0, tranche=15 on tranche/15`);
 }
 
 // The invariant is a *relationship*, not two independent literals: the

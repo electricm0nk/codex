@@ -39,14 +39,16 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: tranche moves to 14 (tranche/14 is the active branch for this
-  // bundle, cut from tranche/13's tip 571307724f after SD-33's closure PR
-  // #377 merged to develop `ea2b3396f2`) and major stays 0 until first
-  // main-publish, per that bundle's decisions.md §11 build-version
-  // specification (`0.14.<build>`). The tranche digit only advances when a
+  // Anchor: tranche moves to 15 (tranche/15 is the active branch for the
+  // SD-35 bundle, cut from develop `fe5ae6cd4a` after SD-34's PRs #382/#383
+  // merged, operator directive 2026-09-07) and major stays 0 until first
+  // main-publish (`0.15.<build>`). The tranche digit only advances when a
   // new tranche/N branch is cut for the next bundle — not automatically at a
-  // bundle's own closure while still on the same tranche branch.
-  assert(pkg.startsWith('0.14.'), `version "${pkg}" must keep major=0, tranche=14 on tranche/14`);
+  // bundle's own closure while still on the same tranche branch. Update this
+  // anchor, src/release/buildVersionTriple.test.ts, and every
+  // `Codex 0.<tranche>.0-test` build-label fixture in the SAME commit as the
+  // version files (buildLabelFixtureFreshness.test.ts enforces the latter).
+  assert(pkg.startsWith('0.15.'), `version "${pkg}" must keep major=0, tranche=15 on tranche/15`);
 }
 
 verifiesAllThreeVersionFilesAgreeAndFollowTripleShape();
