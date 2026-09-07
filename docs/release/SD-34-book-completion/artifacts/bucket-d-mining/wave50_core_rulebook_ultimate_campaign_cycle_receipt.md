@@ -207,7 +207,8 @@ data gap, the same shape already named for `trait_shadow_whispers` in `decisions
   cycle after the two pure-insertion hunks this wave's own edits made — `git diff -U0` gave the
   exact +53/+61 breakpoints, each new line's content read back and confirmed, never the arithmetic
   alone).
-- `denominator_gate.py --check`: first run found 3 violations (a bare "100%"/"~86%" in this
-  receipt, `decisions.md`, and `progress.md`, each with its own real denominator on a markdown-
-  wrapped adjacent line rather than the same raw line the gate scans) -- rephrased all three to
-  state the denominator on the same line, re-ran clean: `files_checked=185 violations=0`.
+- `denominator_gate.py --check`: first run found 3 violations (a bare percentage figure with no
+  same-line denominator, one each in this receipt, `decisions.md`, and `progress.md` -- each one's
+  real denominator was already stated, but on a markdown-wrapped adjacent line rather than the same
+  raw line the gate scans) -- rephrased all three to state the denominator on the same line, re-ran
+  clean: `files_checked=185 violations=0`.

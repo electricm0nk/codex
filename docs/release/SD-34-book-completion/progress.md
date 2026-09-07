@@ -2,14 +2,34 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-34
-status: not-started — planning-ready, launch gates unrun
-date: 2026-08-26
+status: in-progress — wave 50 closed (343 units), wave 51 launching
+date: 2026-09-07
 ---
 
 # SD-34 Progress
 
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
+
+### Cycle — Wave 50 wave-end gate — independent re-confirmation of 343 units closed, full 40/40 confirmed — complete
+
+**Status: complete.** Orchestrator-run full verification suite on the committed wave 50 state
+(`138f6bb288` + receipt docs), independently re-confirming 343 units closed via bucket math
+cross-check and live corpus probe — matching the cycle's own self-reported closure exactly.
+
+**Bucket math re-verification:** the cycle reported 174 class_feature (B bucket) + 169 D-shaped
+(template/language/skill/race_trait_generic) = 343 total. `completion_atlas.py --check` on
+the committed state confirms: `DONE 25563→25906`, `B 11763→11589` (−174), `D 2253→2084` (−169),
+population 49438 unchanged, citation_failures=0. Independent Python `id`→`status` join re-derived:
+exactly 343 changed, zero collateral movement. Bucket math verified.
+
+**Site dashboard staleness fixed this gate:** `./scripts/publish-site-dashboard.sh` regenerated the
+committed-but-stale feed, confirmed current via `--check`.
+
+**Full verification run:** `root-lib PASS (3182 passed, unchanged)`, `root-full PASS (8648 passed
+across 589 suites, all green, byte-identical to `BASELINE_ROOT_FULL_TESTS=8648` — no baseline
+change needed)`. Clippy: 0 warnings both runs. Started at 39/40 (site-dashboard-check stale),
+fixed that one gate, now **confirmed 40/40**.
 
 ### Cycle — Wave 50 — Core Rulebook + Ultimate Campaign buckets B/C/D/M: 343 units closed (244 in-scope, 99 real cross-book bonus) — partial
 
