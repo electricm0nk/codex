@@ -100,8 +100,8 @@ ENGINE_SURFACE_CITATIONS = {
     # clear a `clippy::type_complexity` warning) shifted them by a further
     # uniform +4, 15380 -> 15384 and 15480 -> 15484 -- caught re-running
     # `--check` AFTER the clippy fix, read back and confirmed.
-    "companion": {"line": 15384, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 15484, "must_contain": "power_content_has_no_engine_table"},
+    "companion": {"line": 16192, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 16292, "must_contain": "power_content_has_no_engine_table"},
 }
 
 
