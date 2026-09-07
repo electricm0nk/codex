@@ -1,6 +1,6 @@
 # Cycle — SD-34 wave 49 — 33-class magnitude-only sweep across sub-mechanism-5's registered-prestige remainder: 129 units closed
 
-- **Commit SHA:** `PENDING` (feat commit; this receipt's own SHA fill-in lands in a second,
+- **Commit SHA:** `c2a41a62da` (feat commit; this receipt's own SHA fill-in lands in a second,
   docs-only commit immediately after, following this bundle's own established two-commit pattern)
 - **Files touched:** `src/rules_core/pilot_compute/mod.rs` (33 new `<CLASS>_CLASS_ID` consts; ~90
   new pure formula functions; 33 new `ground_<class>_class_features` dispatch functions; 33 new
