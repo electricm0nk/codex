@@ -11,6 +11,48 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 49 wave-end gate — independent re-confirmation of 129 units closed, full 40/40 confirmed — complete
+
+**Status: complete.** Orchestrator-run full verification suite on the committed wave 49 state
+(`c2a41a62da` + receipt docs), independently re-confirming 129 units closed across 33 registered
+prestige classes via live corpus probe and pipeline execution — not relying on wave 49's own
+build-time observation (the standard post-commit gate for this bundle).
+
+**Two self-caught issues from wave 49's own build (both fixed before commit, not found by this gate,
+named here for completeness):** (1) a `clippy::empty_line_after_doc_comments` warning (section-banner
+comment mistakenly as doc comment) and (2) a real correctness bug in three classes' draft compute
+formulas (Hellknight, Pathfinder Savant, Diabolist) that used total character level instead of this
+bundle's own established raw-class-level precedent for `<X>LVL|CL` variables — caught by tracing the
+oracle's own semantics against prior wave precedent, fixed before commit, the single-class fixture
+made it numerically invisible. Both triggered a second full-suite run at wave 49's close.
+
+**A more consequential gap found mid-wave and fixed:** wave 49's own "batch all compute code, verify
+once" plan never accounted for the fact that the census tool (`v06_work_inventory.rs`) needs a
+dedicated `probe_<class>_wiring` function + `EngineFacts` field + `classify()` check per class to
+even SEE a new class's formulas — the four-part pattern every prior wave applied per class. A zero-delta
+regen after all 33 compute functions were written triggered a fix: all 33 probes were added
+(reusing the existing `probe_wave46_single_owner_class_features` helper), plus a new
+`wave49_registered_prestige_probe_reachability_tests` module (33 tests) proving each probe resolves
+the real corpus keys end to end.
+
+**F1 population pin correction during this gate run: 5155 → 5124.** A genuine consequence of the 31
+units that legitimately left the F1-shaped population once their real compute functions closed them
+— not a measurement error or an artifact. The gate run's full suite execution generated 31 new probe
+& classify test cases for these 31 units' F1-exit mechanics, plus 2 citation-line-number correction
+tests from fixing staleness in `completion_atlas.py` and `missing_engine_tables.py` (wave 49's own
+code insertions shifted all downstream citation line numbers).
+
+**Site dashboard staleness fixed this gate:** `./scripts/publish-site-dashboard.sh` regenerated the
+committed-but-stale feed, confirmed current via `--check`.
+
+**Baseline raised:** `BASELINE_ROOT_FULL_TESTS` 8615 → 8648 (the +33 accounted for by the 31
+F1-exit probe tests + the 2 citation-line corrections, all new bin/integration tests in
+`v06_work_inventory.rs`; root-lib unchanged at 3182).
+
+**Full verification run:** `root-lib PASS (3182 passed, unchanged)`, `root-full PASS (8648 passed
+across 589 suites, all green)`. Started at 39/40 (site-dashboard-check stale), fixed that one stale
+gate, now **confirmed 40/40**.
+
 ### Cycle — Wave 49 — 33-class magnitude-only sweep across sub-mechanism-5's registered-prestige remainder: 129 units closed — complete
 
 **Status: complete.** Per the operator's own explicit directive this wave ("do all of them at once

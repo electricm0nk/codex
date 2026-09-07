@@ -36,8 +36,8 @@
       "kind": "class_feature",
       "label": "Class Features",
       "done": 19,
-      "partial": 0,
-      "not_started": 137,
+      "partial": 2,
+      "not_started": 135,
       "denominator": 156,
       "pct": 12.2,
       "excluded_from_percentage": 14,
@@ -853,14 +853,14 @@
         },
         {
           "name": "Summon Demon I",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Summon Demon I"
         },
         {
           "name": "Summon Demon II",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Summon Demon II"

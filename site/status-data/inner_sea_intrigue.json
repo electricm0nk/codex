@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 37,
-      "partial": 0,
-      "not_started": 83,
+      "done": 40,
+      "partial": 1,
+      "not_started": 79,
       "denominator": 120,
-      "pct": 30.8,
+      "pct": 33.3,
       "excluded_from_percentage": 64,
       "standing_breakdown": {
         "unclassified": 64,
@@ -389,7 +389,7 @@
         },
         {
           "name": "Expeditious Advance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Expeditious Advance"
@@ -571,7 +571,7 @@
         },
         {
           "name": "Hidden Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Hidden Spell"
@@ -1026,7 +1026,7 @@
         },
         {
           "name": "Seductive Intuition",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Seductive Intuition"
@@ -1047,7 +1047,7 @@
         },
         {
           "name": "Silent Soul",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Silent Soul"
@@ -1075,7 +1075,7 @@
         },
         {
           "name": "Sneak Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Sneak Attack"
