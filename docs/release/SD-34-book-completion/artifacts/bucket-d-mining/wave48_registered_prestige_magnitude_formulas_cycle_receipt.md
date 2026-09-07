@@ -1,8 +1,8 @@
 # Cycle — SD-34 wave 48 — Twilight Talon and Golden Legionnaire's magnitude-only remainder: 16 units closed
 
-- **Commit SHA:** `<FILL>` (`<FILL-full>`, feat commit; this receipt's own SHA fill-in lands in a
-  second, docs-only commit immediately after, following this bundle's own established
-  two-commit pattern)
+- **Commit SHA:** `7261a35281` (`7261a35281a310ef4e32d29255a722f9566619e0`, feat commit; this
+  receipt's own SHA fill-in lands in a second, docs-only commit immediately after, following this
+  bundle's own established two-commit pattern)
 - **Files touched:** `src/rules_core/pilot_compute/mod.rs` (2 new class-id consts
   `TWILIGHT_TALON_CLASS_ID`/`GOLDEN_LEGIONNAIRE_CLASS_ID`; 5 new choice-set-id consts
   `TWILIGHT_TALON_TATTOO_LEVEL_{2,4,6,8,10}_CHOICE_ID`; 1 new tier table
