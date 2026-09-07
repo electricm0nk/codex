@@ -84,7 +84,17 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         # choice-gating consts, rewritten probe function, and `classify()`
         # early-return block shifted it again, 14609 -> 14923 (see
         # `shape_engine_boundary.py`'s own module doc comment).
-        self.assertEqual(report["promotion_ladder_anchor_line"], 14923)
+        # SD-34 wave 48: this cycle's own Twilight Talon/Golden Legionnaire
+        # `EngineFacts` fields, probe functions, and choice-seed arm shifted
+        # it again, 14923 -> 15273 (see `shape_engine_boundary.py`'s own
+        # module doc comment).
+        # SD-34 wave 48 CORRECTION (same cycle, before commit): the 15273
+        # figure above was derived against a pre-clippy-fix snapshot; the
+        # cycle's own `type TwilightTalonTattooTierMember` alias shifted it
+        # by a further uniform +4, 15273 -> 15277 -- caught re-running this
+        # test AFTER the clippy fix (see `shape_engine_boundary.py`'s own
+        # module doc comment).
+        self.assertEqual(report["promotion_ladder_anchor_line"], 15277)
         self.assertIn("has_real_description", report["promotion_ladder_source"])
         self.assertIn("class_feature_pool_catalog_holds", report["promotion_ladder_source"])
 
@@ -148,7 +158,7 @@ class TestRenderMarkdownEmbedsReDeriveCommands(unittest.TestCase):
         self.assertIn("python3 -c", md)
         self.assertIn(str(report["magnitude_bearing"]), md)
         self.assertIn(str(report["not_held_by_engine"]), md)
-        self.assertIn("14923", md)
+        self.assertIn("15277", md)
         self.assertIn("denominator", md)
 
 

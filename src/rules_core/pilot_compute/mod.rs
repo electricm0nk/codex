@@ -6393,6 +6393,33 @@ const DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID: &str =
 /// above.
 const DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID: &str =
     "choice:divine_scion_domain_specialization";
+/// SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): Twilight Talon and
+/// Golden Legionnaire's own class ids, needed by `ground_twilight_talon_
+/// class_features` / `ground_golden_legionnaire_class_features` below --
+/// the same "real prestige class, registered in `prestige_class_entry_gate`
+/// (source book `adventurers_guide`), no `ClassId`-family enum entry, no
+/// chassis dispatch reaches it" gap as the wave-46/47 classes above.
+/// Matches `tests/fixtures/rules_core/prestige-class-entry-requirements.
+/// json`'s own entries exactly.
+const TWILIGHT_TALON_CLASS_ID: &str = "class:twilight_talon";
+const GOLDEN_LEGIONNAIRE_CLASS_ID: &str = "class:golden_legionnaire";
+/// SD-34 wave 48: Twilight Talon's Enhanced Tattoo grants one spell-like
+/// ability per tier reached (2nd/4th/6th/8th/10th level) -- each tier a
+/// genuine `ABILITYPOOL`-gated one-of-two choice, verified directly against
+/// the real, non-ingested PCGen oracle (`ag_abilities_class.lst:542`'s own
+/// `BONUS:ABILITYPOOL|Twilight Talon Tattoo Level <N>|1|
+/// PREVARGTEQ:TwilightTalonLVL,<N>` tokens) -- the same "real pool
+/// selection this engine must gate on, not assume" shape
+/// `DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID` established (wave 47's
+/// own correction). Five separate choice axes, one per tier, since a
+/// character accumulates a NEW tattoo at each tier reached over their
+/// career rather than picking once for the whole class (unlike Divine
+/// Scion's single Domain Specialization pick).
+const TWILIGHT_TALON_TATTOO_LEVEL_2_CHOICE_ID: &str = "choice:twilight_talon_tattoo_level_2";
+const TWILIGHT_TALON_TATTOO_LEVEL_4_CHOICE_ID: &str = "choice:twilight_talon_tattoo_level_4";
+const TWILIGHT_TALON_TATTOO_LEVEL_6_CHOICE_ID: &str = "choice:twilight_talon_tattoo_level_6";
+const TWILIGHT_TALON_TATTOO_LEVEL_8_CHOICE_ID: &str = "choice:twilight_talon_tattoo_level_8";
+const TWILIGHT_TALON_TATTOO_LEVEL_10_CHOICE_ID: &str = "choice:twilight_talon_tattoo_level_10";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` idiom. Verified against
@@ -9145,6 +9172,13 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     ground_holy_vindicator_class_features(input, &mut explanations);
     ground_stalwart_defender_class_features(input, &ability_modifiers, &mut explanations);
     ground_divine_scion_class_features(input, &mut explanations);
+
+    // SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): two more
+    // prestige classes in the same "registered, no `ClassId` enum entry,
+    // magnitude-only" remainder -- same unconditional placement as the
+    // wave 46/47 functions above.
+    ground_twilight_talon_class_features(input, &ability_modifiers, &mut explanations);
+    ground_golden_legionnaire_class_features(input, &mut explanations);
 
     // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
     // class-feature blocker into three named pillars, and ground Track and
@@ -36349,6 +36383,302 @@ fn ground_divine_scion_class_features(
                 ),
             });
         }
+    }
+}
+
+/// Twilight Talon Sneak Attack (`ag_abilities_class.lst:541`, `KEY:Twilight
+/// Talon ~ Sneak Attack`): `BONUS:VAR|SneakAttackDice|(TwilightTalonLVL+2)/3`
+/// -- the classic sneak-attack-dice-by-level idiom this file already grounds
+/// repeatedly for other classes (`slayer_sneak_attack_dice`,
+/// Duelist/Assassin's own precedents). No `PREVARGTEQ` gate on the token
+/// itself. `None` below level 1.
+fn twilight_talon_sneak_attack_dice(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 2) / 3)
+}
+
+/// Twilight Talon Enhanced Tattoo's own save DC (`ag_abilities_class.
+/// lst:542`, `KEY:Twilight Talon ~ Enhanced Tattoo`): `DEFINE:
+/// EnhancedTattooDC|0` / `BONUS:VAR|EnhancedTattooDC|
+/// 10+TwilightTalonLVL/2+CHA` -- the classic "10 + level factor + ability
+/// modifier" save-DC idiom (`warpriest_channel_energy_dc`'s own shape,
+/// `argent_dramaturge_argent_performance_dc`'s own precedent within this
+/// same book), `CHA` being the Charisma MODIFIER (this codebase's
+/// established convention). No `PREVARGTEQ` gate on the token itself.
+/// `None` below level 1.
+fn twilight_talon_enhanced_tattoo_save_dc(level: u8, charisma_modifier: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10 + i16::from(level) / 2 + charisma_modifier)
+}
+
+/// Twilight Talon's own 5 Enhanced Tattoo tiers, each a real one-of-two
+/// `ABILITYPOOL` choice -- verified directly against the real, non-ingested
+/// PCGen oracle (`ag_abilities_class.lst:548-557`): the tier's own minimum
+/// class level, its own choice-set id, and its two candidate (slug,
+/// display name) members. Every tattoo record's own `SPELLS:Enhanced
+/// Tattoo|CASTERLEVEL=TL|<spell name>[,EnhancedTattooDC]` token grounds
+/// only the caster-level fact (`TL` = total character level) -- the same
+/// "ground the SLA triple, don't model the effect or its own save DC total"
+/// split `ground_divine_scion_class_features`'s own domain block already
+/// established; no `TIMES=` parameter appears on any of these 10 tokens
+/// (PCGen's own implicit 1/day default), so no separate uses-per-day fact
+/// is grounded here -- there is no literal token to cite for it.
+///
+/// Type alias per clippy's own `type_complexity` lint (this bundle's
+/// zero-warning ceiling): (tier min level, choice-set id, tier members).
+type TwilightTalonTattooTier = (u8, &'static str, &'static [(&'static str, &'static str)]);
+const TWILIGHT_TALON_TATTOO_TIERS: &[TwilightTalonTattooTier] = &[
+    (
+        2,
+        TWILIGHT_TALON_TATTOO_LEVEL_2_CHOICE_ID,
+        &[
+            ("disguise_self", "Disguise Self"),
+            ("undetectable_alignment", "Undetectable Alignment"),
+        ],
+    ),
+    (
+        4,
+        TWILIGHT_TALON_TATTOO_LEVEL_4_CHOICE_ID,
+        &[("alter_self", "Alter Self"), ("invisibility", "Invisibility")],
+    ),
+    (
+        6,
+        TWILIGHT_TALON_TATTOO_LEVEL_6_CHOICE_ID,
+        &[("glibness", "Glibness"), ("secret_page", "Secret Page")],
+    ),
+    (
+        8,
+        TWILIGHT_TALON_TATTOO_LEVEL_8_CHOICE_ID,
+        &[("modify_memory", "Modify Memory"), ("zone_of_silence", "Zone of Silence")],
+    ),
+    (
+        10,
+        TWILIGHT_TALON_TATTOO_LEVEL_10_CHOICE_ID,
+        &[("mislead", "Mislead"), ("seeming", "Seeming")],
+    ),
+];
+
+/// Grounds Twilight Talon's 12 magnitude-bearing class features --
+/// `decisions.md §22`'s WAVE 48 UPDATE, sub-mechanism-5's "registered
+/// prestige class, magnitude-only" remainder. Unconditional on chassis
+/// support (no `ClassId`-family enum entry for this class, source book
+/// `adventurers_guide`), same placement as `ground_divine_scion_class_
+/// features` above. The remaining 5 sm5 units this class carries (Many
+/// Hats, Eye for Detail, Dead Drop, Resourceful Agent, Unassuming
+/// Presence) carry no `BONUS`/`DEFINE` token at all (pure prose class
+/// features) and are NOT attempted -- the same "no magnitude token to
+/// ground" boundary this whole sub-mechanism-5 series already applies
+/// elsewhere (e.g. Stalwart Defender's own Renewed Defense, wave 46).
+fn ground_twilight_talon_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == TWILIGHT_TALON_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(dice) = twilight_talon_sneak_attack_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.twilight_talon.sneak_attack.dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Twilight Talon level {level} Sneak Attack: +{dice}d6 (corpus \
+                 `BONUS:VAR|SneakAttackDice|(TwilightTalonLVL+2)/3`). Grounds standalone: \
+                 this engine tracks no shared sneak-attack-dice total for it to add into"
+            ),
+        });
+    }
+
+    if let Some(dc) =
+        twilight_talon_enhanced_tattoo_save_dc(level, ability_modifiers.charisma)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.twilight_talon.enhanced_tattoo.save_dc"
+                .to_owned(),
+            value: dc,
+            detail: format!(
+                "Twilight Talon level {level} Enhanced Tattoo save DC {dc} (corpus \
+                 `BONUS:VAR|EnhancedTattooDC|10+TwilightTalonLVL/2+CHA`, this character's \
+                 Charisma modifier {cha_mod:+}). Grounds the DC magnitude only; no save is \
+                 actually rolled by this engine, and no per-spell-like-ability total exists \
+                 anywhere for it to feed into",
+                cha_mod = ability_modifiers.charisma
+            ),
+        });
+    }
+
+    // Each of the 5 tiers is a real one-of-two `ABILITYPOOL` choice (see
+    // `TWILIGHT_TALON_TATTOO_TIERS`'s own doc comment) -- only the ONE
+    // tattoo the character actually recorded at each tier reached
+    // surfaces, never both candidates simultaneously, the same
+    // choice-gating discipline `ground_divine_scion_class_features`'s own
+    // correction established.
+    let caster_level = total_character_level(input);
+    for &(tier_level, choice_id, members) in TWILIGHT_TALON_TATTOO_TIERS {
+        if level < tier_level {
+            continue;
+        }
+        let Some(selection) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        let Some(&(slug, display)) =
+            members.iter().find(|(slug, _)| selection == format!("tattoo:{slug}"))
+        else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_feature.adventurers_guide.twilight_talon.{slug}.caster_level"),
+            value: caster_level,
+            detail: format!(
+                "Twilight Talon level {level} Enhanced Tattoo (tier {tier_level}), {display}: \
+                 spell-like ability, caster level {caster_level} (corpus `SPELLS:Enhanced \
+                 Tattoo|CASTERLEVEL=TL|{display},...`, `TL` = this character's total level \
+                 across every class, {caster_level}; recorded selection {choice_id} -> \
+                 {selection}). Grounds the caster-level fact only -- no spell effect or save \
+                 DC total is modelled beyond the standalone Enhanced Tattoo DC above"
+            ),
+        });
+    }
+}
+
+/// Golden Legionnaire Allied Retribution (`ag_abilities_class.lst:136`
+/// area, `KEY:Golden Legionnaire ~ Allied Retribution`): `DEFINE:
+/// AlliedRetributionBonus|0` / `BONUS:VAR|AlliedRetributionBonus|
+/// 1+(GoldenLegionnaireLVL>=7)` -- a flat +1, stepping to +2 at level 7.
+/// No `PREVARGTEQ` gate on the token itself. `None` below level 1.
+fn golden_legionnaire_allied_retribution_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 7))
+}
+
+/// Golden Legionnaire Authoritative Command (same record family):
+/// `DEFINE:AuthoritativeCommandBonus|0` / `BONUS:VAR|
+/// AuthoritativeCommandBonus|1+(GoldenLegionnaireLVL>=6)` -- a flat +1,
+/// stepping to +2 at level 6. `None` below level 1.
+fn golden_legionnaire_authoritative_command_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 6))
+}
+
+/// Golden Legionnaire Improved Aid (same record family): `DEFINE:
+/// LegionImprovedAid|0` / `BONUS:VAR|LegionImprovedAid|
+/// 1+(GoldenLegionnaireLVL>=9)` -- a flat +1, stepping to +2 at level 9.
+/// `None` below level 1.
+fn golden_legionnaire_improved_aid_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 9))
+}
+
+/// Golden Legionnaire United Defense (same record family): `DEFINE:
+/// UnitedDefenseBonus|0` / `BONUS:VAR|UnitedDefenseBonus|
+/// 1+(GoldenLegionnaireLVL>=6)+(GoldenLegionnaireLVL>=10)` -- a flat +1,
+/// stepping to +2 at level 6 and +3 at level 10. `None` below level 1.
+fn golden_legionnaire_united_defense_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 6) + i16::from(level >= 10))
+}
+
+/// Grounds Golden Legionnaire's 4 magnitude-bearing class features --
+/// `decisions.md §22`'s WAVE 48 UPDATE, sub-mechanism-5's "registered
+/// prestige class, magnitude-only" remainder. Unconditional on chassis
+/// support (no `ClassId`-family enum entry for this class, source book
+/// `adventurers_guide`), same placement as `ground_twilight_talon_class_
+/// features` above. The remaining 12 sm5 units this class carries
+/// (Bodyguard, Combat Feat, Defy Danger, Guardian of Liberty, Hold the
+/// Line, In Harm's Way, Intercept, Legion Feats, Preemptive Strike,
+/// Retaliate, Stand Still, Swift Aid) are either pure prose (no `BONUS`/
+/// `DEFINE` token), automatic single-feat grants with no magnitude, or (for
+/// Legion Feats/Combat Feat) a bonus-feat `ABILITYPOOL` this cycle chose
+/// not to model a bare pool-of-feats magnitude for -- left named for a
+/// future wave rather than guessed at.
+fn ground_golden_legionnaire_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == GOLDEN_LEGIONNAIRE_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = golden_legionnaire_allied_retribution_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.golden_legionnaire.allied_retribution.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Golden Legionnaire level {level} Allied Retribution: +{bonus} (corpus \
+                 `BONUS:VAR|AlliedRetributionBonus|1+(GoldenLegionnaireLVL>=7)`). Grounds the \
+                 magnitude only: no shared allied-retribution total exists anywhere in this \
+                 engine for it to layer onto"
+            ),
+        });
+    }
+
+    if let Some(bonus) = golden_legionnaire_authoritative_command_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.golden_legionnaire.authoritative_command.\
+                 bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Golden Legionnaire level {level} Authoritative Command: +{bonus} (corpus \
+                 `BONUS:VAR|AuthoritativeCommandBonus|1+(GoldenLegionnaireLVL>=6)`). Grounds \
+                 the magnitude only: no shared authoritative-command total exists anywhere in \
+                 this engine for it to layer onto"
+            ),
+        });
+    }
+
+    if let Some(bonus) = golden_legionnaire_improved_aid_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.golden_legionnaire.improved_aid.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Golden Legionnaire level {level} Improved Aid: +{bonus} (corpus `BONUS:VAR|\
+                 LegionImprovedAid|1+(GoldenLegionnaireLVL>=9)`). Grounds the magnitude only: \
+                 no shared aid-another total exists anywhere in this engine for it to layer \
+                 onto"
+            ),
+        });
+    }
+
+    if let Some(bonus) = golden_legionnaire_united_defense_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.golden_legionnaire.united_defense.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Golden Legionnaire level {level} United Defense: +{bonus} (corpus `BONUS:VAR|\
+                 UnitedDefenseBonus|1+(GoldenLegionnaireLVL>=6)+(GoldenLegionnaireLVL>=10)`). \
+                 Grounds the magnitude only: no shared united-defense total exists anywhere in \
+                 this engine for it to layer onto"
+            ),
+        });
     }
 }
 
@@ -78165,6 +78495,264 @@ mod wave47_divine_scion_class_features_tests {
                 None,
                 "a Fighter must not gain any of Divine Scion's new class-feature ids: {id}, \
                  even with Divine Scion's own choices recorded"
+            );
+        }
+    }
+}
+
+/// SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): Twilight Talon and
+/// Golden Legionnaire's own magnitude-bearing class features. Same overall
+/// shape as `wave47_divine_scion_class_features_tests` immediately above --
+/// pure-formula tests for every new function, plus real-pipeline
+/// reachability tests proving the choice-gated tattoo records surface
+/// exactly one member per tier and nothing else.
+#[cfg(test)]
+mod wave48_registered_prestige_magnitude_formulas_tests {
+    use super::{
+        build_pilot_headless_receipt, golden_legionnaire_allied_retribution_bonus,
+        golden_legionnaire_authoritative_command_bonus, golden_legionnaire_improved_aid_bonus,
+        golden_legionnaire_united_defense_bonus, twilight_talon_enhanced_tattoo_save_dc,
+        twilight_talon_sneak_attack_dice, CharacterClassLevel, CharacterInput,
+        TWILIGHT_TALON_TATTOO_LEVEL_2_CHOICE_ID, TWILIGHT_TALON_TATTOO_LEVEL_4_CHOICE_ID,
+    };
+    use crate::rules_core::character_input::{SelectedChoice, load_character_input_fixture};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// This fixture's own Charisma modifier -- CHA 8 -> -1, the same
+    /// documented constant `wave46_registered_prestige_magnitude_formulas_
+    /// tests`'s own `FIXTURE_CHARISMA_MODIFIER` already establishes for the
+    /// identical shared fixture.
+    const FIXTURE_CHARISMA_MODIFIER: i16 = -1;
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn twilight_talon_with_tattoos(level: u8, picks: &[(&str, &str)]) -> CharacterInput {
+        let mut input = character("class:twilight_talon", level);
+        for (choice_set_id, selection_id) in picks {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: (*choice_set_id).to_owned(),
+                selection_id: (*selection_id).to_owned(),
+            });
+        }
+        input
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    // ---- Pure formula ----
+
+    #[test]
+    fn twilight_talon_sneak_attack_dice_matches_the_corpus_token() {
+        // `(TwilightTalonLVL+2)/3`, integer division, no `PREVARGTEQ` gate.
+        assert_eq!(twilight_talon_sneak_attack_dice(0), None);
+        assert_eq!(twilight_talon_sneak_attack_dice(1), Some(1));
+        assert_eq!(twilight_talon_sneak_attack_dice(3), Some(1));
+        assert_eq!(twilight_talon_sneak_attack_dice(4), Some(2));
+        assert_eq!(twilight_talon_sneak_attack_dice(10), Some(4));
+    }
+
+    #[test]
+    fn twilight_talon_enhanced_tattoo_save_dc_matches_the_corpus_token() {
+        // `10+TwilightTalonLVL/2+CHA`, no `PREVARGTEQ` gate.
+        assert_eq!(twilight_talon_enhanced_tattoo_save_dc(0, 3), None);
+        assert_eq!(twilight_talon_enhanced_tattoo_save_dc(2, 3), Some(14));
+        assert_eq!(twilight_talon_enhanced_tattoo_save_dc(10, 3), Some(18));
+        assert_eq!(twilight_talon_enhanced_tattoo_save_dc(10, -1), Some(14));
+    }
+
+    #[test]
+    fn golden_legionnaire_step_bonuses_match_the_corpus_tokens() {
+        // `1+(GoldenLegionnaireLVL>=7)`.
+        assert_eq!(golden_legionnaire_allied_retribution_bonus(0), None);
+        assert_eq!(golden_legionnaire_allied_retribution_bonus(1), Some(1));
+        assert_eq!(golden_legionnaire_allied_retribution_bonus(6), Some(1));
+        assert_eq!(golden_legionnaire_allied_retribution_bonus(7), Some(2));
+        // `1+(GoldenLegionnaireLVL>=6)`.
+        assert_eq!(golden_legionnaire_authoritative_command_bonus(5), Some(1));
+        assert_eq!(golden_legionnaire_authoritative_command_bonus(6), Some(2));
+        // `1+(GoldenLegionnaireLVL>=9)`.
+        assert_eq!(golden_legionnaire_improved_aid_bonus(8), Some(1));
+        assert_eq!(golden_legionnaire_improved_aid_bonus(9), Some(2));
+        // `1+(GoldenLegionnaireLVL>=6)+(GoldenLegionnaireLVL>=10)`.
+        assert_eq!(golden_legionnaire_united_defense_bonus(5), Some(1));
+        assert_eq!(golden_legionnaire_united_defense_bonus(6), Some(2));
+        assert_eq!(golden_legionnaire_united_defense_bonus(10), Some(3));
+    }
+
+    // ---- Reachability: the real pipeline ----
+
+    #[test]
+    fn twilight_talon_unconditional_ids_reach_the_real_pipeline_at_level_ten() {
+        let character = character("class:twilight_talon", 10);
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.adventurers_guide.twilight_talon.sneak_attack.dice"
+            ),
+            Some(4)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.adventurers_guide.twilight_talon.enhanced_tattoo.save_dc"
+            ),
+            Some(15 + FIXTURE_CHARISMA_MODIFIER)
+        );
+    }
+
+    /// CORRECTION-shaped RED-for-the-right-reason: none of the 10 choice-
+    /// gated tattoo caster-level facts surface for a character with no
+    /// recorded tier selections -- the same discipline wave 47's own
+    /// correction established for Divine Scion.
+    #[test]
+    fn twilight_talon_tattoo_ids_are_absent_with_no_recorded_selection() {
+        let character = character("class:twilight_talon", 10);
+        for id in [
+            "class_feature.adventurers_guide.twilight_talon.disguise_self.caster_level",
+            "class_feature.adventurers_guide.twilight_talon.alter_self.caster_level",
+            "class_feature.adventurers_guide.twilight_talon.glibness.caster_level",
+            "class_feature.adventurers_guide.twilight_talon.modify_memory.caster_level",
+            "class_feature.adventurers_guide.twilight_talon.mislead.caster_level",
+        ] {
+            assert_eq!(
+                explanation_value(&character, id),
+                None,
+                "{id}: a real twilight talon has no tattoo at all until a tier selection is \
+                 recorded, never all candidates defaulted"
+            );
+        }
+    }
+
+    #[test]
+    fn twilight_talon_tattoo_surfaces_only_the_recorded_member_per_tier() {
+        let character = twilight_talon_with_tattoos(
+            10,
+            &[
+                (TWILIGHT_TALON_TATTOO_LEVEL_2_CHOICE_ID, "tattoo:disguise_self"),
+                (TWILIGHT_TALON_TATTOO_LEVEL_4_CHOICE_ID, "tattoo:invisibility"),
+            ],
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.adventurers_guide.twilight_talon.disguise_self.caster_level"
+            ),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.adventurers_guide.twilight_talon.invisibility.caster_level"
+            ),
+            Some(10)
+        );
+        // Recording Disguise Self at tier 2 must not also surface tier 2's
+        // OWN sibling (Undetectable Alignment), and recording Invisibility
+        // at tier 4 must not surface tier 4's own sibling (Alter Self).
+        for absent in [
+            "class_feature.adventurers_guide.twilight_talon.undetectable_alignment.\
+             caster_level",
+            "class_feature.adventurers_guide.twilight_talon.alter_self.caster_level",
+        ] {
+            assert_eq!(explanation_value(&character, absent), None, "{absent}");
+        }
+        // Tiers 6/8/10 were never recorded at all -- absent too.
+        for absent in [
+            "class_feature.adventurers_guide.twilight_talon.glibness.caster_level",
+            "class_feature.adventurers_guide.twilight_talon.modify_memory.caster_level",
+            "class_feature.adventurers_guide.twilight_talon.mislead.caster_level",
+        ] {
+            assert_eq!(explanation_value(&character, absent), None, "{absent}");
+        }
+    }
+
+    #[test]
+    fn twilight_talon_tattoo_ids_are_absent_below_their_own_tier_gate() {
+        // Level 3: tier 2 is open, tiers 4/6/8/10 are not -- even though a
+        // (premature) tier-4 selection is recorded, it must not surface.
+        let character = twilight_talon_with_tattoos(
+            3,
+            &[
+                (TWILIGHT_TALON_TATTOO_LEVEL_2_CHOICE_ID, "tattoo:disguise_self"),
+                (TWILIGHT_TALON_TATTOO_LEVEL_4_CHOICE_ID, "tattoo:alter_self"),
+            ],
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.adventurers_guide.twilight_talon.disguise_self.caster_level"
+            ),
+            Some(3)
+        );
+        assert_eq!(
+            explanation_value(
+                &character,
+                "class_feature.adventurers_guide.twilight_talon.alter_self.caster_level"
+            ),
+            None,
+            "tier 4 is gated below level 4, regardless of the recorded selection"
+        );
+    }
+
+    #[test]
+    fn golden_legionnaire_unconditional_ids_reach_the_real_pipeline_at_level_ten() {
+        let character = character("class:golden_legionnaire", 10);
+        let expected: &[(&str, i16)] = &[
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.allied_retribution.bonus",
+                2,
+            ),
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.authoritative_command.\
+                 bonus",
+                2,
+            ),
+            ("class_feature.adventurers_guide.golden_legionnaire.improved_aid.bonus", 2),
+            ("class_feature.adventurers_guide.golden_legionnaire.united_defense.bonus", 3),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&character, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn none_of_the_wave48_ids_leak_onto_an_unrelated_class() {
+        let mut fighter = character("class:fighter", 10);
+        fighter.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: TWILIGHT_TALON_TATTOO_LEVEL_2_CHOICE_ID.to_owned(),
+            selection_id: "tattoo:disguise_self".to_owned(),
+        });
+        for id in [
+            "class_feature.adventurers_guide.twilight_talon.sneak_attack.dice",
+            "class_feature.adventurers_guide.twilight_talon.enhanced_tattoo.save_dc",
+            "class_feature.adventurers_guide.twilight_talon.disguise_self.caster_level",
+            "class_feature.adventurers_guide.golden_legionnaire.allied_retribution.bonus",
+            "class_feature.adventurers_guide.golden_legionnaire.authoritative_command.bonus",
+            "class_feature.adventurers_guide.golden_legionnaire.improved_aid.bonus",
+            "class_feature.adventurers_guide.golden_legionnaire.united_defense.bonus",
+        ] {
+            assert_eq!(
+                explanation_value(&fighter, id),
+                None,
+                "a Fighter must not gain any of Twilight Talon/Golden Legionnaire's new \
+                 class-feature ids: {id}"
             );
         }
     }

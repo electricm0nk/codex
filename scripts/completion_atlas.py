@@ -195,7 +195,18 @@ BUCKET_DEFINITIONS = {
         # `grep -n 'status: "grounded",'`, first hit inside
         # `simple_kind_verdict`, 11907 -> 12204, read back and confirmed
         # still the real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 12204, "must_contain": "grounded"},
+        # Wave 48 re-derivation (this cycle's own two new `EngineFacts`
+        # fields, two new probe functions, and `classify()` early-return
+        # block all sit above this site): fresh `grep -n 'status:
+        # "grounded",'`, first hit inside `simple_kind_verdict`, 12204 ->
+        # 12530, read back and confirmed still the real construction site.
+        # Wave 48 CORRECTION (same cycle, before commit): the derivation
+        # above was against a pre-clippy-fix snapshot; this cycle's own
+        # `type TwilightTalonTattooTierMember` alias (inserted above this
+        # site to clear a `clippy::type_complexity` warning) shifted this by
+        # a further uniform +4, 12530 -> 12534 -- caught by re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12534, "must_contain": "grounded"},
     },
     "A": {
         "meaning": "engine has no table for this kind",
@@ -259,7 +270,15 @@ BUCKET_DEFINITIONS = {
         # above this site): fresh `grep -n` for the same unique literal,
         # 14716 -> 15030, line content read back and confirmed still the
         # real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 15030, "must_contain": "has_no_engine_table"},
+        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
+        # Legionnaire insertions above this site): fresh `grep -n` for the
+        # same unique literal, 15030 -> 15380, line content read back and
+        # confirmed still the real construction site.
+        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
+        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
+        # this by a further uniform +4, 15380 -> 15384 -- caught re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 15384, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -317,7 +336,15 @@ BUCKET_DEFINITIONS = {
         # above this site): fresh `grep -n` for the same unique literal,
         # 14376 -> 14690, line content read back and confirmed still the
         # real construction site.
-        "citation": {"file": _ENGINE_SRC, "line": 14690, "must_contain": "not_held_by_engine"},
+        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
+        # Legionnaire insertions above this site): fresh `grep -n` for the
+        # same unique literal, 14690 -> 15040, line content read back and
+        # confirmed still the real construction site.
+        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
+        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
+        # this by a further uniform +4, 15040 -> 15044 -- caught re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 15044, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -377,7 +404,23 @@ BUCKET_DEFINITIONS = {
         # above this site): fresh `grep -n` for the same unique literal,
         # 14621 -> 14935, line content read back and confirmed still the
         # real construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 14935, "must_contain": "explanation_id"},
+        # Wave 48 re-derivation: `--check` did NOT flag this citation (14935
+        # still happened to contain the bare substring "explanation_id"
+        # after this cycle's own insertions shifted it -- the line landed on
+        # `"explanation_id_observed_and_corpus_record_carries_real_
+        # description"`, a DIFFERENT construction site's own evidence
+        # string, not this bucket's), the exact "passes the string check,
+        # wrong construction site" hazard this file's own comments warn
+        # about -- caught by reading the line back, not trusted from the
+        # string match alone. Fresh `grep -n` for the same unique literal
+        # (`engine_does_not_hold("no_explanation_id_and_no_diagnostic_
+        # names_this_feature")`), 14935 -> 15285, line content read back and
+        # confirmed this time it IS the real construction site.
+        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
+        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
+        # this by a further uniform +4, 15285 -> 15289 -- caught re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 15289, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -429,7 +472,17 @@ BUCKET_DEFINITIONS = {
         # 12080 -> 12377 (definition line), the closure body's own `status:
         # "engine-does-not-hold"` line one below at 12378, read back and
         # confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12378, "must_contain": "engine-does-not-hold"},
+        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
+        # Legionnaire `EngineFacts` fields, probe functions, and choice-seed
+        # arm sit above this closure definition): fresh `grep -n 'let
+        # engine_does_not_hold = '`, 12377 -> 12703 (definition line), the
+        # closure body's own `status: "engine-does-not-hold"` line one below
+        # at 12704, read back and confirmed.
+        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
+        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
+        # this by a further uniform +4, 12704 -> 12708 -- caught re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12708, "must_contain": "engine-does-not-hold"},
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
@@ -468,7 +521,15 @@ BUCKET_DEFINITIONS = {
         # sit above this site): fresh `grep -n` for the first hit inside
         # `simple_kind_verdict`, 11916 -> 12213, line content read back and
         # confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12213, "must_contain": "ingested-magnitude"},
+        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
+        # Legionnaire insertions sit above this site): fresh `grep -n` for
+        # the first hit inside `simple_kind_verdict`, 12213 -> 12539, line
+        # content read back and confirmed.
+        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
+        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
+        # this by a further uniform +4, 12539 -> 12543 -- caught re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12543, "must_contain": "ingested-magnitude"},
     },
     "V": {
         "meaning": "verified by proxy, never by the oracle",
@@ -549,7 +610,15 @@ BUCKET_DEFINITIONS = {
         # sit above this site): fresh `grep -n` for the same unique literal,
         # 15498 -> 15812, read back and confirmed still the real
         # construction site, not a test assertion.
-        "citation": {"file": _ENGINE_SRC, "line": 15812, "must_contain": "literal-verified"},
+        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
+        # Legionnaire insertions sit above this site): fresh `grep -n` for
+        # the same unique literal, 15812 -> 16162, read back and confirmed
+        # still the real construction site, not a test assertion.
+        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
+        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
+        # this by a further uniform +4, 16162 -> 16166 -- caught re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 16166, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
@@ -583,7 +652,15 @@ BUCKET_DEFINITIONS = {
         # Wave 47 re-derivation (this cycle's own Divine Scion insertions
         # sit above this site): fresh `grep -n 'status: "unmeasurable"'`,
         # first hit, 12168 -> 12465, line content read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12465, "must_contain": "unmeasurable"},
+        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
+        # Legionnaire insertions sit above this site): fresh `grep -n
+        # 'status: "unmeasurable"'`, first hit, 12465 -> 12791, line content
+        # read back and confirmed.
+        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
+        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
+        # this by a further uniform +4, 12791 -> 12795 -- caught re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12795, "must_contain": "unmeasurable"},
     },
     "X": {
         "meaning": "deferred with a stated reason",
@@ -618,7 +695,15 @@ BUCKET_DEFINITIONS = {
         # sit above this site): fresh `grep -n 'status:
         # "deferred-with-reason"'`, first hit, 12128 -> 12425, line content
         # read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12425, "must_contain": "deferred-with-reason"},
+        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
+        # Legionnaire insertions sit above this site): fresh `grep -n
+        # 'status: "deferred-with-reason"'`, first hit, 12425 -> 12751, line
+        # content read back and confirmed.
+        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
+        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
+        # this by a further uniform +4, 12751 -> 12755 -- caught re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12755, "must_contain": "deferred-with-reason"},
     },
     "Z": {
         "meaning": "not started",
@@ -652,7 +737,15 @@ BUCKET_DEFINITIONS = {
         # sit above this site): fresh `grep -n 'status: "not-started"'`,
         # still the only real hit, 11989 -> 12286, line content read back
         # and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 12286, "must_contain": "not-started"},
+        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
+        # Legionnaire insertions sit above this site): fresh `grep -n
+        # 'status: "not-started"'`, still the only real hit, 12286 -> 12612,
+        # line content read back and confirmed.
+        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
+        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
+        # this by a further uniform +4, 12612 -> 12616 -- caught re-running
+        # `--check` AFTER the clippy fix, read back and confirmed.
+        "citation": {"file": _ENGINE_SRC, "line": 12616, "must_contain": "not-started"},
     },
 }
 

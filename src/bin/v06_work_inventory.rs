@@ -5624,6 +5624,15 @@ struct EngineFacts {
     /// remaining two sm5 units) are NOT covered here -- see `ground_
     /// divine_scion_class_features`'s own doc comment.
     divine_scion_wired: BTreeSet<String>,
+    /// SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): Twilight
+    /// Talon's 12 magnitude-bearing class features (Sneak Attack, Enhanced
+    /// Tattoo's own save DC, and all 10 per-tier tattoo caster-level
+    /// records), keyed by the record's own corpus `key`.
+    twilight_talon_wired: BTreeSet<String>,
+    /// SD-34 wave 48: Golden Legionnaire's four magnitude-bearing class
+    /// features (Allied Retribution, Authoritative Command, Improved Aid,
+    /// United Defense), keyed by the record's own corpus `key`.
+    golden_legionnaire_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -6161,6 +6170,25 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
             vec![
                 choice("choice:divine_scion_domain_specialization", "domain:fire"),
                 choice("choice:divine_scion_opposition_alignment", "alignment:evil"),
+            ],
+            Vec::new(),
+        ),
+        // Wave 48 (`decisions.md §22`): Twilight Talon's Enhanced Tattoo is
+        // 5 separate `ABILITYPOOL` choices (one per tier reached), the same
+        // "give the sweep one canonical default choice per axis" gap this
+        // function already closes for Divine Scion's two axes above --
+        // without these arms the standard corpus-wide sweep would see NONE
+        // of the 10 choice-gated tattoo caster-level facts (`ground_
+        // twilight_talon_class_features`'s own doc comment). One member of
+        // each tier's own two-candidate list is picked arbitrarily as the
+        // canonical default.
+        "twilight_talon" => (
+            vec![
+                choice("choice:twilight_talon_tattoo_level_2", "tattoo:disguise_self"),
+                choice("choice:twilight_talon_tattoo_level_4", "tattoo:alter_self"),
+                choice("choice:twilight_talon_tattoo_level_6", "tattoo:glibness"),
+                choice("choice:twilight_talon_tattoo_level_8", "tattoo:modify_memory"),
+                choice("choice:twilight_talon_tattoo_level_10", "tattoo:mislead"),
             ],
             Vec::new(),
         ),
@@ -9949,6 +9977,142 @@ fn probe_divine_scion_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
     wired
 }
 
+/// Golden Legionnaire -- `decisions.md §22`'s WAVE 48 UPDATE. A real
+/// prestige class registered in `prestige_class_entry_gate` (source book
+/// `adventurers_guide`), no `ClassId`-family enum entry, no chassis
+/// dispatch reaches it otherwise. All 4 members are single-owner
+/// unconditional grants (no choice-gating), the same
+/// `probe_wave46_single_owner_class_features` shape every wave-46 class
+/// already uses.
+fn probe_golden_legionnaire_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "golden_legionnaire",
+        &[
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.allied_retribution.bonus",
+                "Golden Legionnaire ~ Allied Retribution",
+            ),
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.authoritative_command.\
+                 bonus",
+                "Golden Legionnaire ~ Authoritative Command",
+            ),
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.improved_aid.bonus",
+                "Golden Legionnaire ~ Improved Aid",
+            ),
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.united_defense.bonus",
+                "Golden Legionnaire ~ United Defense",
+            ),
+        ],
+    )
+}
+
+/// Twilight Talon's own 5 Enhanced Tattoo tiers -- a probe-local
+/// correspondence table (the same "probe-local list, never importing the
+/// engine's own internals" convention `DIVINE_SCION_DOMAIN_SPECIALIZATION_
+/// SLUGS` above already establishes), mirroring `pilot_compute::mod.rs`'s
+/// own `TWILIGHT_TALON_TATTOO_TIERS` exactly: tier level, choice-set id,
+/// and the tier's two (slug, display name) candidate members.
+///
+/// Type alias per clippy's own `type_complexity` lint (this bundle's
+/// zero-warning ceiling): (tier min level, choice-set id, tier members).
+type TwilightTalonTattooTierMember = (u8, &'static str, &'static [(&'static str, &'static str)]);
+const TWILIGHT_TALON_TATTOO_TIER_MEMBERS: &[TwilightTalonTattooTierMember] = &[
+    (
+        2,
+        "choice:twilight_talon_tattoo_level_2",
+        &[
+            ("disguise_self", "Disguise Self"),
+            ("undetectable_alignment", "Undetectable Alignment"),
+        ],
+    ),
+    (
+        4,
+        "choice:twilight_talon_tattoo_level_4",
+        &[("alter_self", "Alter Self"), ("invisibility", "Invisibility")],
+    ),
+    (
+        6,
+        "choice:twilight_talon_tattoo_level_6",
+        &[("glibness", "Glibness"), ("secret_page", "Secret Page")],
+    ),
+    (
+        8,
+        "choice:twilight_talon_tattoo_level_8",
+        &[("modify_memory", "Modify Memory"), ("zone_of_silence", "Zone of Silence")],
+    ),
+    (
+        10,
+        "choice:twilight_talon_tattoo_level_10",
+        &[("mislead", "Mislead"), ("seeming", "Seeming")],
+    ),
+];
+
+/// Twilight Talon -- `decisions.md §22`'s WAVE 48 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `adventurers_guide`), no `ClassId`-family enum entry, no chassis
+/// dispatch reaches it otherwise. 12 members total: 2 genuinely
+/// unconditional single-owner grants (Sneak Attack, Enhanced Tattoo's own
+/// save DC -- proven the same `probe_wave46_single_owner_class_features`
+/// way every wave-46 class already does), plus 10 per-tier tattoo records
+/// that are each a genuine `ABILITYPOOL` one-of-two CHOICE
+/// (`ag_abilities_class.lst:542`'s own 5 `PREVARGTEQ`-gated `ABILITYPOOL`
+/// tokens) -- fixed here by sweeping every one of the 10 candidate
+/// selections in turn, the same `probe_divine_scion_wiring` idiom
+/// immediately above, so a genuinely-reachable-once-selected record is
+/// never conflated with one that was merely asserted unconditionally.
+fn probe_twilight_talon_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = probe_wave46_single_owner_class_features(
+        fixture,
+        "twilight_talon",
+        &[
+            (
+                "class_feature.adventurers_guide.twilight_talon.sneak_attack.dice",
+                "Twilight Talon ~ Sneak Attack",
+            ),
+            (
+                "class_feature.adventurers_guide.twilight_talon.enhanced_tattoo.save_dc",
+                "Twilight Talon ~ Enhanced Tattoo",
+            ),
+        ],
+    );
+
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &(_tier_level, choice_set_id, members) in TWILIGHT_TALON_TATTOO_TIER_MEMBERS {
+        for &(slug, display) in members {
+            let id =
+                format!("class_feature.adventurers_guide.twilight_talon.{slug}.caster_level");
+            let corpus_key = format!("Twilight Talon ~ {display}");
+            for &level in SWEEP_LEVELS {
+                let mut input = class_sweep_input(fixture, "twilight_talon", level);
+                input
+                    .chosen
+                    .selected_choices
+                    .retain(|c| c.choice_set_id != choice_set_id);
+                input.chosen.selected_choices.push(SelectedChoice {
+                    choice_set_id: choice_set_id.to_string(),
+                    selection_id: format!("tattoo:{slug}"),
+                });
+                let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                    compute_pilot_base_chassis(&input)
+                }));
+                let Ok(computation) = outcome else { continue };
+                if computation.explanations.iter().any(|e| e.id == id) {
+                    wired.insert(corpus_key.clone());
+                }
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): real-pipeline
 /// reachability proof for every one of this wave's seven probe functions --
 /// against the REAL shared fixture and the REAL `compute_pilot_base_
@@ -10386,6 +10550,170 @@ mod wave47_divine_scion_classify_tests {
         );
     }
 }
+
+/// SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): real-pipeline
+/// reachability proof for Twilight Talon and Golden Legionnaire -- against
+/// the REAL shared fixture and the REAL `compute_pilot_base_chassis`
+/// pipeline (via `class_sweep_input`), proving each new class-feature
+/// block resolves end to end, not merely that the pure formula functions
+/// return the right numbers in isolation.
+#[cfg(test)]
+mod wave48_registered_prestige_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn twilight_talon_is_wired_end_to_end() {
+        let wired = probe_twilight_talon_wiring(&fixture());
+        for expected in [
+            "Twilight Talon ~ Sneak Attack",
+            "Twilight Talon ~ Enhanced Tattoo",
+            "Twilight Talon ~ Disguise Self",
+            "Twilight Talon ~ Undetectable Alignment",
+            "Twilight Talon ~ Alter Self",
+            "Twilight Talon ~ Invisibility",
+            "Twilight Talon ~ Glibness",
+            "Twilight Talon ~ Secret Page",
+            "Twilight Talon ~ Modify Memory",
+            "Twilight Talon ~ Zone of Silence",
+            "Twilight Talon ~ Mislead",
+            "Twilight Talon ~ Seeming",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+        // All 12 members resolve, not just this sample.
+        assert_eq!(wired.len(), 12, "expected all 12 Twilight Talon members wired: {wired:?}");
+    }
+
+    #[test]
+    fn golden_legionnaire_is_wired_end_to_end() {
+        let wired = probe_golden_legionnaire_wiring(&fixture());
+        for expected in [
+            "Golden Legionnaire ~ Allied Retribution",
+            "Golden Legionnaire ~ Authoritative Command",
+            "Golden Legionnaire ~ Improved Aid",
+            "Golden Legionnaire ~ United Defense",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+        assert_eq!(
+            wired.len(),
+            4,
+            "expected all 4 Golden Legionnaire members wired: {wired:?}"
+        );
+    }
+
+    // NOTE: no meaningful "probe returns empty for an unrelated fixture"
+    // case exists here either -- same reason `wave46_registered_prestige_
+    // probe_reachability_tests`'s own doc comment above already gives
+    // (`class_sweep_input` always overwrites `class_levels` to the named
+    // class regardless of the fixture passed in). The real negative
+    // control is `mod.rs`'s own `none_of_the_wave48_ids_leak_onto_an_
+    // unrelated_class`, plus this module's own classify()-dispatch
+    // negative control below.
+}
+
+/// SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): `classify()`-level
+/// proof that Twilight Talon's and Golden Legionnaire's new probe checks
+/// actually win, using `EngineFacts::default()` with the field manually
+/// populated -- the same discipline `wave47_divine_scion_classify_tests`
+/// already establishes.
+#[cfg(test)]
+mod wave48_registered_prestige_classify_tests {
+    use super::*;
+
+    fn class_feature_unit(book: &str, file: &str, line: usize, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: book.to_string(),
+            kind: Kind::ClassFeature,
+            key: key.to_string(),
+            name: key.split(" ~ ").nth(1).unwrap_or(key).to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    #[test]
+    fn twilight_talon_sneak_attack_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.twilight_talon_wired.insert("Twilight Talon ~ Sneak Attack".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            541,
+            "Twilight Talon ~ Sneak Attack",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "twilight_talon_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn golden_legionnaire_allied_retribution_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .golden_legionnaire_wired
+            .insert("Golden Legionnaire ~ Allied Retribution".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            136,
+            "Golden Legionnaire ~ Allied Retribution",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "golden_legionnaire_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed record of one of this wave's own new
+    /// keys still falls through to whatever the pre-existing classify()
+    /// logic gives it (never a false `grounded`).
+    #[test]
+    fn an_unprobed_wave48_record_never_falls_grounded_through_either_new_check() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            541,
+            "Twilight Talon ~ Sneak Attack",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_ne!(
+            verdict.evidence,
+            "twilight_talon_probe_observed_a_real_computed_magnitude",
+            "an unprobed record must never resolve through this wave's own new check"
+        );
+        assert_ne!(
+            verdict.evidence,
+            "golden_legionnaire_probe_observed_a_real_computed_magnitude",
+            "an unprobed record must never resolve through this wave's own new check"
+        );
+    }
+}
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -10804,6 +11132,8 @@ fn gather_engine_facts(
         holy_vindicator_wired: probe_holy_vindicator_wiring(fixture),
         stalwart_defender_wired: probe_stalwart_defender_wiring(fixture),
         divine_scion_wired: probe_divine_scion_wiring(fixture),
+        twilight_talon_wired: probe_twilight_talon_wiring(fixture),
+        golden_legionnaire_wired: probe_golden_legionnaire_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -14191,6 +14521,30 @@ fn classify(
                 return Verdict {
                     status: "grounded",
                     evidence: "divine_scion_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): two more
+            // prestige classes in the same "registered in `prestige_class_
+            // entry_gate`, no `ClassId` enum entry, no chassis dispatch
+            // reaches it" family as the wave-46/47 classes above -- see
+            // each `ground_<class>_class_features`'s own doc comment
+            // (`pilot_compute/mod.rs`) for its corpus citations.
+            if facts.twilight_talon_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "twilight_talon_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.golden_legionnaire_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "golden_legionnaire_probe_observed_a_real_computed_magnitude"
                         .to_string(),
                     reason: None,
                     engine_book: engine_book_field,

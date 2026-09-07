@@ -1455,4 +1455,91 @@ own 2-unit True Scion remainder is left) and the 88 not-registered units (unchan
 above). The ≥10-class AS/MB/Ma cross-class-manifester-level population is unchanged, untouched
 this wave.
 
+**WAVE 48 UPDATE, 2026-09-06: sub-mechanism-5 re-derived fresh a fifth consecutive time (591,
+unchanged from wave 47's own post-cycle figure), and 16 units closed across two prestige classes
+(Twilight Talon, Golden Legionnaire).**
+
+**Fresh re-derivation, unchanged from wave 47's close.** `591` total, split `503` registered / `88`
+not registered, identical to wave 47's own post-cycle split — the registry fixture and classifier
+have not moved since wave 47 closed. Of the 503 registered, the SAME 116-unit excluded
+cross-class-manifester-level group (Sighted Seeker, Thrallherd, Psion Uncarnate, Elocater,
+Psicrystal Imprinter, Metamind, Phrenic Slayer, Cerebremancer, Soul Archer, Metaforge) and the
+SAME 2-unit Divine Scion True Scion remainder are unchanged, leaving **385** as the real working
+pool across 44 remaining prestige classes.
+
+**Closed this wave: 16 units across two `adventurers_guide` prestige classes**, every formula read
+directly from its own corpus record, independently cross-checked against the real, non-ingested
+PCGen oracle:
+- **Twilight Talon** (12 of 17 sm5 units): Sneak Attack (the classic sneak-attack-dice-by-level
+  idiom, `(TwilightTalonLVL+2)/3`), Enhanced Tattoo's own save DC (the classic "10 + level factor +
+  ability modifier" idiom, `10+TwilightTalonLVL/2+CHA`), and all 10 per-tier Enhanced Tattoo
+  caster-level records -- a genuine 5-tier, one-of-two-per-tier `ABILITYPOOL` choice
+  (`ag_abilities_class.lst:542`'s own 5 `PREVARGTEQ`-gated `BONUS:ABILITYPOOL|Twilight Talon Tattoo
+  Level <N>|1` tokens), gated via 5 new `choice_selection(input, <CHOICE_ID>)` checks (one per
+  tier, since a character accumulates a NEW tattoo at each tier reached, unlike Divine Scion's
+  single career-long pick) -- the exact discipline wave 47's own generalizable finding named:
+  before grounding any `# <X> choices`-shaped record, check whether it is a real `ABILITYPOOL`
+  one-of-N selection rather than a single-owner unconditional grant. 5 units left named, not
+  attempted (Many Hats, Eye for Detail, Dead Drop, Resourceful Agent, Unassuming Presence -- pure
+  prose, no `BONUS`/`DEFINE` token).
+- **Golden Legionnaire** (4 of 16 sm5 units): Allied Retribution, Authoritative Command, Improved
+  Aid, United Defense -- all flat step-bonuses (`1+(GoldenLegionnaireLVL>=N)`), the same idiom
+  already used repeatedly this bundle. 12 units left named, not attempted: 10 pure-prose/automatic
+  single-feat-grant records, plus Combat Feat and Legion Feats (both real bonus-feat `ABILITYPOOL`
+  grants this cycle chose not to model a bare pool-of-feats magnitude for -- a future wave's own
+  scoping question, not a correctness gap).
+
+**A new finding: not every `adventurers_guide` prestige class carrying `DESCISPI:YES` is
+PI-name-blacklisted.** Twilight Talon and Golden Legionnaire's own DESC prose is scrubbed
+(`DESCISPI:YES`, matching the same redaction this whole book carries throughout) but their class
+NAMES and formula tokens are NOT -- both ingest normally under an ordinary `data/corpus/
+adventurers_guide/class_feature/<slug>/` directory. Aldori Swordlord and Magaambyan Arcanist,
+investigated and explicitly SKIPPED this wave, are a different, stricter case: their class NAME
+itself is Product Identity, so their records ingest under a redacted `codex_named_unit_*` directory
+with `data.class` replaced by the redaction marker -- confirmed directly against
+`src/rules_core/cache_gen/class_feature.rs`'s own
+`generate_redacts_a_class_field_resolved_from_a_real_corpus_class_name_that_is_itself_pi` test
+names Aldori Swordlord as its own worked example. **Check for an ingested directory under the
+class's own slug (`data/corpus/<book>/class_feature/<slug>/`) before scoping a future wave against
+any `adventurers_guide` prestige class** -- its absence is the cheap signal this wave used to skip
+both without writing PI-blacklisted content into new source citations.
+
+**A second citation-pin hazard, caught before commit:** this wave's citation-pin re-derivation was
+first done BEFORE the `clippy::type_complexity` fix (a `type TwilightTalonTattooTierMember` alias)
+was applied, and that alias sits above every one of the bucket/promotion-ladder/table citation
+sites in `v06_work_inventory.rs` -- so its insertion shifted all of them by a further uniform +4
+lines. Re-running `completion_atlas.py --check` one final time before commit caught this
+immediately: all 10 bucket citations failed at once (an unambiguous single-shared-cause signal).
+Corrected every citation across all four affected files (`completion_atlas.py`,
+`shape_engine_boundary.py`, `missing_engine_tables.py`, `test_shape_engine_boundary.py`),
+re-confirmed `citation_failures=0` everywhere. **Lesson: citation-pin re-derivation must be the
+LAST thing done before commit, re-run again after every real `.rs` edit including a late clippy
+fix, however small.**
+
+**Verification, independently re-derived by the orchestrator against a fresh `docs/work-
+inventory.json` join, not just taken on the fixing agent's word:** exactly **16 units** changed
+status, zero collateral movement (id-set unchanged at 49438) -- `DONE: 25458->25474 (+16)`,
+`D: 2398->2382 (-16)`, `V: 349->349 (unchanged, +0)` -- every one of this wave's 16 closures landed
+straight in `grounded` (DONE); none landed in `literal-verified`/`fixture-verified` (V), since none
+of the 16 has a corresponding `derived_evaluator_fixture_check` fixture row -- a legitimate,
+different outcome from several prior waves' own D->V shape, not a lesser one. Both `cargo test
+--locked --lib` (3143 passed, up from 3134) and the full `cargo test --locked --no-fail-fast`
+integration suite were run this cycle, the full suite run TWICE end to end (a real clippy-fix `.rs`
+edit -- two `clippy::type_complexity` warnings on this wave's own new tier tables, the exact
+zero-warning-ceiling hazard wave 47 named -- landed between the two runs). F1/`shape_ledger.py`
+census re-derived: unchanged at 5155 (0 of the 16 closed units are F1-shaped -- 6 are `F2`,
+per-level arithmetic; 10 are `F0`, an unrecognized `SPELLS:Innate` token, the same blind spot
+Divine Scion's domain records already hit). Full receipt:
+`artifacts/bucket-d-mining/wave48_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
+**Sub-mechanism 5's remaining population after this wave: 575 (591 - 16)**, split across the
+SAME 44 registered prestige classes as before this wave (neither Twilight Talon nor Golden
+Legionnaire was fully closed, so neither drops out of the working-pool class count; largest
+remaining: cyphermage 17, psychic_fist 16, asavir 15, metamorph 15, war_mind 15, hellknight 14,
+adaptive_warrior 14, aldori_swordlord 13 [PI-name-blacklisted, see above], sanguine_angel 13,
+body_snatcher 13, golden_legionnaire 12 [own remainder], steel_falcon 12, magaambyan_arcanist 11
+[PI-name-blacklisted], and roughly 30 smaller classes) and the 88 not-registered units (unchanged,
+named above). The ≥10-class AS/MB/Ma cross-class-manifester-level population is unchanged,
+untouched this wave.
+
 ---

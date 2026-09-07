@@ -90,8 +90,18 @@ ENGINE_SURFACE_CITATIONS = {
     # `EngineFacts` field, choice-gating consts, rewritten probe function,
     # and `classify()` early-return block (all above both sites) shifted
     # them again, 14716 -> 15030 and 14816 -> 15130.
-    "companion": {"line": 15030, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 15130, "must_contain": "power_content_has_no_engine_table"},
+    # SD-34 wave 48 re-derivation: this cycle's own Twilight Talon/Golden
+    # Legionnaire `EngineFacts` fields, probe functions, and choice-seed arm
+    # (all above both sites) shifted them again, 15030 -> 15380 and
+    # 15130 -> 15480.
+    # SD-34 wave 48 CORRECTION (same cycle, before commit): the derivation
+    # above was against a pre-clippy-fix snapshot; this cycle's own `type
+    # TwilightTalonTattooTierMember` alias (inserted above both sites to
+    # clear a `clippy::type_complexity` warning) shifted them by a further
+    # uniform +4, 15380 -> 15384 and 15480 -> 15484 -- caught re-running
+    # `--check` AFTER the clippy fix, read back and confirmed.
+    "companion": {"line": 15384, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 15484, "must_contain": "power_content_has_no_engine_table"},
 }
 
 

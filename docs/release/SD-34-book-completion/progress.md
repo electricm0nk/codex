@@ -11,6 +11,82 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 48 — Twilight Talon and Golden Legionnaire's magnitude-only remainder: 16 units closed — complete
+
+**Status: complete.** Re-derived sub-mechanism-5's current population fresh (591, unchanged from
+wave 47's own post-cycle figure — no drift since wave 47 closed), grouped the 385-unit real working
+pool by owning prestige class, and closed 16 units across two `adventurers_guide` classes: Twilight
+Talon (12 of 17) and Golden Legionnaire (4 of 16).
+
+**Twilight Talon:** Sneak Attack (`(TwilightTalonLVL+2)/3`, the classic sneak-attack-dice-by-level
+idiom) and Enhanced Tattoo's own save DC (`10+TwilightTalonLVL/2+CHA`, the classic "10 + level
+factor + ability modifier" idiom) closed as single-owner unconditional grants. Enhanced Tattoo's 10
+per-tier caster-level records are a genuine 5-tier, one-of-two-per-tier `ABILITYPOOL` choice
+(`ag_abilities_class.lst:542`'s own 5 `PREVARGTEQ`-gated tokens) — applied wave 47's own
+generalizable finding directly: gated each tier on its own new `choice_selection(input,
+<CHOICE_ID>)` check rather than grounding both tattoo candidates per tier unconditionally. 5 units
+(Many Hats, Eye for Detail, Dead Drop, Resourceful Agent, Unassuming Presence) left named — pure
+prose, no magnitude token.
+
+**Golden Legionnaire:** Allied Retribution, Authoritative Command, Improved Aid, United Defense —
+all flat step-bonuses (`1+(GoldenLegionnaireLVL>=N)`). 12 units left named: 10 pure-prose/automatic
+single-feat-grant records, plus Combat Feat/Legion Feats (a bonus-feat `ABILITYPOOL` this cycle
+chose not to model a bare pool-of-feats magnitude for).
+
+**A new finding for future waves:** not every `adventurers_guide` prestige class carrying
+`DESCISPI:YES` is PI-name-blacklisted — Twilight Talon/Golden Legionnaire's own DESC prose is
+scrubbed but their class names and formula tokens ingest normally. Aldori Swordlord and Magaambyan
+Arcanist (both investigated, both skipped this wave) are the stricter case: their class NAME itself
+is Product Identity, so their records ingest under a redacted `codex_named_unit_*` directory with
+`data.class` replaced by the redaction marker — confirmed against
+`src/rules_core/cache_gen/class_feature.rs`'s own existing test naming Aldori Swordlord as its
+worked example. Check for an ingested directory under the class's own slug before scoping a future
+wave against any `adventurers_guide` prestige class.
+
+**Real movement: 16 units closed**, regen-confirmed. Before/after, re-derived via
+`completion_atlas.py --check` on both snapshots plus an independent Python `id`→`status` join
+(both agree): `DONE: 25458→25474 (+16)`, `D: 2398→2382 (−16)`, `V: 349→349 (unchanged, +0)` —
+exactly 16 units changed status, zero collateral movement (population 49438, 0 added/removed both
+sides). All 16 landed straight in `grounded` (DONE); none landed in `literal-verified`/
+`fixture-verified` (V) this cycle — a legitimate, different outcome from several prior waves' own
+D→V shape, since none of these 16 has a corresponding `derived_evaluator_fixture_check` fixture
+row.
+
+**Both the lib suite AND the full integration suite were run this cycle — the full suite run TWICE
+end to end, against the fully-settled tree.** `cargo test --locked --lib -j 6`, run 1 → 3143
+passed, 0 failed, 14 ignored (up from the standing 3134 baseline by exactly this cycle's 9 new lib
+tests). `cargo test --locked --no-fail-fast -j 6`, run 1 → exit 0, all 543 suites + lib + doc-tests
+green. `cargo clippy --locked --tests -j 6` then found 2 `clippy::type_complexity` warnings on this
+cycle's own new tier tables (the exact zero-warning-ceiling hazard wave 47 named) — fixed with a
+`type` alias in each file, re-confirmed 0 warnings. Because that fix is a real `.rs` edit landing
+after the first full-suite run, both suites were run a SECOND time end to end against the
+fully-settled tree: `cargo test --locked --lib -j 6`, run 2 → 3143 passed, 0 failed, 14 ignored
+(byte-identical to run 1). `cargo test --locked --no-fail-fast -j 6`, run 2 → 8576 passed, 0
+failed, 67 ignored, across 589 suites, exit 0.
+
+**A second citation-pin hazard caught before commit:** the bucket/promotion-ladder/table citation
+re-derivations were first done BEFORE the clippy `type` alias fix, which sits above every one of
+those sites and shifted all of them by a further uniform +4 lines — caught when a final
+pre-commit `--check` failed all 10 bucket citations at once. Corrected across all four affected
+scripts; `citation_failures=0` re-confirmed everywhere. Lesson: citation-pin re-derivation must be
+the LAST step before commit, re-run after every real `.rs` edit including a late clippy fix.
+
+**F1/`shape_ledger.py` pin: unchanged, 5155 → 5155.** Verified per-id: 0 of the 16 closed units are
+F1-shaped (Golden Legionnaire's 4 step-bonuses and Twilight Talon's Sneak Attack/Enhanced Tattoo are
+`F2`, per-level arithmetic, not bare literals; the 10 per-tier tattoo caster-level records are `F0`,
+their own `SPELLS:Innate|CASTERLEVEL=TL|...` token not recognized as a formula token by this
+classifier).
+
+**What remains open after this wave:** sub-mechanism 5's remaining population (**575**, 591 − 16),
+split across the same 44 registered prestige classes (largest remaining: cyphermage 17,
+psychic_fist 16, asavir 15, metamorph 15, war_mind 15, hellknight 14, adaptive_warrior 14, and
+roughly 30 smaller classes, 2 of which — Aldori Swordlord, Magaambyan Arcanist — are
+PI-name-blacklisted, see above) and the 88 not-registered units (unchanged); the ≥10-class AS/MB/Ma
+cross-class-manifester-level population (unchanged, untouched this wave).
+
+Full receipt:
+`artifacts/bucket-d-mining/wave48_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
 ### Cycle — Wave 47 wave-end gate — mid-gate server reboot survived cleanly, one real clippy follow-up fixed, full 40/40 confirmed — complete
 
 **Status: complete.** Gate/closure summary for wave 47's own cycle (above), which closed 43 of
