@@ -1,6 +1,7 @@
 # Cycle — SD-34 wave 50 — Core Rulebook + Ultimate Campaign, buckets B/C/D/M: 244 units closed (75 class_feature B, 169 D-shaped), plus 99 real cross-book units closed as an unplanned, honest side effect
 
-- **Commit SHA:** (filled in below, second commit)
+- **Commit SHA:** `1a07f08bdc` (feat commit; this receipt's own SHA fill-in lands in a second,
+  docs-only commit immediately after, following this bundle's own established two-commit pattern)
 - **Files touched:** `src/bin/v06_work_inventory.rs` (`classify()`'s `Kind::ClassFeature` owner-matched
   text_only arm gains two new rungs; `simple_kind_verdict`'s shared zero-magnitude fallback gains one
   new CRB-scoped rung; one existing test updated to its new correct terminus), `src/rules_core/
