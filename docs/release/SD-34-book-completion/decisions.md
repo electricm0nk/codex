@@ -1883,3 +1883,69 @@ subsystem, ~85 pool groups still needing `push_generic_pool_choice_magnitude` wi
 9, `race_trait` 2, `template` 1); UC 38, unchanged, wave 50's four named blockers all still standing.
 
 ---
+
+## §23 — Operator ruling, 2026-09-07: Campaign Codex is a paper character-sheet generator, not a simulation — `§2a`/`§20`'s text-only-features precedent generalizes to the whole remaining backlog
+
+**Operator ruling (verbatim intent, communicated out-of-band via a parallel planning session; first
+flagged in-repo by `forward-scope-register.md` row C1.8, which named it "NOT YET recorded in
+`decisions.md`" until this entry):** *Campaign Codex is a paper character-sheet generator, not a
+video game. Most rules only need their text printed on the sheet; only values that actually feed
+sheet totals need to be genuinely computed. Agents must not build simulation-style compute engines
+or "consumer-delta" proofs for print-only rules.* Also reiterated, as a standing process rule, not
+a new one: **batch large swaths of homogeneous work, then run ONE build+test pass** (a `cargo build`
+is ~30 min; one-item-per-build dispatch was measured at ~90 min/item and is unacceptable).
+
+**What this generalizes.** `§2a` established the base ruling ("a zero-magnitude feature whose
+description is shown to the player is COMPLETE") and `§20` extended it to the honest sibling case
+(a zero-magnitude, set-shaped record with genuinely no upstream description is *also* complete —
+there is no display gap to close because there is nothing to display). Both were scoped to
+zero-magnitude records. **This ruling removes that scope limit.** The controlling question is no
+longer "does this record carry a magnitude token" but **"does this unit's value ever land in a
+number the rendered character sheet totals or displays."** A unit whose value never feeds a sheet
+total is a **print-only unit**, and it is complete once its text is ingested and surfaced to the
+player — regardless of whether it happens to carry a magnitude token in the corpus. A unit whose
+value genuinely does feed a sheet total (an AC bonus, a save DC, a skill modifier, a damage
+formula the sheet displays as a number) still needs the real compute this bundle has built
+throughout — that requirement is unchanged. What changes is which units get sorted into which pile:
+some units this bundle's own bucket taxonomy (`M`/`B`/`C`/`D`) treats as "magnitude held, not yet
+computed" or "not yet wired" may, on inspection, never reach a sheet total at all, and are
+print-only under this ruling regardless of their bucket label.
+
+**Consequence for future waves.** Wave 52 and beyond must classify remaining units into two piles
+before scoping any dispatch:
+
+1. **Feeds-a-sheet-total** — build or extend real compute, exactly as this bundle has done
+   throughout (the `grounded_magnitude` seam, `pilot_compute`'s formula functions, the
+   `racial_sla`/`domain_power` "one corpus-stated formula, many records" discipline). Unchanged.
+2. **Print-only** — the unit's text is ingested and reaches the player through the existing
+   display/description path. It is complete on that basis alone. **Do not build a simulation-style
+   compute engine or a "consumer-delta" proof (a probe that asserts a magnitude by calling private
+   engine internals directly, rather than observing it through a real character-sheet-shaped
+   consumer) for a print-only rule.** The character-size subsystem `wave51`'s own receipt named as
+   the blocker for Monk Unarmed Damage by size (§ below) is the canonical example of the kind of
+   subsystem this ruling says NOT to build for a print-only-shaped remainder without first checking
+   whether the value in question actually reaches a sheet total anywhere this engine renders one.
+
+**Wave 51 was dispatched, and largely executed, BEFORE this ruling reached the orchestrator, under
+the pre-ruling bar (a magnitude observed reaching a consumer through a real pipeline run).** Its
+work is not wrong under the bar it was scoped against: `racial_sla` (115 units) computes a real
+save DC that a spell-like ability's own consumer would render as a number, and the 102 `ability`
+closures are genuinely proseless internal plumbing, not print-only content withheld from a player.
+Wave 51 also correctly *declined* to build a subsystem it would not have built under this ruling
+either way — Monk Unarmed Damage by size (48 units, `progress.md`/receipt §5) was named as blocked
+on "a character-size subsystem," and declined rather than force-shipped, which is the same
+conservatism this ruling now makes mandatory rather than a judgment call. **Wave 52+ must re-scope
+under this ruling before dispatching:** re-read the remaining CR/UC buckets (and, per
+`forward-scope-register.md` C1.8, the wider `fable-review.md §1` B-SYNTH classification feeding
+SD-35's cost model) against the feeds-a-sheet-total/print-only split above, rather than continuing
+to treat "magnitude token present" as a proxy for "must be computed." This is expected to
+re-classify some units this bundle's own bucket labels call `M`/`D`-not-yet-computed as print-only-
+already-complete, and to shrink the compute-shaped remainder `fable-review.md §1.b`'s cost model
+assumed.
+
+**Enforced by:** this entry itself, cited by `forward-scope-register.md` row C1.8 (updated in the
+same commit to point here); no code or classifier change is made by this entry alone — re-scoping
+the remainder against this ruling is wave 52+'s own work, not retroactive relabeling of wave 51's
+closures.
+
+---
