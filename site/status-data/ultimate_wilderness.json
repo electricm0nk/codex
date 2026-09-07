@@ -4478,7 +4478,7 @@
         },
         {
           "name": "Scalykind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Scalykind (Internal.DomainAbility)"

@@ -123,7 +123,7 @@
         },
         {
           "name": "Void",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Void (Internal.DomainAbility)"

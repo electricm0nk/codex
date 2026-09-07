@@ -594,7 +594,7 @@
         },
         {
           "name": "Detect Chaos",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Detect Chaos"
@@ -622,7 +622,7 @@
         },
         {
           "name": "Discern Lies",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Discern Lies"
@@ -1112,7 +1112,7 @@
         },
         {
           "name": "Scalykind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Scalykind (Internal.DomainAbility)"
@@ -1329,7 +1329,7 @@
         },
         {
           "name": "Smite Chaos",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Smite Chaos"
@@ -1483,7 +1483,7 @@
         },
         {
           "name": "Void",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Void (Internal.DomainAbility)"
@@ -1539,14 +1539,14 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Internal) #4"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "[redacted PI] (SpecialQuality.Extraordinary) #5"
