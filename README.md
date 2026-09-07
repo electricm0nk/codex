@@ -245,6 +245,12 @@ Expected working behavior after the fix:
 - the app window loads the Guard Stance package successfully
 - the workbench shows package state, preview state, and the snapshot payload instead of a missing-path error
 
+## Long-lived infrastructure branches
+
+- `test` is the promotion gate (beta channel) for stable releases: only the `test` branch may merge into `main` per `.github/workflows/allow-only-test-into-main.yml`. The workflow automatically re-creates `test` at `main`'s current tip if deleted. **Never delete it** — operator ruling 2026-09-07.
+
+- `update-index` is the release channel-index feed. `.github/workflows/publish-tester-release.yml`'s `finalize` job is the only writer: it checks out (or orphan-creates) the branch, writes `channels/<channel>.json` and a mirrored `manifests/<manifest-tag>/update-manifest.json`, and pushes straight to `origin/update-index` on every successful `develop`/`main` publish run. The desktop app's updater (`apps/desktop/src/update/indexSource.ts`, `fetch.ts`) reads the channel pointer directly from `https://raw.githubusercontent.com/electricm0nk/codex/update-index/channels/<channel>.json` — this branch is the update feed, not a stale work branch. **Never delete it.** Its tip also carries a large snapshot of an old full repo tree alongside `channels/`/`manifests/`; that tree is incidental (an artifact of how the branch was first cut) and is not maintained or read by anything — only `channels/` and `manifests/` are live.
+
 ## Onboarding and contribution rules
 
 - read `AGENTS.md` before taking implementation work

@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-07T08:00:34Z",
+  "generated_at": "2026-09-07T13:06:14Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16604,
+  "proven_units": 16821,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -21,15 +21,16 @@
   "kinds": {
     "ability": {
       "units": 4337,
-      "proven": 1424,
+      "proven": 1526,
       "by_status": {
         "ingested-magnitude": 1483,
         "oracle-unverifiable": 745,
         "text-complete": 1424,
-        "engine-does-not-hold": 685
+        "engine-does-not-hold": 583,
+        "grounded": 102
       },
       "shard": "PF1e-units-ability.json",
-      "bytes": 582464,
+      "bytes": 581240,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -43,10 +44,10 @@
         },
         "none": {
           "label": "Uncategorised",
-          "done": 212,
-          "held": 17,
+          "done": 295,
+          "held": 26,
           "in-progress": 98,
-          "not-started": 244,
+          "not-started": 152,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -448,10 +449,10 @@
         },
         "knowledge": {
           "label": "Knowledge",
-          "done": 0,
+          "done": 10,
           "held": 0,
           "in-progress": 0,
-          "not-started": 10,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -11627,17 +11628,17 @@
     },
     "race_trait": {
       "units": 2561,
-      "proven": 1082,
+      "proven": 1197,
       "by_status": {
-        "ingested-magnitude": 812,
+        "ingested-magnitude": 697,
         "literal-verified": 152,
         "engine-does-not-hold": 502,
-        "grounded": 396,
+        "grounded": 511,
         "text-complete": 686,
         "oracle-unverifiable": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 381708,
+      "bytes": 380558,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
@@ -11669,9 +11670,9 @@
         },
         "racialspelllikeability": {
           "label": "Racial Spell-Like Ability",
-          "done": 0,
+          "done": 114,
           "held": 1,
-          "in-progress": 136,
+          "in-progress": 22,
           "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0

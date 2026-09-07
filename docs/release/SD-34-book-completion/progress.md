@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-34
-status: in-progress — wave 51 closed (217 units), wave 52 pending
+status: in-progress — wave 51 closed (217 units); remaining CR+UC pool routes through SD-35 Epic 2 sheet rule
 date: 2026-09-07
 ---
 
@@ -10,6 +10,36 @@ date: 2026-09-07
 
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
+
+### Cycle — Wave 51 wave-end gate — independent re-confirmation of 217 units closed, full 40/40 confirmed — complete
+
+**Status: complete.** Orchestrator-run full verification suite on the committed wave 51 state
+(`3dcf0f044d` + receipt docs), independently re-confirming 217 units closed via bucket math
+cross-check and live corpus probe — matching the cycle's own self-reported closure exactly.
+
+**Bucket math re-verification:** the cycle reported 115 race_trait (M bucket) + 102 ability (D bucket) = 217 total. `completion_atlas.py --check` on
+the committed state confirms: `DONE 25906→26123` out of 49,438 units, `M 4449→4334` (−115) of 6,701 core_rulebook units, `D 2084→1982` (−102) of 6,701 core_rulebook units,
+population 49,438 unchanged, citation_failures=0. Independent Python `id`→`status` join re-derived:
+exactly 217 changed, zero collateral movement. Bucket math verified.
+
+**Wave 51's own self-caught fix:** one stale test expectation for `Racial SLA ~ Aid` pins its
+terminus moving from `ingested-magnitude` to `grounded` (2nd-level spell against the module's `+2`
+Charisma fixture, so DC 14). Re-derived that expectation and its doc comment, re-ran clean. Also
+3 clippy warnings in the new test file collapsed into a single let-chain; re-ran the target clean
+at 0 warnings.
+
+**A pre-existing instrument staleness found and closed:** running citation checks BEFORE editing
+showed 2 of 3 citation instruments were already stale at HEAD `5f6b18f4e3` (waves 49 and 50 both
+edited the engine source and re-derived `completion_atlas.py`'s citations only): `shape_engine_boundary.py` promotion-ladder citation off by 861 lines, `missing_engine_tables.py` companion/power citations off by 114 lines each. Both re-derived here. Gate gap: neither `shape_engine_boundary.py --check`, `missing_engine_tables.py --check`, nor the related test is a `verify.sh` stage — a future wave should add them (named, not attempted here).
+
+**Site dashboard staleness fixed this gate:** `./scripts/publish-site-dashboard.sh` regenerated the
+committed-but-stale feed, confirmed current via `--check`.
+
+**Full verification run:** `root-lib PASS (3186 passed, up from 3182 baseline by exactly this wave's 4 new `racial_sla` unit tests)`, `root-full PASS (8656 passed
+across 591 suites, all green, byte-identical to `BASELINE_ROOT_FULL_TESTS=8656` — baseline raised by exactly this wave's 8 new tests)`. Clippy: 0 warnings both runs. Started at 39/40 (site-dashboard-check stale),
+fixed that one gate, now **confirmed 40/40**.
+
+**Formal record:** the 2026-09-07 paper-character-sheet operator ruling (commit `3dcf0f044d`) now formally recorded in decisions.md.
 
 ### Cycle — Wave 51 — Core Rulebook + Ultimate Campaign buckets B/C/D/M: 217 units closed via two generic mechanisms — complete
 
