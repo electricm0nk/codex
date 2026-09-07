@@ -32,6 +32,7 @@ pub mod pilot_failure;
 pub mod pilot_view_model;
 pub mod race_creation;
 pub mod race_resolver;
+pub mod racial_sla;
 pub mod rules_tables;
 pub mod shape_b_v1;
 pub mod size;

@@ -100,8 +100,18 @@ ENGINE_SURFACE_CITATIONS = {
     # clear a `clippy::type_complexity` warning) shifted them by a further
     # uniform +4, 15380 -> 15384 and 15480 -> 15484 -- caught re-running
     # `--check` AFTER the clippy fix, read back and confirmed.
-    "companion": {"line": 16192, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 16292, "must_contain": "power_content_has_no_engine_table"},
+    # SD-34 wave 51 re-derivation, and a REAL PRE-EXISTING STALENESS this wave
+    # found rather than caused: `--check` already failed at HEAD
+    # (`5f6b18f4e3`), where the two arms live at 16306 and 16406, not 16192 and
+    # 16292 -- wave 49's and wave 50's own `src/bin/v06_work_inventory.rs`
+    # edits shifted them and neither wave's gate re-ran THIS instrument (both
+    # re-derived `completion_atlas.py`'s ten citations only). Re-derived here
+    # for the post-wave-51 file by fresh `grep -n 'Kind::Companion =>
+    # engine_does_not_hold'` / `'Kind::Power => engine_does_not_hold'` -- one
+    # real construction site each -- content read back and confirmed, never the
+    # arithmetic alone.
+    "companion": {"line": 16442, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 16542, "must_contain": "power_content_has_no_engine_table"},
 }
 
 

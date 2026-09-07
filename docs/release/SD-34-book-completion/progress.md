@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-34
-status: in-progress — wave 50 closed (343 units), wave 51 launching
+status: in-progress — wave 51 closed (217 units), wave 52 pending
 date: 2026-09-07
 ---
 
@@ -10,6 +10,69 @@ date: 2026-09-07
 
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
+
+### Cycle — Wave 51 — Core Rulebook + Ultimate Campaign buckets B/C/D/M: 217 units closed via two generic mechanisms — complete
+
+**Status: complete.** Freshly re-derived the granted scope with `completion_atlas.py`'s own
+`_bucket_of()` logic directly: CR **M 778 / B 392 / C 191 / D 138** = 1,499 actionable out of 6,701
+core_rulebook units, and UC **M 36 / D 2** = 38 actionable out of 265 ultimate_campaign units —
+**1,537 actionable units out of the 6,966 total CR + UC units**, matching the dispatch brief exactly.
+
+**Closed 217 units, out of the 1,537 actionable CR + UC units in scope**, through two generic
+mechanisms rather than per-record patching.
+
+**(1) `src/rules_core/racial_sla.rs`, a genuinely new engine module — 115 bucket-M units from ONE
+corpus-stated formula.** Every `Racial SLA ~ <Spell>` record `cr_abilities_race.lst` declares sat at
+`ingested-magnitude`. Reading all 118 Core Rulebook records directly and classifying by `raw_tokens`
+shape found one mechanism, not 118 pieces of content: **115 records, out of the 118 ingested, carry
+the identical five-token `BONUS:VAR` chain**, so the corpus itself states PF1's spell-like-ability
+save DC (`10 + spell level + Charisma modifier`) and the only per-record datum is the spell's level.
+Each record grounds through a REAL `compute_pilot_base_chassis` run whose COMPUTED Charisma modifier
+is bound into that formula and evaluated by the crate's real `PcgenFormulaEvaluator` — the same
+`domain_power` discipline and the same `grounded_magnitude` seam `AT-34-E3-003`/`AT-34-E4-002`
+already proved, behind three refuse-don't-paper-over guards. The fixture carries Charisma **14
+(`+2`), deliberately not 10 (`+0`)**: at `+0` the formula's `CHA` term contributes nothing, so a
+wrong binding would still produce the right number. New corpus fixture gate
+(`tests/sd34_wave51_racial_sla_catalog_matches_the_corpus.rs`, 4 tests) reads the live corpus
+directory and pins both halves — every transcribed value, and the catalog's own membership.
+
+**(2) A prose-bearing-raw-token guard, which is what made wave 50's ruling safe to extend — 102
+bucket-D units.** The naive extension of wave 50's zero-magnitude rung to `ability` would have been
+WRONG for **6 records, out of the 109 CR `ability` records in that evidence shape**: they carry a
+real player-facing sentence in an `ASPECT:` token the ingester never lifted into `data.description`,
+so `has_real_description == false` is not evidence of proselessness — it is a real INGESTION gap.
+New `EngineFacts::corpus_json_prose_bearing_ability_tokens` makes wave 33 lane A's own by-hand
+`DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:` check mechanical and corpus-wide. Applied as a post-check in
+`classify()`'s `Kind::Ability` arm, never inside the shared `simple_kind_verdict` — zero collateral
+movement, measured.
+
+**Bucket C's generic fix was designed and deliberately NOT shipped, with the blocker named.** The
+largest coherent bucket-C family is `Monk Unarmed Damage LVL <N> (<Size>)` — **48 units, out of the
+191 core_rulebook bucket-C units** — and all 54 cells are unambiguously stated by their own corpus
+tokens. But no character in this engine can occupy any size but Small or Medium (all 18 playable
+races, no size field on `ChosenCharacterState`, no size-change subsystem), so the only route to
+"grounded" would be asserting the engine against itself, which the existing probe's own doc comment
+refuses. **The blocker is a character-size subsystem, not a damage table.**
+
+**A pre-existing instrument staleness found by asking the gates BEFORE editing.** Two of three
+citation instruments already failed at HEAD `5f6b18f4e3` — waves 49 and 50 both edited the engine
+source and both re-derived `completion_atlas.py`'s ten citations only. Re-derived both here, and
+also closed `test_shape_engine_boundary.py`'s `not_held_by_engine` pin, a KNOWN deferred item
+carried since wave 44 (re-derived to 8784, confirmed NOT moved by this wave — 8784 in both
+snapshots).
+
+**Verification:** `cargo test --locked --lib -j 6`: 3186 passed, 0 failed (up from the 3182 baseline
+by exactly this wave's 4 new `racial_sla` unit tests). `cargo clippy --locked --tests -j 6`: 3
+warnings, all 3 in this wave's own new integration test file, collapsed and re-run clean at 0
+warnings on that target. Full `cargo test --locked --no-fail-fast -j 6`: run TWICE. Run 1 found ONE real failing expectation, which was a genuine catch, not a flake: `race_trait_grounding_tests::a_real_cross_book_sla_library_row_is_placed_by_the_generic_table` pins `Racial SLA ~ Aid`'s terminus, and this wave genuinely moves that unit from `ingested-magnitude` to `grounded` (a 2nd-level spell against the module's `+2` Charisma fixture, so DC 14). Re-derived that expectation and its doc comment, re-ran the bin target (624/624), then run 2: **8656 passed, 0 failed, 67 ignored, across 591 suites**, 0 clippy warnings. Stopped there. F1
+census: **not updated, correctly** — this wave adds no corpus record and changes no magnitude token.
+Guarded regen with `corpus_literal_sweep` CLEAN and `derived_evaluator_fixture_check` 0 failed out
+of 1,839 units cleared. `completion_atlas.py --check`: `DONE 25906 -> 26123`, `M 4449 -> 4334`
+(-115), `D 2084 -> 1982` (-102), `citation_failures=0`. `denominator_gate.py --check`:
+**`files_checked=186 violations=0`** (one violation on the first run, a verbatim corpus `ASPECT:` quote whose literal percent figure the gate reads as a bare percentage -- rephrased to describe the token instead of quoting its number, re-run clean). Independent `id`->`status` join: **exactly 217 units changed, out of a
+population of 49,438 units identical on both sides**, zero collateral movement.
+
+Full receipt: `artifacts/bucket-d-mining/wave51_core_rulebook_ultimate_campaign_cycle_receipt.md`.
 
 ### Cycle — Wave 50 wave-end gate — independent re-confirmation of 343 units closed, full 40/40 confirmed — complete
 

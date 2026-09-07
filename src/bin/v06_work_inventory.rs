@@ -5699,6 +5699,29 @@ struct EngineFacts {
     /// `acg_equipmods.lst:41` is both `Flying` and `Special Ability ~ Flying
     /// ~ Melee`). Populated by [`load_corpus_json_descriptions`].
     corpus_json_descriptions: BTreeMap<(String, usize, String), String>,
+    /// Wave 51 (`decisions.md §22`): every `ability` corpus coordinate whose
+    /// record carries real player-facing prose in a RAW TOKEN the ingester
+    /// never lifted into `data.description` -- a `DESC:`/`SPROP:`/`BENEFIT:`/
+    /// `ASPECT:` token with a non-trivial value. Keyed identically to
+    /// [`Self::corpus_json_descriptions`] (`(<lst basename>, <line>, <record
+    /// key>)`); populated by [`load_corpus_json_prose_bearing_ability_tokens`].
+    ///
+    /// This exists because `has_real_description` alone is NOT sufficient
+    /// evidence that a zero-magnitude record is genuinely proseless. Direct
+    /// read of `core_rulebook`'s 109 zero-magnitude `ability` records this
+    /// wave closes found 6 whose `data.description` is `null` (so
+    /// `has_real_description` is `false`) but whose own `ASPECT:` token
+    /// carries a real sentence a player reads -- e.g. `Cloak of Displacement
+    /// (Minor) ~ Miss Chance`'s `ASPECT:CombatBonus|Attacks against you have
+    /// a 20%% chance to miss.` and the four `Unarmed <X> Burst`
+    /// `ASPECT:UnarmedNotes|...` records. Closing those as "genuinely carries
+    /// no upstream prose by design" would be false: they carry prose the
+    /// INGESTER dropped, which is a real ingestion gap, not a completion.
+    /// Wave 33 lane A's own precedent already checked `ASPECT:` alongside
+    /// `DESC:`/`SPROP:`/`BENEFIT:` when it made the same argument for the 9
+    /// wizard-school records; this field makes that check mechanical and
+    /// corpus-wide rather than a per-cycle manual read.
+    corpus_json_prose_bearing_ability_tokens: BTreeSet<(String, usize, String)>,
     /// SD31-W22-POOLMEMBER-001: `(source_book, corpus_key) -> rendered
     /// description` for every option-pool `class_feature` record
     /// [`class_feature_pool_catalog::load_pool_catalog`] proves renders with
@@ -11667,6 +11690,8 @@ fn gather_engine_facts(
         diagnostics,
         corpus_class_names,
         corpus_json_descriptions: load_corpus_json_descriptions(repo_root),
+        corpus_json_prose_bearing_ability_tokens:
+            load_corpus_json_prose_bearing_ability_tokens(repo_root),
         class_feature_pool_catalog: class_feature_pool_catalog::pool_catalog_index(
             &class_feature_pool_catalog::load_pool_catalog(repo_root),
         ),
@@ -11751,6 +11776,92 @@ fn load_corpus_json_descriptions(repo_root: &Path) -> BTreeMap<(String, usize, S
                         description.trim().to_string(),
                     );
                 }
+            }
+        }
+    }
+    out
+}
+
+/// Walks every observable book's `ability` corpus directory and returns the
+/// coordinate of every record carrying real player-facing prose in a RAW
+/// TOKEN the ingester never lifted into `data.description` -- see
+/// [`EngineFacts::corpus_json_prose_bearing_ability_tokens`] for why this is a
+/// separate, necessary signal from `has_real_description`.
+///
+/// The four token keys checked are exactly the four wave 33 lane A's own
+/// "genuinely `description: null` upstream, not merely un-ingested" argument
+/// checked by hand (`DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:`), never a wider or
+/// narrower set invented here. A token whose value is empty, or is PCGen's
+/// own `.CLEAR`/`.CLEARALL` erasure, is not prose -- the same three exclusions
+/// [`closure_has_real_description`] already applies to a raw `DESC:` value.
+fn load_corpus_json_prose_bearing_ability_tokens(
+    repo_root: &Path,
+) -> BTreeSet<(String, usize, String)> {
+    const PROSE_BEARING_TOKEN_KEYS: &[&str] = &["DESC", "SPROP", "BENEFIT", "ASPECT"];
+    let mut out: BTreeSet<(String, usize, String)> = BTreeSet::new();
+    for book_dir in OBSERVABLE_BOOK_DIRS {
+        let root = repo_root.join("data/corpus").join(book_dir).join("ability");
+        if !root.is_dir() {
+            continue;
+        }
+        let mut stack = vec![root];
+        while let Some(dir) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                    continue;
+                }
+                if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                    continue;
+                }
+                let Ok(text) = std::fs::read_to_string(&path) else { continue };
+                let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+                let Some(tokens) =
+                    value.pointer("/data/raw_tokens").and_then(|v| v.as_array())
+                else {
+                    continue;
+                };
+                let carries_prose = tokens.iter().any(|token| {
+                    let key = token.get("key").and_then(|v| v.as_str()).unwrap_or("");
+                    if !PROSE_BEARING_TOKEN_KEYS.contains(&key) {
+                        return false;
+                    }
+                    let raw = token.get("value").and_then(|v| v.as_str()).unwrap_or("");
+                    // An `ASPECT:`/`SPROP:` value is `<Name>|<prose>`; a
+                    // `DESC:`/`BENEFIT:` value is the prose itself. Taking the
+                    // whole value is deliberate: any of the four carrying real
+                    // text at all is enough to refuse the "proseless by
+                    // design" close, and splitting on `|` would need a
+                    // per-token grammar this check does not need.
+                    let trimmed = raw.trim();
+                    !trimmed.is_empty()
+                        && trimmed != ".CLEAR"
+                        && trimmed != ".CLEARALL"
+                        && !trimmed.contains("[redacted PI]")
+                });
+                if !carries_prose {
+                    continue;
+                }
+                let Some(src_path) = value.pointer("/source/path").and_then(|v| v.as_str()) else {
+                    continue;
+                };
+                let Some(line) = value.pointer("/source/line").and_then(|v| v.as_u64()) else {
+                    continue;
+                };
+                let Some(key) = value
+                    .pointer("/source/record_key")
+                    .and_then(|v| v.as_str())
+                    .or_else(|| value.pointer("/data/key").and_then(|v| v.as_str()))
+                else {
+                    continue;
+                };
+                let basename = Path::new(src_path)
+                    .file_name()
+                    .map(|n| n.to_string_lossy().into_owned())
+                    .unwrap_or_default();
+                out.insert((basename, line as usize, key.to_string()));
             }
         }
     }
@@ -14318,6 +14429,31 @@ fn classify(
             // them, is unaffected -- the retry only ever finds a record the
             // first lookup missed, it can never disagree with a HELD
             // first-lookup result).
+            // Wave 51 (bucket M, `decisions.md §22`): the same
+            // `grounded_magnitude` wiring `AT-34-E3-003` proved for
+            // `Kind::Skill` and `AT-34-E4-002` proved for `Kind::Trait`,
+            // here backed by `racial_sla::racial_sla_save_dc_is_grounded_
+            // for_corpus_key` -- an ACTUALLY-EXECUTED fixture character run
+            // through the real `compute_pilot_base_chassis`, whose COMPUTED
+            // Charisma modifier is then bound into the corpus's own
+            // `10+SpellLVL+DCMod` save-DC formula and evaluated by the
+            // crate's real `formula_interpreter::PcgenFormulaEvaluator`,
+            // never by arithmetic re-written in that module. Covers the 115
+            // of `core_rulebook`'s 118 `Racial SLA ~ <Spell>` records
+            // carrying the full five-token `BONUS:VAR` chain; every other
+            // held `race_trait_generic` record's `unit.key` resolves to
+            // `None` and falls through to `simple_kind_verdict`'s unchanged
+            // `ingested-magnitude` fallback -- a pure widening, never a
+            // regression for a record that module does not cover. See that
+            // module's own doc comment for the three deliberately-absent
+            // records and why guessing a DC for them would be worse.
+            let racial_sla_magnitude = if text_only {
+                None
+            } else {
+                codex::rules_core::racial_sla::racial_sla_save_dc_is_grounded_for_corpus_key(
+                    &unit.key,
+                )
+            };
             let generic = simple_kind_verdict(
                 Some(&facts.race_trait_generic_table),
                 "race_trait_generic",
@@ -14331,7 +14467,7 @@ fn classify(
                 universal_sheet_modifier,
                 engine_book_field.clone(),
                 None,
-                None,
+                racial_sla_magnitude,
             );
             let generic_absent = generic.status == "engine-does-not-hold"
                 && generic.evidence.contains("_absent_from_race_trait_generic_table_in_");
@@ -14349,7 +14485,7 @@ fn classify(
                     universal_sheet_modifier,
                     engine_book_field.clone(),
                     None,
-                    None,
+                    racial_sla_magnitude,
                 )
             } else {
                 generic
@@ -16447,21 +16583,78 @@ fn classify(
             None,
             None,
         ),
-        Kind::Ability => simple_kind_verdict(
-            facts.simple_kind_tables.get("ability"),
-            "ability_content",
-            "ability",
-            &engine_book,
-            &unit.key,
-            &unit.name,
-            text_only,
-            has_real_description,
-            wc_class,
-            universal_sheet_modifier,
-            engine_book_field.clone(),
-            None,
-            None,
-        ),
+        Kind::Ability => {
+            let verdict = simple_kind_verdict(
+                facts.simple_kind_tables.get("ability"),
+                "ability_content",
+                "ability",
+                &engine_book,
+                &unit.key,
+                &unit.name,
+                text_only,
+                has_real_description,
+                wc_class,
+                universal_sheet_modifier,
+                engine_book_field.clone(),
+                None,
+                None,
+            );
+            // Wave 51 (`decisions.md §22`, extending wave 50's own CR-scoped
+            // rung inside `simple_kind_verdict` to this kind): a
+            // `core_rulebook` `ability` record that is held, carries no
+            // magnitude token at all, has no real description, AND carries no
+            // prose in any raw `DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:` token
+            // either is internal PCGen plumbing with nothing to compute and
+            // nothing to show -- the same "genuinely has no real upstream
+            // prose, set-shaped/internal record, by design" ruling
+            // `decisions.md §20`/`§21` established and wave 50 extended to
+            // `template`/`language`/`skill`/`race_trait_generic`.
+            //
+            // Direct read of every one of `core_rulebook`'s 109 records
+            // landing on this evidence string, this cycle: 102 are
+            // `CATEGORY:Class Skill` + `CSKILL:<skill>` rows -- the internal
+            // per-class class-skill LIST plumbing PCGen attaches to a class,
+            // never a line item a player reads (the player reads the skill on
+            // the Skills panel, off `skill_allocation`, which is a different
+            // record entirely); 1 is `"Default"`, a bare
+            // `TEMPLATE:Bonus Language ~ Modern Human Language` grant with no
+            // other token at all. The remaining 6 DO carry real prose in an
+            // `ASPECT:` token their `data.description` does not hold, and are
+            // deliberately excluded by
+            // `corpus_json_prose_bearing_ability_tokens` -- see that field's
+            // own doc comment. They stay open as a real INGESTION gap, which
+            // is what they are, rather than being closed as complete.
+            //
+            // Deliberately scoped to `core_rulebook` alone -- this wave's own
+            // granted scope -- exactly as wave 50 scoped its own sibling rung,
+            // and for the same reason: this fallback's cross-book population
+            // was not read this cycle and is NOT assumed to share this shape.
+            // A future wave verifying another book's own records the same way
+            // widens this by adding its book, never by dropping the check.
+            let carries_prose_in_a_raw_token =
+                facts.corpus_json_prose_bearing_ability_tokens.contains(&(
+                    unit.provenance.file.clone(),
+                    unit.provenance.line,
+                    unit.key.clone(),
+                ));
+            if verdict.status == "engine-does-not-hold"
+                && verdict.evidence
+                    == "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review"
+                && engine_book == "core_rulebook"
+                && !has_real_description
+                && !carries_prose_in_a_raw_token
+            {
+                return Verdict {
+                    status: "grounded",
+                    evidence:
+                        "ability_content_zero_magnitude_record_carries_no_upstream_description_by_design"
+                            .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            verdict
+        }
         // `trait`'s corpus records live under `trait_generic/`, not
         // `trait/` -- `simple_kind_tables::kind_dir_for` resolves that; the
         // evidence string keeps the `trait` kind name (`dir` argument is
@@ -22154,8 +22347,23 @@ mod race_trait_grounding_tests {
     /// already transcribed.** The exact same unit now resolves: the
     /// generic table holds a real, magnitude-bearing record (`BONUS:VAR`
     /// tokens), so bucket B's bar (`decisions.md §2`: "placing the
-    /// record") is met and the verdict moves to `ingested-magnitude` --
-    /// bucket M, an honest reclassification, not a fabricated `done`.
+    /// record") is met.
+    ///
+    /// Wave 51 updated this test's own expected terminus, exactly the way
+    /// wave 50 updated its zero-magnitude sibling's below: `Racial SLA ~
+    /// Aid` is one of the 115 `Racial SLA ~ <Spell>` records
+    /// `rules_core::racial_sla::RACIAL_SLA_CATALOG` now covers, so the
+    /// `grounded_magnitude` argument this arm passes to
+    /// `simple_kind_verdict` resolves for it and the verdict moves past
+    /// `ingested-magnitude` (bucket M) to `grounded` -- the record's own
+    /// corpus-stated save DC, really computed against a real
+    /// `compute_pilot_base_chassis` run. `Aid` is a 2nd-level spell and
+    /// the module's fixture carries a `+2` Charisma modifier, so the
+    /// computed DC is `10 + 2 + 2 = 14`, which the shared evidence
+    /// string's `_flat_<n>` suffix carries verbatim. The invariant this
+    /// test exists for -- that the generic table PLACES this row rather
+    /// than leaving it `race_trait_race_not_modelled` -- is unchanged and
+    /// is still what the RED half above proves can fail.
     #[test]
     fn a_real_cross_book_sla_library_row_is_placed_by_the_generic_table() {
         let facts = EngineFacts {
@@ -22168,8 +22376,11 @@ mod race_trait_grounding_tests {
         };
         let unit = core_rulebook_race_trait_unit("cr_abilities_race.lst", 245, "Racial SLA ~ Aid", 3);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
-        assert_eq!(verdict.status, "ingested-magnitude");
-        assert_eq!(verdict.evidence, "race_trait_generic_table_holds_record_magnitude_not_yet_computed");
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_generic_magnitude_computed_and_verified_by_fixture_execution_flat_14"
+        );
     }
 
     /// The zero-magnitude sibling shape (`No Race Trait Available`,

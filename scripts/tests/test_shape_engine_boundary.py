@@ -94,7 +94,12 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         # by a further uniform +4, 15273 -> 15277 -- caught re-running this
         # test AFTER the clippy fix (see `shape_engine_boundary.py`'s own
         # module doc comment).
-        self.assertEqual(report["promotion_ladder_anchor_line"], 15277)
+        # SD-34 wave 51: the citation was ALREADY stale at HEAD before this
+        # wave touched anything (waves 49/50 shifted it and re-derived only
+        # `completion_atlas.py`'s citations), and this wave's own edits shifted
+        # it further: 15277 -> 16274 (see `shape_engine_boundary.py`'s own
+        # module doc comment for the full re-derivation).
+        self.assertEqual(report["promotion_ladder_anchor_line"], 16274)
         self.assertIn("has_real_description", report["promotion_ladder_source"])
         self.assertIn("class_feature_pool_catalog_holds", report["promotion_ladder_source"])
 
@@ -107,7 +112,21 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         units = SEB._load_units()
         mag = SEB.magnitude_bearing(units)
         self.assertEqual(len(mag), 26396)
-        self.assertEqual(len(SEB.not_held_by_engine(mag)), 9475)
+        # SD-34 wave 51: `9475` was stale, and had been carried as a KNOWN,
+        # deliberately-deferred open item since wave 44 (`progress.md`, wave 45
+        # entry: "left `shape_engine_boundary.py`'s own pre-existing, unrelated
+        # population-count drift (now 9475 pinned vs 8996 live) named, not
+        # fixed"). Closed here rather than carried a seventh wave: a red pin in
+        # this file is not harmless, because it keeps the WHOLE instrument's
+        # test red, which is exactly how its promotion-ladder citation went two
+        # further waves (49, 50) without anyone noticing it had gone stale too.
+        # Re-derived live, and confirmed NOT moved by this wave's own work:
+        # `not_held_by_engine` is 8784 in BOTH this wave's before and after
+        # `docs/work-inventory.json` snapshots (this wave closes 102
+        # `engine-does-not-hold` units, but every one carries
+        # `magnitude_token_count == 0`, so none of them is in the
+        # magnitude-bearing population this figure counts over at all).
+        self.assertEqual(len(SEB.not_held_by_engine(mag)), 8784)
 
 
 class TestCitationFailsClosedForTheIntendedReason(unittest.TestCase):
@@ -158,7 +177,7 @@ class TestRenderMarkdownEmbedsReDeriveCommands(unittest.TestCase):
         self.assertIn("python3 -c", md)
         self.assertIn(str(report["magnitude_bearing"]), md)
         self.assertIn(str(report["not_held_by_engine"]), md)
-        self.assertIn("15277", md)
+        self.assertIn("16274", md)
         self.assertIn("denominator", md)
 
 

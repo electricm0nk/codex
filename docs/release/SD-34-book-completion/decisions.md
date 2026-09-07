@@ -1771,4 +1771,115 @@ generic passes already proven for Cleric Domain/Sorcerer Bloodline, wired for cl
 never reached); CR D remainder 138 (`ability` 109, `class` 17 -- 17 distinct classes each needing
 their own probe investigation, `class_feature` 9, `race_trait` 2); UC 38 (see above, each named).
 
+**WAVE 51 UPDATE, 2026-09-07: 217 units closed out of the 1,537 actionable Core Rulebook + Ultimate
+Campaign units in scope, via two generic mechanisms -- a genuinely new `racial_sla` engine module
+(115 bucket-M units from ONE corpus-stated formula) and a prose-bearing-raw-token guard that made
+wave 50's own "proseless by design" ruling safe to extend to `ability` (102 bucket-D units) -- plus
+a real, pre-existing citation staleness in two instruments found and closed rather than caused.**
+
+**Fresh re-derivation, matching the dispatch brief exactly.** CR **M 778 / B 392 / C 191 / D 138**
+= 1,499 actionable, out of 6,701 core_rulebook units; UC **M 36 / D 2** = 38 actionable, out of 265
+ultimate_campaign units; **1,537 total**.
+
+**Mechanism 1 -- `src/rules_core/racial_sla.rs`, new this wave. The bundle's cleanest instance yet
+of "one corpus-stated formula, many records."** `cr_abilities_race.lst` declares a `Racial SLA ~
+<Spell>` record for every spell any race in the whole PCGen library grants as a racial spell-like
+ability; Core Rulebook ingests 118 of them and every one sat at `ingested-magnitude`. Reading all
+118 directly and classifying by `raw_tokens` shape found **one mechanism, not 118 pieces of
+content**: **115 records, out of the 118 ingested, carry the identical five-token `BONUS:VAR` chain**
+(`_LVL|TL`, `_SpellLVL|<n>`, `_Times|1`, `_DCMod|CHA`, `_DC|10+_SpellLVL+_DCMod`), so the corpus
+itself states PF1's spell-like-ability save DC rule and the ONLY datum that varies across the 115
+is the spell's own level. `RACIAL_SLA_SAVE_DC_FORMULA` is therefore ONE shared string, not a
+per-record transcription -- the same `domain_power` discipline `OPERATOR-RULINGS-2026-08-21.md §20`
+established, wired through the same `grounded_magnitude` seam `AT-34-E3-003`/`AT-34-E4-002` already
+proved for `Kind::Skill`/`Kind::Trait`. Each record is grounded by a REAL
+`compute_pilot_base_chassis` run whose COMPUTED Charisma modifier is bound into the formula and
+evaluated by the crate's real `PcgenFormulaEvaluator`, behind three independent refuse-don't-paper-
+over guards. **The fixture carries Charisma 14 (`+2`), deliberately not 10 (`+0`)**: with a `+0`
+modifier the formula's `CHA` term contributes nothing, so a wrong binding would still produce the
+right number -- the "validate the proxy where it makes the confident claim" bar. The 3 records
+excluded (`Dispel Magic`/`Divine Favor`/`Suggestion`) carry the `DC` formula with NO `DCMod|CHA`
+row, so their DC resolves against the `DEFINE`'s own `0` default; that is very likely an upstream
+`.lst` omission, and shipping `10 + spell level` for them would be a specific, checkable,
+probably-wrong DC.
+
+**Mechanism 2 -- and the real root cause it exposed: `has_real_description == false` is NOT
+sufficient evidence that a record is proseless.** Extending wave 50's CR-scoped zero-magnitude rung
+to `ability` was the obvious next move, and the naive version would have been WRONG for **6 records,
+out of the 109 CR `ability` records in that evidence shape**: `Cloak of Displacement (Minor) ~ Miss
+Chance` and the four `Unarmed <X> Burst`/`Thundering` records carry a real player-facing sentence in
+an `ASPECT:` token the ingester never lifted into `data.description`. Closing those as "genuinely
+carries no upstream prose by design" would have been false -- they carry prose the INGESTER dropped,
+a real ingestion gap, not a completion. New `EngineFacts::corpus_json_prose_bearing_ability_tokens`
+records the coordinate of any record carrying non-trivial text in a raw
+`DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:` token -- exactly the four keys wave 33 lane A's own argument
+checked by hand for its 9 wizard-school records, now mechanical and corpus-wide instead of a
+per-cycle manual read. The remaining 102 close: 102 are `CATEGORY:Class Skill` + `CSKILL:` internal
+class-skill-list plumbing, plus `"Default"` and `Belt of Dwarvenkind ~ Languages`. Applied as a
+post-check in `classify()`'s own `Kind::Ability` arm, NOT inside the shared `simple_kind_verdict`,
+so no other kind can move -- confirmed: zero collateral movement.
+
+**A second real finding from the same guard, named not forced.** `Fly` and `Heal` are plain
+`CATEGORY:Class Skill` + `CSKILL:` rows with no `.MOD` and no prose token of their own (read
+directly against the upstream `.lst` bytes), yet still resolve `has_real_description == true` --
+their bare one-word names collide with the same-named SKILL and SPELL records, whose `DESC:` the
+token closure picks up. That is the "a shared name never implies a shared thing" corpus-scope-
+collision hazard living inside the classifier's own closure resolution. The guard's conservative
+direction is correct; the finding is new, pre-existing, and now named.
+
+**Bucket C's pool-group wiring gap: a generic fix was designed and deliberately NOT shipped, for a
+real reason.** The largest single coherent family in bucket C is `Monk Unarmed Damage LVL <N>
+(<Size>)` -- **48 units, out of the 191 core_rulebook bucket-C units** (6 band levels x 8 non-Medium
+sizes) -- and all 54 size/level cells are unambiguously stated by their own corpus records'
+`BONUS:VAR|PrimaryAttackDamage{Dice,Size}` tokens, dumped in full this cycle. Transcribing all nine
+columns into `monk_unarmed_strike_damage_die_for_size` (which returns `None` for seven of the nine
+today) is easy and correct. Making the 48 records `grounded` is not, and this is the ruling: **this
+bundle's bar is a magnitude OBSERVED reaching a consumer through a real pipeline run, and no
+character in this engine can occupy any size but Small or Medium** -- `race_resolver::RACE_SIZES`
+gives all 18 playable races exactly those two, `ChosenCharacterState` carries no size field, and no
+template/size-change subsystem exists. The only route to a "grounded" verdict would be making that
+private function public and having the probe call it directly, which is asserting the engine against
+itself -- exactly what `probe_monk_unarmed_damage_die_wiring`'s own doc comment already refuses. A
+nine-column table with no reachable consumer closes 0 units and makes the word "grounded" mean less;
+the blocker is a **character-size subsystem, not a damage table**, and that is what a future wave
+should build. Bucket B's own largest family (`Domain Power` 58 + `Domain Base` 33 = **91 units, out
+of the 392 core_rulebook bucket-B units**) was dumped the same way: most open `Domain Power` records
+carry multi-`%N`, `PREVARLT`-gated, dice-bearing or ally/enemy-facing formulas `DOMAIN_POWER_CATALOG`
+already documents as out of grammar; the genuinely catalog-shaped remainder is **5 records, out of
+the 58 open `Domain Power` records** (Chaos Blade, Holy Lance, Staff of Order, Scythe of Evil,
+Sun's Blessing -- all the Death's-Kiss `grounds_self_application: false` shape), each still needing
+its own provenance and fixture check. Named precisely rather than half-done.
+
+**A pre-existing instrument staleness, found by asking the gates before touching anything.** Two of
+the three citation instruments ALREADY failed at HEAD `5f6b18f4e3`: `shape_engine_boundary.py`
+(ladder pinned at 15274-15277, really at 16135-16138) and `missing_engine_tables.py` (arms pinned at
+16192/16292, really at 16306/16406). Waves 49 and 50 both edited the engine source and both
+re-derived `completion_atlas.py`'s ten citations ONLY. The `--check` gates worked; nobody asked
+them. Both re-derived here by content grep and line-content read-back. `test_shape_engine_boundary.
+py`'s own `not_held_by_engine` pin was also stale and had been carried as a KNOWN deferred item
+since wave 44 -- **closed here rather than carried a seventh wave**, precisely because a red pin in
+that file keeps the whole instrument's test red, which is how its citation went two more waves
+unnoticed. Re-derived to 8784 and confirmed NOT moved by this wave (8784 in both snapshots -- this
+wave's 102 closures all carry `magnitude_token_count == 0`). **Root cause named, fix deliberately
+deferred:** none of those three checks is a `scripts/verify.sh` stage, which is why they drift;
+adding them changes the wave-end gate's own 40-stage count and belongs in a wave that updates that
+gate too.
+
+**Real movement, independently re-derived** via a direct `id`->`status`/`evidence` join over
+before/after `docs/work-inventory.json` snapshots: **exactly 217 units changed, out of a population
+of 49,438 units identical on both sides** -- 115 `ingested-magnitude` -> `grounded` and 102
+`engine-does-not-hold` -> `grounded`, **zero collateral movement**. `completion_atlas.py --check`:
+`DONE 25906 -> 26123`, `M 4449 -> 4334` (-115, exactly the Racial SLA closures), `D 2084 -> 1982`
+(-102, exactly the ability closures), `citation_failures=0`. Post-wave CR buckets: **M 663 / B 392 /
+C 191 / D 36, out of 6,701 core_rulebook units**.
+
+**Remaining named for a future wave:** CR M 663 (`ability` 217 per-record SLA/`SPELLS:` chassis,
+`equipment_modifier` 210 split 130 compute-path / 99 choice-gated, `template` 96 needing a
+`TEMPBONUS` temporary-effect subsystem, `domain` 34 new chassis, 106 across
+feat/skill/equipment/spell/race_trait on precedented seams); CR B 392 (Domain Power/Base 91 is the
+largest family, 5 catalog-shaped today); CR C 191 (Monk Unarmed Damage 48 blocked on a character-size
+subsystem, ~85 pool groups still needing `push_generic_pool_choice_magnitude` wired); CR D 36
+(`class` 17, `ability` 7 -- 5 of them the real `ASPECT:` ingestion gap named above, `class_feature`
+9, `race_trait` 2, `template` 1); UC 38, unchanged, wave 50's four named blockers all still standing.
+
 ---

@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 16306,
+        "line": 16442,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,7 +14,7 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 15905,
+        "line": 16041,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
@@ -25,7 +25,7 @@
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 16211,
+        "line": 16347,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -36,40 +36,40 @@
     "D": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13265,
+        "line": 13376,
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2084,
+      "count": 1982,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
     "DONE": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13038,
+        "line": 13149,
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 25906,
+      "count": 26123,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
     "M": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13047,
+        "line": 13158,
         "must_contain": "ingested-magnitude"
       },
       "clears": "running the compute path (shape engine)",
-      "count": 4449,
+      "count": 4334,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
       "meaning": "magnitude ingested, never computed or applied"
     },
     "U": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13352,
+        "line": 13463,
         "must_contain": "unmeasurable"
       },
       "clears": "instrument correction",
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 17088,
+        "line": 17281,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -91,7 +91,7 @@
     "X": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13312,
+        "line": 13423,
         "must_contain": "deferred-with-reason"
       },
       "clears": "revisiting the stated condition",
@@ -102,7 +102,7 @@
     "Z": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13173,
+        "line": 13284,
         "must_contain": "not-started"
       },
       "clears": "ordinary work",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "138f6bb28815edea761d822648688a9c9080ef68",
+  "derived_at": "b51eb62890a68634b1311d7bd42bf56dbb93b158",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -122,7 +122,7 @@
   "stale_derived_at": false,
   "sub_causes": {
     "D": {
-      "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 210,
+      "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 108,
       "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 25,
       "class_feature_of_unmodelled_corpus_class:adaptive_warrior": 9,
       "class_feature_of_unmodelled_corpus_class:aldori_swordlord": 13,

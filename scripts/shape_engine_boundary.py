@@ -114,13 +114,25 @@ _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 # this file's own comments already name. Fresh `grep -n 'if
 # has_real_description'` against the live post-fix file, line content read
 # back and confirmed the real construction site.
+#
+# SD-34 wave 51 re-derivation, and a REAL PRE-EXISTING STALENESS this wave
+# found rather than caused: running `--check` before touching anything showed
+# this citation ALREADY failed at HEAD (`5f6b18f4e3`) -- at that commit the
+# block lives at 16135-16138, not 15274-15277, so wave 49's and wave 50's own
+# edits to `src/bin/v06_work_inventory.rs` shifted it and neither wave's gate
+# re-ran THIS instrument (both re-derived `completion_atlas.py`'s ten
+# citations only). The `--check` gate did exactly what it exists to do; the
+# gap was that nobody asked it. Re-derived here for the post-wave-51 file:
+# fresh `grep -n 'if has_real_description$'` (two hits), taking the one whose
+# own next three lines match this block's remaining conditions verbatim, every
+# line's content read back and confirmed rather than arithmetic alone.
 PROMOTION_LADDER_LINES = {
-    15274: "if has_real_description",
-    15275: "&& is_display_wiring_class_for_promotion(wc_class)",
-    15276: "&& !universal_sheet_modifier",
-    15277: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
+    16271: "if has_real_description",
+    16272: "&& is_display_wiring_class_for_promotion(wc_class)",
+    16273: "&& !universal_sheet_modifier",
+    16274: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
 }
-PROMOTION_LADDER_ANCHOR_LINE = 15277
+PROMOTION_LADDER_ANCHOR_LINE = 16274
 
 
 class StaleCitationError(RuntimeError):
@@ -185,7 +197,7 @@ def build_report(units: list) -> dict:
     stuck = not_held_by_engine(mag)
 
     ladder_source = "".join(
-        _read_source_lines(_ENGINE_SRC)[15273:15277]  # lines 15274..15277, 0-indexed slice
+        _read_source_lines(_ENGINE_SRC)[16270:16274]  # lines 16271..16274, 0-indexed slice
     )
 
     return {
