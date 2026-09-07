@@ -11,6 +11,62 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 48 wave-end gate — full suite exactly re-confirmed, full 40/40 confirmed — complete
+
+**Status: complete.** Gate/closure summary for wave 48's own cycle, which closed 16 units
+across two `adventurers_guide` prestige classes (Twilight Talon 12 of 17, Golden
+Legionnaire 4 of 16) on commit `7261a35281` (receipt SHA fill-in `11a80b1247`) on
+`tranche/14`. Independently re-verified by the orchestrator before trusting the cycle's own
+self-report: spot-checked both closed formulas directly against their real corpus records
+(`sneak_attack.json`'s `SneakAttackDice = (TwilightTalonLVL+2)/3`, `enhanced_tattoo.json`'s
+`EnhancedTattooDC = 10+TwilightTalonLVL/2+CHA`, both exact matches; confirmed the 5 real
+`ABILITYPOOL` tattoo tiers genuinely exist and are correctly gated via
+`choice_selection()`, not grounded unconditionally); re-confirmed `python3 scripts/
+completion_atlas.py --check` bucket deltas exactly (`DONE: 25458→25474 (+16)`,
+`D: 2398→2382 (−16)`, `V: 349→349 unchanged`, `population=49438`, `citation_failures=0`);
+`python3 scripts/denominator_gate.py --check` clean (183 files, 0 violations); and
+independently re-ran `cargo clippy --locked --tests -j 6` in a separate scratch build,
+confirming genuinely 0 warnings (the wave's own 2 `clippy::type_complexity` fixes held).
+
+**A new finding this wave: PI-name-blacklisting is class-level, not book-level.** A class
+can carry `DESCISPI:YES` on its own DESC prose (redacted) while its class NAME and formula
+tokens ingest normally under an ordinary `data/corpus/<book>/class_feature/<slug>/`
+directory (true of both Twilight Talon and Golden Legionnaire) — versus a class whose NAME
+itself is Product Identity (Aldori Swordlord, Magaambyan Arcanist), which ingests under a
+redacted `codex_named_unit_*` directory instead. Wave 48 correctly skipped both of the
+latter, confirmed against `class_feature.rs`'s own existing PI-redaction test. Future waves
+should check for a real ingested `<slug>` directory before scoping any `adventurers_guide`
+class.
+
+**A second, separate finding: citation-pin re-derivation must be the LAST step before
+commit.** Wave 48's own citation-pin pass was done before a late `clippy::type_complexity`
+fix (a `type` alias) shifted every downstream citation site in
+`completion_atlas.py`/`shape_engine_boundary.py`/`missing_engine_tables.py`/
+`test_shape_engine_boundary.py` by a uniform +4 lines — caught immediately by re-running
+`completion_atlas.py --check` one final time (all 10 bucket citations failed at once, an
+unambiguous shared-cause signal), corrected across all four files.
+
+**Both the lib suite and the full integration suite were run this cycle, confirmed
+genuinely end-to-end, in a freshly-isolated `scripts/verify.sh -j 6` run (separate scratch
+`CARGO_TARGET_DIR`):** `root-lib PASS (3143 passed)`, `root-full PASS` (8576 passed across
+589 suites, all 543 `tests/*.rs` suites executed) — an exact match to wave 48's own
+pre-gate claim. The one gate failure this run caught was the routine, expected
+`site-dashboard-check` staleness — regenerated via `./scripts/publish-site-dashboard.sh`
+and reconfirmed current. **True 40/40 confirmed.**
+
+**What remains open after this wave:** sub-mechanism 5's own working pool sits at 575
+(591 − 16) across 44 registered prestige classes (largest: cyphermage 17, psychic_fist 16,
+asavir 15, metamorph 15, war_mind 15, hellknight 14, adaptive_warrior 14, sanguine_angel
+13, body_snatcher 13, golden_legionnaire 12, steel_falcon 12, plus ~30 smaller); the same
+excluded ≥10-class cross-class-manifester-level population, 88 not-registered units, and
+Divine Scion's own 2-unit True Scion remainder are unchanged; Aldori Swordlord and
+Magaambyan Arcanist are now also correctly named out-of-scope (PI-blacklisted class
+names). Separately, the orchestrator independently re-derived the FULL actionable
+remainder (not just sub-mechanism 5) for Core Rulebook + Ultimate Campaign specifically —
+**1,781 units** across buckets M (magnitude ingested, never computed — 814), B (table
+exists, record missing — 467), C (computed, never surfaced — 191), and D (other gap —
+309) — scoped for the next wave.
+
 ### Cycle — Wave 48 — Twilight Talon and Golden Legionnaire's magnitude-only remainder: 16 units closed — complete
 
 **Status: complete.** Re-derived sub-mechanism-5's current population fresh (591, unchanged from

@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-06T07:01:16Z",
+  "generated_at": "2026-09-06T23:08:33Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 49438,
-  "proven_units": 16156,
+  "proven_units": 16172,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,19 +1428,19 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 4876,
+      "proven": 4892,
       "by_status": {
-        "engine-does-not-hold": 12839,
+        "engine-does-not-hold": 12823,
         "text-complete": 4239,
         "deferred-with-reason": 154,
-        "grounded": 637,
+        "grounded": 653,
         "oracle-agree": 26,
         "literal-verified": 139,
         "oracle-unverifiable": 6,
         "fixture-verified": 3
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2787469,
+      "bytes": 2787277,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -1454,10 +1454,10 @@
         },
         "classfeatures": {
           "label": "Class Features",
-          "done": 560,
-          "held": 9,
+          "done": 562,
+          "held": 13,
           "in-progress": 0,
-          "not-started": 753,
+          "not-started": 747,
           "unmeasurable": 0,
           "deferred": 1
         },
@@ -5424,45 +5424,45 @@
         "twilighttalontattoo4": {
           "label": "Twilight Talon Tattoo 4",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "twilighttalontattoo2": {
           "label": "Twilight Talon Tattoo 2",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "twilighttalontattoo6": {
           "label": "Twilight Talon Tattoo 6",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "twilighttalontattoo10": {
           "label": "Twilight Talon Tattoo 10",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "twilighttalontattoo8": {
           "label": "Twilight Talon Tattoo 8",
           "done": 0,
-          "held": 0,
+          "held": 2,
           "in-progress": 0,
-          "not-started": 2,
+          "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
