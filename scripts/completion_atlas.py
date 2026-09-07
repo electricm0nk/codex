@@ -278,7 +278,14 @@ BUCKET_DEFINITIONS = {
         # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
         # this by a further uniform +4, 15380 -> 15384 -- caught re-running
         # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 16192, "must_contain": "has_no_engine_table"},
+        # Wave 50: re-derived all ten citations again after this cycle's own
+        # two pure-insertion hunks (`git diff -U0`: +53 lines after old
+        # `simple_kind_verdict` line 13052, +61 more after old `classify()`
+        # line 16094) -- every citation at or below old-line 13052 unchanged,
+        # every one in (13052, 16094] shifted +53, every one above 16094
+        # shifted +114; each new line's own content re-read and confirmed
+        # (never the arithmetic alone), 16192 -> 16306.
+        "citation": {"file": _ENGINE_SRC, "line": 16306, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -344,7 +351,7 @@ BUCKET_DEFINITIONS = {
         # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
         # this by a further uniform +4, 15040 -> 15044 -- caught re-running
         # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 15852, "must_contain": "not_held_by_engine"},
+        "citation": {"file": _ENGINE_SRC, "line": 15905, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -420,7 +427,7 @@ BUCKET_DEFINITIONS = {
         # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
         # this by a further uniform +4, 15285 -> 15289 -- caught re-running
         # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 16097, "must_contain": "explanation_id"},
+        "citation": {"file": _ENGINE_SRC, "line": 16211, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
@@ -482,7 +489,7 @@ BUCKET_DEFINITIONS = {
         # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
         # this by a further uniform +4, 12704 -> 12708 -- caught re-running
         # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13212, "must_contain": "engine-does-not-hold"},
+        "citation": {"file": _ENGINE_SRC, "line": 13265, "must_contain": "engine-does-not-hold"},
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
@@ -618,7 +625,7 @@ BUCKET_DEFINITIONS = {
         # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
         # this by a further uniform +4, 16162 -> 16166 -- caught re-running
         # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 16974, "must_contain": "literal-verified"},
+        "citation": {"file": _ENGINE_SRC, "line": 17088, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
@@ -660,7 +667,7 @@ BUCKET_DEFINITIONS = {
         # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
         # this by a further uniform +4, 12791 -> 12795 -- caught re-running
         # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13299, "must_contain": "unmeasurable"},
+        "citation": {"file": _ENGINE_SRC, "line": 13352, "must_contain": "unmeasurable"},
     },
     "X": {
         "meaning": "deferred with a stated reason",
@@ -703,7 +710,7 @@ BUCKET_DEFINITIONS = {
         # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
         # this by a further uniform +4, 12751 -> 12755 -- caught re-running
         # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13259, "must_contain": "deferred-with-reason"},
+        "citation": {"file": _ENGINE_SRC, "line": 13312, "must_contain": "deferred-with-reason"},
     },
     "Z": {
         "meaning": "not started",
@@ -745,7 +752,7 @@ BUCKET_DEFINITIONS = {
         # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
         # this by a further uniform +4, 12612 -> 12616 -- caught re-running
         # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13120, "must_contain": "not-started"},
+        "citation": {"file": _ENGINE_SRC, "line": 13173, "must_contain": "not-started"},
     },
 }
 

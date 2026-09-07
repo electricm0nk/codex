@@ -13050,6 +13050,59 @@ fn simple_kind_verdict(
             engine_book: engine_book_field,
         };
     }
+    // Wave 50 (`decisions.md §22` continuation, CR-only): the DOMINANT shape
+    // inside this fallback, corpus-wide, is a real held record whose own
+    // upstream `.lst` row genuinely carries no `DESC:`/`SPROP:`/`BENEFIT:`
+    // token at all -- direct read of every Core Rulebook `template`/
+    // `language`/`skill`/`race_trait_generic` record landing here (`data/
+    // corpus/core_rulebook/{template,language,skill,race_trait}/**/*.json`,
+    // `data.description: null` for every one) confirms this is genuinely a
+    // "nothing remains" case, not a hidden gap, matching `decisions.md
+    // §20`/`§21`'s already-established "genuinely has no real upstream
+    // prose, set-shaped/internal-plumbing record, by design" ruling
+    // (extended in this same wave to `Kind::ClassFeature`'s Core Domain/
+    // Sorcerer Domain groups, see that arm's own doc comment) -- 130 CRB
+    // `template` rows (123 of 130 additionally carry the corpus's own
+    // `VISIBLE:NO`, e.g. `"PC Level 11"`/`"Wild Shape"`: internal kit-
+    // application/spell-effect chassis, never player-read prose; the other
+    // 7, e.g. `"Inherent Ability Bonus (Strength)"`, are the same internal-
+    // mechanism shape without the `VISIBLE:NO` marker), all 22 CRB
+    // `language` rows (a language's own real "content" is its bare name --
+    // `cr_languages.lst`'s language block carries no `DESC:` for any of the
+    // 22, by design; e.g. `"Abyssal"`'s only token is `TYPE:Spoken.Written.
+    // Read.Planar`), 15 CRB `skill` rows (all `"<Skill> (Untrained)"` /
+    // `"Untrained <Ability>"` / `"Untrained ~ <Skill>"` internal usable-
+    // untrained bookkeeping records, never rendered to a player as their own
+    // line item), and 3 CRB `race_trait_generic` rows (`"No Race Trait
+    // Available"`, `"Region ~ None"`, `"Region ~ Unknown"` -- vacuous
+    // placeholder sentinels, the same shape `class_feature_pool_catalog::
+    // vacuous_placeholder_reason` already names for `Kind::ClassFeature`).
+    // Deliberately book-scoped to `core_rulebook` alone -- this wave's own
+    // granted scope -- rather than widened to this fallback's much larger
+    // cross-book population (e.g. 724 `template` units corpus-wide, most in
+    // Bestiary books where a template name like "Advanced"/"Celestial"
+    // genuinely groups real, un-ingested prose elsewhere in the same
+    // record's own token closure, not verified by this wave and NOT
+    // assumed to share this shape); a future wave verifying each other
+    // book's own records the same way this wave verified Core Rulebook's
+    // can widen this gate by adding its own book, never by dropping the
+    // book check.
+    if engine_book == "core_rulebook"
+        && !has_real_description
+        && matches!(
+            kind_label,
+            "template_content" | "language_content" | "skill_content" | "race_trait_generic"
+        )
+    {
+        return Verdict {
+            status: "grounded",
+            evidence: format!(
+                "{kind_label}_zero_magnitude_record_carries_no_upstream_description_by_design"
+            ),
+            reason: None,
+            engine_book: engine_book_field,
+        };
+    }
     Verdict {
         status: "engine-does-not-hold",
         evidence: format!("{kind_label}_table_holds_zero_magnitude_record_pending_wiring_class_review"),
@@ -16087,6 +16140,67 @@ fn classify(
                     return Verdict {
                         status: "text-complete",
                         evidence: "class_feature_pool_catalog_serves_a_rendered_description"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+                // Wave 50 (`decisions.md §22` continuation): `"Core Domain ~
+                // <X> Domain"` / `"Sorcerer Domain ~ <X> Domain"` are the
+                // internal "you selected this domain" chassis ability --
+                // `CATEGORY:Internal`, an `ABILITY` chain granting the
+                // domain's own `Domain Power`/`Domain Base` sub-records, no
+                // separate mechanical content of their own. Direct corpus
+                // read (`data/corpus/core_rulebook/class_feature/core_domain/
+                // *.json`, `.../sorcerer_domain/*.json`): 31 of 33 Core
+                // Domain records and all 22 Sorcerer Domain records carry
+                // `description: null` -- confirmed against the upstream
+                // `cr_abilities_class.lst` rows too, `CATEGORY:Internal` with
+                // no `DESC:`/`SPROP:`/`BENEFIT:` token. The remaining 2 Core
+                // Domain records (Destruction, Darkness) carry a real `data.
+                // description`, but it is a leaked SPELL description ("This
+                // spell instantly delivers...") from an unrelated corpus
+                // record, not real content describing the domain SELECTION
+                // itself -- `has_real_description` is `true` for them, so
+                // this guard correctly excludes them and they fall through
+                // to the generic fallback below unchanged, still open. Same
+                // "genuinely has no real upstream prose, set-shaped grant, by
+                // design" shape `decisions.md §20`/`§21` and this arm's own
+                // weapon-proficiency-grant rung above already established --
+                // extended here to the two DOMAIN chassis groups rather than
+                // a new one-off rule.
+                if (group == "Core Domain" || group == "Sorcerer Domain") && !has_real_description {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+                // Wave 50 (same continuation, second group): `"Sorcerer Bonus
+                // Spell L<N> ~ <Spell>"` (`N` 1-9) is the internal per-level
+                // bonus-spell SLOT record (`CATEGORY:Internal`, a
+                // `PREVARGTEQ`/`SPELLKNOWN` chain, never a `BONUS:`/`DEFINE:`
+                // token itself -- the slot's own real magnitude, if any, is
+                // the SPELL's, not this record's). Direct corpus read (`data/
+                // corpus/core_rulebook/class_feature/sorcerer_bonus_spell_l1..9/
+                // *.json`, 200 records total): exactly 22 carry `description:
+                // null` (e.g. `"Sorcerer Bonus Spell L1 ~ Burning Hands
+                // (Acid)"`) -- the other 178 (110 already `text-complete`, 68
+                // still open) carry a real, legitimately-relevant description
+                // inherited from the granted spell's own text (unlike Core
+                // Domain's Destruction/Darkless leak above, "Sorcerer Bonus
+                // Spell L2 ~ Hideous Laughter" genuinely IS about the Hideous
+                // Laughter spell this slot grants) -- `has_real_description`
+                // is `true` for those 68 and this guard correctly leaves them
+                // open for a future wave to close via a real registered-pool-
+                // catalog rung, not this "no upstream description" one. Only
+                // the 22 genuinely-proseless slots close here.
+                if group.starts_with("Sorcerer Bonus Spell L") && !has_real_description {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
                             .to_string(),
                         reason: None,
                         engine_book: engine_book_field,
@@ -22064,6 +22178,14 @@ mod race_trait_grounding_tests {
     /// `_pending_wiring_class_review` evidence every one of Epic 2's eight
     /// kinds already uses for this exact posture, never `engine-does-not-
     /// hold: race_trait_race_not_modelled` (a materially different claim).
+    ///
+    /// Wave 50 updated this test's own expected terminus: `"No Race Trait
+    /// Available"` is one of the 3 CRB `race_trait_generic` vacuous-
+    /// placeholder records (`decisions.md §22` continuation) `simple_kind_
+    /// verdict`'s own new CRB-scoped, no-upstream-description rung now
+    /// closes directly to `grounded` rather than parking at the
+    /// `_pending_wiring_class_review` fallback -- still never `race_trait_
+    /// race_not_modelled`, the one invariant this test's own name asserts.
     #[test]
     fn a_real_zero_magnitude_pool_bookkeeping_row_is_placed_not_left_race_not_modelled() {
         let facts = EngineFacts {
@@ -22077,9 +22199,10 @@ mod race_trait_grounding_tests {
         let unit = core_rulebook_race_trait_unit("cr_abilities_race.lst", 12, "No Race Trait Available", 0);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
         assert_ne!(verdict.evidence, "race_trait_race_not_modelled");
+        assert_eq!(verdict.status, "grounded");
         assert_eq!(
             verdict.evidence,
-            "race_trait_generic_table_holds_zero_magnitude_record_pending_wiring_class_review"
+            "race_trait_generic_zero_magnitude_record_carries_no_upstream_description_by_design"
         );
     }
 

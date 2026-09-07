@@ -1641,4 +1641,134 @@ golden_legionnaire 12 [own remainder, unchanged], telekinetic_weaponmaster 9 [un
 shape], and roughly 30 smaller remainders) and the 88 not-registered units (unchanged). The excluded
 cross-class-manifester-level group is now confirmed at 13 classes (not 10), untouched this wave.
 
+**WAVE 50 UPDATE, 2026-09-07: a first Core Rulebook + Ultimate Campaign, buckets B/C/D/M wave --
+343 units closed (244 inside the wave's own CR+UC scope, 99 as a verified cross-book bonus), the
+dispatch brief's own "cleanest/most mechanical" characterization of buckets M and B corrected by
+direct investigation, and both bucket D's dominant shape and bucket C's wiring gap named precisely
+by root cause.**
+
+**Fresh re-derivation.** Re-classified every Core Rulebook and Ultimate Campaign unit using
+`completion_atlas.py`'s own `_bucket_of()` logic directly (not the classifier's own prior output):
+CR **M 778 / B 467 / C 191 / D 307** = 1,743; UC **M 36 / D 2** = 38; **1,781 total**, matching the
+dispatch brief's own figure exactly.
+
+**The dispatch brief's own characterization of buckets M and B did not survive direct
+investigation.** Bucket M is not one shape: 347 of CR's 778 (`ability`/`template`/`domain`) have
+**no `grounded` precedent anywhere in this engine** (a corpus-wide grep of every `grounded` unit by
+kind returns zero for these three) -- genuinely new-chassis compute-path work, not a missing
+formula in an existing path. `equipment_modifier` (210) splits into 111 real-formula-needed and 99
+`%CHOICE`-parameterized alias rows needing player-choice-gated computation. Only 221 of 778
+(`race_trait`/`feat`/`skill`/`equipment`/`spell`) have established precedent. Bucket B (467, all
+`class_feature`) is not "a table exists, add entries" -- there is no single table; it is
+`classify()`'s `Kind::ClassFeature` arm failing to resolve an owner/promotion path across ~140
+distinct option-pool groups, each its own investigation.
+
+**Two concentrated, verified, low-risk mechanisms closed instead of spreading effort across ~140
+unverified groups.** (1) `"Core Domain ~ <X> Domain"` (33 CR records) / `"Sorcerer Domain ~ <X>
+Domain"` (22) -- the internal "you selected this domain" chassis ability, `CATEGORY:Internal`, no
+separate content of its own. Direct corpus read: 31/33 and 22/22 respectively carry `description:
+null` by design (confirmed against the upstream `.lst` rows too); the other 2 Core Domain records
+(Destruction, Darkness) carry a real `description`, but it is a leaked SPELL description from an
+unrelated record, not domain-selection content -- correctly excluded and left open. (2) `"Sorcerer
+Bonus Spell L1"`-`"L9" ~ <Spell>"` (200 CR records across 9 levels): the internal per-level
+bonus-spell-slot grant; 22 of 200 carry `description: null`, the other 178 carry the granted
+spell's own real, legitimately-relevant description (a different, valuable registered-pool-catalog
+opportunity for a future wave, not this shape) -- only the 22 genuinely-proseless ones close here.
+Both extend `decisions.md §20`/`§21`'s already-established "genuinely has no real upstream prose,
+set-shaped/internal grant, by design" ruling to two groups it had not yet reached, reusing the same
+`class_feature_set_shaped_grant_carries_no_upstream_description_by_design` evidence string rather
+than minting a new one.
+
+**A third mechanism, shared across four OTHER kinds for the first time.** `simple_kind_verdict`'s
+shared zero-magnitude fallback (`<kind>_content_table_holds_zero_magnitude_record_pending_wiring_
+class_review`, backing `template`/`language`/`skill`/`race_trait_generic`/`ability`/`domain`/
+`equipment`/`deity`) fires whenever a held, zero-magnitude record fails the
+`has_real_description && is_display_wiring_class_for_promotion(wc_class) && !universal_sheet_
+modifier` promotion gate. Sampled every CR `template` (262 corpus files), `language` (22), `skill`
+(15 D-bucket), and `race_trait_generic` (3) record directly: **all 169 of 169 CR D-bucket units
+in this shape fail on the FIRST condition alone, by design, not by an ingestion gap** --
+`template` (130, 123 additionally `VISIBLE:NO`) is internal PCGen kit/auto-application chassis
+(`"PC Level 11"`, `"Wild Shape"`, `"Righteous Might (Damage Reduction/Good)"`), never player-read
+prose; `language` (22) has no `DESC:` for any CRB language by design (a language's real content is
+its own name); `skill` (15) is internal usable-untrained bookkeeping (`"Craft (Untrained)"`,
+`"Untrained ~ Disable Device"`); `race_trait_generic` (3) is vacuous placeholder sentinels (`"No
+Race Trait Available"`, `"Region ~ None/Unknown"`), the shape `class_feature_pool_catalog::
+vacuous_placeholder_reason` already names. New rung added, gated on `engine_book == "core_rulebook"`
+(this wave's own granted scope -- corpus-wide this same shape carries 724 `template` units alone,
+most in Bestiary books where a template name genuinely groups real prose elsewhere in its own
+closure, NOT verified this wave and not assumed to share CR's shape) `&& !has_real_description`.
+Closed 169 of 169 CR units sampled this way; one CR template (`Wild Shape`) resolves
+`has_real_description == true` through a wider closure this cycle did not trace further and
+correctly stayed open.
+
+**Bucket C's wiring gap, named precisely.** `no_explanation_id_and_no_diagnostic_names_this_
+feature` (191 CR units, 103 distinct owner groups, largest Rage Power 13/Rogue Talent 10/Dragon
+Disciple 9/Druid Domain 7/Arcane Archer 6/Elemental Bloodline 6): this bundle's own `AT-34-E3-002`
+generic pool-group-selection/pool-choice mechanism (`push_generic_pool_group_selection_magnitude`/
+`push_generic_pool_choice_magnitude`) **already closes the resolvable majority** of this shape for
+Cleric Domain and Sorcerer Bloodline specifically -- confirmed live: `Elemental Bloodline ~
+Elemental Blast`/`~ Elemental Ray`/`~ Elemental Movement (Air)` already read `grounded`/
+`literal-verified`. What remains for those two groups is residual the generic formula interpreter
+genuinely cannot resolve (dice notation, non-numeric qualitative grants, multi-terminal records) --
+a FORMULA-INTERPRETER gap, not a wiring gap. The other ~85 groups (Rage Power, Rogue Talent, Monk,
+Barbarian, Dragon Disciple, ...) have never had either generic pass wired to them at all --
+real per-pool wiring for a future wave (`push_generic_pool_choice_magnitude` already exists and
+already serves two other classes; extending it to Rage Power/Rogue Talent is the same shape, not a
+new mechanism), not attempted this cycle given the per-group verification cost (103 groups, ~2
+units/group).
+
+**A real cross-book bonus, honestly reported rather than hidden.** Both `classify()` fixes key on
+the record's own `group`/`kind_label` text (the class_feature fix) or `engine_book` (the
+simple_kind_verdict fix, deliberately book-scoped). The class_feature fix is NOT book-scoped (the
+"Core Domain"/"Sorcerer Bonus Spell L<N>" shape is structural to the record, not CR-specific), so
+it also closed 99 real units in 10 other books carrying the identical corpus shape (`advanced_
+players_guide` 68 -- APG's own subdomains reuse the same `"Core Domain ~ <X> Subdomain"` internal
+chassis pattern -- `occult_adventures` 14, `ultimate_magic` 8, and 7 smaller books) -- the same
+"keyed on the record's own shape, not the book" payoff `decisions.md`'s own `AT-34-E4-002` cycle 3
+already established as legitimate. Every one spot-checked against its own book's real corpus JSON
+(`description: null` confirmed) before trusting it.
+
+**Ultimate Campaign: 0 units closed, all 38 investigated and named precisely** rather than banked
+as a silent zero. 18 `Drawback` records (of the 36 M-bucket units) carry only `COST:0` as their
+sole "magnitude" token -- a real, precisely-diagnosed classifier gap for a future wave: `COST:`
+counts as a `MAGNITUDE_TOKENS` entry even at value 0, forcing a genuinely narrative, zero-mechanical
+-effect record into the `ingested-magnitude` (M) purgatory a real `text_only` record would instead
+promote past. 10 `Retrain ~ *` records need a downtime-retraining tracking subsystem this engine
+has none of. 2 `trait ~ *` records are real `BONUS:ABILITYPOOL` one-of-N choices needing the
+choice-gating machinery this bundle's own standing rule #3 already defers (Sanguine Angel
+precedent, wave 49). `Trait ~ Wrecking Wrath (Rovagug)` has no matching corpus file anywhere under
+`trait_generic/` -- a genuine, pre-existing data gap, the same shape already named for
+`trait_shadow_whispers`.
+
+**A real, live test caught and fixed by the wave's own final verification pass, not shipped as an
+oversight.** `class_feature_pool_catalog.rs`'s own live-query test
+(`class_feature_owner_matched_non_excluded_remainder_is_24_and_named_by_subcause`) pins the
+excluded-class population (Cleric/Sorcerer/... own share of the `class_feature_owner_matched_by_
+name_but_record_not_held_by_engine` mechanism) at a literal count re-derived by each wave that
+moves it. This wave's own Core Domain/Sorcerer Domain/Sorcerer Bonus Spell fix moves 75 CR units
+(all `class: "Cleric"` or `class: "Sorcerer"`) out of that evidence string entirely, so the pinned
+`213` needed re-deriving to `138` -- caught by the full suite's own second run (the standing
+citation/pinned-count hazard this section has named repeatedly), fixed, re-verified, not the
+mistake of trusting the first (stale) full-suite pass.
+
+**Real movement, independently re-derived via a direct `id`→`status`/`evidence` join** over
+before/after `docs/work-inventory.json` snapshots (not just `completion_atlas.py`'s own bucket
+counts): exactly **343** units changed status, all `engine-does-not-hold` → `grounded`, **zero
+collateral movement** (population unchanged at 49438). `completion_atlas.py --check`: `DONE
+25563→25906`, `B 11763→11589` (−174, exactly the class_feature closures), `D 2253→2084` (−169,
+exactly the template/language/skill/race_trait closures). Both `cargo test --locked --lib -j 6`
+(3182 passed, unchanged -- this wave's own code lives entirely in `src/bin/v06_work_inventory.rs`,
+which `--lib` excludes) and the full `cargo test --locked --no-fail-fast -j 6` integration suite
+were run (twice -- the pinned-count fix above triggered the second run). `cargo clippy --locked
+--tests -j 6`: 0 warnings both runs. F1/`shape_ledger.py` census: unchanged at 5124 (this wave's
+own engine code closes only zero-magnitude/no-formula-token units, never a formula-bearing one).
+
+**Remaining named for a future wave:** CR M 778 (221 with established precedent, 347 genuinely
+new-chassis, 210 equipment_modifier split real-formula/choice-gated); CR B remainder 392 (~140
+unverified option-pool groups); CR C 191 across 103 groups (the Rage-Power/Rogue-Talent-shaped
+flat pools and the Dragon-Disciple/Druid-Domain-shaped group-selection pools both need the SAME
+generic passes already proven for Cleric Domain/Sorcerer Bloodline, wired for classes they have
+never reached); CR D remainder 138 (`ability` 109, `class` 17 -- 17 distinct classes each needing
+their own probe investigation, `class_feature` 9, `race_trait` 2); UC 38 (see above, each named).
+
 ---

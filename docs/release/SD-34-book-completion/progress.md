@@ -11,6 +11,65 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 50 — Core Rulebook + Ultimate Campaign buckets B/C/D/M: 343 units closed (244 in-scope, 99 real cross-book bonus) — partial
+
+**Status: partial.** Freshly re-derived the operator-widened scope (CR M/B/C/D + UC M/D, using
+`completion_atlas.py`'s own `_bucket_of()` logic directly): **1,781** actionable units, matching
+the dispatch brief's figure exactly. Direct investigation found the brief's own "cleanest,
+mechanical" characterization of buckets M and B did not hold up: 347 of CR's 778 M-bucket units
+(`ability`/`template`/`domain`) have no `grounded` precedent anywhere in this engine at all
+(genuinely new-chassis work), and bucket B's 467 units are not "table entries" but ~140 distinct
+`class_feature` option-pool groups each needing its own classifier investigation, not one shared
+table.
+
+**Closed 343 units total** via two concentrated, verified, low-risk `classify()` fixes rather than
+spreading effort across ~140 unverified groups: (1) Core Domain / Sorcerer Domain / Sorcerer Bonus
+Spell L1-L9 -- internal, genuinely-proseless "you selected this" chassis grants, extending
+`decisions.md §20`/`§21`'s already-established ruling to two more `class_feature` groups (75 CR
+units + 99 real cross-book units sharing the identical corpus shape, spot-checked before trusting);
+(2) a new CR-scoped rung in the shared `simple_kind_verdict` zero-magnitude fallback for
+`template`/`language`/`skill`/`race_trait_generic`, closing 169 CR units whose records are, by
+direct sampling, genuinely internal/proseless by design (internal PCGen kit chassis, bare language
+names, untrained-usable bookkeeping, vacuous placeholders) -- not an ingestion gap.
+
+**Ultimate Campaign: 0 of 38 units closed, all investigated and named precisely** rather than
+banked silently: 18 `Drawback` records are blocked on a real, precisely-diagnosed classifier gap
+(`COST:0` counting as a `MAGNITUDE_TOKENS` entry forces a narrative zero-effect record into
+`ingested-magnitude` rather than the `text_only` promotion path); 10 `Retrain` records need a
+downtime-tracking subsystem this engine has none of; 2 traits need new choice-gating machinery this
+bundle already defers (standing rule #3); 1 needs a cross-cutting "every active luck bonus +1"
+mechanic; 1 targets an unmodelled eidolon subsystem; 1 (`Wrecking Wrath (Rovagug)`) has no matching
+corpus file anywhere -- a pre-existing data gap, the same shape as `trait_shadow_whispers`.
+
+**A real, live test caught by the wave's own final verification pass, fixed before commit.**
+`class_feature_pool_catalog.rs`'s live-query test pinning the excluded-class share of a sibling
+mechanism needed re-deriving (213 → 138) after this wave's fix moved 75 Cleric/Sorcerer-owned units
+out of that evidence string entirely -- caught by the SECOND full-suite run, not shipped stale.
+
+**Verification:** `cargo test --locked --bin v06_work_inventory -j 6`: 624/624. `cargo test
+--locked --lib -j 6`: 3182/3182 (unchanged from baseline -- this wave's code lives entirely in
+`src/bin/v06_work_inventory.rs`). Full `cargo test --locked --no-fail-fast -j 6`: run twice (the
+pinned-count fix triggered run 2); see the wave-end gate entry below for the definitive numbers.
+`cargo clippy --locked --tests -j 6`: 0 warnings both runs. F1 census (`shape_ledger.py`): unchanged
+at 5124. `completion_atlas.py --check`: `DONE 25563→25906`, `B 11763→11589` (−174), `D 2253→2084`
+(−169), citation_failures=0 (all ten `BUCKET_DEFINITIONS` citations re-derived after this wave's
+own two pure-insertion hunks). `denominator_gate.py --check`: violations=0. Independently
+re-derived via a direct `id`→`status` join: exactly 343 changed, zero collateral movement
+(population unchanged at 49438).
+
+Full receipt: `artifacts/bucket-d-mining/wave50_core_rulebook_ultimate_campaign_cycle_receipt.md`.
+
+**What remains, named:** CR M 778 (221 with established `grounded` precedent elsewhere in the
+engine, 347 genuinely new-chassis, 210 `equipment_modifier` split real-formula/choice-gated); CR B
+remainder 392 (~140 unverified option-pool groups); CR C 191/103 groups (Rage-Power/Rogue-
+Talent-shaped flat pools and Dragon-Disciple/Druid-Domain-shaped group-selection pools both need
+generic passes already proven for Cleric Domain/Sorcerer Bloodline, wired for classes never
+reached); CR D remainder 138 (`ability` 109, `class` 17, `class_feature` 9, `race_trait` 2); UC 38
+(all named above). `Status: partial` -- the operator-widened 1,781-unit population is not fully
+closed; 244/1,781 in-scope units closed this wave (13.7% of 1,781), with the true difficulty of
+the remaining 1,537 (of 1,781) now characterized precisely by mechanism rather than estimated from
+evidence-string text alone.
+
 ### Cycle — Wave 49 wave-end gate — independent re-confirmation of 129 units closed, full 40/40 confirmed — complete
 
 **Status: complete.** Orchestrator-run full verification suite on the committed wave 49 state
