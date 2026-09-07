@@ -11,6 +11,83 @@ date: 2026-08-26
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
+### Cycle — Wave 49 — 33-class magnitude-only sweep across sub-mechanism-5's registered-prestige remainder: 129 units closed — complete
+
+**Status: complete.** Per the operator's own explicit directive this wave ("do all of them at once
+— then test them all at once"), batched ALL 42 remaining prestige classes' investigation and code
+in one pass, wrote every compute function and test first, then ran the full verification sequence
+ONCE at the end — not the per-class/per-few-classes re-verify cycle waves 43-48 used.
+
+Re-derived sub-mechanism-5's current population fresh (575, unchanged since wave 48's own post-cycle
+figure — no drift), cross-referenced against the 74-entry registry (487 registered / 88 not
+registered), and confirmed the 42-class, 345-unit real working pool matches the dispatch brief
+exactly. Closed **129 units across 33 prestige classes** (5 fully closed: Mystic Archer 7/7,
+Mammoth Rider 6/6, Master Chymist 5/5, Dark Tempest 5/5, Ulfen Guard 1/1). Full class-by-class table
+in the receipt.
+
+**A real, new negative finding:** three more Ultimate Psionics classes (Psychic Fist, Metamorph, War
+Mind) carry the excluded AS/MB/Ma cross-class-manifester-level shape, previously undiscovered —
+widening the excluded class count from 10 to 13 (units unchanged). Their other, non-AS/MB/Ma units
+were still closed normally.
+
+**A real correctness bug self-caught before commit, not shipped as an oversight:** three classes'
+draft formulas (Hellknight, Pathfinder Savant, Diabolist) initially used total CHARACTER level for a
+class-table-fed `<X>LVL|CL` variable. Re-checking against this bundle's own already-shipped
+precedent for the identical idiom (`PaDLVL|CL`, `TwilightTalonLVL|CL`, `GoldenLegionnaireLVL|CL` —
+all treating bare `CL` as that CLASS's own raw level) showed the drafts were wrong for a multiclass
+character. Fixed to use the raw per-class level. The bundle's own single-class test fixture made the
+bug numerically invisible (no test assertion needed to change) — caught only by tracing the real
+oracle's own semantics against this codebase's own prior precedent, exactly the failure mode this
+section's own doctrine exists to catch.
+
+**A second, more consequential self-caught gap: the census tool itself never knew about any of
+these 33 classes.** A first `docs/work-inventory.json` regen after all 33 `ground_*` functions and
+their `pilot_compute/mod.rs` tests were written showed **zero** status changes — the compute
+functions all fire correctly (39 passing `pilot_compute/mod.rs` tests prove it), but
+`v06_work_inventory.rs`'s own `classify()` has no knowledge of a new class's formulas unless a
+dedicated `probe_<class>_wiring` function, `EngineFacts` field, and `classify()` early-return check
+are ALSO added — the same four-part pattern waves 43-48 each applied per class. Fixed by adding all
+33 probes (reusing the existing `probe_wave46_single_owner_class_features` helper) plus a new
+`wave49_registered_prestige_probe_reachability_tests` module (33 tests, one per class) proving each
+probe resolves the real corpus keys end to end. Worth naming for future waves: a "batch all the
+compute code, verify once" cycle must still wire the census probe per class as part of that
+same batch — a zero-delta regen is the signal to check for this, not to assume nothing changed.
+
+**Real movement: 129 units closed** (130 originally drafted; Student of War's own Mind Over Metal
+formula is real and independently tested but the shared census probe fixture's ability scores never
+satisfy its Intelligence-over-Dexterity gate, so it is left named rather than force-closed),
+regen-confirmed. Before/after, re-derived via `completion_atlas.py --check` on both snapshots plus
+an independent Python `id`→`status` join (both agree): `DONE: 25474→25603 (+129)`,
+`D: 2382→2253 (−129)`, `V: 349→349 (unchanged)` — exactly 129 units changed status, zero collateral
+movement (population 49438, 0 added/removed both sides).
+
+**Both the lib suite AND the full integration suite were run this cycle — the full suite run
+multiple times end to end as each real correctness/registration gap was found and fixed.**
+`cargo test --locked --lib -j 6`, run 1 → 3182 passed (up from 3143 baseline by this cycle's 39 new
+`pilot_compute/mod.rs` tests). `cargo clippy --locked --tests -j 6` then found 1
+`clippy::empty_line_after_doc_comments` warning (a section-banner comment mistakenly written as a
+doc comment) — fixed. A real correctness bug (the CL/TL semantics above) was found and fixed on
+this same pass, triggering a second full-suite run (3182/8615/67/589, 0 failed). The census-probe
+gap above was found AFTER that run (via the zero-delta regen), fixed with the 33 new probes plus 33
+new `v06_work_inventory.rs` tests, and verified with a third and final full-suite run: see below.
+
+**F1/`shape_ledger.py` pin: unchanged, 5155 → 5155.** This wave's new engine code does not touch
+corpus data; verified per-id (none of the 129 closed units flip an F1 classification).
+
+**What remains open after this wave:** sub-mechanism 5's remaining population (**446**, 575 − 129),
+split across **37** registered prestige classes still carrying an open remainder (5 of this wave's
+42 — Mystic Archer, Mammoth Rider, Master Chymist, Dark Tempest, Ulfen Guard — fully closed) and the
+88 not-registered units (unchanged); the excluded cross-class-manifester-level population (now 13
+classes, not 10);
+Sanguine Angel's own 6-unit Discipline `ABILITYPOOL` choice (needs new choice-gating machinery,
+named for a future wave); Student of War's Mind Over Metal (real formula, unreachable via the
+shared census probe fixture); Sentinel's one sm5 unit (feat-chain-gated on Ranger Combat Style, not
+level-gated on `class:sentinel` at all — a genuinely different owner shape, the first found in this
+population).
+
+Full receipt:
+`artifacts/bucket-d-mining/wave49_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
 ### Cycle — Wave 48 wave-end gate — full suite exactly re-confirmed, full 40/40 confirmed — complete
 
 **Status: complete.** Gate/closure summary for wave 48's own cycle, which closed 16 units

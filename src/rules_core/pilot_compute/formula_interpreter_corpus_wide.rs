@@ -816,18 +816,49 @@ mod tests {
     /// confirmed by re-running `python3 scripts/shape_ledger.py --inventory
     /// docs/work-inventory.json --corpus-root data/corpus` against the
     /// post-regen `docs/work-inventory.json`: F1 = 5155 exactly.
+    ///
+    /// **5,155 -> 5,124, a REAL movement (SD-34 wave 49, 2026-09-06/07).**
+    /// The wave's own receipt (`docs/release/SD-34-book-completion/artifacts/
+    /// bucket-d-mining/wave49_registered_prestige_magnitude_formulas_cycle_
+    /// receipt.md`) originally claimed this pin unchanged ("touches no
+    /// corpus data, so no drift is expected") -- that claim was WRONG, caught
+    /// by a follow-up run of this exact test; the receipt carries its own
+    /// correction note. Wave 49 closed 129 units across 33 registered
+    /// prestige classes; comparing `shape_ledger.py --output` run against the
+    /// PRE-cycle inventory snapshot (HEAD at wave 48's own close) to the
+    /// post-cycle snapshot, keyed by each unit's doneness verdict
+    /// (`pf1e_dashboard_producer.doneness_verdict`), shows exactly 72 units
+    /// leave the not-done population (31 `F1`, 22 `F2`, 7 `F4`, 7 `F5`, 4
+    /// `F0`, 1 `F8`) -- the other 60 of the 132 total status-changed ids land
+    /// on a `held` verdict, not `done`, and so correctly stay IN the
+    /// not-done population, unmoved. The 31 F1-shaped ones (bare-literal-
+    /// magnitude tokens, verified per-id, not assumed from formula-resolution
+    /// shape: e.g. Asavir's elemental-blessing/mount grants, Mammoth Rider's
+    /// Gigantic Steed and Steed's Reach, Steel Falcon's Talmandor's
+    /// Blessing/Chainbreaker, Lion Blade's Sneak Attack/Silent Soul/
+    /// Expeditious Advance, Master Chymist's Brutality, Battle Herald's
+    /// Teamwork Feat, and 20 more across the same wave's 33 classes) leave
+    /// the not-done population once wave 49's own real compute functions
+    /// (`wiring_class: computed` -> `grounded`) or byte-verified literal
+    /// stamps (`wiring_class: static` -> `literal-verified`) close them:
+    /// 5155 - 31 = 5124, confirmed by re-running `python3 scripts/
+    /// shape_ledger.py --inventory docs/work-inventory.json --corpus-root
+    /// data/corpus` against the post-regen `docs/work-inventory.json`: F1 =
+    /// 5124 exactly.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5155,
-            "F1 population must equal the CURRENT true formula-bearing count (5,155, re-derived \
-             2026-09-06 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
+            f1.population, 5124,
+            "F1 population must equal the CURRENT true formula-bearing count (5,124, re-derived \
+             2026-09-07 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
              `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
-             cycle's own true-at-the-time 5,193 (SD-34 wave 46 closure-cycle), not the \
+             cycle's own true-at-the-time 5,155 (SD-34 wave 47/48 closure-cycles, unchanged \
+             through wave 48's own zero-F1 closure), not the cycle-before-that's own \
+             true-at-the-time 5,193 (SD-34 wave 46 closure-cycle), not the \
              cycle-before-that's own true-at-the-time 5,196 (SD-34 waves 44/45 closure-cycles, \
              unchanged through wave 45's own zero-F1 closure), not the cycle-before-that's own \
              true-at-the-time 5,206 (SD-34 wave 43 closure-cycle), not the \

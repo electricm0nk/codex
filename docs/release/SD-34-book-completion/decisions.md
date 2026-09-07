@@ -1542,4 +1542,103 @@ body_snatcher 13, golden_legionnaire 12 [own remainder], steel_falcon 12, magaam
 named above). The ≥10-class AS/MB/Ma cross-class-manifester-level population is unchanged,
 untouched this wave.
 
+**WAVE 49 UPDATE, 2026-09-06: 33 more prestige classes swept in one batched cycle (the operator's
+own "batch big, verify once" directive), 129 units closed, two real bugs self-caught and fixed
+before commit (one correctness, one a census-registration gap that would have silently zeroed out
+this entire wave's own closure count).**
+
+**Fresh re-derivation.** Sub-mechanism-5 re-derived at `575` (591 − 16, unchanged from wave 48's own
+post-cycle figure — no drift since wave 48 closed), split `487` registered / `88` not registered.
+Of the 487 registered: `116` remain the excluded cross-class-manifester-level group, `2` Divine
+Scion's own True Scion remainder, `13`/`11` Aldori Swordlord/Magaambyan Arcanist (PI-name-
+blacklisted, wave 48's own finding) — leaving **345** as this wave's real working pool across **42**
+remaining prestige classes, matching the dispatch brief's own count exactly.
+
+**Method, widened for throughput per the operator's own directive:** rather than 2-5 classes per
+wave with a full re-verify cycle between each, ALL 42 classes' code and tests were written first,
+then the full verification sequence (lib tests, full integration suite, clippy, guarded regen, gate
+scripts) was run once at the end. One clippy warning and one real correctness bug were found on that
+single pass, both fixed, triggering exactly one second full-suite run — not a return to the
+per-class cycle.
+
+**A real, new negative finding: three more Ultimate Psionics classes carry the excluded AS/MB/Ma
+cross-class-manifester-level shape.** Psychic Fist, Metamorph, and War Mind (none named in the
+prior 10-class exclusion list) each carry the identical `Advance Astral Suit`/`Advance Mind Blade`/
+`Advance Manifesting` family, confirmed by direct read. Their OTHER units (not AS/MB/Ma-shaped) were
+still closed normally. This widens the excluded class count from 10 to 13 (the unit count inside the
+already-counted 116 is unchanged).
+
+**A real correctness bug self-caught on this wave's own re-verification, before commit.** Three
+classes' draft formulas (Hellknight, Pathfinder Savant, Diabolist) initially used
+`total_character_level(input)` for a class-table-fed `<X>LVL|CL` variable. Re-checking against this
+bundle's OWN already-shipped precedent for the identical idiom (`PaDLVL|CL`, `TwilightTalonLVL|CL`,
+`GoldenLegionnaireLVL|CL` — all already shipped treating bare `CL` on a class's own table row as
+**that class's own raw level**, not total character level) showed the three drafts were wrong: a
+multiclass character would have received an inflated value from every other class level they held.
+Fixed to use the raw per-class level directly. The single-class test fixture this bundle's own test
+modules always use made the bug numerically invisible (level == total level with no other classes
+present) — caught only by tracing the real oracle's own class-table semantics against this
+codebase's own prior precedent, not by any failing test. Exactly the "a wrong computed number looks
+like a right one" failure mode this section's own standing doctrine exists to catch.
+
+**A second, more consequential self-caught bug: the census tool itself never knew about any of
+these 33 classes.** After writing all 33 `ground_<class>_class_features` functions and their
+`pilot_compute/mod.rs` tests, a first `docs/work-inventory.json` regen showed **zero** status
+changes — every one of this wave's own new explanation ids fires correctly against the real
+pipeline (proven by the `pilot_compute/mod.rs` test module, 39 passing tests), but
+`src/bin/v06_work_inventory.rs`'s own `classify()` function has NO knowledge that these classes'
+formulas exist unless a dedicated `probe_<class>_wiring` function, a matching `EngineFacts` field,
+and a `classify()` early-return check are ALSO added for each one — exactly the four-part pattern
+waves 43-48 each applied per class but that this wave's own "batch the compute code first" plan
+never accounted for. Fixed by adding all 33 probes (reusing the existing generic
+`probe_wave46_single_owner_class_features` helper, one call per class) plus their `EngineFacts`
+fields, constructor lines, and `classify()` checks, and a new `pilot_compute`-analog reachability
+test module (`wave49_registered_prestige_probe_reachability_tests`, one test per class) proving
+each probe resolves the real corpus keys through the real pipeline. This is the second
+"corpus-wide census is a SEPARATE registration surface from the runtime compute path" hazard
+following this bundle's own repeated-attribution-collision findings — worth naming explicitly for
+any future wave: writing a working `ground_*` function and its own direct tests is necessary but
+not sufficient; the census needs its own probe wired in too, and a "zero deltas" regen result is
+the signal to check for exactly this, not to assume nothing changed.
+
+**Closed this wave: 129 units across 33 prestige classes** (full class-by-class table in
+`artifacts/bucket-d-mining/wave49_registered_prestige_magnitude_formulas_cycle_receipt.md` — one
+unit short of the 130 originally drafted: Student of War's own Mind Over Metal is a real,
+independently-tested formula (`student_of_war_mind_over_metal_ac_bonus`, gated on Intelligence
+exceeding Dexterity) but the shared probe fixture's own ability scores never satisfy that gate at
+any level, so the corpus-wide census cannot observe it reachable through the standard probe path —
+left named, not force-closed, rather than fabricating a bespoke fixture override for one unit under
+time pressure).
+**5 classes fully closed** (mystic_archer 7/7, mammoth_rider 6/6, master_chymist 5/5, dark_tempest
+5/5, ulfen_guard 1/1). Every formula
+was transcribed directly from its own ingested corpus record, cross-checked against the real,
+non-ingested PCGen oracle where a cross-file class-table lookup was needed (the same
+`nature_warden_companion_bond_level` idiom already established). Genuinely un-attemptable units
+(216 named, not attempted) split by reason: pure prose / no `BONUS`/`DEFINE` token; the excluded
+cross-class prime-stat/manifester-level shape; an untracked equipment/state gate (armor equipped,
+psionic focus active); dice notation this engine's formula interpreter does not parse; a real
+`ABILITYPOOL` one-of-N discipline choice needing new choice-gating machinery (Sanguine Angel's own
+Discipline pool, left for a future wave rather than rushed); an ability-score-gated formula the
+shared probe fixture cannot exercise (Student of War's Mind Over Metal, above); and one genuinely
+different-owner shape (Sentinel's one sm5 unit keys off a Ranger Combat Style FEAT chain, not
+`class:sentinel` level, the first unit in this whole population found to NOT be level-gated on its
+own registered class at all).
+
+Independently re-derived by the orchestrator against a fresh `docs/work-inventory.json` join, not
+just taken on the fixing agent's word: exactly **129 units** changed status (`DONE: 25474->25603`,
+`D: 2382->2253`, `V: 349->349`), zero collateral movement (population unchanged at 49438). Both
+`cargo test --locked --lib -j 6` (3182 passed, up from 3143) and the full `cargo test --locked
+--no-fail-fast -j 6` integration suite were run this cycle (run TWICE: the clippy fix and the
+CL-semantics correctness fix both landed between the two runs). `cargo clippy --locked --tests -j 6`:
+0 warnings after the fix. F1/`shape_ledger.py` census: unchanged at 5155 (this wave's own new engine
+code touches no corpus data).
+
+**Sub-mechanism 5's remaining population after this wave: 446 (575 − 129)**, split across **37**
+registered prestige classes still carrying an open remainder (5 of this wave's 42 -- Mystic Archer,
+Mammoth Rider, Master Chymist, Dark Tempest, Ulfen Guard -- fully closed and drop out of the
+working-pool class count; largest remaining: sanguine_angel 11, cyphermage 14, lantern_bearer 8,
+golden_legionnaire 12 [own remainder, unchanged], telekinetic_weaponmaster 9 [unattempted, AS/MB/Ma
+shape], and roughly 30 smaller remainders) and the 88 not-registered units (unchanged). The excluded
+cross-class-manifester-level group is now confirmed at 13 classes (not 10), untouched this wave.
+
 ---

@@ -6420,6 +6420,45 @@ const TWILIGHT_TALON_TATTOO_LEVEL_4_CHOICE_ID: &str = "choice:twilight_talon_tat
 const TWILIGHT_TALON_TATTOO_LEVEL_6_CHOICE_ID: &str = "choice:twilight_talon_tattoo_level_6";
 const TWILIGHT_TALON_TATTOO_LEVEL_8_CHOICE_ID: &str = "choice:twilight_talon_tattoo_level_8";
 const TWILIGHT_TALON_TATTOO_LEVEL_10_CHOICE_ID: &str = "choice:twilight_talon_tattoo_level_10";
+/// SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more registered
+/// prestige classes in the same "no `ClassId` enum entry, magnitude-only"
+/// remainder as every class above -- one raw string const per class,
+/// matched against `CharacterClassLevel::class_id` exactly like every
+/// other class in this family. Matches `tests/fixtures/rules_core/
+/// prestige-class-entry-requirements.json`'s own entries exactly.
+const CYPHERMAGE_CLASS_ID: &str = "class:cyphermage";
+const PSYCHIC_FIST_CLASS_ID: &str = "class:psychic_fist";
+const ASAVIR_CLASS_ID: &str = "class:asavir";
+const METAMORPH_CLASS_ID: &str = "class:metamorph";
+const WAR_MIND_CLASS_ID: &str = "class:war_mind";
+const HELLKNIGHT_CLASS_ID: &str = "class:hellknight";
+const ADAPTIVE_WARRIOR_CLASS_ID: &str = "class:adaptive_warrior";
+const SANGUINE_ANGEL_CLASS_ID: &str = "class:sanguine_angel";
+const BODY_SNATCHER_CLASS_ID: &str = "class:body_snatcher";
+const STEEL_FALCON_CLASS_ID: &str = "class:steel_falcon";
+const LANTERN_BEARER_CLASS_ID: &str = "class:lantern_bearer";
+const STORM_KINDLER_CLASS_ID: &str = "class:storm_kindler";
+const WESTCROWN_DEVIL_CLASS_ID: &str = "class:westcrown_devil";
+const PYROKINETICIST_CLASS_ID: &str = "class:pyrokineticist";
+const ASPIS_AGENT_CLASS_ID: &str = "class:aspis_agent";
+const GRAY_CORSAIR_CLASS_ID: &str = "class:gray_corsair";
+const PATHFINDER_SAVANT_CLASS_ID: &str = "class:pathfinder_savant";
+const RIVETHUN_EMISSARY_CLASS_ID: &str = "class:rivethun_emissary";
+const STUDENT_OF_WAR_CLASS_ID: &str = "class:student_of_war";
+const DIABOLIST_CLASS_ID: &str = "class:diabolist";
+const LION_BLADE_CLASS_ID: &str = "class:lion_blade";
+const BELLFLOWER_TILLER_CLASS_ID: &str = "class:bellflower_tiller";
+const HELLKNIGHT_SIGNIFER_CLASS_ID: &str = "class:hellknight_signifer";
+const MYSTIC_ARCHER_CLASS_ID: &str = "class:mystic_archer";
+const MAMMOTH_RIDER_CLASS_ID: &str = "class:mammoth_rider";
+const DEMONIAC_CLASS_ID: &str = "class:demoniac";
+const MASTER_CHYMIST_CLASS_ID: &str = "class:master_chymist";
+const ENCHANTING_COURTESAN_CLASS_ID: &str = "class:enchanting_courtesan";
+const DARK_TEMPEST_CLASS_ID: &str = "class:dark_tempest";
+const BATTLE_HERALD_CLASS_ID: &str = "class:battle_herald";
+const MASTER_SPY_CLASS_ID: &str = "class:master_spy";
+const EVANGELIST_CLASS_ID: &str = "class:evangelist";
+const ULFEN_GUARD_CLASS_ID: &str = "class:ulfen_guard";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` idiom. Verified against
@@ -9179,6 +9218,44 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // wave 46/47 functions above.
     ground_twilight_talon_class_features(input, &ability_modifiers, &mut explanations);
     ground_golden_legionnaire_class_features(input, &mut explanations);
+
+    // SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more prestige
+    // classes in the same "registered, no `ClassId` enum entry,
+    // magnitude-only" remainder -- same unconditional placement as the
+    // wave 43-48 functions above.
+    ground_cyphermage_class_features(input, &mut explanations);
+    ground_psychic_fist_class_features(input, &mut explanations);
+    ground_asavir_class_features(input, &mut explanations);
+    ground_metamorph_class_features(input, &mut explanations);
+    ground_war_mind_class_features(input, &mut explanations);
+    ground_hellknight_class_features(input, &ability_modifiers, &mut explanations);
+    ground_adaptive_warrior_class_features(input, &ability_modifiers, &mut explanations);
+    ground_sanguine_angel_class_features(input, &ability_modifiers, &mut explanations);
+    ground_body_snatcher_class_features(input, &mut explanations);
+    ground_steel_falcon_class_features(input, &mut explanations);
+    ground_lantern_bearer_class_features(input, &mut explanations);
+    ground_storm_kindler_class_features(input, &mut explanations);
+    ground_westcrown_devil_class_features(input, &ability_modifiers, &mut explanations);
+    ground_pyrokineticist_class_features(input, &mut explanations);
+    ground_aspis_agent_class_features(input, &mut explanations);
+    ground_gray_corsair_class_features(input, &mut explanations);
+    ground_pathfinder_savant_class_features(input, &mut explanations);
+    ground_rivethun_emissary_class_features(input, &ability_modifiers, &mut explanations);
+    ground_student_of_war_class_features(input, &ability_modifiers, &mut explanations);
+    ground_diabolist_class_features(input, &ability_modifiers, &mut explanations);
+    ground_lion_blade_class_features(input, &mut explanations);
+    ground_bellflower_tiller_class_features(input, &mut explanations);
+    ground_hellknight_signifer_class_features(input, &mut explanations);
+    ground_mystic_archer_class_features(input, &mut explanations);
+    ground_mammoth_rider_class_features(input, &mut explanations);
+    ground_demoniac_class_features(input, &mut explanations);
+    ground_master_chymist_class_features(input, &mut explanations);
+    ground_enchanting_courtesan_class_features(input, &mut explanations);
+    ground_dark_tempest_class_features(input, &mut explanations);
+    ground_battle_herald_class_features(input, &mut explanations);
+    ground_master_spy_class_features(input, &mut explanations);
+    ground_evangelist_class_features(input, &mut explanations);
+    ground_ulfen_guard_class_features(input, &mut explanations);
 
     // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
     // class-feature blocker into three named pillars, and ground Track and
@@ -36677,6 +36754,3311 @@ fn ground_golden_legionnaire_class_features(
                  UnitedDefenseBonus|1+(GoldenLegionnaireLVL>=6)+(GoldenLegionnaireLVL>=10)`). \
                  Grounds the magnitude only: no shared united-defense total exists anywhere in \
                  this engine for it to layer onto"
+            ),
+        });
+    }
+}
+
+
+// SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more registered
+// prestige classes in sub-mechanism-5's "registered prestige class,
+// magnitude-only" remainder, each grounded exactly like the classes
+// above -- one `ground_<class>_class_features` function per class, called
+// unconditionally from `compute_pilot_base_chassis`, matched on the raw
+// `class_id` string. Every formula is transcribed directly from its own
+// ingested corpus record (`data/corpus/<book>/class_feature/<slug>/...`),
+// independently cross-checked against the real, non-ingested PCGen oracle
+// where the corpus record's own token needed an external class-table
+// cross-reference (cited per function). This wave prioritizes breadth: a
+// short doc comment per function citing its own literal token, not the
+// long prose established in earlier waves.
+
+// ---- Cyphermage (inner_sea_magic / adventurers_guide) ----
+
+/// `ism_abilities_class.lst`, `KEY:Cyphermage ~ Analyze Scroll`:
+/// `BONUS:VAR|AnalyzeScrollBonus|CyphermageLVL`.
+fn cyphermage_analyze_scroll_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `ag_abilities_class.lst`, `KEY:Cyphermage ~ Cypher Lore`:
+/// `BONUS:ABILITYPOOL|Cypher Lore Choice|min(9,CyphermageLVL)` (the
+/// `adventurers_guide` printing's own capped pool size).
+fn cyphermage_cypher_lore_pool_size_capped(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level).min(9))
+}
+
+/// `ism_abilities_class.lst`, `KEY:Cyphermage ~ Cypher Lore`:
+/// `BONUS:ABILITYPOOL|Cypher Lore|CyphermageLVL` (the `inner_sea_magic`
+/// printing's own uncapped pool size -- a real corpus discrepancy between
+/// two printings of the same feature, transcribed literally per-printing,
+/// not reconciled).
+fn cyphermage_cypher_lore_pool_size_uncapped(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn ground_cyphermage_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == CYPHERMAGE_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = cyphermage_analyze_scroll_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_magic.cyphermage.analyze_scroll.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Cyphermage level {level} Analyze Scroll: +{bonus} on Use Magic Device checks \
+                 to activate scrolls (corpus `BONUS:VAR|AnalyzeScrollBonus|CyphermageLVL`)"
+            ),
+        });
+    }
+    if let Some(pool) = cyphermage_cypher_lore_pool_size_capped(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.cyphermage.cypher_lore.pool_size".to_owned(),
+            value: pool,
+            detail: format!(
+                "Cyphermage level {level} Cypher Lore (adventurers_guide printing): a pool of \
+                 {pool} (corpus `BONUS:ABILITYPOOL|Cypher Lore Choice|min(9,CyphermageLVL)`). \
+                 Grounds the pool SIZE only"
+            ),
+        });
+    }
+    if let Some(pool) = cyphermage_cypher_lore_pool_size_uncapped(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_magic.cyphermage.cypher_lore.pool_size".to_owned(),
+            value: pool,
+            detail: format!(
+                "Cyphermage level {level} Cypher Lore (inner_sea_magic printing): a pool of \
+                 {pool} (corpus `BONUS:ABILITYPOOL|Cypher Lore|CyphermageLVL`, no cap on this \
+                 printing). Grounds the pool SIZE only"
+            ),
+        });
+    }
+}
+
+// ---- Psychic Fist (ultimate_psionics) ----
+
+/// `up_abilities_class.lst`, `KEY:Psychic Fist ~ Infused Body`:
+/// `BONUS:VAR|InfusedBody|floor(PsychicFistLVL/3)`.
+fn psychic_fist_infused_body_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 3)
+}
+
+/// `up_abilities_class.lst`, `KEY:Psychic Fist ~ Ki Power`:
+/// `BONUS:VAR|KiPower|PsychicFistLVL/2`.
+fn psychic_fist_ki_power_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// `up_abilities_class.lst`, `KEY:Psychic Fist ~ Mesmerizing Glow`:
+/// `BONUS:VAR|MesmerizingGlowTargets|PsychicFistLVL/2` -- the record's own
+/// second token (`MesmerizingGlowDC|14+PsychicFistPrimeStat`) needs
+/// `PsychicFistPrimeStat`, a cross-class "which parent psionic class fed
+/// the prime manifesting stat" resolution this engine does not yet model
+/// (the same shape this bundle already excludes for Phrenic Slayer's own
+/// remainder) -- not grounded here.
+fn psychic_fist_mesmerizing_glow_targets(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+fn ground_psychic_fist_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == PSYCHIC_FIST_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = psychic_fist_infused_body_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.psychic_fist.infused_body.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Psychic Fist level {level} Infused Body: +{bonus} natural armor (corpus \
+                 `BONUS:VAR|InfusedBody|floor(PsychicFistLVL/3)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = psychic_fist_ki_power_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.psychic_fist.ki_power.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Psychic Fist level {level} Ki Power: {bonus} extra ki points (corpus \
+                 `BONUS:VAR|KiPower|PsychicFistLVL/2`)"
+            ),
+        });
+    }
+    if let Some(targets) = psychic_fist_mesmerizing_glow_targets(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.psychic_fist.mesmerizing_glow.targets"
+                .to_owned(),
+            value: targets,
+            detail: format!(
+                "Psychic Fist level {level} Mesmerizing Glow: affects {targets} targets (corpus \
+                 `BONUS:VAR|MesmerizingGlowTargets|PsychicFistLVL/2`). Grounds the target-count \
+                 magnitude only; the ability's own save DC needs `PsychicFistPrimeStat` (a \
+                 cross-class parent-entry resolution this engine does not model) and is not \
+                 grounded"
+            ),
+        });
+    }
+}
+
+// ---- Asavir (adventurers_guide) ----
+
+/// `ag_abilities_class.lst`, `KEY:Asavir ~ Camaraderie`:
+/// `BONUS:VAR|AsavirCamaraderieBonus|1` (+1 at level 5, +1 at level 9).
+/// Granted from level 1 (`ag_classes.lst` level-1 row).
+fn asavir_camaraderie_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 5) + i16::from(level >= 9))
+}
+
+/// `ag_abilities_class.lst`, `KEY:Asavir ~ Djinni's Blessing`:
+/// `BONUS:VAR|AsavirDjinnisBlessingBonus|10` (+10 more at level 8). Granted
+/// at level 4 (`ag_classes.lst` level-4 row).
+fn asavir_djinnis_blessing_bonus(level: u8) -> Option<i16> {
+    if level < 4 {
+        return None;
+    }
+    Some(10 + 10 * i16::from(level >= 8))
+}
+
+/// `ag_abilities_class.lst`, `KEY:Asavir ~ Efreeti's Blessing` (mount
+/// variant): `BONUS:VAR|FireResistanceBonus|5|TYPE=Resistance`. Granted at
+/// level 8 (`ag_classes.lst` level-8 row).
+fn asavir_efreeti_blessing_fire_resistance(level: u8) -> Option<i16> {
+    if level < 8 {
+        return None;
+    }
+    Some(5)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Asavir ~ Equine Bond`:
+/// `BONUS:VAR|AsavirAnimalCompanionLVL|AsavirLVL+2` (also restated onto
+/// `AnimalCompanionMasterLVL`). Granted from level 1.
+fn asavir_equine_bond_companion_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) + 2)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Asavir ~ Janni's Blessing` (base and
+/// mount variants both carry the identical token):
+/// `BONUS:SAVE|ALL|1|TYPE=Luck`. Granted at level 10 (`ag_classes.lst`
+/// level-10 row).
+fn asavir_jannis_blessing_luck_save(level: u8) -> Option<i16> {
+    if level < 10 {
+        return None;
+    }
+    Some(1)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Asavir ~ Marid's Blessing` (mount
+/// variant): `BONUS:SAVE|Reflex|2|TYPE=Racial`. Granted at level 6
+/// (`ag_classes.lst` level-6 row).
+fn asavir_marids_blessing_reflex_save(level: u8) -> Option<i16> {
+    if level < 6 {
+        return None;
+    }
+    Some(2)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Asavir ~ Shaitan's Blessing`:
+/// `BONUS:VAR|AsavirShaitansBlessingBonus|2` (+2 more at level 9). Granted
+/// at level 2 (`ag_classes.lst` level-2 row).
+fn asavir_shaitans_blessing_bonus(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(2 + 2 * i16::from(level >= 9))
+}
+
+/// `ag_abilities_class.lst`, `KEY:Asavir ~ Thunderous Charge`:
+/// `BONUS:VAR|AsavirThunderousChargeBonus|5` (+5 more at level 6, +10 more
+/// at level 10). Granted at level 2.
+fn asavir_thunderous_charge_bonus(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(5 + 5 * i16::from(level >= 6) + 10 * i16::from(level >= 10))
+}
+
+fn ground_asavir_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ASAVIR_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = asavir_camaraderie_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.camaraderie.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Asavir level {level} Camaraderie: +{bonus} (corpus `AsavirCamaraderieBonus`, \
+                 stepping at levels 5 and 9)"
+            ),
+        });
+    }
+    if let Some(bonus) = asavir_djinnis_blessing_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.djinnis_blessing.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Asavir level {level} Djinni's Blessing: +{bonus} (corpus \
+                 `AsavirDjinnisBlessingBonus`, stepping at level 8)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.djinnis_blessing_mount.move_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Asavir level {level} Djinni's Blessing (mount): +{bonus} ft. mounted movement \
+                 (corpus `BONUS:MOVEADD|TYPE.Walk|MASTERVAR(\"AsavirDjinnisBlessingBonus\")`, \
+                 restating the same bonus above)"
+            ),
+        });
+    }
+    if let Some(fire_resist) = asavir_efreeti_blessing_fire_resistance(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.efreeti_blessing_mount.fire_resistance"
+                .to_owned(),
+            value: fire_resist,
+            detail: format!(
+                "Asavir level {level} Efreeti's Blessing (mount): fire resistance \
+                 {fire_resist} (corpus `BONUS:VAR|FireResistanceBonus|5|TYPE=Resistance`)"
+            ),
+        });
+    }
+    if let Some(companion_level) = asavir_equine_bond_companion_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.equine_bond.companion_level".to_owned(),
+            value: companion_level,
+            detail: format!(
+                "Asavir level {level} Equine Bond: animal companion effective level \
+                 {companion_level} (corpus `AsavirAnimalCompanionLVL = AsavirLVL+2`)"
+            ),
+        });
+    }
+    if let Some(save) = asavir_jannis_blessing_luck_save(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.jannis_blessing.luck_save".to_owned(),
+            value: save,
+            detail: format!(
+                "Asavir level {level} Janni's Blessing: +{save} luck bonus on all saves \
+                 (corpus `BONUS:SAVE|ALL|1|TYPE=Luck`)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.jannis_blessing_mount.luck_save"
+                .to_owned(),
+            value: save,
+            detail: format!(
+                "Asavir level {level} Janni's Blessing (mount): +{save} luck bonus on all \
+                 saves (corpus `BONUS:SAVE|ALL|1|TYPE=Luck`, restating the same base record)"
+            ),
+        });
+    }
+    if let Some(save) = asavir_marids_blessing_reflex_save(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.marids_blessing_mount.reflex_save"
+                .to_owned(),
+            value: save,
+            detail: format!(
+                "Asavir level {level} Marid's Blessing (mount): +{save} racial bonus on \
+                 Reflex saves (corpus `BONUS:SAVE|Reflex|2|TYPE=Racial`)"
+            ),
+        });
+    }
+    if let Some(bonus) = asavir_shaitans_blessing_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.shaitans_blessing.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Asavir level {level} Shaitan's Blessing: +{bonus} (corpus \
+                 `AsavirShaitansBlessingBonus`, stepping at level 9)"
+            ),
+        });
+    }
+    if let Some(bonus) = asavir_thunderous_charge_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.asavir.thunderous_charge.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Asavir level {level} Thunderous Charge: +{bonus} damage (corpus \
+                 `AsavirThunderousChargeBonus`, stepping at levels 6 and 10)"
+            ),
+        });
+    }
+}
+
+// ---- Metamorph (ultimate_psionics) ----
+
+/// `up_abilities_class.lst`, `KEY:Metamorph ~ Alter Metamorphosis`:
+/// `BONUS:VAR|AlterMetamorphosisLVL|MetamorphLVL`.
+fn metamorph_alter_metamorphosis_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `up_abilities_class.lst`, `KEY:Metamorph ~ Free Shift`:
+/// `BONUS:VAR|FreeShiftTimes|(MetamorphLVL/2)`.
+fn metamorph_free_shift_times(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// `up_abilities_class.lst`, `KEY:Metamorph ~ Natural Shifter`:
+/// `BONUS:VAR|NaturalShifter|floor((MetamorphLVL+4)/5)`.
+fn metamorph_natural_shifter_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 4) / 5)
+}
+
+fn ground_metamorph_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == METAMORPH_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(value) = metamorph_alter_metamorphosis_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.metamorph.alter_metamorphosis.level"
+                .to_owned(),
+            value,
+            detail: format!(
+                "Metamorph level {level} Alter Metamorphosis: `AlterMetamorphosisLVL` = \
+                 {value} (corpus `BONUS:VAR|AlterMetamorphosisLVL|MetamorphLVL`)"
+            ),
+        });
+    }
+    if let Some(times) = metamorph_free_shift_times(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.metamorph.free_shift.times".to_owned(),
+            value: times,
+            detail: format!(
+                "Metamorph level {level} Free Shift: {times} times per day (corpus \
+                 `BONUS:VAR|FreeShiftTimes|(MetamorphLVL/2)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = metamorph_natural_shifter_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.metamorph.natural_shifter.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Metamorph level {level} Natural Shifter: +{bonus} caster level on \
+                 Metamorphosis spells (corpus `BONUS:VAR|NaturalShifter|\
+                 floor((MetamorphLVL+4)/5)`)"
+            ),
+        });
+    }
+}
+
+// ---- War Mind (ultimate_psionics) ----
+
+/// `up_abilities_class.lst`, `KEY:War Mind ~ Chain of Defensive Posture`:
+/// `BONUS:VAR|DefensiveChain|2*floor((WarMindLVL+4)/6)`.
+fn war_mind_chain_of_defensive_posture_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 * ((i16::from(level) + 4) / 6))
+}
+
+/// `up_abilities_class.lst`, `KEY:War Mind ~ Chain of Personal
+/// Superiority`: `BONUS:VAR|SuperiorityChain|2*floor((WarMindLVL+5)/6)`.
+fn war_mind_chain_of_personal_superiority_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 * ((i16::from(level) + 5) / 6))
+}
+
+/// `up_abilities_class.lst`, `KEY:War Mind ~ Enduring Body`:
+/// `BONUS:VAR|EnduringBody|floor(WarMindLVL/3)`.
+fn war_mind_enduring_body_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 3)
+}
+
+fn ground_war_mind_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == WAR_MIND_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = war_mind_chain_of_defensive_posture_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.war_mind.chain_of_defensive_posture.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "War Mind level {level} Chain of Defensive Posture: +{bonus} natural armor \
+                 (corpus `BONUS:VAR|DefensiveChain|2*floor((WarMindLVL+4)/6)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = war_mind_chain_of_personal_superiority_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.war_mind.chain_of_personal_superiority.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "War Mind level {level} Chain of Personal Superiority: +{bonus} (corpus \
+                 `BONUS:VAR|SuperiorityChain|2*floor((WarMindLVL+5)/6)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = war_mind_enduring_body_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.war_mind.enduring_body.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "War Mind level {level} Enduring Body: +{bonus} hit points per Hit Die (corpus \
+                 `BONUS:VAR|EnduringBody|floor(WarMindLVL/3)`)"
+            ),
+        });
+    }
+}
+
+// ---- Hellknight (adventurers_guide / inner_sea_world_guide) ----
+
+/// `ag_abilities_class.lst`, `KEY:Detect Chaos ~ HK`: `SPELLS:Hellknight|
+/// TIMES=ATWILL|CASTERLEVEL=TL|Detect Chaos,11+CHA`. Granted at level 2
+/// (`ag_classes.lst` level-2 row).
+fn hellknight_detect_chaos_dc(level: u8, charisma_modifier: i16) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(11 + charisma_modifier)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Discern Lies ~ HK`: `SPELLS:Hellknight|
+/// TIMES=3+CHA|CASTERLEVEL=TL|Discern Lies,14+CHA`. Granted at level 2.
+fn hellknight_discern_lies_uses_per_day(level: u8, charisma_modifier: i16) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(3 + charisma_modifier)
+}
+
+fn hellknight_discern_lies_dc(level: u8, charisma_modifier: i16) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(14 + charisma_modifier)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Smite Chaos ~ HK`: `DEFINE:
+/// HKSmiteTimes|0`, with the real formula on `ag_classes.lst`'s own
+/// level-1 row: `BONUS:VAR|HKSmiteTimes|(CL+2)/3` -- `CL` here is this
+/// class's own raw level (the same "bare `CL` on a class's own table row
+/// means that class's own level, not total character level" idiom already
+/// confirmed for `PaDLVL|CL`/`TwilightTalonLVL|CL`/`GoldenLegionnaireLVL|
+/// CL`, all already shipped in this file treating it as the raw class
+/// level, not `total_character_level`). The record's own DESC substitution
+/// list (`HKSmiteTimes|max(CHA,0)|HellknightLvl|max(CHA,0)`) names three
+/// further magnitudes literally: the attack-roll bonus (`max(CHA,0)`), the
+/// damage bonus (`HellknightLvl`, the class's own raw level -- not
+/// Charisma, transcribed literally per this bundle's authoritative-token-
+/// over-prose discipline), and the deflection AC bonus (`max(CHA,0)`
+/// again). Granted at level 1.
+fn hellknight_smite_chaos_uses_per_day(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 2) / 3)
+}
+
+fn hellknight_smite_chaos_attack_bonus(level: u8, charisma_modifier: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(charisma_modifier.max(0))
+}
+
+fn hellknight_smite_chaos_damage_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `ag_abilities_class.lst`/`ag_classes.lst`, `KEY:Hellknight Armor ~ HK`:
+/// `DEFINE:HellknightArmorLVL|0` (set to `CL`, this class's own raw level,
+/// on the class's own level-2 table row -- same "bare `CL`" idiom as
+/// `hellknight_smite_chaos_uses_per_day` above) / `BONUS:VAR|
+/// HellknightArmorBonus|floor((HellknightArmorLVL+1)/3)`. Granted at
+/// level 2. Both the `adventurers_guide` and `inner_sea_world_guide`
+/// printings carry the identical record.
+fn hellknight_armor_bonus(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some((i16::from(level) + 1) / 3)
+}
+
+fn ground_hellknight_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == HELLKNIGHT_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+    let charisma = ability_modifiers.charisma;
+
+    if let Some(dc) = hellknight_detect_chaos_dc(level, charisma) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight.detect_chaos.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Hellknight level {level} Detect Chaos, at will, DC {dc} (corpus \
+                 `SPELLS:Hellknight|TIMES=ATWILL|...|Detect Chaos,11+CHA`)"
+            ),
+        });
+    }
+    if let Some(uses) = hellknight_discern_lies_uses_per_day(level, charisma) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight.discern_lies.uses_per_day"
+                .to_owned(),
+            value: uses,
+            detail: format!(
+                "Hellknight level {level} Discern Lies: {uses} times per day (corpus \
+                 `SPELLS:Hellknight|TIMES=3+CHA|...`)"
+            ),
+        });
+    }
+    if let Some(dc) = hellknight_discern_lies_dc(level, charisma) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight.discern_lies.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Hellknight level {level} Discern Lies, DC {dc} (corpus `...Discern \
+                 Lies,14+CHA`)"
+            ),
+        });
+    }
+    if let Some(uses) = hellknight_smite_chaos_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight.smite_chaos.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Hellknight level {level} Smite Chaos: {uses} times per day (corpus \
+                 `BONUS:VAR|HKSmiteTimes|(CL+2)/3`, `CL` = this class's own level {level})"
+            ),
+        });
+    }
+    if let Some(bonus) = hellknight_smite_chaos_attack_bonus(level, charisma) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight.smite_chaos.attack_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Hellknight level {level} Smite Chaos: +{bonus} attack roll against the smited \
+                 target (corpus DESC substitution `max(CHA,0)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = hellknight_smite_chaos_damage_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight.smite_chaos.damage_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Hellknight level {level} Smite Chaos: +{bonus} damage against the smited \
+                 target (corpus DESC substitution `HellknightLvl`, the class's own raw level, \
+                 transcribed literally rather than assumed to be Charisma)"
+            ),
+        });
+    }
+    if let Some(bonus) = hellknight_smite_chaos_attack_bonus(level, charisma) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight.smite_chaos.deflection_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Hellknight level {level} Smite Chaos: +{bonus} deflection bonus to AC against \
+                 the smited target's attacks (corpus DESC substitution `max(CHA,0)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = hellknight_armor_bonus(level) {
+        for book in ["adventurers_guide", "inner_sea_world_guide"] {
+            explanations.push(ComputationExplanation {
+                id: format!("class_feature.{book}.hellknight.hellknight_armor.bonus"),
+                value: bonus,
+                detail: format!(
+                    "Hellknight level {level} Hellknight Armor: reduces armor check penalty \
+                     and raises max Dexterity bonus by {bonus} while wearing Hellknight armor \
+                     (corpus `BONUS:VAR|HellknightArmorBonus|floor((HellknightArmorLVL+1)/3)`, \
+                     `HellknightArmorLVL` = this class's own level {level})"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: format!("class_feature.{book}.hellknight.hellknight_armor_benefits.bonus"),
+                value: bonus,
+                detail: format!(
+                    "Hellknight level {level} Hellknight Armor Benefits: restates the same \
+                     +{bonus} armor-check/max-Dex bonus above (corpus `BONUS:MISC|MAXDEX,\
+                     ACCHECK|HellknightArmorBonus`)"
+                ),
+            });
+        }
+    }
+}
+
+// ---- Adaptive Warrior (ultimate_psionics) ----
+
+/// `up_abilities_class.lst`, `KEY:Adaptive Warrior ~ Combine Fighting
+/// Styles`: `BONUS:VAR|CombineFightingStylesTimes|4+INT`.
+fn adaptive_warrior_combine_fighting_styles_times(
+    level: u8,
+    intelligence_modifier: i16,
+) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(4 + intelligence_modifier)
+}
+
+/// `up_abilities_class.lst`, `KEY:Adaptive Warrior ~ Counter Fighting
+/// Style`: `BONUS:VAR|CounterFightingStyleBonus|max(1,AdaptiveWarriorLVL/2)`.
+fn adaptive_warrior_counter_fighting_style_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) / 2).max(1))
+}
+
+/// `up_abilities_class.lst`, `KEY:Adaptive Warrior ~ Examine Technique`:
+/// `BONUS:VAR|ExamineTechniqueTargets|AdaptiveWarriorLVL`.
+fn adaptive_warrior_examine_technique_targets(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `up_abilities_class.lst`, `KEY:Adaptive Warrior ~ Extended
+/// Examination`: `BONUS:VAR|ExtendedExaminationBonus|AdaptiveWarriorLVL`.
+fn adaptive_warrior_extended_examination_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `up_abilities_class.lst`, `KEY:Adaptive Warrior ~ Mimic Skill`:
+/// `BONUS:VAR|MimicSkillRanks|AdaptiveWarriorLVL`.
+fn adaptive_warrior_mimic_skill_ranks(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn ground_adaptive_warrior_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ADAPTIVE_WARRIOR_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(times) =
+        adaptive_warrior_combine_fighting_styles_times(level, ability_modifiers.intelligence)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.adaptive_warrior.combine_fighting_styles.\
+                 times_per_day"
+                .to_owned(),
+            value: times,
+            detail: format!(
+                "Adaptive Warrior level {level} Combine Fighting Styles: {times} times per day \
+                 (corpus `BONUS:VAR|CombineFightingStylesTimes|4+INT`)"
+            ),
+        });
+    }
+    if let Some(bonus) = adaptive_warrior_counter_fighting_style_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.adaptive_warrior.counter_fighting_style.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Adaptive Warrior level {level} Counter Fighting Style: +{bonus} (corpus \
+                 `BONUS:VAR|CounterFightingStyleBonus|max(1,AdaptiveWarriorLVL/2)`)"
+            ),
+        });
+    }
+    if let Some(targets) = adaptive_warrior_examine_technique_targets(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.adaptive_warrior.examine_technique.targets"
+                .to_owned(),
+            value: targets,
+            detail: format!(
+                "Adaptive Warrior level {level} Examine Technique: {targets} (corpus \
+                 `BONUS:VAR|ExamineTechniqueTargets|AdaptiveWarriorLVL`)"
+            ),
+        });
+    }
+    if let Some(bonus) = adaptive_warrior_extended_examination_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.adaptive_warrior.extended_examination.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Adaptive Warrior level {level} Extended Examination: +{bonus} (corpus \
+                 `BONUS:VAR|ExtendedExaminationBonus|AdaptiveWarriorLVL`)"
+            ),
+        });
+    }
+    if let Some(ranks) = adaptive_warrior_mimic_skill_ranks(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.adaptive_warrior.mimic_skill.ranks".to_owned(),
+            value: ranks,
+            detail: format!(
+                "Adaptive Warrior level {level} Mimic Skill: {ranks} ranks (corpus \
+                 `BONUS:VAR|MimicSkillRanks|AdaptiveWarriorLVL`)"
+            ),
+        });
+    }
+}
+
+// ---- Sanguine Angel (adventurers_guide) ----
+
+/// `ag_abilities_class.lst`, `KEY:Sanguine Angel ~ Armored Angel`:
+/// `BONUS:VAR|ArmorTrainingLVL|SanguineAngelLVL|PREEQUIP:1,Gray Maiden
+/// Plate%`. Grounds the level magnitude only; this engine does not track
+/// which armor a character has equipped, so the `PREEQUIP` gate itself is
+/// not modelled. Granted from level 1 (no `PREVARGTEQ` on the token
+/// itself).
+fn sanguine_angel_armored_angel_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `ag_abilities_class.lst`, `KEY:Sanguine Angel ~ Mystique of Ardad
+/// Lili`: `SPELLS:Innate|CASTERLEVEL=TL|Dominate Person,10+TL/2+CHA` --
+/// the classic "ground the SLA triple" idiom (caster level and save DC),
+/// `TL` = total character level.
+fn sanguine_angel_mystique_dc(total_level: i16, charisma_modifier: i16) -> i16 {
+    10 + total_level / 2 + charisma_modifier
+}
+
+fn ground_sanguine_angel_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == SANGUINE_ANGEL_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(value) = sanguine_angel_armored_angel_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.sanguine_angel.armored_angel.level".to_owned(),
+            value,
+            detail: format!(
+                "Sanguine Angel level {level} Armored Angel: `ArmorTrainingLVL` = {value} \
+                 (corpus `BONUS:VAR|ArmorTrainingLVL|SanguineAngelLVL|...`). Grounds the \
+                 magnitude only; this engine does not track whether Gray Maiden Plate is \
+                 equipped"
+            ),
+        });
+    }
+    if level >= 1 {
+        let total_level = total_character_level(input);
+        let dc = sanguine_angel_mystique_dc(total_level, ability_modifiers.charisma);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.sanguine_angel.mystique_of_ardad_lili.caster_\
+                 level"
+                .to_owned(),
+            value: total_level,
+            detail: format!(
+                "Sanguine Angel Mystique of Ardad Lili: Dominate Person spell-like ability, \
+                 caster level {total_level} (corpus `SPELLS:Innate|CASTERLEVEL=TL|...`)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.sanguine_angel.mystique_of_ardad_lili.dc"
+                .to_owned(),
+            value: dc,
+            detail: format!(
+                "Sanguine Angel Mystique of Ardad Lili: Dominate Person save DC {dc} (corpus \
+                 `Dominate Person,10+TL/2+CHA`)"
+            ),
+        });
+    }
+}
+
+// ---- Body Snatcher (ultimate_psionics) ----
+
+/// `up_abilities_class.lst`, `KEY:Body Snatcher ~ Body Thief`:
+/// `BONUS:CASTERLEVEL|SPELL.Mind Switch|BodySnatcherLVL`.
+fn body_snatcher_body_thief_caster_level_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `up_abilities_class.lst`, `KEY:Body Snatcher ~ Death Is Only the
+/// Beginning`: `BONUS:CASTERLEVEL|SPELL.Mind Switch (True)|BodySnatcherLVL`.
+fn body_snatcher_death_is_only_the_beginning_caster_level_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `up_abilities_class.lst`, `KEY:Body Snatcher ~ Melding Exchange`:
+/// `BONUS:VAR|MeldingExchangeBonus|2*BodySnatcherLVL`.
+fn body_snatcher_melding_exchange_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 * i16::from(level))
+}
+
+fn ground_body_snatcher_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == BODY_SNATCHER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = body_snatcher_body_thief_caster_level_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.body_snatcher.body_thief.caster_level_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Body Snatcher level {level} Body Thief: +{bonus} caster level on Mind Switch \
+                 (corpus `BONUS:CASTERLEVEL|SPELL.Mind Switch|BodySnatcherLVL`). Grounds the \
+                 magnitude only: no Mind Switch total exists anywhere in this engine for it to \
+                 layer onto"
+            ),
+        });
+    }
+    if let Some(bonus) = body_snatcher_death_is_only_the_beginning_caster_level_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.body_snatcher.death_is_only_the_beginning.\
+                 caster_level_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Body Snatcher level {level} Death Is Only the Beginning: +{bonus} caster \
+                 level on Mind Switch (True) (corpus `BONUS:CASTERLEVEL|SPELL.Mind Switch \
+                 (True)|BodySnatcherLVL`)"
+            ),
+        });
+    }
+    if let Some(bonus) = body_snatcher_melding_exchange_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.body_snatcher.melding_exchange.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Body Snatcher level {level} Melding Exchange: +{bonus} (corpus \
+                 `BONUS:VAR|MeldingExchangeBonus|2*BodySnatcherLVL`)"
+            ),
+        });
+    }
+}
+
+// ---- Steel Falcon (adventurers_guide) ----
+
+/// `ag_abilities_class.lst`, `KEY:Steel Falcon ~ Chainbreaker`:
+/// `BONUS:SITUATION|Escape Artist=Escape manacles or ropes|10`.
+fn steel_falcon_chainbreaker_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Steel Falcon ~ Enemy of Slavers`:
+/// `BONUS:VAR|EnemyOfSlavers|2*(1+(SteelFalconLVL>=5)+(SteelFalconLVL>=9))`.
+fn steel_falcon_enemy_of_slavers_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 * (1 + i16::from(level >= 5) + i16::from(level >= 9)))
+}
+
+/// `ag_abilities_class.lst`, `KEY:Steel Falcon ~ Sailor and Survivalist`:
+/// `BONUS:SKILL|Profession (sailor)|SteelFalconLVL` (and the identical
+/// value restated for Survival checks made to get along in the wild or
+/// navigate).
+fn steel_falcon_sailor_and_survivalist_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn ground_steel_falcon_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == STEEL_FALCON_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = steel_falcon_chainbreaker_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.steel_falcon.chainbreaker.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Steel Falcon level {level} Chainbreaker: +{bonus} to escape manacles or ropes \
+                 (corpus `BONUS:SITUATION|Escape Artist=...|10`)"
+            ),
+        });
+    }
+    if let Some(bonus) = steel_falcon_enemy_of_slavers_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.steel_falcon.enemy_of_slavers.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Steel Falcon level {level} Enemy of Slavers: +{bonus} (corpus \
+                 `EnemyOfSlavers|2*(1+(SteelFalconLVL>=5)+(SteelFalconLVL>=9))`)"
+            ),
+        });
+    }
+    if let Some(bonus) = steel_falcon_sailor_and_survivalist_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.steel_falcon.sailor_and_survivalist.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Steel Falcon level {level} Sailor and Survivalist: +{bonus} on Profession \
+                 (sailor) and relevant Survival checks (corpus `BONUS:SKILL|Profession \
+                 (sailor)|SteelFalconLVL`)"
+            ),
+        });
+    }
+    if level >= 1 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.steel_falcon.talmandor_s_blessing.acrobatics_\
+                 bonus"
+                .to_owned(),
+            value: 10,
+            detail: "Steel Falcon Talmandor's Blessing: +10 on Acrobatics checks made when \
+                     jumping (corpus `BONUS:SITUATION|Acrobatics=When Jumping|10`)"
+                .to_owned(),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.steel_falcon.talmandor_s_blessing.perception_\
+                 bonus"
+                .to_owned(),
+            value: 4,
+            detail: "Steel Falcon Talmandor's Blessing: +4 on Perception checks (corpus \
+                     `BONUS:SKILL|Perception|4`)"
+                .to_owned(),
+        });
+    }
+}
+
+// ---- Lantern Bearer (adventurers_guide) ----
+
+/// `ag_abilities_class.lst`, `KEY:Lantern Bearer ~ Favored Enemy`:
+/// `BONUS:ABILITYPOOL|Lantern Bearer Favored Enemy|1+(LanternBearerLVL>=8)`.
+fn lantern_bearer_favored_enemy_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 8))
+}
+
+/// Same record's second pool: `BONUS:ABILITYPOOL|Lantern Bearer Favored
+/// Enemy Bonus|1|PREVARGTEQ:LanternBearerLVL,8`.
+fn lantern_bearer_favored_enemy_bonus_pool_size(level: u8) -> Option<i16> {
+    if level < 8 {
+        return None;
+    }
+    Some(1)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Lantern Bearer ~ Proven Weapon
+/// Familiarity`: `BONUS:WEAPONPROF=<group>|DAMAGE,TOHIT|1` (identical +1
+/// across every listed weapon group).
+fn lantern_bearer_proven_weapon_familiarity_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Lantern Bearer ~ Superior
+/// Discernment`: `BONUS:ABILITYPOOL|Lantern Bearer Discernment|1`.
+fn lantern_bearer_superior_discernment_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1)
+}
+
+fn ground_lantern_bearer_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == LANTERN_BEARER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = lantern_bearer_favored_enemy_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.lantern_bearer.favored_enemy.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Lantern Bearer level {level} Favored Enemy: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Lantern Bearer Favored Enemy|1+(LanternBearerLVL>=8)`). \
+                 Grounds the pool SIZE only"
+            ),
+        });
+    }
+    if let Some(pool) = lantern_bearer_favored_enemy_bonus_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.lantern_bearer.favored_enemy.bonus_pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Lantern Bearer level {level} Favored Enemy Bonus: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Lantern Bearer Favored Enemy Bonus|1|\
+                 PREVARGTEQ:LanternBearerLVL,8`)"
+            ),
+        });
+    }
+    if let Some(bonus) = lantern_bearer_proven_weapon_familiarity_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.lantern_bearer.proven_weapon_familiarity.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Lantern Bearer level {level} Proven Weapon Familiarity: +{bonus} damage and \
+                 attack with longbow, shortbow, longsword, short sword, and elven weapons \
+                 (corpus `BONUS:WEAPONPROF=...|DAMAGE,TOHIT|1`)"
+            ),
+        });
+    }
+    if let Some(pool) = lantern_bearer_superior_discernment_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.lantern_bearer.superior_discernment.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Lantern Bearer level {level} Superior Discernment: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Lantern Bearer Discernment|1`)"
+            ),
+        });
+    }
+}
+
+// ---- Storm Kindler (adventurers_guide) ----
+
+/// `ag_abilities_class.lst`, `KEY:Storm Kindler ~ Aura of Calm`:
+/// `BONUS:VAR|StormKindlerAuraRadius|5` (+5 more at levels 5, 7, 9).
+fn storm_kindler_aura_of_calm_radius(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(5 + 5 * i16::from(level >= 5) + 5 * i16::from(level >= 7) + 5 * i16::from(level >= 9))
+}
+
+/// Same record's second magnitude: `BONUS:VAR|StormKindlerAuraBonus|2`
+/// (+2 more at level 7).
+fn storm_kindler_aura_of_calm_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 + 2 * i16::from(level >= 7))
+}
+
+/// `ag_abilities_class.lst`, `KEY:Storm Kindler ~ Oceanic Spirit`:
+/// `BONUS:VAR|OceanicSpiritBonus|5` (+5 more at level 5, +10 more at
+/// level 9).
+fn storm_kindler_oceanic_spirit_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(5 + 5 * i16::from(level >= 5) + 10 * i16::from(level >= 9))
+}
+
+/// `ag_abilities_class.lst`, `KEY:Storm Kindler ~ Storm Shape`:
+/// `BONUS:VAR|StormShapeHeight|10*(1+min(5,StormKindlerLVL/2))`.
+fn storm_kindler_storm_shape_height(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10 * (1 + (i16::from(level) / 2).min(5)))
+}
+
+/// `ag_abilities_class.lst`, `KEY:Storm Kindler ~ Weather's Fury`:
+/// `BONUS:VAR|StormKindlerFury|3+(StormKindlerLVL>=8)+(StormKindlerLVL>=10)`.
+fn storm_kindler_weathers_fury_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(3 + i16::from(level >= 8) + i16::from(level >= 10))
+}
+
+fn ground_storm_kindler_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == STORM_KINDLER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(radius) = storm_kindler_aura_of_calm_radius(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.storm_kindler.aura_of_calm.radius".to_owned(),
+            value: radius,
+            detail: format!(
+                "Storm Kindler level {level} Aura of Calm: {radius} ft. radius (corpus \
+                 `StormKindlerAuraRadius`, stepping at levels 5, 7, 9)"
+            ),
+        });
+    }
+    if let Some(bonus) = storm_kindler_aura_of_calm_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.storm_kindler.aura_of_calm.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Storm Kindler level {level} Aura of Calm: +{bonus} save bonus within the aura \
+                 (corpus `StormKindlerAuraBonus`, stepping at level 7)"
+            ),
+        });
+    }
+    if let Some(bonus) = storm_kindler_oceanic_spirit_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.storm_kindler.oceanic_spirit.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Storm Kindler level {level} Oceanic Spirit: +{bonus} electricity/sonic \
+                 resistance and Fly/Swim (corpus `OceanicSpiritBonus`, stepping at levels 5, 9)"
+            ),
+        });
+    }
+    if let Some(height) = storm_kindler_storm_shape_height(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.storm_kindler.storm_shape.height".to_owned(),
+            value: height,
+            detail: format!(
+                "Storm Kindler level {level} Storm Shape: {height} ft. tall (corpus \
+                 `StormShapeHeight|10*(1+min(5,StormKindlerLVL/2))`)"
+            ),
+        });
+    }
+    if let Some(bonus) = storm_kindler_weathers_fury_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.storm_kindler.weathers_fury.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Storm Kindler level {level} Weather's Fury: +{bonus} damage per die (corpus \
+                 `StormKindlerFury|3+(StormKindlerLVL>=8)+(StormKindlerLVL>=10)`)"
+            ),
+        });
+    }
+}
+
+// ---- Westcrown Devil (adventurers_guide) ----
+
+/// `ag_abilities_class.lst`, `KEY:Westcrown Devil ~ Council's Secret`:
+/// `BONUS:ABILITYPOOL|Rogue Talent|WestcrownDevilLVL/2`.
+fn westcrown_devil_council_secret_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Westcrown Devil ~ Founders' Favor`:
+/// `BONUS:VAR|FoundersFavorPool|WestcrownDevilLVL+max(INT,WIS,CHA)`.
+fn westcrown_devil_founders_favor_pool(level: u8, max_mental_modifier: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) + max_mental_modifier)
+}
+
+/// Same record's second magnitude: `BONUS:VAR|FoundersFavorDC|
+/// 10+WestcrownDevilLVL/2+max(INT,WIS,CHA)`.
+fn westcrown_devil_founders_favor_dc(level: u8, max_mental_modifier: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10 + i16::from(level) / 2 + max_mental_modifier)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Westcrown Devil ~ Sneak Attack`:
+/// `BONUS:VAR|SneakAttackDice|WestcrownDevilLVL/3`.
+fn westcrown_devil_sneak_attack_dice(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 3)
+}
+
+fn ground_westcrown_devil_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == WESTCROWN_DEVIL_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+    let max_mental = ability_modifiers
+        .intelligence
+        .max(ability_modifiers.wisdom)
+        .max(ability_modifiers.charisma);
+
+    if let Some(pool) = westcrown_devil_council_secret_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.westcrown_devil.council_s_secret.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Westcrown Devil level {level} Council's Secret: a pool of {pool} rogue \
+                 talents (corpus `BONUS:ABILITYPOOL|Rogue Talent|WestcrownDevilLVL/2`)"
+            ),
+        });
+    }
+    if let Some(pool) = westcrown_devil_founders_favor_pool(level, max_mental) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.westcrown_devil.founders_favor.pool".to_owned(),
+            value: pool,
+            detail: format!(
+                "Westcrown Devil level {level} Founders' Favor: a pool of {pool} (corpus \
+                 `FoundersFavorPool|WestcrownDevilLVL+max(INT,WIS,CHA)`)"
+            ),
+        });
+    }
+    if let Some(dc) = westcrown_devil_founders_favor_dc(level, max_mental) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.westcrown_devil.founders_favor.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Westcrown Devil level {level} Founders' Favor DC {dc} (corpus \
+                 `FoundersFavorDC|10+WestcrownDevilLVL/2+max(INT,WIS,CHA)`)"
+            ),
+        });
+    }
+    if let Some(dice) = westcrown_devil_sneak_attack_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.westcrown_devil.sneak_attack.dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Westcrown Devil level {level} Sneak Attack: +{dice}d6 (corpus \
+                 `SneakAttackDice|WestcrownDevilLVL/3`)"
+            ),
+        });
+    }
+}
+
+// ---- Pyrokineticist (ultimate_psionics) ----
+
+fn pyrokineticist_bolt_of_fire_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `up_abilities_class.lst`, `KEY:Pyrokineticist ~ Fire Adaptation`:
+/// `BONUS:VAR|FireAdaptation|4*floor((PyrokineticistLVL+3)/5)`.
+fn pyrokineticist_fire_adaptation_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(4 * ((i16::from(level) + 3) / 5))
+}
+
+/// Same record's second magnitude: `BONUS:VAR|FireResistanceBonus|
+/// 10*floor((PyrokineticistLVL+3)/5)`.
+fn pyrokineticist_fire_adaptation_resistance(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10 * ((i16::from(level) + 3) / 5))
+}
+
+/// `up_abilities_class.lst`, `KEY:Pyrokineticist ~ Hand Afire`:
+/// `BONUS:VAR|HandAfire|2*floor((PyrokineticistLVL+4)/6)`.
+fn pyrokineticist_hand_afire_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 * ((i16::from(level) + 4) / 6))
+}
+
+/// `up_abilities_class.lst`, `KEY:Pyrokineticist ~ Leech Heat`:
+/// `BONUS:VAR|LeechHeat|2*floor((PyrokineticistLVL-3)/3)`. Negative below
+/// level 4 -- `None` there.
+fn pyrokineticist_leech_heat_bonus(level: u8) -> Option<i16> {
+    let value = 2 * ((i16::from(level) - 3) / 3);
+    if value <= 0 {
+        return None;
+    }
+    Some(value)
+}
+
+/// `up_abilities_class.lst`, `KEY:Pyrokineticist ~ Manipulate Blaze`:
+/// `BONUS:VAR|ManipulateBlazeRange|(25+5*floor(PyrokineticistLVL/2))`.
+fn pyrokineticist_manipulate_blaze_range(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(25 + 5 * (i16::from(level) / 2))
+}
+
+/// `up_abilities_class.lst`, `KEY:Pyrokineticist ~ Nimbus`:
+/// `BONUS:VAR|NimbusDuration|PyrokineticistLVL`.
+fn pyrokineticist_nimbus_duration(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Same record's magnitude: `BONUS:VAR|Nimbus|2*floor((PyrokineticistLVL-2)/3)`.
+/// Negative below level 3 -- `None` there. (`NimbusTimes` -- a shared
+/// variable also incremented by Fire Soul's own token -- is not grounded
+/// here: this record's own contribution cannot be cleanly separated from
+/// Fire Soul's without double-counting.)
+fn pyrokineticist_nimbus_bonus(level: u8) -> Option<i16> {
+    let value = 2 * ((i16::from(level) - 2) / 3);
+    if value <= 0 {
+        return None;
+    }
+    Some(value)
+}
+
+fn pyrokineticist_penetrating_fire_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `up_abilities_class.lst`, `KEY:Pyrokineticist ~ Weapon Afire`:
+/// `BONUS:VAR|WeaponAfire|2*floor((PyrokineticistLVL)/4)`.
+fn pyrokineticist_weapon_afire_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 * (i16::from(level) / 4))
+}
+
+fn ground_pyrokineticist_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == PYROKINETICIST_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = pyrokineticist_bolt_of_fire_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.bolt_of_fire.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pyrokineticist level {level} Bolt of Fire: +{bonus} fire damage (corpus \
+                 `BONUS:VAR|BoltFire|PyrokineticistLVL`)"
+            ),
+        });
+    }
+    if let Some(bonus) = pyrokineticist_fire_adaptation_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.fire_adaptation.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pyrokineticist level {level} Fire Adaptation: +{bonus} (corpus \
+                 `FireAdaptation|4*floor((PyrokineticistLVL+3)/5)`)"
+            ),
+        });
+    }
+    if let Some(resist) = pyrokineticist_fire_adaptation_resistance(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.fire_adaptation.fire_resistance"
+                .to_owned(),
+            value: resist,
+            detail: format!(
+                "Pyrokineticist level {level} Fire Adaptation: fire resistance {resist} \
+                 (corpus `FireResistanceBonus|10*floor((PyrokineticistLVL+3)/5)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = pyrokineticist_hand_afire_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.hand_afire.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pyrokineticist level {level} Hand Afire: +{bonus} fire damage (corpus \
+                 `HandAfire|2*floor((PyrokineticistLVL+4)/6)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = pyrokineticist_leech_heat_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.leech_heat.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pyrokineticist level {level} Leech Heat: +{bonus} (corpus \
+                 `LeechHeat|2*floor((PyrokineticistLVL-3)/3)`)"
+            ),
+        });
+    }
+    if let Some(range) = pyrokineticist_manipulate_blaze_range(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.manipulate_blaze.range"
+                .to_owned(),
+            value: range,
+            detail: format!(
+                "Pyrokineticist level {level} Manipulate Blaze: range {range} ft. (corpus \
+                 `ManipulateBlazeRange|(25+5*floor(PyrokineticistLVL/2))`)"
+            ),
+        });
+    }
+    if let Some(duration) = pyrokineticist_nimbus_duration(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.nimbus.duration_rounds"
+                .to_owned(),
+            value: duration,
+            detail: format!(
+                "Pyrokineticist level {level} Nimbus: lasts {duration} rounds (corpus \
+                 `NimbusDuration|PyrokineticistLVL`)"
+            ),
+        });
+    }
+    if let Some(bonus) = pyrokineticist_nimbus_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.nimbus.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pyrokineticist level {level} Nimbus: +{bonus} fire damage per die (corpus \
+                 `Nimbus|2*floor((PyrokineticistLVL-2)/3)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = pyrokineticist_penetrating_fire_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.penetrating_fire.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pyrokineticist level {level} Penetrating Fire: +{bonus} (corpus \
+                 `PenetratingFire|PyrokineticistLVL`)"
+            ),
+        });
+    }
+    if let Some(bonus) = pyrokineticist_weapon_afire_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.pyrokineticist.weapon_afire.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pyrokineticist level {level} Weapon Afire: +{bonus} fire damage (corpus \
+                 `WeaponAfire|2*floor((PyrokineticistLVL)/4)`)"
+            ),
+        });
+    }
+}
+
+// ---- Aspis Agent (adventurers_guide) ----
+
+fn aspis_agent_agency_secrets_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+fn aspis_agent_sneak_attack_dice(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 9))
+}
+
+fn aspis_agent_trap_sense_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level) / 3)
+}
+
+fn aspis_agent_trapfinding_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) / 2).max(1))
+}
+
+fn ground_aspis_agent_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ASPIS_AGENT_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = aspis_agent_agency_secrets_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.aspis_agent.agency_secrets.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Aspis Agent level {level} Agency Secrets: a pool of {pool} (corpus \
+                 `AspisAgencySecretsCount|AspisAgentLVL/2`)"
+            ),
+        });
+    }
+    if let Some(dice) = aspis_agent_sneak_attack_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.aspis_agent.sneak_attack.dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Aspis Agent level {level} Sneak Attack: +{dice}d6 (corpus `SneakAttackDice|1` \
+                 plus 1 more at level 9)"
+            ),
+        });
+    }
+    if let Some(bonus) = aspis_agent_trap_sense_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.aspis_agent.trap_sense.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Aspis Agent level {level} Trap Sense: +{bonus} (corpus \
+                 `TrapSenseBonus|1+AspisAgentTrapSenseLVL/3`)"
+            ),
+        });
+    }
+    if let Some(bonus) = aspis_agent_trapfinding_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.aspis_agent.trapfinding.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Aspis Agent level {level} Trapfinding: +{bonus} (corpus \
+                 `TrapfindingBonus|max(TrapfindingLVL/2,1)`)"
+            ),
+        });
+    }
+}
+
+// ---- Gray Corsair (adventurers_guide) ----
+
+fn gray_corsair_favored_port_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2)
+}
+
+fn gray_corsair_slaver_slayer_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 * (1 + i16::from(level >= 6) + i16::from(level >= 9)))
+}
+
+fn ground_gray_corsair_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == GRAY_CORSAIR_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = gray_corsair_favored_port_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.gray_corsair.favored_port.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Gray Corsair level {level} Favored Port: +{bonus} on Bluff/Diplomacy/\
+                 Intimidate/Knowledge (local) in a favored port (corpus \
+                 `BONUS:SITUATION|...=In favored port|+2`)"
+            ),
+        });
+    }
+    if let Some(bonus) = gray_corsair_slaver_slayer_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.gray_corsair.slaver_slayer.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Gray Corsair level {level} Slaver Slayer: +{bonus} (corpus \
+                 `SlaverSlayerBonus|2*(1+(GrayCorsairLVL>=6)+(GrayCorsairLVL>=9))`)"
+            ),
+        });
+    }
+}
+
+// ---- Pathfinder Savant (adventurers_guide) ----
+
+/// `ag_classes.lst`'s own level-1 row: `BONUS:VAR|PaSSkillBonus|
+/// max(1,CL/2)`, applied on the record's own `BONUS:SKILL|Knowledge
+/// (Arcana),Spellcraft,Use Magic Device|PaSSkillBonus` token -- the same
+/// "external class-table sets the DEFINE'd variable" cross-file idiom
+/// `nature_warden_companion_bond_level` already established. `CL` here is
+/// this class's own raw level -- the same "bare `CL` on a class's own
+/// table row means that class's own level, not total character level"
+/// idiom already confirmed for `PaDLVL|CL`/`TwilightTalonLVL|CL`/
+/// `GoldenLegionnaireLVL|CL`, all already shipped in this file treating
+/// it as the raw class level.
+fn pathfinder_savant_master_scholar_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) / 2).max(1))
+}
+
+/// `ag_classes.lst`'s own level-2 row: `BONUS:VAR|PaSEsotericSpells|
+/// CL-1`, feeding the record's own `BONUS:ABILITYPOOL|Esoteric Magic
+/// Spell|PaSEsotericSpells` pool.
+fn pathfinder_savant_esoteric_magic_pool_size(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(i16::from(level) - 1)
+}
+
+/// `ag_classes.lst`'s own level-4 row: `BONUS:VAR|PaSIdentifyTimes|
+/// CL/2`, feeding `SPELLS:...|TIMES=PaSIdentifyTimes|...|Identify`.
+fn pathfinder_savant_quick_identification_times(level: u8) -> Option<i16> {
+    if level < 4 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+/// `ag_classes.lst`'s own level-5 row: `BONUS:VAR|PaSSaveBonus|CL`.
+/// Grounds the magnitude only: the ability's own record carries no
+/// mechanical `BONUS:SAVE` token, only a DESC/ASPECT display substitution.
+fn pathfinder_savant_sigil_master_save_bonus(level: u8) -> Option<i16> {
+    if level < 5 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `ag_classes.lst`'s own level-6 row: `BONUS:VAR|PaSAnalyzeDuration|CL`
+/// (this class's own raw level again); the record's own `SPELLS:Pathfinder
+/// Savant|TIMES=PaSLvl|...|CASTERLEVEL=PaSLvl|Analyze Dweomer` token uses
+/// `PaSLvl` directly -- also this class's own raw level (`DEFINE:PaSLVL|0`
+/// / `BONUS:VAR|PaSLVL|CL` on the class's own base row).
+fn pathfinder_savant_analyze_dweomer_times_and_caster_level(level: u8) -> Option<i16> {
+    if level < 6 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn ground_pathfinder_savant_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == PATHFINDER_SAVANT_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = pathfinder_savant_master_scholar_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_savant.master_scholar.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pathfinder Savant level {level} Master Scholar: +{bonus} on Knowledge \
+                 (arcana)/Spellcraft/Use Magic Device (corpus `PaSSkillBonus|max(1,CL/2)`)"
+            ),
+        });
+    }
+    if let Some(pool) = pathfinder_savant_esoteric_magic_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_savant.esoteric_magic.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Pathfinder Savant level {level} Esoteric Magic: a pool of {pool} (corpus \
+                 `PaSEsotericSpells|CL-1`)"
+            ),
+        });
+    }
+    if let Some(times) = pathfinder_savant_quick_identification_times(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_savant.quick_identification.times_\
+                 per_day"
+                .to_owned(),
+            value: times,
+            detail: format!(
+                "Pathfinder Savant level {level} Quick Identification: {times} times per day \
+                 (corpus `PaSIdentifyTimes|CL/2`)"
+            ),
+        });
+    }
+    if let Some(bonus) = pathfinder_savant_sigil_master_save_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_savant.sigil_master.save_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Pathfinder Savant level {level} Sigil Master: +{bonus} on saves against \
+                 writing-based magical traps (corpus `PaSSaveBonus|CL`)"
+            ),
+        });
+    }
+    if let Some(value) = pathfinder_savant_analyze_dweomer_times_and_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.pathfinder_savant.analyze_dweomer.times_per_\
+                 day"
+                .to_owned(),
+            value,
+            detail: format!(
+                "Pathfinder Savant level {level} Analyze Dweomer: {value} rounds per day, \
+                 caster level {value} (corpus `SPELLS:Pathfinder Savant|TIMES=PaSLvl|...|\
+                 CASTERLEVEL=PaSLvl|Analyze Dweomer`, `PaSLvl` = this class's own level)"
+            ),
+        });
+    }
+}
+
+// ---- Rivethun Emissary (adventurers_guide) ----
+
+fn rivethun_emissary_enhanced_spirit_animal_ep(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 + i16::from(level >= 5))
+}
+
+fn rivethun_emissary_sixth_sense_uses(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn rivethun_emissary_spirit_animal_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn rivethun_emissary_spirit_bond_hex_dc(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+fn rivethun_emissary_spirit_bond_hex_ability_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn ground_rivethun_emissary_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == RIVETHUN_EMISSARY_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(ep) = rivethun_emissary_enhanced_spirit_animal_ep(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.rivethun_emissary.enhanced_spirit_animal.\
+                 evolution_points"
+                .to_owned(),
+            value: ep,
+            detail: format!(
+                "Rivethun Emissary level {level} Enhanced Spirit Animal: {ep} evolution points \
+                 (corpus `FamiliarEP|2` plus 1 more at level 5)"
+            ),
+        });
+    }
+    if level >= 1 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.rivethun_emissary.parley.uses_per_day"
+                .to_owned(),
+            value: 3,
+            detail: "Rivethun Emissary Parley: 3 times per day (corpus `SPELLS:Innate|\
+                     TIMES=3|...`)"
+                .to_owned(),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.rivethun_emissary.parley.dc".to_owned(),
+            value: 12 + ability_modifiers.charisma,
+            detail: format!(
+                "Rivethun Emissary Parley: Rivethun Calm Spirit save DC {} (corpus \
+                 `Rivethun Calm Spirit,12+CHA`)",
+                12 + ability_modifiers.charisma
+            ),
+        });
+    }
+    if let Some(uses) = rivethun_emissary_sixth_sense_uses(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.rivethun_emissary.sixth_sense.uses_per_day"
+                .to_owned(),
+            value: uses,
+            detail: format!(
+                "Rivethun Emissary level {level} Sixth Sense: {uses} times per day (corpus \
+                 `SPELLS:Innate|TIMES=RivethunEmissaryLVL|...`)"
+            ),
+        });
+    }
+    if let Some(value) = rivethun_emissary_spirit_animal_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.rivethun_emissary.spirit_animal.level"
+                .to_owned(),
+            value,
+            detail: format!(
+                "Rivethun Emissary level {level} Spirit Animal: `ShamanSpiritLVL` = \
+                 `FamiliarMasterLVL` = {value} (corpus `ShamanSpiritLVL|RivethunEmissaryLVL`)"
+            ),
+        });
+    }
+    if let Some(dc) = rivethun_emissary_spirit_bond_hex_dc(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.rivethun_emissary.spirit_bond.hex_dc"
+                .to_owned(),
+            value: dc,
+            detail: format!(
+                "Rivethun Emissary level {level} Spirit Bond hex DC bonus {dc} (corpus \
+                 `ShamanHexDC|RivethunEmissaryLVL/2`)"
+            ),
+        });
+    }
+    if let Some(value) = rivethun_emissary_spirit_bond_hex_ability_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.rivethun_emissary.spirit_bond.hex_ability_\
+                 level"
+                .to_owned(),
+            value,
+            detail: format!(
+                "Rivethun Emissary level {level} Spirit Bond: `ShamanHexAbilityLVL` = {value} \
+                 (corpus `ShamanHexAbilityLVL|RivethunEmissaryLVL`)"
+            ),
+        });
+    }
+}
+
+// ---- Student of War (adventurers_guide) ----
+
+fn student_of_war_additional_skill_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 1) / 2)
+}
+
+/// `ag_abilities_class.lst`, `KEY:Student of War ~ Mind Over Metal`:
+/// `BONUS:COMBAT|AC|INT-DEX|...|PREMULT:2,[no armor/shield],[INT>DEX]`.
+/// Grounds the magnitude only when Intelligence exceeds Dexterity (the
+/// condition the corpus record itself gates on); this engine does not
+/// track whether armor or a shield is currently equipped.
+fn student_of_war_mind_over_metal_ac_bonus(
+    intelligence_modifier: i16,
+    dexterity_modifier: i16,
+) -> Option<i16> {
+    if intelligence_modifier <= dexterity_modifier {
+        return None;
+    }
+    Some(intelligence_modifier - dexterity_modifier)
+}
+
+fn ground_student_of_war_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == STUDENT_OF_WAR_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = student_of_war_additional_skill_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.student_of_war.additional_skill.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Student of War level {level} Additional Skill: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Student of War Skill|(SoWLvl+1)/2`)"
+            ),
+        });
+    }
+    if let Some(bonus) = student_of_war_mind_over_metal_ac_bonus(
+        ability_modifiers.intelligence,
+        ability_modifiers.dexterity,
+    ) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.student_of_war.mind_over_metal.ac_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Student of War level {level} Mind Over Metal: +{bonus} AC (corpus \
+                 `BONUS:COMBAT|AC|INT-DEX|...`, this character's Intelligence modifier exceeds \
+                 Dexterity). Grounds the magnitude only; this engine does not track whether \
+                 armor or a shield is equipped, which the corpus record itself also requires"
+            ),
+        });
+    }
+}
+
+// ---- Diabolist (book_of_the_damned_volume_1) ----
+
+fn diabolist_channel_hellfire_times(level: u8, charisma_modifier: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(charisma_modifier.max(1))
+}
+
+fn diabolist_infernal_transport_times(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2)
+}
+
+/// `botd1_classes.lst`'s own level-1 row: `BONUS:VAR|DiabolistDamnedLVL|
+/// CL` -- this class's own raw level, the same "bare `CL` on a class's own
+/// table row means that class's own level, not total character level"
+/// idiom already confirmed for `PaDLVL|CL`/`TwilightTalonLVL|CL`/
+/// `GoldenLegionnaireLVL|CL`, all already shipped in this file treating it
+/// as the raw class level.
+fn diabolist_damned_dc(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10 + i16::from(level))
+}
+
+/// Same level-1 row: `BONUS:VAR|DiabolistInfernalCharismaLVL|CL`.
+fn diabolist_infernal_charisma_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 * ((i16::from(level) + 2) / 3))
+}
+
+/// `botd1_classes.lst`'s own level-3 row: `BONUS:VAR|DiabolistHeresyLVL|
+/// CL`.
+fn diabolist_heresy_bonus(level: u8) -> Option<i16> {
+    if level < 3 {
+        return None;
+    }
+    Some(2 * ((i16::from(level) + 3) / 6))
+}
+
+/// `botd1_classes.lst`'s own level-8 row: `BONUS:VAR|
+/// DiabolistHellfireRayLVL|CL`.
+fn diabolist_hellfire_ray_caster_level(level: u8) -> Option<i16> {
+    if level < 8 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn ground_diabolist_class_features(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == DIABOLIST_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+    let charisma = ability_modifiers.charisma;
+
+    if let Some(times) = diabolist_channel_hellfire_times(level, charisma) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.book_of_the_damned_volume_1.diabolist.channel_hellfire.times_\
+                 per_day"
+                .to_owned(),
+            value: times,
+            detail: format!(
+                "Diabolist level {level} Channel Hellfire: {times} times per day (corpus \
+                 `DiabolistChannelHellfireTimes|max(1,CHA)`)"
+            ),
+        });
+    }
+    if let Some(times) = diabolist_infernal_transport_times(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.book_of_the_damned_volume_1.diabolist.infernal_transport.times_\
+                 per_day"
+                .to_owned(),
+            value: times,
+            detail: format!(
+                "Diabolist level {level} Infernal Transport: {times} times per day (corpus \
+                 `DiabolistInfernalTransportTimes|2`)"
+            ),
+        });
+    }
+    if let Some(dc) = diabolist_damned_dc(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.book_of_the_damned_volume_1.diabolist.damned.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Diabolist level {level} Damned, DC {dc} (corpus `DiabolistDamnedDC|\
+                 10+DiabolistDamnedLVL`, `DiabolistDamnedLVL` = this class's own level \
+                 {level})"
+            ),
+        });
+    }
+    if let Some(bonus) = diabolist_infernal_charisma_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.book_of_the_damned_volume_1.diabolist.infernal_charisma.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Diabolist level {level} Infernal Charisma: +{bonus} Charisma-based check \
+                 bonus (corpus `DiabolistInfernalCharismaBonus|\
+                 floor((DiabolistInfernalCharismaLVL+2)/3)*2`)"
+            ),
+        });
+    }
+    if let Some(bonus) = diabolist_heresy_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.book_of_the_damned_volume_1.diabolist.heresy.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Diabolist level {level} Heresy: +{bonus} caster level check bonus (corpus \
+                 `DiabolistHeresyBonus|floor((DiabolistHeresyLVL+3)/6)*2`)"
+            ),
+        });
+    }
+    if let Some(caster_level) = diabolist_hellfire_ray_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.book_of_the_damned_volume_1.diabolist.hellfire_ray.caster_level"
+                .to_owned(),
+            value: caster_level,
+            detail: format!(
+                "Diabolist level {level} Hellfire Ray: 2 times per day, caster level \
+                 {caster_level} (corpus `SPELLS:Class|TIMES=2|CASTERLEVEL=\
+                 DiabolistHellFireRayLVL|Hellfire Ray,16+CHA`)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.book_of_the_damned_volume_1.diabolist.hellfire_ray.dc".to_owned(),
+            value: 16 + charisma,
+            detail: format!(
+                "Diabolist level {level} Hellfire Ray, DC {} (corpus `Hellfire Ray,16+CHA`)",
+                16 + charisma
+            ),
+        });
+    }
+}
+
+// ---- Lion Blade (inner_sea_intrigue) ----
+
+fn lion_blade_expeditious_advance_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10)
+}
+
+fn lion_blade_silent_soul_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10)
+}
+
+fn lion_blade_sneak_attack_dice(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level >= 2) + i16::from(level >= 6) + i16::from(level >= 10))
+}
+
+fn ground_lion_blade_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == LION_BLADE_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = lion_blade_expeditious_advance_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_intrigue.lion_blade.expeditious_advance.speed_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Lion Blade level {level} Expeditious Advance: +{bonus} ft. movement speed \
+                 (corpus `BONUS:MOVEADD|TYPE=Walk|10|...`), while lightly loaded and not \
+                 wearing medium or heavy armor -- this engine does not track encumbrance or \
+                 armor weight, so the gate is not itself modelled"
+            ),
+        });
+    }
+    if let Some(bonus) = lion_blade_silent_soul_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_intrigue.lion_blade.silent_soul.stealth_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Lion Blade level {level} Silent Soul: +{bonus} Stealth (corpus \
+                 `BONUS:SKILL|Stealth|10|TYPE=Circumstance`)"
+            ),
+        });
+    }
+    if let Some(dice) = lion_blade_sneak_attack_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_intrigue.lion_blade.sneak_attack.dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Lion Blade level {level} Sneak Attack: +{dice}d6 (corpus `SneakAttackDice|1` \
+                 at levels 2, 6, 10)"
+            ),
+        });
+    }
+}
+
+// ---- Bellflower Tiller (adventurers_guide) ----
+
+fn bellflower_tiller_bellflower_crop_range(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(30 + 30 * i16::from(level >= 7))
+}
+
+fn bellflower_tiller_crop_guardian_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn bellflower_tiller_sneak_attack_dice(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 3)
+}
+
+fn bellflower_tiller_swift_sower_speed(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10 + 10 * i16::from(level >= 6))
+}
+
+fn bellflower_tiller_teamwork_feat_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 6) + i16::from(level >= 10))
+}
+
+fn ground_bellflower_tiller_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == BELLFLOWER_TILLER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(range) = bellflower_tiller_bellflower_crop_range(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.bellflower_tiller.bellflower_crop.range"
+                .to_owned(),
+            value: range,
+            detail: format!(
+                "Bellflower Tiller level {level} Bellflower Crop: range {range} ft. (corpus \
+                 `BellflowerCropRange|30` plus 30 more at level 7)"
+            ),
+        });
+    }
+    if let Some(bonus) = bellflower_tiller_crop_guardian_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.bellflower_tiller.crop_guardian.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Bellflower Tiller level {level} Crop Guardian: `CropVigilanceBonusLVL` = \
+                 {bonus} (corpus `CropVigilanceBonusLVL|BellflowerTillerLVL`)"
+            ),
+        });
+    }
+    if let Some(dice) = bellflower_tiller_sneak_attack_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.bellflower_tiller.sneak_attack.dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Bellflower Tiller level {level} Sneak Attack: +{dice}d6 (corpus \
+                 `SneakAttackDice|BellflowerTillerLVL/3`)"
+            ),
+        });
+    }
+    if let Some(speed) = bellflower_tiller_swift_sower_speed(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.bellflower_tiller.swift_sower.speed_bonus"
+                .to_owned(),
+            value: speed,
+            detail: format!(
+                "Bellflower Tiller level {level} Swift Sower: +{speed} ft. movement (corpus \
+                 `SwiftSowerSpeed|10` plus 10 more at level 6)"
+            ),
+        });
+    }
+    if let Some(pool) = bellflower_tiller_teamwork_feat_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.bellflower_tiller.teamwork_feat.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Bellflower Tiller level {level} Teamwork Feat: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Teamwork Feat|1+(BellflowerTillerLVL>=6)+\
+                 (BellflowerTillerLVL>=10)`)"
+            ),
+        });
+    }
+}
+
+// ---- Hellknight Signifer (adventurers_guide) ----
+
+fn hellknight_signifer_assiduous_gaze_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 7))
+}
+
+fn hellknight_signifer_signifer_mask_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2)
+}
+
+fn hellknight_signifer_infernal_resilience_dr(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(5)
+}
+
+fn ground_hellknight_signifer_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == HELLKNIGHT_SIGNIFER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = hellknight_signifer_assiduous_gaze_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight_signifer.assiduous_gaze.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Hellknight Signifer level {level} Assiduous Gaze: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Assiduous Gaze Ability|1+(HellknightSigniferLVL>=7)`)"
+            ),
+        });
+    }
+    if let Some(bonus) = hellknight_signifer_signifer_mask_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight_signifer.signifer_mask.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Hellknight Signifer level {level} Signifer Mask: +{bonus} Sense Motive while \
+                 wearing the mask (corpus `BONUS:SKILL|Sense Motive|2|TYPE=Competence|\
+                 PREEQUIP:1,Signifer Mask%`). Grounds the magnitude only; this engine does not \
+                 track whether the mask is equipped"
+            ),
+        });
+    }
+    if let Some(dr) = hellknight_signifer_infernal_resilience_dr(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.hellknight_signifer.infernal_resilience.dr"
+                .to_owned(),
+            value: dr,
+            detail: format!(
+                "Hellknight Signifer level {level} Infernal Resilience: DR {dr}/chaotic \
+                 (corpus `DR:5/Chaotic`)"
+            ),
+        });
+    }
+}
+
+// ---- Mystic Archer (ultimate_psionics) ----
+
+/// `up_classes.lst`'s own level-3 row grants Heightened Senses;
+/// `up_abilities_class.lst`'s own token: `BONUS:VAR|HeightenedSensesRange|
+/// 5*(MysticArcherLVL-2)`.
+fn mystic_archer_heightened_senses_range(level: u8) -> Option<i16> {
+    if level < 3 {
+        return None;
+    }
+    Some(5 * (i16::from(level) - 2))
+}
+
+/// Granted at level 2 (`up_classes.lst`'s own level-2 row). `30 +
+/// HeightenedSensesRange` once Heightened Senses (level 3+) applies.
+fn mystic_archer_blindsense_range(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(30 + mystic_archer_heightened_senses_range(level).unwrap_or(0))
+}
+
+/// Granted at level 6.
+fn mystic_archer_blindsight_range(level: u8) -> Option<i16> {
+    if level < 6 {
+        return None;
+    }
+    Some(30 + mystic_archer_heightened_senses_range(level).unwrap_or(0))
+}
+
+/// Granted at level 4.
+fn mystic_archer_tremorsense_range(level: u8) -> Option<i16> {
+    if level < 4 {
+        return None;
+    }
+    Some(30 + mystic_archer_heightened_senses_range(level).unwrap_or(0))
+}
+
+/// Granted at level 1: `BONUS:VAR|InevitableStrikeTimes|
+/// (MysticArcherLVL+1)/2`.
+fn mystic_archer_inevitable_strike_uses(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 1) / 2)
+}
+
+/// Granted at level 2: `BONUS:VAR|RangedSneakAttack|
+/// floor((MysticArcherLVL+1)/3)`.
+fn mystic_archer_ranged_sneak_attack_dice(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some((i16::from(level) + 1) / 3)
+}
+
+/// Granted at level 7: `SPELLS:Innate|TIMES=1|...|Pierce the Veils`.
+fn mystic_archer_unhindered_vision_uses(level: u8) -> Option<i16> {
+    if level < 7 {
+        return None;
+    }
+    Some(1)
+}
+
+fn ground_mystic_archer_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == MYSTIC_ARCHER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(range) = mystic_archer_heightened_senses_range(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.mystic_archer.heightened_senses.range"
+                .to_owned(),
+            value: range,
+            detail: format!(
+                "Mystic Archer level {level} Heightened Senses: {range} ft. (corpus \
+                 `HeightenedSensesRange|5*(MysticArcherLVL-2)`)"
+            ),
+        });
+    }
+    if let Some(range) = mystic_archer_blindsense_range(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.mystic_archer.blindsense.range".to_owned(),
+            value: range,
+            detail: format!(
+                "Mystic Archer level {level} Blindsense: {range} ft. (corpus \
+                 `BlindsenseRange|30`, plus `HeightenedSensesRange` once granted)"
+            ),
+        });
+    }
+    if let Some(range) = mystic_archer_blindsight_range(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.mystic_archer.blindsight.range".to_owned(),
+            value: range,
+            detail: format!(
+                "Mystic Archer level {level} Blindsight: {range} ft. (corpus \
+                 `BlindsightRange|30`, plus `HeightenedSensesRange`)"
+            ),
+        });
+    }
+    if let Some(range) = mystic_archer_tremorsense_range(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.mystic_archer.tremorsense.range".to_owned(),
+            value: range,
+            detail: format!(
+                "Mystic Archer level {level} Tremorsense: {range} ft. (corpus \
+                 `TremorsenseRange|30`, plus `HeightenedSensesRange`)"
+            ),
+        });
+    }
+    if let Some(uses) = mystic_archer_inevitable_strike_uses(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.mystic_archer.inevitable_strike.uses_per_day"
+                .to_owned(),
+            value: uses,
+            detail: format!(
+                "Mystic Archer level {level} Inevitable Strike: {uses} times per day (corpus \
+                 `InevitableStrikeTimes|(MysticArcherLVL+1)/2`)"
+            ),
+        });
+    }
+    if let Some(dice) = mystic_archer_ranged_sneak_attack_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.mystic_archer.ranged_sneak_attack.dice"
+                .to_owned(),
+            value: dice,
+            detail: format!(
+                "Mystic Archer level {level} Ranged Sneak Attack: +{dice}d6 within 30 ft. \
+                 (corpus `RangedSneakAttack|floor((MysticArcherLVL+1)/3)`)"
+            ),
+        });
+    }
+    if let Some(uses) = mystic_archer_unhindered_vision_uses(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.mystic_archer.unhindered_vision.uses_per_day"
+                .to_owned(),
+            value: uses,
+            detail: format!(
+                "Mystic Archer level {level} Unhindered Vision: {uses} time per 10 minutes \
+                 (corpus `SPELLS:Innate|TIMES=1|...|Pierce the Veils`)"
+            ),
+        });
+    }
+}
+
+// ---- Mammoth Rider (adventurers_guide) ----
+
+fn mammoth_rider_born_survivor_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 2) / 4)
+}
+
+fn mammoth_rider_flag(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1)
+}
+
+fn mammoth_rider_steed_companion_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn ground_mammoth_rider_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == MAMMOTH_RIDER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = mammoth_rider_born_survivor_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.mammoth_rider.born_survivor.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Mammoth Rider level {level} Born Survivor: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Mammoth Rider Born Survivor Feat|(MammothRiderLvl+2)/4`)"
+            ),
+        });
+    }
+    if let Some(flag) = mammoth_rider_flag(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.mammoth_rider.gigantic_steed.qualify_flag"
+                .to_owned(),
+            value: flag,
+            detail: format!(
+                "Mammoth Rider level {level} Gigantic Steed: a qualifying flag (corpus \
+                 `GrantGiganticSteed|1`)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.mammoth_rider.rugged_steed.qualify_flag"
+                .to_owned(),
+            value: flag,
+            detail: format!(
+                "Mammoth Rider level {level} Rugged Steed: a qualifying flag (corpus \
+                 `GrantRuggedSteed|1`)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.mammoth_rider.steeds_reach.qualify_flag"
+                .to_owned(),
+            value: flag,
+            detail: format!(
+                "Mammoth Rider level {level} Steed's Reach: a qualifying flag (corpus \
+                 `GrantSteedsReach|1`)"
+            ),
+        });
+    }
+    if let Some(companion_level) = mammoth_rider_steed_companion_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.mammoth_rider.steed.companion_level".to_owned(),
+            value: companion_level,
+            detail: format!(
+                "Mammoth Rider level {level} Steed: animal companion effective level \
+                 {companion_level} (corpus `CompanionBondLVL|MammothRiderLVL`, restated onto \
+                 `AnimalCompanionMasterLVL`)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.adventurers_guide.mammoth_rider.wild_coercion.level".to_owned(),
+            value: companion_level,
+            detail: format!(
+                "Mammoth Rider level {level} Wild Coercion: `WildEmpathyLVL` = \
+                 {companion_level} (corpus `WildEmpathyLVL|MammothRiderLVL`)"
+            ),
+        });
+    }
+}
+
+// ---- Demoniac (book_of_the_damned_volume_2) ----
+
+fn demoniac_summon_demon_i_caster_level(level: u8, total_level: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(total_level - 1)
+}
+
+fn demoniac_summon_demon_ii_caster_level(level: u8, total_level: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(total_level - 1)
+}
+
+fn ground_demoniac_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == DEMONIAC_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+    let total_level = total_character_level(input);
+
+    if let Some(caster_level) = demoniac_summon_demon_i_caster_level(level, total_level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_i.caster_level"
+                .to_owned(),
+            value: caster_level,
+            detail: format!(
+                "Demoniac level {level} Summon Demon I: once per day, caster level \
+                 {caster_level} (corpus `SPELLS:Demoniac|TIMES=1|CASTERLEVEL=TL-1|Summon \
+                 Monster VI (Demoniac)`)"
+            ),
+        });
+    }
+    if let Some(caster_level) = demoniac_summon_demon_ii_caster_level(level, total_level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_ii.caster_\
+                 level"
+                .to_owned(),
+            value: caster_level,
+            detail: format!(
+                "Demoniac level {level} Summon Demon II: once per day, caster level \
+                 {caster_level} (corpus `SPELLS:Demoniac|TIMES=1|CASTERLEVEL=TL-1|Summon \
+                 Monster VIII (Demoniac)`)"
+            ),
+        });
+    }
+}
+
+// ---- Master Chymist (advanced_players_guide) ----
+
+fn master_chymist_advanced_mutagen_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+fn master_chymist_bomb_thrower_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn master_chymist_brutality_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 + 2 * i16::from(level >= 7) + 2 * i16::from(level >= 9))
+}
+
+fn master_chymist_extracts_per_day_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn master_chymist_mutate_times(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 + i16::from(level >= 5) + i16::from(level >= 8) + i16::from(level >= 10))
+}
+
+fn ground_master_chymist_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == MASTER_CHYMIST_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = master_chymist_advanced_mutagen_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.master_chymist.advanced_mutagen.pool_\
+                 size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Master Chymist level {level} Advanced Mutagen: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Master Chymist Advanced Mutagen|\
+                 MasterChymist_AdvancedMutagen_LVL/2`)"
+            ),
+        });
+    }
+    if let Some(value) = master_chymist_bomb_thrower_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.master_chymist.bomb_thrower.level"
+                .to_owned(),
+            value,
+            detail: format!(
+                "Master Chymist level {level} Bomb-Thrower: `AlchemistBombLVL` = {value} \
+                 (corpus `AlchemistBombLVL|MasterChymistLVL`)"
+            ),
+        });
+    }
+    if let Some(bonus) = master_chymist_brutality_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.master_chymist.brutality.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Master Chymist level {level} Brutality: +{bonus} (corpus \
+                 `MasterChymist_Brutality_Bonus|2`, stepping at levels 7 and 9)"
+            ),
+        });
+    }
+    if let Some(value) = master_chymist_extracts_per_day_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.master_chymist.extracts_per_day.level"
+                .to_owned(),
+            value,
+            detail: format!(
+                "Master Chymist level {level} Extracts per Day: `AlchemistAlchemyLVL` = \
+                 {value} (corpus `AlchemistAlchemyLVL|MasterChymistLVL`)"
+            ),
+        });
+    }
+    if let Some(times) = master_chymist_mutate_times(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.master_chymist.mutate.times_per_day"
+                .to_owned(),
+            value: times,
+            detail: format!(
+                "Master Chymist level {level} Mutate: {times} times per day (corpus \
+                 `MasterChymist_Mutate_Times|2`, stepping at levels 5, 8, 10)"
+            ),
+        });
+    }
+}
+
+// ---- Enchanting Courtesan (inner_sea_intrigue) ----
+
+fn enchanting_courtesan_hidden_spell_count(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1 + i16::from(level >= 6) + i16::from(level >= 9))
+}
+
+fn enchanting_courtesan_seductive_intuition_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+
+fn ground_enchanting_courtesan_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ENCHANTING_COURTESAN_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(count) = enchanting_courtesan_hidden_spell_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_intrigue.enchanting_courtesan.hidden_spell.count"
+                .to_owned(),
+            value: count,
+            detail: format!(
+                "Enchanting Courtesan level {level} Hidden Spell: {count} times per day \
+                 (corpus `EnchantingCourtesanHiddenSpell|1`, stepping at levels 6 and 9)"
+            ),
+        });
+    }
+    if let Some(bonus) = enchanting_courtesan_seductive_intuition_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_intrigue.enchanting_courtesan.seductive_intuition.\
+                 bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Enchanting Courtesan level {level} Seductive Intuition: +{bonus} on Bluff/\
+                 Diplomacy/Sense Motive/Sleight of Hand (corpus `BONUS:SKILL|...|\
+                 EnchantingCourtesanLVL/2`)"
+            ),
+        });
+    }
+}
+
+// ---- Dark Tempest (ultimate_psionics) ----
+
+/// Granted at level 5 (`up_classes.lst`'s own level-5 row): `BONUS:
+/// ABILITYPOOL|Dark Tempest Blade Skill|floor((DarkTempestLVL-2)/3)`.
+fn dark_tempest_blade_skills_pool_size(level: u8) -> Option<i16> {
+    if level < 5 {
+        return None;
+    }
+    Some((i16::from(level) - 2) / 3)
+}
+
+/// Granted at level 1: `BONUS:VAR|BladeSkillPrereqLVL,SoulknifeFeatPrereqLVL|
+/// DarkTempestLVL`.
+fn dark_tempest_diverse_training_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Granted at level 2: `ADD:ABILITY|...|Dark Tempest ~ Expanded Power
+/// List`, `BONUS:ABILITYPOOL|Dark Tempest Expanded Power List Class|1`.
+fn dark_tempest_expanded_power_list_pool_size(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(1)
+}
+
+/// Granted at level 3: `BONUS:VAR|PowerStrikePowerLevel|
+/// floor(DarkTempestLVL/3)`.
+fn dark_tempest_power_strike_power_level(level: u8) -> Option<i16> {
+    if level < 3 {
+        return None;
+    }
+    Some(i16::from(level) / 3)
+}
+
+/// Granted at level 1: `BONUS:VAR|PsychicStrikeDice|
+/// floor((DarkTempestLVL+2)/3)` -- this class's own additive contribution
+/// to the shared Soulknife Psychic Strike dice progression.
+fn dark_tempest_psychic_strike_dice(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 2) / 3)
+}
+
+fn ground_dark_tempest_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == DARK_TEMPEST_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = dark_tempest_blade_skills_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.dark_tempest.blade_skills.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Dark Tempest level {level} Blade Skills: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Dark Tempest Blade Skill|floor((DarkTempestLVL-2)/3)`)"
+            ),
+        });
+    }
+    if let Some(value) = dark_tempest_diverse_training_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.dark_tempest.diverse_training.level"
+                .to_owned(),
+            value,
+            detail: format!(
+                "Dark Tempest level {level} Diverse Training: `BladeSkillPrereqLVL` = \
+                 `SoulknifeFeatPrereqLVL` = {value} (corpus \
+                 `BladeSkillPrereqLVL,SoulknifeFeatPrereqLVL|DarkTempestLVL`)"
+            ),
+        });
+    }
+    if let Some(pool) = dark_tempest_expanded_power_list_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.dark_tempest.expanded_power_list.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Dark Tempest level {level} Expanded Power List: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Dark Tempest Expanded Power List Class|1`)"
+            ),
+        });
+    }
+    if let Some(power_level) = dark_tempest_power_strike_power_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.dark_tempest.power_strike.power_level"
+                .to_owned(),
+            value: power_level,
+            detail: format!(
+                "Dark Tempest level {level} Power Strike: `PowerStrikePowerLevel` = \
+                 {power_level} (corpus `PowerStrikePowerLevel|floor(DarkTempestLVL/3)`)"
+            ),
+        });
+    }
+    if let Some(dice) = dark_tempest_psychic_strike_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_psionics.dark_tempest.psychic_strike.dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Dark Tempest level {level} Psychic Strike: +{dice}d6 (corpus \
+                 `PsychicStrikeDice|floor((DarkTempestLVL+2)/3)`, this class's own additive \
+                 contribution to the shared Soulknife Psychic Strike progression)"
+            ),
+        });
+    }
+}
+
+// ---- Battle Herald (advanced_players_guide) ----
+
+fn battle_herald_inspiring_command_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn battle_herald_teamwork_feat_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1)
+}
+
+fn ground_battle_herald_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == BATTLE_HERALD_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(value) = battle_herald_inspiring_command_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.battle_herald.inspiring_command.level"
+                .to_owned(),
+            value,
+            detail: format!(
+                "Battle Herald level {level} Inspiring Command: `InspiringCommandLVL` = \
+                 {value} (corpus `InspiringCommandLVL|BattleHeraldLVL`)"
+            ),
+        });
+    }
+    if let Some(pool) = battle_herald_teamwork_feat_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.battle_herald.teamwork_feat.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Battle Herald level {level} Teamwork Feat: a pool of {pool} (corpus \
+                 `BONUS:ABILITYPOOL|Teamwork Feat|1`)"
+            ),
+        });
+    }
+}
+
+// ---- Master Spy (advanced_players_guide) ----
+
+fn master_spy_art_of_deception_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+fn master_spy_slippery_mind_times(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(1)
+}
+
+fn master_spy_sneak_attack_dice(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(((i16::from(level) - 1) / 3) + 1)
+}
+
+fn ground_master_spy_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == MASTER_SPY_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(bonus) = master_spy_art_of_deception_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.master_spy.art_of_deception.bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Master Spy level {level} Art of Deception: +{bonus} on Bluff/Disguise/Sense \
+                 Motive (corpus `MasterSpyArtOfDeceptionBonus|MasterSpyLVL`)"
+            ),
+        });
+    }
+    if let Some(times) = master_spy_slippery_mind_times(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.master_spy.slippery_mind.times".to_owned(),
+            value: times,
+            detail: format!(
+                "Master Spy level {level} Slippery Mind: {times} extra save re-roll (corpus \
+                 `SlipperyMindTimes|1`)"
+            ),
+        });
+    }
+    if let Some(dice) = master_spy_sneak_attack_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.advanced_players_guide.master_spy.sneak_attack.dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Master Spy level {level} Sneak Attack: +{dice}d6 (corpus \
+                 `SneakAttackDice|((MasterSpyLVL-1)/3)+1`)"
+            ),
+        });
+    }
+}
+
+// ---- Evangelist (ultimate_combat) ----
+
+fn evangelist_single_minded_domain_count_delta(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(-1)
+}
+
+fn ground_evangelist_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == EVANGELIST_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(delta) = evangelist_single_minded_domain_count_delta(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ultimate_combat.evangelist.single_minded.domain_count_delta"
+                .to_owned(),
+            value: delta,
+            detail: format!(
+                "Evangelist level {level} Single-Minded: `ClericDomainCount` {delta} (corpus \
+                 `BONUS:VAR|ClericDomainCount|-1`, the Evangelist gives up their second domain \
+                 for full Bardic-Performance-style abilities)"
+            ),
+        });
+    }
+}
+
+// ---- Ulfen Guard (inner_sea_combat) ----
+
+fn ulfen_guard_dedication_pool_size(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 1) / 2)
+}
+
+fn ground_ulfen_guard_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ULFEN_GUARD_CLASS_ID)
+        .map(|class_level| class_level.level)
+    else {
+        return;
+    };
+
+    if let Some(pool) = ulfen_guard_dedication_pool_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.inner_sea_combat.ulfen_guard.guard_dedications.pool_size"
+                .to_owned(),
+            value: pool,
+            detail: format!(
+                "Ulfen Guard level {level} Guard Dedications: a pool of {pool} (corpus \
+                 `BONUS:VAR|Pool_GuardDedication|(Ulfen_GuardLVL+1)/2`)"
             ),
         });
     }
@@ -84217,6 +87599,908 @@ mod generic_pool_group_selection_wiring_tests {
                 0,
                 "an invented selection ({choice_set_id} -> {selection_id}) must never ground \
                  anything through the description resolver"
+            );
+        }
+    }
+}
+
+/// SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more registered
+/// prestige classes' magnitude-only remainder. Same two-layer discipline as
+/// every prior wave's own test module in this file: pure-formula edge-case
+/// tests for the trickiest formulas (floor/negative-clamped values, the
+/// ability-modifier gate on Student of War's Mind Over Metal), then one
+/// reachability test per class proving every new explanation id actually
+/// surfaces through the real `build_pilot_headless_receipt` pipeline at a
+/// representative level, plus one negative control proving none of the new
+/// ids leak onto an unrelated class (Fighter). Given this wave's breadth
+/// (33 classes), reachability tests double as the primary formula check --
+/// their expected values were independently derived (not copied from the
+/// production code) before being transcribed here.
+#[cfg(test)]
+mod wave49_registered_prestige_magnitude_formulas_tests {
+    use super::{
+        build_pilot_headless_receipt, dark_tempest_blade_skills_pool_size,
+        mystic_archer_heightened_senses_range, pyrokineticist_leech_heat_bonus,
+        pyrokineticist_nimbus_bonus, student_of_war_mind_over_metal_ac_bonus,
+        CharacterClassLevel, CharacterInput,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// This fixture's own ability modifiers (matches every prior wave's own
+    /// documented constants for the identical shared fixture): STR +3
+    /// (human bonus, not used here), DEX +2, CON +2, INT +0, WIS +1,
+    /// CHA -1.
+    const FIXTURE_CHARISMA_MODIFIER: i16 = -1;
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    // ---- Pure-formula edge cases ----
+
+    #[test]
+    fn pyrokineticist_leech_heat_is_none_below_the_level_it_turns_positive() {
+        assert_eq!(pyrokineticist_leech_heat_bonus(3), None);
+        assert_eq!(pyrokineticist_leech_heat_bonus(4), None);
+        assert_eq!(pyrokineticist_leech_heat_bonus(6), Some(2));
+        assert_eq!(pyrokineticist_leech_heat_bonus(10), Some(4));
+    }
+
+    #[test]
+    fn pyrokineticist_nimbus_bonus_is_none_below_the_level_it_turns_positive() {
+        assert_eq!(pyrokineticist_nimbus_bonus(2), None);
+        assert_eq!(pyrokineticist_nimbus_bonus(4), None);
+        assert_eq!(pyrokineticist_nimbus_bonus(5), Some(2));
+        assert_eq!(pyrokineticist_nimbus_bonus(10), Some(4));
+    }
+
+    #[test]
+    fn dark_tempest_blade_skills_pool_size_is_none_below_level_five() {
+        assert_eq!(dark_tempest_blade_skills_pool_size(4), None);
+        assert_eq!(dark_tempest_blade_skills_pool_size(5), Some(1));
+        assert_eq!(dark_tempest_blade_skills_pool_size(10), Some(2));
+    }
+
+    #[test]
+    fn mystic_archer_heightened_senses_range_is_none_below_level_three() {
+        assert_eq!(mystic_archer_heightened_senses_range(2), None);
+        assert_eq!(mystic_archer_heightened_senses_range(3), Some(5));
+        assert_eq!(mystic_archer_heightened_senses_range(7), Some(25));
+    }
+
+    #[test]
+    fn student_of_war_mind_over_metal_requires_int_above_dex() {
+        assert_eq!(student_of_war_mind_over_metal_ac_bonus(0, 2), None);
+        assert_eq!(student_of_war_mind_over_metal_ac_bonus(2, 2), None);
+        assert_eq!(student_of_war_mind_over_metal_ac_bonus(4, 2), Some(2));
+    }
+
+    // ---- Reachability: one test per class, at a representative level ----
+
+    #[test]
+    fn cyphermage_ids_reach_the_real_pipeline() {
+        let c = character("class:cyphermage", 10);
+        assert_eq!(
+            explanation_value(&c, "class_feature.inner_sea_magic.cyphermage.analyze_scroll.bonus"),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.adventurers_guide.cyphermage.cypher_lore.pool_size"
+            ),
+            Some(9)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.inner_sea_magic.cyphermage.cypher_lore.pool_size"
+            ),
+            Some(10)
+        );
+    }
+
+    #[test]
+    fn psychic_fist_ids_reach_the_real_pipeline() {
+        let c = character("class:psychic_fist", 10);
+        assert_eq!(
+            explanation_value(&c, "class_feature.ultimate_psionics.psychic_fist.infused_body.bonus"),
+            Some(3)
+        );
+        assert_eq!(
+            explanation_value(&c, "class_feature.ultimate_psionics.psychic_fist.ki_power.bonus"),
+            Some(5)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.ultimate_psionics.psychic_fist.mesmerizing_glow.targets"
+            ),
+            Some(5)
+        );
+    }
+
+    #[test]
+    fn asavir_ids_reach_the_real_pipeline() {
+        let c = character("class:asavir", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.asavir.camaraderie.bonus", 3),
+            ("class_feature.adventurers_guide.asavir.djinnis_blessing.bonus", 20),
+            ("class_feature.adventurers_guide.asavir.djinnis_blessing_mount.move_bonus", 20),
+            (
+                "class_feature.adventurers_guide.asavir.efreeti_blessing_mount.fire_resistance",
+                5,
+            ),
+            ("class_feature.adventurers_guide.asavir.equine_bond.companion_level", 12),
+            ("class_feature.adventurers_guide.asavir.jannis_blessing.luck_save", 1),
+            ("class_feature.adventurers_guide.asavir.jannis_blessing_mount.luck_save", 1),
+            ("class_feature.adventurers_guide.asavir.marids_blessing_mount.reflex_save", 2),
+            ("class_feature.adventurers_guide.asavir.shaitans_blessing.bonus", 4),
+            ("class_feature.adventurers_guide.asavir.thunderous_charge.bonus", 20),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn metamorph_ids_reach_the_real_pipeline() {
+        let c = character("class:metamorph", 10);
+        assert_eq!(
+            explanation_value(&c, "class_feature.ultimate_psionics.metamorph.alter_metamorphosis.level"),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(&c, "class_feature.ultimate_psionics.metamorph.free_shift.times"),
+            Some(5)
+        );
+        assert_eq!(
+            explanation_value(&c, "class_feature.ultimate_psionics.metamorph.natural_shifter.bonus"),
+            Some(2)
+        );
+    }
+
+    #[test]
+    fn war_mind_ids_reach_the_real_pipeline() {
+        let c = character("class:war_mind", 10);
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.ultimate_psionics.war_mind.chain_of_defensive_posture.bonus"
+            ),
+            Some(4)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.ultimate_psionics.war_mind.chain_of_personal_superiority.bonus"
+            ),
+            Some(4)
+        );
+        assert_eq!(
+            explanation_value(&c, "class_feature.ultimate_psionics.war_mind.enduring_body.bonus"),
+            Some(3)
+        );
+    }
+
+    #[test]
+    fn hellknight_ids_reach_the_real_pipeline() {
+        let c = character("class:hellknight", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.hellknight.detect_chaos.dc", 10),
+            ("class_feature.adventurers_guide.hellknight.discern_lies.uses_per_day", 2),
+            ("class_feature.adventurers_guide.hellknight.discern_lies.dc", 13),
+            ("class_feature.adventurers_guide.hellknight.smite_chaos.uses_per_day", 4),
+            ("class_feature.adventurers_guide.hellknight.smite_chaos.attack_bonus", 0),
+            ("class_feature.adventurers_guide.hellknight.smite_chaos.damage_bonus", 10),
+            ("class_feature.adventurers_guide.hellknight.smite_chaos.deflection_bonus", 0),
+            ("class_feature.adventurers_guide.hellknight.hellknight_armor.bonus", 3),
+            ("class_feature.inner_sea_world_guide.hellknight.hellknight_armor.bonus", 3),
+            ("class_feature.adventurers_guide.hellknight.hellknight_armor_benefits.bonus", 3),
+            (
+                "class_feature.inner_sea_world_guide.hellknight.hellknight_armor_benefits.bonus",
+                3,
+            ),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn adaptive_warrior_ids_reach_the_real_pipeline() {
+        let c = character("class:adaptive_warrior", 10);
+        let expected: &[(&str, i16)] = &[
+            (
+                "class_feature.ultimate_psionics.adaptive_warrior.combine_fighting_styles.\
+                 times_per_day",
+                4,
+            ),
+            (
+                "class_feature.ultimate_psionics.adaptive_warrior.counter_fighting_style.bonus",
+                5,
+            ),
+            ("class_feature.ultimate_psionics.adaptive_warrior.examine_technique.targets", 10),
+            (
+                "class_feature.ultimate_psionics.adaptive_warrior.extended_examination.bonus",
+                10,
+            ),
+            ("class_feature.ultimate_psionics.adaptive_warrior.mimic_skill.ranks", 10),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn sanguine_angel_ids_reach_the_real_pipeline() {
+        let c = character("class:sanguine_angel", 10);
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.adventurers_guide.sanguine_angel.armored_angel.level"
+            ),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.adventurers_guide.sanguine_angel.mystique_of_ardad_lili.caster_\
+                 level"
+            ),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.adventurers_guide.sanguine_angel.mystique_of_ardad_lili.dc"
+            ),
+            Some(10 + 10 / 2 + FIXTURE_CHARISMA_MODIFIER)
+        );
+    }
+
+    #[test]
+    fn body_snatcher_ids_reach_the_real_pipeline() {
+        let c = character("class:body_snatcher", 10);
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.ultimate_psionics.body_snatcher.body_thief.caster_level_bonus"
+            ),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.ultimate_psionics.body_snatcher.death_is_only_the_beginning.\
+                 caster_level_bonus"
+            ),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.ultimate_psionics.body_snatcher.melding_exchange.bonus"
+            ),
+            Some(20)
+        );
+    }
+
+    #[test]
+    fn steel_falcon_ids_reach_the_real_pipeline() {
+        let c = character("class:steel_falcon", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.steel_falcon.chainbreaker.bonus", 10),
+            ("class_feature.adventurers_guide.steel_falcon.enemy_of_slavers.bonus", 6),
+            ("class_feature.adventurers_guide.steel_falcon.sailor_and_survivalist.bonus", 10),
+            (
+                "class_feature.adventurers_guide.steel_falcon.talmandor_s_blessing.acrobatics_\
+                 bonus",
+                10,
+            ),
+            (
+                "class_feature.adventurers_guide.steel_falcon.talmandor_s_blessing.perception_\
+                 bonus",
+                4,
+            ),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn lantern_bearer_ids_reach_the_real_pipeline() {
+        let c = character("class:lantern_bearer", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.lantern_bearer.favored_enemy.pool_size", 2),
+            ("class_feature.adventurers_guide.lantern_bearer.favored_enemy.bonus_pool_size", 1),
+            (
+                "class_feature.adventurers_guide.lantern_bearer.proven_weapon_familiarity.bonus",
+                1,
+            ),
+            (
+                "class_feature.adventurers_guide.lantern_bearer.superior_discernment.pool_size",
+                1,
+            ),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn storm_kindler_ids_reach_the_real_pipeline() {
+        let c = character("class:storm_kindler", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.storm_kindler.aura_of_calm.radius", 20),
+            ("class_feature.adventurers_guide.storm_kindler.aura_of_calm.bonus", 4),
+            ("class_feature.adventurers_guide.storm_kindler.oceanic_spirit.bonus", 20),
+            ("class_feature.adventurers_guide.storm_kindler.storm_shape.height", 60),
+            ("class_feature.adventurers_guide.storm_kindler.weathers_fury.bonus", 5),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn westcrown_devil_ids_reach_the_real_pipeline() {
+        let c = character("class:westcrown_devil", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.westcrown_devil.council_s_secret.pool_size", 5),
+            ("class_feature.adventurers_guide.westcrown_devil.founders_favor.pool", 11),
+            ("class_feature.adventurers_guide.westcrown_devil.founders_favor.dc", 16),
+            ("class_feature.adventurers_guide.westcrown_devil.sneak_attack.dice", 3),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn pyrokineticist_ids_reach_the_real_pipeline() {
+        let c = character("class:pyrokineticist", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.ultimate_psionics.pyrokineticist.bolt_of_fire.bonus", 10),
+            ("class_feature.ultimate_psionics.pyrokineticist.fire_adaptation.bonus", 8),
+            (
+                "class_feature.ultimate_psionics.pyrokineticist.fire_adaptation.fire_resistance",
+                20,
+            ),
+            ("class_feature.ultimate_psionics.pyrokineticist.hand_afire.bonus", 4),
+            ("class_feature.ultimate_psionics.pyrokineticist.leech_heat.bonus", 4),
+            ("class_feature.ultimate_psionics.pyrokineticist.manipulate_blaze.range", 50),
+            ("class_feature.ultimate_psionics.pyrokineticist.nimbus.duration_rounds", 10),
+            ("class_feature.ultimate_psionics.pyrokineticist.nimbus.bonus", 4),
+            ("class_feature.ultimate_psionics.pyrokineticist.penetrating_fire.bonus", 10),
+            ("class_feature.ultimate_psionics.pyrokineticist.weapon_afire.bonus", 4),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn aspis_agent_ids_reach_the_real_pipeline() {
+        let c = character("class:aspis_agent", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.aspis_agent.agency_secrets.pool_size", 5),
+            ("class_feature.adventurers_guide.aspis_agent.sneak_attack.dice", 2),
+            ("class_feature.adventurers_guide.aspis_agent.trap_sense.bonus", 4),
+            ("class_feature.adventurers_guide.aspis_agent.trapfinding.bonus", 5),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn gray_corsair_ids_reach_the_real_pipeline() {
+        let c = character("class:gray_corsair", 10);
+        assert_eq!(
+            explanation_value(&c, "class_feature.adventurers_guide.gray_corsair.favored_port.bonus"),
+            Some(2)
+        );
+        assert_eq!(
+            explanation_value(&c, "class_feature.adventurers_guide.gray_corsair.slaver_slayer.bonus"),
+            Some(6)
+        );
+    }
+
+    #[test]
+    fn pathfinder_savant_ids_reach_the_real_pipeline() {
+        let c = character("class:pathfinder_savant", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.pathfinder_savant.master_scholar.bonus", 5),
+            ("class_feature.adventurers_guide.pathfinder_savant.esoteric_magic.pool_size", 9),
+            (
+                "class_feature.adventurers_guide.pathfinder_savant.quick_identification.times_\
+                 per_day",
+                5,
+            ),
+            ("class_feature.adventurers_guide.pathfinder_savant.sigil_master.save_bonus", 10),
+            (
+                "class_feature.adventurers_guide.pathfinder_savant.analyze_dweomer.times_per_\
+                 day",
+                10,
+            ),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn rivethun_emissary_ids_reach_the_real_pipeline() {
+        let c = character("class:rivethun_emissary", 10);
+        let expected: &[(&str, i16)] = &[
+            (
+                "class_feature.adventurers_guide.rivethun_emissary.enhanced_spirit_animal.\
+                 evolution_points",
+                3,
+            ),
+            ("class_feature.adventurers_guide.rivethun_emissary.parley.uses_per_day", 3),
+            (
+                "class_feature.adventurers_guide.rivethun_emissary.parley.dc",
+                12 + FIXTURE_CHARISMA_MODIFIER,
+            ),
+            ("class_feature.adventurers_guide.rivethun_emissary.sixth_sense.uses_per_day", 10),
+            ("class_feature.adventurers_guide.rivethun_emissary.spirit_animal.level", 10),
+            ("class_feature.adventurers_guide.rivethun_emissary.spirit_bond.hex_dc", 5),
+            (
+                "class_feature.adventurers_guide.rivethun_emissary.spirit_bond.hex_ability_\
+                 level",
+                10,
+            ),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn student_of_war_additional_skill_reaches_the_real_pipeline() {
+        let c = character("class:student_of_war", 10);
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.adventurers_guide.student_of_war.additional_skill.pool_size"
+            ),
+            Some(5)
+        );
+        // Mind Over Metal does not fire on this fixture: its own Intelligence
+        // modifier (+0) does not exceed Dexterity (+2).
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.adventurers_guide.student_of_war.mind_over_metal.ac_bonus"
+            ),
+            None
+        );
+    }
+
+    #[test]
+    fn diabolist_ids_reach_the_real_pipeline() {
+        let c = character("class:diabolist", 10);
+        let expected: &[(&str, i16)] = &[
+            (
+                "class_feature.book_of_the_damned_volume_1.diabolist.channel_hellfire.times_\
+                 per_day",
+                1,
+            ),
+            (
+                "class_feature.book_of_the_damned_volume_1.diabolist.infernal_transport.times_\
+                 per_day",
+                2,
+            ),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.damned.dc", 20),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.infernal_charisma.bonus", 8),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.heresy.bonus", 4),
+            (
+                "class_feature.book_of_the_damned_volume_1.diabolist.hellfire_ray.caster_level",
+                10,
+            ),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.hellfire_ray.dc", 15),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn lion_blade_ids_reach_the_real_pipeline() {
+        let c = character("class:lion_blade", 10);
+        let expected: &[(&str, i16)] = &[
+            (
+                "class_feature.inner_sea_intrigue.lion_blade.expeditious_advance.speed_bonus",
+                10,
+            ),
+            ("class_feature.inner_sea_intrigue.lion_blade.silent_soul.stealth_bonus", 10),
+            ("class_feature.inner_sea_intrigue.lion_blade.sneak_attack.dice", 3),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn bellflower_tiller_ids_reach_the_real_pipeline() {
+        let c = character("class:bellflower_tiller", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.bellflower_tiller.bellflower_crop.range", 60),
+            ("class_feature.adventurers_guide.bellflower_tiller.crop_guardian.bonus", 10),
+            ("class_feature.adventurers_guide.bellflower_tiller.sneak_attack.dice", 3),
+            ("class_feature.adventurers_guide.bellflower_tiller.swift_sower.speed_bonus", 20),
+            ("class_feature.adventurers_guide.bellflower_tiller.teamwork_feat.pool_size", 3),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn hellknight_signifer_ids_reach_the_real_pipeline() {
+        let c = character("class:hellknight_signifer", 10);
+        let expected: &[(&str, i16)] = &[
+            (
+                "class_feature.adventurers_guide.hellknight_signifer.assiduous_gaze.pool_size",
+                2,
+            ),
+            ("class_feature.adventurers_guide.hellknight_signifer.signifer_mask.bonus", 2),
+            (
+                "class_feature.adventurers_guide.hellknight_signifer.infernal_resilience.dr",
+                5,
+            ),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn mystic_archer_ids_reach_the_real_pipeline() {
+        let c = character("class:mystic_archer", 7);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.ultimate_psionics.mystic_archer.heightened_senses.range", 25),
+            ("class_feature.ultimate_psionics.mystic_archer.blindsense.range", 55),
+            ("class_feature.ultimate_psionics.mystic_archer.blindsight.range", 55),
+            ("class_feature.ultimate_psionics.mystic_archer.tremorsense.range", 55),
+            ("class_feature.ultimate_psionics.mystic_archer.inevitable_strike.uses_per_day", 4),
+            ("class_feature.ultimate_psionics.mystic_archer.ranged_sneak_attack.dice", 2),
+            ("class_feature.ultimate_psionics.mystic_archer.unhindered_vision.uses_per_day", 1),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn mammoth_rider_ids_reach_the_real_pipeline() {
+        let c = character("class:mammoth_rider", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.adventurers_guide.mammoth_rider.born_survivor.pool_size", 3),
+            ("class_feature.adventurers_guide.mammoth_rider.gigantic_steed.qualify_flag", 1),
+            ("class_feature.adventurers_guide.mammoth_rider.rugged_steed.qualify_flag", 1),
+            ("class_feature.adventurers_guide.mammoth_rider.steeds_reach.qualify_flag", 1),
+            ("class_feature.adventurers_guide.mammoth_rider.steed.companion_level", 10),
+            ("class_feature.adventurers_guide.mammoth_rider.wild_coercion.level", 10),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn demoniac_ids_reach_the_real_pipeline() {
+        let c = character("class:demoniac", 10);
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_i.caster_level"
+            ),
+            Some(9)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_ii.caster_\
+                 level"
+            ),
+            Some(9)
+        );
+    }
+
+    #[test]
+    fn master_chymist_ids_reach_the_real_pipeline() {
+        let c = character("class:master_chymist", 10);
+        let expected: &[(&str, i16)] = &[
+            (
+                "class_feature.advanced_players_guide.master_chymist.advanced_mutagen.pool_\
+                 size",
+                5,
+            ),
+            ("class_feature.advanced_players_guide.master_chymist.bomb_thrower.level", 10),
+            ("class_feature.advanced_players_guide.master_chymist.brutality.bonus", 6),
+            (
+                "class_feature.advanced_players_guide.master_chymist.extracts_per_day.level",
+                10,
+            ),
+            ("class_feature.advanced_players_guide.master_chymist.mutate.times_per_day", 5),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn enchanting_courtesan_ids_reach_the_real_pipeline() {
+        let c = character("class:enchanting_courtesan", 10);
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.inner_sea_intrigue.enchanting_courtesan.hidden_spell.count"
+            ),
+            Some(3)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.inner_sea_intrigue.enchanting_courtesan.seductive_intuition.\
+                 bonus"
+            ),
+            Some(5)
+        );
+    }
+
+    #[test]
+    fn dark_tempest_ids_reach_the_real_pipeline() {
+        let c = character("class:dark_tempest", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.ultimate_psionics.dark_tempest.blade_skills.pool_size", 2),
+            ("class_feature.ultimate_psionics.dark_tempest.diverse_training.level", 10),
+            ("class_feature.ultimate_psionics.dark_tempest.expanded_power_list.pool_size", 1),
+            ("class_feature.ultimate_psionics.dark_tempest.power_strike.power_level", 3),
+            ("class_feature.ultimate_psionics.dark_tempest.psychic_strike.dice", 4),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn battle_herald_ids_reach_the_real_pipeline() {
+        let c = character("class:battle_herald", 10);
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.advanced_players_guide.battle_herald.inspiring_command.level"
+            ),
+            Some(10)
+        );
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.advanced_players_guide.battle_herald.teamwork_feat.pool_size"
+            ),
+            Some(1)
+        );
+    }
+
+    #[test]
+    fn master_spy_ids_reach_the_real_pipeline() {
+        let c = character("class:master_spy", 10);
+        let expected: &[(&str, i16)] = &[
+            ("class_feature.advanced_players_guide.master_spy.art_of_deception.bonus", 10),
+            ("class_feature.advanced_players_guide.master_spy.slippery_mind.times", 1),
+            ("class_feature.advanced_players_guide.master_spy.sneak_attack.dice", 4),
+        ];
+        for (id, value) in expected {
+            assert_eq!(explanation_value(&c, id), Some(*value), "{id}");
+        }
+    }
+
+    #[test]
+    fn evangelist_id_reaches_the_real_pipeline() {
+        let c = character("class:evangelist", 10);
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.ultimate_combat.evangelist.single_minded.domain_count_delta"
+            ),
+            Some(-1)
+        );
+    }
+
+    #[test]
+    fn ulfen_guard_id_reaches_the_real_pipeline() {
+        let c = character("class:ulfen_guard", 10);
+        assert_eq!(
+            explanation_value(
+                &c,
+                "class_feature.inner_sea_combat.ulfen_guard.guard_dedications.pool_size"
+            ),
+            Some(5)
+        );
+    }
+
+    // ---- Negative control: none of this wave's ids leak onto Fighter ----
+
+    const ALL_WAVE_49_EXPLANATION_IDS: &[&str] = &[
+        "class_feature.inner_sea_magic.cyphermage.analyze_scroll.bonus",
+        "class_feature.adventurers_guide.cyphermage.cypher_lore.pool_size",
+        "class_feature.inner_sea_magic.cyphermage.cypher_lore.pool_size",
+        "class_feature.ultimate_psionics.psychic_fist.infused_body.bonus",
+        "class_feature.ultimate_psionics.psychic_fist.ki_power.bonus",
+        "class_feature.ultimate_psionics.psychic_fist.mesmerizing_glow.targets",
+        "class_feature.adventurers_guide.asavir.camaraderie.bonus",
+        "class_feature.adventurers_guide.asavir.djinnis_blessing.bonus",
+        "class_feature.adventurers_guide.asavir.djinnis_blessing_mount.move_bonus",
+        "class_feature.adventurers_guide.asavir.efreeti_blessing_mount.fire_resistance",
+        "class_feature.adventurers_guide.asavir.equine_bond.companion_level",
+        "class_feature.adventurers_guide.asavir.jannis_blessing.luck_save",
+        "class_feature.adventurers_guide.asavir.jannis_blessing_mount.luck_save",
+        "class_feature.adventurers_guide.asavir.marids_blessing_mount.reflex_save",
+        "class_feature.adventurers_guide.asavir.shaitans_blessing.bonus",
+        "class_feature.adventurers_guide.asavir.thunderous_charge.bonus",
+        "class_feature.ultimate_psionics.metamorph.alter_metamorphosis.level",
+        "class_feature.ultimate_psionics.metamorph.free_shift.times",
+        "class_feature.ultimate_psionics.metamorph.natural_shifter.bonus",
+        "class_feature.ultimate_psionics.war_mind.chain_of_defensive_posture.bonus",
+        "class_feature.ultimate_psionics.war_mind.chain_of_personal_superiority.bonus",
+        "class_feature.ultimate_psionics.war_mind.enduring_body.bonus",
+        "class_feature.adventurers_guide.hellknight.detect_chaos.dc",
+        "class_feature.adventurers_guide.hellknight.discern_lies.uses_per_day",
+        "class_feature.adventurers_guide.hellknight.discern_lies.dc",
+        "class_feature.adventurers_guide.hellknight.smite_chaos.uses_per_day",
+        "class_feature.adventurers_guide.hellknight.smite_chaos.attack_bonus",
+        "class_feature.adventurers_guide.hellknight.smite_chaos.damage_bonus",
+        "class_feature.adventurers_guide.hellknight.smite_chaos.deflection_bonus",
+        "class_feature.adventurers_guide.hellknight.hellknight_armor.bonus",
+        "class_feature.inner_sea_world_guide.hellknight.hellknight_armor.bonus",
+        "class_feature.adventurers_guide.hellknight.hellknight_armor_benefits.bonus",
+        "class_feature.inner_sea_world_guide.hellknight.hellknight_armor_benefits.bonus",
+        "class_feature.ultimate_psionics.adaptive_warrior.combine_fighting_styles.times_per_day",
+        "class_feature.ultimate_psionics.adaptive_warrior.counter_fighting_style.bonus",
+        "class_feature.ultimate_psionics.adaptive_warrior.examine_technique.targets",
+        "class_feature.ultimate_psionics.adaptive_warrior.extended_examination.bonus",
+        "class_feature.ultimate_psionics.adaptive_warrior.mimic_skill.ranks",
+        "class_feature.adventurers_guide.sanguine_angel.armored_angel.level",
+        "class_feature.adventurers_guide.sanguine_angel.mystique_of_ardad_lili.caster_level",
+        "class_feature.adventurers_guide.sanguine_angel.mystique_of_ardad_lili.dc",
+        "class_feature.ultimate_psionics.body_snatcher.body_thief.caster_level_bonus",
+        "class_feature.ultimate_psionics.body_snatcher.death_is_only_the_beginning.caster_\
+         level_bonus",
+        "class_feature.ultimate_psionics.body_snatcher.melding_exchange.bonus",
+        "class_feature.adventurers_guide.steel_falcon.chainbreaker.bonus",
+        "class_feature.adventurers_guide.steel_falcon.enemy_of_slavers.bonus",
+        "class_feature.adventurers_guide.steel_falcon.sailor_and_survivalist.bonus",
+        "class_feature.adventurers_guide.steel_falcon.talmandor_s_blessing.acrobatics_bonus",
+        "class_feature.adventurers_guide.steel_falcon.talmandor_s_blessing.perception_bonus",
+        "class_feature.adventurers_guide.lantern_bearer.favored_enemy.pool_size",
+        "class_feature.adventurers_guide.lantern_bearer.favored_enemy.bonus_pool_size",
+        "class_feature.adventurers_guide.lantern_bearer.proven_weapon_familiarity.bonus",
+        "class_feature.adventurers_guide.lantern_bearer.superior_discernment.pool_size",
+        "class_feature.adventurers_guide.storm_kindler.aura_of_calm.radius",
+        "class_feature.adventurers_guide.storm_kindler.aura_of_calm.bonus",
+        "class_feature.adventurers_guide.storm_kindler.oceanic_spirit.bonus",
+        "class_feature.adventurers_guide.storm_kindler.storm_shape.height",
+        "class_feature.adventurers_guide.storm_kindler.weathers_fury.bonus",
+        "class_feature.adventurers_guide.westcrown_devil.council_s_secret.pool_size",
+        "class_feature.adventurers_guide.westcrown_devil.founders_favor.pool",
+        "class_feature.adventurers_guide.westcrown_devil.founders_favor.dc",
+        "class_feature.adventurers_guide.westcrown_devil.sneak_attack.dice",
+        "class_feature.ultimate_psionics.pyrokineticist.bolt_of_fire.bonus",
+        "class_feature.ultimate_psionics.pyrokineticist.fire_adaptation.bonus",
+        "class_feature.ultimate_psionics.pyrokineticist.fire_adaptation.fire_resistance",
+        "class_feature.ultimate_psionics.pyrokineticist.hand_afire.bonus",
+        "class_feature.ultimate_psionics.pyrokineticist.leech_heat.bonus",
+        "class_feature.ultimate_psionics.pyrokineticist.manipulate_blaze.range",
+        "class_feature.ultimate_psionics.pyrokineticist.nimbus.duration_rounds",
+        "class_feature.ultimate_psionics.pyrokineticist.nimbus.bonus",
+        "class_feature.ultimate_psionics.pyrokineticist.penetrating_fire.bonus",
+        "class_feature.ultimate_psionics.pyrokineticist.weapon_afire.bonus",
+        "class_feature.adventurers_guide.aspis_agent.agency_secrets.pool_size",
+        "class_feature.adventurers_guide.aspis_agent.sneak_attack.dice",
+        "class_feature.adventurers_guide.aspis_agent.trap_sense.bonus",
+        "class_feature.adventurers_guide.aspis_agent.trapfinding.bonus",
+        "class_feature.adventurers_guide.gray_corsair.favored_port.bonus",
+        "class_feature.adventurers_guide.gray_corsair.slaver_slayer.bonus",
+        "class_feature.adventurers_guide.pathfinder_savant.master_scholar.bonus",
+        "class_feature.adventurers_guide.pathfinder_savant.esoteric_magic.pool_size",
+        "class_feature.adventurers_guide.pathfinder_savant.quick_identification.times_per_day",
+        "class_feature.adventurers_guide.pathfinder_savant.sigil_master.save_bonus",
+        "class_feature.adventurers_guide.pathfinder_savant.analyze_dweomer.times_per_day",
+        "class_feature.adventurers_guide.rivethun_emissary.enhanced_spirit_animal.evolution_\
+         points",
+        "class_feature.adventurers_guide.rivethun_emissary.parley.uses_per_day",
+        "class_feature.adventurers_guide.rivethun_emissary.parley.dc",
+        "class_feature.adventurers_guide.rivethun_emissary.sixth_sense.uses_per_day",
+        "class_feature.adventurers_guide.rivethun_emissary.spirit_animal.level",
+        "class_feature.adventurers_guide.rivethun_emissary.spirit_bond.hex_dc",
+        "class_feature.adventurers_guide.rivethun_emissary.spirit_bond.hex_ability_level",
+        "class_feature.adventurers_guide.student_of_war.additional_skill.pool_size",
+        "class_feature.adventurers_guide.student_of_war.mind_over_metal.ac_bonus",
+        "class_feature.book_of_the_damned_volume_1.diabolist.channel_hellfire.times_per_day",
+        "class_feature.book_of_the_damned_volume_1.diabolist.infernal_transport.times_per_day",
+        "class_feature.book_of_the_damned_volume_1.diabolist.damned.dc",
+        "class_feature.book_of_the_damned_volume_1.diabolist.infernal_charisma.bonus",
+        "class_feature.book_of_the_damned_volume_1.diabolist.heresy.bonus",
+        "class_feature.book_of_the_damned_volume_1.diabolist.hellfire_ray.caster_level",
+        "class_feature.book_of_the_damned_volume_1.diabolist.hellfire_ray.dc",
+        "class_feature.inner_sea_intrigue.lion_blade.expeditious_advance.speed_bonus",
+        "class_feature.inner_sea_intrigue.lion_blade.silent_soul.stealth_bonus",
+        "class_feature.inner_sea_intrigue.lion_blade.sneak_attack.dice",
+        "class_feature.adventurers_guide.bellflower_tiller.bellflower_crop.range",
+        "class_feature.adventurers_guide.bellflower_tiller.crop_guardian.bonus",
+        "class_feature.adventurers_guide.bellflower_tiller.sneak_attack.dice",
+        "class_feature.adventurers_guide.bellflower_tiller.swift_sower.speed_bonus",
+        "class_feature.adventurers_guide.bellflower_tiller.teamwork_feat.pool_size",
+        "class_feature.adventurers_guide.hellknight_signifer.assiduous_gaze.pool_size",
+        "class_feature.adventurers_guide.hellknight_signifer.signifer_mask.bonus",
+        "class_feature.adventurers_guide.hellknight_signifer.infernal_resilience.dr",
+        "class_feature.ultimate_psionics.mystic_archer.heightened_senses.range",
+        "class_feature.ultimate_psionics.mystic_archer.blindsense.range",
+        "class_feature.ultimate_psionics.mystic_archer.blindsight.range",
+        "class_feature.ultimate_psionics.mystic_archer.tremorsense.range",
+        "class_feature.ultimate_psionics.mystic_archer.inevitable_strike.uses_per_day",
+        "class_feature.ultimate_psionics.mystic_archer.ranged_sneak_attack.dice",
+        "class_feature.ultimate_psionics.mystic_archer.unhindered_vision.uses_per_day",
+        "class_feature.adventurers_guide.mammoth_rider.born_survivor.pool_size",
+        "class_feature.adventurers_guide.mammoth_rider.gigantic_steed.qualify_flag",
+        "class_feature.adventurers_guide.mammoth_rider.rugged_steed.qualify_flag",
+        "class_feature.adventurers_guide.mammoth_rider.steeds_reach.qualify_flag",
+        "class_feature.adventurers_guide.mammoth_rider.steed.companion_level",
+        "class_feature.adventurers_guide.mammoth_rider.wild_coercion.level",
+        "class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_i.caster_level",
+        "class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_ii.caster_level",
+        "class_feature.advanced_players_guide.master_chymist.advanced_mutagen.pool_size",
+        "class_feature.advanced_players_guide.master_chymist.bomb_thrower.level",
+        "class_feature.advanced_players_guide.master_chymist.brutality.bonus",
+        "class_feature.advanced_players_guide.master_chymist.extracts_per_day.level",
+        "class_feature.advanced_players_guide.master_chymist.mutate.times_per_day",
+        "class_feature.inner_sea_intrigue.enchanting_courtesan.hidden_spell.count",
+        "class_feature.inner_sea_intrigue.enchanting_courtesan.seductive_intuition.bonus",
+        "class_feature.ultimate_psionics.dark_tempest.blade_skills.pool_size",
+        "class_feature.ultimate_psionics.dark_tempest.diverse_training.level",
+        "class_feature.ultimate_psionics.dark_tempest.expanded_power_list.pool_size",
+        "class_feature.ultimate_psionics.dark_tempest.power_strike.power_level",
+        "class_feature.ultimate_psionics.dark_tempest.psychic_strike.dice",
+        "class_feature.advanced_players_guide.battle_herald.inspiring_command.level",
+        "class_feature.advanced_players_guide.battle_herald.teamwork_feat.pool_size",
+        "class_feature.advanced_players_guide.master_spy.art_of_deception.bonus",
+        "class_feature.advanced_players_guide.master_spy.slippery_mind.times",
+        "class_feature.advanced_players_guide.master_spy.sneak_attack.dice",
+        "class_feature.ultimate_combat.evangelist.single_minded.domain_count_delta",
+        "class_feature.inner_sea_combat.ulfen_guard.guard_dedications.pool_size",
+    ];
+
+    #[test]
+    fn none_of_wave_49s_ids_leak_onto_an_unrelated_class() {
+        let fighter = character("class:fighter", 10);
+        for id in ALL_WAVE_49_EXPLANATION_IDS {
+            assert_eq!(
+                explanation_value(&fighter, id),
+                None,
+                "a Fighter must not gain any of wave 49's new class-feature ids: {id}"
             );
         }
     }

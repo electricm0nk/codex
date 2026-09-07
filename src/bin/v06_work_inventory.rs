@@ -5633,6 +5633,44 @@ struct EngineFacts {
     /// features (Allied Retribution, Authoritative Command, Improved Aid,
     /// United Defense), keyed by the record's own corpus `key`.
     golden_legionnaire_wired: BTreeSet<String>,
+    /// SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more
+    /// prestige classes' magnitude-bearing class features, one field per
+    /// class, each keyed by the record's own corpus `key`. See each
+    /// `ground_<class>_class_features`'s own doc comment (`pilot_compute/
+    /// mod.rs`) for corpus citations.
+    cyphermage_wave49_wired: BTreeSet<String>,
+    psychic_fist_wave49_wired: BTreeSet<String>,
+    asavir_wave49_wired: BTreeSet<String>,
+    metamorph_wave49_wired: BTreeSet<String>,
+    war_mind_wave49_wired: BTreeSet<String>,
+    hellknight_wave49_wired: BTreeSet<String>,
+    adaptive_warrior_wave49_wired: BTreeSet<String>,
+    sanguine_angel_wave49_wired: BTreeSet<String>,
+    body_snatcher_wave49_wired: BTreeSet<String>,
+    steel_falcon_wave49_wired: BTreeSet<String>,
+    lantern_bearer_wave49_wired: BTreeSet<String>,
+    storm_kindler_wave49_wired: BTreeSet<String>,
+    westcrown_devil_wave49_wired: BTreeSet<String>,
+    pyrokineticist_wave49_wired: BTreeSet<String>,
+    aspis_agent_wave49_wired: BTreeSet<String>,
+    gray_corsair_wave49_wired: BTreeSet<String>,
+    pathfinder_savant_wave49_wired: BTreeSet<String>,
+    rivethun_emissary_wave49_wired: BTreeSet<String>,
+    student_of_war_wave49_wired: BTreeSet<String>,
+    diabolist_wave49_wired: BTreeSet<String>,
+    lion_blade_wave49_wired: BTreeSet<String>,
+    bellflower_tiller_wave49_wired: BTreeSet<String>,
+    hellknight_signifer_wave49_wired: BTreeSet<String>,
+    mystic_archer_wave49_wired: BTreeSet<String>,
+    mammoth_rider_wave49_wired: BTreeSet<String>,
+    demoniac_wave49_wired: BTreeSet<String>,
+    master_chymist_wave49_wired: BTreeSet<String>,
+    enchanting_courtesan_wave49_wired: BTreeSet<String>,
+    dark_tempest_wave49_wired: BTreeSet<String>,
+    battle_herald_wave49_wired: BTreeSet<String>,
+    master_spy_wave49_wired: BTreeSet<String>,
+    evangelist_wave49_wired: BTreeSet<String>,
+    ulfen_guard_wave49_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -10113,6 +10151,439 @@ fn probe_twilight_talon_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
     wired
 }
 
+/// SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more prestige
+/// classes' magnitude-only closures, same "registered in `prestige_class_
+/// entry_gate`, no `ClassId` enum entry, no chassis dispatch reaches it"
+/// family as every probe above -- one probe per class, reusing
+/// `probe_wave46_single_owner_class_features`. See each `ground_<class>_
+/// class_features`'s own doc comment (`pilot_compute/mod.rs`) for corpus
+/// citations.
+fn probe_cyphermage_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "cyphermage",
+        &[
+            ("class_feature.inner_sea_magic.cyphermage.analyze_scroll.bonus", "Cyphermage ~ Analyze Scroll"),
+            ("class_feature.adventurers_guide.cyphermage.cypher_lore.pool_size", "Cyphermage ~ Cypher Lore"),
+            ("class_feature.inner_sea_magic.cyphermage.cypher_lore.pool_size", "Cyphermage ~ Cypher Lore"),
+        ],
+    )
+}
+
+fn probe_psychic_fist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "psychic_fist",
+        &[
+            ("class_feature.ultimate_psionics.psychic_fist.infused_body.bonus", "Psychic Fist ~ Infused Body"),
+            ("class_feature.ultimate_psionics.psychic_fist.ki_power.bonus", "Psychic Fist ~ Ki Power"),
+            ("class_feature.ultimate_psionics.psychic_fist.mesmerizing_glow.targets", "Psychic Fist ~ Mesmerizing Glow"),
+        ],
+    )
+}
+
+fn probe_asavir_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "asavir",
+        &[
+            ("class_feature.adventurers_guide.asavir.camaraderie.bonus", "Asavir ~ Camaraderie"),
+            ("class_feature.adventurers_guide.asavir.djinnis_blessing.bonus", "Asavir ~ Djinni's Blessing"),
+            ("class_feature.adventurers_guide.asavir.djinnis_blessing_mount.move_bonus", "Asavir ~ Djinni's Blessing ~ Mount"),
+            ("class_feature.adventurers_guide.asavir.efreeti_blessing_mount.fire_resistance", "Asavir ~ Efreeti's Blessing ~ Mount"),
+            ("class_feature.adventurers_guide.asavir.equine_bond.companion_level", "Asavir ~ Equine Bond"),
+            ("class_feature.adventurers_guide.asavir.jannis_blessing.luck_save", "Asavir ~ Janni's Blessing"),
+            ("class_feature.adventurers_guide.asavir.jannis_blessing_mount.luck_save", "Asavir ~ Janni's Blessing ~ Mount"),
+            ("class_feature.adventurers_guide.asavir.marids_blessing_mount.reflex_save", "Asavir ~ Marid's Blessing ~ Mount"),
+            ("class_feature.adventurers_guide.asavir.shaitans_blessing.bonus", "Asavir ~ Shaitan's Blessing"),
+            ("class_feature.adventurers_guide.asavir.thunderous_charge.bonus", "Asavir ~ Thunderous Charge"),
+        ],
+    )
+}
+
+fn probe_metamorph_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "metamorph",
+        &[
+            ("class_feature.ultimate_psionics.metamorph.alter_metamorphosis.level", "Metamorph ~ Alter Metamorphosis"),
+            ("class_feature.ultimate_psionics.metamorph.free_shift.times", "Metamorph ~ Free Shift"),
+            ("class_feature.ultimate_psionics.metamorph.natural_shifter.bonus", "Metamorph ~ Natural Shifter"),
+        ],
+    )
+}
+
+fn probe_war_mind_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "war_mind",
+        &[
+            ("class_feature.ultimate_psionics.war_mind.chain_of_defensive_posture.bonus", "War Mind ~ Chain of Defensive Posture"),
+            ("class_feature.ultimate_psionics.war_mind.chain_of_personal_superiority.bonus", "War Mind ~ Chain of Personal Superiority"),
+            ("class_feature.ultimate_psionics.war_mind.enduring_body.bonus", "War Mind ~ Enduring Body"),
+        ],
+    )
+}
+
+fn probe_hellknight_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "hellknight",
+        &[
+            ("class_feature.adventurers_guide.hellknight.detect_chaos.dc", "Detect Chaos ~ HK"),
+            ("class_feature.adventurers_guide.hellknight.discern_lies.uses_per_day", "Discern Lies ~ HK"),
+            ("class_feature.adventurers_guide.hellknight.smite_chaos.uses_per_day", "Smite Chaos ~ HK"),
+            ("class_feature.adventurers_guide.hellknight.hellknight_armor.bonus", "Hellknight Armor ~ HK"),
+            ("class_feature.inner_sea_world_guide.hellknight.hellknight_armor.bonus", "Hellknight Armor ~ HK"),
+            ("class_feature.adventurers_guide.hellknight.hellknight_armor_benefits.bonus", "Hellknight Armor Benefits"),
+            ("class_feature.inner_sea_world_guide.hellknight.hellknight_armor_benefits.bonus", "Hellknight Armor Benefits"),
+        ],
+    )
+}
+
+fn probe_adaptive_warrior_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "adaptive_warrior",
+        &[
+            ("class_feature.ultimate_psionics.adaptive_warrior.combine_fighting_styles.times_per_day", "Adaptive Warrior ~ Combine Fighting Styles"),
+            ("class_feature.ultimate_psionics.adaptive_warrior.counter_fighting_style.bonus", "Adaptive Warrior ~ Counter Fighting Style"),
+            ("class_feature.ultimate_psionics.adaptive_warrior.examine_technique.targets", "Adaptive Warrior ~ Examine Technique"),
+            ("class_feature.ultimate_psionics.adaptive_warrior.extended_examination.bonus", "Adaptive Warrior ~ Extended Examination"),
+            ("class_feature.ultimate_psionics.adaptive_warrior.mimic_skill.ranks", "Adaptive Warrior ~ Mimic Skill"),
+        ],
+    )
+}
+
+fn probe_sanguine_angel_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "sanguine_angel",
+        &[
+            ("class_feature.adventurers_guide.sanguine_angel.armored_angel.level", "Sanguine Angel ~ Armored Angel"),
+            ("class_feature.adventurers_guide.sanguine_angel.mystique_of_ardad_lili.caster_level", "Sanguine Angel ~ Mystique of Ardad Lili"),
+        ],
+    )
+}
+
+fn probe_body_snatcher_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "body_snatcher",
+        &[
+            ("class_feature.ultimate_psionics.body_snatcher.body_thief.caster_level_bonus", "Body Snatcher ~ Body Thief"),
+            ("class_feature.ultimate_psionics.body_snatcher.death_is_only_the_beginning.caster_level_bonus", "Body Snatcher ~ Death Is Only the Beginning"),
+            ("class_feature.ultimate_psionics.body_snatcher.melding_exchange.bonus", "Body Snatcher ~ Melding Exchange"),
+        ],
+    )
+}
+
+fn probe_steel_falcon_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "steel_falcon",
+        &[
+            ("class_feature.adventurers_guide.steel_falcon.chainbreaker.bonus", "Steel Falcon ~ Chainbreaker"),
+            ("class_feature.adventurers_guide.steel_falcon.enemy_of_slavers.bonus", "Steel Falcon ~ Enemy of Slavers"),
+            ("class_feature.adventurers_guide.steel_falcon.sailor_and_survivalist.bonus", "Steel Falcon ~ Sailor and Survivalist"),
+            ("class_feature.adventurers_guide.steel_falcon.talmandor_s_blessing.acrobatics_bonus", "Steel Falcon ~ Talmandor's Blessing"),
+        ],
+    )
+}
+
+fn probe_lantern_bearer_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "lantern_bearer",
+        &[
+            ("class_feature.adventurers_guide.lantern_bearer.favored_enemy.pool_size", "Lantern Bearer ~ Favored Enemy"),
+            ("class_feature.adventurers_guide.lantern_bearer.proven_weapon_familiarity.bonus", "Lantern Bearer ~ Proven Weapon Familiarity"),
+            ("class_feature.adventurers_guide.lantern_bearer.superior_discernment.pool_size", "Lantern Bearer ~ Superior Discernment"),
+        ],
+    )
+}
+
+fn probe_storm_kindler_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "storm_kindler",
+        &[
+            ("class_feature.adventurers_guide.storm_kindler.aura_of_calm.radius", "Storm Kindler ~ Aura of Calm"),
+            ("class_feature.adventurers_guide.storm_kindler.oceanic_spirit.bonus", "Storm Kindler ~ Oceanic Spirit"),
+            ("class_feature.adventurers_guide.storm_kindler.storm_shape.height", "Storm Kindler ~ Storm Shape"),
+            ("class_feature.adventurers_guide.storm_kindler.weathers_fury.bonus", "Storm Kindler ~ Weather's Fury"),
+        ],
+    )
+}
+
+fn probe_westcrown_devil_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "westcrown_devil",
+        &[
+            ("class_feature.adventurers_guide.westcrown_devil.council_s_secret.pool_size", "Westcrown Devil ~ Council's Secret"),
+            ("class_feature.adventurers_guide.westcrown_devil.founders_favor.pool", "Westcrown Devil ~ Founders' Favor"),
+            ("class_feature.adventurers_guide.westcrown_devil.sneak_attack.dice", "Westcrown Devil ~ Sneak Attack"),
+        ],
+    )
+}
+
+fn probe_pyrokineticist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "pyrokineticist",
+        &[
+            ("class_feature.ultimate_psionics.pyrokineticist.bolt_of_fire.bonus", "Pyrokineticist ~ Bolt of Fire"),
+            ("class_feature.ultimate_psionics.pyrokineticist.fire_adaptation.bonus", "Pyrokineticist ~ Fire Adaptation"),
+            ("class_feature.ultimate_psionics.pyrokineticist.hand_afire.bonus", "Pyrokineticist ~ Hand Afire"),
+            ("class_feature.ultimate_psionics.pyrokineticist.leech_heat.bonus", "Pyrokineticist ~ Leech Heat"),
+            ("class_feature.ultimate_psionics.pyrokineticist.manipulate_blaze.range", "Pyrokineticist ~ Manipulate Blaze"),
+            ("class_feature.ultimate_psionics.pyrokineticist.nimbus.duration_rounds", "Pyrokineticist ~ Nimbus"),
+            ("class_feature.ultimate_psionics.pyrokineticist.penetrating_fire.bonus", "Pyrokineticist ~ Penetrating Fire"),
+            ("class_feature.ultimate_psionics.pyrokineticist.weapon_afire.bonus", "Pyrokineticist ~ Weapon Afire"),
+        ],
+    )
+}
+
+fn probe_aspis_agent_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "aspis_agent",
+        &[
+            ("class_feature.adventurers_guide.aspis_agent.agency_secrets.pool_size", "Aspis Agent ~ Agency Secrets"),
+            ("class_feature.adventurers_guide.aspis_agent.sneak_attack.dice", "Aspis Agent ~ Sneak Attack"),
+            ("class_feature.adventurers_guide.aspis_agent.trap_sense.bonus", "Aspis Agent ~ Trap Sense"),
+            ("class_feature.adventurers_guide.aspis_agent.trapfinding.bonus", "Aspis Agent ~ Trapfinding"),
+        ],
+    )
+}
+
+fn probe_gray_corsair_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "gray_corsair",
+        &[
+            ("class_feature.adventurers_guide.gray_corsair.favored_port.bonus", "Gray Corsair ~ Favored Port"),
+            ("class_feature.adventurers_guide.gray_corsair.slaver_slayer.bonus", "Gray Corsair ~ Slaver Slayer"),
+        ],
+    )
+}
+
+fn probe_pathfinder_savant_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "pathfinder_savant",
+        &[
+            ("class_feature.adventurers_guide.pathfinder_savant.master_scholar.bonus", "Pathfinder Savant ~ Master Scholar"),
+            ("class_feature.adventurers_guide.pathfinder_savant.esoteric_magic.pool_size", "Pathfinder Savant ~ Esoteric Magic"),
+            ("class_feature.adventurers_guide.pathfinder_savant.quick_identification.times_per_day", "Pathfinder Savant ~ Quick Identification"),
+            ("class_feature.adventurers_guide.pathfinder_savant.sigil_master.save_bonus", "Pathfinder Savant ~ Sigil Master"),
+            ("class_feature.adventurers_guide.pathfinder_savant.analyze_dweomer.times_per_day", "Pathfinder Savant ~ Analyze Dweomer"),
+        ],
+    )
+}
+
+fn probe_rivethun_emissary_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "rivethun_emissary",
+        &[
+            ("class_feature.adventurers_guide.rivethun_emissary.enhanced_spirit_animal.evolution_points", "Rivethun Emissary ~ Enhanced Spirit Animal"),
+            ("class_feature.adventurers_guide.rivethun_emissary.parley.uses_per_day", "Rivethun Emissary ~ Parley"),
+            ("class_feature.adventurers_guide.rivethun_emissary.sixth_sense.uses_per_day", "Rivethun Emissary ~ Sixth Sense"),
+            ("class_feature.adventurers_guide.rivethun_emissary.spirit_animal.level", "Rivethun Emissary ~ Spirit Animal"),
+            ("class_feature.adventurers_guide.rivethun_emissary.spirit_bond.hex_dc", "Rivethun Emissary ~ Spirit Bond"),
+        ],
+    )
+}
+
+fn probe_student_of_war_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "student_of_war",
+        &[
+            ("class_feature.adventurers_guide.student_of_war.additional_skill.pool_size", "Student of War ~ Additional Skill"),
+        ],
+    )
+}
+
+fn probe_diabolist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "diabolist",
+        &[
+            ("class_feature.book_of_the_damned_volume_1.diabolist.channel_hellfire.times_per_day", "Diabolist ~ Channel Hellfire"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.infernal_transport.times_per_day", "Diabolist ~ Infernal Transport"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.damned.dc", "Diabolist ~ Damned"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.infernal_charisma.bonus", "Diabolist ~ Infernal Charisma"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.heresy.bonus", "Diabolist ~ Heresy"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.hellfire_ray.caster_level", "Diabolist ~ Hellfire Ray"),
+        ],
+    )
+}
+
+fn probe_lion_blade_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "lion_blade",
+        &[
+            ("class_feature.inner_sea_intrigue.lion_blade.expeditious_advance.speed_bonus", "Lion Blade ~ Expeditious Advance"),
+            ("class_feature.inner_sea_intrigue.lion_blade.silent_soul.stealth_bonus", "Lion Blade ~ Silent Soul"),
+            ("class_feature.inner_sea_intrigue.lion_blade.sneak_attack.dice", "Lion Blade ~ Sneak Attack"),
+        ],
+    )
+}
+
+fn probe_bellflower_tiller_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "bellflower_tiller",
+        &[
+            ("class_feature.adventurers_guide.bellflower_tiller.bellflower_crop.range", "Bellflower Tiller ~ Bellflower Crop"),
+            ("class_feature.adventurers_guide.bellflower_tiller.crop_guardian.bonus", "Bellflower Tiller ~ Crop Guardian"),
+            ("class_feature.adventurers_guide.bellflower_tiller.sneak_attack.dice", "Bellflower Tiller ~ Sneak Attack"),
+            ("class_feature.adventurers_guide.bellflower_tiller.swift_sower.speed_bonus", "Bellflower Tiller ~ Swift Sower"),
+            ("class_feature.adventurers_guide.bellflower_tiller.teamwork_feat.pool_size", "Bellflower Tiller ~ Teamwork Feat"),
+        ],
+    )
+}
+
+fn probe_hellknight_signifer_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "hellknight_signifer",
+        &[
+            ("class_feature.adventurers_guide.hellknight_signifer.assiduous_gaze.pool_size", "Hellknight Signifer ~ Assiduous Gaze"),
+            ("class_feature.adventurers_guide.hellknight_signifer.signifer_mask.bonus", "Hellknight Signifer ~ Signifer Mask"),
+            ("class_feature.adventurers_guide.hellknight_signifer.infernal_resilience.dr", "Hellknight Signifer ~ Infernal Resilience"),
+        ],
+    )
+}
+
+fn probe_mystic_archer_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "mystic_archer",
+        &[
+            ("class_feature.ultimate_psionics.mystic_archer.heightened_senses.range", "Mystic Archer ~ Heightened Senses"),
+            ("class_feature.ultimate_psionics.mystic_archer.blindsense.range", "Mystic Archer ~ Blindsense"),
+            ("class_feature.ultimate_psionics.mystic_archer.blindsight.range", "Mystic Archer ~ Blindsight"),
+            ("class_feature.ultimate_psionics.mystic_archer.tremorsense.range", "Mystic Archer ~ Tremorsense"),
+            ("class_feature.ultimate_psionics.mystic_archer.inevitable_strike.uses_per_day", "Mystic Archer ~ Inevitable Strike"),
+            ("class_feature.ultimate_psionics.mystic_archer.ranged_sneak_attack.dice", "Mystic Archer ~ Ranged Sneak Attack"),
+            ("class_feature.ultimate_psionics.mystic_archer.unhindered_vision.uses_per_day", "Mystic Archer ~ Unhindered Vision"),
+        ],
+    )
+}
+
+fn probe_mammoth_rider_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "mammoth_rider",
+        &[
+            ("class_feature.adventurers_guide.mammoth_rider.born_survivor.pool_size", "Mammoth Rider ~ Born Survivor"),
+            ("class_feature.adventurers_guide.mammoth_rider.gigantic_steed.qualify_flag", "Mammoth Rider ~ Gigantic Steed"),
+            ("class_feature.adventurers_guide.mammoth_rider.rugged_steed.qualify_flag", "Mammoth Rider ~ Rugged Steed"),
+            ("class_feature.adventurers_guide.mammoth_rider.steed.companion_level", "Mammoth Rider ~ Steed"),
+            ("class_feature.adventurers_guide.mammoth_rider.steeds_reach.qualify_flag", "Mammoth Rider ~ Steed's Reach"),
+            ("class_feature.adventurers_guide.mammoth_rider.wild_coercion.level", "Mammoth Rider ~ Wild Coercion"),
+        ],
+    )
+}
+
+fn probe_demoniac_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "demoniac",
+        &[
+            ("class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_i.caster_level", "Demoniac ~ Summon Demon I"),
+            ("class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_ii.caster_level", "Demoniac ~ Summon Demon II"),
+        ],
+    )
+}
+
+fn probe_master_chymist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "master_chymist",
+        &[
+            ("class_feature.advanced_players_guide.master_chymist.advanced_mutagen.pool_size", "Master Chymist ~ Advanced Mutagen"),
+            ("class_feature.advanced_players_guide.master_chymist.bomb_thrower.level", "Master Chymist ~ Bomb-Thrower"),
+            ("class_feature.advanced_players_guide.master_chymist.brutality.bonus", "Master Chymist ~ Brutality"),
+            ("class_feature.advanced_players_guide.master_chymist.extracts_per_day.level", "Master Chymist ~ Extracts per Day"),
+            ("class_feature.advanced_players_guide.master_chymist.mutate.times_per_day", "Master Chymist ~ Mutate"),
+        ],
+    )
+}
+
+fn probe_enchanting_courtesan_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "enchanting_courtesan",
+        &[
+            ("class_feature.inner_sea_intrigue.enchanting_courtesan.hidden_spell.count", "Enchanting Courtesan ~ Hidden Spell"),
+            ("class_feature.inner_sea_intrigue.enchanting_courtesan.seductive_intuition.bonus", "Enchanting Courtesan ~ Seductive Intuition"),
+        ],
+    )
+}
+
+fn probe_dark_tempest_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "dark_tempest",
+        &[
+            ("class_feature.ultimate_psionics.dark_tempest.blade_skills.pool_size", "Dark Tempest ~ Blade Skills"),
+            ("class_feature.ultimate_psionics.dark_tempest.diverse_training.level", "Dark Tempest ~ Diverse Training"),
+            ("class_feature.ultimate_psionics.dark_tempest.expanded_power_list.pool_size", "Dark Tempest ~ Expanded Power List"),
+            ("class_feature.ultimate_psionics.dark_tempest.power_strike.power_level", "Dark Tempest ~ Power Strike"),
+            ("class_feature.ultimate_psionics.dark_tempest.psychic_strike.dice", "Dark Tempest ~ Psychic Strike"),
+        ],
+    )
+}
+
+fn probe_battle_herald_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "battle_herald",
+        &[
+            ("class_feature.advanced_players_guide.battle_herald.inspiring_command.level", "Battle Herald ~ Inspiring Command"),
+            ("class_feature.advanced_players_guide.battle_herald.teamwork_feat.pool_size", "Battle Herald ~ Teamwork Feat"),
+        ],
+    )
+}
+
+fn probe_master_spy_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "master_spy",
+        &[
+            ("class_feature.advanced_players_guide.master_spy.art_of_deception.bonus", "Master Spy ~ Art of Deception"),
+            ("class_feature.advanced_players_guide.master_spy.slippery_mind.times", "Master Spy ~ Slippery Mind"),
+            ("class_feature.advanced_players_guide.master_spy.sneak_attack.dice", "Master Spy ~ Sneak Attack"),
+        ],
+    )
+}
+
+fn probe_evangelist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "evangelist",
+        &[
+            ("class_feature.ultimate_combat.evangelist.single_minded.domain_count_delta", "Evangelist ~ Single-Minded"),
+        ],
+    )
+}
+
+fn probe_ulfen_guard_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "ulfen_guard",
+        &[
+            ("class_feature.inner_sea_combat.ulfen_guard.guard_dedications.pool_size", "Ulfen Guard ~ Guard Dedications"),
+        ],
+    )
+}
+
 /// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): real-pipeline
 /// reachability proof for every one of this wave's seven probe functions --
 /// against the REAL shared fixture and the REAL `compute_pilot_base_
@@ -11134,6 +11605,39 @@ fn gather_engine_facts(
         divine_scion_wired: probe_divine_scion_wiring(fixture),
         twilight_talon_wired: probe_twilight_talon_wiring(fixture),
         golden_legionnaire_wired: probe_golden_legionnaire_wiring(fixture),
+        cyphermage_wave49_wired: probe_cyphermage_wave49_wiring(fixture),
+        psychic_fist_wave49_wired: probe_psychic_fist_wave49_wiring(fixture),
+        asavir_wave49_wired: probe_asavir_wave49_wiring(fixture),
+        metamorph_wave49_wired: probe_metamorph_wave49_wiring(fixture),
+        war_mind_wave49_wired: probe_war_mind_wave49_wiring(fixture),
+        hellknight_wave49_wired: probe_hellknight_wave49_wiring(fixture),
+        adaptive_warrior_wave49_wired: probe_adaptive_warrior_wave49_wiring(fixture),
+        sanguine_angel_wave49_wired: probe_sanguine_angel_wave49_wiring(fixture),
+        body_snatcher_wave49_wired: probe_body_snatcher_wave49_wiring(fixture),
+        steel_falcon_wave49_wired: probe_steel_falcon_wave49_wiring(fixture),
+        lantern_bearer_wave49_wired: probe_lantern_bearer_wave49_wiring(fixture),
+        storm_kindler_wave49_wired: probe_storm_kindler_wave49_wiring(fixture),
+        westcrown_devil_wave49_wired: probe_westcrown_devil_wave49_wiring(fixture),
+        pyrokineticist_wave49_wired: probe_pyrokineticist_wave49_wiring(fixture),
+        aspis_agent_wave49_wired: probe_aspis_agent_wave49_wiring(fixture),
+        gray_corsair_wave49_wired: probe_gray_corsair_wave49_wiring(fixture),
+        pathfinder_savant_wave49_wired: probe_pathfinder_savant_wave49_wiring(fixture),
+        rivethun_emissary_wave49_wired: probe_rivethun_emissary_wave49_wiring(fixture),
+        student_of_war_wave49_wired: probe_student_of_war_wave49_wiring(fixture),
+        diabolist_wave49_wired: probe_diabolist_wave49_wiring(fixture),
+        lion_blade_wave49_wired: probe_lion_blade_wave49_wiring(fixture),
+        bellflower_tiller_wave49_wired: probe_bellflower_tiller_wave49_wiring(fixture),
+        hellknight_signifer_wave49_wired: probe_hellknight_signifer_wave49_wiring(fixture),
+        mystic_archer_wave49_wired: probe_mystic_archer_wave49_wiring(fixture),
+        mammoth_rider_wave49_wired: probe_mammoth_rider_wave49_wiring(fixture),
+        demoniac_wave49_wired: probe_demoniac_wave49_wiring(fixture),
+        master_chymist_wave49_wired: probe_master_chymist_wave49_wiring(fixture),
+        enchanting_courtesan_wave49_wired: probe_enchanting_courtesan_wave49_wiring(fixture),
+        dark_tempest_wave49_wired: probe_dark_tempest_wave49_wiring(fixture),
+        battle_herald_wave49_wired: probe_battle_herald_wave49_wiring(fixture),
+        master_spy_wave49_wired: probe_master_spy_wave49_wiring(fixture),
+        evangelist_wave49_wired: probe_evangelist_wave49_wiring(fixture),
+        ulfen_guard_wave49_wired: probe_ulfen_guard_wave49_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -14550,6 +15054,310 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
+            // SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more
+            // prestige classes in the same "registered in `prestige_class_
+            // entry_gate`, no `ClassId` enum entry, no chassis dispatch
+            // reaches it" family as every class above -- see each `ground_
+            // <class>_class_features`'s own doc comment (`pilot_compute/
+            // mod.rs`) for corpus citations.
+            if facts.cyphermage_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "cyphermage_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.psychic_fist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "psychic_fist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.asavir_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "asavir_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.metamorph_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "metamorph_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.war_mind_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "war_mind_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.hellknight_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "hellknight_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.adaptive_warrior_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "adaptive_warrior_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.sanguine_angel_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "sanguine_angel_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.body_snatcher_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "body_snatcher_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.steel_falcon_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "steel_falcon_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.lantern_bearer_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "lantern_bearer_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.storm_kindler_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "storm_kindler_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.westcrown_devil_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "westcrown_devil_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.pyrokineticist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "pyrokineticist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.aspis_agent_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "aspis_agent_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.gray_corsair_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "gray_corsair_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.pathfinder_savant_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "pathfinder_savant_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.rivethun_emissary_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "rivethun_emissary_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.student_of_war_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "student_of_war_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.diabolist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "diabolist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.lion_blade_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "lion_blade_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.bellflower_tiller_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "bellflower_tiller_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.hellknight_signifer_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "hellknight_signifer_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.mystic_archer_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "mystic_archer_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.mammoth_rider_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "mammoth_rider_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.demoniac_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "demoniac_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.master_chymist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "master_chymist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.enchanting_courtesan_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "enchanting_courtesan_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.dark_tempest_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "dark_tempest_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.battle_herald_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "battle_herald_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.master_spy_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "master_spy_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.evangelist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "evangelist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.ulfen_guard_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "ulfen_guard_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+
             // `AT-34-E3-001` (mechanism 2 continuation, cycle 5): Bardic
             // Performance sub-cause, same shape as the wizard arcane-school
             // block immediately above -- `group` here is `"Bardic
@@ -30180,4 +30988,549 @@ mod reattribution_widening_tests {
         assert!(!by_name_only.holds_unit_by_key("bestiary_1", &unit));
         assert!(by_key.holds_unit_by_key("bestiary_1", &unit));
     }
+}
+
+/// SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): real-pipeline
+/// reachability proof for every one of this wave's 33 probe functions --
+/// against the REAL shared fixture and the REAL `compute_pilot_base_
+/// chassis` pipeline (via `class_sweep_input`, the same entry point the
+/// corpus-wide union sweep uses for every modelled class), proving each
+/// new class-feature block resolves end to end, not merely that the pure
+/// formula functions return the right numbers in isolation. One test per
+/// class, following wave 46-48's own established pattern.
+#[cfg(test)]
+mod wave49_registered_prestige_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn cyphermage_wave49_is_wired_end_to_end() {
+        let wired = probe_cyphermage_wave49_wiring(&fixture());
+        for expected in [
+            "Cyphermage ~ Analyze Scroll",
+            "Cyphermage ~ Cypher Lore",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn psychic_fist_wave49_is_wired_end_to_end() {
+        let wired = probe_psychic_fist_wave49_wiring(&fixture());
+        for expected in [
+            "Psychic Fist ~ Infused Body",
+            "Psychic Fist ~ Ki Power",
+            "Psychic Fist ~ Mesmerizing Glow",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn asavir_wave49_is_wired_end_to_end() {
+        let wired = probe_asavir_wave49_wiring(&fixture());
+        for expected in [
+            "Asavir ~ Camaraderie",
+            "Asavir ~ Djinni's Blessing",
+            "Asavir ~ Djinni's Blessing ~ Mount",
+            "Asavir ~ Efreeti's Blessing ~ Mount",
+            "Asavir ~ Equine Bond",
+            "Asavir ~ Janni's Blessing",
+            "Asavir ~ Janni's Blessing ~ Mount",
+            "Asavir ~ Marid's Blessing ~ Mount",
+            "Asavir ~ Shaitan's Blessing",
+            "Asavir ~ Thunderous Charge",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn metamorph_wave49_is_wired_end_to_end() {
+        let wired = probe_metamorph_wave49_wiring(&fixture());
+        for expected in [
+            "Metamorph ~ Alter Metamorphosis",
+            "Metamorph ~ Free Shift",
+            "Metamorph ~ Natural Shifter",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn war_mind_wave49_is_wired_end_to_end() {
+        let wired = probe_war_mind_wave49_wiring(&fixture());
+        for expected in [
+            "War Mind ~ Chain of Defensive Posture",
+            "War Mind ~ Chain of Personal Superiority",
+            "War Mind ~ Enduring Body",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn hellknight_wave49_is_wired_end_to_end() {
+        let wired = probe_hellknight_wave49_wiring(&fixture());
+        for expected in [
+            "Detect Chaos ~ HK",
+            "Discern Lies ~ HK",
+            "Smite Chaos ~ HK",
+            "Hellknight Armor ~ HK",
+            "Hellknight Armor Benefits",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn adaptive_warrior_wave49_is_wired_end_to_end() {
+        let wired = probe_adaptive_warrior_wave49_wiring(&fixture());
+        for expected in [
+            "Adaptive Warrior ~ Combine Fighting Styles",
+            "Adaptive Warrior ~ Counter Fighting Style",
+            "Adaptive Warrior ~ Examine Technique",
+            "Adaptive Warrior ~ Extended Examination",
+            "Adaptive Warrior ~ Mimic Skill",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn sanguine_angel_wave49_is_wired_end_to_end() {
+        let wired = probe_sanguine_angel_wave49_wiring(&fixture());
+        for expected in [
+            "Sanguine Angel ~ Armored Angel",
+            "Sanguine Angel ~ Mystique of Ardad Lili",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn body_snatcher_wave49_is_wired_end_to_end() {
+        let wired = probe_body_snatcher_wave49_wiring(&fixture());
+        for expected in [
+            "Body Snatcher ~ Body Thief",
+            "Body Snatcher ~ Death Is Only the Beginning",
+            "Body Snatcher ~ Melding Exchange",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn steel_falcon_wave49_is_wired_end_to_end() {
+        let wired = probe_steel_falcon_wave49_wiring(&fixture());
+        for expected in [
+            "Steel Falcon ~ Chainbreaker",
+            "Steel Falcon ~ Enemy of Slavers",
+            "Steel Falcon ~ Sailor and Survivalist",
+            "Steel Falcon ~ Talmandor's Blessing",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn lantern_bearer_wave49_is_wired_end_to_end() {
+        let wired = probe_lantern_bearer_wave49_wiring(&fixture());
+        for expected in [
+            "Lantern Bearer ~ Favored Enemy",
+            "Lantern Bearer ~ Proven Weapon Familiarity",
+            "Lantern Bearer ~ Superior Discernment",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn storm_kindler_wave49_is_wired_end_to_end() {
+        let wired = probe_storm_kindler_wave49_wiring(&fixture());
+        for expected in [
+            "Storm Kindler ~ Aura of Calm",
+            "Storm Kindler ~ Oceanic Spirit",
+            "Storm Kindler ~ Storm Shape",
+            "Storm Kindler ~ Weather's Fury",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn westcrown_devil_wave49_is_wired_end_to_end() {
+        let wired = probe_westcrown_devil_wave49_wiring(&fixture());
+        for expected in [
+            "Westcrown Devil ~ Council's Secret",
+            "Westcrown Devil ~ Founders' Favor",
+            "Westcrown Devil ~ Sneak Attack",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn pyrokineticist_wave49_is_wired_end_to_end() {
+        let wired = probe_pyrokineticist_wave49_wiring(&fixture());
+        for expected in [
+            "Pyrokineticist ~ Bolt of Fire",
+            "Pyrokineticist ~ Fire Adaptation",
+            "Pyrokineticist ~ Hand Afire",
+            "Pyrokineticist ~ Leech Heat",
+            "Pyrokineticist ~ Manipulate Blaze",
+            "Pyrokineticist ~ Nimbus",
+            "Pyrokineticist ~ Penetrating Fire",
+            "Pyrokineticist ~ Weapon Afire",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn aspis_agent_wave49_is_wired_end_to_end() {
+        let wired = probe_aspis_agent_wave49_wiring(&fixture());
+        for expected in [
+            "Aspis Agent ~ Agency Secrets",
+            "Aspis Agent ~ Sneak Attack",
+            "Aspis Agent ~ Trap Sense",
+            "Aspis Agent ~ Trapfinding",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn gray_corsair_wave49_is_wired_end_to_end() {
+        let wired = probe_gray_corsair_wave49_wiring(&fixture());
+        for expected in [
+            "Gray Corsair ~ Favored Port",
+            "Gray Corsair ~ Slaver Slayer",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn pathfinder_savant_wave49_is_wired_end_to_end() {
+        let wired = probe_pathfinder_savant_wave49_wiring(&fixture());
+        for expected in [
+            "Pathfinder Savant ~ Master Scholar",
+            "Pathfinder Savant ~ Esoteric Magic",
+            "Pathfinder Savant ~ Quick Identification",
+            "Pathfinder Savant ~ Sigil Master",
+            "Pathfinder Savant ~ Analyze Dweomer",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn rivethun_emissary_wave49_is_wired_end_to_end() {
+        let wired = probe_rivethun_emissary_wave49_wiring(&fixture());
+        for expected in [
+            "Rivethun Emissary ~ Enhanced Spirit Animal",
+            "Rivethun Emissary ~ Parley",
+            "Rivethun Emissary ~ Sixth Sense",
+            "Rivethun Emissary ~ Spirit Animal",
+            "Rivethun Emissary ~ Spirit Bond",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn student_of_war_wave49_is_wired_end_to_end() {
+        let wired = probe_student_of_war_wave49_wiring(&fixture());
+        {
+            let expected = "Student of War ~ Additional Skill";
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn diabolist_wave49_is_wired_end_to_end() {
+        let wired = probe_diabolist_wave49_wiring(&fixture());
+        for expected in [
+            "Diabolist ~ Channel Hellfire",
+            "Diabolist ~ Infernal Transport",
+            "Diabolist ~ Damned",
+            "Diabolist ~ Infernal Charisma",
+            "Diabolist ~ Heresy",
+            "Diabolist ~ Hellfire Ray",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn lion_blade_wave49_is_wired_end_to_end() {
+        let wired = probe_lion_blade_wave49_wiring(&fixture());
+        for expected in [
+            "Lion Blade ~ Expeditious Advance",
+            "Lion Blade ~ Silent Soul",
+            "Lion Blade ~ Sneak Attack",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn bellflower_tiller_wave49_is_wired_end_to_end() {
+        let wired = probe_bellflower_tiller_wave49_wiring(&fixture());
+        for expected in [
+            "Bellflower Tiller ~ Bellflower Crop",
+            "Bellflower Tiller ~ Crop Guardian",
+            "Bellflower Tiller ~ Sneak Attack",
+            "Bellflower Tiller ~ Swift Sower",
+            "Bellflower Tiller ~ Teamwork Feat",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn hellknight_signifer_wave49_is_wired_end_to_end() {
+        let wired = probe_hellknight_signifer_wave49_wiring(&fixture());
+        for expected in [
+            "Hellknight Signifer ~ Assiduous Gaze",
+            "Hellknight Signifer ~ Signifer Mask",
+            "Hellknight Signifer ~ Infernal Resilience",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn mystic_archer_wave49_is_wired_end_to_end() {
+        let wired = probe_mystic_archer_wave49_wiring(&fixture());
+        for expected in [
+            "Mystic Archer ~ Heightened Senses",
+            "Mystic Archer ~ Blindsense",
+            "Mystic Archer ~ Blindsight",
+            "Mystic Archer ~ Tremorsense",
+            "Mystic Archer ~ Inevitable Strike",
+            "Mystic Archer ~ Ranged Sneak Attack",
+            "Mystic Archer ~ Unhindered Vision",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn mammoth_rider_wave49_is_wired_end_to_end() {
+        let wired = probe_mammoth_rider_wave49_wiring(&fixture());
+        for expected in [
+            "Mammoth Rider ~ Born Survivor",
+            "Mammoth Rider ~ Gigantic Steed",
+            "Mammoth Rider ~ Rugged Steed",
+            "Mammoth Rider ~ Steed",
+            "Mammoth Rider ~ Steed's Reach",
+            "Mammoth Rider ~ Wild Coercion",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn demoniac_wave49_is_wired_end_to_end() {
+        let wired = probe_demoniac_wave49_wiring(&fixture());
+        for expected in [
+            "Demoniac ~ Summon Demon I",
+            "Demoniac ~ Summon Demon II",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn master_chymist_wave49_is_wired_end_to_end() {
+        let wired = probe_master_chymist_wave49_wiring(&fixture());
+        for expected in [
+            "Master Chymist ~ Advanced Mutagen",
+            "Master Chymist ~ Bomb-Thrower",
+            "Master Chymist ~ Brutality",
+            "Master Chymist ~ Extracts per Day",
+            "Master Chymist ~ Mutate",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn enchanting_courtesan_wave49_is_wired_end_to_end() {
+        let wired = probe_enchanting_courtesan_wave49_wiring(&fixture());
+        for expected in [
+            "Enchanting Courtesan ~ Hidden Spell",
+            "Enchanting Courtesan ~ Seductive Intuition",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn dark_tempest_wave49_is_wired_end_to_end() {
+        let wired = probe_dark_tempest_wave49_wiring(&fixture());
+        for expected in [
+            "Dark Tempest ~ Blade Skills",
+            "Dark Tempest ~ Diverse Training",
+            "Dark Tempest ~ Expanded Power List",
+            "Dark Tempest ~ Power Strike",
+            "Dark Tempest ~ Psychic Strike",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn battle_herald_wave49_is_wired_end_to_end() {
+        let wired = probe_battle_herald_wave49_wiring(&fixture());
+        for expected in [
+            "Battle Herald ~ Inspiring Command",
+            "Battle Herald ~ Teamwork Feat",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn master_spy_wave49_is_wired_end_to_end() {
+        let wired = probe_master_spy_wave49_wiring(&fixture());
+        for expected in [
+            "Master Spy ~ Art of Deception",
+            "Master Spy ~ Slippery Mind",
+            "Master Spy ~ Sneak Attack",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn evangelist_wave49_is_wired_end_to_end() {
+        let wired = probe_evangelist_wave49_wiring(&fixture());
+        {
+            let expected = "Evangelist ~ Single-Minded";
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn ulfen_guard_wave49_is_wired_end_to_end() {
+        let wired = probe_ulfen_guard_wave49_wiring(&fixture());
+        {
+            let expected = "Ulfen Guard ~ Guard Dedications";
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
 }
