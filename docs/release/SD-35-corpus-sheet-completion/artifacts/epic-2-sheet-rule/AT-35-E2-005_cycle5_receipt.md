@@ -13,8 +13,9 @@ no data and no script, and closed zero units. It did **not** start a fifth grind
 
 - **Commit SHA:** `ad6da1bbf24709121ec9f9c8844d2a92f4d9e057` is the tree verified — unchanged by
   this cycle apart from `docs/`. Cycle start `ad6da1bbf2`. The docs-only commit carrying this
-  receipt, `progress.md`, `kanban.md` and the two retro events is pinned by the follow-up commit
-  (the pattern `ca14f2363f` set on this branch).
+  receipt, `progress.md`, `kanban.md` and the two retro events is
+  `77fa8a0d31` on `tranche/15`, pinned here by the follow-up commit (the pattern `ca14f2363f`
+  set on this branch).
 - **Scope gate:** `scoped=1404 remaining_non_done=1404 floor=500 verdict=PASS` — the literal last
   line of `python3 scripts/cycle_scope_gate.py --min 500` (no flags = the whole remainder), run at
   cycle start on the rebased tree. Full output:
