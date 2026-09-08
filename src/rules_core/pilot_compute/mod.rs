@@ -255,6 +255,31 @@ pub struct PilotBaseChassisComputation {
     pub selected_skill_modifiers: SelectedSkillModifiers,
     pub explanations: Vec<ComputationExplanation>,
     pub diagnostics: Vec<ComputationDiagnostic>,
+    /// SD-35 AT-35-E2-002: the "Rules and features" lines -- every held sheet rule's line
+    /// (`sheet_rule::render_sheet`), one per held, printed rule. Empty from
+    /// `compute_pilot_base_chassis` itself, which has no `data/sheet_rules/` package in hand;
+    /// filled by [`PilotBaseChassisComputation::with_sheet_rules`] once a caller loads one
+    /// (the desktop, once per process).
+    pub sheet_lines: Vec<crate::rules_core::sheet_rule::SheetLine>,
+}
+
+impl PilotBaseChassisComputation {
+    /// Attach the sheet lines for this computation: the held set is the seed (the character's
+    /// own selections plus the class-feature records this computation grounded, plus
+    /// `extra_race_traits` from the caller's race resolver) closed over the package's grants.
+    pub fn with_sheet_rules(
+        mut self,
+        input: &CharacterInput,
+        package: &crate::rules_core::sheet_rule::SheetRulePackage,
+        extra_race_traits: &[String],
+    ) -> Self {
+        use crate::rules_core::sheet_rule::{render_sheet, CharacterFacts, HeldSeed};
+        let mut seed = HeldSeed::from_character(input, &self);
+        seed.race_traits.extend(extra_race_traits.iter().cloned());
+        let facts = CharacterFacts::from_character(input, &self);
+        self.sheet_lines = render_sheet(package, &seed, &facts);
+        self
+    }
 }
 
 /// Ability modifiers derived from chosen ability scores via `floor(score/2) - 5`.
@@ -9425,6 +9450,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         selected_skill_modifiers,
         explanations,
         diagnostics,
+        sheet_lines: Vec::new(),
     }
 }
 

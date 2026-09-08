@@ -85,6 +85,7 @@ impl RuleSystemAdapter for StubAdapter {
                 message: self.would_render_message(),
                 claim_blocking: true,
             }],
+            sheet_lines: Vec::new(),
         }
     }
 

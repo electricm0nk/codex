@@ -350,6 +350,9 @@ mod tests {
                     .clone(),
             };
 
+            let (sheet_lines, sheet_rules_unavailable_reason) =
+                crate::character_hub::sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
+
             Ok(LoadSavedCharacterResponse {
                 summary,
                 snapshot,
@@ -370,6 +373,8 @@ mod tests {
                 resolved_racial_traits: resolve_racial_traits_for_character(
                     &envelope.character_input,
                 ),
+                sheet_lines,
+                sheet_rules_unavailable_reason,
             })
         }
     }

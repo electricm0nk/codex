@@ -226,6 +226,110 @@ fn find_json_files(dir: &Path) -> Vec<std::path::PathBuf> {
     out
 }
 
+/// The result of loading `data/sheet_rules/` (SD-35 AT-35-E2-002).
+pub struct SheetRuleLoad {
+    pub package: crate::rules_core::sheet_rule::SheetRulePackage,
+    /// One per file that failed to read or parse; the rest of the package still loads.
+    pub diagnostics: Vec<crate::rules_core::source_content::SourceContentDiagnostic>,
+    pub rule_files: usize,
+    pub var_files: usize,
+}
+
+/// Loads the whole `data/sheet_rules/` package -- every `<book>/<kind>/**/*.json` rule file
+/// (each a JSON array of `SheetRule`) and every `_vars/<VarId>.json` table -- into one
+/// [`SheetRulePackage`](crate::rules_core::sheet_rule::SheetRulePackage). The live side's only
+/// reader of the package: it reads our schema and nothing else (`decisions.md` §11).
+///
+/// `_refused.json`, `_report.json`, `_defects/` and `GENERATED` are the converter's own
+/// reports, not rules, and are skipped. Files are parsed on `available_parallelism` threads
+/// (the package is ~52,000 files); the result is deterministic because rules are keyed by id.
+pub fn load_sheet_rules(dir: &Path) -> SheetRuleLoad {
+    load_sheet_rules_filtered(dir, &|_, _| true)
+}
+
+/// [`load_sheet_rules`] restricted to the `(book, kind)` pairs `keep` accepts; `_vars/` always
+/// loads. The per-kind gates use it to read one kind's live directory.
+pub fn load_sheet_rules_filtered(dir: &Path, keep: &dyn Fn(&str, &str) -> bool) -> SheetRuleLoad {
+    use crate::rules_core::sheet_rule::{SheetRule, SheetRulePackage, VarTable};
+
+    let mut rule_paths: Vec<std::path::PathBuf> = Vec::new();
+    let mut var_paths: Vec<std::path::PathBuf> = Vec::new();
+    let mut diagnostics = Vec::new();
+    let mut books: Vec<std::path::PathBuf> = match fs::read_dir(dir) {
+        Ok(entries) => entries.flatten().map(|e| e.path()).filter(|p| p.is_dir()).collect(),
+        Err(_) => {
+            diagnostics.push(load_diagnostic(dir, "cannot read the sheet-rules root"));
+            Vec::new()
+        }
+    };
+    books.sort();
+    for book_dir in books {
+        let book = book_dir.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+        if book == "_vars" {
+            var_paths.extend(find_json_files(&book_dir));
+            continue;
+        }
+        if book.starts_with('_') {
+            continue;
+        }
+        let mut kinds: Vec<std::path::PathBuf> = match fs::read_dir(&book_dir) {
+            Ok(entries) => entries.flatten().map(|e| e.path()).filter(|p| p.is_dir()).collect(),
+            Err(_) => continue,
+        };
+        kinds.sort();
+        for kind_dir in kinds {
+            let kind = kind_dir.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+            if keep(&book, &kind) {
+                rule_paths.extend(find_json_files(&kind_dir));
+            }
+        }
+    }
+
+    fn parse_all<T: serde::de::DeserializeOwned + Send>(paths: &[std::path::PathBuf]) -> Vec<Result<T, (std::path::PathBuf, &'static str)>> {
+        let threads = std::thread::available_parallelism().map(|n| n.get()).unwrap_or(4).clamp(1, 8);
+        let chunk = paths.len().div_ceil(threads).max(1);
+        let mut out = Vec::with_capacity(paths.len());
+        std::thread::scope(|scope| {
+            let handles: Vec<_> = paths
+                .chunks(chunk)
+                .map(|slice| {
+                    scope.spawn(move || {
+                        slice
+                            .iter()
+                            .map(|path| {
+                                let Ok(text) = fs::read_to_string(path) else { return Err((path.clone(), "failed to read file")) };
+                                serde_json::from_str::<T>(&text).map_err(|_| (path.clone(), "failed to parse as a sheet-rules JSON file"))
+                            })
+                            .collect::<Vec<_>>()
+                    })
+                })
+                .collect();
+            for handle in handles {
+                out.extend(handle.join().expect("a sheet-rules parse thread must not panic"));
+            }
+        });
+        out
+    }
+
+    let mut package = SheetRulePackage::new();
+    let rule_files = rule_paths.len();
+    let var_files = var_paths.len();
+    for parsed in parse_all::<Vec<SheetRule>>(&rule_paths) {
+        match parsed {
+            Ok(rules) => rules.into_iter().for_each(|r| package.insert_rule(r)),
+            Err((path, message)) => diagnostics.push(load_diagnostic(&path, message)),
+        }
+    }
+    for parsed in parse_all::<VarTable>(&var_paths) {
+        match parsed {
+            Ok(table) => package.insert_var(table),
+            Err((path, message)) => diagnostics.push(load_diagnostic(&path, message)),
+        }
+    }
+    package.finish();
+    SheetRuleLoad { package, diagnostics, rule_files, var_files }
+}
+
 fn load_diagnostic(path: &Path, message: &str) -> crate::rules_core::source_content::SourceContentDiagnostic {
     use crate::rules_core::source_content::{SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentSeverity};
     SourceContentDiagnostic {

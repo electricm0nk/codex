@@ -8180,5 +8180,93 @@ mod tests {
             other => panic!("APG feats reach the feat catalog today, got {other:?}"),
         }
     }
+
+    /// **SD-35 AT-35-E2-002 -- the sheet-rule lines cross the IPC with a payload.**
+    ///
+    /// Runs the real `load_saved_character` builder on a character created through the real
+    /// `create_character` path and checks the "Rules and features" section's records arrive
+    /// carrying what the render path reads: a label, and a value or the rule's words. An
+    /// identity-only line (id, no label, no value, no prose) is the Feats-tab defect this
+    /// module exists to catch, so it fails the gate here the same way. Every line's `kind`
+    /// names a directory the converter wrote under `data/sheet_rules/`, so the frontend's
+    /// per-kind grouping (`rulesAndFeaturesSection.test.ts`, one test per kind) and the wire
+    /// agree on the kind vocabulary.
+    #[test]
+    fn sheet_rule_lines_cross_the_ipc_carrying_label_and_value() {
+        use crate::character_hub::{
+            create_character_at_root, load_saved_character_at_root, AbilityScoresDto,
+            CreateCharacterRequest, CreateCharacterResponse,
+        };
+
+        let unique = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system time should be after unix epoch")
+            .as_nanos();
+        let root = std::env::temp_dir().join(format!("codex-reach-gate-sheet-rules-{}-{unique}", std::process::id()));
+        fs::create_dir_all(&root).expect("temp dir should be creatable");
+
+        let request = CreateCharacterRequest {
+            character_id: "char-sheet-rules".to_owned(),
+            display_label: "Sheet Rules Probe".to_owned(),
+            race_id: "race:human".to_owned(),
+            class_id: "class:fighter".to_owned(),
+            level: 3,
+            ability_scores: AbilityScoresDto {
+                strength: 16,
+                dexterity: 14,
+                constitution: 14,
+                intelligence: 10,
+                wisdom: 12,
+                charisma: 8,
+            },
+            ability_bonus_target: "strength".to_owned(),
+            selected_alternate_trait_keys: Vec::new(),
+            companion_species: None,
+            selected_traits: Vec::new(),
+            trait_skill_choices: Vec::new(),
+            saved_at: "2026-09-08T00:00:00Z".to_owned(),
+        };
+        match create_character_at_root(&root, &request, "test-version".to_owned()).expect("create call should not error") {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => panic!("a Human Fighter 3 must be creatable, got: {diagnostics:?}"),
+        }
+
+        let loaded = load_saved_character_at_root(&root).expect("the saved character must load back");
+        let _ = fs::remove_dir_all(&root);
+        assert_eq!(
+            loaded.sheet_rules_unavailable_reason, None,
+            "the data/sheet_rules/ package loads from the repo root the desktop already resolves"
+        );
+        assert!(!loaded.sheet_lines.is_empty(), "a Human Fighter 3 holds sheet rules (its racial traits, its class features)");
+
+        let kind_dirs: BTreeSet<String> = fs::read_dir(repo_root().join("data/sheet_rules"))
+            .expect("data/sheet_rules/ is generated")
+            .flatten()
+            .filter(|book| book.path().is_dir() && !book.file_name().to_string_lossy().starts_with('_'))
+            .flat_map(|book| fs::read_dir(book.path()).into_iter().flatten().flatten())
+            .filter(|kind| kind.path().is_dir())
+            .map(|kind| kind.file_name().to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(kind_dirs.len(), 19, "the converter's kind vocabulary: {kind_dirs:?}");
+
+        let mut kinds_seen = BTreeSet::new();
+        let mut bare = Vec::new();
+        for line in &loaded.sheet_lines {
+            assert!(kind_dirs.contains(&line.kind), "{}: kind `{}` is a data/sheet_rules/ directory", line.id, line.kind);
+            kinds_seen.insert(line.kind.clone());
+            assert!(matches!(line.form.as_str(), "number" | "dice" | "words"), "{}: form {}", line.id, line.form);
+            let has_payload = !line.label.is_empty() && (!line.value.is_empty() || !line.prose.is_empty() || !line.also.is_empty() || line.form == "words");
+            if !has_payload {
+                bare.push(line.id.clone());
+            }
+            if line.form == "words" {
+                assert!(line.value.is_empty(), "{}: a words line carries no number", line.id);
+            }
+        }
+        assert!(bare.is_empty(), "identity-only lines are not reach: {bare:?}");
+        assert!(kinds_seen.contains("race_trait"), "the Human's racial traits reach the sheet: {kinds_seen:?}");
+        assert!(kinds_seen.contains("class_feature"), "the Fighter's class features reach the sheet: {kinds_seen:?}");
+        eprintln!("sheet_rule_lines: {} lines across kinds {:?}", loaded.sheet_lines.len(), kinds_seen);
+    }
 }
 

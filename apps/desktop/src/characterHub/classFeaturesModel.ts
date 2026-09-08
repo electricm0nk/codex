@@ -1,4 +1,4 @@
-import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
+import type { ExplanationDto, SheetLineDto } from '../boundary/loadSavedCharacterDetail';
 import type { ClassFeatureDescriptionDto } from '../boundary/loadClassFeatureDescriptions';
 import type { HeldClass } from './characterProgression';
 import { normalizeFeatIdentity } from './featsTabModel';
@@ -289,10 +289,49 @@ export function unmatchedClassFeatureDescriptions(
   );
 }
 
+/**
+ * SD-35 AT-35-E2-002: whether a `.unsupported` notice names a record the
+ * "Rules and features" section already renders from its sheet rule.
+ *
+ * The `Not computed` lane keeps only records with no rule
+ * (`epic-breakdown.md` AT-35-E2-002): a facet the chassis could not ground
+ * but whose corpus record converted to a `SheetRule` prints as that rule's
+ * line -- the number, the dice, or the words -- so the notice would only say
+ * "not computed" next to a line that computes it. The join is the same
+ * `<class>_<feature>` / `<feature>` slug the engine's seed uses
+ * (`sheet_rule::held_set`): the notice's segments after the class token,
+ * joined with `_`, matched against a `class_feature` line's id slug.
+ */
+function noticeHasSheetRule(
+  trimmedId: string,
+  classToken: string | null,
+  sheetLines: readonly SheetLineDto[]
+): boolean {
+  if (sheetLines.length === 0) {
+    return false;
+  }
+  const segments = trimmedId.split('.').slice(1);
+  const classIndex = classToken === null ? -1 : segments.indexOf(classToken);
+  const featureSegments = stripRecordFamily(classIndex >= 0 ? segments.slice(classIndex + 1) : segments);
+  if (featureSegments.length === 0) {
+    return false;
+  }
+  const feature = featureSegments.join('_');
+  const candidates = classToken === null ? [feature] : [`${classToken}_${feature}`, feature];
+  return sheetLines.some((line) => {
+    if (line.kind !== 'class_feature') {
+      return false;
+    }
+    const slug = line.id.slice(line.id.lastIndexOf(':') + 1).split('#')[0] ?? '';
+    return candidates.includes(slug);
+  });
+}
+
 export function buildClassFeatureSurface(
   explanations: readonly ExplanationDto[],
   heldClasses: readonly HeldClass[],
-  descriptions: readonly ClassFeatureDescriptionDto[] = []
+  descriptions: readonly ClassFeatureDescriptionDto[] = [],
+  sheetLines: readonly SheetLineDto[] = []
 ): ClassFeatureSurface {
   // Token -> the held class's own label, so an attributed row can render the
   // name the character already uses instead of the raw id segment.
@@ -311,6 +350,9 @@ export function buildClassFeatureSurface(
     if (explanation.id.endsWith(UNSUPPORTED_SUFFIX)) {
       const trimmedId = explanation.id.slice(0, -UNSUPPORTED_SUFFIX.length);
       const { classToken, label } = splitId(trimmedId, heldTokens);
+      if (noticeHasSheetRule(trimmedId, classToken, sheetLines)) {
+        continue;
+      }
       notComputed.push({
         id: explanation.id,
         classToken,

@@ -14,6 +14,7 @@
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 use base64::Engine as _;
 use serde::{Deserialize, Serialize};
@@ -32,7 +33,7 @@ use codex::rules_core::money;
 use codex::rules_core::pilot_compute::{
     ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt,
     race_alternate_trait_selection_id, ComputationExplanation, HeadlessReceiptStatus,
-    RACE_ALTERNATE_TRAIT_CHOICE_ID, RACE_ALTERNATE_TRAIT_SELECTION_PREFIX,
+    PilotBaseChassisComputation, RACE_ALTERNATE_TRAIT_CHOICE_ID, RACE_ALTERNATE_TRAIT_SELECTION_PREFIX,
 };
 use codex::rules_core::pilot_compute_corpus::{
     compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
@@ -611,6 +612,100 @@ pub struct LoadSavedCharacterResponse {
     /// verbatim: they are corpus prose with the engine's numbers resolved into
     /// it, not text to paraphrase.
     pub resolved_racial_traits: crate::race_trait_picker::RaceSelectionResponse,
+    /// **SD-35 AT-35-E2-002 -- the "Rules and features" section.** Every held sheet rule's
+    /// line for this character (`codex::rules_core::sheet_rule::render_sheet` over the
+    /// `data/sheet_rules/` package, loaded once per process by [`sheet_rule_package`]),
+    /// grouped by kind: one final number, dice in final form, or the rule's words
+    /// (`decisions.md §1`). The frontend renders `label`, `value`, `also`, `prose` and
+    /// `condition` verbatim -- nothing here is re-derived on the far side of the boundary.
+    pub sheet_lines: Vec<SheetLineDto>,
+    /// Why `sheet_lines` is empty when it is empty for a reason other than "this character
+    /// holds no rule": the package directory could not be resolved or read. `None` when the
+    /// package loaded. Carried so the sheet can say so instead of showing an empty section.
+    pub sheet_rules_unavailable_reason: Option<String>,
+}
+
+/// Wire form of `sheet_rule::SheetLine` -- one line of the "Rules and features" section.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SheetLineDto {
+    /// `<book>:<kind>:<slug>`, the same id `docs/work-inventory.json` keys the unit by.
+    pub id: String,
+    /// The record kind (`feat`, `class_feature`, ...); the section groups by it.
+    pub kind: String,
+    pub label: String,
+    /// `"number"`, `"dice"` or `"words"`.
+    pub form: String,
+    /// The value as the player writes it: `"+2"`, `"15"`, `"1d8+2"`; `""` for words.
+    pub value: String,
+    /// Second/third numbers on the line, already printed: `"6/day"`, `"CL 5"`, `"DC 15"`.
+    pub also: Vec<String>,
+    /// The rule's words with every slot filled.
+    pub prose: String,
+    /// The situational condition, when the rule has one: `"when jumping"`.
+    pub condition: Option<String>,
+}
+
+fn sheet_line_form(value: &codex::rules_core::sheet_rule::SheetLineValue) -> &'static str {
+    use codex::rules_core::sheet_rule::SheetLineValue;
+    match value {
+        SheetLineValue::Resolved(_) => "number",
+        SheetLineValue::Dice(_) => "dice",
+        SheetLineValue::Words => "words",
+    }
+}
+
+pub(crate) fn map_sheet_lines_dto(lines: &[codex::rules_core::sheet_rule::SheetLine]) -> Vec<SheetLineDto> {
+    lines
+        .iter()
+        .map(|line| SheetLineDto {
+            id: line.id.clone(),
+            kind: line.kind.clone(),
+            label: line.label.clone(),
+            form: sheet_line_form(&line.value).to_owned(),
+            value: line.printed.clone(),
+            also: line.also.iter().map(|(printed, _)| printed.clone()).collect(),
+            prose: line.prose.clone(),
+            condition: line.condition.clone(),
+        })
+        .collect()
+}
+
+/// The `data/sheet_rules/` package, loaded once per process -- the same shape
+/// `race_trait_picker::race_corpus` uses for `data/corpus/`. `Err` names why it is
+/// unavailable (no repo root, an unreadable directory, an empty package).
+fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetRulePackage, String> {
+    static PACKAGE: OnceLock<Result<codex::rules_core::sheet_rule::SheetRulePackage, String>> = OnceLock::new();
+    PACKAGE.get_or_init(|| {
+        let dir = crate::authoring_workbench::codex_repo_root()?.join("data/sheet_rules");
+        let load = codex::rules_core::corpus_loader::load_sheet_rules(&dir);
+        if load.package.rules.is_empty() {
+            return Err(format!(
+                "no sheet rules under {} ({} file diagnostics; regenerate with `cargo run --locked --bin sheet_rule_convert`)",
+                dir.display(),
+                load.diagnostics.len()
+            ));
+        }
+        Ok(load.package)
+    })
+}
+
+/// The "Rules and features" lines for a character: the chassis computation's held set --
+/// the character's own selections, the class-feature records the chassis grounded, and the
+/// racial traits the race resolver applied -- rendered through the live evaluator.
+pub(crate) fn sheet_lines_for(
+    input: &CharacterInput,
+    base: &PilotBaseChassisComputation,
+) -> (Vec<SheetLineDto>, Option<String>) {
+    match sheet_rule_package() {
+        Ok(package) => {
+            let race_traits: Vec<String> =
+                resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()).collect();
+            let computed = base.clone().with_sheet_rules(input, package, &race_traits);
+            (map_sheet_lines_dto(&computed.sheet_lines), None)
+        }
+        Err(reason) => (Vec::new(), Some(reason.clone())),
+    }
 }
 
 /// Wire form of `pilot_compute::ComputationExplanation`.
@@ -1646,6 +1741,8 @@ pub(crate) fn load_saved_character_at_root(
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
     ));
+    let (sheet_lines, sheet_rules_unavailable_reason) =
+        sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
 
     Ok(LoadSavedCharacterResponse {
         summary: summarize_envelope(&envelope),
@@ -1660,6 +1757,8 @@ pub(crate) fn load_saved_character_at_root(
         selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
         selected_traits: envelope.character_input.chosen.selected_traits.clone(),
         resolved_racial_traits: resolve_racial_traits_for_character(&envelope.character_input),
+        sheet_lines,
+        sheet_rules_unavailable_reason,
     })
 }
 
