@@ -37,7 +37,7 @@ Notes column.** Notes here are a pointer, never a story.
 | 8 | `live-evaluator-and-sheet-section` | 2 | AT-35-E2-002 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-002_cycle1_receipt.md`; `docs/retro/events/at-35-e2-002.jsonl` — `909bb0837c` |
 | 9 | `sheet-complete-status` | 2 | AT-35-E2-003 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-003_cycle1_receipt.md`; `docs/retro/events/at-35-e2-003.jsonl` — `a81c2a005c` |
 | 10 | `token-coverage-ledger` | 2 | AT-35-E2-004 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-004_cycle1_receipt.md`; `artifacts/epic-2-sheet-rule/token-coverage.json`; `data/sheet_rules/_tokens.json` — `344f18d1e1` |
-| 11 | `first-corpus-wide-conversion` | 2 | AT-35-E2-005 | partial | `artifacts/epic-2-sheet-rule/AT-35-E2-005_cycle1_receipt.md`; `artifacts/epic-2-sheet-rule/oracle-parity/sheet-parity.json`; `docs/retro/events/at-35-e2-005.jsonl` — `51f91bba11` (closed 21,911; 1,404 remain: 659 refused by token type, 745 non-promotable statuses) |
+| 11 | `first-corpus-wide-conversion` | 2 | AT-35-E2-005 | partial | `artifacts/epic-2-sheet-rule/AT-35-E2-005_cycle2_receipt.md` (cycle 1: `…_cycle1_receipt.md`); `artifacts/epic-2-sheet-rule/oracle-parity/sheet-parity.json`; `docs/retro/events/at-35-e2-005.jsonl` — `33deab007b` (cycle 2: parity 8/8 agree, 0 closed by the criterion's no-mapping rule; 1,404 remain: 659 refused by token type, 745 non-promotable statuses) |
 | 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | not-started | |
 | 13 | `other-kinds-b-zero` | 3 | AT-35-E3-002 | not-started | |
 | 14 | `bucket-c-zero` | 3 | AT-35-E3-003 | not-started | |
