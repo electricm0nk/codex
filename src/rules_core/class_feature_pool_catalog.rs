@@ -2088,11 +2088,20 @@ mod tests {
         // by re-running this test's own live query standalone post-regen). This lane's OWN
         // owned population (`null_desc`/`real_desc_refused` below, neither Cleric nor Sorcerer
         // was ever counted there) is unaffected -- still 18/6, still summing to 24.
-        assert_eq!(excluded, 138, "excluded-class population (sibling lane's, do not touch)");
-        assert_eq!(null_desc, 18, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
-        assert_eq!(real_desc_refused, 6, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
+        // SD-35 AT-35-E2-005 re-derivation (2026-09-08): 138 -> 1, 18 -> 0, 6 -> 0. The first
+        // corpus-wide sheet-rule pass stamped `sheet-complete` (AT-35-E2-003's rung) on every
+        // `engine-does-not-hold` unit whose converted `SheetRule` renders for the probe
+        // character, so `mechanism_units` (this test's own live query, re-run standalone
+        // post-regen: `python3 -c` over `docs/work-inventory.json` filtering book/status/
+        // evidence exactly as above) shrank 162 -> 1 -- the one survivor is excluded-class
+        // (its record is in `data/sheet_rules/_refused.json`). This lane's own owned
+        // population (`null_desc` + `real_desc_refused`) is 0: every one of the 24 rendered
+        // as a sheet line and left the mechanism.
+        assert_eq!(excluded, 1, "excluded-class population (sibling lane's, do not touch)");
+        assert_eq!(null_desc, 0, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
+        assert_eq!(real_desc_refused, 0, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
         assert_eq!(excluded + null_desc + real_desc_refused, mechanism_units.len() as u32);
-        assert_eq!(null_desc + real_desc_refused, 24, "this lane's own owned population");
+        assert_eq!(null_desc + real_desc_refused, 0, "this lane's own owned population (24 before SD-35 AT-35-E2-005's pass)");
     }
 }
 

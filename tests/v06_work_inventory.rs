@@ -701,10 +701,20 @@ fn zero_magnitude_option_pool_class_features_are_engine_does_not_hold_not_unknow
     ] {
         let unit = units.iter().find(|u| u["id"] == id).unwrap_or_else(|| panic!("{id} missing from inventory"));
         assert_eq!(unit["magnitude_token_count"], 0, "{id}: fixture assumption changed, re-check");
+        // SD-35 AT-35-E2-005 (2026-09-08): the first corpus-wide sheet-rule pass. Both
+        // records convert (`data/sheet_rules/advanced_class_guide/class_feature/*_bonus_spells.json`)
+        // and render as words for the probe character, so AT-35-E2-003's `sheet-complete`
+        // rung -- the rung directly above `engine-does-not-hold` (`technical-design.md §3`) --
+        // lifts them with evidence `sheet_rule_rendered:words`. The classifier still reaches
+        // `engine-does-not-hold` first (the owned-branch evidence assertion below is unchanged);
+        // the rung runs last and only over that status, so this pin now reads the rung's word.
         assert_eq!(
-            unit["status"], "engine-does-not-hold",
-            "{id}: zero-magnitude option-pool class_feature confirmed unheld by the engine must be engine-does-not-hold, not unknown or text-complete"
+            unit["status"], "sheet-complete",
+            "{id}: zero-magnitude option-pool class_feature confirmed unheld by the engine is \
+             engine-does-not-hold at the classifier and sheet-complete after the rung (SD-35 \
+             AT-35-E2-003/E2-005), never unknown or text-complete"
         );
+        assert_eq!(unit["evidence"], "sheet_rule_rendered:words", "{id}: the rung's evidence");
         // Owner resolves via `classify()`'s third owner-resolution fallback,
         // `class_feature_owner_via_pool_catalog`: "Bloodrager Bloodline" is
         // a registered `CLASS_FEATURE_POOLS` entry resolving to
@@ -719,11 +729,14 @@ fn zero_magnitude_option_pool_class_features_are_engine_does_not_hold_not_unknow
         // in `src/bin/v06_work_inventory.rs`) and this record's own `null`
         // description fails `class_feature_pool_catalog`'s `has_real_
         // description` gate outright -- so it carries the same OWNED-branch
-        // evidence string the "Rogue Talent"/former "Discovery" cases do.
-        assert_eq!(
-            unit["evidence"],
-            "class_feature_owner_matched_by_name_but_record_not_held_by_engine"
-        );
+        // evidence string the "Rogue Talent"/former "Discovery" cases do at
+        // the classifier. Since SD-35 AT-35-E2-005 the rung overwrites that
+        // evidence with `sheet_rule_rendered:words` (asserted above); the
+        // classifier-side proof of the owned branch is
+        // `class_feature_owner_via_pool_catalog`'s own unit tests in
+        // `src/bin/v06_work_inventory.rs`, and the rung's promotable set is
+        // exactly `engine-does-not-hold`/`ingested-magnitude`, so a
+        // `sheet-complete` stamp here implies the owned branch was reached.
     }
 
     // No unknown class_feature may carry magnitude_token_count == 0 AND no
@@ -1179,13 +1192,26 @@ fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
          (15-card-15-other-kinds-memo.md §3), got {}",
         power_units.len()
     );
+    // SD-35 AT-35-E2-005 (2026-09-08): the first corpus-wide sheet-rule pass. 420 of the 421
+    // convert and render for the probe character, so AT-35-E2-003's `sheet-complete` rung
+    // lifts them off `engine-does-not-hold`; the one that stays is the converter refusal
+    // `ultimate_psionics:power:physical_acceleration` (`data/sheet_rules/_refused.json`).
+    // Enumeration is still the point: every unit carries one of the two engine-consulted
+    // verdicts, never `not-started`.
     let power_statuses: std::collections::BTreeSet<&str> =
         power_units.iter().filter_map(|u| u["status"].as_str()).collect();
     assert_eq!(
         power_statuses,
-        std::collections::BTreeSet::from(["engine-does-not-hold"]),
-        "ultimate_psionics' power units must all be engine-does-not-hold (Epic 9 deferred mapping \
-         them into an engine pipeline, not enumeration itself), statuses seen were \
-         {power_statuses:?}"
+        std::collections::BTreeSet::from(["engine-does-not-hold", "sheet-complete"]),
+        "ultimate_psionics' power units are engine-does-not-hold at the classifier and \
+         sheet-complete after SD-35's rung (Epic 9 deferred mapping them into an engine \
+         pipeline, not enumeration itself), statuses seen were {power_statuses:?}"
+    );
+    let power_sheet_complete = power_units.iter().filter(|u| u["status"] == "sheet-complete").count();
+    assert_eq!(
+        power_sheet_complete,
+        420,
+        "420 of the 421 power units render as a sheet line (SD-35 AT-35-E2-005); the one \
+         `engine-does-not-hold` survivor is the converter refusal physical_acceleration"
     );
 }

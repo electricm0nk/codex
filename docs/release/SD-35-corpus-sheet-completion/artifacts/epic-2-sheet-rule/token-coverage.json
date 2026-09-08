@@ -3,18 +3,18 @@
  "derived_by": "python3 scripts/token_coverage.py --check",
  "reading_rule": "A token type is the converter mapping-table row key the converter resolved a token to (`src/pcgen_import/sheet_rule/table.rs::row_for_head`), `unmapped:<HEAD>` / `BONUS:<SUB>` when the table has no row, or `token-less` for a record whose closure has no row at all. `carrying` counts a unit once per token type it carries (a unit carrying k types is under k rows); `refused_because_of_this_token` counts a refused record under the token type each of its refusal shapes arose under; `refused_non_done` counts carrying non-DONE units the converter refused for ANY shape, so carrying_non_done = converted_non_done + refused_non_done per row. DONE is `scripts/completion_atlas.py`'s partition over docs/work-inventory.json.",
  "inputs": {
-  "inventory_generated_at": "2026-09-07T13:06:14Z",
+  "inventory_generated_at": "2026-09-08T09:12:49Z",
   "converter_version": "sheet_rule_convert/0.15.0",
   "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6",
   "mapping_table": "mapping-table.v1"
  },
  "denominators": {
   "units": 49438,
-  "non_done": 23315,
+  "non_done": 1404,
   "records_in_census": 49438,
   "refused_records": 1810,
   "refused_non_done": 659,
-  "token_less_non_done": 7,
+  "token_less_non_done": 5,
   "token_types": 231,
   "refusal_shapes": 81
  },
@@ -51,8 +51,8 @@
     "maps_to": "Metadata(ignored-by-sheet)"
    },
    "carrying": 42141,
-   "carrying_non_done": 18963,
-   "converted_non_done": 18403,
+   "carrying_non_done": 1126,
+   "converted_non_done": 566,
    "refused_non_done": 560,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
@@ -64,22 +64,9 @@
     "maps_to": "Metadata(ignored-by-sheet)"
    },
    "carrying": 31867,
-   "carrying_non_done": 17647,
-   "converted_non_done": 17175,
+   "carrying_non_done": 1002,
+   "converted_non_done": 530,
    "refused_non_done": 472,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "KEY": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 31386,
-   "carrying_non_done": 15197,
-   "converted_non_done": 14774,
-   "refused_non_done": 423,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -90,9 +77,22 @@
     "maps_to": "Metadata(ignored-by-sheet)"
    },
    "carrying": 33953,
-   "carrying_non_done": 13309,
-   "converted_non_done": 13002,
+   "carrying_non_done": 913,
+   "converted_non_done": 606,
    "refused_non_done": 307,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "KEY": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 31386,
+   "carrying_non_done": 904,
+   "converted_non_done": 481,
+   "refused_non_done": 423,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -103,8 +103,8 @@
     "maps_to": "Text"
    },
    "carrying": 29708,
-   "carrying_non_done": 12685,
-   "converted_non_done": 12485,
+   "carrying_non_done": 605,
+   "converted_non_done": 405,
    "refused_non_done": 200,
    "refused_because_of_this_token": 44,
    "refused_because_of_this_token_non_done": 40,
@@ -128,14 +128,31 @@
     "FORMULA:var(HP)": 1
    }
   },
+  "ABILITY": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 9883,
+   "carrying_non_done": 564,
+   "converted_non_done": 192,
+   "refused_non_done": 372,
+   "refused_because_of_this_token": 212,
+   "refused_because_of_this_token_non_done": 200,
+   "refusal_shapes": {
+    "FORMULA:malformed (parser refusals)": 15,
+    "FORMULA:var(<export token>) (ENCUMBRANCE: equipment/encumbrance state)": 1,
+    "FORMULA:var(COUNT)": 196
+   }
+  },
   "BONUS:VAR": {
    "mapping_row": {
     "family": "bonus",
     "maps_to": "Number(Expr) -- a contribution to a corpus variable, never a sheet line"
    },
    "carrying": 10599,
-   "carrying_non_done": 6963,
-   "converted_non_done": 6703,
+   "carrying_non_done": 502,
+   "converted_non_done": 242,
    "refused_non_done": 260,
    "refused_because_of_this_token": 75,
    "refused_because_of_this_token_non_done": 60,
@@ -166,31 +183,14 @@
     "FORMULA:var(STAT)": 7
    }
   },
-  "ABILITY": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 9883,
-   "carrying_non_done": 6167,
-   "converted_non_done": 5795,
-   "refused_non_done": 372,
-   "refused_because_of_this_token": 212,
-   "refused_because_of_this_token_non_done": 200,
-   "refusal_shapes": {
-    "FORMULA:malformed (parser refusals)": 15,
-    "FORMULA:var(<export token>) (ENCUMBRANCE: equipment/encumbrance state)": 1,
-    "FORMULA:var(COUNT)": 196
-   }
-  },
   "VISIBLE": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Metadata (print flag on the rule: SheetRule.print)"
    },
    "carrying": 7157,
-   "carrying_non_done": 4853,
-   "converted_non_done": 4621,
+   "carrying_non_done": 426,
+   "converted_non_done": 194,
    "refused_non_done": 232,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
@@ -202,8 +202,8 @@
     "maps_to": "Metadata(ignored-by-sheet)"
    },
    "carrying": 6495,
-   "carrying_non_done": 4681,
-   "converted_non_done": 4495,
+   "carrying_non_done": 366,
+   "converted_non_done": 180,
    "refused_non_done": 186,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
@@ -215,8 +215,8 @@
     "maps_to": "Applies"
    },
    "carrying": 4127,
-   "carrying_non_done": 2964,
-   "converted_non_done": 2763,
+   "carrying_non_done": 287,
+   "converted_non_done": 86,
    "refused_non_done": 201,
    "refused_because_of_this_token": 8,
    "refused_because_of_this_token_non_done": 4,
@@ -225,324 +225,66 @@
     "FORMULA:var(AC)": 1
    }
   },
-  "PREMULT": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 3898,
-   "carrying_non_done": 2694,
-   "converted_non_done": 2663,
-   "refused_non_done": 31,
-   "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {
-    "unmapped:PRESPELLSCHOOLSUB": 1
-   }
-  },
-  "PREABILITY": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 4039,
-   "carrying_non_done": 2692,
-   "converted_non_done": 2595,
-   "refused_non_done": 97,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "COST (literal)": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 8156,
-   "carrying_non_done": 2358,
-   "converted_non_done": 2353,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
   "!PRE* (all negated forms)": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
    "carrying": 2448,
-   "carrying_non_done": 1900,
-   "converted_non_done": 1693,
+   "carrying_non_done": 224,
+   "converted_non_done": 17,
    "refused_non_done": 207,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "FACT / FACTSET": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 4210,
-   "carrying_non_done": 1835,
-   "converted_non_done": 1703,
-   "refused_non_done": 132,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "CHOOSE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 2116,
-   "carrying_non_done": 1785,
-   "converted_non_done": 1758,
-   "refused_non_done": 27,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "MULT": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 2126,
-   "carrying_non_done": 1783,
-   "converted_non_done": 1751,
-   "refused_non_done": 32,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "CLASSES": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 3184,
-   "carrying_non_done": 1543,
-   "converted_non_done": 1538,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "STACK": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 1687,
-   "carrying_non_done": 1509,
-   "converted_non_done": 1490,
-   "refused_non_done": 19,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "NAMEISPI / DESCISPI (and the corpus `license`/`pi_field`/`pi_marker` stamps)": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 1716,
-   "carrying_non_done": 1452,
-   "converted_non_done": 1329,
-   "refused_non_done": 123,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:ABILITYPOOL": {
+  "BONUS:COMBAT": {
    "mapping_row": {
     "family": "bonus",
-    "maps_to": "Number(Expr) -> Choice.count of the pool's Choice (the sheet prints the picks, not the pool size)"
-   },
-   "carrying": 1731,
-   "carrying_non_done": 1208,
-   "converted_non_done": 1175,
-   "refused_non_done": 33,
-   "refused_because_of_this_token": 3,
-   "refused_because_of_this_token_non_done": 2,
-   "refusal_shapes": {
-    "FORMULA:CL-no-owner": 1,
-    "FORMULA:malformed (parser refusals)": 2
-   }
-  },
-  "PRECLASS": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 1304,
-   "carrying_non_done": 1191,
-   "converted_non_done": 1172,
-   "refused_non_done": 19,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SPELLKNOWN": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 1492,
-   "carrying_non_done": 1049,
-   "converted_non_done": 1047,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SCHOOL": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (spell stat-block line)"
-   },
-   "carrying": 2936,
-   "carrying_non_done": 1002,
-   "converted_non_done": 1001,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "CASTTIME": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (spell stat-block line)"
-   },
-   "carrying": 2858,
-   "carrying_non_done": 985,
-   "converted_non_done": 984,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "NATURALATTACKS": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Dice (one natural-attack line per entry: name, count, die)"
-   },
-   "carrying": 2023,
-   "carrying_non_done": 981,
-   "converted_non_done": 980,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 7,
-   "refused_because_of_this_token_non_done": 1,
-   "refusal_shapes": {
-    "NATURALATTACKS (die shape)": 7
-   }
-  },
-  "RANGE (spell / power keyword)": {
-   "mapping_row": {
-    "family": "formula",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 3094,
-   "carrying_non_done": 975,
-   "converted_non_done": 974,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
+   "carrying": 597,
+   "carrying_non_done": 173,
+   "converted_non_done": 9,
+   "refused_non_done": 164,
+   "refused_because_of_this_token": 27,
+   "refused_because_of_this_token_non_done": 19,
+   "refusal_shapes": {
+    "FORMULA:CL-no-owner": 4,
+    "FORMULA:malformed (parser refusals)": 5,
+    "FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)": 9,
+    "FORMULA:var(ARMOR)": 1,
+    "FORMULA:var(COUNT)": 8
+   }
   },
-  "DURATION": {
+  "EQMOD / ALTEQMOD": {
    "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (spell stat-block line)"
-   },
-   "carrying": 2850,
-   "carrying_non_done": 971,
-   "converted_non_done": 970,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "TARGETAREA": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (spell stat-block line)"
-   },
-   "carrying": 2850,
-   "carrying_non_done": 969,
-   "converted_non_done": 968,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "COMPS": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (spell stat-block line)"
-   },
-   "carrying": 2828,
-   "carrying_non_done": 958,
-   "converted_non_done": 957,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "ASPECT:<structural sub-key> (ChildAbility, MasterAbility, Archetype Base Class, Bloodline, StatBlockName, SourceBook)": {
-   "mapping_row": {
-    "family": "prose",
+    "family": "formula",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1777,
-   "carrying_non_done": 942,
-   "converted_non_done": 937,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SAVEINFO": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (spell stat-block line)"
-   },
-   "carrying": 2540,
-   "carrying_non_done": 893,
-   "converted_non_done": 892,
+   "carrying": 2429,
+   "carrying_non_done": 159,
+   "converted_non_done": 158,
    "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "SPELLRES": {
+  "BONUS:SAVE": {
    "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (spell stat-block line)"
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
    },
-   "carrying": 2539,
-   "carrying_non_done": 893,
-   "converted_non_done": 892,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRESIZEEQ": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 885,
-   "carrying_non_done": 885,
-   "converted_non_done": 885,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
+   "carrying": 347,
+   "carrying_non_done": 150,
+   "converted_non_done": 7,
+   "refused_non_done": 143,
+   "refused_because_of_this_token": 5,
+   "refused_because_of_this_token_non_done": 1,
+   "refusal_shapes": {
+    "FORMULA:CL-no-owner": 4,
+    "FORMULA:malformed (parser refusals)": 1
+   }
   },
   "ASPECT:<display sub-key> (Ability Benefit, AbilityBenefit, SaveBonus, CombatBonus, SkillBonus, RacialSkillModifier, Immunity, Resistance, ResistanceOutput, UnarmedNotes, Vision, Maneuverability, ModifyAC, CMBCircumstance, NaturalAttack*, Typical Alignment, Ancestry, Alternate *, Skill Modifiers, Spell-Like Ability, *SaveBonus, Racial Points)": {
    "mapping_row": {
@@ -550,8 +292,8 @@
     "maps_to": "Text"
    },
    "carrying": 2251,
-   "carrying_non_done": 810,
-   "converted_non_done": 759,
+   "carrying_non_done": 146,
+   "converted_non_done": 95,
    "refused_non_done": 51,
    "refused_because_of_this_token": 15,
    "refused_because_of_this_token_non_done": 13,
@@ -568,8 +310,8 @@
     "maps_to": "Text"
    },
    "carrying": 1651,
-   "carrying_non_done": 808,
-   "converted_non_done": 787,
+   "carrying_non_done": 145,
+   "converted_non_done": 124,
    "refused_non_done": 21,
    "refused_because_of_this_token": 3,
    "refused_because_of_this_token_non_done": 3,
@@ -578,594 +320,15 @@
     "FORMULA:malformed (parser refusals)": 2
    }
   },
-  "BONUS:SKILL": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 1569,
-   "carrying_non_done": 718,
-   "converted_non_done": 663,
-   "refused_non_done": 55,
-   "refused_because_of_this_token": 28,
-   "refused_because_of_this_token_non_done": 15,
-   "refusal_shapes": {
-    "BONUS (shape)": 1,
-    "FORMULA:malformed (parser refusals)": 2,
-    "FORMULA:malformed (parser refusals) (empty)": 1,
-    "FORMULA:var(<export token>) (ACCHECK: equipment/encumbrance state)": 5,
-    "FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)": 1,
-    "FORMULA:var(COUNT)": 2,
-    "FORMULA:var(SKILL.<name>.MISC)": 16
-   }
-  },
-  "OUTPUTNAME": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text"
-   },
-   "carrying": 2331,
-   "carrying_non_done": 631,
-   "converted_non_done": 611,
-   "refused_non_done": 20,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SPELLS": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 1463,
-   "carrying_non_done": 629,
-   "converted_non_done": 629,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {
-    "FORMULA:malformed (parser refusals)": 1
-   }
-  },
-  "PREFACT": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 859,
-   "carrying_non_done": 573,
-   "converted_non_done": 571,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "ASPECT:CheckCount / ASPECT:CheckType": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 715,
-   "carrying_non_done": 560,
-   "converted_non_done": 544,
-   "refused_non_done": 16,
-   "refused_because_of_this_token": 2,
-   "refused_because_of_this_token_non_done": 2,
-   "refusal_shapes": {
-    "FORMULA:identifier DEFINEd nowhere (CharmLVL inside a function or under * /)": 1,
-    "FORMULA:malformed (parser refusals)": 1
-   }
-  },
-  "SORTKEY": {
+  "NAMEISPI / DESCISPI (and the corpus `license`/`pi_field`/`pi_marker` stamps)": {
    "mapping_row": {
     "family": "prose",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 3399,
-   "carrying_non_done": 552,
-   "converted_non_done": 547,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "CSKILL": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 820,
-   "carrying_non_done": 520,
-   "converted_non_done": 425,
-   "refused_non_done": 95,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "DESCRIPTOR": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (spell stat-block line)"
-   },
-   "carrying": 1304,
-   "carrying_non_done": 511,
-   "converted_non_done": 511,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "TEMPLATE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 741,
-   "carrying_non_done": 467,
-   "converted_non_done": 449,
-   "refused_non_done": 18,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "DOMAINS": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 868,
-   "carrying_non_done": 450,
-   "converted_non_done": 450,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "TEMPBONUS": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr) with Applies::Situational{\"when active\"} + the TEMPDESC words"
-   },
-   "carrying": 601,
-   "carrying_non_done": 439,
-   "converted_non_done": 418,
-   "refused_non_done": 21,
-   "refused_because_of_this_token": 10,
-   "refused_because_of_this_token_non_done": 4,
-   "refusal_shapes": {
-    "BONUS:LOADMULT": 2,
-    "BONUS:SITUATION (target shape)": 3,
-    "FORMULA:malformed (parser refusals)": 1,
-    "FORMULA:var(<export token>) (ENCUMBRANCE: equipment/encumbrance state)": 2,
-    "FORMULA:var(<export token>) (MOVEBASE: equipment/encumbrance state)": 2
-   }
-  },
-  "BONUS:STAT": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 2322,
-   "carrying_non_done": 430,
-   "converted_non_done": 413,
-   "refused_non_done": 17,
-   "refused_because_of_this_token": 12,
-   "refused_because_of_this_token_non_done": 11,
-   "refusal_shapes": {
-    "BONUS:STAT (target )": 1,
-    "BONUS:STAT (target BASESPELLKNOWNSTAT;Class)": 7,
-    "BONUS:STAT (target BASESPELLSTAT)": 2,
-    "BONUS:STAT (target BASESPELLSTAT;CLASS)": 2,
-    "BONUS:STAT (target BASESPELLSTAT;Class)": 7
-   }
-  },
-  "ALIGN": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata (deity fact: alignment)"
-   },
-   "carrying": 455,
-   "carrying_non_done": 414,
-   "converted_non_done": 414,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "DEITYWEAP": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata (deity fact: favored weapon)"
-   },
-   "carrying": 455,
-   "carrying_non_done": 414,
-   "converted_non_done": 414,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PREVARLT": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 509,
-   "carrying_non_done": 403,
-   "converted_non_done": 400,
-   "refused_non_done": 3,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:COMBAT": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 597,
-   "carrying_non_done": 381,
-   "converted_non_done": 217,
-   "refused_non_done": 164,
-   "refused_because_of_this_token": 27,
-   "refused_because_of_this_token_non_done": 19,
-   "refusal_shapes": {
-    "FORMULA:CL-no-owner": 4,
-    "FORMULA:malformed (parser refusals)": 5,
-    "FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)": 9,
-    "FORMULA:var(ARMOR)": 1,
-    "FORMULA:var(COUNT)": 8
-   }
-  },
-  "SPELLLEVEL": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 507,
-   "carrying_non_done": 378,
-   "converted_non_done": 378,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:SPELLKNOWN": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 439,
-   "carrying_non_done": 339,
-   "converted_non_done": 339,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SPROP": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text"
-   },
-   "carrying": 3747,
-   "carrying_non_done": 322,
-   "converted_non_done": 307,
-   "refused_non_done": 15,
-   "refused_because_of_this_token": 3,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {
-    "FORMULA:malformed (parser refusals)": 1,
-    "FORMULA:var(AC)": 2
-   }
-  },
-  "PREVAREQ": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 351,
-   "carrying_non_done": 302,
-   "converted_non_done": 300,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 1,
-   "refusal_shapes": {
-    "FORMULA:var(AC)": 1
-   }
-  },
-  "AUTO": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 1233,
-   "carrying_non_done": 288,
-   "converted_non_done": 279,
-   "refused_non_done": 9,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SUBSCHOOL": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (spell stat-block line)"
-   },
-   "carrying": 1075,
-   "carrying_non_done": 285,
-   "converted_non_done": 285,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRESTAT": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 380,
-   "carrying_non_done": 283,
-   "converted_non_done": 275,
-   "refused_non_done": 8,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:WEAPONPROF=<name>": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 873,
-   "carrying_non_done": 257,
-   "converted_non_done": 254,
-   "refused_non_done": 3,
-   "refused_because_of_this_token": 3,
-   "refused_because_of_this_token_non_done": 3,
-   "refusal_shapes": {
-    "BONUS (shape)": 1,
-    "FORMULA:var(COUNT)": 2
-   }
-  },
-  "NAMEOPT / ITYPE / REPLACES / FORMATCAT / ASSIGNTOALL": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata (equipment-modifier facts)"
-   },
-   "carrying": 874,
-   "carrying_non_done": 257,
-   "converted_non_done": 247,
-   "refused_non_done": 10,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:SAVE": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 347,
-   "carrying_non_done": 245,
-   "converted_non_done": 102,
-   "refused_non_done": 143,
-   "refused_because_of_this_token": 5,
-   "refused_because_of_this_token_non_done": 1,
-   "refusal_shapes": {
-    "FORMULA:CL-no-owner": 4,
-    "FORMULA:malformed (parser refusals)": 1
-   }
-  },
-  "BONUS:SITUATION": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 509,
-   "carrying_non_done": 244,
-   "converted_non_done": 230,
-   "refused_non_done": 14,
-   "refused_because_of_this_token": 12,
-   "refused_because_of_this_token_non_done": 9,
-   "refusal_shapes": {
-    "BONUS:SITUATION (target shape)": 9,
-    "FORMULA:var(COUNT)": 1,
-    "FORMULA:var(MOVE)": 2
-   }
-  },
-  "PRESKILL": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 366,
-   "carrying_non_done": 218,
-   "converted_non_done": 162,
-   "refused_non_done": 56,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "RACESUBTYPE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 1071,
-   "carrying_non_done": 211,
-   "converted_non_done": 208,
-   "refused_non_done": 3,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRETEXT": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 424,
-   "carrying_non_done": 204,
-   "converted_non_done": 186,
-   "refused_non_done": 18,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "ITEM": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 702,
-   "carrying_non_done": 202,
-   "converted_non_done": 202,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SITUATION": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Text"
-   },
-   "carrying": 276,
-   "carrying_non_done": 201,
-   "converted_non_done": 198,
-   "refused_non_done": 3,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "EQMOD / ALTEQMOD": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 2429,
-   "carrying_non_done": 198,
-   "converted_non_done": 197,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRETYPE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 1022,
-   "carrying_non_done": 194,
-   "converted_non_done": 194,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "MOVE": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 1919,
-   "carrying_non_done": 169,
-   "converted_non_done": 165,
-   "refused_non_done": 4,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "REGION / REMOVABLE / VARIANTS / INFO / EXCLUSIVE / ALLOWBASECLASS / EXCLASS / WEAPONBONUS / ACHECK / CHANGEPROF / ADDSPELLLEVEL": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata (small record facts)"
-   },
-   "carrying": 413,
-   "carrying_non_done": 165,
-   "converted_non_done": 160,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "COMPANIONLIST": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies (Choice over companion races)"
-   },
-   "carrying": 163,
-   "carrying_non_done": 158,
-   "converted_non_done": 156,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "WT": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 5406,
-   "carrying_non_done": 153,
-   "converted_non_done": 148,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRERACE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 351,
-   "carrying_non_done": 147,
-   "converted_non_done": 107,
-   "refused_non_done": 40,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SUBRACE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 146,
-   "carrying_non_done": 146,
-   "converted_non_done": 145,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "TEMPVALUE": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 166,
+   "carrying": 1716,
    "carrying_non_done": 145,
-   "converted_non_done": 133,
-   "refused_non_done": 12,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "FOLLOWERS": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr) (companion slots of a type)"
-   },
-   "carrying": 148,
-   "carrying_non_done": 144,
-   "converted_non_done": 142,
-   "refused_non_done": 2,
+   "converted_non_done": 22,
+   "refused_non_done": 123,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -1176,8 +339,8 @@
     "maps_to": "Metadata(ignored-by-sheet)"
    },
    "carrying": 184,
-   "carrying_non_done": 141,
-   "converted_non_done": 3,
+   "carrying_non_done": 138,
+   "converted_non_done": 0,
    "refused_non_done": 138,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
@@ -1189,74 +352,35 @@
     "maps_to": "Number(Expr)"
    },
    "carrying": 182,
-   "carrying_non_done": 140,
-   "converted_non_done": 3,
+   "carrying_non_done": 137,
+   "converted_non_done": 0,
    "refused_non_done": 137,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "BONUS:CASTERLEVEL": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 172,
-   "carrying_non_done": 137,
-   "converted_non_done": 114,
-   "refused_non_done": 23,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SERVESAS": {
+  "FACT / FACTSET": {
    "mapping_row": {
     "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 315,
-   "carrying_non_done": 137,
-   "converted_non_done": 136,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PREALIGN": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 167,
-   "carrying_non_done": 134,
-   "converted_non_done": 124,
-   "refused_non_done": 10,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "LEGS / HANDS": {
-   "mapping_row": {
-    "family": "formula",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1345,
-   "carrying_non_done": 122,
-   "converted_non_done": 120,
-   "refused_non_done": 2,
+   "carrying": 4210,
+   "carrying_non_done": 132,
+   "converted_non_done": 0,
+   "refused_non_done": 132,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRETOTALAB": {
+  "PREABILITY": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 243,
-   "carrying_non_done": 122,
-   "converted_non_done": 91,
-   "refused_non_done": 31,
+   "carrying": 4039,
+   "carrying_non_done": 130,
+   "converted_non_done": 33,
+   "refused_non_done": 97,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -1273,239 +397,110 @@
     "unmapped:STARTSKILLPTS": 162
    }
   },
-  "UDAM": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Dice"
-   },
-   "carrying": 113,
-   "carrying_non_done": 113,
-   "converted_non_done": 113,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "UMULT": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Text"
-   },
-   "carrying": 113,
-   "carrying_non_done": 113,
-   "converted_non_done": 113,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "RACETYPE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 1825,
-   "carrying_non_done": 111,
-   "converted_non_done": 107,
-   "refused_non_done": 4,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "DR": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 702,
-   "carrying_non_done": 109,
-   "converted_non_done": 103,
-   "refused_non_done": 6,
-   "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 1,
-   "refusal_shapes": {
-    "FORMULA:var(COUNT)": 1
-   }
-  },
-  "KIT": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 1633,
-   "carrying_non_done": 107,
-   "converted_non_done": 104,
-   "refused_non_done": 3,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "TEMPDESC": {
+  "SPROP": {
    "mapping_row": {
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 185,
-   "carrying_non_done": 103,
+   "carrying": 3747,
+   "carrying_non_done": 116,
    "converted_non_done": 101,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
+   "refused_non_done": 15,
+   "refused_because_of_this_token": 3,
    "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "VISION": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 521,
-   "carrying_non_done": 102,
-   "converted_non_done": 101,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRETEMPLATE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 112,
-   "carrying_non_done": 99,
-   "converted_non_done": 98,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "LANGBONUS": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 196,
-   "carrying_non_done": 97,
-   "converted_non_done": 97,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:SPELLCAST": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 94,
-   "carrying_non_done": 93,
-   "converted_non_done": 92,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "SIZE": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 2266,
-   "carrying_non_done": 90,
-   "converted_non_done": 87,
-   "refused_non_done": 3,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:PCLEVEL": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 127,
-   "carrying_non_done": 88,
-   "converted_non_done": 83,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 1,
-   "refusal_shapes": {
-    "FORMULA:var(WinterWitchLVL)": 1
-   }
-  },
-  "BONUS:MOVEADD": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 133,
-   "carrying_non_done": 87,
-   "converted_non_done": 78,
-   "refused_non_done": 9,
-   "refused_because_of_this_token": 14,
-   "refused_because_of_this_token_non_done": 9,
    "refusal_shapes": {
     "FORMULA:malformed (parser refusals)": 1,
-    "FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)": 10,
-    "FORMULA:var(<export token>) (MOVEBASE: equipment/encumbrance state)": 2,
-    "FORMULA:var(COUNT)": 1
+    "FORMULA:var(AC)": 2
    }
   },
-  "CR": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Text"
-   },
-   "carrying": 1617,
-   "carrying_non_done": 82,
-   "converted_non_done": 77,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PREVARGT": {
+  "CSKILL": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 78,
-   "carrying_non_done": 76,
-   "converted_non_done": 67,
-   "refused_non_done": 9,
+   "carrying": 820,
+   "carrying_non_done": 95,
+   "converted_non_done": 0,
+   "refused_non_done": 95,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "SELECT": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 93,
-   "carrying_non_done": 72,
-   "converted_non_done": 71,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {
-    "FORMULA:var(STAT)": 1
-   }
-  },
-  "ASPECT:NAME": {
+  "OUTPUTNAME": {
    "mapping_row": {
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 95,
-   "carrying_non_done": 70,
-   "converted_non_done": 68,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 1,
+   "carrying": 2331,
+   "carrying_non_done": 78,
+   "converted_non_done": 58,
+   "refused_non_done": 20,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:SKILL": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 1569,
+   "carrying_non_done": 76,
+   "converted_non_done": 21,
+   "refused_non_done": 55,
+   "refused_because_of_this_token": 28,
+   "refused_because_of_this_token_non_done": 15,
    "refusal_shapes": {
-    "FORMULA:malformed (parser refusals)": 1
+    "BONUS (shape)": 1,
+    "FORMULA:malformed (parser refusals)": 2,
+    "FORMULA:malformed (parser refusals) (empty)": 1,
+    "FORMULA:var(<export token>) (ACCHECK: equipment/encumbrance state)": 5,
+    "FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)": 1,
+    "FORMULA:var(COUNT)": 2,
+    "FORMULA:var(SKILL.<name>.MISC)": 16
    }
+  },
+  "MULT": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 2126,
+   "carrying_non_done": 74,
+   "converted_non_done": 42,
+   "refused_non_done": 32,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:ABILITYPOOL": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr) -> Choice.count of the pool's Choice (the sheet prints the picks, not the pool size)"
+   },
+   "carrying": 1731,
+   "carrying_non_done": 70,
+   "converted_non_done": 37,
+   "refused_non_done": 33,
+   "refused_because_of_this_token": 3,
+   "refused_because_of_this_token_non_done": 2,
+   "refusal_shapes": {
+    "FORMULA:CL-no-owner": 1,
+    "FORMULA:malformed (parser refusals)": 2
+   }
+  },
+  "COST (literal)": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 8156,
+   "carrying_non_done": 70,
+   "converted_non_done": 65,
+   "refused_non_done": 5,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
   },
   "SPELLS (PI-redacted token)": {
    "mapping_row": {
@@ -1522,46 +517,33 @@
     "SPELLS (PI-redacted token)": 78
    }
   },
-  "ADD": {
+  "PRESKILL": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 133,
-   "carrying_non_done": 66,
-   "converted_non_done": 42,
-   "refused_non_done": 24,
+   "carrying": 366,
+   "carrying_non_done": 65,
+   "converted_non_done": 9,
+   "refused_non_done": 56,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREMULT": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 3898,
+   "carrying_non_done": 64,
+   "converted_non_done": 33,
+   "refused_non_done": 31,
    "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 1,
+   "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {
-    "ADD (CLASSSKILLS)": 1
+    "unmapped:PRESPELLSCHOOLSUB": 1
    }
-  },
-  "PREDEITY": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 134,
-   "carrying_non_done": 66,
-   "converted_non_done": 61,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "CONTAINS / CHARGES / BASEITEM / BASEQTY / MODS / FUMBLERANGE": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 684,
-   "carrying_non_done": 63,
-   "converted_non_done": 62,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
   },
   "BONUS:[redacted PI]": {
    "mapping_row": {
@@ -1578,98 +560,70 @@
     "BONUS:[redacted PI]": 62
    }
   },
-  "REACH": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 1617,
-   "carrying_non_done": 60,
-   "converted_non_done": 58,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "KEYSTAT": {
+  "WT": {
    "mapping_row": {
     "family": "formula",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 148,
-   "carrying_non_done": 50,
-   "converted_non_done": 43,
-   "refused_non_done": 7,
+   "carrying": 5406,
+   "carrying_non_done": 59,
+   "converted_non_done": 54,
+   "refused_non_done": 5,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "SR": {
+  "SORTKEY": {
    "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 410,
-   "carrying_non_done": 45,
-   "converted_non_done": 43,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "STARTFEATS": {
-   "mapping_row": {
-    "family": "prereq",
+    "family": "prose",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1382,
-   "carrying_non_done": 45,
-   "converted_non_done": 43,
-   "refused_non_done": 2,
+   "carrying": 3399,
+   "carrying_non_done": 58,
+   "converted_non_done": 53,
+   "refused_non_done": 5,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "BONUS:DOMAIN": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 46,
-   "carrying_non_done": 43,
-   "converted_non_done": 43,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "USEUNTRAINED": {
+  "PRETEXT": {
    "mapping_row": {
     "family": "prereq",
-    "maps_to": "Metadata (skill fact)"
+    "maps_to": "Applies"
    },
-   "carrying": 117,
-   "carrying_non_done": 42,
+   "carrying": 424,
+   "carrying_non_done": 56,
    "converted_non_done": 38,
-   "refused_non_done": 4,
+   "refused_non_done": 18,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "BONUS:SKILLRANK": {
+  "STACK": {
    "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
+    "family": "prereq",
+    "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 50,
-   "carrying_non_done": 41,
-   "converted_non_done": 34,
-   "refused_non_done": 7,
-   "refused_because_of_this_token": 2,
-   "refused_because_of_this_token_non_done": 2,
-   "refusal_shapes": {
-    "FORMULA:var(SKILL.<name>.MISC)": 2
-   }
+   "carrying": 1687,
+   "carrying_non_done": 48,
+   "converted_non_done": 29,
+   "refused_non_done": 19,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "CHOOSE": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 2116,
+   "carrying_non_done": 44,
+   "converted_non_done": 17,
+   "refused_non_done": 27,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
   },
   "DEFINE (PI-redacted token)": {
    "mapping_row": {
@@ -1686,18 +640,79 @@
     "DEFINE (PI-redacted token)": 40
    }
   },
-  "BONUS:DC": {
+  "ASPECT:CheckCount / ASPECT:CheckType": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 715,
+   "carrying_non_done": 40,
+   "converted_non_done": 24,
+   "refused_non_done": 16,
+   "refused_because_of_this_token": 2,
+   "refused_because_of_this_token_non_done": 2,
+   "refusal_shapes": {
+    "FORMULA:identifier DEFINEd nowhere (CharmLVL inside a function or under * /)": 1,
+    "FORMULA:malformed (parser refusals)": 1
+   }
+  },
+  "PRERACE": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 351,
+   "carrying_non_done": 40,
+   "converted_non_done": 0,
+   "refused_non_done": 40,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRETOTALAB": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 243,
+   "carrying_non_done": 40,
+   "converted_non_done": 9,
+   "refused_non_done": 31,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "CONTAINS / CHARGES / BASEITEM / BASEQTY / MODS / FUMBLERANGE": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 684,
+   "carrying_non_done": 39,
+   "converted_non_done": 38,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:STAT": {
    "mapping_row": {
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 48,
-   "carrying_non_done": 40,
-   "converted_non_done": 38,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
+   "carrying": 2322,
+   "carrying_non_done": 38,
+   "converted_non_done": 21,
+   "refused_non_done": 17,
+   "refused_because_of_this_token": 12,
+   "refused_because_of_this_token_non_done": 11,
+   "refusal_shapes": {
+    "BONUS:STAT (target )": 1,
+    "BONUS:STAT (target BASESPELLKNOWNSTAT;Class)": 7,
+    "BONUS:STAT (target BASESPELLSTAT)": 2,
+    "BONUS:STAT (target BASESPELLSTAT;CLASS)": 2,
+    "BONUS:STAT (target BASESPELLSTAT;Class)": 7
+   }
   },
   "unmapped:MODTOSKILLS": {
    "mapping_row": null,
@@ -1711,170 +726,50 @@
     "unmapped:MODTOSKILLS": 41
    }
   },
-  "DEFINESTAT": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata feeding the ability-score total (not Text)"
-   },
-   "carrying": 42,
-   "carrying_non_done": 36,
-   "converted_non_done": 34,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "DESC:.CLEAR": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text"
-   },
-   "carrying": 109,
-   "carrying_non_done": 36,
-   "converted_non_done": 35,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:MISC": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 44,
-   "carrying_non_done": 35,
-   "converted_non_done": 30,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 5,
-   "refused_because_of_this_token_non_done": 5,
-   "refusal_shapes": {
-    "FORMULA:var(<export token>) (ACCHECK: equipment/encumbrance state)": 1,
-    "FORMULA:var(SPELLFAILURE)": 4
-   }
-  },
-  "BONUS:HP": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 49,
-   "carrying_non_done": 35,
-   "converted_non_done": 31,
-   "refused_non_done": 4,
-   "refused_because_of_this_token": 3,
-   "refused_because_of_this_token_non_done": 3,
-   "refusal_shapes": {
-    "FORMULA:identifier DEFINEd nowhere (FigherLVL inside a function or under * /)": 1,
-    "FORMULA:identifier DEFINEd nowhere (RACIALHDSIZE inside a function or under * /)": 1,
-    "FORMULA:malformed (parser refusals)": 1
-   }
-  },
-  "PLUS": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 534,
-   "carrying_non_done": 35,
-   "converted_non_done": 35,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "MONSTERCLASS": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies (grant edge: racial hit dice class and level)"
-   },
-   "carrying": 1717,
-   "carrying_non_done": 32,
-   "converted_non_done": 30,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRELEVEL": {
+  "TEMPLATE": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 55,
-   "carrying_non_done": 32,
-   "converted_non_done": 31,
-   "refused_non_done": 1,
+   "carrying": 741,
+   "carrying_non_done": 29,
+   "converted_non_done": 11,
+   "refused_non_done": 18,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "HD (template band: <lo>-<hi>:TEMPLATE:<name>)": {
+  "BONUS:SITUATION": {
    "mapping_row": {
-    "family": "formula",
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 509,
+   "carrying_non_done": 26,
+   "converted_non_done": 12,
+   "refused_non_done": 14,
+   "refused_because_of_this_token": 12,
+   "refused_because_of_this_token_non_done": 9,
+   "refusal_shapes": {
+    "BONUS:SITUATION (target shape)": 9,
+    "FORMULA:var(COUNT)": 1,
+    "FORMULA:var(MOVE)": 2
+   }
+  },
+  "ADD": {
+   "mapping_row": {
+    "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 27,
-   "carrying_non_done": 27,
-   "converted_non_done": 27,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:SIZEMOD": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 174,
-   "carrying_non_done": 25,
-   "converted_non_done": 25,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "MOVECLONE": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 42,
-   "carrying_non_done": 25,
-   "converted_non_done": 23,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:DR": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 28,
+   "carrying": 133,
    "carrying_non_done": 24,
-   "converted_non_done": 23,
-   "refused_non_done": 1,
+   "converted_non_done": 0,
+   "refused_non_done": 24,
    "refused_because_of_this_token": 1,
    "refused_because_of_this_token_non_done": 1,
    "refusal_shapes": {
-    "FORMULA:var(HD)": 1
+    "ADD (CLASSSKILLS)": 1
    }
-  },
-  "PRESPELLTYPE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 31,
-   "carrying_non_done": 24,
-   "converted_non_done": 11,
-   "refused_non_done": 13,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
   },
   "unmapped:SPELLSTAT": {
    "mapping_row": null,
@@ -1888,79 +783,72 @@
     "unmapped:SPELLSTAT": 49
    }
   },
-  "HITDIE (n, with optional class filter)": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 59,
-   "carrying_non_done": 23,
-   "converted_non_done": 22,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PROFICIENCY / WIELD": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 848,
-   "carrying_non_done": 23,
-   "converted_non_done": 22,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "ADDLEVEL": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 22,
-   "carrying_non_done": 22,
-   "converted_non_done": 22,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PREVARLTEQ": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 23,
-   "carrying_non_done": 22,
-   "converted_non_done": 22,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "MONCSKILL": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 403,
-   "carrying_non_done": 21,
-   "converted_non_done": 19,
-   "refused_non_done": 2,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:VISION": {
+  "BONUS:CASTERLEVEL": {
    "mapping_row": {
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 46,
-   "carrying_non_done": 20,
-   "converted_non_done": 20,
+   "carrying": 172,
+   "carrying_non_done": 23,
+   "converted_non_done": 0,
+   "refused_non_done": 23,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "NAMEOPT / ITYPE / REPLACES / FORMATCAT / ASSIGNTOALL": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Metadata (equipment-modifier facts)"
+   },
+   "carrying": 874,
+   "carrying_non_done": 23,
+   "converted_non_done": 13,
+   "refused_non_done": 10,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRECLASS": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1304,
+   "carrying_non_done": 23,
+   "converted_non_done": 4,
+   "refused_non_done": 19,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "TEMPBONUS": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr) with Applies::Situational{\"when active\"} + the TEMPDESC words"
+   },
+   "carrying": 601,
+   "carrying_non_done": 22,
+   "converted_non_done": 1,
+   "refused_non_done": 21,
+   "refused_because_of_this_token": 10,
+   "refused_because_of_this_token_non_done": 4,
+   "refusal_shapes": {
+    "BONUS:LOADMULT": 2,
+    "BONUS:SITUATION (target shape)": 3,
+    "FORMULA:malformed (parser refusals)": 1,
+    "FORMULA:var(<export token>) (ENCUMBRANCE: equipment/encumbrance state)": 2,
+    "FORMULA:var(<export token>) (MOVEBASE: equipment/encumbrance state)": 2
+   }
+  },
+  "PLUS": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 534,
+   "carrying_non_done": 21,
+   "converted_non_done": 21,
    "refused_non_done": 0,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
@@ -1978,145 +866,85 @@
     "unmapped:MEMORIZE": 38
    }
   },
-  "PREBASESIZEGTEQ": {
+  "PRETYPE": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 19,
-   "carrying_non_done": 19,
-   "converted_non_done": 19,
+   "carrying": 1022,
+   "carrying_non_done": 15,
+   "converted_non_done": 15,
    "refused_non_done": 0,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRESUBCLASS": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 17,
-   "carrying_non_done": 17,
-   "converted_non_done": 17,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "QUALITY": {
-   "mapping_row": {
-    "family": "prose",
-    "maps_to": "Text (equipment fine print)"
-   },
-   "carrying": 1800,
-   "carrying_non_done": 17,
-   "converted_non_done": 16,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PREBASESIZEEQ": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 16,
-   "carrying_non_done": 16,
-   "converted_non_done": 16,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRESPELL": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 32,
-   "carrying_non_done": 16,
-   "converted_non_done": 12,
-   "refused_non_done": 4,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PREWEAPONPROF": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 21,
-   "carrying_non_done": 14,
-   "converted_non_done": 13,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:SKILLPOINTS": {
+  "BONUS:SKILLRANK": {
    "mapping_row": {
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 16,
-   "carrying_non_done": 13,
-   "converted_non_done": 13,
-   "refused_non_done": 0,
+   "carrying": 50,
+   "carrying_non_done": 14,
+   "converted_non_done": 7,
+   "refused_non_done": 7,
+   "refused_because_of_this_token": 2,
+   "refused_because_of_this_token_non_done": 2,
+   "refusal_shapes": {
+    "FORMULA:var(SKILL.<name>.MISC)": 2
+   }
+  },
+  "PREDEITY": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 134,
+   "carrying_non_done": 14,
+   "converted_non_done": 9,
+   "refused_non_done": 5,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "CRITMULT / ALTCRITMULT": {
+  "BONUS:WEAPONPROF=<name>": {
    "mapping_row": {
-    "family": "formula",
-    "maps_to": "Text"
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
    },
-   "carrying": 599,
+   "carrying": 873,
    "carrying_non_done": 13,
-   "converted_non_done": 12,
-   "refused_non_done": 1,
+   "converted_non_done": 10,
+   "refused_non_done": 3,
+   "refused_because_of_this_token": 3,
+   "refused_because_of_this_token_non_done": 3,
+   "refusal_shapes": {
+    "BONUS (shape)": 1,
+    "FORMULA:var(COUNT)": 2
+   }
+  },
+  "AUTO": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1233,
+   "carrying_non_done": 13,
+   "converted_non_done": 4,
+   "refused_non_done": 9,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "CRITRANGE / ALTCRITRANGE": {
+  "PRESPELLTYPE": {
    "mapping_row": {
-    "family": "formula",
-    "maps_to": "Text"
+    "family": "prereq",
+    "maps_to": "Applies"
    },
-   "carrying": 585,
+   "carrying": 31,
    "carrying_non_done": 13,
-   "converted_non_done": 12,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "DAMAGE / ALTDAMAGE": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Dice"
-   },
-   "carrying": 610,
-   "carrying_non_done": 13,
-   "converted_non_done": 12,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "UNENCUMBEREDMOVE": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Text"
-   },
-   "carrying": 24,
-   "carrying_non_done": 13,
-   "converted_non_done": 13,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 13,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -2133,6 +961,68 @@
     "unmapped:SPELLLIST": 19
    }
   },
+  "BONUS:MOVEADD": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 133,
+   "carrying_non_done": 12,
+   "converted_non_done": 3,
+   "refused_non_done": 9,
+   "refused_because_of_this_token": 14,
+   "refused_because_of_this_token_non_done": 9,
+   "refusal_shapes": {
+    "FORMULA:malformed (parser refusals)": 1,
+    "FORMULA:var(<export token>) (ENCUMBERANCE: equipment/encumbrance state)": 10,
+    "FORMULA:var(<export token>) (MOVEBASE: equipment/encumbrance state)": 2,
+    "FORMULA:var(COUNT)": 1
+   }
+  },
+  "BONUS:MISC": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 44,
+   "carrying_non_done": 12,
+   "converted_non_done": 7,
+   "refused_non_done": 5,
+   "refused_because_of_this_token": 5,
+   "refused_because_of_this_token_non_done": 5,
+   "refusal_shapes": {
+    "FORMULA:var(<export token>) (ACCHECK: equipment/encumbrance state)": 1,
+    "FORMULA:var(SPELLFAILURE)": 4
+   }
+  },
+  "DR": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 702,
+   "carrying_non_done": 12,
+   "converted_non_done": 6,
+   "refused_non_done": 6,
+   "refused_because_of_this_token": 1,
+   "refused_because_of_this_token_non_done": 1,
+   "refusal_shapes": {
+    "FORMULA:var(COUNT)": 1
+   }
+  },
+  "TEMPVALUE": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 166,
+   "carrying_non_done": 12,
+   "converted_non_done": 0,
+   "refused_non_done": 12,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
   "BONUS:EQM": {
    "mapping_row": null,
    "carrying": 13,
@@ -2144,6 +1034,32 @@
    "refusal_shapes": {
     "BONUS:EQM": 13
    }
+  },
+  "PREALIGN": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 167,
+   "carrying_non_done": 11,
+   "converted_non_done": 1,
+   "refused_non_done": 10,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRESTAT": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 380,
+   "carrying_non_done": 11,
+   "converted_non_done": 3,
+   "refused_non_done": 8,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
   },
   "BONUS:ITEMCOST": {
    "mapping_row": null,
@@ -2157,15 +1073,43 @@
     "BONUS:ITEMCOST": 10
    }
   },
-  "ACCHECK": {
+  "SPELLS": {
    "mapping_row": {
     "family": "formula",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 205,
-   "carrying_non_done": 9,
-   "converted_non_done": 9,
+   "carrying": 1463,
+   "carrying_non_done": 10,
+   "converted_non_done": 10,
    "refused_non_done": 0,
+   "refused_because_of_this_token": 1,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {
+    "FORMULA:malformed (parser refusals)": 1
+   }
+  },
+  "SIZE": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 2266,
+   "carrying_non_done": 10,
+   "converted_non_done": 7,
+   "refused_non_done": 3,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "COMPANIONLIST": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies (Choice over companion races)"
+   },
+   "carrying": 163,
+   "carrying_non_done": 9,
+   "converted_non_done": 7,
+   "refused_non_done": 2,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -2183,209 +1127,183 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRECSKILL": {
+  "PREVARGT": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 9,
+   "carrying": 78,
    "carrying_non_done": 9,
-   "converted_non_done": 9,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 9,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREDEITYALIGN": {
+  "PROFICIENCY / WIELD": {
    "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 9,
+   "carrying": 848,
    "carrying_non_done": 9,
-   "converted_non_done": 9,
-   "refused_non_done": 0,
+   "converted_non_done": 8,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRESIZEGTEQ": {
+  "SERVESAS": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 9,
+   "carrying": 315,
    "carrying_non_done": 9,
-   "converted_non_done": 9,
-   "refused_non_done": 0,
+   "converted_non_done": 8,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRESIZELTEQ": {
+  "ASPECT:<structural sub-key> (ChildAbility, MasterAbility, Archetype Base Class, Bloodline, StatBlockName, SourceBook)": {
    "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
+    "family": "prose",
+    "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 11,
-   "carrying_non_done": 9,
-   "converted_non_done": 9,
-   "refused_non_done": 0,
+   "carrying": 1777,
+   "carrying_non_done": 8,
+   "converted_non_done": 3,
+   "refused_non_done": 5,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRESPELLCAST": {
+  "CRITMULT / ALTCRITMULT": {
    "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
+    "family": "formula",
+    "maps_to": "Text"
    },
-   "carrying": 9,
-   "carrying_non_done": 9,
+   "carrying": 599,
+   "carrying_non_done": 8,
    "converted_non_done": 7,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "CRITRANGE / ALTCRITRANGE": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Text"
+   },
+   "carrying": 585,
+   "carrying_non_done": 8,
+   "converted_non_done": 7,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "DAMAGE / ALTDAMAGE": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Dice"
+   },
+   "carrying": 610,
+   "carrying_non_done": 8,
+   "converted_non_done": 7,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "FOLLOWERS": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr) (companion slots of a type)"
+   },
+   "carrying": 148,
+   "carrying_non_done": 8,
+   "converted_non_done": 6,
    "refused_non_done": 2,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "SPELLFAILURE": {
-   "mapping_row": {
-    "family": "formula",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 210,
-   "carrying_non_done": 9,
-   "converted_non_done": 9,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:SPECIALTYSPELLKNOWN": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 8,
-   "carrying_non_done": 8,
-   "converted_non_done": 8,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "CCSKILL": {
+  "CLASSES": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 9,
-   "carrying_non_done": 8,
-   "converted_non_done": 8,
-   "refused_non_done": 0,
+   "carrying": 3184,
+   "carrying_non_done": 7,
+   "converted_non_done": 2,
+   "refused_non_done": 5,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "MAXDEX": {
+  "DESC:.CLEAR": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text"
+   },
+   "carrying": 109,
+   "carrying_non_done": 7,
+   "converted_non_done": 6,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "KEYSTAT": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 148,
+   "carrying_non_done": 7,
+   "converted_non_done": 0,
+   "refused_non_done": 7,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREVAREQ": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 351,
+   "carrying_non_done": 6,
+   "converted_non_done": 4,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 1,
+   "refused_because_of_this_token_non_done": 1,
+   "refusal_shapes": {
+    "FORMULA:var(AC)": 1
+   }
+  },
+  "MOVE": {
    "mapping_row": {
     "family": "formula",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 163,
-   "carrying_non_done": 8,
-   "converted_non_done": 8,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRERULE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 11,
-   "carrying_non_done": 8,
-   "converted_non_done": 4,
+   "carrying": 1919,
+   "carrying_non_done": 6,
+   "converted_non_done": 2,
    "refused_non_done": 4,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "token-less": {
-   "mapping_row": null,
-   "carrying": 839,
-   "carrying_non_done": 7,
-   "converted_non_done": 2,
-   "refused_non_done": 5,
-   "refused_because_of_this_token": 837,
-   "refused_because_of_this_token_non_done": 5,
-   "refusal_shapes": {
-    "no_corpus_record": 829,
-    "no_source_row": 8
-   }
-  },
-  "PREMOVE": {
+  "RANGE (spell / power keyword)": {
    "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 12,
-   "carrying_non_done": 7,
-   "converted_non_done": 7,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "REMOVE": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 10,
-   "carrying_non_done": 7,
-   "converted_non_done": 7,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:CONCENTRATION": {
-   "mapping_row": {
-    "family": "bonus",
+    "family": "formula",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 11,
-   "carrying_non_done": 6,
-   "converted_non_done": 6,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {
-    "FORMULA:malformed (parser refusals)": 1
-   }
-  },
-  "BONUS:EQMARMOR": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 22,
-   "carrying_non_done": 6,
-   "converted_non_done": 6,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:WEAPON": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 30,
+   "carrying": 3094,
    "carrying_non_done": 6,
    "converted_non_done": 5,
    "refused_non_done": 1,
@@ -2393,25 +1311,12 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREBASESIZELT": {
+  "REGION / REMOVABLE / VARIANTS / INFO / EXCLUSIVE / ALLOWBASECLASS / EXCLASS / WEAPONBONUS / ACHECK / CHANGEPROF / ADDSPELLLEVEL": {
    "mapping_row": {
     "family": "prereq",
-    "maps_to": "Applies"
+    "maps_to": "Metadata (small record facts)"
    },
-   "carrying": 6,
-   "carrying_non_done": 6,
-   "converted_non_done": 6,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRELANG": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 6,
+   "carrying": 413,
    "carrying_non_done": 6,
    "converted_non_done": 1,
    "refused_non_done": 5,
@@ -2419,31 +1324,44 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREPCLEVEL": {
+  "UDAM": {
    "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
+    "family": "formula",
+    "maps_to": "Dice"
    },
-   "carrying": 74,
-   "carrying_non_done": 6,
-   "converted_non_done": 5,
-   "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PREVISION": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 7,
+   "carrying": 113,
    "carrying_non_done": 6,
    "converted_non_done": 6,
    "refused_non_done": 0,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
+  },
+  "UMULT": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Text"
+   },
+   "carrying": 113,
+   "carrying_non_done": 6,
+   "converted_non_done": 6,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "token-less": {
+   "mapping_row": null,
+   "carrying": 839,
+   "carrying_non_done": 5,
+   "converted_non_done": 0,
+   "refused_non_done": 5,
+   "refused_because_of_this_token": 837,
+   "refused_because_of_this_token_non_done": 5,
+   "refusal_shapes": {
+    "no_corpus_record": 829,
+    "no_source_row": 8
+   }
   },
   "unmapped:KNOWNSPELLS": {
    "mapping_row": null,
@@ -2457,12 +1375,42 @@
     "unmapped:KNOWNSPELLS": 14
    }
   },
-  "PREDOMAIN": {
+  "BONUS:PCLEVEL": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 127,
+   "carrying_non_done": 5,
+   "converted_non_done": 0,
+   "refused_non_done": 5,
+   "refused_because_of_this_token": 1,
+   "refused_because_of_this_token_non_done": 1,
+   "refusal_shapes": {
+    "FORMULA:var(WinterWitchLVL)": 1
+   }
+  },
+  "SELECT": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 9,
+   "carrying": 93,
+   "carrying_non_done": 5,
+   "converted_non_done": 4,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 1,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {
+    "FORMULA:var(STAT)": 1
+   }
+  },
+  "BONUS:SIZEMOD": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 174,
    "carrying_non_done": 5,
    "converted_non_done": 5,
    "refused_non_done": 0,
@@ -2470,15 +1418,67 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "QUALIFY": {
+  "CR": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Text"
+   },
+   "carrying": 1617,
+   "carrying_non_done": 5,
+   "converted_non_done": 0,
+   "refused_non_done": 5,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREFACT": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 8,
+   "carrying": 859,
    "carrying_non_done": 5,
-   "converted_non_done": 5,
-   "refused_non_done": 0,
+   "converted_non_done": 3,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRELANG": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 6,
+   "carrying_non_done": 5,
+   "converted_non_done": 0,
+   "refused_non_done": 5,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRERULE": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 11,
+   "carrying_non_done": 5,
+   "converted_non_done": 1,
+   "refused_non_done": 4,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "VISION": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 521,
+   "carrying_non_done": 5,
+   "converted_non_done": 4,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -2534,54 +1534,203 @@
     "unmapped:[redacted PI]": 4
    }
   },
-  "BONUS:FOLLOWERS": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 4,
-   "carrying_non_done": 4,
-   "converted_non_done": 4,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:RANGEADD": {
+  "BONUS:HP": {
    "mapping_row": {
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 4,
+   "carrying": 49,
    "carrying_non_done": 4,
-   "converted_non_done": 4,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
+   "converted_non_done": 0,
+   "refused_non_done": 4,
+   "refused_because_of_this_token": 3,
+   "refused_because_of_this_token_non_done": 3,
+   "refusal_shapes": {
+    "FORMULA:identifier DEFINEd nowhere (FigherLVL inside a function or under * /)": 1,
+    "FORMULA:identifier DEFINEd nowhere (RACIALHDSIZE inside a function or under * /)": 1,
+    "FORMULA:malformed (parser refusals)": 1
+   }
   },
-  "BONUS:SKILLPOOL": {
+  "ASPECT:NAME": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text"
+   },
+   "carrying": 95,
+   "carrying_non_done": 4,
+   "converted_non_done": 2,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 1,
+   "refused_because_of_this_token_non_done": 1,
+   "refusal_shapes": {
+    "FORMULA:malformed (parser refusals)": 1
+   }
+  },
+  "BONUS:WEAPON": {
    "mapping_row": {
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 4,
+   "carrying": 30,
    "carrying_non_done": 4,
-   "converted_non_done": 4,
-   "refused_non_done": 0,
+   "converted_non_done": 3,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRE": {
+  "CASTTIME": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text (spell stat-block line)"
+   },
+   "carrying": 2858,
+   "carrying_non_done": 4,
+   "converted_non_done": 3,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "COMPS": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text (spell stat-block line)"
+   },
+   "carrying": 2828,
+   "carrying_non_done": 4,
+   "converted_non_done": 3,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "DURATION": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text (spell stat-block line)"
+   },
+   "carrying": 2850,
+   "carrying_non_done": 4,
+   "converted_non_done": 3,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRESPELL": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 32,
+   "carrying_non_done": 4,
+   "converted_non_done": 0,
+   "refused_non_done": 4,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRESPELLCAST": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 9,
+   "carrying_non_done": 4,
+   "converted_non_done": 2,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREVARLT": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 509,
+   "carrying_non_done": 4,
+   "converted_non_done": 1,
+   "refused_non_done": 3,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "RACETYPE": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 9,
+   "carrying": 1825,
    "carrying_non_done": 4,
-   "converted_non_done": 4,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 4,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "SAVEINFO": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text (spell stat-block line)"
+   },
+   "carrying": 2540,
+   "carrying_non_done": 4,
+   "converted_non_done": 3,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "SCHOOL": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text (spell stat-block line)"
+   },
+   "carrying": 2936,
+   "carrying_non_done": 4,
+   "converted_non_done": 3,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "SPELLRES": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text (spell stat-block line)"
+   },
+   "carrying": 2539,
+   "carrying_non_done": 4,
+   "converted_non_done": 3,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "TARGETAREA": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text (spell stat-block line)"
+   },
+   "carrying": 2850,
+   "carrying_non_done": 4,
+   "converted_non_done": 3,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "USEUNTRAINED": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Metadata (skill fact)"
+   },
+   "carrying": 117,
+   "carrying_non_done": 4,
+   "converted_non_done": 0,
+   "refused_non_done": 4,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -2613,27 +1762,12 @@
     "unmapped:BONUSSPELLSTAT": 4
    }
   },
-  "BONUS:POSTMOVEADD": {
+  "BONUS:VISION": {
    "mapping_row": {
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 4,
-   "carrying_non_done": 3,
-   "converted_non_done": 3,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 1,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {
-    "FORMULA:var(<export token>) (MOVEBASE: equipment/encumbrance state)": 1
-   }
-  },
-  "BONUS:FEAT": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 3,
+   "carrying": 46,
    "carrying_non_done": 3,
    "converted_non_done": 3,
    "refused_non_done": 0,
@@ -2641,80 +1775,28 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "BONUS:LANGUAGES": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Number(Expr)"
-   },
-   "carrying": 3,
-   "carrying_non_done": 3,
-   "converted_non_done": 3,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:MONSKILLPTS": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 3,
-   "carrying_non_done": 3,
-   "converted_non_done": 3,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:RANGEMULT": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Text"
-   },
-   "carrying": 3,
-   "carrying_non_done": 3,
-   "converted_non_done": 3,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "BONUS:SLOTS": {
-   "mapping_row": {
-    "family": "bonus",
-    "maps_to": "Metadata(ignored-by-sheet)"
-   },
-   "carrying": 12,
-   "carrying_non_done": 3,
-   "converted_non_done": 3,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PREGENDER": {
+  "KIT": {
    "mapping_row": {
     "family": "prereq",
-    "maps_to": "Applies"
+    "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 3,
+   "carrying": 1633,
    "carrying_non_done": 3,
-   "converted_non_done": 2,
-   "refused_non_done": 1,
+   "converted_non_done": 0,
+   "refused_non_done": 3,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREHD": {
+  "RACESUBTYPE": {
    "mapping_row": {
     "family": "prereq",
-    "maps_to": "Applies"
+    "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 3,
+   "carrying": 1071,
    "carrying_non_done": 3,
-   "converted_non_done": 3,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 3,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -2728,6 +1810,71 @@
    "carrying_non_done": 3,
    "converted_non_done": 0,
    "refused_non_done": 3,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "SITUATION": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Text"
+   },
+   "carrying": 276,
+   "carrying_non_done": 3,
+   "converted_non_done": 0,
+   "refused_non_done": 3,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "SPELLKNOWN": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 1492,
+   "carrying_non_done": 3,
+   "converted_non_done": 1,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "SPELLLEVEL": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 507,
+   "carrying_non_done": 3,
+   "converted_non_done": 3,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "SR": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 410,
+   "carrying_non_done": 3,
+   "converted_non_done": 1,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "UNENCUMBEREDMOVE": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Text"
+   },
+   "carrying": 24,
+   "carrying_non_done": 3,
+   "converted_non_done": 3,
+   "refused_non_done": 0,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -2756,12 +1903,105 @@
     "unmapped:PRESPELLSCHOOL": 3
    }
   },
-  "BONUS:UDAM": {
+  "BONUS:DR": {
    "mapping_row": {
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 2,
+   "carrying": 28,
+   "carrying_non_done": 2,
+   "converted_non_done": 1,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 1,
+   "refused_because_of_this_token_non_done": 1,
+   "refusal_shapes": {
+    "FORMULA:var(HD)": 1
+   }
+  },
+  "BONUS:DC": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 48,
+   "carrying_non_done": 2,
+   "converted_non_done": 0,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "DEFINESTAT": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata feeding the ability-score total (not Text)"
+   },
+   "carrying": 42,
+   "carrying_non_done": 2,
+   "converted_non_done": 0,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "LEGS / HANDS": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 1345,
+   "carrying_non_done": 2,
+   "converted_non_done": 0,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "MONCSKILL": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 403,
+   "carrying_non_done": 2,
+   "converted_non_done": 0,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "MONSTERCLASS": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies (grant edge: racial hit dice class and level)"
+   },
+   "carrying": 1717,
+   "carrying_non_done": 2,
+   "converted_non_done": 0,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "MOVECLONE": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 42,
+   "carrying_non_done": 2,
+   "converted_non_done": 0,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRELEVEL": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 55,
    "carrying_non_done": 2,
    "converted_non_done": 1,
    "refused_non_done": 1,
@@ -2769,12 +2009,51 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRECHARACTERTYPE": {
+  "PREWEAPONPROF": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 21,
+   "carrying_non_done": 2,
+   "converted_non_done": 1,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "REACH": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 1617,
+   "carrying_non_done": 2,
+   "converted_non_done": 0,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "STARTFEATS": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 2,
+   "carrying": 1382,
+   "carrying_non_done": 2,
+   "converted_non_done": 0,
+   "refused_non_done": 2,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "SUBSCHOOL": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text (spell stat-block line)"
+   },
+   "carrying": 1075,
    "carrying_non_done": 2,
    "converted_non_done": 2,
    "refused_non_done": 0,
@@ -2782,44 +2061,33 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRECHECKBASE": {
+  "TEMPDESC": {
    "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
+    "family": "prose",
+    "maps_to": "Text"
    },
-   "carrying": 3,
+   "carrying": 185,
    "carrying_non_done": 2,
-   "converted_non_done": 2,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 2,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREDEITYDOMAIN": {
+  "NATURALATTACKS": {
    "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
+    "family": "formula",
+    "maps_to": "Dice (one natural-attack line per entry: name, count, die)"
    },
-   "carrying": 37,
-   "carrying_non_done": 2,
-   "converted_non_done": 2,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRESPELLDESCRIPTOR": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 4,
-   "carrying_non_done": 2,
-   "converted_non_done": 1,
+   "carrying": 2023,
+   "carrying_non_done": 1,
+   "converted_non_done": 0,
    "refused_non_done": 1,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
+   "refused_because_of_this_token": 7,
+   "refused_because_of_this_token_non_done": 1,
+   "refusal_shapes": {
+    "NATURALATTACKS (die shape)": 7
+   }
   },
   "unmapped:ITEMCREATE": {
    "mapping_row": null,
@@ -2831,6 +2099,21 @@
    "refused_because_of_this_token_non_done": 1,
    "refusal_shapes": {
     "unmapped:ITEMCREATE": 3
+   }
+  },
+  "BONUS:CONCENTRATION": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 11,
+   "carrying_non_done": 1,
+   "converted_non_done": 1,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 1,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {
+    "FORMULA:malformed (parser refusals)": 1
    }
   },
   "BONUS:EQMWEAPON": {
@@ -2860,12 +2143,12 @@
     "SIZE (formula)": 1
    }
   },
-  "CRMOD": {
+  "ACCHECK": {
    "mapping_row": {
     "family": "formula",
-    "maps_to": "Metadata(ignored-by-sheet)"
+    "maps_to": "Number(Expr)"
    },
-   "carrying": 1,
+   "carrying": 205,
    "carrying_non_done": 1,
    "converted_non_done": 1,
    "refused_non_done": 0,
@@ -2873,15 +2156,67 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREARMORTYPE": {
+  "BONUS:FEAT": {
    "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
    },
-   "carrying": 1,
+   "carrying": 3,
    "carrying_non_done": 1,
    "converted_non_done": 1,
    "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:SLOTS": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 12,
+   "carrying_non_done": 1,
+   "converted_non_done": 1,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:SPELLCAST": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 94,
+   "carrying_non_done": 1,
+   "converted_non_done": 0,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:UDAM": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 2,
+   "carrying_non_done": 1,
+   "converted_non_done": 0,
+   "refused_non_done": 1,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "HITDIE (n, with optional class filter)": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 59,
+   "carrying_non_done": 1,
+   "converted_non_done": 0,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -2899,93 +2234,80 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREDR": {
+  "PREGENDER": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 1,
+   "carrying": 3,
    "carrying_non_done": 1,
-   "converted_non_done": 1,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREHANDSGTEQ": {
+  "PREPCLEVEL": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 1,
+   "carrying": 74,
    "carrying_non_done": 1,
-   "converted_non_done": 1,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRELEVELMAX": {
+  "PRESPELLDESCRIPTOR": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 1,
+   "carrying": 4,
    "carrying_non_done": 1,
-   "converted_non_done": 1,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREPROFWITHSHIELD": {
+  "PRETEMPLATE": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 1,
+   "carrying": 112,
    "carrying_non_done": 1,
-   "converted_non_done": 1,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PREREACHGTEQ": {
+  "QUALITY": {
    "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
+    "family": "prose",
+    "maps_to": "Text (equipment fine print)"
    },
-   "carrying": 1,
+   "carrying": 1800,
    "carrying_non_done": 1,
-   "converted_non_done": 1,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
-  "PRESIZELT": {
+  "SUBRACE": {
    "mapping_row": {
     "family": "prereq",
-    "maps_to": "Applies"
+    "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1,
+   "carrying": 146,
    "carrying_non_done": 1,
-   "converted_non_done": 1,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 0,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {}
-  },
-  "PRESPELLBOOK": {
-   "mapping_row": {
-    "family": "prereq",
-    "maps_to": "Applies"
-   },
-   "carrying": 1,
-   "carrying_non_done": 1,
-   "converted_non_done": 1,
-   "refused_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 1,
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
@@ -3062,6 +2384,21 @@
     "unmapped:MONCCSKILL": 2
    }
   },
+  "BONUS:POSTMOVEADD": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 4,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 1,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {
+    "FORMULA:var(<export token>) (MOVEBASE: equipment/encumbrance state)": 1
+   }
+  },
   "unmapped:GROUP": {
    "mapping_row": null,
    "carrying": 1,
@@ -3086,6 +2423,97 @@
     "unmapped:PROHIBITSPELL": 1
    }
   },
+  "ADDLEVEL": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 22,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "ALIGN": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Metadata (deity fact: alignment)"
+   },
+   "carrying": 455,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:DOMAIN": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 46,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:EQMARMOR": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 22,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:FOLLOWERS": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 4,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:LANGUAGES": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 3,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:MONSKILLPTS": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 3,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
   "BONUS:MOVEMULT": {
    "mapping_row": {
     "family": "bonus",
@@ -3099,10 +2527,218 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
+  "BONUS:RANGEADD": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 4,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:RANGEMULT": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Text"
+   },
+   "carrying": 3,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:SKILLPOINTS": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 16,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:SKILLPOOL": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 4,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:SPECIALTYSPELLKNOWN": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 8,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:SPELLKNOWN": {
+   "mapping_row": {
+    "family": "bonus",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 439,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
   "BONUS:WIELDCATEGORY": {
    "mapping_row": {
     "family": "bonus",
     "maps_to": "Text"
+   },
+   "carrying": 9,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "CCSKILL": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 9,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "CRMOD": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 1,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "DEITYWEAP": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Metadata (deity fact: favored weapon)"
+   },
+   "carrying": 455,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "DESCRIPTOR": {
+   "mapping_row": {
+    "family": "prose",
+    "maps_to": "Text (spell stat-block line)"
+   },
+   "carrying": 1304,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "DOMAINS": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 868,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "HD (template band: <lo>-<hi>:TEMPLATE:<name>)": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Applies"
+   },
+   "carrying": 27,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "ITEM": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 702,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "LANGBONUS": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 196,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "MAXDEX": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 163,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRE": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Metadata(ignored-by-sheet)"
    },
    "carrying": 9,
    "carrying_non_done": 0,
@@ -3125,12 +2761,155 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
+  "PREARMORTYPE": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREBASESIZEEQ": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 16,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREBASESIZEGTEQ": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 19,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREBASESIZELT": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 6,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
   "PRECAMPAIGN": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
    "carrying": 4,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRECHARACTERTYPE": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Metadata(ignored-by-sheet)"
+   },
+   "carrying": 2,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRECHECKBASE": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 3,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRECSKILL": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 9,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREDEITYALIGN": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 9,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREDEITYDOMAIN": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 37,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREDOMAIN": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 9,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREDR": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -3151,6 +2930,201 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
+  "PREHANDSGTEQ": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREHD": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 3,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRELEVELMAX": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREMOVE": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 12,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREPROFWITHSHIELD": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREREACHGTEQ": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRESIZEEQ": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 885,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRESIZEGTEQ": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 9,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRESIZELT": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRESIZELTEQ": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 11,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRESPELLBOOK": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 1,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PRESUBCLASS": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 17,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREVARLTEQ": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 23,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "PREVISION": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 7,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "QUALIFY": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 8,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
   "REACHMULT": {
    "mapping_row": {
     "family": "formula",
@@ -3164,12 +3138,38 @@
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
   },
+  "REMOVE": {
+   "mapping_row": {
+    "family": "prereq",
+    "maps_to": "Applies"
+   },
+   "carrying": 10,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
   "SAB": {
    "mapping_row": {
     "family": "prose",
     "maps_to": "Text"
    },
    "carrying": 2,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "SPELLFAILURE": {
+   "mapping_row": {
+    "family": "formula",
+    "maps_to": "Number(Expr)"
+   },
+   "carrying": 210,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -3819,9 +3819,9 @@
    "ok": true
   },
   "coverage": {
-   "non_done": 23315,
-   "tokened": 23308,
-   "token_less": 7,
+   "non_done": 1404,
+   "tokened": 1399,
+   "token_less": 5,
    "uncovered": 0,
    "ok": true
   },

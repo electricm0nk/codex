@@ -845,18 +845,30 @@ mod tests {
     /// shape_ledger.py --inventory docs/work-inventory.json --corpus-root
     /// data/corpus` against the post-regen `docs/work-inventory.json`: F1 =
     /// 5124 exactly.
+    ///
+    /// **5,124 -> 239, a REAL movement (SD-35 AT-35-E2-005, 2026-09-08).**
+    /// The first corpus-wide sheet-rule pass: `v06_work_inventory`'s
+    /// `sheet-complete` rung (AT-35-E2-003) stamped 21,911 units
+    /// (`engine-does-not-hold` 17,640 + `ingested-magnitude` 4,271) whose
+    /// converted `SheetRule` renders for the probe character, moving them
+    /// into DONE by id-set diff; the not-done population fell 23,315 ->
+    /// 1,404, and with it every formula family this scan reads. 5124 -> 239,
+    /// confirmed by re-running `python3 scripts/shape_ledger.py --inventory
+    /// docs/work-inventory.json --corpus-root data/corpus` against the
+    /// post-regen `docs/work-inventory.json`: F1 = 239 exactly.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5124,
-            "F1 population must equal the CURRENT true formula-bearing count (5,124, re-derived \
-             2026-09-07 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
+            f1.population, 239,
+            "F1 population must equal the CURRENT true formula-bearing count (239, re-derived \
+             2026-09-08 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
              `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
-             cycle's own true-at-the-time 5,155 (SD-34 wave 47/48 closure-cycles, unchanged \
+             cycle's own true-at-the-time 5,124 (SD-34 wave 49 closure-cycle), not the \
+             cycle-before-that's own true-at-the-time 5,155 (SD-34 wave 47/48 closure-cycles, unchanged \
              through wave 48's own zero-F1 closure), not the cycle-before-that's own \
              true-at-the-time 5,193 (SD-34 wave 46 closure-cycle), not the \
              cycle-before-that's own true-at-the-time 5,196 (SD-34 waves 44/45 closure-cycles, \

@@ -1,0 +1,7396 @@
+{
+  "pcgen_oracle_sha": "7f818006e371188e5717fd18d74d18a420747fc6",
+  "roster": [
+    "deterministic_human_fighter_l1",
+    "dwarf_fighter_l1",
+    "elf_fighter_l1",
+    "gnome_fighter_l1",
+    "half_elf_fighter_l1",
+    "half_orc_fighter_l1",
+    "halfling_fighter_l1",
+    "human_barbarian_l1",
+    "human_barbarian_l10",
+    "human_bard_l1",
+    "human_bard_l10",
+    "human_cleric_l1",
+    "human_cleric_l10",
+    "human_druid_l1",
+    "human_druid_l10",
+    "human_fighter_l1",
+    "human_fighter_l10",
+    "human_monk_l1",
+    "human_monk_l10",
+    "human_paladin_l1",
+    "human_paladin_l10",
+    "human_ranger_l1",
+    "human_ranger_l10",
+    "human_rogue_l1",
+    "human_rogue_l10",
+    "human_sorcerer_l1",
+    "human_sorcerer_l10",
+    "human_wizard_l1",
+    "human_wizard_l10"
+  ],
+  "exports_missing": [],
+  "summary": {
+    "lines": {
+      "compared": 12,
+      "agree": 1,
+      "disagree": 11,
+      "unverifiable": 42
+    },
+    "chassis": {
+      "compared": 382,
+      "agree": 359,
+      "disagree": 23,
+      "unverifiable": 140
+    },
+    "unverifiable_reasons": {
+      "engine-posture-absent": 140,
+      "no-component-export": 24,
+      "no-pcgen-ability-named": 18
+    }
+  },
+  "disagreements": [
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Ac:Armor",
+      "ours": 2,
+      "oracle": 4,
+      "oracle_key": "AC.ARMOR",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:equipment:chain_shirt",
+        "core_rulebook:equipment:chain_shirt#bonus1"
+      ],
+      "labels": [
+        "Chain Shirt (Base)",
+        "Chain Shirt (Base) (AC)"
+      ],
+      "contributions": [
+        4,
+        -2
+      ],
+      "expr": {
+        "core_rulebook:equipment:chain_shirt": {
+          "value": {
+            "Number": {
+              "Const": 4
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:equipment:chain_shirt#bonus1": {
+          "value": {
+            "Number": {
+              "Const": -2
+            }
+          },
+          "also": null
+        }
+      }
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Skill:climb",
+      "ours": 17,
+      "oracle": 1,
+      "oracle_key": "SKILL.3.MISC",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:skill:climb",
+        "core_rulebook:skill:climb#bonus1",
+        "core_rulebook:skill:climb#bonus2",
+        "core_rulebook:skill:climb#bonus3"
+      ],
+      "labels": [
+        "Climb",
+        "Climb (Climb)",
+        "Climb (Climb)",
+        "Climb (Climb)"
+      ],
+      "contributions": [
+        3,
+        8,
+        3,
+        6
+      ],
+      "expr": {
+        "core_rulebook:skill:climb": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:climb#bonus1": {
+          "value": {
+            "Number": {
+              "Const": 8
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:climb#bonus2": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:climb#bonus3": {
+          "value": {
+            "Number": {
+              "Const": 6
+            }
+          },
+          "also": null
+        }
+      }
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Skill:intimidate",
+      "ours": 9,
+      "oracle": 3,
+      "oracle_key": "SKILL.10.MISC",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:skill:intimidate",
+        "core_rulebook:skill:intimidate#bonus1",
+        "core_rulebook:skill:intimidate#bonus2"
+      ],
+      "labels": [
+        "Intimidate",
+        "Intimidate (Intimidate)",
+        "Intimidate (Intimidate)"
+      ],
+      "contributions": [
+        3,
+        3,
+        6
+      ],
+      "expr": {
+        "core_rulebook:skill:intimidate": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:intimidate#bonus1": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:intimidate#bonus2": {
+          "value": {
+            "Number": {
+              "Const": 6
+            }
+          },
+          "also": null
+        }
+      }
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Skill:swim",
+      "ours": 17,
+      "oracle": 1,
+      "oracle_key": "SKILL.17.MISC",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:skill:swim",
+        "core_rulebook:skill:swim#bonus1",
+        "core_rulebook:skill:swim#bonus2",
+        "core_rulebook:skill:swim#bonus3"
+      ],
+      "labels": [
+        "Swim",
+        "Swim (Swim)",
+        "Swim (Swim)",
+        "Swim (Swim)"
+      ],
+      "contributions": [
+        3,
+        8,
+        3,
+        6
+      ],
+      "expr": {
+        "core_rulebook:skill:swim": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:swim#bonus1": {
+          "value": {
+            "Number": {
+              "Var": "v69b734a795c3afc9"
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:swim#bonus2": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:swim#bonus3": {
+          "value": {
+            "Number": {
+              "Const": 6
+            }
+          },
+          "also": null
+        }
+      }
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": 0,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 3,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 2,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 3,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -2,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 5,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 0,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 1,
+      "oracle": 0,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": 0,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 4,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 1,
+      "oracle": 0,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 4,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 3,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:5 rounds per days",
+      "ours": 5,
+      "oracle": [
+        7
+      ],
+      "oracle_key": "DESC:bardic performance",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:bard_bardic_performance"
+      ],
+      "labels": [
+        "Bardic Performance"
+      ],
+      "desc_numbers": [
+        7
+      ],
+      "expr": {
+        "core_rulebook:class_feature:bard_bardic_performance": {
+          "value": "Text",
+          "also": [
+            [
+              {
+                "Uses": {
+                  "period": "rounds per days"
+                }
+              },
+              {
+                "Number": {
+                  "Var": "vb7765d10517c9c35"
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 7 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic pe"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:5 rounds per days",
+      "ours": 5,
+      "oracle": [
+        25
+      ],
+      "oracle_key": "DESC:bardic performance",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:bard_bardic_performance"
+      ],
+      "labels": [
+        "Bardic Performance"
+      ],
+      "desc_numbers": [
+        25
+      ],
+      "expr": {
+        "core_rulebook:class_feature:bard_bardic_performance": {
+          "value": "Text",
+          "also": [
+            [
+              {
+                "Uses": {
+                  "period": "rounds per days"
+                }
+              },
+              {
+                "Number": {
+                  "Var": "vb7765d10517c9c35"
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 25 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic p"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 0",
+      "ours": 0,
+      "oracle": [
+        3,
+        60
+      ],
+      "oracle_key": "DESC:detect evil",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_detect_evil"
+      ],
+      "labels": [
+        "Detect Evil"
+      ],
+      "desc_numbers": [
+        3,
+        60
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_detect_evil": {
+          "value": "Text",
+          "also": [
+            [
+              "CasterLevel",
+              {
+                "Number": {
+                  "Var": "v75e0a3acc8b517a3"
+                }
+              }
+            ],
+            [
+              "SaveDc",
+              {
+                "Number": {
+                  "Sum": [
+                    {
+                      "Const": 11
+                    },
+                    {
+                      "AbilityMod": "Wis"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
+      "ours": 13,
+      "oracle": [
+        3,
+        60
+      ],
+      "oracle_key": "DESC:detect evil",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_detect_evil"
+      ],
+      "labels": [
+        "Detect Evil"
+      ],
+      "desc_numbers": [
+        3,
+        60
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_detect_evil": {
+          "value": "Text",
+          "also": [
+            [
+              "CasterLevel",
+              {
+                "Number": {
+                  "Var": "v75e0a3acc8b517a3"
+                }
+              }
+            ],
+            [
+              "SaveDc",
+              {
+                "Number": {
+                  "Sum": [
+                    {
+                      "Const": 11
+                    },
+                    {
+                      "AbilityMod": "Wis"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 6,
+      "oracle": 9,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 3,
+      "oracle": 6,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 9,
+      "oracle": 12,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 0",
+      "ours": 0,
+      "oracle": [
+        3,
+        60
+      ],
+      "oracle_key": "DESC:detect evil",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_detect_evil"
+      ],
+      "labels": [
+        "Detect Evil"
+      ],
+      "desc_numbers": [
+        3,
+        60
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_detect_evil": {
+          "value": "Text",
+          "also": [
+            [
+              "CasterLevel",
+              {
+                "Number": {
+                  "Var": "v75e0a3acc8b517a3"
+                }
+              }
+            ],
+            [
+              "SaveDc",
+              {
+                "Number": {
+                  "Sum": [
+                    {
+                      "Const": 11
+                    },
+                    {
+                      "AbilityMod": "Wis"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
+      "ours": 13,
+      "oracle": [
+        3,
+        60
+      ],
+      "oracle_key": "DESC:detect evil",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_detect_evil"
+      ],
+      "labels": [
+        "Detect Evil"
+      ],
+      "desc_numbers": [
+        3,
+        60
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_detect_evil": {
+          "value": "Text",
+          "also": [
+            [
+              "CasterLevel",
+              {
+                "Number": {
+                  "Var": "v75e0a3acc8b517a3"
+                }
+              }
+            ],
+            [
+              "SaveDc",
+              {
+                "Number": {
+                  "Sum": [
+                    {
+                      "Const": 11
+                    },
+                    {
+                      "AbilityMod": "Wis"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_lay_on_hands:also:3 uses per day",
+      "ours": 3,
+      "oracle": [
+        8
+      ],
+      "oracle_key": "DESC:lay on hands",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_lay_on_hands"
+      ],
+      "labels": [
+        "Lay on Hands"
+      ],
+      "desc_numbers": [
+        8
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_lay_on_hands": {
+          "value": "Text",
+          "also": [
+            [
+              {
+                "Uses": {
+                  "period": "uses per day"
+                }
+              },
+              {
+                "Number": {
+                  "Var": "v34eeee55389302e7"
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability 8 times per day. With one use of this ability, you can heal 5d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this "
+    }
+  ],
+  "results": [
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 17,
+      "oracle": 17,
+      "oracle_key": "AC.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 6,
+      "oracle": 6,
+      "oracle_key": "WEAPON.0.TOTALHIT",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 6,
+      "oracle": 6,
+      "oracle_key": "SKILL.3.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "SKILL.10.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 6,
+      "oracle": 6,
+      "oracle_key": "SKILL.17.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Ac:Armor",
+      "ours": 2,
+      "oracle": 4,
+      "oracle_key": "AC.ARMOR",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:equipment:chain_shirt",
+        "core_rulebook:equipment:chain_shirt#bonus1"
+      ],
+      "labels": [
+        "Chain Shirt (Base)",
+        "Chain Shirt (Base) (AC)"
+      ],
+      "contributions": [
+        4,
+        -2
+      ],
+      "expr": {
+        "core_rulebook:equipment:chain_shirt": {
+          "value": {
+            "Number": {
+              "Const": 4
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:equipment:chain_shirt#bonus1": {
+          "value": {
+            "Number": {
+              "Const": -2
+            }
+          },
+          "also": null
+        }
+      }
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Ac:Dodge",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "AC.DODGE",
+      "verdict": "agree",
+      "rule_ids": [
+        "core_rulebook:feat:dodge"
+      ],
+      "labels": [
+        "Dodge"
+      ],
+      "contributions": [
+        1
+      ]
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Other:armor accheck",
+      "ours": -2,
+      "oracle": null,
+      "oracle_key": "no-component-export:Other",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:equipment:chain_shirt#bonus2"
+      ],
+      "labels": [
+        "Chain Shirt (Base) (armor)"
+      ],
+      "contributions": [
+        -2
+      ]
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Pool:fighter_bonus_feat",
+      "ours": -21,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_bonus_feats",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+      ],
+      "labels": [
+        "Bonus Feats",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Skill:climb",
+      "ours": 17,
+      "oracle": 1,
+      "oracle_key": "SKILL.3.MISC",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:skill:climb",
+        "core_rulebook:skill:climb#bonus1",
+        "core_rulebook:skill:climb#bonus2",
+        "core_rulebook:skill:climb#bonus3"
+      ],
+      "labels": [
+        "Climb",
+        "Climb (Climb)",
+        "Climb (Climb)",
+        "Climb (Climb)"
+      ],
+      "contributions": [
+        3,
+        8,
+        3,
+        6
+      ],
+      "expr": {
+        "core_rulebook:skill:climb": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:climb#bonus1": {
+          "value": {
+            "Number": {
+              "Const": 8
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:climb#bonus2": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:climb#bonus3": {
+          "value": {
+            "Number": {
+              "Const": 6
+            }
+          },
+          "also": null
+        }
+      }
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Skill:intimidate",
+      "ours": 9,
+      "oracle": 3,
+      "oracle_key": "SKILL.10.MISC",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:skill:intimidate",
+        "core_rulebook:skill:intimidate#bonus1",
+        "core_rulebook:skill:intimidate#bonus2"
+      ],
+      "labels": [
+        "Intimidate",
+        "Intimidate (Intimidate)",
+        "Intimidate (Intimidate)"
+      ],
+      "contributions": [
+        3,
+        3,
+        6
+      ],
+      "expr": {
+        "core_rulebook:skill:intimidate": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:intimidate#bonus1": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:intimidate#bonus2": {
+          "value": {
+            "Number": {
+              "Const": 6
+            }
+          },
+          "also": null
+        }
+      }
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Skill:swim",
+      "ours": 17,
+      "oracle": 1,
+      "oracle_key": "SKILL.17.MISC",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:skill:swim",
+        "core_rulebook:skill:swim#bonus1",
+        "core_rulebook:skill:swim#bonus2",
+        "core_rulebook:skill:swim#bonus3"
+      ],
+      "labels": [
+        "Swim",
+        "Swim (Swim)",
+        "Swim (Swim)",
+        "Swim (Swim)"
+      ],
+      "contributions": [
+        3,
+        8,
+        3,
+        6
+      ],
+      "expr": {
+        "core_rulebook:skill:swim": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:swim#bonus1": {
+          "value": {
+            "Number": {
+              "Var": "v69b734a795c3afc9"
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:swim#bonus2": {
+          "value": {
+            "Number": {
+              "Const": 3
+            }
+          },
+          "also": null
+        },
+        "core_rulebook:skill:swim#bonus3": {
+          "value": {
+            "Number": {
+              "Const": 6
+            }
+          },
+          "also": null
+        }
+      }
+    },
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:WeaponAttack:{\"Chosen\": \"core_rulebook:feat:weapon_focus\"}",
+      "ours": 0,
+      "oracle": null,
+      "oracle_key": "no-component-export:WeaponAttack",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:feat:weapon_focus"
+      ],
+      "labels": [
+        "Weapon Focus"
+      ],
+      "contributions": [
+        0
+      ]
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": 0,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 3,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 2,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 3,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "dwarf_fighter_l1",
+      "family": "lines",
+      "unit": "target:Pool:fighter_bonus_feat",
+      "ours": -21,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_bonus_feats",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+      ],
+      "labels": [
+        "Bonus Feats",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -2,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 5,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 0,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 11,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "elf_fighter_l1",
+      "family": "lines",
+      "unit": "target:Pool:fighter_bonus_feat",
+      "ours": -21,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_bonus_feats",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+      ],
+      "labels": [
+        "Bonus Feats",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 1,
+      "oracle": 0,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": 0,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 4,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 11,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 4,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "target:Pool:fighter_bonus_feat",
+      "ours": -21,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_bonus_feats",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+      ],
+      "labels": [
+        "Bonus Feats",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:value",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Dancing Lights",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_dancing_lights"
+      ],
+      "labels": [
+        "Dancing Lights"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:also:1/day",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Dancing Lights",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_dancing_lights"
+      ],
+      "labels": [
+        "Dancing Lights"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:also:CL 1",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Dancing Lights",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_dancing_lights"
+      ],
+      "labels": [
+        "Dancing Lights"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:also:DC 13",
+      "ours": 13,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Dancing Lights",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_dancing_lights"
+      ],
+      "labels": [
+        "Dancing Lights"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:value",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Ghost Sound",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_ghost_sound"
+      ],
+      "labels": [
+        "Ghost Sound"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:also:1/day",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Ghost Sound",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_ghost_sound"
+      ],
+      "labels": [
+        "Ghost Sound"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:also:CL 1",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Ghost Sound",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_ghost_sound"
+      ],
+      "labels": [
+        "Ghost Sound"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:also:DC 13",
+      "ours": 13,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Ghost Sound",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_ghost_sound"
+      ],
+      "labels": [
+        "Ghost Sound"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:value",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Prestidigitation",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_prestidigitation"
+      ],
+      "labels": [
+        "Prestidigitation"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:also:1/day",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Prestidigitation",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_prestidigitation"
+      ],
+      "labels": [
+        "Prestidigitation"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:also:CL 1",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Prestidigitation",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_prestidigitation"
+      ],
+      "labels": [
+        "Prestidigitation"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:also:DC 13",
+      "ours": 13,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Prestidigitation",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_prestidigitation"
+      ],
+      "labels": [
+        "Prestidigitation"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:value",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_speak_with_animals"
+      ],
+      "labels": [
+        "Speak with Animals"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:also:1/day",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_speak_with_animals"
+      ],
+      "labels": [
+        "Speak with Animals"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:also:CL 1",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_speak_with_animals"
+      ],
+      "labels": [
+        "Speak with Animals"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:also:DC 14",
+      "ours": 14,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_speak_with_animals"
+      ],
+      "labels": [
+        "Speak with Animals"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals#spell1_speak_with_animals:also:CL 1",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_speak_with_animals#spell1_speak_with_animals"
+      ],
+      "labels": [
+        "Speak with Animals"
+      ]
+    },
+    {
+      "character": "gnome_fighter_l1",
+      "family": "lines",
+      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals#spell1_speak_with_animals:also:DC 14",
+      "ours": 14,
+      "oracle": null,
+      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:race_trait:racial_sla_speak_with_animals#spell1_speak_with_animals"
+      ],
+      "labels": [
+        "Speak with Animals"
+      ]
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_elf_fighter_l1",
+      "family": "lines",
+      "unit": "target:Pool:fighter_bonus_feat",
+      "ours": -21,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_bonus_feats",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+      ],
+      "labels": [
+        "Bonus Feats",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 5,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "half_orc_fighter_l1",
+      "family": "lines",
+      "unit": "target:Pool:fighter_bonus_feat",
+      "ours": -21,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_bonus_feats",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+      ],
+      "labels": [
+        "Bonus Feats",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 1,
+      "oracle": 0,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 4,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 3,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 12,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 4,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "halfling_fighter_l1",
+      "family": "lines",
+      "unit": "target:Pool:fighter_bonus_feat",
+      "ours": -21,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_bonus_feats",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+      ],
+      "labels": [
+        "Bonus Feats",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_barbarian_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 10,
+      "oracle": 10,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 6,
+      "oracle": 6,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 5,
+      "oracle": 5,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 12,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_barbarian_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l1",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:5 rounds per days",
+      "ours": 5,
+      "oracle": [
+        7
+      ],
+      "oracle_key": "DESC:bardic performance",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:bard_bardic_performance"
+      ],
+      "labels": [
+        "Bardic Performance"
+      ],
+      "desc_numbers": [
+        7
+      ],
+      "expr": {
+        "core_rulebook:class_feature:bard_bardic_performance": {
+          "value": "Text",
+          "also": [
+            [
+              {
+                "Uses": {
+                  "period": "rounds per days"
+                }
+              },
+              {
+                "Number": {
+                  "Var": "vb7765d10517c9c35"
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 7 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic pe"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 9,
+      "oracle": 9,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 9,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_bard_l10",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:5 rounds per days",
+      "ours": 5,
+      "oracle": [
+        25
+      ],
+      "oracle_key": "DESC:bardic performance",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:bard_bardic_performance"
+      ],
+      "labels": [
+        "Bardic Performance"
+      ],
+      "desc_numbers": [
+        25
+      ],
+      "expr": {
+        "core_rulebook:class_feature:bard_bardic_performance": {
+          "value": "Text",
+          "also": [
+            [
+              {
+                "Uses": {
+                  "period": "rounds per days"
+                }
+              },
+              {
+                "Number": {
+                  "Var": "vb7765d10517c9c35"
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 25 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic p"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_cleric_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 6,
+      "oracle": 6,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 9,
+      "oracle": 9,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 9,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_cleric_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l1",
+      "family": "lines",
+      "unit": "target:Pool:nature_bond",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:druid_nature_bond"
+      ],
+      "labels": [
+        "Nature Bond"
+      ],
+      "contributions": [
+        1
+      ]
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 6,
+      "oracle": 6,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 9,
+      "oracle": 9,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 9,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_druid_l10",
+      "family": "lines",
+      "unit": "target:Pool:nature_bond",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:druid_nature_bond"
+      ],
+      "labels": [
+        "Nature Bond"
+      ],
+      "contributions": [
+        1
+      ]
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l1",
+      "family": "lines",
+      "unit": "target:Pool:fighter_bonus_feat",
+      "ours": -21,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_bonus_feats",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+      ],
+      "labels": [
+        "Bonus Feats",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 10,
+      "oracle": 10,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 6,
+      "oracle": 6,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 5,
+      "oracle": 5,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 12,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "lines",
+      "unit": "target:Other:accheck",
+      "ours": 0,
+      "oracle": null,
+      "oracle_key": "no-component-export:Other",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_armor_training#bonus5"
+      ],
+      "labels": [
+        "Armor Training (accheck)"
+      ],
+      "contributions": [
+        0
+      ]
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "lines",
+      "unit": "target:Other:maxdex",
+      "ours": 4,
+      "oracle": null,
+      "oracle_key": "no-component-export:Other",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_armor_training#bonus1",
+        "core_rulebook:class_feature:fighter_armor_training#bonus2",
+        "core_rulebook:class_feature:fighter_armor_training#bonus3",
+        "core_rulebook:class_feature:fighter_armor_training#bonus4"
+      ],
+      "labels": [
+        "Armor Training (maxdex)",
+        "Armor Training (maxdex)",
+        "Armor Training (maxdex)",
+        "Armor Training (maxdex)"
+      ],
+      "contributions": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "lines",
+      "unit": "target:Pool:armor_training_choice",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_armor_training"
+      ],
+      "labels": [
+        "Armor Training"
+      ],
+      "contributions": [
+        1
+      ]
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "lines",
+      "unit": "target:Pool:fighter_bonus_feat",
+      "ours": -21,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_bonus_feats",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
+        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+      ],
+      "labels": [
+        "Bonus Feats",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)",
+        "Bonus Feats (fighter bonus feat picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "lines",
+      "unit": "target:Pool:weapon_training_i",
+      "ours": -1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_weapon_training",
+        "core_rulebook:class_feature:fighter_weapon_training#bonus4",
+        "core_rulebook:class_feature:fighter_weapon_training#bonus8"
+      ],
+      "labels": [
+        "Weapon Training",
+        "Weapon Training (weapon training i picks)",
+        "Weapon Training (weapon training i picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "lines",
+      "unit": "target:Pool:weapon_training_ii",
+      "ours": -1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_weapon_training#bonus1",
+        "core_rulebook:class_feature:fighter_weapon_training#bonus5",
+        "core_rulebook:class_feature:fighter_weapon_training#bonus9"
+      ],
+      "labels": [
+        "Weapon Training (weapon training ii picks)",
+        "Weapon Training (weapon training ii picks)",
+        "Weapon Training (weapon training ii picks)"
+      ],
+      "contributions": [
+        1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "lines",
+      "unit": "target:Pool:weapon_training_iii",
+      "ours": -1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_weapon_training#bonus10",
+        "core_rulebook:class_feature:fighter_weapon_training#bonus2",
+        "core_rulebook:class_feature:fighter_weapon_training#bonus6"
+      ],
+      "labels": [
+        "Weapon Training (weapon training iii picks)",
+        "Weapon Training (weapon training iii picks)",
+        "Weapon Training (weapon training iii picks)"
+      ],
+      "contributions": [
+        -1,
+        1,
+        -1
+      ]
+    },
+    {
+      "character": "human_fighter_l10",
+      "family": "lines",
+      "unit": "target:Pool:weapon_training_iv",
+      "ours": -1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:fighter_weapon_training#bonus11",
+        "core_rulebook:class_feature:fighter_weapon_training#bonus3",
+        "core_rulebook:class_feature:fighter_weapon_training#bonus7"
+      ],
+      "labels": [
+        "Weapon Training (weapon training iv picks)",
+        "Weapon Training (weapon training iv picks)",
+        "Weapon Training (weapon training iv picks)"
+      ],
+      "contributions": [
+        -1,
+        1,
+        -1
+      ]
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 12,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_monk_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 6,
+      "oracle": 6,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 9,
+      "oracle": 9,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 14,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 9,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_monk_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 0",
+      "ours": 0,
+      "oracle": [
+        3,
+        60
+      ],
+      "oracle_key": "DESC:detect evil",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_detect_evil"
+      ],
+      "labels": [
+        "Detect Evil"
+      ],
+      "desc_numbers": [
+        3,
+        60
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_detect_evil": {
+          "value": "Text",
+          "also": [
+            [
+              "CasterLevel",
+              {
+                "Number": {
+                  "Var": "v75e0a3acc8b517a3"
+                }
+              }
+            ],
+            [
+              "SaveDc",
+              {
+                "Number": {
+                  "Sum": [
+                    {
+                      "Const": 11
+                    },
+                    {
+                      "AbilityMod": "Wis"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+    },
+    {
+      "character": "human_paladin_l1",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
+      "ours": 13,
+      "oracle": [
+        3,
+        60
+      ],
+      "oracle_key": "DESC:detect evil",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_detect_evil"
+      ],
+      "labels": [
+        "Detect Evil"
+      ],
+      "desc_numbers": [
+        3,
+        60
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_detect_evil": {
+          "value": "Text",
+          "also": [
+            [
+              "CasterLevel",
+              {
+                "Number": {
+                  "Var": "v75e0a3acc8b517a3"
+                }
+              }
+            ],
+            [
+              "SaveDc",
+              {
+                "Number": {
+                  "Sum": [
+                    {
+                      "Const": 11
+                    },
+                    {
+                      "AbilityMod": "Wis"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 10,
+      "oracle": 10,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 6,
+      "oracle": 9,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 3,
+      "oracle": 6,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 9,
+      "oracle": 12,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "disagree"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 12,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 0",
+      "ours": 0,
+      "oracle": [
+        3,
+        60
+      ],
+      "oracle_key": "DESC:detect evil",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_detect_evil"
+      ],
+      "labels": [
+        "Detect Evil"
+      ],
+      "desc_numbers": [
+        3,
+        60
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_detect_evil": {
+          "value": "Text",
+          "also": [
+            [
+              "CasterLevel",
+              {
+                "Number": {
+                  "Var": "v75e0a3acc8b517a3"
+                }
+              }
+            ],
+            [
+              "SaveDc",
+              {
+                "Number": {
+                  "Sum": [
+                    {
+                      "Const": 11
+                    },
+                    {
+                      "AbilityMod": "Wis"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
+      "ours": 13,
+      "oracle": [
+        3,
+        60
+      ],
+      "oracle_key": "DESC:detect evil",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_detect_evil"
+      ],
+      "labels": [
+        "Detect Evil"
+      ],
+      "desc_numbers": [
+        3,
+        60
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_detect_evil": {
+          "value": "Text",
+          "also": [
+            [
+              "CasterLevel",
+              {
+                "Number": {
+                  "Var": "v75e0a3acc8b517a3"
+                }
+              }
+            ],
+            [
+              "SaveDc",
+              {
+                "Number": {
+                  "Sum": [
+                    {
+                      "Const": 11
+                    },
+                    {
+                      "AbilityMod": "Wis"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+    },
+    {
+      "character": "human_paladin_l10",
+      "family": "lines",
+      "unit": "core_rulebook:class_feature:paladin_lay_on_hands:also:3 uses per day",
+      "ours": 3,
+      "oracle": [
+        8
+      ],
+      "oracle_key": "DESC:lay on hands",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:class_feature:paladin_lay_on_hands"
+      ],
+      "labels": [
+        "Lay on Hands"
+      ],
+      "desc_numbers": [
+        8
+      ],
+      "expr": {
+        "core_rulebook:class_feature:paladin_lay_on_hands": {
+          "value": "Text",
+          "also": [
+            [
+              {
+                "Uses": {
+                  "period": "uses per day"
+                }
+              },
+              {
+                "Number": {
+                  "Var": "v34eeee55389302e7"
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "desc": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability 8 times per day. With one use of this ability, you can heal 5d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this "
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 1,
+      "oracle": 1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 10,
+      "oracle": 10,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 6,
+      "oracle": 6,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 5,
+      "oracle": 5,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 12,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "lines",
+      "unit": "target:Pool:combat_style",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:ranger_combat_style_feat"
+      ],
+      "labels": [
+        "Combat Style Feat"
+      ],
+      "contributions": [
+        1
+      ]
+    },
+    {
+      "character": "human_ranger_l10",
+      "family": "lines",
+      "unit": "target:Pool:ranger_combat_style_feat",
+      "ours": 0,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:ranger_combat_style_feat#bonus1"
+      ],
+      "labels": [
+        "Combat Style Feat (ranger combat style feat picks)"
+      ],
+      "contributions": [
+        0
+      ]
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_rogue_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 5,
+      "oracle": 5,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 9,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_rogue_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 5,
+      "oracle": 5,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 9,
+      "oracle": 9,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 7,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_sorcerer_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l1",
+      "family": "lines",
+      "unit": "target:Pool:arcane_bond",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:wizard_arcane_bond"
+      ],
+      "labels": [
+        "Arcane Bond"
+      ],
+      "contributions": [
+        1
+      ]
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.str",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.0.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.dex",
+      "ours": 0,
+      "oracle": 0,
+      "oracle_key": "STAT.1.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.con",
+      "ours": -1,
+      "oracle": -1,
+      "oracle_key": "STAT.2.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.int",
+      "ours": 4,
+      "oracle": 4,
+      "oracle_key": "STAT.3.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.wis",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "STAT.4.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "ability_mod.cha",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "STAT.5.MOD",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "base_attack_bonus",
+      "ours": 5,
+      "oracle": 5,
+      "oracle_key": "BAB",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.0.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "save.fortitude.total",
+      "ours": 2,
+      "oracle": 2,
+      "oracle_key": "CHECK.0.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "save.reflex.base",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "save.reflex.total",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "CHECK.1.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "save.will.base",
+      "ours": 7,
+      "oracle": 7,
+      "oracle_key": "CHECK.2.BASE",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "save.will.total",
+      "ours": 9,
+      "oracle": 9,
+      "oracle_key": "CHECK.2.TOTAL",
+      "verdict": "agree"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "armor_class",
+      "ours": 0,
+      "oracle": 10,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "melee_attack",
+      "ours": 0,
+      "oracle": 7,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "skill.climb",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "skill.intimidate",
+      "ours": 0,
+      "oracle": 3,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "chassis",
+      "unit": "skill.swim",
+      "ours": 0,
+      "oracle": 2,
+      "oracle_key": "engine-posture-absent",
+      "verdict": "unverifiable"
+    },
+    {
+      "character": "human_wizard_l10",
+      "family": "lines",
+      "unit": "target:Pool:arcane_bond",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "no-component-export:Pool",
+      "verdict": "unverifiable",
+      "rule_ids": [
+        "core_rulebook:class_feature:wizard_arcane_bond"
+      ],
+      "labels": [
+        "Arcane Bond"
+      ],
+      "contributions": [
+        1
+      ]
+    }
+  ]
+}
