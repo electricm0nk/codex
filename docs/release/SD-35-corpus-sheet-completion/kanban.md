@@ -28,7 +28,7 @@ Notes column.** Notes here are a pointer, never a story.
 | # | Card | Epic | Criterion | Status | Notes (pointer only) |
 |---|---|---|---|---|---|
 | 1 | `batch-floor-gate` | 1 | AT-35-E1-001 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-001_cycle1_receipt.md` — `1d821cdc8d` |
-| 2 | `content-anchored-citations` | 1 | AT-35-E1-002 | not-started | |
+| 2 | `content-anchored-citations` | 1 | AT-35-E1-002 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-002_cycle1_receipt.md`; `artifacts/epic-1-tax-cut/citation-anchor-proofs.md` |
 | 3 | `test-families-table-driven` | 1 | AT-35-E1-003 | not-started | |
 | 4 | `ratio-row-and-gate-scope` | 1 | AT-35-E1-004 | not-started | |
 | 5 | `pcgen-residue-gate` | 1 | AT-35-E1-005 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-005_cycle1_receipt.md`; baseline `live_files=260 live_hits=12736` |

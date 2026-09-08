@@ -25,14 +25,14 @@ process defect** recorded by the epic wrap-up.
 
 | Epic | Criteria | Complete | In progress | Not started |
 |---|---:|---:|---:|---:|
-| 1 — Tax cut | 6 | 3 | 0 | 3 |
+| 1 — Tax cut | 6 | 4 | 0 | 2 |
 | 2 — Sheet rule | 5 | 0 | 0 | 5 |
 | 3 — Place and surface | 4 | 0 | 0 | 4 |
 | 4 — Resolve and verify | 3 | 0 | 0 | 3 |
 | 5 — Residues | 5 | 0 | 0 | 5 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **3** | **0** | **27** |
+| **Total** | **30** | **4** | **0** | **26** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,16 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-07 — AT-35-E1-002 cycle 1 — `content-anchored-citations` — **complete**
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (instrument-hardening cycle — closes zero units by design, decisions.md §2)` — `cycle_scope_gate.py` was absent at cycle start (`53296d80f0`) and arrived via AT-35-E1-001 on the pre-push rebase.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 53296d80f0 --before /tmp/wi-before-AT-35-E1-002.json --after docs/work-inventory.json --target-dir /tmp/cargo-sd35-AT-35-E1-002`, at the rebased HEAD with AT-35-E1-005's gate present; coarse-grep stand-in read 78 at start and end).
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS` (`python3 scripts/pcgen_residue_gate.py --check` at the rebased HEAD) — equal to E1-005's first recording, not risen.
+- **Refused tokens:** none
+- **Commits:** `815139fadd` (code, artifacts, retro events; rebased onto AT-35-E1-001/E1-006/E1-005), plus this entry's commit (receipt, progress, kanban). Receipt: `artifacts/epic-1-tax-cut/AT-35-E1-002_cycle1_receipt.md`.
+- **What landed:** 16 `file:line` pins → 16 content anchors across the three citation instruments, one shared resolver (`completion_atlas.resolve_content_anchor`); `--by-kind` / `--by-evidence`; `verify.sh` +3 stages (`shape-engine-boundary-selftest`, `shape-engine-boundary`, `missing-engine-tables`) — 42 → **45** after the rebases onto E1-001's `cycle-scope-gate-selftest` and E1-005's `pcgen-residue-gate` (`scripts/verify.sh --list | tail -n +2 | wc -l`); RED→GREEN transcript on the live engine source in `artifacts/epic-1-tax-cut/citation-anchor-proofs.md` (move 50 lines: all resolved lines +50, all green; change one condition each: all three fail closed and the two stages FAIL).
+- **Discoveries (2 `correction` events):** `site-dashboard-check` already wrapped in `timeout` since AT-34-E6-001 wave 27 — nothing to add, D1.2 row updated; §6 step 3's denominator gate was red at cycle start on 11 pre-launch token-mapping lines (`artifacts/**` glob; the launch audit scanned the package root only — the same finding E1-001, E1-005 and E1-006 recorded and left) — **fixed here**, no figure changed, `denominator-gate` stage now `files_checked=186 violations=0`.
 
 ### 2026-09-07 — AT-35-E1-005 cycle 1 — the PCGen residue gate exists, baseline recorded — `complete`
 
