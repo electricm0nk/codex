@@ -89,6 +89,16 @@ A later bundle extends `DEFAULT_GLOBS` again (or passes its own paths /
 sets `DENOMINATOR_GATE_PATHS`, the env var `scripts/verify.sh`'s stage
 reads) for its own receipts -- the same per-bundle-hardcoded-path shape
 `supersession-gate` already uses for SD-31's register.
+
+Widened twice since: `AT-34-E1-006` added SD-34's package (its receipts
+under `artifacts/**` plus every root `.md`), and `AT-35-E1-004`
+(`docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md`) added
+SD-35's package (every root `.md` plus every `.md` under `artifacts/**`
+-- SD-35's receipts are named `<criterion>_cycle<N>_receipt.md` and its
+figure-bearing evidence includes non-receipt artifacts, so the receipt
+glob alone would miss both). Each widening is additive: **nothing already
+scanned stops being scanned**, pinned by
+`scripts/tests/test_denominator_gate.py`'s frozen pre-widening lists.
 """
 
 import argparse
@@ -100,6 +110,18 @@ import sys
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUNDLE_DIR = os.path.join(
     REPO_ROOT, "docs", "release", "SD-33-computed-value-verification"
+)
+
+# AT-35-E1-004: the default scope widens a third time, to SD-35's own
+# package -- added alongside SD-33's and SD-34's, never in place of them.
+# SD-35 names its receipts `<criterion>_cycle<N>_receipt.md`
+# (`SD-35 workflow-instruction.md §6` step 5) and keeps figure-bearing
+# evidence under `artifacts/**` that is not a receipt (the token-mapping
+# synthesis, `citation-anchor-proofs.md`), so its `artifacts/**` entry is
+# `*.md`, the same glob `SD-35 workflow-instruction.md §6` step 3 passed
+# explicitly every cycle until this default carried it.
+SHEET_COMPLETION_BUNDLE_DIR = os.path.join(
+    REPO_ROOT, "docs", "release", "SD-35-corpus-sheet-completion"
 )
 
 # AT-34-E1-006: the default scope widens again to SD-34's own package --
@@ -136,6 +158,10 @@ DEFAULT_GLOBS = [
     # cycle receipts under `artifacts/**`.
     os.path.join(SD34_BUNDLE_DIR, "artifacts", "**", "*_cycle_receipt.md"),
     os.path.join(SD34_BUNDLE_DIR, "*.md"),
+    # AT-35-E1-004: every SD-35 `.md` -- package root and everything
+    # under `artifacts/**`.
+    os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "artifacts", "**", "*.md"),
+    os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "*.md"),
 ]
 
 # A bare percentage token: digits (commas allowed), optional decimal, a `%`
@@ -497,9 +523,20 @@ def run_check(patterns, out=sys.stdout):
 # shaped receipts (numbered-list figures, not `- **`/`##`-bounded
 # sections) hit this section-boundary heuristic. `DENOMINATOR_GATE_PATHS`
 # still overrides this for either stage, same as always.
+#
+# AT-35-E1-004 widened this default to SD-35's package (root `.md` plus
+# `artifacts/**/*.md`, same entries as `DEFAULT_GLOBS`), keeping SD-34's.
+# SD-33 stays out for reason (2) above, now measured rather than
+# predicted: `--check-provenance` over SD-33's receipts and root docs at
+# `d1b5738658` (2026-09-08) reports `files_checked=78 figures_examined=137
+# violations=44`, in a folder no later bundle may write to -- adding it
+# would make `verify.sh --only figure-provenance` permanently red. Pinned
+# by `test_provenance_default_still_excludes_sd33`.
 PROVENANCE_DEFAULT_GLOBS = [
     os.path.join(SD34_BUNDLE_DIR, "artifacts", "**", "*_cycle_receipt.md"),
     os.path.join(SD34_BUNDLE_DIR, "*.md"),
+    os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "artifacts", "**", "*.md"),
+    os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "*.md"),
 ]
 
 

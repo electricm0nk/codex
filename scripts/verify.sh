@@ -1304,11 +1304,13 @@ run_missing_engine_tables() {
 # (`docs/release/SD-33-computed-value-verification/epic-breakdown.md`),
 # enforcing `decisions.md` §2: a percentage reported without its
 # denominator stated in the same construct (the same line) fails the
-# build. Default target is this bundle's own generated evidence
-# (`artifacts/**/*_cycle_receipt.md` + `progress.md`) -- deliberately not
-# this bundle's planning prose (out of this criterion's write scope) and
-# not every prior bundle's receipts (261 files, unaudited, a separate
-# task). `DENOMINATOR_GATE_PATHS` (space-separated globs) overrides the
+# build. Default target (`DEFAULT_GLOBS` in the script) is SD-33's
+# receipts, `progress.md` and seven headline docs, SD-34's receipts and
+# root `.md` (`AT-34-E1-006`), and every SD-35 `.md` -- root plus
+# `artifacts/**` (`AT-35-E1-004`); each widening is additive, nothing
+# already scanned stops being scanned. Still not every prior bundle's
+# receipts (261 files, unaudited, a separate task).
+# `DENOMINATOR_GATE_PATHS` (space-separated globs) overrides the
 # default, matching the `${VAR:-default}` shape `VERIFY_LOG_DIR` and
 # `PREFLIGHT_DISK_MIN_FREE_GB` already use -- this is how a deliberately-
 # malformed receipt is proven to fail this exact stage without permanently
@@ -1356,9 +1358,12 @@ run_denominator_gate() {
 # (`docs/release/SD-34-book-completion/epic-breakdown.md`), enforcing
 # `AGENTS.md` rule 9: a figure with no re-derive command reachable from it
 # is not a figure, it is a recollection. Wired alongside `denominator-gate`
-# in the same script, not as a standalone tool. Default target is this
-# package's own artifacts (`PROVENANCE_DEFAULT_GLOBS` -- deliberately not
-# SD-33's folder, which this bundle may not write to). `FIGURE_PROVENANCE_PATHS`
+# in the same script, not as a standalone tool. Default target
+# (`PROVENANCE_DEFAULT_GLOBS`) is SD-34's receipts and root `.md` plus
+# every SD-35 `.md`, root and `artifacts/**` (`AT-35-E1-004`) --
+# deliberately not SD-33's folder, which no later bundle may write to and
+# which reads 44 provenance violations of 137 figures at the widening
+# (measured in the script's own comment). `FIGURE_PROVENANCE_PATHS`
 # (space-separated globs) overrides the default, the same `${VAR:-default}`
 # shape `DENOMINATOR_GATE_PATHS` already uses. The PASS line states the
 # figure population examined, closing `workflow-instruction.md §12` row 15

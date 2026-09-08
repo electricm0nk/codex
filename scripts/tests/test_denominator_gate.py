@@ -261,7 +261,11 @@ class TestDefaultScopeIsCleanOnRealBundle(unittest.TestCase):
         # AT-34-E1-006 widened DEFAULT_GLOBS to cover both SD-33's folder
         # (unchanged) and SD-34's own package -- every entry must start
         # with one of the two, not just the original.
+        # AT-35-E1-004 widened it again to SD-35's package -- three known
+        # bundle dirs now, still nothing outside them.
         for pattern in dg.DEFAULT_GLOBS:
+            if pattern.startswith(dg.SHEET_COMPLETION_BUNDLE_DIR):
+                continue  # AT-35-E1-004's own entries; the two older dirs are checked below
             self.assertTrue(
                 pattern.startswith(dg.BUNDLE_DIR)
                 or pattern.startswith(dg.SD34_BUNDLE_DIR),
@@ -488,8 +492,14 @@ class TestFigureProvenanceDefaultScope(unittest.TestCase):
     there, so the gate this cycle owns cannot default to a scope only a
     different, forbidden cycle could ever turn green."""
 
-    def test_provenance_default_globs_are_sd34_only(self):
+    def test_provenance_default_globs_are_sd34_and_sd35_only(self):
+        # AT-35-E1-004 widened the provenance default to SD-35's package.
+        # SD-33 stays out: see `TestDefaultGlobsWidenedToSD35
+        # .test_provenance_default_still_excludes_sd33` for the measured
+        # reason.
         for pattern in dg.PROVENANCE_DEFAULT_GLOBS:
+            if pattern.startswith(dg.SHEET_COMPLETION_BUNDLE_DIR):
+                continue  # AT-35-E1-004's own entries; SD-34's are checked below
             self.assertTrue(pattern.startswith(dg.SD34_BUNDLE_DIR))
 
     def test_provenance_default_run_is_clean(self):
@@ -503,6 +513,151 @@ class TestFigureProvenanceDefaultScope(unittest.TestCase):
         ][0]
         examined = int(checked_line.split("=")[1])
         self.assertGreater(examined, 0, "vacuous pass -- zero figures examined")
+
+
+class TestDefaultGlobsWidenedToSD35(unittest.TestCase):
+    """`AT-35-E1-004` (`docs/release/SD-35-corpus-sheet-completion/
+    epic-breakdown.md`): both default scopes -- `DEFAULT_GLOBS` for
+    `--check` and `PROVENANCE_DEFAULT_GLOBS` for `--check-provenance` --
+    widen to SD-35's own package, and **nothing already scanned stops
+    being scanned**. RED before this cycle (a default run saw zero SD-35
+    files), GREEN after.
+
+    Two shapes SD-35 adds that the SD-33/SD-34 globs would miss on their
+    own: SD-35's receipts are named `<criterion>_cycle<N>_receipt.md`
+    (`workflow-instruction.md §6` step 5), which `*_cycle_receipt.md`
+    does not match; and SD-35 keeps figure-bearing evidence under
+    `artifacts/**` that is not a receipt at all (the token-mapping
+    synthesis, `citation-anchor-proofs.md`). So the SD-35 entries sweep
+    `artifacts/**/*.md`, the same glob `workflow-instruction.md §6` step 3
+    already passes explicitly every cycle."""
+
+    # The exact default entries in force at the `tranche/15` cut
+    # (`4c6c57eb9f`), frozen so a later widening cannot silently drop one
+    # -- the criterion's own invariant, "nothing already scanned stops
+    # being scanned". Relative to REPO_ROOT.
+    PRE_WIDENING_DEFAULT_GLOBS = (
+        "docs/release/SD-33-computed-value-verification/artifacts/**/*_cycle_receipt.md",
+        "docs/release/SD-33-computed-value-verification/progress.md",
+        "docs/release/SD-33-computed-value-verification/README.md",
+        "docs/release/SD-33-computed-value-verification/decisions.md",
+        "docs/release/SD-33-computed-value-verification/epic-breakdown.md",
+        "docs/release/SD-33-computed-value-verification/release-notes.md",
+        "docs/release/SD-33-computed-value-verification/scope-draft.md",
+        "docs/release/SD-33-computed-value-verification/kanban.md",
+        "docs/release/SD-33-computed-value-verification/THE-BOX.md",
+        "docs/release/SD-34-book-completion/artifacts/**/*_cycle_receipt.md",
+        "docs/release/SD-34-book-completion/*.md",
+    )
+    PRE_WIDENING_PROVENANCE_GLOBS = (
+        "docs/release/SD-34-book-completion/artifacts/**/*_cycle_receipt.md",
+        "docs/release/SD-34-book-completion/*.md",
+    )
+
+    def _real_sd35_md(self):
+        root = glob.glob(os.path.join(dg.SHEET_COMPLETION_BUNDLE_DIR, "*.md"))
+        artifacts = glob.glob(
+            os.path.join(dg.SHEET_COMPLETION_BUNDLE_DIR, "artifacts", "**", "*.md"),
+            recursive=True,
+        )
+        return {p for p in root + artifacts if os.path.isfile(p)}
+
+    def test_sd35_bundle_dir_is_the_real_package_folder(self):
+        self.assertTrue(os.path.isdir(dg.SHEET_COMPLETION_BUNDLE_DIR))
+        self.assertTrue(dg.SHEET_COMPLETION_BUNDLE_DIR.endswith("SD-35-corpus-sheet-completion"))
+
+    def test_nothing_already_scanned_stops_being_scanned(self):
+        expected = {
+            os.path.join(dg.REPO_ROOT, rel) for rel in self.PRE_WIDENING_DEFAULT_GLOBS
+        }
+        dropped = expected - set(dg.DEFAULT_GLOBS)
+        self.assertEqual(dropped, set(), f"DEFAULT_GLOBS lost pre-widening entries: {dropped}")
+        expected_prov = {
+            os.path.join(dg.REPO_ROOT, rel) for rel in self.PRE_WIDENING_PROVENANCE_GLOBS
+        }
+        dropped_prov = expected_prov - set(dg.PROVENANCE_DEFAULT_GLOBS)
+        self.assertEqual(
+            dropped_prov, set(),
+            f"PROVENANCE_DEFAULT_GLOBS lost pre-widening entries: {dropped_prov}",
+        )
+
+    def test_default_run_includes_every_sd35_md_file(self):
+        real = self._real_sd35_md()
+        self.assertGreater(len(real), 0, "no SD-35 .md files found on disk")
+        paths, missing = dg.expand_paths(list(dg.DEFAULT_GLOBS))
+        self.assertEqual(missing, [])
+        not_covered = real - set(paths)
+        self.assertEqual(
+            not_covered, set(),
+            f"SD-35 .md file(s) not covered by the widened default: {not_covered}",
+        )
+
+    def test_provenance_default_includes_every_sd35_md_file(self):
+        real = self._real_sd35_md()
+        self.assertGreater(len(real), 0, "no SD-35 .md files found on disk")
+        paths, missing = dg.expand_paths(list(dg.PROVENANCE_DEFAULT_GLOBS))
+        self.assertEqual(missing, [])
+        not_covered = real - set(paths)
+        self.assertEqual(
+            not_covered, set(),
+            f"SD-35 .md file(s) not covered by the provenance default: {not_covered}",
+        )
+
+    def test_sd35_cycle_numbered_receipt_naming_is_covered(self):
+        # `AT-35-E1-001_cycle1_receipt.md` is the naming every SD-35 cycle
+        # uses; `*_cycle_receipt.md` (SD-33/SD-34's glob) does not match
+        # it, so this pins that the SD-35 entries do.
+        receipt = os.path.join(
+            dg.SHEET_COMPLETION_BUNDLE_DIR, "artifacts", "epic-1-tax-cut",
+            "AT-35-E1-001_cycle1_receipt.md",
+        )
+        self.assertTrue(os.path.isfile(receipt), f"expected real receipt at {receipt}")
+        paths, _ = dg.expand_paths(list(dg.DEFAULT_GLOBS))
+        self.assertIn(receipt, set(paths))
+        prov_paths, _ = dg.expand_paths(list(dg.PROVENANCE_DEFAULT_GLOBS))
+        self.assertIn(receipt, set(prov_paths))
+
+    def test_default_run_files_checked_covers_sd35_and_is_clean(self):
+        out = io.StringIO()
+        status = dg.run_check([], out=out)
+        checked = int(
+            [
+                line for line in out.getvalue().splitlines()
+                if line.startswith("files_checked=")
+            ][0].split("=")[1]
+        )
+        self.assertGreaterEqual(checked, len(self._real_sd35_md()))
+        self.assertEqual(status, 0, out.getvalue())
+
+    def test_provenance_default_run_covers_sd35_and_is_clean(self):
+        out = io.StringIO()
+        status = dg.run_provenance_check([], out=out)
+        checked = int(
+            [
+                line for line in out.getvalue().splitlines()
+                if line.startswith("files_checked=")
+            ][0].split("=")[1]
+        )
+        self.assertGreaterEqual(checked, len(self._real_sd35_md()))
+        self.assertEqual(status, 0, out.getvalue())
+
+    def test_provenance_default_still_excludes_sd33(self):
+        # Measured, not assumed: `python3 scripts/denominator_gate.py
+        # --check-provenance 'docs/release/SD-33-computed-value-verification/
+        # artifacts/**/*_cycle_receipt.md' 'docs/release/SD-33-computed-
+        # value-verification/*.md'` at `d1b5738658` (2026-09-08) reports
+        # `files_checked=78 figures_examined=137 violations=44` -- SD-33's
+        # receipts predate the Figures-section discipline and no bundle
+        # after SD-33 may write to that folder (`workflow-instruction.md
+        # §3`). Adding it to the provenance default would make
+        # `verify.sh --only figure-provenance` permanently red, so the
+        # exclusion is pinned here as a deliberate act with its reason,
+        # and the denominator (`--check`) default keeps SD-33 in full.
+        for pattern in dg.PROVENANCE_DEFAULT_GLOBS:
+            self.assertFalse(
+                pattern.startswith(dg.BUNDLE_DIR),
+                f"SD-33 entered the provenance default: {pattern}",
+            )
 
 
 if __name__ == "__main__":
