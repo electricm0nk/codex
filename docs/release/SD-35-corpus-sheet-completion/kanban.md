@@ -36,7 +36,7 @@ Notes column.** Notes here are a pointer, never a story.
 | 7 | `sheet-rule-converter` | 2 | AT-35-E2-001 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-001_cycle1_receipt.md`; `data/sheet_rules/_refused.json` — `72ad0be010` |
 | 8 | `live-evaluator-and-sheet-section` | 2 | AT-35-E2-002 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-002_cycle1_receipt.md`; `docs/retro/events/at-35-e2-002.jsonl` — `909bb0837c` |
 | 9 | `sheet-complete-status` | 2 | AT-35-E2-003 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-003_cycle1_receipt.md`; `docs/retro/events/at-35-e2-003.jsonl` — `a81c2a005c` |
-| 10 | `token-coverage-ledger` | 2 | AT-35-E2-004 | not-started | |
+| 10 | `token-coverage-ledger` | 2 | AT-35-E2-004 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-004_cycle1_receipt.md`; `artifacts/epic-2-sheet-rule/token-coverage.json`; `data/sheet_rules/_tokens.json` — `344f18d1e1` |
 | 11 | `first-corpus-wide-conversion` | 2 | AT-35-E2-005 | not-started | |
 | 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | not-started | |
 | 13 | `other-kinds-b-zero` | 3 | AT-35-E3-002 | not-started | |
