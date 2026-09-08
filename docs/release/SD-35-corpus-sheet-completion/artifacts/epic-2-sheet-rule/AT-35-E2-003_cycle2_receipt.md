@@ -11,8 +11,9 @@ evidence relation *stronger* than cycle 1 could show.
 
 - **Commit SHA:** `8274054e34f4036a27255405cc75cdecd8160506` is the tree verified — unchanged by
   this cycle apart from `docs/`. The docs-only commit carrying this receipt, `progress.md`,
-  `kanban.md` and the retro events follows it on `tranche/15` (its own SHA is pinned by the
-  follow-up commit, the pattern `ca14f2363f` set on this branch). Cycle start `8274054e34`.
+  `kanban.md` and the retro events is `dc1fd9886c24ef6ec2e4a3ec02587ab522aeb36b` on `tranche/15`
+  (pinned here by this follow-up commit, the pattern `ca14f2363f` set on this branch). Cycle start
+  `8274054e34`.
 - **Scope gate:** `SCOPE_GATE: EXEMPT (status-vocabulary cycle — closes zero units by design)`
   (`decisions.md §2`; the status is defined and wired here, the pass that moves units is
   AT-35-E2-005, which has since run — the criterion is additionally already at zero, so the
