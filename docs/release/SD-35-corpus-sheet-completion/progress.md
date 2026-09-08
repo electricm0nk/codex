@@ -41,6 +41,56 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — AT-35-E2-003 cycle 2 — `sheet-complete-status` — **complete** (re-dispatch of a closed criterion; re-verified at HEAD, and it corrected one stale figure in its own cycle-1 receipt)
+
+AT-35-E2-003 was dispatched a second time after cycle 1 had landed (`a81c2a005c`, board row 9
+already `complete`). The criterion was at zero on arrival, so this cycle re-derived every clause of
+its `Evidence:` sentence at HEAD `8274054e34` rather than re-doing work, and **changed no code, no
+data and no script** — `rust_lines_changed=0`, nothing outside `docs/` written. Receipt:
+`artifacts/epic-2-sheet-rule/AT-35-E2-003_cycle2_receipt.md`.
+
+`SCOPE_GATE: EXEMPT (status-vocabulary cycle — closes zero units by design)` (`decisions.md §2`;
+the pass that moves units is AT-35-E2-005, which has since run — and the criterion is additionally
+already at zero). Receipt rows: `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a
+builds_recorded=1 pcgen_live_files=260`. Residue `live_files=260 live_hits=12736 baseline_files=260
+baseline_hits=12736 verdict=PASS`, identical at start and end, to cycle 1's, and to the two
+preceding re-dispatches'.
+
+Evidence re-derived, clause by clause. **The census clause now holds as a strict superset, which
+cycle 1 could not yet show** — this cycle's one correction (`1788886876100-at-35-e2-003-d79ecd`).
+Cycle 1 recorded before=6 / after=7 with one *before-only* file
+(`src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs`, which named the oracle words in
+a pin narrative but not yet `sheet-complete`). At HEAD:
+`grep -rln "oracle-unverifiable" src scripts apps tests | wc -l` → **6**;
+`grep -rln "sheet-complete" src scripts apps tests | wc -l` → **10**; before-only files **0**
+(`comm -23` over the sorted sets). The 4 after-only files are the status's own RED→GREEN tests plus
+the two consumers AT-35-E2-004/005 added. The only vocabulary reader outside the after-set is
+`scripts/reachability_audit.py`, which reads `status_vocabulary` from the document instead of
+hard-coding it; its run reports `unmeasurable_unknown_status_units: 0`. **Cycle 1's projection was
+exact**: it projected the rung would move **21,911** units at the next regeneration, and
+`docs/work-inventory.json` now carries exactly **21,911** `sheet-complete` units, by rendered form
+`words 16614 / number 4400 / dice 897` — a 12-word vocabulary carrying the `technical-design.md §3`
+meaning verbatim. The atlas clause, verbatim: `completion_atlas.py --check` → `population=49438
+buckets=10 unclassified=0 overlap=0` … `done_evidence_violations=0 missing_clearing_mechanisms=0
+stale_derived_at=False citation_failures=0`, with the `sheet_rule_rendered:<number|dice|words>`
+DONE-evidence rule at `completion_atlas.py:116,307-308,390-404`.
+
+Widest build scope: `--no-run` exit 0 (3 min 04 s, cold target dir, max RSS 2,384,876 kB),
+`--lib` **3217 passed / 0 failed / 14 ignored**, `--no-fail-fast` **412 binaries, 412 ok, 8,721
+passed, 0 failed, 67 ignored** (`FULL_EXIT=0`, derived twice and agreeing), clippy on the lib and
+`v06_work_inventory` **0 warnings**; `apps/` untouched, so desktop and frontend stay at epic
+cadence. Gates: `sheet_rule_convert -- --check` → `records=49438 converted=47628 refused=1810
+rules=66514 var_tables=5081 verdict=PASS`; literal scan over `data/sheet_rules/` **0** files;
+`token_coverage.py --check` `non_done=1404 tokened=1399 token_less=5 refused=1810
+refused_non_done=659 token_types=231 shapes=81 verdict=PASS`, all six sub-checks `ok=True`;
+`shape_engine_boundary.py` `magnitude_bearing=26396 not_held_by_engine=363`;
+`missing_engine_tables.py` `population=1 citation_failures=0`; `denominator_gate.py`
+`files_checked=42 violations=0` at verification time, `files_checked=43 violations=0` once this receipt was written; `verify.sh --only pi-sweep` `RESULT: PASS`; python consumer suites
+`Ran 146 tests … OK`. Audits on the final diff: `OK_NO_BUNDLE_TAGS`; wired-integration **9 diff
+lines / 7 sites**, every one rulebook prose or the source's own editorial wording in
+`data/sheet_rules/**` and `docs/work-inventory.json`, all previously attributed by AT-35-E2-002
+cycle 2 — none in `src/`, `scripts/` or `apps/`. **Refused tokens: none.**
+
 ### 2026-09-08 — AT-35-E2-002 cycle 2 — `live-evaluator-and-sheet-section` — **complete** (re-dispatch of a closed criterion; re-verified at HEAD, and it corrected one stale figure in its own cycle-1 receipt)
 
 AT-35-E2-002 was dispatched a second time after cycle 1 had landed (`909bb0837c`, board row 8
