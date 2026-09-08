@@ -178,13 +178,14 @@ record it would attach to.
   (denominator: {report['magnitude_bearing']} magnitude-bearing units, computed immediately
   above)
 
-**Roughly a third of the shape engine's own feedstock is still stuck downstream of it** (this
-fraction moved from just over half, {13119}/{26396}, at Epic 1's original AT-34-E1-004 cycle
+**{report['not_held_by_engine'] * 100.0 / report['magnitude_bearing']:.1f}% of the shape engine's own feedstock is still stuck downstream of it**
+({report['not_held_by_engine']} of {report['magnitude_bearing']} magnitude-bearing units; this
+fraction moved from just over half, 13119/26396, at Epic 1's original AT-34-E1-004 cycle
 to {report['not_held_by_engine']}/{report['magnitude_bearing']} here, as Epic 3's per-bucket
-work closed real units -- see `decisions.md §12` L10: a count that drops from measurement
-work is closure, not a re-measurement artifact). This is exactly the gap Epic 2's tables and
-Epics 3-4's per-bucket work close -- the engine already works; the boundary is where its
-output goes next.
+work and SD-35's corpus-wide conversion closed real units -- see `decisions.md §12` L10: a count
+that drops from measurement work is closure, not a re-measurement artifact). This is exactly the
+gap Epic 2's tables and Epics 3-4's per-bucket work close -- the engine already works; the
+boundary is where its output goes next.
 
 ## Why this is a fact, not an assumption
 

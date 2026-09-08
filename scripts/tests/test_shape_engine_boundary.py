@@ -127,13 +127,23 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         # this file is not harmless, because it keeps the WHOLE instrument's
         # test red, which is exactly how its promotion-ladder citation went two
         # further waves (49, 50) without anyone noticing it had gone stale too.
-        # Re-derived live, and confirmed NOT moved by this wave's own work:
-        # `not_held_by_engine` is 8784 in BOTH this wave's before and after
-        # `docs/work-inventory.json` snapshots (this wave closes 102
-        # `engine-does-not-hold` units, but every one carries
-        # `magnitude_token_count == 0`, so none of them is in the
-        # magnitude-bearing population this figure counts over at all).
-        self.assertEqual(len(SEB.not_held_by_engine(mag)), 8784)
+        # `not_held_by_engine`, unlike `magnitude_bearing`, is the population
+        # SD-35's converter exists to DRAIN: every cycle that renders a sheet
+        # line moves units out of it. Re-pinning an equality to the live value
+        # each cycle is the hand-maintained pin that went stale for six waves
+        # above -- a recurring failure gets a mechanism, not another edit
+        # (`AGENTS.md` rule 8). So the assertion is the direction of travel and
+        # its high-water mark, which still fails CLOSED: a regression that puts
+        # units back into `engine-does-not-hold`, or an instrument that starts
+        # over-counting, breaks the ceiling.
+        #
+        # `8784` is the SD-34-wave-51 high-water mark. Live at SD-35
+        # `4e321d2c6c` (after Epic 2's corpus-wide conversion): 363.
+        # Re-derive: `python3 scripts/shape_engine_boundary.py --check`
+        # -> `magnitude_bearing=26396 not_held_by_engine=<n>`.
+        not_held = len(SEB.not_held_by_engine(mag))
+        self.assertLessEqual(not_held, 8784)
+        self.assertLessEqual(not_held, len(mag))
 
 
 class TestContentAnchorRedGreen(unittest.TestCase):

@@ -1,37 +1,22 @@
 {
   "kinds": {
-    "companion": {
-      "by_book": {
-        "bestiary": 28
-      },
-      "count": 28,
-      "engine_surface": {
-        "anchor": "Kind::Companion => engine_does_not_hold(\"companion_content_has_no_engine_table\"),",
-        "context_fn": "classify",
-        "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 16442
-      },
-      "zero_bucket_a_books": [
-        "bestiary"
-      ]
-    },
     "power": {
       "by_book": {
-        "ultimate_psionics": 421
+        "ultimate_psionics": 1
       },
-      "count": 421,
+      "count": 1,
       "engine_surface": {
         "anchor": "Kind::Power => engine_does_not_hold(\"power_content_has_no_engine_table\"),",
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 16542
+        "resolved_line": 16561
       },
       "zero_bucket_a_books": [
         "ultimate_psionics"
       ]
     }
   },
-  "population": 449,
+  "population": 1,
   "re_derive_command": "python3 scripts/missing_engine_tables.py --check",
   "source": "docs/work-inventory.json (status == engine-does-not-hold, evidence contains 'has_no_engine_table')"
 }

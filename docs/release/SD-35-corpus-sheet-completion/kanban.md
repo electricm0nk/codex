@@ -29,7 +29,7 @@ Notes column.** Notes here are a pointer, never a story.
 | # | Card | Epic | Criterion | Status | Notes (pointer only) |
 |---|---|---|---|---|---|
 | 1 | `batch-floor-gate` | 1 | AT-35-E1-001 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-001_cycle1_receipt.md` — `1d821cdc8d` |
-| 2 | `content-anchored-citations` | 1 | AT-35-E1-002 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-002_cycle1_receipt.md`; `artifacts/epic-1-tax-cut/citation-anchor-proofs.md` |
+| 2 | `content-anchored-citations` | 1 | AT-35-E1-002 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-002_cycle1_receipt.md`; `artifacts/epic-1-tax-cut/citation-anchor-proofs.md`; cycle 2 re-verify + stale-pin repair: `artifacts/epic-1-tax-cut/AT-35-E1-002_cycle2_receipt.md` |
 | 3 | `test-families-table-driven` | 1 | AT-35-E1-003 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-003_cycle1_receipt.md`; `build-time.json`, `test-list-diff.txt` — `03072aea0c` |
 | 4 | `ratio-row-and-gate-scope` | 1 | AT-35-E1-004 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-004_cycle1_receipt.md` — `2bf452b038` |
 | 5 | `pcgen-residue-gate` | 1 | AT-35-E1-005 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-005_cycle1_receipt.md`; baseline `live_files=260 live_hits=12736` |

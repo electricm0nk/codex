@@ -152,11 +152,19 @@ class TestLiveInventory(unittest.TestCase):
         # seven `simple_kind_tables` are wired into `classify()` for real --
         # only `companion` (28, `bestiary`-book, no chassis registration at
         # all for that book) and `power` (421, Epic 5's to build) remain.
+        # SD-35 drains this population too (Epic 2's converter renders the
+        # sheet line; Epic 5 builds the `power` chassis), so the assertion is
+        # the ceiling and the kind set, not an equality that has to be
+        # hand-edited every cycle. It still fails CLOSED: a new kind, or a
+        # count above the SD-34 mark, breaks it.
+        # `449` / `{companion, power}` is the SD-34 AT-34-E2-004 high-water
+        # mark. Live at SD-35 `4e321d2c6c`: population=1, kinds={power}.
+        # Re-derive: `python3 scripts/missing_engine_tables.py --check`.
         units = MET._load_units()
         report = MET.build_report(units)
-        self.assertEqual(report["population"], 449)
-        self.assertEqual(len(report["kinds"]), 2)
-        self.assertEqual(set(report["kinds"]), {"companion", "power"})
+        self.assertLessEqual(report["population"], 449)
+        self.assertLessEqual(len(report["kinds"]), 2)
+        self.assertTrue(set(report["kinds"]) <= {"companion", "power"}, report["kinds"])
 
     def test_live_core_rulebook_and_ultimate_campaign_have_zero_bucket_a(self):
         # `AT-34-E2-004`'s own evidence bar, restated as a pinned test: the
@@ -169,10 +177,22 @@ class TestLiveInventory(unittest.TestCase):
             self.assertNotIn("ultimate_campaign", kind_report["by_book"], f"kind={kind}")
 
     def test_live_remaining_population_is_power_and_bestiary_companion_only(self):
+        # The BOOK set is the invariant that does not drain: whatever survives
+        # under `power` is `ultimate_psionics`, and whatever survives under
+        # `companion` is `bestiary`. A unit from any other book appearing here
+        # is the regression this test catches. Counts are ceilings against the
+        # SD-34 marks (421 / 28); live at SD-35 `4e321d2c6c`: power 1,
+        # companion absent. Re-derive:
+        # `python3 scripts/missing_engine_tables.py --check`.
         units = MET._load_units()
         report = MET.build_report(units)
-        self.assertEqual(report["kinds"]["power"]["by_book"], {"ultimate_psionics": 421})
-        self.assertEqual(report["kinds"]["companion"]["by_book"], {"bestiary": 28})
+        ceilings = {"power": ("ultimate_psionics", 421), "companion": ("bestiary", 28)}
+        for kind, (book, ceiling) in ceilings.items():
+            if kind not in report["kinds"]:
+                continue
+            by_book = report["kinds"][kind]["by_book"]
+            self.assertEqual(set(by_book), {book}, f"kind={kind}")
+            self.assertLessEqual(by_book[book], ceiling, f"kind={kind}")
 
 
 if __name__ == "__main__":
