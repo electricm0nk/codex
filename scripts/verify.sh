@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -1261,6 +1261,70 @@ run_figure_provenance() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: pcgen-residue-gate
+#
+# Runs `scripts/pcgen_residue_gate.py --check` -- `AT-35-E1-005`
+# (`docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md`), enforcing
+# SD-35 `decisions.md` §11: PCGen is a converter input and a test oracle,
+# never live code. The script greps the LIVE side (`src/rules_core` minus
+# `cache_gen/`, `src/saved_character`, `src/campaign`, `src/homebrew_authoring`,
+# `apps/desktop`) for the PCGen surface -- `raw_tokens`, `PcgenFormulaEvaluator`,
+# `render_pcgen_desc`, `bonus_stack_reader`, `pre_tokens`, and the token-syntax
+# literals -- and fails when either the file count or the hit count is above
+# `scripts/pcgen-residue-baseline.env`. The baseline is a ratchet: only
+# `--rebaseline` after a reduction moves it, never a hand edit. Cheap (stdlib
+# re/os.walk, no build, no network) -- in BOTH stage sets next to
+# denominator-gate for the same live-check-with-an-exit-code reasoning.
+#
+# `PCGEN_RESIDUE_GATE_CLOSURE=1` switches the stage to `--check --closure`,
+# which passes only at `live_files=0 live_hits=0` -- the stage's closure mode,
+# wired from AT-35-E6-004 onward (same `${VAR:-default}` shape as
+# `DENOMINATOR_GATE_PATHS`).
+# ---------------------------------------------------------------------------
+
+run_pcgen_residue_gate() {
+    local script="$REPO_ROOT/scripts/pcgen_residue_gate.py"
+    local baseline="$REPO_ROOT/scripts/pcgen-residue-baseline.env"
+    local -a flags=(--check)
+    local label="--check"
+    if [[ "${PCGEN_RESIDUE_GATE_CLOSURE:-0}" == 1 ]]; then
+        flags+=(--closure)
+        label="--check --closure"
+    fi
+    stage_start "pcgen-residue-gate — python3 scripts/pcgen_residue_gate.py $label"
+    local log="$LOG_DIR/pcgen-residue-gate.log"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail pcgen-residue-gate "script missing at scripts/pcgen_residue_gate.py"
+        return
+    fi
+    if [[ "${PCGEN_RESIDUE_GATE_CLOSURE:-0}" != 1 && ! -f "$baseline" ]]; then
+        stage_fail pcgen-residue-gate "baseline missing at scripts/pcgen-residue-baseline.env (record it with --rebaseline)"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" "${flags[@]}" ) >"$log" 2>&1
+    local status=$?
+
+    local verdict_line files hits verdict
+    verdict_line=$(grep -E '^live_files=[0-9]+ live_hits=[0-9]+ .*verdict=' "$log" | tail -1)
+    files=$(printf '%s\n' "$verdict_line" | sed -n 's/^live_files=\([0-9]*\) .*/\1/p')
+    hits=$(printf '%s\n' "$verdict_line" | sed -n 's/.* live_hits=\([0-9]*\) .*/\1/p')
+    verdict=$(printf '%s\n' "$verdict_line" | sed -n 's/.*verdict=\([A-Z_]*\)$/\1/p')
+
+    if (( status != 0 )); then
+        stage_fail pcgen-residue-gate "${verdict_line:-no verdict line (exit $status)} — $log"
+        return
+    fi
+    if [[ "$verdict" != PASS ]]; then
+        stage_fail pcgen-residue-gate "exit 0 without verdict=PASS: ${verdict_line:-none} — $log"
+        return
+    fi
+
+    stage_pass pcgen-residue-gate "${verdict_line:-live_files=${files:-?} live_hits=${hits:-?} verdict=PASS}"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: reachability-audit
 #
 # Runs `scripts/reachability_audit.py` against the live `docs/work-inventory.json`
@@ -2275,6 +2339,7 @@ for stage in "${SELECTED[@]}"; do
         cycle-scope-gate-selftest) run_cycle_scope_gate_selftest ;;
         denominator-gate)    run_denominator_gate ;;
         figure-provenance)   run_figure_provenance ;;
+        pcgen-residue-gate)  run_pcgen_residue_gate ;;
         pi-sweep)            run_pi_sweep ;;
         declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;

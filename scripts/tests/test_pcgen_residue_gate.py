@@ -1,0 +1,217 @@
+"""Unit tests for `scripts/pcgen_residue_gate.py` -- `AT-35-E1-005`
+(`docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md`), enforcing
+`decisions.md` §11 (no PCGen on the live side; the count never rises; zero at
+closure).
+
+Every test builds its own synthetic tree under a temp dir and runs the gate's
+real CLI entry point against it (`--root` / `--baseline`), so the RED->GREEN
+evidence the criterion asks for -- plant one `raw_tokens` read under
+`src/rules_core/`, the gate fails; remove it, the gate passes; `--closure`
+fails while the baseline is above zero -- is executed, not narrated. No test
+here reads the real repository: the `pcgen-residue-gate` stage in
+`scripts/verify.sh` is what runs the gate on the live tree.
+"""
+
+import io
+import os
+import shutil
+import sys
+import tempfile
+import unittest
+from contextlib import redirect_stdout
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import pcgen_residue_gate as prg  # noqa: E402
+
+
+def _write(root, rel, text):
+    path = os.path.join(root, rel)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(text)
+    return path
+
+
+def _run(argv):
+    """Run the CLI, returning (exit_code, stdout_text)."""
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        code = prg.main(argv)
+    return code, buf.getvalue()
+
+
+def _last_line(out):
+    lines = [ln for ln in out.splitlines() if ln.strip()]
+    return lines[-1] if lines else ""
+
+
+class _TreeCase(unittest.TestCase):
+    def setUp(self):
+        self.root = tempfile.mkdtemp(prefix="pcgen-residue-")
+        self.baseline = os.path.join(self.root, "scripts", "pcgen-residue-baseline.env")
+        os.makedirs(os.path.dirname(self.baseline), exist_ok=True)
+        # A clean live side with one real reader, plus tool-side and excluded
+        # files that must NOT count.
+        _write(self.root, "src/rules_core/reader.rs",
+               "fn f(r: &Rec) { let t = &r.raw_tokens; let _ = t; }\n")
+        _write(self.root, "src/rules_core/cache_gen/gen.rs",
+               "// converter side on the wrong path: raw_tokens raw_tokens BONUS:\n")
+        _write(self.root, "src/pcgen_import/parser.rs",
+               "// tool side: raw_tokens PcgenFormulaEvaluator BONUS:STAT|STR|2\n")
+        _write(self.root, "src/bin/gen_thing.rs", "// raw_tokens\n")
+        _write(self.root, "tests/oracle.rs", "// raw_tokens\n")
+        _write(self.root, "apps/desktop/node_modules/x/index.js", "raw_tokens BONUS:\n")
+        _write(self.root, "apps/desktop/src/fixture.json", '{"raw_tokens": ["BONUS:STAT|STR|2"]}\n')
+
+    def tearDown(self):
+        shutil.rmtree(self.root, ignore_errors=True)
+
+
+class TestScan(_TreeCase):
+    def test_counts_only_the_live_side_source_files(self):
+        res = prg.scan(self.root)
+        self.assertEqual(res.live_files, 1)
+        self.assertEqual(res.live_hits, 1)
+        self.assertEqual(res.hits_by_pattern["raw_tokens"], 1)
+        self.assertEqual(sorted(res.files), ["src/rules_core/reader.rs"])
+
+    def test_every_design_pattern_is_counted(self):
+        _write(self.root, "apps/desktop/src-tauri/src/catalog.rs",
+               'let e = PcgenFormulaEvaluator::new(); render_pcgen_desc(x);\n'
+               'use crate::bonus_stack_reader; use pre_tokens::parse;\n'
+               '"BONUS:STAT|STR|2" "DEFINE:X|0" "PREFEAT:1,Dodge" "SAB:Text" "DESC:Words"\n'
+               '"%CHOICE" "%LIST" "TYPE=Combat"\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.live_files, 2)
+        for name in prg.PATTERNS:
+            self.assertGreaterEqual(res.hits_by_pattern[name], 1, name)
+        self.assertEqual(res.hits_by_root["apps/desktop"], 12)  # 12 tokens, no raw_tokens
+        self.assertEqual(res.hits_by_root["src/rules_core"], 1)
+
+    def test_identifier_subset_is_reported_separately(self):
+        _write(self.root, "src/rules_core/tables.rs", '"PREFEAT:1,Dodge" "BONUS:STAT|STR|2"\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.live_files, 2)
+        self.assertEqual(res.live_hits, 3)
+        self.assertEqual(res.identifier_files, 1)
+        self.assertEqual(res.identifier_hits, 1)
+
+
+class TestCheck(_TreeCase):
+    def test_check_without_a_baseline_fails_closed(self):
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 2)
+        self.assertIn("verdict=FAIL_NO_BASELINE", _last_line(out))
+
+    def test_rebaseline_records_the_first_count_then_check_passes(self):
+        code, out = _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 0, out)
+        self.assertIn("rebaseline=RECORDED", _last_line(out))
+        self.assertTrue(os.path.isfile(self.baseline))
+        base = prg.read_baseline(self.baseline)
+        self.assertEqual((base["files"], base["hits"]), (1, 1))
+
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 0, out)
+        self.assertEqual(
+            _last_line(out),
+            "live_files=1 live_hits=1 baseline_files=1 baseline_hits=1 verdict=PASS",
+        )
+
+    def test_planted_raw_tokens_read_fails_and_removing_it_passes(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        planted = _write(self.root, "src/rules_core/planted.rs",
+                         "fn g(r: &Rec) -> usize { r.raw_tokens.len() }\n")
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertEqual(
+            _last_line(out),
+            "live_files=2 live_hits=2 baseline_files=1 baseline_hits=1 verdict=FAIL_INCREASED",
+        )
+        os.remove(planted)
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 0, out)
+        self.assertIn("verdict=PASS", _last_line(out))
+
+    def test_more_hits_in_the_same_file_count_also_fails(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        _write(self.root, "src/rules_core/reader.rs",
+               "fn f(r: &Rec) { let t = &r.raw_tokens; let u = &r.raw_tokens; }\n")
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertIn("live_files=1 live_hits=2", _last_line(out))
+        self.assertIn("verdict=FAIL_INCREASED", _last_line(out))
+
+    def test_check_prints_the_per_pattern_and_per_root_rows(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        _, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertIn("pattern raw_tokens files=1 hits=1", out)
+        self.assertIn("pattern PcgenFormulaEvaluator files=0 hits=0", out)
+        self.assertIn("root src/rules_core files=1 hits=1", out)
+        self.assertIn("root apps/desktop files=0 hits=0", out)
+        self.assertIn("identifier_files=1 identifier_hits=1", out)
+
+
+class TestClosure(_TreeCase):
+    def test_closure_fails_while_anything_is_above_zero(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        code, out = _run(["--check", "--closure", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertEqual(_last_line(out), "live_files=1 live_hits=1 verdict=FAIL")
+
+    def test_closure_passes_at_zero_even_with_a_nonzero_baseline(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        os.remove(os.path.join(self.root, "src/rules_core/reader.rs"))
+        code, out = _run(["--check", "--closure", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 0, out)
+        self.assertEqual(_last_line(out), "live_files=0 live_hits=0 verdict=PASS")
+
+
+class TestRebaseline(_TreeCase):
+    def test_rebaseline_is_refused_when_the_count_did_not_go_down(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        before = open(self.baseline, encoding="utf-8").read()
+        code, out = _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertIn("rebaseline=REFUSED", _last_line(out))
+        self.assertIn("verdict=FAIL_NOT_REDUCED", _last_line(out))
+        self.assertEqual(open(self.baseline, encoding="utf-8").read(), before)
+
+    def test_rebaseline_is_refused_when_the_count_went_up(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        _write(self.root, "src/rules_core/planted.rs", "r.raw_tokens\n")
+        code, out = _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertIn("rebaseline=REFUSED", _last_line(out))
+        self.assertEqual(prg.read_baseline(self.baseline)["files"], 1)
+
+    def test_rebaseline_is_allowed_after_a_reduction(self):
+        _write(self.root, "src/rules_core/second.rs", "r.raw_tokens\n")
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(prg.read_baseline(self.baseline)["files"], 2)
+        os.remove(os.path.join(self.root, "src/rules_core/second.rs"))
+        code, out = _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 0, out)
+        self.assertIn("rebaseline=RECORDED", _last_line(out))
+        base = prg.read_baseline(self.baseline)
+        self.assertEqual((base["files"], base["hits"]), (1, 1))
+
+
+class TestLiveRootsAreTheDesignBoundary(unittest.TestCase):
+    """`technical-design.md §0`'s path table, pinned so a quiet widening of
+    the allow-list (`acceptance-and-verification.md §3a`) fails here."""
+
+    def test_live_roots(self):
+        self.assertEqual(
+            list(prg.LIVE_ROOTS),
+            ["src/rules_core", "src/saved_character", "src/campaign",
+             "src/homebrew_authoring", "apps/desktop"],
+        )
+
+    def test_only_cache_gen_is_carved_out_of_rules_core(self):
+        self.assertEqual(list(prg.EXCLUDED_PREFIXES), ["src/rules_core/cache_gen/"])
+
+
+if __name__ == "__main__":
+    unittest.main()
