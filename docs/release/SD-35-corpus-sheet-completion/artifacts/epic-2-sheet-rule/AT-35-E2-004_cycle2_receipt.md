@@ -11,7 +11,7 @@ later cycles would otherwise scope from.
 
 - **Commit SHA:** `9f1b27dcdf10da1e43519bacc54c6eabcf6f1b62` is the tree verified — unchanged by
   this cycle apart from `docs/`. The docs-only commit carrying this receipt, `progress.md`,
-  `kanban.md` and the retro event is `__RECEIPT_COMMIT__` on `tranche/15` (pinned here by the
+  `kanban.md` and the retro event is `8a5b19e7bbee771ed2da9be5287313659ce0182d` on `tranche/15` (pinned here by the
   follow-up commit, the pattern `ca14f2363f` set on this branch). Cycle start `9f1b27dcdf`.
 - **Scope gate:** `SCOPE_GATE: EXEMPT (ledger-building cycle — closes zero units by design)`
   (`decisions.md §2`; the ledger names the population later cycles scope, and the pass that moves
