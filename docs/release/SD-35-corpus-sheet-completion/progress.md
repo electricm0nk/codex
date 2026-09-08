@@ -41,6 +41,66 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — AT-35-E2-004 cycle 2 — `token-coverage-ledger` — **complete** (re-dispatch of a closed criterion; re-verified at HEAD, and it corrected one stale figure in its own cycle-1 receipt)
+
+AT-35-E2-004 was dispatched a second time after cycle 1 had landed (`344f18d1e1`, board row 10
+already `complete`). The criterion was at zero on arrival, so this cycle re-derived every clause of
+its `Evidence:` sentence at HEAD `9f1b27dcdf` rather than re-doing work, and **changed no code, no
+data and no script** — `rust_lines_changed=0`, nothing outside `docs/` written. Receipt:
+`artifacts/epic-2-sheet-rule/AT-35-E2-004_cycle2_receipt.md`.
+
+`SCOPE_GATE: EXEMPT (ledger-building cycle — closes zero units by design)` (`decisions.md §2`; the
+pass that moves units is AT-35-E2-005, which has since run — and the criterion is additionally
+already at zero). Receipt rows: `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a
+builds_recorded=2 pcgen_live_files=260`. Residue `live_files=260 live_hits=12736 baseline_files=260
+baseline_hits=12736 verdict=PASS`, identical at start and end, to cycle 1's, and to all three
+preceding re-dispatches'.
+
+Evidence re-derived, clause by clause. `python3 scripts/token_coverage.py --check` exits 0 in 2.47 s
+with **`non_done=1404 tokened=1399 token_less=5 refused=1810 refused_non_done=659 token_types=231
+shapes=81 verdict=PASS`** and all six sub-checks `ok=True` (`population`, `double_count`,
+`coverage` with `uncovered=0`, `refused_set` with `census_refused=1810 refused_json=1810
+union_over_token_types=1810`, `shape_totals`, `partition`) — the two sums the criterion names hold
+exactly. The **RED→GREEN on a planted double-count** is `RedGreen.test_a_planted_duplicate_census_
+entry_fails_the_check` and `..._duplicate_token_on_one_record_...` (each asserts
+`verdict=FAIL_DOUBLE_COUNT` exit 1, then `verdict=PASS` exit 0 with the plant removed); the file
+runs `14 tests … OK`. The **`verify.sh` wiring** is live in both `ALL_STAGES` and `QUICK_STAGES`
+(48 stages, unchanged): `--only token-coverage-selftest --only token-coverage` → `RESULT: PASS`.
+`--check` rewrote nothing — the ledger and `data/sheet_rules/_tokens.json` (49,438 entries,
+14,631,801 bytes) are byte-identical to cycle 1's.
+
+**The one correction** (`1788889623100-at-35-e2-004-c2ecac`): cycle 1 recorded **44** of 231 token
+types carrying ≥500 non-DONE units, the `decisions.md §2` batch floor. At HEAD it is **7** — `TYPE`
+1126, `CATEGORY` 1002, the `SOURCEPAGE`-family 913, `KEY` 904, `DESC` 605, `ABILITY` 564,
+`BONUS:VAR` 502 — because AT-35-E2-005 dropped non-DONE from 23,315 to 1,404; only 164 of 231 types
+carry any non-DONE unit at all. Cycle 1's figure was right at its tree; it is the shape of stale
+scoping figure `AGENTS.md` rule 9 exists for, so **the ledger is the only admissible source for a
+batch scope from here on, never a prior receipt's list.** The counterpart finding is that the
+**refused set is invariant**: the remainder by token type is identical to cycle 1's, type for type
+and count for count — 49 types, sum with multiplicity 850, over the **same** 659 distinct non-DONE
+refused units (now of 1,404 non-DONE, not 23,315). AT-35-E2-005 closed 21,911 units and **not one
+came out of the refused set**, so the ledger's remainder is a standing work list, not a decaying
+one. `unmapped_token_types=24`, `shapes=81`, `token_types=231` all unchanged.
+
+Widest build scope: `--no-run` exit 0 (2 min 48 s, cold target dir), `--lib` **3217 passed / 0
+failed / 14 ignored** (unchanged from AT-35-E2-003 cycle 2), `--no-fail-fast` **412 binaries, 412
+ok, 8,721 passed, 0 failed, 67 ignored** (`FULL_EXIT=0`, derived twice and agreeing), clippy on the
+lib, `v06_work_inventory`, `sheet_rule_convert` and the convert gate **0 warnings**; `apps/`
+untouched, so desktop and frontend stay at epic cadence. Whole chain 46 min 42 s, every step exit 0.
+Gates: `sheet_rule_convert -- --check` → `records=49438 converted=47628 refused=1810 rules=66514
+var_tables=5081 verdict=PASS (110.6s)`; literal scan over `data/sheet_rules/` **0** files;
+`completion_atlas.py` `population=49438 buckets=10 unclassified=0 overlap=0 …
+done_evidence_violations=0 stale_derived_at=False citation_failures=0`;
+`shape_engine_boundary.py` `magnitude_bearing=26396 not_held_by_engine=363`;
+`missing_engine_tables.py` `population=1 citation_failures=0`; `denominator_gate.py`
+`files_checked=43 violations=0`; `verify.sh --only pi-sweep` `RESULT: PASS`; `corpus_literal_sweep`
+skipped (no corpus record changed). Audits on the final diff: `OK_NO_BUNDLE_TAGS`;
+wired-integration **9 diff lines / 4 files**, every one rulebook prose or PCGen's own editorial
+wording in `data/sheet_rules/**` (3) and `docs/work-inventory.json` (6, the three
+`empty_selection_standard_*` `reason` fields) — none in `src/`, `scripts/`, `apps/` or `tests/`,
+matching AT-35-E2-003 cycle 2's accounting exactly. **Refused tokens: the ledger's 49-type
+remainder, unchanged from cycle 1** (full list in the receipt).
+
 ### 2026-09-08 — AT-35-E2-003 cycle 2 — `sheet-complete-status` — **complete** (re-dispatch of a closed criterion; re-verified at HEAD, and it corrected one stale figure in its own cycle-1 receipt)
 
 AT-35-E2-003 was dispatched a second time after cycle 1 had landed (`a81c2a005c`, board row 9
