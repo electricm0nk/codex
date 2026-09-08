@@ -41,6 +41,59 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — AT-35-E2-005-DISPOSITION cycle 2 — `e2-005-disposition` — **complete** (re-dispatch of a closed disposition cycle; the hand-off re-derived at HEAD and unchanged, no discoveries)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (disposition cycle — it moves no unit; it records where every
+  remaining unit is owned)` — `decisions.md §2`'s zero-units-by-design exemption. Run anyway and
+  quoted: `python3 scripts/cycle_scope_gate.py --min 500` → `scoped=1404 remaining_non_done=1404
+  floor=500 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since ca976bf31d…`; `regressed=0 added=0
+  dropped=0`, `closed_by_kind=` and `relabeled_moves=` both empty). `builds_recorded=0` is honest —
+  nothing outside `docs/` changed, so no build was paid.
+- **Refused-token remainder:** none refused *by this cycle* (no converter run). The remainder it
+  hands on, re-derived at HEAD:
+  `python3 artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py` → exit 0,
+  `non_done=1404 atlas_non_done=1404 refused_non_done=659 not_refused_non_done=745 owned_sum=1404
+  unowned=0 duplicate_ids=0 verdict=PASS`;
+  `by_owner AT-35-E4-001=659 AT-35-E4-002=391 AT-35-E5-003=217 AT-35-E5-004=137`. The 659 carry 69
+  refusal strings / 81 shapes — largest `FORMULA:var(COUNT)=210, unmapped:STARTSKILLPTS=119,
+  SPELLS (PI-redacted token)=66, BONUS:[redacted PI]=62, FORMULA:malformed=62,
+  DEFINE (PI-redacted token)=40, unmapped:MODTOSKILLS=37, unmapped:SPELLSTAT=23,
+  unmapped:MEMORIZE=19`; `refused_class_records all=182 non_done=144`, the 144 first. Deferral
+  `1788895582394-at-35-e2-005-disposition-dde6f4`.
+- **What this cycle did:** re-verified, at HEAD `ca976bf31d`, all five obligations cycle 1 landed at
+  `8cc4ea1516` — the dated amendment on `### AT-35-E2-005` with the original bar kept; the hand-off
+  re-derived (never copied) and summing to the live non-DONE total; `decisions.md §16` citing the
+  four receipts; `kanban.md` row 11 `complete` with its pointer; and the "Inherited from
+  AT-35-E2-005" line on AT-35-E3-001 / E4-002 / E5-003 / E5-004. All five hold. `epic-breakdown.md`,
+  `decisions.md`, the hand-off script and its JSON are **unchanged** — re-derivation reproduces them
+  exactly, so rewriting them would be churn.
+- **Discoveries:** none. Every figure cycle 1 wrote re-derives identically: buckets
+  `A 1 B 437 C 79 D 43 M 63 V 392 U 202 X 168 Z 19` (non-DONE 1,404 of 49,438, DONE 48,034), the
+  four owner rows, the thirteen cells, the 69 refusal strings, the `class` 182/144 split. Cycle 1's
+  correction `1788878644075-at-35-e2-005-disposition-6224d1` (the four AT-35-E2-005 receipts wrote
+  the non-refused split as "V 389 + 3, U 202, X 137, Z 19" = **750**; the true split is
+  **V 391 + U 198 + X 137 + Z 19 = 745**, 1 V and 4 U units being converter-refused) stands and
+  needs no re-issue.
+- **Gates:** `completion_atlas.py --check` green (`unclassified=0 overlap=0
+  done_evidence_violations=0 stale_derived_at=False citation_failures=0`);
+  `token_coverage.py --check` → `non_done=1404 refused_non_done=659 shapes=81 verdict=PASS`, all six
+  sub-checks `ok=True`; `pcgen_residue_gate.py --check` → `live_files=260 live_hits=12736
+  baseline_files=260 baseline_hits=12736 verdict=PASS` (unchanged — no live-side file touched);
+  `denominator_gate.py --check` over the package → `files_checked=46 violations=0`;
+  `shape_engine_boundary.py --check` → `magnitude_bearing=26396 not_held_by_engine=363
+  citation_ok=True`; `missing_engine_tables.py --check` → `population=1 citation_failures=0`. No
+  build: `git diff --stat ca976bf31d..HEAD -- src scripts tests data apps` empty.
+- **Audits:** `OK_NO_BUNDLE_TAGS` and `OK_NO_TOKENS` on this cycle's own diff. Over the whole Epic 2
+  docs set since `fe5ae6cd4a`, only pre-existing hits, none in code — the `tests/sd18_widening/` /
+  `tests/sd13_progression/` directory names, and the 3 rulebook-prose hits AT-35-E2-002 recorded
+  (correction `1788844812035-at-35-e2-002-7cbeb2`).
+- **Receipt:** `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle2_receipt.md`.
+- **Next-cycle scope:** Epic 2 wrap-up (`§10`) if not already run, then Epic 3. Every B/C/D unit at
+  HEAD is converter-refused, so AT-35-E4-001's first cycle takes the 659 by refusal string, the 144
+  non-DONE `class` records first.
+
 ### 2026-09-08 — AT-35-E2-005 cycle 5 — `first-corpus-wide-conversion` — **complete** (re-dispatch of a criterion already closed against its amended bar; re-verified at HEAD, one instrument correction)
 
 AT-35-E2-005 was dispatched again with a stale brief (`CYCLE NUMBER FOR THIS CRITERION: 1`, scope
