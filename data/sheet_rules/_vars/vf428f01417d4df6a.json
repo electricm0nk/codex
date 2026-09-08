@@ -1,0 +1,1 @@
+{"var":"vf428f01417d4df6a","declared_by":["advanced_players_guide:class_feature:favored_community_four"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:favored_community_bonus_four","expr":{"Const":2},"when":"Always"},{"rule_id":"advanced_players_guide:class_feature:favored_community_four","expr":{"Const":2},"when":"Always"}],"provenance":{}}

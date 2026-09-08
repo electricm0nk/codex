@@ -1,0 +1,1 @@
+{"var":"vc648741eb25a8b93","declared_by":["ultimate_psionics:class_feature:ascetic_trance"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:ascetic_trance","expr":{"Div":[{"Sum":[{"Var":"v54326a78fe9a3d2e"},{"Const":1}]},{"Const":4}]},"when":"Always"}],"provenance":{}}

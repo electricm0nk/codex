@@ -1,0 +1,1 @@
+{"var":"vea1a9eca9a5b5e30","declared_by":["core_rulebook:companion:crocodile_death_roll"],"contributions":[{"rule_id":"bestiary:monster:crocodile_dire","expr":{"Const":2},"when":"Always"},{"rule_id":"core_rulebook:companion:crocodile_death_roll","expr":{"Const":1},"when":"Always"}],"provenance":{}}

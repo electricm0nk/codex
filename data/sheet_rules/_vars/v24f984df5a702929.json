@@ -1,0 +1,1 @@
+{"var":"v24f984df5a702929","declared_by":["ultimate_psionics:class_feature:dread_power_points"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:bonus_pp_level_dread","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_psionics:class_feature:dread_power_points","expr":{"Var":"vcc836ef94567178e"},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v499166ea8d051f1a","declared_by":["monster_codex:feat:draconic_magic"],"contributions":[{"rule_id":"monster_codex:feat:draconic_magic","expr":{"Const":1},"when":"Always"},{"rule_id":"monster_codex:feat:draconic_magic","expr":{"Const":1},"when":{"Holds":{"what":{"Rule":"advanced_race_guide:feat:draconic_paragon"},"count":1}}}],"provenance":{}}

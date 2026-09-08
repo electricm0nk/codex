@@ -1,0 +1,1 @@
+{"var":"vb8bf374cca27952e","declared_by":["ultimate_psionics:class:psychic_fist"],"contributions":[{"rule_id":"ultimate_psionics:class:psychic_fist","expr":{"AbilityMod":"Wis"},"when":{"Compare":{"lhs":{"ClassLevel":"psychic_fist"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

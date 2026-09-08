@@ -1,0 +1,1 @@
+{"var":"vd56988a06aec340b","declared_by":["pathfinder_unchained:class_feature:abp_weapon"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_weapon","expr":{"Min":[{"Var":"vd77986206d898b38"},{"Const":5}]},"when":"Always"}],"provenance":{}}

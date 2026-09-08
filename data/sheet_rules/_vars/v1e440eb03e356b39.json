@@ -1,0 +1,1 @@
+{"var":"v1e440eb03e356b39","declared_by":["advanced_players_guide:class:battle_herald"],"contributions":[{"rule_id":"advanced_players_guide:class:battle_herald","expr":{"ClassLevel":"battle_herald"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:battle_herald","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

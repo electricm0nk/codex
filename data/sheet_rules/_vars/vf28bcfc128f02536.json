@@ -1,0 +1,1 @@
+{"var":"vf28bcfc128f02536","declared_by":["advanced_players_guide:class_feature:underwater_blindsense"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:aquatic_bloodline_aquatic_adaptation","expr":{"Mul":[{"Sum":[{"Floor":{"Div":[{"Var":"v063cb7e1d6504ee1"},{"Const":15}]}},{"Const":1}]},{"Const":30}]},"when":"Always"}],"provenance":{}}

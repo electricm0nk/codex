@@ -1,0 +1,1 @@
+{"var":"v3e62a233b0bb5100","declared_by":["pathfinder_unchained:class_feature:abp_armor"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_armor","expr":{"Min":[{"Var":"v82f77dfdcdab6a81"},{"Const":5}]},"when":"Always"}],"provenance":{}}

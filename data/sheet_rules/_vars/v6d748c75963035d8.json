@@ -1,0 +1,1 @@
+{"var":"v6d748c75963035d8","declared_by":["advanced_players_guide:class:oracle"],"contributions":[{"rule_id":"advanced_players_guide:class:oracle","expr":{"ClassLevel":"oracle"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:oracle","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

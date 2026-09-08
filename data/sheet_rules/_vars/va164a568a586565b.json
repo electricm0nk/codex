@@ -1,0 +1,1 @@
+{"var":"va164a568a586565b","declared_by":["ultimate_intrigue:class_feature:refined_education_escape_artist"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:refined_education_escape_artist","expr":{"Const":1},"when":{"Compare":{"lhs":{"ClassLevel":"rogue"},"op":"Gte","rhs":{"Const":4}}}}],"provenance":{}}

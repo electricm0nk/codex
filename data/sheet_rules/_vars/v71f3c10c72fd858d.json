@@ -1,0 +1,1 @@
+{"var":"v71f3c10c72fd858d","declared_by":["ultimate_wilderness:class_feature:favored_turf_plane"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:favored_turf_bonus_plane","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_wilderness:class_feature:favored_turf_plane","expr":{"Var":"v10a9f2b3c6b22aa3"},"when":"Always"}],"provenance":{}}

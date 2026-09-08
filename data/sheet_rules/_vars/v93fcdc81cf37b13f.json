@@ -1,0 +1,1 @@
+{"var":"v93fcdc81cf37b13f","declared_by":["bestiary_2:monster_ability:heat"],"contributions":[{"rule_id":"bestiary_2:monster:azer","expr":{"Const":6},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:132"]}}

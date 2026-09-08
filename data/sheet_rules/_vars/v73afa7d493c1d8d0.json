@@ -1,0 +1,1 @@
+{"var":"v73afa7d493c1d8d0","declared_by":["occult_adventures:class_feature:spiritualist_phantom"],"contributions":[{"rule_id":"horror_adventures:class_feature:death_druid_phantom","expr":{"Var":"v47666b8cadcbc84d"},"when":"Always"},{"rule_id":"occult_adventures:class_feature:spiritualist_phantom","expr":{"Var":"v8e73d2da801f6a9e"},"when":"Always"}],"provenance":{}}

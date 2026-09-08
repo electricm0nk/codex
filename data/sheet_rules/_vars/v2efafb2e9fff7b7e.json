@@ -1,0 +1,1 @@
+{"var":"v2efafb2e9fff7b7e","declared_by":["ultimate_psionics:class:elocater"],"contributions":[{"rule_id":"ultimate_psionics:class:elocater","expr":{"ClassLevel":"elocater"},"when":{"Compare":{"lhs":{"ClassLevel":"elocater"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v07a445b029d41bfe","declared_by":["ultimate_campaign:trait:trait_fate_s_favored"],"contributions":[{"rule_id":"ultimate_campaign:trait:trait_fate_s_favored","expr":{"Const":1},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:9"]}}

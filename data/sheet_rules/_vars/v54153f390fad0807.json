@@ -1,0 +1,1 @@
+{"var":"v54153f390fad0807","declared_by":["core_rulebook:class_feature:divine_bond_special_mount"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:cavalier_mount_boost_paladin","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_combat:class_feature:samurai_mount_boost_paladin","expr":{"Const":1},"when":"Always"}],"provenance":{}}

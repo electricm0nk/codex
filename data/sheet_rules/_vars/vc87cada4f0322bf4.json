@@ -1,0 +1,1 @@
+{"var":"vc87cada4f0322bf4","declared_by":["ultimate_magic:class_feature:discovery_bottled_ooze"],"contributions":[{"rule_id":"ultimate_magic:class_feature:discovery_bottled_ooze","expr":{"Sum":[{"Var":"vfb959251a389b619"},{"CasterLevel":{"Class":"alchemist"}},{"Mul":[{"Const":-1},{"ClassLevel":"alchemist"}]}]},"when":"Always"}],"provenance":{}}

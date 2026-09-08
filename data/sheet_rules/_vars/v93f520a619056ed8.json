@@ -1,0 +1,1 @@
+{"var":"v93f520a619056ed8","declared_by":["ultimate_wilderness:class_feature:shifter_shifter_aspect"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:shifter_shifter_aspect","expr":{"Sum":[{"Const":1},{"Min":[{"Const":3},{"Div":[{"Var":"v10eb36da6a6aee49"},{"Const":5}]}]}]},"when":"Always"}],"provenance":{}}

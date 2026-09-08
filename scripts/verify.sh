@@ -107,7 +107,7 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
 QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
@@ -2189,6 +2189,35 @@ run_corpus_sweep() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: sheet-rules-check
+#
+# Runs `cargo run --locked --bin sheet_rule_convert -- --check` -- `AT-35-E2-001`
+# (`docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md`): the generated
+# `data/sheet_rules/` package equals a fresh conversion of every
+# `docs/work-inventory.json` unit byte for byte, carries no source-format
+# literal (`BONUS:`, `DEFINE:`, `PRE<X>:`, `%CHOICE`, `CL=`, `TYPE=`, `%<n>`),
+# every referenced variable has a `_vars/` table, and converted + refused sums
+# to the population. Needs the pinned oracle checkout (`preflight-oracle`).
+# ---------------------------------------------------------------------------
+run_sheet_rule_convert_check() {
+    stage_start "sheet-rules-check — cargo run --locked --bin sheet_rule_convert -- --check  (repo root)"
+    local log="$LOG_DIR/sheet-rules-check.log"
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin sheet_rule_convert -- --check ) >"$log" 2>&1
+    local status=$?
+    if [[ "$status" -ne 0 ]]; then
+        stage_fail sheet-rules-check "package stale, source-format literal, or a variable with no table (exit $status) — $log"
+        return
+    fi
+    local line
+    line=$(grep -E '^records=[0-9]+ converted=[0-9]+ refused=[0-9]+ .*verdict=PASS' "$log" | tail -n 1)
+    if [[ -z "$line" ]]; then
+        stage_fail sheet-rules-check "binary exited 0 without a verdict=PASS line — $log"
+        return
+    fi
+    stage_pass sheet-rules-check "$line"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: corpus-trap-audit-selftest
 #
 # Runs scripts/tests/test_corpus_trap_audit_baseline.sh — the detection
@@ -2493,6 +2522,7 @@ for stage in "${SELECTED[@]}"; do
         corpus-sweep-selftest) run_corpus_sweep_selftest ;;
         corpus-trap-audit-selftest) run_corpus_trap_audit_selftest ;;
         corpus-sweep)        run_corpus_sweep ;;
+        sheet-rules-check) run_sheet_rule_convert_check ;;
         corpus-trap-audit)   run_corpus_trap_audit ;;
         supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;

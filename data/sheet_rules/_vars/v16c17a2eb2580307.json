@@ -1,0 +1,1 @@
+{"var":"v16c17a2eb2580307","declared_by":["ultimate_intrigue:class_feature:favored_enemy_spy_ring"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:favored_enemy_bonus_spy_ring","expr":{"Const":2},"when":"Always"},{"rule_id":"ultimate_intrigue:class_feature:favored_enemy_spy_ring","expr":{"Var":"v0f51f8dadef759dd"},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"vfe3414238efd22dd","declared_by":["ultimate_intrigue:class_feature:refined_education_appraise"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:refined_education_appraise","expr":{"Const":1},"when":{"Compare":{"lhs":{"ClassLevel":"rogue"},"op":"Gte","rhs":{"Const":4}}}}],"provenance":{}}

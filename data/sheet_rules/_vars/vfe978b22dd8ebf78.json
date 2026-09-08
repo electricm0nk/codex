@@ -1,0 +1,1 @@
+{"var":"vfe978b22dd8ebf78","declared_by":["advanced_class_guide:class_feature:warpriest_bonus_feat_arcane_strike","core_rulebook:feat:arcane_strike"],"contributions":[{"rule_id":"core_rulebook:feat:arcane_strike","expr":{"Min":[{"Sum":[{"Const":1},{"Div":[{"Var":"v07dceb73ec12ffa2"},{"Const":5}]}]},{"Const":5}]},"when":"Always"}],"provenance":{}}

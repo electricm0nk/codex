@@ -1,0 +1,1 @@
+{"var":"ve50e3213803b05f1","declared_by":["core_rulebook:class:arcane_archer"],"contributions":[{"rule_id":"core_rulebook:class:arcane_archer","expr":{"ClassLevel":"arcane_archer"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:arcane_archer","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

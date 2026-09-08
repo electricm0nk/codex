@@ -1,0 +1,1 @@
+{"var":"v60ad68b510930673","declared_by":["inner_sea_intrigue:class_feature:inquisition_sedition"],"contributions":[{"rule_id":"inner_sea_intrigue:class_feature:inquisition_sedition","expr":{"Sum":[{"Const":10},{"Div":[{"Var":"v925c9ebdb6fe293e"},{"Const":2}]},{"AbilityMod":"Wis"}]},"when":"Always"}],"provenance":{}}

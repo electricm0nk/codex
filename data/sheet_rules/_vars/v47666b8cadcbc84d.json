@@ -1,0 +1,1 @@
+{"var":"v47666b8cadcbc84d","declared_by":["core_rulebook:class:druid"],"contributions":[{"rule_id":"core_rulebook:class:druid","expr":{"ClassLevel":"druid"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:druid","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

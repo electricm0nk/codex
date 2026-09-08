@@ -1,0 +1,1 @@
+{"var":"v10bc522983b2c841","declared_by":["ultimate_magic:class_feature:empyreal_bloodline_sacred_cistern"],"contributions":[{"rule_id":"ultimate_magic:class_feature:empyreal_bloodline_sacred_cistern","expr":{"Sum":[{"Var":"v76434fdc4b0acd65"},{"Const":-4}]},"when":"Always"}],"provenance":{}}

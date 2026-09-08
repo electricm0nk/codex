@@ -1,0 +1,1 @@
+{"var":"va207240ab40e5fdf","declared_by":["ultimate_magic:companion:evolution_major_acid_arrow_1"],"contributions":[{"rule_id":"ultimate_magic:companion:evolution_major_acid_arrow_1","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_magic:companion:evolution_major_acid_arrow_3","expr":{"Const":2},"when":"Always"}],"provenance":{}}

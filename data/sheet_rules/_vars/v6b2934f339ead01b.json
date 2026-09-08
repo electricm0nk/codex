@@ -1,0 +1,1 @@
+{"var":"v6b2934f339ead01b","declared_by":["ultimate_psionics:class:thrallherd"],"contributions":[{"rule_id":"ultimate_psionics:class:thrallherd","expr":{"ClassLevel":"thrallherd"},"when":{"Compare":{"lhs":{"ClassLevel":"thrallherd"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

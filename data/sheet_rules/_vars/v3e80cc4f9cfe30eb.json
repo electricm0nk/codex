@@ -1,0 +1,1 @@
+{"var":"v3e80cc4f9cfe30eb","declared_by":["ultimate_magic:companion:evolution_major_scorching_ray_1"],"contributions":[{"rule_id":"ultimate_magic:companion:evolution_major_scorching_ray_1","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_magic:companion:evolution_major_scorching_ray_3","expr":{"Const":2},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v59ebb2a61355c7d6","declared_by":["ultimate_psionics:ability:cm_size_changing"],"contributions":[{"rule_id":"ultimate_psionics:monster_ability:half_giant_powerful_build","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_psionics:ability:cm_size_changing","expr":{"Var":"v4665d3fae5c7cf16"},"when":"Always"}],"provenance":{}}

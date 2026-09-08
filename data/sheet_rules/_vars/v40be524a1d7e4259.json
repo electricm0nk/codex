@@ -1,0 +1,1 @@
+{"var":"v40be524a1d7e4259","declared_by":["occult_adventures:class_feature:medium_spirit"],"contributions":[{"rule_id":"occult_adventures:class_feature:medium_spirit","expr":{"Sum":[{"Const":1},{"Div":[{"Var":"v520724ceea91bcd7"},{"Const":4}]}]},"when":"Always"}],"provenance":{}}

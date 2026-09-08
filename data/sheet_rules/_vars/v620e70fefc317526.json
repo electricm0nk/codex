@@ -1,0 +1,1 @@
+{"var":"v620e70fefc317526","declared_by":["core_rulebook:class_feature:favored_enemy_outsider_water"],"contributions":[{"rule_id":"core_rulebook:class_feature:favored_enemy_bonus_outsider_water","expr":{"Const":2},"when":"Always"},{"rule_id":"core_rulebook:class_feature:favored_enemy_outsider_water","expr":{"Var":"v0f51f8dadef759dd"},"when":"Always"}],"provenance":{}}

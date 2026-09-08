@@ -1,0 +1,1 @@
+{"var":"v4f78532012cdbed0","declared_by":["advanced_class_guide:class:shaman"],"contributions":[{"rule_id":"advanced_class_guide:class:shaman","expr":{"ClassLevel":"shaman"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:shaman","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

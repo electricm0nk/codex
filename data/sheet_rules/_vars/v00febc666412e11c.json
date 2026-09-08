@@ -1,0 +1,1 @@
+{"var":"v00febc666412e11c","declared_by":["core_rulebook:class_feature:favored_enemy_outsider_air"],"contributions":[{"rule_id":"core_rulebook:class_feature:favored_enemy_bonus_outsider_air","expr":{"Const":2},"when":"Always"},{"rule_id":"core_rulebook:class_feature:favored_enemy_outsider_air","expr":{"Var":"v0f51f8dadef759dd"},"when":"Always"}],"provenance":{}}

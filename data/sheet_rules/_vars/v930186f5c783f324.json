@@ -1,0 +1,1 @@
+{"var":"v930186f5c783f324","declared_by":["ultimate_psionics:class:marksman"],"contributions":[{"rule_id":"ultimate_psionics:class:marksman","expr":{"ClassLevel":"marksman"},"when":{"Compare":{"lhs":{"ClassLevel":"marksman"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

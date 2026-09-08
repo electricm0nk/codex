@@ -1,0 +1,1 @@
+{"var":"v93e97e42976e5ba4","declared_by":["horror_adventures:ability:deep_one_manifestation_level"],"contributions":[{"rule_id":"horror_adventures:ability:deep_one_manifestation_level","expr":{"Choice":"horror_adventures:ability:deep_one_manifestation_level"},"when":{"Situational":{"text":"when active"}}}],"provenance":{}}

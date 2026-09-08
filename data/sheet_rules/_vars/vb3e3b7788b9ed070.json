@@ -1,0 +1,1 @@
+{"var":"vb3e3b7788b9ed070","declared_by":["ultimate_wilderness:class_feature:favored_turf_forest"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:favored_turf_bonus_forest","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_wilderness:class_feature:favored_turf_forest","expr":{"Var":"v10a9f2b3c6b22aa3"},"when":"Always"}],"provenance":{}}

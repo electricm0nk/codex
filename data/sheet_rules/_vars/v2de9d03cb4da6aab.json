@@ -1,0 +1,1 @@
+{"var":"v2de9d03cb4da6aab","declared_by":["core_rulebook:class_feature:bloodline_tracker"],"contributions":[{"rule_id":"core_rulebook:class_feature:celestial_bloodline_feat_tracker","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:1775"]}}

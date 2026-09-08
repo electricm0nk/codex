@@ -1,0 +1,1 @@
+{"var":"v4f5e2291d6ac9055","declared_by":["advanced_players_guide:companion:evolution_ability_increase_int","advanced_players_guide:companion:temp_evolution_ability_increase_int"],"contributions":[{"rule_id":"advanced_players_guide:companion:evolution_ability_increase_int","expr":{"Const":1},"when":"Always"}],"provenance":{}}

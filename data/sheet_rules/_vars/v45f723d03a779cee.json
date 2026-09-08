@@ -1,0 +1,1 @@
+{"var":"v45f723d03a779cee","declared_by":["advanced_race_guide:race_trait:samsaran_mystic_past_life"],"contributions":[{"rule_id":"advanced_race_guide:race_trait:samsaran_mystic_past_life","expr":{"Div":[{"Sum":[{"Var":"v982ff241d0597e7f"},{"Const":-10}]},{"Const":2}]},"when":"Always"}],"provenance":{}}

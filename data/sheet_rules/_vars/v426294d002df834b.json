@@ -1,0 +1,1 @@
+{"var":"v426294d002df834b","declared_by":["ultimate_psionics:class_feature:purifier_manifesting_variables"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:purifier_manifesting_variables","expr":{"Sum":[{"Var":"v75e0a3acc8b517a3"},{"CasterLevel":{"Class":"paladin"}},{"Mul":[{"Const":-1},{"ClassLevel":"paladin"}]}]},"when":"Always"}],"provenance":{}}

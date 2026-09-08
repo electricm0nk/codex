@@ -1,0 +1,1 @@
+{"var":"v346678a6c54a6c99","declared_by":["core_rulebook:class_feature:favored_enemy_dragon"],"contributions":[{"rule_id":"core_rulebook:class_feature:favored_enemy_bonus_dragon","expr":{"Const":2},"when":"Always"},{"rule_id":"core_rulebook:class_feature:favored_enemy_dragon","expr":{"Var":"v0f51f8dadef759dd"},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"vb2aeea3b5d51f825","declared_by":["ultimate_magic:companion:evolution_bm_dancing_lights_1"],"contributions":[{"rule_id":"ultimate_magic:companion:evolution_bm_dancing_lights_1","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_magic:companion:evolution_bm_dancing_lights_3","expr":{"Const":2},"when":"Always"}],"provenance":{}}

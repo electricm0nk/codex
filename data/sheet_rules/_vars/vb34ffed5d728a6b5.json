@@ -1,0 +1,1 @@
+{"var":"vb34ffed5d728a6b5","declared_by":["advanced_players_guide:class_feature:favored_community_one"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:favored_community_bonus_one","expr":{"Const":2},"when":"Always"},{"rule_id":"advanced_players_guide:class_feature:favored_community_one","expr":{"Const":2},"when":"Always"}],"provenance":{}}

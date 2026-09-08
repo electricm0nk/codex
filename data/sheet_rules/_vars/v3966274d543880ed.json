@@ -1,0 +1,1 @@
+{"var":"v3966274d543880ed","declared_by":["ultimate_psionics:class_feature:blade_skill_thick_skin"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:blade_skill_thick_skin","expr":{"Const":2},"when":"Always"},{"rule_id":"ultimate_psionics:class_feature:blade_skill_thick_skin_improved","expr":{"Const":1},"when":"Always"}],"provenance":{}}

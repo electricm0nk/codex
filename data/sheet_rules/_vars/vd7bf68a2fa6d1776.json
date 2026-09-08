@@ -1,0 +1,1 @@
+{"var":"vd7bf68a2fa6d1776","declared_by":["ultimate_wilderness:race_trait:vine_leshy_poisonous"],"contributions":[{"rule_id":"ultimate_wilderness:race_trait:vine_leshy_poisonous","expr":{"Sum":[{"Const":10},{"Div":["Level",{"Const":2}]},{"AbilityMod":"Con"}]},"when":"Always"}],"provenance":{}}

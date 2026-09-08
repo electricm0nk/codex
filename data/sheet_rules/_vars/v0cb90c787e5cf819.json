@@ -1,0 +1,1 @@
+{"var":"v0cb90c787e5cf819","declared_by":["advanced_class_guide:class:slayer","advanced_class_guide:class:swashbuckler"],"contributions":[{"rule_id":"advanced_class_guide:class:slayer","expr":{"ClassLevel":"slayer"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:slayer","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"vd9883c6e17a4e2ea","declared_by":["ultimate_psionics:class:metaforge"],"contributions":[{"rule_id":"ultimate_psionics:class:metaforge","expr":{"ClassLevel":"metaforge"},"when":{"Compare":{"lhs":{"ClassLevel":"metaforge"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

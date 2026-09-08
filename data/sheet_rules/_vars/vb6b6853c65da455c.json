@@ -1,0 +1,1 @@
+{"var":"vb6b6853c65da455c","declared_by":["ultimate_wilderness:companion:tremorsense_underwater_only"],"contributions":[{"rule_id":"ultimate_wilderness:companion:companion_salamander_giant","expr":{"Const":30},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{}}

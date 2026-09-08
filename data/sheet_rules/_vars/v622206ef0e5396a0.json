@@ -1,0 +1,1 @@
+{"var":"v622206ef0e5396a0","declared_by":["ultimate_wilderness:class_feature:default"],"contributions":[{"rule_id":"ultimate_wilderness:companion:bodyguard_animal_feats","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst:670"]}}

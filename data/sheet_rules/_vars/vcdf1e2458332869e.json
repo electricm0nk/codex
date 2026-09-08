@@ -1,0 +1,1 @@
+{"var":"vcdf1e2458332869e","declared_by":["occult_adventures:class_feature:mesmerist_touch_treatment"],"contributions":[{"rule_id":"occult_adventures:class_feature:mesmerist_touch_treatment","expr":{"Sum":[{"Const":3},{"AbilityMod":"Cha"}]},"when":"Always"},{"rule_id":"occult_adventures:feat:extra_touch_treatment","expr":{"Const":2},"when":"Always"}],"provenance":{}}

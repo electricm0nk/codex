@@ -1,0 +1,1 @@
+{"var":"v8720342fa6101bb4","declared_by":["advanced_class_guide:class_feature:life_spirit_channel"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:life_spirit_channel","expr":{"Div":[{"Sum":[{"Var":"vacb5a847c03975e0"},{"Var":"v0ccf4aafda04856d"},{"Const":1}]},{"Const":2}]},"when":"Always"}],"provenance":{}}

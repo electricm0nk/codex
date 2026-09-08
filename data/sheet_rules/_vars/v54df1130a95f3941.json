@@ -1,0 +1,1 @@
+{"var":"v54df1130a95f3941","declared_by":["core_rulebook:race_trait:dwarf_stonecunning"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:deep_earth_bloodline_rockseer","expr":{"Const":2},"when":{"Holds":{"what":{"Rule":"core_rulebook:template:isdwarf"},"count":1}}}],"provenance":{}}

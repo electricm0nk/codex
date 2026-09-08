@@ -1,0 +1,1 @@
+{"var":"v0f11f3d8fe37c442","declared_by":["ultimate_magic:companion:evolution_minor_ventriloquism_1"],"contributions":[{"rule_id":"ultimate_magic:companion:evolution_minor_ventriloquism_1","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_magic:companion:evolution_minor_ventriloquism_3","expr":{"Const":2},"when":"Always"}],"provenance":{}}

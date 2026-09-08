@@ -1,0 +1,1 @@
+{"var":"ve40f58e4302bc3e5","declared_by":["bestiary:monster_ability:energy_drain"],"contributions":[{"rule_id":"bestiary:monster:devourer","expr":{"Const":1},"when":"Always"}],"provenance":{}}

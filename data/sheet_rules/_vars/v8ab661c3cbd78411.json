@@ -1,0 +1,1 @@
+{"var":"v8ab661c3cbd78411","declared_by":["core_rulebook:race_trait:racial_sla_charm_person"],"contributions":[{"rule_id":"core_rulebook:race_trait:racial_sla_charm_person","expr":{"Sum":[{"Const":10},{"Const":1},{"Var":"v85e3426d711a5403"}]},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"vd14da133edd87c72","declared_by":["ultimate_psionics:class:body_snatcher"],"contributions":[{"rule_id":"ultimate_psionics:class:body_snatcher","expr":{"ClassLevel":"body_snatcher"},"when":{"Compare":{"lhs":{"ClassLevel":"body_snatcher"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

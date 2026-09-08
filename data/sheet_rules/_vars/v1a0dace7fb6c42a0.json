@@ -1,0 +1,1 @@
+{"var":"v1a0dace7fb6c42a0","declared_by":["core_rulebook:class:assassin"],"contributions":[{"rule_id":"core_rulebook:class:assassin","expr":{"ClassLevel":"assassin"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:assassin","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

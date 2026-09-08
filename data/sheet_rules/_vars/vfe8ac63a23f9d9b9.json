@@ -1,0 +1,1 @@
+{"var":"vfe8ac63a23f9d9b9","declared_by":["ultimate_psionics:ability:dissonance_deafening_static"],"contributions":[{"rule_id":"ultimate_psionics:ability:dissonance_deafening_static","expr":{"Const":15},"when":"Always"},{"rule_id":"ultimate_psionics:ability:dissonance_psychic_whirlwind","expr":{"Const":15},"when":"Always"}],"provenance":{}}

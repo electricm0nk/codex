@@ -1,0 +1,1 @@
+{"var":"vf49d40abb1f88d91","declared_by":["advanced_class_guide:class_feature:arcanist_school_water_cold_blast"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:arcanist_school_water_cold_blast","expr":{"Const":-1},"when":{"Not":{"Compare":{"lhs":{"ClassLevel":"wizard"},"op":"Gte","rhs":{"Const":1}}}}}],"provenance":{}}

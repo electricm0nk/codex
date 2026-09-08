@@ -1,0 +1,1 @@
+{"var":"v6ee6fa46730b2a1f","declared_by":["advanced_class_guide:class_feature:warpriest_bonus_feat_combat_reflexes","core_rulebook:feat:combat_reflexes"],"contributions":[{"rule_id":"core_rulebook:feat:combat_reflexes","expr":{"AbilityMod":"Dex"},"when":"Always"}],"provenance":{}}

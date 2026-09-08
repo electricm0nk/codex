@@ -1,0 +1,1 @@
+{"var":"vd4c4466fe5e8be43","declared_by":["book_of_the_damned_volume_1:class_feature:diabolist_heresy"],"contributions":[{"rule_id":"book_of_the_damned_volume_1:class:diabolist","expr":{"ClassLevel":"diabolist"},"when":{"Compare":{"lhs":{"ClassLevel":"diabolist"},"op":"Gte","rhs":{"Const":3}}}}],"provenance":{}}

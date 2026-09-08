@@ -1,0 +1,1 @@
+{"var":"ve500459ad1ac3a2a","declared_by":["pathfinder_unchained:class_feature:unchained_rogue_talent_certainty"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:unchained_rogue_talent_certainty_display","expr":{"Div":[{"Var":"ve4704d6c844d69d3"},{"Const":5}]},"when":"Always"}],"provenance":{}}

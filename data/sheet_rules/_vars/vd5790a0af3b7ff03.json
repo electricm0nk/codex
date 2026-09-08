@@ -1,0 +1,1 @@
+{"var":"vd5790a0af3b7ff03","declared_by":["advanced_race_guide:class_feature:nimble_guardian_defensive_aid"],"contributions":[{"rule_id":"advanced_race_guide:class_feature:nimble_guardian_defensive_aid","expr":{"AbilityMod":"Wis"},"when":"Always"},{"rule_id":"advanced_race_guide:class_feature:nimble_guardian_defensive_mastery","expr":{"Const":3},"when":"Always"}],"provenance":{}}

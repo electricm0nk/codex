@@ -1,0 +1,1 @@
+{"var":"v23c0c959624a63c7","declared_by":["ultimate_psionics:class_feature:cryptic_disrupt_pattern"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:cryptic_disrupt_pattern","expr":{"Sum":[{"Const":1},{"Var":"v74703e5a59357d05"}]},"when":"Always"}],"provenance":{}}

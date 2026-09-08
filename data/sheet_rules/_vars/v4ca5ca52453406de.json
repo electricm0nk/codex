@@ -1,0 +1,1 @@
+{"var":"v4ca5ca52453406de","declared_by":["core_rulebook:class_feature:default"],"contributions":[{"rule_id":"core_rulebook:class_feature:equipment_heavy_armor_grants_gauntlet","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2749"]}}

@@ -1,0 +1,1 @@
+{"var":"v19b6ba0fc40ee500","declared_by":["ultimate_combat:class_feature:ninja_sneak_attack"],"contributions":[{"rule_id":"ultimate_combat:class_feature:ninja_trick_deadly_range","expr":{"Const":10},"when":"Always"},{"rule_id":"ultimate_combat:class_feature:ninja_sneak_attack","expr":{"Const":30},"when":"Always"}],"provenance":{}}

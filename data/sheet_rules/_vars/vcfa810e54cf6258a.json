@@ -1,0 +1,1 @@
+{"var":"vcfa810e54cf6258a","declared_by":["advanced_class_guide:class:swashbuckler"],"contributions":[{"rule_id":"advanced_class_guide:class:swashbuckler","expr":{"ClassLevel":"swashbuckler"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:swashbuckler","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

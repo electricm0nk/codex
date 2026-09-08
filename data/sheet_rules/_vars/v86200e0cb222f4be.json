@@ -1,0 +1,1 @@
+{"var":"v86200e0cb222f4be","declared_by":["advanced_class_guide:class_feature:slayer_talent_hard_to_fool"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:slayer_talent_hard_to_fool","expr":{"Sum":[{"Div":[{"Var":"vfcf5c8d0b1ceb89f"},{"Const":5}]},{"Const":1}]},"when":"Always"}],"provenance":{}}

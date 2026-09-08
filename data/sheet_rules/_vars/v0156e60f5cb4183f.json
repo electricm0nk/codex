@@ -1,0 +1,1 @@
+{"var":"v0156e60f5cb4183f","declared_by":["advanced_race_guide:feat:fearless_curiosity"],"contributions":[{"rule_id":"advanced_race_guide:feat:fearless_curiosity","expr":{"Const":1},"when":"Always"},{"rule_id":"advanced_race_guide:feat:intimidating_confidence","expr":{"Const":1},"when":"Always"}],"provenance":{}}

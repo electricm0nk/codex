@@ -1,0 +1,1 @@
+{"var":"v676cfa1d92514c92","declared_by":["core_rulebook:class_feature:monk_slow_fall"],"contributions":[{"rule_id":"advanced_class_guide:feat:slow_faller","expr":{"Const":10},"when":"Always"},{"rule_id":"core_rulebook:class_feature:monk_slow_fall","expr":{"Mul":[{"Floor":{"Div":[{"Var":"vcc4b23d768b34240"},{"Const":2}]}},{"Const":10}]},"when":"Always"}],"provenance":{}}

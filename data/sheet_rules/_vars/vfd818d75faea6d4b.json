@@ -1,0 +1,1 @@
+{"var":"vfd818d75faea6d4b","declared_by":["ultimate_psionics:class:wilder"],"contributions":[{"rule_id":"ultimate_psionics:class:wilder","expr":{"AbilityMod":"Cha"},"when":{"Compare":{"lhs":{"ClassLevel":"wilder"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

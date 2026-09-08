@@ -1,0 +1,1 @@
+{"var":"v4353ecada534d171","declared_by":["advanced_class_guide:class_feature:arcanist_exploit_ice_missile"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:arcanist_exploit_ice_missile","expr":{"Const":30},"when":"Always"},{"rule_id":"advanced_class_guide:class_feature:water_master_powerful_exploit","expr":{"Const":30},"when":"Always"}],"provenance":{}}

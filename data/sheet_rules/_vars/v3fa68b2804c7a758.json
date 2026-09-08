@@ -1,0 +1,1 @@
+{"var":"v3fa68b2804c7a758","declared_by":["ultimate_intrigue:class_feature:refined_education_intimidate"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:refined_education_intimidate","expr":{"Const":1},"when":{"Compare":{"lhs":{"ClassLevel":"rogue"},"op":"Gte","rhs":{"Const":4}}}}],"provenance":{}}

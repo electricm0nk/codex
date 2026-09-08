@@ -1,0 +1,1 @@
+{"var":"ve18a28df19325e68","declared_by":["ultimate_psionics:class_feature:wilder_power_points"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:bonus_pp_level_wilder","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_psionics:class_feature:wilder_power_points","expr":{"Var":"ve886abc64abba1e6"},"when":"Always"}],"provenance":{}}

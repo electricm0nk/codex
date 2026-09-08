@@ -1,0 +1,1 @@
+{"var":"v51cb0938bcc059ce","declared_by":["bestiary:monster_ability:ability_damage_ex","bestiary:monster_ability:ability_damage_su"],"contributions":[{"rule_id":"bestiary:monster_ability:ability_damage_ex","expr":{"Const":1},"when":"Always"},{"rule_id":"bestiary:monster_ability:ability_damage_su","expr":{"Const":1},"when":"Always"}],"provenance":{}}

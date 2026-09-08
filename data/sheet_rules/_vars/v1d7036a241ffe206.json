@@ -1,0 +1,1 @@
+{"var":"v1d7036a241ffe206","declared_by":["ultimate_psionics:class:psicrystal_imprinter"],"contributions":[{"rule_id":"ultimate_psionics:class:psicrystal_imprinter","expr":{"ClassLevel":"psicrystal_imprinter"},"when":{"Compare":{"lhs":{"ClassLevel":"psicrystal_imprinter"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

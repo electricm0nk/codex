@@ -1,0 +1,1 @@
+{"var":"v3f75882c6c7413a0","declared_by":["core_rulebook:class_feature:favored_enemy_outsider_lawful"],"contributions":[{"rule_id":"core_rulebook:class_feature:favored_enemy_bonus_outsider_lawful","expr":{"Const":2},"when":"Always"},{"rule_id":"core_rulebook:class_feature:favored_enemy_outsider_lawful","expr":{"Var":"v0f51f8dadef759dd"},"when":"Always"}],"provenance":{}}

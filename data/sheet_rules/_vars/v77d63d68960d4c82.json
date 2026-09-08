@@ -1,0 +1,1 @@
+{"var":"v77d63d68960d4c82","declared_by":["horror_adventures:ability:rules_use_sanity"],"contributions":[{"rule_id":"horror_adventures:ability:rules_use_sanity","expr":{"Max":[{"Max":[{"Max":[{"AbilityScore":"Cha"},{"AbilityScore":"Int"}]},{"AbilityScore":"Wis"}]},{"Const":0}]},"when":"Always"}],"provenance":{}}

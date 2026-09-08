@@ -1,0 +1,1 @@
+{"var":"v133b312915394ede","declared_by":["ultimate_psionics:class_feature:marksman_wind_reader"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:marksman_wind_reader","expr":{"Sum":[{"Const":3},{"Var":"v930186f5c783f324"}]},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst:380"]}}

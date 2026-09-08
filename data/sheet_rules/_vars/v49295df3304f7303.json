@@ -1,0 +1,1 @@
+{"var":"v49295df3304f7303","declared_by":["ultimate_psionics:class_feature:marksman_favored_weapon"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:marksman_favored_weapon","expr":{"Div":[{"Sum":[{"Var":"v930186f5c783f324"},{"Const":2}]},{"Const":4}]},"when":"Always"}],"provenance":{}}

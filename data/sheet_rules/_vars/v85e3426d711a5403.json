@@ -1,0 +1,1 @@
+{"var":"v85e3426d711a5403","declared_by":["core_rulebook:race_trait:racial_sla_charm_person"],"contributions":[{"rule_id":"core_rulebook:race_trait:racial_sla_charm_person","expr":{"AbilityMod":"Cha"},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{}}

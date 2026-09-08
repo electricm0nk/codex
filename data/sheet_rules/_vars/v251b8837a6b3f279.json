@@ -1,0 +1,1 @@
+{"var":"v251b8837a6b3f279","declared_by":["horror_adventures:class_feature:default","ultimate_combat:class_feature:merciful_healer_willing_healer"],"contributions":[{"rule_id":"ultimate_combat:class_feature:merciful_healer_willing_healer","expr":{"Const":1},"when":"Always"}],"provenance":{}}

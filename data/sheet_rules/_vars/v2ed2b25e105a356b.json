@@ -1,0 +1,1 @@
+{"var":"v2ed2b25e105a356b","declared_by":["core_rulebook:race_trait:racial_sla_commune","core_rulebook:race_trait:racial_sla_commune_week"],"contributions":[{"rule_id":"core_rulebook:race_trait:racial_sla_commune","expr":{"Const":5},"when":"Always"},{"rule_id":"core_rulebook:race_trait:racial_sla_commune_week","expr":{"Const":5},"when":"Always"}],"provenance":{}}

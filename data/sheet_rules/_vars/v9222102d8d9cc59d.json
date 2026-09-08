@@ -1,0 +1,1 @@
+{"var":"v9222102d8d9cc59d","declared_by":["advanced_class_guide:class_feature:warpriest_bonus_feat_touch_of_serenity","advanced_players_guide:feat:touch_of_serenity"],"contributions":[{"rule_id":"advanced_players_guide:feat:touch_of_serenity","expr":{"Min":[{"Const":1},{"Div":["Level",{"Const":4}]}]},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"vcb125295022f7de2","declared_by":["ultimate_psionics:class_feature:psychic_fist_power_points"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:bonus_pp_level_psychic_fist","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_psionics:class_feature:psychic_fist_power_points","expr":{"Var":"vcc41385488b7f697"},"when":"Always"}],"provenance":{}}

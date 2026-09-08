@@ -1,0 +1,1 @@
+{"var":"v7b298b65a6bc1dfa","declared_by":["advanced_players_guide:class:alchemist"],"contributions":[{"rule_id":"advanced_players_guide:class:alchemist","expr":{"ClassLevel":"alchemist"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:alchemist","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

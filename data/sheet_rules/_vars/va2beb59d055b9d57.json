@@ -1,0 +1,1 @@
+{"var":"va2beb59d055b9d57","declared_by":["core_rulebook:class:duelist"],"contributions":[{"rule_id":"core_rulebook:class:duelist","expr":{"ClassLevel":"duelist"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:duelist","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

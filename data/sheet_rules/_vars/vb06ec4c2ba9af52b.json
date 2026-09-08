@@ -1,0 +1,1 @@
+{"var":"vb06ec4c2ba9af52b","declared_by":["core_rulebook:class_feature:favored_terrain_plane"],"contributions":[{"rule_id":"core_rulebook:class_feature:favored_terrain_bonus_plane","expr":{"Const":2},"when":"Always"},{"rule_id":"core_rulebook:class_feature:favored_terrain_plane","expr":{"Var":"v1e13c64e82bbd06f"},"when":"Always"}],"provenance":{}}

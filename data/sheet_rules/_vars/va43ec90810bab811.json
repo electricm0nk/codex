@@ -1,0 +1,1 @@
+{"var":"va43ec90810bab811","declared_by":["ultimate_psionics:class_feature:marksman_combat_style"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:marksman_combat_style","expr":{"Div":[{"Var":"v930186f5c783f324"},{"Const":3}]},"when":"Always"}],"provenance":{}}

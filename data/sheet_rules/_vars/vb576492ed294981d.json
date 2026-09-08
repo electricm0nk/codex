@@ -1,0 +1,1 @@
+{"var":"vb576492ed294981d","declared_by":["monster_codex:class_feature:ghoul_bloodline_ghoulish_claws"],"contributions":[{"rule_id":"monster_codex:class_feature:ghoul_bloodline_ghoulish_claws","expr":{"Const":1},"when":{"Not":{"Holds":{"what":{"Race":"bestiary:monster:ghoul"},"count":1}}}}],"provenance":{}}

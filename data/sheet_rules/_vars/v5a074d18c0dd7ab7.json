@@ -1,0 +1,1 @@
+{"var":"v5a074d18c0dd7ab7","declared_by":["core_rulebook:class_feature:greater_shield_focus_qualify"],"contributions":[{"rule_id":"core_rulebook:class_feature:greater_shield_focus_qualify","expr":{"Const":1},"when":{"Compare":{"lhs":{"Var":"v02d6291514e48a32"},"op":"Gte","rhs":{"Const":8}}}}],"provenance":{}}

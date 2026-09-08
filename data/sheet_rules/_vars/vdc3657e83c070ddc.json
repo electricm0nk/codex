@@ -1,0 +1,1 @@
+{"var":"vdc3657e83c070ddc","declared_by":["pathfinder_unchained:feat:combat_stamina"],"contributions":[{"rule_id":"pathfinder_unchained:feat:combat_stamina","expr":{"Sum":["BaseAttack",{"AbilityMod":"Con"}]},"when":"Always"},{"rule_id":"pathfinder_unchained:feat:extra_stamina","expr":{"Const":3},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"vf99b87a6a299e07b","declared_by":["adventurers_guide:class_feature:mammoth_rider_rugged_steed"],"contributions":[{"rule_id":"adventurers_guide:class_feature:rugged_steed_companion","expr":{"Div":[{"Sum":[{"ClassLevel":"rugged_steed"},{"Const":-1}]},{"Const":2}]},"when":"Always"}],"provenance":{}}

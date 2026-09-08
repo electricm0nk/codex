@@ -1,0 +1,1 @@
+{"var":"v28f80e1edfd7e9b0","declared_by":["ultimate_wilderness:class_feature:default"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:leshy_warden_leshy_familiar","expr":{"Const":1},"bonus_type":{"name":"DruidDomain","mode":"Plain"},"when":"Always"}],"provenance":{}}

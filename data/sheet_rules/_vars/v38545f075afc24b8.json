@@ -1,0 +1,1 @@
+{"var":"v38545f075afc24b8","declared_by":["bestiary:monster_ability:frightful_presence"],"contributions":[{"rule_id":"bestiary:monster_ability:frightful_presence","expr":{"Sum":[{"Const":10},{"Div":["HitDice",{"Const":2}]},{"AbilityMod":"Cha"}]},"when":"Always"},{"rule_id":"bestiary_4:monster:argus","expr":{"Const":16},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v8120d26431e53d1a","declared_by":["ultimate_combat:class:samurai"],"contributions":[{"rule_id":"inner_sea_gods:ability:samurai","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"},{"rule_id":"ultimate_combat:class:samurai","expr":{"ClassLevel":"samurai"},"when":"Always"}],"provenance":{}}

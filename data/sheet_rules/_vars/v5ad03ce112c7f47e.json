@@ -1,0 +1,1 @@
+{"var":"v5ad03ce112c7f47e","declared_by":["bestiary_4:monster_ability:broken_soul_agonized_wail"],"contributions":[{"rule_id":"bestiary_4:monster_ability:broken_soul_agonized_wail","expr":{"Sum":[{"Const":10},{"Div":["Level",{"Const":2}]},{"AbilityMod":"Cha"}]},"when":"Always"}],"provenance":{}}

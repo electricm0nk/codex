@@ -1,0 +1,1 @@
+{"var":"v6ffc5f6f7aeca367","declared_by":["ultimate_psionics:class:psychic_warrior"],"contributions":[{"rule_id":"ultimate_psionics:class:psychic_warrior","expr":{"AbilityMod":"Wis"},"when":{"Compare":{"lhs":{"ClassLevel":"psychic_warrior"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v7308ff312cb0dc55","declared_by":["advanced_class_guide:class_feature:arcanist_school_earth_earth_supremacy"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:arcanist_school_earth_earth_supremacy","expr":{"Const":-1},"when":{"Not":{"Compare":{"lhs":{"ClassLevel":"wizard"},"op":"Gte","rhs":{"Const":1}}}}}],"provenance":{}}

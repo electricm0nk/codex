@@ -1,0 +1,1 @@
+{"var":"v7959cc7508e6fd44","declared_by":["core_rulebook:class_feature:favored_enemy_monstrous_humanoid"],"contributions":[{"rule_id":"core_rulebook:class_feature:favored_enemy_bonus_monstrous_humanoid","expr":{"Const":2},"when":"Always"},{"rule_id":"core_rulebook:class_feature:favored_enemy_monstrous_humanoid","expr":{"Var":"v0f51f8dadef759dd"},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"vb551c4c2f9807b6a","declared_by":["ultimate_magic:class_feature:witch_hex_prehensile_hair"],"contributions":[{"rule_id":"ultimate_magic:class_feature:witch_hex_prehensile_hair","expr":{"Div":[{"Var":"va94befd227a43b94"},{"Const":2}]},"when":"Always"}],"provenance":{}}

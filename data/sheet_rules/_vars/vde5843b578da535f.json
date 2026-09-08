@@ -1,0 +1,1 @@
+{"var":"vde5843b578da535f","declared_by":["core_rulebook:class_feature:bloodline_tracker"],"contributions":[{"rule_id":"ultimate_magic:class_feature:rakshasa_bloodline_feat_tracker","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:1719"]}}

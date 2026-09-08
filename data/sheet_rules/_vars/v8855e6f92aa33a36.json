@@ -1,0 +1,1 @@
+{"var":"v8855e6f92aa33a36","declared_by":["ultimate_psionics:class:metamorph"],"contributions":[{"rule_id":"ultimate_psionics:class:metamorph","expr":{"ClassLevel":"metamorph"},"when":{"Compare":{"lhs":{"ClassLevel":"metamorph"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

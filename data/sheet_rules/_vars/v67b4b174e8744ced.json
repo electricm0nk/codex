@@ -1,0 +1,1 @@
+{"var":"v67b4b174e8744ced","declared_by":["core_rulebook:race_trait:racial_sla_dancing_lights"],"contributions":[{"rule_id":"core_rulebook:race_trait:racial_sla_dancing_lights","expr":"Level","bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{}}

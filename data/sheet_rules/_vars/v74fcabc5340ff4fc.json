@@ -1,0 +1,1 @@
+{"var":"v74fcabc5340ff4fc","declared_by":["ultimate_wilderness:class_feature:wild_soul_nemesis"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:wild_soul_nemesis","expr":{"Sum":[{"Const":2},{"Min":[{"Const":4},{"Div":[{"Var":"veef07274d198a2be"},{"Const":5}]}]}]},"when":"Always"}],"provenance":{}}

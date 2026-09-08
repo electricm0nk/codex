@@ -1,0 +1,1 @@
+{"var":"v4f398f3bf838b29f","declared_by":["ultimate_psionics:class_feature:raging_beast_rage"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:raging_beast_rage","expr":{"Max":[{"Const":1},{"Floor":{"Div":[{"Var":"v8fe1800a0932db55"},{"Const":2}]}}]},"when":"Always"}],"provenance":{}}

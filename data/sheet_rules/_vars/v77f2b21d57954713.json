@@ -1,0 +1,1 @@
+{"var":"v77f2b21d57954713","declared_by":["mythic_adventures:feat:medusa_s_wrath"],"contributions":[{"rule_id":"mythic_adventures:feat:medusa_s_wrath","expr":{"Sum":[{"Const":10},{"Floor":{"Div":["Level",{"Const":2}]}},{"AbilityMod":"Wis"}]},"when":"Always"}],"provenance":{}}

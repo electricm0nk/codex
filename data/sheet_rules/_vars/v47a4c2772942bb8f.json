@@ -1,0 +1,1 @@
+{"var":"v47a4c2772942bb8f","declared_by":["core_rulebook:class:dragon_disciple"],"contributions":[{"rule_id":"core_rulebook:class:dragon_disciple","expr":{"ClassLevel":"dragon_disciple"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:dragon_disciple","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v66ee218841c1ebd5","declared_by":["advanced_class_guide:class:investigator"],"contributions":[{"rule_id":"advanced_class_guide:class:investigator","expr":{"ClassLevel":"investigator"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:investigator","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

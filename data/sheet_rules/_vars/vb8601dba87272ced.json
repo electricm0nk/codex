@@ -1,0 +1,1 @@
+{"var":"vb8601dba87272ced","declared_by":["core_rulebook:class:arcane_trickster"],"contributions":[{"rule_id":"core_rulebook:class:arcane_trickster","expr":{"ClassLevel":"arcane_trickster"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:arcane_trickster","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

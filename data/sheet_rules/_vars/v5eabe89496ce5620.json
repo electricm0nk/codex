@@ -1,0 +1,1 @@
+{"var":"v5eabe89496ce5620","declared_by":["ultimate_combat:class:gunslinger"],"contributions":[{"rule_id":"inner_sea_gods:ability:gunslinger","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"},{"rule_id":"ultimate_combat:class:gunslinger","expr":{"ClassLevel":"gunslinger"},"when":"Always"}],"provenance":{}}

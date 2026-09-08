@@ -1,0 +1,1 @@
+{"var":"v663cfd78b79f33dd","declared_by":["bestiary_2:race_trait:jet"],"contributions":[{"rule_id":"bestiary_2:monster:devilfish","expr":{"Const":240},"when":"Always"},{"rule_id":"bestiary_2:monster:grindylow","expr":{"Const":200},"when":"Always"}],"provenance":{}}

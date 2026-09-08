@@ -1,0 +1,1 @@
+{"var":"v504ff42c4ee1b910","declared_by":["ultimate_psionics:class_feature:vitalist_transfer_wounds"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:vitalist_transfer_wounds","expr":{"Div":[{"Sum":[{"Var":"v04fb403e65c7a751"},{"Const":2}]},{"Const":3}]},"when":"Always"}],"provenance":{}}

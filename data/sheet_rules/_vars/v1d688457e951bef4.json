@@ -1,0 +1,1 @@
+{"var":"v1d688457e951bef4","declared_by":["ultimate_psionics:monster_ability:xeph_burst"],"contributions":[{"rule_id":"ultimate_psionics:monster_ability:xeph_burst","expr":{"Const":0},"when":"Always"},{"rule_id":"ultimate_psionics:monster_ability:xeph_burst","expr":{"Const":1},"when":{"Situational":{"text":"when active"}}}],"provenance":{}}

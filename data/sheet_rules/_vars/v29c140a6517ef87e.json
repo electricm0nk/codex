@@ -1,0 +1,1 @@
+{"var":"v29c140a6517ef87e","declared_by":["bestiary:monster_ability:universal_monster_rule_stench"],"contributions":[{"rule_id":"monster_codex:class_feature:ghoul_bloodline_ghoulish_aspect","expr":{"Const":1},"when":"Always"}],"provenance":{}}

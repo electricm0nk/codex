@@ -1,0 +1,189 @@
+{
+  "records": 49438,
+  "converted": 47628,
+  "refused": 1810,
+  "rules_written": 66514,
+  "var_tables": 5081,
+  "by_kind": {
+    "ability": {
+      "records": 4337,
+      "converted": 4246,
+      "refused": 91
+    },
+    "class": {
+      "records": 185,
+      "converted": 3,
+      "refused": 182
+    },
+    "class_feature": {
+      "records": 18043,
+      "converted": 17683,
+      "refused": 360
+    },
+    "companion": {
+      "records": 1696,
+      "converted": 1682,
+      "refused": 14
+    },
+    "deity": {
+      "records": 459,
+      "converted": 458,
+      "refused": 1
+    },
+    "domain": {
+      "records": 183,
+      "converted": 183,
+      "refused": 0
+    },
+    "equipment": {
+      "records": 6223,
+      "converted": 6044,
+      "refused": 179
+    },
+    "equipment_modifier": {
+      "records": 1532,
+      "converted": 1504,
+      "refused": 28
+    },
+    "feat": {
+      "records": 2764,
+      "converted": 2030,
+      "refused": 734
+    },
+    "language": {
+      "records": 136,
+      "converted": 136,
+      "refused": 0
+    },
+    "monster": {
+      "records": 1270,
+      "converted": 1257,
+      "refused": 13
+    },
+    "monster_ability": {
+      "records": 3806,
+      "converted": 3795,
+      "refused": 11
+    },
+    "power": {
+      "records": 421,
+      "converted": 420,
+      "refused": 1
+    },
+    "race": {
+      "records": 95,
+      "converted": 68,
+      "refused": 27
+    },
+    "race_trait": {
+      "records": 2561,
+      "converted": 2431,
+      "refused": 130
+    },
+    "skill": {
+      "records": 149,
+      "converted": 141,
+      "refused": 8
+    },
+    "spell": {
+      "records": 2843,
+      "converted": 2829,
+      "refused": 14
+    },
+    "template": {
+      "records": 2248,
+      "converted": 2234,
+      "refused": 14
+    },
+    "trait": {
+      "records": 487,
+      "converted": 484,
+      "refused": 3
+    }
+  },
+  "refused_by_token_type": {
+    "ADD (CLASSSKILLS)": 1,
+    "ASPECT\u003a<malformed sub-key>": 1,
+    "BONUS (shape)": 3,
+    "BONUS\u003aEQM": 13,
+    "BONUS\u003aEQMWEAPON": 1,
+    "BONUS\u003aITEMCOST": 10,
+    "BONUS\u003aLOADMULT": 2,
+    "BONUS\u003aSITUATION (target shape)": 12,
+    "BONUS\u003aSTAT (target )": 1,
+    "BONUS\u003aSTAT (target BASESPELLKNOWNSTAT;Class)": 7,
+    "BONUS\u003aSTAT (target BASESPELLSTAT)": 2,
+    "BONUS\u003aSTAT (target BASESPELLSTAT;CLASS)": 2,
+    "BONUS\u003aSTAT (target BASESPELLSTAT;Class)": 7,
+    "BONUS\u003a[redacted PI]": 62,
+    "DEFINE (PI-redacted token)": 40,
+    "FORMULA\u003aCL-no-owner": 16,
+    "FORMULA\u003aidentifier DEFINEd nowhere (BeastmophLVL inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (Bloodrager_CF_BloodlinePowers inside a function or under * /)": 12,
+    "FORMULA\u003aidentifier DEFINEd nowhere (Bloodrager_CF_BloodlineSpells inside a function or under * /)": 11,
+    "FORMULA\u003aidentifier DEFINEd nowhere (Cavalier inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (CharmLVL inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (ClecricLVL inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (FigherLVL inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (Gunslinger inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (HP inside a function or under * /)": 8,
+    "FORMULA\u003aidentifier DEFINEd nowhere (Inquisitor inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (MarskmanStyleLVL inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (MonateryFame inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (OccultistNecromanticFocus inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (PrometheanManifestation inside a function or under * /)": 2,
+    "FORMULA\u003aidentifier DEFINEd nowhere (PsychicWarriorPL inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (RACIALHDSIZE inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (SightedSeekeerPLStatScore inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (SneakAttack inside a function or under * /)": 1,
+    "FORMULA\u003aidentifier DEFINEd nowhere (Sorcerer inside a function or under * /)": 1,
+    "FORMULA\u003amalformed (parser refusals)": 87,
+    "FORMULA\u003amalformed (parser refusals) (empty)": 2,
+    "FORMULA\u003avar(<export token>) (ACCHECK\u003a equipment/encumbrance state)": 6,
+    "FORMULA\u003avar(<export token>) (ENCUMBERANCE\u003a equipment/encumbrance state)": 23,
+    "FORMULA\u003avar(<export token>) (ENCUMBRANCE\u003a equipment/encumbrance state)": 3,
+    "FORMULA\u003avar(<export token>) (MOVEBASE\u003a equipment/encumbrance state)": 6,
+    "FORMULA\u003avar(<export token>) (SPELLFAILURE\u003a equipment/encumbrance state)": 1,
+    "FORMULA\u003avar(AC)": 11,
+    "FORMULA\u003avar(ARMOR)": 2,
+    "FORMULA\u003avar(COUNT)": 211,
+    "FORMULA\u003avar(HD)": 1,
+    "FORMULA\u003avar(HP)": 1,
+    "FORMULA\u003avar(MOVE)": 2,
+    "FORMULA\u003avar(SKILL.<name>.MISC)": 20,
+    "FORMULA\u003avar(SKILLRANK)": 1,
+    "FORMULA\u003avar(SPELLFAILURE)": 5,
+    "FORMULA\u003avar(STAT)": 8,
+    "FORMULA\u003avar(WinterWitchLVL)": 1,
+    "HITDIE (\u0025-step\u003a \u0025+1, \u0025/4)": 8,
+    "NATURALATTACKS (die shape)": 7,
+    "SIZE (formula)": 1,
+    "SPELLS (PI-redacted token)": 78,
+    "no_corpus_record": 829,
+    "no_source_row": 8,
+    "unmapped\u003aALTTYPE": 49,
+    "unmapped\u003aARMORTYPE": 15,
+    "unmapped\u003aBONUSSPELLSTAT": 4,
+    "unmapped\u003aDOMAIN": 4,
+    "unmapped\u003aGLOBALVAR\u003aABILITY": 9,
+    "unmapped\u003aGROUP": 1,
+    "unmapped\u003aITEMCREATE": 3,
+    "unmapped\u003aKNOWNSPELLS": 14,
+    "unmapped\u003aMEMORIZE": 38,
+    "unmapped\u003aMODTOSKILLS": 41,
+    "unmapped\u003aMONCCSKILL": 2,
+    "unmapped\u003aNUMPAGES": 16,
+    "unmapped\u003aPAGEUSAGE": 5,
+    "unmapped\u003aPRESPELLSCHOOL": 3,
+    "unmapped\u003aPRESPELLSCHOOLSUB": 1,
+    "unmapped\u003aPROHIBITSPELL": 1,
+    "unmapped\u003aSLOTS": 95,
+    "unmapped\u003aSPELLBOOK": 9,
+    "unmapped\u003aSPELLLIST": 19,
+    "unmapped\u003aSPELLSTAT": 49,
+    "unmapped\u003aSTARTSKILLPTS": 162,
+    "unmapped\u003a[redacted PI]": 4
+  },
+  "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6",
+  "converter_version": "sheet_rule_convert/0.15.0"
+}

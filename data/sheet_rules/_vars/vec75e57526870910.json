@@ -1,0 +1,1 @@
+{"var":"vec75e57526870910","declared_by":["advanced_class_guide:class_feature:slayer_track_bonus"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:slayer_track_bonus","expr":{"Max":[{"Div":[{"Var":"v0cb90c787e5cf819"},{"Const":2}]},{"Const":1}]},"when":"Always"}],"provenance":{}}

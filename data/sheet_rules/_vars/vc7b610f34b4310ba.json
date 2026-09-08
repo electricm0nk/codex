@@ -1,0 +1,1 @@
+{"var":"vc7b610f34b4310ba","declared_by":["advanced_class_guide:class_feature:warpriest_bonus_feat_punishing_kick","advanced_players_guide:feat:punishing_kick"],"contributions":[{"rule_id":"advanced_players_guide:feat:punishing_kick","expr":{"Sum":[{"Const":10},{"Div":["Level",{"Const":2}]},{"AbilityMod":"Wis"}]},"when":"Always"}],"provenance":{}}

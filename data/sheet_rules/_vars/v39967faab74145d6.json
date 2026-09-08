@@ -1,0 +1,1 @@
+{"var":"v39967faab74145d6","declared_by":["ultimate_intrigue:class_feature:refined_education_swim"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:refined_education_swim","expr":{"Const":1},"when":{"Compare":{"lhs":{"ClassLevel":"rogue"},"op":"Gte","rhs":{"Const":4}}}}],"provenance":{}}

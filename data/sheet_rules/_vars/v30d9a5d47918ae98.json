@@ -1,0 +1,1 @@
+{"var":"v30d9a5d47918ae98","declared_by":["ultimate_magic:companion:evolution_major_lesser_restoration_1"],"contributions":[{"rule_id":"ultimate_magic:companion:evolution_major_lesser_restoration_1","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_magic:companion:evolution_major_lesser_restoration_3","expr":{"Const":2},"when":"Always"}],"provenance":{}}

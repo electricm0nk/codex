@@ -1,0 +1,1 @@
+{"var":"vb61c4791f9981fd4","declared_by":["advanced_class_guide:class_feature:arcanist_school_earth_acid_cloud"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:arcanist_school_earth_acid_cloud","expr":{"Const":-1},"when":{"Not":{"Compare":{"lhs":{"ClassLevel":"wizard"},"op":"Gte","rhs":{"Const":1}}}}}],"provenance":{}}

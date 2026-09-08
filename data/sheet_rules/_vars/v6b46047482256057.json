@@ -1,0 +1,1 @@
+{"var":"v6b46047482256057","declared_by":["core_rulebook:class_feature:default"],"contributions":[{"rule_id":"core_rulebook:template:ability_damaged_wisdom","expr":{"Choice":"core_rulebook:template:ability_damaged_wisdom"},"when":{"Situational":{"text":"when active"}}}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst:921"]}}

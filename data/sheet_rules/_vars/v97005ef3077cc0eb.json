@@ -1,0 +1,1 @@
+{"var":"v97005ef3077cc0eb","declared_by":["ultimate_psionics:class:psychic_fist"],"contributions":[{"rule_id":"ultimate_psionics:class:psychic_fist","expr":{"ClassLevel":"psychic_fist"},"when":{"Compare":{"lhs":{"ClassLevel":"psychic_fist"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

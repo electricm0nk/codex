@@ -1,0 +1,1 @@
+{"var":"v725132b7f4b720fd","declared_by":["ultimate_psionics:class:wilder"],"contributions":[{"rule_id":"ultimate_psionics:class:wilder","expr":{"ClassLevel":"wilder"},"when":{"Compare":{"lhs":{"ClassLevel":"wilder"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

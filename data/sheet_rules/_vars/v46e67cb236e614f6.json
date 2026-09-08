@@ -1,0 +1,1 @@
+{"var":"v46e67cb236e614f6","declared_by":["ultimate_psionics:class_feature:thrallherd_thrallherd"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:thrallherd_thrallherd","expr":{"Sum":["Level",{"Var":"v290ec4eb8d061568"},{"Var":"v6b2934f339ead01b"}]},"when":"Always"}],"provenance":{}}

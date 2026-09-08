@@ -1,0 +1,1 @@
+{"var":"v0e0cc33ab7eb3bba","declared_by":["ultimate_combat:class_feature:terrain_mastery_5"],"contributions":[{"rule_id":"ultimate_combat:class_feature:terrain_mastery_5","expr":{"Sum":[{"Mul":[{"Var":"v6b5ea8b72478b6a3"},{"Const":2}]},{"Const":-10}]},"when":"Always"}],"provenance":{}}

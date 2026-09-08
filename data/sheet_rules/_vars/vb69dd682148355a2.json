@@ -1,0 +1,1 @@
+{"var":"vb69dd682148355a2","declared_by":["pathfinder_unchained:class_feature:unchained_rage_power_guarded_stance"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:unchained_rage_power_guarded_stance","expr":{"Sum":[{"Const":1},{"Floor":{"Div":[{"Var":"v81feb433e02a1864"},{"Const":4}]}}]},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v01e6d08e75750e09","declared_by":["advanced_class_guide:class_feature:brawler_unarmed_damage"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:brawler_unarmed_damage","expr":{"Min":[{"Const":5},{"Div":[{"Var":"v003063b34d2344b8"},{"Const":4}]}]},"when":"Always"}],"provenance":{}}

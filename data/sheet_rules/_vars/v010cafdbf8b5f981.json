@@ -1,0 +1,1 @@
+{"var":"v010cafdbf8b5f981","declared_by":["advanced_class_guide:class_feature:warpriest_bonus_feat_deadly_aim","core_rulebook:feat:deadly_aim"],"contributions":[{"rule_id":"core_rulebook:feat:deadly_aim","expr":{"Sum":[{"Floor":{"Div":["BaseAttack",{"Const":4}]}},{"Const":1}]},"when":"Always"}],"provenance":{}}

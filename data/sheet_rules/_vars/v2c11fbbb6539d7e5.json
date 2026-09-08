@@ -1,0 +1,1 @@
+{"var":"v2c11fbbb6539d7e5","declared_by":["advanced_players_guide:class:nature_warden"],"contributions":[{"rule_id":"advanced_players_guide:class:nature_warden","expr":{"ClassLevel":"nature_warden"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:nature_warden","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

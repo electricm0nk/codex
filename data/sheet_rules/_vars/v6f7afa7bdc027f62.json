@@ -1,0 +1,1 @@
+{"var":"v6f7afa7bdc027f62","declared_by":["core_rulebook:class:eldritch_knight"],"contributions":[{"rule_id":"core_rulebook:class:eldritch_knight","expr":{"ClassLevel":"eldritch_knight"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:eldritch_knight","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

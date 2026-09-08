@@ -35,6 +35,7 @@ pub mod race_resolver;
 pub mod racial_sla;
 pub mod rules_tables;
 pub mod shape_b_v1;
+pub mod sheet_rule;
 pub mod size;
 pub mod skill_allocation;
 pub mod skinwalker_change_shape;

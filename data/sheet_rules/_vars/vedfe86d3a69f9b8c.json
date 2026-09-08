@@ -1,0 +1,1 @@
+{"var":"vedfe86d3a69f9b8c","declared_by":["core_rulebook:class_feature:default"],"contributions":[{"rule_id":"core_rulebook:class_feature:default","expr":{"Const":1},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst:11"]}}

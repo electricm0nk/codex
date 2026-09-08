@@ -1,0 +1,1 @@
+{"var":"v358a4e9a8b2a8337","declared_by":["occult_adventures:class_feature:mesmerist_mesmerist_tricks"],"contributions":[{"rule_id":"occult_adventures:class_feature:mesmerist_mesmerist_tricks","expr":{"Sum":[{"Const":100},{"Mul":[{"Var":"v8c08cc9cf086c185"},{"Const":10}]}]},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v68b223b46c050603","declared_by":["advanced_players_guide:class_feature:favored_terrain_plane_air"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:favored_terrain_bonus_air","expr":{"Const":2},"when":"Always"},{"rule_id":"advanced_players_guide:class_feature:favored_terrain_plane_air","expr":{"Var":"vf370cff462a8cb48"},"when":"Always"}],"provenance":{}}

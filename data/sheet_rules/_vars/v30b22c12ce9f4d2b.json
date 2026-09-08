@@ -1,0 +1,1 @@
+{"var":"v30b22c12ce9f4d2b","declared_by":["core_rulebook:class_feature:bloodline_tracker"],"contributions":[{"rule_id":"core_rulebook:class_feature:bloodline_feat_tracker_abyssal","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:1747"]}}

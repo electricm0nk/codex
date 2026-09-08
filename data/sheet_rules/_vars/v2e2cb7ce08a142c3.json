@@ -1,0 +1,1 @@
+{"var":"v2e2cb7ce08a142c3","declared_by":["book_of_the_damned_volume_1:monster_ability:apostate_devil_evangelization"],"contributions":[{"rule_id":"book_of_the_damned_volume_1:monster_ability:apostate_devil_evangelization","expr":{"Sum":[{"Const":10},{"Div":["Level",{"Const":2}]},{"AbilityMod":"Cha"}]},"when":"Always"}],"provenance":{}}

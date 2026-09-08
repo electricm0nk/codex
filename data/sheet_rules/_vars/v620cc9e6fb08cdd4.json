@@ -1,0 +1,1 @@
+{"var":"v620cc9e6fb08cdd4","declared_by":["horror_adventures:ability:vampirism_manifestation_level"],"contributions":[{"rule_id":"horror_adventures:ability:vampirism_manifestation_level","expr":{"Choice":"horror_adventures:ability:vampirism_manifestation_level"},"when":{"Situational":{"text":"when active"}}}],"provenance":{}}

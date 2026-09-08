@@ -1,0 +1,1 @@
+{"var":"v12e5ad94bfd569ab","declared_by":["core_rulebook:class_feature:default"],"contributions":[{"rule_id":"core_rulebook:class_feature:default","expr":{"AbilityMod":"Cha"},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst:694"]}}

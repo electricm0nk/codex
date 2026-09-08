@@ -1,0 +1,1 @@
+{"var":"v4270eba7354427da","declared_by":["core_rulebook:class:fighter"],"contributions":[{"rule_id":"core_rulebook:class:fighter","expr":{"ClassLevel":"fighter"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:fighter","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"vdff7d4de88ea635e","declared_by":["ultimate_intrigue:class_feature:refined_education_spellcraft"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:refined_education_spellcraft","expr":{"Const":1},"when":{"Compare":{"lhs":{"ClassLevel":"rogue"},"op":"Gte","rhs":{"Const":4}}}}],"provenance":{}}

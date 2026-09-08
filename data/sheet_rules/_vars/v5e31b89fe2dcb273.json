@@ -1,0 +1,1 @@
+{"var":"v5e31b89fe2dcb273","declared_by":["advanced_class_guide:class_feature:arcanist_exploit_flame_arc"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:arcanist_exploit_flame_arc","expr":{"Const":30},"when":"Always"},{"rule_id":"advanced_class_guide:class_feature:fire_master_powerful_exploit","expr":{"Const":30},"when":"Always"}],"provenance":{}}

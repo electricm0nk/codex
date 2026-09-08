@@ -1,0 +1,1 @@
+{"var":"v0fb916eaa7407f1a","declared_by":["core_rulebook:ability:pass_without_trace"],"contributions":[{"rule_id":"core_rulebook:ability:pass_without_trace","expr":{"Var":"v0c118c00f85170a7"},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst:763"]}}

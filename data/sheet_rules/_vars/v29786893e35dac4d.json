@@ -1,0 +1,1 @@
+{"var":"v29786893e35dac4d","declared_by":["ultimate_psionics:class_feature:mind_knight_trance"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:mind_knight_trance","expr":{"Div":[{"Sum":[{"Var":"vd5bc6e26821bd55a"},{"Const":1}]},{"Const":4}]},"when":"Always"}],"provenance":{}}

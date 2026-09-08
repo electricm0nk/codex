@@ -1,0 +1,1 @@
+{"var":"v33dc7e3fcc013f5c","declared_by":["ultimate_psionics:class:metamind"],"contributions":[{"rule_id":"ultimate_psionics:class:metamind","expr":{"ClassLevel":"metamind"},"when":{"Compare":{"lhs":{"ClassLevel":"metamind"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

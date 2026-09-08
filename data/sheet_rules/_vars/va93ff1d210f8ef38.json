@@ -1,0 +1,1 @@
+{"var":"va93ff1d210f8ef38","declared_by":["ultimate_intrigue:class_feature:favored_enemy_organization"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:favored_enemy_bonus_organization","expr":{"Const":2},"when":"Always"},{"rule_id":"ultimate_intrigue:class_feature:favored_enemy_organization","expr":{"Var":"v0f51f8dadef759dd"},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v4208f82a21836a65","declared_by":["ultimate_psionics:monster_ability:maenad_outburst"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:disciple_of_the_raging_sea_unyielding_anger","expr":{"Const":2},"when":"Always"},{"rule_id":"ultimate_psionics:monster_ability:maenad_outburst","expr":{"Const":2},"when":"Always"}],"provenance":{}}

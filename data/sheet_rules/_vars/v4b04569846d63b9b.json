@@ -1,0 +1,1 @@
+{"var":"v4b04569846d63b9b","declared_by":["ultimate_psionics:feat:surging_aura"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:leader_s_surge_shared_euphoria","expr":{"Mul":[{"Const":5},{"Var":"v1497de87b10db705"}]},"when":"Always"},{"rule_id":"ultimate_psionics:feat:surging_aura","expr":{"Const":10},"when":"Always"}],"provenance":{}}

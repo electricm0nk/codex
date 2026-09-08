@@ -1,0 +1,1 @@
+{"var":"vbf78d83b6bd0faeb","declared_by":["ultimate_magic:companion:evolution_minor_magic_missile_1"],"contributions":[{"rule_id":"ultimate_magic:companion:evolution_minor_magic_missile_1","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_magic:companion:evolution_minor_magic_missile_3","expr":{"Const":2},"when":"Always"}],"provenance":{}}

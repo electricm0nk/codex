@@ -1,0 +1,1 @@
+{"var":"vaf53e24cf7e9bc71","declared_by":[],"contributions":[{"rule_id":"ultimate_combat:class_feature:titan_mauler_massive_weapons","expr":{"Min":[{"Const":0},{"Sum":[{"Div":[{"Var":"v8fe1800a0932db55"},{"Const":3}]},{"Const":-4}]}]},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr__stats.lst:4"]}}

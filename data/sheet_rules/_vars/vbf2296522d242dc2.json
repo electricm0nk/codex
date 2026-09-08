@@ -1,0 +1,1 @@
+{"var":"vbf2296522d242dc2","declared_by":["advanced_players_guide:class_feature:alchemist_discovery"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:alchemist_discovery","expr":{"Sum":[{"Const":10},{"Div":[{"Var":"v7b298b65a6bc1dfa"},{"Const":2}]},{"AbilityMod":"Int"}]},"when":"Always"}],"provenance":{}}

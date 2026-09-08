@@ -1,0 +1,1 @@
+{"var":"v081c8f194ff6cd8a","declared_by":["ultimate_magic:companion:giant_slug_companion_spit_acid"],"contributions":[{"rule_id":"ultimate_magic:companion:companion_advancement_slug_giant","expr":{"Const":2},"when":"Always"},{"rule_id":"ultimate_magic:companion:giant_slug_companion_spit_acid","expr":{"Const":6},"when":"Always"}],"provenance":{}}

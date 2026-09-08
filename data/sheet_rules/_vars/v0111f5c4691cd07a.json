@@ -1,0 +1,1 @@
+{"var":"v0111f5c4691cd07a","declared_by":["ultimate_psionics:class:cryptic"],"contributions":[{"rule_id":"ultimate_psionics:class:cryptic","expr":{"AbilityMod":"Int"},"when":{"Compare":{"lhs":{"ClassLevel":"cryptic"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

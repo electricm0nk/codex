@@ -1,0 +1,1 @@
+{"var":"v5c494c6c13e96f38","declared_by":["ultimate_magic:class_feature:preacher_determination"],"contributions":[{"rule_id":"ultimate_magic:class_feature:extra_determination_use","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_magic:class_feature:preacher_determination","expr":{"Const":1},"when":"Always"}],"provenance":{}}

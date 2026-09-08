@@ -1,0 +1,1 @@
+{"var":"vb3cce9986fb1f161","declared_by":["core_rulebook:class_feature:loremaster_secret_lore"],"contributions":[{"rule_id":"core_rulebook:class_feature:loremaster_secret_lore","expr":{"Sum":[{"Var":"vbda4fcb724fb21d3"},{"AbilityMod":"Int"}]},"when":"Always"}],"provenance":{}}

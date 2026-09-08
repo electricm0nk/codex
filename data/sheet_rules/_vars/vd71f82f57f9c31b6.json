@@ -1,0 +1,1 @@
+{"var":"vd71f82f57f9c31b6","declared_by":["inner_sea_bestiary:race_trait:resistance_to_mind_affecting"],"contributions":[{"rule_id":"inner_sea_bestiary:template:mana_wastes_mutant","expr":{"Const":4},"when":"Always"}],"provenance":{}}

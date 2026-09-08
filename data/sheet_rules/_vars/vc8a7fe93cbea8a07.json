@@ -1,0 +1,1 @@
+{"var":"vc8a7fe93cbea8a07","declared_by":["ultimate_psionics:class:soul_archer"],"contributions":[{"rule_id":"ultimate_psionics:class:soul_archer","expr":{"ClassLevel":"soul_archer"},"when":{"Compare":{"lhs":{"ClassLevel":"soul_archer"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

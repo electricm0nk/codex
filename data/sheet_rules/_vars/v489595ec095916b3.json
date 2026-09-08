@@ -1,0 +1,1 @@
+{"var":"v489595ec095916b3","declared_by":["core_rulebook:class_feature:paladin_mercy"],"contributions":[{"rule_id":"core_rulebook:class_feature:paladin_mercy","expr":{"Var":"v75e0a3acc8b517a3"},"when":"Always"},{"rule_id":"occult_adventures:class_feature:psychic_discipline_pain_live_on","expr":{"Sum":[{"Var":"va5640d0c657c24c7"},{"Const":-3}]},"when":"Always"}],"provenance":{}}

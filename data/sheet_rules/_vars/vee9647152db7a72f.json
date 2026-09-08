@@ -1,0 +1,1 @@
+{"var":"vee9647152db7a72f","declared_by":["ultimate_psionics:class:aegis"],"contributions":[{"rule_id":"ultimate_psionics:class:aegis","expr":{"Mul":[{"Min":[{"Const":1},{"Max":[{"Const":0},{"Sum":[{"ClassLevel":"aegis"},{"Const":-1},{"Const":1}]}]}]},{"AbilityMod":"Int"}]},"when":{"Compare":{"lhs":{"ClassLevel":"aegis"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

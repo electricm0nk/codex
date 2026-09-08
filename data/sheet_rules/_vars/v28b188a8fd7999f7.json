@@ -1,0 +1,1 @@
+{"var":"v28b188a8fd7999f7","declared_by":["ultimate_intrigue:class_feature:refined_education_disguise"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:refined_education_disguise","expr":{"Const":1},"when":{"Compare":{"lhs":{"ClassLevel":"rogue"},"op":"Gte","rhs":{"Const":4}}}}],"provenance":{}}

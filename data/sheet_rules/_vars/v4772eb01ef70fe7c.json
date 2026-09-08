@@ -1,0 +1,1 @@
+{"var":"v4772eb01ef70fe7c","declared_by":["bestiary_4:monster_ability:fortification"],"contributions":[{"rule_id":"bestiary_4:monster_ability:fortification","expr":{"Const":50},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst:8"]}}

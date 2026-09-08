@@ -1,0 +1,1 @@
+{"var":"v92fd06113d454d82","declared_by":["advanced_players_guide:class:cavalier"],"contributions":[{"rule_id":"advanced_players_guide:class:cavalier","expr":{"ClassLevel":"cavalier"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:cavalier","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}

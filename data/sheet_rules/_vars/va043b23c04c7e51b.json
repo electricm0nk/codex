@@ -1,0 +1,1 @@
+{"var":"va043b23c04c7e51b","declared_by":["ultimate_intrigue:class_feature:refined_education_ride"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:refined_education_ride","expr":{"Const":1},"when":{"Compare":{"lhs":{"ClassLevel":"rogue"},"op":"Gte","rhs":{"Const":4}}}}],"provenance":{}}

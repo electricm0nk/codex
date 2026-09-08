@@ -1,0 +1,1 @@
+{"var":"v1573c660502aca8d","declared_by":["ultimate_intrigue:class_feature:refined_education_linguistics"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:refined_education_linguistics","expr":{"Const":1},"when":{"Compare":{"lhs":{"ClassLevel":"rogue"},"op":"Gte","rhs":{"Const":4}}}}],"provenance":{}}

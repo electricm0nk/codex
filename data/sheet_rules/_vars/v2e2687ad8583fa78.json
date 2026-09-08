@@ -1,0 +1,1 @@
+{"var":"v2e2687ad8583fa78","declared_by":["ultimate_psionics:class:sighted_seeker"],"contributions":[{"rule_id":"ultimate_psionics:class:sighted_seeker","expr":{"ClassLevel":"sighted_seeker"},"when":{"Compare":{"lhs":{"ClassLevel":"sighted_seeker"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

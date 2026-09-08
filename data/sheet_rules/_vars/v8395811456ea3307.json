@@ -1,0 +1,1 @@
+{"var":"v8395811456ea3307","declared_by":["adventurers_guide:ability:student_of_perfection_ki_powers"],"contributions":[{"rule_id":"adventurers_guide:ability:student_of_perfection_ki_powers","expr":{"Sum":[{"Const":10},{"Var":"v3a36eb5b11dfc6cc"},{"AbilityMod":"Wis"}]},"when":"Always"}],"provenance":{}}

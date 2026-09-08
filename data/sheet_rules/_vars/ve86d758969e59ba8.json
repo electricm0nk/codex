@@ -1,0 +1,1 @@
+{"var":"ve86d758969e59ba8","declared_by":["adventurers_guide:class_feature:death_slayer_channel_energy"],"contributions":[{"rule_id":"adventurers_guide:class_feature:death_slayer_channel_energy","expr":{"Sum":[{"Const":3},{"AbilityMod":"Cha"}]},"when":"Always"},{"rule_id":"adventurers_guide:ability:death_slayer_extra_channel","expr":{"Const":2},"when":"Always"}],"provenance":{}}

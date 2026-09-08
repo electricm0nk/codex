@@ -1,0 +1,1 @@
+{"var":"vf16890934e27bf13","declared_by":["ultimate_psionics:class_feature:cryptic_altered_defense"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:cryptic_altered_defense","expr":{"Floor":{"Div":[{"Sum":[{"Var":"v7fe770402a7a3b26"},{"Const":3}]},{"Const":4}]}},"when":"Always"}],"provenance":{}}

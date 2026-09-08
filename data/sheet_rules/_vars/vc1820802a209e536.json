@@ -1,0 +1,1 @@
+{"var":"vc1820802a209e536","declared_by":["ultimate_psionics:class_feature:blasting_wilder_wild_surge","ultimate_psionics:class_feature:wilder_wild_surge"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:wilder_wild_surge","expr":{"Sum":[{"Const":1},{"Div":[{"Sum":[{"Var":"ve0de720b96c5a5b9"},{"Const":1}]},{"Const":4}]}]},"when":"Always"}],"provenance":{}}

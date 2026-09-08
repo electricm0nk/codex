@@ -1,0 +1,1 @@
+{"var":"v027e43a2dddfa8a4","declared_by":["inner_sea_combat:feat:monstrous_mount"],"contributions":[{"rule_id":"inner_sea_combat:class_feature:hippogriff_companion_tracker","expr":{"Const":1},"when":"Always"}],"provenance":{}}

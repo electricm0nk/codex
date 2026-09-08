@@ -1,0 +1,1 @@
+{"var":"vdbd847ca057928aa","declared_by":["ultimate_magic:companion:evolution_bm_mage_hand_1"],"contributions":[{"rule_id":"ultimate_magic:companion:evolution_bm_mage_hand_1","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_magic:companion:evolution_bm_mage_hand_3","expr":{"Const":2},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v290ec4eb8d061568","declared_by":["ultimate_psionics:class:thrallherd"],"contributions":[{"rule_id":"ultimate_psionics:class:thrallherd","expr":{"AbilityMod":"Cha"},"when":{"Compare":{"lhs":{"ClassLevel":"thrallherd"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

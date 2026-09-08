@@ -1,0 +1,1 @@
+{"var":"vdf8d1403d6cefe95","declared_by":["core_rulebook:ability:goodberry"],"contributions":[{"rule_id":"core_rulebook:ability:goodberry","expr":{"Sum":[{"Const":10},{"Var":"v258aa5ef2b6aa98e"},{"Var":"v6e23d9260e47a5d4"}]},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst:753"]}}

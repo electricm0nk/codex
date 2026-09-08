@@ -1,0 +1,1 @@
+{"var":"v31adefbbf76bc78d","declared_by":["ultimate_magic:companion:evolution_minor_burning_hands_1"],"contributions":[{"rule_id":"ultimate_magic:companion:evolution_minor_burning_hands_1","expr":{"Const":1},"when":"Always"},{"rule_id":"ultimate_magic:companion:evolution_minor_burning_hands_3","expr":{"Const":2},"when":"Always"}],"provenance":{}}

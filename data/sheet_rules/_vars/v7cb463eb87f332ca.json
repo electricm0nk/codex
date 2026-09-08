@@ -1,0 +1,1 @@
+{"var":"v7cb463eb87f332ca","declared_by":["horror_adventures:ability:lycanthropy_manifestation_level"],"contributions":[{"rule_id":"horror_adventures:ability:lycanthropy_manifestation_level","expr":{"Choice":"horror_adventures:ability:lycanthropy_manifestation_level"},"when":{"Situational":{"text":"when active"}}}],"provenance":{}}

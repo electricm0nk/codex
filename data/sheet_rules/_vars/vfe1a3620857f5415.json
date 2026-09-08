@@ -1,0 +1,1 @@
+{"var":"vfe1a3620857f5415","declared_by":["ultimate_magic:class_feature:ranger_trap_fire_trap","ultimate_psionics:class_feature:cryptic_ranger_trap_fire_trap"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:cryptic_ranger_trap_fire_trap","expr":{"Floor":{"Div":[{"Var":"v9bf63df2cf1e72bc"},{"Const":2}]}},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"vf8f79fa9936dd23b","declared_by":["ultimate_intrigue:class_feature:sentinel_sense_intruder"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:sentinel_style_feat_improved_sense_intruder","expr":{"Const":10},"when":"Always"},{"rule_id":"ultimate_intrigue:class_feature:sentinel_sense_intruder","expr":{"Const":20},"when":"Always"}],"provenance":{}}

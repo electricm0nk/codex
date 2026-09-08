@@ -1,0 +1,1 @@
+{"var":"v61d994cd95065059","declared_by":["core_rulebook:class:sorcerer"],"contributions":[{"rule_id":"core_rulebook:class:sorcerer","expr":{"ClassLevel":"sorcerer"},"when":"Always"},{"rule_id":"inner_sea_gods:ability:sorcerer","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"}],"provenance":{}}
