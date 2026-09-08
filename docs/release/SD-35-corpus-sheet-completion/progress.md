@@ -43,11 +43,11 @@ re-measured at the cut by the launch-readiness audit.
 
 ### Cycle — AT-35-E1-006 cycle 1 — SD-34's unrun closure folded: retrospective written and cited, 17 open rows and 29 open deferrals dispositioned — complete (2026-09-08)
 
-**Status: complete.** Docs only; zero units moved by design. Work commit `0dac3ddc9f`; receipt
-`artifacts/epic-1-tax-cut/AT-35-E1-006_cycle1_receipt.md`.
+**Status: complete.** Docs only; zero units moved by design. Work commit `9cc73dca76`, receipt
+commit `800c363e42`; receipt `artifacts/epic-1-tax-cut/AT-35-E1-006_cycle1_receipt.md`.
 
-- **Scope gate:** `SCOPE_GATE: EXEMPT (docs-only fold of SD-34's closure epilogue — closes zero units by design, decisions.md §2 and §12; scripts/cycle_scope_gate.py absent in this tree, AT-35-E1-001 builds it)`
-- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=78` (coarse grep, `content-unit-inventory.md §6`; `scripts/pcgen_residue_gate.py` absent — AT-35-E1-005 builds it).
+- **Scope gate:** `SCOPE_GATE: EXEMPT (docs-only fold of SD-34's closure epilogue — closes zero units by design, decisions.md §2 and §12)` — `cycle_scope_gate.py` was absent at cycle start (`53296d80f0`) and arrived via AT-35-E1-001 on the pre-push rebase.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=unavailable` (`cycle_scope_gate.py --receipt --since 53296d80f0 --target-dir /tmp/cargo-sd35-AT-35-E1-006`; `pcgen_residue_gate.py` absent — AT-35-E1-005 builds it; coarse-grep stand-in 78 files, `content-unit-inventory.md §6`).
 - **Refused tokens:** none.
 - **Evidence:** `test -f docs/retro/sd34-book-completion-retrospective.md` → present; `grep -c sd34-book-completion-retrospective` → 1 in each `references/README.md`; row map 1,590 of 1,590 (core_rulebook 1,529 of 6,701 + ultimate_campaign 61 of 265, `completion_atlas.py --book <book> --check`) sum-checked; SD-34 `progress.md` `status: closed-by-fold`; 29 of 29 deferrals dispositioned (8 resolved with a SHA, 1 superseded by register C2.5, 20 mapped) — `retro.py summary --since 2026-08-27` now reads `deferrals.open=20`, all SD-35-owned.
 - **Gates:** `completion_atlas.py --check` 0; `shape_engine_boundary.py --check` 0; `missing_engine_tables.py --check` 0; `verify.sh --only pi-sweep` PASS; **`denominator_gate.py --check` red — 11 violations in 4 pre-existing `artifacts/epic-2-sheet-rule/token-mapping/*.md` files this cycle did not touch** (incident `1788831974625-at-35-e1-006-ae4135`; owner: the token-mapping synthesis / AT-35-E2-001).
