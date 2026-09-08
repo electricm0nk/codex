@@ -28,3 +28,63 @@
 - **Status:** complete
 - **Notes:** `--or` is the mechanism `decisions.md §2` asks for ("bundled with others until the cycle reaches 500"): repeats of a flag OR, different flags AND, `--or` unions clauses. `--token` matches the unit's `tokens` list when the inventory carries one (AT-35-E2-004 onward) and, until then, `wiring_class_signals` whole (`derived:bonus`) or by family (`bonus`). The denominator-gate violations are in four pre-launch token-mapping files outside this lane's file-touch set; AT-35-E1-004 (the gates point at this package) owns the package-wide pass — recorded as retro incident `denominator-gate-red-on-package-prose`. Five parallel worktrees were live at dispatch (`git worktree list`), so `scripts/verify.sh` was rebased at push time; the stage list is additive.
 - **Next-cycle scope:** criterion at zero. AT-35-E1-002 and AT-35-E1-005 are this lane's next cycles (`workflow-instruction.md §3`); every later cycle's first command is `python3 scripts/cycle_scope_gate.py --min 500 <scope flags>`.
+
+---
+
+## Re-verification appendix — 2026-09-08, duplicate dispatch at HEAD `4e321d2c6c`
+
+AT-35-E1-001 was **re-dispatched after it had already landed and pushed** (code `1d821cdc8d`,
+receipt + board rows `b826669560`, both ancestors of `origin/tranche/15`). The re-dispatched
+cycle agent rebased onto `origin/tranche/15`, found the criterion at zero and the kanban row
+already `complete`, and **re-verified the criterion at HEAD instead of duplicating the work**.
+No code, test, or `verify.sh` change was made; only this appendix, the progress entry, and one
+retro `incident` event (`recurrence-key duplicate-criterion-dispatch`) were written.
+
+**Criterion re-derived at `4e321d2c6c`** — every command run in this worktree:
+
+- `python3 scripts/cycle_scope_gate.py --min 500` →
+  `scoped=1404 remaining_non_done=1404 floor=500 verdict=PASS`, exit 0 — the whole-remainder
+  shape ("a 12-unit scope that is the entire remainder exits 0"), now at 1,404 non-DONE units.
+- `python3 scripts/cycle_scope_gate.py --min 500 --bucket A --kind companion` →
+  `scoped=0 remaining_non_done=1404 floor=500 verdict=FAIL_UNDER_FLOOR`, **exit 1** — the
+  under-floor shape. (`scoped` is 0, not the 28 of the original run: Epic 2 closed bucket A
+  `companion` in the interim.)
+- `python3 scripts/cycle_scope_gate.py --min 500 --bucket B --kind class_feature` →
+  `scoped=214 remaining_non_done=1404 floor=500 verdict=FAIL_UNDER_FLOOR`, **exit 1** — the same
+  scope that read `scoped=7866 verdict=PASS` at cycle 1; it now correctly refuses, which is the
+  gate doing its job (and is exactly what AT-35-E3-001's blocked-escalation reported).
+- `python3 -m unittest scripts/tests/test_cycle_scope_gate.py` → `Ran 51 tests in 0.707s OK`.
+- `RETRO_DISABLE=1 scripts/verify.sh --only cycle-scope-gate-selftest` →
+  `PASS cycle-scope-gate-selftest (51 cases passed)`, `RESULT: PASS`, exit 0. The stage is in
+  **both** `ALL_STAGES` and `QUICK_STAGES` (`grep -n cycle-scope-gate-selftest scripts/verify.sh`
+  → lines 110, 111, 1113–1160).
+- `python3 scripts/cycle_scope_gate.py --receipt --since 4e321d2c6c --before <HEAD inventory copy> --after docs/work-inventory.json` →
+  `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=260`,
+  preceded by `regressed=0 added=0 dropped=0` and `residue_gate=present`. The
+  `pcgen_live_files` row now resolves to a **number** rather than `unavailable`, because
+  AT-35-E1-005 has since landed `scripts/pcgen_residue_gate.py` — the `--receipt` half of the
+  criterion is therefore proven end to end, which cycle 1 could not do.
+- `python3 scripts/pcgen_residue_gate.py --check` →
+  `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`, exit 0 —
+  at baseline, not above it.
+
+**Audits re-run on the final diff** (`git diff --unified=0 fe5ae6cd4a...HEAD` over Epic 1's
+file-touch set): wired-integration → `OK_NO_TOKENS`. Identifier audit → 4 hits, all in
+`scripts/verify-baselines.env` **comment** lines naming the real, pre-existing test binaries
+`tests/sd18_widening/main.rs` and `tests/sd13_progression/main.rs` (AT-35-E1-003's lane, not
+this one); those are file paths that exist on disk, not new bundle-tagged identifiers, so no
+correction is owed.
+
+**Other gates at HEAD:** `completion_atlas.py --check` exit 0
+(`done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`);
+`shape_engine_boundary.py --check` exit 0 (`magnitude_bearing=26396 not_held_by_engine=363 citation_ok=True`);
+`missing_engine_tables.py --check` exit 0 (`population=1 kinds=1 power:1 citation_failures=0`);
+`denominator_gate.py --check` over the package globs → `files_checked=38 violations=0` — the
+11 violations cycle 1 recorded as "found, not fixed" are **cleared** (AT-35-E1-004 landed the
+package-wide pass); `verify.sh --only pi-sweep` → `RESULT: PASS`. No cargo command was run: the
+re-verification touched no `.rs` or Cargo file. The three
+`docs/release/SD-34-book-completion/artifacts/epic-1-atlas/*` files that the `--check` runs
+restamp as a side effect were reverted with `git checkout --`, out of this lane's write scope —
+the same disposition cycle 1 made.
+
+**Status: complete** — unchanged. The criterion's population is zero at HEAD.

@@ -41,6 +41,22 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — AT-35-E1-001 **re-verification** (duplicate dispatch) — `batch-floor-gate` — **complete**, no new work
+
+AT-35-E1-001 was dispatched a second time after it had already landed and pushed (code
+`1d821cdc8d`, board rows `b826669560`, both ancestors of `origin/tranche/15`; `kanban.md` row 1
+already `complete`). The lane rebased, found the criterion at zero, and **re-verified rather than
+duplicating the work**. Only the receipt appendix, this entry, and one retro `incident`
+(`recurrence-key duplicate-criterion-dispatch`) were written; no code, test, or `verify.sh`
+change. Commit for this entry only.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (gate-building cycle — this cycle CREATES cycle_scope_gate.py; it closes zero units by design, decisions.md §2)` — the exemption carried forward from cycle 1; the re-verification itself moved zero units. Live at HEAD `4e321d2c6c`: `python3 scripts/cycle_scope_gate.py --min 500` → `scoped=1404 remaining_non_done=1404 floor=500 verdict=PASS` exit 0; `--bucket A --kind companion` → `scoped=0 ... FAIL_UNDER_FLOOR` exit 1; `--bucket B --kind class_feature` → `scoped=214 ... FAIL_UNDER_FLOOR` exit 1. All three RED→GREEN shapes hold.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=260` — `python3 scripts/cycle_scope_gate.py --receipt --since 4e321d2c6c --before /tmp/wi-recheck-AT-35-E1-001.json --after docs/work-inventory.json` (`regressed=0 added=0 dropped=0`, `residue_gate=present`). **`pcgen_live_files` now resolves to a number** rather than cycle 1's `unavailable`, because AT-35-E1-005 has since landed the residue gate — the `--receipt` half of the criterion is proven end to end for the first time.
+- **Refused tokens:** none.
+- **Gates:** `python3 -m unittest scripts/tests/test_cycle_scope_gate.py` → `Ran 51 tests OK`; `verify.sh --only cycle-scope-gate-selftest` → `PASS (51 cases passed)`; `pcgen_residue_gate.py --check` → `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`; `completion_atlas.py --check`, `shape_engine_boundary.py --check`, `missing_engine_tables.py --check` all exit 0; `verify.sh --only pi-sweep` PASS. No cargo run — no `.rs` touched.
+- **Cleared since cycle 1:** `denominator_gate.py --check` over the package globs is now `files_checked=38 violations=0`; cycle 1's 11 token-mapping violations are fixed (AT-35-E1-004).
+- **Receipt:** `artifacts/epic-1-tax-cut/AT-35-E1-001_cycle1_receipt.md`, "Re-verification appendix" section.
+
 ### 2026-09-08 — AT-35-E1-003 **re-dispatch** (no new cycle) — `test-families-table-driven` — **complete** (already closed at `03072aea0c`; re-verified at HEAD, zero change to code or baselines)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (build-time tax cut — closes zero corpus units by design, decisions.md §2)` — unchanged from cycle 1. `pcgen_residue_gate.py --check` at start of the re-dispatch: `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
