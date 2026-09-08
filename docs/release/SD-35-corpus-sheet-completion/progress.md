@@ -41,6 +41,32 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — AT-35-E1-004 cycle 2 — `ratio-row-and-gate-scope` — **complete** (re-dispatch that found a real gap: the default scan missed one SD-35 doc)
+
+AT-35-E1-004 was dispatched a second time after cycle 1 had landed (`2bf452b038`, board row 4
+already `complete`). The lane rebased to `942c8d3ae5`, re-verified the criterion, and **found the
+evidence bar not actually met**: the criterion says a default `denominator-gate` run "lists every
+SD-35 `.md` in `files_checked`", and it listed 39 of the 40 `.md` files under
+`docs/release/SD-35-corpus-sheet-completion/`. `references/README.md` sits in neither the package
+root nor `artifacts/`, so neither of cycle 1's two SD-35 glob entries matched it, and it was never
+read by either stage. Cycle 1's own coverage test could not catch this: `_real_sd35_md()` built its
+"every SD-35 `.md`" expected set by re-running the same two globs it then asserted `DEFAULT_GLOBS`
+covered — an assertion that cannot fail for a file the globs miss. This cycle replaced that
+expected set with a filesystem walk (RED, 2 failures, naming exactly `references/README.md`), then
+added `SHEET_COMPLETION_BUNDLE_DIR/**/*.md` to **both** `DEFAULT_GLOBS` and
+`PROVENANCE_DEFAULT_GLOBS` (GREEN). The widening is additive — cycle 1's two entries stay in both
+lists, `expand_paths` deduplicates, and the criterion's "nothing already scanned stops being
+scanned" invariant is still pinned by `test_nothing_already_scanned_stops_being_scanned`.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (gate-retargeting cycle — closes zero units by design, decisions.md §2)`. `pcgen_residue_gate.py --check` at start: `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=260` — `python3 scripts/cycle_scope_gate.py --receipt --since 942c8d3ae5db5d447efd12400b2db3b8644e8be1 --before /tmp/wi-before-AT-35-E1-004.json --after docs/work-inventory.json` (`regressed=0 added=0 dropped=0`, `residue_gate=present`). No Rust, no corpus, no unit movement — the diff is two Python files under `scripts/`.
+- **PCGen residue:** unchanged, `verdict=PASS` — not risen; no live path touched.
+- **Evidence at HEAD:** `scripts/verify.sh --only denominator-gate` → `PASS (files_checked=227 violations=0)`, up from `225` and now covering all 41 SD-35 `.md` files (40 before this cycle's own receipt); `scripts/verify.sh --only figure-provenance` → `PASS (files_checked=157 figures_examined=173 violations=0)`, up from `155`; `python3 -m unittest discover -s scripts/tests -p test_denominator_gate.py` → `Ran 55 tests OK` (54 before; the new one, `test_expected_set_is_a_filesystem_walk_not_the_globs_under_test`, pins the anti-circularity fix so the coverage assertions cannot go vacuous again). The `--receipt` half of the criterion is unchanged and still carries `rust_lines_changed`, `ratio` and `pcgen_live_files`.
+- **Other gates:** `cargo test --locked --no-run -j 6` exit 0; `cargo test --locked --lib -j 6` → `3217 passed; 0 failed; 14 ignored`; `sheet_rule_convert -- --check` exit 0; `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → `0`; `completion_atlas.py`, `token_coverage.py` (`verdict=PASS`), `shape_engine_boundary.py`, `missing_engine_tables.py` all exit 0; `verify.sh --only pi-sweep` PASS. `--no-fail-fast`, `corpus_literal_sweep` and `clippy` not run — no `src/`, classifier, corpus or Rust target touched (`§6` step 3's own conditions).
+- **Refused tokens:** none. **Discoveries:** one instrument-shaped — the self-referential coverage test — emitted as a `correction` retro event (`1788881408334-sd31-transcribe-957b44`; it landed in `sd31-transcribe.jsonl` because `RETRO_ACTOR` does not persist between this harness's shell calls, the same misfiling AT-35-E1-002 cycle 2 recorded).
+- **Process note:** this is the fourth Epic 1 criterion re-dispatched after `kanban.md` already read `complete`. Unlike the other three it was **not** a no-op, which is the argument against treating a `complete` row as sufficient reason to skip the re-verify.
+- **Receipt:** `artifacts/epic-1-tax-cut/AT-35-E1-004_cycle2_receipt.md`.
+
 ### 2026-09-08 — AT-35-E1-001 **re-verification** (duplicate dispatch) — `batch-floor-gate` — **complete**, no new work
 
 AT-35-E1-001 was dispatched a second time after it had already landed and pushed (code

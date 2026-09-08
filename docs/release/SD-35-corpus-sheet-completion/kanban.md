@@ -31,7 +31,7 @@ Notes column.** Notes here are a pointer, never a story.
 | 1 | `batch-floor-gate` | 1 | AT-35-E1-001 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-001_cycle1_receipt.md` — `1d821cdc8d` |
 | 2 | `content-anchored-citations` | 1 | AT-35-E1-002 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-002_cycle1_receipt.md`; `artifacts/epic-1-tax-cut/citation-anchor-proofs.md`; cycle 2 re-verify + stale-pin repair: `artifacts/epic-1-tax-cut/AT-35-E1-002_cycle2_receipt.md` |
 | 3 | `test-families-table-driven` | 1 | AT-35-E1-003 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-003_cycle1_receipt.md`; `build-time.json`, `test-list-diff.txt` — `03072aea0c` |
-| 4 | `ratio-row-and-gate-scope` | 1 | AT-35-E1-004 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-004_cycle1_receipt.md` — `2bf452b038` |
+| 4 | `ratio-row-and-gate-scope` | 1 | AT-35-E1-004 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-004_cycle1_receipt.md` — `2bf452b038`; cycle 2 closes the last unscanned SD-35 `.md`: `artifacts/epic-1-tax-cut/AT-35-E1-004_cycle2_receipt.md` — `dd48f73d0f` |
 | 5 | `pcgen-residue-gate` | 1 | AT-35-E1-005 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-005_cycle1_receipt.md`; baseline `live_files=260 live_hits=12736` |
 | 6 | `sd34-closure-folded` | 1 | AT-35-E1-006 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-006_cycle1_receipt.md`; `docs/retro/sd34-book-completion-retrospective.md`; `artifacts/epic-1-tax-cut/sd34-open-row-map.json` (1,590 of 1,590), `sd34-deferral-dispositions.json` (29 of 29) |
 | 7 | `sheet-rule-converter` | 2 | AT-35-E2-001 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-001_cycle1_receipt.md`; `data/sheet_rules/_refused.json` — `72ad0be010` |
