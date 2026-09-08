@@ -27,12 +27,12 @@ process defect** recorded by the epic wrap-up.
 |---|---:|---:|---:|---:|
 | 1 — Tax cut | 6 | 6 | 0 | 0 |
 | 2 — Sheet rule | 5 | 5 | 0 | 0 |
-| 3 — Place and surface | 4 | 0 | 0 | 4 |
+| 3 — Place and surface | 4 | 0 | 1 | 3 |
 | 4 — Resolve and verify | 3 | 0 | 0 | 3 |
 | 5 — Residues | 5 | 0 | 0 | 5 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **11** | **0** | **19** |
+| **Total** | **30** | **11** | **1** | **18** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,16 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-08 — AT-35-E3-001 cycle 1 — `class-feature-b-zero` — **blocked-escalated** (§8 under-floor re-scope, not an operator ruling; the cycle did not start)
+
+- **Scope gate:** `scoped=214 remaining_non_done=1404 floor=500 verdict=FAIL_UNDER_FLOOR` — `python3 scripts/cycle_scope_gate.py --min 500 --bucket B --kind class_feature` at `8cc4ea1516` (`scoped_by_bucket=B:214`, `scoped_by_kind=class_feature:214`); under the floor and not the whole 1,404 remainder, so the cycle did not start (`workflow-instruction.md §6` step 1, `§8`). `pcgen_residue_gate.py --check` at start: `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 8cc4ea1516 --before /tmp/wi-before-AT-35-E3-001.json --after docs/work-inventory.json --target-dir /tmp/cargo-sd35-AT-35-E3-001`; `regressed=0 added=0 dropped=0`; docs only, no build paid).
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS` after — not risen (no live-side file touched).
+- **Refused tokens:** the scoped **214 of 1,404 non-DONE of 49,438** are **214 of 214 converter-refused** (ids in `data/sheet_rules/_refused.json`; status `engine-does-not-hold`); by first refused type, summing to 214: `FORMULA:var(COUNT)=169, FORMULA:malformed (parser refusals)=11, BONUS:[redacted PI]=6, FORMULA:var(STAT)=6, BONUS:SITUATION (target shape)=2, FORMULA:var(SPELLFAILURE)=2, FORMULA:var(<export token>) (ENCUMBERANCE)=2, BONUS:STAT (target BASESPELLKNOWNSTAT;Class)=2`, and 14 types at 1 each — **24 distinct types** (>10, `§8`). Evidence families: owner-matched 154, option-pool-with-magnitude 42, option-pool 18 (sum 214). Deferral `1788879242003-at-35-e3-001-bf4043`.
+- **Discoveries (1 `correction`, `docs/retro/events/at-35-e3-001.jsonl`):** `epic-breakdown.md` `### AT-35-E3-001` and the dispatch prompt carry 7,866 (authoring, pre-Epic 2); at HEAD the population is 214 and every unit of it is converter-refused — the `applies` widening has no non-refused unit left to move (AT-35-E2-005 cycle 1 closed them all; the DISPOSITION owner rule routes refused B to AT-35-E4-001). `1788879241856-at-35-e3-001-ccb13f`, caught before implementation.
+- **Verification (docs gates only):** no build (`git diff --stat 8cc4ea1516..HEAD -- src scripts tests data apps` empty); atlas `population=49438 unclassified=0 overlap=0 done_evidence_violations=0` (SD-34 atlas `derived_at` re-stamp reverted); residue PASS; identifier audit OK_NO_BUNDLE_TAGS; wired-integration audit OK_NO_TOKENS on this cycle's diff; denominator gate `files_checked=38 violations=0`.
+- **Receipt:** `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle1_receipt.md`. **Re-scope for the orchestrator:** `python3 scripts/cycle_scope_gate.py --min 500 --bucket A --bucket B --bucket C --bucket D --bucket M` → `scoped=623 remaining_non_done=1404 floor=500 verdict=PASS` — all 623 converter-refused, AT-35-E4-001's population by the DISPOSITION owner rule (mapping rows in `src/pcgen_import/sheet_rule/`, `FORMULA:var(COUNT)` first); or the whole 1,404 with no flags. AT-35-E3-001 closes at `class_feature` B = 0 once those rows land; SD-33 deferral 1 stays with it.
 
 ### 2026-09-08 — AT-35-E2-005-DISPOSITION cycle 1 — `e2-005-disposition` — **complete** (orchestrator re-scope recorded; row 11 → complete against its amended bar)
 

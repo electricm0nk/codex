@@ -40,7 +40,7 @@ Notes column.** Notes here are a pointer, never a story.
 | 10 | `token-coverage-ledger` | 2 | AT-35-E2-004 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-004_cycle1_receipt.md`; `artifacts/epic-2-sheet-rule/token-coverage.json`; `data/sheet_rules/_tokens.json` — `344f18d1e1` |
 | 11 | `first-corpus-wide-conversion` | 2 | AT-35-E2-005 | complete | Against the amended bar — `epic-breakdown.md` `### AT-35-E2-005` amendment 2026-09-08 + `### AT-35-E2-005-DISPOSITION` hand-off table; `decisions.md §16`; `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.json` (1,404 of 1,404 owned); receipts `AT-35-E2-005_cycle1..4_receipt.md`; `oracle-parity/sheet-parity.json` — `cd3d64e578` |
 | 30 | `e2-005-disposition` | 2 | AT-35-E2-005-DISPOSITION (row 11's disposition cycle, `§5` one row per extra cycle) | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle1_receipt.md`; `AT-35-E2-005-DISPOSITION_handoff.py` / `.json`; `docs/retro/events/at-35-e2-005-disposition.jsonl` |
-| 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | not-started | |
+| 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | blocked-escalated | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle1_receipt.md`; `docs/retro/events/at-35-e3-001.jsonl` (cycle 1 did not start: `scoped=214 … verdict=FAIL_UNDER_FLOOR`, all 214 converter-refused, 24 refused types; §8 → orchestrator re-scope to AT-35-E4-001's 623-unit refused bundle, no Open-blockers entry) |
 | 13 | `other-kinds-b-zero` | 3 | AT-35-E3-002 | not-started | |
 | 14 | `bucket-c-zero` | 3 | AT-35-E3-003 | not-started | |
 | 15 | `epic-3-rate-ledger` | 3 | AT-35-E3-004 | not-started | |
