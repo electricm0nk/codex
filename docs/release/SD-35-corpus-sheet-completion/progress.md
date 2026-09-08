@@ -25,14 +25,14 @@ process defect** recorded by the epic wrap-up.
 
 | Epic | Criteria | Complete | In progress | Not started |
 |---|---:|---:|---:|---:|
-| 1 — Tax cut | 6 | 4 | 0 | 2 |
+| 1 — Tax cut | 6 | 5 | 0 | 1 |
 | 2 — Sheet rule | 5 | 0 | 0 | 5 |
 | 3 — Place and surface | 4 | 0 | 0 | 4 |
 | 4 — Resolve and verify | 3 | 0 | 0 | 3 |
 | 5 — Residues | 5 | 0 | 0 | 5 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **4** | **0** | **26** |
+| **Total** | **30** | **5** | **0** | **25** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,16 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-08 — AT-35-E1-003 cycle 1 — `test-families-table-driven` — **complete**
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (build-time tax cut — closes zero corpus units by design, decisions.md §2)` — `cycle_scope_gate.py` was absent at cycle start (`53296d80f0`) and arrived via AT-35-E1-001 on the pre-push rebase.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=1906 ratio=n/a builds_recorded=0 pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 53296d80f0 --before /tmp/wi-before-AT-35-E1-003.json --after docs/work-inventory.json` at `03072aea0c`; `builds_recorded=0` reads the deleted target dirs — the transcripts show 4 cold measurement compiles + 1 verify session, receipt row for the breakdown).
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS` at `03072aea0c` — not risen.
+- **Refused tokens:** none (no converter run).
+- **What moved:** 184 integration-test binaries → 2 (`tests/sd18_widening/`, `tests/sd13_progression/`, one module per original file behind a class-keyed roster table); `cargo test -- --list` name-by-name diff 8,723 = 8,723 `IDENTICAL`; `BASELINE_ROOT_TEST_BINARIES` 589 → 408, test floors unchanged (8,656 / 3,186). Cold `cargo test --locked --no-run -j 6`, paired quiet-box: 3:08.97 → 2:25.89 (−43.08 s of 188.97 s); full suite after: 8,656 passed / 0 failed / 67 ignored across 408 targets in 37.6 min; clippy on both targets 0 warnings.
+- **Discoveries:** the package's `denominator_gate.py` artifacts glob was already red at cycle start (11 violations, all in `epic-2-sheet-rule/token-mapping/`, for AT-35-E1-004); the criterion's "~80k of 187k" is 74,932 of 180,260; 244 `src/`+`docs/architecture/` citations of the old test paths deferred to AT-35-E7-003 (retro events in `docs/retro/events/at-35-e1-003.jsonl`).
+- **Receipt:** `artifacts/epic-1-tax-cut/AT-35-E1-003_cycle1_receipt.md`; `build-time.json`, `test-list-diff.txt` beside it. Code `03072aea0c`.
 
 ### 2026-09-07 — AT-35-E1-002 cycle 1 — `content-anchored-citations` — **complete**
 
