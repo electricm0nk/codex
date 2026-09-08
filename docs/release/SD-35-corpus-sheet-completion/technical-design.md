@@ -322,13 +322,17 @@ start of Epic 6 and again at its end; any drift is a defect in the exit, not a n
 |---|---|---|
 | `cycle-scope-gate-selftest` | `scripts/tests/test_cycle_scope_gate.py` | the floor not exiting non-zero on a small scope |
 | `pcgen-residue-gate` | `scripts/pcgen_residue_gate.py --check` | live-side PCGen count above the recorded baseline; above zero at closure |
-| `shape-engine-boundary` | `scripts/shape_engine_boundary.py --check` | a content anchor that no longer resolves |
-| `missing-engine-tables` | `scripts/missing_engine_tables.py --check` | same |
+| `shape-engine-boundary-selftest` | `scripts/tests/test_shape_engine_boundary.py` | the anchor resolver's RED→GREEN proofs (move 50 lines stays green; a changed condition fails) not holding — **landed AT-35-E1-002** |
+| `shape-engine-boundary` | `scripts/shape_engine_boundary.py --check` | a content anchor that no longer resolves — **landed AT-35-E1-002** |
+| `missing-engine-tables` | `scripts/missing_engine_tables.py --check` | same — **landed AT-35-E1-002** |
 | `token-coverage` | `scripts/token_coverage.py --check` | a non-DONE unit under no token, or a refused set that does not equal the non-converting set |
 | `sheet-rules-check` | `cargo run --locked --bin sheet_rule_convert -- --check` | a corpus record with no `SheetRule` and no refusal record; a `SheetRule` whose id has no corpus record |
 
-Stage count moves 40 → 46. `scripts/verify-baselines.env` and any count assertion move in the
-same commit as each stage lands.
+Stage count moves 40 → 47 (41 after AT-35-E1-001's `cycle-scope-gate-selftest`; 42 after
+AT-35-E1-005's `pcgen-residue-gate`; **45 after AT-35-E1-002**, which added three: the two
+`--check`s and the boundary self-test, following `verify.sh`'s existing `<gate>-selftest` /
+`<gate>` pairing — re-derive: `scripts/verify.sh --list | tail -n +2 | wc -l`). `scripts/verify-baselines.env` and
+any count assertion move in the same commit as each stage lands.
 
 **`scripts/cycle_scope_gate.py`** (AT-35-E1-001):
 

@@ -117,7 +117,7 @@ check (`§11`).** Any other cycle under 500 that is not the whole remainder does
 | Check | What it is | When |
 |---|---|---|
 | Cycle check | `cargo test --locked --no-run` + the scoped suites + `cargo test --locked --no-fail-fast` when the cycle touched compute or classification + the fast python gates (`completion_atlas.py --check`, `denominator_gate.py`, the three citation `--check`s, `pi-sweep`) | **once per cycle**, after the last figure-moving commit |
-| Full gate | `scripts/verify.sh` (all stages — 40 at authoring, 42 after AT-35-E1-002) | **once per epic** (`§10`), and once before the PR (`§11`) |
+| Full gate | `scripts/verify.sh` (all stages — 40 at authoring; 41 after AT-35-E1-001's `cycle-scope-gate-selftest`; 42 after AT-35-E1-005's `pcgen-residue-gate`; **45 after AT-35-E1-002**: the two citation `--check`s plus the boundary self-test, per `verify.sh`'s selftest/gate pairing; re-derive `scripts/verify.sh --list \| tail -n +2 \| wc -l`) | **once per epic** (`§10`), and once before the PR (`§11`) |
 
 **Why.** SD-34 ran the full gate as a separate cycle after every wave (~101 minutes recorded at
 `SD-34/progress.md:3625`) on top of the cycle's own full-suite run, so a 5-unit wave paid two or
@@ -132,7 +132,7 @@ is at most one fix cycle per epic.
 **Amendment, operator 2026-09-07 — the worker split.** Asked whether the run should move to the
 cloud for speed, the operator chose the hybrid: cycle work stays **local** (this box compiled the
 whole workspace cold in 2 min 45 s at the cut; its cache is warm; its progress is visible), and
-the two long **read-only** jobs — the epic-end 40-stage gate (~100 min) and the oracle-harness
+the two long **read-only** jobs — the epic-end full gate (40 stages at the ruling, 45 after AT-35-E1-001, E1-005 and E1-002; ~100 min) and the oracle-harness
 runs — go to an **isolated worker that pushes nothing** (a worktree agent here, or a cloud
 session when the box is loaded). The gate **overlaps the next epic's first cycle** and must be
 green before that epic's second cycle; a red gate costs at most one cycle of rework. The cloud

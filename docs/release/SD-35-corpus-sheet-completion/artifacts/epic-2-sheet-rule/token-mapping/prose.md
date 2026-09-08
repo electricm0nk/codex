@@ -20,8 +20,8 @@ count below states its denominator. Two denominators recur:
 
 ## 1. The family's shape in one page
 
-**The family is 58% of every token instance and has exactly one rule that matters: how a `DESC:`
-segment becomes words.** TYPE/KEY/SOURCEPAGE/VISIBLE/SORTKEY/SOURCE\* are provenance or
+**The family is 58% of every token instance (an estimate inherited from the fable review's TOKEN-MODEL, 2026-08-31 — this lane restated no instance denominator for it; the lane's own denominator is ND 21,722 units, or CW 51,474 records, above) and has exactly one rule that
+matters: how a `DESC:` segment becomes words.** TYPE/KEY/SOURCEPAGE/VISIBLE/SORTKEY/SOURCE\* are provenance or
 flags; ASPECT/BENEFIT/SPROP/SAB/TEMPDESC are DESC with a different label. The converter's prose
 pass is therefore one function applied to five token kinds, plus a per-sub-key table for ASPECT.
 

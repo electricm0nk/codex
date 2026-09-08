@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-"""Tests for `scripts/shape_engine_boundary.py` (SD-34 Epic 1, AT-34-E1-004).
+"""Tests for `scripts/shape_engine_boundary.py` (SD-34 Epic 1, AT-34-E1-004;
+content anchors by SD-35 AT-35-E1-002).
 
 Proves the load-bearing claim: a shape engine turns a formula string into a
 number and does not place/attach/display the record -- that gate is the
 engine's four-condition promotion ladder in `src/bin/v06_work_inventory.rs`,
-whose line-cited content is re-verified, not assumed, on every run.
+whose content is re-verified by search, not assumed, on every run.
 
 Uses small synthetic inventory fixtures for the counting logic, same
 precedent as `test_completion_atlas.py` / `test_missing_engine_tables.py`.
 The citation check is exercised against the real, live source file (there is
-only one `v06_work_inventory.rs` to cite), including a genuine RED->GREEN
-mutation proof that the fail-closed path fires for the intended reason.
+only one `v06_work_inventory.rs` to cite) AND against synthetic source text
+for the two RED->GREEN proofs AT-35-E1-002 names: moving the cited function
+50 lines keeps the anchor green; changing one cited condition fails it.
 """
 
 import os
@@ -24,6 +26,30 @@ import shape_engine_boundary as SEB  # noqa: E402
 
 def _unit(id_, magnitude_tokens, status):
     return {"id": id_, "magnitude_token_count": magnitude_tokens, "status": status}
+
+
+# A miniature `classify` carrying the real ladder text, plus the sibling
+# `if has_real_description` block that shares its first three lines -- the
+# shape the live file has, so uniqueness is exercised, not assumed.
+_LADDER = SEB.PROMOTION_LADDER_ANCHOR["anchor"]
+_SYNTHETIC_SOURCE = (
+    ["fn simple_kind_verdict() {", "    let x = 1;", "}", "",
+     "fn classify(unit: &Unit) -> Verdict {",
+     "    if something {",
+     "        if has_real_description",
+     "            && is_display_wiring_class_for_promotion(wc_class)",
+     "            && !universal_sheet_modifier",
+     "            && facts.explanation_ids.contains(&grounding_explanation_id)",
+     "        {",
+     "            return early();",
+     "        }",
+     "    }",
+     "    // the real ladder",
+     "    if " + _LADDER[0][3:]]  # `if has_real_description`
+    + ["        " + line for line in _LADDER[1:]]
+    + ["    {", "        return promoted();", "    }", "    fallthrough()", "}", "",
+       "fn classify_class_feature_delta() {", "    unrelated()", "}"]
+)
 
 
 class TestMagnitudeBearing(unittest.TestCase):
@@ -61,7 +87,7 @@ class TestNotHeldByEngine(unittest.TestCase):
 
 
 class TestBuildReportOnLiveSource(unittest.TestCase):
-    """The citation must resolve against the real, committed
+    """The anchor must resolve against the real, committed
     `src/bin/v06_work_inventory.rs` -- this is the whole point of the
     instrument, so it is not faked with a fixture."""
 
@@ -69,39 +95,20 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         units = [_unit("u1", 1, "engine-does-not-hold"), _unit("u2", 1, "grounded")]
         report = SEB.build_report(units)
         self.assertTrue(report["citation_ok"])
-        # SD-34 wave 44: Piece 1/2's own insertions into
-        # `src/bin/v06_work_inventory.rs` shifted the promotion ladder
-        # again, 10857 -> 13906 (see `shape_engine_boundary.py`'s own
-        # module doc comment for the re-derivation).
-        # SD-34 wave 45: this cycle's own Phrenic Slayer Favored Enemy
-        # insertions shifted it again, 13906 -> 13986 (see
-        # `shape_engine_boundary.py`'s own module doc comment).
-        # SD-34 wave 46: this cycle's own six new `EngineFacts` fields,
-        # seven new probe functions, and `classify()` early-return block
-        # shifted it again, 13986 -> 14609 (see `shape_engine_boundary.py`'s
-        # own module doc comment).
-        # SD-34 wave 47: this cycle's own Divine Scion `EngineFacts` field,
-        # choice-gating consts, rewritten probe function, and `classify()`
-        # early-return block shifted it again, 14609 -> 14923 (see
-        # `shape_engine_boundary.py`'s own module doc comment).
-        # SD-34 wave 48: this cycle's own Twilight Talon/Golden Legionnaire
-        # `EngineFacts` fields, probe functions, and choice-seed arm shifted
-        # it again, 14923 -> 15273 (see `shape_engine_boundary.py`'s own
-        # module doc comment).
-        # SD-34 wave 48 CORRECTION (same cycle, before commit): the 15273
-        # figure above was derived against a pre-clippy-fix snapshot; the
-        # cycle's own `type TwilightTalonTattooTierMember` alias shifted it
-        # by a further uniform +4, 15273 -> 15277 -- caught re-running this
-        # test AFTER the clippy fix (see `shape_engine_boundary.py`'s own
-        # module doc comment).
-        # SD-34 wave 51: the citation was ALREADY stale at HEAD before this
-        # wave touched anything (waves 49/50 shifted it and re-derived only
-        # `completion_atlas.py`'s citations), and this wave's own edits shifted
-        # it further: 15277 -> 16274 (see `shape_engine_boundary.py`'s own
-        # module doc comment for the full re-derivation).
-        self.assertEqual(report["promotion_ladder_anchor_line"], 16274)
+        # The line is DERIVED by search at check time (AT-35-E1-002) -- never
+        # pinned here, which is exactly what let SD-34 waves 44-51 drift it.
+        # Assert it is real and that it points at the ladder's last line.
+        resolved = SEB.resolve_promotion_ladder()
+        self.assertTrue(resolved["ok"], resolved)
+        self.assertEqual(report["promotion_ladder_anchor_line"], resolved["end_line"])
+        self.assertGreater(report["promotion_ladder_anchor_line"], 0)
+        self.assertEqual(report["promotion_ladder_context_fn"], "classify")
         self.assertIn("has_real_description", report["promotion_ladder_source"])
         self.assertIn("class_feature_pool_catalog_holds", report["promotion_ladder_source"])
+        self.assertEqual(
+            [line.strip() for line in report["promotion_ladder_source"].strip().split("\n")],
+            SEB.PROMOTION_LADDER_ANCHOR["anchor"],
+        )
 
     def test_citation_failures_empty_at_head(self):
         self.assertEqual(SEB.citation_failures(), [])
@@ -129,42 +136,74 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         self.assertEqual(len(SEB.not_held_by_engine(mag)), 8784)
 
 
-class TestCitationFailsClosedForTheIntendedReason(unittest.TestCase):
-    """RED->GREEN: prove the fail-closed path fires because the cited
-    line's CONTENT stopped matching -- not because of an unrelated error
-    (`risks-and-open-questions.md §10`)."""
+class TestContentAnchorRedGreen(unittest.TestCase):
+    """AT-35-E1-002's two proofs, on synthetic source text so the live file
+    is never mutated by a test: a refactor that MOVES the cited function
+    keeps the citation green; a change to one cited condition fails it."""
 
-    def setUp(self):
-        self._orig_lines = dict(SEB.PROMOTION_LADDER_LINES)
+    def test_synthetic_source_resolves_GREEN(self):
+        resolved = SEB.resolve_promotion_ladder(lines=_SYNTHETIC_SOURCE)
+        self.assertTrue(resolved["ok"], resolved)
+        # It resolved to the REAL ladder, not the sibling block that shares
+        # the first three lines.
+        self.assertEqual(_SYNTHETIC_SOURCE[resolved["line"] - 1].strip(), "if has_real_description")
+        self.assertIn("class_feature_pool_catalog_holds", _SYNTHETIC_SOURCE[resolved["end_line"] - 1])
+        self.assertEqual(SEB.citation_failures(lines=_SYNTHETIC_SOURCE), [])
 
-    def tearDown(self):
-        SEB.PROMOTION_LADDER_LINES.clear()
-        SEB.PROMOTION_LADDER_LINES.update(self._orig_lines)
+    def test_moving_the_function_fifty_lines_stays_GREEN(self):
+        before = SEB.resolve_promotion_ladder(lines=_SYNTHETIC_SOURCE)
+        moved = ["// padding %d" % i for i in range(50)] + _SYNTHETIC_SOURCE
+        after = SEB.resolve_promotion_ladder(lines=moved)
+        self.assertTrue(after["ok"], after)
+        self.assertEqual(after["line"], before["line"] + 50)
+        self.assertEqual(after["source"], before["source"])
+        self.assertEqual(SEB.citation_failures(lines=moved), [])
 
-    def test_wrong_expected_content_is_caught_not_silently_passed(self):
-        # RED: assert a line 13906 must contain text it does not.
-        SEB.PROMOTION_LADDER_LINES[13906] = "this text does not appear on that line"
-        failures = SEB.citation_failures()
-        self.assertEqual(len(failures), 1)
-        self.assertIn("13906", failures[0])
-        self.assertIn("this text does not appear on that line", failures[0])
+    def test_changing_one_cited_condition_is_RED(self):
+        idx = SEB.resolve_promotion_ladder(lines=_SYNTHETIC_SOURCE)["end_line"] - 1
+        mutated = list(_SYNTHETIC_SOURCE)
+        mutated[idx] = mutated[idx].replace(
+            "class_feature_pool_catalog_holds", "class_feature_pool_catalog_might_hold"
+        )
+        failures = SEB.citation_failures(lines=mutated)
+        self.assertEqual(len(failures), 1, failures)
+        self.assertIn("no longer contains", failures[0])
+        self.assertIn("class_feature_pool_catalog_holds", failures[0])
 
-        with self.assertRaises(SEB.StaleCitationError):
-            SEB.build_report([_unit("u1", 1, "engine-does-not-hold")])
+    def test_a_second_copy_of_the_ladder_is_RED_as_ambiguous(self):
+        # Two identical ladders inside `classify` means the citation no
+        # longer names ONE construction site -- fail closed rather than
+        # silently pick the first.
+        resolved = SEB.resolve_promotion_ladder(lines=_SYNTHETIC_SOURCE)
+        block = _SYNTHETIC_SOURCE[resolved["line"] - 1:resolved["end_line"]]
+        duplicated = (
+            _SYNTHETIC_SOURCE[:resolved["end_line"]]
+            + ["    {", "    }"]
+            + block
+            + _SYNTHETIC_SOURCE[resolved["end_line"]:]
+        )
+        failures = SEB.citation_failures(lines=duplicated)
+        self.assertEqual(len(failures), 1, failures)
+        self.assertIn("ambiguous", failures[0])
 
-    def test_out_of_range_line_is_caught(self):
-        SEB.PROMOTION_LADDER_LINES[99999999] = "unreachable"
-        failures = SEB.citation_failures()
-        self.assertTrue(any("out of range" in f for f in failures))
+    def test_function_vanishing_is_RED(self):
+        renamed = [line.replace("fn classify(", "fn classify_renamed(") for line in _SYNTHETIC_SOURCE]
+        failures = SEB.citation_failures(lines=renamed)
+        self.assertEqual(len(failures), 1, failures)
+        self.assertIn("does not resolve", failures[0])
 
-    def test_restored_lines_pass_again_GREEN(self):
-        # GREEN: after tearDown-equivalent restoration mid-test, the real
-        # content passes again -- proves the RED above was about content,
-        # not a broken test harness.
-        SEB.PROMOTION_LADDER_LINES[13906] = "this text does not appear on that line"
-        self.assertNotEqual(SEB.citation_failures(), [])
-        SEB.PROMOTION_LADDER_LINES.clear()
-        SEB.PROMOTION_LADDER_LINES.update(self._orig_lines)
+    def test_build_report_fails_closed_on_a_stale_anchor(self):
+        # The fail-closed path fires for the intended reason: the anchor's
+        # content, not a harness error.
+        orig = dict(SEB.PROMOTION_LADDER_ANCHOR)
+        try:
+            SEB.PROMOTION_LADDER_ANCHOR["anchor"] = ["this text does not appear in classify"]
+            with self.assertRaises(SEB.StaleCitationError):
+                SEB.build_report([_unit("u1", 1, "engine-does-not-hold")])
+        finally:
+            SEB.PROMOTION_LADDER_ANCHOR.clear()
+            SEB.PROMOTION_LADDER_ANCHOR.update(orig)
+        # GREEN again once restored -- proves the RED above was about content.
         self.assertEqual(SEB.citation_failures(), [])
 
 
@@ -177,7 +216,8 @@ class TestRenderMarkdownEmbedsReDeriveCommands(unittest.TestCase):
         self.assertIn("python3 -c", md)
         self.assertIn(str(report["magnitude_bearing"]), md)
         self.assertIn(str(report["not_held_by_engine"]), md)
-        self.assertIn("16274", md)
+        self.assertIn(str(report["promotion_ladder_anchor_line"]), md)
+        self.assertIn("fn classify", md)
         self.assertIn("denominator", md)
 
 

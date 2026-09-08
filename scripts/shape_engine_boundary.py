@@ -3,7 +3,7 @@
 -- not an assumption a future bundle has to re-derive (SD-34 `AT-34-E1-004`).
 
     python3 scripts/shape_engine_boundary.py --check
-        -> magnitude_bearing=26396 not_held_by_engine=9475 citation_ok=True
+        -> magnitude_bearing=26396 not_held_by_engine=8784 citation_ok=True
            (exit 0)
         writes artifacts/epic-1-atlas/shape-engine-boundary.md
 
@@ -22,15 +22,17 @@ or `src/bin/v06_work_inventory.rs`:
   - `not_held_by_engine`  -- of those, the ones the engine has not promoted
                              past `engine-does-not-hold` (i.e. it refused every rung,
                              including the four-condition ladder below)
-  - the promotion ladder's own source text and line numbers, re-read from
-    the live file and asserted to still contain the exact conditions this
-    document quotes -- content, not just path/line
-    (`risks-and-open-questions.md §10`, same posture as `completion_atlas.py`
-    condition 6 and `missing_engine_tables.py`'s `citation_failures()`).
+  - the promotion ladder's own source text, found by CONTENT ANCHOR inside
+    `classify` (SD-35 `AT-35-E1-002`): the four condition lines must appear,
+    consecutively and exactly once, in that function -- the line they
+    resolve to is derived at check time, never pinned (the `file:line` pin
+    this file carried before was re-derived by hand in eight SD-34 waves and
+    was found already drifted at HEAD by wave 51 because nobody had asked
+    the gate; `git log -p` on this file keeps that history).
 
 Fails closed (non-zero exit, no artifact written) when either count cannot
-be derived or the citation no longer resolves to the quoted content -- a
-silently-stale "fact" document is worse than no document.
+be derived or the anchor no longer resolves -- a silently-stale "fact"
+document is worse than no document.
 """
 
 from __future__ import annotations
@@ -40,6 +42,8 @@ import json
 import os
 import sys
 
+from completion_atlas import resolve_content_anchor
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INVENTORY_PATH = os.path.join(REPO_ROOT, "docs", "work-inventory.json")
 ARTIFACT_PATH = os.path.join(
@@ -48,91 +52,21 @@ ARTIFACT_PATH = os.path.join(
 )
 _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 
-# The promotion ladder's four conditions, as they appear in the live file
-# today. Line numbers are 1-indexed. `technical-design.md §3` and
-# `decisions.md §2a` both quote this same block, originally citing its last
-# line as `:9595` at the time those documents were authored (`tranche/13`
-# cut). Epic 3's per-unit fixes to `v06_work_inventory.rs` shifted this exact
-# block down to `:10854-10857` -- re-verified at HEAD 2026-08-28
-# (AT-34-E1-004 re-verification cycle); the anchor below is the CURRENT
-# line, not the one those two docs still print.
-#
-# SD-34 wave 44 re-derivation: Piece 1/2's own insertions into this file
-# (the census-collision classifier fixes and their new compute functions)
-# shifted this block again, 10854 -> 13903. Fresh `grep -n 'if
-# has_real_description'` against the live file, taking the promotion-ladder
-# hit (not the two sibling `has_real_description` checks earlier in the
-# file), line content read back and confirmed still the real construction
-# site.
-#
-# SD-34 wave 45 re-derivation: this cycle's own Phrenic Slayer Favored
-# Enemy `EngineFacts` field doc comment + probe function + wiring +
-# `classify()` early-return block (all inserted above this site) shifted
-# this block again, 13903 -> 13983. Fresh `grep -n 'if
-# has_real_description'` against the live file -- now THREE hits, not two
-# (11826, 13640, 13983) -- taking the one whose own next three lines match
-# this block's remaining conditions verbatim, line content read back and
-# confirmed still the real construction site. Population count NOT
-# re-derived this cycle (same finding wave 44 named and left open: this
-# script's own `not_held_by_engine` pin is stale by hundreds of units,
-# unrelated to this cycle's own scope, not wired into `verify.sh`).
-#
-# SD-34 wave 46 re-derivation: this cycle's own six new `EngineFacts` fields,
-# seven new probe functions, and `classify()` early-return block (all
-# inserted above this site) shifted this block again, 13983 -> 14606. Fresh
-# `grep -n 'if has_real_description'` against the live file -- three hits
-# again -- taking the one whose own next three lines match this block's
-# remaining conditions verbatim, line content read back and confirmed still
-# the real construction site. Population count NOT re-derived this cycle,
-# same reason as wave 44/45's own choice.
-#
-# SD-34 wave 47 re-derivation: this cycle's own Divine Scion `EngineFacts`
-# field, choice-gating consts, rewritten probe function, and `classify()`
-# early-return block (all inserted above this site) shifted this block
-# again, 14606 -> 14920. Fresh `grep -n 'if has_real_description'` against
-# the live file -- three hits again -- taking the one whose own next three
-# lines match this block's remaining conditions verbatim, line content read
-# back and confirmed still the real construction site. Population count NOT
-# re-derived this cycle, same reason as wave 44/45/46's own choice.
-#
-# SD-34 wave 48 re-derivation: this cycle's own Twilight Talon/Golden
-# Legionnaire `EngineFacts` fields, probe functions, and choice-seed arm
-# (all inserted above this site) shifted this block again, 14920 -> 15270.
-# Fresh `grep -n 'if has_real_description'` against the live file -- three
-# hits again -- taking the one whose own next three lines match this
-# block's remaining conditions verbatim, line content read back and
-# confirmed still the real construction site. Population count NOT
-# re-derived this cycle, same reason as wave 44/45/46/47's own choice.
-#
-# SD-34 wave 48 CORRECTION (same cycle, before commit): the first pass above
-# was derived against a pre-clippy-fix snapshot. This cycle's own
-# `clippy::type_complexity` fix (a `type TwilightTalonTattooTierMember` alias
-# inserted earlier in the file, above this site) shifted this block by a
-# further uniform +4, 15270 -> 15274 -- caught by re-running
-# `python3 scripts/shape_engine_boundary.py --check` AFTER the clippy fix
-# instead of trusting the pre-fix derivation, exactly the silent-shift hazard
-# this file's own comments already name. Fresh `grep -n 'if
-# has_real_description'` against the live post-fix file, line content read
-# back and confirmed the real construction site.
-#
-# SD-34 wave 51 re-derivation, and a REAL PRE-EXISTING STALENESS this wave
-# found rather than caused: running `--check` before touching anything showed
-# this citation ALREADY failed at HEAD (`5f6b18f4e3`) -- at that commit the
-# block lives at 16135-16138, not 15274-15277, so wave 49's and wave 50's own
-# edits to `src/bin/v06_work_inventory.rs` shifted it and neither wave's gate
-# re-ran THIS instrument (both re-derived `completion_atlas.py`'s ten
-# citations only). The `--check` gate did exactly what it exists to do; the
-# gap was that nobody asked it. Re-derived here for the post-wave-51 file:
-# fresh `grep -n 'if has_real_description$'` (two hits), taking the one whose
-# own next three lines match this block's remaining conditions verbatim, every
-# line's content read back and confirmed rather than arithmetic alone.
-PROMOTION_LADDER_LINES = {
-    16271: "if has_real_description",
-    16272: "&& is_display_wiring_class_for_promotion(wc_class)",
-    16273: "&& !universal_sheet_modifier",
-    16274: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
+# The promotion ladder's four conditions, as a content anchor: the exact
+# lines (indentation stripped), consecutive, exactly once inside `classify`.
+# A sibling `if has_real_description` block earlier in `classify` shares the
+# first three lines and differs on the fourth (`facts.explanation_ids
+# .contains(...)`), so all four are load-bearing for uniqueness.
+PROMOTION_LADDER_ANCHOR = {
+    "file": _ENGINE_SRC,
+    "context_fn": "classify",
+    "anchor": [
+        "if has_real_description",
+        "&& is_display_wiring_class_for_promotion(wc_class)",
+        "&& !universal_sheet_modifier",
+        "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
+    ],
 }
-PROMOTION_LADDER_ANCHOR_LINE = 16274
 
 
 class StaleCitationError(RuntimeError):
@@ -145,34 +79,22 @@ def _load_units() -> list:
         return json.load(fh)["units"]
 
 
-def _read_source_lines(rel_path: str) -> "list[str] | None":
-    path = os.path.join(REPO_ROOT, rel_path)
-    try:
-        with open(path, "r", encoding="utf-8") as fh:
-            return fh.readlines()
-    except OSError:
-        return None
+def resolve_promotion_ladder(citation: dict = PROMOTION_LADDER_ANCHOR,
+                             lines: "list[str] | None" = None) -> dict:
+    """`resolve_content_anchor` over the ladder anchor; `lines` lets a test
+    resolve against supplied text instead of the file on disk."""
+    return resolve_content_anchor(citation, lines=lines, repo_root=REPO_ROOT)
 
 
-def citation_failures() -> list:
-    """Re-verify every promotion-ladder line against the live file's actual
-    content at its claimed line number -- not merely that the file and line
-    exist, so a refactor that shifts code without changing line counts is
-    still caught (`risks-and-open-questions.md §10`)."""
-    lines = _read_source_lines(_ENGINE_SRC)
-    failures = []
-    if lines is None:
-        return [f"{_ENGINE_SRC}: file not found"]
-    for line_no, expected in PROMOTION_LADDER_LINES.items():
-        if line_no < 1 or line_no > len(lines):
-            failures.append(f"{_ENGINE_SRC}:{line_no}: out of range ({len(lines)} lines in file)")
-            continue
-        actual = lines[line_no - 1].strip()
-        if expected not in actual:
-            failures.append(
-                f"{_ENGINE_SRC}:{line_no}: expected to contain {expected!r}, found {actual!r}"
-            )
-    return failures
+def citation_failures(citation: dict = PROMOTION_LADDER_ANCHOR,
+                      lines: "list[str] | None" = None) -> list:
+    """Re-verify the promotion ladder by content anchor -- the four cited
+    lines must still be present, consecutive, and unique inside `classify`,
+    wherever a refactor has moved them (`risks-and-open-questions.md §10`)."""
+    resolved = resolve_promotion_ladder(citation, lines)
+    if resolved["ok"]:
+        return []
+    return [resolved["reason"]]
 
 
 def magnitude_bearing(units: list) -> list:
@@ -187,25 +109,23 @@ def not_held_by_engine(units: list) -> list:
 
 
 def build_report(units: list) -> dict:
-    failures = citation_failures()
-    if failures:
+    resolved = resolve_promotion_ladder()
+    if not resolved["ok"]:
         raise StaleCitationError(
-            "promotion-ladder citation no longer resolves at HEAD: " + "; ".join(failures)
+            "promotion-ladder citation no longer resolves at HEAD: " + resolved["reason"]
         )
 
     mag = magnitude_bearing(units)
     stuck = not_held_by_engine(mag)
 
-    ladder_source = "".join(
-        _read_source_lines(_ENGINE_SRC)[16270:16274]  # lines 16271..16274, 0-indexed slice
-    )
-
     return {
         "magnitude_bearing": len(mag),
         "not_held_by_engine": len(stuck),
         "engine_source": _ENGINE_SRC,
-        "promotion_ladder_anchor_line": PROMOTION_LADDER_ANCHOR_LINE,
-        "promotion_ladder_source": ladder_source,
+        "promotion_ladder_context_fn": PROMOTION_LADDER_ANCHOR["context_fn"],
+        # Derived by search at check time -- the last of the four cited lines.
+        "promotion_ladder_anchor_line": resolved["end_line"],
+        "promotion_ladder_source": "\n".join(resolved["source"]) + "\n",
         "citation_ok": True,
     }
 
@@ -229,14 +149,16 @@ Re-derive: `python3 scripts/shape_engine_boundary.py --check`
 ```
 
 **It does not place the record, attach it, or display it.** Those are separate, later steps
-gated by the engine's own promotion ladder -- the real authority, quoted below with its line
-number re-verified at HEAD, not assumed:
+gated by the engine's own promotion ladder -- the real authority, quoted below from the live
+file by content anchor, not assumed:
 
 ```rust
 {report['promotion_ladder_source']}```
 
-(`{report['engine_source']}:{report['promotion_ladder_anchor_line']}` -- re-checked by content,
-not just path/line, on every run of this instrument.)
+(`{report['engine_source']}`, inside `fn {report['promotion_ladder_context_fn']}`, resolving to
+line {report['promotion_ladder_anchor_line']} at the time of this run -- found by searching for
+these exact four lines on every run of this instrument, so a refactor that moves them keeps this
+citation green and a change to any of them fails it.)
 
 None of the four conditions is "a value was computed". Fail the last one and the verdict is
 `class_feature_owner_matched_by_name_but_record_not_held_by_engine` -- a unit the shape engine
@@ -270,9 +192,10 @@ Both counts above and the citation are re-derived by
 `python3 scripts/shape_engine_boundary.py --check` on every invocation, against the live
 `docs/work-inventory.json` and the live `{report['engine_source']}` -- never quoted from an
 earlier document (`decisions.md §12` L2). The instrument fails closed (non-zero exit, no
-artifact written) if the citation's line numbers stop containing the exact conditions quoted
-above, so a refactor that moves this code cannot leave a stale "fact" behind
-(`risks-and-open-questions.md §10`).
+artifact written) if the four quoted lines stop appearing, consecutively and exactly once,
+inside `fn {report['promotion_ladder_context_fn']}` -- so a refactor cannot leave a stale
+"fact" behind, and a change to the ladder's conditions cannot pass unnoticed
+(`risks-and-open-questions.md §10`; SD-35 `AT-35-E1-002`).
 """
 
 

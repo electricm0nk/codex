@@ -38,7 +38,7 @@ units), `<STAT>SCORE` → `AbilityScore`, `TL` → `Level` (1,385 / 1,041 units)
 `Size`), and the holder-relative **`CasterLevel`** that spell records need (§3).
 
 **Variables are the whole problem.** 11,144 units reference a corpus variable; **8,518 of them
-(6,646 non-DONE — 28.5% of all non-DONE units)** reference a variable whose contributors sit on
+(6,646 non-DONE — 28.5% of all 23,315 non-DONE units)** reference a variable whose contributors sit on
 *another* record. `Expr` has no way to say "add this record's term only if the character holds
 it". That is the one gap that blocks a large population; §3 states the rule and the two
 mechanical fixes.
@@ -206,7 +206,7 @@ them too; the bonus lane's "refuse per name" would refuse 618 non-DONE units the
 prints).
 
 **Counts (units with a corpus record, of 48,608):** same-record only **1,318** (793 non-DONE);
-cross-record **8,518** (6,646 non-DONE, 28.5% of all non-DONE); any variable **11,144**
+cross-record **8,518** (6,646 non-DONE, 28.5% of all 23,315 non-DONE); any variable **11,144**
 (8,309). Contributors in *unheld rows of ingested files* (row 29): 7,768 rows across the 677
 cited `.lst` files — 5,969 are `.MOD` rows the token closure already reads when the base record
 is ingested, 1,799 are base rows never ingested (`acg_abilities_globalvar.lst` 703,

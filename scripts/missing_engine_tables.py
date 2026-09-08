@@ -30,9 +30,9 @@ For each of the 2 kinds this population actually contains, records:
   - `by_book` -- per-book breakdown of that count
   - `engine_surface` -- the exact `engine_does_not_hold(...)` call site in
     `src/bin/v06_work_inventory.rs` a real table would replace (the same
-    `file:line:must_contain` citation shape `completion_atlas.py` uses for
-    its own bucket definitions -- verified against the live file, not
-    assumed, and re-checked every run)
+    `{file, context_fn, anchor}` content-anchor shape `completion_atlas.py`
+    uses for its own bucket definitions -- resolved by search against the
+    live file on every run, never pinned to a line; SD-35 `AT-35-E1-002`)
   - `zero_bucket_a_books` -- books whose ENTIRE bucket-A population is this
     one kind; building this kind's table alone would take that book's
     bucket A to zero. A book with two or more bucket-A kinds is not listed
@@ -53,6 +53,8 @@ import json
 import os
 import sys
 
+from completion_atlas import resolve_content_anchor
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INVENTORY_PATH = os.path.join(REPO_ROOT, "docs", "work-inventory.json")
 ARTIFACT_PATH = os.path.join(
@@ -63,55 +65,25 @@ _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 _A_MARKER = "has_no_engine_table"
 
 # The exact `engine_does_not_hold(...)` call site emitting each kind's bucket-A
-# marker in `_ENGINE_SRC`, as of this cycle's re-verification. This is "the
-# engine surface a table would attach to": the arm a real per-kind table
-# lookup would replace.
+# marker in `_ENGINE_SRC`, as a CONTENT ANCHOR (SD-35 `AT-35-E1-002`): the
+# arm's exact source line, which must appear exactly once inside `classify`,
+# found by search at check time (`completion_atlas.resolve_content_anchor`).
+# This is "the engine surface a table would attach to": the arm a real
+# per-kind table lookup would replace. The `file:line` pins this dict carried
+# before were re-derived by hand in seven SD-34 waves and found already
+# drifted at HEAD by wave 51 because this instrument was never a `verify.sh`
+# stage; `git log -p` on this file keeps that history.
 ENGINE_SURFACE_CITATIONS = {
-    # Re-derived by this wave's shared regen cycle (AT-34-E3-001_wave9_regen_receipt.md,
-    # fourth dispatch), whose --check run found both prior pins shifted +195 lines by
-    # intervening cycles' own insertions (AT-34-E3-002 Cleric Domain probe, AT-34-E4-002
-    # cycle 4 choice-based trait spine, AT-34-E3-003 bucket-M BASEITEM chase) since the
-    # prior re-derivation. Re-grepped fresh against the real construction sites.
-    #
-    # SD-34 wave 44 re-derivation: both pins were already stale at HEAD
-    # (before this wave's own edits), never caught because this test is not
-    # wired into `verify.sh` (only invoked via `scripts/tests` discovery).
-    # Piece 1/2's own insertions into this file shifted them further still.
-    # Re-grepped fresh against the real construction sites, 11719 -> 14013
-    # and 11819 -> 14113.
-    # SD-34 wave 45 re-derivation: this cycle's own Phrenic Slayer Favored
-    # Enemy insertions (above both sites) shifted them again, 14013 -> 14093
-    # and 14113 -> 14193.
-    # SD-34 wave 46 re-derivation: this cycle's own six new `EngineFacts`
-    # fields, seven new probe functions, and `classify()` early-return block
-    # (all above both sites) shifted them again, 14093 -> 14716 and
-    # 14193 -> 14816.
-    # SD-34 wave 47 re-derivation: this cycle's own Divine Scion
-    # `EngineFacts` field, choice-gating consts, rewritten probe function,
-    # and `classify()` early-return block (all above both sites) shifted
-    # them again, 14716 -> 15030 and 14816 -> 15130.
-    # SD-34 wave 48 re-derivation: this cycle's own Twilight Talon/Golden
-    # Legionnaire `EngineFacts` fields, probe functions, and choice-seed arm
-    # (all above both sites) shifted them again, 15030 -> 15380 and
-    # 15130 -> 15480.
-    # SD-34 wave 48 CORRECTION (same cycle, before commit): the derivation
-    # above was against a pre-clippy-fix snapshot; this cycle's own `type
-    # TwilightTalonTattooTierMember` alias (inserted above both sites to
-    # clear a `clippy::type_complexity` warning) shifted them by a further
-    # uniform +4, 15380 -> 15384 and 15480 -> 15484 -- caught re-running
-    # `--check` AFTER the clippy fix, read back and confirmed.
-    # SD-34 wave 51 re-derivation, and a REAL PRE-EXISTING STALENESS this wave
-    # found rather than caused: `--check` already failed at HEAD
-    # (`5f6b18f4e3`), where the two arms live at 16306 and 16406, not 16192 and
-    # 16292 -- wave 49's and wave 50's own `src/bin/v06_work_inventory.rs`
-    # edits shifted them and neither wave's gate re-ran THIS instrument (both
-    # re-derived `completion_atlas.py`'s ten citations only). Re-derived here
-    # for the post-wave-51 file by fresh `grep -n 'Kind::Companion =>
-    # engine_does_not_hold'` / `'Kind::Power => engine_does_not_hold'` -- one
-    # real construction site each -- content read back and confirmed, never the
-    # arithmetic alone.
-    "companion": {"line": 16442, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 16542, "must_contain": "power_content_has_no_engine_table"},
+    "companion": {
+        "file": _ENGINE_SRC,
+        "context_fn": "classify",
+        "anchor": 'Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table"),',
+    },
+    "power": {
+        "file": _ENGINE_SRC,
+        "context_fn": "classify",
+        "anchor": 'Kind::Power => engine_does_not_hold("power_content_has_no_engine_table"),',
+    },
 }
 
 
@@ -132,28 +104,18 @@ def _is_bucket_a(unit: dict) -> bool:
     return unit.get("status") == "engine-does-not-hold" and _A_MARKER in (unit.get("evidence") or "")
 
 
-def _read_source_line(rel_path: str, line_no: int) -> "str | None":
-    path = os.path.join(REPO_ROOT, rel_path)
-    try:
-        with open(path, "r", encoding="utf-8") as fh:
-            lines = fh.readlines()
-    except OSError:
-        return None
-    if line_no < 1 or line_no > len(lines):
-        return None
-    return lines[line_no - 1]
-
-
-def citation_failures() -> list:
-    """Bucket-A kinds whose citation no longer resolves or whose cited
-    line's content no longer contains the marker it claims to (content, not
-    just path/line -- `risks-and-open-questions.md §10`, same shape as
-    `completion_atlas.py` condition 6)."""
+def citation_failures(citations: dict = ENGINE_SURFACE_CITATIONS,
+                      lines: "list[str] | None" = None) -> list:
+    """Bucket-A kinds whose content anchor no longer resolves -- the cited
+    arm is gone, changed, duplicated, or its function vanished (content, not
+    path/line -- `risks-and-open-questions.md §10`, same resolver as
+    `completion_atlas.py` condition 6). `lines` lets a test resolve against
+    supplied text instead of the file on disk."""
     failures = []
-    for kind, cite in ENGINE_SURFACE_CITATIONS.items():
-        content = _read_source_line(_ENGINE_SRC, cite["line"])
-        if content is None or cite["must_contain"] not in content:
-            failures.append(f"{kind}: {_ENGINE_SRC}:{cite['line']} does not contain {cite['must_contain']!r}")
+    for kind, cite in citations.items():
+        resolved = resolve_content_anchor(cite, lines=lines, repo_root=REPO_ROOT)
+        if not resolved["ok"]:
+            failures.append(f"{kind}: {resolved['reason']}")
     return failures
 
 
@@ -179,13 +141,16 @@ def build_report(units: list) -> dict:
     for kind, book_counts in by_kind_book.items():
         zero_books = sorted(b for b, c in book_counts.items() if c == book_a_total[b])
         cite = ENGINE_SURFACE_CITATIONS[kind]
+        resolved = resolve_content_anchor(cite, repo_root=REPO_ROOT)
         kinds_out[kind] = {
             "count": sum(book_counts.values()),
             "by_book": dict(book_counts.most_common()),
             "engine_surface": {
-                "file": _ENGINE_SRC,
-                "line": cite["line"],
-                "must_contain": cite["must_contain"],
+                "file": cite["file"],
+                "context_fn": cite["context_fn"],
+                "anchor": cite["anchor"],
+                # Derived by search at check time, never pinned.
+                "resolved_line": resolved["line"] if resolved["ok"] else None,
             },
             "zero_bucket_a_books": zero_books,
         }

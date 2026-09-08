@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -1158,6 +1158,143 @@ run_cycle_scope_gate_selftest() {
     fi
 
     stage_pass cycle-scope-gate-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: shape-engine-boundary-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_shape_engine_boundary.py` --
+# the self-test behind the `shape-engine-boundary` stage below, carrying the
+# two RED->GREEN proofs SD-35 `AT-35-E1-002` names (moving the cited function
+# 50 lines keeps its content anchor green; changing one cited condition
+# fails it). Same shape as `shape-coverage-standing-gate-selftest`: a zero
+# case count is a failure, not a vacuous pass. Cheap (Python, no build) --
+# in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_shape_engine_boundary_selftest() {
+    stage_start "shape-engine-boundary-selftest — python3 -m unittest scripts/tests/test_shape_engine_boundary.py"
+    local log="$LOG_DIR/shape-engine-boundary-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_shape_engine_boundary.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail shape-engine-boundary-selftest "self-test script missing at scripts/tests/test_shape_engine_boundary.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail shape-engine-boundary-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail shape-engine-boundary-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass shape-engine-boundary-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: shape-engine-boundary
+#
+# Runs `scripts/shape_engine_boundary.py --check` -- SD-34 `AT-34-E1-004`'s
+# committed fact (a shape engine turns a formula into a number and does not
+# place/attach/display the record), re-derived against the live
+# `docs/work-inventory.json` and the live `src/bin/v06_work_inventory.rs` on
+# every run. Fails when either count cannot be derived or the promotion
+# ladder's CONTENT ANCHOR no longer resolves -- the four cited lines gone,
+# changed, duplicated, or `fn classify` vanished (SD-35 `AT-35-E1-002`).
+# Wired here because SD-34 wave 51 found this instrument's citation already
+# drifted at HEAD: the gate worked, nobody had asked it -- an instrument
+# that is not a stage is not a gate (`workflow-instruction.md §12` row 31).
+# Cheap (Python + JSON, no build) -- in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_shape_engine_boundary() {
+    stage_start "shape-engine-boundary — python3 scripts/shape_engine_boundary.py --check"
+    local log="$LOG_DIR/shape-engine-boundary.log"
+    local script="$REPO_ROOT/scripts/shape_engine_boundary.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail shape-engine-boundary "script missing at scripts/shape_engine_boundary.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    local magnitude_bearing not_held citation_ok stale
+    magnitude_bearing=$(sed -n 's/^magnitude_bearing=\([0-9]*\) .*$/\1/p' "$log" | tail -1)
+    not_held=$(sed -n 's/^.* not_held_by_engine=\([0-9]*\) .*$/\1/p' "$log" | tail -1)
+    citation_ok=$(sed -n 's/^.* citation_ok=\([A-Za-z]*\)$/\1/p' "$log" | tail -1)
+    stale=$(sed -n 's/^STALE_CITATION: \(.*\)$/\1/p' "$log" | tail -1)
+    actual "SHAPE_ENGINE_MAGNITUDE_BEARING=${magnitude_bearing:-unknown}"
+    actual "SHAPE_ENGINE_NOT_HELD=${not_held:-unknown}"
+
+    if (( status != 0 )); then
+        stage_fail shape-engine-boundary "exit $status${stale:+ — stale citation: $stale} — $log"
+        return
+    fi
+
+    if [[ "$citation_ok" != True || -z "$magnitude_bearing" ]]; then
+        stage_fail shape-engine-boundary "exited 0 without printing citation_ok=True and a population — $log"
+        return
+    fi
+
+    stage_pass shape-engine-boundary "magnitude_bearing=${magnitude_bearing} not_held_by_engine=${not_held:-?} citation_ok=True"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: missing-engine-tables
+#
+# Runs `scripts/missing_engine_tables.py --check` -- SD-34 `AT-34-E1-003`'s
+# per-kind enumeration of bucket A ("engine has no table for this kind"),
+# re-derived against the live inventory on every run. Fails on a bucket-A
+# kind with no engine-surface citation (`UnknownKindError`) or on a citation
+# whose CONTENT ANCHOR no longer resolves inside `fn classify` (SD-35
+# `AT-35-E1-002`). Same wave-51 lesson as `shape-engine-boundary`: both
+# pins were found stale at HEAD because neither instrument was a stage.
+# Cheap (Python + JSON, no build) -- in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_missing_engine_tables() {
+    stage_start "missing-engine-tables — python3 scripts/missing_engine_tables.py --check"
+    local log="$LOG_DIR/missing-engine-tables.log"
+    local script="$REPO_ROOT/scripts/missing_engine_tables.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail missing-engine-tables "script missing at scripts/missing_engine_tables.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    local population kinds cite_failures unknown
+    population=$(sed -n 's/^population=\([0-9]*\) kinds=[0-9]*$/\1/p' "$log" | tail -1)
+    kinds=$(sed -n 's/^population=[0-9]* kinds=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    cite_failures=$(sed -n 's/^citation_failures=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    unknown=$(sed -n 's/^UNKNOWN_KIND: \(.*\)$/\1/p' "$log" | tail -1)
+    actual "MISSING_ENGINE_TABLES_POPULATION=${population:-unknown}"
+
+    if (( status != 0 )); then
+        stage_fail missing-engine-tables "exit $status population=${population:-?} kinds=${kinds:-?} citation_failures=${cite_failures:-?}${unknown:+ — $unknown} — $log"
+        return
+    fi
+
+    if [[ -z "$population" || "$cite_failures" != 0 ]]; then
+        stage_fail missing-engine-tables "exited 0 without printing a population and citation_failures=0 — $log"
+        return
+    fi
+
+    stage_pass missing-engine-tables "population=${population} kinds=${kinds:-?} citation_failures=0"
 }
 
 # ---------------------------------------------------------------------------
@@ -2337,6 +2474,9 @@ for stage in "${SELECTED[@]}"; do
         shape-coverage-standing-gate-selftest) run_shape_coverage_standing_gate_selftest ;;
         shape-coverage-standing-gate) run_shape_coverage_standing_gate ;;
         cycle-scope-gate-selftest) run_cycle_scope_gate_selftest ;;
+        shape-engine-boundary-selftest) run_shape_engine_boundary_selftest ;;
+        shape-engine-boundary) run_shape_engine_boundary ;;
+        missing-engine-tables) run_missing_engine_tables ;;
         denominator-gate)    run_denominator_gate ;;
         figure-provenance)   run_figure_provenance ;;
         pcgen-residue-gate)  run_pcgen_residue_gate ;;

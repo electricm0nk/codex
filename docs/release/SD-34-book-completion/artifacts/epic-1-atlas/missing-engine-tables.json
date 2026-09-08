@@ -6,9 +6,10 @@
       },
       "count": 28,
       "engine_surface": {
+        "anchor": "Kind::Companion => engine_does_not_hold(\"companion_content_has_no_engine_table\"),",
+        "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 16442,
-        "must_contain": "companion_content_has_no_engine_table"
+        "resolved_line": 16442
       },
       "zero_bucket_a_books": [
         "bestiary"
@@ -20,9 +21,10 @@
       },
       "count": 421,
       "engine_surface": {
+        "anchor": "Kind::Power => engine_does_not_hold(\"power_content_has_no_engine_table\"),",
+        "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 16542,
-        "must_contain": "power_content_has_no_engine_table"
+        "resolved_line": 16542
       },
       "zero_bucket_a_books": [
         "ultimate_psionics"

@@ -2,9 +2,12 @@
   "buckets": {
     "A": {
       "citation": {
+        "anchor": [
+          "Kind::Companion => engine_does_not_hold(\"companion_content_has_no_engine_table\"),"
+        ],
+        "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 16442,
-        "must_contain": "has_no_engine_table"
+        "resolved_line": 16442
       },
       "clears": "building the table (Epic 2)",
       "count": 449,
@@ -13,9 +16,12 @@
     },
     "B": {
       "citation": {
+        "anchor": [
+          "return engine_does_not_hold(\"class_feature_option_pool_record_not_held_by_engine\");"
+        ],
+        "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 16041,
-        "must_contain": "not_held_by_engine"
+        "resolved_line": 16041
       },
       "clears": "placing the record (Epic 3/4)",
       "count": 11589,
@@ -24,9 +30,12 @@
     },
     "C": {
       "citation": {
+        "anchor": [
+          "engine_does_not_hold(\"no_explanation_id_and_no_diagnostic_names_this_feature\")"
+        ],
+        "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 16347,
-        "must_contain": "explanation_id"
+        "resolved_line": 16347
       },
       "clears": "wiring the display/explanation path (Epic 3)",
       "count": 4180,
@@ -35,9 +44,13 @@
     },
     "D": {
       "citation": {
+        "anchor": [
+          "let engine_does_not_hold = |evidence: &str| Verdict {",
+          "status: \"engine-does-not-hold\","
+        ],
+        "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13376,
-        "must_contain": "engine-does-not-hold"
+        "resolved_line": 13375
       },
       "clears": "per named sub-cause",
       "count": 1982,
@@ -46,9 +59,14 @@
     },
     "DONE": {
       "citation": {
+        "anchor": [
+          "if let Some(bonus) = grounded_magnitude {",
+          "return Verdict {",
+          "status: \"grounded\","
+        ],
+        "context_fn": "simple_kind_verdict",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13149,
-        "must_contain": "grounded"
+        "resolved_line": 13147
       },
       "clears": "\u2014",
       "count": 26123,
@@ -57,9 +75,13 @@
     },
     "M": {
       "citation": {
+        "anchor": [
+          "status: \"ingested-magnitude\",",
+          "evidence: format!(\"{kind_label}_table_holds_record_magnitude_not_yet_computed\"),"
+        ],
+        "context_fn": "simple_kind_verdict",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13158,
-        "must_contain": "ingested-magnitude"
+        "resolved_line": 13158
       },
       "clears": "running the compute path (shape engine)",
       "count": 4334,
@@ -68,9 +90,13 @@
     },
     "U": {
       "citation": {
+        "anchor": [
+          "status: \"unmeasurable\",",
+          "evidence: \"feat_served_description_is_a_placeholder_marker_not_prose\".to_string(),"
+        ],
+        "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13463,
-        "must_contain": "unmeasurable"
+        "resolved_line": 13463
       },
       "clears": "instrument correction",
       "count": 202,
@@ -79,9 +105,12 @@
     },
     "V": {
       "citation": {
+        "anchor": [
+          "item.verdict.status = \"literal-verified\";"
+        ],
+        "context_fn": "apply_done_rung_stamps",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 17281,
-        "must_contain": "literal-verified"
+        "resolved_line": 17281
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
       "count": 392,
@@ -90,9 +119,13 @@
     },
     "X": {
       "citation": {
+        "anchor": [
+          "status: \"deferred-with-reason\",",
+          "evidence: \"engine_diagnostic:ultimate_campaign::feat_tables::DEFERRED_WITH_REASON\""
+        ],
+        "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13423,
-        "must_contain": "deferred-with-reason"
+        "resolved_line": 13423
       },
       "clears": "revisiting the stated condition",
       "count": 168,
@@ -101,9 +134,13 @@
     },
     "Z": {
       "citation": {
+        "anchor": [
+          "status: \"not-started\",",
+          "evidence: \"no_compiled_rule_set_for_book\".to_string(),"
+        ],
+        "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 13284,
-        "must_contain": "not-started"
+        "resolved_line": 13284
       },
       "clears": "ordinary work",
       "count": 19,
@@ -112,7 +149,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "4c4d07f89d8cadfb2bfdb19dcad0304269176bfe",
+  "derived_at": "53296d80f05fe8c32e867f90dd5064a125187f32",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],

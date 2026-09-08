@@ -34,15 +34,27 @@ top of AT-34-E1-001's `unclassified`/`overlap` gate:
     3. a unit in DONE whose evidence does not support it
     4. a bucket with no named clearing mechanism
     5. a `derived_at` SHA that is not an ancestor of HEAD (staleness gate)
-    6. a bucket whose definition does not cite the `file:line` that emits
-       the evidence strings it keys on -- or whose citation no longer
-       resolves, or whose cited *line's content* no longer contains the
-       marker (content, not just path/line -- `risks-and-open-questions.md
-       §10`)
+    6. a bucket whose definition does not cite the source that emits the
+       evidence strings it keys on -- or whose citation no longer resolves,
+       or whose cited *content* changed (content, not path/line --
+       `risks-and-open-questions.md §10`)
 
-Each `BUCKET_DEFINITIONS` entry now carries a `citation` naming the real
-`src/bin/v06_work_inventory.rs` line that emits the marker/status string the
-bucket keys on -- verified against the live file, not assumed.
+Each `BUCKET_DEFINITIONS` entry carries a `citation` that is a CONTENT
+ANCHOR (SD-35 `AT-35-E1-002`): `{file, context_fn, anchor}` -- the exact
+source line(s) that emit the marker/status string the bucket keys on, inside
+a named function of `src/bin/v06_work_inventory.rs`, resolved by search on
+every run (`resolve_content_anchor`). `shape_engine_boundary.py` and
+`missing_engine_tables.py` import the same resolver.
+
+Output modes:
+
+    --check                 the fail-closed partition + the six conditions
+    --by-book               one row per book, bucket counts and percentages
+    --by-kind [--book B]    one row per kind, bucket counts and percentages
+    --by-evidence [--book B] [--bucket X]
+                            per bucket, the distinct evidence strings and
+                            how many units carry each (the sub-cause census)
+    --book B --check        exit 0 only when that book's non-DONE buckets are 0
 """
 
 from __future__ import annotations
@@ -51,6 +63,7 @@ import argparse
 import collections
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -72,141 +85,44 @@ _C_MARKERS = ("explanation_id", "diagnostic")
 
 _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 
+# --- content anchors (SD-35 AT-35-E1-002) -----------------------------------
+#
+# Every bucket cites the source that emits the evidence/status string it keys
+# on as a CONTENT ANCHOR, not a `file:line` pin: `{file, context_fn, anchor}`
+# where `anchor` is the exact source line(s) -- stripped of indentation --
+# that must appear, consecutively and exactly once, inside the body of the
+# named function. `resolve_content_anchor` searches for it at check time, so
+# a refactor that moves the code keeps the citation green and any change to
+# the cited content (or a second copy of it, or the function vanishing)
+# still fails closed -- SD-34 AT-34-E1-002 condition 6, preserved.
+#
+# Why: the `file:line` pins this block carried before were re-derived by hand
+# in eleven separate SD-34 waves (32, 33, 35, 38, 40, 44, 45, 46, 47, 48, 50),
+# went silently stale twice on a doc-comment that happened to contain the
+# bare marker substring, and were found drifted at HEAD by wave 51 -- every
+# edit to `v06_work_inventory.rs` shifted them. `git log -p` on this file
+# keeps that history; it no longer needs to live here. The multi-line anchors
+# below are the minimum that is unique inside the named function (e.g.
+# `status: "grounded",` appears twice in `simple_kind_verdict`, so DONE's
+# anchor carries the `if let Some(bonus) = grounded_magnitude {` line above
+# its construction site).
+
 BUCKET_DEFINITIONS = {
     "DONE": {
         "meaning": "nothing remains",
         "clears": "—",
         "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
-        # First `status: "grounded"` literal -- one of the two DONE statuses.
-        # `AT-34-E3-002` (Monk Unarmed Damage Medium closure) re-derived this
-        # line after its own edit shifted every citation below it -- see that
-        # cycle's receipt for the re-derivation method (`git diff` line-count
-        # deltas, confirmed by reading each new line's real content, never
-        # guessed). `AT-34-E4-002` cycle 4 re-derived it again after its own
-        # rebase onto AT-34-E3-002's WIP cycle shifted every citation below
-        # it a second time -- same method: for A/B/C/D, the exact literal
-        # call site each comment already names; for DONE/M/U/X/Z, the FIRST
-        # `status: "<value>"` construction-site occurrence in the file
-        # (never a test-assertion `verdict.status, "<value>"` occurrence).
-        # `AT-34-E3-002` cycle 4 (Sorcerer Bloodline generic-pool-group
-        # reuse) re-derived every line below a third time: `diff -u0` on the
-        # cycle's own six pure-insertion hunks gives exact original-line ->
-        # inserted-line-count breakpoints, summed cumulatively per target
-        # line and confirmed by reading each new line's real content, never
-        # guessed. `AT-34-E3-002` cycle 5 (Bard Versatile Performance
-        # generic-member-naming closure) re-derived every line below a
-        # fourth time, same method: each old line's own exact literal
-        # content (`git show HEAD:...`) matched against a UNIQUE grep of
-        # that same literal string in the working tree, disambiguating the
-        # first real construction-site occurrence from later test
-        # assertions by full-line, full-indentation string match (never a
-        # guessed offset).
-        # `AT-34-E3-002` cycle 7 (wave-21, Ranger Combat Style choice-recognition
-        # wiring) re-derived every line below a seventh time, same method: each
-        # old line's own exact literal content (`git show HEAD~1:...`) matched
-        # against a UNIQUE grep of that same literal string in the working tree.
-        # `AT-34-E4-002` cycle 9 (seventh trait slice, `BONUS:SITUATION`)
-        # re-derived every line below an eighth time: this cycle's own rebase
-        # picked up a concurrently-landed `AT-34-E3-002` cycle 8 commit that had
-        # already shifted every citation below by its own insertions (none of
-        # them re-derived by that lane), and this cycle's own insertions shifted
-        # the ones at or past its own edit point a second time -- fresh `grep -n`
-        # for each marker's own unique literal construction-site string against
-        # the real, current, post-rebase file content, never either side's own
-        # pre-rebase number.
-        # `AT-34-E3-003` cycle 6 (equipment sub-causes, `encumbrance` WT:/COST:
-        # probe widening) re-derived every line below a ninth time: this
-        # cycle's own single pure-insertion hunk at `equipment_key_is_wired`
-        # (line ~6757, before every citation below) added exactly 20 lines --
-        # confirmed by a fresh, unique `grep -n` for each marker's own real
-        # construction-site literal (never the first grep hit, which for
-        # several markers is a doc-comment or a `BUCKET_DEFINITIONS`-adjacent
-        # status-vocabulary tuple, not the construction site) against the
-        # current file, all ten landing at exactly old_line+20.
-        # Wave 32 (AT-34-E1-002 citation-gate repair) re-derived all ten
-        # citations a tenth time: `--check` reported ALL TEN as broken, not
-        # just DONE's -- an intervening edit shifted every line below without
-        # any lane re-deriving them. Method: fresh `grep -n` for each
-        # marker's own unique literal, excluding (a) the `STATUS_VOCABULARY`
-        # tuple entries near line 9330-9410 (doc strings, not construction
-        # sites) and (b) `#[cfg(test)]` assertions, then confirmed the
-        # surviving hit sits inside real production code by walking upward
-        # to the nearest `fn`/`#[cfg(test)]` marker. Each new line's exact
-        # content was read back and checked to literally contain the marker
-        # before being written here -- never assumed from the grep hit alone.
-        # Wave 33 lane B re-derivation: this cycle's own 6 pure-insertion
-        # hunks (`git diff -U0` on `src/bin/v06_work_inventory.rs`) at old
-        # lines 55/5635/6273/6443/11251/18428 shifted every citation at or
-        # below each breakpoint by that hunk's own line count
-        # (+3/+16/+35/+41/+48/+176). This marker sits below the first four
-        # breakpoints only (10195 < 11251): cumulative shift +95,
-        # 10195 -> 10290. Confirmed by reading the new line's real content.
-        # Wave 35 fold re-derivation (lane A's Skinwalker resolver and lane
-        # B's TEMPLATE bonus-language probe both land in this file; neither
-        # lane's own hand-computed offset is trusted here): fresh `grep -n
-        # 'status: "grounded"'` against the actual merged file, taking the
-        # first hit that survives inside `simple_kind_verdict` (not a test
-        # assertion) -- 10290 -> 10387. Read back and confirmed the new
-        # line still literally contains `status: "grounded",`.
-        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
-        # own doc comment gained a new numbered point above its function
-        # definition, shifting every construction site below it): the OLD
-        # pin (10387) had gone SILENTLY stale -- `_citation_failures` did
-        # not flag it only because the shifted line 10387 still happened to
-        # contain the substring "grounded" inside an unrelated doc comment
-        # (`// `grounded_magnitude` is the caller's OWN...`), the exact
-        # "passes the string check, wrong construction site" hazard this
-        # file's own comments warn about (`decisions.md §12` L2) -- caught
-        # by reading the line back, not trusted from the string match alone.
-        # Fresh `grep -n 'status: "grounded",'` against the real file,
-        # taking the first hit inside `simple_kind_verdict` (not a test),
-        # 10387 -> 10427, read back and confirmed the real construction
-        # site.
-        # Wave 40 lane B re-derivation: this cycle's own 2 pure-insertion
-        # hunks (`git diff -U0` on `src/bin/v06_work_inventory.rs`) at old
-        # lines 10281 and 24229 shifted this citation by their cumulative
-        # +43 (the second hunk sits below this marker, so it does not
-        # apply). The OLD pin (10737) had gone SILENTLY stale again, in the
-        # SAME shape wave 38 lane C already found once: the shifted line
-        # 10737 lands on `// \`grounded\` at all -- every non-\`text_only\`
-        # held record falls to the`, a doc-comment line that still contains
-        # the bare substring "grounded" and so passes `must_contain`
-        # without being the real construction site. Fresh `grep -n
-        # 'status: "grounded",'` against the real file, taking the first
-        # hit inside `simple_kind_verdict` (not a test), 10737 -> 10780,
-        # read back and confirmed the real construction site.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this site
-        # shift it): fresh `grep -n 'status: "grounded",'`, first hit inside
-        # `simple_kind_verdict`, 10908 -> 11301, read back and confirmed
-        # still the real construction site.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `EngineFacts` field doc comment + probe function + wiring
-        # insertions sit above this site): fresh `grep -n 'status:
-        # "grounded",'`, first hit inside `simple_kind_verdict`, 11301 ->
-        # 11361, read back and confirmed still the real construction site.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block all sit above this site): fresh `grep -n 'status:
-        # "grounded",'`, first hit inside `simple_kind_verdict`, 11361 ->
-        # 11907, read back and confirmed still the real construction site.
-        # Wave 47 re-derivation (this cycle's own Divine Scion `EngineFacts`
-        # field, choice-gating consts, rewritten probe function, and
-        # `classify()` early-return block all sit above this site): fresh
-        # `grep -n 'status: "grounded",'`, first hit inside
-        # `simple_kind_verdict`, 11907 -> 12204, read back and confirmed
-        # still the real construction site.
-        # Wave 48 re-derivation (this cycle's own two new `EngineFacts`
-        # fields, two new probe functions, and `classify()` early-return
-        # block all sit above this site): fresh `grep -n 'status:
-        # "grounded",'`, first hit inside `simple_kind_verdict`, 12204 ->
-        # 12530, read back and confirmed still the real construction site.
-        # Wave 48 CORRECTION (same cycle, before commit): the derivation
-        # above was against a pre-clippy-fix snapshot; this cycle's own
-        # `type TwilightTalonTattooTierMember` alias (inserted above this
-        # site to clear a `clippy::type_complexity` warning) shifted this by
-        # a further uniform +4, 12530 -> 12534 -- caught by re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13149, "must_contain": "grounded"},
+        # The `grounded` construction site in `simple_kind_verdict` (one of
+        # the two DONE statuses): the fixture-verified magnitude arm.
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "simple_kind_verdict",
+            "anchor": [
+                "if let Some(bonus) = grounded_magnitude {",
+                "return Verdict {",
+                'status: "grounded",',
+            ],
+        },
     },
     "A": {
         "meaning": "engine has no table for this kind",
@@ -215,77 +131,15 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'has_no_engine_table')"
         ),
-        # `Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table")`.
-        # Wave 32 re-derivation: fresh `grep -n` for the full literal, line
-        # content read back and confirmed.
-        # Wave 33 re-derivation, post-fold (both lane A and lane B land in
-        # this file): neither lane's own hand-computed arithmetic offset is
-        # trusted here -- re-derived fresh against the actual merged file
-        # with `grep -n` for the SAME unique literal (`Kind::Companion =>
-        # engine_does_not_hold("companion_content_has_no_engine_table"),`),
-        # line content read back and confirmed still the real construction
-        # site.
-        # Wave 34 merge re-derivation (lane A + lane B both land in this
-        # file): neither lane's own hand-computed offset is trusted here --
-        # fresh `grep -n` against the actual merged file for the same
-        # unique literal, line content read back and confirmed still the
-        # real construction site.
-        # Wave 35 fold re-derivation (both lanes land in this file): fresh
-        # `grep -n` against the actual merged file for the same unique
-        # literal (`Kind::Companion => engine_does_not_hold(
-        # "companion_content_has_no_engine_table"),`), 12780 -> 12934, line
-        # content read back and confirmed still the real construction site.
-        # Wave 36 lane A re-derivation (sub-mechanism 1 matcher fix adds a
-        # `facts.class_books` membership check earlier in the same function):
-        # fresh `grep -n` for the same unique literal, 12934 -> 12955, line
-        # content read back and confirmed still the real construction site.
-        # Wave 36 merge re-derivation (lane A + lane C's own creature-type-
-        # collision guard both compose at the SAME site): fresh `grep -n`
-        # against the actual merged file for the same unique literal,
-        # 12955 -> 12986, line content read back and confirmed still the
-        # real construction site.
-        # Wave 37 lane A re-derivation (the new subdomain-keyed sibling check
-        # inserted a 34-line block above this site): fresh `grep -n` for the
-        # same unique literal, 12986 -> 13020, line content read back and
-        # confirmed still the real construction site.
-        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
-        # widened doc comment + new second-to-last-dot-segment check sit
-        # above this site): fresh `grep -n` for the same unique literal,
-        # 13020 -> 13060, line content read back and confirmed still the
-        # real construction site.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this site
-        # shift it): fresh `grep -n` for the same unique literal, 13561 ->
-        # 14013, line content read back and confirmed still the real
-        # construction site.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `classify()` early-return block sits above this site):
-        # fresh `grep -n` for the same unique literal, 14013 -> 14093, line
-        # content read back and confirmed still the real construction site.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block all sit above this site): fresh `grep -n` for the same
-        # unique literal, 14093 -> 14716, line content read back and
-        # confirmed still the real construction site.
-        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
-        # above this site): fresh `grep -n` for the same unique literal,
-        # 14716 -> 15030, line content read back and confirmed still the
-        # real construction site.
-        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
-        # Legionnaire insertions above this site): fresh `grep -n` for the
-        # same unique literal, 15030 -> 15380, line content read back and
-        # confirmed still the real construction site.
-        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
-        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
-        # this by a further uniform +4, 15380 -> 15384 -- caught re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        # Wave 50: re-derived all ten citations again after this cycle's own
-        # two pure-insertion hunks (`git diff -U0`: +53 lines after old
-        # `simple_kind_verdict` line 13052, +61 more after old `classify()`
-        # line 16094) -- every citation at or below old-line 13052 unchanged,
-        # every one in (13052, 16094] shifted +53, every one above 16094
-        # shifted +114; each new line's own content re-read and confirmed
-        # (never the arithmetic alone), 16192 -> 16306.
-        "citation": {"file": _ENGINE_SRC, "line": 16442, "must_contain": "has_no_engine_table"},
+        # The `companion` arm emitting the bucket-A marker in `classify`
+        # (the same site `missing_engine_tables.py` cites for `companion`).
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "classify",
+            "anchor": [
+                'Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table"),',
+            ],
+        },
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -294,64 +148,15 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')"
         ),
-        # `engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine")`.
-        # Wave 32 re-derivation: fresh `grep -n` for the full literal, line
-        # content read back and confirmed.
-        # Wave 33 re-derivation, post-fold: same treatment as bucket A above
-        # -- re-derived fresh against the actual merged file with `grep -n`
-        # for the same unique literal (`return engine_does_not_hold(
-        # "class_feature_option_pool_record_not_held_by_engine");`), line
-        # content read back and confirmed still the real construction site.
-        # Wave 34 merge re-derivation: same treatment as bucket A above --
-        # fresh `grep -n` against the actual merged file for the same
-        # unique literal, line content read back and confirmed.
-        # Wave 35 fold re-derivation (both lanes land in this file): fresh
-        # `grep -n` against the actual merged file for the same unique
-        # literal (`return engine_does_not_hold(
-        # "class_feature_option_pool_record_not_held_by_engine");`),
-        # 12460 -> 12614, line content read back and confirmed still the
-        # real construction site (not one of the differently-worded
-        # `engine_does_not_hold(...)` calls a few lines above it).
-        # Wave 36 lane A re-derivation (same membership-check insertion as
-        # bucket A above): fresh `grep -n` for the same unique literal,
-        # 12614 -> 12635, line content read back and confirmed still the
-        # real construction site.
-        # Wave 36 merge re-derivation (same composition as bucket A above):
-        # fresh `grep -n` against the actual merged file for the same unique
-        # literal, 12635 -> 12666, line content read back and confirmed
-        # still the real construction site.
-        # Wave 37 lane A re-derivation (same insertion as bucket A above):
-        # fresh `grep -n` for the same unique literal, 12666 -> 12700, line
-        # content read back and confirmed still the real construction site.
-        # Wave 38 lane C re-derivation (same insertion as bucket A above):
-        # fresh `grep -n` for the same unique literal, 12700 -> 12740, line
-        # content read back and confirmed still the real construction site.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this site
-        # shift it): fresh `grep -n` for the same unique literal, 13221 ->
-        # 13673, line content read back and confirmed still the real
-        # construction site.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `classify()` early-return block sits above this site):
-        # fresh `grep -n` for the same unique literal, 13673 -> 13753, line
-        # content read back and confirmed still the real construction site.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block all sit above this site): fresh `grep -n` for the same
-        # unique literal, 13753 -> 14376, line content read back and
-        # confirmed still the real construction site.
-        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
-        # above this site): fresh `grep -n` for the same unique literal,
-        # 14376 -> 14690, line content read back and confirmed still the
-        # real construction site.
-        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
-        # Legionnaire insertions above this site): fresh `grep -n` for the
-        # same unique literal, 14690 -> 15040, line content read back and
-        # confirmed still the real construction site.
-        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
-        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
-        # this by a further uniform +4, 15040 -> 15044 -- caught re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 16041, "must_contain": "not_held_by_engine"},
+        # The class-feature option-pool `not_held_by_engine` emission in
+        # `classify`.
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "classify",
+            "anchor": [
+                'return engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine");',
+            ],
+        },
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -360,399 +165,105 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'explanation_id' / 'diagnostic')"
         ),
-        # `engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")`.
-        # Wave 32 re-derivation: fresh `grep -n` for the full literal, line
-        # content read back and confirmed.
-        # Wave 33 re-derivation, post-fold: same treatment as buckets A/B
-        # above -- re-derived fresh against the actual merged file with
-        # `grep -n` for the same unique literal (`engine_does_not_hold(
-        # "no_explanation_id_and_no_diagnostic_names_this_feature")`), line
-        # content read back and confirmed still the real construction site.
-        # Wave 34 merge re-derivation: same treatment as buckets A/B above --
-        # fresh `grep -n` against the actual merged file for the same
-        # unique literal, line content read back and confirmed.
-        # Wave 35 fold re-derivation (both lanes land in this file): fresh
-        # `grep -n` against the actual merged file for the same unique
-        # literal (`engine_does_not_hold(
-        # "no_explanation_id_and_no_diagnostic_names_this_feature")`),
-        # 12685 -> 12839, line content read back and confirmed still the
-        # real construction site, not a test assertion.
-        # Wave 36 lane A re-derivation (same membership-check insertion as
-        # buckets A/B above): fresh `grep -n` for the same unique literal,
-        # 12839 -> 12860, line content read back and confirmed still the
-        # real construction site, not a test assertion.
-        # Wave 36 merge re-derivation (same composition as buckets A/B
-        # above): fresh `grep -n` against the actual merged file for the
-        # same unique literal, 12860 -> 12891, line content read back and
-        # confirmed still the real construction site, not a test assertion.
-        # Wave 37 lane A re-derivation (same insertion as buckets A/B
-        # above): fresh `grep -n` for the same unique literal, 12891 ->
-        # 12925, line content read back and confirmed still the real
-        # construction site, not a test assertion.
-        # Wave 38 lane C re-derivation (same insertion as buckets A/B
-        # above): fresh `grep -n` for the same unique literal, 12925 ->
-        # 12965, line content read back and confirmed still the real
-        # construction site, not a test assertion.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this site
-        # shift it): fresh `grep -n` for the same unique literal, 13466 ->
-        # 13918, line content read back and confirmed still the real
-        # construction site, not a test assertion.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `classify()` early-return block sits above this site):
-        # fresh `grep -n` for the same unique literal, 13918 -> 13998, line
-        # content read back and confirmed still the real construction site,
-        # not a test assertion.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block all sit above this site): fresh `grep -n` for the same
-        # unique literal, 13998 -> 14621, line content read back and
-        # confirmed still the real construction site, not a test assertion.
-        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
-        # above this site): fresh `grep -n` for the same unique literal,
-        # 14621 -> 14935, line content read back and confirmed still the
-        # real construction site, not a test assertion.
-        # Wave 48 re-derivation: `--check` did NOT flag this citation (14935
-        # still happened to contain the bare substring "explanation_id"
-        # after this cycle's own insertions shifted it -- the line landed on
-        # `"explanation_id_observed_and_corpus_record_carries_real_
-        # description"`, a DIFFERENT construction site's own evidence
-        # string, not this bucket's), the exact "passes the string check,
-        # wrong construction site" hazard this file's own comments warn
-        # about -- caught by reading the line back, not trusted from the
-        # string match alone. Fresh `grep -n` for the same unique literal
-        # (`engine_does_not_hold("no_explanation_id_and_no_diagnostic_
-        # names_this_feature")`), 14935 -> 15285, line content read back and
-        # confirmed this time it IS the real construction site.
-        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
-        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
-        # this by a further uniform +4, 15285 -> 15289 -- caught re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 16347, "must_contain": "explanation_id"},
+        # The class-feature fallthrough naming both `explanation_id` and
+        # `diagnostic` in `classify`.
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "classify",
+            "anchor": [
+                'engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")',
+            ],
+        },
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
         "clears": "per named sub-cause",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
-        # The shared `engine_does_not_hold` closure that stamps `status: "engine-does-not-hold"`
-        # for every arm that falls through A/B/C -- this IS the D fallthrough
-        # (the closure's own `Verdict { status: "engine-does-not-hold", ... }`
-        # body, one line below its own `let engine_does_not_hold = |evidence: &str| Verdict {`
-        # definition line). Wave 32 re-derivation: fresh `grep -n` for the
-        # closure definition (`let engine_does_not_hold = `), line content
-        # read back and confirmed.
-        # Wave 33 lane B re-derivation: cumulative shift +95 (+3+16+35+41),
-        # 10369 -> 10464.
-        # Wave 35 fold re-derivation (both lanes' own additions -- lane A's
-        # `RaceTraitProbe` skinwalker field/accessor and lane B's TEMPLATE
-        # bonus-language field/accessor -- sit ABOVE this closure
-        # definition, shifting it): fresh `grep -n 'let engine_does_not_hold
-        # = '`, 10464 -> 10560 (definition line), the closure body's own
-        # `status: "engine-does-not-hold"` line one below at 10561, read
-        # back and confirmed.
-        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
-        # widened doc comment sits above this closure definition, shifting
-        # it): fresh `grep -n 'let engine_does_not_hold = '`, 10561 -> 10600
-        # (definition line), the closure body's own `status:
-        # "engine-does-not-hold"` line one below at 10601, read back and
-        # confirmed.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this
-        # closure definition shift it): fresh `grep -n 'let
-        # engine_does_not_hold = '`, 10601 -> 11474 (definition line), the
-        # closure body's own `status: "engine-does-not-hold"` line one
-        # below at 11475, read back and confirmed.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `EngineFacts` field doc comment + probe function + wiring
-        # insertions sit above this closure definition): fresh `grep -n 'let
-        # engine_does_not_hold = '`, 11474 -> 11534 (definition line), the
-        # closure body's own `status: "engine-does-not-hold"` line one below
-        # at 11535, read back and confirmed.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block all sit above this closure definition): fresh `grep -n 'let
-        # engine_does_not_hold = '`, 11534 -> 12080 (definition line), the
-        # closure body's own `status: "engine-does-not-hold"` line one below
-        # at 12081, read back and confirmed.
-        # Wave 47 re-derivation (this cycle's own Divine Scion `EngineFacts`
-        # field, choice-gating consts, rewritten probe function, and
-        # `classify()` early-return block all sit above this closure
-        # definition): fresh `grep -n 'let engine_does_not_hold = '`,
-        # 12080 -> 12377 (definition line), the closure body's own `status:
-        # "engine-does-not-hold"` line one below at 12378, read back and
-        # confirmed.
-        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
-        # Legionnaire `EngineFacts` fields, probe functions, and choice-seed
-        # arm sit above this closure definition): fresh `grep -n 'let
-        # engine_does_not_hold = '`, 12377 -> 12703 (definition line), the
-        # closure body's own `status: "engine-does-not-hold"` line one below
-        # at 12704, read back and confirmed.
-        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
-        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
-        # this by a further uniform +4, 12704 -> 12708 -- caught re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13376, "must_contain": "engine-does-not-hold"},
+        # The shared `engine_does_not_hold` closure in `classify` that stamps
+        # `status: "engine-does-not-hold"` for every arm that falls through
+        # A/B/C -- this IS the D fallthrough.
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "classify",
+            "anchor": [
+                "let engine_does_not_hold = |evidence: &str| Verdict {",
+                'status: "engine-does-not-hold",',
+            ],
+        },
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
         "clears": "running the compute path (shape engine)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
-        # First real `status: "ingested-magnitude"` construction site in
-        # `simple_kind_verdict` (the `STATUS_VOCABULARY` tuple entry near
-        # line 9367 is a doc string, not a construction site). Wave 32
-        # re-derivation: fresh `grep -n`, line content read back and
-        # confirmed.
-        # Wave 33 lane B re-derivation: cumulative shift +95, 10204 -> 10299.
-        # Wave 35 fold re-derivation (both lanes land in this file): fresh
-        # `grep -n 'status: "ingested-magnitude"'` against the actual
-        # merged file, taking the first hit (inside `simple_kind_verdict`,
-        # not a per-Kind classify() arm), 10299 -> 10396, line content read
-        # back and confirmed.
-        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
-        # widened doc comment sits above this site): fresh `grep -n` for the
-        # first hit inside `simple_kind_verdict`, 10396 -> 10436, line
-        # content read back and confirmed.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this site
-        # shift it): fresh `grep -n` for the first hit inside
-        # `simple_kind_verdict`, 10917 -> 11310, line content read back and
-        # confirmed.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `EngineFacts` field doc comment + probe function + wiring
-        # insertions sit above this site): fresh `grep -n` for the first hit
-        # inside `simple_kind_verdict`, 11310 -> 11370, line content read
-        # back and confirmed.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block all sit above this site): fresh `grep -n` for the first hit
-        # inside `simple_kind_verdict`, 11370 -> 11916, line content read
-        # back and confirmed.
-        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
-        # sit above this site): fresh `grep -n` for the first hit inside
-        # `simple_kind_verdict`, 11916 -> 12213, line content read back and
-        # confirmed.
-        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
-        # Legionnaire insertions sit above this site): fresh `grep -n` for
-        # the first hit inside `simple_kind_verdict`, 12213 -> 12539, line
-        # content read back and confirmed.
-        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
-        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
-        # this by a further uniform +4, 12539 -> 12543 -- caught re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13158, "must_contain": "ingested-magnitude"},
+        # The `ingested-magnitude` construction site in `simple_kind_verdict`
+        # (a held record whose magnitude the compute path has not run).
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "simple_kind_verdict",
+            "anchor": [
+                'status: "ingested-magnitude",',
+                'evidence: format!("{kind_label}_table_holds_record_magnitude_not_yet_computed"),',
+            ],
+        },
     },
     "V": {
         "meaning": "verified by proxy, never by the oracle",
         "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
-        # `item.verdict.status = "literal-verified";` -- one of the two V statuses.
-        # Re-derived at wave 22's regen (line drifted 13250 -> 13262 after wave 22's
-        # AT-34-E4-002 cycle 10 eighth-trait-slice + picker-gap-fix insertions into
-        # v06_work_inventory.rs): fresh `grep -n` against the real post-regen file
-        # content, not the prior cycle's own pre-insertion number.
-        # Re-derived at wave 32 (line drifted 13262 -> 13276 after intervening
-        # insertions above `apply_done_rung_stamps`): fresh `grep -n` against
-        # the real current file content, line content read back and confirmed
-        # not to be one of the test-assertion or STATUS_VOCABULARY hits.
-        # Re-derived at wave 33, post-fold (both lane A and lane B land in
-        # this file; neither lane's own hand-computed offset is trusted
-        # here): fresh `grep -n` against the actual merged file for the
-        # exact same unique literal (`item.verdict.status =
-        # "literal-verified";`), line content read back and confirmed still
-        # the real construction site, not a test assertion.
-        # Re-derived at wave 34 merge (lane A + lane B both land in this
-        # file; neither lane's own hand-computed offset is trusted here):
-        # fresh `grep -n` against the actual merged file for the exact same
-        # unique literal, line content read back and confirmed still the
-        # real construction site, not a test assertion.
-        # Wave 35 lane A re-derivation: `--check` did not flag this citation
-        # (13562 still happened to CONTAIN the substring "literal-verified"
-        # after this cycle's own insertions shifted it), but the line it
-        # landed on was a doc comment mentioning the literal, not the real
-        # construction site -- the exact "a citation that passes the string
-        # check but is not the real call site" hazard `decisions.md §12` L2
-        # warns about. Fresh `grep -n` for the exact same unique literal
-        # (`item.verdict.status = "literal-verified";`), 13562 -> 13639,
-        # read back and confirmed this time it IS the real construction
-        # site (assignment, not a doc string).
-        # Wave 35 fold re-derivation: this citation carried no diff-hunk
-        # conflict during lane B's rebase (its own edits sit below this
-        # line, not across it), but its real position still moved once
-        # lane B's insertions landed above it -- never trusted un-checked.
-        # Fresh `grep -n` against the actual merged file for the same
-        # unique literal, 13639 -> 13716, read back and confirmed still the
-        # real construction site.
-        # Wave 36 lane A re-derivation (sub-mechanism 1 matcher fix adds a
-        # membership check above this line): fresh `grep -n` for the same
-        # unique literal, 13716 -> 13737, read back and confirmed still the
-        # real construction site, not a test assertion.
-        # Wave 36 merge re-derivation (lane A + lane C's own composition
-        # above this citation's own construction site shifts it too): fresh
-        # `grep -n` against the actual merged file for the same unique
-        # literal (`item.verdict.status = "literal-verified";`), 13737 ->
-        # 13768, read back and confirmed still the real construction site,
-        # not a test assertion.
-        # Wave 37 lane A re-derivation (same insertion as buckets A/B/C
-        # above): fresh `grep -n` for the same unique literal, 13768 ->
-        # 13802, read back and confirmed still the real construction site,
-        # not a test assertion.
-        # Wave 38 lane C re-derivation (same insertion as buckets A/B/C
-        # above): fresh `grep -n` for the same unique literal, 13802 ->
-        # 13842, read back and confirmed still the real construction site,
-        # not a test assertion.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this site
-        # shift it; the comment trail above stops at wave 38's 13842 but the
-        # live value at wave 44's own start was 14343, from an intervening
-        # wave's uncommented re-derivation): fresh `grep -n` for the same
-        # unique literal, 14343 -> 14795, read back and confirmed still the
-        # real construction site, not a test assertion.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `classify()` early-return block sits above this site): fresh
-        # `grep -n` for the same unique literal, 14795 -> 14875, read back
-        # and confirmed still the real construction site, not a test
-        # assertion.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block all sit above this site): fresh `grep -n` for the same
-        # unique literal, 14875 -> 15498, read back and confirmed still the
-        # real construction site, not a test assertion.
-        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
-        # sit above this site): fresh `grep -n` for the same unique literal,
-        # 15498 -> 15812, read back and confirmed still the real
-        # construction site, not a test assertion.
-        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
-        # Legionnaire insertions sit above this site): fresh `grep -n` for
-        # the same unique literal, 15812 -> 16162, read back and confirmed
-        # still the real construction site, not a test assertion.
-        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
-        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
-        # this by a further uniform +4, 16162 -> 16166 -- caught re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 17281, "must_contain": "literal-verified"},
+        # The `literal-verified` stamp in `apply_done_rung_stamps` (one of the
+        # two V statuses).
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "apply_done_rung_stamps",
+            "anchor": [
+                'item.verdict.status = "literal-verified";',
+            ],
+        },
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
         "clears": "instrument correction",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
-        # First real `status: "unmeasurable"` construction site (the
-        # `STATUS_VOCABULARY` tuple entry near line 9404 is a doc string,
-        # not a construction site). Wave 32 re-derivation: fresh `grep -n`,
-        # line content read back and confirmed.
-        # Wave 33 lane B re-derivation: cumulative shift +95, 10456 -> 10551.
-        # Wave 35 fold re-derivation (both lanes land in this file): fresh
-        # `grep -n 'status: "unmeasurable"'` against the actual merged
-        # file, taking the first hit, 10551 -> 10648, line content read
-        # back and confirmed.
-        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
-        # widened doc comment sits above this site): fresh `grep -n` for
-        # the first hit, 10648 -> 10688, line content read back and
-        # confirmed.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this site
-        # shift it): fresh `grep -n` for the first hit, 11169 -> 11562,
-        # line content read back and confirmed.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `EngineFacts` field doc comment + probe function + wiring +
-        # `classify()` early-return block sit above this site): fresh
-        # `grep -n` for the first hit, 11562 -> 11622, line content read
-        # back and confirmed.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block all sit above this site): fresh `grep -n` for the first hit,
-        # 11622 -> 12168, line content read back and confirmed.
-        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
-        # sit above this site): fresh `grep -n 'status: "unmeasurable"'`,
-        # first hit, 12168 -> 12465, line content read back and confirmed.
-        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
-        # Legionnaire insertions sit above this site): fresh `grep -n
-        # 'status: "unmeasurable"'`, first hit, 12465 -> 12791, line content
-        # read back and confirmed.
-        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
-        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
-        # this by a further uniform +4, 12791 -> 12795 -- caught re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13463, "must_contain": "unmeasurable"},
+        # The first `unmeasurable` construction site in `classify`: a feat
+        # whose served description is an upstream marker string, not prose.
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "classify",
+            "anchor": [
+                'status: "unmeasurable",',
+                'evidence: "feat_served_description_is_a_placeholder_marker_not_prose".to_string(),',
+            ],
+        },
     },
     "X": {
         "meaning": "deferred with a stated reason",
         "clears": "revisiting the stated condition",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
-        # First real `status: "deferred-with-reason"` construction site (the
-        # `STATUS_VOCABULARY` tuple entry near line 9383 is a doc string,
-        # not a construction site). Wave 32 re-derivation: fresh `grep -n`,
-        # line content read back and confirmed.
-        # Wave 33 lane B re-derivation: cumulative shift +95, 10416 -> 10511.
-        # Wave 35 fold re-derivation (both lanes land in this file): fresh
-        # `grep -n 'status: "deferred-with-reason"'` against the actual
-        # merged file, taking the first hit, 10511 -> 10608, line content
-        # read back and confirmed.
-        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
-        # widened doc comment sits above this site): fresh `grep -n` for
-        # the first hit, 10608 -> 10648, line content read back and
-        # confirmed.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this site
-        # shift it): fresh `grep -n` for the first hit, 11129 -> 11522,
-        # line content read back and confirmed.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `EngineFacts` field doc comment + probe function + wiring +
-        # `classify()` early-return block sit above this site): fresh
-        # `grep -n` for the first hit, 11522 -> 11582, line content read
-        # back and confirmed.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block all sit above this site): fresh `grep -n` for the first hit,
-        # 11582 -> 12128, line content read back and confirmed.
-        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
-        # sit above this site): fresh `grep -n 'status:
-        # "deferred-with-reason"'`, first hit, 12128 -> 12425, line content
-        # read back and confirmed.
-        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
-        # Legionnaire insertions sit above this site): fresh `grep -n
-        # 'status: "deferred-with-reason"'`, first hit, 12425 -> 12751, line
-        # content read back and confirmed.
-        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
-        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
-        # this by a further uniform +4, 12751 -> 12755 -- caught re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13423, "must_contain": "deferred-with-reason"},
+        # The first `deferred-with-reason` construction site in `classify`:
+        # the Ultimate Campaign feat-table diagnostic.
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "classify",
+            "anchor": [
+                'status: "deferred-with-reason",',
+                'evidence: "engine_diagnostic:ultimate_campaign::feat_tables::DEFERRED_WITH_REASON"',
+            ],
+        },
     },
     "Z": {
         "meaning": "not started",
         "clears": "ordinary work",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == not-started)",
-        # Only real `status: "not-started"` construction site in the file
-        # (the `STATUS_VOCABULARY` tuple entry near line 9393 is a doc
-        # string, not a construction site). Wave 32 re-derivation: fresh
-        # `grep -n`, line content read back and confirmed.
-        # Wave 33 lane B re-derivation: cumulative shift +95, 10277 -> 10372.
-        # Wave 35 fold re-derivation (both lanes land in this file): fresh
-        # `grep -n 'status: "not-started"'` against the actual merged file
-        # -- still the only real hit, 10372 -> 10469, line content read
-        # back and confirmed.
-        # Wave 38 lane C re-derivation (`class_feature_exact_suffix_grounded`'s
-        # widened doc comment sits above this site): fresh `grep -n` --
-        # still the only real hit, 10469 -> 10509, line content read back
-        # and confirmed.
-        # Wave 44 re-derivation (Piece 1/2's own insertions above this site
-        # shift it): fresh `grep -n` -- still the only real hit, 10990 ->
-        # 11383, line content read back and confirmed.
-        # Wave 45 re-derivation (this cycle's own Phrenic Slayer Favored
-        # Enemy `EngineFacts` field doc comment + probe function + wiring
-        # sit above this site): fresh `grep -n` -- still the only real hit,
-        # 11383 -> 11443, line content read back and confirmed.
-        # Wave 46 re-derivation (this cycle's own six new `EngineFacts`
-        # fields, seven new probe functions, and `classify()` early-return
-        # block sit above this site): fresh `grep -n` -- still the only real
-        # hit, 11443 -> 11989, line content read back and confirmed.
-        # Wave 47 re-derivation (this cycle's own Divine Scion insertions
-        # sit above this site): fresh `grep -n 'status: "not-started"'`,
-        # still the only real hit, 11989 -> 12286, line content read back
-        # and confirmed.
-        # Wave 48 re-derivation (this cycle's own Twilight Talon/Golden
-        # Legionnaire insertions sit above this site): fresh `grep -n
-        # 'status: "not-started"'`, still the only real hit, 12286 -> 12612,
-        # line content read back and confirmed.
-        # Wave 48 CORRECTION (same cycle, before commit): pre-clippy-fix
-        # snapshot; the `type TwilightTalonTattooTierMember` alias shifted
-        # this by a further uniform +4, 12612 -> 12616 -- caught re-running
-        # `--check` AFTER the clippy fix, read back and confirmed.
-        "citation": {"file": _ENGINE_SRC, "line": 13284, "must_contain": "not-started"},
+        # The only `not-started` construction site: a book with no compiled
+        # rule set, in `classify`.
+        "citation": {
+            "file": _ENGINE_SRC,
+            "context_fn": "classify",
+            "anchor": [
+                'status: "not-started",',
+                'evidence: "no_compiled_rule_set_for_book".to_string(),',
+            ],
+        },
     },
 }
 
@@ -886,40 +397,142 @@ def _missing_clearing_mechanisms(definitions: dict = BUCKET_DEFINITIONS) -> list
     return [b for b in BUCKET_ORDER if not definitions.get(b, {}).get("clears")]
 
 
-def _read_source_line(rel_path: str, line_no: int) -> "str | None":
-    abs_path = os.path.join(REPO_ROOT, rel_path)
+def read_source_lines(rel_path: str, repo_root: str = REPO_ROOT) -> "list[str] | None":
+    """The cited file's lines (newlines stripped), or None when it is absent."""
+    abs_path = os.path.join(repo_root, rel_path)
     try:
         with open(abs_path, "r", encoding="utf-8") as fh:
-            lines = fh.readlines()
+            return fh.read().split("\n")
     except OSError:
         return None
-    if line_no < 1 or line_no > len(lines):
-        return None
-    return lines[line_no - 1]
+
+
+# A Rust function definition line: optional visibility / qualifiers, then
+# `fn <name>` followed by its generics or parameter list. `classify(` is
+# matched; `classify_class_feature_delta(` is not.
+_FN_DEF_RE = re.compile(
+    r"^(?P<indent>\s*)(?:pub(?:\([^)]*\))?\s+)?(?:(?:const|async|unsafe|extern\s+\"[^\"]*\")\s+)*"
+    r"fn\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s*[<(]"
+)
+
+
+def _fn_extents(lines: list, fn_name: str) -> list:
+    """Every `(start, end)` 0-indexed inclusive line span whose `fn fn_name`
+    definition opens it and whose closing `}` sits at the definition's own
+    indentation -- rustfmt's invariant, which `v06_work_inventory.rs` is
+    formatted under. A body that never closes runs to end of file."""
+    extents = []
+    for i, line in enumerate(lines):
+        m = _FN_DEF_RE.match(line)
+        if not m or m.group("name") != fn_name:
+            continue
+        indent = m.group("indent")
+        end = len(lines) - 1
+        for j in range(i + 1, len(lines)):
+            if lines[j] == indent + "}":
+                end = j
+                break
+        extents.append((i, end))
+    return extents
+
+
+def resolve_content_anchor(citation: dict, lines: "list[str] | None" = None,
+                           repo_root: str = REPO_ROOT) -> dict:
+    """Resolve a content anchor `{file, context_fn, anchor}` by search.
+
+    `anchor` is one line or a list of consecutive lines, compared after
+    stripping indentation. The anchor must occur EXACTLY ONCE inside the body
+    of `context_fn` (searched across every definition of that name). Returns
+    `{"ok": True, "line": <1-indexed first line>, "end_line": <1-indexed last
+    line>, "fn_line": <1-indexed fn definition line>, "source": [<the matched
+    lines as written>]}` or `{"ok": False, "reason": <why>}`.
+
+    A refactor that MOVES the function or the block keeps the anchor green; a
+    change to any cited line, a second copy of the block inside the function,
+    or the function/file disappearing fails closed (SD-34 AT-34-E1-002
+    condition 6, preserved by SD-35 AT-35-E1-002).
+
+    `lines` lets a caller (a test) resolve against text it supplies instead
+    of the file on disk."""
+    rel_path = citation.get("file")
+    fn_name = citation.get("context_fn")
+    anchor = citation.get("anchor")
+    if isinstance(anchor, str):
+        anchor = [anchor]
+    if not rel_path or not fn_name or not anchor:
+        return {"ok": False, "reason": "citation is missing file, context_fn, or anchor"}
+    wanted = [a.strip() for a in anchor]
+    if any(not w for w in wanted):
+        return {"ok": False, "reason": "anchor contains an empty line"}
+
+    if lines is None:
+        lines = read_source_lines(rel_path, repo_root)
+    if lines is None:
+        return {"ok": False, "reason": f"{rel_path} does not resolve (file not found)"}
+
+    extents = _fn_extents(lines, fn_name)
+    if not extents:
+        return {"ok": False, "reason": f"{rel_path}: fn {fn_name} does not resolve (no definition found)"}
+
+    hits = []
+    n = len(wanted)
+    for start, end in extents:
+        for i in range(start, end - n + 2):
+            if all(lines[i + k].strip() == wanted[k] for k in range(n)):
+                hits.append((start, i))
+    if not hits:
+        return {
+            "ok": False,
+            "reason": f"{rel_path}: fn {fn_name} no longer contains {wanted!r}",
+        }
+    if len(hits) > 1:
+        return {
+            "ok": False,
+            "reason": (
+                f"{rel_path}: fn {fn_name} contains {wanted!r} {len(hits)} times "
+                f"(lines {[h[1] + 1 for h in hits]}) -- ambiguous, lengthen the anchor"
+            ),
+        }
+    fn_start, i = hits[0]
+    return {
+        "ok": True,
+        "line": i + 1,
+        "end_line": i + n,
+        "fn_line": fn_start + 1,
+        "source": lines[i:i + n],
+    }
 
 
 def _citation_failures(definitions: dict = BUCKET_DEFINITIONS) -> list:
-    """Condition 6. Every bucket must cite the `file:line` that emits the
-    evidence string it keys on, resolvable at HEAD, and the cited LINE's
-    CONTENT must actually contain the claimed marker -- a refactor that
-    moves the code without changing line counts must still trip this
-    (`risks-and-open-questions.md §10`)."""
+    """Condition 6. Every bucket must cite, as a content anchor, the source
+    that emits the evidence string it keys on, and that anchor must resolve
+    by search at HEAD -- exactly once, inside the named function, with the
+    cited lines' CONTENT unchanged (`risks-and-open-questions.md §10`)."""
     failures = []
     for b in BUCKET_ORDER:
         citation = definitions.get(b, {}).get("citation")
         if not citation:
             failures.append(f"{b}: no citation")
             continue
-        line = _read_source_line(citation["file"], citation["line"])
-        if line is None:
-            failures.append(f"{b}: {citation['file']}:{citation['line']} does not resolve")
-            continue
-        if citation["must_contain"] not in line:
-            failures.append(
-                f"{b}: {citation['file']}:{citation['line']} no longer contains "
-                f"'{citation['must_contain']}'"
-            )
+        resolved = resolve_content_anchor(citation)
+        if not resolved["ok"]:
+            failures.append(f"{b}: {resolved['reason']}")
     return failures
+
+
+def resolved_citations(definitions: dict = BUCKET_DEFINITIONS) -> dict:
+    """Each bucket's citation with the line it resolved to at check time
+    (`resolved_line` is derived, never pinned; None when unresolved)."""
+    out = {}
+    for b in BUCKET_ORDER:
+        citation = definitions.get(b, {}).get("citation")
+        if not citation:
+            out[b] = None
+            continue
+        resolved = resolve_content_anchor(citation)
+        out[b] = dict(citation)
+        out[b]["resolved_line"] = resolved["line"] if resolved["ok"] else None
+    return out
 
 
 def _is_ancestor(sha: "str | None") -> bool:
@@ -994,6 +607,7 @@ def cmd_check(args) -> int:
 
         d_causes = _sub_causes(units, "D")
         u_causes = _sub_causes(units, "U")
+        citations = resolved_citations()
         artifact = {
             "population": population,
             "derived_at": _head_sha(),
@@ -1003,7 +617,7 @@ def cmd_check(args) -> int:
                     "meaning": BUCKET_DEFINITIONS[b]["meaning"],
                     "clears": BUCKET_DEFINITIONS[b]["clears"],
                     "evidence_source": BUCKET_DEFINITIONS[b]["evidence_source"],
-                    "citation": BUCKET_DEFINITIONS[b].get("citation"),
+                    "citation": citations[b],
                 }
                 for b in BUCKET_ORDER
             },
@@ -1049,19 +663,77 @@ def cmd_check(args) -> int:
     return 0 if non_done_total == 0 else 1
 
 
+def _bucket_row(counts: "collections.Counter", total: int) -> str:
+    return " ".join(
+        f"{b}={counts.get(b, 0)}({(counts.get(b, 0) / total * 100 if total else 0):.1f}%)"
+        for b in BUCKET_ORDER
+    )
+
+
 def cmd_by_book(args) -> int:
     inv = _load_inventory()
     units = inv["units"]
     books = sorted({u.get("book") for u in units if u.get("book")})
     for book in books:
         result = partition(units, book=book)
-        counts = result["counts"]
-        total = result["examined"]
-        row = " ".join(
-            f"{b}={counts.get(b, 0)}({(counts.get(b, 0) / total * 100 if total else 0):.1f}%)"
-            for b in BUCKET_ORDER
-        )
-        print(f"{book} (n={total}): {row}")
+        print(f"{book} (n={result['examined']}): {_bucket_row(result['counts'], result['examined'])}")
+    return 0
+
+
+def by_kind(units: list, book: "str | None" = None) -> dict:
+    """`{kind: {"examined": n, "counts": Counter}}` -- the same partition as
+    `partition()`, grouped by the unit's `kind` (a missing kind groups under
+    `None` so no unit is dropped from the census)."""
+    groups: "dict[str | None, list]" = collections.defaultdict(list)
+    for unit in units:
+        if book is not None and unit.get("book") != book:
+            continue
+        groups[unit.get("kind")].append(unit)
+    out = {}
+    for kind, group in groups.items():
+        result = partition(group)
+        out[kind] = {"examined": result["examined"], "counts": result["counts"]}
+    return out
+
+
+def cmd_by_kind(args) -> int:
+    inv = _load_inventory()
+    rows = by_kind(inv["units"], book=args.book)
+    for kind in sorted(rows, key=lambda k: (k is None, k or "")):
+        r = rows[kind]
+        print(f"{kind} (n={r['examined']}): {_bucket_row(r['counts'], r['examined'])}")
+    return 0
+
+
+def by_evidence(units: list, book: "str | None" = None,
+                bucket: "str | None" = None) -> dict:
+    """`{bucket: Counter(evidence -> units)}` for every bucket the units land
+    in (or only `bucket` when given) -- `_sub_causes` generalised from D/U to
+    the whole partition. A unit with no evidence counts under `None`."""
+    out: "dict[str, collections.Counter]" = collections.defaultdict(collections.Counter)
+    for unit in units:
+        if book is not None and unit.get("book") != book:
+            continue
+        b = _bucket_of(unit)
+        if b is None or (bucket is not None and b != bucket):
+            continue
+        out[b][unit.get("evidence")] += 1
+    return dict(out)
+
+
+def cmd_by_evidence(args) -> int:
+    if args.bucket is not None and args.bucket not in BUCKET_ORDER:
+        print(f"unknown bucket {args.bucket!r}; one of {BUCKET_ORDER}", file=sys.stderr)
+        return 2
+    inv = _load_inventory()
+    rows = by_evidence(inv["units"], book=args.book, bucket=args.bucket)
+    for b in BUCKET_ORDER:
+        if b not in rows:
+            continue
+        counter = rows[b]
+        print(f"bucket={b} population={sum(counter.values())} distinct_evidence={len(counter)}")
+        for evidence, n in counter.most_common():
+            print(f"  {n:>6}  {evidence}")
     return 0
 
 
@@ -1069,11 +741,18 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--by-book", action="store_true")
+    parser.add_argument("--by-kind", action="store_true")
+    parser.add_argument("--by-evidence", action="store_true")
     parser.add_argument("--book", default=None)
+    parser.add_argument("--bucket", default=None, help="with --by-evidence: restrict to one bucket")
     args = parser.parse_args(argv)
 
     if args.by_book:
         return cmd_by_book(args)
+    if args.by_kind:
+        return cmd_by_kind(args)
+    if args.by_evidence:
+        return cmd_by_evidence(args)
     if args.check:
         return cmd_check(args)
     parser.print_help()

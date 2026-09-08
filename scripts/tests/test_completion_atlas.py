@@ -189,14 +189,21 @@ class TestMissingClearingMechanisms(unittest.TestCase):
 
 
 class TestCitationFailures(unittest.TestCase):
-    """AT-34-E1-002 condition 6: the file:line citation must resolve AND its
-    content must actually contain the claimed marker."""
+    """AT-34-E1-002 condition 6, preserved by AT-35-E1-002: every bucket's
+    content anchor must resolve by search -- exactly once, inside the named
+    function -- and any change to the cited content must fail it."""
 
     def test_real_citations_all_resolve_and_match(self):
         # This is the live acceptance evidence for condition 6: every
-        # bucket's citation is checked against the real, current
+        # bucket's anchor is searched for in the real, current
         # src/bin/v06_work_inventory.rs on disk -- not assumed.
         self.assertEqual(CA._citation_failures(), [])
+
+    def test_every_citation_is_a_content_anchor_not_a_line_pin(self):
+        for b in CA.BUCKET_ORDER:
+            cite = CA.BUCKET_DEFINITIONS[b]["citation"]
+            self.assertEqual(set(cite), {"file", "context_fn", "anchor"}, b)
+            self.assertNotIn("line", cite, b)
 
     def test_missing_citation_detected(self):
         mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
@@ -205,31 +212,167 @@ class TestCitationFailures(unittest.TestCase):
         self.assertEqual(len(failures), 1)
         self.assertIn("A", failures[0])
 
-    def test_wrong_line_number_detected(self):
+    def test_wrong_function_detected(self):
         mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
         mutated["A"]["citation"] = dict(mutated["A"]["citation"])
-        mutated["A"]["citation"]["line"] = 10**9  # out of range
+        mutated["A"]["citation"]["context_fn"] = "fn_that_does_not_exist_98765"
         failures = CA._citation_failures(mutated)
         self.assertEqual(len(failures), 1)
         self.assertIn("does not resolve", failures[0])
 
-    def test_content_mismatch_detected_even_when_line_resolves(self):
-        # The line resolves (it exists) but no longer contains the claimed
-        # marker -- proves this asserts on CONTENT, not just path/line
+    def test_content_mismatch_detected_even_when_function_resolves(self):
+        # The function resolves (it exists) but no longer contains the cited
+        # content -- proves this asserts on CONTENT, not path/line
         # (risks-and-open-questions.md §10).
         mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
         mutated["A"]["citation"] = dict(mutated["A"]["citation"])
-        mutated["A"]["citation"]["must_contain"] = "this_marker_definitely_does_not_appear_on_that_line"
+        mutated["A"]["citation"]["anchor"] = ["this_marker_definitely_does_not_appear_in_classify"]
         failures = CA._citation_failures(mutated)
         self.assertEqual(len(failures), 1)
         self.assertIn("no longer contains", failures[0])
 
     def test_nonexistent_file_detected(self):
         mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
-        mutated["A"]["citation"] = {"file": "src/bin/does_not_exist_98765.rs", "line": 1, "must_contain": "x"}
+        mutated["A"]["citation"] = {
+            "file": "src/bin/does_not_exist_98765.rs", "context_fn": "classify", "anchor": "x",
+        }
         failures = CA._citation_failures(mutated)
         self.assertEqual(len(failures), 1)
         self.assertIn("does not resolve", failures[0])
+
+    def test_resolved_citations_carry_a_derived_line(self):
+        resolved = CA.resolved_citations()
+        for b in CA.BUCKET_ORDER:
+            self.assertIsInstance(resolved[b]["resolved_line"], int, b)
+            self.assertGreater(resolved[b]["resolved_line"], 0, b)
+
+
+_SYNTHETIC = [
+    "fn other() {",
+    '    status: "grounded",',
+    "}",
+    "",
+    "pub fn simple_kind_verdict(unit: &Unit) -> Verdict {",
+    "    if !text_only {",
+    "        if let Some(bonus) = grounded_magnitude {",
+    "            return Verdict {",
+    '                status: "grounded",',
+    "            };",
+    "        }",
+    "    }",
+    "    return Verdict {",
+    '        status: "grounded",',
+    "    };",
+    "}",
+]
+_SYNTHETIC_CITE = {
+    "file": "src/bin/v06_work_inventory.rs",
+    "context_fn": "simple_kind_verdict",
+    "anchor": [
+        "if let Some(bonus) = grounded_magnitude {",
+        "return Verdict {",
+        'status: "grounded",',
+    ],
+}
+
+
+class TestResolveContentAnchorRedGreen(unittest.TestCase):
+    """AT-35-E1-002's two proofs on synthetic text: moving the cited
+    function 50 lines keeps the anchor green; changing one cited line fails
+    it. Also the two ways an anchor can be wrong without the content
+    changing: ambiguity and a vanished function."""
+
+    def test_resolves_to_the_unique_block_inside_the_named_fn_GREEN(self):
+        r = CA.resolve_content_anchor(_SYNTHETIC_CITE, lines=_SYNTHETIC)
+        self.assertTrue(r["ok"], r)
+        self.assertEqual(r["line"], 7)
+        self.assertEqual(r["end_line"], 9)
+        self.assertEqual(r["fn_line"], 5)
+        self.assertEqual([s.strip() for s in r["source"]], _SYNTHETIC_CITE["anchor"])
+
+    def test_moving_the_function_fifty_lines_stays_GREEN(self):
+        moved = ["// %d" % i for i in range(50)] + _SYNTHETIC
+        r = CA.resolve_content_anchor(_SYNTHETIC_CITE, lines=moved)
+        self.assertTrue(r["ok"], r)
+        self.assertEqual(r["line"], 57)
+
+    def test_changing_one_cited_line_is_RED(self):
+        mutated = list(_SYNTHETIC)
+        mutated[8] = '                status: "text-complete",'
+        r = CA.resolve_content_anchor(_SYNTHETIC_CITE, lines=mutated)
+        self.assertFalse(r["ok"])
+        self.assertIn("no longer contains", r["reason"])
+
+    def test_single_line_anchor_that_occurs_twice_in_the_fn_is_RED_ambiguous(self):
+        cite = dict(_SYNTHETIC_CITE, anchor='status: "grounded",')
+        r = CA.resolve_content_anchor(cite, lines=_SYNTHETIC)
+        self.assertFalse(r["ok"])
+        self.assertIn("ambiguous", r["reason"])
+
+    def test_match_outside_the_named_fn_does_not_count(self):
+        # `fn other` also carries `status: "grounded",` -- only the named
+        # function's body is searched.
+        cite = dict(_SYNTHETIC_CITE, context_fn="other", anchor='status: "grounded",')
+        r = CA.resolve_content_anchor(cite, lines=_SYNTHETIC)
+        self.assertTrue(r["ok"], r)
+        self.assertEqual(r["line"], 2)
+
+    def test_vanished_function_is_RED(self):
+        cite = dict(_SYNTHETIC_CITE, context_fn="simple_kind_verdict_v2")
+        r = CA.resolve_content_anchor(cite, lines=_SYNTHETIC)
+        self.assertFalse(r["ok"])
+        self.assertIn("does not resolve", r["reason"])
+
+    def test_fn_name_is_matched_whole_not_as_a_prefix(self):
+        # `classify` must not match `classify_class_feature_delta(`.
+        lines = ["fn classify_class_feature_delta() {", "    marker();", "}"]
+        cite = {"file": "x.rs", "context_fn": "classify", "anchor": "marker();"}
+        r = CA.resolve_content_anchor(cite, lines=lines)
+        self.assertFalse(r["ok"])
+        self.assertIn("does not resolve", r["reason"])
+
+
+class TestByKindAndByEvidence(unittest.TestCase):
+    def test_by_kind_partitions_each_kind_and_drops_nothing(self):
+        units = [
+            dict(_unit("u1", "grounded", "ok"), kind="feat"),
+            dict(_unit("u2", "engine-does-not-hold", "has_no_engine_table"), kind="feat"),
+            dict(_unit("u3", "not-started", "x"), kind="spell"),
+            _unit("u4", "grounded", "ok"),  # no kind -> grouped under None
+        ]
+        rows = CA.by_kind(units)
+        self.assertEqual(rows["feat"]["examined"], 2)
+        self.assertEqual(rows["feat"]["counts"]["DONE"], 1)
+        self.assertEqual(rows["feat"]["counts"]["A"], 1)
+        self.assertEqual(rows["spell"]["counts"]["Z"], 1)
+        self.assertEqual(rows[None]["examined"], 1)
+        self.assertEqual(sum(r["examined"] for r in rows.values()), len(units))
+
+    def test_by_kind_honours_book_filter(self):
+        units = [
+            dict(_unit("u1", "grounded", "ok", book="b1"), kind="feat"),
+            dict(_unit("u2", "grounded", "ok", book="b2"), kind="feat"),
+        ]
+        self.assertEqual(CA.by_kind(units, book="b1")["feat"]["examined"], 1)
+
+    def test_by_evidence_counts_each_evidence_string_per_bucket(self):
+        units = [
+            _unit("u1", "engine-does-not-hold", "has_no_engine_table"),
+            _unit("u2", "engine-does-not-hold", "has_no_engine_table"),
+            _unit("u3", "engine-does-not-hold", "absent_from_table"),
+            _unit("u4", "unmeasurable", "why"),
+        ]
+        rows = CA.by_evidence(units)
+        self.assertEqual(rows["A"]["has_no_engine_table"], 2)
+        self.assertEqual(rows["B"]["absent_from_table"], 1)
+        self.assertEqual(rows["U"]["why"], 1)
+        self.assertEqual(set(CA.by_evidence(units, bucket="A")), {"A"})
+        self.assertEqual(
+            sum(sum(c.values()) for c in rows.values()), len(units)
+        )
+
+    def test_by_evidence_cli_rejects_unknown_bucket(self):
+        self.assertEqual(CA.main(["--by-evidence", "--bucket", "Q"]), 2)
 
 
 class TestStalenessGate(unittest.TestCase):

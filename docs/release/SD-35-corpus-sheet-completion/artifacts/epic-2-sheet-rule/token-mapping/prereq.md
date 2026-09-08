@@ -13,7 +13,7 @@ of 2026-08-31, 22,366 units) are quoted only where marked.
 
 **Family coverage.** 22,081 non-DONE units carry at least one token of this family in
 `raw_tokens`, plus 351 token-less feat units with a `prerequisites` list: **22,432 of 23,315
-non-DONE units (96.2%)** touch this family. That is not surprising: `CATEGORY`/`TYPE`/`KEY` are on
+non-DONE units (96.2% of 23,315)** touch this family. That is not surprising: `CATEGORY`/`TYPE`/`KEY` are on
 nearly every record. The PRE\* gates alone are on **6,930 records corpus-wide** for
 `PREABILITY`+`PREMULT`+`PREVARGTEQ` and 14,734 instances on the TOKEN-MODEL remainder.
 
@@ -105,9 +105,9 @@ the converter, never a gate; *Choice* = resolves once the player picks.
 |---|---:|---:|---|---|---|
 | `PREABILITY` | 3,411 | 2,414 | Applies | filter (per-character-resolvable) | high |
 | `PREMULT` | 4,708 | 2,729 | Applies | filter (per-character-resolvable) | high |
-| `PREVARGTEQ` | 4,213 | 2,848 | Applies | filter for classes a-c (about 90% of i | medium |
+| `PREVARGTEQ` | 4,213 | 2,848 | Applies | filter for classes a-c (about 90% of 4,213 instances) | medium |
 | `PREVARGT` | 69 | 67 | Applies | filter (per-character-resolvable) | medium |
-| `PREVARLT` | 506 | 402 | Applies | Words for counters (about 45%), filter | medium |
+| `PREVARLT` | 506 | 402 | Applies | Words for counters (about 45% of 506 instances), filter | medium |
 | `PREVARLTEQ` | 22 | 22 | Applies | situational (prints as words; never bl | medium |
 | `PREVAREQ` | 304 | 256 | Applies | filter (per-character-resolvable) | medium |
 | `PREVARNEQ` | 4 | 4 | Applies | situational (prints as words; never bl | high |
@@ -249,7 +249,7 @@ Every one of them has a row above. None needs per-record handling; the two bigge
   `PRESPELLDESCRIPTOR`.
 - **Situational (Words by design):** `PRETEXT`, `PREARMORTYPE`, `PREEQUIP`, `PREDR`,
   `PREHANDSGTEQ`, `PREREACHGTEQ`, `PREVARNEQ`, and the pool-counter / computed-total classes of
-  `PREVAR*` (`*Count`, `*Taken`, `var("AC.Natural")`; about 7% of `PREVAR*` instances).
+  `PREVAR*` (`*Count`, `*Taken`, `var("AC.Natural")`; about 7% of 5,118 `PREVAR*` instances).
 - **Metadata (never a gate):** `PRERULE`, `PRECAMPAIGN`/`!PRECAMPAIGN`,
   `PRECHARACTERTYPE`/`!PRECHARACTERTYPE` (→ `Always`/`Never`), `PRE:.CLEAR`, `!PREKIT`.
 - **Refuse:** none of the PRE types. The single REFUSE row is `ABILITYCATEGORY` — a converter
@@ -299,7 +299,7 @@ No `KB_Tier` in the output. The Kineticist wild talents
 are the same shape one level up: `AtLeast{1, [Compare{ClassLevel(kineticist, element=earth) >= 4}, …]}`,
 where `KineticistLVL_Earth` resolves to "kineticist level if the earth element is held, else 0" —
 a `Mul(ClassLevel, Holds)` shape the setter index has to recognise. Measured split of 5,118
-`PREVAR*` instances: 2,666 level-alias (52%), 56 `PreStatScore_`, ~2,100 flag/other set by a
+`PREVAR*` instances: 2,666 level-alias (52% of 5,118), 56 `PreStatScore_`, ~2,100 flag/other set by a
 rule, 300 pool counters, 40 computed-total reads. The first three classes resolve; the last two
 are `Words` until `Expr::ChoiceCount` exists. **Confidence medium** because the 'other-var' bucket
 (1,902 instances) was classified by name pattern, not by reading each setter; the index will

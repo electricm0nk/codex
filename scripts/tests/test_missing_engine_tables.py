@@ -99,8 +99,12 @@ class TestEngineSurfaceCitation(unittest.TestCase):
         for k in MET.ENGINE_SURFACE_CITATIONS:
             surface = result["kinds"][k]["engine_surface"]
             self.assertEqual(surface["file"], "src/bin/v06_work_inventory.rs")
-            self.assertIsInstance(surface["line"], int)
-            self.assertIn("has_no_engine_table", surface["must_contain"])
+            self.assertEqual(surface["context_fn"], "classify")
+            self.assertIn("has_no_engine_table", surface["anchor"])
+            # Derived by search at check time (AT-35-E1-002), never pinned.
+            self.assertIsInstance(surface["resolved_line"], int)
+            self.assertGreater(surface["resolved_line"], 0)
+            self.assertNotIn("line", surface)
 
     def test_citation_resolves_at_head(self):
         # The real, committed file -- not a fixture. Guards against the
@@ -108,6 +112,36 @@ class TestEngineSurfaceCitation(unittest.TestCase):
         # (`decisions.md §12` L1, same shape as completion_atlas condition 6).
         failures = MET.citation_failures()
         self.assertEqual(failures, [], f"stale citations: {failures}")
+
+
+_SYNTHETIC = [
+    "fn classify(unit: &Unit) -> Verdict {",
+    "    match unit.kind {",
+    '        Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table"),',
+    '        Kind::Power => engine_does_not_hold("power_content_has_no_engine_table"),',
+    "    }",
+    "}",
+]
+
+
+class TestContentAnchorRedGreen(unittest.TestCase):
+    """AT-35-E1-002: moving `classify` 50 lines keeps both anchors green;
+    changing one cited arm fails exactly that kind."""
+
+    def test_synthetic_source_is_GREEN(self):
+        self.assertEqual(MET.citation_failures(lines=_SYNTHETIC), [])
+
+    def test_moving_the_function_fifty_lines_stays_GREEN(self):
+        moved = ["// %d" % i for i in range(50)] + _SYNTHETIC
+        self.assertEqual(MET.citation_failures(lines=moved), [])
+
+    def test_changing_one_cited_arm_is_RED_for_that_kind_only(self):
+        mutated = list(_SYNTHETIC)
+        mutated[2] = mutated[2].replace("companion_content_has_no_engine_table", "companion_has_a_table_now")
+        failures = MET.citation_failures(lines=mutated)
+        self.assertEqual(len(failures), 1, failures)
+        self.assertTrue(failures[0].startswith("companion:"), failures[0])
+        self.assertIn("no longer contains", failures[0])
 
 
 class TestLiveInventory(unittest.TestCase):
