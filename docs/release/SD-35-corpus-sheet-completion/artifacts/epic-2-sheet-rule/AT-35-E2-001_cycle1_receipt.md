@@ -17,7 +17,7 @@
   - refused per token type — same command, the `refused <n> <type>` lines; also `data/sheet_rules/_refused.json` `by_token_type` (a record refused by k types counts under each: type-sum 2,131 over 1,810 records)
   - refused non-DONE **659** of 1,810 (of 23,315 non-DONE); non-DONE converted **22,656** — `python3 -c` over `_refused.json` × `completion_atlas._bucket_of` (in `progress.md`)
   - literal scan **0** files — `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l`
-  - wall time **~23 s** for the whole population (release build, this box; `--check` re-converts in memory and reads 52,720 files) — the timing AT-35-E2-005 projects from
+  - wall time **~23 s** for the whole population (release build, this box; `--check` re-converts in memory and reads 52,720 files) — `time cargo run --locked --release --bin sheet_rule_convert -- --check`; the timing AT-35-E2-005 projects from
   - stages **46** all / 40 quick — `scripts/verify.sh --list | tail -n +2 | wc -l`
   - `_defects/`: `unresolved-references` 13,124 lines (Special Ability 3,522, FEAT 1,987, Internal 1,886 — references whose (category, KEY) joins no shipped record; a ledger for AT-35-E3-001's holdings lookup, not a refusal), `undefined-variables` 711, `grants-to-unconverted-targets` 789, `grant-by-type` 613, `choice-marker-without-choose` 126, `undeclared-contributed-variables` 56, `literal-in-prose` 55, `glued-tokens` 4, `double-percent-slot` 3 — `python3 -c "import json,os; ..."` over `data/sheet_rules/_defects/*.json` (`progress.md`)
   - table transcription: 249 rows both ways — `cargo test --locked --lib table_is_a_transcription_of_the_json`

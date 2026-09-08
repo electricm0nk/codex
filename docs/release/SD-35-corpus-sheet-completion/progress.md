@@ -26,13 +26,13 @@ process defect** recorded by the epic wrap-up.
 | Epic | Criteria | Complete | In progress | Not started |
 |---|---:|---:|---:|---:|
 | 1 — Tax cut | 6 | 6 | 0 | 0 |
-| 2 — Sheet rule | 5 | 1 | 0 | 4 |
+| 2 — Sheet rule | 5 | 2 | 0 | 3 |
 | 3 — Place and surface | 4 | 0 | 0 | 4 |
 | 4 — Resolve and verify | 3 | 0 | 0 | 3 |
 | 5 — Residues | 5 | 0 | 0 | 5 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **7** | **0** | **23** |
+| **Total** | **30** | **8** | **0** | **22** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,18 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-08 — AT-35-E2-002 cycle 1 — `live-evaluator-and-sheet-section` — **complete**
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (live-evaluator + sheet-section cycle — closes zero units by design)` — `decisions.md §2`. `pcgen_residue_gate.py --check` at start (`643cc89bba`): `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=1818 ratio=n/a builds_recorded=3 pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 643cc89bba --before /tmp/wi-before-AT-35-E2-002.json --after docs/work-inventory.json --target-dir /tmp/cargo-sd35-AT-35-E2-002` at `909bb0837c`).
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS` at `909bb0837c` — not risen (the evaluator, loader, DTO and section read `SheetRule`/`VarTable` JSON and the chassis output only).
+- **Refused tokens:** none (no converter run; `sheet_rule_convert -- --check` → `records=49438 converted=47628 refused=1810 rules=66514 var_tables=5081 verdict=PASS`).
+- **What landed:** `src/rules_core/sheet_rule.rs` gains the evaluator (`technical-design.md §2`): exact-rational `Rat` with ONE truncation at the `SheetValue` boundary; `Expr` leaves over `CharacterFacts` (built from `CharacterInput` + `PilotBaseChassisComputation`); the two-valued `Applies` gate plus `Situational`; the `Var` contribution fold by bonus type (`STACKING_TYPES`, `Stack`, `Replace`); slot filling with family order and `pick_last` / `suppress_when_all_zero`; dice folding and the damage-die ladder; the held-set fixpoint over the seed (race, classes, feats, traits, equipment, spells, skills, the chassis' grounded `class_feature.*` records joined by `<class>_<feature>` slug, the race resolver's applied-trait keys) with `Rule`/`Class`/`Race`/`Deity`/`Choice` grants gated by `when` + `applies`, `FactDeclare`, `CountsAs`, `Waives`/`Revokes`; `render_sheet` sorted by kind then label. `corpus_loader::load_sheet_rules` reads `data/sheet_rules/` (47,628 rule files + 5,081 `_vars/` → 66,147 rules in 2.66 s debug, parallel). `PilotBaseChassisComputation.sheet_lines` + `with_sheet_rules`. Desktop: `SheetLineDto`, the package loaded once per process, `LoadSavedCharacterResponse.sheet_lines` / `sheet_rules_unavailable_reason` on both response constructors; `CharacterSheet.tsx` renders one generic **Rules and features** section grouped by kind in the Actions tab (a `words` line renders no number); `buildClassFeatureSurface(..., sheetLines)` keeps only records with no rule in the `Not computed` lane.
+- **Verification (one pass, `decisions.md §3`):** `cargo test --locked --no-run -j 6` exit 0; `--lib` → 3214 passed / 0 failed / 14 ignored; `--no-fail-fast -j 6` → **411 binaries, 411 ok, 8,710 passed, 0 failed, 67 ignored**; `cargo test --locked --lib sheet_rule` → 28 passed (the three value forms on real records — Ill Omen `DC 13` at Cha 14 / `Resolved(15)` on the design shape at spell level 3; Longsword `1d8` / `1d8+2` / `1d8+4` (Str 18) / `1d10` (one step); Magical Knack `Words` → `Wizard`; the per-kind gate over all 66,147 rules of 19 kinds; fixpoint; var fold; the fixture fighter's 45 lines with Acrobatic `+4` at 10 ranks); frontend `101/101` files (`rulesAndFeaturesSection.test.ts`: 19 per-kind DOM tests + 5; `classFeaturesModel.test.ts` +1), `tsc --noEmit` clean; desktop crate `574 passed / 0 failed` incl. the reach-gate IPC test on a Human Fighter 3 created through `create_character_at_root`; clippy 0 warnings on the lib and the desktop tests (3 `should_implement_trait` fixed in-cycle); atlas / shape-engine-boundary / missing-engine-tables / denominator-gate / pi-sweep green; literal scan 0; `token_coverage.py` absent until AT-35-E2-004.
+- **Discoveries (3 `correction` events, `docs/retro/events/at-35-e2-002.jsonl`):** the chassis output carries fewer leaf facts than `technical-design.md §2` claims (size from `race_tables::race_size` for the 7 CRB races, walk speed from the `race.<slug>.trait_bundle.speed` record, the rest 0 and named in `CharacterFacts::from_character`; `…-796340`); the package carries no `Granter::Class`/`Race` rows (`python3` census over `data/sheet_rules/{core_rulebook,advanced_players_guide,bestiary,ultimate_psionics}/*/*.json` `granted_by`: `Rule` 8,103, `ClassSpellList` 5,149, `Deity` 2,126) and 1,187 of 1,738 CRB `class_feature` rules have no `granted_by` (`…-decb80`) — placement is bridged from the engine until AT-35-E3-001; the §6 wired-integration grep matches 3 rulebook-prose lines in the generated package, none in code (`…-7cbeb2`). Also: templates are not universal (the first fixpoint held every ungranted `applies: Always` template — fixed, pinned); `fighter_bonus_feats` prints 23 lines (22 `#bonusN` siblings) — AT-35-E3-001's placement shape.
+- **Gate self-heal:** `verify.sh --only figure-provenance` was red on one pre-existing AT-35-E2-001 receipt line (`~23 s` with no command) — command added in this cycle's docs commit; `violations=0` after.
+- **Receipt:** `artifacts/epic-2-sheet-rule/AT-35-E2-002_cycle1_receipt.md`. Code `909bb0837c` (after `097e7c1aa5`, a fold of a live `sd31-transcribe` retro append). **Epic 2: 2 of 5 complete — AT-35-E2-003 next.**
 
 ### 2026-09-08 — AT-35-E2-001 cycle 1 — `sheet-rule-converter` — **complete**
 
