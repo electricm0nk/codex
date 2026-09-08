@@ -2,14 +2,51 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-34
-status: in-progress — wave 51 closed (217 units); remaining CR+UC pool routes through SD-35 Epic 2 sheet rule
-date: 2026-09-07
+status: closed-by-fold — merged by operator ruling 2026-09-07 (PR #383, fe5ae6cd4a) without its closure epilogue; retrospective, 17 open rows and 29 open deferrals folded into SD-35 AT-35-E1-006 (SD-35 decisions.md §12)
+date: 2026-09-08
 ---
 
 # SD-34 Progress
 
+**This bundle is closed.** It was merged to `develop` by operator ruling on 2026-09-07 (PR #383,
+`fe5ae6cd4a`) **before** its own closure epilogue (`workflow-instruction.md §11`) ran. The
+epilogue was folded into the successor bundle as SD-35 `AT-35-E1-006`
+(`../SD-35-corpus-sheet-completion/decisions.md §12`). The 17 `kanban.md` rows that are not
+`complete` are **not live work**: their units are inside SD-35's Definition of Done by
+construction, and each row is mapped to the SD-35 criterion that owns it in
+`../SD-35-corpus-sheet-completion/artifacts/epic-1-tax-cut/sd34-open-row-map.json`.
+
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update
 `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
+
+### Cycle — SD-35 AT-35-E1-006 — SD-34's unrun closure folded: retrospective written and cited, 17 open rows and 29 open deferrals dispositioned — complete (2026-09-08)
+
+**Status: closed-by-fold.** Written from SD-35's Epic 1, docs only, zero units moved.
+
+- **Retrospective:** `docs/retro/sd34-book-completion-retrospective.md`, grounded in
+  `python3 scripts/retro.py summary --since 2026-08-27 --json` (387 events: 173 verification,
+  93 correction, 52 incident, 34 deferral, 20 note, 9 resolution, 3 near_miss, 3 rework). Cited
+  from `references/README.md` here and from SD-35's.
+- **Board at close:** `DONE 26,123 of 49,438` at the `tranche/15` cut (`4c6c57eb9f`;
+  `python3 scripts/completion_atlas.py --check | grep '  DONE:'`), from `12,265 of 49,438` at
+  open (`artifacts/epic-1-atlas/AT-34-E1-001_cycle_receipt.md`).
+- **Open rows mapped:** 17 of 37 (13, 14, 15, 17, 20, 26, 27, 28–37). Core Rulebook's 1,529 of
+  6,701 non-DONE and Ultimate Campaign's 61 of 265 (`completion_atlas.py --book <book> --check`)
+  are owned, by bucket and kind, by AT-35-E3-001 (392), E3-003 (191), E4-001 (699), E4-002
+  (122), E5-002 (38), E5-003 (31), E5-004 (117) — 1,590 of 1,590, sum-checked in
+  `sd34-open-row-map.json`. Rows 26/27 → AT-35-E7-001..003 (zero units).
+- **Open deferrals dispositioned:** 29 of 29 in
+  `../SD-35-corpus-sheet-completion/artifacts/epic-1-tax-cut/sd34-deferral-dispositions.json` —
+  8 resolved with a SHA (resolution events appended to the retro log), 1 superseded by
+  SD-35 `forward-scope-register.md` C2.5 (the two fable-review P1s — **still unfixed**), 20
+  mapped to SD-35 criteria by bucket.
+- **`## Open blockers`:** empty (its one entry was resolved 2026-08-27).
+- **Carried one-liner:** `forward-scope-register.md` C1.8's `monk_ki_pool` "size"-suffix census
+  fix — `core_rulebook:class_feature:monk_ki_pool` is bucket C at the cut (evidence
+  `no_explanation_id_and_no_diagnostic_names_this_feature`), owned by SD-35 AT-35-E3-003; the
+  suffix widening in `src/bin/v06_work_inventory.rs` is that cycle's, applied on the classifier
+  side. Not touched here (docs-only cycle).
+- **Receipt:** `../SD-35-corpus-sheet-completion/artifacts/epic-1-tax-cut/AT-35-E1-006_cycle1_receipt.md`.
 
 ### Cycle — Wave 51 wave-end gate — independent re-confirmation of 217 units closed, full 40/40 confirmed — complete
 

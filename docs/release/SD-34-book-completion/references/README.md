@@ -57,7 +57,7 @@ and ignored, because they were prose. That is why every row names a command.
 
 | Document | Status |
 |---|---|
-| `../../../retro/sd34-book-completion-retrospective.md` | **Written at closure by AT-34-E6-002, and cited from THIS file in the same cycle.** Not a follow-up. A retrospective that exists but is never linked from the package it is about is the exact gap an SD-32 chassis review had to fix by hand. |
+| `../../../retro/sd34-book-completion-retrospective.md` | **Written 2026-09-08 by SD-35's AT-35-E1-006, not by AT-34-E6-002** — SD-34 was merged by operator ruling on 2026-09-07 (PR #383, `fe5ae6cd4a`) without running its closure epilogue, and the retrospective was folded into the successor's Epic 1 (`../../SD-35-corpus-sheet-completion/decisions.md §12`). Grounded in `python3 scripts/retro.py summary --since 2026-08-27 --json` (387 events). Its 17 open kanban rows and 29 open deferrals are dispositioned in `../../SD-35-corpus-sheet-completion/artifacts/epic-1-tax-cut/sd34-open-row-map.json` and `sd34-deferral-dispositions.json`. |
 | `../../../retro/sd33-computed-value-verification-retrospective.md` | SD-33's. The source of `decisions.md §4`, `§5`, `§10`, `§12` L6–L8 (its §6 fold lessons) and `workflow-instruction.md §12` rows 3, 11–16, 23–26. Its §5 corrects the inherited-debt figure to 29 of 599 / 46 of 8,034. |
 | `../../../retro/sd32-compute-library-and-cause-closure-retrospective.md` | SD-32's. The source of the denominator-gate and deferral-revisit disciplines SD-34 inherits. |
 | `../../../retro/sd31-retrospective.md` | The worked example every bundle's closure retrospective follows in shape. |

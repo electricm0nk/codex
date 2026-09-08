@@ -236,6 +236,9 @@ Three denominators are live in this package and every figure names which:
 | L11 | Parallel cargo fan-out crashes the VM | memory `proxmox-host-stops-vm-on-guest-oom` | `workflow-instruction.md §3`: at most 3 concurrent lanes, `-j 6` per lane |
 | L12 | Shared instrument files are not fenced by a bucket or kind boundary | memory `territory-must-fence-shared-instrument-files` | `§3`: any two lanes both touching `v06_work_inventory.rs` or `completion_atlas.py` run sequentially |
 | L13 | A run-time interpreter permitted "for now" stays forever unless a gate counts it | SD-31 Decision 20 → 78 live files by 2026-09-07 | §11 + `pcgen_residue_gate.py`, monotonic, zero at closure |
+| L14 | A lane's unpushed commit chain is a wrong brief for the next lane — commit and push before the turn ends | `docs/retro/sd34-book-completion-retrospective.md` "did not work" (wave 38 lane C's `b80ccbffa4`, never pushed; wave 39's brief off by 100 units) | `workflow-instruction.md §2.5`; `§5`'s push protocol in every dispatch prompt |
+| L15 | The dashboard producer runs at the epic wrap-up, and its `--check` is the gate there — never a per-wave red stage | `sd34-book-completion-retrospective.md §3` (`site-dashboard-check` red 24 of 31 failing runs) | §3; `workflow-instruction.md §10` step 0 (`scripts/verify.sh` full, once per epic) |
+| L16 | A predecessor's unrun closure is folded into the successor's Epic 1, not forgotten | §12; SD-34 merged with 17 of 37 rows open and no retrospective | AT-35-E1-006; `workflow-instruction.md §1` item 4; `§12` row 37 |
 
 ---
 

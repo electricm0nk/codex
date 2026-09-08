@@ -1,0 +1,464 @@
+{
+ "criterion": "AT-35-E1-006",
+ "inventory_sha": "4c6c57eb9f (byte-identical at HEAD 53296d80f0)",
+ "source_commands": [
+  "python3 scripts/completion_atlas.py --book core_rulebook --check",
+  "python3 scripts/completion_atlas.py --book ultimate_campaign --check",
+  "per-kind split: completion_atlas._bucket_of over docs/work-inventory.json units (scratch gen_row_map.py)"
+ ],
+ "atlas_at_cut": {
+  "core_rulebook": {
+   "population": 6701,
+   "done": 5172,
+   "non_done": 1529
+  },
+  "ultimate_campaign": {
+   "population": 265,
+   "done": 204,
+   "non_done": 61
+  }
+ },
+ "open_rows": 17,
+ "units_mapped_total": 1590,
+ "units_expected_total": 1590,
+ "sum_check": "PASS",
+ "units_by_sd35_owner": {
+  "AT-35-E3-001": 392,
+  "AT-35-E3-003": 191,
+  "AT-35-E4-001": 699,
+  "AT-35-E4-002": 122,
+  "AT-35-E5-002": 38,
+  "AT-35-E5-003": 31,
+  "AT-35-E5-004": 117
+ },
+ "bucket_owner_rule": {
+  "B:class_feature": "AT-35-E3-001",
+  "B:*": "AT-35-E3-002",
+  "C:*": "AT-35-E3-003",
+  "M:*": "AT-35-E4-001",
+  "V:*": "AT-35-E4-002",
+  "A:*": "AT-35-E5-001",
+  "D:*": "AT-35-E5-002",
+  "U:*": "AT-35-E5-003",
+  "Z:*": "AT-35-E5-003",
+  "X:*": "AT-35-E5-004"
+ },
+ "rows": [
+  {
+   "sd34_row": 13,
+   "card": "core-bucket-b-zero",
+   "criterion": "AT-34-E3-001",
+   "status_at_cut": "in-progress",
+   "mapping_kind": "primary",
+   "units_owned": 392,
+   "cells": [
+    {
+     "bucket": "B",
+     "kind": "class_feature",
+     "units": 392,
+     "owner": "AT-35-E3-001"
+    }
+   ],
+   "owners": [
+    "AT-35-E3-001"
+   ],
+   "note": "core_rulebook bucket B at the cut, by kind; every unit is class_feature."
+  },
+  {
+   "sd34_row": 14,
+   "card": "core-bucket-c-zero",
+   "criterion": "AT-34-E3-002",
+   "status_at_cut": "in-progress",
+   "mapping_kind": "primary",
+   "units_owned": 191,
+   "cells": [
+    {
+     "bucket": "C",
+     "kind": "class_feature",
+     "units": 191,
+     "owner": "AT-35-E3-003"
+    }
+   ],
+   "owners": [
+    "AT-35-E3-003"
+   ],
+   "note": "core_rulebook bucket C at the cut."
+  },
+  {
+   "sd34_row": 15,
+   "card": "core-buckets-m-v-d-u-x-zero",
+   "criterion": "AT-34-E3-003",
+   "status_at_cut": "in-progress",
+   "mapping_kind": "primary",
+   "units_owned": 946,
+   "cells": [
+    {
+     "bucket": "D",
+     "kind": "ability",
+     "units": 7,
+     "owner": "AT-35-E5-002"
+    },
+    {
+     "bucket": "D",
+     "kind": "class",
+     "units": 17,
+     "owner": "AT-35-E5-002"
+    },
+    {
+     "bucket": "D",
+     "kind": "class_feature",
+     "units": 9,
+     "owner": "AT-35-E5-002"
+    },
+    {
+     "bucket": "D",
+     "kind": "race_trait",
+     "units": 2,
+     "owner": "AT-35-E5-002"
+    },
+    {
+     "bucket": "D",
+     "kind": "template",
+     "units": 1,
+     "owner": "AT-35-E5-002"
+    },
+    {
+     "bucket": "M",
+     "kind": "ability",
+     "units": 217,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "M",
+     "kind": "domain",
+     "units": 34,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "M",
+     "kind": "equipment",
+     "units": 19,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "M",
+     "kind": "equipment_modifier",
+     "units": 210,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "M",
+     "kind": "feat",
+     "units": 47,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "M",
+     "kind": "race_trait",
+     "units": 6,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "M",
+     "kind": "skill",
+     "units": 19,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "M",
+     "kind": "spell",
+     "units": 15,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "M",
+     "kind": "template",
+     "units": 96,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "U",
+     "kind": "equipment_modifier",
+     "units": 10,
+     "owner": "AT-35-E5-003"
+    },
+    {
+     "bucket": "V",
+     "kind": "class_feature",
+     "units": 87,
+     "owner": "AT-35-E4-002"
+    },
+    {
+     "bucket": "V",
+     "kind": "equipment",
+     "units": 19,
+     "owner": "AT-35-E4-002"
+    },
+    {
+     "bucket": "V",
+     "kind": "equipment_modifier",
+     "units": 6,
+     "owner": "AT-35-E4-002"
+    },
+    {
+     "bucket": "V",
+     "kind": "race_trait",
+     "units": 10,
+     "owner": "AT-35-E4-002"
+    },
+    {
+     "bucket": "X",
+     "kind": "class_feature",
+     "units": 103,
+     "owner": "AT-35-E5-004"
+    },
+    {
+     "bucket": "X",
+     "kind": "companion",
+     "units": 12,
+     "owner": "AT-35-E5-004"
+    }
+   ],
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E4-002",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "core_rulebook buckets M/V/D/U/X at the cut, by kind."
+  },
+  {
+   "sd34_row": 17,
+   "card": "core-rulebook-zero-remaining",
+   "criterion": "AT-34-E3-005",
+   "status_at_cut": "in-progress",
+   "mapping_kind": "union",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E5-005"
+   ],
+   "note": "Gate over rows 13/14/15 \u2014 the same 1529 units, owned by the same criteria; the whole-book-to-zero claim itself is AT-35-E5-005 (corpus 49,438 of 49,438). Counted once, under rows 13/14/15."
+  },
+  {
+   "sd34_row": 20,
+   "card": "ultimate-campaign-zero-remaining",
+   "criterion": "AT-34-E4-002",
+   "status_at_cut": "partial",
+   "mapping_kind": "primary",
+   "units_owned": 61,
+   "cells": [
+    {
+     "bucket": "D",
+     "kind": "trait",
+     "units": 2,
+     "owner": "AT-35-E5-002"
+    },
+    {
+     "bucket": "M",
+     "kind": "ability",
+     "units": 30,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "M",
+     "kind": "trait",
+     "units": 6,
+     "owner": "AT-35-E4-001"
+    },
+    {
+     "bucket": "U",
+     "kind": "feat",
+     "units": 21,
+     "owner": "AT-35-E5-003"
+    },
+    {
+     "bucket": "X",
+     "kind": "feat",
+     "units": 2,
+     "owner": "AT-35-E5-004"
+    }
+   ],
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "ultimate_campaign non-DONE at the cut, by bucket and kind."
+  },
+  {
+   "sd34_row": 26,
+   "card": "final-acceptance-scan",
+   "criterion": "AT-34-E6-001",
+   "status_at_cut": "not-started",
+   "mapping_kind": "closure",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E7-001"
+   ],
+   "note": "SD-34's final-acceptance scan never ran; SD-35's AT-35-E7-001 scans the corpus these rows now belong to. Zero units."
+  },
+  {
+   "sd34_row": 27,
+   "card": "retro-sweep-archdocs-pr",
+   "criterion": "AT-34-E6-002 + AT-34-E6-003",
+   "status_at_cut": "not-started",
+   "mapping_kind": "closure",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E1-006",
+    "AT-35-E7-002",
+    "AT-35-E7-003"
+   ],
+   "note": "Retrospective: written by AT-35-E1-006 (docs/retro/sd34-book-completion-retrospective.md). Sweep, architecture docs, PR: SD-34 merged by operator (PR #383, fe5ae6cd4a); tranche/14 deleted on origin; SD-35 AT-35-E7-002/003 own the successor sweep and docs. Zero units."
+  },
+  {
+   "sd34_row": 28,
+   "card": "salvage-2026-08-30",
+   "criterion": "AT-34-E4-002 (continuation) + bucket-v-widen infra",
+   "status_at_cut": "partial",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
+  },
+  {
+   "sd34_row": 29,
+   "card": "trait-drawback-capability-built",
+   "criterion": "AT-34-E4-002 (cycle 3)",
+   "status_at_cut": "partial",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
+  },
+  {
+   "sd34_row": 30,
+   "card": "trait-choice-spine-and-picker",
+   "criterion": "AT-34-E4-002 (cycle 4)",
+   "status_at_cut": "partial",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
+  },
+  {
+   "sd34_row": 31,
+   "card": "trait-family-choice-spine",
+   "criterion": "AT-34-E4-002 (cycle 5)",
+   "status_at_cut": "partial",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
+  },
+  {
+   "sd34_row": 32,
+   "card": "trait-flat-save-slice",
+   "criterion": "AT-34-E4-002 (cycle 6)",
+   "status_at_cut": "partial",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
+  },
+  {
+   "sd34_row": 33,
+   "card": "trait-initiative-concentration-slice",
+   "criterion": "AT-34-E4-002 (cycle 7)",
+   "status_at_cut": "partial",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
+  },
+  {
+   "sd34_row": 34,
+   "card": "trait-ability-diff-formula-slice",
+   "criterion": "AT-34-E4-002 (cycle 8)",
+   "status_at_cut": "in-progress",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
+  },
+  {
+   "sd34_row": 35,
+   "card": "trait-situational-skill-slice",
+   "criterion": "AT-34-E4-002 (cycle 9)",
+   "status_at_cut": "in-progress",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
+  },
+  {
+   "sd34_row": 36,
+   "card": "trait-picker-gap-fix-and-caster-level-skill-slice",
+   "criterion": "AT-34-E4-002 (cycle 10)",
+   "status_at_cut": "in-progress",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
+  },
+  {
+   "sd34_row": 37,
+   "card": "mine-bucket-d",
+   "criterion": "wave 32, lane C (no AT-34-E# card yet)",
+   "status_at_cut": "partial",
+   "mapping_kind": "cycle-row",
+   "units_owned": 0,
+   "owners": [
+    "AT-35-E5-002"
+   ],
+   "note": "Per-cycle row over a subset of core_rulebook; its remaining units are counted once under row 15 (bucket D) and the other books' bucket D. Zero additional units."
+  }
+ ]
+}
