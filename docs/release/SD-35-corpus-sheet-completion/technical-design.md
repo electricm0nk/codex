@@ -177,8 +177,9 @@ python3 scripts/cycle_scope_gate.py --min 500 --bucket A --kind companion
   -> scoped=28 remaining_non_done=23315 floor=500 verdict=FAIL_UNDER_FLOOR   (exit 1)
 python3 scripts/cycle_scope_gate.py --min 500 --bucket A --kind companion --bucket X --bucket U --bucket Z
   -> scoped=417 remaining_non_done=417 floor=500 verdict=PASS_WHOLE_REMAINDER (exit 0)
-python3 scripts/cycle_scope_gate.py --receipt --before /tmp/wi-before.json --after /tmp/wi-after.json
+python3 scripts/cycle_scope_gate.py --receipt --since <cycle-start-sha> --before /tmp/wi-before.json --after /tmp/wi-after.json
   -> closed=<n> relabeled=<n> rust_lines_changed=<n> ratio=<lines per unit> builds_recorded=<n> pcgen_live_files=<n>
+  (`--since` bounds the `git diff --stat` that produces rust_lines_changed to this cycle)
 ```
 
 **`scripts/pcgen_residue_gate.py`** (AT-35-E1-005):
@@ -200,7 +201,7 @@ python3 scripts/pcgen_residue_gate.py --rebaseline     # only after a cycle that
 |---|---|---|
 | Completion Atlas | `scripts/completion_atlas.py` | the partition; DONE set widened |
 | PCGen formula parser | `src/rules_core/pilot_compute/formula_interpreter*.rs` | **the converter's parser**; relocated to the converter side by AT-35-E6-001 |
-| Bonus stacking, prereqs | `bonus_stack_reader.rs`, `pre_tokens.rs`, `feat_prereqs.rs` | folded into `Expr` / `Applies` at convert time; relocated |
+| Bonus stacking, prereqs | `pilot_compute/bonus_stack_reader.rs`, `feat_prereqs.rs`, `feat_prereqs/pre_tokens.rs` | folded into `Expr` / `Applies` at convert time; relocated |
 | Oracle harness | `scripts/oracle_harness/` | **the test oracle** — parity of our `Number` values against PCGen's totals, before and after the exit |
 | Oracle pin | `scripts/pcgen-oracle-pin.env` | `~/workspace/repos/pcgen` is forbidden as an oracle path |
 | Work inventory | `src/bin/v06_work_inventory.rs`, `docs/work-inventory.json` | the population; the new status and rung (tool side — may read `raw_tokens`) |

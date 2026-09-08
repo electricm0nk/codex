@@ -7,16 +7,16 @@ date: 2026-09-07
 
 # SD-35 Technical Requirements
 
-Pre-launch prerequisites and normative requirements. **§1 is unrun** — SD-35 is `planning`,
-not `planning-ready`, until SD-34 closes and the `tranche/15` cut runs `workflow-instruction.md §1`.
+Pre-launch prerequisites and normative requirements. §1 was run at the `tranche/15` cut
+`4c6c57eb9f` on 2026-09-07; outputs are pasted in `workflow-instruction.md §1`.
 
 ## 1. Launch prerequisites
 
 | # | Prerequisite | Tier |
 |---|---|---|
-| 1 | SD-34's closure PR **merged** to `develop`; SD-34's retrospective written and cited; its `## Open blockers` empty | **Tier 1 — blocking** |
-| 2 | `tranche/15` cut from `develop` and pushed | **Tier 1 — blocking** |
-| 3 | `0.15.0` stamped in `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` | Tier 1 |
+| 1 | SD-34's closure PR **merged** to `develop` — **satisfied** 2026-09-07, #383 → `fe5ae6cd4a`; its `## Open blockers` empty. Its retrospective is **not** a precondition: it never ran and is folded into AT-35-E1-006 (`decisions.md §12`) | **Tier 1 — blocking** |
+| 2 | `tranche/15` cut from `develop` and pushed — **satisfied**, `4c6c57eb9f` | **Tier 1 — blocking** |
+| 3 | `0.15.0` stamped in `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` — **satisfied**, both read `0.15.0` | Tier 1 |
 | 4 | `./kanban.md` present and readable | Tier 2 |
 | 5 | Working tree clean on the bundle branch | Tier 2 |
 | 6 | Oracle pin readable; repo-local slot used, **never** `~/workspace/repos/pcgen` | Tier 1 |
@@ -34,7 +34,6 @@ grep -rlE 'PcgenFormulaEvaluator|render_pcgen_desc|raw_tokens|bonus_stack_reader
 python3 scripts/shape_engine_boundary.py --check
 python3 scripts/missing_engine_tables.py --check
 python3 -m unittest scripts/tests/test_shape_engine_boundary.py
-python3 scripts/box_ledger.py --check
 python3 scripts/denominator_gate.py --check 'docs/release/SD-35-corpus-sheet-completion/*.md'
 scripts/verify.sh --only denominator-gate
 scripts/verify.sh --only figure-provenance
@@ -51,9 +50,13 @@ it and stop.
 SD-34 inherited **29 of 599** workspace suites carrying **46 of 8,034** failures, proven
 pre-existing at the `tranche/13` cut. The fable review's post-fix sweep (2026-09-01) recorded
 **14 of 40** `verify.sh` stages red at that time, all attributed to SD-34's own in-flight
-instrument changes; SD-34's wave-end gates since report 40 of 40 green. **Re-derive the
-failing-suite set at the `tranche/15` cut and record it as SD-35's baseline.** A failure
-outside the recorded baseline is SD-35's, proven against the cut SHA with `git`.
+instrument changes; SD-34's wave-end gates since report 40 of 40 green.
+
+**Re-derived at the `tranche/15` cut (2026-09-07, `workflow-instruction.md §1` item 10): 590
+targets executed, 8,656 passed, 0 failed, 0 failing suites. SD-35's inherited baseline is
+EMPTY.** A failure anywhere in the workspace from here on is SD-35's. The cold `--no-run`
+compile took 2 min 45 s on this box (24 cores); the full suite took 70 min — AT-35-E1-003's
+build-time.json records both, before and after.
 
 ```bash
 cargo test --locked --no-run ; echo EXIT=$?                       # must be 0
@@ -113,7 +116,8 @@ it.
 
 **N16 — Recursive search, always.** State the search used.
 
-**N17 — At most 3 concurrent building lanes, `-j 6` each** (`decisions.md §9` L11).
+**N17 — At most 3 concurrent building lanes, `-j 6` each** (`decisions.md §9` L11) — the
+isolated read-only worker (`decisions.md §3` amendment) counts as one of the three.
 
 **N18 — No PCGen on the live side** (`decisions.md §11`). The converter (`src/pcgen_import/**`,
 the `src/bin` generators) and the test oracle (`scripts/oracle_harness/`, `src/oracle_validation/`)

@@ -19,6 +19,7 @@ The closure gates, the command that proves each criterion, and the artifact each
 | AT-35-E1-003 | `artifacts/epic-1-tax-cut/build-time.json` before/after cold `cargo test --locked --no-run` wall time with commands; `cargo test -- --list` name-by-name diff, count unchanged | `build-time.json`, the consolidated binaries, the moved baselines |
 | AT-35-E1-004 | `scripts/verify.sh --only denominator-gate` default run lists every SD-35 `.md`, `violations=0`; `--only figure-provenance` exit 0 | the widened default scope |
 | AT-35-E1-005 | `python3 -m unittest scripts/tests/test_pcgen_residue_gate.py` (planted `raw_tokens` read fails; removed passes; `--closure` fails at baseline); `scripts/verify.sh --only pcgen-residue-gate`; `scripts/pcgen-residue-baseline.env` committed with the real first count | `scripts/pcgen_residue_gate.py`, the baseline file |
+| AT-35-E1-006 | `test -f docs/retro/sd34-book-completion-retrospective.md`; `grep -c sd34-book-completion-retrospective docs/release/SD-34-book-completion/references/README.md docs/release/SD-35-corpus-sheet-completion/references/README.md` → ≥1 each; the row map sums against `completion_atlas.py --book core_rulebook --check` + `--book ultimate_campaign --check` at `4c6c57eb9f`; SD-34 `progress.md` status reads closed-by-fold | `docs/retro/sd34-book-completion-retrospective.md`, `artifacts/epic-1-tax-cut/sd34-open-row-map.json` |
 | AT-35-E2-001 | `cargo run --locked --bin sheet_rule_convert -- --check` → `records=49438 converted=<n> refused=<n>` summing; `grep -rlE 'BONUS:\|DEFINE:\|PRE[A-Z]+:\|%CHOICE\|CL=' data/sheet_rules/ \| wc -l` → 0; per-kind converter gates green | `src/bin/sheet_rule_convert.rs`, `src/pcgen_import/sheet_rule/`, `data/sheet_rules/`, `data/sheet_rules/_refused.json` |
 | AT-35-E2-002 | `cargo test --locked --lib sheet_rule` (one test per value form); 19 per-kind on-screen frontend tests green; `pcgen_residue_gate.py --check` unchanged from baseline | `src/rules_core/sheet_rule.rs`, the section in `CharacterSheet.tsx`, the tests |
 | AT-35-E2-003 | grep census: `grep -rln "oracle-unverifiable" src scripts apps tests \| wc -l` before == `grep -rln "sheet-complete" ... \| wc -l` after; `completion_atlas.py --check` `unclassified=0 overlap=0 done_evidence_violations=0` | the status, the rung, every consumer diff |
@@ -54,7 +55,6 @@ python3 scripts/token_coverage.py --check                       # from AT-35-E2-
 cargo run --locked --bin sheet_rule_convert -- --check          # from AT-35-E2-001 onward; ids agree with the corpus
 python3 scripts/shape_engine_boundary.py --check                # content-anchored from AT-35-E1-002
 python3 scripts/missing_engine_tables.py --check
-python3 scripts/box_ledger.py --check
 python3 scripts/denominator_gate.py --check 'docs/release/SD-35-corpus-sheet-completion/*.md'   # explicit until AT-35-E1-004
 scripts/verify.sh --only pi-sweep
 cargo run --locked --bin corpus_literal_sweep                   # 0 findings (only when corpus records changed)

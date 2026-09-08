@@ -5,7 +5,7 @@ bundle_id: SD-35
 date: 2026-09-07
 ---
 
-# SD-35 Epic Breakdown — 7 epics, 29 criteria
+# SD-35 Epic Breakdown — 7 epics, 30 criteria
 
 Criterion IDs follow the program convention `AT-35-E<epic>-<nnn>`. Every criterion states its
 **evidence obligation** — the command or artifact that proves it.
@@ -33,8 +33,9 @@ before it starts; a criterion's bar is "to zero", not "this many".
 
 **Gated on:** launch gates. **Gates:** Epic 2. Every later build pays less after this epic, and
 the two counters that must only go down (batch size up, PCGen residue down) exist from the
-first cycle. **Parallel:** `E1-003` (`tests/` only) may run in a worktree beside
-`E1-001`/`E1-002`/`E1-005` (`scripts/` only); `E1-004` after all (`workflow-instruction.md §3`).
+first cycle, and SD-34's unrun closure is cleared. **Parallel:** three file-disjoint lanes —
+`E1-003` (`tests/`), `E1-006` (`docs/retro/` + two `references/README.md`), and
+`E1-001`/`E1-002`/`E1-005` (`scripts/`); `E1-004` after all three (`workflow-instruction.md §3`).
 
 ### AT-35-E1-001 — the batch floor is a script with a nonzero exit
 
@@ -89,7 +90,9 @@ baseline re-derived after the change.
 
 `workflow-instruction.md §7`'s receipt carries the `rust_lines_changed / units_closed` and
 `pcgen_live_files` rows, produced by `cycle_scope_gate.py --receipt`. `scripts/denominator_gate.py`
-and the `figure-provenance` stage default to this package's folder in addition to SD-34's.
+(`BUNDLE_DIR` at :101 and `DEFAULT_GLOBS` at :121 still point at **SD-33** — never advanced to
+SD-34) and the `figure-provenance` stage default to SD-33 **and** SD-34 **and** this package;
+nothing already scanned stops being scanned.
 
 **Evidence:** `scripts/verify.sh --only denominator-gate` default run lists every SD-35 `.md`
 in `files_checked`, `violations=0`; `--only figure-provenance` exits 0 across the package.
@@ -109,6 +112,29 @@ in this cycle from the real grep (a coarse count at authoring found 78 files —
 **Evidence:** RED→GREEN — plant one `raw_tokens` read in `src/rules_core/`, the gate fails;
 remove it, the gate passes; `--closure` fails at the baseline (correct — Epic 6 is what makes
 it pass). Wired into `verify.sh` as `pcgen-residue-gate`. `scripts/tests/test_pcgen_residue_gate.py`.
+
+### AT-35-E1-006 — SD-34's unrun closure is folded: retrospective written and cited, open rows mapped
+
+`decisions.md §12`. SD-34 merged (PR #383, `fe5ae6cd4a`) without its closure epilogue. This
+docs-only cycle writes `docs/retro/sd34-book-completion-retrospective.md` from
+`python3 scripts/retro.py summary --since 2026-08-27 --json` in `docs/retro/sd31-retrospective.md`'s
+shape (raw tally, what the data says, what worked, what did not, named changes for the next
+bundle), cites it from `../SD-34-book-completion/references/README.md` **and** this package's
+`references/README.md`, maps SD-34's 17 open `kanban.md` rows to the SD-35 criterion that owns
+their units, and records in SD-34's `progress.md` that the bundle closed by operator merge with
+its epilogue folded here. Any "changes for the next bundle" the retrospective names that
+`decisions.md §9` does not already carry are added to `§9` in the same cycle. **The 29 open
+deferrals** `retro.py summary --since 2026-08-27 --json` reports at the cut (SD-34 recorded 3;
+the rest are SD-34 wave deferrals) are each dispositioned: resolved (with the resolving SHA), or
+mapped to the SD-35 criterion whose population owns the units, so `deferrals.open` for the SD-34
+window reads 0 or names only SD-35-owned items.
+
+**Evidence:** the file exists; `grep -c sd34-book-completion-retrospective` ≥ 1 in both
+`references/README.md` files; the row map's unit counts sum to `completion_atlas.py --book
+core_rulebook --check` + `--book ultimate_campaign --check` non-DONE totals at `4c6c57eb9f`;
+SD-34's `progress.md` frontmatter `status` reads closed-by-fold; the 29-deferral disposition
+table in `artifacts/epic-1-tax-cut/sd34-deferral-dispositions.json` with every id. `SCOPE_GATE:
+EXEMPT` in the receipt (`decisions.md §2`).
 
 ---
 
@@ -336,7 +362,7 @@ harness runs on the fixture roster at the start and the end; drift is a defect i
 converter's parser). Every live caller (14 files at authoring — `racial_sla.rs`,
 `domain_power`, trait/feat effects, the pilot_compute formula paths) is replaced by
 `sheet_rule::evaluate` over converted `Expr`, or deleted where the sheet line already carries
-the value. `bonus_stack_reader.rs` and `pre_tokens.rs` move with it.
+the value. `bonus_stack_reader.rs` and `feat_prereqs/pre_tokens.rs` move with it.
 
 **Evidence:** `pcgen_residue_gate.py --check` shows `PcgenFormulaEvaluator`,
 `bonus_stack_reader`, `pre_tokens` at 0 live hits; the oracle comparison agrees before and after;

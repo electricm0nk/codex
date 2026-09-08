@@ -26,6 +26,8 @@ date: 2026-09-07
 | **The batch floor** — one mechanism corpus-wide, 500 units minimum, as a script (2026-09-07) | `../decisions.md §2` |
 | **No PCGen in live code** — converter and test oracle only; the 78 existing live readers come out in SD-35 (2026-09-07) | `../decisions.md §11`, quoted verbatim |
 | **Keep the converter and the oracle** — Starfinder starts right after PF1e; the tool side is the asset, not litter (2026-09-07) | `../decisions.md §11`, "what is kept", quoted verbatim |
+| **SD-34's unrun closure is folded into SD-35 Epic 1** (2026-09-07, audit) | `../decisions.md §12` |
+| **`box_ledger.py` retired as a gate; the atlas is the partition** (2026-09-07, audit) | `../decisions.md §13` |
 | **Cost scales with token vocabulary, not unit count** (2026-08-31) | `../../SD-34-book-completion/fable-review.md §1.b`, register row C1.6 |
 | **Text-only features are complete** (SD-31 Decision 7, 2026-08-16) — the precedent the sheet rule generalizes | `../../SD-31-corpus-closure-grind/decisions.md` Decision 7 (line 505) |
 | **The interpreter ban is dead** (SD-31 Decision 20, 2026-08-21) — only `derived_evaluator_fixture_check` binds | `../../SD-31-corpus-closure-grind/decisions.md` Decision 20 |
@@ -85,7 +87,7 @@ forever.**
 | Document | Status |
 |---|---|
 | `../../../retro/sd35-corpus-sheet-completion-retrospective.md` | **Written at closure by AT-35-E7-002, and cited from THIS file in the same cycle.** Must report units-per-cycle distribution, lines-per-unit distribution, build time before/after, and the `Words` share per kind. |
-| `../../../retro/sd34-book-completion-retrospective.md` | SD-34's. **Does not exist at authoring** — SD-34 is in progress. Its existence and citation is SD-35 launch gate item 4 (`../workflow-instruction.md §1`). When it lands, its "changes for the next bundle" section is checked against `../decisions.md §9` and any lesson not already carried is added there before launch. |
+| `../../../retro/sd34-book-completion-retrospective.md` | SD-34's. **Does not exist at the cut** — SD-34 merged without running its epilogue (`../decisions.md §12`). **Written by AT-35-E1-006 and cited from THIS file in that cycle**, alongside SD-34's own `references/README.md`; its "changes for the next bundle" are folded into `../decisions.md §9` in the same cycle, before Epic 2 dispatches. |
 | `../../../retro/sd33-computed-value-verification-retrospective.md` | SD-33's. The measure-before-population-run lesson (N7). |
 | `../../../retro/sd32-compute-library-and-cause-closure-retrospective.md` | SD-32's. The denominator-gate and deferral-revisit disciplines; the generic-pass-not-per-object-lanes proof. |
 | `../../../retro/sd31-retrospective.md` | The worked example every bundle's closure retrospective follows in shape. |

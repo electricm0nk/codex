@@ -98,8 +98,15 @@ before wave 43 and did not stop waves 43–48.
 census found 22 mechanisms covering 90% of 22,369 units in the 35 non-vehicle books, so the
 typical mechanism carries on the order of a thousand units. 500 is a floor, not a target.
 
-**Enforced by:** `scripts/cycle_scope_gate.py --min 500` in `workflow-instruction.md §6` step 0;
-`§7`'s receipt carries its literal output.
+**Exemption, stated here so it is a decision and not a habit.** Cycles that close zero units
+*by design* skip the scope gate and write `SCOPE_GATE: EXEMPT (<reason>)` in the receipt: the
+gate-building cycles (Epic 1 rows 1, 2, 5, 6), epic wrap-up fix cycles (`§10` step 0), and
+Epic 6's exit cycles. SD-34 `workflow-instruction.md §12` row 6 ("measurement waves that bank
+zero units are legitimate deliverables") is the precedent. **Nothing is exempt from the residue
+check (`§11`).** Any other cycle under 500 that is not the whole remainder does not start.
+
+**Enforced by:** `scripts/cycle_scope_gate.py --min 500` in `workflow-instruction.md §6` step 1;
+`§7`'s receipt carries its literal output or the `EXEMPT` line.
 
 ---
 
@@ -121,6 +128,18 @@ dashboard stages.
 
 **Risk accepted.** A desktop or dashboard break surfaces at epic end instead of wave end. That
 is at most one fix cycle per epic.
+
+**Amendment, operator 2026-09-07 — the worker split.** Asked whether the run should move to the
+cloud for speed, the operator chose the hybrid: cycle work stays **local** (this box compiled the
+whole workspace cold in 2 min 45 s at the cut; its cache is warm; its progress is visible), and
+the two long **read-only** jobs — the epic-end 40-stage gate (~100 min) and the oracle-harness
+runs — go to an **isolated worker that pushes nothing** (a worktree agent here, or a cloud
+session when the box is loaded). The gate **overlaps the next epic's first cycle** and must be
+green before that epic's second cycle; a red gate costs at most one cycle of rework. The cloud
+was rejected as the default because every cloud session starts cold (clone, corpus, build) and
+cannot be watched live (`cloud-loop-orchestration-lessons`); two writers on one branch is the
+collision this split is designed to prevent. Enforced by `workflow-instruction.md §2`'s worker
+split, `§2.4`'s `pendingWrap`, `§10` step 0.
 
 **Enforced by:** `workflow-instruction.md §6` step 3 and `§10` step 0.
 
@@ -166,14 +185,15 @@ license deferral:** a mechanism under 500 units is bundled, not parked.
 
 ---
 
-## §7 — Relationship to SD-34, which is still running
+## §7 — Relationship to SD-34, which merged without closing
 
-SD-34 is `in-progress` at this package's authoring (wave 51 closed 2026-09-07; kanban rows 13,
-14, 15, 17, 20, 26, 27 and the wave rows are open). SD-35 does **not** take SD-34's open cards.
-Its Tier-1 launch gate is SD-34's closure PR merged to `develop`. Whatever remainder SD-34
-leaves in `core_rulebook` and `ultimate_campaign` at that point is inside SD-35's population by
-construction — SD-35's population is *every* non-DONE unit in the corpus at the `tranche/15` cut,
-all 37 books, re-measured then (`content-unit-inventory.md §0`).
+SD-34 was `in-progress` at this package's authoring (wave 51, 2026-09-07 morning). The same
+evening the operator merged SD-34's PR #383 to `develop` (`fe5ae6cd4a`, 22:26 UTC), cut
+`tranche/15`, and stamped `0.15.0` (`4c6c57eb9f`). **SD-34's closure epilogue never ran**: no
+retrospective, 17 of 37 kanban rows not `complete`, no final-acceptance scan. `§12` records the
+ruling that folds that debt into SD-35. SD-35's population is *every* non-DONE unit in the corpus
+at the cut, all 37 books — including whatever SD-34 left in `core_rulebook` and
+`ultimate_campaign` — re-measured at `4c6c57eb9f` (`content-unit-inventory.md §0`).
 
 SD-34's `decisions.md §22` (2026-09-04) told future waves to scope bucket-D work "as real
 feature-building work (new `ground_<class>_class_features`-style dispatch functions)". **Under
@@ -277,6 +297,93 @@ the tool-side liveness check in `acceptance-and-verification.md §3a`.
 
 ---
 
+## §12 — Operator ruling, 2026-09-07: SD-34's unrun closure is folded into SD-35 Epic 1
+
+**What happened.** SD-34's PR #383 was merged and `tranche/15` cut before SD-34 ran its own
+closure epilogue (`SD-34/workflow-instruction.md §11`). At the cut: no
+`docs/retro/sd34-book-completion-retrospective.md`; **17 of 37** `kanban.md` rows not
+`complete` — rows 13, 14, 15, 17, 20 (Epic 3/4 book-to-zero criteria), 26, 27 (the closure
+epilogue itself), and 28–37 (the salvage, trait-slice, and bucket-D-mining cycle rows); no
+final-acceptance scan. `tranche/14` is deleted on origin. The launch-readiness audit of this
+package surfaced it.
+
+**Operator ruling (three options presented; the first chosen):** fold it into SD-35 Epic 1 as
+one housekeeping cycle — **AT-35-E1-006**. That cycle:
+
+1. writes `docs/retro/sd34-book-completion-retrospective.md` from
+   `python3 scripts/retro.py summary --since 2026-08-27 --json`, in `sd31-retrospective.md`'s
+   shape, and cites it from **both** `../SD-34-book-completion/references/README.md` and this
+   package's `references/README.md`;
+2. maps each of SD-34's 17 open rows to the SD-35 criterion whose population now owns its
+   units (rows 13/14/15/17/20 → AT-35-E3-001..E4-001 by bucket; rows 28–37 → the same by
+   bucket; rows 26/27 → AT-35-E7-001..003), with the unit counts summing against
+   `completion_atlas.py --book core_rulebook` and `--book ultimate_campaign` at the cut;
+3. records in SD-34's `progress.md` that the bundle closed **by operator merge on 2026-09-07
+   with its epilogue folded into SD-35**, so no reader mistakes the 17 rows for live work.
+
+**What this is not.** Not a waiver: the retrospective gets written and SD-34's lessons reach
+`§9` before Epic 2 dispatches. Not a laundering: the 17 rows' units are in SD-35's Definition of
+Done by construction (they are non-DONE units in the corpus), not in a register.
+
+**Enforced by:** AT-35-E1-006's evidence (file exists; both citations grep ≥ 1; the row map
+sums); `workflow-instruction.md §1` item 4; `§12` row 37.
+
+---
+
+## §13 — `box_ledger.py` is retired as a standing gate; the Completion Atlas is the partition
+
+**Finding, launch-readiness audit 2026-09-07.** `python3 scripts/box_ledger.py --check` exits 1
+at the `tranche/15` cut: `uncovered=27502 of 49438`, with eight warnings that
+`docs/release/SD-33-computed-value-verification/THE-BOX.md` "needs re-deriving". THE-BOX.md is
+SD-33's frozen closure artifact and pins SD-33's status vocabulary — `not-ingested` at 26,002,
+`grounded` at 3,415, `literal-verified` at 6,589 — against a live inventory where
+`not-ingested` is **0** (SD-34's AT-34-E1-005 renamed it to `engine-does-not-hold` on
+2026-08-26) and `grounded` is 5,222. The count did not drop because coverage was lost; it
+dropped because the instrument reads names the inventory no longer emits
+(`instrument-correction-is-not-closure`). The ledger is not a `scripts/verify.sh` stage and has
+no re-derive mode, so nothing ran it after the rename. SD-34 listed it as a standing gate
+"green at every cycle"; it was red for the whole of SD-34's Epics 2–5.
+
+**Decision.** `box_ledger.py --check` is **not** an SD-35 standing gate. The partition of record
+is `scripts/completion_atlas.py --check` — fail-closed on six conditions, content-cited, green at
+the cut (`unclassified=0 overlap=0 citation_failures=0`). THE-BOX.md stays as SD-33 history and
+is not re-derived by this bundle. The one thing the ledger checked that the atlas does not —
+`oracle_disagreement` against SD-33's `oracle-results.json` — is covered by AT-35-E4-002's
+harness run and the parity artifacts (`§11`).
+
+**Why not fix it instead.** A second partition that must be hand-kept in sync with the first is
+the drift SD-34 `decisions.md §12` L1 ("a field's name is not its meaning") warns about; the
+atlas already re-derives the same population every cycle with citations that fail closed.
+
+**Enforced by:** its removal from `acceptance-and-verification.md §2`, `technical-requirements.md §2`,
+and `workflow-instruction.md §6` step 3; the finding recorded in `§1` item 9.
+
+---
+
+## §14 — Operator ruling, 2026-09-07: Fable on every lane until it runs dry, then Opus; orchestrator on Opus
+
+**Operator, verbatim:** *"i would really prefer just to throw fable at everything until it runs
+dry, and then switch to opus. We can run the orchestrator as opus to manage this."* Context: about
+36 hours to the quota reset with a large surplus.
+
+**Decision.** For this bundle the global model tiering (Sonnet as the execution default) is
+overridden: every dispatched cycle, wrap-up, oracle, and scan lane runs on **`fable`** until the
+Fable quota is exhausted, then on **`opus`**; housekeeping (release notes, version confirmation)
+stays on Haiku. The **orchestrating session runs on Opus**. The mechanism is
+`workflow-instruction.md §2.4`'s `LANE_MODEL` (from `args.laneModel`): a lane that returns `null`
+on a terminal API error halts the script naming its criterion; the orchestrator rebuilds the
+criteria lists from `kanban.md` and relaunches with `args.laneModel = 'opus'`. Nothing is resumed
+blind — the relaunch re-reads the board.
+
+**Also spent on Fable before launch, same ruling:** the converter's token-type → `Expr` /
+`Applies` / prose mapping table (`artifacts/epic-2-sheet-rule/token-mapping/`), derived from the
+corpus and judged adversarially, so AT-35-E2-001 transcribes a reviewed table instead of
+inventing one mid-cycle (`risks-and-open-questions.md §2` R1).
+
+**Enforced by:** `LANE_MODEL` in every `agent()` call; `§12` row 39.
+
+---
+
 ## §10 — Build version
 
 SD-35's first concrete build value is `0.15.0`, stamped in `apps/desktop/package.json` and
@@ -284,5 +391,6 @@ SD-35's first concrete build value is `0.15.0`, stamped in `apps/desktop/package
 new `tranche/N` cut, never on a bundle's own closure (SD-34 `decisions.md §11`). Root
 `Cargo.toml` stays at `0.1.0` and is not the version source of truth.
 
-**Resolution point:** `workflow-instruction.md §1` item 8, the cut. Until it lands, `README.md §1`
-records the branch as not yet cut — a documented deferral with a named resolution point.
+**Resolved 2026-09-07:** the cut landed as `4c6c57eb9f` ("feat(sd35): version bump 0.15.0 for
+tranche/15") on `fe5ae6cd4a` (SD-34's PR #383 merge); both version files read `0.15.0`;
+`git ls-remote --heads origin tranche/15` resolves. No deferral remains.

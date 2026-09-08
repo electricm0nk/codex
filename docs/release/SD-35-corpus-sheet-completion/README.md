@@ -1,6 +1,6 @@
 ---
 title: SD-35 — Corpus Sheet Completion — Release Package
-status: planning
+status: planning-ready
 bundle_id: SD-35
 slug: corpus-sheet-completion
 scope: docs/release/SD-35-corpus-sheet-completion
@@ -30,14 +30,14 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-
 |---|---|
 | Bundle ID | SD-35 |
 | Slug | `corpus-sheet-completion` |
-| Canonical branch | `tranche/15` — **not yet cut**. Cut from `develop` after SD-34's closure PR merges; the cut is `workflow-instruction.md §1` item 8 (`decisions.md §10`) |
+| Canonical branch | `tranche/15` — **cut and pushed 2026-09-07** at `4c6c57eb9f` on `fe5ae6cd4a` (SD-34's PR #383 merge); `decisions.md §10` |
 | Kanban board | local-file `./kanban.md` (Hermes retired 2026-08-01) |
-| Epics / criteria | 7 / 29 (28 kanban rows) |
-| Target version | `0.15.0`, stamped at the `tranche/15` cut |
+| Epics / criteria | 7 / 30 (29 kanban rows) |
+| Target version | `0.15.0`, stamped at the cut in `4c6c57eb9f` (both version files confirmed) |
 | Dispatch mechanism | `Workflow` tool, invoked from a live session, per `workflow-instruction.md §2` |
 | Cadence | N/A — dispatch is a live `Workflow` session, not a timer loop |
 | Closure gate | `tranche/15 → develop` PR; retrospective written + cited; worktree/branch sweep; release notes; architecture-docs refresh (§6) — full sequence in `workflow-instruction.md §11` |
-| Launch state | **planning, NOT planning-ready.** Authored 2026-09-07 with `stc-authoring` while SD-34 was at wave 51. Tier-1 item 1 (SD-34's closure PR merged) is **not yet satisfied**; `workflow-instruction.md §1`'s outputs paste at the `tranche/15` cut; every population figure re-measures then. |
+| Launch state | Authored 2026-09-07 morning with `stc-authoring` while SD-34 was at wave 51; **launch-readiness audit the same evening at the `tranche/15` cut** re-based the premise, fixed two script/citation defects and three path/scope mismatches, added AT-35-E1-006 (SD-34's closure folded — `decisions.md §12`), and re-ran `workflow-instruction.md §1` with outputs pasted. **planning-ready** as of 2026-09-08 00:10Z: every §1 item green at the cut (590 targets / 8,656 passed / 0 failed; desktop 573/0; sweep CLEAN; atlas `unclassified=0`). Launch = `/model opus`, then the §2.4 script with `args.laneModel='fable'`. |
 
 ## 2. What this bundle is
 
@@ -80,8 +80,8 @@ build time lower at closure than at launch, measured.
 |---|---|---|
 | `scope-draft.md` | Canonical handoff *what* — the operator's rulings, measured baseline, epics, success | operator |
 | `workflow-instruction.md` | Per-cycle launch *how* — the batch-floor gate, one-build cadence, dispatch, receipt schema | operator |
-| `epic-breakdown.md` | The 29 acceptance criteria across 7 epics | operator |
-| `decisions.md` | Bundle-specific ADRs — §1 the sheet rule, §2 the batch floor, §3 the cadence, §4 the ratio, §11 no PCGen in live code | operator |
+| `epic-breakdown.md` | The 30 acceptance criteria across 7 epics | operator |
+| `decisions.md` | Bundle-specific ADRs — §1 the sheet rule, §2 the batch floor, §3 the cadence, §4 the ratio, §11 no PCGen in live code, §12 SD-34's closure folded | operator |
 | `kanban.md` | One row per criterion; the board | loop (updated per cycle) |
 | `progress.md` | Live cycle-by-cycle record + status | loop (created on first cycle) |
 | `technical-requirements.md` | Pre-loop prerequisites + normative requirements N1–N18 | operator |
@@ -139,22 +139,23 @@ Per `../template/template.md §7`, all present in this folder: `README.md`, `sco
 
 Every population figure was measured on 2026-09-07 against `tranche/14` HEAD `5f6b18f4e3` from
 `docs/work-inventory.json` (`generated_at: 2026-09-07T13:06:14Z`), cross-checked against
-`artifacts/epic-1-atlas/completion-atlas.json` at the same HEAD. `content-unit-inventory.md`
-carries the re-derive command for each.
+`artifacts/epic-1-atlas/completion-atlas.json`, **and re-measured at the `tranche/15` cut
+`4c6c57eb9f` the same evening — identical** (the inventory file did not change between the two).
+`content-unit-inventory.md` carries the re-derive command for each.
 
 The live-side PCGen residue figure (78 files) is a coarse grep at the same HEAD; AT-35-E1-005's
 first run records the exact baseline.
 
-**They are provisional by construction** — SD-34 is still moving units — and are re-measured
-at the `tranche/15` cut (`content-unit-inventory.md §0`). Three denominators are in play and
+**They are the cut's figures.** Epic 2's first corpus-wide conversion is the next thing that
+moves them (`content-unit-inventory.md §0`). Three denominators are in play and
 every figure names its own (`decisions.md §8`): 49,438 (corpus), 23,315 (non-DONE, 37 books),
 22,369 (the fable review's non-DONE across 35 non-vehicle books, an older snapshot quoted only
 when citing that review).
 
 ## 9. Launch gates
 
-`workflow-instruction.md §1`, items 1–12. **Unrun.** Tier-1 item 1 — SD-34's closure PR merged
-to `develop` — is **not yet satisfied** (SD-34 at wave 51, seven kanban rows open on
-2026-09-07). Items 2, 3, 8 pass at the `tranche/15` cut; item 10 records the cold build time
-that AT-35-E1-003 measures against; item 12 (the denominator gate on this package) is run by
-the authoring session and pasted.
+`workflow-instruction.md §1`, items 1–12, **run at the `tranche/15` cut `4c6c57eb9f` on
+2026-09-07 with outputs pasted.** Tier-1 items 1–3 are satisfied (PR #383 merged, branch cut,
+`0.15.0` stamped). Item 4 records that SD-34's own epilogue never ran and is folded
+(`decisions.md §12`, AT-35-E1-006). Item 10 records the cold build time AT-35-E1-003 measures
+against and the inherited failing-suite baseline.

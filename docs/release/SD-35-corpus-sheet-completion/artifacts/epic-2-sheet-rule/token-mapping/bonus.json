@@ -1,0 +1,1408 @@
+[
+ {
+  "token_type": "BONUS:VAR",
+  "family": "bonus",
+  "instances": "27331 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 15,396 instances on 6,271 units",
+  "units": "6708 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 10211 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "VAR is a BINDING, never a sheet line by itself. The converter resolves the variable's producer chain corpus-wide exactly as bonus_stack_reader.rs::resolve_producer_chain_corpus_wide does (DEFINE base + every BONUS:VAR addend for that name, each gated by its own trailing PRE), maps the chain to one Expr, and INLINES that Expr wherever the closure consumes the name: a DESC `%N` argument (prose number), a SPELLS DC=/CASTERLEVEL=/TIMES= field (the SLA line), another BONUS's formula or PRE gate, or a PREVAR* gate. Consumer census, corpus-wide by instance (denominator 27,331): consumed by DESC 9,938; by SPELLS 1,230; by SAB/ASPECT/BENEFIT 1,127; only by other BONUS/PRE tokens 11,766; by nothing in the corpus 3,946 (877 distinct names). The no-corpus-consumer names are consumed by PCGen system rows that are not corpus records; the converter maps them by a fixed NAME table (per name, not per record): AC_Natural_Armor (1,574) -> COMBAT|AC TYPE=NaturalArmor; DarkvisionRange (344) -> VISION Darkvision; CMB_<m>/CMD_<m> -> the CMB/CMD line for maneuver m; SLA_CL -> CasterLevel of the record's SLAs; HasLowlightVision/HasLowLightVision/Mindless/RaceSizeIsLong/NoTypeTraits and every TYPE=Boolean VAR (1,709 instances) -> a flag: Text, no number; ARG_RaceBuilderPoints/TempEvolution*/Pool_*/DomainTaken -> builder bookkeeping: Metadata (no line). A name in none of those sets and consumed by nothing emits no line and no refusal. Formula mapping (F1..F9 AST from formula_interpreter.rs, then table): integer -> Const; TL -> Level; CL -> ClassLevel(owning class of the record; refuse when the record has no owning class); CL=X and classlevel(\"X\") -> ClassLevel(X); classlevel(\"APPLIEDAS=NONEPIC\") and bare classlevel() -> ClassLevel(owning class); HD -> HitDice; BAB -> BaseAttack; SIZE -> Size; STR..CHA -> AbilityMod; STRSCORE..CHASCORE -> AbilityScore (PCGen TermEvaluatorBuilderPCVar.java: bare abbreviation = modifier, +SCORE = score); + - * / -> Sum/Sum(Mul(-1))/Mul/Div; min/max n-ary -> nested Min/Max; floor(x) -> x (Div already floors); a DEFINEd identifier -> its own chain, recursively; %LIST/%CHOICE -> Choice. Per-formula refusals (corpus-wide, of 27,331): identifier neither built-in nor DEFINEd anywhere 1,177 (231 distinct names, e.g. BloodlinePower1TimesBonus 84, BoonCompanionBonus_AnimalCompanion 40, VitalistLVL 23 -- a PCGen data defect or a variable owned by a book not ingested); var(...) 75; skillinfo(...) 71; count(...) 36; charbonusto(...) 26; mastervar(...) 9; decimal literal 1. These are formula-shape refusals reported per shape, not per unit.",
+  "expr_shape": "Sum([Const(10), SpellLevel, AbilityMod(Cha)]) for a DC chain; Sum([Const(2), <gated Const(1)>, <gated Const(1)>]) for a level-stepped chain (see gap E1)",
+  "expr_gaps": [
+   "E1 conditional term: PREVARGTEQ-gated addends and if()/comparison arithmetic (615 if( calls, 1,299 PREVARGTEQ gates on VAR) need Expr::If(Cond, then, else) with Cond = Cmp(Expr, op, Expr) | And. Exact fallback inside the existing vocabulary: (X>=k) == Min(Const(1), Max(Const(0), Sum([X, Const(1-k)]))) for integer X and k; if(c,a,b) == Sum([b, Mul(c, Sum([a, Mul(-1,b)]))]). The fallback is exact but unreadable; the variant is recommended.",
+   "E2 Expr::Ceil (49 ceil( calls) and Expr::Abs -- no exact fallback for ceil in the vocabulary.",
+   "E3 Expr::SkillRanks(SkillId) for skillinfo(\"TOTALRANK\"|\"RANK\", skill) (182 calls across the family).",
+   "E4 Expr::CountHeld(category, key) for count(\"ABILITIES\",...) (39 calls) -- else refuse.",
+   "E5 Expr::BonusCasterLevels(ClassId) for var(\"BL=X\") when it appears without its var(\"CL=X\") partner (the pair maps to CasterLevel(X)).",
+   "E6 equipment/encumbrance state (ENCUMBERANCE, var(\"COUNT[EQTYPE...]\"), ARMORACCHECK, SHIELDACCHECK, MOVEBASE, CR) -- not character facts in \u00a71; refuse or fold as words.",
+   "V1 a variable whose chain is DEFINEd only by a record outside the ingested books (231 names, 1,177 instances) -- refuse per name."
+  ],
+  "applies_shape": "None. A VAR never constrains the holder; its gates constrain the ADDEND (rule G).",
+  "prose_effect": "Through DESC %N substitution only: `DESC:DC %1|WitchHexDC_Ward` prints the folded number in the prose. TYPE=Boolean flags print their record's words unchanged.",
+  "examples": [
+   {
+    "record": "advanced_players_guide:class_feature:Witch Hex ~ Ward",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:898",
+    "raw": "BONUS:VAR|WitchWardBonus|1|PREVARGTEQ:WitchHexAbilityLVL,8",
+    "sheet_line": "Ward: +4 deflection bonus to AC, +4 resistance bonus on saves (F20 witch: 2 base +1 at hex level 8 +1 at 16 = 4, printed through DESC %1/%2)"
+   },
+   {
+    "record": "core_rulebook:race_trait_generic:Racial SLA ~ Speak with Animals (rodents only)",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst:239",
+    "raw": "BONUS:VAR|RacialSLA_SpeakWithAnimalsRodentsOnly_DC|10+RacialSLA_SpeakWithAnimalsRodentsOnly_SpellLVL+RacialSLA_SpeakWithAnimalsRodentsOnly_DCMod",
+    "sheet_line": "Speak with Animals (rodents only) 1/day, CL 20, DC 13 (F20, Cha 14: 10 + 1 + 2; consumed by the SPELLS token's DC field)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Kineticist ~ Infusion",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:545",
+    "raw": "BONUS:VAR|Pool_KineticistInfusion|1+(KineticistLVL>=3)+(KineticistLVL>=5)+(KineticistLVL>=9)+(KineticistLVL>=11)+(KineticistLVL>=13)+(KineticistLVL>=17)+(KineticistLVL>=19)",
+    "sheet_line": "Infusions known: 8 (F20 kineticist; comparison arithmetic, gap E1) -- Pool_* is builder bookkeeping so this prints only where DESC cites it"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in the charbuild-remainder export (scripts/oracle_harness/charbuild-remainder.txt.ftl: magnitude-substituted DESC) covers every VAR that a DESC %N consumes; VAR.CMB/VAR.CMD cover CMB_*/CMD_*; AC.TOTAL covers AC_Natural_Armor; a VAR consumed only by SPELLS or by nothing has no PCGen total in the export set (sheet-line only).",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "PCGen truncates a bare division toward zero at consumption; Expr::Div floors. They differ only for a negative dividend (e.g. min(NinjaTrickLVL-4,0)); confirm the evaluator's choice or add Expr::Trunc.",
+   "The 877 no-corpus-consumer names: the fixed name table above covers the top 12 by instance; the tail needs one pass over the pinned system .lst files to confirm each is bookkeeping, not a sheet feeder."
+  ]
+ },
+ {
+  "token_type": "BONUS:VAR (TYPE=Boolean flag)",
+  "family": "bonus",
+  "instances": "1709 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "counted inside BONUS:VAR above; 1,709 instances corpus-wide (denominator 27,331 VAR instances)",
+  "maps_to": "Text",
+  "rule": "A BONUS:VAR whose TYPE= is Boolean (or whose value is a 0/1 constant consumed only by PREVAREQ/PREFACT gates) is a flag: HasLowlightVision, Mindless, RaceSizeIsLong, <Class>_CF_<Feature> replacement flags. It sets a fact other tokens gate on; it prints nothing by itself. The record's DESC prints as Text. The converter keeps the flag on the tool side to evaluate other tokens' gates; no flag name reaches the SheetRule.",
+  "expr_shape": "n/a (flag)",
+  "expr_gaps": [
+   "A1 Applies needs a way to say 'unless an archetype replaced this feature': the <Class>_CF_<Feature> / PREFACT:1,ABILITIES,X=True family (1,621 PREFACT + ~170 PREVAREQ:*_CF_* gates on BONUS) is that fact. Name it Applies::FeatureNotReplaced(feature_id)."
+  ],
+  "applies_shape": "None directly; the flag becomes an Applies gate on OTHER rules (gap A1).",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:plasma_ooze",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:221",
+    "raw": "BONUS:VAR|Mindless|1",
+    "sheet_line": "Mindless (words only; the flag suppresses Int-based lines elsewhere)"
+   },
+   {
+    "record": "core_rulebook:race_trait_generic:Racial SLA ~ Speak with Animals (rodents only)",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst:239",
+    "raw": "BONUS:VAR|RacialSLA_SpeakWithAnimalsRodentsOnly_Times|1|TYPE=Base",
+    "sheet_line": "(no line; selects the '1/day' SPELLS row over the at-will one)"
+   },
+   {
+    "record": "occult_adventures:race_trait_generic:Phantom Companion ~ Darkvision",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst:7",
+    "raw": "BONUS:VAR|DarkvisionRange|60|TYPE=Base",
+    "sheet_line": "Darkvision 60 ft. (not a flag: DarkvisionRange is on the sheet-feeder name table and prints as a number)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total covers a flag.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:VAR ([redacted PI] value)",
+  "family": "bonus",
+  "instances": "counted under BONUS:[redacted PI]",
+  "units": "see BONUS:[redacted PI]",
+  "maps_to": "REFUSE",
+  "rule": "See the BONUS:[redacted PI] row.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "n/a",
+  "prose_effect": "n/a",
+  "examples": [],
+  "oracle_check": "n/a",
+  "refuse_reason": "see BONUS:[redacted PI]",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:STAT",
+  "family": "bonus",
+  "instances": "8835 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 721 instances",
+  "units": "426 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 2306 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target = ability abbreviation list (STR,DEX,CON,INT,WIS,CHA; comma list applies the same Expr to each; %LIST -> Choice(ability)). Value -> Expr; TYPE= -> bonus_type for the character-level fold (Racial is a STACKING type per BONUSSTACKS; Enhancement/Inherent/Alchemical/Insight/Profane/Size take the max). The sheet line is the ability score row: score = base + Sum(folded bonuses). One malformed target `BASESPELLSTAT;CLASS=Inquisitor|INT` (1 instance) -> refuse. 8,687 of 8,835 values are integer literals; 109 identifiers, 38 expressions, 1 mastervar (refuse). Stacking is a CHARACTER-level fold, not a record-level one (PCGen BonusManager.java:640-700, pinned 7f81800): untyped bonuses sum; two bonuses of the same TYPE take the max unless the type is in the game mode's stacking list (system/gameModes/Pathfinder/miscinfo.lst:17 BONUSSTACKS: Defense, Dodge, Circumstance, Racial, NotRanged, NotFlatFooted), a negative value always adds, `.STACK` always sums, `.REPLACE` replaces the plain-typed value (total = max(plain+stack, replace), BonusManager.java:475-489). Inside ONE record the converter folds tokens sharing (target, type) with that rule into one Expr: Sum([...]) for stacking types, Max(a, b) for a non-stacking type. Across records the live sheet-total evaluator applies the same rule, so the SheetRule must carry `target` and `bonus_type` (gap S1).",
+  "expr_shape": "Const(2) typed Racial; Sum over held rules per (ability, type) at evaluation",
+  "expr_gaps": [
+   "S1 SheetRule needs `target` and `bonus_type` fields so the live evaluator can fold same-type bonuses across records (see bonus.md \u00a72)."
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None; the number is the line.",
+  "examples": [
+   {
+    "record": "bestiary_5:race_trait_generic:Werebear-Kin ~ Ability Scores",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst:43",
+    "raw": "BONUS:STAT|CON|2|TYPE=Racial",
+    "sheet_line": "Con 16 (14 +2 racial)"
+   },
+   {
+    "record": "advanced_race_guide:ability:AbilityScoreNegative -2 ~ Charisma",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst:155",
+    "raw": "BONUS:STAT|CHA|-2|TYPE=Racial",
+    "sheet_line": "Cha 12 (14 -2 racial)"
+   },
+   {
+    "record": "mythic_adventures:ability:Mythic Path Ability ~ Enhanced Ability",
+    "source": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst:319",
+    "raw": "BONUS:STAT|%LIST|2",
+    "sheet_line": "Enhanced Ability: +2 to one ability score (words until the choice is made; then the chosen score row shows +2)"
+   }
+  ],
+  "oracle_check": "STAT.<n>.SCORE / STAT.<n>.MOD in computed-values.txt.ftl and STAT.<i>.SCORE in charbuild-remainder.txt.ftl.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:ABILITYPOOL",
+  "family": "bonus",
+  "instances": "2247 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 1,480 instances; 1,091 choice-bearing units",
+  "units": "1105 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 1647 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target = a pool name (Rage Power, Fighter Bonus Feat, Companion Level Increase Choice, ...). Value = how many picks the pool grants (often negative, gated: `-1|PREVARGTEQ:SkaldLVL,3|PREVAREQ:Skald_CF_RagePower3,1` retracts a pick an archetype replaced). The converter sums every ABILITYPOOL token for one pool across the record into one Expr; the live fold across records is a plain Sum (pools are untyped). Sheet line: '<pool>: N picks'. The picks themselves are choice records (CHOOSE family, not this row). 1,764 integer literals, 267 identifiers, 213 expressions, 3 %LIST (-> Choice). Refusals: 97 undefined identifiers (all ultimate_psionics *EnhancementCount names), 33 var(\"CL=X\") (-> ClassLevel(X), no refusal once E5's partner rule lands), 2 mastervar, 1 cl( -> 130 records corpus-wide.",
+  "expr_shape": "Sum([Div(ClassLevel(skald), Const(3)), gated Const(-1), ...])",
+  "expr_gaps": [
+   "E1 (gated retractions)",
+   "A1 (PREVAREQ:<Class>_CF_<Feature> archetype-replacement gates: 176 PREVAREQ on ABILITYPOOL)"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words. PRECLASS:1,X=1 on 107 ABILITYPOOL tokens -> Applies class X.",
+  "prose_effect": "'N picks' is the whole line; the pool's picks are separate records.",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Skald ~ Rage Powers",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1728",
+    "raw": "BONUS:ABILITYPOOL|Rage Power|RagePowersLVL/3",
+    "sheet_line": "Rage powers: 6 picks (F20 skald, 20/3 floored, no archetype retraction)"
+   },
+   {
+    "record": "adventurers_guide:template:Lore Warden Bonus Feat",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_templates.lst:11",
+    "raw": "BONUS:ABILITYPOOL|Fighter Bonus Feat|1",
+    "sheet_line": "Fighter bonus feat: +1 pick"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Shadow Savant Subschool",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2514",
+    "raw": "BONUS:ABILITYPOOL|Arcanist Savant Opposition School|2",
+    "sheet_line": "Opposition schools: 2 picks"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no PCGen total in the export set counts pool sizes (SA.COUNT counts held abilities, not open picks).",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Is a pool size a sheet line at all, or bookkeeping the picker consumes (Metadata)? The 'print what the player would write' rule says the PICKS are written, not the pool size. Recommend: Number(Expr) kept on the rule for the picker and the level-up sheet, but the printed sheet shows only the picks."
+  ]
+ },
+ {
+  "token_type": "BONUS:SKILL",
+  "family": "bonus",
+  "instances": "2075 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 965 instances",
+  "units": "763 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 1571 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target = skill name list (comma list applies the same Expr to each), `TYPE.Knowledge` = every skill of that type, `LIST` and `%LIST` = the record's CHOOSE'd skill -> Choice(skill). Value -> Expr. TYPE= -> bonus_type (Racial 593 STACKS; Trait 242, SkillFocus 194, Competence 68, Insight, Sacred, Profane take the max; ClassSkill 105 is PCGen's +3 class-skill mechanism and is folded by the product's class-skill rule, not printed as a bonus). Sheet line: '<Skill> +N (<type>)' on the skill row. 1,514 integer literals, 397 expressions, 156 identifiers, 4 stat mods, 2 %LIST formulas. Refusals corpus-wide: 28 var(\"SKILL.X.MISC\"), 11 skillinfo (E3), 13 undefined identifiers (7 are ACCHECK: `SKILL|TYPE=Strength,TYPE=Dexterity|-ACCHECK`, the armor check penalty -> E6), 2 %LIST-in-formula -> 34 records. Stacking is a CHARACTER-level fold, not a record-level one (PCGen BonusManager.java:640-700, pinned 7f81800): untyped bonuses sum; two bonuses of the same TYPE take the max unless the type is in the game mode's stacking list (system/gameModes/Pathfinder/miscinfo.lst:17 BONUSSTACKS: Defense, Dodge, Circumstance, Racial, NotRanged, NotFlatFooted), a negative value always adds, `.STACK` always sums, `.REPLACE` replaces the plain-typed value (total = max(plain+stack, replace), BonusManager.java:475-489). Inside ONE record the converter folds tokens sharing (target, type) with that rule into one Expr: Sum([...]) for stacking types, Max(a, b) for a non-stacking type. Across records the live sheet-total evaluator applies the same rule, so the SheetRule must carry `target` and `bonus_type` (gap S1).",
+  "expr_shape": "Const(2) typed Racial; Div(ClassLevel(rogue), Const(2)) untyped",
+  "expr_gaps": [
+   "S1",
+   "E3",
+   "E6 (ACCHECK)",
+   "A2 Applies::SkillRanks(skill, min) for PRESKILL:1,X=1 / !PRESKILL (341 gates) and Applies::ClassSkill(skill) for PRECSKILL (105)."
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words. PRESKILL/PRECSKILL gates are build-settled: fold into Applies (gap A2).",
+  "prose_effect": "The type word in parentheses.",
+  "examples": [
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:kech",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:165",
+    "raw": "BONUS:SKILL|Perception|2|TYPE=Racial",
+    "sheet_line": "Perception +2 (racial)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Hunter ~ Track",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1177",
+    "raw": "BONUS:SKILL|Survival|HunterLVL/2",
+    "sheet_line": "Survival +10 (F20 hunter; untyped, stacks)"
+   },
+   {
+    "record": "ultimate_campaign:ability:Trait ~ Artisan",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst:189",
+    "raw": "BONUS:SKILL|%LIST|2|TYPE=Trait",
+    "sheet_line": "Artisan: +2 trait bonus to one Craft skill (words until chosen; then 'Craft (weapons) +2 (trait)')"
+   }
+  ],
+  "oracle_check": "sheet-line only -- neither export template emits SKILL.<n>.TOTAL; add it to the harness before AT-35-E2-005 (bonus.md \u00a75).",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:WEAPONPROF=<name>",
+  "family": "bonus",
+  "instances": "1678 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 439 instances (collapsed)",
+  "units": "246 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 842 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Sub-target after `=` names a weapon or `TYPE.<group>` (or %LIST -> Choice(weapon)); the second field picks the weapon property: DAMAGESIZE 585 (die-size steps), DAMAGE 571 (flat damage), TOHIT 319 (attack), WIELDCATEGORY 63, REACH 62, CRITRANGEADD 24, CRITMULTADD 22, CRITRANGEDOUBLE 16, PCSIZE. TOHIT and DAMAGE -> Number(Expr) onto the weapon's attack/damage line ('Bite +N / 1d6+M'). DAMAGESIZE -> a die STEP: the converter reads the base die from the same record's NATURALATTACKS (monster/companion) or the weapon record, steps it on the PF size chart at convert time when the step is Const, and emits SheetValue::Dice; a level-gated step (Bloodrager claws: `Bloodrager_GenericClaws_SizeBonus|PREVARGTEQ:...,8`) needs gap D1. REACH/CRIT*/WIELDCATEGORY/PCSIZE -> Text on the weapon line ('reach 10 ft.', 'crit 18-20'). Refusals: 6 undefined identifiers (GunslingerLvl misspelling family).",
+  "expr_shape": "Dice{dice:'1d8', modifier: Div(AbilityMod(Str), Const(2))} for DAMAGE; Sum([Const(1)]) typed WeaponTraining for TOHIT",
+  "expr_gaps": [
+   "D1 SheetValue::Dice needs `size_steps: Expr` (or the converter needs a per-step die ladder) for a die whose step count depends on level.",
+   "S1"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words. PREABILITY:1,CATEGORY=FEAT,Two-Weapon Fighting on 86 tokens (secondary-attack penalties) -> Applies feat.",
+  "prose_effect": "The property word (reach, crit) for the Text cases.",
+  "examples": [
+   {
+    "record": "inner_sea_world_guide:monster:inner_sea_world_guide:monster:gecko_giant",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races_bestiary.lst:11",
+    "raw": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+    "sheet_line": "Bite 1d6+1 (this creature: Str 12, max(0, 1/2) -> +0; damage total from the natural attack line)"
+   },
+   {
+    "record": "advanced_class_guide:ability:Warpriest Bonus Feat ~ Blood Beak",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst:56",
+    "raw": "BONUS:WEAPONPROF=Beak|DAMAGESIZE|1",
+    "sheet_line": "Beak 1d6 (base 1d4 stepped up one size at convert time)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Swashbuckler ~ Swashbuckler Weapon Training",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1960",
+    "raw": "BONUS:WEAPONPROF=TYPE.Weapon Group Melee Light Piercing|CRITRANGEDOUBLE|1|TYPE=WeaponTraining",
+    "sheet_line": "Light piercing weapons: critical threat range doubled (words on the weapon line)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- the export set has BAB but no per-weapon attack/damage total; SA.<n>.DESC covers natural-attack DESC lines.",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Confirm the base die source for DAMAGESIZE on class_feature records (Bloodrager claws) -- the die lives on a granted NATURALATTACKS token in a sibling record, so the converter needs the closure to include grants."
+  ]
+ },
+ {
+  "token_type": "BONUS:SPELLCAST",
+  "family": "bonus",
+  "instances": "620 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 598 instances, 72 units",
+  "units": "93 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 93 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target `CLASS=X;LEVEL=n` = the spells-per-day table cell for class X at spell level n. Value -> Expr added to that cell. Two shapes: a per-level +1 (Shadow Savant: 25 tokens per Arcanist row) and the archetype 'no spellcasting' hack `-10` / `-floor((INT+3)/4)` (Investigator, 146 PRECLASS-gated tokens) that zeroes the cell. Sheet line: the class's spells-per-day row. Zero formula refusals corpus-wide. Cell values below 0 print as '--'.",
+  "expr_shape": "Const(1) per cell; Sum with the class table's own cell at evaluation",
+  "expr_gaps": [
+   "T1 SheetRule has no 'table cell' target: the rule needs target = (class, spell_level) so the evaluator can add it to the spells-per-day row. Same gap for SPELLKNOWN, SPECIALTYSPELLKNOWN, SKILLPOOL."
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words. PRECLASS:1,X=1 (146) -> Applies class X.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Shadow Savant Subschool",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2514",
+    "raw": "BONUS:SPELLCAST|CLASS=Arcanist;LEVEL=1|1",
+    "sheet_line": "Arcanist spells per day, 1st level: 6 (F20 arcanist table 5 +1)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:No Spellcasting ~ Investigator",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1272",
+    "raw": "BONUS:SPELLCAST|CLASS=Investigator;LEVEL=1|-10",
+    "sheet_line": "Investigator spells per day: -- (archetype removes spellcasting)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Medium To Mesmerist Spells 6",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:885",
+    "raw": "BONUS:SPELLCAST|CLASS=Medium;LEVEL=6|MediumLVL-15|PREVARGTEQ:MediumLVL,16",
+    "sheet_line": "Medium spells per day, 6th level: table +5 (F20 medium: 20-15, gate met)"
+   }
+  ],
+  "oracle_check": "sheet-line only -- no spells-per-day export token in either template.",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:COMBAT",
+  "family": "bonus",
+  "instances": "586 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 367 instances",
+  "units": "352 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 527 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Second field picks the total: AC 219 (typed: Deflection, Dodge, NaturalArmor, Insight, Armor, Shield, Size, Luck, Sacred, Profane...), BASEAB 192 (the class BAB progression, TYPE=Base.REPLACE), INITIATIVE 57, TOHIT / TOHIT.<weapon group> 16+, TOHIT-SECONDARY 9, DAMAGE.Melee/DAMAGE.Ranged, RANGEPENALTY (1, decimal 0.5 -> refuse). AC/INITIATIVE/TOHIT/DAMAGE -> Number(Expr) onto that sheet total with bonus_type for the fold (Dodge STACKS; Deflection/NaturalArmor/Insight/Luck take the max; NaturalArmor.STACK sums). BASEAB with TYPE=Base.REPLACE and PREVAREQ:UseAlternateBABProgression,0 -> the class's BAB rule: Div(Mul(ClassLevel(X), Const(3)), Const(4)); the PREVAREQ:UseFractionalBAB,1 twin is the fractional house rule, dropped at convert time by the product's rule setting (rule G-hr). Refusals: 14 undefined identifiers (PhantomArmorBonus family: master-companion variables, E6/mastervar).",
+  "expr_shape": "Sum([Const(1)]) typed Dodge; Div(Mul(ClassLevel(fighter),Const(3)),Const(4)) untyped base",
+  "expr_gaps": [
+   "S1",
+   "E6 (SHIELDACCHECK in Swashbuckler Finesse: `((max(STR,DEX)-STR)+SHIELDACCHECK)`)",
+   "A3 Applies::NotWearing(armor class) for !PREEQUIP:1,ARMORTYPE=Medium,ARMORTYPE=Heavy (monk-style AC) -- situational per rule G: keep the number, append 'when unarmored' as words."
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "The type word; 'when unarmored'-style conditions for equipment gates.",
+  "examples": [
+   {
+    "record": "core_rulebook:class:Fighter",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst:139",
+    "raw": "BONUS:COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0",
+    "sheet_line": "BAB +20 (F20 fighter)"
+   },
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:akhlut",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:14",
+    "raw": "BONUS:COMBAT|AC|1|TYPE=Dodge",
+    "sheet_line": "AC +1 (dodge)"
+   },
+   {
+    "record": "bestiary_4:monster_ability:bestiary_4:monster_ability:divine_guardian_divine_swiftness",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst:499",
+    "raw": "BONUS:COMBAT|INITIATIVE|4",
+    "sheet_line": "Initiative +4"
+   }
+  ],
+  "oracle_check": "AC.TOTAL / AC.TOUCH / AC.FLATFOOTED and BAB (ATTACK.MELEE.BASE) in computed-values.txt.ftl; INITIATIVE/TOHIT/DAMAGE are sheet-line only (no export token).",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:SPELLKNOWN",
+  "family": "bonus",
+  "instances": "582 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 360 instances",
+  "units": "362 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 462 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target `CLASS=X;LEVEL=n` = the spells-known table cell. Value -> Expr (582 of 582 are integer literals; 41 gated by PREVARGTEQ on a casting-progression LVL, 13 by PRECLASS). Mostly favored-class-bonus race traits ('Sorcerer Spell Level 6 +1', 279 ability + 263 class_feature + 39 race_trait_generic). Sheet line: the spells-known row cell. Zero refusals.",
+  "expr_shape": "Const(1) into cell (X, n)",
+  "expr_gaps": [
+   "T1"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words. The FCB variants are held only when the race+class pair is chosen (record-level Applies).",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_players_guide:race_trait_generic:Sorcerer Spell Level 6",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:303",
+    "raw": "BONUS:SPELLKNOWN|CLASS=Sorcerer;LEVEL=6|1",
+    "sheet_line": "Sorcerer spells known, 6th level: table +1"
+   },
+   {
+    "record": "advanced_class_guide:race_trait_generic:Skald Spell Level 4",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst:298",
+    "raw": "BONUS:SPELLKNOWN|CLASS=Skald;LEVEL=4|1",
+    "sheet_line": "Skald spells known, 4th level: table +1"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Eldritch Scion SpellCasting Reduction",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:3382",
+    "raw": "BONUS:SPELLKNOWN|CLASS=Magus;LEVEL=0|4|PREVARGTEQ:MagusSpellCastingProgressionLVL,1",
+    "sheet_line": "Magus cantrips known: table +4 (gate met at level 1)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:SITUATION",
+  "family": "bonus",
+  "instances": "549 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 254 instances",
+  "units": "238 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 493 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target `<Skill>=<situation words>` (comma list of pairs). Value -> Expr; TYPE= -> bonus_type (Racial 288 stacks; Circumstance 86 stacks; Trait/Competence max). This is the family's built-in 'number plus words' shape: label = '<Skill> (<situation words>)', value = the folded number. The situation text is copied verbatim into the label; it is not a PCGen token. Refusals: 6 undefined identifiers, 3 skillinfo (E3), 1 var(\"COUNT[EQTYPE...]\") (E6).",
+  "expr_shape": "Sum([Const(4)]) typed Racial, label 'Acrobatics (when jumping)'",
+  "expr_gaps": [
+   "S1",
+   "E3"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "The situation words become the label suffix.",
+  "examples": [
+   {
+    "record": "bestiary_3:monster:bestiary_3:monster:flying_squirrel",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst:105",
+    "raw": "BONUS:SITUATION|Acrobatics=When Jumping|8|TYPE=Racial",
+    "sheet_line": "Acrobatics +8 (racial, when jumping)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Slayer ~ Trapfinding",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1882",
+    "raw": "BONUS:SITUATION|Perception=Trapfinding|SlayerTrapfindingBonus",
+    "sheet_line": "Perception +10 (to find traps; F20 slayer, chain = SlayerLVL/2)"
+   },
+   {
+    "record": "advanced_class_guide:race_trait_generic:Investigator ~ Trap Sense",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst:25",
+    "raw": "BONUS:SITUATION|Perception=underground|DwarfInvestigatorFavClassBonus/4",
+    "sheet_line": "Perception +N (underground; N = favored-class picks / 4, Choice count)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:SAVE",
+  "family": "bonus",
+  "instances": "549 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 395 instances",
+  "units": "228 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 317 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target: BASE.Fortitude/BASE.Reflex/BASE.Will (402 of 549: the class save progression on `class` records, `classlevel(\"APPLIEDAS=NONEPIC\")/2+2` good, `/3` poor, twinned with a PREVAREQ:UseFractionalSave,1 house-rule variant that is dropped per rule G-hr), or Fortitude/Reflex/Will/ALL (147: a typed bonus -> Number onto the save total; ALL fans out to three lines). TYPE= (Resistance 25, Luck 12, Sacred/Profane, Trait, Morale, Racial) -> bonus_type for the fold. Refusals: 4 undefined identifiers. 2 tokens use lowercase `Type=Racial` (accepted as TYPE=).",
+  "expr_shape": "Sum([Div(ClassLevel(fighter),Const(2)), Const(2)]) base; Sum([Const(2)]) typed Resistance",
+  "expr_gaps": [
+   "S1",
+   "A4 Applies::Alignment for PREALIGN (18 SAVE, 70 family-wide): the product's character record carries no alignment (pre_tokens.rs:315) -- either add the fact or print the gate as words."
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "core_rulebook:class:Fighter",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst:139",
+    "raw": "BONUS:SAVE|BASE.Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0",
+    "sheet_line": "Fortitude base +12 (F20 fighter)"
+   },
+   {
+    "record": "inner_sea_bestiary:monster:inner_sea_bestiary:monster:nightripper",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst:56",
+    "raw": "BONUS:SAVE|ALL|4|TYPE=Deflection",
+    "sheet_line": "Fort +4, Ref +4, Will +4 (deflection)"
+   },
+   {
+    "record": "occult_adventures:class_feature:Psychic Discipline Faith ~ Resilience of the Faithful",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1216",
+    "raw": "BONUS:SAVE|ALL|2+floor((PsychicLVL-5)/5)",
+    "sheet_line": "All saves +5 (F20 psychic: 2 + 15/5)"
+   }
+  ],
+  "oracle_check": "CHECK.<n>.TOTAL / CHECK.<n>.BASE in computed-values.txt.ftl.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:CASTERLEVEL",
+  "family": "bonus",
+  "instances": "188 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 181 instances",
+  "units": "117 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 123 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target: a class name (caster level of that class), SPELL.%LIST (Choice(spell): +N CL for one chosen spell), SCHOOL.X / DESCRIPTOR.X / SUBSCHOOL.X (+N CL for spells of that school), <Class>.RESET|0 (archetype 'no spellcasting' marker -> Metadata). Value -> Expr; the 'prestige class adds caster levels' shape `min(2,(TL-(var(\"CL=X\")+var(\"BL=X\")-3)))` maps var(CL)+var(BL) -> CasterLevel(X). Sheet line: 'Caster level (<scope>) +N'. Refusals: 21 var( (all the CL/BL pair -> resolvable by the pair rule; 0 residual), 3 undefined identifiers, 2 %LIST inside the formula.",
+  "expr_shape": "Sum([Const(1)]) with label scope; Min(Const(2), Sum([Level, Mul(-1, CasterLevel(paladin)), Const(3)]))",
+  "expr_gaps": [
+   "E1 (`1+(ShamanSpiritLVL>=8)`)"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words. PRECLASS:1,X=4 (13) -> Applies class X level 4.",
+  "prose_effect": "The scope words (school, descriptor, chosen spell).",
+  "examples": [
+   {
+    "record": "advanced_players_guide:race_trait_generic:Gnome ~ Pyromaniac",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:50",
+    "raw": "BONUS:CASTERLEVEL|DESCRIPTOR.Fire|1",
+    "sheet_line": "Caster level +1 (fire spells)"
+   },
+   {
+    "record": "advanced_players_guide:ability:Gifted Adept ~ Standard",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:55",
+    "raw": "BONUS:CASTERLEVEL|SPELL.%LIST|1",
+    "sheet_line": "Gifted Adept: +1 caster level with one chosen spell (words until chosen)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Shaman Spirit Hex ~ Crashing Waves",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1673",
+    "raw": "BONUS:CASTERLEVEL|DESCRIPTOR.Water|1+(ShamanSpiritLVL>=8)",
+    "sheet_line": "Caster level +2 (water spells; F20 shaman)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:SIZEMOD",
+  "family": "bonus",
+  "instances": "175 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "25 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 174 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target NUMBER only. Value = size steps (+1 Large, -1 Small). Sheet line: the Size row ('Size: Large'). 149 of 174 records are companion evolutions/advancements. Zero formula refusals; 4 gated by PREVARGTEQ:MasterLevel (mastervar-shaped: the companion's master level, E7).",
+  "expr_shape": "Const(1) size step",
+  "expr_gaps": [
+   "Z1 technical-design \u00a72 binds Size from the race table only; a SIZEMOD rule mutates it. The evaluator needs Size = race size + Sum(SIZEMOD rules), and every Size-reading Expr must see the mutated value.",
+   "E7 Expr::MasterLevel for companion records (MasterLevel 240 gates family-wide, mastervar 14 calls)."
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_players_guide:companion:Evolution ~ Large",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst:168",
+    "raw": "BONUS:SIZEMOD|NUMBER|1",
+    "sheet_line": "Size: Large (Medium eidolon +1 step)"
+   },
+   {
+    "record": "advanced_players_guide:companion:Evolution ~ Small",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst:70",
+    "raw": "BONUS:SIZEMOD|NUMBER|-1",
+    "sheet_line": "Size: Small"
+   },
+   {
+    "record": "advanced_players_guide:companion:Evolution ~ Huge",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst:169",
+    "raw": "BONUS:SIZEMOD|NUMBER|1",
+    "sheet_line": "Size: Huge (stacks on Large)"
+   }
+  ],
+  "oracle_check": "sheet-line only (SIZE is not exported).",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:MOVEADD",
+  "family": "bonus",
+  "instances": "138 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "87 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 125 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target TYPE.<Walk|Fly|Swim|Climb|Burrow|All> (the `TYPE=Walk` spelling, 21, is the same target). Value in feet -> Expr added to that speed. TYPE= (Enhancement 1, Walk 21 -- a data typo, treated as untyped) -> bonus_type. Sheet line: 'Speed 40 ft.' / 'Fly 60 ft.'. Refusals: 11 undefined identifiers (UnfetteredEidolonBaseSpeed), 1 mastervar, 1 count(.",
+  "expr_shape": "Sum([Const(10)]) on speed(walk)",
+  "expr_gaps": [
+   "E6 MOVEBASE for PREVARGT:MOVEBASE,10 and min(MOVEBASE,30) (2 + 1)",
+   "A3 (PREVARLT:ENCUMBERANCE / armor gates, 8+6: keep the number, 'when unarmored' as words)"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "'when unarmored' for the encumbrance-gated ones.",
+  "examples": [
+   {
+    "record": "bestiary_2:template:Spriggan Size Alteration",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst:95",
+    "raw": "BONUS:MOVEADD|TYPE.Walk|10",
+    "sheet_line": "Speed +10 ft."
+   },
+   {
+    "record": "advanced_class_guide:template:Heavens Spirit Animal ~ Enhance Fly Speed",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst:43",
+    "raw": "BONUS:MOVEADD|TYPE.Fly|10",
+    "sheet_line": "Fly speed +10 ft."
+   },
+   {
+    "record": "advanced_class_guide:race_trait_generic:Elf ~ Brawler ~ Fast Movement",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst:325",
+    "raw": "BONUS:MOVEADD|TYPE=Walk|floor(ElfBrawlerFavClassBonus/5)",
+    "sheet_line": "Speed +N ft. (N = favored-class picks / 5, Choice count)"
+   }
+  ],
+  "oracle_check": "sheet-line only (no MOVEMENT token in the export set).",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:POSTMOVEADD",
+  "family": "bonus",
+  "instances": "4 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "3 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 4 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Same as MOVEADD, applied after MOVEMULT. Sum onto the speed. 1 PREARMORTYPE gate -> words 'in medium or heavy armor'.",
+  "expr_shape": "Sum([Const(5)]) on speed(walk)",
+  "expr_gaps": [
+   "A3"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "'in medium or heavy armor'.",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Steelblood ~ Armored Swiftness",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2830",
+    "raw": "BONUS:POSTMOVEADD|TYPE.Walk|5|PREARMORTYPE:1,TYPE.Medium,TYPE.Heavy",
+    "sheet_line": "Speed +5 ft. (in medium or heavy armor)"
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Terrain Dominance ~ Plains",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:1344",
+    "raw": "BONUS:POSTMOVEADD|TYPE=Walk|10",
+    "sheet_line": "Speed +10 ft."
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Terrain Dominance ~ Water",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:1355",
+    "raw": "BONUS:POSTMOVEADD|TYPE=Swim|20",
+    "sheet_line": "Swim speed +20 ft."
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:MOVEMULT",
+  "family": "bonus",
+  "instances": "1 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "0 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 1 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target TYPE.All; value = multiplier. Mul(speed, Const(2)). One record, already DONE.",
+  "expr_shape": "Mul(speed, Const(2))",
+  "expr_gaps": [
+   "needs a speed Expr to multiply: Expr::Speed(kind) is absent from \u00a71"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "bestiary_4:monster_ability:bestiary_4:monster_ability:divine_guardian_divine_swiftness",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst:499",
+    "raw": "BONUS:MOVEMULT|TYPE.All|2",
+    "sheet_line": "All speeds x2"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:[redacted PI]",
+  "family": "bonus",
+  "instances": "138 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded); TOKEN-MODEL.json (2026-08-31, non-DONE, 35 books): 97 instances (a PI-redacted target)",
+  "units": "99 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 99 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "REFUSE",
+  "rule": "The corpus copy carries `[redacted PI]` as the ENTIRE BONUS value (sub-target, target and formula all gone). Nothing is readable. Reported per token type, not per unit; the residue is the PI-handling lane's, not the converter's.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "n/a",
+  "prose_effect": "n/a",
+  "examples": [
+   {
+    "record": "advanced_players_guide:ability:Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_230)",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:230",
+    "raw": "BONUS:[redacted PI]",
+    "sheet_line": "(none: the value is redacted)"
+   },
+   {
+    "record": "advanced_players_guide:ability:Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_237)",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:237",
+    "raw": "BONUS:[redacted PI]",
+    "sheet_line": "(none)"
+   },
+   {
+    "record": "advanced_players_guide:ability:Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_227)",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:227",
+    "raw": "BONUS:[redacted PI]",
+    "sheet_line": "(none)"
+   }
+  ],
+  "oracle_check": "none possible",
+  "refuse_reason": "the token value is `[redacted PI]` in the shipped corpus; 138 instances on 99 units (all non-DONE: 86 ability, 26 class_feature, 22 class_generic, 3 feat_generic, 1 monster_generic by instance). Unresolvable without the PI ruling (SD-32 Decision \u00a728).",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:PCLEVEL",
+  "family": "bonus",
+  "instances": "125 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "83 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 122 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target = a class name (or 'Sorcerer/Cleric (Arcane)'-style pseudo-class); value = levels of that class the creature casts as. Monsters with innate spellcasting (b1_races.lst: 'casts as a 13th-level cleric') and prestige classes that advance another class's casting (`PCLEVEL|Psychic Detective|classlevel(\"Investigator\")`). -> Number(Expr) feeding CasterLevel(X) for the class's spell block; sheet line 'Spellcasting: as a 13th-level cleric'. Refusals: 9 var(\"...LVL\") (identifier form resolves once E5's var(name) -> identifier rule lands: var(\"X\") of a DEFINEd X is the same as X).",
+  "expr_shape": "Const(13) -> CasterLevel(cleric)",
+  "expr_gaps": [
+   "C1 the evaluator's CasterLevel(ClassId) must accept a PCLEVEL contribution for a class the character has no levels in."
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "'as a Nth-level <class>'.",
+  "examples": [
+   {
+    "record": "beastiary:monster:beastiary:monster:archon_trumpet",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:28",
+    "raw": "BONUS:PCLEVEL|Cleric|13",
+    "sheet_line": "Spells: as a 13th-level cleric"
+   },
+   {
+    "record": "beastiary:monster:beastiary:monster:nymph",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:309",
+    "raw": "BONUS:PCLEVEL|Druid|6",
+    "sheet_line": "Spells: as a 6th-level druid"
+   },
+   {
+    "record": "occult_adventures:template:Psychic Detective",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_templates.lst:10",
+    "raw": "BONUS:PCLEVEL|Psychic Detective|classlevel(\"Investigator\")",
+    "sheet_line": "Psychic spellcasting: as a 20th-level investigator (F20)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:SKILLPOOL",
+  "family": "bonus",
+  "instances": "80 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "4 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 4 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target `CLASS=X;LEVEL=n` = skill ranks gained at class level n. Value -> Expr. 4 records (Tortured Crusader) with 20 tokens each. Same table-cell shape as SPELLCAST (gap T1). Sheet: skill ranks per level.",
+  "expr_shape": "Const(2) into cell (paladin, n)",
+  "expr_gaps": [
+   "T1"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "horror_adventures:class_feature:Tortured Crusader ~ Self-Sufficient",
+    "source": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst:194",
+    "raw": "BONUS:SKILLPOOL|CLASS=Paladin;LEVEL=1|2",
+    "sheet_line": "Skill ranks per level: 4 (paladin 2 +2)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:SPECIALTYSPELLKNOWN",
+  "family": "bonus",
+  "instances": "72 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "8 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 8 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target `CLASS=<school specialist>;LEVEL=n`; value = extra school spell slot per level. 8 wizard school records, 9 tokens each. Gap T1. Sheet: 'Bonus school spell slot: +1 per spell level'.",
+  "expr_shape": "Const(1) into cell",
+  "expr_gaps": [
+   "T1"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "core_rulebook:class_feature:Illusion School",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2602",
+    "raw": "BONUS:SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=1|1",
+    "sheet_line": "Illusion school: +1 illusion spell slot per spell level"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:SKILLRANK",
+  "family": "bonus",
+  "instances": "69 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "38 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 47 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target = skill name or %LIST (Choice); value = ranks GRANTED (not a bonus): TL (16) = ranks equal to level, skillinfo(\"TOTALRANK\", other skill) (28: Versatile Performance mirrors one skill's ranks onto another) -> gap E3, integer or identifier. TYPE=SkillGranted (28). Sheet line: the skill row's ranks column. Refusals corpus-wide: 28 skillinfo (E3), 14 undefined identifiers (PhantomSkillRankBonus: master-side variable, E7).",
+  "expr_shape": "Level as ranks; SkillRanks(perform_oratory) as ranks",
+  "expr_gaps": [
+   "E3",
+   "E7"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Skald Versatile Performance ~ Oratory",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1747",
+    "raw": "BONUS:SKILLRANK|Diplomacy (Perform (Oratory))|skillinfo(\"TOTALRANK\", \"Perform (Oratory)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Skald Versatile Performance ~ Oratory",
+    "sheet_line": "Diplomacy: ranks = Perform (oratory) ranks (F20 skald with 20 ranks: 20)"
+   },
+   {
+    "record": "ultimate_campaign:ability:Retraining ~ Skill Rank Added",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst:124",
+    "raw": "BONUS:SKILLRANK|%LIST|1",
+    "sheet_line": "+1 rank in one chosen skill"
+   },
+   {
+    "record": "occult_adventures:class_feature:Trickster Skill Choice",
+    "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:905",
+    "raw": "BONUS:SKILLRANK|%LIST|MediumLVL",
+    "sheet_line": "Chosen skill: ranks = 20 (F20 medium)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:SLOTS",
+  "family": "bonus",
+  "instances": "67 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "1 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 10 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Target = an equipment slot name (Body, Hands, Feet, WEAPON...); value = slot count change. Companion body types (66 of 67, all DONE) and one kobold tail attachment. The product's sheet has no equipment-slot ledger; the record's words print as Text. No number line.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "The record's own DESC.",
+  "examples": [
+   {
+    "record": "ultimate_wilderness:companion:ultimate_wilderness:companion:companion_body_type_quadruped_other",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst:398",
+    "raw": "BONUS:SLOTS|Body|-1",
+    "sheet_line": "(no line)"
+   },
+   {
+    "record": "advanced_class_guide:ability:Warpriest Bonus Feat ~ Tail Terror",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst:50",
+    "raw": "BONUS:SLOTS|WEAPON|1|PREEQUIP:1,TYPE=KoboldTailAttachment",
+    "sheet_line": "(no line; the feat's words print)"
+   }
+  ],
+  "oracle_check": "none needed",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:MISC",
+  "family": "bonus",
+  "instances": "65 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "34 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 42 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Second field: CR 29 (monster challenge rating: Number on the CR line; Metadata for a PC), MAXDEX 14 / ACCHECK 11 / SPELLFAILURE 9 (armor stats: Number onto the worn-armor line, e.g. 'armor check penalty -1'). Refusals: 4 var(\"SPELLFAILURE\") (E6).",
+  "expr_shape": "Sum([Const(1)]) on CR; Sum([Const(-1)]) on armor check penalty",
+  "expr_gaps": [
+   "E6"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words. PREEQUIP/PREARMORTYPE gates (armor-conditional) -> words per rule G.",
+  "prose_effect": "'while wearing <armor type>' for the gated ones.",
+  "examples": [
+   {
+    "record": "beastiary:template:Half-Celestial",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst:32",
+    "raw": "BONUS:MISC|CR|1",
+    "sheet_line": "CR +1"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Steelblood ~ Armor Training",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2831",
+    "raw": "BONUS:MISC|MAXDEX|SteelbloodArmorTrainingBonus",
+    "sheet_line": "Armor max Dex bonus +4 (F20 steelblood; chain = level steps)"
+   },
+   {
+    "record": "adventurers_guide:ability:Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_25)",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst:25",
+    "raw": "BONUS:MISC|SPELLFAILURE|-5|PREEQUIP:1,Gray Maiden Plate%",
+    "sheet_line": "Arcane spell failure -5% (in Gray Maiden plate)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:HP",
+  "family": "bonus",
+  "instances": "51 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "32 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 40 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target CURRENTMAX (50) -> Number added to max HP; ALTHP (1, PRERULE house rule) -> Metadata. Value -> Expr: `TL*CHA` (undead), `max(SIZE-2,0)*10` (construct), `CR*5` (E6: CR), `min(FCBhp,FigherLVL)` (FigherLVL: undefined identifier, a data typo -> refuse). Refusals: 2 undefined identifiers, 1 count(.",
+  "expr_shape": "Mul(Level, AbilityMod(Cha)) on HP",
+  "expr_gaps": [
+   "E6 (CR)"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words. PRESIZEEQ gates (11) -> Applies::Size (gap A5).",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "beastiary:race_trait_generic:Undead Traits",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:1693",
+    "raw": "BONUS:HP|CURRENTMAX|TL*CHA",
+    "sheet_line": "HP +40 (F20, Cha 14: 20 x 2)"
+   },
+   {
+    "record": "beastiary:race_trait_generic:Construct Traits",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:1684",
+    "raw": "BONUS:HP|CURRENTMAX|max(SIZE-2,0)*10",
+    "sheet_line": "HP +20 (a Large construct: size index 5-2... per PCGen SIZE index; +20 for Large)"
+   },
+   {
+    "record": "inner_sea_bestiary:monster:inner_sea_bestiary:monster:golem_noqual",
+    "source": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst:33",
+    "raw": "BONUS:HP|CURRENTMAX|65",
+    "sheet_line": "HP +65"
+   }
+  ],
+  "oracle_check": "HP in computed-values.txt.ftl.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": [
+   "Expr::Size must use PCGen's size index (Fine=0 ... Colossal=8) for `SIZE-2` arithmetic to match; confirm the product's Size enum ordinal."
+  ]
+ },
+ {
+  "token_type": "BONUS:DOMAIN",
+  "family": "bonus",
+  "instances": "46 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "43 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 46 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target NUMBER; value = domains granted (a pick count, like ABILITYPOOL). 'Domains: N'. Zero refusals; 3 PREABILITY gates -> Applies feat/ability.",
+  "expr_shape": "Const(1)",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "adventurers_guide:class_feature:Tempest Druid ~ Nature Bond",
+    "source": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:811",
+    "raw": "BONUS:DOMAIN|NUMBER|1",
+    "sheet_line": "Domains: 1"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Divine Hunter ~ Domain",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:3146",
+    "raw": "BONUS:DOMAIN|NUMBER|DivineHunterDomainCount",
+    "sheet_line": "Domains: 1 (chain = constant 1)"
+   },
+   {
+    "record": "advanced_class_guide:class:None (Shaman)",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:221",
+    "raw": "BONUS:DOMAIN|NUMBER|1|PREABILITY:1,CATEGORY=Special Ability,TYPE.ShamanSpirit",
+    "sheet_line": "Domains: 1 (with a spirit)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": [
+   "Same question as ABILITYPOOL: pool size vs picks."
+  ]
+ },
+ {
+  "token_type": "BONUS:VISION",
+  "family": "bonus",
+  "instances": "45 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "19 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 45 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target = vision mode (Darkvision 31, Blindsense, Tremorsense); value = range in feet added to that mode (PCGen VISION bonuses sum onto the race's VISION: line; a creature without the mode gains it at that range). Sheet: 'Darkvision 60 ft.'. Zero refusals; 2 PREVARGTEQ gates (E1), 2 PREMULT with PREVISION (gap A6 Applies::HasVision(mode)).",
+  "expr_shape": "Sum([Const(30)]) on vision(darkvision)",
+  "expr_gaps": [
+   "E1",
+   "A6"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_players_guide:class_feature:Terrain Dominance ~ Underground",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:1353",
+    "raw": "BONUS:VISION|Darkvision|60",
+    "sheet_line": "Darkvision 60 ft."
+   },
+   {
+    "record": "advanced_players_guide:template:Vision Darkvision",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:76",
+    "raw": "BONUS:VISION|Darkvision|30",
+    "sheet_line": "Darkvision +30 ft."
+   },
+   {
+    "record": "bestiary_2:monster:bestiary_2:monster:charybdis",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst:177",
+    "raw": "BONUS:VISION|Darkvision|60",
+    "sheet_line": "Darkvision 60 ft."
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:DC",
+  "family": "bonus",
+  "instances": "36 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "27 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 31 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target: SCHOOL.X / SUBSCHOOL.X / DESCRIPTOR.X / CLASS.X (comma list) / SPELL.X; value -> Expr added to the save DC of spells in that scope. TYPE= Profane/SchoolPower -> bonus_type. Sheet: 'Spell DCs +1 (illusion)'. Zero refusals.",
+  "expr_shape": "Sum([Const(1)]) with scope label",
+  "expr_gaps": [
+   "S1"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "The scope words.",
+  "examples": [
+   {
+    "record": "advanced_players_guide:race_trait_generic:Elf ~ Dreamspeaker",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:32",
+    "raw": "BONUS:DC|SCHOOL.Divination|1",
+    "sheet_line": "Spell DCs +1 (divination)"
+   },
+   {
+    "record": "advanced_players_guide:race_trait_generic:Gnome ~ Magical Linguist",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst:48",
+    "raw": "BONUS:DC|DESCRIPTOR.Language-Dependent|1",
+    "sheet_line": "Spell DCs +1 (language-dependent)"
+   },
+   {
+    "record": "book_of_the_damned_volume_2:class_feature:Elder's Grace ~ Mestama",
+    "source": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst:161",
+    "raw": "BONUS:DC|SCHOOL.Illusion|2|TYPE=Profane",
+    "sheet_line": "Spell DCs +2 (illusion, profane)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:DR",
+  "family": "bonus",
+  "instances": "29 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "24 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 26 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target = the bypass words ('-' = none, 'Cold Iron', 'slashing or piercing', 'Magic', 'Evil'); value = the DR amount -> Expr. Sheet: 'DR 5/cold iron'. Refusals: 1 var(\"DruidLVL\") (resolves under the var(name)->identifier rule). PRELEVEL:MIN=10 / PREHD gates -> Applies level/HD.",
+  "expr_shape": "Const(5) labelled 'DR /cold iron'",
+  "expr_gaps": [
+   "A7 Applies::HitDice(min,max) for PREHD:MIN=5,MAX=10 (pre_tokens.rs handles PREHD; Applies in \u00a71 has no HD bound)"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "The bypass words.",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Undead Bloodrager Bloodline ~ One Foot in the Grave",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:882",
+    "raw": "BONUS:DR|-|3",
+    "sheet_line": "DR 3/--"
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Aquatic Druid ~ Deep Diver",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:1915",
+    "raw": "BONUS:DR|slashing or piercing|var(\"DruidLVL\")/2",
+    "sheet_line": "DR 10/slashing or piercing (F20 druid)"
+   },
+   {
+    "record": "bestiary_3:template:Fey Creature",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst:10",
+    "raw": "BONUS:DR|Cold Iron|5|PRELEVEL:MIN=10",
+    "sheet_line": "DR 5/cold iron (from level 10)"
+   }
+  ],
+  "oracle_check": "SA.<n>.DESC in charbuild-remainder covers DR class features whose DESC cites the amount; the DR line itself is not exported.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:CONCENTRATION",
+  "family": "bonus",
+  "instances": "16 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "8 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 15 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target ALLSPELLS (or a class); value -> Expr on the concentration check; TYPE= Trait/Insight for the fold. Two malformed tokens `CONCENTRATION|4|TYPE=Sacred|PREALIGN:...` (target missing) -> refuse (2 instances, 1 record). Sheet: 'Concentration +2 (trait)'.",
+  "expr_shape": "Sum([Const(2)]) typed Trait",
+  "expr_gaps": [
+   "S1",
+   "A4"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_players_guide:ability:Trait ~ Focused Mind",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst:43",
+    "raw": "BONUS:CONCENTRATION|ALLSPELLS|2",
+    "sheet_line": "Concentration +2 (trait)"
+   },
+   {
+    "record": "bestiary_2:monster_ability:bestiary_2:monster_ability:neh_thalggu_brain_collection",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst:866",
+    "raw": "BONUS:CONCENTRATION|ALLSPELLS|7|TYPE=Insight",
+    "sheet_line": "Concentration +7 (insight)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:SKILLPOINTS",
+  "family": "bonus",
+  "instances": "14 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "11 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 14 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target NUMBER; value = skill ranks per level change. `max(1,2+INT)` (1) is a full replacement shape. Sheet: skill ranks per level. Zero refusals.",
+  "expr_shape": "Const(2) on ranks-per-level",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Cult Leader ~ Class Skills",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:3950",
+    "raw": "BONUS:SKILLPOINTS|NUMBER|2",
+    "sheet_line": "Skill ranks per level +2"
+   },
+   {
+    "record": "advanced_race_guide:class_feature:Eldritch Raider ~ Skill Ranks per Level",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:846",
+    "raw": "BONUS:SKILLPOINTS|NUMBER|-2",
+    "sheet_line": "Skill ranks per level -2"
+   },
+   {
+    "record": "advanced_race_guide:ability:Builder Racial Trait ~ Skilled",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst:307",
+    "raw": "BONUS:SKILLPOINTS|NUMBER|1",
+    "sheet_line": "Skill ranks per level +1"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:WIELDCATEGORY",
+  "family": "bonus",
+  "instances": "9 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "0 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 9 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Text",
+  "rule": "Target ALL; value = wield-category steps (undersized/oversized weapons). All 9 records DONE. No number a player writes; the record's words print.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "The record's DESC.",
+  "examples": [
+   {
+    "record": "beastiary:monster_ability:beastiary:monster_ability:centaur_undersized_weapons",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst:205",
+    "raw": "BONUS:WIELDCATEGORY|ALL|1",
+    "sheet_line": "Undersized Weapons (words)"
+   },
+   {
+    "record": "beastiary:monster_ability:beastiary:monster_ability:oversized_weapon",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:1450",
+    "raw": "BONUS:WIELDCATEGORY|ALL|-1",
+    "sheet_line": "Oversized Weapon (words)"
+   }
+  ],
+  "oracle_check": "none needed",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:RANGEADD",
+  "family": "bonus",
+  "instances": "5 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "4 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 4 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target THROWN/PROJECTILE; value in feet added to the range increment. Sheet: 'Thrown range increment +10 ft.'. Zero refusals.",
+  "expr_shape": "Sum([Const(5), Mul(Const(5), Div(Sum([ClassLevel(fighter),Const(-2)]),Const(4)))])",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_players_guide:class_feature:Hurler ~ Skilled Thrower",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:1583",
+    "raw": "BONUS:RANGEADD|THROWN|10",
+    "sheet_line": "Thrown weapon range increment +10 ft."
+   },
+   {
+    "record": "advanced_players_guide:class_feature:Fighter Archer ~ Hawkeye",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:2118",
+    "raw": "BONUS:RANGEADD|PROJECTILE|5+(5*((FighterLVL-2)/4))",
+    "sheet_line": "Projectile range increment +25 ft. (F20)"
+   },
+   {
+    "record": "advanced_class_guide:class_feature:Flying Blade ~ Flying Blade Training",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:3878",
+    "raw": "BONUS:RANGEADD|THROWN|FlyingBladeRangeBonus",
+    "sheet_line": "Thrown range increment +N ft. (chain)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:RANGEMULT",
+  "family": "bonus",
+  "instances": "2 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "1 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 1 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Text",
+  "rule": "Target PROJECTILE/THROWN; value 500 = a x500 multiplier (Limitless Range). One record. Prints as its words.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "The record's DESC.",
+  "examples": [
+   {
+    "record": "mythic_adventures:ability:Mythic Path Ability ~ Limitless Range",
+    "source": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst:200",
+    "raw": "BONUS:RANGEMULT|PROJECTILE|500",
+    "sheet_line": "Limitless Range (words)"
+   }
+  ],
+  "oracle_check": "none needed",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:WEAPON",
+  "family": "bonus",
+  "instances": "4 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "0 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 3 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target TOHIT / TOHIT,DAMAGE on the creature's natural weapons (magic fang permanency). `MIN(floor(%LIST/4),5)` -> Choice(caster level) then Min/Div. All 3 records DONE.",
+  "expr_shape": "Min(Div(Choice(cl), Const(4)), Const(5)) typed Enhancement",
+  "expr_gaps": [
+   "S1"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "beastiary:monster_ability:beastiary:monster_ability:permanency_spell_magic_fang",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:1612",
+    "raw": "BONUS:WEAPON|TOHIT,DAMAGE|1|TYPE=Enhancement",
+    "sheet_line": "Natural attacks +1 (enhancement)"
+   },
+   {
+    "record": "beastiary:monster_ability:beastiary:monster_ability:permanency_spell_greater_magic_fang",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst:1613",
+    "raw": "BONUS:WEAPON|TOHIT,DAMAGE|MIN(floor(%LIST/4),5)|TYPE=Enhancement",
+    "sheet_line": "Natural attacks +N (enhancement; N = caster level/4, max 5, a choice)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:LANGUAGES",
+  "family": "bonus",
+  "instances": "3 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "3 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 3 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target NUMBER; value = extra bonus languages. 'Bonus languages: +3'.",
+  "expr_shape": "Const(3)",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_class_guide:class_feature:Discovery ~ Inspired Languages",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2332",
+    "raw": "BONUS:LANGUAGES|NUMBER|3",
+    "sheet_line": "Bonus languages +3"
+   },
+   {
+    "record": "bestiary_4:race_trait_generic:Changeling ~ Languages",
+    "source": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst:22",
+    "raw": "BONUS:LANGUAGES|NUMBER|1",
+    "sheet_line": "Bonus languages +1"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:FOLLOWERS",
+  "family": "bonus",
+  "instances": "3 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "3 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 3 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Target = a companion kind; value -1 = the archetype removes that companion slot. Bookkeeping for the companion picker; the record's words print.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "The record's DESC.",
+  "examples": [
+   {
+    "record": "advanced_players_guide:class_feature:Blight Druid ~ Familiar",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:1938",
+    "raw": "BONUS:FOLLOWERS|Animal Companion|-1",
+    "sheet_line": "(no line; 'Familiar' words print)"
+   }
+  ],
+  "oracle_check": "none needed",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:MONSKILLPTS",
+  "family": "bonus",
+  "instances": "3 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "3 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 3 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Metadata(ignored-by-sheet)",
+  "rule": "Target LOCKNUMBER; template monster-build skill points. Not a player sheet fact.",
+  "expr_shape": "n/a",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "beastiary:template:Half-Celestial",
+    "source": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst:32",
+    "raw": "BONUS:MONSKILLPTS|LOCKNUMBER|6",
+    "sheet_line": "(no line)"
+   }
+  ],
+  "oracle_check": "none needed",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:FEAT",
+  "family": "bonus",
+  "instances": "3 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "3 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 3 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target POOL; value = bonus feats granted ('Rogue Talent ~ Feat'). 'Bonus feat: 1'. Same pool-vs-pick question as ABILITYPOOL.",
+  "expr_shape": "Const(1)",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "core_rulebook:class_feature:Rogue Talent ~ Feat",
+    "source": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:1686",
+    "raw": "BONUS:FEAT|POOL|1",
+    "sheet_line": "Bonus feat: 1"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:EQMARMOR",
+  "family": "bonus",
+  "instances": "1 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "1 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 1 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target ACCHECK on worn armor; `max(CHA,DEX)-DEX` (Sidestep Secret: Cha replaces Dex). One record. Max/Sum shape, no gap.",
+  "expr_shape": "Sum([Max(AbilityMod(Cha),AbilityMod(Dex)), Mul(-1, AbilityMod(Dex))])",
+  "expr_gaps": [],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "advanced_players_guide:class_feature:Lore Mystery ~ Sidestep Secret",
+    "source": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:641",
+    "raw": "BONUS:EQMARMOR|ACCHECK|max(CHA,DEX)-DEX",
+    "sheet_line": "Armor check penalty +0 (F20: Cha 14 = Dex 14)"
+   }
+  ],
+  "oracle_check": "AC.TOTAL indirectly (Sidestep Secret also carries a COMBAT|AC token).",
+  "refuse_reason": "",
+  "confidence": "high",
+  "open_questions": []
+ },
+ {
+  "token_type": "BONUS:UDAM",
+  "family": "bonus",
+  "instances": "1 corpus-wide (own count 2026-09-07 over 51,474 data/corpus records with raw_tokens, 39 book dirs, LICENSE.json and _parity/ excluded)",
+  "units": "1 non-DONE units (of 23,315 non-DONE units, all 37 inventory books, atlas bucket != DONE, docs/work-inventory.json at HEAD); 1 records corpus-wide (of 13,794 records carrying any BONUS)",
+  "maps_to": "Number(Expr)",
+  "rule": "Target CLASS.Monk; value = an offset to the unarmed-damage progression level (`min(NinjaTrickLVL-4,0)`). One record. The die itself comes from the monk unarmed table (gap D1: a die selected by a level Expr).",
+  "expr_shape": "Min(Sum([ClassLevel(ninja),Const(-4)]),Const(0))",
+  "expr_gaps": [
+   "D1"
+  ],
+  "applies_shape": "The token itself adds no holder constraint. The record's own kind supplies Applies (class feature -> class+level, race trait -> race, feat -> feat). A trailing PRE field on the token is a per-token gate, folded per the family rule G (see bonus.md \u00a73): build-settled gates fold into the Expr or into Applies; situational gates keep the number and append the condition to the label as words.",
+  "prose_effect": "None.",
+  "examples": [
+   {
+    "record": "ultimate_combat:class_feature:Ninja Trick ~ Unarmed Combat Mastery",
+    "source": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:171",
+    "raw": "BONUS:UDAM|CLASS.Monk|min(NinjaTrickLVL-4,0)",
+    "sheet_line": "Unarmed strike 2d10 (F20 ninja: monk table at level 16)"
+   }
+  ],
+  "oracle_check": "sheet-line only.",
+  "refuse_reason": "",
+  "confidence": "medium",
+  "open_questions": []
+ }
+]

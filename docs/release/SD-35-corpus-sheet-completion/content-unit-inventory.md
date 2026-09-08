@@ -17,11 +17,12 @@ Bucket letters come from `scripts/completion_atlas.py::_bucket_of()`; the atlas'
 `completion-atlas.json` at the same HEAD reproduces every count below bit-for-bit
 (`unclassified=0 overlap=0 done_evidence_violations=0`).
 
-**SD-34 is still running.** Every figure here is re-run at the `tranche/15` cut and the cut's
-numbers replace these throughout the package (`decisions.md §7`). Setup at the cut:
+**Re-measured at the `tranche/15` cut `4c6c57eb9f` on 2026-09-07 — identical.** The inventory
+file is byte-for-byte the same at both SHAs (`generated_at` unchanged), so every figure below
+is the cut's figure. Setup to reproduce at the cut:
 
 ```bash
-git show <tranche-15-cut-sha>:docs/work-inventory.json > /tmp/wi.json
+git show 4c6c57eb9f:docs/work-inventory.json > /tmp/wi.json
 python3 scripts/completion_atlas.py --check      # the authoritative bucket totals
 ```
 
@@ -136,7 +137,7 @@ for k, v in c.most_common(15): print(f'{k:28} {v:6}')"
 | ultimate_intrigue | 757 |
 | mythic_adventures | 664 |
 
-The other 22 books sum to 5,191 (smallest `bonus_bestiary` at 3). **Books are reported, not
+The other 22 books sum to 3,591 (smallest `bonus_bestiary` at 3; the first draft's 5,191 was an arithmetic slip caught at the cut re-measure). **Books are reported, not
 targeted** (`scope-draft.md §7`); cycles run across all 37.
 
 ## 5. The token vocabulary — why this is small
@@ -180,8 +181,9 @@ and (b) is a sanity check.
 python3 scripts/completion_atlas.py --check            # population=49438 buckets=10 unclassified=0 overlap=0 citation_failures=0
 python3 scripts/shape_engine_boundary.py --check       # citation_ok=True  (was stale before wave 51 — decisions.md §9 L4)
 python3 scripts/missing_engine_tables.py --check       # population=449 citation_failures=0
-python3 scripts/box_ledger.py --check                  # uncovered=0 overlap=0 population=49438
+python3 scripts/box_ledger.py --check                  # RED since 2026-08-26: uncovered=27502 — THE-BOX.md pins SD-33's status names; retired as a gate, decisions.md §13
 grep -c '' scripts/verify.sh                           # ALL_STAGES at :110 — 40 stages at authoring
+cargo test --locked --no-fail-fast -j 6                # at the cut: 590 targets, 8656 passed, 0 failed (workflow-instruction.md §1 item 10)
 ```
 
 `shape_engine_boundary.py`'s own figures at authoring: **26,396** units carry a magnitude token
@@ -207,7 +209,7 @@ for pat in PcgenFormulaEvaluator render_pcgen_desc raw_tokens bonus_stack_reader
 | `bonus_stack_reader` | 7 | 5 |
 | `pre_tokens` | 6 | 6 |
 
-Of the 78, the `src/rules_core/cache_gen/**` generators are converter code on the wrong side
+Of the 78, **13** are `src/rules_core/cache_gen/**` generators — converter code on the wrong side
 (relocate, AT-35-E6-002); the desktop `*_catalog.rs` / picker / bridge files and the
 `rules_core` evaluator callers are real live readers (replace, AT-35-E6-001, E6-003). The gate
 splits them exactly.
