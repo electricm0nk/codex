@@ -26,13 +26,13 @@ process defect** recorded by the epic wrap-up.
 | Epic | Criteria | Complete | In progress | Not started |
 |---|---:|---:|---:|---:|
 | 1 — Tax cut | 6 | 6 | 0 | 0 |
-| 2 — Sheet rule | 5 | 2 | 0 | 3 |
+| 2 — Sheet rule | 5 | 3 | 0 | 2 |
 | 3 — Place and surface | 4 | 0 | 0 | 4 |
 | 4 — Resolve and verify | 3 | 0 | 0 | 3 |
 | 5 — Residues | 5 | 0 | 0 | 5 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **8** | **0** | **22** |
+| **Total** | **30** | **9** | **0** | **21** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,17 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-08 — AT-35-E2-003 cycle 1 — `sheet-complete-status` — **complete**
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (status-vocabulary cycle — closes zero units by design)` — `decisions.md §2`. `pcgen_residue_gate.py --check` at start (`9c8a3abe3d`): `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=442 ratio=n/a builds_recorded=2 pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 9c8a3abe3d --before /tmp/wi-before-AT-35-E2-003.json --after docs/work-inventory.json --target-dir /tmp/cargo-sd35-AT-35-E2-003` at the tree of `a81c2a005c`).
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS` at `a81c2a005c` — not risen (the rung reads the converter's package and the evaluator's output only).
+- **Refused tokens:** none (no converter run; `sheet_rule_convert -- --check` → `records=49438 converted=47628 refused=1810 rules=66514 var_tables=5081 verdict=PASS`).
+- **What landed:** `sheet-complete` in `v06_work_inventory`'s `status_vocabulary` with `technical-design.md §3`'s meaning; the rung `apply_sheet_complete_rung` (run last of the status passes) lifts `engine-does-not-hold`/`ingested-magnitude` units whose id has a `SheetRule` in `data/sheet_rules/`, is absent from `_refused.json`, whose kind has an on-screen test (list pinned to the frontend test's `KINDS` by reading the file), and which `rules_core::sheet_rule::evaluate` renders for the probe character (the deterministic Human Fighter 1 holding the rule outright) — evidence `sheet_rule_rendered:<number|dice|words>`; `sheet-complete` joins `DONE_RUNG_STAMP_STATUSES` (a regen on a tree missing the package fails loudly). Consumers, found by grep: `completion_atlas.py` (DONE; DONE-evidence requires the rendered-form marker), `pf1e_dashboard_producer.py` (`done` for every wiring class), `test_cycle_scope_gate.py`, `companion_chassis.rs` `HELD_STATUSES`. **The inventory is not regenerated here** — AT-35-E2-005 does that once; the rung over the live package renders all **47,628** top-level rules (number=8017 dice=1461 words=38150, 2.28 s) and the projection from the committed inventory is **21,911** units moving (17,640 `engine-does-not-hold` + 4,271 `ingested-magnitude`).
+- **Verification (one pass, `decisions.md §3`):** `cargo test --locked --no-run -j 6` exit 0 (2 min 53 s); `--lib` → 3214 passed / 0 failed / 14 ignored; `--no-fail-fast -j 6` → **411 binaries, 411 ok, 8,715 passed, 0 failed, 67 ignored**; clippy 0 warnings on `--lib --bin v06_work_inventory`; python RED (`132 run, 5 failures + 1 error`) → GREEN (`143 run, OK`); atlas `unclassified=0 overlap=0 done_evidence_violations=0`; shape-engine-boundary / missing-engine-tables / denominator-gate / pi-sweep green; literal scan 0; `token_coverage.py` absent until AT-35-E2-004; desktop and frontend at epic cadence (no `apps/` touch).
+- **Discoveries (2 `correction` events, `docs/retro/events/at-35-e2-003.jsonl`):** the census evidence is not a literal equality — before **6**, after **7**: the five status-branching files are in both sets, `formula_interpreter_corpus_wide.rs` (before-only) is an F1 pin-history narrative, the two after-only files are the RED→GREEN tests (`…-b92fcf`); the producer's grid test enumerated 9 of 11 vocabulary words (the two oracle words never added — now 10 of 12; `…-41c58b`). Also: 4,681 of 47,628 top-level rules are `print: false` (R1) and are stamped with their value's form.
+- **Receipt:** `artifacts/epic-2-sheet-rule/AT-35-E2-003_cycle1_receipt.md`. Code `a81c2a005c` (after `f731af3759`, a fold of a live `sd31-transcribe` retro append). **Epic 2: 3 of 5 complete — AT-35-E2-004 next.**
 
 ### 2026-09-08 — AT-35-E2-002 cycle 1 — `live-evaluator-and-sheet-section` — **complete**
 

@@ -35,7 +35,7 @@ Notes column.** Notes here are a pointer, never a story.
 | 6 | `sd34-closure-folded` | 1 | AT-35-E1-006 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-006_cycle1_receipt.md`; `docs/retro/sd34-book-completion-retrospective.md`; `artifacts/epic-1-tax-cut/sd34-open-row-map.json` (1,590 of 1,590), `sd34-deferral-dispositions.json` (29 of 29) |
 | 7 | `sheet-rule-converter` | 2 | AT-35-E2-001 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-001_cycle1_receipt.md`; `data/sheet_rules/_refused.json` — `72ad0be010` |
 | 8 | `live-evaluator-and-sheet-section` | 2 | AT-35-E2-002 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-002_cycle1_receipt.md`; `docs/retro/events/at-35-e2-002.jsonl` — `909bb0837c` |
-| 9 | `sheet-complete-status` | 2 | AT-35-E2-003 | not-started | |
+| 9 | `sheet-complete-status` | 2 | AT-35-E2-003 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-003_cycle1_receipt.md`; `docs/retro/events/at-35-e2-003.jsonl` — `a81c2a005c` |
 | 10 | `token-coverage-ledger` | 2 | AT-35-E2-004 | not-started | |
 | 11 | `first-corpus-wide-conversion` | 2 | AT-35-E2-005 | not-started | |
 | 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | not-started | |
