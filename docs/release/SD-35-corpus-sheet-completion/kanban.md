@@ -27,7 +27,7 @@ Notes column.** Notes here are a pointer, never a story.
 
 | # | Card | Epic | Criterion | Status | Notes (pointer only) |
 |---|---|---|---|---|---|
-| 1 | `batch-floor-gate` | 1 | AT-35-E1-001 | not-started | |
+| 1 | `batch-floor-gate` | 1 | AT-35-E1-001 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-001_cycle1_receipt.md` — `1d821cdc8d` |
 | 2 | `content-anchored-citations` | 1 | AT-35-E1-002 | not-started | |
 | 3 | `test-families-table-driven` | 1 | AT-35-E1-003 | not-started | |
 | 4 | `ratio-row-and-gate-scope` | 1 | AT-35-E1-004 | not-started | |
