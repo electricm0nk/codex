@@ -11925,6 +11925,25 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
          found `done` on the live board with a null corpus description as a result.",
     ),
     (
+        // SD-35 AT-35-E2-003 (`decisions.md §1`, the sheet rule;
+        // `technical-design.md §3`): the terminal state for everything the
+        // sheet totals do not consume. Stamped by `apply_sheet_complete_rung`
+        // from the converter's package alone -- never from a token read.
+        "sheet-complete",
+        "The record has a `SheetRule` in `data/sheet_rules/` with no refused token (its id is \
+         in the package and absent from `_refused.json`), the live evaluator \
+         (`rules_core::sheet_rule::evaluate`) renders it for a probe character that holds it \
+         (the deterministic Human Fighter 1 fixture holding the rule outright; `evidence` \
+         carries the rendered form as `sheet_rule_rendered:<number|dice|words>` -- a final \
+         number, dice in final form, or the rule's words), and the record's kind has an \
+         on-screen test in `apps/desktop/src/characterHub/rulesAndFeaturesSection.test.ts` \
+         (one per kind, green at the epic gate). Sits ABOVE `engine-does-not-hold` and \
+         `ingested-magnitude` -- the only two statuses it promotes -- and BELOW `grounded`, \
+         `text-complete`, `literal-verified`/`fixture-verified` and the oracle dispositions, \
+         which keep their own word. Nothing here reads a PCGen token: the package is the \
+         converter's output (`decisions.md §11`).",
+    ),
+    (
         "deferred-with-reason",
         "A claim-blocking diagnostic the engine itself emits names this unit. `reason` is that \
          diagnostic's message VERBATIM and `reason_id` is its id -- never re-narrated.",
@@ -17782,6 +17801,370 @@ mod load_bucket_v_oracle_dispositions_tests {
     }
 }
 
+// ---------------------------------------------------------------------------
+// The `sheet-complete` rung -- SD-35 AT-35-E2-003 (`decisions.md §1`, the
+// sheet rule; `technical-design.md §3`)
+// ---------------------------------------------------------------------------
+
+/// Where the converter (`sheet_rule_convert`) writes the package, relative to
+/// the crate root. The live side's loader reads the same directory.
+const SHEET_RULES_RELATIVE_PATH: &str = "data/sheet_rules";
+
+/// The converter's refusal report inside the package: one entry per corpus
+/// record it wrote no rule for, with the token types that refused it.
+const SHEET_RULES_REFUSED_RELATIVE_PATH: &str = "data/sheet_rules/_refused.json";
+
+/// The frontend's per-kind on-screen proof (AT-35-E2-002): one test per
+/// record kind asserting a held record's label and value are in the DOM.
+/// Read by the pin test below, not by the run itself.
+#[cfg(test)]
+const SHEET_SECTION_TEST_RELATIVE_PATH: &str =
+    "apps/desktop/src/characterHub/rulesAndFeaturesSection.test.ts";
+
+/// The record kinds `apps/desktop/src/characterHub/rulesAndFeaturesSection.test.ts`
+/// proves on screen. The rung stamps a unit only when its kind is here;
+/// `sheet_kinds_with_on_screen_test_match_the_frontend_test` pins this list
+/// to that file's `KINDS` array so it cannot decay silently.
+const SHEET_KINDS_WITH_ON_SCREEN_TEST: &[&str] = &[
+    "ability",
+    "class",
+    "class_feature",
+    "companion",
+    "deity",
+    "domain",
+    "equipment",
+    "equipment_modifier",
+    "feat",
+    "language",
+    "monster",
+    "monster_ability",
+    "power",
+    "race",
+    "race_trait",
+    "skill",
+    "spell",
+    "template",
+    "trait",
+];
+
+/// The two statuses the rung lifts. `grounded`, `text-complete`, the
+/// static/derived stamps and the oracle dispositions sit above it and keep
+/// their own word (`technical-design.md §3`, "ladder position").
+const SHEET_COMPLETE_PROMOTABLE_STATUSES: &[&str] = &["engine-does-not-hold", "ingested-magnitude"];
+
+/// What the rung reads: the live package, the converter's refusal set, and
+/// the probe character (the deterministic Human Fighter 1 fixture) with its
+/// own held set, on top of which each unit's rule is held outright.
+struct SheetRuleProbe {
+    package: codex::rules_core::sheet_rule::SheetRulePackage,
+    refused: BTreeSet<String>,
+    facts: codex::rules_core::sheet_rule::CharacterFacts,
+    held: codex::rules_core::sheet_rule::HeldSet,
+    rule_files: usize,
+}
+
+/// Loads the package, the refusal set and the probe character. `None` when
+/// `data/sheet_rules/` is absent -- the rung then stamps nothing and the
+/// stamp-loss guard refuses to overwrite an inventory that carries
+/// `sheet-complete` stamps. A package that is present but partly unreadable
+/// still loads (the loader's own diagnostics say which files), so a broken
+/// file drops exactly its own records, loudly.
+fn load_sheet_rule_probe(repo_root: &Path) -> Option<SheetRuleProbe> {
+    use codex::rules_core::corpus_loader::load_sheet_rules;
+    use codex::rules_core::sheet_rule::{CharacterFacts, HeldSeed, held_set};
+
+    let dir = repo_root.join(SHEET_RULES_RELATIVE_PATH);
+    if !dir.is_dir() {
+        return None;
+    }
+    let load = load_sheet_rules(&dir);
+    for diagnostic in load.diagnostics.iter().take(10) {
+        eprintln!("sheet-complete rung: package diagnostic: {diagnostic:?}");
+    }
+    if load.diagnostics.len() > 10 {
+        eprintln!("sheet-complete rung: ... {} package diagnostic(s) in all", load.diagnostics.len());
+    }
+    let refused = load_sheet_rule_refused_ids(repo_root);
+    let input = load_probe_fixture(repo_root);
+    let computation = compute_pilot_base_chassis(&input);
+    let facts = CharacterFacts::from_character(&input, &computation);
+    let seed = HeldSeed::from_character(&input, &computation);
+    let held = held_set(&load.package, &seed, &facts);
+    Some(SheetRuleProbe { package: load.package, refused, facts, held, rule_files: load.rule_files })
+}
+
+/// The ids in `_refused.json`'s `entries`. An absent or unreadable report is
+/// an empty set: a record with no rule is left alone by the rung anyway, so
+/// the report only ever narrows, never widens, what gets stamped.
+fn load_sheet_rule_refused_ids(repo_root: &Path) -> BTreeSet<String> {
+    let path = repo_root.join(SHEET_RULES_REFUSED_RELATIVE_PATH);
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        eprintln!("sheet-complete rung: {} is absent or unreadable", path.display());
+        return BTreeSet::new();
+    };
+    let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&text) else {
+        eprintln!("sheet-complete rung: {} is not valid JSON", path.display());
+        return BTreeSet::new();
+    };
+    parsed["entries"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .filter_map(|e| e["id"].as_str().map(|s| s.to_string()))
+        .collect()
+}
+
+/// The three forms of `decisions.md §1`, as the evidence token names them.
+fn sheet_line_form(value: &codex::rules_core::sheet_rule::SheetLineValue) -> &'static str {
+    use codex::rules_core::sheet_rule::SheetLineValue;
+    match value {
+        SheetLineValue::Resolved(_) => "number",
+        SheetLineValue::Dice(_) => "dice",
+        SheetLineValue::Words => "words",
+    }
+}
+
+/// Renders one rule for the probe character holding it outright: the probe's
+/// own held set plus this rule, evaluated by the live evaluator exactly as
+/// `render_sheet` evaluates a held rule.
+fn render_for_probe(
+    probe: &SheetRuleProbe,
+    rule: &codex::rules_core::sheet_rule::SheetRule,
+) -> codex::rules_core::sheet_rule::SheetLine {
+    use codex::rules_core::sheet_rule::{EvalContext, Subject, evaluate};
+    let mut held = probe.held.clone();
+    held.rules.entry(rule.id.clone()).or_default();
+    let ctx = EvalContext {
+        holder_class: None,
+        spell_level: 0,
+        item_tags: if rule.subject == Subject::Item { rule.tags.clone() } else { Vec::new() },
+    };
+    evaluate(rule, &held, &probe.package, &probe.facts, ctx)
+}
+
+/// The rung. A unit in one of [`SHEET_COMPLETE_PROMOTABLE_STATUSES`] whose
+/// kind has an on-screen test, whose id the converter did not refuse, and
+/// whose id has a rule in the package is rendered for the probe character
+/// and becomes `sheet-complete`, evidence `sheet_rule_rendered:<form>`.
+/// Every other unit is left exactly as it was. Returns the stamped count by
+/// form, for the run's own report line.
+fn apply_sheet_complete_rung(
+    inventory: &mut [InventoryUnit],
+    probe: &SheetRuleProbe,
+) -> BTreeMap<&'static str, usize> {
+    let mut by_form: BTreeMap<&'static str, usize> = BTreeMap::new();
+    for item in inventory.iter_mut() {
+        if !SHEET_COMPLETE_PROMOTABLE_STATUSES.contains(&item.verdict.status) {
+            continue;
+        }
+        if !SHEET_KINDS_WITH_ON_SCREEN_TEST.contains(&item.unit.kind.id()) {
+            continue;
+        }
+        if probe.refused.contains(&item.id) {
+            continue;
+        }
+        let Some(rule) = probe.package.rule(&item.id) else {
+            continue;
+        };
+        let line = render_for_probe(probe, rule);
+        let form = sheet_line_form(&line.value);
+        item.verdict.status = "sheet-complete";
+        item.verdict.evidence = format!("sheet_rule_rendered:{form}");
+        item.verdict.reason = None;
+        *by_form.entry(form).or_insert(0) += 1;
+    }
+    by_form
+}
+
+/// AT-35-E2-003's proofs: the rung against the LIVE package (the per-kind
+/// gate shape `decisions.md §4` asks for -- it reads the corpus directory,
+/// never a hand-derived per-unit value), and the pin that keeps the
+/// on-screen-test kind list honest.
+#[cfg(test)]
+mod apply_sheet_complete_rung_tests {
+    use super::*;
+    use std::sync::OnceLock;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn probe() -> &'static SheetRuleProbe {
+        static P: OnceLock<SheetRuleProbe> = OnceLock::new();
+        P.get_or_init(|| {
+            let started = std::time::Instant::now();
+            let probe = load_sheet_rule_probe(&repo_root())
+                .expect("data/sheet_rules/ is generated (cargo run --locked --bin sheet_rule_convert)");
+            eprintln!(
+                "sheet-complete rung probe: {} rule files, {} rules, {} refused ids, fighter holds {} rules, loaded in {:?}",
+                probe.rule_files,
+                probe.package.rules.len(),
+                probe.refused.len(),
+                probe.held.rules.len(),
+                started.elapsed()
+            );
+            probe
+        })
+    }
+
+    fn kind_from_id(id: &str) -> Kind {
+        let kind = id.split(':').nth(1).unwrap_or_default();
+        *Kind::ALL.iter().find(|k| k.id() == kind).unwrap_or_else(|| panic!("{id}: unknown kind {kind:?}"))
+    }
+
+    fn unit(id: &str, status: &'static str) -> InventoryUnit {
+        let mut segments = id.split(':');
+        let book = segments.next().unwrap_or_default().to_string();
+        InventoryUnit {
+            id: id.to_string(),
+            unit: CorpusUnit {
+                book: book.clone(),
+                source_book: book,
+                kind: kind_from_id(id),
+                key: id.to_string(),
+                name: id.to_string(),
+                origin: Origin::Declared,
+                provenance: Provenance { file: "test.lst".to_string(), line: 1 },
+                magnitude_token_count: 0,
+                type_facet: None,
+                visible: true,
+            },
+            verdict: Verdict { status, evidence: "test".to_string(), reason: Some("test".to_string()), engine_book: None },
+            wiring_class: wiring_class::WiringClass::Static,
+            wiring_class_reason: "test".to_string(),
+            wiring_class_signals: BTreeSet::new(),
+        }
+    }
+
+    // Three real records, one per sheet form (AT-35-E2-002's own value-form
+    // proofs): the metamagic feat is `Text`, Acrobatic is a `Number` (+2 with
+    // the fixture's 10 ranks -> +4), the longsword is `Dice`.
+    const WORDS_ID: &str = "core_rulebook:feat:empower_spell";
+    const NUMBER_ID: &str = "core_rulebook:feat:acrobatic";
+    const DICE_ID: &str = "core_rulebook:equipment:longsword";
+    /// Refused by the converter (`unmapped:SPELLSTAT` and five more); it has
+    /// no rule in the package AND is in `_refused.json`.
+    const REFUSED_ID: &str = "advanced_class_guide:class:arcanist";
+
+    /// The core positive case: the two statuses beneath the rung, each with a
+    /// rendered rule, become `sheet-complete` carrying the rendered form.
+    #[test]
+    fn engine_does_not_hold_and_ingested_magnitude_units_with_a_rendered_rule_become_sheet_complete() {
+        let probe = probe();
+        let mut inventory = vec![
+            unit(WORDS_ID, "engine-does-not-hold"),
+            unit(NUMBER_ID, "ingested-magnitude"),
+            unit(DICE_ID, "engine-does-not-hold"),
+        ];
+        let by_form = apply_sheet_complete_rung(&mut inventory, probe);
+        for item in &inventory {
+            assert_eq!(item.verdict.status, "sheet-complete", "{}", item.id);
+            assert_eq!(item.verdict.reason, None, "{}", item.id);
+        }
+        assert_eq!(inventory[0].verdict.evidence, "sheet_rule_rendered:words");
+        assert_eq!(inventory[1].verdict.evidence, "sheet_rule_rendered:number");
+        assert_eq!(inventory[2].verdict.evidence, "sheet_rule_rendered:dice");
+        assert_eq!(by_form, BTreeMap::from([("words", 1), ("number", 1), ("dice", 1)]));
+    }
+
+    /// Ladder position (`technical-design.md §3`): every status above or
+    /// beside the rung keeps its word even though the same rule renders.
+    #[test]
+    fn every_status_above_or_beside_the_rung_is_left_alone() {
+        let probe = probe();
+        let statuses = [
+            "grounded",
+            "text-complete",
+            "literal-verified",
+            "fixture-verified",
+            "oracle-agree",
+            "oracle-unverifiable",
+            "unmeasurable",
+            "deferred-with-reason",
+            "not-started",
+        ];
+        let mut inventory: Vec<InventoryUnit> = statuses.iter().map(|s| unit(NUMBER_ID, s)).collect();
+        let by_form = apply_sheet_complete_rung(&mut inventory, probe);
+        assert!(by_form.is_empty(), "{by_form:?}");
+        for (item, status) in inventory.iter().zip(statuses) {
+            assert_eq!(item.verdict.status, status);
+            assert_eq!(item.verdict.evidence, "test");
+            assert_eq!(item.verdict.reason.as_deref(), Some("test"));
+        }
+    }
+
+    /// A refused record and a record with no rule stay where they were: the
+    /// rung stamps only what the converter actually wrote.
+    #[test]
+    fn a_refused_record_and_a_record_with_no_rule_are_left_alone() {
+        let probe = probe();
+        assert!(probe.refused.contains(REFUSED_ID), "the fixture refusal is still refused");
+        assert!(probe.package.rule(REFUSED_ID).is_none(), "a refused record has no rule");
+        let mut inventory = vec![
+            unit(REFUSED_ID, "engine-does-not-hold"),
+            unit("core_rulebook:feat:no_such_feat_in_any_book", "ingested-magnitude"),
+        ];
+        let by_form = apply_sheet_complete_rung(&mut inventory, probe);
+        assert!(by_form.is_empty(), "{by_form:?}");
+        assert_eq!(inventory[0].verdict.status, "engine-does-not-hold");
+        assert_eq!(inventory[1].verdict.status, "ingested-magnitude");
+    }
+
+    /// The per-kind gate over the live directory (`decisions.md §4`): EVERY
+    /// converted record -- every top-level rule id in the package -- renders
+    /// for the probe character and is stamped, and the refusal set is exactly
+    /// the records with no rule (converted + refused = records,
+    /// `sheet_rule_convert --check`'s own identity). Prints the per-kind form
+    /// census so the run's figures re-derive from this one command.
+    #[test]
+    fn every_converted_record_in_the_live_package_renders_for_the_probe_character() {
+        let probe = probe();
+        let top_level: Vec<&String> = probe.package.rules.keys().filter(|id| !id.contains('#')).collect();
+        assert!(top_level.len() > 40_000, "the package is generated: {} top-level rules", top_level.len());
+        for id in &probe.refused {
+            assert!(probe.package.rule(id).is_none(), "{id}: refused AND has a rule -- the converter contradicts itself");
+        }
+        let mut inventory: Vec<InventoryUnit> = top_level.iter().map(|id| unit(id, "engine-does-not-hold")).collect();
+        let started = std::time::Instant::now();
+        let by_form = apply_sheet_complete_rung(&mut inventory, probe);
+        let elapsed = started.elapsed();
+        let stamped: usize = by_form.values().sum();
+        assert_eq!(stamped, top_level.len(), "every top-level rule renders and is stamped");
+        let mut census: BTreeMap<(&str, &str), usize> = BTreeMap::new();
+        for item in &inventory {
+            assert_eq!(item.verdict.status, "sheet-complete", "{}", item.id);
+            let form = item.verdict.evidence.strip_prefix("sheet_rule_rendered:").unwrap_or_else(|| panic!("{}: {}", item.id, item.verdict.evidence));
+            assert!(matches!(form, "number" | "dice" | "words"), "{}: {form}", item.id);
+            *census.entry((item.unit.kind.id(), form)).or_insert(0) += 1;
+        }
+        eprintln!("sheet-complete rung: {} top-level rules rendered in {elapsed:?}; by form {by_form:?}", top_level.len());
+        for kind in Kind::ALL {
+            let n = |form: &str| census.get(&(kind.id(), form)).copied().unwrap_or(0);
+            eprintln!("kind={} number={} dice={} words={}", kind.id(), n("number"), n("dice"), n("words"));
+        }
+    }
+
+    /// The on-screen-test kind list is the frontend test's own `KINDS`
+    /// array, read from the file -- a kind added to one and not the other
+    /// fails here, so the third condition of `sheet-complete`'s definition
+    /// (the kind has an on-screen test) is checked against the test that
+    /// exists, not against a list someone remembered.
+    #[test]
+    fn sheet_kinds_with_on_screen_test_match_the_frontend_test() {
+        let path = repo_root().join(SHEET_SECTION_TEST_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+        let start = text.find("const KINDS = [").expect("the frontend test declares `const KINDS = [`");
+        let rest = &text[start..];
+        let end = rest.find("] as const;").expect("`KINDS` ends with `] as const;`");
+        let block = &rest[..end];
+        let frontend: BTreeSet<&str> = block.split('\'').skip(1).step_by(2).collect();
+        let ours: BTreeSet<&str> = SHEET_KINDS_WITH_ON_SCREEN_TEST.iter().copied().collect();
+        assert_eq!(ours, frontend, "SHEET_KINDS_WITH_ON_SCREEN_TEST must equal the frontend test's KINDS");
+        let all: BTreeSet<&str> = Kind::ALL.iter().map(|k| k.id()).collect();
+        assert_eq!(ours, all, "every inventory kind has an on-screen test");
+    }
+}
+
 /// Every status this generator treats as a "done-rung stamp" for the
 /// stamp-loss guard's purposes: `literal-verified`/`fixture-verified` (the
 /// static/derived rungs, operator directive 2026-08-13) and, since
@@ -17792,8 +18175,19 @@ mod load_bucket_v_oracle_dispositions_tests {
 /// promotion as a loss of the first pair, exactly the silent hazard this
 /// guard exists to catch, so both pairs share one shared, single notion of
 /// "stamped" rather than drifting into two separate lists.
-const DONE_RUNG_STAMP_STATUSES: &[&str] =
-    &["literal-verified", "fixture-verified", "oracle-agree", "oracle-unverifiable"];
+///
+/// `sheet-complete` (SD-35 AT-35-E2-003, `apply_sheet_complete_rung`) joins
+/// the family for the same reason: it is re-derived every run from
+/// `data/sheet_rules/`, so a regen against a tree where that package is
+/// missing or truncated would silently drop every one of them back to
+/// `engine-does-not-hold` -- the guard makes that loud instead.
+const DONE_RUNG_STAMP_STATUSES: &[&str] = &[
+    "literal-verified",
+    "fixture-verified",
+    "oracle-agree",
+    "oracle-unverifiable",
+    "sheet-complete",
+];
 
 /// The set of unit `id`s carrying a done-rung stamp (any status in
 /// [`DONE_RUNG_STAMP_STATUSES`]) in a `work-inventory.json` document. Shared
@@ -19679,6 +20073,30 @@ fn main() {
     let bucket_v_oracle_dispositions = load_bucket_v_oracle_dispositions(&repo_root);
     apply_bucket_v_oracle_disposition_stamps(&mut inventory, &bucket_v_oracle_dispositions);
 
+    // SD-35 AT-35-E2-003 (`decisions.md §1`): the `sheet-complete` rung.
+    // Applied LAST of the status passes, so it only ever lifts the two
+    // statuses beneath it (`engine-does-not-hold`, `ingested-magnitude`) and
+    // never touches a stamp the passes above just wrote -- and before
+    // aggregation, for the same reason as the two comments above.
+    match load_sheet_rule_probe(&repo_root) {
+        Some(probe) => {
+            let by_form = apply_sheet_complete_rung(&mut inventory, &probe);
+            eprintln!(
+                "sheet-complete rung: package {} rule files, {} rules, {} refused ids; stamped {} unit(s) ({})",
+                probe.rule_files,
+                probe.package.rules.len(),
+                probe.refused.len(),
+                by_form.values().sum::<usize>(),
+                by_form.iter().map(|(f, n)| format!("{f}={n}")).collect::<Vec<_>>().join(", ")
+            );
+        }
+        None => eprintln!(
+            "sheet-complete rung: {} is absent -- no unit stamped; the stamp-loss guard below \
+             refuses to overwrite an inventory that carries sheet-complete stamps",
+            SHEET_RULES_RELATIVE_PATH
+        ),
+    }
+
     // --- aggregate ---------------------------------------------------------
     let mut by_kind: BTreeMap<&str, usize> = BTreeMap::new();
     let mut by_status: BTreeMap<&str, usize> = BTreeMap::new();
@@ -20008,7 +20426,10 @@ fn main() {
         if !lost.is_empty() && !allow_stamp_loss {
             eprintln!(
                 "refusing to write {}: this run would drop {} of the {} verification \
-                 stamp(s) (literal-verified/fixture-verified) it currently carries. Set \
+                 stamp(s) (literal-verified/fixture-verified/oracle-agree/oracle-unverifiable/\
+                 sheet-complete) it currently carries. A dropped sheet-complete stamp means \
+                 data/sheet_rules/ is missing or truncated in this tree (regenerate it: \
+                 cargo run --locked --bin sheet_rule_convert). Set \
                  CORPUS_LITERAL_SWEEP_REPORT and DERIVED_FIXTURE_CHECK_REPORT to the sweep's \
                  and the fixture check's `--json-out` reports before regenerating (see \
                  loop-instruction.md DoD item 4), or pass --allow-stamp-loss to proceed anyway. \
@@ -30455,10 +30876,11 @@ mod stamp_loss_guard_tests {
         format!("{{\"units\": [{}]}}", rows.join(", "))
     }
 
-    /// `stamped_ids` picks out exactly the four done-rung statuses
+    /// `stamped_ids` picks out exactly the five done-rung statuses
     /// (`decisions.md §19` added `oracle-agree`/`oracle-unverifiable` to
-    /// the original `literal-verified`/`fixture-verified` pair), ignoring
-    /// every ordinary status a unit might otherwise carry.
+    /// the original `literal-verified`/`fixture-verified` pair; SD-35
+    /// AT-35-E2-003 added `sheet-complete`), ignoring every ordinary status
+    /// a unit might otherwise carry.
     #[test]
     fn stamped_ids_finds_only_the_done_rung_statuses() {
         let doc = inventory_json(&[
@@ -30468,6 +30890,7 @@ mod stamp_loss_guard_tests {
             ("d", "engine-does-not-hold"),
             ("e", "oracle-agree"),
             ("f", "oracle-unverifiable"),
+            ("g", "sheet-complete"),
         ]);
         let ids = stamped_ids(&doc);
         assert_eq!(
@@ -30477,6 +30900,7 @@ mod stamp_loss_guard_tests {
                 "b".to_string(),
                 "e".to_string(),
                 "f".to_string(),
+                "g".to_string(),
             ])
         );
     }

@@ -65,11 +65,13 @@ STATUS_WORDS = (
     "engine-does-not-hold",
     "not-started",
     "unmeasurable",
+    # SD-35 AT-35-E2-003: the sheet rule's terminal status (decisions.md §1).
+    "sheet-complete",
 )
 
 
 def _fabricated_doc_path(tmpdir: str) -> str:
-    """One unit per `(wiring_class, status)` cell -- 5 x 9 = 45 units.
+    """One unit per `(wiring_class, status)` cell -- 5 x 10 = 50 units.
 
     `kind="spell"`, deliberately: `spell` left `NO_GROUNDING_PROBE` (see the
     producer's own SD30-E0-F2 comment on `STATUS_LABEL`/`NO_GROUNDING_PROBE`,
@@ -105,7 +107,7 @@ class DonenessVerdictGridTest(unittest.TestCase):
         self.cache_path = os.path.join(self._tmp.name, "fab-wiring-cache.json")
 
     def test_full_grid_yields_no_unmapped_cells(self):
-        """The whole 5 wiring_class x 9 status grid (45 cells) must map to a
+        """The whole 5 wiring_class x 10 status grid (50 cells) must map to a
         real doneness verdict -- `doneness_unmapped` must come back empty."""
         summary = producer.compute_wiring_class_summary(
             doc_path=self.doc_path, cache_path=self.cache_path
@@ -121,6 +123,19 @@ class DonenessVerdictGridTest(unittest.TestCase):
         total_doneness = sum(summary.get("doneness", {}).values())
         total_unmapped = sum(summary.get("doneness_unmapped", {}).values())
         self.assertEqual(total_doneness + total_unmapped, len(producer.WIRING_CLASS_VALUES) * len(STATUS_WORDS))
+
+    def test_sheet_complete_is_done_for_every_wiring_class(self):
+        # SD-35 AT-35-E2-003 (decisions.md §1, technical-design.md §3): a
+        # rendered sheet line is the terminal state for every wiring class --
+        # the sheet rule's bar is the same bar for display, static, derived,
+        # computed and ambiguous alike, so the lower-bound rule the
+        # `ambiguous` branch applies yields `done` here too.
+        for wc in producer.WIRING_CLASS_VALUES:
+            self.assertEqual(
+                producer.doneness_verdict(wc, "sheet-complete", "spell"),
+                producer.DONENESS_DONE,
+                wc,
+            )
 
     def test_ambiguous_literal_verified_is_held(self):
         self.assertEqual(

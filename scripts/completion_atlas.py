@@ -111,7 +111,10 @@ BUCKET_DEFINITIONS = {
     "DONE": {
         "meaning": "nothing remains",
         "clears": "—",
-        "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
+        "evidence_source": (
+            "src/bin/v06_work_inventory.rs (status in {grounded, text-complete, "
+            "oracle-agree, oracle-unverifiable, sheet-complete})"
+        ),
         # The `grounded` construction site in `simple_kind_verdict` (one of
         # the two DONE statuses): the fixture-verified magnitude arm.
         "citation": {
@@ -298,6 +301,12 @@ def _bucket_of(unit: dict) -> "str | None":
     # it can never reach this branch.
     if status in ("oracle-agree", "oracle-unverifiable"):
         return "DONE"
+    # SD-35 AT-35-E2-003 (`decisions.md §1`, the sheet rule): a unit whose
+    # `SheetRule` the live evaluator renders for a probe character holding it
+    # is DONE -- the sheet shows what the player would write. Its evidence is
+    # `sheet_rule_rendered:<form>`, checked by `_done_evidence_is_supported`.
+    if status == "sheet-complete":
+        return "DONE"
     if status in ("literal-verified", "fixture-verified"):
         return "V"
     if status == "ingested-magnitude":
@@ -372,21 +381,36 @@ def _sub_causes(units: list, bucket: str) -> "collections.Counter | None":
     return c
 
 
-def _done_evidence_is_supported(evidence: "str | None") -> bool:
+def _done_evidence_is_supported(evidence: "str | None", status: "str | None" = None) -> bool:
     """Condition 3. A DONE unit's evidence must be a real, non-empty string
     that carries none of `_DONE_VIOLATION_MARKERS` -- a DONE unit whose
     evidence looks like an unfinished-bucket marker is the atlas silently
-    trusting a field instead of what produced it (`decisions.md §12` L1)."""
+    trusting a field instead of what produced it (`decisions.md §12` L1).
+
+    A `sheet-complete` unit (SD-35 AT-35-E2-003) additionally must carry
+    `sheet_rule_rendered:<form>` with `<form>` one of the three sheet forms
+    (`decisions.md §1`: a final number, dice in final form, the rule's words)
+    -- the generator's `apply_sheet_complete_rung` writes exactly that."""
     if not evidence:
         return False
-    return not any(marker in evidence for marker in _DONE_VIOLATION_MARKERS)
+    if any(marker in evidence for marker in _DONE_VIOLATION_MARKERS):
+        return False
+    if status == "sheet-complete":
+        return evidence in _SHEET_COMPLETE_EVIDENCE
+    return True
+
+
+_SHEET_COMPLETE_EVIDENCE = frozenset(
+    f"sheet_rule_rendered:{form}" for form in ("number", "dice", "words")
+)
 
 
 def _done_evidence_violations(units: list) -> list:
     return [
         unit.get("id")
         for unit in units
-        if _bucket_of(unit) == "DONE" and not _done_evidence_is_supported(unit.get("evidence"))
+        if _bucket_of(unit) == "DONE"
+        and not _done_evidence_is_supported(unit.get("evidence"), unit.get("status"))
     ]
 
 

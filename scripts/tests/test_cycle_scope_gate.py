@@ -99,7 +99,8 @@ def _last_line(text):
 
 class TestBucketing(unittest.TestCase):
     def test_done_statuses_are_done(self):
-        for status in ("grounded", "text-complete", "oracle-agree", "oracle-unverifiable"):
+        # `sheet-complete`: SD-35 AT-35-E2-003, the sheet rule's terminal status.
+        for status in ("grounded", "text-complete", "oracle-agree", "oracle-unverifiable", "sheet-complete"):
             self.assertTrue(CSG.is_done(_unit("x", status)), status)
 
     def test_non_done_statuses_are_not_done(self):

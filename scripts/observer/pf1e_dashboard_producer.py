@@ -4025,6 +4025,19 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
         return DONENESS_DEFERRED
     if status in ("engine-does-not-hold", "not-started"):
         return DONENESS_NOT_STARTED
+    # `sheet-complete` (SD-35 AT-35-E2-003; `decisions.md §1`, the sheet
+    # rule; `technical-design.md §3`): the record's `SheetRule` renders for a
+    # probe character that holds it -- a final number, dice in final form, or
+    # the rule's words -- and the kind's on-screen test covers it. That is the
+    # terminal state for EVERY wiring class: the sheet rule's bar is the same
+    # bar whether the unit is display, static, derived or computed, so the
+    # `ambiguous` lower-bound rule below (never more favourable than the
+    # least favourable class for the same status) also yields `done` here.
+    # Resolved before the per-class dispatch for the same reason
+    # `deferred-with-reason`/`not-started` are: the verdict does not depend
+    # on the class.
+    if status == "sheet-complete":
+        return DONENESS_DONE
     # An `unknown`/`unmeasurable` status cannot be measured against any bar,
     # classifiable or not -- checked first, ahead of both the ambiguous check
     # and the per-class rules below. `AT-33-E4-002` (2026-08-25) renamed the

@@ -32,6 +32,11 @@ class TestBucketOf(unittest.TestCase):
         self.assertEqual(CA._bucket_of(_unit("u1", "grounded")), "DONE")
         self.assertEqual(CA._bucket_of(_unit("u2", "text-complete")), "DONE")
 
+    def test_sheet_complete_is_done(self):
+        # SD-35 AT-35-E2-003: `sheet-complete` (decisions.md §1, the sheet
+        # rule) is a DONE status -- a rendered sheet line is the terminal state.
+        self.assertEqual(CA._bucket_of(_unit("u14", "sheet-complete", "sheet_rule_rendered:number")), "DONE")
+
     def test_verified_statuses(self):
         self.assertEqual(CA._bucket_of(_unit("u3", "literal-verified")), "V")
         self.assertEqual(CA._bucket_of(_unit("u4", "fixture-verified")), "V")
@@ -169,6 +174,38 @@ class TestDoneEvidenceViolations(unittest.TestCase):
             _unit("g2", "grounded", "has_no_engine_table"),  # planted violation
         ]
         self.assertEqual(CA._done_evidence_violations(units), ["g2"])
+
+    def test_sheet_complete_evidence_must_name_a_rendered_form(self):
+        # SD-35 AT-35-E2-003: a `sheet-complete` unit's evidence is
+        # `sheet_rule_rendered:<form>` with `<form>` one of the three sheet
+        # forms (decisions.md §1) -- anything else is the atlas trusting the
+        # status word instead of what produced it.
+        for form in ("number", "dice", "words"):
+            self.assertTrue(
+                CA._done_evidence_is_supported(f"sheet_rule_rendered:{form}", status="sheet-complete"), form
+            )
+        for bad in (
+            "sheet_rule_rendered:",
+            "sheet_rule_rendered:hidden",
+            "companion_held_and_corpus_record_carries_real_description",
+            "",
+            None,
+        ):
+            self.assertFalse(CA._done_evidence_is_supported(bad, status="sheet-complete"), repr(bad))
+        # The other DONE statuses keep their existing bar: a grounded unit
+        # does not need the sheet-rule marker.
+        self.assertTrue(
+            CA._done_evidence_is_supported(
+                "companion_held_and_corpus_record_carries_real_description", status="grounded"
+            )
+        )
+
+    def test_done_evidence_violations_finds_sheet_complete_without_rendered_form(self):
+        units = [
+            _unit("s1", "sheet-complete", "sheet_rule_rendered:words"),
+            _unit("s2", "sheet-complete", "class_probe_observed_computed_delta_on_the_rendered_snapshot"),  # planted
+        ]
+        self.assertEqual(CA._done_evidence_violations(units), ["s2"])
 
 
 class TestMissingClearingMechanisms(unittest.TestCase):

@@ -1765,12 +1765,16 @@ mod tests {
         // oracle looked at it (or, for `oracle-unverifiable`, before the
         // oracle found it had no surface to check). Both are held content,
         // same as `58b4f837cc` taught the doneness table.
-        const HELD_STATUSES: [&str; 5] = [
+        // `sheet-complete` (SD-35 AT-35-E2-003, `decisions.md §1`): the
+        // record's `SheetRule` renders for a probe character -- held content
+        // under the sheet rule, the terminal state above `engine-does-not-hold`.
+        const HELD_STATUSES: [&str; 6] = [
             "grounded",
             "text-complete",
             "literal-verified",
             "oracle-agree",
             "oracle-unverifiable",
+            "sheet-complete",
         ];
 
         let companion_dir = repo_root.join("data/corpus/core_rulebook/companion");
