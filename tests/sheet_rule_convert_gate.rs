@@ -242,19 +242,21 @@ fn token_census_names_the_row_for_every_token_and_the_head_under_each_refusal() 
     let c = convert_unit("core_rulebook:equipment:longsword");
     assert!(c.tokens.contains("DAMAGE / ALTDAMAGE"), "the longsword's DAMAGE token names its row: {:?}", c.tokens);
     assert!(c.refusals.is_empty() && c.refusal_under.is_empty());
-    // A refused record: every refusal shape is recorded under the token type it arose under,
-    // and that token type is itself in the census.
+    // A DEGRADED record (SD-35 AT-35-E3-001): an unmapped head no longer deletes the record --
+    // the term degrades, the record converts, and every degradation shape is still recorded
+    // under the token type it arose under, so the census names it exactly as before.
     let c = convert_unit("advanced_class_guide:class:arcanist");
+    assert!(c.refusals.is_empty(), "an unmapped head is not a RECORD-level refusal: {:?}", c.refusals);
     for shape in ["unmapped:STARTSKILLPTS", "unmapped:MEMORIZE"] {
-        assert!(c.refusals.contains(shape), "{shape} refuses the Arcanist: {:?}", c.refusals);
-        let under: Vec<&String> = c.refusal_under.get(shape).map(|s| s.iter().collect()).unwrap_or_default();
+        assert!(c.degradations.contains(shape), "{shape} degrades the Arcanist: {:?}", c.degradations);
+        let under: Vec<&String> = c.degraded_under.get(shape).map(|s| s.iter().collect()).unwrap_or_default();
         assert_eq!(under, vec![shape], "{shape} arose under itself");
         assert!(c.tokens.contains(shape), "an unmapped head is still a token the record carries");
     }
-    // A formula-shaped refusal names the TOKEN it arose under, not the formula family.
+    // A formula-shaped degradation names the TOKEN it arose under, not the formula family.
     let c = convert_unit("advanced_class_guide:class_feature:eldritch_scion_spells");
-    let under = c.refusal_under.get("BONUS:STAT (target BASESPELLSTAT;Class)").expect("the refusal is recorded");
-    assert_eq!(under.iter().collect::<Vec<_>>(), vec!["BONUS:STAT"], "refused under the BONUS:STAT row");
+    let under = c.degraded_under.get("BONUS:STAT (target BASESPELLSTAT;Class)").expect("the degradation is recorded");
+    assert_eq!(under.iter().collect::<Vec<_>>(), vec!["BONUS:STAT"], "degraded under the BONUS:STAT row");
     // The whole run's census: one entry per record, ids unique, and the refused id set equals
     // `_refused.json`'s -- the sum `token_coverage.py --check` re-checks.
     let s = shared();

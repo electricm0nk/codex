@@ -18128,9 +18128,14 @@ mod apply_sheet_complete_rung_tests {
     const WORDS_ID: &str = "core_rulebook:feat:empower_spell";
     const NUMBER_ID: &str = "core_rulebook:feat:acrobatic";
     const DICE_ID: &str = "core_rulebook:equipment:longsword";
-    /// Refused by the converter (`unmapped:SPELLSTAT` and five more); it has
-    /// no rule in the package AND is in `_refused.json`.
-    const REFUSED_ID: &str = "advanced_class_guide:class:arcanist";
+    /// Refused by the converter; it has no rule in the package AND is in
+    /// `_refused.json`. SD-35 AT-35-E3-001 moved this pin: term-level refusal
+    /// means an unlowerable token no longer deletes a record, so
+    /// `advanced_class_guide:class:arcanist` (six unmapped heads) now converts
+    /// and prints its words. The refusal set is the 837 records with no source
+    /// row at all -- `no_corpus_record` 829, `no_source_row` 8 -- and this feat
+    /// is one of them.
+    const REFUSED_ID: &str = "advanced_players_guide:feat:allied_spellcaster";
 
     /// The core positive case: the two statuses beneath the rung, each with a
     /// rendered rule, become `sheet-complete` carrying the rendered form.

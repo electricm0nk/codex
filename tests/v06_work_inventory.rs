@@ -1196,13 +1196,16 @@ fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
     // convert and render for the probe character, so AT-35-E2-003's `sheet-complete` rung
     // lifts them off `engine-does-not-hold`; the one that stays is the converter refusal
     // `ultimate_psionics:power:physical_acceleration` (`data/sheet_rules/_refused.json`).
-    // Enumeration is still the point: every unit carries one of the two engine-consulted
-    // verdicts, never `not-started`.
+    // SD-35 AT-35-E3-001 (2026-09-08): term-level refusal. `physical_acceleration`'s
+    // unlowerable term no longer deletes the whole record, so it converts, renders as words
+    // and joins the other 420 -- all 421 are `sheet-complete` and bucket A is empty.
+    // Enumeration is still the point: every unit carries an engine-consulted verdict, never
+    // `not-started`.
     let power_statuses: std::collections::BTreeSet<&str> =
         power_units.iter().filter_map(|u| u["status"].as_str()).collect();
     assert_eq!(
         power_statuses,
-        std::collections::BTreeSet::from(["engine-does-not-hold", "sheet-complete"]),
+        std::collections::BTreeSet::from(["sheet-complete"]),
         "ultimate_psionics' power units are engine-does-not-hold at the classifier and \
          sheet-complete after SD-35's rung (Epic 9 deferred mapping them into an engine \
          pipeline, not enumeration itself), statuses seen were {power_statuses:?}"
@@ -1210,8 +1213,8 @@ fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
     let power_sheet_complete = power_units.iter().filter(|u| u["status"] == "sheet-complete").count();
     assert_eq!(
         power_sheet_complete,
-        420,
-        "420 of the 421 power units render as a sheet line (SD-35 AT-35-E2-005); the one \
-         `engine-does-not-hold` survivor is the converter refusal physical_acceleration"
+        421,
+        "all 421 power units render as a sheet line (SD-35 AT-35-E3-001 converted the last \
+         one, physical_acceleration, that AT-35-E2-005 left refused)"
     );
 }
