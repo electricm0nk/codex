@@ -41,6 +41,49 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — AT-35-E2-002 cycle 2 — `live-evaluator-and-sheet-section` — **complete** (re-dispatch of a closed criterion; re-verified at HEAD, and it corrected one stale figure in its own cycle-1 receipt)
+
+AT-35-E2-002 was dispatched a second time after cycle 1 had landed (`909bb0837c`, board row 8
+already `complete`). The criterion was at zero on arrival, so this cycle re-derived every clause of
+its `Evidence:` sentence at HEAD `bb785e568d` rather than re-doing work, and **changed no code, no
+data and no script** — `rust_lines_changed=0`, nothing outside `docs/` written. Receipt:
+`artifacts/epic-2-sheet-rule/AT-35-E2-002_cycle2_receipt.md`.
+
+`SCOPE_GATE: EXEMPT (live-evaluator + sheet-section cycle — closes zero units by design)`
+(`decisions.md §2`; AT-35-E2-003 is the status that moves units and AT-35-E2-005 the pass that
+moves them — and the criterion is additionally already at zero). Receipt rows: `closed=0
+relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=260`. Residue
+`live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`, identical at
+start and end, to cycle 1's, and to AT-35-E2-001 cycle 2's.
+
+Evidence re-derived, clause by clause. The evaluator is a match over the enum with **zero** PCGen
+surface — `grep -cE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|raw_tokens|PcgenFormulaEvaluator|render_pcgen_desc'
+src/rules_core/sheet_rule.rs` → `0` over its 2,359 lines. `cargo test --locked --lib -j 6
+sheet_rule` → **31 passed / 0 failed**, carrying the three value-form proofs the criterion names.
+The section, its grouping helpers and its mount are at `CharacterSheet.tsx:2041,2051,2064,2084,2087,2324`;
+the `Not computed` lane's `noticeHasSheetRule` at `classFeaturesModel.ts:321,353`; the IPC reach
+test at `reach_gate.rs:8195`. Frontend: `node scripts/run-tests.mjs` → `101/101 test files passed`
+with `rulesAndFeaturesSection: 19 per-kind tests + 5 section tests passed` — the criterion's
+"19 frontend tests, one per kind" clause, verbatim — and `tsc --noEmit` exit 0. Desktop crate,
+tested explicitly because `apps/` is in scope: `574 passed / 0 failed`, clippy **0 warnings**.
+Widest build scope: `--no-run` exit 0 (2 min 47 s warm), `--lib` **3217 passed / 0 failed**,
+`--no-fail-fast` **412 binaries, 412 ok, 8,721 passed, 0 failed**, lib clippy 0 warnings. Gates:
+`completion_atlas.py` `done_evidence_violations=0 citation_failures=0`; `token_coverage.py`
+`non_done=1404 refused_non_done=659 token_types=231 shapes=81 verdict=PASS`;
+`shape_engine_boundary.py` `magnitude_bearing=26396 not_held_by_engine=363`;
+`missing_engine_tables.py` `population=1 citation_failures=0`; `denominator_gate.py`
+`files_checked=41 violations=0`; `verify.sh --only pi-sweep` `RESULT: PASS`;
+`sheet_rule_convert -- --check` `records=49438 converted=47628 refused=1810 verdict=PASS`, summing
+exactly; `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → **0**.
+
+**One correction, to this criterion's own cycle-1 receipt** (`1788883047652-at-35-e2-002-8f4a35`):
+the fixture Human Fighter 1 renders **13 lines**, not the 45 cycle 1 recorded — across the *same*
+five kinds, and with all 19 per-kind evaluation censuses byte-identical to cycle 1's. The cause is
+named: AT-35-E2-005 cycle 2 (`33deab007b`) made a `#bonusN` sibling print only when its own
+`applies` includes, removing the 32 unconditionally-printed siblings cycle 1 counted — exactly the
+shape cycle 1's own Discovery (4) had flagged as open. A downstream improvement to the criterion's
+clause, not a regression. Refused tokens: **none**.
+
 ### 2026-09-08 — AT-35-E2-001 cycle 2 — `sheet-rule-converter` — **complete** (re-dispatch of a closed criterion; re-verified at HEAD, and it corrected its own cycle-1 audit row)
 
 AT-35-E2-001 was dispatched a second time after cycle 1 had landed (`72ad0be010`, board row 7
