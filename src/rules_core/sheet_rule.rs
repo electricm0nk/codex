@@ -1200,11 +1200,24 @@ pub struct HeldSet {
     pub counts_as: BTreeSet<RuleId>,
     /// `Waives` / `Revokes` targets from held rules: dropped from the sheet.
     pub removed: BTreeSet<RuleId>,
+    /// The classes the character holds by level (`HeldSeed::classes`, level >= 1). A `class`
+    /// kind rule id (`<book>:class:<slug>`) counts as held for one of these whether or not the
+    /// package carries the class record -- the character holds the class by having levels in
+    /// it, and the class-level `Var`s the converter declares on the class record fold from
+    /// `ClassLevel`, which the facts carry.
+    pub classes: BTreeSet<ClassId>,
 }
 
 impl HeldSet {
     pub fn holds(&self, id: &str) -> bool {
-        (self.rules.contains_key(id) || self.counts_as.contains(id)) && !self.removed.contains(id)
+        if self.removed.contains(id) {
+            return false;
+        }
+        if self.rules.contains_key(id) || self.counts_as.contains(id) {
+            return true;
+        }
+        let (_, kind, slug) = split_rule_id(id);
+        kind == "class" && !id.contains('#') && self.classes.contains(slug)
     }
 }
 
@@ -1703,6 +1716,7 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
     {
         add(&mut held, id, HeldRule::default());
     }
+    held.classes = seed.classes.iter().filter(|(_, level)| *level >= 1).map(|(class, _)| class.clone()).collect();
     for (class, _) in &seed.classes {
         if let Some(id) = package.find("class", class) {
             add(&mut held, id, HeldRule { holder_class: Some(class.clone()), ..Default::default() });
@@ -1829,6 +1843,10 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
 }
 
 /// Every held, printed rule's line, grouped by kind then label: the "Rules and features" section.
+/// A `#bonusN` sibling is a bonus line with its own gate (`applies`), held alongside its
+/// principal: it prints only when that gate includes -- an unbroken chain shirt's "Broken"
+/// line, a Climb bonus gated on a climb speed, a Skill Focus line on a character without the
+/// feat stay off the sheet.
 pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFacts) -> Vec<SheetLine> {
     let held = held_set(package, seed, facts);
     let mut lines: Vec<SheetLine> = held
@@ -1837,13 +1855,16 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
         .filter(|(id, _)| !held.removed.contains(*id))
         .filter_map(|(id, entry)| package.rule(id).map(|r| (r, entry)))
         .filter(|(r, _)| r.print)
-        .map(|(r, entry)| {
+        .filter_map(|(r, entry)| {
             let ctx = EvalContext {
                 holder_class: entry.holder_class.clone(),
                 spell_level: entry.spell_level.unwrap_or(0),
                 item_tags: if r.subject == Subject::Item { r.tags.clone() } else { Vec::new() },
             };
-            evaluate(r, &held, package, facts, ctx)
+            if r.id.contains('#') && !Evaluator::new(package, &held, facts, ctx.clone()).applies(&r.applies).includes() {
+                return None;
+            }
+            Some(evaluate(r, &held, package, facts, ctx))
         })
         .collect();
     lines.sort_by(|a, b| a.kind.cmp(&b.kind).then(a.label.cmp(&b.label)).then(a.id.cmp(&b.id)));
@@ -2187,6 +2208,99 @@ mod evaluate_tests {
         assert_eq!(facts.size, 4, "Human is Medium");
         assert_eq!(facts.skill_ranks.get("acrobatics"), Some(&10));
         assert_eq!(facts.race.as_deref(), Some("human"));
+    }
+
+    /// A `#bonusN` sibling is a bonus line with its own gate: it prints, and folds into its
+    /// target, only when that gate includes. The deterministic fighter has no Climb speed and
+    /// no Skill Focus, so `core_rulebook:skill:climb`'s three gated siblings (+8 Racial with a
+    /// climb speed, +3 / +6 Skill Focus) stay off the sheet and the class-skill +3 is the only
+    /// line on the target; PCGen's `SKILL.n.MISC` for the same character carries exactly that
+    /// +3 (AT-35-E2-005 cycle 1, disagreements 1-4). A sibling whose gate includes still
+    /// prints (Acrobatic's Fly half is `Always`).
+    #[test]
+    fn a_sibling_line_prints_only_when_its_own_gate_includes() {
+        let package = package();
+        let (mut input, _) = fighter();
+        input.chosen.selected_feats.push("feat:acrobatic".into());
+        let computation = compute_pilot_base_chassis(&input);
+        let computation = computation.with_sheet_rules(&input, package, &[]);
+        let lines = &computation.sheet_lines;
+        let climb: Vec<&str> = lines.iter().filter(|l| l.id.starts_with("core_rulebook:skill:climb")).map(|l| l.id.as_str()).collect();
+        assert_eq!(climb, vec!["core_rulebook:skill:climb"], "the gated siblings stay off the sheet");
+        let swim: Vec<&str> = lines.iter().filter(|l| l.id.starts_with("core_rulebook:skill:swim")).map(|l| l.id.as_str()).collect();
+        assert_eq!(swim, vec!["core_rulebook:skill:swim"]);
+        assert!(lines.iter().any(|l| l.id == "core_rulebook:feat:acrobatic#bonus1"), "an `Always` sibling prints");
+        assert!(
+            !lines.iter().any(|l| l.id == "core_rulebook:equipment:chain_shirt#bonus1"),
+            "the Broken-armor sibling of an unbroken chain shirt stays off the sheet"
+        );
+        let held = held_set(package, &HeldSeed::from_character(&input, &computation), &CharacterFacts::from_character(&input, &computation));
+        assert!(held.holds("core_rulebook:skill:climb#bonus2"), "the sibling is still HELD (its gate is a bonus condition, not a holding condition)");
+    }
+
+    /// A `Var` declared by a `class` kind rule is that class's own level variable. The converter
+    /// refuses every `class` record today (unmapped `STARTSKILLPTS` / `SPELLSTAT` / ... --
+    /// AT-35-E4-001), so no class rule is in the package to seed; the character still HOLDS
+    /// the class by its levels, so the declarer counts as held and its `ClassLevel`
+    /// contribution folds (AT-35-E2-005 cycle 1, disagreements 5-8). Another class's levels do
+    /// not hold it.
+    #[test]
+    fn a_class_level_var_folds_for_the_class_the_character_holds() {
+        let mut package = SheetRulePackage::new();
+        let mut feature = rule_with_value(SheetValue::Number(Expr::Var("vlvl".into())));
+        feature.id = "core_rulebook:class_feature:bard_thing".into();
+        package.insert_rule(feature);
+        package.insert_var(VarTable {
+            var: "vlvl".into(),
+            declared_by: vec!["core_rulebook:class:bard".into()],
+            contributions: vec![VarContribution {
+                rule_id: "core_rulebook:class:bard".into(),
+                expr: Expr::ClassLevel("bard".into()),
+                bonus_type: None,
+                when: Applies::Always,
+            }],
+            provenance: VarProvenance::default(),
+        });
+        package.finish();
+        for (class, expected) in [("bard", 5), ("fighter", 0)] {
+            let seed = HeldSeed {
+                classes: vec![(class.to_string(), 5)],
+                rule_ids: vec!["core_rulebook:class_feature:bard_thing".into()],
+                ..Default::default()
+            };
+            let facts = CharacterFacts { class_levels: vec![(class.to_string(), 5)], ..Default::default() };
+            let lines = render_sheet(&package, &seed, &facts);
+            assert_eq!(lines.len(), 1, "{class}: the class rule itself is not a line (no record)");
+            assert_eq!(lines[0].value, SheetLineValue::Resolved(expected), "{class}");
+            let held = held_set(&package, &seed, &facts);
+            assert_eq!(held.holds("core_rulebook:class:bard"), class == "bard");
+            assert!(!held.holds("core_rulebook:class:bard#bonus1"), "a class sibling is not implied by levels");
+        }
+    }
+
+    /// The live package, on the parity roster's Human Bard: Bardic Performance's rounds per day
+    /// is 4 + Cha + 2 per level beyond 1st in the book, `2 + Cha + 2 * BardLevel` in the converted
+    /// contribution -- 7 at level 1 and 25 at level 10 with Charisma 16, PCGen's own substituted
+    /// DESCRIPTION for the same characters (`oracle-parity/exports/human_bard_l{1,10}.txt`).
+    #[test]
+    fn bardic_performance_rounds_read_the_bard_level_from_the_held_class() {
+        let package = package();
+        for (level, expected) in [(1, 7), (10, 25)] {
+            let text = format!(
+                "case_id=parity-human_bard_l{level}\nsource_package_id=pf1.core_rulebook\nrace_id=race:human\nclass_level=class:bard:{level}\n\
+                 ability=strength:12\nability=dexterity:10\nability=constitution:8\nability=intelligence:18\nability=wisdom:14\nability=charisma:16\n\
+                 choice=choice:human_ability_bonus:ability:strength\n"
+            );
+            let input = load_character_input_fixture(&text).character_input.expect("the roster member loads");
+            let computation = compute_pilot_base_chassis(&input).with_sheet_rules(&input, package, &[]);
+            let line = computation
+                .sheet_lines
+                .iter()
+                .find(|l| l.id == "core_rulebook:class_feature:bard_bardic_performance")
+                .unwrap_or_else(|| panic!("bardic performance is held at bard {level}: {:?}", computation.sheet_lines.iter().map(|l| &l.id).collect::<Vec<_>>()));
+            let rounds = line.also.iter().find(|(printed, _)| printed.contains("rounds")).map(|(_, v)| v.clone());
+            assert_eq!(rounds, Some(SheetLineValue::Resolved(expected)), "bard {level}: {:?}", line.also);
+        }
     }
 }
 

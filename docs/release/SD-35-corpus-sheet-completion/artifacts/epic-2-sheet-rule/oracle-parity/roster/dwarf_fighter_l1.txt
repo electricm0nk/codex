@@ -3,9 +3,10 @@ case_id=parity-dwarf_fighter_l1
 source_package_id=pf1.core_rulebook
 race_id=race:dwarf
 class_level=class:fighter:1
+# ability scores pre-bake the race's fixed adjustment (CON +2, WIS +2, CHA -2); PCGen applies it from the race.
 ability=strength:12
 ability=dexterity:10
-ability=constitution:8
+ability=constitution:10
 ability=intelligence:18
-ability=wisdom:14
-ability=charisma:16
+ability=wisdom:16
+ability=charisma:14

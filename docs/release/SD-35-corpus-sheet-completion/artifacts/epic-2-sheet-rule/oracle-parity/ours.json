@@ -73,380 +73,6 @@
         },
         {
           "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus9",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
           "bonus_type": {
             "mode": "Plain",
             "name": "Armor"
@@ -461,41 +87,6 @@
           "target": "Ac",
           "value": {
             "Resolved": 4
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": {
-            "mode": "Plain",
-            "name": "Armor"
-          },
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:equipment:chain_shirt#bonus1",
-          "kind": "equipment",
-          "label": "Chain Shirt (Base) (AC)",
-          "printed": "-2",
-          "prose": "",
-          "target": "Ac",
-          "value": {
-            "Resolved": -2
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:equipment:chain_shirt#bonus2",
-          "kind": "equipment",
-          "label": "Chain Shirt (Base) (armor)",
-          "printed": "-2",
-          "prose": "",
-          "target": {
-            "Other": "armor accheck"
-          },
-          "value": {
-            "Resolved": -2
           }
         },
         {
@@ -613,66 +204,6 @@
           "also": [],
           "bonus_type": {
             "mode": "Plain",
-            "name": "Racial"
-          },
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:skill:climb#bonus1",
-          "kind": "skill",
-          "label": "Climb (Climb)",
-          "printed": "+8",
-          "prose": "",
-          "target": {
-            "Skill": "climb"
-          },
-          "value": {
-            "Resolved": 8
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": {
-            "mode": "Plain",
-            "name": "SkillFocus"
-          },
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:skill:climb#bonus2",
-          "kind": "skill",
-          "label": "Climb (Climb)",
-          "printed": "+3",
-          "prose": "",
-          "target": {
-            "Skill": "climb"
-          },
-          "value": {
-            "Resolved": 3
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": {
-            "mode": "Plain",
-            "name": "SkillFocus"
-          },
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:skill:climb#bonus3",
-          "kind": "skill",
-          "label": "Climb (Climb)",
-          "printed": "+6",
-          "prose": "",
-          "target": {
-            "Skill": "climb"
-          },
-          "value": {
-            "Resolved": 6
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": {
-            "mode": "Plain",
             "name": "ClassSkill"
           },
           "condition": null,
@@ -687,46 +218,6 @@
           },
           "value": {
             "Resolved": 3
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": {
-            "mode": "Plain",
-            "name": "SkillFocus"
-          },
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:skill:intimidate#bonus1",
-          "kind": "skill",
-          "label": "Intimidate (Intimidate)",
-          "printed": "+3",
-          "prose": "",
-          "target": {
-            "Skill": "intimidate"
-          },
-          "value": {
-            "Resolved": 3
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": {
-            "mode": "Plain",
-            "name": "SkillFocus"
-          },
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:skill:intimidate#bonus2",
-          "kind": "skill",
-          "label": "Intimidate (Intimidate)",
-          "printed": "+6",
-          "prose": "",
-          "target": {
-            "Skill": "intimidate"
-          },
-          "value": {
-            "Resolved": 6
           }
         },
         {
@@ -748,66 +239,6 @@
           "value": {
             "Resolved": 3
           }
-        },
-        {
-          "also": [],
-          "bonus_type": {
-            "mode": "Plain",
-            "name": "Racial"
-          },
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:skill:swim#bonus1",
-          "kind": "skill",
-          "label": "Swim (Swim)",
-          "printed": "+8",
-          "prose": "",
-          "target": {
-            "Skill": "swim"
-          },
-          "value": {
-            "Resolved": 8
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": {
-            "mode": "Plain",
-            "name": "SkillFocus"
-          },
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:skill:swim#bonus2",
-          "kind": "skill",
-          "label": "Swim (Swim)",
-          "printed": "+3",
-          "prose": "",
-          "target": {
-            "Skill": "swim"
-          },
-          "value": {
-            "Resolved": 3
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": {
-            "mode": "Plain",
-            "name": "SkillFocus"
-          },
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:skill:swim#bonus3",
-          "kind": "skill",
-          "label": "Swim (Swim)",
-          "printed": "+6",
-          "prose": "",
-          "target": {
-            "Skill": "swim"
-          },
-          "value": {
-            "Resolved": 6
-          }
         }
       ],
       "race": "race:human",
@@ -824,20 +255,20 @@
       "ability_scores": [
         12,
         10,
-        8,
+        10,
         18,
-        14,
-        16
+        16,
+        14
       ],
       "character": "dwarf_fighter_l1",
       "chassis": {
         "ability_mods": [
           1,
           0,
-          -1,
+          0,
           4,
-          2,
-          3
+          3,
+          2
         ],
         "bab": 1,
         "base_saves": [
@@ -853,9 +284,9 @@
           "swim": 0
         },
         "total_saves": [
-          1,
+          2,
           0,
-          2
+          3
         ]
       },
       "classes": [
@@ -889,380 +320,6 @@
           },
           "value": {
             "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus9",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
           }
         },
         {
@@ -1376,9 +433,9 @@
     {
       "ability_scores": [
         12,
-        10,
-        8,
-        18,
+        12,
+        6,
+        20,
         14,
         16
       ],
@@ -1386,9 +443,9 @@
       "chassis": {
         "ability_mods": [
           1,
-          0,
-          -1,
-          4,
+          1,
+          -2,
+          5,
           2,
           3
         ],
@@ -1406,8 +463,8 @@
           "swim": 0
         },
         "total_saves": [
-          1,
           0,
+          1,
           2
         ]
       },
@@ -1442,380 +499,6 @@
           },
           "value": {
             "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus9",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
           }
         },
         {
@@ -1912,22 +595,22 @@
     },
     {
       "ability_scores": [
-        12,
         10,
-        8,
+        10,
+        10,
         18,
         14,
-        16
+        18
       ],
       "character": "gnome_fighter_l1",
       "chassis": {
         "ability_mods": [
-          1,
           0,
-          -1,
+          0,
+          0,
           4,
           2,
-          3
+          4
         ],
         "bab": 1,
         "base_saves": [
@@ -1943,7 +626,7 @@
           "swim": 0
         },
         "total_saves": [
-          1,
+          2,
           0,
           2
         ]
@@ -1982,380 +665,6 @@
           }
         },
         {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus9",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
           "also": [
             [
               "1/day",
@@ -2370,9 +679,9 @@
               }
             ],
             [
-              "DC 13",
+              "DC 14",
               {
-                "Resolved": 13
+                "Resolved": 14
               }
             ]
           ],
@@ -2417,9 +726,9 @@
               }
             ],
             [
-              "DC 13",
+              "DC 14",
               {
-                "Resolved": 13
+                "Resolved": 14
               }
             ]
           ],
@@ -2529,9 +838,9 @@
               }
             ],
             [
-              "DC 13",
+              "DC 14",
               {
-                "Resolved": 13
+                "Resolved": 14
               }
             ]
           ],
@@ -2563,9 +872,9 @@
               }
             ],
             [
-              "DC 14",
+              "DC 15",
               {
-                "Resolved": 14
+                "Resolved": 15
               }
             ]
           ],
@@ -2581,32 +890,6 @@
           "value": {
             "Resolved": 1
           }
-        },
-        {
-          "also": [
-            [
-              "CL 1",
-              {
-                "Resolved": 1
-              }
-            ],
-            [
-              "DC 14",
-              {
-                "Resolved": 14
-              }
-            ]
-          ],
-          "bonus_type": null,
-          "condition": null,
-          "form": "words",
-          "id": "core_rulebook:race_trait:racial_sla_speak_with_animals#spell1_speak_with_animals",
-          "kind": "race_trait",
-          "label": "Speak with Animals",
-          "printed": "",
-          "prose": "At will",
-          "target": null,
-          "value": "Words"
         },
         {
           "also": [],
@@ -2707,380 +990,6 @@
           },
           "value": {
             "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus9",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
           }
         },
         {
@@ -3264,380 +1173,6 @@
           "also": [],
           "bonus_type": null,
           "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus9",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
           "form": "words",
           "id": "core_rulebook:race_trait:half_orc_intimidating",
           "kind": "race_trait",
@@ -3702,22 +1237,22 @@
     },
     {
       "ability_scores": [
-        12,
         10,
+        12,
         8,
         18,
         14,
-        16
+        18
       ],
       "character": "halfling_fighter_l1",
       "chassis": {
         "ability_mods": [
-          1,
           0,
+          1,
           -1,
           4,
           2,
-          3
+          4
         ],
         "bab": 1,
         "base_saves": [
@@ -3734,7 +1269,7 @@
         },
         "total_saves": [
           1,
-          0,
+          1,
           2
         ]
       },
@@ -3769,380 +1304,6 @@
           },
           "value": {
             "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus9",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
           }
         },
         {
@@ -4443,7 +1604,7 @@
           "kind": "class_feature",
           "label": "Damage Reduction",
           "printed": "",
-          "prose": "You gain damage reduction. Subtract -1 from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.\nDR: -1/-",
+          "prose": "You gain damage reduction. Subtract 2 from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.\nDR: 2/-",
           "target": null,
           "value": "Words"
         },
@@ -4482,7 +1643,7 @@
           "kind": "class_feature",
           "label": "Trap Sense",
           "printed": "",
-          "prose": "You gain a +0 bonus on Reflex saves made to avoid traps, and a +0 dodge bonus to AC against attacks made by traps.\nAbility Benefit: +0\nSaveBonus: +0 Reflex to avoid traps",
+          "prose": "You gain a +3 bonus on Reflex saves made to avoid traps, and a +3 dodge bonus to AC against attacks made by traps.\nAbility Benefit: +3\nSaveBonus: +3 Reflex to avoid traps",
           "target": null,
           "value": "Words"
         },
@@ -4606,9 +1767,9 @@
         {
           "also": [
             [
-              "5 rounds per days",
+              "7 rounds per days",
               {
-                "Resolved": 5
+                "Resolved": 7
               }
             ]
           ],
@@ -4619,7 +1780,7 @@
           "kind": "class_feature",
           "label": "Bardic Performance",
           "printed": "",
-          "prose": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired.\nYou are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 5 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic performance is a standard action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the bard to stop the previous performance and start a new one as a standard action. A bardic performance cannot be disrupted, but it ends immediately if you are killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. You cannot have more than one bardic performance in effect at one time.",
+          "prose": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired.\nYou are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 7 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic performance is a standard action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the bard to stop the previous performance and start a new one as a standard action. A bardic performance cannot be disrupted, but it ends immediately if you are killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. You cannot have more than one bardic performance in effect at one time.",
           "target": null,
           "value": "Words"
         },
@@ -4633,6 +1794,45 @@
           "label": "Cantrips",
           "printed": "",
           "prose": "You have learned a number of cantrips, or 0-level spells. These spells are cast like any other spells, but they do not consume any slots and may be used again.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_distraction",
+          "kind": "class_feature",
+          "label": "Distraction",
+          "printed": "",
+          "prose": "You can use your performance to counter magic effects that depend on sight. Each round of the distraction, make a Perform (act, comedy, dance, or oratory) skill check. Any creature within 30 feet (including yourself) that is affected by an illusion (pattern) or illusion (figment) magical attack may use your Perform check result in place of its saving throw if, after the saving throw is rolled, the Perform skill check proves to be higher. If a creature within range of the distraction is already under the effect of a noninstantaneous illusion (pattern) or illusion (figment) magical attack, it gains another saving throw against the effect each round it sees the distraction, but it must use your Perform skill check result for the save. Distraction does not work on effects that don't allow saves. Distraction relies on visual components.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_fascinate",
+          "kind": "class_feature",
+          "label": "Fascinate",
+          "printed": "",
+          "prose": "You can use your performance to cause up to 1 creatures to become fascinated with you. Each creature to be fascinated must be within 90 feet, able to see and hear you, and capable of paying attention to you. You must also be able to see the creatures affected. The distraction of a nearby combat or other dangers prevents this ability from working. Each creature within range receives a Will save (DC 13) to negate the effect. If a creature's saving throw succeeds, you cannot attempt to fascinate that creature again for 24 hours. If its saving throw fails, the creature sits quietly and observes your performance for as long as you continue to maintain it. While fascinated, a target takes a -4 penalty on all skill checks made as reactions, such as Perception checks. Any potential threat to the target allows the target to make a new saving throw against the effect. Any obvious threat, such as someone drawing a weapon, casting a spell, or aiming a weapon at the target, automatically breaks the effect. Fascinate is an enchantment (compulsion), mind-affecting ability. Fascinate relies on audible and visual components in order to function.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_inspire_courage",
+          "kind": "class_feature",
+          "label": "Inspire Courage",
+          "printed": "",
+          "prose": "You can use your performance to inspire courage in your allies (including yourself), bolstering them against fear and improving their combat abilities. To be affected, an ally must be able to perceive your performance. An affected ally receives a +1 morale bonus on saving throws against charm and fear effects and a +1 competence bonus on attack and weapon damage rolls. Inspire courage is a mind-affecting ability. Inspire courage can use audible or visual components. The bard must choose which component to use when starting his performance.",
           "target": null,
           "value": "Words"
         },
@@ -4769,9 +1969,9 @@
         {
           "also": [
             [
-              "5 rounds per days",
+              "25 rounds per days",
               {
-                "Resolved": 5
+                "Resolved": 25
               }
             ]
           ],
@@ -4782,7 +1982,7 @@
           "kind": "class_feature",
           "label": "Bardic Performance",
           "printed": "",
-          "prose": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired.\nYou are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 5 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic performance is a standard action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the bard to stop the previous performance and start a new one as a standard action. A bardic performance cannot be disrupted, but it ends immediately if you are killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. You cannot have more than one bardic performance in effect at one time.",
+          "prose": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired.\nYou are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 25 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic performance is a move action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the bard to stop the previous performance and start a new one as a move action. A bardic performance cannot be disrupted, but it ends immediately if you are killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. You cannot have more than one bardic performance in effect at one time.",
           "target": null,
           "value": "Words"
         },
@@ -4796,6 +1996,84 @@
           "label": "Cantrips",
           "printed": "",
           "prose": "You have learned a number of cantrips, or 0-level spells. These spells are cast like any other spells, but they do not consume any slots and may be used again.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_dirge_of_doom",
+          "kind": "class_feature",
+          "label": "Dirge of Doom",
+          "printed": "",
+          "prose": "You can use your performance to foster a sense of growing dread in your enemies, causing them to become shaken. To be affected, an enemy must be within 30 feet and able to see and hear your performance. The effect persists for as long as the enemy is within 30 feet and you continue your performance. This performance cannot cause a creature to become frightened or panicked, even if the targets are already shaken from another effect. Dirge of Doom is a mind-affecting fear effect, and it relies on audible and visual components.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_distraction",
+          "kind": "class_feature",
+          "label": "Distraction",
+          "printed": "",
+          "prose": "You can use your performance to counter magic effects that depend on sight. Each round of the distraction, make a Perform (act, comedy, dance, or oratory) skill check. Any creature within 30 feet (including yourself) that is affected by an illusion (pattern) or illusion (figment) magical attack may use your Perform check result in place of its saving throw if, after the saving throw is rolled, the Perform skill check proves to be higher. If a creature within range of the distraction is already under the effect of a noninstantaneous illusion (pattern) or illusion (figment) magical attack, it gains another saving throw against the effect each round it sees the distraction, but it must use your Perform skill check result for the save. Distraction does not work on effects that don't allow saves. Distraction relies on visual components.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_fascinate",
+          "kind": "class_feature",
+          "label": "Fascinate",
+          "printed": "",
+          "prose": "You can use your performance to cause up to 4 creatures to become fascinated with you. Each creature to be fascinated must be within 90 feet, able to see and hear you, and capable of paying attention to you. You must also be able to see the creatures affected. The distraction of a nearby combat or other dangers prevents this ability from working. Each creature within range receives a Will save (DC 18) to negate the effect. If a creature's saving throw succeeds, you cannot attempt to fascinate that creature again for 24 hours. If its saving throw fails, the creature sits quietly and observes your performance for as long as you continue to maintain it. While fascinated, a target takes a -4 penalty on all skill checks made as reactions, such as Perception checks. Any potential threat to the target allows the target to make a new saving throw against the effect. Any obvious threat, such as someone drawing a weapon, casting a spell, or aiming a weapon at the target, automatically breaks the effect. Fascinate is an enchantment (compulsion), mind-affecting ability. Fascinate relies on audible and visual components in order to function.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_inspire_competence",
+          "kind": "class_feature",
+          "label": "Inspire Competence",
+          "printed": "",
+          "prose": "You can use your performance to help an ally succeed at a task. That ally must be within 30 feet and be able to hear you. The ally gets a +3 competence bonus on skill checks with a particular skill as long as she continues to hear your performance. Certain uses of this ability are infeasible, such as Stealth, and may be disallowed at the GM's discretion. A bard can't inspire competence in himself. Inspire competence relies on audible components.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_inspire_courage",
+          "kind": "class_feature",
+          "label": "Inspire Courage",
+          "printed": "",
+          "prose": "You can use your performance to inspire courage in your allies (including yourself), bolstering them against fear and improving their combat abilities. To be affected, an ally must be able to perceive your performance. An affected ally receives a +2 morale bonus on saving throws against charm and fear effects and a +2 competence bonus on attack and weapon damage rolls. Inspire courage is a mind-affecting ability. Inspire courage can use audible or visual components. The bard must choose which component to use when starting his performance.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_inspire_greatness",
+          "kind": "class_feature",
+          "label": "Inspire Greatness",
+          "printed": "",
+          "prose": "You can use your performance to inspire greatness in yourself or up to 1 willing allies within 30 feet, granting extra fighting capability. To inspire greatness, all of the targets must be able to see and hear you. A creature inspired with greatness gains 2 bonus Hit Dice (d10s), the commensurate number of temporary hit points (apply the target's Constitution modifier, if any, to these bonus Hit Dice), a +2 competence bonus on attack rolls, and a +1 competence bonus on Fortitude saves. The bonus Hit Dice count as regular Hit Dice for determining the effect of spells that are Hit Dice dependent. Inspire Greatness is a mind-affecting ability and it relies on audible and visual components.",
           "target": null,
           "value": "Words"
         },
@@ -4821,7 +2099,20 @@
           "kind": "class_feature",
           "label": "Lore Master",
           "printed": "",
-          "prose": "You have become a master of lore and can take 10 on any Knowledge skill check that you have ranks in. You can choose not to take 10 and can instead roll normally. In addition, 0 times per day, you can take 20 on any Knowledge skill check as a standard action.",
+          "prose": "You have become a master of lore and can take 10 on any Knowledge skill check that you have ranks in. You can choose not to take 10 and can instead roll normally. In addition, 1 times per day, you can take 20 on any Knowledge skill check as a standard action.",
+          "target": null,
+          "value": "Words"
+        },
+        {
+          "also": [],
+          "bonus_type": null,
+          "condition": null,
+          "form": "words",
+          "id": "core_rulebook:class_feature:bardic_performance_suggestion",
+          "kind": "class_feature",
+          "label": "Suggestion",
+          "printed": "",
+          "prose": "You use your performance to make a Suggestion (as per the spell) to a creature you have already fascinated. Using this ability does not disrupt the Fascinate effect, but it does require a standard action to activate (in addition to the free action to continue the Fascinate effect). You can use this ability more than once against an individual creature during an individual performance. Making a Suggestion does not count against your daily use of Bardic Performance. A Will saving throw (DC 18) negates the effect. This ability affects only a single creature. Suggestion is an enchantment (compulsion), mind affecting, language-dependent ability and relies on audible components.\nYou influence the actions of the target creature by suggesting a course of activity [limited to a sentence or two]. The suggestion must be worded in such a manner as to make the activity sound reasonable. Asking the creature to do some obviously harmful act automatically negates the effect of the spell. The suggested course of activity can continue for the entire duration. If the suggested activity can be completed in a shorter time, the spell ends when the subject finishes what it was asked to do. You can instead specify conditions that will trigger a special activity during the duration. If the condition is not met before the spell duration expires, the activity is not performed. A very reasonable suggestion causes the save to be made with a penalty [such as -1 or -2].",
           "target": null,
           "value": "Words"
         },
@@ -5673,380 +2964,6 @@
           "also": [],
           "bonus_type": null,
           "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus9",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
           "form": "words",
           "id": "core_rulebook:race_trait:human_bonus_feat",
           "kind": "race_trait",
@@ -6173,458 +3090,16 @@
           "bonus_type": null,
           "condition": null,
           "form": "number",
-          "id": "core_rulebook:class_feature:fighter_armor_training#bonus1",
-          "kind": "class_feature",
-          "label": "Armor Training (maxdex)",
-          "printed": "+1",
-          "prose": "",
-          "target": {
-            "Other": "maxdex"
-          },
-          "value": {
-            "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_armor_training#bonus2",
-          "kind": "class_feature",
-          "label": "Armor Training (maxdex)",
-          "printed": "+1",
-          "prose": "",
-          "target": {
-            "Other": "maxdex"
-          },
-          "value": {
-            "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_armor_training#bonus3",
-          "kind": "class_feature",
-          "label": "Armor Training (maxdex)",
-          "printed": "+1",
-          "prose": "",
-          "target": {
-            "Other": "maxdex"
-          },
-          "value": {
-            "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_armor_training#bonus4",
-          "kind": "class_feature",
-          "label": "Armor Training (maxdex)",
-          "printed": "+1",
-          "prose": "",
-          "target": {
-            "Other": "maxdex"
-          },
-          "value": {
-            "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
           "id": "core_rulebook:class_feature:fighter_bonus_feats",
           "kind": "class_feature",
           "label": "Bonus Feats",
-          "printed": "+1",
+          "printed": "+6",
           "prose": "At 1st level, and at every even level thereafter, a fighter gains a bonus feat in addition to those gained from normal advancement (meaning that the fighter gains a feat at every level). These bonus feats must be selected from those listed as combat feats, sometimes also called \"fighter bonus feats.\" Upon reaching 4th level, and every four levels thereafter (8th, 12th, and so on), a fighter can choose to learn a new bonus feat in place of a bonus feat he has already learned. In effect, the fighter loses the bonus feat in exchange for the new one. The old feat cannot be one that was used as a prerequisite for another feat, prestige class, or other ability. A fighter can only change one feat at any given level and must choose whether or not to swap the feat at the time he gains a new bonus feat for the level.",
           "target": {
             "Pool": "fighter_bonus_feat"
           },
           "value": {
-            "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_bonus_feats#bonus9",
-          "kind": "class_feature",
-          "label": "Bonus Feats (fighter bonus feat picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "fighter_bonus_feat"
-          },
-          "value": {
-            "Resolved": -1
+            "Resolved": 6
           }
         },
         {
@@ -6655,193 +3130,6 @@
           },
           "value": {
             "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus4",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training i picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_i"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus8",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training i picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_i"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus1",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training ii picks)",
-          "printed": "+1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_ii"
-          },
-          "value": {
-            "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus5",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training ii picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_ii"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus9",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training ii picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_ii"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus10",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training iii picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_iii"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus2",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training iii picks)",
-          "printed": "+1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_iii"
-          },
-          "value": {
-            "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus6",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training iii picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_iii"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus11",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training iv picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_iv"
-          },
-          "value": {
-            "Resolved": -1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus3",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training iv picks)",
-          "printed": "+1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_iv"
-          },
-          "value": {
-            "Resolved": 1
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "number",
-          "id": "core_rulebook:class_feature:fighter_weapon_training#bonus7",
-          "kind": "class_feature",
-          "label": "Weapon Training (weapon training iv picks)",
-          "printed": "-1",
-          "prose": "",
-          "target": {
-            "Pool": "weapon_training_iv"
-          },
-          "value": {
-            "Resolved": -1
           }
         },
         {
@@ -6970,37 +3258,9 @@
           "kind": "class_feature",
           "label": "Flurry of Blows",
           "printed": "",
-          "prose": "You can make a flurry of blows as a full-attack action.",
+          "prose": "You can make a flurry of blows as a full-attack action.\nYou can make a flurry of blows as a full-attack action. When doing so, you may make one additional attack, taking a -2 penalty on all of your attacks, as if using the Two-Weapon Fighting feat. These attacks can be any combination of unarmed strikes and attacks with a monk speciak weapon (you do not need to use two weapons to utlilize this ability). For the purpose of these attacks, your base attack bonus is equal to your monk level. For all other purposes, such as qualifying for a feat or a prestige class, you use your normal base attack bonus.",
           "target": null,
           "value": "Words"
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "words",
-          "id": "core_rulebook:class_feature:monk_unarmed_damage_lvl_1",
-          "kind": "class_feature",
-          "label": "Monk Unarmed Damage LVL 1",
-          "printed": "",
-          "prose": "",
-          "target": null,
-          "value": "Words"
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "dice",
-          "id": "core_rulebook:class_feature:monk_unarmed_damage_lvl_1_medium",
-          "kind": "class_feature",
-          "label": "Monk Unarmed Damage LVL 1 (Medium)",
-          "printed": "1d6",
-          "prose": "Critical multiplier: x2",
-          "target": null,
-          "value": {
-            "Dice": "1d6"
-          }
         },
         {
           "also": [],
@@ -7180,7 +3440,7 @@
           "kind": "class_feature",
           "label": "Flurry of Blows",
           "printed": "",
-          "prose": "You can make a flurry of blows as a full-attack action.",
+          "prose": "You can make a flurry of blows as a full-attack action.\nYou can make a flurry of blows as a full-attack action. When doing so, you may make two additional attacks using any combination of unarmed strikes or attack with a special monk weapon (kama, nunchaku, quarterstaff, sai, shuriken, and siangham) as if using the Two-Weapon Fighting and Improved Two-Weapon Fighting feats. For the purpose of these attacks, your base attack bonus is equal to your monk level. For all other purposes, such as qualifying for a feat or a prestige class, you use your normal base attack bonus.",
           "target": null,
           "value": "Words"
         },
@@ -7228,34 +3488,6 @@
           "bonus_type": null,
           "condition": null,
           "form": "words",
-          "id": "core_rulebook:class_feature:monk_unarmed_damage_lvl_1",
-          "kind": "class_feature",
-          "label": "Monk Unarmed Damage LVL 1",
-          "printed": "",
-          "prose": "",
-          "target": null,
-          "value": "Words"
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "dice",
-          "id": "core_rulebook:class_feature:monk_unarmed_damage_lvl_1_medium",
-          "kind": "class_feature",
-          "label": "Monk Unarmed Damage LVL 1 (Medium)",
-          "printed": "1d6",
-          "prose": "Critical multiplier: x2",
-          "target": null,
-          "value": {
-            "Dice": "1d6"
-          }
-        },
-        {
-          "also": [],
-          "bonus_type": null,
-          "condition": null,
-          "form": "words",
           "id": "core_rulebook:class_feature:monk_unarmed_damage",
           "kind": "class_feature",
           "label": "Monk ~ Unarmed Damage",
@@ -7286,7 +3518,7 @@
           "kind": "class_feature",
           "label": "Stunning Fist",
           "printed": "",
-          "prose": "You gain Stunning Fist as a bonus feat.",
+          "prose": "You gain Stunning Fist as a bonus feat.\nYou gain Stunning Fist as a bonus feat. You can choose to make the target of your Stunning Fist fatigued, or sickened for 1 minute. This condition replaces stunning the target for 1 round, and a successful saving throw still negates the effect. You must choose which condition will apply before the attack roll is made. These effects do not stack with themselves, but additional hits do increase the duration.",
           "target": null,
           "value": "Words"
         },
@@ -7410,9 +3642,9 @@
         {
           "also": [
             [
-              "CL 0",
+              "CL 1",
               {
-                "Resolved": 0
+                "Resolved": 1
               }
             ],
             [
@@ -7553,9 +3785,9 @@
         {
           "also": [
             [
-              "CL 0",
+              "CL 10",
               {
-                "Resolved": 0
+                "Resolved": 10
               }
             ],
             [
@@ -7592,9 +3824,9 @@
         {
           "also": [
             [
-              "3 uses per day",
+              "8 uses per day",
               {
-                "Resolved": 3
+                "Resolved": 8
               }
             ]
           ],
@@ -7605,7 +3837,7 @@
           "kind": "class_feature",
           "label": "Lay on Hands",
           "printed": "",
-          "prose": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability 3 times per day. With one use of this ability, you can heal 0d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this healing power to deal damage to undead creatures, dealing 0d6 points of damage. Using Lay on Hands in this way requires a melee touch attack and doesn't provide an attack of opportunity. Undead do not receive a saving throw against this damage.",
+          "prose": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability 8 times per day. With one use of this ability, you can heal 5d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this healing power to deal damage to undead creatures, dealing 5d6 points of damage. Using Lay on Hands in this way requires a melee touch attack and doesn't provide an attack of opportunity. Undead do not receive a saving throw against this damage.",
           "target": null,
           "value": "Words"
         },
@@ -7920,13 +4152,13 @@
           "id": "core_rulebook:class_feature:ranger_combat_style_feat#bonus1",
           "kind": "class_feature",
           "label": "Combat Style Feat (ranger combat style feat picks)",
-          "printed": "+0",
+          "printed": "+3",
           "prose": "",
           "target": {
             "Pool": "ranger_combat_style_feat"
           },
           "value": {
-            "Resolved": 0
+            "Resolved": 3
           }
         },
         {
@@ -7977,7 +4209,7 @@
           "kind": "class_feature",
           "label": "Master Hunter",
           "printed": "",
-          "prose": "You can always move at full speed while using Survival to follow tracks without penalty. You can, as a standard action, make a single attack against a favored enemy at your full attack bonus. If the attack hits, the target takes damage normally and must make a Fortitude save or die (DC 12). You can choose instead to deal an amount of nonlethal damage equal to the creature's current hit points. A successful save negates this damage. You can use this ability once per day against each favored enemy type you possess, but not against the same creature more than once in a 24-hour period.",
+          "prose": "You can always move at full speed while using Survival to follow tracks without penalty. You can, as a standard action, make a single attack against a favored enemy at your full attack bonus. If the attack hits, the target takes damage normally and must make a Fortitude save or die (DC 17). You can choose instead to deal an amount of nonlethal damage equal to the creature's current hit points. A successful save negates this damage. You can use this ability once per day against each favored enemy type you possess, but not against the same creature more than once in a 24-hour period.",
           "target": null,
           "value": "Words"
         },
@@ -8341,7 +4573,7 @@
           "kind": "class_feature",
           "label": "Master Strike",
           "printed": "",
-          "prose": "You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is 14. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.",
+          "prose": "You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is 19. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.",
           "target": null,
           "value": "Words"
         },
@@ -8354,7 +4586,7 @@
           "kind": "class_feature",
           "label": "Trap Sense",
           "printed": "",
-          "prose": "You gain a +0 bonus on Reflex saves made to avoid traps, and a +0 dodge bonus to AC against attacks made by traps.\nAbility Benefit: +0\nSaveBonus: +0 Reflex to avoid traps",
+          "prose": "You gain a +3 bonus on Reflex saves made to avoid traps, and a +3 dodge bonus to AC against attacks made by traps.\nAbility Benefit: +3\nSaveBonus: +3 Reflex to avoid traps",
           "target": null,
           "value": "Words"
         },
@@ -9432,5 +5664,5 @@
     }
   ],
   "generated_by": "sheet_rule_parity",
-  "roster": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex-docs-release-SD-33-computed-value-verification/c57a7080-1e94-4af6-9023-fa4f4f21e03f/scratchpad/parity/roster"
+  "roster": "/home/ubuntu/workspace/repos/codex/docs/release/SD-35-corpus-sheet-completion/artifacts/epic-2-sheet-rule/oracle-parity/roster"
 }

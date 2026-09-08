@@ -34,389 +34,27 @@
   "exports_missing": [],
   "summary": {
     "lines": {
-      "compared": 12,
-      "agree": 1,
-      "disagree": 11,
-      "unverifiable": 42
+      "compared": 8,
+      "agree": 8,
+      "disagree": 0,
+      "unverifiable": 39
     },
     "chassis": {
       "compared": 382,
-      "agree": 359,
-      "disagree": 23,
+      "agree": 376,
+      "disagree": 6,
       "unverifiable": 140
     },
     "unverifiable_reasons": {
       "engine-posture-absent": 140,
-      "no-component-export": 24,
-      "no-pcgen-ability-named": 18
+      "no-component-export": 19,
+      "no-pcgen-ability-named": 16,
+      "DESC-has-no-CasterLevel": 2,
+      "DESC-has-no-SaveDc": 2
     }
   },
   "disagreements": [
     {
-      "character": "deterministic_human_fighter_l1",
-      "family": "lines",
-      "unit": "target:Ac:Armor",
-      "ours": 2,
-      "oracle": 4,
-      "oracle_key": "AC.ARMOR",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:equipment:chain_shirt",
-        "core_rulebook:equipment:chain_shirt#bonus1"
-      ],
-      "labels": [
-        "Chain Shirt (Base)",
-        "Chain Shirt (Base) (AC)"
-      ],
-      "contributions": [
-        4,
-        -2
-      ],
-      "expr": {
-        "core_rulebook:equipment:chain_shirt": {
-          "value": {
-            "Number": {
-              "Const": 4
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:equipment:chain_shirt#bonus1": {
-          "value": {
-            "Number": {
-              "Const": -2
-            }
-          },
-          "also": null
-        }
-      }
-    },
-    {
-      "character": "deterministic_human_fighter_l1",
-      "family": "lines",
-      "unit": "target:Skill:climb",
-      "ours": 17,
-      "oracle": 1,
-      "oracle_key": "SKILL.3.MISC",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:skill:climb",
-        "core_rulebook:skill:climb#bonus1",
-        "core_rulebook:skill:climb#bonus2",
-        "core_rulebook:skill:climb#bonus3"
-      ],
-      "labels": [
-        "Climb",
-        "Climb (Climb)",
-        "Climb (Climb)",
-        "Climb (Climb)"
-      ],
-      "contributions": [
-        3,
-        8,
-        3,
-        6
-      ],
-      "expr": {
-        "core_rulebook:skill:climb": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:climb#bonus1": {
-          "value": {
-            "Number": {
-              "Const": 8
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:climb#bonus2": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:climb#bonus3": {
-          "value": {
-            "Number": {
-              "Const": 6
-            }
-          },
-          "also": null
-        }
-      }
-    },
-    {
-      "character": "deterministic_human_fighter_l1",
-      "family": "lines",
-      "unit": "target:Skill:intimidate",
-      "ours": 9,
-      "oracle": 3,
-      "oracle_key": "SKILL.10.MISC",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:skill:intimidate",
-        "core_rulebook:skill:intimidate#bonus1",
-        "core_rulebook:skill:intimidate#bonus2"
-      ],
-      "labels": [
-        "Intimidate",
-        "Intimidate (Intimidate)",
-        "Intimidate (Intimidate)"
-      ],
-      "contributions": [
-        3,
-        3,
-        6
-      ],
-      "expr": {
-        "core_rulebook:skill:intimidate": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:intimidate#bonus1": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:intimidate#bonus2": {
-          "value": {
-            "Number": {
-              "Const": 6
-            }
-          },
-          "also": null
-        }
-      }
-    },
-    {
-      "character": "deterministic_human_fighter_l1",
-      "family": "lines",
-      "unit": "target:Skill:swim",
-      "ours": 17,
-      "oracle": 1,
-      "oracle_key": "SKILL.17.MISC",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:skill:swim",
-        "core_rulebook:skill:swim#bonus1",
-        "core_rulebook:skill:swim#bonus2",
-        "core_rulebook:skill:swim#bonus3"
-      ],
-      "labels": [
-        "Swim",
-        "Swim (Swim)",
-        "Swim (Swim)",
-        "Swim (Swim)"
-      ],
-      "contributions": [
-        3,
-        8,
-        3,
-        6
-      ],
-      "expr": {
-        "core_rulebook:skill:swim": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:swim#bonus1": {
-          "value": {
-            "Number": {
-              "Var": "v69b734a795c3afc9"
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:swim#bonus2": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:swim#bonus3": {
-          "value": {
-            "Number": {
-              "Const": 6
-            }
-          },
-          "also": null
-        }
-      }
-    },
-    {
-      "character": "dwarf_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.con",
-      "ours": -1,
-      "oracle": 0,
-      "oracle_key": "STAT.2.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "dwarf_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.wis",
-      "ours": 2,
-      "oracle": 3,
-      "oracle_key": "STAT.4.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "dwarf_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.cha",
-      "ours": 3,
-      "oracle": 2,
-      "oracle_key": "STAT.5.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "dwarf_fighter_l1",
-      "family": "chassis",
-      "unit": "save.fortitude.total",
-      "ours": 1,
-      "oracle": 2,
-      "oracle_key": "CHECK.0.TOTAL",
-      "verdict": "disagree"
-    },
-    {
-      "character": "dwarf_fighter_l1",
-      "family": "chassis",
-      "unit": "save.will.total",
-      "ours": 2,
-      "oracle": 3,
-      "oracle_key": "CHECK.2.TOTAL",
-      "verdict": "disagree"
-    },
-    {
-      "character": "elf_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.dex",
-      "ours": 0,
-      "oracle": 1,
-      "oracle_key": "STAT.1.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "elf_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.con",
-      "ours": -1,
-      "oracle": -2,
-      "oracle_key": "STAT.2.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "elf_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.int",
-      "ours": 4,
-      "oracle": 5,
-      "oracle_key": "STAT.3.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "elf_fighter_l1",
-      "family": "chassis",
-      "unit": "save.fortitude.total",
-      "ours": 1,
-      "oracle": 0,
-      "oracle_key": "CHECK.0.TOTAL",
-      "verdict": "disagree"
-    },
-    {
-      "character": "elf_fighter_l1",
-      "family": "chassis",
-      "unit": "save.reflex.total",
-      "ours": 0,
-      "oracle": 1,
-      "oracle_key": "CHECK.1.TOTAL",
-      "verdict": "disagree"
-    },
-    {
-      "character": "gnome_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.str",
-      "ours": 1,
-      "oracle": 0,
-      "oracle_key": "STAT.0.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "gnome_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.con",
-      "ours": -1,
-      "oracle": 0,
-      "oracle_key": "STAT.2.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "gnome_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.cha",
-      "ours": 3,
-      "oracle": 4,
-      "oracle_key": "STAT.5.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "gnome_fighter_l1",
-      "family": "chassis",
-      "unit": "save.fortitude.total",
-      "ours": 1,
-      "oracle": 2,
-      "oracle_key": "CHECK.0.TOTAL",
-      "verdict": "disagree"
-    },
-    {
-      "character": "halfling_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.str",
-      "ours": 1,
-      "oracle": 0,
-      "oracle_key": "STAT.0.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "halfling_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.dex",
-      "ours": 0,
-      "oracle": 1,
-      "oracle_key": "STAT.1.MOD",
-      "verdict": "disagree"
-    },
-    {
-      "character": "halfling_fighter_l1",
-      "family": "chassis",
-      "unit": "ability_mod.cha",
-      "ours": 3,
-      "oracle": 4,
-      "oracle_key": "STAT.5.MOD",
-      "verdict": "disagree"
-    },
-    {
       "character": "halfling_fighter_l1",
       "family": "chassis",
       "unit": "save.fortitude.total",
@@ -429,7 +67,7 @@
       "character": "halfling_fighter_l1",
       "family": "chassis",
       "unit": "save.reflex.total",
-      "ours": 0,
+      "ours": 1,
       "oracle": 2,
       "oracle_key": "CHECK.1.TOTAL",
       "verdict": "disagree"
@@ -442,192 +80,6 @@
       "oracle": 3,
       "oracle_key": "CHECK.2.TOTAL",
       "verdict": "disagree"
-    },
-    {
-      "character": "human_bard_l1",
-      "family": "lines",
-      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:5 rounds per days",
-      "ours": 5,
-      "oracle": [
-        7
-      ],
-      "oracle_key": "DESC:bardic performance",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:class_feature:bard_bardic_performance"
-      ],
-      "labels": [
-        "Bardic Performance"
-      ],
-      "desc_numbers": [
-        7
-      ],
-      "expr": {
-        "core_rulebook:class_feature:bard_bardic_performance": {
-          "value": "Text",
-          "also": [
-            [
-              {
-                "Uses": {
-                  "period": "rounds per days"
-                }
-              },
-              {
-                "Number": {
-                  "Var": "vb7765d10517c9c35"
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 7 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic pe"
-    },
-    {
-      "character": "human_bard_l10",
-      "family": "lines",
-      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:5 rounds per days",
-      "ours": 5,
-      "oracle": [
-        25
-      ],
-      "oracle_key": "DESC:bardic performance",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:class_feature:bard_bardic_performance"
-      ],
-      "labels": [
-        "Bardic Performance"
-      ],
-      "desc_numbers": [
-        25
-      ],
-      "expr": {
-        "core_rulebook:class_feature:bard_bardic_performance": {
-          "value": "Text",
-          "also": [
-            [
-              {
-                "Uses": {
-                  "period": "rounds per days"
-                }
-              },
-              {
-                "Number": {
-                  "Var": "vb7765d10517c9c35"
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 25 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic p"
-    },
-    {
-      "character": "human_paladin_l1",
-      "family": "lines",
-      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 0",
-      "ours": 0,
-      "oracle": [
-        3,
-        60
-      ],
-      "oracle_key": "DESC:detect evil",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:class_feature:paladin_detect_evil"
-      ],
-      "labels": [
-        "Detect Evil"
-      ],
-      "desc_numbers": [
-        3,
-        60
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_detect_evil": {
-          "value": "Text",
-          "also": [
-            [
-              "CasterLevel",
-              {
-                "Number": {
-                  "Var": "v75e0a3acc8b517a3"
-                }
-              }
-            ],
-            [
-              "SaveDc",
-              {
-                "Number": {
-                  "Sum": [
-                    {
-                      "Const": 11
-                    },
-                    {
-                      "AbilityMod": "Wis"
-                    }
-                  ]
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
-    },
-    {
-      "character": "human_paladin_l1",
-      "family": "lines",
-      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
-      "ours": 13,
-      "oracle": [
-        3,
-        60
-      ],
-      "oracle_key": "DESC:detect evil",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:class_feature:paladin_detect_evil"
-      ],
-      "labels": [
-        "Detect Evil"
-      ],
-      "desc_numbers": [
-        3,
-        60
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_detect_evil": {
-          "value": "Text",
-          "also": [
-            [
-              "CasterLevel",
-              {
-                "Number": {
-                  "Var": "v75e0a3acc8b517a3"
-                }
-              }
-            ],
-            [
-              "SaveDc",
-              {
-                "Number": {
-                  "Sum": [
-                    {
-                      "Const": 11
-                    },
-                    {
-                      "AbilityMod": "Wis"
-                    }
-                  ]
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
     },
     {
       "character": "human_paladin_l10",
@@ -655,152 +107,6 @@
       "oracle": 12,
       "oracle_key": "CHECK.2.TOTAL",
       "verdict": "disagree"
-    },
-    {
-      "character": "human_paladin_l10",
-      "family": "lines",
-      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 0",
-      "ours": 0,
-      "oracle": [
-        3,
-        60
-      ],
-      "oracle_key": "DESC:detect evil",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:class_feature:paladin_detect_evil"
-      ],
-      "labels": [
-        "Detect Evil"
-      ],
-      "desc_numbers": [
-        3,
-        60
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_detect_evil": {
-          "value": "Text",
-          "also": [
-            [
-              "CasterLevel",
-              {
-                "Number": {
-                  "Var": "v75e0a3acc8b517a3"
-                }
-              }
-            ],
-            [
-              "SaveDc",
-              {
-                "Number": {
-                  "Sum": [
-                    {
-                      "Const": 11
-                    },
-                    {
-                      "AbilityMod": "Wis"
-                    }
-                  ]
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
-    },
-    {
-      "character": "human_paladin_l10",
-      "family": "lines",
-      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
-      "ours": 13,
-      "oracle": [
-        3,
-        60
-      ],
-      "oracle_key": "DESC:detect evil",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:class_feature:paladin_detect_evil"
-      ],
-      "labels": [
-        "Detect Evil"
-      ],
-      "desc_numbers": [
-        3,
-        60
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_detect_evil": {
-          "value": "Text",
-          "also": [
-            [
-              "CasterLevel",
-              {
-                "Number": {
-                  "Var": "v75e0a3acc8b517a3"
-                }
-              }
-            ],
-            [
-              "SaveDc",
-              {
-                "Number": {
-                  "Sum": [
-                    {
-                      "Const": 11
-                    },
-                    {
-                      "AbilityMod": "Wis"
-                    }
-                  ]
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
-    },
-    {
-      "character": "human_paladin_l10",
-      "family": "lines",
-      "unit": "core_rulebook:class_feature:paladin_lay_on_hands:also:3 uses per day",
-      "ours": 3,
-      "oracle": [
-        8
-      ],
-      "oracle_key": "DESC:lay on hands",
-      "verdict": "disagree",
-      "rule_ids": [
-        "core_rulebook:class_feature:paladin_lay_on_hands"
-      ],
-      "labels": [
-        "Lay on Hands"
-      ],
-      "desc_numbers": [
-        8
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_lay_on_hands": {
-          "value": "Text",
-          "also": [
-            [
-              {
-                "Uses": {
-                  "period": "uses per day"
-                }
-              },
-              {
-                "Number": {
-                  "Var": "v34eeee55389302e7"
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability 8 times per day. With one use of this ability, you can heal 5d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this "
     }
   ],
   "results": [
@@ -970,40 +276,19 @@
       "character": "deterministic_human_fighter_l1",
       "family": "lines",
       "unit": "target:Ac:Armor",
-      "ours": 2,
+      "ours": 4,
       "oracle": 4,
       "oracle_key": "AC.ARMOR",
-      "verdict": "disagree",
+      "verdict": "agree",
       "rule_ids": [
-        "core_rulebook:equipment:chain_shirt",
-        "core_rulebook:equipment:chain_shirt#bonus1"
+        "core_rulebook:equipment:chain_shirt"
       ],
       "labels": [
-        "Chain Shirt (Base)",
-        "Chain Shirt (Base) (AC)"
+        "Chain Shirt (Base)"
       ],
       "contributions": [
-        4,
-        -2
-      ],
-      "expr": {
-        "core_rulebook:equipment:chain_shirt": {
-          "value": {
-            "Number": {
-              "Const": 4
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:equipment:chain_shirt#bonus1": {
-          "value": {
-            "Number": {
-              "Const": -2
-            }
-          },
-          "also": null
-        }
-      }
+        4
+      ]
     },
     {
       "character": "deterministic_human_fighter_l1",
@@ -1026,276 +311,74 @@
     {
       "character": "deterministic_human_fighter_l1",
       "family": "lines",
-      "unit": "target:Other:armor accheck",
-      "ours": -2,
-      "oracle": null,
-      "oracle_key": "no-component-export:Other",
-      "verdict": "unverifiable",
-      "rule_ids": [
-        "core_rulebook:equipment:chain_shirt#bonus2"
-      ],
-      "labels": [
-        "Chain Shirt (Base) (armor)"
-      ],
-      "contributions": [
-        -2
-      ]
-    },
-    {
-      "character": "deterministic_human_fighter_l1",
-      "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
-      "ours": -21,
+      "ours": 1,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_bonus_feats",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+        "core_rulebook:class_feature:fighter_bonus_feats"
       ],
       "labels": [
-        "Bonus Feats",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)"
+        "Bonus Feats"
       ],
       "contributions": [
-        1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
+        1
       ]
     },
     {
       "character": "deterministic_human_fighter_l1",
       "family": "lines",
       "unit": "target:Skill:climb",
-      "ours": 17,
-      "oracle": 1,
-      "oracle_key": "SKILL.3.MISC",
-      "verdict": "disagree",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "SKILL.3.MISC-ACCHECK",
+      "verdict": "agree",
       "rule_ids": [
-        "core_rulebook:skill:climb",
-        "core_rulebook:skill:climb#bonus1",
-        "core_rulebook:skill:climb#bonus2",
-        "core_rulebook:skill:climb#bonus3"
+        "core_rulebook:skill:climb"
       ],
       "labels": [
-        "Climb",
-        "Climb (Climb)",
-        "Climb (Climb)",
-        "Climb (Climb)"
+        "Climb"
       ],
       "contributions": [
-        3,
-        8,
-        3,
-        6
-      ],
-      "expr": {
-        "core_rulebook:skill:climb": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:climb#bonus1": {
-          "value": {
-            "Number": {
-              "Const": 8
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:climb#bonus2": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:climb#bonus3": {
-          "value": {
-            "Number": {
-              "Const": 6
-            }
-          },
-          "also": null
-        }
-      }
+        3
+      ]
     },
     {
       "character": "deterministic_human_fighter_l1",
       "family": "lines",
       "unit": "target:Skill:intimidate",
-      "ours": 9,
+      "ours": 3,
       "oracle": 3,
       "oracle_key": "SKILL.10.MISC",
-      "verdict": "disagree",
+      "verdict": "agree",
       "rule_ids": [
-        "core_rulebook:skill:intimidate",
-        "core_rulebook:skill:intimidate#bonus1",
-        "core_rulebook:skill:intimidate#bonus2"
+        "core_rulebook:skill:intimidate"
       ],
       "labels": [
-        "Intimidate",
-        "Intimidate (Intimidate)",
-        "Intimidate (Intimidate)"
+        "Intimidate"
       ],
       "contributions": [
-        3,
-        3,
-        6
-      ],
-      "expr": {
-        "core_rulebook:skill:intimidate": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:intimidate#bonus1": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:intimidate#bonus2": {
-          "value": {
-            "Number": {
-              "Const": 6
-            }
-          },
-          "also": null
-        }
-      }
+        3
+      ]
     },
     {
       "character": "deterministic_human_fighter_l1",
       "family": "lines",
       "unit": "target:Skill:swim",
-      "ours": 17,
-      "oracle": 1,
-      "oracle_key": "SKILL.17.MISC",
-      "verdict": "disagree",
+      "ours": 3,
+      "oracle": 3,
+      "oracle_key": "SKILL.17.MISC-ACCHECK",
+      "verdict": "agree",
       "rule_ids": [
-        "core_rulebook:skill:swim",
-        "core_rulebook:skill:swim#bonus1",
-        "core_rulebook:skill:swim#bonus2",
-        "core_rulebook:skill:swim#bonus3"
+        "core_rulebook:skill:swim"
       ],
       "labels": [
-        "Swim",
-        "Swim (Swim)",
-        "Swim (Swim)",
-        "Swim (Swim)"
+        "Swim"
       ],
       "contributions": [
-        3,
-        8,
-        3,
-        6
-      ],
-      "expr": {
-        "core_rulebook:skill:swim": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:swim#bonus1": {
-          "value": {
-            "Number": {
-              "Var": "v69b734a795c3afc9"
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:swim#bonus2": {
-          "value": {
-            "Number": {
-              "Const": 3
-            }
-          },
-          "also": null
-        },
-        "core_rulebook:skill:swim#bonus3": {
-          "value": {
-            "Number": {
-              "Const": 6
-            }
-          },
-          "also": null
-        }
-      }
+        3
+      ]
     },
     {
       "character": "deterministic_human_fighter_l1",
@@ -1337,10 +420,10 @@
       "character": "dwarf_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.con",
-      "ours": -1,
+      "ours": 0,
       "oracle": 0,
       "oracle_key": "STAT.2.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "dwarf_fighter_l1",
@@ -1355,19 +438,19 @@
       "character": "dwarf_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.wis",
-      "ours": 2,
+      "ours": 3,
       "oracle": 3,
       "oracle_key": "STAT.4.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "dwarf_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.cha",
-      "ours": 3,
+      "ours": 2,
       "oracle": 2,
       "oracle_key": "STAT.5.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "dwarf_fighter_l1",
@@ -1391,10 +474,10 @@
       "character": "dwarf_fighter_l1",
       "family": "chassis",
       "unit": "save.fortitude.total",
-      "ours": 1,
+      "ours": 2,
       "oracle": 2,
       "oracle_key": "CHECK.0.TOTAL",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "dwarf_fighter_l1",
@@ -1427,10 +510,10 @@
       "character": "dwarf_fighter_l1",
       "family": "chassis",
       "unit": "save.will.total",
-      "ours": 2,
+      "ours": 3,
       "oracle": 3,
       "oracle_key": "CHECK.2.TOTAL",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "dwarf_fighter_l1",
@@ -1481,84 +564,18 @@
       "character": "dwarf_fighter_l1",
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
-      "ours": -21,
+      "ours": 1,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_bonus_feats",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+        "core_rulebook:class_feature:fighter_bonus_feats"
       ],
       "labels": [
-        "Bonus Feats",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)"
+        "Bonus Feats"
       ],
       "contributions": [
-        1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
+        1
       ]
     },
     {
@@ -1574,28 +591,28 @@
       "character": "elf_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.dex",
-      "ours": 0,
+      "ours": 1,
       "oracle": 1,
       "oracle_key": "STAT.1.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "elf_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.con",
-      "ours": -1,
+      "ours": -2,
       "oracle": -2,
       "oracle_key": "STAT.2.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "elf_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.int",
-      "ours": 4,
+      "ours": 5,
       "oracle": 5,
       "oracle_key": "STAT.3.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "elf_fighter_l1",
@@ -1637,10 +654,10 @@
       "character": "elf_fighter_l1",
       "family": "chassis",
       "unit": "save.fortitude.total",
-      "ours": 1,
+      "ours": 0,
       "oracle": 0,
       "oracle_key": "CHECK.0.TOTAL",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "elf_fighter_l1",
@@ -1655,10 +672,10 @@
       "character": "elf_fighter_l1",
       "family": "chassis",
       "unit": "save.reflex.total",
-      "ours": 0,
+      "ours": 1,
       "oracle": 1,
       "oracle_key": "CHECK.1.TOTAL",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "elf_fighter_l1",
@@ -1727,94 +744,28 @@
       "character": "elf_fighter_l1",
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
-      "ours": -21,
+      "ours": 1,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_bonus_feats",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+        "core_rulebook:class_feature:fighter_bonus_feats"
       ],
       "labels": [
-        "Bonus Feats",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)"
+        "Bonus Feats"
       ],
       "contributions": [
-        1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
+        1
       ]
     },
     {
       "character": "gnome_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.str",
-      "ours": 1,
+      "ours": 0,
       "oracle": 0,
       "oracle_key": "STAT.0.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "gnome_fighter_l1",
@@ -1829,10 +780,10 @@
       "character": "gnome_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.con",
-      "ours": -1,
+      "ours": 0,
       "oracle": 0,
       "oracle_key": "STAT.2.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "gnome_fighter_l1",
@@ -1856,10 +807,10 @@
       "character": "gnome_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.cha",
-      "ours": 3,
+      "ours": 4,
       "oracle": 4,
       "oracle_key": "STAT.5.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "gnome_fighter_l1",
@@ -1883,10 +834,10 @@
       "character": "gnome_fighter_l1",
       "family": "chassis",
       "unit": "save.fortitude.total",
-      "ours": 1,
+      "ours": 2,
       "oracle": 2,
       "oracle_key": "CHECK.0.TOTAL",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "gnome_fighter_l1",
@@ -1973,84 +924,18 @@
       "character": "gnome_fighter_l1",
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
-      "ours": -21,
+      "ours": 1,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_bonus_feats",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+        "core_rulebook:class_feature:fighter_bonus_feats"
       ],
       "labels": [
-        "Bonus Feats",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)"
+        "Bonus Feats"
       ],
       "contributions": [
-        1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
+        1
       ]
     },
     {
@@ -2101,8 +986,8 @@
     {
       "character": "gnome_fighter_l1",
       "family": "lines",
-      "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:also:DC 13",
-      "ours": 13,
+      "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:also:DC 14",
+      "ours": 14,
       "oracle": null,
       "oracle_key": "no-pcgen-ability-named:Dancing Lights",
       "verdict": "unverifiable",
@@ -2161,8 +1046,8 @@
     {
       "character": "gnome_fighter_l1",
       "family": "lines",
-      "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:also:DC 13",
-      "ours": 13,
+      "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:also:DC 14",
+      "ours": 14,
       "oracle": null,
       "oracle_key": "no-pcgen-ability-named:Ghost Sound",
       "verdict": "unverifiable",
@@ -2221,8 +1106,8 @@
     {
       "character": "gnome_fighter_l1",
       "family": "lines",
-      "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:also:DC 13",
-      "ours": 13,
+      "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:also:DC 14",
+      "ours": 14,
       "oracle": null,
       "oracle_key": "no-pcgen-ability-named:Prestidigitation",
       "verdict": "unverifiable",
@@ -2281,43 +1166,13 @@
     {
       "character": "gnome_fighter_l1",
       "family": "lines",
-      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:also:DC 14",
-      "ours": 14,
+      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:also:DC 15",
+      "ours": 15,
       "oracle": null,
       "oracle_key": "no-pcgen-ability-named:Speak with Animals",
       "verdict": "unverifiable",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_speak_with_animals"
-      ],
-      "labels": [
-        "Speak with Animals"
-      ]
-    },
-    {
-      "character": "gnome_fighter_l1",
-      "family": "lines",
-      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals#spell1_speak_with_animals:also:CL 1",
-      "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
-      "verdict": "unverifiable",
-      "rule_ids": [
-        "core_rulebook:race_trait:racial_sla_speak_with_animals#spell1_speak_with_animals"
-      ],
-      "labels": [
-        "Speak with Animals"
-      ]
-    },
-    {
-      "character": "gnome_fighter_l1",
-      "family": "lines",
-      "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals#spell1_speak_with_animals:also:DC 14",
-      "ours": 14,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
-      "verdict": "unverifiable",
-      "rule_ids": [
-        "core_rulebook:race_trait:racial_sla_speak_with_animals#spell1_speak_with_animals"
       ],
       "labels": [
         "Speak with Animals"
@@ -2489,84 +1344,18 @@
       "character": "half_elf_fighter_l1",
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
-      "ours": -21,
+      "ours": 1,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_bonus_feats",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+        "core_rulebook:class_feature:fighter_bonus_feats"
       ],
       "labels": [
-        "Bonus Feats",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)"
+        "Bonus Feats"
       ],
       "contributions": [
-        1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
+        1
       ]
     },
     {
@@ -2735,103 +1524,37 @@
       "character": "half_orc_fighter_l1",
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
-      "ours": -21,
+      "ours": 1,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_bonus_feats",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+        "core_rulebook:class_feature:fighter_bonus_feats"
       ],
       "labels": [
-        "Bonus Feats",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)"
+        "Bonus Feats"
       ],
       "contributions": [
-        1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
+        1
       ]
     },
     {
       "character": "halfling_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.str",
-      "ours": 1,
+      "ours": 0,
       "oracle": 0,
       "oracle_key": "STAT.0.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "halfling_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.dex",
-      "ours": 0,
+      "ours": 1,
       "oracle": 1,
       "oracle_key": "STAT.1.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "halfling_fighter_l1",
@@ -2864,10 +1587,10 @@
       "character": "halfling_fighter_l1",
       "family": "chassis",
       "unit": "ability_mod.cha",
-      "ours": 3,
+      "ours": 4,
       "oracle": 4,
       "oracle_key": "STAT.5.MOD",
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "character": "halfling_fighter_l1",
@@ -2909,7 +1632,7 @@
       "character": "halfling_fighter_l1",
       "family": "chassis",
       "unit": "save.reflex.total",
-      "ours": 0,
+      "ours": 1,
       "oracle": 2,
       "oracle_key": "CHECK.1.TOTAL",
       "verdict": "disagree"
@@ -2981,84 +1704,18 @@
       "character": "halfling_fighter_l1",
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
-      "ours": -21,
+      "ours": 1,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_bonus_feats",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+        "core_rulebook:class_feature:fighter_bonus_feats"
       ],
       "labels": [
-        "Bonus Feats",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)"
+        "Bonus Feats"
       ],
       "contributions": [
-        1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
+        1
       ]
     },
     {
@@ -3550,13 +2207,13 @@
     {
       "character": "human_bard_l1",
       "family": "lines",
-      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:5 rounds per days",
-      "ours": 5,
+      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:7 rounds per days",
+      "ours": 7,
       "oracle": [
         7
       ],
       "oracle_key": "DESC:bardic performance",
-      "verdict": "disagree",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:bard_bardic_performance"
       ],
@@ -3565,27 +2222,7 @@
       ],
       "desc_numbers": [
         7
-      ],
-      "expr": {
-        "core_rulebook:class_feature:bard_bardic_performance": {
-          "value": "Text",
-          "also": [
-            [
-              {
-                "Uses": {
-                  "period": "rounds per days"
-                }
-              },
-              {
-                "Number": {
-                  "Var": "vb7765d10517c9c35"
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 7 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic pe"
+      ]
     },
     {
       "character": "human_bard_l10",
@@ -3752,13 +2389,13 @@
     {
       "character": "human_bard_l10",
       "family": "lines",
-      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:5 rounds per days",
-      "ours": 5,
+      "unit": "core_rulebook:class_feature:bard_bardic_performance:also:25 rounds per days",
+      "ours": 25,
       "oracle": [
         25
       ],
       "oracle_key": "DESC:bardic performance",
-      "verdict": "disagree",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:bard_bardic_performance"
       ],
@@ -3767,27 +2404,7 @@
       ],
       "desc_numbers": [
         25
-      ],
-      "expr": {
-        "core_rulebook:class_feature:bard_bardic_performance": {
-          "value": "Text",
-          "also": [
-            [
-              {
-                "Uses": {
-                  "period": "rounds per days"
-                }
-              },
-              {
-                "Number": {
-                  "Var": "vb7765d10517c9c35"
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 25 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic p"
+      ]
     },
     {
       "character": "human_cleric_l1",
@@ -4639,84 +3256,18 @@
       "character": "human_fighter_l1",
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
-      "ours": -21,
+      "ours": 1,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_bonus_feats",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+        "core_rulebook:class_feature:fighter_bonus_feats"
       ],
       "labels": [
-        "Bonus Feats",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)"
+        "Bonus Feats"
       ],
       "contributions": [
-        1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
+        1
       ]
     },
     {
@@ -4902,33 +3453,6 @@
     {
       "character": "human_fighter_l10",
       "family": "lines",
-      "unit": "target:Other:maxdex",
-      "ours": 4,
-      "oracle": null,
-      "oracle_key": "no-component-export:Other",
-      "verdict": "unverifiable",
-      "rule_ids": [
-        "core_rulebook:class_feature:fighter_armor_training#bonus1",
-        "core_rulebook:class_feature:fighter_armor_training#bonus2",
-        "core_rulebook:class_feature:fighter_armor_training#bonus3",
-        "core_rulebook:class_feature:fighter_armor_training#bonus4"
-      ],
-      "labels": [
-        "Armor Training (maxdex)",
-        "Armor Training (maxdex)",
-        "Armor Training (maxdex)",
-        "Armor Training (maxdex)"
-      ],
-      "contributions": [
-        1,
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "character": "human_fighter_l10",
-      "family": "lines",
       "unit": "target:Pool:armor_training_choice",
       "ours": 1,
       "oracle": null,
@@ -4948,180 +3472,36 @@
       "character": "human_fighter_l10",
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
-      "ours": -21,
+      "ours": 6,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_bonus_feats",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus1",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus10",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus11",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus12",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus13",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus14",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus15",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus16",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus17",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus18",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus19",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus2",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus20",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus21",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus22",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus3",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus4",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus5",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus6",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus7",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus8",
-        "core_rulebook:class_feature:fighter_bonus_feats#bonus9"
+        "core_rulebook:class_feature:fighter_bonus_feats"
       ],
       "labels": [
-        "Bonus Feats",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)",
-        "Bonus Feats (fighter bonus feat picks)"
+        "Bonus Feats"
       ],
       "contributions": [
-        1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1
+        6
       ]
     },
     {
       "character": "human_fighter_l10",
       "family": "lines",
       "unit": "target:Pool:weapon_training_i",
-      "ours": -1,
+      "ours": 1,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
       "rule_ids": [
-        "core_rulebook:class_feature:fighter_weapon_training",
-        "core_rulebook:class_feature:fighter_weapon_training#bonus4",
-        "core_rulebook:class_feature:fighter_weapon_training#bonus8"
+        "core_rulebook:class_feature:fighter_weapon_training"
       ],
       "labels": [
-        "Weapon Training",
-        "Weapon Training (weapon training i picks)",
-        "Weapon Training (weapon training i picks)"
+        "Weapon Training"
       ],
       "contributions": [
-        1,
-        -1,
-        -1
-      ]
-    },
-    {
-      "character": "human_fighter_l10",
-      "family": "lines",
-      "unit": "target:Pool:weapon_training_ii",
-      "ours": -1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
-      "rule_ids": [
-        "core_rulebook:class_feature:fighter_weapon_training#bonus1",
-        "core_rulebook:class_feature:fighter_weapon_training#bonus5",
-        "core_rulebook:class_feature:fighter_weapon_training#bonus9"
-      ],
-      "labels": [
-        "Weapon Training (weapon training ii picks)",
-        "Weapon Training (weapon training ii picks)",
-        "Weapon Training (weapon training ii picks)"
-      ],
-      "contributions": [
-        1,
-        -1,
-        -1
-      ]
-    },
-    {
-      "character": "human_fighter_l10",
-      "family": "lines",
-      "unit": "target:Pool:weapon_training_iii",
-      "ours": -1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
-      "rule_ids": [
-        "core_rulebook:class_feature:fighter_weapon_training#bonus10",
-        "core_rulebook:class_feature:fighter_weapon_training#bonus2",
-        "core_rulebook:class_feature:fighter_weapon_training#bonus6"
-      ],
-      "labels": [
-        "Weapon Training (weapon training iii picks)",
-        "Weapon Training (weapon training iii picks)",
-        "Weapon Training (weapon training iii picks)"
-      ],
-      "contributions": [
-        -1,
-        1,
-        -1
-      ]
-    },
-    {
-      "character": "human_fighter_l10",
-      "family": "lines",
-      "unit": "target:Pool:weapon_training_iv",
-      "ours": -1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
-      "rule_ids": [
-        "core_rulebook:class_feature:fighter_weapon_training#bonus11",
-        "core_rulebook:class_feature:fighter_weapon_training#bonus3",
-        "core_rulebook:class_feature:fighter_weapon_training#bonus7"
-      ],
-      "labels": [
-        "Weapon Training (weapon training iv picks)",
-        "Weapon Training (weapon training iv picks)",
-        "Weapon Training (weapon training iv picks)"
-      ],
-      "contributions": [
-        -1,
-        1,
-        -1
+        1
       ]
     },
     {
@@ -5613,108 +3993,32 @@
     {
       "character": "human_paladin_l1",
       "family": "lines",
-      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 0",
-      "ours": 0,
-      "oracle": [
-        3,
-        60
-      ],
-      "oracle_key": "DESC:detect evil",
-      "verdict": "disagree",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 1",
+      "ours": 1,
+      "oracle": null,
+      "oracle_key": "DESC-has-no-CasterLevel:detect evil",
+      "verdict": "unverifiable",
       "rule_ids": [
         "core_rulebook:class_feature:paladin_detect_evil"
       ],
       "labels": [
         "Detect Evil"
-      ],
-      "desc_numbers": [
-        3,
-        60
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_detect_evil": {
-          "value": "Text",
-          "also": [
-            [
-              "CasterLevel",
-              {
-                "Number": {
-                  "Var": "v75e0a3acc8b517a3"
-                }
-              }
-            ],
-            [
-              "SaveDc",
-              {
-                "Number": {
-                  "Sum": [
-                    {
-                      "Const": 11
-                    },
-                    {
-                      "AbilityMod": "Wis"
-                    }
-                  ]
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+      ]
     },
     {
       "character": "human_paladin_l1",
       "family": "lines",
       "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
       "ours": 13,
-      "oracle": [
-        3,
-        60
-      ],
-      "oracle_key": "DESC:detect evil",
-      "verdict": "disagree",
+      "oracle": null,
+      "oracle_key": "DESC-has-no-SaveDc:detect evil",
+      "verdict": "unverifiable",
       "rule_ids": [
         "core_rulebook:class_feature:paladin_detect_evil"
       ],
       "labels": [
         "Detect Evil"
-      ],
-      "desc_numbers": [
-        3,
-        60
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_detect_evil": {
-          "value": "Text",
-          "also": [
-            [
-              "CasterLevel",
-              {
-                "Number": {
-                  "Var": "v75e0a3acc8b517a3"
-                }
-              }
-            ],
-            [
-              "SaveDc",
-              {
-                "Number": {
-                  "Sum": [
-                    {
-                      "Const": 11
-                    },
-                    {
-                      "AbilityMod": "Wis"
-                    }
-                  ]
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+      ]
     },
     {
       "character": "human_paladin_l10",
@@ -5881,119 +4185,43 @@
     {
       "character": "human_paladin_l10",
       "family": "lines",
-      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 0",
-      "ours": 0,
-      "oracle": [
-        3,
-        60
-      ],
-      "oracle_key": "DESC:detect evil",
-      "verdict": "disagree",
+      "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 10",
+      "ours": 10,
+      "oracle": null,
+      "oracle_key": "DESC-has-no-CasterLevel:detect evil",
+      "verdict": "unverifiable",
       "rule_ids": [
         "core_rulebook:class_feature:paladin_detect_evil"
       ],
       "labels": [
         "Detect Evil"
-      ],
-      "desc_numbers": [
-        3,
-        60
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_detect_evil": {
-          "value": "Text",
-          "also": [
-            [
-              "CasterLevel",
-              {
-                "Number": {
-                  "Var": "v75e0a3acc8b517a3"
-                }
-              }
-            ],
-            [
-              "SaveDc",
-              {
-                "Number": {
-                  "Sum": [
-                    {
-                      "Const": 11
-                    },
-                    {
-                      "AbilityMod": "Wis"
-                    }
-                  ]
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+      ]
     },
     {
       "character": "human_paladin_l10",
       "family": "lines",
       "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
       "ours": 13,
-      "oracle": [
-        3,
-        60
-      ],
-      "oracle_key": "DESC:detect evil",
-      "verdict": "disagree",
+      "oracle": null,
+      "oracle_key": "DESC-has-no-SaveDc:detect evil",
+      "verdict": "unverifiable",
       "rule_ids": [
         "core_rulebook:class_feature:paladin_detect_evil"
       ],
       "labels": [
         "Detect Evil"
-      ],
-      "desc_numbers": [
-        3,
-        60
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_detect_evil": {
-          "value": "Text",
-          "also": [
-            [
-              "CasterLevel",
-              {
-                "Number": {
-                  "Var": "v75e0a3acc8b517a3"
-                }
-              }
-            ],
-            [
-              "SaveDc",
-              {
-                "Number": {
-                  "Sum": [
-                    {
-                      "Const": 11
-                    },
-                    {
-                      "AbilityMod": "Wis"
-                    }
-                  ]
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+      ]
     },
     {
       "character": "human_paladin_l10",
       "family": "lines",
-      "unit": "core_rulebook:class_feature:paladin_lay_on_hands:also:3 uses per day",
-      "ours": 3,
+      "unit": "core_rulebook:class_feature:paladin_lay_on_hands:also:8 uses per day",
+      "ours": 8,
       "oracle": [
         8
       ],
       "oracle_key": "DESC:lay on hands",
-      "verdict": "disagree",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:paladin_lay_on_hands"
       ],
@@ -6002,27 +4230,7 @@
       ],
       "desc_numbers": [
         8
-      ],
-      "expr": {
-        "core_rulebook:class_feature:paladin_lay_on_hands": {
-          "value": "Text",
-          "also": [
-            [
-              {
-                "Uses": {
-                  "period": "uses per day"
-                }
-              },
-              {
-                "Number": {
-                  "Var": "v34eeee55389302e7"
-                }
-              }
-            ]
-          ]
-        }
-      },
-      "desc": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability 8 times per day. With one use of this ability, you can heal 5d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this "
+      ]
     },
     {
       "character": "human_ranger_l1",
@@ -6370,7 +4578,7 @@
       "character": "human_ranger_l10",
       "family": "lines",
       "unit": "target:Pool:ranger_combat_style_feat",
-      "ours": 0,
+      "ours": 3,
       "oracle": null,
       "oracle_key": "no-component-export:Pool",
       "verdict": "unverifiable",
@@ -6381,7 +4589,7 @@
         "Combat Style Feat (ranger combat style feat picks)"
       ],
       "contributions": [
-        0
+        3
       ]
     },
     {

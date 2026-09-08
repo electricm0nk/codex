@@ -36,6 +36,7 @@ AC.NATURALARMOR=${pcstring('AC.NaturalArmor')}
 AC.DEFLECTION=${pcstring('AC.Deflection')}
 AC.DODGE=${pcstring('AC.Dodge')}
 AC.MISC=${pcstring('AC.Misc')}
+ACCHECK=${pcstring('ACCHECK')}
 BAB=${pcstring('ATTACK.MELEE.BASE')}
 ATTACK.MELEE.TOTAL=${pcstring('ATTACK.MELEE.TOTAL')}
 ATTACK.MELEE.MISC=${pcstring('ATTACK.MELEE.MISC')}
@@ -60,6 +61,7 @@ SKILL.${skill}.TOTAL=${pcstring('SKILL.${skill}.TOTAL')}
 SKILL.${skill}.RANK=${pcstring('SKILL.${skill}.RANK')}
 SKILL.${skill}.ABMOD=${pcstring('SKILL.${skill}.ABMOD')}
 SKILL.${skill}.MISC=${pcstring('SKILL.${skill}.MISC')}
+SKILL.${skill}.ACHECK=${pcstring('SKILL.${skill}.ACPNONE,YES,NONPROF,DOUBLE,WEIGHT')}
 </@loop>
 MOVE.COUNT=${pcvar('COUNT[MOVE]')?c}
 <@loop from=0 to=pcvar('COUNT[MOVE]-1') ; move , move_has_next>

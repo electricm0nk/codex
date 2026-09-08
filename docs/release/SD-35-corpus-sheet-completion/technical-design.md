@@ -251,7 +251,13 @@ contributions the result is `max(plain + stack, replace)`. The same fold, keyed 
 **Held set.** A fixpoint: start from the character's race, class levels, templates and
 choices; add every rule some held rule grants (`granted_by`) whose `when` and `applies`
 evaluate Include; apply `Effect`s (facts, counts-as, waivers, revokes); repeat until nothing
-changes. `print == false` rules stay in the set and off the sheet.
+changes. `print == false` rules stay in the set and off the sheet. A `class` kind rule id is
+held by the character's levels in that class whether or not the package carries the class
+record (`HeldSet.classes`; the converter refuses every `class` record until AT-35-E4-001 maps
+its tokens), so the class-level `Var`s declared on it fold from `ClassLevel`. A `#bonusN`
+sibling is a bonus line with its own gate: it is held alongside its principal and **prints
+only when its own `applies` includes** (AT-35-E2-005 cycle 2 — an unbroken chain shirt's
+"Broken" line, a Climb bonus gated on a climb speed, stay off the sheet).
 
 **`Applies` evaluation** is two-valued. `Compare`, `Holds`, `Chosen`, `ItemHas` read facts;
 `AtLeast` counts Includes; `Not` flips. A leaf over a fact the character record does not yet

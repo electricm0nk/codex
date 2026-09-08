@@ -3,9 +3,10 @@ case_id=parity-halfling_fighter_l1
 source_package_id=pf1.core_rulebook
 race_id=race:halfling
 class_level=class:fighter:1
-ability=strength:12
-ability=dexterity:10
+# ability scores pre-bake the race's fixed adjustment (DEX +2, CHA +2, STR -2); PCGen applies it from the race.
+ability=strength:10
+ability=dexterity:12
 ability=constitution:8
 ability=intelligence:18
 ability=wisdom:14
-ability=charisma:16
+ability=charisma:18

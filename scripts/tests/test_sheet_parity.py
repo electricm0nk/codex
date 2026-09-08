@@ -41,6 +41,7 @@ AC.NATURALARMOR=0
 AC.DEFLECTION=0
 AC.DODGE=1
 AC.MISC=0
+ACCHECK=-2
 BAB=+1
 ATTACK.MELEE.TOTAL=+3
 ATTACK.MELEE.MISC=+0
@@ -59,10 +60,16 @@ CHECK.2.BASE=+0
 CHECK.2.MISC=+2
 SKILL.0.NAME=Acrobatics
 SKILL.0.TOTAL=4
-SKILL.0.MISC=4
+SKILL.0.MISC=2
+SKILL.0.ACHECK=YES
 SKILL.1.NAME=Climb
 SKILL.1.TOTAL=3
-SKILL.1.MISC=0
+SKILL.1.MISC=1
+SKILL.1.ACHECK=YES
+SKILL.2.NAME=Diplomacy
+SKILL.2.TOTAL=3
+SKILL.2.MISC=3
+SKILL.2.ACHECK=NONE
 MOVE.0.NAME=Walk
 MOVE.0.RATE=30 ft.
 SA.0.NAME=Rage
@@ -70,6 +77,8 @@ SA.0.DESC=A barbarian can rage for 6 rounds per day.
 This is a second paragraph with the number 12 in it.
 SA.1.NAME=Stunning Fist
 SA.1.DESC=Fortitude save DC 15 negates.
+SA.2.NAME=Detect Evil
+SA.2.DESC=At will, you can use Detect Evil, as the Spell. You can concentrate on a single individual within 60 feet, as if having studied it for 3 rounds.
 """
 
 
@@ -143,7 +152,7 @@ class CompareTest(unittest.TestCase):
         )
         r = rows["target:Skill:acrobatics"]
         self.assertEqual((r["ours"], r["oracle"], r["verdict"]), (4, 4, "agree"))
-        self.assertEqual(r["oracle_key"], "SKILL.0.MISC")
+        self.assertEqual(r["oracle_key"], "SKILL.0.MISC-ACCHECK", "Acrobatics is an armor-check skill: MISC=2 carries the -2 penalty")
 
     def test_save_contribution_is_compared_without_the_ability_modifier(self):
         rows = self.rows_for([line("b:feat:great_fortitude", "Great Fortitude", 2, {"Save": "Fortitude"})])
@@ -168,11 +177,11 @@ class CompareTest(unittest.TestCase):
         rows = self.rows_for(
             [
                 line("b:class_feature:barbarian_rage", "Rage", 6),
-                line("b:class_feature:monk_stunning_fist", "Stunning Fist", 0, also=[["DC", {"Resolved": 15}]]),
+                line("b:class_feature:monk_stunning_fist", "Stunning Fist", 0, also=[["DC 15", {"Resolved": 15}]]),
             ]
         )
         self.assertEqual(rows["b:class_feature:barbarian_rage:value"]["verdict"], "agree")
-        self.assertEqual(rows["b:class_feature:monk_stunning_fist:also:DC"]["verdict"], "agree")
+        self.assertEqual(rows["b:class_feature:monk_stunning_fist:also:DC 15"]["verdict"], "agree")
         self.assertEqual(rows["b:class_feature:monk_stunning_fist:value"]["verdict"], "disagree")
 
     def test_a_planted_disagreement_surfaces_and_is_named(self):
@@ -192,6 +201,40 @@ class CompareTest(unittest.TestCase):
         self.assertTrue(r["oracle_key"].startswith("no-component-export"))
         rows = self.rows_for([line("b:class_feature:y", "Unnamed Thing", 2)])
         self.assertEqual(rows["b:class_feature:y:value"]["verdict"], "unverifiable")
+
+    def test_skill_misc_drops_the_armor_check_penalty_on_armor_check_skills(self):
+        rows = self.rows_for([line("b:skill:climb", "Climb", 3, {"Skill": "climb"}, {"name": "ClassSkill", "mode": "Plain"})])
+        r = rows["target:Skill:climb"]
+        # SKILL.1.MISC=1 carries the chain shirt's -2 armor check penalty; the class-skill +3 is what the rule line contributes.
+        self.assertEqual((r["ours"], r["oracle"], r["verdict"], r["oracle_key"]), (3, 3, "agree", "SKILL.1.MISC-ACCHECK"))
+        rows = self.rows_for([line("b:skill:diplomacy", "Diplomacy", 3, {"Skill": "diplomacy"})])
+        r = rows["target:Skill:diplomacy"]
+        self.assertEqual((r["oracle"], r["verdict"], r["oracle_key"]), (3, "agree", "SKILL.2.MISC"))
+        # an export without the ACHECK rows (an older template) compares the raw MISC
+        export = SP.parse_export(EXPORT.replace("SKILL.1.ACHECK=YES\n", "").replace("ACCHECK=-2\n", ""))
+        rows = {r["unit"]: r for r in SP.compare_character(ours([line("b:skill:climb", "Climb", 3, {"Skill": "climb"})]), export)}
+        self.assertEqual((rows["target:Skill:climb"]["oracle"], rows["target:Skill:climb"]["oracle_key"], rows["target:Skill:climb"]["verdict"]), (1, "SKILL.1.MISC", "disagree"))
+
+    def test_an_also_value_is_joined_in_its_own_role(self):
+        rows = self.rows_for(
+            [
+                line("b:class_feature:paladin_detect_evil", "Detect Evil", 0, also=[["CL 1", {"Resolved": 1}], ["DC 13", {"Resolved": 13}], ["3/day", {"Resolved": 3}]]),
+                line("b:class_feature:monk_stunning_fist", "Stunning Fist", 0, also=[["DC 15", {"Resolved": 15}], ["DC 3", {"Resolved": 3}]]),
+                line("b:class_feature:barbarian_rage", "Rage", 0, also=[["6 rounds per days", {"Resolved": 6}], ["12/day", {"Resolved": 12}]]),
+            ]
+        )
+        # Detect Evil's description prints 60 feet and 3 rounds, never a caster level, a DC or a per-day count.
+        cl = rows["b:class_feature:paladin_detect_evil:also:CL 1"]
+        self.assertEqual((cl["verdict"], cl["oracle_key"]), ("unverifiable", "DESC-has-no-CasterLevel:detect evil"))
+        self.assertEqual(rows["b:class_feature:paladin_detect_evil:also:DC 13"]["oracle_key"], "DESC-has-no-SaveDc:detect evil")
+        self.assertEqual(rows["b:class_feature:paladin_detect_evil:also:3/day"]["oracle_key"], "DESC-has-no-Uses:detect evil")
+        self.assertEqual(rows["b:class_feature:monk_stunning_fist:also:DC 15"]["verdict"], "agree")
+        self.assertEqual(rows["b:class_feature:monk_stunning_fist:also:DC 3"]["verdict"], "disagree")
+        self.assertEqual(rows["b:class_feature:barbarian_rage:also:6 rounds per days"]["verdict"], "agree")
+        r = rows["b:class_feature:barbarian_rage:also:12/day"]
+        self.assertEqual((r["verdict"], r["oracle"]), ("disagree", [6]))
+        summary = SP.summarize(list(rows.values()))
+        self.assertEqual(summary["unverifiable_reasons"].get("DESC-has-no-CasterLevel"), 1)
 
     def test_chassis_totals_compare_and_a_wrong_one_disagrees(self):
         rows = self.rows_for([])
@@ -214,6 +257,28 @@ class RosterTest(unittest.TestCase):
         self.assertIn("STAT:INT|SCORE:18", pcg)
         self.assertIn("+2 Strength", pcg)
         self.assertNotIn("+2 Strength", SP.pcg_text("x", "Dwarf", "Fighter", 1))
+
+    def test_racial_stat_bonuses_parse_from_the_pinned_row_shape(self):
+        row = "+2 Constitution, +2 Wisdom, -2 Charisma\tKEY:Dwarf ~ Ability Scores\tCATEGORY:Special Ability\tBONUS:STAT|CON,WIS|2|TYPE=Racial\tBONUS:STAT|CHA|-2|TYPE=Racial\tDESC:x"
+        self.assertEqual(SP.parse_racial_stat_bonuses(row), {"CON": 2, "WIS": 2, "CHA": -2})
+        human = "+2 to One Ability Score\tKEY:Human ~ Ability Scores\tBONUS:ABILITYPOOL|Ability Bonus|1"
+        self.assertEqual(SP.parse_racial_stat_bonuses(human), {})
+        gated = "x\tBONUS:STAT|STR|2|TYPE=Racial|PREVARGTEQ:Foo,1"
+        self.assertEqual(SP.parse_racial_stat_bonuses(gated), {}, "a gated bonus is not a fixed adjustment")
+
+    def test_engine_fixture_prebakes_the_fixed_racial_adjustment_and_the_pcg_does_not(self):
+        text = SP.engine_fixture_text("dwarf_fighter_l1", "dwarf", "fighter", 1, {"CON": 2, "WIS": 2, "CHA": -2})
+        for expected in ("ability=constitution:10", "ability=wisdom:16", "ability=charisma:14", "ability=strength:12"):
+            self.assertIn(expected, text)
+        self.assertIn("STAT:CON|SCORE:8", SP.pcg_text("dwarf_fighter_l1", "Dwarf", "Fighter", 1))
+        self.assertIn("ability=constitution:8", SP.engine_fixture_text("human_wizard_l1", "human", "wizard", 1, {}))
+
+    def test_pinned_checkout_rows_when_the_checkout_is_present(self):
+        if not os.path.isdir(os.path.join(SP.pcgen_repo_dir(), SP.PCGEN_RACES_DIR)):
+            self.skipTest("no pinned PCGen checkout on this box")
+        self.assertEqual(SP.racial_ability_adjustments("Dwarf"), {"CON": 2, "WIS": 2, "CHA": -2})
+        self.assertEqual(SP.racial_ability_adjustments("Halfling"), {"DEX": 2, "CHA": 2, "STR": -2})
+        self.assertEqual(SP.racial_ability_adjustments("Human"), {})
 
     def test_skill_names(self):
         self.assertEqual(SP.skill_name("knowledge_arcana"), "Knowledge (Arcana)")
