@@ -142,6 +142,18 @@ EXEMPT` in the receipt (`decisions.md §2`).
 
 **Gated on:** Epic 1. **Gates:** Epics 3–6. **Population:** all 23,315 non-DONE units.
 
+**Inputs already built (`decisions.md §15`):** `artifacts/epic-2-sheet-rule/token-mapping/mapping-table.v1.json`
+(249 rows, judged and synthesized — AT-35-E2-001 transcribes it), `SYNTHESIS.md` (the 12
+resolved conflicts), `blockers.md` (B1–B10 with owners; three pending rulings R1–R3 built to
+their recommendations until ruled). `technical-design.md §1–§2` are schema v2. Owners from
+`blockers.md`: B2, B5, B7, B9 → AT-35-E2-001 (tool-side reads of un-ingested DEFINE rows,
+prestige level lines, and the `.lst` row for the 1,008 no-`raw_tokens` units; the `_pfs/` skip
+and KEY-based `.MOD` match in the mod index **before** the first conversion); B10 → AT-35-E2-004
+(refusals counted per shape); B1 → AT-35-E2-005 (oracle export tokens for skill, speed, DR, DC,
+spells-per-day before the parity run); B3 → AT-35-E4-001 (ABILITYCATEGORY input for
+`BONUS:ABILITYPOOL`); B4, B6, B8 → AT-35-E4-001 (character facts, PI residue per R2, small
+shape refusals).
+
 ### AT-35-E2-001 — the converter exists, and writes our schema
 
 `src/bin/sheet_rule_convert.rs` + `src/pcgen_import/sheet_rule/` (`technical-design.md §1`).
@@ -151,7 +163,9 @@ one `SheetRule` per record in **our** schema — `label`, `value` (`Number(Expr)
 string, or variable name appears in the output.** A token type with no mapping row makes the
 record `Refused { token_type }`, written to `data/sheet_rules/_refused.json` and counted per
 token type. The converter calls the existing PCGen formula parser to get an AST and maps the
-AST to `Expr`; it never emits the source string.
+AST to `Expr`; it never emits the source string. **The mapping rows are transcribed from
+`token-mapping/mapping-table.v1.json`** (`decisions.md §15`); a mapping not in the table is a
+table defect to record, not a rule to invent in the cycle.
 
 **Evidence:** `cargo run --locked --bin sheet_rule_convert -- --check` exits 0 with
 `records=49438 converted=<n> refused=<n>` summing to the corpus; `grep -rlE

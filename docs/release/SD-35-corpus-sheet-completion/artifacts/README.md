@@ -14,7 +14,7 @@ One subdirectory per epic, each seeded with a `.gitkeep`. Every cycle writes its
 | Directory | Epic | Expected contents |
 |---|---|---|
 | `epic-1-tax-cut/` | 1 — Tax cut | `build-time.json` (before/after cold `--no-run` wall time, commands, load), `citation-anchor-proofs.md`, the consolidation's `cargo test -- --list` diff, the residue gate's first-run transcript |
-| `epic-2-sheet-rule/` | 2 — Sheet rule | **`token-coverage.json`** (re-derived every cycle from here on), the per-kind conversion-outcome counts, AT-35-E2-005's first-pass receipt with its wall time, **`oracle-parity-epic2.json`** |
+| `epic-2-sheet-rule/` | 2 — Sheet rule | **`token-mapping/`** (pre-launch, 2026-09-08: four lane tables, four judge verdict files, `SYNTHESIS.md`, **`mapping-table.v1.json`** — the table AT-35-E2-001 transcribes — and `blockers.md`), **`token-coverage.json`** (re-derived every cycle from here on), the per-kind conversion-outcome counts, AT-35-E2-005's first-pass receipt with its wall time, **`oracle-parity-epic2.json`** |
 | `epic-3-place-and-surface/` | 3 — Place and surface | `rate-ledger.json` (one row per cycle), receipts |
 | `epic-4-resolve-and-verify/` | 4 — Resolve and verify | `rate-ledger.json`, `oracle-run-receipt.md` (with `PCGEN_ORACLE_SHA`, per-unit cost on the first 50, every disagreement named), per-cycle oracle comparisons |
 | `epic-5-residues/` | 5 — Residues | `table-proofs.md`, **`completion-manifest.json`** (one row per unit), `capability-register-closed.json` |

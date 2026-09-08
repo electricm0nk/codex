@@ -134,7 +134,8 @@ the entries in `technical-design.md §0`; the closure scan greps independently o
 | Q5 | Does any capability in SD-34's register survive the sheet rule as genuinely required? | AT-35-E5-005 |
 | Q6 | What does one mechanism-cycle cost, measured? | AT-35-E3-004, AT-35-E4-003 |
 | Q7 | What is the exact live-side PCGen baseline, and how much of it is `cache_gen` (relocate) vs real live readers (replace)? | AT-35-E1-005's first run |
-| Q8 | Does our `Expr` vocabulary cover every `Number` the totals need, or does a PCGen variable exist that names a fact our character does not carry? | AT-35-E2-005's refused report, per token type |
+| Q8 | Does our `Expr` vocabulary cover every `Number` the totals need, or does a PCGen variable exist that names a fact our character does not carry? | **Largely answered pre-launch** by the token-mapping synthesis (schema v2, `decisions.md §15`): 23,312 of 23,315 reachable; the residue is `blockers.md` B4 (character facts) and B8 (small shapes), owned by AT-35-E4-001 |
+| Q9 | Rulings R1–R3 (`VISIBLE:DISPLAY`, PI term-hit bucket, closure scope) | The operator; AT-35-E2-001 builds to the recommendations until then |
 
 **Q1 decides the shape of Epics 3–5.** A large first-pass yield means those epics are mostly
 arm-adding cycles; a small one means the placement problem (bucket B) is real engine work

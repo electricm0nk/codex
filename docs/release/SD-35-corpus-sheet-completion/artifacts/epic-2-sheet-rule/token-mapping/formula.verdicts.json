@@ -1,0 +1,1082 @@
+{
+ "family": "formula",
+ "rows_reviewed": 79,
+ "judge": "formula.verdicts (2026-09-07, tranche/15; index rebuilt from data/corpus + docs/work-inventory.json; PCGen semantics read at pinned 7f81800)",
+ "denominators": "denominators: 51,474 data/corpus records (recursive; _parity and LICENSE.json excluded; beastiary counted as bestiary); 49,438 docs/work-inventory.json units, 48,608 joined by (book, source basename, line) with corpus_key fallback; non-DONE via scripts/completion_atlas.py::_bucket_of = 23,315 -- the judge's own index reproduced all three figures exactly",
+ "method": "Every count re-derived from a fresh recursive walk (51,474 records) joined to work-inventory (48,608 units) with completion_atlas._bucket_of; every formula (6,380 distinct) parsed and evaluated under PCGen semantics (doubles, Math.floor/ceil, IfCommand, truncate toward zero at the boundary) and under the lane's Expr rewrite (per-step floor Div, Min/Max comparisons) on 60 random integer assignments each; token semantics read in VariableProcessor.java, PlayerCharacter.java, VariableFacet.java, VariableKey.java, Description.java, MovecloneLst.java, SpellsFacet.java, ClassLevelCommand.java, CharBonusToCommand.java, IfCommand.java, SkillInfoCommand.java, TermEvaluatorBuilderPCVar.java, PJEP.java, StatMinValueFacet.java, CRToken.java.",
+ "verdicts": [
+  {
+   "row": 1,
+   "token_type": "DEFINE",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "PCGen semantics verified: hasVariable is variableFacet.contains (PlayerCharacter.java:2430), getVariable adds getTotalBonusTo('VAR') only when a HELD object DEFINEs the name (PlayerCharacter.java:2090-2140; VariableFacet.getVariableValue picks the max seed with isMax). Every readable seed is the literal 0 (15,763 of 15,763 re-derived). Units 6,353 / 4,599 non-DONE reproduced exactly. Metadata is right. One caveat carried to row 28: the DEFINE must be on an object THIS character holds, so a character who holds a contributor but not the DEFINEr gets 0 in PCGen.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 2,
+   "token_type": "DEFINE (PI-redacted token)",
+   "refuted": false,
+   "axis": [
+    "C"
+   ],
+   "reason": "55 [redacted PI] DEFINE tokens, 40 units, reproduced. Refusal is the conservative reading; the open question (re-derive the name from same-record BONUS:VAR targets) is legitimate but not mechanical yet.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 3,
+   "token_type": "DEFINESTAT",
+   "refuted": true,
+   "axis": [
+    "A",
+    "E"
+   ],
+   "reason": "DEFINESTAT:MINVALUE|STR|15 is not words in PCGen: StatMinValueFacet + StatCalcFacet floor the ability score TOTAL (code/src/java/pcgen/cdom/facet/analysis/StatMinValueFacet.java, StatCalcFacet.java). A resolvable term (the floored score) is left as words; the player writes Str 15, not 'at least 15'. NONSTAT|CON removes the score (constructs), STAT|INT adds one. 42 units / 36 non-DONE reproduced.",
+   "fix": "Metadata feeding the ability-score total: MINVALUE|X|n -> the score chassis evaluates Max(AbilityScore(X), Const(n)); MINVALUE with a variable floor -> the fold of rows 27-28 (words only if unresolved); NONSTAT|X -> metadata 'no X score' shown as '--' on the stat line; STAT|X -> metadata. Not Text.",
+   "confidence": "medium"
+  },
+  {
+   "row": 4,
+   "token_type": "FORMULA:ability modifier (STR DEX CON INT WIS CHA as an identifier in any formula position)",
+   "refuted": false,
+   "axis": [
+    "D",
+    "E"
+   ],
+   "reason": "Bare STR..CHA = modifier confirmed (TermEvaluatorBuilderPCStat / PCStatModTermEvaluator). Judge's count over formula positions (BONUS formula field, TEMPBONUS, SPELLS TIMES/CL/DC, DESC/BENEFIT args, SR, DR, DEFINESTAT, PREVAR operands): 3,327 units / 1,596 non-DONE vs the row's 3,625 / 1,649 (8% under; the row's position list is broader -- ASPECT args -- so this is a scope difference, not a wrong figure). denominators: 51,474 data/corpus records (recursive; _parity and LICENSE.json excluded; beastiary counted as bestiary); 49,438 docs/work-inventory.json units, 48,608 joined by (book, source basename, line) with corpus_key fallback; non-DONE via scripts/completion_atlas.py::_bucket_of = 23,315 -- the judge's own index reproduced all three figures exactly",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 5,
+   "token_type": "FORMULA:ability score (STRSCORE..CHASCORE)",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "<STAT>SCORE = total score (PCStatTotalTermEvaluator). Judge: 73 units / 57 non-DONE vs 87 / 72 (same scope difference as row 4). Comparison-in-arithmetic examples are integer-valued, so row 19's encoding applies.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 6,
+   "token_type": "FORMULA:TL",
+   "refuted": false,
+   "axis": [
+    "D",
+    "E"
+   ],
+   "reason": "TL = PCTLTermEvaluator (TermEvaluatorBuilderPCVar.java:725). Judge: 1,051 units / 563 non-DONE vs 1,041 / 556 (within 1%).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 7,
+   "token_type": "FORMULA:CL, bare classlevel(), classlevel(\"APPLIEDAS=NONEPIC\")",
+   "refuted": false,
+   "axis": [
+    "E",
+    "C"
+   ],
+   "reason": "PCGen: bare CL is legal ONLY when the source string starts with CLASS: (TermEvaluatorBuilderPCVar.java:847-870 throws 'may only be used in a Class'); bare classlevel() likewise (ClassLevelCommand.java: 'Unable to determine class name'). Only PCClass has a CLASS: qualified key (PCClass.java:149; CDOMObject.java:1132 returns empty) and DESC arguments are evaluated with src 'Description' (Description.java:295), so PCGen resolves the 24 class_feature uses (11 in DESC args, 10 BONUS:VAR, 3 BONUS:SAVE) through the broken parser, i.e. to 0. The row's 'bind the record's class' is the INTENDED value and the right sheet value, but the oracle will disagree on those 24; say so. Class-record uses (1,215 class + 149 class_generic + 29 companion formula positions) match PCGen exactly.",
+   "fix": "keep; add: the 24 non-class uses are oracle-divergent by construction (PCGen evaluates them to 0 through the broken parser); do not treat an SA.n.DESC disagreement there as a converter defect",
+   "confidence": "high"
+  },
+  {
+   "row": 8,
+   "token_type": "FORMULA:classlevel(\"X\"), cl(\"X\"), var(\"CL=X\")",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "classlevel(\"X\") = ClassLevelCommand -> pc.getClassLevelString; APPLIEDAS=NONEPIC appends BEFORELEVEL=21, identical below 21. `cl` IS a registered JEP alias (PJEP.java:99 addFunction(\"cl\", new ClassLevel())), so the one cl( call is valid, not malformed. Judge: 675 units / 630 non-DONE vs 666 / 621.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 9,
+   "token_type": "FORMULA:HD",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "Judge: 410 / 86 vs 406 / 84. HD = total hit dice.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 10,
+   "token_type": "FORMULA:BAB",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "Judge: 45 / 31 vs 42 / 30. BAB = base attack bonus.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 11,
+   "token_type": "FORMULA:SIZE, SIZEMOD",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "TermEvaluatorBuilderPCVar.java:675 registers SIZEMOD|SIZE: SIZE -> PCSizeIntTermEvaluator (index), SIZEMOD -> PCSizeModEvaluatorTermEvaluator = pc.getSizeAdjustmentBonusTo(\"COMBAT\",\"AC\"). Judge: SIZE 5 units / 4, SIZEMOD 2 / 1 (row: 8 / 6 combined).",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "row": 12,
+   "token_type": "FORMULA:CR",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "CR in a formula is not a term evaluator (only BASECR is, TermEvaluatorBuilderPCVar.java:83) and no DEFINE:CR exists in corpus or pinned data; it resolves through lookupVariable -> getExportVariable -> plugin/exporttokens/CRToken.java, so PCGen does compute 11+CR. Fractional CR truncates at consumption (11.25 -> 11). Judge: 37 units / 19 non-DONE carry CR in a formula position vs 32 / 19.",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "row": 13,
+   "token_type": "FORMULA:CASTERLEVEL, SPELLLEVEL (bare identifiers)",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "Bare CASTERLEVEL with src 'Description' (Description.java:295) is PCCasterLevelTotalTermEvaluator: the SUM of caster levels over every class with a spell type (PCCasterLevelTotalTermEvaluator.java resolve). For a single-class fixture that equals CasterLevel(owning); for a multiclass caster the oracle prints the sum, which is a PCGen quirk, not the sheet value. Judge: 39 units / 22 non-DONE use the identifier in a formula position (row's 78 / 62 includes COST %CASTERLEVEL).",
+   "fix": "keep; note that the oracle sums caster levels across classes for this term",
+   "confidence": "medium"
+  },
+  {
+   "row": 14,
+   "token_type": "FORMULA:integer literal, + - * / and parentheses, unary minus",
+   "refuted": true,
+   "axis": [
+    "E",
+    "A"
+   ],
+   "reason": "The rule 'a/b -> Div (floors); agrees with PCGen for every non-negative operand; negative operands differ in 0 corpus cases' is wrong on both counts. PCGen carries doubles to the consumer and truncates toward zero there (VariableProcessor.java:461 addVariable double; Description.java:295 .intValue(); formula_interpreter.rs module doc point 1 says the same). Judge simulation of all 6,380 distinct corpus formulas (60 random integer assignments each; PCGen semantics vs per-step floor Div with the row's own comparison/if/decimal rewrites): 255 formulas disagree, on 452 units (301 non-DONE). Negative dividends: `(MediumLVL-13)/2` (occult_adventures:class_feature, level 8: PCGen -2, Div -3), `-InvestigatorLVL/4`, `1+(OccultistLVL-8)/4`, `min(3,(SummonerLVL-6)/4)`, `STR/2` (book_of_the_damned_volume_2 templates, Str -1: PCGen 0, Div -1). Division results feeding later arithmetic: `HD/2+CON/2` (5 HD, Con +7: PCGen 6, per-step 5), `BeastmorphProgression/2*15` (19: 142 vs 135), `(1+MonkLVL/16)*15` (20: 33 vs 30), `ClassBABFull+(ClassBABModerate*3/4)+(ClassBABPoor*1/2)` (the multiclass BAB formula: 16 vs 15), `5*((MediumLVL-5)/2)` (6: 2 vs 0).",
+   "fix": "Make Div exact (rational or f64) in the live evaluator and truncate toward zero ONCE at the SheetValue boundary (matching Number.intValue() / (int) casts in Description.java:295 and BonusManager); add explicit Expr::Floor and Expr::Ceil for the corpus floor()/ceil() calls. technical-design.md section 1's 'Div floors' must change.",
+   "confidence": "high"
+  },
+  {
+   "row": 15,
+   "token_type": "FORMULA:fractional literal (0.5, 1.5, 1/3, X*3/4)",
+   "refuted": true,
+   "axis": [
+    "E"
+   ],
+   "reason": "`X*1.5 -> Div(Mul(X,3),2) exact` holds only when the product is the whole formula and X >= 0: `STR*1.5` / `1.5*STR` (Str -5: PCGen -7, Div -8), `STR*3/2` (Str -3: -4 vs -5), `max(MesmeristLVL/2,1)+PainfulStareDamFCB/4` (9, 19: 9 vs 8). Same defect as row 14. The 7 bare-fraction seeds (4 distinct formulas found: `0.5`, `1.5`, `if(DEX>0,0.5,1)-if(STR>0,0.5,1)`, `if(DEX>0,1.5,1)-if(STR>0,1.5,1)`) are correctly refused under the current Expr. Judge: 203 units / 100 non-DONE carry a fractional literal vs 192 / 95.",
+   "fix": "Make Div exact (rational or f64) in the live evaluator and truncate toward zero ONCE at the SheetValue boundary (matching Number.intValue() / (int) casts in Description.java:295 and BonusManager); add explicit Expr::Floor and Expr::Ceil for the corpus floor()/ceil() calls. technical-design.md section 1's 'Div floors' must change. With exact Div the 7 bare-fraction seeds convert too (Div(Const(1),Const(3)) stays 1/3 until the boundary), so gap G16 disappears.",
+   "confidence": "high"
+  },
+  {
+   "row": 16,
+   "token_type": "FORMULA:max(...), min(...) (also MAX, MIN)",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "MaxCommand/MinCommand are N-ary incl. one argument; PJEP registers every function in both lower and upper case (PJEP.java:90-91). Judge: max 1,064 / 574, min 485 / 440 vs 1,054 / 566 and 479 / 438.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 17,
+   "token_type": "FORMULA:floor(x)",
+   "refuted": true,
+   "axis": [
+    "E"
+   ],
+   "reason": "'floor(x) converts to x because Div already floors' is false for two reasons shown by the simulation: (1) per-step Div floors BEFORE later arithmetic, so `min(floor((Sorcerer_Psychic_BloodlinePower3LVL+3)/6*2),4)` (the row's own example 2) gives 2 at level 7 where PCGen (FloorCommand = Math.floor of the double 3.33) gives 3; same for `max(min(floor((Sorcerer_Serpentine_BloodlinePower1LVL+1)/6*2),4),1)`; (2) once Div is made exact (row 14's fix) floor() must be explicit. Judge: 493 units / 433 non-DONE vs 492 / 433.",
+   "fix": "Add Expr::Floor (Math.floor semantics); convert floor(x) -> Floor(x); Div exact per row 14.",
+   "confidence": "high"
+  },
+  {
+   "row": 18,
+   "token_type": "FORMULA:ceil(x)",
+   "refuted": true,
+   "axis": [
+    "E"
+   ],
+   "reason": "The caveat 'the rewrite agrees only when X >= 0' is false under a flooring Div: ceil(X/n) = floor((X+n-1)/n) is an identity for every integer X and n > 0 (Str -3: Math.ceil(-1.5) = -1 = floor(-2/2); Str -1: ceil(-0.5) = 0 = floor(0/2)). All 49 corpus calls are ceil(V/2) (judge: 49 `V/2` + 1 `ceil(classlevel(...)/2)`), so under the current design G8 is not needed at all. Under the corrected exact-Div design (row 14) an explicit Ceil IS needed, together with Floor. Judge: 49 / 41 reproduced.",
+   "fix": "Drop the negative-operand caveat. If Div stays flooring: no Ceil variant, rewrite is exact. If Div becomes exact (recommended, row 14): add Expr::Ceil alongside Expr::Floor.",
+   "confidence": "high"
+  },
+  {
+   "row": 19,
+   "token_type": "FORMULA:if(cond, a, b) and comparison arithmetic ((X>=k)*2)",
+   "refuted": true,
+   "axis": [
+    "D",
+    "E"
+   ],
+   "reason": "The conclusion (no If variant needed) survives; the evidence does not. (a) '52 with a bare numeric condition the parser refuses': the judge's parser over every if( call finds ZERO bare-variable conditions; what the current parser refuses is `&&` conjunctions -- 189 instances on 20 units (19 non-DONE), e.g. `if((Sorcerer_CF_BloodlinePower3==0&&Sorcerer_Psychic_BloodlineProgressionLVL>=3),1,0)` (occult_adventures:class_feature:Psychic Bloodline). The row never names `&&`; it is exact as Min(c1,c2) since both sides are 0/1. (b) The Min/Max encoding of >, <, <=, == needs integer operands; census: every comparison operand in the corpus is integer-valued (no division or decimal inside an operand), so the encoding is exact -- confirmed, but the row should state the precondition. (c) IfCommand.java accepts a Number (nonzero) or Boolean condition; PJEP comparisons yield 1.0/0.0. (d) Operator census over distinct formulas: >= 77, && 184, < 26, == 9, > 7, <= 6, || 0. The one if() shape that mismatches PCGen (`if(WarpriestLVL<19,1+((WarpriestLVL/2)-5),5)`, level 1: -3 vs -4) is row 14's division defect, not if().",
+   "fix": "Replace '52 bare-numeric conditions' with '189 && conjunctions on 20 units -> Min(c1,c2)'; state 'operands are integer-valued (census-verified)' as the precondition of the Min/Max encoding; conclusion 'no If variant' keeps.",
+   "confidence": "high"
+  },
+  {
+   "row": 20,
+   "token_type": "FORMULA:charbonusto(\"PCLEVEL\", \"X\")",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "CharBonusToCommand.java: one or two string params -> pc.getTotalBonusTo(\"PCLEVEL\", X). Judge: 227 / 209 reproduced exactly. The G5 decision (does CasterLevel(X) include PCLEVEL grants) is the right question; PCCasterLevelTotalTermEvaluator itself adds pcBonus = getTotalBonusTo(\"PCLEVEL\", classKey), which argues for 'yes'.",
+   "fix": "keep; recommend defining CasterLevel(X) = ClassLevel(X) + PCLEVEL grants, as PCGen's own caster-level term does",
+   "confidence": "medium"
+  },
+  {
+   "row": 21,
+   "token_type": "FORMULA:var(\"<export token>\")",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "var(...) is GetVarCommand -> getVariableValue -> lookupVariable, which reaches export tokens (VariableProcessor.java:532-560, 717-745). Sub-table is right. Judge: 164 units / 143 non-DONE carry a var( call when PREVAR operands and DR gates are included (row's 134 / 117 counts formula fields only).",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "row": 22,
+   "token_type": "FORMULA:skillinfo(\"RANK\"|\"TOTALRANK\"|\"TOTAL\", \"<skill>\")",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "SkillInfoCommand.java:92-115: RANK = getRank, TOTALRANK = getTotalRank, TOTAL = totalRank + modifier, plus MODIFIER/STAT forms the corpus does not use. Judge: 65 / 53 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 23,
+   "token_type": "FORMULA:count(\"ABILITIES\", \"CATEGORY=..\", \"KEY=..|TYPE=..\")",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "CountCommand counts held objects by filter. Judge: 58 / 45 vs 57 / 44.",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "row": 24,
+   "token_type": "FORMULA:mastervar(\"X\") / MASTERVAR / MasterLevel",
+   "refuted": false,
+   "axis": [
+    "E",
+    "C"
+   ],
+   "reason": "mastervar(\"X\") = MasterVarCommand reading the master PC. Correct refusal. Note: the identifier MasterLevel is an ordinary variable DEFINEd in 16 pinned-data files and SET by un-ingested companionmod rows (`BONUS:VAR|MasterLevel|MASTERVAR(\"FamiliarLVL\")` in um/uc/up/sggah companionmods), so MasterLevel is row 29's shape (contributor row not ingested) whose contributor formula happens to be mastervar(); the outcome (refuse / words) is the same. Judge: 20 units / 13 non-DONE carry a mastervar( call vs 14 / 7 (scope: PREVAR operands included).",
+   "fix": "keep; record MasterLevel under row 29's mechanism with mastervar() as the contributor formula",
+   "confidence": "high"
+  },
+  {
+   "row": 25,
+   "token_type": "FORMULA:%CHOICE, %LIST",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "Choice(ChoiceId) is right; the target-slot %LIST belongs to the bonus lane as stated. Judge counts %CHOICE in formula fields only: 172 / 148 (row 207 / 182 includes the target slot); consistent.",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "row": 26,
+   "token_type": "FORMULA:%SPELLLEVEL %CASTERLEVEL %CHARGES %SPELLCOST %SPELLXPCOST BASECOST (equipment-modifier pricing)",
+   "refuted": false,
+   "axis": [],
+   "reason": "EQMOD pricing formulas; 101 COST formulas, all on equipment_modifier records (verified). Not printed.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 27,
+   "token_type": "FORMULA:corpus variable, SAME-record contributors only",
+   "refuted": false,
+   "axis": [
+    "E",
+    "F"
+   ],
+   "reason": "Fold rule matches PCGen (seed 0 + sum of the record's own BONUS:VAR, each gated by its own PRE). Judge: units whose every referenced variable is same-record: 1,641 / 1,019 (all formula positions) or 1,722 / 1,138 (excluding PREVAR operands) vs 1,318 / 793 -- scope difference. Cross-family: prose DESC rule step 5 turns 5,161 of these arguments into Const(0) (see conflicts).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 28,
+   "token_type": "FORMULA:corpus variable, CROSS-record contributors (the resolution rule)",
+   "refuted": true,
+   "axis": [
+    "D",
+    "E"
+   ],
+   "reason": "The RULE stands and the PCGen reading is verified line by line (PlayerCharacter.java:2090-2140: seed via VariableFacet.getVariableValue(isMax) + getTotalBonusTo('VAR') only when found; VariableProcessor.java:532-560 falls to term/export lookups otherwise; BonusManager sums only active bonuses of held objects). Two refutations of the evidence: (1) the 8,518 / 6,646 figure could not be reproduced within 5%: the judge gets 5,701 / 4,629 counting BONUS/TEMPBONUS/SPELLS/SR/DR/DESC-argument positions and 9,733 / 7,518 when PREVAR operands are added (case-insensitive contributor matching); the row's number sits between and its extraction scope is unstated. (2) 'DEFINE-existence gating changes no value except the row-30 names' is incomplete: variableFacet is per character, so a character who HOLDS a contributor but NOT the DEFINEr gets 0 with the contributions dropped in PCGen, while option B sums them; the converter must either gate the sum on 'some held rule declares V' or document the divergence. The cross-record >> same-record conclusion holds under every scope measured.",
+   "fix": "keep option B; state the extraction scope of the count; add the held-DEFINEr gate to the variable-table evaluator (or an explicit divergence note) so the oracle comparison is exact",
+   "confidence": "high"
+  },
+  {
+   "row": 29,
+   "token_type": "FORMULA:variable with a contributor row the corpus does NOT hold (in an ingested file)",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "Not re-derivable in this lane's time (needs the closure); the mechanism (contributor rows in ingested files that no closure covers) is real: SLA_Base_Times / SLA_DC_STAT are DEFINEd in exactly one pinned file each and used by apg_abilities.lst blessings; MasterLevel is the same shape (row 24). Upper-bound figure taken as stated, unverified.",
+   "fix": "keep (count unverified)",
+   "confidence": "low"
+  },
+  {
+   "row": 30,
+   "token_type": "FORMULA:identifier DEFINEd nowhere (corpus or pinned PCGen data)",
+   "refuted": true,
+   "axis": [
+    "E",
+    "C",
+    "D",
+    "F"
+   ],
+   "reason": "Three independent breaks. (1) PCGen variable names are CASE-INSENSITIVE (VariableKey.java:36,108 CaseInsensitiveMap; VariableKey.valueOf), so 38 of the row's names / 311 uses ARE defined: HellknightLvl == HellknightLVL DEFINEd on the Hellknight class (iswg_classes.lst, ag_classes.lst), AlchemistLvl 75 uses, MHMercyLVL 33 (uc_abilities_class.lst), ClericLvl 20, FighterLvl 18, ArcanistLvl 17, MesmeristLvl 16, MagusLvl 12 ... All three of the row's examples (iswg_abilities_class.lst:92/96/102, DomainArtificeLVL|HellknightLvl) resolve to the Hellknight level in PCGen, and Const(0) prints 0 where PCGen prints e.g. 5. (2) Re-derived case-insensitively against corpus DEFINEs plus every DEFINE in ~/workspace/repos/pcgen/data/pathfinder: 125 names / 671 uses / 312 units (264 non-DONE) in formula positions, 189 / 790 / 379 (309) with PREVAR operands -- not 184 / 873 / 756 (618); the '882 units carry a BONUS:VAR target DEFINEd nowhere' figure re-derives to 182 targets on 172 records. The residue is real and is the BloodlinePower{1,3,9,15,20}LVLBonus / BloodlinePower1TimesBonus / EldrtichHeritage* family (a PCGen data defect). (3) 'PCGen prints 0' is only true for a bare identifier or a pure +/- chain: an undefined name makes processJepFormula return null for the WHOLE formula (VariableProcessor.java:463-471) and processBrokenParser (:215-410) then evaluates the uppercased string left-to-right with no precedence and no functions. Of the 671 undefined uses, 259 are bare and 289 are +/- chains (Const(0) substitution agrees), but 123 sit inside functions or * / (`min(2*OccultistNecromanticFocus,4*OccultistLVL)`, `-OccultistNecromanticFocus/4`, occult_adventures:class_feature:Resonant Power ~ Necromantic Focus) where PCGen's result is not the 0-substituted value. Cross-family: bonus V1 (231 names, refuse per name) has the same case-sensitivity defect.",
+   "fix": "(1) Build the variable index case-insensitively over corpus + pinned-data DEFINEs (PCGen's own rule). (2) For the residue: Const(0) + defect list ONLY where the use is a bare identifier or a +/- chain; REFUSE per name where the use sits inside a function or under * or / (the oracle is not 0 there). (3) Re-state counts: ~125 names, ~671 uses, ~312 units (264 non-DONE) in formula positions.",
+   "confidence": "high"
+  },
+  {
+   "row": 31,
+   "token_type": "FORMULA:malformed (parser refusals)",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "Inherited 240-field figure, not re-derived (no cargo in this lane). The judge's parser fails on 68 distinct formula strings, of which the named category `if(X>=7),1,0` (acg Bloodrager bloodlines) is real; the rest are token-envelope splits, not formula text.",
+   "fix": "keep (count unverified)",
+   "confidence": "low"
+  },
+  {
+   "row": 32,
+   "token_type": "DAMAGE / ALTDAMAGE",
+   "refuted": false,
+   "axis": [
+    "A",
+    "D"
+   ],
+   "reason": "535 DAMAGE / 42 ALTDAMAGE reproduced; 26 distinct values, none carries + - or /; DAMAGE:0 (5) and Special (1) confirmed. Dice stays dice; no row folds a die into a number.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 33,
+   "token_type": "CRITRANGE / ALTCRITRANGE",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "CRITRANGE:n = threat width, 21-n..20. Reproduced 510 / 7.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 34,
+   "token_type": "CRITMULT / ALTCRITMULT",
+   "refuted": false,
+   "axis": [],
+   "reason": "Reproduced 524 / 7.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 35,
+   "token_type": "UDAM",
+   "refuted": false,
+   "axis": [
+    "A",
+    "D"
+   ],
+   "reason": "113 / 113 reproduced; exactly 5 list-form tokens (`1d6,1d8,1d10,2d6,2d8,3d8,4d8,6d8,8d8`). Dice stays dice.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 36,
+   "token_type": "UMULT",
+   "refuted": false,
+   "axis": [],
+   "reason": "Reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 37,
+   "token_type": "RANGE (spell / power keyword)",
+   "refuted": false,
+   "axis": [
+    "A",
+    "D",
+    "E"
+   ],
+   "reason": "Keyword census reproduced: Close 673, Touch 503, Personal 454, Medium 263, Long 90, 'N ft.' 218, free text 66; total 2,581 / 665. The PF1 table (25+5*floor(CL/2), 100+10*CL, 400+40*CL) is right and CasterLevel(holder) is the honest gap. Sheet line 'Range: Close (35 ft)' folds the number as rule 1 requires.",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "row": 38,
+   "token_type": "WT",
+   "refuted": false,
+   "axis": [],
+   "reason": "4,948 / 12 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 39,
+   "token_type": "COST (literal)",
+   "refuted": false,
+   "axis": [],
+   "reason": "7,716 / 2,191 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 40,
+   "token_type": "COST (formula, equipment_modifier)",
+   "refuted": false,
+   "axis": [],
+   "reason": "101 COST formulas, all equipment_modifier; reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 41,
+   "token_type": "ACCHECK",
+   "refuted": false,
+   "axis": [],
+   "reason": "178 / 1 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 42,
+   "token_type": "SPELLFAILURE",
+   "refuted": false,
+   "axis": [],
+   "reason": "182 / 0 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 43,
+   "token_type": "MAXDEX",
+   "refuted": false,
+   "axis": [],
+   "reason": "142 / 0 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 44,
+   "token_type": "MOVE",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "Judge: 1,952 instances, 1,923 units / 177 non-DONE vs 1,918 / 172 (within 1%).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 45,
+   "token_type": "MOVECLONE",
+   "refuted": true,
+   "axis": [
+    "E",
+    "A"
+   ],
+   "reason": "MovecloneLst.java:66-140: a third argument starting with `/` divides, `*` multiplies, `+N` adds, and a BARE INTEGER is an addend (`conversion = moveRate -> moveRate + diff`). So `MOVECLONE:Walk,Climb,0` on inner_sea_bestiary:template:Vetala (isb_templates.lst:11) means climb = walk speed (Bestiary 3 vetala: speed 30 ft., climb 30 ft.), not 'climb 0 ft' as the row's sheet line says; advanced_race_guide `Augmented Form ~ Swim` (Walk,Swim,0) likewise. Census: *1 23, /2 7, *2 6, 0 2, *1.5 1 (39 / 24 reproduced).",
+   "fix": "`/k` -> Div(Speed(m), k); `*k` -> Mul (decimal via exact Div); `+k` or bare `k` -> Sum([Speed(m), Const(k)]). Gap G10 Speed(mode) stands.",
+   "confidence": "high"
+  },
+  {
+   "row": 46,
+   "token_type": "UNENCUMBEREDMOVE",
+   "refuted": false,
+   "axis": [],
+   "reason": "21 / 13 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 47,
+   "token_type": "REACH",
+   "refuted": false,
+   "axis": [],
+   "reason": "1,614 / 60 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 48,
+   "token_type": "HITDIE (n, with optional class filter)",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "HITDIE census: bare n 36, n|CLASS.TYPE=Monster 20, n|CLASS=Monk 2, n|CLASS=Eidolon 1, %+N 5, %/N 3 (67 units / 26 non-DONE).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 49,
+   "token_type": "HITDIE (%-step: %+1, %/4)",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "8 %-step tokens confirmed (5 %+1, 3 %/N).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 50,
+   "token_type": "HD (class)",
+   "refuted": false,
+   "axis": [],
+   "reason": "Class HD; reproduced 208 HD units total.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 51,
+   "token_type": "HD (template band: <lo>-<hi>:TEMPLATE:<name>)",
+   "refuted": false,
+   "axis": [
+    "F"
+   ],
+   "reason": "HD:lo-hi:TEMPLATE is a band grant. Note the cited 'prereq lane's A7' is the BONUS lane's id; prereq's Applies expresses it as Compare{HitDice}.",
+   "fix": "keep; cite the bonus lane's A7 or prereq's Compare{HitDice} form",
+   "confidence": "high"
+  },
+  {
+   "row": 52,
+   "token_type": "DR",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "DR shapes: n/qualifier 605, n/- 86, variable amounts and PRE tails as stated; 699 / 108 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 53,
+   "token_type": "SR",
+   "refuted": false,
+   "axis": [
+    "D",
+    "E"
+   ],
+   "reason": "SR shapes: const 371, V+V 30 (CR forms), 5+(TL-HD) 2, %CHOICE 2, mastervar/MasterLevel forms 3; 407 / 43 reproduced. CR resolves via CRToken (row 12).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 54,
+   "token_type": "CR",
+   "refuted": false,
+   "axis": [],
+   "reason": "1,611 / 78 reproduced; 257 fractional values confirmed Text-only.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 55,
+   "token_type": "CRMOD",
+   "refuted": false,
+   "axis": [],
+   "reason": "3 instances on 2 records, 1 unit; reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 56,
+   "token_type": "SPELLS",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D",
+    "A"
+   ],
+   "reason": "SpellsFacet.java:83-90 builds a SpellLikeAbility(times, timeunit, casterlevel, dcformula): the DC field IS the whole save DC (Treerazer `Contagion,14+CHA` = 10 + 4 + Cha), so folding to one number is right. Field census reproduced: TIMES variable 1,357 / integer 1,143 / ATWILL; CASTERLEVEL variable 1,575 / integer 853 / max(X,1) 59; DC bare variable 852, 'n+STAT' 1,070. 1,423 / 671 reproduced. Three numbers per line is a real SheetValue gap (G3).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 57,
+   "token_type": "SPELLS (PI-redacted token)",
+   "refuted": false,
+   "axis": [],
+   "reason": "244 redacted tokens, 78 units; reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 58,
+   "token_type": "SPELLKNOWN",
+   "refuted": false,
+   "axis": [],
+   "reason": "1,491 / 1,049 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 59,
+   "token_type": "SPELLLEVEL",
+   "refuted": false,
+   "axis": [],
+   "reason": "503 / 374 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 60,
+   "token_type": "TEMPBONUS",
+   "refuted": false,
+   "axis": [
+    "F"
+   ],
+   "reason": "575 / 418 reproduced. The open question is answered by the prereq lane's schema: it has NO Situational form -- its nearest is Words{text} ('prints, never filters'), which is not a player toggle. TEMPBONUS needs a toggle in Applies (see conflicts).",
+   "fix": "keep; the prereq schema needs Applies::Toggle (player-activated) -- Words is the wrong fit",
+   "confidence": "medium"
+  },
+  {
+   "row": 61,
+   "token_type": "TEMPVALUE",
+   "refuted": false,
+   "axis": [],
+   "reason": "164 / 143 reproduced; MAX variable 6 times.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 62,
+   "token_type": "TEMPDESC",
+   "refuted": false,
+   "axis": [],
+   "reason": "184 / 102 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 63,
+   "token_type": "DESC / BENEFIT %N argument (a formula inside a prose token)",
+   "refuted": false,
+   "axis": [
+    "D",
+    "E"
+   ],
+   "reason": "Judge: 4,970 units / 3,608 non-DONE carry a non-integer DESC/BENEFIT argument vs 5,013 / 3,634 (within 1%). Description.java:295 substitutes getVariableValue(var, 'Description').intValue() -- integer truncation toward zero, the direct oracle for the slot value.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 64,
+   "token_type": "SAB",
+   "refuted": false,
+   "axis": [],
+   "reason": "2 records reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 65,
+   "token_type": "SPROP",
+   "refuted": false,
+   "axis": [],
+   "reason": "3,816 instances / 3,614 units reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 66,
+   "token_type": "SIZE",
+   "refuted": false,
+   "axis": [],
+   "reason": "2,168 / 63 reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 67,
+   "token_type": "SIZE (formula)",
+   "refuted": false,
+   "axis": [],
+   "reason": "1 record reproduced.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 68,
+   "token_type": "LEGS / HANDS",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "LEGS 1,342 / 124, HANDS 1,043 / 88 (row 1,337 / 119 and 1,038 / 83; within 1%).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 69,
+   "token_type": "VISION",
+   "refuted": true,
+   "axis": [
+    "C"
+   ],
+   "reason": "'Const per entry' gives the wrong answer on 6 records whose range is a VARIABLE, not a number: `Darkvision (UMR_DarkvisionEx_Range)` / `(UMR_DarkvisionSu_Range)` (bestiary_4 universal monster rules), `See in Darkness (UMR_SeeInDarkness_Range)|PREVARGTEQ:...` (bestiary_2), `See in Darkness (Sorcerer_InfernalPowerOfThePit_VisionDistance)` (Infernal Bloodline ~ Power of the Pit, two records), `Blindsense [When Immersed in Water] (BlindsenseUnderwaterRange)`. 510 / 102 reproduced otherwise.",
+   "fix": "range = Number(Expr): Const(n) for a numeric range, the rows 27-28 fold for a variable range; label from the name before the parenthesis.",
+   "confidence": "medium"
+  },
+  {
+   "row": 70,
+   "token_type": "PLUS",
+   "refuted": false,
+   "axis": [],
+   "reason": "Typed equipment/class fields; instance and unit counts reproduced within 1%.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 71,
+   "token_type": "ADDLEVEL",
+   "refuted": false,
+   "axis": [],
+   "reason": "Typed equipment/class fields; instance and unit counts reproduced within 1%.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 72,
+   "token_type": "LEVELSPERFEAT",
+   "refuted": false,
+   "axis": [],
+   "reason": "Typed equipment/class fields; instance and unit counts reproduced within 1%.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 73,
+   "token_type": "KEYSTAT",
+   "refuted": false,
+   "axis": [],
+   "reason": "Typed equipment/class fields; instance and unit counts reproduced within 1%.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 74,
+   "token_type": "ITEM",
+   "refuted": false,
+   "axis": [],
+   "reason": "Typed equipment/class fields; instance and unit counts reproduced within 1%.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 75,
+   "token_type": "SITUATION",
+   "refuted": false,
+   "axis": [],
+   "reason": "Typed equipment/class fields; instance and unit counts reproduced within 1%.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 76,
+   "token_type": "EQMOD / ALTEQMOD",
+   "refuted": false,
+   "axis": [],
+   "reason": "Typed equipment/class fields; instance and unit counts reproduced within 1%.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 77,
+   "token_type": "PROFICIENCY / WIELD",
+   "refuted": false,
+   "axis": [],
+   "reason": "Typed equipment/class fields; instance and unit counts reproduced within 1%.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 78,
+   "token_type": "CONTAINS / CHARGES / BASEITEM / BASEQTY / MODS / FUMBLERANGE",
+   "refuted": false,
+   "axis": [],
+   "reason": "Typed equipment/class fields; instance and unit counts reproduced within 1%.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "row": 79,
+   "token_type": "STAT: / AC: / LEVELADJUSTMENT: (listed in v06_work_inventory's magnitude_tokens)",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "0 top-level STAT:, AC:, LEVELADJUSTMENT: tokens confirmed (also 0 FACE, SPELLSTAT, MONSKILL, STARTSKILLPTS).",
+   "fix": "keep",
+   "confidence": "high"
+  }
+ ],
+ "cross_family_conflicts": [
+  {
+   "rows": [
+    "prose:DESC (rule step 5: same-row DEFINE:X|<int> -> Const)",
+    "formula:row 1 (DEFINE is a 0 seed)",
+    "formula:row 27 (same-record fold = seed + BONUS:VAR)"
+   ],
+   "issue": "Every DEFINE seed is 0. Judge: 7,707 bare-name DESC/BENEFIT/ASPECT arguments; 6,022 name a same-row DEFINE; 5,161 of those ALSO have a same-row BONUS:VAR to that name (e.g. Ironskin's RacialSLA_Ironskin_DC, Psychic Strike's Sorcerer_PsychicPsychicStrike_DC). The prose rule prints 0 for all 5,161; the formula rule prints DC 15.",
+   "recommendation": "Prose hands EVERY bare-name argument to the formula lane's fold (rows 27-28); 'same-row DEFINE -> Const' must be deleted."
+  },
+  {
+   "rows": [
+    "formula:row 30 (Const(0) for names DEFINEd nowhere)",
+    "bonus:V1 (refuse per name, 231 names)"
+   ],
+   "issue": "Both lists were built case-sensitively; PCGen's VariableKey is case-insensitive, so 38 names / 311 uses (HellknightLvl, AlchemistLvl, MHMercyLVL, ClericLvl ...) are defined and resolve to real levels. Neither Const(0) nor refusal is right for them.",
+   "recommendation": "One case-insensitive variable index (corpus + pinned data) owned by one lane; then Const(0)+defect list for bare/+- uses and refuse-per-name for uses inside functions or * /."
+  },
+  {
+   "rows": [
+    "formula:row 28 (option B: Var table gated by held rules)",
+    "bonus:rule 2 / BONUS:VAR (producer chain inlined corpus-wide, PRE-gated only)"
+   ],
+   "issue": "Unconditional inlining sums contributions from records the character does not hold (BloodlineLVL has 6 contributors; one is held). PCGen sums only held objects' active bonuses (BonusManager).",
+   "recommendation": "Adopt formula row 28's option B; the bonus lane's inlining is only correct for same-record chains."
+  },
+  {
+   "rows": [
+    "formula:row 14 / row 17 (Div floors; floor(x) -> x)",
+    "bonus:rule 1 (floor(x) -> x, Div floors)",
+    "technical-design.md section 1 (// Div floors)"
+   ],
+   "issue": "All three inherit the same wrong semantics. PCGen keeps doubles until the consumer truncates toward zero; per-step flooring diverges on 255 distinct corpus formulas / 452 units (301 non-DONE), incl. the multiclass BAB formula and HD/2+CON/2 DC shapes.",
+   "recommendation": "Change section 1: Div exact, truncate toward zero once at the SheetValue boundary, add Floor and Ceil variants. Both lanes' tables then need one line edited."
+  },
+  {
+   "rows": [
+    "formula:row 19 (no If variant; Min/Max encoding)",
+    "bonus:E1 (same)",
+    "prereq:section 3 'comparison-as-value (1+(X>2)) for 5 SELECT forms' listed as a gap"
+   ],
+   "issue": "Prereq lists as a gap what formula and bonus show is expressible.",
+   "recommendation": "Prereq adopts the Min/Max encoding; no variant."
+  },
+  {
+   "rows": [
+    "formula:row 22 SkillRank(SkillId)",
+    "bonus:E3 SkillRanks(SkillId)",
+    "prereq:Expr::SkillRanks(SkillId)"
+   ],
+   "issue": "One fact, three names.",
+   "recommendation": "One variant name (SkillRanks + SkillTotal)."
+  },
+  {
+   "rows": [
+    "formula:row 23 CountHeld(category, filter)",
+    "bonus:E4 CountHeld",
+    "prereq:Expr::HeldCount{pool, tag}"
+   ],
+   "issue": "One fact, two names and two shapes.",
+   "recommendation": "One variant: HeldCount{pool, tag-or-key}."
+  },
+  {
+   "rows": [
+    "formula:row 20 PcLevelBonus(ClassId)",
+    "bonus:E5 BonusCasterLevels(ClassId) / C1"
+   ],
+   "issue": "Same decision asked twice: does CasterLevel(X) include BONUS:PCLEVEL grants?",
+   "recommendation": "Yes -- PCGen's own caster-level term adds getTotalBonusTo('PCLEVEL', class) (PCCasterLevelTotalTermEvaluator). Define CasterLevel(X) that way; no extra variant."
+  },
+  {
+   "rows": [
+    "formula:row 60 Applies::Situational for TEMPBONUS",
+    "prereq:Applies enum (no Situational; Words{text} never filters)"
+   ],
+   "issue": "A TEMPBONUS is a player toggle (rage on/off), not an unevaluable gate; Words prints the condition but cannot switch the number on.",
+   "recommendation": "Prereq adds Applies::Toggle(ToggleId) (or the SheetRule carries `active_when: Toggle`); TEMPBONUS/TEMPDESC/TEMPVALUE map onto it."
+  },
+  {
+   "rows": [
+    "formula:row 21 ('the prereq lane's A3 NotWearing')",
+    "formula:row 51 ('the prereq lane's A7')",
+    "bonus:A1-A7"
+   ],
+   "issue": "The A-ids cited are the bonus lane's; prereq's schema has no NotWearing (PREEQUIP -> Words) and expresses HD bands as Compare{HitDice}.",
+   "recommendation": "Cite the bonus lane's ids, or prereq's Compare/Words forms."
+  }
+ ],
+ "expr_gaps_verdict": [
+  {
+   "gap": "G1 Held(RuleId, Expr) or Var(VarId) + contribution table",
+   "real": true,
+   "necessary": true,
+   "units": 9733,
+   "note": "Judge range 5,701-9,733 units (4,629-7,518 non-DONE) by extraction scope; lane 8,518 / 6,646. Blocking either way. Prefer B; gate the sum on a held DEFINEr to stay oracle-exact."
+  },
+  {
+   "gap": "G2 prose value slots",
+   "real": true,
+   "necessary": true,
+   "units": 4970,
+   "note": "4,970 / 3,608 non-DONE re-derived (lane 5,013 / 3,634)."
+  },
+  {
+   "gap": "G3 multi-value SheetValue (uses, CL, DC)",
+   "real": true,
+   "necessary": true,
+   "units": 1423,
+   "note": "Reproduced; DC field is the whole DC (SpellsFacet)."
+  },
+  {
+   "gap": "G4 CasterLevel(holder)",
+   "real": true,
+   "necessary": true,
+   "units": 2581,
+   "note": "1,026 scaling-keyword instances (Close 673 + Medium 263 + Long 90). PCGen's bare CASTERLEVEL is the SUM across casting classes -- do not copy that."
+  },
+  {
+   "gap": "G5 PcLevelBonus(ClassId)",
+   "real": true,
+   "necessary": false,
+   "units": 227,
+   "note": "Not needed if CasterLevel(X) = ClassLevel(X) + PCLEVEL grants, which is what PCCasterLevelTotalTermEvaluator does."
+  },
+  {
+   "gap": "G6 SkillRank(SkillId) / SkillTotal",
+   "real": true,
+   "necessary": true,
+   "units": 65,
+   "note": "65 / 53 reproduced; shared with bonus E3 and prereq."
+  },
+  {
+   "gap": "G7 CountHeld",
+   "real": true,
+   "necessary": true,
+   "units": 58,
+   "note": "58 / 45 reproduced."
+  },
+  {
+   "gap": "G8 Ceil",
+   "real": true,
+   "necessary": false,
+   "units": 49,
+   "note": "NOT needed under a flooring Div (ceil(X/n) = floor((X+n-1)/n) for all integers). Becomes necessary, together with a MISSING Floor variant, once Div is made exact (row 14's fix)."
+  },
+  {
+   "gap": "G9 ChallengeRating",
+   "real": true,
+   "necessary": true,
+   "units": 37,
+   "note": "37 / 19 re-derived (lane 32 / 19); PCGen resolves CR through the CR export token."
+  },
+  {
+   "gap": "G10 Speed(mode)",
+   "real": true,
+   "necessary": true,
+   "units": 39,
+   "note": "Reproduced; row 45's third-argument semantics corrected (bare integer adds)."
+  },
+  {
+   "gap": "G11 MasterVar / MasterLevel",
+   "real": true,
+   "necessary": true,
+   "units": 20,
+   "note": "20 / 13 re-derived incl. PREVAR operands (lane 14 / 7); MasterLevel itself is a row-29 unheld-contributor variable."
+  },
+  {
+   "gap": "G12 Choice with an integer domain",
+   "real": true,
+   "necessary": true,
+   "units": 164,
+   "note": "Reproduced; prose G8 is the same gap."
+  },
+  {
+   "gap": "G13 SizeMod",
+   "real": true,
+   "necessary": true,
+   "units": 2,
+   "note": "2 units; or a 9-entry table over Size."
+  },
+  {
+   "gap": "G14 DiceBySize",
+   "real": true,
+   "necessary": true,
+   "units": 5,
+   "note": "5 list-form UDAM tokens confirmed."
+  },
+  {
+   "gap": "G15 HitDieSize + die step",
+   "real": true,
+   "necessary": true,
+   "units": 8,
+   "note": "8 confirmed."
+  },
+  {
+   "gap": "G16 rational constant",
+   "real": true,
+   "necessary": false,
+   "units": 7,
+   "note": "Disappears under exact Div (row 14's fix)."
+  },
+  {
+   "gap": "If(Cond) / Cmp",
+   "real": false,
+   "necessary": false,
+   "units": 98,
+   "note": "Min/Max encoding exact for integer operands (census: every comparison operand is integer-valued); && -> Min(c1,c2) (189 instances / 20 units the row omitted); || absent."
+  },
+  {
+   "gap": "MISSING: Floor variant + boundary truncation rule (Div exact, truncate toward zero once)",
+   "real": true,
+   "necessary": true,
+   "units": 452,
+   "note": "Not in the lane's list. 255 distinct formulas / 452 units (301 non-DONE) diverge under per-step flooring; 493 units call floor() explicitly."
+  },
+  {
+   "gap": "MISSING: natural-attack value (Dice + attack count + name) for NATURALATTACKS",
+   "real": true,
+   "necessary": true,
+   "units": 2015,
+   "note": "No family has a row; 2,399 instances on 2,015 units (980 non-DONE), 2,253 carry a dice literal (`Bite,...,*1,1d4|Hoove,...,*2,1d6`)."
+  }
+ ],
+ "missing_rows": [
+  "NATURALATTACKS (2,399 instances; 2,015 units; 980 non-DONE; dice-bearing: `Slam,Weapon.Natural...,*1,8d6`) -- no row in any family",
+  "REACHMULT (27 instances; 27 units; 0 non-DONE) -- a reach multiplier, formula family",
+  "MONSTERCLASS:<class>:<n> (1,715 instances; 1,715 units; 32 non-DONE) -- a level grant like ADDLEVEL",
+  "MAXLEVEL (184; 184 units; 141 non-DONE) -- class metadata",
+  "Spell stat-block tokens no family names: SCHOOL 2,451 / 695, CASTTIME 2,375 / 679, TARGETAREA 2,366 / 662, DURATION 2,366 / 664, COMPS 2,352 / 651, SAVEINFO 2,120 / 634, SPELLRES 2,119 / 634, DESCRIPTOR 1,050 / 361, SUBSCHOOL 843 / 174 (units all / non-DONE) -- the spell line's own words; prose family, but uncovered",
+  "DEITYWEAP / ALIGN (455 / 414), COMPANIONLIST (160 / 156), USEUNTRAINED (117 / 42), QUALITY (1,753 / 2), ROLE, NAMEOPT, ITYPE, REPLACES -- metadata no family lists"
+ ],
+ "blockers_confirmed": [
+  "G1: no held-gated variable sum in Expr (5,701-9,733 units; recommendation B with a held-DEFINEr gate)",
+  "G2/G3: prose slots and multi-value SheetValue (4,970 and 1,423 units)",
+  "technical-design section 1 'Div floors' contradicts the oracle: exact Div + boundary truncation + Floor/Ceil needed before AT-35-E2-001 (452 units diverge today)",
+  "Variable index must be case-insensitive (PCGen VariableKey) -- row 30 and bonus V1 both misclassify 38 names / 311 uses",
+  "prose DESC step 5 (same-row DEFINE -> Const) prints 0 on 5,161 arguments and must be removed before the prose pass ships",
+  "NATURALATTACKS has no mapping row (980 non-DONE units)"
+ ]
+}

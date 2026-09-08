@@ -384,6 +384,49 @@ inventing one mid-cycle (`risks-and-open-questions.md §2` R1).
 
 ---
 
+## §15 — Schema v2 landed from the token-mapping synthesis; three rulings PENDING
+
+**What happened (2026-09-08, pre-launch Fable spend under `§14`).** Four Fable lanes mapped the
+corpus's PCGen token vocabulary onto our schema (bonus, formula, prereq, prose); four Fable
+judges tried to refute every row against the corpus and the pinned PCGen Java; one synthesis
+lane reconciled them. Results in `artifacts/epic-2-sheet-rule/token-mapping/`:
+`mapping-table.v1.json` (249 rows: 128 kept, 49 kept-annotated, 49 rewritten, 8 dropped, 23
+added; 9 REFUSE rows by shape; **23,312 of 23,315** non-DONE units reachable, 3 unjoined spells
+uncovered), `SYNTHESIS.md` (12 cross-family conflicts, each resolved to one rule with its
+citation), `blockers.md` (10 work items with owners, 3 rulings). **`technical-design.md §1–§2`
+are now schema v2** — `Expr` gained `Var` (with a typed, converter-emitted contribution table
+folded over HELD rules exactly as PCGen's `BonusManager` folds), `Floor`, `Ceil`, `BaseSize`,
+`SizeMod`, `BaseSave`, `SkillRanks`, `SkillTotal`, `HeldCount`, `ChallengeRating`, `Speed`,
+`HighestSpellLevel`, `MasterLevel`, `MasterVar`; division is exact with ONE truncation at the
+sheet boundary (per-step floor diverged on 255 formulas / 452 units); `prose` is a slot
+template filled at evaluate time; `Applies` is two-valued plus `Situational`. AT-35-E2-001
+**transcribes the table**; a row invented mid-cycle is a defect.
+
+**Three findings that changed the plan, not just the schema:** (1) the `_pfs/` overlay leak is
+826 records, not 215, and 6,686 cross-book `.MOD` rows never attach under today's per-book
+index — the converter's closure is corpus-wide and matches on KEY (`blockers.md` B9, ruling 3);
+(2) the "no class feature has a holder" blocker was **refuted** — Paizo base-class grants are
+already in the closure; only prestige/hybrid/3rd-party level lines are unpersisted, a tool-side
+read (B5); (3) PCGen's oracle export has no skill, speed, DR, DC, or spells-per-day totals, so
+AT-35-E2-005's parity needs new export tokens first (B1, owner AT-35-E2-005).
+
+**Rulings requested — PENDING the operator (`blockers.md` has the full options):**
+
+| # | Question | Recommendation |
+|---|---|---|
+| R1 | `VISIBLE:DISPLAY` rows (2,319 instances of 7,505): follow PCGen and hide them from the printed sheet, or print everything but `NO`? | **(a) hide** — a DISPLAY row is bookkeeping the player never writes; the feature still prints once where the book puts it |
+| R2 | The PI term-hit bucket (~900 records): omit the redacted field, stamp `provenance.pi`, print the licensed remainder — or refuse forever? | **(a) omit-and-stamp** — one outcome for one fact; refusing forever is a carve-out no mechanism can close |
+| R3 | Converter closure scope: corpus-wide (a later book's `.MOD` changes an earlier book's rule, provenance cites it) or per book? | **(a) corpus-wide** — it is what the loader already does and what PCGen does with all campaigns on |
+
+Until ruled, AT-35-E2-001 builds to the recommendations and flags each in its receipt; a
+different ruling is a re-conversion, not a redesign.
+
+**Enforced by:** AT-35-E2-001's evidence (transcription of `mapping-table.v1.json`; the B9
+closure fix landed before the first conversion); AT-35-E2-005 (B1 export tokens); this entry
+re-read at Epic 2's dispatch.
+
+---
+
 ## §10 — Build version
 
 SD-35's first concrete build value is `0.15.0`, stamped in `apps/desktop/package.json` and
