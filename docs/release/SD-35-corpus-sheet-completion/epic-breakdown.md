@@ -144,8 +144,8 @@ EXEMPT` in the receipt (`decisions.md §2`).
 
 **Inputs already built (`decisions.md §15`):** `artifacts/epic-2-sheet-rule/token-mapping/mapping-table.v1.json`
 (249 rows, judged and synthesized — AT-35-E2-001 transcribes it), `SYNTHESIS.md` (the 12
-resolved conflicts), `blockers.md` (B1–B10 with owners; three pending rulings R1–R3 built to
-their recommendations until ruled). `technical-design.md §1–§2` are schema v2. Owners from
+resolved conflicts), `blockers.md` (B1–B10 with owners; rulings R1–R3 **ruled** 2026-09-08 — hide DISPLAY rows,
+omit-and-stamp PI hits, corpus-wide closure — `decisions.md §15`). `technical-design.md §1–§2` are schema v2. Owners from
 `blockers.md`: B2, B5, B7, B9 → AT-35-E2-001 (tool-side reads of un-ingested DEFINE rows,
 prestige level lines, and the `.lst` row for the 1,008 no-`raw_tokens` units; the `_pfs/` skip
 and KEY-based `.MOD` match in the mod index **before** the first conversion); B10 → AT-35-E2-004

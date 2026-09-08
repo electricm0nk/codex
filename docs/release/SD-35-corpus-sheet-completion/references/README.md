@@ -29,7 +29,7 @@ date: 2026-09-07
 | **SD-34's unrun closure is folded into SD-35 Epic 1** (2026-09-07, audit) | `../decisions.md §12` |
 | **`box_ledger.py` retired as a gate; the atlas is the partition** (2026-09-07, audit) | `../decisions.md §13` |
 | **Fable on every lane until dry, then Opus; orchestrator on Opus** (2026-09-07) | `../decisions.md §14` |
-| **Schema v2 from the token-mapping synthesis; rulings R1–R3 pending** (2026-09-08) | `../decisions.md §15`, `../artifacts/epic-2-sheet-rule/token-mapping/{SYNTHESIS,blockers}.md` |
+| **Schema v2 from the token-mapping synthesis; rulings R1–R3 ruled: hide DISPLAY rows, omit-and-stamp PI hits, corpus-wide closure** (2026-09-08) | `../decisions.md §15`, `../artifacts/epic-2-sheet-rule/token-mapping/{SYNTHESIS,blockers}.md` |
 | **Cost scales with token vocabulary, not unit count** (2026-08-31) | `../../SD-34-book-completion/fable-review.md §1.b`, register row C1.6 |
 | **Text-only features are complete** (SD-31 Decision 7, 2026-08-16) — the precedent the sheet rule generalizes | `../../SD-31-corpus-closure-grind/decisions.md` Decision 7 (line 505) |
 | **The interpreter ban is dead** (SD-31 Decision 20, 2026-08-21) — only `derived_evaluator_fixture_check` binds | `../../SD-31-corpus-closure-grind/decisions.md` Decision 20 |

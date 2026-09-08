@@ -38,6 +38,9 @@ oracle, AT-35-E4-001 mapping rows, AT-35-E4-002 oracle run, AT-35-E1-002 gate pl
 
 ## Operator rulings (at most three; each with options and a recommendation)
 
+**RULED 2026-09-08 — the operator accepted all three recommendations (`../../../decisions.md §15`):
+R1 (a) hide, R2 (a) omit-and-stamp, R3 (a) corpus-wide. The options below are kept for the record.**
+
 **Ruling 1 — VISIBLE:DISPLAY rows: PCGen's sheet or "print the rule"?** 2,319 instances (of
 7,505 VISIBLE) are `DISPLAY`, which `Visibility.java:26` defines as "shows up in the GUI, but
 not on the output sheet"; they are selector and helper records (Wizard ~ Scribe Scroll,

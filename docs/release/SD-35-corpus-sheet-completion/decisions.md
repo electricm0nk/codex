@@ -384,7 +384,7 @@ inventing one mid-cycle (`risks-and-open-questions.md §2` R1).
 
 ---
 
-## §15 — Schema v2 landed from the token-mapping synthesis; three rulings PENDING
+## §15 — Schema v2 landed from the token-mapping synthesis; rulings R1–R3 RULED
 
 **What happened (2026-09-08, pre-launch Fable spend under `§14`).** Four Fable lanes mapped the
 corpus's PCGen token vocabulary onto our schema (bonus, formula, prereq, prose); four Fable
@@ -410,7 +410,8 @@ already in the closure; only prestige/hybrid/3rd-party level lines are unpersist
 read (B5); (3) PCGen's oracle export has no skill, speed, DR, DC, or spells-per-day totals, so
 AT-35-E2-005's parity needs new export tokens first (B1, owner AT-35-E2-005).
 
-**Rulings requested — PENDING the operator (`blockers.md` has the full options):**
+**Rulings — RULED by the operator 2026-09-08 ("your ruling suggestions work for me"); the
+recommendation column is now the decision (`blockers.md` keeps the options for the record):**
 
 | # | Question | Recommendation |
 |---|---|---|
@@ -418,8 +419,13 @@ AT-35-E2-005's parity needs new export tokens first (B1, owner AT-35-E2-005).
 | R2 | The PI term-hit bucket (~900 records): omit the redacted field, stamp `provenance.pi`, print the licensed remainder — or refuse forever? | **(a) omit-and-stamp** — one outcome for one fact; refusing forever is a carve-out no mechanism can close |
 | R3 | Converter closure scope: corpus-wide (a later book's `.MOD` changes an earlier book's rule, provenance cites it) or per book? | **(a) corpus-wide** — it is what the loader already does and what PCGen does with all campaigns on |
 
-Until ruled, AT-35-E2-001 builds to the recommendations and flags each in its receipt; a
-different ruling is a re-conversion, not a redesign.
+**R1 → hide `VISIBLE:DISPLAY` and `NO` rows from the printed sheet; a feature prints once,
+where the book puts it.** **R2 → omit the redacted field, stamp `provenance.pi`, print the
+licensed remainder; the record is `sheet-complete`; the 205 value-redacted units stay REFUSE by
+shape.** **R3 → corpus-wide closure; a later book's `.MOD` changes the earlier book's rule and
+provenance cites the foreign row; `_pfs/` is excluded from the MOD INDEX only, and the 56
+records whose base row sits in `_pfs/` convert from their own row tagged `provenance.overlay =
+pfs`.** AT-35-E2-001 builds exactly these; a receipt that deviates is a defect.
 
 **Enforced by:** AT-35-E2-001's evidence (transcription of `mapping-table.v1.json`; the B9
 closure fix landed before the first conversion); AT-35-E2-005 (B1 export tokens); this entry
