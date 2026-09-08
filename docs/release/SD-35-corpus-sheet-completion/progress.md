@@ -26,13 +26,13 @@ process defect** recorded by the epic wrap-up.
 | Epic | Criteria | Complete | In progress | Not started |
 |---|---:|---:|---:|---:|
 | 1 — Tax cut | 6 | 6 | 0 | 0 |
-| 2 — Sheet rule | 5 | 4 | 1 | 0 |
+| 2 — Sheet rule | 5 | 5 | 0 | 0 |
 | 3 — Place and surface | 4 | 0 | 0 | 4 |
 | 4 — Resolve and verify | 3 | 0 | 0 | 3 |
 | 5 — Residues | 5 | 0 | 0 | 5 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **10** | **1** | **19** |
+| **Total** | **30** | **11** | **0** | **19** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,17 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-08 — AT-35-E2-005-DISPOSITION cycle 1 — `e2-005-disposition` — **complete** (orchestrator re-scope recorded; row 11 → complete against its amended bar)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (disposition cycle — it moves no unit; it records where every remaining unit is owned)` — `decisions.md §2`. `pcgen_residue_gate.py --check` at start (`38b67db94e`): `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 38b67db94e --before /tmp/wi-before-AT-35-E2-005-DISPOSITION.json --after docs/work-inventory.json --target-dir /tmp/cargo-sd35-AT-35-E2-005-DISPOSITION`; `regressed=0 added=0 dropped=0`; docs only, no build paid).
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS` after the cycle's work — not risen (no live-side file touched).
+- **Refused tokens:** none by this cycle (no converter run). **The hand-off, re-derived at HEAD** (`python3 artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py` → `non_done=1404 atlas_non_done=1404 refused_non_done=659 not_refused_non_done=745 owned_sum=1404 unowned=0 duplicate_ids=0 verdict=PASS`): of the **1,404 non-DONE of 49,438**, **659** converter-refused → **AT-35-E4-001** (A 1, B 437, C 79, D 43, M 63, U 4, V 1, X 31; 69 refusal strings / 81 shapes — `FORMULA:var(COUNT)=210, unmapped:STARTSKILLPTS=119, SPELLS (PI-redacted token)=66, BONUS:[redacted PI]=62, FORMULA:malformed=62, DEFINE (PI-redacted token)=40, unmapped:MODTOSKILLS=37, unmapped:SPELLSTAT=23, unmapped:MEMORIZE=19, …`; the 144 non-DONE `class` records of 182 refused `class` records first); **391** non-refused V (`literal-verified` 388 + `fixture-verified` 3) → **AT-35-E4-002**; **217** non-refused U 198 + Z 19 → **AT-35-E5-003**; **137** non-refused X → **AT-35-E5-004**. Deferral `1788878644195-at-35-e2-005-disposition-6bbb45`.
+- **What landed:** `epic-breakdown.md` `### AT-35-E2-005` carries a dated amendment (original text kept): the bar is now the pass measured, the report and ledger re-derived, the oracle harness run and agreeing (`compared=42 agree=41 disagree=1` at `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`, the one named), and zero mapping rows added — met at HEAD by cycles 1–4; a new `### AT-35-E2-005-DISPOSITION` section holds the owner rule and the hand-off table; AT-35-E4-001 / E4-002 / E5-003 / E5-004 each state the units they inherited. `decisions.md §16` records the re-scope, citing the four receipts and the reason (the criterion's own "No mapping row is added in this cycle" forbids the only mechanism that moves the 659; cycles 2–4 closed 0 each; cycle 4 `blocked-escalated` under `§8`'s >10-refused-type rule; a fifth cycle is byte-identical). `kanban.md` row 11 → `complete` (Epic column typo `4` → `2` fixed), row 30 added for this cycle. **No carve-out:** every non-DONE unit is owned by a named criterion and stays in AT-35-E5-005's 49,438 of 49,438.
+- **Discoveries (1 `correction` event, `docs/retro/events/at-35-e2-005-disposition.jsonl`):** the four receipts' "745 = V 389 + 3, U 202, X 137, Z 19" sums to 750 — at HEAD 1 V and 4 U units are converter-refused (E4-001's), so the non-refused split is V 391 + U 198 + X 137 + Z 19 = 745 (`…-6224d1`; blast radius: four receipts, four progress entries, row 11, and this cycle's dispatch prompt). `### AT-35-E2-005-DISPOSITION` did not exist in `epic-breakdown.md` at cycle start; this cycle writes it.
+- **Verification (docs gates only, `decisions.md §3`):** no build (`git diff --stat 38b67db94e..HEAD -- src scripts tests data apps` empty); atlas `population=49438 unclassified=0 overlap=0 done_evidence_violations=0` (SD-34 atlas `derived_at` re-stamp reverted); token-coverage `non_done=1404 refused_non_done=659 verdict=PASS`; residue PASS; denominator gate `files_checked=37 violations=0`; hand-off script `verdict=PASS`.
+- **Receipt:** `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle1_receipt.md`. **Epic 2: 5 of 5 complete — the epic wrap-up (`§10`) if not yet run, then Epic 3 opens (`--bucket B --or --bucket C --or --bucket D` → `scoped=559`, or the whole 1,404) on the holdings gap the parity names; AT-35-E4-001 takes the 659 by refusal string, the 144 non-DONE `class` records first.**
 
 ### 2026-09-08 — AT-35-E2-005 cycle 4 — `first-corpus-wide-conversion` (remainder) — **blocked-escalated** (§8 re-scope, not an operator ruling)
 

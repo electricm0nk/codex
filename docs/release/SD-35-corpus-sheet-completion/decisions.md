@@ -436,6 +436,71 @@ re-read at Epic 2's dispatch.
 
 ---
 
+## §16 — Orchestrator re-scope, 2026-09-08: AT-35-E2-005's bar is amended and its remainder handed on unit for unit
+
+**What happened.** AT-35-E2-005 ran four cycles
+(`artifacts/epic-2-sheet-rule/AT-35-E2-005_cycle1_receipt.md`, `_cycle2_`, `_cycle3_`,
+`_cycle4_`). Cycle 1 (`51f91bba11`) made the first corpus-wide pass and closed **21,911 of
+23,315** non-DONE units (DONE 26,123 → 48,034 of 49,438). Cycles 2 (`33deab007b`), 3
+(`c0f16fe417`) and 4 (`bf9594943f` / `cd3d64e578`) each closed **0 of 1,404**, each re-ran the
+pass at HEAD (byte-identical package), the guarded inventory regen (`generated_at`-only diff)
+and the oracle parity (cycle 2 fixed two live-evaluator defects, 11 → 0 disagreements; cycle 3
+widened the export to 42 comparable values, 41 agree / 1 disagree; cycle 4 re-derived cycle 3
+byte for byte). Cycle 4 returned `blocked-escalated` under `workflow-instruction.md §8`'s
+non-self-healable ">10 distinct refused token types surfacing in one cycle — re-scope, do not
+grind": 69 refusal strings / 81 shapes over the 659 refused units, unchanged across all four
+cycles.
+
+**The cause.** The criterion's own text says **"No mapping row is added in this cycle"**, and
+every one of the 659 still-refused units of 1,404 needs a mapping row. The criterion demanded a
+zero population while forbidding the only mechanism that reaches it. The `partial` →
+`withRemainderScope` loop in `workflow-instruction.md §2.4` re-dispatched it twice on that
+contradiction; a fifth cycle would be byte-identical. This is the "orchestrator re-scopes"
+outcome `§6` step 1 names, taken here rather than a fifth run.
+
+**Decision.**
+
+1. **AT-35-E2-005's bar is amended, not rewritten** (`epic-breakdown.md` `### AT-35-E2-005`,
+   amendment dated 2026-09-08; the original text stays visible above it). The amended bar is what
+   the criterion can prove and has proved at HEAD: the corpus-wide pass ran and was measured; the
+   report and ledger were re-derived; the oracle harness ran at
+   `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` and agrees
+   (`compared=42 agree=41 disagree=1`, the one named with its `Expr` and PCGen's value); zero
+   mapping rows were added. Against that bar the criterion is **complete** at `38b67db94e`.
+2. **The remainder is handed on unit for unit, never dropped** — `epic-breakdown.md`
+   `### AT-35-E2-005-DISPOSITION`. Re-derived at HEAD by
+   `python3 artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py` (exit 1 unless the
+   owned cells sum to the live non-DONE total with no unit in two cells and none in none), the
+   1,404 non-DONE of 49,438 are: **659** converter-refused → **AT-35-E4-001** (by refusal string,
+   the 144 non-DONE `class` records of 182 refused `class` records first); **391** non-refused V
+   → **AT-35-E4-002**; **217** non-refused U 198 + Z 19 → **AT-35-E5-003**; **137** non-refused
+   X → **AT-35-E5-004**. Sum 1,404; `unowned=0`. Each successor criterion carries an "Inherited
+   from AT-35-E2-005" line with these counts.
+3. **`kanban.md` row 11 reads `complete`** because the amended bar is met and every remaining
+   unit is owned by a named later criterion — **not** because anything was excused. There is no
+   carve-out: "the engine cannot model X" and "not reachable" remain numbers, and the numbers
+   above are all of them.
+
+**What this is not.** Not a waiver of the sheet rule (`§1`) or the batch floor (`§2`): the 659
+are AT-35-E4-001's first cycle, scoped by refusal string and bundled up to the floor as `§2`
+requires. Not a deferral in the `blocker-closure-doctrine.md` sense: the units stay in the
+Definition of Done (AT-35-E5-005's 49,438 of 49,438), owned by criteria that dispatch in order.
+Not a silent rewrite: the original criterion text is preserved and the amendment is dated and
+reasoned in place.
+
+**Correction recorded while re-deriving** (`docs/retro/events/at-35-e2-005-disposition.jsonl`):
+the four receipts' "745 = V 389 + 3, U 202, X 137, Z 19" sums to 750; at HEAD 1 V and 4 U
+units are converter-refused (and thus AT-35-E4-001's), so the non-refused split is
+V 391 + U 198 + X 137 + Z 19 = 745. Re-deriving from the inventory rather than copying the
+receipt is what caught it (`§9` L8).
+
+**Enforced by:** `AT-35-E2-005-DISPOSITION_handoff.py`'s nonzero exit on an unowned or
+double-owned unit; the inherited-units lines on AT-35-E4-001, E4-002, E5-003, E5-004; AT-35-E7-001's
+scan, which re-derives every `complete` from the repo and checks that every kanban row is
+`complete` with no "or filed under Open blockers".
+
+---
+
 ## §10 — Build version
 
 SD-35's first concrete build value is `0.15.0`, stamped in `apps/desktop/package.json` and

@@ -228,6 +228,90 @@ re-derived; `completion_atlas.py --check` before and after; the oracle compariso
 `PCGEN_ORACLE_SHA`, `compared=<n> agree=<n> disagree=<n>` and every disagreement named with its
 `Expr` and PCGen's value.
 
+**Amendment, 2026-09-08 — orchestrator re-scope (`decisions.md §16`; receipt
+`artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle1_receipt.md`).** The text above
+stands as written; from this date the criterion is judged by the bar below. Four cycles ran
+(`artifacts/epic-2-sheet-rule/AT-35-E2-005_cycle1_receipt.md` … `_cycle4_receipt.md`): cycle 1
+closed 21,911 of 23,315 non-DONE units; cycles 2, 3 and 4 each closed 0 of 1,404; cycle 4
+returned `blocked-escalated` under `workflow-instruction.md §8`'s ">10 distinct refused token
+types in one cycle — re-scope, do not grind" (69 refusal strings / 81 shapes over the 659
+refused units of 1,404). The cause is not a defect in the work but in the bar: the text above
+says "No mapping row is added in this cycle", and every one of the 659 needs a mapping row —
+the criterion demanded a zero population while forbidding the only mechanism that reaches it.
+A fifth cycle would be byte-identical to cycles 3 and 4. **Amended bar — what the criterion can
+prove and has proved:** (1) the corpus-wide pass ran and was **measured** (25.64 s for 49,438
+records, cycle 4; 24.6 s, cycle 1); (2) the report and the ledger were **re-derived** —
+`token_coverage.py --check` → `non_done=1404 refused_non_done=659 shapes=81 verdict=PASS`,
+`completion_atlas.py --check` → `unclassified=0 overlap=0 done_evidence_violations=0` before
+and after; (3) the oracle harness ran at
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` and **agrees** —
+`compared=42 agree=41 disagree=1 unverifiable=5`, the one disagreement (Weapon Focus on the
+deterministic fighter, ours 0 vs PCGen 1, `Var vb1e14268d73c2def`) named with its `Expr` and
+PCGen's value and attributed to a holdings gap owned by AT-35-E3-001; (4) **zero mapping rows
+were added**. Its remainder is not dropped: it is named and handed on, unit for unit, in
+`### AT-35-E2-005-DISPOSITION` below, and each successor criterion states what it inherited.
+Complete against this bar at `38b67db94e`.
+
+### AT-35-E2-005-DISPOSITION — the re-scope recorded, and every remaining unit owned by a named criterion
+
+A docs-only cycle (`SCOPE_GATE: EXEMPT` — it moves no unit) that records the orchestrator's
+re-scope of AT-35-E2-005 (the amendment above; `decisions.md §16`), reconciles `kanban.md`
+row 11, and hands the remainder on so that **no non-DONE unit is orphaned**. The hand-off is
+re-derived at HEAD from `docs/work-inventory.json` (the atlas partition),
+`data/sheet_rules/_refused.json` and `artifacts/epic-2-sheet-rule/token-coverage.json` — never
+copied from a receipt — by
+`python3 artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py`, which exits 1 unless
+the owned cells sum to the live non-DONE total with no unit in two cells and none in none.
+
+**Owner rule.** A non-DONE unit the converter refused (its id is in `_refused.json`) needs a
+mapping row → AT-35-E4-001, whatever its bucket. A non-DONE unit the converter did **not**
+refuse is owned by its atlas bucket's to-zero criterion: V → AT-35-E4-002, U and Z →
+AT-35-E5-003, X → AT-35-E5-004 (A → E5-001, B → E3-001/E3-002 by kind, C → E3-003, D →
+E5-002, M → E4-001 — all **0** units at HEAD, every non-refused A/B/C/D/M unit having been
+stamped `sheet-complete` by cycle 1).
+
+**The hand-off at `38b67db94e` (1,404 non-DONE of 49,438):**
+
+| Owner | Units | Cells (bucket / status / refused) | By kind |
+|---|---:|---|---|
+| AT-35-E4-001 | **659** | A 1, B 437, C 79, D 43, M 63 (`engine-does-not-hold` / `ingested-magnitude`), U 4, V 1, X 31 — all refused | class_feature 334, class 144, ability 91, feat 32, race_trait 16, equipment_modifier 10, template 9, equipment 8, skill 7, spell 3, monster 2, companion 1, power 1, trait 1 |
+| AT-35-E4-002 | **391** | V: `literal-verified` 388 + `fixture-verified` 3 — not refused | class_feature 184, race_trait 152, equipment 42, equipment_modifier 9, spell 3, feat 1 |
+| AT-35-E5-003 | **217** | U `unmeasurable` 198 + Z `not-started` 19 — not refused | equipment 138, feat 58, equipment_modifier 21 |
+| AT-35-E5-004 | **137** | X `deferred-with-reason` 137 — not refused | class_feature 123, companion 12, feat 2 |
+| **Sum** | **1,404** | = `completion_atlas.py --check` non-DONE at HEAD (`A 1 B 437 C 79 D 43 M 63 V 392 U 202 X 168 Z 19`); `unowned=0 duplicate_ids=0` | |
+
+The 659 by refusal string (`token-coverage.json` `refusal_shapes[*].non_done`, 69 strings with
+a non-DONE count, multiplicity 851 over 659 units): `FORMULA:var(COUNT)=210,
+unmapped:STARTSKILLPTS=119, SPELLS (PI-redacted token)=66, BONUS:[redacted PI]=62,
+FORMULA:malformed (parser refusals)=62, DEFINE (PI-redacted token)=40, unmapped:MODTOSKILLS=37,
+unmapped:SPELLSTAT=23, unmapped:MEMORIZE=19, FORMULA:var(<export token>) (ENCUMBERANCE)=17,
+FORMULA:identifier DEFINEd nowhere (Bloodrager_CF_BloodlinePowers …)=12, unmapped:SPELLLIST=12,
+BONUS:EQM=11, FORMULA:CL-no-owner=11, FORMULA:identifier DEFINEd nowhere
+(Bloodrager_CF_BloodlineSpells …)=11, FORMULA:var(SKILL.<name>.MISC)=11, BONUS:ITEMCOST=10,
+BONUS:STAT (target BASESPELLKNOWNSTAT;Class)=7, BONUS:STAT (target BASESPELLSTAT;Class)=7,
+FORMULA:var(STAT)=7, BONUS:SITUATION (target shape)=6, FORMULA:var(SPELLFAILURE)=5,
+unmapped:KNOWNSPELLS=5, and 46 strings at 1–4 each` — the full list is
+`artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.json`
+`refused_non_done_by_shape`. The **144 non-DONE `class` records** (of **182** refused `class`
+records in `_refused.json`; the other 38 are DONE by an earlier route) go first — they carry
+`unmapped:STARTSKILLPTS / SPELLSTAT / MEMORIZE / SPELLLIST / BONUSSPELLSTAT / SPELLBOOK`, and
+their absence is what the live evaluator's class-level fold routes around (cycle 2).
+
+**Correction recorded (`docs/retro/events/at-35-e2-005-disposition.jsonl`):** the four receipts
+wrote the 745 non-refused units as "V 389 + 3, U 202, X 137, Z 19", which sums to 750. At HEAD
+1 V unit and 4 U units are converter-refused and belong to the 659; the non-refused split is
+V 391 + U 198 + X 137 + Z 19 = 745.
+
+**Evidence:** `AT-35-E2-005-DISPOSITION_handoff.py` exits 0 at HEAD with
+`non_done=1404 atlas_non_done=1404 refused_non_done=659 not_refused_non_done=745 owned_sum=1404
+unowned=0 duplicate_ids=0 verdict=PASS`, and its table is committed as
+`AT-35-E2-005-DISPOSITION_handoff.json`; `decisions.md §16` exists and cites the four receipts;
+`kanban.md` row 11 reads `complete` with a pointer to the amendment and the table; AT-35-E4-001,
+AT-35-E4-002, AT-35-E5-003 and AT-35-E5-004 each carry an "Inherited from AT-35-E2-005" line
+whose counts are the table's; `denominator_gate.py --check` over the package →
+`violations=0`; `pcgen_residue_gate.py --check` unchanged (`live_files=260`). `SCOPE_GATE:
+EXEMPT` and `builds_recorded=0` in the receipt — nothing outside `docs/` changes.
+
 ---
 
 ## Epic 3 — Place and surface
@@ -291,6 +375,16 @@ roster in the same cycle.
 compute-bearing token type with a mapping row or a named refusal with count; the oracle
 comparison per cycle with disagreements named.
 
+**Inherited from AT-35-E2-005 (2026-09-08, `decisions.md §16`, `### AT-35-E2-005-DISPOSITION`):**
+the **659** converter-refused non-DONE units of 1,404 at `38b67db94e` — every unit whose id is
+in `data/sheet_rules/_refused.json` and is not DONE, whatever its bucket (A 1, B 437, C 79,
+D 43, M 63, U 4, V 1, X 31; by kind class_feature 334, class 144, ability 91, feat 32,
+race_trait 16, equipment_modifier 10, template 9, equipment 8, skill 7, spell 3, monster 2,
+companion 1, power 1, trait 1). Scope them by refusal string (69 strings / 81 shapes,
+`token-coverage.json` `refusal_shapes`), the **144 non-DONE `class` records** (of 182 refused
+`class` records) first. This criterion's bar is therefore "M at 0 **and** the refused set at 0",
+not M alone. Re-derive: `python3 artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py`.
+
 ### AT-35-E4-002 — bucket V goes through the oracle harness once
 
 392 units at authoring. One corpus-wide run of `scripts/oracle_harness/`, per-unit cost
@@ -301,6 +395,12 @@ retired.
 
 **Evidence:** V at 0; the harness receipt with `PCGEN_ORACLE_SHA`; `oracle_disagreement=<n> of
 392`, every disagreement named.
+
+**Inherited from AT-35-E2-005 (2026-09-08, `decisions.md §16`, `### AT-35-E2-005-DISPOSITION`):**
+the **391** non-refused bucket-V units of 1,404 non-DONE at `38b67db94e` — `literal-verified`
+388 + `fixture-verified` 3 (by kind class_feature 184, race_trait 152, equipment 42,
+equipment_modifier 9, spell 3, feat 1). The 392nd V unit at HEAD is converter-refused and is
+AT-35-E4-001's. Re-derive: `python3 artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py`.
 
 ### AT-35-E4-003 — the rate ledger
 
@@ -341,6 +441,12 @@ generator path, then converts.
 **Evidence:** U and Z at 0; `corpus_literal_sweep` examined-count moved by exactly the
 `beginner_box` record delta.
 
+**Inherited from AT-35-E2-005 (2026-09-08, `decisions.md §16`, `### AT-35-E2-005-DISPOSITION`):**
+**217** non-refused units of 1,404 non-DONE at `38b67db94e` — U `unmeasurable` 198 + Z
+`not-started` 19 (by kind equipment 138, feat 58, equipment_modifier 21). The other 4 U units
+at HEAD are converter-refused and are AT-35-E4-001's. Re-derive:
+`python3 artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py`.
+
 ### AT-35-E5-004 — bucket X reaches zero: the per-character choice filter
 
 168 at authoring. SD-34 `decisions.md §17`'s operator requirement stands: the backend filters
@@ -350,6 +456,12 @@ side) and expose it on the existing level-up IPC.
 
 **Evidence:** X at 0; a desktop test: a level-3 fixture's option list excludes a failed-prereq
 option and includes a met one.
+
+**Inherited from AT-35-E2-005 (2026-09-08, `decisions.md §16`, `### AT-35-E2-005-DISPOSITION`):**
+the **137** non-refused X `deferred-with-reason` units of 1,404 non-DONE at `38b67db94e` (by
+kind class_feature 123, companion 12, feat 2). The other 31 X units at HEAD are
+converter-refused and are AT-35-E4-001's. Re-derive:
+`python3 artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py`.
 
 ### AT-35-E5-005 — the corpus reaches 49,438 of 49,438, and the capability register is closed
 

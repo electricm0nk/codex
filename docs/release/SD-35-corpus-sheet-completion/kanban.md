@@ -8,8 +8,9 @@ board: local-file (Hermes board retired 2026-08-01, SD-30 Decision 14a)
 
 # SD-35 Kanban
 
-One row per acceptance criterion. **29 rows covering 30 criteria** — the last row carries both
-remaining closure criteria. A cycle marks its row from inside the dispatched agent
+One row per acceptance criterion. **30 rows covering 30 criteria** — row 29 carries both
+remaining closure criteria; row 30 is AT-35-E2-005's disposition cycle (`workflow-instruction.md
+§5`: one row per extra cycle), not a 31st criterion. A cycle marks its row from inside the dispatched agent
 (`workflow-instruction.md §6` step 8), from the mechanical receipt rows, never from effort.
 
 **Status vocabulary:** `not-started` | `in-progress` | `complete` | `blocked-escalated`.
@@ -37,7 +38,8 @@ Notes column.** Notes here are a pointer, never a story.
 | 8 | `live-evaluator-and-sheet-section` | 2 | AT-35-E2-002 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-002_cycle1_receipt.md`; `docs/retro/events/at-35-e2-002.jsonl` — `909bb0837c` |
 | 9 | `sheet-complete-status` | 2 | AT-35-E2-003 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-003_cycle1_receipt.md`; `docs/retro/events/at-35-e2-003.jsonl` — `a81c2a005c` |
 | 10 | `token-coverage-ledger` | 2 | AT-35-E2-004 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-004_cycle1_receipt.md`; `artifacts/epic-2-sheet-rule/token-coverage.json`; `data/sheet_rules/_tokens.json` — `344f18d1e1` |
-| 11 | `first-corpus-wide-conversion` | 4 | AT-35-E2-005 | blocked-escalated | `artifacts/epic-2-sheet-rule/AT-35-E2-005_cycle4_receipt.md` (cycles 1–3: `…_cycle1_receipt.md`, `…_cycle2_receipt.md`, `…_cycle3_receipt.md`); `artifacts/epic-2-sheet-rule/oracle-parity/sheet-parity.json`; `docs/retro/events/at-35-e2-005.jsonl` — `cd3d64e578` (cycle 4: byte-identical re-derivation of cycle 3 at HEAD, parity 41/42, 0 closed; §8 >10 refused types → orchestrator re-scope to Epic 3 / AT-35-E4-001, no Open-blockers entry) |
+| 11 | `first-corpus-wide-conversion` | 2 | AT-35-E2-005 | complete | Against the amended bar — `epic-breakdown.md` `### AT-35-E2-005` amendment 2026-09-08 + `### AT-35-E2-005-DISPOSITION` hand-off table; `decisions.md §16`; `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.json` (1,404 of 1,404 owned); receipts `AT-35-E2-005_cycle1..4_receipt.md`; `oracle-parity/sheet-parity.json` — `cd3d64e578` |
+| 30 | `e2-005-disposition` | 2 | AT-35-E2-005-DISPOSITION (row 11's disposition cycle, `§5` one row per extra cycle) | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle1_receipt.md`; `AT-35-E2-005-DISPOSITION_handoff.py` / `.json`; `docs/retro/events/at-35-e2-005-disposition.jsonl` |
 | 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | not-started | |
 | 13 | `other-kinds-b-zero` | 3 | AT-35-E3-002 | not-started | |
 | 14 | `bucket-c-zero` | 3 | AT-35-E3-003 | not-started | |
