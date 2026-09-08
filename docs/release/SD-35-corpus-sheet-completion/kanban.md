@@ -40,15 +40,15 @@ Notes column.** Notes here are a pointer, never a story.
 | 10 | `token-coverage-ledger` | 2 | AT-35-E2-004 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-004_cycle1_receipt.md`; `artifacts/epic-2-sheet-rule/token-coverage.json`; `data/sheet_rules/_tokens.json` — `344f18d1e1`; cycle 2 re-dispatch re-verifies at HEAD and corrects cycle 1's batch-floor figure (44 → 7 types ≥500 non-DONE): `artifacts/epic-2-sheet-rule/AT-35-E2-004_cycle2_receipt.md` |
 | 11 | `first-corpus-wide-conversion` | 2 | AT-35-E2-005 | complete | Against the amended bar — `epic-breakdown.md` `### AT-35-E2-005` amendment 2026-09-08 + `### AT-35-E2-005-DISPOSITION` hand-off table; `decisions.md §16`; `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.json` (1,404 of 1,404 owned); receipts `AT-35-E2-005_cycle1..4_receipt.md`; `oracle-parity/sheet-parity.json` — `cd3d64e578`; cycle 5 re-dispatch re-verifies the amended bar at HEAD and corrects the cycle-4 receipt's `cmp`-on-`ours.json` stability test: `artifacts/epic-2-sheet-rule/AT-35-E2-005_cycle5_receipt.md` — `77fa8a0d31` |
 | 30 | `e2-005-disposition` | 2 | AT-35-E2-005-DISPOSITION (row 11's disposition cycle, `§5` one row per extra cycle) | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle1_receipt.md`; `AT-35-E2-005-DISPOSITION_handoff.py` / `.json`; `docs/retro/events/at-35-e2-005-disposition.jsonl`; cycle 2 re-dispatch re-derives the hand-off at HEAD and confirms all five obligations unchanged (`owned_sum=1404 unowned=0`, no discoveries): `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle2_receipt.md` |
-| 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | blocked-escalated | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle1_receipt.md`; `docs/retro/events/at-35-e3-001.jsonl` (cycle 1 did not start: `scoped=214 … verdict=FAIL_UNDER_FLOOR`, all 214 converter-refused, 24 refused types; §8 → orchestrator re-scope to AT-35-E4-001's 623-unit refused bundle, no Open-blockers entry) |
+| 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; `class_feature` B = 0 (`completion_atlas.py --by-kind`). Cycle 1's `blocked-escalated` superseded by the cycle-2 bundle |
 | 13 | `other-kinds-b-zero` | 3 | AT-35-E3-002 | not-started | |
-| 14 | `bucket-c-zero` | 3 | AT-35-E3-003 | not-started | |
+| 14 | `bucket-c-zero` | 3 | AT-35-E3-003 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; bucket C 79 → 0, emptied by the same bundled cycle (`completion_atlas.py --check`) |
 | 15 | `epic-3-rate-ledger` | 3 | AT-35-E3-004 | not-started | |
 | 16 | `bucket-m-zero` | 4 | AT-35-E4-001 | not-started | |
 | 17 | `bucket-v-oracle-once` | 4 | AT-35-E4-002 | not-started | |
 | 18 | `epic-4-rate-ledger` | 4 | AT-35-E4-003 | not-started | |
-| 19 | `bucket-a-two-tables` | 5 | AT-35-E5-001 | not-started | |
-| 20 | `bucket-d-zero` | 5 | AT-35-E5-002 | not-started | |
+| 19 | `bucket-a-two-tables` | 5 | AT-35-E5-001 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; `missing_engine_tables.py --check` → `population=0`, bucket A 1 → 0, emptied by the same bundled cycle |
+| 20 | `bucket-d-zero` | 5 | AT-35-E5-002 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; bucket D 43 → 0, every sub-cause named in `progress.md`, emptied by the same bundled cycle |
 | 21 | `buckets-u-z-zero` | 5 | AT-35-E5-003 | not-started | |
 | 22 | `bucket-x-choice-filter` | 5 | AT-35-E5-004 | not-started | |
 | 23 | `corpus-49438-of-49438` | 5 | AT-35-E5-005 | not-started | |

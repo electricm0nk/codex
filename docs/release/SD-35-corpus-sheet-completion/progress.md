@@ -27,12 +27,12 @@ process defect** recorded by the epic wrap-up.
 |---|---:|---:|---:|---:|
 | 1 — Tax cut | 6 | 6 | 0 | 0 |
 | 2 — Sheet rule | 5 | 5 | 0 | 0 |
-| 3 — Place and surface | 4 | 0 | 1 | 3 |
+| 3 — Place and surface | 4 | 2 | 0 | 2 |
 | 4 — Resolve and verify | 3 | 0 | 0 | 3 |
-| 5 — Residues | 5 | 0 | 0 | 5 |
+| 5 — Residues | 5 | 2 | 0 | 3 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **11** | **1** | **18** |
+| **Total** | **30** | **15** | **0** | **15** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,73 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-08 — AT-35-E3-001 cycle 2 — `class-feature-b-zero` — **complete** (bundled B+C; term-level refusal replaces record-level refusal in the converter)
+
+- **Scope gate:** `scoped=516 remaining_non_done=1404 floor=500 verdict=PASS` —
+  `python3 scripts/cycle_scope_gate.py --min 500 --bucket B --or --bucket C`
+  (`scope=bucket=B OR bucket=C`, `scoped_by_bucket=B:437 C:79`). The criterion's own scope
+  (`--bucket B --kind class_feature`) returned `scoped=214 … verdict=FAIL_UNDER_FLOOR`, cycle 1's
+  finding, so the cycle bundled the rest of Epic 3's buckets per the orchestrator's 2026-09-08
+  bundling rule. Residue at start: `live_files=260 live_hits=12736 baseline_files=260
+  baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=618 relabeled=0 rust_lines_changed=232 ratio=0.38 builds_recorded=3
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since a542652c5e…`; `regressed=0
+  added=0 dropped=0`; `closed_by_kind=ability:91 class:144 class_feature:302 companion:1
+  equipment:6 equipment_modifier:10 feat:28 monster:2 power:1 race_trait:16 skill:7 template:9
+  trait:1`). `builds_recorded=3` is **above `decisions.md §3`'s one-build target** and is named
+  here for `AT-35-E3-004`'s ledger: the converter build, the
+  `corpus_literal_sweep`/`derived_evaluator_fixture_check` build the inventory's stamp-loss guard
+  demanded, and the test build — sequential prerequisites, not three verification passes.
+  `ratio=0.38` is well under `decisions.md §4`'s 3.0.
+- **Refused-token remainder:** `no_corpus_record=2` — `book_of_the_damned_volume_2:spell:summon_demons_nascent_demon_lord`
+  and `ultimate_combat:spell:share_language_communal`, both bucket B, kind `spell`. They join to
+  no corpus record at all, so the converter has no source row to convert and degradation cannot
+  reach them; they are AT-35-E3-002's whole remaining population. Deferral
+  `1788899844992-at-35-e3-001-e163d1`. **Zero** refused token types remain for `class_feature`.
+- **What changed.** The converter refused the **whole record** when any single token of its
+  closure had no mapping row or would not lower, so 1,810 records — 659 of them non-DONE units —
+  never reached `data/sheet_rules/` and the `sheet-complete` rung had nothing to stamp. That is a
+  carve-out wearing a refusal's clothes. `ctx::RECORD_REFUSAL_SHAPES` now names the only shapes
+  that still delete a record (`decisions.md §15` R2's value-redacted shape; `no_corpus_record` /
+  `no_source_row` are handled before conversion); every other unlowerable term is a **term-level
+  degradation** — the token contributes no number, the record converts, and its principal value
+  becomes `SheetValue::Text` with `target`/`bonus_type`/`also` cleared, so the sheet prints the
+  rule's own words (`§1` form 3) and no partly-read magnitude folds into a sheet total. `§15` R2's
+  three PI rows now do what their own mapping-table row rule already said — omit the redacted
+  field, stamp `provenance.pi`, print the licensed remainder. The census keeps naming every
+  degraded shape (`_tokens.json.degradations`, `_report.json.degraded_by_token_type`), separate
+  from `refusals`, so `token_coverage.py`'s refused-set ledger still balances.
+- **Movement.** 618 closed, 0 relabelled, 0 regressed. Non-DONE **1,404 → 786 of 49,438**;
+  buckets `DONE 48652 / A 0 / B 2 / C 0 / D 0 / M 3 / V 392 / U 202 / X 168 / Z 19`.
+  `class_feature (n=18043): DONE=17704 A=0 B=0 C=0 D=0 M=0 V=185 U=0 X=154 Z=0` — the criterion's
+  bar. Converter population `48601 converted + 837 refused = 49438 records`, with **973 degraded
+  records of 48,601 converted** over 79 degradation shapes (largest, over those 973:
+  `FORMULA:var(COUNT)` 211, `unmapped:STARTSKILLPTS` 162, `unmapped:SLOTS` 95,
+  `FORMULA:malformed (parser refusals)` 87, `SPELLS (PI-redacted token)` 78,
+  `BONUS:[redacted PI]` 62).
+- **Cards emptied and closed in the same cycle**, each pointing at this cycle's receipt:
+  **AT-35-E3-003** (bucket C 79 → 0), **AT-35-E5-002** (bucket D 43 → 0), **AT-35-E5-001**
+  (bucket A 1 → 0; `missing_engine_tables.py --check` → `population=0 kinds=0`; the unit,
+  `ultimate_psionics:power:physical_acceleration`, moved
+  `engine-does-not-hold`/`power_content_has_no_engine_table` →
+  `sheet-complete`/`sheet_rule_rendered:words`). AT-35-E5-002's sub-causes, all 43 now DONE:
+  `class_modelled_but_no_observed_delta_on_the_rendered_snapshot` 29,
+  `class_feature_of_unmodelled_corpus_class:*` 9 (aldori_swordlord 3; diabolist, hellknight_signifer,
+  magaambyan_arcanist, metamorph, psychic_fist, sighted_seeker 1 each),
+  `skill_content_table_holds_zero_magnitude_record_pending_wiring_class_review` 4,
+  `template_content_table_holds_zero_magnitude_record_pending_wiring_class_review` 1.
+- **Correction.** `1788899836496-at-35-e3-001-312a28`: the criterion names the `applies`
+  derivation and SD-33's 1,128 unmatched pool-group prefixes as the mechanism; at `a542652c5e`
+  all 214 `class_feature` bucket-B units (and all 516 of the bundled scope) were already held by
+  `applies` and were blocked instead by record-level refusal. SD-33's open deferral 1 is closed by
+  consequence: no `class_feature` unit is unheld at HEAD.
+- **Self-heal.** Two count pins this change moved, healed in the same commit
+  (`workflow-instruction.md §8`'s self-healable list): `class_feature_pool_catalog`'s
+  excluded-class population 1 → 0 (its own live query), and `formula_interpreter_corpus_wide`'s
+  F1 239 → 135 (`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json
+  --corpus-root data/corpus`).
+- **Receipt:** `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`.
 
 ### 2026-09-08 — AT-35-E2-005-DISPOSITION cycle 2 — `e2-005-disposition` — **complete** (re-dispatch of a closed disposition cycle; the hand-off re-derived at HEAD and unchanged, no discoveries)
 
