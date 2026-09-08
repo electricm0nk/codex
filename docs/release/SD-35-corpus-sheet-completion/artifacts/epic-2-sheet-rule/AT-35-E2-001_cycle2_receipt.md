@@ -6,7 +6,7 @@ re-verified every clause of the criterion's `Evidence:` sentence at HEAD `451051
 code and no data, and closes zero units — the same shape as the three earlier re-dispatch
 re-verifications on this branch (`986084c5a4`, `06872eff73`, `3c43cf0531`).
 
-- **Commit SHA:** `<docs-commit>` (this receipt, `progress.md`, `kanban.md`, the two retro events; verified at HEAD `4510517993194cdc89f4dae56ca1380836fb6b15`, unchanged by this cycle)
+- **Commit SHA:** `969d5b9402cc29bf42b662bfeeea155e84714d5e` (this receipt, `progress.md`, `kanban.md`, the two retro events — a docs-only commit; this line's own SHA is pinned by the follow-up commit, the pattern `942c8d3ae5` set for `AT-35-E1-002_cycle2`). The tree verified is HEAD `4510517993194cdc89f4dae56ca1380836fb6b15`, unchanged by this cycle.
 - **Scope gate:** `SCOPE_GATE: EXEMPT (converter-building cycle — closes zero units by design; AT-35-E2-005 is the pass that moves the population)` (`decisions.md §2`; the criterion is additionally already at zero, so the re-verification moves nothing by construction). `python3 scripts/pcgen_residue_gate.py --check` at cycle start: `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
 - **Files touched:** `artifacts/epic-2-sheet-rule/AT-35-E2-001_cycle2_receipt.md` (this file, new), `progress.md`, `kanban.md`, `docs/retro/events/at-35-e2-001.jsonl` (2 corrections appended). **No file outside `docs/` changed** — no `src/`, no `scripts/`, no `data/`, no `apps/`.
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS (`git diff --unified=0 fe5ae6cd4a...4510517993 -- <Epic 2 file-touch set>`, `':!**/__tests__/**' ':!**/*.test.*'`)
