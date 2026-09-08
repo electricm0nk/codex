@@ -45,7 +45,7 @@
  },
  "rows": [
   {
-   "sd34_row": 13,
+   "row": 13,
    "card": "core-bucket-b-zero",
    "criterion": "AT-34-E3-001",
    "status_at_cut": "in-progress",
@@ -65,7 +65,7 @@
    "note": "core_rulebook bucket B at the cut, by kind; every unit is class_feature."
   },
   {
-   "sd34_row": 14,
+   "row": 14,
    "card": "core-bucket-c-zero",
    "criterion": "AT-34-E3-002",
    "status_at_cut": "in-progress",
@@ -85,7 +85,7 @@
    "note": "core_rulebook bucket C at the cut."
   },
   {
-   "sd34_row": 15,
+   "row": 15,
    "card": "core-buckets-m-v-d-u-x-zero",
    "criterion": "AT-34-E3-003",
    "status_at_cut": "in-progress",
@@ -229,7 +229,7 @@
    "note": "core_rulebook buckets M/V/D/U/X at the cut, by kind."
   },
   {
-   "sd34_row": 17,
+   "row": 17,
    "card": "core-rulebook-zero-remaining",
    "criterion": "AT-34-E3-005",
    "status_at_cut": "in-progress",
@@ -241,7 +241,7 @@
    "note": "Gate over rows 13/14/15 \u2014 the same 1529 units, owned by the same criteria; the whole-book-to-zero claim itself is AT-35-E5-005 (corpus 49,438 of 49,438). Counted once, under rows 13/14/15."
   },
   {
-   "sd34_row": 20,
+   "row": 20,
    "card": "ultimate-campaign-zero-remaining",
    "criterion": "AT-34-E4-002",
    "status_at_cut": "partial",
@@ -288,7 +288,7 @@
    "note": "ultimate_campaign non-DONE at the cut, by bucket and kind."
   },
   {
-   "sd34_row": 26,
+   "row": 26,
    "card": "final-acceptance-scan",
    "criterion": "AT-34-E6-001",
    "status_at_cut": "not-started",
@@ -300,7 +300,7 @@
    "note": "SD-34's final-acceptance scan never ran; SD-35's AT-35-E7-001 scans the corpus these rows now belong to. Zero units."
   },
   {
-   "sd34_row": 27,
+   "row": 27,
    "card": "retro-sweep-archdocs-pr",
    "criterion": "AT-34-E6-002 + AT-34-E6-003",
    "status_at_cut": "not-started",
@@ -314,7 +314,7 @@
    "note": "Retrospective: written by AT-35-E1-006 (docs/retro/sd34-book-completion-retrospective.md). Sweep, architecture docs, PR: SD-34 merged by operator (PR #383, fe5ae6cd4a); tranche/14 deleted on origin; SD-35 AT-35-E7-002/003 own the successor sweep and docs. Zero units."
   },
   {
-   "sd34_row": 28,
+   "row": 28,
    "card": "salvage-2026-08-30",
    "criterion": "AT-34-E4-002 (continuation) + bucket-v-widen infra",
    "status_at_cut": "partial",
@@ -329,7 +329,7 @@
    "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
   },
   {
-   "sd34_row": 29,
+   "row": 29,
    "card": "trait-drawback-capability-built",
    "criterion": "AT-34-E4-002 (cycle 3)",
    "status_at_cut": "partial",
@@ -344,7 +344,7 @@
    "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
   },
   {
-   "sd34_row": 30,
+   "row": 30,
    "card": "trait-choice-spine-and-picker",
    "criterion": "AT-34-E4-002 (cycle 4)",
    "status_at_cut": "partial",
@@ -359,7 +359,7 @@
    "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
   },
   {
-   "sd34_row": 31,
+   "row": 31,
    "card": "trait-family-choice-spine",
    "criterion": "AT-34-E4-002 (cycle 5)",
    "status_at_cut": "partial",
@@ -374,7 +374,7 @@
    "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
   },
   {
-   "sd34_row": 32,
+   "row": 32,
    "card": "trait-flat-save-slice",
    "criterion": "AT-34-E4-002 (cycle 6)",
    "status_at_cut": "partial",
@@ -389,7 +389,7 @@
    "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
   },
   {
-   "sd34_row": 33,
+   "row": 33,
    "card": "trait-initiative-concentration-slice",
    "criterion": "AT-34-E4-002 (cycle 7)",
    "status_at_cut": "partial",
@@ -404,7 +404,7 @@
    "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
   },
   {
-   "sd34_row": 34,
+   "row": 34,
    "card": "trait-ability-diff-formula-slice",
    "criterion": "AT-34-E4-002 (cycle 8)",
    "status_at_cut": "in-progress",
@@ -419,7 +419,7 @@
    "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
   },
   {
-   "sd34_row": 35,
+   "row": 35,
    "card": "trait-situational-skill-slice",
    "criterion": "AT-34-E4-002 (cycle 9)",
    "status_at_cut": "in-progress",
@@ -434,7 +434,7 @@
    "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
   },
   {
-   "sd34_row": 36,
+   "row": 36,
    "card": "trait-picker-gap-fix-and-caster-level-skill-slice",
    "criterion": "AT-34-E4-002 (cycle 10)",
    "status_at_cut": "in-progress",
@@ -449,7 +449,7 @@
    "note": "Per-cycle row over a subset of ultimate_campaign; its remaining units are counted once under row 20. Zero additional units."
   },
   {
-   "sd34_row": 37,
+   "row": 37,
    "card": "mine-bucket-d",
    "criterion": "wave 32, lane C (no AT-34-E# card yet)",
    "status_at_cut": "partial",

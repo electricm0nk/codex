@@ -32,7 +32,7 @@ Notes column.** Notes here are a pointer, never a story.
 | 3 | `test-families-table-driven` | 1 | AT-35-E1-003 | not-started | |
 | 4 | `ratio-row-and-gate-scope` | 1 | AT-35-E1-004 | not-started | |
 | 5 | `pcgen-residue-gate` | 1 | AT-35-E1-005 | not-started | |
-| 6 | `sd34-closure-folded` | 1 | AT-35-E1-006 | not-started | `decisions.md §12` — the fold ruling and SD-34's 17 open rows |
+| 6 | `sd34-closure-folded` | 1 | AT-35-E1-006 | complete | `artifacts/epic-1-tax-cut/AT-35-E1-006_cycle1_receipt.md`; `docs/retro/sd34-book-completion-retrospective.md`; `artifacts/epic-1-tax-cut/sd34-open-row-map.json` (1,590 of 1,590), `sd34-deferral-dispositions.json` (29 of 29) |
 | 7 | `sheet-rule-converter` | 2 | AT-35-E2-001 | not-started | |
 | 8 | `live-evaluator-and-sheet-section` | 2 | AT-35-E2-002 | not-started | |
 | 9 | `sheet-complete-status` | 2 | AT-35-E2-003 | not-started | |
