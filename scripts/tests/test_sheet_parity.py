@@ -81,6 +81,33 @@ SA.2.NAME=Detect Evil
 SA.2.DESC=At will, you can use Detect Evil, as the Spell. You can concentrate on a single individual within 60 feet, as if having studied it for 3 rounds.
 """
 
+#: The widened export's pool, weapon and spell-like-ability rows (cycle 3): every ability
+#: category's `ABILITYPOOL` total, the one wielded weapon, and every `SPELLMEM` row per
+#: spellbook with its uses, caster level and DC.
+EXPORT_WIDE = EXPORT + """WEAPON.COUNT=1
+WEAPON.0.NAME=Longsword
+WEAPON.0.TOTALHIT=+4
+POOL.COUNT=3
+POOL.0.NAME=Fighter Bonus Feat
+POOL.0.SIZE=1
+POOL.1.NAME=Weapon Training I
+POOL.1.SIZE=0
+POOL.2.NAME=Hunter's Bond
+POOL.2.SIZE=0
+SPELLBOOK.COUNT=3
+SPELLBOOK.2.NAME=Racial
+SPELLMEM.0.2.0.0.NAME=Dancing Lights
+SPELLMEM.0.2.0.0.TIMES=1
+SPELLMEM.0.2.0.0.TIMEUNIT=Day
+SPELLMEM.0.2.0.0.CASTERLEVEL=1
+SPELLMEM.0.2.0.0.DC=14
+SPELLMEM.0.2.0.1.NAME=Detect Evil
+SPELLMEM.0.2.0.1.TIMES=At Will
+SPELLMEM.0.2.0.1.TIMEUNIT=Day
+SPELLMEM.0.2.0.1.CASTERLEVEL=1
+SPELLMEM.0.2.0.1.DC=13
+"""
+
 
 def ours(lines, **chassis_over):
     chassis = {
@@ -243,6 +270,111 @@ class CompareTest(unittest.TestCase):
         self.assertEqual(rows["skill.climb"]["verdict"], "agree")
         rows = self.rows_for([], bab=2)
         self.assertEqual(rows["base_attack_bonus"]["verdict"], "disagree")
+
+
+class WideExportCompareTest(unittest.TestCase):
+    """The cycle-3 widening: pools, the wielded weapon's own bonus, and spell-like abilities."""
+
+    def setUp(self):
+        self.export = SP.parse_export(EXPORT_WIDE)
+
+    def rows_for(self, lines, export=None):
+        return {r["unit"]: r for r in SP.compare_character(ours(lines), export or self.export)}
+
+    def test_pool_target_compares_with_the_category_pool_size(self):
+        rows = self.rows_for(
+            [
+                line("b:class_feature:fighter_bonus_feats", "Bonus Feats", 1, {"Pool": "fighter_bonus_feat"}),
+                line("b:class_feature:fighter_weapon_training", "Weapon Training", 1, {"Pool": "weapon_training_i"}),
+                line("b:class_feature:ranger_hunters_bond", "Hunter's Bond", 0, {"Pool": "hunter_s_bond"}),
+                line("b:class_feature:x", "X", 2, {"Pool": "ki"}),
+            ]
+        )
+        r = rows["target:Pool:fighter_bonus_feat"]
+        self.assertEqual((r["ours"], r["oracle"], r["verdict"], r["oracle_key"]), (1, 1, "agree", "POOL.0.SIZE"))
+        r = rows["target:Pool:weapon_training_i"]
+        self.assertEqual((r["ours"], r["oracle"], r["verdict"]), (1, 0, "disagree"))
+        self.assertIn("expr", r)
+        self.assertEqual(rows["target:Pool:hunter_s_bond"]["oracle_key"], "POOL.2.SIZE", "an apostrophe in the category name slugs to `_`")
+        r = rows["target:Pool:ki"]
+        self.assertEqual((r["verdict"], r["oracle_key"]), ("unverifiable", "no-pcgen-pool:ki"))
+        # an export without POOL rows (an older template) keeps the old reason
+        rows = self.rows_for([line("b:class_feature:fighter_bonus_feats", "Bonus Feats", 1, {"Pool": "fighter_bonus_feat"})], SP.parse_export(EXPORT))
+        self.assertEqual(rows["target:Pool:fighter_bonus_feat"]["oracle_key"], "no-component-export:Pool")
+
+    def test_weapon_attack_target_compares_with_the_single_wielded_weapons_own_bonus(self):
+        wf = line("b:feat:weapon_focus", "Weapon Focus", 0, {"WeaponAttack": {"Chosen": "b:feat:weapon_focus"}})
+        r = self.rows_for([wf])["target:WeaponAttack:{\"Chosen\": \"b:feat:weapon_focus\"}"]
+        # WEAPON.0.TOTALHIT=+4 less ATTACK.MELEE.TOTAL=+3: the weapon's own +1 is what the line must carry.
+        self.assertEqual((r["ours"], r["oracle"], r["verdict"], r["oracle_key"]), (0, 1, "disagree", "WEAPON.0.TOTALHIT-ATTACK.MELEE.TOTAL"))
+        two = SP.parse_export(EXPORT_WIDE.replace("WEAPON.COUNT=1", "WEAPON.COUNT=2"))
+        r = self.rows_for([wf], two)["target:WeaponAttack:{\"Chosen\": \"b:feat:weapon_focus\"}"]
+        self.assertEqual((r["verdict"], r["oracle_key"]), ("unverifiable", "no-pcgen-single-weapon:2"))
+        r = self.rows_for([wf], SP.parse_export(EXPORT))["target:WeaponAttack:{\"Chosen\": \"b:feat:weapon_focus\"}"]
+        self.assertEqual(r["oracle_key"], "no-component-export:WeaponAttack")
+
+    def test_spell_like_ability_values_join_their_spellmem_row_in_role(self):
+        rows = self.rows_for(
+            [
+                line("b:race_trait:racial_sla_dancing_lights", "Dancing Lights", 1, also=[["1/day", {"Resolved": 1}], ["CL 1", {"Resolved": 1}], ["DC 14", {"Resolved": 14}]]),
+                line("b:race_trait:racial_sla_ghost_sound", "Ghost Sound", 1, also=[["DC 15", {"Resolved": 15}]]),
+            ]
+        )
+        dl = "b:race_trait:racial_sla_dancing_lights"
+        # a spell-like ability's principal value is its uses count (the converter maps `TIMES=` to `value` and to the `Uses` also)
+        self.assertEqual((rows[f"{dl}:value"]["verdict"], rows[f"{dl}:value"]["oracle_key"]), ("agree", "SPELLMEM.0.2.0.0.TIMES"))
+        self.assertEqual(rows[f"{dl}:also:1/day"]["oracle_key"], "SPELLMEM.0.2.0.0.TIMES")
+        self.assertEqual((rows[f"{dl}:also:CL 1"]["verdict"], rows[f"{dl}:also:CL 1"]["oracle_key"]), ("agree", "SPELLMEM.0.2.0.0.CASTERLEVEL"))
+        self.assertEqual((rows[f"{dl}:also:DC 14"]["verdict"], rows[f"{dl}:also:DC 14"]["oracle"]), ("agree", 14))
+        self.assertEqual(rows["b:race_trait:racial_sla_ghost_sound:also:DC 15"]["oracle_key"], "no-pcgen-ability-named:Ghost Sound")
+
+    def test_desc_join_falls_back_to_the_spell_row_in_the_same_role(self):
+        rows = self.rows_for(
+            [line("b:class_feature:paladin_detect_evil", "Detect Evil", 0, also=[["CL 1", {"Resolved": 1}], ["DC 13", {"Resolved": 13}], ["3/day", {"Resolved": 3}]])]
+        )
+        cl = rows["b:class_feature:paladin_detect_evil:also:CL 1"]
+        self.assertEqual((cl["verdict"], cl["oracle"], cl["oracle_key"]), ("agree", 1, "SPELLMEM.0.2.0.1.CASTERLEVEL"))
+        dc = rows["b:class_feature:paladin_detect_evil:also:DC 13"]
+        self.assertEqual((dc["verdict"], dc["oracle_key"]), ("agree", "SPELLMEM.0.2.0.1.DC"))
+        uses = rows["b:class_feature:paladin_detect_evil:also:3/day"]
+        self.assertEqual((uses["verdict"], uses["oracle_key"]), ("unverifiable", "SPELL-times-not-numeric:At Will"))
+        # a planted wrong DC is a disagreement named with the spell row's value
+        rows = self.rows_for([line("b:class_feature:paladin_detect_evil", "Detect Evil", 0, also=[["DC 14", {"Resolved": 14}]])])
+        r = rows["b:class_feature:paladin_detect_evil:also:DC 14"]
+        self.assertEqual((r["verdict"], r["oracle"]), ("disagree", 13))
+        self.assertIn("expr", r)
+        # the helper's principal value 0 is a plain number the description does not print (60, 3): that disagreement is the DESC join's, not the spell join's
+        self.assertEqual({u for u, x in rows.items() if x["family"] == "lines" and x["verdict"] == "disagree"}, {"b:class_feature:paladin_detect_evil:also:DC 14", "b:class_feature:paladin_detect_evil:value"})
+        self.assertEqual(SP.summarize(list(rows.values()))["lines"]["disagree"], 2)
+
+
+class TemplateTest(unittest.TestCase):
+    def test_pool_categories_parse_from_the_pinned_row_shape(self):
+        text = (
+            "# comment\n"
+            "ABILITYCATEGORY:Fighter Bonus Feat\tVISIBLE:QUALIFY\tEDITABLE:YES\tEDITPOOL:YES\tCATEGORY:FEAT\n"
+            "ABILITYCATEGORY:Hunter's Bond\tEDITPOOL:YES\n"
+            'ABILITYCATEGORY:Bad "Quoted"\tEDITPOOL:YES\n'
+            "ABILITYCATEGORY:Fighter Bonus Feat.MOD\tPLURAL:x\n"
+            "SOURCELONG:x\n"
+        )
+        self.assertEqual(SP.pool_categories_from_rows(text), ["Fighter Bonus Feat", "Hunter's Bond"])
+
+    def test_template_marker_is_filled_with_the_category_list(self):
+        template = "A=1\n<#assign pool_categories = [] /><#-- POOL_CATEGORIES -->\nB=2\n"
+        out = SP.render_template(template, ["Fighter Bonus Feat", "Hunter's Bond"])
+        self.assertIn('<#assign pool_categories = ["Fighter Bonus Feat", "Hunter\'s Bond"] />', out)
+        self.assertTrue(out.startswith("A=1\n") and out.endswith("B=2\n"))
+        with self.assertRaises(ValueError):
+            SP.render_template("no marker here\n", ["x"])
+
+    def test_pinned_checkout_categories_when_the_checkout_is_present(self):
+        if not os.path.isdir(os.path.join(SP.pcgen_repo_dir(), SP.PCGEN_RACES_DIR)):
+            self.skipTest("no pinned PCGen checkout on this box")
+        cats = SP.pool_categories()
+        for expected in ("Fighter Bonus Feat", "Arcane Bond", "Nature Bond", "Ranger Combat Style Feat", "Weapon Training I"):
+            self.assertIn(expected, cats)
+        self.assertEqual(len(cats), len(set(cats)))
 
 
 class RosterTest(unittest.TestCase):

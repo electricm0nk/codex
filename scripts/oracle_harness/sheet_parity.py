@@ -31,12 +31,23 @@ What is compared (every rendered `Number` line the live evaluator produced for t
     the total, the rule lines carry only the bonuses), the AC parts by type, `CHECK.<n>.MISC`
     less the ability modifier, `INITIATIVEMISC`, `ATTACK.MELEE.MISC`, `BAB`, `CHECK.<n>.BASE`,
     `MOVE.<n>.RATE`, `DR`, `STAT.<n>.SCORE`;
+  * a `Pool` line folds with its siblings and compares with the ability category's
+    `ABILITYPOOL` total (`POOL.<n>.SIZE`, `charbonusto("ABILITYPOOL", <category>)` for every
+    category the pinned Core Rulebook chain declares -- the `export` step fills the template's
+    `pool_categories` list from the data), joined by the category name's slug;
+  * a `WeaponAttack` line compares with the one wielded weapon's own bonus,
+    `WEAPON.0.TOTALHIT - ATTACK.MELEE.TOTAL` (`no-pcgen-single-weapon` when the export lists
+    zero or several weapons);
   * a line with no such component (a DC, a caster level, uses per day, a plain number) is
     compared with the numbers PCGen printed in the same-named ability's substituted
     `DESCRIPTION` (`SA.<n>.DESC` / `FEAT.<n>.DESC`) **in the value's own role** -- a `DC N`
     for a save DC, a `caster level N` for a caster level, an `N ... per day` for a uses
-    count, any number for a plain value: agree when our number is among them, `unverifiable`
-    (`DESC-has-no-<role>`) when the description prints no number in that role;
+    count, any number for a plain value: agree when our number is among them; when the
+    description prints no number in that role, or PCGen names no such ability, the same-named
+    `SPELLMEM` row (every spellbook, every class index: the `SPELLS:` token's spell-like
+    abilities) is tried in the same role -- `TIMES` for uses and for a spell-like ability's
+    principal value, `CASTERLEVEL`, `DC` -- `unverifiable` (`DESC-has-no-<role>`,
+    `no-pcgen-ability-named`, `SPELL-times-not-numeric`) when neither has it;
   * a line PCGen exports nothing for is `unverifiable` with the reason named.
 
 The roster's engine fixtures carry each race's FIXED ability adjustment in the score (the
@@ -266,24 +277,99 @@ def cmd_roster(args):
 # ---------------------------------------------------------------------------
 
 
-def run_one(pcg, out_txt, settings):
+#: The pinned data's ability-category files the roster's `CAMPAIGN:Core Rulebook` chain loads
+#: (`core_rulebook.pcc` -> `_core_essentials.pcc` -> the seven `races/*/_race.pcc`), relative
+#: to the checkout: every `*abilitycategories*.lst` under these directories.
+PCGEN_CATEGORY_DIRS = (
+    os.path.join("data", "pathfinder", "paizo", "roleplaying_game", "core_rulebook"),
+    os.path.join("data", "pathfinder", "paizo", "roleplaying_game", "core_essentials"),
+    os.path.join("data", "pathfinder", "paizo", "roleplaying_game", "core_essentials", "races"),
+)
+#: The template line the `export` step fills with the category list.
+POOL_MARKER = "<#assign pool_categories = [] />"
+
+
+def pool_categories_from_rows(text):
+    """Every `ABILITYCATEGORY:<name>` a `.lst` text declares, in file order, without `.MOD`
+    rows and without a name a FreeMarker/JEP double-quoted string could not carry."""
+    out = []
+    for line in text.splitlines():
+        if not line.startswith("ABILITYCATEGORY:"):
+            continue
+        name = line.split("\t", 1)[0][len("ABILITYCATEGORY:") :].strip()
+        if not name or name.endswith(".MOD") or '"' in name or "\\" in name:
+            continue
+        if name not in out:
+            out.append(name)
+    return out
+
+
+def pool_categories():
+    """The ability categories the pinned checkout's Core Rulebook chain declares (tool side:
+    the oracle harness reading the oracle's own data); `[]` when the checkout is absent."""
+    root = pcgen_repo_dir()
+    out = []
+    for rel in PCGEN_CATEGORY_DIRS:
+        base = os.path.join(root, rel)
+        if not os.path.isdir(base):
+            continue
+        for dirpath, dirnames, filenames in os.walk(base):
+            dirnames.sort()
+            if rel.endswith("core_essentials") and dirpath != base:
+                dirnames[:] = []  # `races/` is walked by its own entry
+                continue
+            for fname in sorted(filenames):
+                if "abilitycategories" not in fname or not fname.endswith(".lst"):
+                    continue
+                with open(os.path.join(dirpath, fname), encoding="utf-8", errors="replace") as f:
+                    for name in pool_categories_from_rows(f.read()):
+                        if name not in out:
+                            out.append(name)
+    return out
+
+
+def render_template(text, categories):
+    """The committed template with its `pool_categories` marker filled: one FreeMarker string
+    per category. Raises when the marker is absent so a stale template cannot export silently."""
+    if POOL_MARKER not in text:
+        raise ValueError(f"template has no {POOL_MARKER!r} marker")
+    literal = "[" + ", ".join('"' + c.replace('"', '\\"') + '"' for c in categories) + "]"
+    return text.replace(POOL_MARKER, f"<#assign pool_categories = {literal} />", 1)
+
+
+def run_one(pcg, out_txt, settings, ftl=FTL):
     log = out_txt + ".log"
     with open(log, "w", encoding="utf-8") as lf:
-        proc = subprocess.run(["bash", RUN_ONE, pcg, FTL, out_txt, settings], stdout=lf, stderr=subprocess.STDOUT)
+        proc = subprocess.run(["bash", RUN_ONE, pcg, ftl, out_txt, settings], stdout=lf, stderr=subprocess.STDOUT)
     return proc.returncode
 
 
 def cmd_export(args):
+    # `charbuild_remainder_run_one.sh` runs from the PCGen install directory: every path it
+    # is handed must be absolute.
+    args.roster = os.path.abspath(args.roster)
+    args.out = os.path.abspath(args.out)
     os.makedirs(args.out, exist_ok=True)
+    categories = pool_categories()
+    with open(FTL, encoding="utf-8") as f:
+        rendered = render_template(f.read(), categories)
+    template_dir = os.path.join(args.out, "_template")
+    os.makedirs(template_dir, exist_ok=True)
+    ftl = os.path.join(template_dir, os.path.basename(FTL))
+    with open(ftl, "w", encoding="utf-8") as f:
+        f.write(rendered)
+    print(f"  template: {len(categories)} pool categories from the pinned data -> {ftl}")
     pcgs = sorted(p for p in os.listdir(args.roster) if p.endswith(".pcg"))
+    if args.only:
+        pcgs = [p for p in pcgs if p[: -len(".pcg")] in set(args.only)]
     settings_root = os.path.join(args.out, "_settings")
     jobs = []
     for p in pcgs:
         name = p[: -len(".pcg")]
-        jobs.append((os.path.join(args.roster, p), os.path.join(args.out, f"{name}.txt"), os.path.join(settings_root, name)))
+        jobs.append((os.path.join(args.roster, p), os.path.join(args.out, f"{name}.txt"), os.path.join(settings_root, name), ftl))
     failures = 0
     with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-        for (pcg, out_txt, _), rc in zip(jobs, pool.map(lambda j: run_one(*j), jobs)):
+        for (pcg, out_txt, _, _), rc in zip(jobs, pool.map(lambda j: run_one(*j), jobs)):
             ok = rc == 0 and os.path.exists(out_txt)
             print(f"  {'ok  ' if ok else 'FAIL'} {os.path.basename(pcg)} exit={rc}")
             failures += 0 if ok else 1
@@ -475,7 +561,73 @@ def oracle_component(export, kind, arg, character):
         order = ["Str", "Dex", "Con", "Int", "Wis", "Cha"]
         base = character["ability_scores"][order.index(arg)]
         return (as_int(export.get(f"STAT.{i}.SCORE")) - base, f"STAT.{i}.SCORE-{base}")
+    if kind == "Pool" and as_int(export.get("POOL.COUNT")) is not None:
+        # `POOL.<n>.NAME=Fighter Bonus Feat` joins the engine's `Pool("fighter_bonus_feat")`
+        # by the category name's slug; the size is PCGen's `ABILITYPOOL` total for it.
+        pools = {slug(name): idx for name, idx in index_by_name(export, "POOL").items()}
+        idx = pools.get(str(arg))
+        if idx is None:
+            return (None, f"no-pcgen-pool:{arg}")
+        return (as_int(export.get(f"POOL.{idx}.SIZE")), f"POOL.{idx}.SIZE")
+    if kind == "WeaponAttack" and as_int(export.get("WEAPON.COUNT")) is not None:
+        # The wielded weapon's own bonus (Weapon Focus, an enhancement) is the weapon line's
+        # total less the generic melee total; only unambiguous with exactly one weapon.
+        n = as_int(export.get("WEAPON.COUNT"))
+        hit = as_int(export.get("WEAPON.0.TOTALHIT"))
+        melee = as_int(export.get("ATTACK.MELEE.TOTAL"))
+        if n != 1 or hit is None or melee is None:
+            return (None, f"no-pcgen-single-weapon:{n}")
+        return (hit - melee, "WEAPON.0.TOTALHIT-ATTACK.MELEE.TOTAL")
     return (None, f"no-component-export:{kind}")
+
+
+def slug(name):
+    """`Fighter Bonus Feat` -> `fighter_bonus_feat`; `Hunter's Bond` -> `hunter_s_bond` (the
+    engine's category slug: lower case, every non-alphanumeric run one `_`)."""
+    return re.sub(r"[^a-z0-9]+", "_", name.strip().lower()).strip("_")
+
+
+#: `SPELLMEM.<class>.<book>.<level>.<spell>.<field>` -- the widened export's spell rows.
+SPELLMEM_RE = re.compile(r"^(SPELLMEM\.\d+\.\d+\.\d+\.\d+)\.NAME$")
+SPELL_ROLE_FIELD = {"value": "TIMES", "Uses": "TIMES", "CasterLevel": "CASTERLEVEL", "SaveDc": "DC"}
+
+
+def spell_rows(export):
+    """`{lower spell name: [row prefix, ...]}` over every exported `SPELLMEM` row (a spell may
+    appear once per spellbook or per its `PREVAREQ`-gated variant)."""
+    out = {}
+    for k, v in export.items():
+        m = SPELLMEM_RE.match(k)
+        if m:
+            out.setdefault(v.strip().lower(), []).append(m.group(1))
+    return out
+
+
+def spell_oracle(export, spells, label, role):
+    """`(numbers, key)` for a standalone value joined to the same-named `SPELLMEM` rows in
+    `role`; `(None, reason)` when no row is named so or its field is not a number (`At
+    Will`). A spell-like ability's principal `value` is its uses count (the converter maps
+    `TIMES=` to the value and to the `Uses` also), so `value` reads `TIMES`."""
+    field = SPELL_ROLE_FIELD.get(role)
+    prefixes = None
+    for k in label_keys(label):
+        if k in spells:
+            prefixes = spells[k]
+            break
+    if prefixes is None or field is None:
+        return (None, f"no-pcgen-ability-named:{label}")
+    found = set()
+    keys = []
+    raw = None
+    for p in prefixes:
+        raw = export.get(f"{p}.{field}")
+        n = as_int(raw)
+        if n is not None:
+            found.add(n)
+            keys.append(f"{p}.{field}")
+    if not found:
+        return (None, f"SPELL-{field.lower()}-not-numeric:{raw}")
+    return (sorted(found), keys[0])
 
 
 def named_abilities(export):
@@ -639,9 +791,12 @@ def compare_character(character, export):
         unit = f"target:{kind}" if arg is None else f"target:{kind}:{arg if isinstance(arg, str) else json.dumps(arg)}"
         row("lines", unit, ours, oracle, key, verdict, **extra)
 
-    # lines: standalone numbers against the same-named ability's substituted description
+    # lines: standalone numbers against the same-named ability's substituted description,
+    # then against the same-named SPELLMEM row in the same role
     abilities = named_abilities(export)
+    spells = spell_rows(export)
     for line, n, slot in standalone:
+        role = "value" if slot == "value" else also_role(slot[len("also:") :])
         descs = None
         matched = None
         for k in label_keys(line["label"]):
@@ -649,21 +804,30 @@ def compare_character(character, export):
                 descs = abilities[k]
                 matched = k
                 break
+        found = desc_numbers_for(role, descs) if descs is not None else set()
+        if found:
+            verdict = "agree" if n in found else "disagree"
+            extra = {"rule_ids": [line["id"]], "labels": [line["label"]], "desc_numbers": sorted(found)}
+            if verdict == "disagree":
+                extra["expr"] = {line["id"]: rule_expr(line["id"])}
+                extra["desc"] = descs[0][:400]
+            row("lines", f"{line['id']}:{slot}", n, sorted(found), f"DESC:{matched}", verdict, **extra)
+            continue
+        spell_found, spell_key = spell_oracle(export, spells, line["label"], role)
+        if spell_found is not None:
+            verdict = "agree" if n in spell_found else "disagree"
+            extra = {"rule_ids": [line["id"]], "labels": [line["label"]], "spell_numbers": spell_found}
+            if verdict == "disagree":
+                extra["expr"] = {line["id"]: rule_expr(line["id"])}
+            row("lines", f"{line['id']}:{slot}", n, spell_found[0] if len(spell_found) == 1 else spell_found, spell_key, verdict, **extra)
+            continue
         if descs is None:
-            row("lines", f"{line['id']}:{slot}", n, None, "no-pcgen-ability-named:" + line["label"], "unverifiable", rule_ids=[line["id"]], labels=[line["label"]])
-            continue
-        role = "value" if slot == "value" else also_role(slot[len("also:") :])
-        found = desc_numbers_for(role, descs)
-        if not found:
-            reason = "DESC-has-no-number" if role == "value" else f"DESC-has-no-{role}"
-            row("lines", f"{line['id']}:{slot}", n, None, f"{reason}:{matched}", "unverifiable", rule_ids=[line["id"]], labels=[line["label"]])
-            continue
-        verdict = "agree" if n in found else "disagree"
-        extra = {"rule_ids": [line["id"]], "labels": [line["label"]], "desc_numbers": sorted(found)}
-        if verdict == "disagree":
-            extra["expr"] = {line["id"]: rule_expr(line["id"])}
-            extra["desc"] = descs[0][:400]
-        row("lines", f"{line['id']}:{slot}", n, sorted(found), f"DESC:{matched}", verdict, **extra)
+            reason = spell_key if spell_key.startswith("SPELL-") else "no-pcgen-ability-named:" + line["label"]
+        elif spell_key.startswith("SPELL-"):
+            reason = spell_key
+        else:
+            reason = ("DESC-has-no-number" if role == "value" else f"DESC-has-no-{role}") + f":{matched}"
+        row("lines", f"{line['id']}:{slot}", n, None, reason, "unverifiable", rule_ids=[line["id"]], labels=[line["label"]])
     return rows
 
 
@@ -736,6 +900,7 @@ def main(argv=None):
     e.add_argument("--roster", required=True)
     e.add_argument("--out", required=True)
     e.add_argument("--jobs", type=int, default=3)
+    e.add_argument("--only", nargs="*", help="export only these roster member names (template validation)")
     e.set_defaults(fn=cmd_export)
     c = sub.add_parser("compare")
     c.add_argument("--ours", required=True)

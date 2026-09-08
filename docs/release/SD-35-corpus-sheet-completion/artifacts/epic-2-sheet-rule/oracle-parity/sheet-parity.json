@@ -34,10 +34,10 @@
   "exports_missing": [],
   "summary": {
     "lines": {
-      "compared": 8,
-      "agree": 8,
-      "disagree": 0,
-      "unverifiable": 39
+      "compared": 42,
+      "agree": 41,
+      "disagree": 1,
+      "unverifiable": 5
     },
     "chassis": {
       "compared": 382,
@@ -47,13 +47,39 @@
     },
     "unverifiable_reasons": {
       "engine-posture-absent": 140,
-      "no-component-export": 19,
-      "no-pcgen-ability-named": 16,
-      "DESC-has-no-CasterLevel": 2,
-      "DESC-has-no-SaveDc": 2
+      "SPELL-dc-not-numeric": 4,
+      "no-component-export": 1
     }
   },
   "disagreements": [
+    {
+      "character": "deterministic_human_fighter_l1",
+      "family": "lines",
+      "unit": "target:WeaponAttack:{\"Chosen\": \"core_rulebook:feat:weapon_focus\"}",
+      "ours": 0,
+      "oracle": 1,
+      "oracle_key": "WEAPON.0.TOTALHIT-ATTACK.MELEE.TOTAL",
+      "verdict": "disagree",
+      "rule_ids": [
+        "core_rulebook:feat:weapon_focus"
+      ],
+      "labels": [
+        "Weapon Focus"
+      ],
+      "contributions": [
+        0
+      ],
+      "expr": {
+        "core_rulebook:feat:weapon_focus": {
+          "value": {
+            "Number": {
+              "Var": "vb1e14268d73c2def"
+            }
+          },
+          "also": null
+        }
+      }
+    },
     {
       "character": "halfling_fighter_l1",
       "family": "chassis",
@@ -313,9 +339,9 @@
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.47.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_bonus_feats"
       ],
@@ -385,9 +411,9 @@
       "family": "lines",
       "unit": "target:WeaponAttack:{\"Chosen\": \"core_rulebook:feat:weapon_focus\"}",
       "ours": 0,
-      "oracle": null,
-      "oracle_key": "no-component-export:WeaponAttack",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "WEAPON.0.TOTALHIT-ATTACK.MELEE.TOTAL",
+      "verdict": "disagree",
       "rule_ids": [
         "core_rulebook:feat:weapon_focus"
       ],
@@ -396,7 +422,17 @@
       ],
       "contributions": [
         0
-      ]
+      ],
+      "expr": {
+        "core_rulebook:feat:weapon_focus": {
+          "value": {
+            "Number": {
+              "Var": "vb1e14268d73c2def"
+            }
+          },
+          "also": null
+        }
+      }
     },
     {
       "character": "dwarf_fighter_l1",
@@ -565,9 +601,9 @@
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.47.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_bonus_feats"
       ],
@@ -745,9 +781,9 @@
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.47.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_bonus_feats"
       ],
@@ -925,9 +961,9 @@
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.47.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_bonus_feats"
       ],
@@ -943,14 +979,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:value",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Dancing Lights",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.0.TIMES",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_dancing_lights"
       ],
       "labels": [
         "Dancing Lights"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -958,14 +997,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:also:1/day",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Dancing Lights",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.0.TIMES",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_dancing_lights"
       ],
       "labels": [
         "Dancing Lights"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -973,14 +1015,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:also:CL 1",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Dancing Lights",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.0.CASTERLEVEL",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_dancing_lights"
       ],
       "labels": [
         "Dancing Lights"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -989,7 +1034,7 @@
       "unit": "core_rulebook:race_trait:racial_sla_dancing_lights:also:DC 14",
       "ours": 14,
       "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Dancing Lights",
+      "oracle_key": "SPELL-dc-not-numeric:",
       "verdict": "unverifiable",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_dancing_lights"
@@ -1003,14 +1048,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:value",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Ghost Sound",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.1.TIMES",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_ghost_sound"
       ],
       "labels": [
         "Ghost Sound"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -1018,14 +1066,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:also:1/day",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Ghost Sound",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.1.TIMES",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_ghost_sound"
       ],
       "labels": [
         "Ghost Sound"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -1033,14 +1084,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:also:CL 1",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Ghost Sound",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.1.CASTERLEVEL",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_ghost_sound"
       ],
       "labels": [
         "Ghost Sound"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -1048,14 +1102,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_ghost_sound:also:DC 14",
       "ours": 14,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Ghost Sound",
-      "verdict": "unverifiable",
+      "oracle": 14,
+      "oracle_key": "SPELLMEM.0.2.0.1.DC",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_ghost_sound"
       ],
       "labels": [
         "Ghost Sound"
+      ],
+      "spell_numbers": [
+        14
       ]
     },
     {
@@ -1063,14 +1120,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:value",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Prestidigitation",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.2.TIMES",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_prestidigitation"
       ],
       "labels": [
         "Prestidigitation"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -1078,14 +1138,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:also:1/day",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Prestidigitation",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.2.TIMES",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_prestidigitation"
       ],
       "labels": [
         "Prestidigitation"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -1093,14 +1156,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:also:CL 1",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Prestidigitation",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.2.CASTERLEVEL",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_prestidigitation"
       ],
       "labels": [
         "Prestidigitation"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -1108,14 +1174,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_prestidigitation:also:DC 14",
       "ours": 14,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Prestidigitation",
-      "verdict": "unverifiable",
+      "oracle": 14,
+      "oracle_key": "SPELLMEM.0.2.0.2.DC",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_prestidigitation"
       ],
       "labels": [
         "Prestidigitation"
+      ],
+      "spell_numbers": [
+        14
       ]
     },
     {
@@ -1123,14 +1192,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:value",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.3.TIMES",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_speak_with_animals"
       ],
       "labels": [
         "Speak with Animals"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -1138,14 +1210,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:also:1/day",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.3.TIMES",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_speak_with_animals"
       ],
       "labels": [
         "Speak with Animals"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -1153,14 +1228,17 @@
       "family": "lines",
       "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:also:CL 1",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.3.CASTERLEVEL",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_speak_with_animals"
       ],
       "labels": [
         "Speak with Animals"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -1169,7 +1247,7 @@
       "unit": "core_rulebook:race_trait:racial_sla_speak_with_animals:also:DC 15",
       "ours": 15,
       "oracle": null,
-      "oracle_key": "no-pcgen-ability-named:Speak with Animals",
+      "oracle_key": "SPELL-dc-not-numeric:",
       "verdict": "unverifiable",
       "rule_ids": [
         "core_rulebook:race_trait:racial_sla_speak_with_animals"
@@ -1345,9 +1423,9 @@
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.47.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_bonus_feats"
       ],
@@ -1525,9 +1603,9 @@
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.47.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_bonus_feats"
       ],
@@ -1705,9 +1783,9 @@
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.47.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_bonus_feats"
       ],
@@ -2897,9 +2975,9 @@
       "family": "lines",
       "unit": "target:Pool:nature_bond",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.83.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:druid_nature_bond"
       ],
@@ -3077,9 +3155,9 @@
       "family": "lines",
       "unit": "target:Pool:nature_bond",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.83.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:druid_nature_bond"
       ],
@@ -3257,9 +3335,9 @@
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.47.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_bonus_feats"
       ],
@@ -3455,9 +3533,9 @@
       "family": "lines",
       "unit": "target:Pool:armor_training_choice",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.53.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_armor_training"
       ],
@@ -3473,9 +3551,9 @@
       "family": "lines",
       "unit": "target:Pool:fighter_bonus_feat",
       "ours": 6,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 6,
+      "oracle_key": "POOL.47.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_bonus_feats"
       ],
@@ -3491,9 +3569,9 @@
       "family": "lines",
       "unit": "target:Pool:weapon_training_i",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.63.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:fighter_weapon_training"
       ],
@@ -3995,14 +4073,17 @@
       "family": "lines",
       "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 1",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "DESC-has-no-CasterLevel:detect evil",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "SPELLMEM.0.2.0.0.CASTERLEVEL",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:paladin_detect_evil"
       ],
       "labels": [
         "Detect Evil"
+      ],
+      "spell_numbers": [
+        1
       ]
     },
     {
@@ -4011,7 +4092,7 @@
       "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
       "ours": 13,
       "oracle": null,
-      "oracle_key": "DESC-has-no-SaveDc:detect evil",
+      "oracle_key": "SPELL-dc-not-numeric:",
       "verdict": "unverifiable",
       "rule_ids": [
         "core_rulebook:class_feature:paladin_detect_evil"
@@ -4187,14 +4268,17 @@
       "family": "lines",
       "unit": "core_rulebook:class_feature:paladin_detect_evil:also:CL 10",
       "ours": 10,
-      "oracle": null,
-      "oracle_key": "DESC-has-no-CasterLevel:detect evil",
-      "verdict": "unverifiable",
+      "oracle": 10,
+      "oracle_key": "SPELLMEM.0.2.0.0.CASTERLEVEL",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:paladin_detect_evil"
       ],
       "labels": [
         "Detect Evil"
+      ],
+      "spell_numbers": [
+        10
       ]
     },
     {
@@ -4203,7 +4287,7 @@
       "unit": "core_rulebook:class_feature:paladin_detect_evil:also:DC 13",
       "ours": 13,
       "oracle": null,
-      "oracle_key": "DESC-has-no-SaveDc:detect evil",
+      "oracle_key": "SPELL-dc-not-numeric:",
       "verdict": "unverifiable",
       "rule_ids": [
         "core_rulebook:class_feature:paladin_detect_evil"
@@ -4561,9 +4645,9 @@
       "family": "lines",
       "unit": "target:Pool:combat_style",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.74.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:ranger_combat_style_feat"
       ],
@@ -4579,9 +4663,9 @@
       "family": "lines",
       "unit": "target:Pool:ranger_combat_style_feat",
       "ours": 3,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 3,
+      "oracle_key": "POOL.73.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:ranger_combat_style_feat#bonus1"
       ],
@@ -5407,9 +5491,9 @@
       "family": "lines",
       "unit": "target:Pool:arcane_bond",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.79.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:wizard_arcane_bond"
       ],
@@ -5587,9 +5671,9 @@
       "family": "lines",
       "unit": "target:Pool:arcane_bond",
       "ours": 1,
-      "oracle": null,
-      "oracle_key": "no-component-export:Pool",
-      "verdict": "unverifiable",
+      "oracle": 1,
+      "oracle_key": "POOL.79.SIZE",
+      "verdict": "agree",
       "rule_ids": [
         "core_rulebook:class_feature:wizard_arcane_bond"
       ],
