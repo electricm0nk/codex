@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -1467,6 +1467,97 @@ run_pcgen_residue_gate() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: token-coverage-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_token_coverage.py` -- the
+# self-test behind the `token-coverage` stage below, carrying the RED->GREEN
+# proof SD-35 `AT-35-E2-004` names: a planted double-count (one record twice
+# in the census, or one token twice on a record) fails the check; removing it
+# passes. Same shape as `shape-engine-boundary-selftest`: a zero case count is
+# a failure, not a vacuous pass. Cheap (Python, synthetic fixtures, no build)
+# -- in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_token_coverage_selftest() {
+    stage_start "token-coverage-selftest — python3 -m unittest scripts/tests/test_token_coverage.py"
+    local log="$LOG_DIR/token-coverage-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_token_coverage.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail token-coverage-selftest "self-test script missing at scripts/tests/test_token_coverage.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail token-coverage-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail token-coverage-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass token-coverage-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: token-coverage
+#
+# Runs `scripts/token_coverage.py --check` -- SD-35 `AT-35-E2-004`: the
+# token-coverage ledger. Re-derives `artifacts/epic-2-sheet-rule/
+# token-coverage.json` from the converter's token census
+# (`data/sheet_rules/_tokens.json`), its refusal report, and the live
+# `docs/work-inventory.json`, and checks the sums: every non-DONE unit is
+# under >= 1 token type or `token-less`; the refused set across all token
+# types equals `_refused.json`'s id set; no record or token is counted
+# twice; per-shape totals agree. Fails when a sum does not hold OR when the
+# committed ledger is stale (it rewrites it, so the fix is one commit) --
+# from this criterion on the remainder is named by token type
+# (`workflow-instruction.md §12` row 33). Cheap (Python + JSON, no build) --
+# in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_token_coverage() {
+    stage_start "token-coverage — python3 scripts/token_coverage.py --check"
+    local log="$LOG_DIR/token-coverage.log"
+    local script="$REPO_ROOT/scripts/token_coverage.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail token-coverage "script missing at scripts/token_coverage.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    local verdict_line non_done refused verdict
+    verdict_line=$(grep -E '^non_done=[0-9]+ .*verdict=' "$log" | tail -1)
+    non_done=$(printf '%s\n' "$verdict_line" | sed -n 's/^non_done=\([0-9]*\) .*/\1/p')
+    refused=$(printf '%s\n' "$verdict_line" | sed -n 's/.* refused=\([0-9]*\) .*/\1/p')
+    verdict=$(printf '%s\n' "$verdict_line" | sed -n 's/.*verdict=\([A-Z_]*\)$/\1/p')
+    actual "TOKEN_COVERAGE_NON_DONE=${non_done:-unknown}"
+    actual "TOKEN_COVERAGE_REFUSED=${refused:-unknown}"
+
+    if (( status != 0 )); then
+        stage_fail token-coverage "${verdict_line:-no verdict line (exit $status)} — $log"
+        return
+    fi
+    if [[ "$verdict" != PASS ]]; then
+        stage_fail token-coverage "exit 0 without verdict=PASS: ${verdict_line:-none} — $log"
+        return
+    fi
+
+    stage_pass token-coverage "$verdict_line"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: reachability-audit
 #
 # Runs `scripts/reachability_audit.py` against the live `docs/work-inventory.json`
@@ -2514,6 +2605,8 @@ for stage in "${SELECTED[@]}"; do
         denominator-gate)    run_denominator_gate ;;
         figure-provenance)   run_figure_provenance ;;
         pcgen-residue-gate)  run_pcgen_residue_gate ;;
+        token-coverage-selftest) run_token_coverage_selftest ;;
+        token-coverage)      run_token_coverage ;;
         pi-sweep)            run_pi_sweep ;;
         declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;

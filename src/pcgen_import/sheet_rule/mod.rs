@@ -13,11 +13,14 @@
 //! - `<book>/<kind>/<key>.json` -- a JSON array of `SheetRule` for one record;
 //! - `_vars/<VarId>.json` -- one `VarTable` per corpus variable some rule references;
 //! - `_refused.json` -- the refusal report, per token type (never per unit);
+//! - `_tokens.json` -- the token census (SD-35 AT-35-E2-004): per record, the mapping-table
+//!   row key of every token its closure carried, and per refusal shape the token type it arose
+//!   under -- what `scripts/token_coverage.py` counts from;
 //! - `_defects/<kind>.json` -- converter defect lists (unresolved references, undefined
 //!   variables, choice markers without a choice, grants by type);
 //! - `_report.json` -- the run summary (`records=... converted=... refused=...`).
 //!
-//! Token types in `_refused.json`, `_defects/` and `_report.json` are written with their `:`
+//! Token types in `_refused.json`, `_tokens.json`, `_defects/` and `_report.json` are written with their `:`
 //! JSON-escaped (`:`) so the source-format literal never appears in the data package
 //! (`grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/` is 0); a JSON reader
 //! sees the real string. The source-name -> `VarId` map goes to
@@ -337,6 +340,32 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
 
 // ---- the run ----------------------------------------------------------------------------------
 
+/// The token census (SD-35 AT-35-E2-004), written to `_tokens.json`: per record, the
+/// mapping-table row key of every token its closure carried, and per refusal shape the token
+/// type(s) it arose under. `scripts/token_coverage.py` counts "units carrying it" and "units
+/// refused because of this token" from this -- the converter's own reading of the closure --
+/// never from a second reading of the corpus. Tool side only: it names PCGen token types.
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct TokenCensus {
+    pub schema: u32,
+    pub entries: Vec<TokenCensusRecord>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TokenCensusRecord {
+    pub id: String,
+    pub book: String,
+    pub kind: String,
+    /// Sorted, unique. Empty for a record whose closure has no row (`token-less`).
+    pub tokens: Vec<String>,
+    /// Refusal shape -> the token type(s) it arose under (`token-less` for `no_corpus_record`
+    /// / `no_source_row`). Empty for a converted record.
+    pub refusals: BTreeMap<String, Vec<String>>,
+}
+
+/// The census key for a record refused before any token was read.
+pub const TOKEN_LESS: &str = "token-less";
+
 /// Everything one conversion pass produces, in memory.
 pub struct Run {
     /// rule file path (relative to the output dir) -> the rules in it, sorted by id.
@@ -344,6 +373,7 @@ pub struct Run {
     pub vars: BTreeMap<VarId, VarTable>,
     pub var_names: BTreeMap<VarId, String>,
     pub refused: RefusedReport,
+    pub tokens: TokenCensus,
     pub defects: BTreeMap<String, Vec<String>>,
     pub report: Report,
 }
@@ -382,6 +412,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     let mut var_names: BTreeMap<VarId, String> = BTreeMap::new();
     let mut defects: BTreeMap<String, Vec<String>> = BTreeMap::new();
     let mut refused = RefusedReport::default();
+    let mut census = TokenCensus { schema: 1, entries: Vec::with_capacity(index.records.len()) };
     let mut report = Report { oracle_pin: oracle_pin(), converter_version: convert::CONVERTER_VERSION.into(), ..Default::default() };
     let mut converted_ids: Vec<(String, String, String)> = Vec::new();
     for (r, closure) in index.records.iter().zip(closures.iter()) {
@@ -391,18 +422,27 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         if !r.joined || r.rel_path.is_empty() {
             let tt = if r.joined { "no_source_row".to_string() } else { "no_corpus_record".to_string() };
             *refused.by_token_type.entry(tt.clone()).or_default() += 1;
-            refused.entries.push(RefusedRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), token_types: vec![tt] });
+            refused.entries.push(RefusedRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), token_types: vec![tt.clone()] });
+            census.entries.push(TokenCensusRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), tokens: Vec::new(), refusals: BTreeMap::from([(tt, vec![TOKEN_LESS.to_string()])]) });
             kc.refused += 1;
             continue;
         }
         if tree.file_index(&r.rel_path).is_none() && r.prerequisites.is_empty() && r.shipped_tokens.as_ref().is_none_or(|t| t.is_empty()) {
             let tt = "no_source_row".to_string();
             *refused.by_token_type.entry(tt.clone()).or_default() += 1;
-            refused.entries.push(RefusedRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), token_types: vec![tt] });
+            refused.entries.push(RefusedRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), token_types: vec![tt.clone()] });
+            census.entries.push(TokenCensusRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), tokens: Vec::new(), refusals: BTreeMap::from([(tt, vec![TOKEN_LESS.to_string()])]) });
             kc.refused += 1;
             continue;
         }
         let c = convert::convert_record(tree, index, r, closure);
+        census.entries.push(TokenCensusRecord {
+            id: r.id.clone(),
+            book: r.book.clone(),
+            kind: r.kind.clone(),
+            tokens: c.tokens.iter().cloned().collect(),
+            refusals: c.refusal_under.iter().map(|(shape, under)| (shape.clone(), under.iter().cloned().collect())).collect(),
+        });
         for (k, v) in c.defects {
             defects.entry(k).or_default().extend(v);
         }
@@ -480,15 +520,37 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     report.rules_written = files.values().map(|v| v.len()).sum();
     report.var_tables = vars.len();
     report.refused_by_token_type = refused.by_token_type.clone();
-    Run { files, vars, var_names, refused, defects, report }
+    Run { files, vars, var_names, refused, tokens: census, defects, report }
 }
 
 // ---- output -----------------------------------------------------------------------------------
 
 /// JSON with `:` escaped inside strings, for the ledgers that name token types.
 fn json_colon_escaped<T: Serialize>(value: &T) -> Vec<u8> {
-    let text = serde_json::to_string_pretty(value).unwrap();
-    // Escape ':' only inside string literals: walk the text tracking string state.
+    let mut out = escape_token_strings(&serde_json::to_string_pretty(value).unwrap());
+    out.push('\n');
+    out.into_bytes()
+}
+
+/// The census, one record per line (49k rows: diffable, and no 10 MB single line), with the
+/// same in-string escaping as the other ledgers.
+fn json_census(census: &TokenCensus) -> Vec<u8> {
+    let mut out = String::with_capacity(census.entries.len() * 160 + 64);
+    out.push_str("{\n  \"schema\": ");
+    out.push_str(&census.schema.to_string());
+    out.push_str(",\n  \"entries\": [\n");
+    for (i, e) in census.entries.iter().enumerate() {
+        out.push_str("    ");
+        out.push_str(&escape_token_strings(&serde_json::to_string(e).unwrap()));
+        out.push_str(if i + 1 < census.entries.len() { ",\n" } else { "\n" });
+    }
+    out.push_str("  ]\n}\n");
+    out.into_bytes()
+}
+
+/// Escape `:`, `%` and `=` inside JSON string literals only, walking the text tracking string
+/// state, so no output file carries a source-format literal (`shape_violations`).
+fn escape_token_strings(text: &str) -> String {
     let mut out = String::with_capacity(text.len() + 64);
     let mut in_str = false;
     let mut escaped = false;
@@ -510,8 +572,7 @@ fn json_colon_escaped<T: Serialize>(value: &T) -> Vec<u8> {
         }
         escaped = false;
     }
-    out.push('\n');
-    out.into_bytes()
+    out
 }
 
 /// Serialize the run to the on-disk layout: `(relative path, bytes)` for every file.
@@ -528,6 +589,7 @@ pub fn render(run: &Run) -> BTreeMap<String, Vec<u8>> {
         out.insert(format!("_vars/{id}.json"), text.into_bytes());
     }
     out.insert("_refused.json".into(), json_colon_escaped(&run.refused));
+    out.insert("_tokens.json".into(), json_census(&run.tokens));
     for (kind, lines) in &run.defects {
         out.insert(format!("_defects/{kind}.json"), json_colon_escaped(lines));
     }

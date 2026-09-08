@@ -117,7 +117,7 @@ check (`§11`).** Any other cycle under 500 that is not the whole remainder does
 | Check | What it is | When |
 |---|---|---|
 | Cycle check | `cargo test --locked --no-run` + the scoped suites + `cargo test --locked --no-fail-fast` when the cycle touched compute or classification + the fast python gates (`completion_atlas.py --check`, `denominator_gate.py`, the three citation `--check`s, `pi-sweep`) | **once per cycle**, after the last figure-moving commit |
-| Full gate | `scripts/verify.sh` (all stages — 40 at authoring; 41 after AT-35-E1-001's `cycle-scope-gate-selftest`; 42 after AT-35-E1-005's `pcgen-residue-gate`; **45 after AT-35-E1-002**: the two citation `--check`s plus the boundary self-test, per `verify.sh`'s selftest/gate pairing; **46 after AT-35-E2-001's `sheet-rules-check`**; re-derive `scripts/verify.sh --list \| tail -n +2 \| wc -l`) | **once per epic** (`§10`), and once before the PR (`§11`) |
+| Full gate | `scripts/verify.sh` (all stages — 40 at authoring; 41 after AT-35-E1-001's `cycle-scope-gate-selftest`; 42 after AT-35-E1-005's `pcgen-residue-gate`; **45 after AT-35-E1-002**: the two citation `--check`s plus the boundary self-test, per `verify.sh`'s selftest/gate pairing; **46 after AT-35-E2-001's `sheet-rules-check`**; **48 after AT-35-E2-004's `token-coverage-selftest` + `token-coverage`**, the same selftest/gate pairing; re-derive `scripts/verify.sh --list \| tail -n +2 \| wc -l`) | **once per epic** (`§10`), and once before the PR (`§11`) |
 
 **Why.** SD-34 ran the full gate as a separate cycle after every wave (~101 minutes recorded at
 `SD-34/progress.md:3625`) on top of the cycle's own full-suite run, so a 5-unit wave paid two or

@@ -16916,6 +16916,12 @@ struct InventoryUnit {
     wiring_class: wiring_class::WiringClass,
     wiring_class_reason: String,
     wiring_class_signals: BTreeSet<String>,
+    /// SD-35 AT-35-E2-004: the converter's token census for this unit -- the
+    /// mapping-table row key of every token its closure carried
+    /// (`data/sheet_rules/_tokens.json`), so `scripts/cycle_scope_gate.py
+    /// --token <type>` scopes a cycle by the type the converter resolved.
+    /// Empty until the package carries a census, or for a unit it does not name.
+    tokens: Vec<String>,
 }
 
 /// Reads the shared deterministic pilot input fixture, or exits with the
@@ -17153,6 +17159,7 @@ mod duplicate_chooser_removal_tests {
             wiring_class: wiring_class::WiringClass::Static,
             wiring_class_reason: "test".to_string(),
             wiring_class_signals: BTreeSet::new(),
+            tokens: Vec::new(),
         }
     }
 
@@ -17348,6 +17355,7 @@ mod apply_done_rung_stamps_tests {
             wiring_class: wc,
             wiring_class_reason: "test".to_string(),
             wiring_class_signals: BTreeSet::new(),
+            tokens: Vec::new(),
         }
     }
 
@@ -17617,6 +17625,7 @@ mod apply_bucket_v_oracle_disposition_stamps_tests {
             wiring_class: wiring_class::WiringClass::Static,
             wiring_class_reason: "test".to_string(),
             wiring_class_signals: BTreeSet::new(),
+            tokens: Vec::new(),
         }
     }
 
@@ -17893,6 +17902,82 @@ fn load_sheet_rule_probe(repo_root: &Path) -> Option<SheetRuleProbe> {
     Some(SheetRuleProbe { package: load.package, refused, facts, held, rule_files: load.rule_files })
 }
 
+/// The converter's token census inside the package (SD-35 AT-35-E2-004): per
+/// record, the mapping-table row key of every token its closure carried.
+const SHEET_RULES_TOKENS_RELATIVE_PATH: &str = "data/sheet_rules/_tokens.json";
+
+/// `_tokens.json`'s `entries`, as unit id -> its token list (sorted, unique, as
+/// the converter wrote it). An absent or unreadable census is an empty map --
+/// every unit then carries an empty `tokens` list and
+/// `scripts/cycle_scope_gate.py --token` falls back to the wiring-class
+/// signals, exactly as before the census existed. Reads only the two fields it
+/// needs, so a schema addition to the census never breaks the inventory.
+fn load_sheet_rule_tokens(repo_root: &Path) -> BTreeMap<String, Vec<String>> {
+    let path = repo_root.join(SHEET_RULES_TOKENS_RELATIVE_PATH);
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        eprintln!("token census: {} is absent or unreadable -- every unit's `tokens` is empty", path.display());
+        return BTreeMap::new();
+    };
+    let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&text) else {
+        eprintln!("token census: {} is not valid JSON -- every unit's `tokens` is empty", path.display());
+        return BTreeMap::new();
+    };
+    parsed["entries"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .filter_map(|e| {
+            let id = e["id"].as_str()?.to_string();
+            let tokens: Vec<String> = e["tokens"]
+                .as_array()
+                .into_iter()
+                .flatten()
+                .filter_map(|t| t.as_str().map(|s| s.to_string()))
+                .collect();
+            Some((id, tokens))
+        })
+        .collect()
+}
+
+#[cfg(test)]
+mod load_sheet_rule_tokens_tests {
+    use super::*;
+
+    fn scratch(name: &str) -> PathBuf {
+        let dir = std::env::temp_dir().join(format!("codex-token-census-{name}-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(dir.join("data/sheet_rules")).unwrap();
+        dir
+    }
+
+    #[test]
+    fn reads_each_entry_id_and_its_token_list_only() {
+        let dir = scratch("reads");
+        std::fs::write(
+            dir.join(SHEET_RULES_TOKENS_RELATIVE_PATH),
+            "{\"schema\": 1, \"entries\": [\n\
+             {\"id\": \"b:feat:a\", \"book\": \"b\", \"kind\": \"feat\", \"tokens\": [\"BONUS\\u003aVAR\", \"DESC\"], \"refusals\": {}},\n\
+             {\"id\": \"b:feat:t\", \"book\": \"b\", \"kind\": \"feat\", \"tokens\": [], \"refusals\": {\"no_corpus_record\": [\"token-less\"]}},\n\
+             {\"book\": \"b\", \"kind\": \"feat\", \"tokens\": [\"DESC\"]}\n]}\n",
+        )
+        .unwrap();
+        let census = load_sheet_rule_tokens(&dir);
+        assert_eq!(census.len(), 2, "an entry without an id is skipped, never minted");
+        assert_eq!(census["b:feat:a"], vec!["BONUS:VAR".to_string(), "DESC".to_string()], "the JSON escape is decoded by the reader");
+        assert_eq!(census["b:feat:t"], Vec::<String>::new());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn an_absent_or_malformed_census_is_an_empty_map() {
+        let dir = scratch("absent");
+        assert!(load_sheet_rule_tokens(&dir).is_empty());
+        std::fs::write(dir.join(SHEET_RULES_TOKENS_RELATIVE_PATH), "{not json").unwrap();
+        assert!(load_sheet_rule_tokens(&dir).is_empty());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+}
+
 /// The ids in `_refused.json`'s `entries`. An absent or unreadable report is
 /// an empty set: a record with no rule is left alone by the rung anyway, so
 /// the report only ever narrows, never widens, what gets stamped.
@@ -18033,6 +18118,7 @@ mod apply_sheet_complete_rung_tests {
             wiring_class: wiring_class::WiringClass::Static,
             wiring_class_reason: "test".to_string(),
             wiring_class_signals: BTreeSet::new(),
+            tokens: Vec::new(),
         }
     }
 
@@ -19986,6 +20072,7 @@ fn main() {
                 wiring_class: wc_class,
                 wiring_class_reason: wc_reason,
                 wiring_class_signals: wc_signals,
+                tokens: Vec::new(),
             });
         }
     }
@@ -20096,6 +20183,26 @@ fn main() {
             SHEET_RULES_RELATIVE_PATH
         ),
     }
+
+    // SD-35 AT-35-E2-004: the converter's token census onto every unit, so
+    // `scripts/cycle_scope_gate.py --token <type>` scopes a cycle by the
+    // mapping-table row key the converter resolved (`data/sheet_rules/_tokens.json`).
+    // A status pass never reads this list; it is scope metadata only.
+    let token_census = load_sheet_rule_tokens(&repo_root);
+    let mut units_with_tokens = 0usize;
+    for item in inventory.iter_mut() {
+        item.tokens = token_census.get(&item.id).cloned().unwrap_or_default();
+        if !item.tokens.is_empty() {
+            units_with_tokens += 1;
+        }
+    }
+    eprintln!(
+        "token census: {} record(s) in {}; {} of {} unit(s) carry a token list",
+        token_census.len(),
+        SHEET_RULES_TOKENS_RELATIVE_PATH,
+        units_with_tokens,
+        inventory.len()
+    );
 
     // --- aggregate ---------------------------------------------------------
     let mut by_kind: BTreeMap<&str, usize> = BTreeMap::new();
@@ -20369,12 +20476,13 @@ fn main() {
             "[{}]",
             item.wiring_class_signals.iter().map(|s| q(s)).collect::<Vec<_>>().join(", ")
         );
+        let tokens = format!("[{}]", item.tokens.iter().map(|s| q(s)).collect::<Vec<_>>().join(", "));
         out.push_str(&format!(
             "    {{\"id\": {}, \"book\": {}, \"engine_book\": {}, \"kind\": {}, \"name\": {}, \
              \"corpus_key\": {}, \"origin\": {}, \"visible\": {}, \"type_facet\": {}, \
              \"source_file\": {}, \"source_line\": {}, \"magnitude_token_count\": {}, \
              \"status\": {}, \"evidence\": {}, \"reason\": {}, \"wiring_class\": {}, \
-             \"wiring_class_reason\": {}, \"wiring_class_signals\": {}}}",
+             \"wiring_class_reason\": {}, \"wiring_class_signals\": {}, \"tokens\": {}}}",
             q(&item.id),
             q(&item.unit.book),
             opt_q(&item.verdict.engine_book),
@@ -20393,6 +20501,7 @@ fn main() {
             q(item.wiring_class.id()),
             q(&item.wiring_class_reason),
             wc_signals,
+            tokens,
         ));
         out.push_str(if i + 1 < inventory.len() { ",\n" } else { "\n" });
     }
@@ -22236,6 +22345,7 @@ mod race_trait_grounding_tests {
                 wiring_class: wiring_class::WiringClass::Static,
                 wiring_class_reason: "test".to_string(),
                 wiring_class_signals: BTreeSet::new(),
+                tokens: Vec::new(),
             }
         }
 

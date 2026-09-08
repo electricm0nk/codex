@@ -230,3 +230,41 @@ fn conversion_is_deterministic() {
         assert_eq!(Some(v), b.get(k), "{k} differs between two runs");
     }
 }
+
+/// SD-35 AT-35-E2-004 -- the token census `scripts/token_coverage.py` reads. Every token the
+/// converter processed names the mapping-table row it resolved to (or `unmapped:<HEAD>` /
+/// `BONUS:<SUB>` when the table has none), and every refusal names the token type it arose
+/// under, so "units carrying it" and "units refused because of this token" are counted from
+/// the closure the converter actually read -- never from a second reading of the corpus.
+#[test]
+fn token_census_names_the_row_for_every_token_and_the_head_under_each_refusal() {
+    // A converted record carries the rows its tokens resolve to and no refusal.
+    let c = convert_unit("core_rulebook:equipment:longsword");
+    assert!(c.tokens.contains("DAMAGE / ALTDAMAGE"), "the longsword's DAMAGE token names its row: {:?}", c.tokens);
+    assert!(c.refusals.is_empty() && c.refusal_under.is_empty());
+    // A refused record: every refusal shape is recorded under the token type it arose under,
+    // and that token type is itself in the census.
+    let c = convert_unit("advanced_class_guide:class:arcanist");
+    for shape in ["unmapped:STARTSKILLPTS", "unmapped:MEMORIZE"] {
+        assert!(c.refusals.contains(shape), "{shape} refuses the Arcanist: {:?}", c.refusals);
+        let under: Vec<&String> = c.refusal_under.get(shape).map(|s| s.iter().collect()).unwrap_or_default();
+        assert_eq!(under, vec![shape], "{shape} arose under itself");
+        assert!(c.tokens.contains(shape), "an unmapped head is still a token the record carries");
+    }
+    // A formula-shaped refusal names the TOKEN it arose under, not the formula family.
+    let c = convert_unit("advanced_class_guide:class_feature:eldritch_scion_spells");
+    let under = c.refusal_under.get("BONUS:STAT (target BASESPELLSTAT;Class)").expect("the refusal is recorded");
+    assert_eq!(under.iter().collect::<Vec<_>>(), vec!["BONUS:STAT"], "refused under the BONUS:STAT row");
+    // The whole run's census: one entry per record, ids unique, and the refused id set equals
+    // `_refused.json`'s -- the sum `token_coverage.py --check` re-checks.
+    let s = shared();
+    let r = run(&s.tree, &s.index, &s.closures);
+    assert_eq!(r.tokens.entries.len(), r.report.records, "one census entry per record");
+    let ids: BTreeSet<&String> = r.tokens.entries.iter().map(|e| &e.id).collect();
+    assert_eq!(ids.len(), r.report.records, "no record appears twice in the census");
+    let census_refused: BTreeSet<&String> = r.tokens.entries.iter().filter(|e| !e.refusals.is_empty()).map(|e| &e.id).collect();
+    let refused: BTreeSet<&String> = r.refused.entries.iter().map(|e| &e.id).collect();
+    assert_eq!(census_refused, refused, "the census refuses exactly the records _refused.json refuses");
+    let rendered = codex::pcgen_import::sheet_rule::render(&r);
+    assert!(rendered.contains_key("_tokens.json"), "the census is written into the package");
+}

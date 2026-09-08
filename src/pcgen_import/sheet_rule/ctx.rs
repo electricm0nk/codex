@@ -183,6 +183,12 @@ pub struct RecordCtx<'a> {
     pub owning_class: Option<ClassId>,
     /// Token types that refused this record (per token SHAPE, never per unit).
     pub refusals: BTreeSet<String>,
+    /// The token census (SD-35 AT-35-E2-004): the mapping-table row key of every token this
+    /// record's closure carried -- `unmapped:<HEAD>` / `BONUS:<SUB>` when the table has no row.
+    pub tokens: BTreeSet<String>,
+    /// Refusal shape -> the token type(s) it arose under, so `token_coverage.py` counts
+    /// "units refused because of this token" from the converter's own reading.
+    pub refusal_under: BTreeMap<String, BTreeSet<String>>,
     /// Defect-list lines (`_defects/`), keyed by defect kind.
     pub defects: BTreeMap<String, Vec<String>>,
     /// Variable ids this record referenced through `Expr::Var`, with their source names.
@@ -208,6 +214,8 @@ impl<'a> RecordCtx<'a> {
             choice_id: None,
             owning_class,
             refusals: BTreeSet::new(),
+            tokens: BTreeSet::new(),
+            refusal_under: BTreeMap::new(),
             defects: BTreeMap::new(),
             var_names: BTreeMap::new(),
             inlining: Vec::new(),
@@ -218,6 +226,18 @@ impl<'a> RecordCtx<'a> {
 
     pub fn refuse(&mut self, token_type: impl Into<String>) {
         self.refusals.insert(token_type.into());
+    }
+
+    /// Record that this record's closure carries a token of type `token_type` (census only).
+    pub fn carry(&mut self, token_type: impl Into<String>) {
+        self.tokens.insert(token_type.into());
+    }
+
+    /// Refuse under `shape`, recording the token type (`under`) the refusal arose under.
+    pub fn refuse_under(&mut self, under: &str, shape: impl Into<String>) {
+        let shape = shape.into();
+        self.refusal_under.entry(shape.clone()).or_default().insert(under.to_string());
+        self.refusals.insert(shape);
     }
 
     pub fn defect(&mut self, kind: &str, line: String) {

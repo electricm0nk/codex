@@ -325,13 +325,16 @@ start of Epic 6 and again at its end; any drift is a defect in the exit, not a n
 | `shape-engine-boundary-selftest` | `scripts/tests/test_shape_engine_boundary.py` | the anchor resolver's RED→GREEN proofs (move 50 lines stays green; a changed condition fails) not holding — **landed AT-35-E1-002** |
 | `shape-engine-boundary` | `scripts/shape_engine_boundary.py --check` | a content anchor that no longer resolves — **landed AT-35-E1-002** |
 | `missing-engine-tables` | `scripts/missing_engine_tables.py --check` | same — **landed AT-35-E1-002** |
-| `token-coverage` | `scripts/token_coverage.py --check` | a non-DONE unit under no token, or a refused set that does not equal the non-converting set |
+| `token-coverage-selftest` | `scripts/tests/test_token_coverage.py` | the planted double-count not failing the ledger's check — **landed AT-35-E2-004** |
+| `token-coverage` | `scripts/token_coverage.py --check` | a non-DONE unit under no token (nor `token-less`), a refused set that does not equal `_refused.json`'s, a record or token counted twice, a per-shape total that does not sum, or a stale committed ledger — **landed AT-35-E2-004**, reading the converter's token census `data/sheet_rules/_tokens.json` |
 | `sheet-rules-check` | `cargo run --locked --bin sheet_rule_convert -- --check` | a corpus record with no `SheetRule` and no refusal record; a `SheetRule` whose id has no corpus record |
 
-Stage count moves 40 → 47 (41 after AT-35-E1-001's `cycle-scope-gate-selftest`; 42 after
+Stage count moves 40 → 48 (41 after AT-35-E1-001's `cycle-scope-gate-selftest`; 42 after
 AT-35-E1-005's `pcgen-residue-gate`; **45 after AT-35-E1-002**, which added three: the two
 `--check`s and the boundary self-test, following `verify.sh`'s existing `<gate>-selftest` /
-`<gate>` pairing; **46 after AT-35-E2-001's `sheet-rules-check`** — re-derive: `scripts/verify.sh --list | tail -n +2 | wc -l`). `scripts/verify-baselines.env` and
+`<gate>` pairing; **46 after AT-35-E2-001's `sheet-rules-check`**; **48 after AT-35-E2-004**,
+which added the `token-coverage-selftest` / `token-coverage` pair under the same pairing —
+the first draft's 47 assumed one stage — re-derive: `scripts/verify.sh --list | tail -n +2 | wc -l`). `scripts/verify-baselines.env` and
 any count assertion move in the same commit as each stage lands.
 
 **`scripts/cycle_scope_gate.py`** (AT-35-E1-001):

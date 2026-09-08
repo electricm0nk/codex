@@ -29,8 +29,30 @@ pub struct Converted {
     /// Names this record's own rows declare.
     pub var_declares: Vec<(VarId, String)>,
     pub refusals: BTreeSet<String>,
+    /// The token census (SD-35 AT-35-E2-004): every mapping-table row key this record's closure
+    /// exercised (`unmapped:<HEAD>` / `BONUS:<SUB>` when the table has none).
+    pub tokens: BTreeSet<String>,
+    /// Refusal shape -> the token type(s) it arose under.
+    pub refusal_under: BTreeMap<String, BTreeSet<String>>,
     pub defects: BTreeMap<String, Vec<String>>,
     pub var_names: BTreeMap<VarId, String>,
+}
+
+/// The census key for one token: its mapping-table row's `token_type`, else the same
+/// `BONUS:<SUB>` / `unmapped:<HEAD>` string the refusal would carry. A PI-redacted head is
+/// `[redacted PI] token`.
+pub fn token_key(key: &str, value: &str) -> String {
+    if key.starts_with("[redacted") {
+        return "[redacted PI] token".to_string();
+    }
+    match row_for_head(key, value) {
+        Some(r) => r.token_type.to_string(),
+        None if key == "BONUS" => {
+            let sub = value.split('|').next().unwrap_or("").split('=').next().unwrap_or("").trim();
+            format!("BONUS:{sub}")
+        }
+        None => format!("unmapped:{key}"),
+    }
 }
 
 /// A value line the record yields (principal first).
@@ -390,9 +412,12 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     }
     // Token-less feat records: the `prerequisites` list is the record's PRE closure.
     for pre in &record.prerequisites {
+        let (head, tail) = pre.split_once(':').unwrap_or((pre.as_str(), ""));
+        let under = token_key(head.trim(), tail);
+        ctx.carry(under.clone());
         match convert_pre_token(&mut ctx, pre) {
             Ok(a) => acc.gates.push(a),
-            Err(tt) => ctx.refuse(tt),
+            Err(tt) => ctx.refuse_under(&under, tt),
         }
     }
 
@@ -405,11 +430,15 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
                 // Class chassis rows (CAST, KNOWN, SPECIALS, ...) the engine already holds.
                 continue;
             }
+            // The census key: the row this token resolves to, recorded before any branch
+            // below decides what to do with it (AT-35-E2-004).
+            let under = token_key(key, value);
+            ctx.carry(under.clone());
             if value.contains("[redacted PI]") {
                 match key {
                     "BONUS" | "DEFINE" | "SPELLS" => {
                         if let Some(r) = row_for_head(key, value) {
-                            ctx.refuse(r.token_type);
+                            ctx.refuse_under(&under, r.token_type);
                         }
                     }
                     k if k.starts_with("PRE") || k.starts_with("!PRE") => {
@@ -425,20 +454,16 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
                 continue;
             }
             let Some(trow) = row_for_head(key, value) else {
-                if key == "BONUS" {
-                    let sub = value.split('|').next().unwrap_or("").split('=').next().unwrap_or("").trim();
-                    ctx.refuse(format!("BONUS:{sub}"));
-                } else {
-                    ctx.refuse(format!("unmapped:{key}"));
-                }
+                // No row: the census key IS the refusal shape (`BONUS:<SUB>` / `unmapped:<HEAD>`).
+                ctx.refuse_under(&under, under.clone());
                 continue;
             };
             if trow.maps_to == MapsTo::Refuse {
-                ctx.refuse(trow.token_type);
+                ctx.refuse_under(&under, trow.token_type);
                 continue;
             }
             if let Err(tt) = convert_token(&mut ctx, &mut acc, &mut out, key, value, level_gate, row.kind) {
-                ctx.refuse(tt);
+                ctx.refuse_under(&under, tt);
             }
         }
     }
@@ -528,6 +553,8 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         });
     }
     out.refusals = ctx.refusals;
+    out.tokens = ctx.tokens;
+    out.refusal_under = ctx.refusal_under;
     out.defects = ctx.defects;
     out.var_names = ctx.var_names;
     out
