@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -1107,6 +1107,57 @@ run_shape_coverage_standing_gate() {
     fi
 
     stage_pass shape-coverage-standing-gate "population=${population:-?} unclassified=${unclassified:-?} no_record=${no_record:-?} corpus_sha=${sha:-?}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: cycle-scope-gate-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_cycle_scope_gate.py` -- the
+# batch floor's own self-test (SD-35 `AT-35-E1-001`, `decisions.md §2`).
+# `scripts/cycle_scope_gate.py --min 500 <scope flags>` is the nonzero exit
+# every SD-35 dispatch runs before touching anything; the three cases the
+# criterion names are executed here against synthetic inventories (a 12-unit
+# scope exits 1; a 500-unit scope exits 0; a 12-unit scope that is the whole
+# remainder exits 0), plus the `--receipt` math (id-set moved into DONE,
+# relabels, Rust lines from `git diff --numstat` on a throwaway repo, compile
+# sessions from cargo fingerprint timestamps, the live-side PCGen count from
+# `pcgen_residue_gate.py`). A floor that stops failing is the incident this
+# stage exists to catch (`workflow-instruction.md §12` row 27). Cheap (stdlib
+# unittest, no build, no network) -- placed in BOTH stage sets next to the
+# other self-tests, the same prove-it-can-fail reasoning they carry.
+# ---------------------------------------------------------------------------
+
+run_cycle_scope_gate_selftest() {
+    stage_start "cycle-scope-gate-selftest — python3 -m unittest scripts/tests/test_cycle_scope_gate.py"
+    local log="$LOG_DIR/cycle-scope-gate-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_cycle_scope_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail cycle-scope-gate-selftest "self-test script missing at scripts/tests/test_cycle_scope_gate.py"
+        return
+    fi
+    if [[ ! -f "$REPO_ROOT/scripts/cycle_scope_gate.py" ]]; then
+        stage_fail cycle-scope-gate-selftest "gate missing at scripts/cycle_scope_gate.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail cycle-scope-gate-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail cycle-scope-gate-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass cycle-scope-gate-selftest "$ran cases passed"
 }
 
 # ---------------------------------------------------------------------------
@@ -2221,6 +2272,7 @@ for stage in "${SELECTED[@]}"; do
         supersession-gate-selftest) run_supersession_gate_selftest ;;
         shape-coverage-standing-gate-selftest) run_shape_coverage_standing_gate_selftest ;;
         shape-coverage-standing-gate) run_shape_coverage_standing_gate ;;
+        cycle-scope-gate-selftest) run_cycle_scope_gate_selftest ;;
         denominator-gate)    run_denominator_gate ;;
         figure-provenance)   run_figure_provenance ;;
         pi-sweep)            run_pi_sweep ;;
