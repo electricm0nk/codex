@@ -1,34 +1,34 @@
 {
   "records": 49438,
-  "converted": 47628,
-  "refused": 1810,
-  "rules_written": 66514,
-  "var_tables": 5081,
+  "converted": 48601,
+  "refused": 837,
+  "rules_written": 68648,
+  "var_tables": 5268,
   "by_kind": {
     "ability": {
       "records": 4337,
-      "converted": 4246,
-      "refused": 91
+      "converted": 4337,
+      "refused": 0
     },
     "class": {
       "records": 185,
-      "converted": 3,
-      "refused": 182
+      "converted": 185,
+      "refused": 0
     },
     "class_feature": {
       "records": 18043,
-      "converted": 17683,
-      "refused": 360
+      "converted": 18043,
+      "refused": 0
     },
     "companion": {
       "records": 1696,
-      "converted": 1682,
-      "refused": 14
+      "converted": 1696,
+      "refused": 0
     },
     "deity": {
       "records": 459,
-      "converted": 458,
-      "refused": 1
+      "converted": 459,
+      "refused": 0
     },
     "domain": {
       "records": 183,
@@ -37,18 +37,18 @@
     },
     "equipment": {
       "records": 6223,
-      "converted": 6044,
-      "refused": 179
+      "converted": 6221,
+      "refused": 2
     },
     "equipment_modifier": {
       "records": 1532,
-      "converted": 1504,
-      "refused": 28
+      "converted": 1532,
+      "refused": 0
     },
     "feat": {
       "records": 2764,
-      "converted": 2030,
-      "refused": 734
+      "converted": 2068,
+      "refused": 696
     },
     "language": {
       "records": 136,
@@ -57,18 +57,18 @@
     },
     "monster": {
       "records": 1270,
-      "converted": 1257,
-      "refused": 13
+      "converted": 1270,
+      "refused": 0
     },
     "monster_ability": {
       "records": 3806,
-      "converted": 3795,
-      "refused": 11
+      "converted": 3806,
+      "refused": 0
     },
     "power": {
       "records": 421,
-      "converted": 420,
-      "refused": 1
+      "converted": 421,
+      "refused": 0
     },
     "race": {
       "records": 95,
@@ -77,31 +77,36 @@
     },
     "race_trait": {
       "records": 2561,
-      "converted": 2431,
-      "refused": 130
+      "converted": 2457,
+      "refused": 104
     },
     "skill": {
       "records": 149,
-      "converted": 141,
-      "refused": 8
+      "converted": 149,
+      "refused": 0
     },
     "spell": {
       "records": 2843,
-      "converted": 2829,
-      "refused": 14
+      "converted": 2835,
+      "refused": 8
     },
     "template": {
       "records": 2248,
-      "converted": 2234,
-      "refused": 14
+      "converted": 2248,
+      "refused": 0
     },
     "trait": {
       "records": 487,
-      "converted": 484,
-      "refused": 3
+      "converted": 487,
+      "refused": 0
     }
   },
   "refused_by_token_type": {
+    "no_corpus_record": 829,
+    "no_source_row": 8
+  },
+  "degraded_records": 973,
+  "degraded_by_token_type": {
     "ADD (CLASSSKILLS)": 1,
     "ASPECT\u003a<malformed sub-key>": 1,
     "BONUS (shape)": 3,
@@ -159,8 +164,6 @@
     "NATURALATTACKS (die shape)": 7,
     "SIZE (formula)": 1,
     "SPELLS (PI-redacted token)": 78,
-    "no_corpus_record": 829,
-    "no_source_row": 8,
     "unmapped\u003aALTTYPE": 49,
     "unmapped\u003aARMORTYPE": 15,
     "unmapped\u003aBONUSSPELLSTAT": 4,

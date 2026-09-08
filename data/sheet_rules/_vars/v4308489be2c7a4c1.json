@@ -1,0 +1,1 @@
+{"var":"v4308489be2c7a4c1","declared_by":["ultimate_psionics:equipment:heartstaff"],"contributions":[{"rule_id":"ultimate_psionics:ability:heartstaff_attunement","expr":{"Max":[{"Const":0},{"Floor":{"Div":[{"Sum":["Level",{"Const":-2}]},{"Const":2}]}}]},"when":"Always"}],"provenance":{}}

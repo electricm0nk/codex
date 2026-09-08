@@ -361,6 +361,12 @@ pub struct TokenCensusRecord {
     /// Refusal shape -> the token type(s) it arose under (`token-less` for `no_corpus_record`
     /// / `no_source_row`). Empty for a converted record.
     pub refusals: BTreeMap<String, Vec<String>>,
+    /// Degradation shape -> the token type(s) it arose under (SD-35 AT-35-E3-001). The record
+    /// DID convert; these are the terms whose number it could not write, so the rule prints
+    /// its words. `scripts/token_coverage.py` reads `refusals` only, by design: a degraded
+    /// record is converted, and this field is the ledger of what its line does not carry.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub degradations: BTreeMap<String, Vec<String>>,
 }
 
 /// The census key for a record refused before any token was read.
@@ -387,6 +393,12 @@ pub struct Report {
     pub var_tables: usize,
     pub by_kind: BTreeMap<String, KindCount>,
     pub refused_by_token_type: BTreeMap<String, usize>,
+    /// SD-35 AT-35-E3-001: records that converted with at least one term degraded to words,
+    /// counted per degradation shape. A record with k shapes counts under each.
+    #[serde(default)]
+    pub degraded_records: usize,
+    #[serde(default)]
+    pub degraded_by_token_type: BTreeMap<String, usize>,
     pub oracle_pin: String,
     pub converter_version: String,
 }
@@ -423,7 +435,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             let tt = if r.joined { "no_source_row".to_string() } else { "no_corpus_record".to_string() };
             *refused.by_token_type.entry(tt.clone()).or_default() += 1;
             refused.entries.push(RefusedRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), token_types: vec![tt.clone()] });
-            census.entries.push(TokenCensusRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), tokens: Vec::new(), refusals: BTreeMap::from([(tt, vec![TOKEN_LESS.to_string()])]) });
+            census.entries.push(TokenCensusRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), tokens: Vec::new(), refusals: BTreeMap::from([(tt, vec![TOKEN_LESS.to_string()])]), degradations: BTreeMap::new() });
             kc.refused += 1;
             continue;
         }
@@ -431,7 +443,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             let tt = "no_source_row".to_string();
             *refused.by_token_type.entry(tt.clone()).or_default() += 1;
             refused.entries.push(RefusedRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), token_types: vec![tt.clone()] });
-            census.entries.push(TokenCensusRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), tokens: Vec::new(), refusals: BTreeMap::from([(tt, vec![TOKEN_LESS.to_string()])]) });
+            census.entries.push(TokenCensusRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), tokens: Vec::new(), refusals: BTreeMap::from([(tt, vec![TOKEN_LESS.to_string()])]), degradations: BTreeMap::new() });
             kc.refused += 1;
             continue;
         }
@@ -442,6 +454,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             kind: r.kind.clone(),
             tokens: c.tokens.iter().cloned().collect(),
             refusals: c.refusal_under.iter().map(|(shape, under)| (shape.clone(), under.iter().cloned().collect())).collect(),
+            degradations: c.degraded_under.iter().map(|(shape, under)| (shape.clone(), under.iter().cloned().collect())).collect(),
         });
         for (k, v) in c.defects {
             defects.entry(k).or_default().extend(v);
@@ -454,6 +467,12 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         }
         for (id, name, contrib) in c.var_contribs {
             contribs.entry(id).or_insert_with(|| (name, Vec::new())).1.push(contrib);
+        }
+        if !c.degradations.is_empty() {
+            report.degraded_records += 1;
+            for t in c.degradations.iter() {
+                *report.degraded_by_token_type.entry(t.clone()).or_default() += 1;
+            }
         }
         if !c.refusals.is_empty() {
             let types: Vec<String> = c.refusals.into_iter().collect();
@@ -745,4 +764,109 @@ pub fn convert_one(repo: &Path, unit_id: &str) -> Result<(convert::Converted, Ve
         rows.push(format!("var {id} {name}: {cites:?}"));
     }
     Ok((c, rows))
+}
+
+// -------------------------------------------------------------------------------------------
+// SD-35 AT-35-E3-001: the term-level-refusal gate.
+//
+// `decisions.md` §4 asks for one gate per KIND that reads the live corpus directory, never a
+// per-unit fixture with a hand-derived value. These two read the generated package and the
+// converter's own census on disk and pin every record at once.
+// -------------------------------------------------------------------------------------------
+#[cfg(test)]
+mod term_level_refusal_gate {
+    use super::*;
+
+    fn package_dir() -> PathBuf {
+        repo_root().join("data/sheet_rules")
+    }
+
+    fn refused_report() -> RefusedReport {
+        let text = std::fs::read_to_string(package_dir().join("_refused.json"))
+            .expect("data/sheet_rules/_refused.json is generated (cargo run --locked --bin sheet_rule_convert)");
+        serde_json::from_str(&text).expect("_refused.json parses")
+    }
+
+    fn census() -> TokenCensus {
+        let text = std::fs::read_to_string(package_dir().join("_tokens.json"))
+            .expect("data/sheet_rules/_tokens.json is generated");
+        serde_json::from_str(&text).expect("_tokens.json parses")
+    }
+
+    /// A record leaves the sheet entirely for exactly three reasons: it has no corpus record,
+    /// it has no source row, or its own value is the redacted field
+    /// ([`ctx::RECORD_REFUSAL_SHAPES`], `decisions.md` §15 R2). Every other unlowerable token
+    /// degrades that term instead of deleting the record -- the standing no-carve-outs ruling.
+    #[test]
+    fn the_only_record_level_refusals_are_the_named_shapes() {
+        let allowed: BTreeSet<&str> = ["no_corpus_record", "no_source_row"]
+            .into_iter()
+            .chain(ctx::RECORD_REFUSAL_SHAPES.iter().copied())
+            .collect();
+        let report = refused_report();
+        let offenders: Vec<String> = report
+            .entries
+            .iter()
+            .flat_map(|e| e.token_types.iter().map(move |t| (e.id.clone(), t.clone())))
+            .filter(|(_, t)| !allowed.contains(t.as_str()))
+            .map(|(id, t)| format!("{id}: {t}"))
+            .take(10)
+            .collect();
+        assert!(
+            offenders.is_empty(),
+            "a token shape outside {allowed:?} refused a whole record: {offenders:?}"
+        );
+    }
+
+    /// Every degraded record reached the sheet, and prints its WORDS: the converter could not
+    /// write one of its terms, so it writes none of them as a number
+    /// (`decisions.md` §1 form 3). A partly-read magnitude never reaches a sheet total.
+    #[test]
+    fn every_degraded_record_converted_and_prints_its_words() {
+        let refused: BTreeSet<String> = refused_report().entries.into_iter().map(|e| e.id).collect();
+        let files = read_output(&package_dir());
+        assert!(!files.is_empty(), "data/sheet_rules/ is generated");
+        let census = census();
+        let degraded: Vec<&TokenCensusRecord> = census.entries.iter().filter(|e| !e.degradations.is_empty()).collect();
+        assert!(!degraded.is_empty(), "the corpus carries degraded records; the census names them");
+        let mut still_refused = Vec::new();
+        let mut missing = Vec::new();
+        let mut numbered = Vec::new();
+        for e in &degraded {
+            if refused.contains(&e.id) {
+                still_refused.push(e.id.clone());
+                continue;
+            }
+            let rel = rule_file_rel(&e.book, &e.kind, &e.id);
+            let Some(bytes) = files.get(&rel) else {
+                missing.push(rel);
+                continue;
+            };
+            let rules: Vec<SheetRule> = serde_json::from_slice(bytes).unwrap_or_else(|err| panic!("{rel}: {err}"));
+            for r in &rules {
+                if r.value != SheetValue::Text || r.target.is_some() || !r.also.is_empty() {
+                    numbered.push(format!("{}: value={:?} target={:?}", r.id, r.value, r.target));
+                }
+            }
+        }
+        still_refused.truncate(10);
+        missing.truncate(10);
+        numbered.truncate(10);
+        assert!(still_refused.is_empty(), "degraded records must still convert: {still_refused:?}");
+        assert!(missing.is_empty(), "degraded records must have a rule file: {missing:?}");
+        assert!(numbered.is_empty(), "a degraded record must print words, never a partly-read number: {numbered:?}");
+    }
+
+    /// The report's own sums: a degraded record is a CONVERTED record, and the per-shape
+    /// counts are the census's, so `token_coverage.py`'s ledger and this report agree.
+    #[test]
+    fn the_report_counts_degradations_as_converted() {
+        let text = std::fs::read_to_string(package_dir().join("_report.json")).expect("_report.json is generated");
+        let report: Report = serde_json::from_str(&text).expect("_report.json parses");
+        assert_eq!(report.converted + report.refused, report.records, "converted + refused == records");
+        let census = census();
+        let degraded = census.entries.iter().filter(|e| !e.degradations.is_empty()).count();
+        assert_eq!(report.degraded_records, degraded, "_report.degraded_records equals the census's degraded records");
+        assert!(report.degraded_records <= report.converted, "a degraded record converted");
+    }
 }

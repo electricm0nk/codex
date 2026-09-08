@@ -1,0 +1,1 @@
+{"var":"v0dd17f5e27f17f0f","declared_by":["ultimate_intrigue:class_feature:default"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:ranger_combat_style_menacing","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst:1302"]}}

@@ -10,7 +10,7 @@
         "resolved_line": 16461
       },
       "clears": "building the table (Epic 2)",
-      "count": 1,
+      "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'has_no_engine_table')",
       "meaning": "engine has no table for this kind"
     },
@@ -24,7 +24,7 @@
         "resolved_line": 16060
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 437,
+      "count": 2,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
@@ -38,7 +38,7 @@
         "resolved_line": 16366
       },
       "clears": "wiring the display/explanation path (Epic 3)",
-      "count": 79,
+      "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'explanation_id' / 'diagnostic')",
       "meaning": "held and computed, never surfaced"
     },
@@ -53,7 +53,7 @@
         "resolved_line": 13394
       },
       "clears": "per named sub-cause",
-      "count": 43,
+      "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -69,7 +69,7 @@
         "resolved_line": 13166
       },
       "clears": "\u2014",
-      "count": 48034,
+      "count": 48652,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete, oracle-agree, oracle-unverifiable, sheet-complete})",
       "meaning": "nothing remains"
     },
@@ -84,7 +84,7 @@
         "resolved_line": 13177
       },
       "clears": "running the compute path (shape engine)",
-      "count": 63,
+      "count": 3,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
       "meaning": "magnitude ingested, never computed or applied"
     },
@@ -149,7 +149,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "942c8d3ae5db5d447efd12400b2db3b8644e8be1",
+  "derived_at": "a542652c5e32f2da5c1c7287fa3e974f211c5b83",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -158,18 +158,7 @@
   "re_derive_command": "python3 scripts/completion_atlas.py --check",
   "stale_derived_at": false,
   "sub_causes": {
-    "D": {
-      "class_feature_of_unmodelled_corpus_class:aldori_swordlord": 3,
-      "class_feature_of_unmodelled_corpus_class:diabolist": 1,
-      "class_feature_of_unmodelled_corpus_class:hellknight_signifer": 1,
-      "class_feature_of_unmodelled_corpus_class:magaambyan_arcanist": 1,
-      "class_feature_of_unmodelled_corpus_class:metamorph": 1,
-      "class_feature_of_unmodelled_corpus_class:psychic_fist": 1,
-      "class_feature_of_unmodelled_corpus_class:sighted_seeker": 1,
-      "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 29,
-      "skill_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 4,
-      "template_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 1
-    },
+    "D": {},
     "U": {
       "feat_served_description_is_a_placeholder_marker_not_prose": 51,
       "text_only_but_corpus_record_carries_no_description_to_show_a_player": 151

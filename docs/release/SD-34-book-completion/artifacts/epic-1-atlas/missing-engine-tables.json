@@ -1,22 +1,6 @@
 {
-  "kinds": {
-    "power": {
-      "by_book": {
-        "ultimate_psionics": 1
-      },
-      "count": 1,
-      "engine_surface": {
-        "anchor": "Kind::Power => engine_does_not_hold(\"power_content_has_no_engine_table\"),",
-        "context_fn": "classify",
-        "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 16561
-      },
-      "zero_bucket_a_books": [
-        "ultimate_psionics"
-      ]
-    }
-  },
-  "population": 1,
+  "kinds": {},
+  "population": 0,
   "re_derive_command": "python3 scripts/missing_engine_tables.py --check",
   "source": "docs/work-inventory.json (status == engine-does-not-hold, evidence contains 'has_no_engine_table')"
 }

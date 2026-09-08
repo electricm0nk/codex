@@ -1,0 +1,1 @@
+{"var":"v01d8b6e89a09a4b4","declared_by":["ultimate_intrigue:class_feature:default"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:ranger_combat_style_deceptive","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst:1314"]}}

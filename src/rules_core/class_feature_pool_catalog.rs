@@ -2097,7 +2097,12 @@ mod tests {
         // (its record is in `data/sheet_rules/_refused.json`). This lane's own owned
         // population (`null_desc` + `real_desc_refused`) is 0: every one of the 24 rendered
         // as a sheet line and left the mechanism.
-        assert_eq!(excluded, 1, "excluded-class population (sibling lane's, do not touch)");
+        // SD-35 AT-35-E3-001 re-derivation (2026-09-08): 1 -> 0. Term-level refusal (the
+        // converter no longer deletes a whole record because one of its tokens will not
+        // lower) converted the last survivor, so it rendered as a sheet line and left the
+        // mechanism. `mechanism_units` is now empty: this test's own live query over
+        // `docs/work-inventory.json`, re-run standalone post-regen, returns 0 rows.
+        assert_eq!(excluded, 0, "excluded-class population (sibling lane's, do not touch)");
         assert_eq!(null_desc, 0, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
         assert_eq!(real_desc_refused, 0, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
         assert_eq!(excluded + null_desc + real_desc_refused, mechanism_units.len() as u32);

@@ -29,11 +29,16 @@ pub struct Converted {
     /// Names this record's own rows declare.
     pub var_declares: Vec<(VarId, String)>,
     pub refusals: BTreeSet<String>,
+    /// Token shapes the converter could not lower but that do NOT refuse the record
+    /// (SD-35 AT-35-E3-001): the record converts and prints its words.
+    pub degradations: BTreeSet<String>,
     /// The token census (SD-35 AT-35-E2-004): every mapping-table row key this record's closure
     /// exercised (`unmapped:<HEAD>` / `BONUS:<SUB>` when the table has none).
     pub tokens: BTreeSet<String>,
     /// Refusal shape -> the token type(s) it arose under.
     pub refusal_under: BTreeMap<String, BTreeSet<String>>,
+    /// Degradation shape -> the token type(s) it arose under.
+    pub degraded_under: BTreeMap<String, BTreeSet<String>>,
     pub defects: BTreeMap<String, Vec<String>>,
     pub var_names: BTreeMap<VarId, String>,
 }
@@ -436,7 +441,12 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             ctx.carry(under.clone());
             if value.contains("[redacted PI]") {
                 match key {
+                    // `decisions.md` §15 R2 (RULED): omit the redacted field, stamp
+                    // `provenance.pi`, print the licensed remainder. The mapping table's own
+                    // row rule says the same ("the rest of the record's tokens still
+                    // convert"); before AT-35-E3-001 the converter dropped the whole record.
                     "BONUS" | "DEFINE" | "SPELLS" => {
+                        ctx.pi_declared.push(key.to_string());
                         if let Some(r) = row_for_head(key, value) {
                             ctx.refuse_under(&under, r.token_type);
                         }
@@ -513,6 +523,20 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         overlay: closure.overlay.clone(),
     };
     let pool = slug(&acc.category);
+    // SD-35 AT-35-E3-001. A term this record carried could not be lowered, so no number the
+    // converter can write is the number the player would write: the rule prints its words
+    // (`decisions.md` §1 form 3). The partly-read magnitudes are dropped rather than folded
+    // into a sheet total -- a wrong computed number looks right, an omitted one does not.
+    let degraded = !ctx.degradations.is_empty();
+    if degraded {
+        acc.also.clear();
+        for line in acc.lines.iter_mut() {
+            line.value = SheetValue::Text;
+            line.also.clear();
+            line.target = None;
+            line.bonus_type = None;
+        }
+    }
     let mut lines: Vec<Line> = std::mem::take(&mut acc.lines).into_iter().filter(|l| l.applies != Applies::Never).collect();
     if lines.is_empty() {
         lines.push(Line { suffix: None, label: label.clone(), value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
@@ -553,8 +577,10 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         });
     }
     out.refusals = ctx.refusals;
+    out.degradations = ctx.degradations;
     out.tokens = ctx.tokens;
     out.refusal_under = ctx.refusal_under;
+    out.degraded_under = ctx.degraded_under;
     out.defects = ctx.defects;
     out.var_names = ctx.var_names;
     out

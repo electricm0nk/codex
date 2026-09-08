@@ -10,6 +10,21 @@ use sha2::{Digest, Sha256};
 use super::closure::{Closure, PinnedTree, RowRef};
 use crate::rules_core::sheet_rule::{Applies, BonusType, ClassId, Expr, RuleId, SkillId, StackMode, VarId};
 
+/// The token shapes that refuse the whole RECORD, so no `SheetRule` is written for it at all.
+///
+/// This is the deliberate REFUSE-by-shape set of `decisions.md` §15 ruling R2: the record's
+/// own value is the redacted field, so there is no licensed remainder to print. Every other
+/// unlowerable term is a degradation (see [`RecordCtx::refuse_under`]) — the record still
+/// reaches the sheet, printing its words.
+///
+/// `no_corpus_record` / `no_source_row` are handled before conversion begins
+/// (`super::run`): a record with no source row has nothing to convert, degraded or not.
+pub const RECORD_REFUSAL_SHAPES: &[&str] = &["BONUS:VAR ([redacted PI] value)"];
+
+pub fn is_record_refusal(shape: &str) -> bool {
+    RECORD_REFUSAL_SHAPES.contains(&shape)
+}
+
 /// `"Fast Movement"` -> `"fast_movement"` -- `v06_work_inventory::slug`'s rule, reproduced so
 /// rule ids here equal the inventory's unit ids.
 pub fn slug(name: &str) -> String {
@@ -181,8 +196,16 @@ pub struct RecordCtx<'a> {
     pub closure: &'a Closure,
     pub choice_id: Option<String>,
     pub owning_class: Option<ClassId>,
-    /// Token types that refused this record (per token SHAPE, never per unit).
+    /// Token types that refused this RECORD outright (per token SHAPE, never per unit).
+    /// Only [`RECORD_REFUSAL_SHAPES`] land here; every other unlowerable term degrades.
     pub refusals: BTreeSet<String>,
+    /// Token shapes whose term the converter could not lower. The record still converts and
+    /// prints its words (`decisions.md` §1 form 3: a term the character does not settle stays
+    /// as words) instead of vanishing from the sheet entirely.
+    pub degradations: BTreeSet<String>,
+    /// Degradation shape -> the token type(s) it arose under, the census twin of
+    /// [`RecordCtx::refusal_under`].
+    pub degraded_under: BTreeMap<String, BTreeSet<String>>,
     /// The token census (SD-35 AT-35-E2-004): the mapping-table row key of every token this
     /// record's closure carried -- `unmapped:<HEAD>` / `BONUS:<SUB>` when the table has no row.
     pub tokens: BTreeSet<String>,
@@ -214,6 +237,8 @@ impl<'a> RecordCtx<'a> {
             choice_id: None,
             owning_class,
             refusals: BTreeSet::new(),
+            degradations: BTreeSet::new(),
+            degraded_under: BTreeMap::new(),
             tokens: BTreeSet::new(),
             refusal_under: BTreeMap::new(),
             defects: BTreeMap::new(),
@@ -225,7 +250,12 @@ impl<'a> RecordCtx<'a> {
     }
 
     pub fn refuse(&mut self, token_type: impl Into<String>) {
-        self.refusals.insert(token_type.into());
+        let tt = token_type.into();
+        if is_record_refusal(&tt) {
+            self.refusals.insert(tt);
+        } else {
+            self.degradations.insert(tt);
+        }
     }
 
     /// Record that this record's closure carries a token of type `token_type` (census only).
@@ -233,11 +263,25 @@ impl<'a> RecordCtx<'a> {
         self.tokens.insert(token_type.into());
     }
 
-    /// Refuse under `shape`, recording the token type (`under`) the refusal arose under.
+    /// Refuse under `shape`, recording the token type (`under`) it arose under.
+    ///
+    /// SD-35 `AT-35-E3-001`: a token the table does not map, or whose formula/gate the
+    /// converter cannot lower, no longer deletes the whole record from the sheet. Only the
+    /// deliberate REFUSE-by-shape set ([`RECORD_REFUSAL_SHAPES`], `decisions.md` §15 R2)
+    /// refuses the record; every other shape is a **term-level degradation** — the token
+    /// contributes no number, the record converts, and its principal value becomes
+    /// `SheetValue::Text` so the sheet prints the rule's own words rather than a number the
+    /// converter only partly read (`decisions.md` §1 form 3, and the standing no-carve-outs
+    /// ruling: "the engine cannot model X" is a number to report, never an exemption).
     pub fn refuse_under(&mut self, under: &str, shape: impl Into<String>) {
         let shape = shape.into();
-        self.refusal_under.entry(shape.clone()).or_default().insert(under.to_string());
-        self.refusals.insert(shape);
+        if is_record_refusal(&shape) {
+            self.refusal_under.entry(shape.clone()).or_default().insert(under.to_string());
+            self.refusals.insert(shape);
+        } else {
+            self.degraded_under.entry(shape.clone()).or_default().insert(under.to_string());
+            self.degradations.insert(shape);
+        }
     }
 
     pub fn defect(&mut self, kind: &str, line: String) {

@@ -1,0 +1,1 @@
+{"var":"v8d5a2ced129e3d07","declared_by":["ultimate_intrigue:class_feature:default"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:ranger_combat_style_underhanded","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst:1299"]}}

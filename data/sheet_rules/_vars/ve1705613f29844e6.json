@@ -1,0 +1,1 @@
+{"var":"ve1705613f29844e6","declared_by":["ultimate_wilderness:class_feature:default"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:default","expr":{"Var":"v2193d0f9fc31c604"},"bonus_type":{"name":"Bypass","mode":"Plain"},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst:1312"]}}
