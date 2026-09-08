@@ -26,13 +26,13 @@ process defect** recorded by the epic wrap-up.
 | Epic | Criteria | Complete | In progress | Not started |
 |---|---:|---:|---:|---:|
 | 1 — Tax cut | 6 | 6 | 0 | 0 |
-| 2 — Sheet rule | 5 | 0 | 0 | 5 |
+| 2 — Sheet rule | 5 | 1 | 0 | 4 |
 | 3 — Place and surface | 4 | 0 | 0 | 4 |
 | 4 — Resolve and verify | 3 | 0 | 0 | 3 |
 | 5 — Residues | 5 | 0 | 0 | 5 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **6** | **0** | **24** |
+| **Total** | **30** | **7** | **0** | **23** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,17 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-08 — AT-35-E2-001 cycle 1 — `sheet-rule-converter` — **complete**
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (converter-building cycle — closes zero units by design; AT-35-E2-005 is the pass that moves the population)` — `decisions.md §2`. `pcgen_residue_gate.py --check` at start: `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=6463 ratio=n/a builds_recorded=3 pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 928272a444 --before /tmp/wi-before-AT-35-E2-001.json --after docs/work-inventory.json`; `builds_recorded` 3: a converter-building cycle iterates build → run → `--check` until the package is clean).
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS` at `72ad0be010` — not risen.
+- **Refused tokens:** 1,810 of 49,438 records (659 non-DONE of 23,315) in 82 refusal strings / ~16 shapes — `no_corpus_record=829, FORMULA:var(COUNT)=211, unmapped:STARTSKILLPTS=162, unmapped:SLOTS=95, FORMULA:malformed=87, SPELLS (PI-redacted)=78, BONUS:[redacted PI]=62, unmapped:ALTTYPE=49, unmapped:SPELLSTAT=49, unmapped:MODTOSKILLS=41, DEFINE (PI-redacted)=40, unmapped:MEMORIZE=38, …` (full list: `data/sheet_rules/_refused.json`; deferral event `1788840316824-at-35-e2-001-de4597`).
+- **What landed:** `src/rules_core/sheet_rule.rs` (schema v2, no source-format reading), `src/pcgen_import/sheet_rule/` (the converter: 249-row table transcribed and proven both ways; corrected corpus-wide `.MOD` index with `_pfs/` skipped and KEY matching — B9/R3; class continuation rows + level lines — B5; the no-`raw_tokens` row read — B7; the pinned DEFINE/BONUS:VAR index — B2; own formula parser; PRE → `Applies`; prose slots; PI term screen on every text), `src/bin/sheet_rule_convert.rs` (regenerate / `--check` / `--one`), `data/sheet_rules/` (`records=49438 converted=47628 refused=1810 rules=66514 var_tables=5081`, ~23 s per pass; literal grep 0), `tests/sheet_rule_convert_gate.rs` (26 tests: Ill Omen's DC = `Sum([Const(10), Const(1), AbilityMod(Cha)])`, the longsword = `Dice{"1d8", None}`, Magical Knack = `Text` + `offers` + `ChoiceName`; 19 per-kind gates; literal scan; freshness; determinism), `verify.sh` stage `sheet-rules-check` (46 stages).
+- **Verification:** `cargo test --locked --no-run` exit 0; `cargo test --locked --no-fail-fast -j 6` → 411 test binaries, 410 ok, 1 FAILED — the lib binary at the pre-fix tree (3203 passed, 3 failed: `sheet_rule::{ctx,formula,table}::tests` expectation drift, fixed in the same cycle); re-run at HEAD `cargo test --locked --lib -j 6` → 3206 passed, 0 failed, 14 ignored; 8,699 tests passed across the run; converter gate binary 26/26; clippy 0 warnings on the touched targets; `sheet_rule_convert --check` `verdict=PASS`; `completion_atlas.py --check` `unclassified=0` (atlas `derived_at` re-stamp reverted); `shape_engine_boundary.py`, `missing_engine_tables.py` `violations=0`; `denominator_gate.py` `files_checked=29 violations=0`; `verify.sh --only pi-sweep` PASS.
+- **Discoveries:** 24 token heads outside the mapping table once the closure is read from the pinned tree (STARTSKILLPTS 162, SLOTS 95, ALTTYPE 49, SPELLSTAT 49, MODTOSKILLS 41, MEMORIZE 38, …; correction `1788840316691-at-35-e2-001-4e50ce`); the epic's `SpellLevel` is the table's `Const(<spell level>)` (`…-8ed3da`); no corpus record carries a `+N` die literal (`…-569089`); refusal shapes > 10 by construction of the converter-building cycle — the §8 signal for AT-35-E4-001's scoping, not a blocker on this criterion.
+- **Receipt:** `artifacts/epic-2-sheet-rule/AT-35-E2-001_cycle1_receipt.md`. Code `72ad0be010`. **Epic 2: 1 of 5 complete — AT-35-E2-002 next.**
 
 ### 2026-09-08 — AT-35-E1-004 cycle 1 — `ratio-row-and-gate-scope` — **complete**
 
