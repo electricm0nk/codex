@@ -41,6 +41,15 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — AT-35-E1-003 **re-dispatch** (no new cycle) — `test-families-table-driven` — **complete** (already closed at `03072aea0c`; re-verified at HEAD, zero change to code or baselines)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (build-time tax cut — closes zero corpus units by design, decisions.md §2)` — unchanged from cycle 1. `pcgen_residue_gate.py --check` at start of the re-dispatch: `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** cycle 1's, unchanged and re-stated: `closed=0 relabeled=0 rust_lines_changed=1906 ratio=n/a builds_recorded=0 pcgen_live_files=260`. Re-running `cycle_scope_gate.py --receipt --since 53296d80f0 --before /tmp/wi-before-AT-35-E1-003.json --after docs/work-inventory.json` at HEAD `4e321d2c6c` prints `closed=21911 relabeled=0 rust_lines_changed=11339 ratio=0.52 builds_recorded=1 pcgen_live_files=260` — that window spans 30 commits of Epic 1/2/3 lanes, **not** this criterion's cycle; the criterion's own window ends at `03072aea0c`.
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS` — not risen; nothing live-side touched.
+- **Refused tokens:** none (no converter run).
+- **Verification at HEAD `4e321d2c6c`:** `ls tests/sd18_*_widening.rs tests/sd13_*progression*.rs` → `No such file or directory` (0 standalone family binaries); `tests/sd18_widening/main.rs` + `tests/sd13_progression/main.rs` present; `BASELINE_ROOT_TEST_BINARIES=408` still the last assignment in `scripts/verify-baselines.env` (`:3484`); `CARGO_INCREMENTAL=0 cargo test --locked -j 6 --test sd18_widening --test sd13_progression` → exit 0, `980 passed; 0 failed` + `1239 passed; 0 failed` (2,219 family tests), **0 warnings**; §6 step 2 audits on the final diff with rename pairing (`-M`, pathspec `'tests/sd18_*' 'tests/sd13_*'`) → 13 identifier matches on added lines (the same 13 the receipt itemises, all citations/doc comments/env notes) and `OK_NO_TOKENS`; `git diff -M --summary` → `184` renames.
+- **Receipt:** `artifacts/epic-1-tax-cut/AT-35-E1-003_cycle1_receipt.md` (re-verification row appended). **Process defect:** the criterion was dispatched again although `kanban.md` row 3 already read `complete` — retro `rework` `1788880170541-at-35-e1-003-b1939e`; avoidable by grepping the criterion id in `kanban.md` for `complete` before dispatch.
+
 ### 2026-09-08 — AT-35-E3-001 cycle 1 — `class-feature-b-zero` — **blocked-escalated** (§8 under-floor re-scope, not an operator ruling; the cycle did not start)
 
 - **Scope gate:** `scoped=214 remaining_non_done=1404 floor=500 verdict=FAIL_UNDER_FLOOR` — `python3 scripts/cycle_scope_gate.py --min 500 --bucket B --kind class_feature` at `8cc4ea1516` (`scoped_by_bucket=B:214`, `scoped_by_kind=class_feature:214`); under the floor and not the whole 1,404 remainder, so the cycle did not start (`workflow-instruction.md §6` step 1, `§8`). `pcgen_residue_gate.py --check` at start: `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
