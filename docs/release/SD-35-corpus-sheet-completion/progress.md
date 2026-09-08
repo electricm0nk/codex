@@ -41,6 +41,64 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — AT-35-E2-001 cycle 2 — `sheet-rule-converter` — **complete** (re-dispatch of a closed criterion; re-verified at HEAD, and it corrected its own cycle-1 audit row)
+
+AT-35-E2-001 was dispatched a second time after cycle 1 had landed (`72ad0be010`, board row 7
+already `complete`). The criterion was at zero on arrival, so this cycle re-derived every clause
+of its `Evidence:` sentence at HEAD `4510517993` rather than re-doing work, and **changed no code,
+no data and no script** — `rust_lines_changed=0`, nothing outside `docs/` written. Receipt:
+`artifacts/epic-2-sheet-rule/AT-35-E2-001_cycle2_receipt.md`.
+
+`SCOPE_GATE: EXEMPT (converter-building cycle — closes zero units by design; AT-35-E2-005 is the
+pass that moves the population)` (`decisions.md §2`; the criterion is additionally already at
+zero). Receipt rows: `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0
+pcgen_live_files=260`. Residue `live_files=260 live_hits=12736 baseline_files=260
+baseline_hits=12736 verdict=PASS`, identical at start and end and to cycle 1's.
+
+Evidence re-derived, clause by clause: `cargo run --locked --release --bin sheet_rule_convert --
+--check` → `records=49438 converted=47628 refused=1810 rules=66514 var_tables=5081 verdict=PASS
+(33.8s)`, exit 0, and 47,628 + 1,810 = 49,438 exactly; `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL='
+data/sheet_rules/ | wc -l` → **0**; `cargo test --locked --test sheet_rule_convert_gate -j 6` → 27
+passed / 0 failed (the 19 per-kind gates over the live corpus directory, the three value-form
+tests on real records, literal scan, freshness, determinism, token census); `cargo test --locked
+--lib sheet_rule -j 6` → 31 passed / 0 failed; all 19 per-kind lines sum. Gates:
+`completion_atlas.py --check` `unclassified=0 overlap=0 done_evidence_violations=0
+citation_failures=0`; `token_coverage.py --check` `non_done=1404 refused_non_done=659
+token_types=231 shapes=81 verdict=PASS`; `shape_engine_boundary.py --check`
+`magnitude_bearing=26396 not_held_by_engine=363`; `missing_engine_tables.py --check`
+`population=1 citation_failures=0`; `denominator_gate.py --check` `files_checked=40 violations=0`;
+`verify.sh --only pi-sweep` `RESULT: PASS`. `cargo test --locked --no-fail-fast` was **not** run
+and is not required — `§6` step 3 conditions it on `src/` or the classifier changing, and neither
+did.
+
+**Two corrections, both recorded** (`docs/retro/events/at-35-e2-001.jsonl`). First, cycle 1's
+receipt claims `Wired-integration audit result: OK_NO_TOKENS`; re-run over the Epic 2 file-touch
+set at HEAD it returns **4 hits**, every one attributed and **none a stub in shipping code** — the
+word `hack` twice as ordinary Pathfinder rules prose ("hack or smash its way out", "hack or force
+a way through") in two generated `data/sheet_rules/` records, `placeholder` six times in
+`docs/work-inventory.json` `reason` fields describing the source's own CHOOSE-menu "no selection"
+rows, and one `not yet implemented` inside a transcribed description. The audit's keyword class is
+a grep over English as well as code; `§8`'s non-self-healable "stub, inline mock, or `\"Would …\"`
+string in shipping code" is not met, so the criterion stands.
+
+Second, that last hit is a real finding and is filed as a **table defect, not fixed here**:
+`data/sheet_rules/ultimate_intrigue/class_feature/courtly_hunter_courtly_companion.json` prints the
+source's editorial bracket `[Change to magical beast and stacking restriction not yet
+implemented]` as sheet prose. The converter is behaving as specified — it is a faithful
+transcription of the source description — and what is missing is a mapping-table row scrubbing
+source editorial annotations out of printed prose. No such row exists in
+`token-mapping/mapping-table.v1.json`, and **inventing one inside the cycle is precisely the
+defect `decisions.md §15` forbids**, so it is recorded for the table's owner instead
+(`1788882373210-at-35-e2-001-f81ef5`). Magnitude: 1 record of 47,628 converted; no computed value
+and no count depends on it. Not an `## Open blockers` entry — the criterion's Definition of Done
+does not require it and nothing downstream is paused.
+
+Refused tokens: none added by this cycle. The standing set is unchanged — 1,810 records, 81
+shapes, 231 token types, of which 659 are non-DONE and are owned by AT-35-E4-001 under
+`### AT-35-E2-005-DISPOSITION`'s hand-off table, not by this criterion. Next-cycle scope:
+criterion at zero. Epic 2 is complete across rows 7–11 plus row 30; the live front is row 12
+(AT-35-E3-001, `blocked-escalated` awaiting the orchestrator's re-scope).
+
 ### 2026-09-08 — AT-35-E1-004 cycle 2 — `ratio-row-and-gate-scope` — **complete** (re-dispatch that found a real gap: the default scan missed one SD-35 doc)
 
 AT-35-E1-004 was dispatched a second time after cycle 1 had landed (`2bf452b038`, board row 4
