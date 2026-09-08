@@ -162,6 +162,14 @@ DEFAULT_GLOBS = [
     # under `artifacts/**`.
     os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "artifacts", "**", "*.md"),
     os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "*.md"),
+    # AT-35-E1-004 cycle 2: the two entries above are kept (nothing
+    # already scanned stops being scanned) but they are not "every SD-35
+    # `.md`", which is the criterion's literal bar -- they missed
+    # `references/README.md`, a figure-bearing package doc in neither the
+    # root nor `artifacts/`. This recursive entry is the whole package and
+    # subsumes both; it also picks up any future subdirectory without
+    # another widening cycle.
+    os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "**", "*.md"),
 ]
 
 # A bare percentage token: digits (commas allowed), optional decimal, a `%`
@@ -537,6 +545,11 @@ PROVENANCE_DEFAULT_GLOBS = [
     os.path.join(SD34_BUNDLE_DIR, "*.md"),
     os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "artifacts", "**", "*.md"),
     os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "*.md"),
+    # AT-35-E1-004 cycle 2, same widening as `DEFAULT_GLOBS`: the whole
+    # SD-35 package recursively, so `references/README.md` and any future
+    # subdirectory are in scope. SD-33 still stays out, for the measured
+    # reason above.
+    os.path.join(SHEET_COMPLETION_BUNDLE_DIR, "**", "*.md"),
 ]
 
 

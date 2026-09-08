@@ -555,12 +555,46 @@ class TestDefaultGlobsWidenedToSD35(unittest.TestCase):
     )
 
     def _real_sd35_md(self):
-        root = glob.glob(os.path.join(dg.SHEET_COMPLETION_BUNDLE_DIR, "*.md"))
-        artifacts = glob.glob(
-            os.path.join(dg.SHEET_COMPLETION_BUNDLE_DIR, "artifacts", "**", "*.md"),
-            recursive=True,
+        """Every `.md` file that actually exists anywhere under SD-35's
+        package, enumerated by walking the directory -- deliberately NOT
+        by re-running the globs under test.
+
+        RED→GREEN, AT-35-E1-004 cycle 2: the first landing of this class
+        built this set from `*.md` + `artifacts/**/*.md`, the same two
+        entries it then asserted `DEFAULT_GLOBS` covered. That is
+        circular -- the assertion could not fail for any file the globs
+        missed, and it missed one: `references/README.md`, a real
+        figure-bearing package doc that a default run never read. The
+        criterion's bar is "every SD-35 `.md`", so the expected set is
+        taken from the filesystem."""
+        found = set()
+        for dirpath, _dirnames, filenames in os.walk(dg.SHEET_COMPLETION_BUNDLE_DIR):
+            for name in filenames:
+                if name.endswith(".md"):
+                    path = os.path.join(dirpath, name)
+                    if os.path.isfile(path):
+                        found.add(path)
+        return found
+
+    def test_expected_set_is_a_filesystem_walk_not_the_globs_under_test(self):
+        # Pins the anti-circularity fix itself: the walk must find at
+        # least one `.md` that neither `*.md` nor `artifacts/**/*.md`
+        # matches, or the two coverage assertions below are vacuous
+        # again. `references/README.md` is that file today.
+        glob_derived = set(
+            glob.glob(os.path.join(dg.SHEET_COMPLETION_BUNDLE_DIR, "*.md"))
+        ) | set(
+            glob.glob(
+                os.path.join(dg.SHEET_COMPLETION_BUNDLE_DIR, "artifacts", "**", "*.md"),
+                recursive=True,
+            )
         )
-        return {p for p in root + artifacts if os.path.isfile(p)}
+        outside = self._real_sd35_md() - glob_derived
+        self.assertIn(
+            os.path.join(dg.SHEET_COMPLETION_BUNDLE_DIR, "references", "README.md"),
+            outside,
+            "references/README.md is the file the pre-cycle-2 globs missed",
+        )
 
     def test_sd35_bundle_dir_is_the_real_package_folder(self):
         self.assertTrue(os.path.isdir(dg.SHEET_COMPLETION_BUNDLE_DIR))
