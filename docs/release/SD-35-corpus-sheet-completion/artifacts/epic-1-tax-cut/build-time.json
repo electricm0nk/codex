@@ -1,0 +1,110 @@
+{
+  "criterion": "AT-35-E1-003",
+  "what": "cold `cargo test --locked --no-run -j 6` wall time before and after folding the two templated integration-test families (tests/sd18_*_widening.rs, tests/sd13_*progression*.rs) into one binary each",
+  "machine": {
+    "cores": 24,
+    "ram_gb": 143,
+    "toolchain": "stable-x86_64-unknown-linux-gnu (rustup)",
+    "note": "shared box; the SD-35 Epic 1 E1-001/002/005 lane was building and running the full suite in its own worktree during runs 1 and 2 — see the load fields"
+  },
+  "command": "CARGO_INCREMENTAL=0 CARGO_TARGET_DIR=<fresh dir, rm -rf'd first> /usr/bin/time -v cargo test --locked --no-run -j 6",
+  "load_note": "load_before / load_after are /proc/loadavg 1/5/15-minute averages at the start and end of the run; a paired run means before and after were measured back-to-back with the same (quiet) box state",
+  "runs": [
+    {
+      "run": 1,
+      "label": "before",
+      "sha": "53296d80f05fe8c32e867f90dd5064a125187f32",
+      "tree": "the cycle-start tree, 184 family files as 184 binaries",
+      "start_utc": "2026-09-08T01:35:39Z",
+      "end_utc": "2026-09-08T01:38:24Z",
+      "wall_clock": "2:44.49",
+      "wall_seconds": 164.49,
+      "max_rss_kb": 2217072,
+      "load_before": "0.66 0.56 0.40",
+      "load_after": "14.76 5.61 2.26",
+      "warnings": 0,
+      "test_binaries_built": 544,
+      "exit": 0,
+      "paired_with": null,
+      "comparable": "quiet box at start; matches the launch audit's 2:44.51 at 4c4d07f89d (workflow-instruction.md §1 item 10)"
+    },
+    {
+      "run": 2,
+      "label": "after",
+      "sha": "53296d80f05fe8c32e867f90dd5064a125187f32+working-tree (the consolidation, before its commit)",
+      "tree": "the consolidated tree, 2 family binaries",
+      "start_utc": "2026-09-08T01:40:59Z",
+      "end_utc": "2026-09-08T01:45:55Z",
+      "wall_clock": "4:55.95",
+      "wall_seconds": 295.95,
+      "max_rss_kb": 2210040,
+      "load_before": "5.37 4.96 2.51",
+      "load_after": "40.43 20.46 9.29",
+      "warnings": 0,
+      "test_binaries_built": 362,
+      "exit": 0,
+      "paired_with": null,
+      "comparable": "NOT comparable to run 1: the other Epic 1 lane's full `cargo test` build (590 binaries, /tmp/cargo-sd35-AT-35-E1-005) ran concurrently — load 40 on 24 cores at the end. Kept because a measurement is reported, not discarded; runs 3 and 4 are the paired re-measurement"
+    },
+    {
+      "run": 3,
+      "label": "before (paired)",
+      "sha": "53296d80f05fe8c32e867f90dd5064a125187f32",
+      "tree": "`git archive 53296d80f0 | tar -x` export to /tmp/e1003-before-tree — the untouched cycle-start tree, 184 family files as 184 binaries",
+      "start_utc": "2026-09-08T02:32:54Z",
+      "end_utc": "2026-09-08T02:36:03Z",
+      "wall_clock": "3:08.97",
+      "wall_seconds": 188.97,
+      "max_rss_kb": 2207880,
+      "load_before": "1.95 2.16 5.29",
+      "load_after": "13.68 6.78 6.43",
+      "warnings": 0,
+      "test_binaries_built": 544,
+      "exit": 0,
+      "paired_with": 4,
+      "comparable": "paired with run 4: same box state, back-to-back, started when the 1-minute load was under 3.0 (waited 0 s); the load_after values on runs 3 and 4 are the -j 6 build itself"
+    },
+    {
+      "run": 4,
+      "label": "after (paired)",
+      "sha": "53296d80f05fe8c32e867f90dd5064a125187f32+working-tree (the consolidation, before its commit; tests/ identical to the committed tree)",
+      "tree": "this lane's worktree, 2 family binaries",
+      "start_utc": "2026-09-08T02:36:15Z",
+      "end_utc": "2026-09-08T02:38:41Z",
+      "wall_clock": "2:25.89",
+      "wall_seconds": 145.89,
+      "max_rss_kb": 2209496,
+      "load_before": "11.96 6.64 6.39",
+      "load_after": "10.34 7.42 6.67",
+      "warnings": 0,
+      "test_binaries_built": 362,
+      "exit": 0,
+      "paired_with": 3,
+      "comparable": "paired with run 3 (its load_before is run 3's own tail — the 1-minute average had not decayed in the 12 s between them)"
+    }
+  ],
+  "paired_rerun": {
+    "before_seconds": 188.97,
+    "after_seconds": 145.89,
+    "delta_seconds": -43.08,
+    "delta_percent": -22.8,
+    "verdict": "after < before on the paired quiet-box runs (3 vs 4), and also against the quiet-box run 1 (164.49 s → 145.89 s, −11.3%); run 2 is the only after > before and it was measured under another lane's full build (load 40)",
+    "what_the_seconds_are": "cargo's --no-run is dominated by the `codex` library compile (~2 min, unchanged) plus one link per test binary; 182 fewer links is the whole delta. The 70-minute full-suite figure the operator complained about (workflow-instruction.md §1 item 10) is test execution, not compile: this cycle's `cargo test --locked --no-fail-fast -j 6` after the fold ran 01:55:07Z → 02:32:45Z (37.6 min, 8656 passed / 0 failed / 67 ignored across 408 targets) — but under a contended box for its first 10 minutes and a quiet one after, so it is a single observation, not a paired measurement",
+    "re_derive": "bash <scratchpad>/e1003_paired.sh — or by hand: export the before SHA with git archive, then in each tree `rm -rf $CARGO_TARGET_DIR; CARGO_INCREMENTAL=0 /usr/bin/time -v cargo test --locked --no-run -j 6`, back-to-back"
+  },
+  "test_count": {
+    "before_entries": 8723,
+    "after_entries": 8723,
+    "list_command": "cargo test --locked -j 6 -- --list 2>&1 (stdout+stderr merged so each entry keeps its `Running tests/<file>.rs` target)",
+    "diff": "artifacts/epic-1-tax-cut/test-list-diff.txt — verdict=IDENTICAL, 0 only-in-before, 0 only-in-after, after each `<module>::<name>` entry of the two folded binaries is mapped back to its original file `tests/sd18_<module>_widening.rs` / `tests/sd13_<module>_progression.rs`",
+    "running_targets_before": 590,
+    "running_targets_after": 408,
+    "family_tests": {"sd18_widening": 980, "sd13_progression": 1239}
+  },
+  "test_binaries_built": {
+    "before": 544,
+    "after": 362,
+    "delta": -182,
+    "derive": "grep -c 'Executable tests/' on the --no-run stderr; 184 family files became 2 binaries"
+  }
+}
