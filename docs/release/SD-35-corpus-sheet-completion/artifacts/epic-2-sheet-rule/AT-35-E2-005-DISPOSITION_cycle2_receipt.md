@@ -5,8 +5,9 @@ carrying the amendment, `decisions.md §16`, the hand-off script and table, `kan
 30, and `progress.md`'s entry). This cycle re-derives the hand-off and every gate at HEAD and
 confirms the amended bar still holds. **No unit moved and no file outside `docs/` changed.**
 
-- **Commit SHA:** the docs commit carrying this receipt, its `progress.md` entry, the `kanban.md`
-  row-30 pointer and the retro deferral, on `tranche/15` (cycle start
+- **Commit SHA:** `5b97482b779912c9a5331de788cd33b89f9ab911` — the docs commit carrying this receipt,
+  its `progress.md` entry, the `kanban.md` row-30 pointer and the retro deferral, on `tranche/15`
+  (this line's own SHA pinned by the immediately following commit; cycle start
   `ca976bf31da9e34376f5beb0b6e684de46df4570`; the cycle moved no file under `src/**`, `scripts/**`,
   `tests/**`, `data/**` or `apps/**`, and `docs/work-inventory.json` is untouched —
   `cmp docs/work-inventory.json /tmp/wi-before-AT-35-E2-005-DISPOSITION.json` → identical).
