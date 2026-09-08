@@ -96,7 +96,8 @@ evidence relation *stronger* than cycle 1 could show.
     `scripts/tests/test_pf1e_dashboard_producer.py`, `tests/v06_work_inventory.rs`,
     `src/rules_core/class_feature_pool_catalog.rs`
   - status vocabulary **12** words, `sheet-complete` present with the `technical-design.md §3`
-    meaning; **21,911** of **49,438** inventory units carry it, by rendered form
+    meaning; **21,911** of **49,438** inventory units carry it (`python3 scripts/completion_atlas.py --check` prints the same 49,438
+    denominator), by rendered form
     `words 16614 / number 4400 / dice 897` (sums to 21,911) —
     `python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); print(len(d['status_vocabulary']), 'sheet-complete' in d['status_vocabulary']); c=collections.Counter(u['status'] for u in d['units']); print(c['sheet-complete'], len(d['units'])); print(collections.Counter(u['evidence'] for u in d['units'] if u['status']=='sheet-complete'))"`
   - `completion_atlas.py --check` → `population=49438 buckets=10 unclassified=0 overlap=0`

@@ -90,8 +90,9 @@ later cycles would otherwise scope from.
   cycle 1's — `--check` rewrote no file (`git status --porcelain` after the run listed neither
   `token-coverage.json` nor `data/sheet_rules/_tokens.json`).
 - **Figures + their re-derive commands:**
-  - the ledger, verbatim (denominator: the 49,438 units of `docs/work-inventory.json` at
-    `9f1b27dcdf`, DONE per `completion_atlas.py`): **`non_done=1404 tokened=1399 token_less=5
+  - the ledger, verbatim, from `python3 scripts/token_coverage.py --check` (denominator: the 49,438
+    units of `docs/work-inventory.json` at `9f1b27dcdf`, DONE per `python3 scripts/completion_atlas.py --check`):
+    **`non_done=1404 tokened=1399 token_less=5
     refused=1810 refused_non_done=659 token_types=231 shapes=81 verdict=PASS`** —
     `python3 scripts/token_coverage.py --check` (last line; **2.47 s**, `time`), with all six named
     sub-checks printing `ok=True`: `population` (`census_entries=49438 inventory_units=49438
@@ -127,8 +128,8 @@ later cycles would otherwise scope from.
     strings **81** — `python3 -c "import json;
     print(len(json.load(open('data/sheet_rules/_refused.json'))['by_token_type']))"`; shapes with a
     non-DONE record **69** of 81
-  - the census: **49,438 entries, 49,443 lines, 14,631,801 bytes** —
-    `python3 -c "import json; print(len(json.load(open('data/sheet_rules/_tokens.json'))['entries']))"`,
+  - the census: **49,438 entries, 49,443 lines, 14,631,801 bytes** — `wc -lc data/sheet_rules/_tokens.json`
+    and `python3 -c "import json; print(len(json.load(open('data/sheet_rules/_tokens.json'))['entries']))"`,
     `wc -lc data/sheet_rules/_tokens.json`; source-format literal scan **0** files —
     `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l`
   - `completion_atlas.py --check` → `population=49438 buckets=10 unclassified=0 overlap=0`,

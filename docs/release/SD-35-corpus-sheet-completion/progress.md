@@ -41,6 +41,109 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — AT-35-E2-005 cycle 5 — `first-corpus-wide-conversion` — **complete** (re-dispatch of a criterion already closed against its amended bar; re-verified at HEAD, one instrument correction)
+
+AT-35-E2-005 was dispatched again with a stale brief (`CYCLE NUMBER FOR THIS CRITERION: 1`, scope
+`--min 500` whole remainder) after four cycles and a disposition cycle had already closed it against
+the **amended bar** (`epic-breakdown.md` `### AT-35-E2-005` amendment 2026-09-08; `decisions.md §16`;
+board row 11 `complete` at `cd3d64e578`). A fifth grinding cycle would have been byte-identical to
+cycles 3 and 4 and is exactly what `workflow-instruction.md §8`'s ">10 distinct refused token types —
+re-scope, do not grind" forbids. This cycle therefore did what the four preceding Epic-2
+re-dispatches did: it **re-proved every clause of the bar at HEAD `ad6da1bbf2`** and **changed no
+code, no data and no script** — `rust_lines_changed=0`, nothing outside `docs/` written. Receipt:
+`artifacts/epic-2-sheet-rule/AT-35-E2-005_cycle5_receipt.md`.
+
+Scope gate, run for real on the rebased tree rather than claimed exempt:
+`scoped=1404 remaining_non_done=1404 floor=500 verdict=PASS`
+(`python3 scripts/cycle_scope_gate.py --min 500`, no flags = whole remainder). Receipt rows:
+`closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=260`.
+Residue `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`,
+identical at start and end and to all of cycles 1–4.
+
+**Measured before the population run** (the standing "measure per-unit cost first" lesson): `n=3`
+single-unit conversions at 33.93 / 32.19 / 31.79 s (mean 32.6 s, spread 2.1 s). `convert_one`
+converts the whole repo and selects one record, so the marginal per-record cost is below the noise
+floor (< 0.04 ms over 49,437 records) and the pass is entirely fixed-cost. **Projection stated
+first: ≈ 33 s conversion + 110.6 s on-disk freshness comparison (AT-35-E2-004 cycle 2's figure)
+≈ 145 s. Actual 117.7 s**, 27.3 s under the 145 s projection, which had added two costs that in fact overlap.
+
+The four clauses of the amended bar, re-derived at HEAD. (1) **The pass, measured:**
+`sheet_rule_convert --check` → `records=49438 converted=47628 refused=1810 rules=66514
+var_tables=5081 verdict=PASS (116.2s)`, exit 0, and `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL='
+data/sheet_rules/ | wc -l` → **0** over all 66,514 rule files. (2) **Report and ledger re-derived:**
+`token_coverage.py --check` → `non_done=1404 tokened=1399 token_less=5 refused=1810
+refused_non_done=659 token_types=231 shapes=81 verdict=PASS`, all six internal checks `ok=True`,
+`token-coverage.json` rewritten byte-identically; `completion_atlas.py --check` **identical before
+and after** — `population=49438 unclassified=0 overlap=0`, `DONE 48034 / A 1 / B 437 / C 79 / D 43 /
+M 63 / V 392 / U 202 / X 168 / Z 19`, `done_evidence_violations=0 citation_failures=0`
+(48,034 DONE of 49,438 = 97.16 %). (3) **The oracle harness ran and agrees**, on an isolated
+worktree that pushed nothing (`workflow-instruction.md §2`'s worker split):
+`compared=42 agree=41 disagree=1 unverifiable=5` over the evaluator's `Number` values at
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`characters=29 lines=270 wall=5.7s`; chassis `compared=382 agree=376 disagree=6 unverifiable=140`;
+`exports_missing=0`), and the produced `sheet-parity.json` is **byte-identical to the committed
+one**. The single disagreement is the one cycles 3 and 4 named:
+`deterministic_human_fighter_l1` `target:WeaponAttack:{"Chosen": "core_rulebook:feat:weapon_focus"}`
+ours 0 vs PCGen 1, `Expr` `{"Number": {"Var": "vb1e14268d73c2def"}}`, whose var table's one
+`Const(1)` contribution is declared by `core_rulebook:class_feature:default` — a **holdings gap
+owned by AT-35-E3-001**, not a mapping defect. **Blocker B1, this criterion's assigned owner, is
+satisfied:** the skill / speed / DR / DC / spells-per-day export tokens exist in
+`exports/_template/sheet-totals.txt.ftl` and are populated in all 29 exports (`exports_missing=0`,
+382 chassis lines compared; no `unverifiable` reason is a missing export token). (4) **Zero mapping
+rows added** — `rust_lines_changed=0`.
+
+The inventory regeneration the criterion's text names was **attempted and correctly refused**:
+`v06_work_inventory` (723 s) exits 1 rather than drop 7,395 of 31,605 verification stamps without
+`CORPUS_LITERAL_SWEEP_REPORT` / `DERIVED_FIXTURE_CHECK_REPORT`. The named offenders are SD-34
+`oracle-agree` stamps, not `sheet-complete` ones — `data/sheet_rules/` is fresh. `--allow-stamp-loss`
+was **not** passed and `docs/work-inventory.json` is byte-unchanged, the correct outcome for a cycle
+whose corpus, converter and classifier are all unchanged.
+
+**One discovery, an instrument one, emitted as a `correction`
+(`1788894275228-at-35-e2-005-1d1792`):** `oracle-parity/ours.json` embeds the absolute `--roster`
+path it was run with, so it is **not** byte-stable across trees even when the engine is — this
+cycle's worktree run differs from the committed file at byte 195592 in that key alone, while
+`characters` (n=29), `generated_by` and the derived `sheet-parity.json` are byte-identical. Cycle 4
+used `cmp` on `ours.json` as its engine-stability test; that test is path-sensitive and would read as
+an engine regression for any cycle honouring the mandated worker split. The committed `ours.json` was
+left as it is rather than overwritten with a worktree path; the right test is the semantic one on
+`characters`, or `cmp` on `sheet-parity.json`.
+
+A second, smaller discovery: `scripts/verify.sh --only figure-provenance` was **already red at
+HEAD** (`violations=3 of figures_examined=189`) on three wrapped-bullet lines of AT-35-E2-003 cycle 2
+and AT-35-E2-004 cycle 2 where the figure and its re-derive command sat on adjacent lines and the
+gate matches per line. It is not in `workflow-instruction.md §6` step 3's chain, so four cycles ran
+past it. Reflowed, no figure touched; `RESULT: PASS files_checked=162 figures_examined=189
+violations=0`, this cycle's receipt included.
+
+Build scope: `cargo test --locked --no-run -j 6` exit 0 (1.75 s warm); `--lib -j 6` **3217 passed,
+0 failed**; `--test sheet_rule_convert_gate -j 6` **27 passed, 0 failed** (the per-kind gates that
+read the live corpus directory); `clippy --locked --tests` on the two touched bins **0 warnings**.
+The full `--no-fail-fast` workspace run was **not** required — §6 step 3 asks for it when `src/` or
+the classifier changed, and neither did; `apps/` untouched, so the desktop crate and frontend stay
+at the epic wrap-up. `shape_engine_boundary.py --check` `magnitude_bearing=26396
+not_held_by_engine=363 citation_ok=True`; `missing_engine_tables.py --check` `population=1 kinds=1
+(power 1) citation_failures=0`; `denominator_gate.py --check` over the package and its artifacts
+`files_checked=44 violations=0`; `verify.sh --only pi-sweep` `RESULT: PASS`.
+
+**Refused tokens (49 types, sum with multiplicity 850, over 659 distinct non-DONE refused units of
+1,404 non-DONE — identical type for type and count for count to cycles 1–4):** `ABILITY=200,
+unmapped:STARTSKILLPTS=119, SPELLS (PI-redacted token)=66, BONUS:[redacted PI]=62, BONUS:VAR=60,
+DEFINE (PI-redacted token)=40, DESC=40, unmapped:MODTOSKILLS=37, unmapped:SPELLSTAT=23,
+BONUS:COMBAT=19, unmapped:MEMORIZE=19, BONUS:SKILL=15, ASPECT:<display sub-key>=13,
+unmapped:SPELLLIST=12, BONUS:EQM=11, BONUS:STAT=11, BONUS:ITEMCOST=10, BONUS:MOVEADD=9,
+BONUS:SITUATION=9, BONUS:MISC=5, token-less=5, unmapped:KNOWNSPELLS=5, PREVARGTEQ=4, PREVARNEQ=4,
+TEMPBONUS=4, [redacted PI] token=4, unmapped:NUMPAGES=4, unmapped:SPELLBOOK=4, BENEFIT=3, BONUS:HP=3,
+BONUS:WEAPONPROF=<name>=3, HITDIE (%-step)=3, unmapped:BONUSSPELLSTAT=3,
+ASPECT:CheckCount / ASPECT:CheckType=2, BONUS:ABILITYPOOL=2, BONUS:SKILLRANK=2, unmapped:DOMAIN=2,
+unmapped:PRESPELLSCHOOL=2, ADD=1, ASPECT:NAME=1, BONUS:DR=1, BONUS:EQMWEAPON=1, BONUS:PCLEVEL=1,
+BONUS:SAVE=1, DR=1, NATURALATTACKS=1, PREVAREQ=1, SIZE (formula)=1, unmapped:ITEMCREATE=1`.
+The cycle scoped 1,404 and closed 0, so a `deferral` is owed and was emitted
+(`1788894965735-at-35-e2-005-1f0f22`). **No unit is orphaned:**
+`AT-35-E2-005-DISPOSITION_handoff.py` re-derived at HEAD → `non_done=1404 atlas_non_done=1404
+refused_non_done=659 not_refused_non_done=745 owned_sum=1404 unowned=0 duplicate_ids=0
+verdict=PASS`, `by_owner AT-35-E4-001=659 AT-35-E4-002=391 AT-35-E5-003=217 AT-35-E5-004=137`.
+
 ### 2026-09-08 — AT-35-E2-004 cycle 2 — `token-coverage-ledger` — **complete** (re-dispatch of a closed criterion; re-verified at HEAD, and it corrected one stale figure in its own cycle-1 receipt)
 
 AT-35-E2-004 was dispatched a second time after cycle 1 had landed (`344f18d1e1`, board row 10
