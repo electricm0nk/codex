@@ -25,14 +25,14 @@ process defect** recorded by the epic wrap-up.
 
 | Epic | Criteria | Complete | In progress | Not started |
 |---|---:|---:|---:|---:|
-| 1 — Tax cut | 6 | 5 | 0 | 1 |
+| 1 — Tax cut | 6 | 6 | 0 | 0 |
 | 2 — Sheet rule | 5 | 0 | 0 | 5 |
 | 3 — Place and surface | 4 | 0 | 0 | 4 |
 | 4 — Resolve and verify | 3 | 0 | 0 | 3 |
 | 5 — Residues | 5 | 0 | 0 | 5 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **5** | **0** | **25** |
+| **Total** | **30** | **6** | **0** | **24** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,16 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-08 — AT-35-E1-004 cycle 1 — `ratio-row-and-gate-scope` — **complete**
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (gate-retargeting cycle — closes zero units by design, decisions.md §2)` — `cycle_scope_gate.py` present; exemption by design.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since d1b5738658 --before /tmp/wi-before-AT-35-E1-004.json --after docs/work-inventory.json --target-dir /tmp/cargo-sd35-AT-35-E1-004` at `2bf452b038`).
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS` at `2bf452b038` — not risen.
+- **Refused tokens:** none (no units scoped).
+- **What moved:** `denominator_gate.py`'s `DEFAULT_GLOBS` and `PROVENANCE_DEFAULT_GLOBS` each gained SD-35's root `*.md` + `artifacts/**/*.md`; SD-33/SD-34 entries untouched (frozen pre-widening lists in the test). `verify.sh --only denominator-gate` → `files_checked=213 violations=0` (186 before + 27 of 27 SD-35 `.md`); `--only figure-provenance` → `files_checked=143 figures_examined=139 violations=0`. Tests 46 → 54 (RED 6 errors first). No stage added (45 / 39).
+- **Discoveries:** the criterion's "never advanced to SD-34" was stale (AT-34-E1-006 had); SD-33 cannot enter the provenance default (44 violations of 137 figures in 78 files, out of write scope) — both emitted as `correction` events in `docs/retro/events/at-35-e1-004.jsonl`; the token-mapping denominator red E1-003/E1-005 saw was already cleared by E1-002 (`815139fadd`).
+- **Receipt:** `artifacts/epic-1-tax-cut/AT-35-E1-004_cycle1_receipt.md`. Code `2bf452b038`. **Epic 1 is 6 of 6 complete — wrap-up (§10) next.**
 
 ### 2026-09-08 — AT-35-E1-003 cycle 1 — `test-families-table-driven` — **complete**
 
