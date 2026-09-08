@@ -8,7 +8,10 @@ re-verifications already on this branch (`969d5b9402` for AT-35-E2-001, `986084c
 `06872eff73`, `3c43cf0531`). It **corrects one stale figure in the cycle-1 receipt**: the fixture
 fighter's line count, which AT-35-E2-005 cycle 2 legitimately moved.
 
-- **Commit SHA:** `<pinned by the follow-up commit — see Notes>`. The tree verified is HEAD
+- **Commit SHA:** `ca14f2363fc86e1a29e3b3aaedd46bd9c790d349` (this receipt, `progress.md`,
+  `kanban.md`, the retro events — a docs-only commit; this line's own SHA is pinned by the
+  follow-up commit, the pattern `942c8d3ae5` and `bb785e568d` set on this branch). The tree
+  verified is HEAD
   `bb785e568df89d71ce6acff4fd798af1495649cf`, unchanged by this cycle apart from `docs/`.
 - **Scope gate:** `SCOPE_GATE: EXEMPT (live-evaluator + sheet-section cycle — closes zero units by design)`
   (`decisions.md §2`; the status `sheet-complete` that moves units is AT-35-E2-003, the pass that
