@@ -706,7 +706,7 @@
         },
         {
           "name": "Double Slice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Double Slice"
@@ -832,7 +832,7 @@
         },
         {
           "name": "Far Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Far Shot"
@@ -965,7 +965,7 @@
         },
         {
           "name": "Greater Two-Weapon Fighting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Greater Two-Weapon Fighting"
@@ -1175,7 +1175,7 @@
         },
         {
           "name": "Improved Shield Bash",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Shield Bash"
@@ -1420,7 +1420,7 @@
         },
         {
           "name": "Mount",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Mount (Cavalier Class Feature.SpecialQuality.Extraordinary)"
@@ -1560,14 +1560,14 @@
         },
         {
           "name": "Pinpoint Targeting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Pinpoint Targeting"
         },
         {
           "name": "Point-Blank Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Point-Blank Shot"
@@ -1588,7 +1588,7 @@
         },
         {
           "name": "Precise Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Precise Shot"
@@ -1616,7 +1616,7 @@
         },
         {
           "name": "Quick Draw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Quick Draw"
@@ -1644,7 +1644,7 @@
         },
         {
           "name": "Rapid Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Rapid Shot"
@@ -1777,7 +1777,7 @@
         },
         {
           "name": "Shot on the Run",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Shot on the Run"
@@ -2022,7 +2022,7 @@
         },
         {
           "name": "Two-Weapon Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Two-Weapon Defense"
@@ -2036,14 +2036,14 @@
         },
         {
           "name": "Two-Weapon Fighting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Two-Weapon Fighting"
         },
         {
           "name": "Two-Weapon Rend",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Two-Weapon Rend"
@@ -2391,11 +2391,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 35,
+      "done": 64,
       "partial": 0,
-      "not_started": 29,
+      "not_started": 0,
       "denominator": 64,
-      "pct": 54.7,
+      "pct": 100.0,
       "excluded_from_percentage": 8,
       "standing_breakdown": {
         "origin": 64,
@@ -2404,21 +2404,21 @@
       "items": [
         {
           "name": "Backbreaker Mail",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Backbreaker Mail"
         },
         {
           "name": "Blackjacket",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blackjacket"
         },
         {
           "name": "Broadside Bulwark",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Broadside Bulwark"
@@ -2453,14 +2453,14 @@
         },
         {
           "name": "Crag Linnorm Plate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crag Linnorm Plate"
         },
         {
           "name": "Crimson Bluff",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Crimson Bluff"
@@ -2481,14 +2481,14 @@
         },
         {
           "name": "Earth Breaker of Righted Injustice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Earth Breaker of Righted Injustice"
         },
         {
           "name": "Ekujae Jungle Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ekujae Jungle Armor"
@@ -2516,35 +2516,35 @@
         },
         {
           "name": "Final Word",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Final Word"
         },
         {
           "name": "Gelugon Plate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Gelugon Plate"
         },
         {
           "name": "Ghoul Hide",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ghoul Hide"
         },
         {
           "name": "Greenblood Scourge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Greenblood Scourge"
         },
         {
           "name": "Guard of Man",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Guard of Man"
@@ -2565,7 +2565,7 @@
         },
         {
           "name": "Hunter's Starknife",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hunter's Starknife"
@@ -2670,14 +2670,14 @@
         },
         {
           "name": "Lyrune-Quah Klar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Lyrune-Quah Klar"
         },
         {
           "name": "Mammoth Hide",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Mammoth Hide"
@@ -2691,14 +2691,14 @@
         },
         {
           "name": "Monastic Warden",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Monastic Warden"
         },
         {
           "name": "Mosswater Stained Leather",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mosswater Stained Leather"
@@ -2712,28 +2712,28 @@
         },
         {
           "name": "Okeno Madu",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Okeno Madu"
         },
         {
           "name": "Peacekeeping Pistol",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Peacekeeping Pistol"
         },
         {
           "name": "Purging Falcata",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Purging Falcata"
         },
         {
           "name": "Quarterstaff of Contemplation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Quarterstaff of Contemplation"
@@ -2747,7 +2747,7 @@
         },
         {
           "name": "Risen Blade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Risen Blade"
@@ -2782,7 +2782,7 @@
         },
         {
           "name": "Scouting Leather",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Scouting Leather"
@@ -2796,28 +2796,28 @@
         },
         {
           "name": "Shadde-Quah Spirit Bolas",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shadde-Quah Spirit Bolas"
         },
         {
           "name": "Shadowbound Chains",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shadowbound Chains"
         },
         {
           "name": "Shearing Sword",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shearing Sword"
         },
         {
           "name": "Steadfast Urumi",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Steadfast Urumi"
@@ -2838,49 +2838,49 @@
         },
         {
           "name": "Truefaith Vestments",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Truefaith Vestments"
         },
         {
           "name": "Tunnel Defender Stoneplate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Tunnel Defender Stoneplate"
         },
         {
           "name": "Wanderer's Scarf",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wanderer's Scarf"
         },
         {
           "name": "War Commander's Field Plate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "War Commander's Field Plate"
         },
         {
           "name": "Wendifisa Spear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wendifisa Spear"
         },
         {
           "name": "Xill Carapace Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Xill Carapace Armor"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI]"
@@ -2901,7 +2901,7 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #4"
@@ -2952,21 +2952,21 @@
         },
         {
           "name": "Duelist of the Roaring Falls",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "unclassified",
           "display_name": "Duelist of the Roaring Falls"
         },
         {
           "name": "Duelist of the Shrouded Lake",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "unclassified",
           "display_name": "Duelist of the Shrouded Lake"
         },
         {
           "name": "Falling Water Gambit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "unclassified",
           "display_name": "Falling Water Gambit"

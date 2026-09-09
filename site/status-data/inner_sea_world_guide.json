@@ -2705,11 +2705,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 22,
+      "done": 25,
       "partial": 0,
-      "not_started": 3,
+      "not_started": 0,
       "denominator": 25,
-      "pct": 88.0,
+      "pct": 100.0,
       "excluded_from_percentage": 12,
       "standing_breakdown": {
         "origin": 25,
@@ -2739,14 +2739,14 @@
         },
         {
           "name": "Cypher Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "unclassified",
           "display_name": "Cypher Magic"
         },
         {
           "name": "Cypher Script",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "unclassified",
           "display_name": "Cypher Script"
@@ -2781,7 +2781,7 @@
         },
         {
           "name": "Eye of the Arclord",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Eye of the Arclord"
@@ -2851,7 +2851,7 @@
         },
         {
           "name": "Harrowed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Harrowed"
@@ -2928,7 +2928,7 @@
         },
         {
           "name": "Wand Dancer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Wand Dancer"

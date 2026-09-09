@@ -8203,7 +8203,7 @@
         },
         {
           "name": "Hex",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "WitchClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Hex"
@@ -14552,7 +14552,7 @@
         },
         {
           "name": "Summoner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Summoner"
@@ -19446,11 +19446,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 323,
+      "done": 324,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 324,
-      "pct": 99.7,
+      "pct": 100.0,
       "excluded_from_percentage": 14,
       "standing_breakdown": {
         "origin": 324,
@@ -20369,7 +20369,7 @@
         },
         {
           "name": "Formula Book",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Formula Book"
@@ -20523,7 +20523,7 @@
         },
         {
           "name": "Hammer, Ricochet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Martial.Specific.Bludgeoning.Hammer",
           "standing": "unclassified",
           "display_name": "Hammer, Ricochet"
@@ -24004,11 +24004,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 245,
-      "partial": 39,
+      "done": 246,
+      "partial": 38,
       "not_started": 0,
       "denominator": 284,
-      "pct": 86.3,
+      "pct": 86.6,
       "excluded_from_percentage": 9,
       "standing_breakdown": {
         "origin": 284,
@@ -24724,7 +24724,7 @@
         },
         {
           "name": "Fester",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fester"

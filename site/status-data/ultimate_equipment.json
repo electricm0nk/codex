@@ -343,11 +343,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 1184,
+      "done": 1224,
       "partial": 15,
-      "not_started": 40,
+      "not_started": 0,
       "denominator": 1239,
-      "pct": 95.6,
+      "pct": 98.8,
       "excluded_from_percentage": 185,
       "standing_breakdown": {
         "origin": 1239,
@@ -762,7 +762,7 @@
         },
         {
           "name": "Artisan's Tools, Masterwork",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Artisan's Tools, Masterwork"
@@ -1511,7 +1511,7 @@
         },
         {
           "name": "Bloodthirst Dagger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bloodthirst Dagger"
@@ -1609,7 +1609,7 @@
         },
         {
           "name": "Bolt, Dust",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bolt, Dust"
@@ -2883,7 +2883,7 @@
         },
         {
           "name": "Cutthroat's Apprentice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cutthroat's Apprentice"
@@ -2897,7 +2897,7 @@
         },
         {
           "name": "Dagger of Doubling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dagger of Doubling"
@@ -3009,7 +3009,7 @@
         },
         {
           "name": "Demonsorrow Curve Blade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demonsorrow Curve Blade"
@@ -3051,7 +3051,7 @@
         },
         {
           "name": "Disarming Blade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Disarming Blade"
@@ -3135,7 +3135,7 @@
         },
         {
           "name": "Dragon's Doom",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dragon's Doom"
@@ -3331,7 +3331,7 @@
         },
         {
           "name": "Earthenflail",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Earthenflail"
@@ -3457,7 +3457,7 @@
         },
         {
           "name": "Everflowing Aspergillum",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Everflowing Aspergillum"
@@ -3604,7 +3604,7 @@
         },
         {
           "name": "Fighter's Fork",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fighter's Fork"
@@ -3933,7 +3933,7 @@
         },
         {
           "name": "Ghoul's Lament",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ghoul's Lament"
@@ -3968,7 +3968,7 @@
         },
         {
           "name": "Gloom Blade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Gloom Blade"
@@ -4122,7 +4122,7 @@
         },
         {
           "name": "Greataxe, Swift Obsidian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Greataxe, Swift Obsidian"
@@ -4178,7 +4178,7 @@
         },
         {
           "name": "Guisarme, Dragoncatch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Guisarme, Dragoncatch"
@@ -4276,7 +4276,7 @@
         },
         {
           "name": "Hammer, Ricochet",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Hammer, Ricochet"
@@ -4521,7 +4521,7 @@
         },
         {
           "name": "Heartswood Spear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heartswood Spear"
@@ -4675,14 +4675,14 @@
         },
         {
           "name": "Holy Symbol, Compartment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Holy Symbol, Compartment"
         },
         {
           "name": "Holy Symbol, Flask",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Holy Symbol, Flask"
@@ -5263,7 +5263,7 @@
         },
         {
           "name": "Kukri, Bloodletting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kukri, Bloodletting"
@@ -6040,105 +6040,105 @@
         },
         {
           "name": "Musical Instrument, Masterwork Bells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Bells"
         },
         {
           "name": "Musical Instrument, Masterwork Chimes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Chimes"
         },
         {
           "name": "Musical Instrument, Masterwork Drums",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Drums"
         },
         {
           "name": "Musical Instrument, Masterwork Fiddle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Fiddle"
         },
         {
           "name": "Musical Instrument, Masterwork Flute",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Flute"
         },
         {
           "name": "Musical Instrument, Masterwork Gong",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Gong"
         },
         {
           "name": "Musical Instrument, Masterwork Harp",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Harp"
         },
         {
           "name": "Musical Instrument, Masterwork Harpsichord",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Harpsichord"
         },
         {
           "name": "Musical Instrument, Masterwork Lute",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Lute"
         },
         {
           "name": "Musical Instrument, Masterwork Mandolin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Mandolin"
         },
         {
           "name": "Musical Instrument, Masterwork Pan Pipes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Pan Pipes"
         },
         {
           "name": "Musical Instrument, Masterwork Piano",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Piano"
         },
         {
           "name": "Musical Instrument, Masterwork Pipe Organ",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Pipe Organ"
         },
         {
           "name": "Musical Instrument, Masterwork Recorder",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Recorder"
         },
         {
           "name": "Musical Instrument, Masterwork Trumpet",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Masterwork Trumpet"
@@ -7167,7 +7167,7 @@
         },
         {
           "name": "Raft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Goods.Transportation.Vehicle.Ships.Container",
           "standing": "origin",
           "display_name": "Raft"
@@ -8294,7 +8294,7 @@
         },
         {
           "name": "Scythe, Void",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Scythe, Void"
@@ -8714,7 +8714,7 @@
         },
         {
           "name": "Sling, Frostbite",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sling, Frostbite"
@@ -9344,7 +9344,7 @@
         },
         {
           "name": "Summoner's Sorrow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Summoner's Sorrow"
@@ -9666,7 +9666,7 @@
         },
         {
           "name": "Traveling Formula Book",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Traveling Formula Book"
@@ -9862,7 +9862,7 @@
         },
         {
           "name": "Valor's Minion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Valor's Minion"
@@ -10086,7 +10086,7 @@
         },
         {
           "name": "Warbringer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Warbringer"
@@ -10327,11 +10327,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 151,
+      "done": 152,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 152,
-      "pct": 99.3,
+      "pct": 100.0,
       "excluded_from_percentage": 38,
       "standing_breakdown": {
         "origin": 152,
@@ -10592,7 +10592,7 @@
         },
         {
           "name": "Defiant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Armor.Shield.Bracer",
           "standing": "origin",
           "display_name": "Defiant (Armor.Shield.Bracer)"

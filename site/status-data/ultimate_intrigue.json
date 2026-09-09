@@ -7367,11 +7367,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 104,
+      "done": 106,
       "partial": 1,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 107,
-      "pct": 97.2,
+      "pct": 99.1,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 107
@@ -7617,7 +7617,7 @@
         },
         {
           "name": "Fey Spell Versatility",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Fey Spell Versatility"
@@ -7736,7 +7736,7 @@
         },
         {
           "name": "Ironclad Logic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Ironclad Logic"

@@ -675,11 +675,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 39,
+      "done": 44,
       "partial": 1,
-      "not_started": 5,
+      "not_started": 0,
       "denominator": 45,
-      "pct": 86.7,
+      "pct": 97.8,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 45
@@ -708,7 +708,7 @@
         },
         {
           "name": "Bloodfeast Shield",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bloodfeast Shield"
@@ -743,7 +743,7 @@
         },
         {
           "name": "Cave Dweller's Greataxe",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cave Dweller's Greataxe"
@@ -820,7 +820,7 @@
         },
         {
           "name": "Frostblood Axe",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Frostblood Axe"
@@ -925,7 +925,7 @@
         },
         {
           "name": "Serpent-Necked Flail",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Serpent-Necked Flail"
@@ -960,7 +960,7 @@
         },
         {
           "name": "Snakebiter Arrow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Snakebiter Arrow"
@@ -1048,11 +1048,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 30,
+      "done": 31,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 31,
-      "pct": 96.8,
+      "pct": 100.0,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "origin": 31,
@@ -1271,7 +1271,7 @@
         },
         {
           "name": "Vampiric Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Vampiric Companion"

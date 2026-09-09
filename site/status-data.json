@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-09-08T22:52:37Z",
+  "generated_at": "2026-09-09T08:28:01Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 35722,
-    "partial": 1912,
-    "not_started": 246,
+    "done": 35970,
+    "partial": 1910,
+    "not_started": 0,
     "denominator": 37880,
-    "pct": 94.3,
+    "pct": 95.0,
     "excluded_from_percentage": 11558,
     "standing_breakdown": {
       "unclassified": 11558,
@@ -21,11 +21,11 @@
     {
       "id": "core_rulebook",
       "title": "Core Rulebook",
-      "done": 4907,
+      "done": 4950,
       "partial": 588,
-      "not_started": 43,
+      "not_started": 0,
       "denominator": 5538,
-      "pct": 88.6,
+      "pct": 89.4,
       "excluded_from_percentage": 1163,
       "standing_breakdown": {
         "origin": 5538,
@@ -35,11 +35,11 @@
     {
       "id": "ultimate_psionics",
       "title": "Ultimate Psionics",
-      "done": 3134,
+      "done": 3144,
       "partial": 119,
-      "not_started": 10,
+      "not_started": 0,
       "denominator": 3263,
-      "pct": 96.0,
+      "pct": 96.4,
       "excluded_from_percentage": 235,
       "standing_breakdown": {
         "origin": 3263,
@@ -49,11 +49,11 @@
     {
       "id": "advanced_players_guide",
       "title": "Advanced Player's Guide",
-      "done": 2627,
-      "partial": 136,
-      "not_started": 1,
+      "done": 2629,
+      "partial": 135,
+      "not_started": 0,
       "denominator": 2764,
-      "pct": 95.0,
+      "pct": 95.1,
       "excluded_from_percentage": 1065,
       "standing_breakdown": {
         "origin": 2764,
@@ -63,11 +63,11 @@
     {
       "id": "ultimate_magic",
       "title": "Ultimate Magic",
-      "done": 2302,
+      "done": 2309,
       "partial": 25,
-      "not_started": 7,
+      "not_started": 0,
       "denominator": 2334,
-      "pct": 98.6,
+      "pct": 98.9,
       "excluded_from_percentage": 678,
       "standing_breakdown": {
         "unclassified": 678,
@@ -77,8 +77,8 @@
     {
       "id": "bestiary",
       "title": "Bestiary",
-      "done": 1901,
-      "partial": 277,
+      "done": 1902,
+      "partial": 276,
       "not_started": 0,
       "denominator": 2178,
       "pct": 87.3,
@@ -91,11 +91,11 @@
     {
       "id": "advanced_class_guide",
       "title": "Advanced Class Guide",
-      "done": 2097,
+      "done": 2110,
       "partial": 27,
-      "not_started": 13,
+      "not_started": 0,
       "denominator": 2137,
-      "pct": 98.1,
+      "pct": 98.7,
       "excluded_from_percentage": 1383,
       "standing_breakdown": {
         "unclassified": 1383,
@@ -105,11 +105,11 @@
     {
       "id": "ultimate_wilderness",
       "title": "Ultimate Wilderness",
-      "done": 1659,
+      "done": 1662,
       "partial": 21,
-      "not_started": 3,
+      "not_started": 0,
       "denominator": 1683,
-      "pct": 98.6,
+      "pct": 98.8,
       "excluded_from_percentage": 321,
       "standing_breakdown": {
         "origin": 1683,
@@ -119,11 +119,11 @@
     {
       "id": "advanced_race_guide",
       "title": "Advanced Race Guide",
-      "done": 1631,
+      "done": 1635,
       "partial": 11,
-      "not_started": 4,
+      "not_started": 0,
       "denominator": 1646,
-      "pct": 99.1,
+      "pct": 99.3,
       "excluded_from_percentage": 391,
       "standing_breakdown": {
         "origin": 1646,
@@ -147,11 +147,11 @@
     {
       "id": "ultimate_combat",
       "title": "Ultimate Combat",
-      "done": 1448,
+      "done": 1450,
       "partial": 21,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 1471,
-      "pct": 98.4,
+      "pct": 98.6,
       "excluded_from_percentage": 725,
       "standing_breakdown": {
         "unclassified": 725,
@@ -161,11 +161,11 @@
     {
       "id": "ultimate_equipment",
       "title": "Ultimate Equipment",
-      "done": 1384,
+      "done": 1425,
       "partial": 16,
-      "not_started": 41,
+      "not_started": 0,
       "denominator": 1441,
-      "pct": 96.0,
+      "pct": 98.9,
       "excluded_from_percentage": 225,
       "standing_breakdown": {
         "origin": 1441,
@@ -217,11 +217,11 @@
     {
       "id": "ultimate_intrigue",
       "title": "Ultimate Intrigue",
-      "done": 1004,
+      "done": 1006,
       "partial": 4,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 1010,
-      "pct": 99.4,
+      "pct": 99.6,
       "excluded_from_percentage": 253,
       "standing_breakdown": {
         "origin": 1010,
@@ -259,11 +259,11 @@
     {
       "id": "inner_sea_gods",
       "title": "Inner Sea Gods",
-      "done": 677,
+      "done": 689,
       "partial": 30,
-      "not_started": 12,
+      "not_started": 0,
       "denominator": 719,
-      "pct": 94.2,
+      "pct": 95.8,
       "excluded_from_percentage": 666,
       "standing_breakdown": {
         "origin": 719,
@@ -273,11 +273,11 @@
     {
       "id": "inner_sea_races",
       "title": "Inner Sea Races",
-      "done": 357,
+      "done": 360,
       "partial": 1,
-      "not_started": 3,
+      "not_started": 0,
       "denominator": 361,
-      "pct": 98.9,
+      "pct": 99.7,
       "excluded_from_percentage": 71,
       "standing_breakdown": {
         "unclassified": 71,
@@ -301,11 +301,11 @@
     {
       "id": "ultimate_campaign",
       "title": "Ultimate Campaign",
-      "done": 223,
+      "done": 246,
       "partial": 0,
-      "not_started": 23,
+      "not_started": 0,
       "denominator": 246,
-      "pct": 90.7,
+      "pct": 100.0,
       "excluded_from_percentage": 19,
       "standing_breakdown": {
         "origin": 246,
@@ -315,11 +315,11 @@
     {
       "id": "inner_sea_combat",
       "title": "Inner Sea Combat",
-      "done": 209,
+      "done": 238,
       "partial": 6,
-      "not_started": 29,
+      "not_started": 0,
       "denominator": 244,
-      "pct": 85.7,
+      "pct": 97.5,
       "excluded_from_percentage": 185,
       "standing_breakdown": {
         "origin": 244,
@@ -357,11 +357,11 @@
     {
       "id": "inner_sea_world_guide",
       "title": "Inner Sea World Guide",
-      "done": 178,
+      "done": 181,
       "partial": 9,
-      "not_started": 3,
+      "not_started": 0,
       "denominator": 190,
-      "pct": 93.7,
+      "pct": 95.3,
       "excluded_from_percentage": 453,
       "standing_breakdown": {
         "unclassified": 453,
@@ -371,11 +371,11 @@
     {
       "id": "monster_codex",
       "title": "Monster Codex",
-      "done": 181,
+      "done": 187,
       "partial": 3,
-      "not_started": 6,
+      "not_started": 0,
       "denominator": 190,
-      "pct": 95.3,
+      "pct": 98.4,
       "excluded_from_percentage": 25,
       "standing_breakdown": {
         "origin": 190,

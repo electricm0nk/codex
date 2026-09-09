@@ -596,11 +596,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 48,
+      "done": 51,
       "partial": 0,
-      "not_started": 3,
+      "not_started": 0,
       "denominator": 51,
-      "pct": 94.1,
+      "pct": 100.0,
       "excluded_from_percentage": 21,
       "standing_breakdown": {
         "origin": 51,
@@ -609,7 +609,7 @@
       "items": [
         {
           "name": "Alien Mindpaths",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Teamwork",
           "standing": "origin",
           "display_name": "Alien Mindpaths"
@@ -630,7 +630,7 @@
         },
         {
           "name": "Ancestral Weapon Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Ancestral Weapon Mastery"
@@ -910,7 +910,7 @@
         },
         {
           "name": "Juju Way",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Teamwork",
           "standing": "origin",
           "display_name": "Juju Way"

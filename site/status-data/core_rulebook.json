@@ -3318,11 +3318,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 432,
+      "done": 453,
       "partial": 97,
-      "not_started": 21,
+      "not_started": 0,
       "denominator": 550,
-      "pct": 78.5,
+      "pct": 82.4,
       "excluded_from_percentage": 967,
       "standing_breakdown": {
         "unclassified": 967,
@@ -3485,7 +3485,7 @@
         },
         {
           "name": "Acrobatic Steps",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Acrobatic Steps"
@@ -3541,7 +3541,7 @@
         },
         {
           "name": "Agile Maneuvers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Agile Maneuvers"
@@ -3590,7 +3590,7 @@
         },
         {
           "name": "Alertness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Alertness"
@@ -3646,7 +3646,7 @@
         },
         {
           "name": "Animal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidDomainSelection.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Animal (DruidDomainSelection.SpecialQuality)"
@@ -3765,14 +3765,14 @@
         },
         {
           "name": "Arcane Armor Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Arcane Armor Mastery"
         },
         {
           "name": "Arcane Armor Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Arcane Armor Training"
@@ -3828,7 +3828,7 @@
         },
         {
           "name": "Arcane Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Arcane Strike"
@@ -3968,7 +3968,7 @@
         },
         {
           "name": "Armor Proficiency (Light)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Armor Proficiency (Light)"
@@ -4059,7 +4059,7 @@
         },
         {
           "name": "Augment Summoning",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Augment Summoning"
@@ -4241,7 +4241,7 @@
         },
         {
           "name": "Bard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FavoredClass",
           "standing": "unclassified",
           "display_name": "Bard (FavoredClass)"
@@ -4437,7 +4437,7 @@
         },
         {
           "name": "Blind-Fight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Blind-Fight"
@@ -5116,14 +5116,14 @@
         },
         {
           "name": "Cleave",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Cleave"
         },
         {
           "name": "Cleric",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FavoredClass",
           "standing": "unclassified",
           "display_name": "Cleric (FavoredClass)"
@@ -5333,14 +5333,14 @@
         },
         {
           "name": "Combat Casting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Combat Casting"
         },
         {
           "name": "Combat Expertise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Combat Expertise"
@@ -5361,7 +5361,7 @@
         },
         {
           "name": "Combat Reflexes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Combat Reflexes (Sorcerer Bloodline Feat)"
@@ -5585,21 +5585,21 @@
         },
         {
           "name": "Craft Rod",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Craft Rod"
         },
         {
           "name": "Craft Staff",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Craft Staff"
         },
         {
           "name": "Craft Wondrous Item",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Craft Wondrous Item"
@@ -5809,7 +5809,7 @@
         },
         {
           "name": "Deceitful",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Deceitful"
@@ -5844,7 +5844,7 @@
         },
         {
           "name": "Defensive Combat Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Defensive Combat Training"
@@ -5879,7 +5879,7 @@
         },
         {
           "name": "Deft Hands",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Deft Hands"
@@ -6012,7 +6012,7 @@
         },
         {
           "name": "Diehard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Diehard"
@@ -6222,7 +6222,7 @@
         },
         {
           "name": "Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Dodge (Sorcerer Bloodline Feat)"
@@ -6264,7 +6264,7 @@
         },
         {
           "name": "Double Slice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Double Slice"
@@ -6355,7 +6355,7 @@
         },
         {
           "name": "Druid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FavoredClass",
           "standing": "unclassified",
           "display_name": "Druid (FavoredClass)"
@@ -6621,7 +6621,7 @@
         },
         {
           "name": "Empower Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Empower Spell"
@@ -6663,7 +6663,7 @@
         },
         {
           "name": "Endurance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Endurance"
@@ -6712,7 +6712,7 @@
         },
         {
           "name": "Enlarge Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Enlarge Spell"
@@ -6894,7 +6894,7 @@
         },
         {
           "name": "Extend Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Extend Spell"
@@ -6950,14 +6950,14 @@
         },
         {
           "name": "Far Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Far Shot (RangerBonusFeat)"
         },
         {
           "name": "Far Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Far Shot (Sorcerer Bloodline Feat)"
@@ -7356,7 +7356,7 @@
         },
         {
           "name": "Fleet",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Fleet"
@@ -7398,7 +7398,7 @@
         },
         {
           "name": "Forge Ring",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Forge Ring"
@@ -7615,7 +7615,7 @@
         },
         {
           "name": "Great Fortitude",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Great Fortitude"
@@ -7657,14 +7657,14 @@
         },
         {
           "name": "Greater Spell Focus (Enchantment)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Greater Spell Focus (Enchantment)"
         },
         {
           "name": "Greater Two-Weapon Fighting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Greater Two-Weapon Fighting"
@@ -7783,7 +7783,7 @@
         },
         {
           "name": "Heighten Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Heighten Spell"
@@ -8133,14 +8133,14 @@
         },
         {
           "name": "Improved Bull Rush",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Bull Rush (Sorcerer Bloodline Feat)"
         },
         {
           "name": "Improved Counterspell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Counterspell"
@@ -8161,7 +8161,7 @@
         },
         {
           "name": "Improved Disarm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Disarm (Sorcerer Bloodline Feat)"
@@ -8210,7 +8210,7 @@
         },
         {
           "name": "Improved Feint",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Feint (Sorcerer Bloodline Feat)"
@@ -8224,42 +8224,42 @@
         },
         {
           "name": "Improved Grapple",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Grapple (Sorcerer Bloodline Feat)"
         },
         {
           "name": "Improved Great Fortitude",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Great Fortitude"
         },
         {
           "name": "Improved Initiative",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Initiative"
         },
         {
           "name": "Improved Iron Will",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Iron Will"
         },
         {
           "name": "Improved Overrun",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Overrun"
         },
         {
           "name": "Improved Precise Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Precise Shot"
@@ -8280,7 +8280,7 @@
         },
         {
           "name": "Improved Shield Bash",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Shield Bash"
@@ -8301,14 +8301,14 @@
         },
         {
           "name": "Improved Two-Weapon Fighting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Two-Weapon Fighting"
         },
         {
           "name": "Improved Unarmed Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Improved Unarmed Strike"
@@ -8483,7 +8483,7 @@
         },
         {
           "name": "Intimidating Prowess",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Intimidating Prowess"
@@ -8518,7 +8518,7 @@
         },
         {
           "name": "Iron Will",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Iron Will"
@@ -8679,7 +8679,7 @@
         },
         {
           "name": "Leadership",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Leadership (Sorcerer Bloodline Feat)"
@@ -8770,7 +8770,7 @@
         },
         {
           "name": "Lightning Reflexes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Lightning Reflexes"
@@ -8980,7 +8980,7 @@
         },
         {
           "name": "Manyshot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Manyshot"
@@ -8994,7 +8994,7 @@
         },
         {
           "name": "Martial Weapon Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Martial Weapon Proficiency (Sorcerer Bloodline Feat)"
@@ -9043,7 +9043,7 @@
         },
         {
           "name": "Maximize Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Maximize Spell"
@@ -9148,7 +9148,7 @@
         },
         {
           "name": "Mobility",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Mobility (Sorcerer Bloodline Feat)"
@@ -9659,7 +9659,7 @@
         },
         {
           "name": "Mounted Combat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Mounted Combat"
@@ -9757,7 +9757,7 @@
         },
         {
           "name": "Nimble Moves",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Nimble Moves"
@@ -10086,7 +10086,7 @@
         },
         {
           "name": "Persuasive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Persuasive"
@@ -10135,7 +10135,7 @@
         },
         {
           "name": "Pinpoint Targeting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Pinpoint Targeting"
@@ -10219,14 +10219,14 @@
         },
         {
           "name": "Point-Blank Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Point-Blank Shot (RangerBonusFeat)"
         },
         {
           "name": "Point-Blank Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Point-Blank Shot (Sorcerer Bloodline Feat)"
@@ -10289,7 +10289,7 @@
         },
         {
           "name": "Power Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Power Attack"
@@ -10352,14 +10352,14 @@
         },
         {
           "name": "Precise Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Precise Shot (RangerBonusFeat)"
         },
         {
           "name": "Precise Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Precise Shot (Sorcerer Bloodline Feat)"
@@ -10471,14 +10471,14 @@
         },
         {
           "name": "Quick Draw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Quick Draw (RangerBonusFeat)"
         },
         {
           "name": "Quick Draw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Quick Draw (Sorcerer Bloodline Feat)"
@@ -10492,7 +10492,7 @@
         },
         {
           "name": "Quicken Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Quicken Spell"
@@ -10569,7 +10569,7 @@
         },
         {
           "name": "Ranger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FavoredClass",
           "standing": "unclassified",
           "display_name": "Ranger (FavoredClass)"
@@ -10604,7 +10604,7 @@
         },
         {
           "name": "Rapid Shot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Rapid Shot"
@@ -10772,7 +10772,7 @@
         },
         {
           "name": "Ride-By Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Ride-By Attack"
@@ -10940,7 +10940,7 @@
         },
         {
           "name": "Scribe Scroll",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Scribe Scroll (Sorcerer Bloodline Feat)"
@@ -11136,7 +11136,7 @@
         },
         {
           "name": "Shot on the Run",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Shot on the Run"
@@ -11171,7 +11171,7 @@
         },
         {
           "name": "Silent Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Silent Spell"
@@ -11192,28 +11192,28 @@
         },
         {
           "name": "Skill Focus (Acrobatics)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Skill Focus (Acrobatics)"
         },
         {
           "name": "Skill Focus (Bluff)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Skill Focus (Bluff)"
         },
         {
           "name": "Skill Focus (Craft)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Skill Focus (Craft)"
         },
         {
           "name": "Skill Focus (Disguise)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Skill Focus (Disguise)"
@@ -11227,7 +11227,7 @@
         },
         {
           "name": "Skill Focus (Intimidate)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Skill Focus (Intimidate)"
@@ -11283,35 +11283,35 @@
         },
         {
           "name": "Skill Focus (Perception)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Skill Focus (Perception)"
         },
         {
           "name": "Skill Focus (Perform)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Skill Focus (Perform)"
         },
         {
           "name": "Skill Focus (Sense Motive)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Skill Focus (Sense Motive)"
         },
         {
           "name": "Skill Focus (Stealth)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Skill Focus (Stealth)"
         },
         {
           "name": "Skill Focus (Swim)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Skill Focus (Swim)"
@@ -11416,7 +11416,7 @@
         },
         {
           "name": "Sorcerer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FavoredClass",
           "standing": "unclassified",
           "display_name": "Sorcerer (FavoredClass)"
@@ -11703,28 +11703,28 @@
         },
         {
           "name": "Spell Focus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Spell Focus"
         },
         {
           "name": "Spell Focus (Enchantment)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Spell Focus (Enchantment)"
         },
         {
           "name": "Spell Focus (Necromancy)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Spell Focus (Necromancy)"
         },
         {
           "name": "Spell Penetration",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "origin",
           "display_name": "Spell Penetration"
@@ -11871,7 +11871,7 @@
         },
         {
           "name": "Standard Barbarian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Selection",
           "standing": "origin",
           "display_name": "Standard Barbarian (Barbarian Class Selection)"
@@ -11892,7 +11892,7 @@
         },
         {
           "name": "Standard Monk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Selection",
           "standing": "origin",
           "display_name": "Standard Monk (Monk Class Selection)"
@@ -11913,7 +11913,7 @@
         },
         {
           "name": "Standard Rogue",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Selection",
           "standing": "origin",
           "display_name": "Standard Rogue (Rogue Class Selection)"
@@ -11927,7 +11927,7 @@
         },
         {
           "name": "Stealthy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Stealthy"
@@ -11941,7 +11941,7 @@
         },
         {
           "name": "Still Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Still Spell"
@@ -12578,21 +12578,21 @@
         },
         {
           "name": "Two-Weapon Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Two-Weapon Defense"
         },
         {
           "name": "Two-Weapon Fighting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Two-Weapon Fighting"
         },
         {
           "name": "Two-Weapon Rend",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Two-Weapon Rend"
@@ -13019,7 +13019,7 @@
         },
         {
           "name": "Weapon Finesse",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Weapon Finesse"
@@ -13768,7 +13768,7 @@
         },
         {
           "name": "Widen Spell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Widen Spell"
@@ -13831,7 +13831,7 @@
         },
         {
           "name": "Wind Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Feat",
           "standing": "unclassified",
           "display_name": "Wind Stance"
@@ -14164,11 +14164,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 138,
+      "done": 150,
       "partial": 17,
-      "not_started": 12,
+      "not_started": 0,
       "denominator": 167,
-      "pct": 82.6,
+      "pct": 89.8,
       "excluded_from_percentage": 17,
       "standing_breakdown": {
         "origin": 167,
@@ -14240,7 +14240,7 @@
         },
         {
           "name": "Animal Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animal Companion"
@@ -15171,70 +15171,70 @@
         },
         {
           "name": "Mod Ability Score Increase",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Ability Score Increase"
         },
         {
           "name": "Mod Bonus Tricks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Bonus Tricks"
         },
         {
           "name": "Mod Devotion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Devotion"
         },
         {
           "name": "Mod Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Evasion"
         },
         {
           "name": "Mod Improved Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Improved Evasion"
         },
         {
           "name": "Mod Link",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Link"
         },
         {
           "name": "Mod Multiattack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Multiattack"
         },
         {
           "name": "Mod Share Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Share Spells"
         },
         {
           "name": "Mod Spell Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Spell Resistance"
         },
         {
           "name": "Mod Spell Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mod Spell Resistance #2"
@@ -15346,7 +15346,7 @@
         },
         {
           "name": "Special Mount",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Special Mount"
@@ -32134,11 +32134,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 614,
+      "done": 624,
       "partial": 46,
-      "not_started": 10,
+      "not_started": 0,
       "denominator": 670,
-      "pct": 91.6,
+      "pct": 93.1,
       "excluded_from_percentage": 6,
       "standing_breakdown": {
         "origin": 670,
@@ -32595,14 +32595,14 @@
         },
         {
           "name": "BANE",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BANE"
         },
         {
           "name": "BANE_AMF",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BANE_AMF"
@@ -33540,14 +33540,14 @@
         },
         {
           "name": "FLM_BRST",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "FLM_BRST"
         },
         {
           "name": "FLM_BRST_AMF",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "FLM_BRST_AMF"
@@ -33736,14 +33736,14 @@
         },
         {
           "name": "ICY_BRST",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ICY_BRST"
         },
         {
           "name": "ICY_BRST_AMF",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ICY_BRST_AMF"
@@ -35885,14 +35885,14 @@
         },
         {
           "name": "SHK_BRST",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "SHK_BRST"
         },
         {
           "name": "SHK_BRST_AMF",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "SHK_BRST_AMF"
@@ -36326,14 +36326,14 @@
         },
         {
           "name": "THUNDER",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "THUNDER"
         },
         {
           "name": "THUNDER_AMF",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "THUNDER_AMF"

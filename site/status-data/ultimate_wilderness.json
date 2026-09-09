@@ -131,7 +131,7 @@
         },
         {
           "name": "Animal Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Hunter Class Features.TreestriderClassFeatures.SpecialQuality.Animal Companion",
           "standing": "unclassified",
           "display_name": "Animal Companion"
@@ -1181,7 +1181,7 @@
         },
         {
           "name": "Combat Style Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ranger Class Features.StormwalkerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Combat Style Feat"
@@ -10906,11 +10906,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 121,
+      "done": 122,
       "partial": 1,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 123,
-      "pct": 98.4,
+      "pct": 99.2,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "origin": 123,
@@ -11164,7 +11164,7 @@
         },
         {
           "name": "Breezeblown Dandelion Flower",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable.Racial.Leshy",
           "standing": "origin",
           "display_name": "Breezeblown Dandelion Flower"
@@ -11826,11 +11826,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 119,
+      "done": 121,
       "partial": 13,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 134,
-      "pct": 88.8,
+      "pct": 90.3,
       "excluded_from_percentage": 3,
       "standing_breakdown": {
         "origin": 134,
@@ -12147,7 +12147,7 @@
         },
         {
           "name": "Feral Grace",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Animal.Combat",
           "standing": "origin",
           "display_name": "Feral Grace"
@@ -12546,7 +12546,7 @@
         },
         {
           "name": "Share Feature",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Share Feature"

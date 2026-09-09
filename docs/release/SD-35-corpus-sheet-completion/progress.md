@@ -41,6 +41,46 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — Epic 3 wrap-up (`§10` steps 0-3) — gate RED at `07e29075b4`, correction cycle GREEN — **complete**
+
+**Status: complete.** Receipt `artifacts/epic-3-place-and-surface/EPIC-3_wrapup_fix_cycle_receipt.md`;
+gate report `artifacts/epic-3-place-and-surface/EPIC-3_wrapup_gate_report.md`; events
+`docs/retro/events/at-35-e3-wrapup.jsonl`, `epic-3-wrapup-gate.jsonl`, `at-35-e3-wrapup-fix.jsonl`.
+Kanban row 32.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2` / `§9` L6, a
+  wrap-up fix cycle closes zero units by design. Not exempt from the residue check.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=260`.
+  The one build is the single full `scripts/verify.sh -j 6` pass; no `*.rs` file was touched
+  (`git diff --stat e91b1d8873 -- '*.rs'` empty).
+- **Refused tokens:** none — this cycle converted nothing.
+- **The gate, once, GREEN:** `scripts/verify.sh -j 6` at `e91b1d8873`, every stage, no `--only` —
+  **48 of 48 PASS**, `RESULT: PASS`, 5,184 s = 86 min 24 s, logs `/tmp/codex-verify-5XWQBR`
+  (`grep -cE '^    PASS' /tmp/e3fix_verify.out` → 48, `grep -cE '^    FAIL' /tmp/e3fix_verify.out` → 0).
+- **Red stage 1, `site-dashboard-check`:** reproduced (`./scripts/publish-site-dashboard.sh --check`
+  → "is STALE", exit 1), fixed by running the producer (75.2 s; 30 books, overall 95.0% of 46,074
+  items), re-check → "is current" + "OK: status-data.json and status-data/*.json are up to date",
+  exit 0. 33 generated `site/` files committed, none hand-edited.
+- **Red stage 2, `figure-provenance`:** **16 violations, not the 14 the gate reported** — the extra
+  two are in `AT-35-E4-001_cycle1_receipt.md`, a lane that landed after the gate ran. All 16
+  rewritten so each figure carries its re-derive command inline on its own line;
+  `python3 scripts/denominator_gate.py --check-provenance` → `files_checked=172 figures_examined=224 violations=0`.
+  No ignore list widened, no stage silenced, no figure changed.
+- **A third stage went red because of this cycle, and was fixed:** committing the gate report moved
+  `denominator-gate` to `violations=3` (three bare percentages in the report itself). Now
+  `files_checked=242 violations=0`.
+- **Baseline:** `BASELINE_ROOT_FULL_TESTS` 8724 → 8727, measured on the green run. A **floor**, so
+  this was a note and never a failure (`scripts/verify.sh:222`). The gate report's cause was wrong —
+  it credited all +3 to AT-35-E3-003 c1; derived by
+  `for c in $(git rev-list --reverse e0280a8fea..e91b1d8873); do git show $c -- '*.rs' | grep -c '^+\s*#\[test\]'; done`,
+  two are AT-35-E3-002 c1's (`26bdfa8d5b`, `5a361c9dc4`) and one is AT-35-E3-003 c1's (`0e0298d7fe`).
+- **PCGen residue, start and end, identical:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`
+  (`python3 scripts/pcgen_residue_gate.py --check`) — no live-side file was touched.
+- **Carried forward, named not dropped:** the three merged-but-undeleted Epic 3 worktrees (owner:
+  orchestrator; the harness refuses a sibling `git worktree remove` from a dispatched agent), and
+  `duplicate-criterion-dispatch` standing at 2 fires — a third makes it a missing mechanism under
+  `AGENTS.md` rule 8.
+
 ### 2026-09-09 — Epic 4 / AT-35-E4-001 cycle 1 — the 25 unmapped token types get a mapping row; bucket M's criterion meets all three Evidence clauses — **complete**
 
 - **Scope gate:** `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`

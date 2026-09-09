@@ -3415,7 +3415,7 @@
         },
         {
           "name": "Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick",
           "standing": "unclassified",
           "display_name": "Feat"
@@ -12474,11 +12474,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 240,
+      "done": 242,
       "partial": 19,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 261,
-      "pct": 92.0,
+      "pct": 92.7,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 261,
@@ -12781,7 +12781,7 @@
         },
         {
           "name": "Deathless Master (Vigor/Wounds)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Deathless Master (Vigor/Wounds)"
@@ -13236,7 +13236,7 @@
         },
         {
           "name": "Gundarme Bonus Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Gundarme Bonus Feat"
@@ -15257,7 +15257,7 @@
         },
         {
           "name": "Share Language (Communal)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Share Language (Communal)"

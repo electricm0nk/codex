@@ -110,26 +110,24 @@
     citation_failures=0`, exit 0. **This is the criterion's evidence sentence, run at HEAD.**
   - **bucket C = 0 in every one of the 19 kinds, `class_feature` included** — `python3
     scripts/completion_atlas.py --by-kind` → the `class_feature` row reads
-    `DONE=18043(100.0%)` of 18,043 `class_feature` units, and `C=0` of that same 18,043. Every
-    one of the 19 kind rows reads `C=0` — 0 of that kind's own `n`, and 0 of the 49,438-unit
-    corpus.
+    `DONE=18043(100.0%)` of 18,043 `class_feature` units, and `C=0` of that same 18,043 — `python3 scripts/completion_atlas.py --by-kind`. Every
+    one of the 19 kind rows reads `C=0` — 0 of that kind's own `n` (`python3 scripts/completion_atlas.py --by-kind`), and 0 of the 49,438-unit corpus (`python3 scripts/completion_atlas.py --check`).
   - **the C evidence string is extinct in the live inventory** — `grep -c
     'no_explanation_id_and_no_diagnostic_names_this_feature' docs/work-inventory.json` → **0**.
     The rung itself is **kept** (`src/bin/v06_work_inventory.rs:16366`, `scripts/completion_atlas.py:177`,
     and its two ladder-position assertions at `:27542` and `:30750`): the criterion says the C
     rung is *replaced*, and a rung with no unit on it is the proof, not a rung deleted.
-  - **C's 4,180 authoring population, accounted for in full: 4,101 + 79 = 4,180.** 4,180 is the
-    launch-gate figure (`workflow-instruction.md §1` item 9, `completion_atlas.py --check` at the
-    cut). **4,101** were closed by AT-35-E2-005's `sheet-complete` rung — the by-prior-bucket
-    breakdown of its 21,911 stamps, `progress.md` "from B 11,152 / M 4,271 / **C 4,101** / D 1,939
-    / A 448". The remaining **79** were closed by AT-35-E3-001 cycle 2 at `406003afc3` — its own
+  - **C's 4,180 authoring population, accounted for in full: 4,101 + 79 = 4,180** — `git show 4c6c57eb9f:docs/completion-atlas.json | jq '.buckets.C'` gives the 4,180
+    launch-gate figure (`workflow-instruction.md §1` item 9, `python3 scripts/completion_atlas.py --check` at the
+    cut). **4,101** were closed by AT-35-E2-005's `sheet-complete` rung — the by-prior-bucket breakdown of its 21,911 stamps, re-derived by `grep -n 'from B 11,152' docs/release/SD-35-corpus-sheet-completion/progress.md`
+    → "from B 11,152 / M 4,271 / **C 4,101** / D 1,939 / A 448" (`grep -n 'from B 11,152' docs/release/SD-35-corpus-sheet-completion/progress.md`).
+    The remaining **79** were closed by AT-35-E3-001 cycle 2 at `406003afc3` — its own
     receipt's `closure … By prior bucket: A 1, B 435, **C 79**, D 43, M 60`. Nothing in C was
     refused, relabelled sideways, or carved out.
   - **`class_feature` refused = 0 of 18,043** — `cargo run --locked --bin sheet_rule_convert -- --check`.
   - **no PCGen token syntax in the generated package** —
     `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → **0**.
-  - **1 unit of 49,438 would change if C1.8's word were added** — `v06_work_inventory
-    --stdout-only` with the word applied, diffed by id against the committed inventory (the run
+  - **1 unit of 49,438 would change if C1.8's word were added** — `cargo run --locked --bin v06_work_inventory -- --stdout-only` with the word applied, diffed by id against the committed inventory (the run
     never touched `docs/work-inventory.json`; `git status --porcelain` confirmed it unmodified).
 - **Build scope verified:** `cargo test --locked --no-run -j 6` → **NO_RUN_EXIT=0**, 0 `error`
   lines. `cargo test --locked --no-fail-fast -j 6` → **411 test binaries executed (+1 doc-test target = 412 `test result:` lines), 8,726 passed, 0 failed, 0 failing suites, FULL_EXIT=0**. Counted two independent ways that agree (`awk '/^     Running/{n++}'` = 411 and `grep -c 'Executable' ` on the `--no-run` log = 411; `awk '/^test result: ok/{s+=$4}'` = 8726). The launch baseline's **590** targets / 8,656 passed became **408** at AT-35-E1-003's test-family tax cut (its own receipt: "590 before \u2192 408 after"); the +3 since are Epic 2's and Epic 3's own gate binaries. **Not a count this cycle moved**, run at

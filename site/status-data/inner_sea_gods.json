@@ -5016,11 +5016,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 115,
+      "done": 118,
       "partial": 1,
-      "not_started": 3,
+      "not_started": 0,
       "denominator": 119,
-      "pct": 96.6,
+      "pct": 99.2,
       "excluded_from_percentage": 31,
       "standing_breakdown": {
         "origin": 119,
@@ -5036,7 +5036,7 @@
         },
         {
           "name": "Armor Of The Unqenchable Fire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Armor Of The Unqenchable Fire"
@@ -5407,7 +5407,7 @@
         },
         {
           "name": "Half-Plate Of The Dark Prince",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Half-Plate Of The Dark Prince"
@@ -5575,7 +5575,7 @@
         },
         {
           "name": "Pelt Of The Demon Mother",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pelt Of The Demon Mother"
@@ -6082,11 +6082,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 61,
+      "done": 70,
       "partial": 13,
-      "not_started": 9,
+      "not_started": 0,
       "denominator": 83,
-      "pct": 73.5,
+      "pct": 84.3,
       "excluded_from_percentage": 3,
       "standing_breakdown": {
         "origin": 83,
@@ -6228,7 +6228,7 @@
         },
         {
           "name": "Conversion Channel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Conversion Channel"
@@ -6270,7 +6270,7 @@
         },
         {
           "name": "Devilish Pride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Devilish Pride"
@@ -6284,7 +6284,7 @@
         },
         {
           "name": "Disciple Of The Sword",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Disciple Of The Sword"
@@ -6375,7 +6375,7 @@
         },
         {
           "name": "Forceful Channel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Forceful Channel"
@@ -6466,7 +6466,7 @@
         },
         {
           "name": "Nightmare Scars",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Nightmare Scars"
@@ -6522,7 +6522,7 @@
         },
         {
           "name": "Protective Channel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Protective Channel"
@@ -6550,7 +6550,7 @@
         },
         {
           "name": "Savior's Arrow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Savior's Arrow"
@@ -6613,7 +6613,7 @@
         },
         {
           "name": "Steelskin Channel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Steelskin Channel"
@@ -6676,7 +6676,7 @@
         },
         {
           "name": "Wave Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Wave Master"

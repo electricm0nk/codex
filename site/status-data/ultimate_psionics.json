@@ -15629,11 +15629,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 186,
+      "done": 192,
       "partial": 29,
-      "not_started": 6,
+      "not_started": 0,
       "denominator": 221,
-      "pct": 84.2,
+      "pct": 86.9,
       "excluded_from_percentage": 5,
       "standing_breakdown": {
         "origin": 221,
@@ -16475,21 +16475,21 @@
         },
         {
           "name": "PKIN_BR_A",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PKIN_BR_A"
         },
         {
           "name": "PKIN_BR_M",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PKIN_BR_M"
         },
         {
           "name": "PKIN_BR_R",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PKIN_BR_R"
@@ -16825,21 +16825,21 @@
         },
         {
           "name": "Psychokinetic Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition",
           "standing": "origin",
           "display_name": "Psychokinetic Burst (Ammunition)"
         },
         {
           "name": "Psychokinetic Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee.Thrown",
           "standing": "origin",
           "display_name": "Psychokinetic Burst (Weapon.Melee.Thrown)"
         },
         {
           "name": "Psychokinetic Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Ranged",
           "standing": "origin",
           "display_name": "Psychokinetic Burst (Weapon.Ranged)"
@@ -17227,11 +17227,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 215,
+      "done": 219,
       "partial": 1,
-      "not_started": 4,
+      "not_started": 0,
       "denominator": 220,
-      "pct": 97.7,
+      "pct": 99.5,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 220,
@@ -17842,7 +17842,7 @@
         },
         {
           "name": "Focused Precision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Combat.Psionic",
           "standing": "origin",
           "display_name": "Focused Precision"
@@ -17982,7 +17982,7 @@
         },
         {
           "name": "Improved Psi-Like Ability",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Psionic.Racial",
           "standing": "origin",
           "display_name": "Improved Psi-Like Ability"
@@ -18549,7 +18549,7 @@
         },
         {
           "name": "Scholarly Discipline",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Scholarly Discipline"
@@ -18780,7 +18780,7 @@
         },
         {
           "name": "Wildblood Mage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Wildblood Mage"

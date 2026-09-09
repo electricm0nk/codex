@@ -120,8 +120,7 @@
   3. **`PRESPELLSCHOOL` had a live arm that no token could reach.** `prereq.rs:546` handled it
      for nested `PREMULT` bodies while the top-level path refused it for want of a table row —
      dead code that a compiler `unreachable_pattern` warning surfaced the moment the row landed.
-- **Figures + their re-derive commands** (denominator: **49,438 units** / **49,438 corpus
-  records** in `docs/work-inventory.json`, all books, unless stated):
+- **Figures + their re-derive commands** (denominator: **49,438 units** / **49,438 corpus records**, all books, unless stated — `jq '.units | length' docs/work-inventory.json`):
   | figure | value | command |
   |---|---|---|
   | bucket M | **0** of 49,438 | `python3 scripts/completion_atlas.py --check` |
@@ -141,8 +140,8 @@
   Wall times paid (each `/usr/bin/time -f`): `corpus_literal_sweep` **154.39 s**,
   `derived_evaluator_fixture_check` **12.80 s**, `v06_work_inventory` **755.88 s**,
   `sheet_rule_convert` **110.9 s**, `sheet_rule_parity` **17.9 s**. The first, unguarded
-  inventory run was **refused by the stamp-loss guard** (it would have dropped 7,385 of 32,617
-  stamps) — the guard working as designed; the re-run supplied
+  inventory run was **refused by the stamp-loss guard** (it would have dropped 7,385 of 32,617 stamps — re-derivable by re-running `cargo run --locked --bin v06_work_inventory` with neither
+  `CORPUS_LITERAL_SWEEP_REPORT` nor `DERIVED_FIXTURE_CHECK_REPORT` set, whose refusal line states both counts) — the guard working as designed; the re-run supplied
   `CORPUS_LITERAL_SWEEP_REPORT` and `DERIVED_FIXTURE_CHECK_REPORT` and wrote cleanly.
   `--allow-stamp-loss` was never passed.
 - **Build scope verified**, run at `9bae2cfa1f`:

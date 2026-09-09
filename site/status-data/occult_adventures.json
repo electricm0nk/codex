@@ -410,14 +410,14 @@
         },
         {
           "name": "Bardic Performance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Phrenologist Class Feature.Bard Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bardic Performance (Phrenologist Class Feature.Bard Class Feature.SpecialQuality)"
         },
         {
           "name": "Bardic Performance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Silver Balladeer Class Feature.Bard Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bardic Performance (Silver Balladeer Class Feature.Bard Class Feature.SpecialQuality)"

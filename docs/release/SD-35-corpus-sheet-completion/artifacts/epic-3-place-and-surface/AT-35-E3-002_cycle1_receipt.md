@@ -108,27 +108,24 @@
   - scoped **786 of 786 non-DONE of 49,438**, verdict PASS — `python3 scripts/cycle_scope_gate.py --min 500`
   - the criterion's own population **0**, in every kind but `class_feature` and in it too —
     `python3 scripts/completion_atlas.py --by-kind` → every one of the 19 kind rows reads
-    bucket B **0 of that kind's own n** (`class_feature` 0 of 18,043, `equipment` 0 of 6,223,
-    `ability` 0 of 4,337, and so on to `skill` 0 of 149); and
+    bucket B **0 of that kind's own n** — `python3 scripts/completion_atlas.py --by-kind` gives `class_feature` 0 of 18,043 and `equipment` 0 of 6,223
+    and, from the same `python3 scripts/completion_atlas.py --by-kind` run, `ability` 0 of 4,337 and so on to `skill` 0 of 149; and
     `python3 scripts/cycle_scope_gate.py --min 500 --bucket B` → `scoped=0 remaining_non_done=0`
-  - buckets at HEAD, **0 non-DONE of 49,438**: `DONE 49438 / A 0 / B 0 / C 0 / D 0 / M 0 / V 0 /
-    U 0 / X 0 / Z 0` — `python3 scripts/completion_atlas.py --check`
+  - buckets at HEAD, **0 non-DONE of 49,438** — `python3 scripts/completion_atlas.py --check` → `DONE 49438 / A 0 / B 0 / C 0 / D 0 / M 0 / V 0 /
+    U 0 / X 0 / Z 0`
     (`unclassified=0 overlap=0 done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`)
-  - status distribution at HEAD, **49,438 units**: `sheet-complete 23315, text-complete 11599,
-    oracle-unverifiable 8491, grounded 5222, oracle-agree 811` —
-    `python3 -c "import json,collections;print(collections.Counter(u['status'] for u in json.load(open('docs/work-inventory.json'))['units']))"`
+  - status distribution at HEAD, **49,438 units** — `python3 -c "import json,collections;print(collections.Counter(u['status'] for u in json.load(open('docs/work-inventory.json'))['units']))"` →
+    `sheet-complete 23315, text-complete 11599, oracle-unverifiable 8491, grounded 5222, oracle-agree 811`
   - movement **786 closed, 0 regressed, 0 relabelled** — the `--receipt` invocation above, and
     the id-set diff `/tmp/wi-before-AT-35-E3-002.json` → `docs/work-inventory.json` through
     `scripts/completion_atlas.py::_bucket_of`
-  - converter population **49,296 converted + 142 refused = 49,438 records** (before: 48,601 +
-    837 = 49,438) — `cargo run --locked --bin sheet_rule_convert` (107 s),
-    `data/sheet_rules/_report.json`; **695 records newly converted**, id-set diff of
+  - converter population **49,296 converted + 142 refused = 49,438 records** — `cargo run --locked --bin sheet_rule_convert` (107 s), reading `jq '.converted, .refused' data/sheet_rules/_report.json`
+    (before: 48,601 + 837 = 49,438 — `git show 9995efa1b6:data/sheet_rules/_report.json | jq '.converted, .refused'`); **695 records newly converted**, id-set diff of
     `_refused.json` against `git show 9995efa1b6:data/sheet_rules/_refused.json`
-  - **974 degraded records of 49,296 converted** (before 973 of 48,601), over 79 degradation
-    shapes — `data/sheet_rules/_report.json` `degraded_records` / `degraded_by_token_type`
-  - the rung's own stamp line, **23,315 units stamped (dice=910, number=4550, words=17855)**
-    over a package of **49,296 rule files / 68,976 rules / 142 refused ids** — the
-    `sheet-complete rung:` line of `cargo run --locked --bin v06_work_inventory`
+  - **974 degraded records of 49,296 converted**, over 79 degradation shapes — `jq '.degraded_records, (.degraded_by_token_type|length)' data/sheet_rules/_report.json`
+    (before 973 of 48,601 — `git show 9995efa1b6:data/sheet_rules/_report.json | jq '.degraded_records'`)
+  - the rung's own stamp line, **23,315 units stamped (dice=910, number=4550, words=17855)** — the `sheet-complete rung:` line of `cargo run --locked --bin v06_work_inventory`
+    over a package of **49,296 rule files / 68,976 rules / 142 refused ids** — the same `cargo run --locked --bin v06_work_inventory` stamp line
   - token ledger **non_done=0 tokened=0 token_less=0 refused=142 refused_non_done=0
     token_types=232 shapes=1 verdict=PASS** — `python3 scripts/token_coverage.py --check` (all
     seven sum checks `ok=True`; the first run reported `FAIL_STALE_ARTIFACT` and rewrote

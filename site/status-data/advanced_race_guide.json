@@ -2485,11 +2485,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 492,
+      "done": 493,
       "partial": 1,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 494,
-      "pct": 99.6,
+      "pct": 99.8,
       "excluded_from_percentage": 214,
       "standing_breakdown": {
         "origin": 494,
@@ -2645,7 +2645,7 @@
         },
         {
           "name": "Animal Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary.Animal Companion",
           "standing": "unclassified",
           "display_name": "Animal Companion"
@@ -5963,7 +5963,7 @@
         },
         {
           "name": "Revelations",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Revelations (ArchetypeAbility.SpecialQuality) #2"
@@ -9234,11 +9234,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 227,
+      "done": 230,
       "partial": 5,
-      "not_started": 3,
+      "not_started": 0,
       "denominator": 235,
-      "pct": 96.6,
+      "pct": 97.9,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "origin": 235,
@@ -9723,7 +9723,7 @@
         },
         {
           "name": "Dispel Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Umbral Scion Spell",
           "standing": "origin",
           "display_name": "Dispel Magic"
@@ -9744,7 +9744,7 @@
         },
         {
           "name": "Divine Favor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Umbral Scion Spell",
           "standing": "origin",
           "display_name": "Divine Favor"
@@ -10682,7 +10682,7 @@
         },
         {
           "name": "Suggestion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Umbral Scion Spell",
           "standing": "origin",
           "display_name": "Suggestion"

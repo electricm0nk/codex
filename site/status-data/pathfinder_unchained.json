@@ -4234,7 +4234,7 @@
         },
         {
           "name": "Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Advanced Talent",
           "standing": "unclassified",
           "display_name": "Feat"
@@ -4528,14 +4528,14 @@
         },
         {
           "name": "Improved Uncanny Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Barbarian Class Feature.Uncanny Dodge.Improved Uncanny Dodge",
           "standing": "unclassified",
           "display_name": "Improved Uncanny Dodge (Unchained Barbarian Class Feature.Uncanny Dodge.Improved Uncanny Dodge)"
         },
         {
           "name": "Improved Uncanny Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature.Uncanny Dodge.Improved Uncanny Dodge",
           "standing": "unclassified",
           "display_name": "Improved Uncanny Dodge (Unchained Rogue Class Feature.Uncanny Dodge.Improved Uncanny Dodge)"
@@ -5186,7 +5186,7 @@
         },
         {
           "name": "Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Barbarian Class Feature.ClassFeatures.SpecialQuality.Extraordinary.Rage.AttackOption",
           "standing": "unclassified",
           "display_name": "Rage (Unchained Barbarian Class Feature.ClassFeatures.SpecialQuality.Extraordinary.Rage.AttackOption)"
@@ -6607,14 +6607,14 @@
         },
         {
           "name": "Uncanny Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Barbarian Class Feature.Uncanny Dodge",
           "standing": "unclassified",
           "display_name": "Uncanny Dodge (Unchained Barbarian Class Feature.Uncanny Dodge)"
         },
         {
           "name": "Uncanny Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature.Uncanny Dodge",
           "standing": "unclassified",
           "display_name": "Uncanny Dodge (Unchained Rogue Class Feature.Uncanny Dodge)"

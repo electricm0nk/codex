@@ -1535,11 +1535,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 2,
-      "partial": 3,
+      "done": 3,
+      "partial": 2,
       "not_started": 0,
       "denominator": 5,
-      "pct": 40.0,
+      "pct": 60.0,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "unclassified": 2,
@@ -1576,7 +1576,7 @@
         },
         {
           "name": "Rag Armor (Dark Creeper)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Light.ArmorProfLight.Suit.Standard.Nonmetal",
           "standing": "origin",
           "display_name": "Rag Armor (Dark Creeper)"

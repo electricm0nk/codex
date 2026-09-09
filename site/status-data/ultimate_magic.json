@@ -3598,11 +3598,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 1145,
+      "done": 1146,
       "partial": 7,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 1153,
-      "pct": 99.3,
+      "pct": 99.4,
       "excluded_from_percentage": 625,
       "standing_breakdown": {
         "origin": 1153,
@@ -3975,7 +3975,7 @@
         },
         {
           "name": "Animal Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.ArchetypeDruid.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Animal Companion (DruidClassFeatures.ArchetypeDruid.SpecialQuality)"
@@ -4087,7 +4087,7 @@
         },
         {
           "name": "Arcane Bloodline",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SorcererBloodlineChoice",
           "standing": "unclassified",
           "display_name": "Arcane Bloodline"
@@ -11087,7 +11087,7 @@
         },
         {
           "name": "Outer Plane Choice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OracleClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Outer Plane Choice"
@@ -17788,11 +17788,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 147,
+      "done": 153,
       "partial": 2,
-      "not_started": 6,
+      "not_started": 0,
       "denominator": 155,
-      "pct": 94.8,
+      "pct": 98.7,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 155
@@ -18038,14 +18038,14 @@
         },
         {
           "name": "Experimental Spellcaster First",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Experimental Spellcaster First"
         },
         {
           "name": "Experimental Spellcaster Rest",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Experimental Spellcaster Rest"
@@ -18206,7 +18206,7 @@
         },
         {
           "name": "Greater Wild Empathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Greater Wild Empathy"
@@ -18563,21 +18563,21 @@
         },
         {
           "name": "Skill Focus (Intimidate)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SaurianShamanBonus",
           "standing": "origin",
           "display_name": "Skill Focus (Intimidate)"
         },
         {
           "name": "Skill Focus (Knowledge [Arcana])",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DragonShamanBonus",
           "standing": "origin",
           "display_name": "Skill Focus (Knowledge [Arcana])"
         },
         {
           "name": "Skill Focus (Swim)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SharkShamanBonus",
           "standing": "origin",
           "display_name": "Skill Focus (Swim)"
