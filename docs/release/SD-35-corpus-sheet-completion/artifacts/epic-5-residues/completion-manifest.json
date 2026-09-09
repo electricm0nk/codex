@@ -1,6 +1,6 @@
 {
  "criterion": "AT-35-E5-005",
- "generated_at_head": "ac2165b393abec7ecf910599e0d5bd3139660af1",
+ "generated_at_head": "39dfd59b7e4763acc09ac374441ed4b3647c01f7",
  "re_derive_command": "python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-5-residues/AT-35-E5-005_completion_manifest.py",
  "atlas_command": "python3 scripts/completion_atlas.py --check",
  "partition_source": "scripts/completion_atlas.py::_bucket_of (imported, never re-implemented)",
