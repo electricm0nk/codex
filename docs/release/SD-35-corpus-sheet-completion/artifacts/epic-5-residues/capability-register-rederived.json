@@ -1,0 +1,343 @@
+{
+ "criterion": "AT-35-E5-005",
+ "generated_at_head": "c17fbfc73b5593d9d9001743501abcadd543b84b",
+ "re_derive_command": "python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-5-residues/AT-35-E5-005_capability_register.py",
+ "closes": "docs/release/SD-34-book-completion/artifacts/epic-5-forward-plan/capability-register.json",
+ "predecessor_register_head": "837dbbcf6be3fcacd8b136f64b49e4892b771d97",
+ "disposition_vocabulary": {
+  "built": "the capability exists in live code at HEAD; `built_evidence` names it",
+  "unnecessary-under-sheet-rule": "decisions.md \u00a71 -- the capability was simulation or verification machinery; every unit the row named reaches one of the three sheet forms without it"
+ },
+ "summary": {
+  "predecessor_rows": 11,
+  "rows_closed": 11,
+  "built": 5,
+  "unnecessary_under_sheet_rule": 6,
+  "still_open": 0,
+  "units_covered": 11055,
+  "units_covered_not_done_at_head": 0,
+  "built_ids": [
+   "companion_table_shape_widening",
+   "cross_record_content_ownership_resolution",
+   "marker_stripping_for_pcgen_editorial_markers",
+   "per_character_choice_filter",
+   "power_engine_table"
+  ],
+  "unnecessary_ids": [
+   "class_feature_deep_subsystem_modelling",
+   "companion_mount_advancement_table",
+   "corpus_content_extraction_for_uncaptured_records",
+   "master_side_ability_pool_record_type_or_cross_book_ownership",
+   "monster_class_hit_dice_progression_modelling",
+   "oracle_probe_surface_for_no_table_kinds"
+  ]
+ },
+ "capabilities": [
+  {
+   "id": "power_engine_table",
+   "predecessor_stated_population": 421,
+   "predecessor_population_source": "live",
+   "predecessor_re_derive_command": "python3 scripts/missing_engine_tables.py --check  (or: status==engine-does-not-hold AND evidence contains 'has_no_engine_table' AND kind=='power', over docs/work-inventory.json)",
+   "rederived_id_set_size": 421,
+   "rederived_from": "the register's own query, run against `git show 837dbbcf6be3fcacd8b136f64b49e4892b771d97:docs/work-inventory.json` (its own `generated_at_head`)",
+   "rederive_command": "python3 scripts/missing_engine_tables.py --check  (or: status==engine-does-not-hold AND evidence contains 'has_no_engine_table' AND kind=='power', over docs/work-inventory.json)",
+   "units_at_head": 421,
+   "bucket_at_head": {
+    "DONE": 421
+   },
+   "status_at_head": {
+    "sheet-complete": 421
+   },
+   "evidence_at_head": {
+    "sheet_rule_rendered:words": 412,
+    "sheet_rule_rendered:number": 9
+   },
+   "built": true,
+   "built_evidence": "The `power` table exists and is served by the live sheet-rule package, which loads `SheetRule.applies` and never a source token (`epic-breakdown.md ### AT-35-E5-001`). Its refusal/success transcript pair is `artifacts/epic-5-residues/table-proofs.md`.",
+   "built_files": [
+    "data/sheet_rules/ultimate_psionics/power/",
+    "src/rules_core/sheet_rule.rs",
+    "src/rules_core/corpus_loader.rs"
+   ],
+   "verify_commands": [
+    "python3 scripts/missing_engine_tables.py --check   # population=0 kinds=0",
+    "cargo run --locked --bin v06_work_inventory -- --epic5-table-transcript"
+   ]
+  },
+  {
+   "id": "companion_table_shape_widening",
+   "predecessor_stated_population": 28,
+   "predecessor_population_source": "live",
+   "predecessor_re_derive_command": "status==engine-does-not-hold AND evidence contains 'has_no_engine_table' AND kind=='companion', over docs/work-inventory.json",
+   "rederived_id_set_size": 28,
+   "rederived_from": "the register's own query, run against `git show 837dbbcf6be3fcacd8b136f64b49e4892b771d97:docs/work-inventory.json` (its own `generated_at_head`)",
+   "rederive_command": "status==engine-does-not-hold AND evidence contains 'has_no_engine_table' AND kind=='companion', over docs/work-inventory.json",
+   "units_at_head": 28,
+   "bucket_at_head": {
+    "DONE": 28
+   },
+   "status_at_head": {
+    "sheet-complete": 28
+   },
+   "evidence_at_head": {
+    "sheet_rule_rendered:words": 28
+   },
+   "built": true,
+   "built_evidence": "Same mechanism as `power_engine_table`: `bestiary`'s `companion` records are served by the live sheet-rule package's `companion` table, gated by a typed `Applies` tree. Transcript pair in `artifacts/epic-5-residues/table-proofs.md`.",
+   "built_files": [
+    "data/sheet_rules/bestiary/companion/",
+    "src/rules_core/sheet_rule.rs"
+   ],
+   "verify_commands": [
+    "python3 scripts/missing_engine_tables.py --check   # population=0 kinds=0",
+    "cargo run --locked --bin v06_work_inventory -- --epic5-table-transcript"
+   ]
+  },
+  {
+   "id": "per_character_choice_filter",
+   "predecessor_stated_population": 113,
+   "predecessor_population_source": "live",
+   "predecessor_re_derive_command": "status=='deferred-with-reason' AND evidence matches 'combat_style_feat_pool.option.' / 'bloodline_feat_pool.option.' / 'progression_subchoices_unresolved', over docs/work-inventory.json",
+   "rederived_id_set_size": 113,
+   "rederived_from": "the register's own query, run against `git show 837dbbcf6be3fcacd8b136f64b49e4892b771d97:docs/work-inventory.json` (its own `generated_at_head`)",
+   "rederive_command": "status=='deferred-with-reason' AND evidence matches 'combat_style_feat_pool.option.' / 'bloodline_feat_pool.option.' / 'progression_subchoices_unresolved', over docs/work-inventory.json",
+   "units_at_head": 113,
+   "bucket_at_head": {
+    "DONE": 113
+   },
+   "status_at_head": {
+    "sheet-complete": 113
+   },
+   "evidence_at_head": {
+    "sheet_rule_rendered:words": 108,
+    "sheet_rule_rendered:number": 5
+   },
+   "built": true,
+   "built_evidence": "AT-35-E5-004 built the join SD-34 named as missing: `filter_option_pool` takes a character's facts and the option pool and returns the options THIS character may take plus the ones it refuses, and desktop's `preview_level_up` serves both as `featOptions` / `refusedFeatOptions`. Prerequisites are typed `Applies` converted at ingest -- no `pre_tokens` on the live side (`decisions.md \u00a711`).",
+   "built_files": [
+    "src/rules_core/level_up_option_filter.rs",
+    "apps/desktop/src-tauri/src/character_hub.rs",
+    "apps/desktop/src/characterHub/LevelUpDialog.tsx"
+   ],
+   "verify_commands": [
+    "grep -n 'filter_option_pool' src/rules_core/level_up_option_filter.rs apps/desktop/src-tauri/src/character_hub.rs",
+    "cat docs/release/SD-35-corpus-sheet-completion/artifacts/epic-5-residues/AT-35-E5-004_cycle1_receipt.md"
+   ]
+  },
+  {
+   "id": "companion_mount_advancement_table",
+   "predecessor_stated_population": 9,
+   "predecessor_population_source": "live",
+   "predecessor_re_derive_command": "status=='deferred-with-reason' AND evidence contains 'advancement_absent', over docs/work-inventory.json",
+   "rederived_id_set_size": 9,
+   "rederived_from": "the register's own query, run against `git show 837dbbcf6be3fcacd8b136f64b49e4892b771d97:docs/work-inventory.json` (its own `generated_at_head`)",
+   "rederive_command": "status=='deferred-with-reason' AND evidence contains 'advancement_absent', over docs/work-inventory.json",
+   "units_at_head": 9,
+   "bucket_at_head": {
+    "DONE": 9
+   },
+   "status_at_head": {
+    "grounded": 1,
+    "sheet-complete": 8
+   },
+   "evidence_at_head": {
+    "sheet_rule_rendered:words": 7,
+    "explanation_id_observed_in_a_real_computation": 1,
+    "sheet_rule_rendered:number": 1
+   },
+   "built": false,
+   "unnecessary-under-sheet-rule": "A per-level stat-progression engine for companions/eidolons/mounts is a simulation of levelling, not a sheet line. Under the sheet rule the advancement record prints what the rulebook prints -- the rule's words, or one final number where the corpus states one -- and every unit this row named reaches one of those forms at HEAD without any advancement engine.",
+   "sheet_rule_citation": "decisions.md \u00a71"
+  },
+  {
+   "id": "class_feature_deep_subsystem_modelling",
+   "predecessor_stated_population": 31,
+   "predecessor_population_source": "live",
+   "predecessor_re_derive_command": "status=='deferred-with-reason' AND evidence starts with 'engine_diagnostic:class_feature.' AND not matched by the choice_filter/advancement/dispatch/vacuous/marker patterns above, over docs/work-inventory.json",
+   "rederived_id_set_size": 31,
+   "rederived_from": "the register's own query, run against `git show 837dbbcf6be3fcacd8b136f64b49e4892b771d97:docs/work-inventory.json` (its own `generated_at_head`)",
+   "rederive_command": "status=='deferred-with-reason' AND evidence starts with 'engine_diagnostic:class_feature.' AND not matched by the choice_filter/advancement/dispatch/vacuous/marker patterns above, over docs/work-inventory.json",
+   "units_at_head": 31,
+   "bucket_at_head": {
+    "DONE": 31
+   },
+   "status_at_head": {
+    "sheet-complete": 31
+   },
+   "evidence_at_head": {
+    "sheet_rule_rendered:number": 20,
+    "sheet_rule_rendered:words": 11
+   },
+   "built": false,
+   "unnecessary-under-sheet-rule": "Bardic performance variants, eidolon evolutions, mystery revelations, spirit powers, exploits: each is a subsystem someone might want a game engine to execute. A paper sheet prints the feature and its text; the player runs the subsystem at the table. Every unit this row named renders a finished sheet line at HEAD (20 as a final number, 11 as the rule's words) with no subsystem modelled.",
+   "sheet_rule_citation": "decisions.md \u00a71"
+  },
+  {
+   "id": "marker_stripping_for_pcgen_editorial_markers",
+   "predecessor_stated_population": 21,
+   "predecessor_population_source": "cited",
+   "predecessor_re_derive_command": null,
+   "rederived_id_set_size": 21,
+   "rederived_from": "the register's own query, run against `git show 837dbbcf6be3fcacd8b136f64b49e4892b771d97:docs/work-inventory.json` (its own `generated_at_head`)",
+   "rederive_command": "status=='unmeasurable' AND book=='ultimate_campaign' AND evidence=='feat_served_description_is_a_placeholder_marker_not_prose', over `git show 837dbbcf6be3fcacd8b136f64b49e4892b771d97:docs/work-inventory.json` -- resolves to the cited 21",
+   "units_at_head": 21,
+   "bucket_at_head": {
+    "DONE": 21
+   },
+   "status_at_head": {
+    "sheet-complete": 21
+   },
+   "evidence_at_head": {
+    "sheet_rule_rendered:words": 21
+   },
+   "built": true,
+   "built_evidence": "AT-35-E5-003 decided the product question SD-34 filed and built the fix on the CONVERTER side: upstream PCGen's editorial not-implemented marker no longer reaches a rendered sheet line. A statement about PCGen's automation is not the rule's words, so under the sheet rule it does not belong on paper.",
+   "built_files": [
+    "src/pcgen_import/sheet_rule/prose.rs",
+    "tests/sheet_rule_convert_gate.rs"
+   ],
+   "verify_commands": [
+    "grep -rlEi '\\[(not implemented|ml bonus not implemented)' data/sheet_rules/ | wc -l   # 0",
+    "cat docs/release/SD-35-corpus-sheet-completion/artifacts/epic-5-residues/AT-35-E5-003_cycle1_receipt.md"
+   ]
+  },
+  {
+   "id": "monster_class_hit_dice_progression_modelling",
+   "predecessor_stated_population": 2,
+   "predecessor_population_source": "cited",
+   "predecessor_re_derive_command": null,
+   "rederived_id_set_size": 2,
+   "rederived_from": "a live query at HEAD (see `rederive_command` below)",
+   "rederive_command": "source_file == 'cr_classes_companion.lst', over docs/work-inventory.json",
+   "units_at_head": 2,
+   "bucket_at_head": {
+    "DONE": 2
+   },
+   "status_at_head": {
+    "grounded": 2
+   },
+   "evidence_at_head": {
+    "core_rulebook_companion_resolve_returned_a_real_record": 2
+   },
+   "built": false,
+   "unnecessary-under-sheet-rule": "A monster-class hit-dice progression is a new RECORD TYPE for the engine to advance a creature level by level -- simulation machinery. Both records this row named (`Companion`, `Shadow Companion`, `cr_classes_companion.lst`) resolve to a real companion record at HEAD and print it; the standing SD-29 architecture decision this row asked to widen stays unwidened, and no unit needs it.",
+   "sheet_rule_citation": "decisions.md \u00a71"
+  },
+  {
+   "id": "master_side_ability_pool_record_type_or_cross_book_ownership",
+   "predecessor_stated_population": 14,
+   "predecessor_population_source": "cited",
+   "predecessor_re_derive_command": null,
+   "rederived_id_set_size": 14,
+   "rederived_from": "a live query at HEAD (see `rederive_command` below)",
+   "rederive_command": "source_file == 'ce_abilities_familiar_cr.lst', over docs/work-inventory.json",
+   "units_at_head": 14,
+   "bucket_at_head": {
+    "DONE": 14
+   },
+   "status_at_head": {
+    "grounded": 2,
+    "oracle-unverifiable": 1,
+    "text-complete": 11
+   },
+   "evidence_at_head": {
+    "companion_held_and_corpus_record_carries_real_description": 11,
+    "core_rulebook_companion_resolve_returned_a_real_record": 2,
+    "oracle_verdict_unverifiable_bucket_v_consolidated_at34_e3_005": 1
+   },
+   "built": false,
+   "unnecessary-under-sheet-rule": "Neither of the two things this row offered (a cross-book ownership shape, or a dedicated master-side ability-pool record type) was built. All 14 `ce_abilities_familiar_cr.lst` rows are DONE at HEAD and every one of them renders real content -- the sheet prints the familiar ability's words whether or not the engine can attribute the row to a same-book creature. The ownership invariant was a table-placement rule, and the sheet rule does not route content through it.",
+   "sheet_rule_citation": "decisions.md \u00a71"
+  },
+  {
+   "id": "corpus_content_extraction_for_uncaptured_records",
+   "predecessor_stated_population": null,
+   "predecessor_population_source": "cited",
+   "predecessor_re_derive_command": null,
+   "rederived_id_set_size": 8380,
+   "rederived_from": "a live query at HEAD (see `rederive_command` below)",
+   "rederive_command": "sheet_rule_content == 'label_only', over completion-manifest.json",
+   "units_at_head": 8380,
+   "bucket_at_head": {
+    "DONE": 8380
+   },
+   "status_at_head": {
+    "grounded": 753,
+    "oracle-agree": 81,
+    "oracle-unverifiable": 1659,
+    "sheet-complete": 5679,
+    "text-complete": 208
+   },
+   "evidence_at_head": {
+    "sheet_rule_rendered:words": 5679,
+    "oracle_verdict_unverifiable_bucket_v_consolidated_at34_e3_005": 1659,
+    "equipment_effect_probe_observed_computed_delta": 263,
+    "template_content_zero_magnitude_record_carries_no_upstream_description_by_design": 97,
+    "oracle_verdict_agree_bucket_v_consolidated_at34_e3_005": 81
+   },
+   "built": false,
+   "unnecessary-under-sheet-rule": "SD-34 left this UNSIZED; it is sized here. These are rules whose corpus record carries no description upstream at all -- PCGen's own row has no DESC to convert. Under the sheet rule the finished line for such a record is the feature's NAME, which is exactly what a player writes on paper next to a class-features entry, so no engine capability is missing. Recovering the published rules text these records never captured is a CORPUS-ACQUISITION wish, not engine machinery, and it moves no unit out of DONE. NOTE the named exception this cycle measured and did NOT fold in: 10 units DO have a real DESC token upstream whose words never reach the sheet rule -- a converter defect, reported as this cycle's residue, not part of this row.",
+   "sheet_rule_citation": "decisions.md \u00a71"
+  },
+  {
+   "id": "cross_record_content_ownership_resolution",
+   "predecessor_stated_population": null,
+   "predecessor_population_source": "cited",
+   "predecessor_re_derive_command": null,
+   "rederived_id_set_size": 1906,
+   "rederived_from": "a live query at HEAD (see `rederive_command` below)",
+   "rederive_command": "sheet_rule_content == 'label_only_with_granted_by', over completion-manifest.json",
+   "units_at_head": 1906,
+   "bucket_at_head": {
+    "DONE": 1906
+   },
+   "status_at_head": {
+    "grounded": 210,
+    "oracle-agree": 2,
+    "oracle-unverifiable": 28,
+    "sheet-complete": 1655,
+    "text-complete": 11
+   },
+   "evidence_at_head": {
+    "sheet_rule_rendered:words": 1655,
+    "class_feature_set_shaped_grant_carries_no_upstream_description_by_design": 122,
+    "ability_content_zero_magnitude_record_carries_no_upstream_description_by_design": 35,
+    "template_content_zero_magnitude_record_carries_no_upstream_description_by_design": 32,
+    "oracle_verdict_unverifiable_bucket_v_consolidated_at34_e3_005": 28
+   },
+   "built": true,
+   "built_evidence": "The converter emits `granted_by` on a pointer row, naming the rule that owns the content, and the LIVE evaluator follows it: `src/rules_core/sheet_rule.rs` walks `granted_by` when it computes what a character holds. That is exactly the shape SD-34 said no bucket named -- 'the content exists, on a DIFFERENT record'. The row's population is the pointer rows themselves, measured here for the first time (SD-34 left it UNSIZED).",
+   "built_files": [
+    "src/rules_core/sheet_rule.rs",
+    "src/pcgen_import/sheet_rule/convert.rs"
+   ],
+   "verify_commands": [
+    "grep -n 'granted_by' src/rules_core/sheet_rule.rs",
+    "python3 -c \"import json;m=json.load(open('docs/release/SD-35-corpus-sheet-completion/artifacts/epic-5-residues/completion-manifest.json'));print(m['summary']['by_sheet_rule_content']['label_only_with_granted_by'])\""
+   ]
+  },
+  {
+   "id": "oracle_probe_surface_for_no_table_kinds",
+   "predecessor_stated_population": 2062,
+   "predecessor_population_source": "live",
+   "predecessor_re_derive_command": "status=='oracle-unverifiable' AND reason contains 'AT-33-E1-003 probe-surface census', over docs/work-inventory.json",
+   "rederived_id_set_size": 130,
+   "rederived_from": "the register's own query, run against `git show 837dbbcf6be3fcacd8b136f64b49e4892b771d97:docs/work-inventory.json` (its own `generated_at_head`)",
+   "rederive_command": "status=='oracle-unverifiable' AND reason contains 'AT-33-E1-003 probe-surface census', over docs/work-inventory.json",
+   "units_at_head": 130,
+   "bucket_at_head": {
+    "DONE": 130
+   },
+   "status_at_head": {
+    "oracle-unverifiable": 130
+   },
+   "evidence_at_head": {
+    "oracle_verdict_unverifiable_bucket_v_consolidated_at34_e3_005": 130
+   },
+   "built": false,
+   "unnecessary-under-sheet-rule": "An oracle probe surface is VERIFICATION machinery: it exists to compare a computed magnitude against PCGen's export. The kinds in this row carry no engine compute table because their sheet line is not a computed magnitude -- it is the rule's words. Building probes so a magnitude that does not exist can be compared is `decisions.md \u00a74`'s per-unit proof machinery, which this bundle does not build. AT-35-E4-002 ran the one corpus-wide oracle comparison the bundle owes on bucket V; every `oracle-unverifiable` unit in the corpus is DONE at HEAD.",
+   "sheet_rule_citation": "decisions.md \u00a71",
+   "predecessor_population_discrepancy": "SD-34 states 2062 (ability 745, companion 104, monster 843, monster_ability 244, template 126). The row's own stated command at the register's own stated generated_at_head returns 130 (ability 90, template 36, companion 4). Recorded as a correction rather than silently replaced; the disposition is unchanged because at HEAD all 8,491 oracle-unverifiable units in the corpus are DONE."
+  }
+ ]
+}
