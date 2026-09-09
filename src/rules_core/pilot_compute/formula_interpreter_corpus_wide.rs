@@ -866,18 +866,31 @@ mod tests {
     /// docs/work-inventory.json --corpus-root data/corpus` against the
     /// post-regen `docs/work-inventory.json`: `F1  135  Flat-constant
     /// magnitude (bare literal)`.
+    ///
+    /// **135 -> 113, a REAL movement (SD-35 AT-35-E3-002, 2026-09-08).**
+    /// The whole-remainder cycle: two token-less converter joins plus the
+    /// `sheet-complete` rung's widened promotable-status list closed the last
+    /// 786 non-DONE units (non-DONE 786 -> 0 by id-set diff, 0 regressions;
+    /// `completion_atlas.py --check` -> DONE 49438 of 49438). F1 fell with
+    /// them: 135 -> 113, confirmed by re-running `python3
+    /// scripts/shape_ledger.py --inventory docs/work-inventory.json
+    /// --corpus-root data/corpus` against the post-regen
+    /// `docs/work-inventory.json`: `F1  113  Flat-constant magnitude (bare
+    /// literal)`.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 135,
-            "F1 population must equal the CURRENT true formula-bearing count (135, re-derived \
+            f1.population, 113,
+            "F1 population must equal the CURRENT true formula-bearing count (113, re-derived \
              2026-09-08 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
              `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
-             cycle's own true-at-the-time 239 (SD-35 AT-35-E2-005's corpus-wide pass), not the \
+             cycle's own true-at-the-time 135 (SD-35 AT-35-E3-001's term-level refusal cycle), \
+             not the cycle-before-that's own true-at-the-time 239 (SD-35 AT-35-E2-005's \
+             corpus-wide pass), not the \
              cycle-before-that's own true-at-the-time 5,124 (SD-34 wave 49 closure-cycle), not the \
              cycle-before-that's own true-at-the-time 5,155 (SD-34 wave 47/48 closure-cycles, unchanged \
              through wave 48's own zero-F1 closure), not the cycle-before-that's own \

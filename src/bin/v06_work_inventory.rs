@@ -18160,13 +18160,17 @@ mod apply_sheet_complete_rung_tests {
     const NUMBER_ID: &str = "core_rulebook:feat:acrobatic";
     const DICE_ID: &str = "core_rulebook:equipment:longsword";
     /// Refused by the converter; it has no rule in the package AND is in
-    /// `_refused.json`. SD-35 AT-35-E3-001 moved this pin: term-level refusal
-    /// means an unlowerable token no longer deletes a record, so
-    /// `advanced_class_guide:class:arcanist` (six unmapped heads) now converts
-    /// and prints its words. The refusal set is the 837 records with no source
-    /// row at all -- `no_corpus_record` 829, `no_source_row` 8 -- and this feat
-    /// is one of them.
-    const REFUSED_ID: &str = "advanced_players_guide:feat:allied_spellcaster";
+    /// `_refused.json`. SD-35 AT-35-E3-001 moved this pin once (term-level
+    /// refusal: an unlowerable token no longer deletes a record, so
+    /// `advanced_class_guide:class:arcanist` converts and prints its words),
+    /// and SD-35 AT-35-E3-002 moved it again: a unit with no corpus record now
+    /// resolves its own source row in the pinned tree, and a corpus record with
+    /// only a second-source `description` converts to those words, so
+    /// `advanced_players_guide:feat:allied_spellcaster` converts too. The
+    /// refusal set is now the 142 records whose named source file sits in
+    /// ANOTHER book's directory -- `no_corpus_record` 142 -- and this
+    /// `bestiary` feat is one of them.
+    const REFUSED_ID: &str = "bestiary:feat:ability_focus";
 
     /// The core positive case: the two statuses beneath the rung, each with a
     /// rendered rule, become `sheet-complete` carrying the rendered form.
