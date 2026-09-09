@@ -29,10 +29,10 @@ process defect** recorded by the epic wrap-up.
 | 2 — Sheet rule | 5 | 5 | 0 | 0 |
 | 3 — Place and surface | 4 | 4 | 0 | 0 |
 | 4 — Resolve and verify | 3 | 3 | 0 | 0 |
-| 5 — Residues | 5 | 3 | 2 | 0 |
+| 5 — Residues | 5 | 4 | 1 | 0 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **21** | **2** | **7** |
+| **Total** | **30** | **22** | **1** | **7** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,49 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-09 — AT-35-E5-004 cycle 1 — `bucket-x-choice-filter` — **complete** (the per-character choice filter itself, recorded as NOT built until now — and the converter defect that building it exposed)
+
+- **Scope gate:** `python3 scripts/cycle_scope_gate.py --min 500 --bucket X` →
+  `inventory=docs/work-inventory.json scope=bucket=X scoped_by_bucket= scoped_by_kind=
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. Not an exemption: the
+  gate ran and passed. The mandatory-bundling instruction was moot — `remaining_non_done=0` is
+  the whole corpus, so there was nothing in any bucket to bundle in. Bucket X reached 0 at
+  `26bdfa8d5b`; this cycle pays the criterion's **second** Evidence clause, which kanban row 22
+  recorded as explicitly unpaid.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=835 ratio=n/a builds_recorded=3
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 7557ab00fa --target-dir
+  /tmp/cargo-sd35-AT-35-E5-004`; `regressed=0 added=0 dropped=0`, `closed_by_kind=` and
+  `relabeled_moves=` empty). This cycle moves no unit — the criterion's 168 closed at
+  `26bdfa8d5b`.
+- **Refused tokens:** none. `python3 scripts/token_coverage.py --check` → `non_done=0
+  refused_non_done=0 refused=142 verdict=PASS` at HEAD.
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736
+  verdict=PASS`. It read `FAIL_INCREASED` (261/12738) mid-cycle because two doc comments in the
+  new live-side module wrote a source token literal in prose; both were reworded and the gate
+  returned to baseline. Nothing on the live side reads a source token; the converter change is
+  on the converter side, where `decisions.md §11` requires it.
+- **What landed.** `src/rules_core/level_up_option_filter.rs` is the join SD-34
+  `decisions.md §17` asked for: it reads `SheetRule.applies` and calls the same
+  `evaluate_applies` the sheet renderer calls, against the same `HeldSet` and `CharacterFacts`
+  the sheet is rendered from. `preview_level_up` serves it as `featOptions` /
+  `refusedFeatOptions` / `optionFilterUnavailableReason`, and `LevelUpDialog` renders both
+  halves. A refused option is never dropped: it carries the requirement it failed in the rule's
+  own words (`decisions.md §1`).
+- **The defect building it exposed.** `PreStatScore_<AB>` — the left-hand side of every
+  `PREVARGTEQ`-shaped ability prerequisite — lowered to a bare corpus variable whose base term
+  belongs to no corpus record, so the gate read 0 and a Strength-16 fighter was refused Power
+  Attack across **354** record files. It now lowers to `max(AbilityScore(ab), <raisers>)`.
+  Package totals unmoved: `records=49438 converted=49296 refused=142 rules=69344
+  var_tables=5277`.
+- **Evidence, both clauses.** X at 0 (gate line above);
+  `preview_level_up_filters_the_feat_options_by_this_characters_own_prerequisites` on the
+  level-3 fixture excludes Leadership (character level at least 7) and includes Mobility —
+  offered *because* this character holds Dodge. Census
+  `offered=718 refused=1745 considered=2463` of 2,465 offerable records, the 2-record gap being
+  the non-repeatable feats the fixture already holds.
+- **Receipt:** `artifacts/epic-5-residues/AT-35-E5-004_cycle1_receipt.md`. Closes kanban row 22;
+  empties no other criterion's population (every bucket was already 0).
 
 ### 2026-09-09 — AT-35-E5-003 cycle 1 — `buckets-u-z-zero` — **complete** (the criterion's per-sub-cause obligation, unpaid until now — and the defect paying it exposed)
 

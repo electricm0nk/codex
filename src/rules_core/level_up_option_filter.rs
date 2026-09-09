@@ -78,7 +78,7 @@ pub const FEAT_POOL: &str = "feat";
 
 /// Split `pool`'s options into the ones this character qualifies for and the ones it does not.
 ///
-/// `tags` narrows the pool the way the source's own `TYPE=` narrowing does (e.g. `["Combat"]`
+/// `tags` narrows the pool the way the source's own record-type narrowing does (e.g. `["Combat"]`
 /// for a fighter bonus feat); an empty `tags` is the whole pool. An option the character
 /// already holds is left out of both lists unless the rule is `repeatable` -- it is not a
 /// choice on offer, and it is not a refusal either.
@@ -545,7 +545,7 @@ mod tests {
         );
     }
 
-    /// A narrowing tag bounds the pool the way the source's own `TYPE=` narrowing does.
+    /// A narrowing tag bounds the pool the way the source's own record-type narrowing does.
     #[test]
     fn a_narrowing_tag_bounds_the_pool() {
         let mut package = SheetRulePackage::new();

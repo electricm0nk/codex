@@ -280,12 +280,14 @@ export function LevelUpDialog(props: {
                     Feats you qualify for — {enginePlan.featOptions.length} of{' '}
                     {enginePlan.featOptions.length + enginePlan.refusedFeatOptions.length}
                   </p>
+                  <label htmlFor="level-up-feat-search" style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.72rem', marginBottom: '0.2rem' }}>
+                    Search feats
+                  </label>
                   <input
+                    id="level-up-feat-search"
                     type="search"
                     value={featSearch}
                     onChange={(event) => setFeatSearch(event.target.value)}
-                    placeholder="Search feats"
-                    aria-label="Search feats"
                     style={{
                       backgroundColor: 'var(--color-surface)',
                       border: '1px solid var(--color-border)',

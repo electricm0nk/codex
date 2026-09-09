@@ -9409,6 +9409,14 @@ mod tests {
     /// after the level-up, not before it. Re-adding a hand-authored
     /// `'Bonus combat feat'` string to cover the gap would be exactly the
     /// uncited-rules-data debt this slice exists to remove.
+    ///
+    /// The prerequisite-evaluation half of that scope note is no longer
+    /// outstanding: SD-35 AT-35-E5-004's `feat_options_for` performs it on
+    /// this response, and
+    /// `preview_level_up_filters_the_feat_options_by_this_characters_own_prerequisites`
+    /// below is its evidence. `pick_from_lists` staying empty here is now
+    /// only about which seam composes the list, not about whether the
+    /// options are filtered.
     #[test]
     fn preview_level_up_reports_fighters_real_level_2_grants() {
         let input = compose_character_input(&request_for("race:human", 1));
@@ -9568,6 +9576,15 @@ mod tests {
             preview.feat_options.iter().map(|option| option.id.as_str()).collect();
         let refused: BTreeSet<&str> =
             preview.refused_feat_options.iter().map(|option| option.id.as_str()).collect();
+
+        // The cycle receipt's census figure, re-derivable with
+        // `cargo test --locked no_feat_option_is_both_offered_and_refused -- --nocapture`.
+        println!(
+            "feat option census: offered={} refused={} considered={}",
+            preview.feat_options.len(),
+            preview.refused_feat_options.len(),
+            preview.feat_options.len() + preview.refused_feat_options.len()
+        );
 
         assert_eq!(offered.len(), preview.feat_options.len(), "offered ids must be unique");
         assert_eq!(refused.len(), preview.refused_feat_options.len(), "refused ids must be unique");
