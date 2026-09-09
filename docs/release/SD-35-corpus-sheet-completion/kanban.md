@@ -8,9 +8,10 @@ board: local-file (Hermes board retired 2026-08-01, SD-30 Decision 14a)
 
 # SD-35 Kanban
 
-One row per acceptance criterion. **30 rows covering 30 criteria** — row 29 carries both
-remaining closure criteria; row 30 is AT-35-E2-005's disposition cycle (`workflow-instruction.md
-§5`: one row per extra cycle), not a 31st criterion. A cycle marks its row from inside the dispatched agent
+One row per acceptance criterion. **31 rows covering 30 criteria** — row 29 carries both
+remaining closure criteria; row 30 is AT-35-E2-005's disposition cycle and row 31 is Epic 2's
+wrap-up gate + correction cycle (`workflow-instruction.md §5`: one row per extra cycle;
+`§10` steps 0-3), neither of them an additional criterion. A cycle marks its row from inside the dispatched agent
 (`workflow-instruction.md §6` step 8), from the mechanical receipt rows, never from effort.
 
 **Status vocabulary:** `not-started` | `in-progress` | `complete` | `blocked-escalated`.
@@ -40,6 +41,7 @@ Notes column.** Notes here are a pointer, never a story.
 | 10 | `token-coverage-ledger` | 2 | AT-35-E2-004 | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-004_cycle1_receipt.md`; `artifacts/epic-2-sheet-rule/token-coverage.json`; `data/sheet_rules/_tokens.json` — `344f18d1e1`; cycle 2 re-dispatch re-verifies at HEAD and corrects cycle 1's batch-floor figure (44 → 7 types ≥500 non-DONE): `artifacts/epic-2-sheet-rule/AT-35-E2-004_cycle2_receipt.md` |
 | 11 | `first-corpus-wide-conversion` | 2 | AT-35-E2-005 | complete | Against the amended bar — `epic-breakdown.md` `### AT-35-E2-005` amendment 2026-09-08 + `### AT-35-E2-005-DISPOSITION` hand-off table; `decisions.md §16`; `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.json` (1,404 of 1,404 owned); receipts `AT-35-E2-005_cycle1..4_receipt.md`; `oracle-parity/sheet-parity.json` — `cd3d64e578`; cycle 5 re-dispatch re-verifies the amended bar at HEAD and corrects the cycle-4 receipt's `cmp`-on-`ours.json` stability test: `artifacts/epic-2-sheet-rule/AT-35-E2-005_cycle5_receipt.md` — `77fa8a0d31` |
 | 30 | `e2-005-disposition` | 2 | AT-35-E2-005-DISPOSITION (row 11's disposition cycle, `§5` one row per extra cycle) | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle1_receipt.md`; `AT-35-E2-005-DISPOSITION_handoff.py` / `.json`; `docs/retro/events/at-35-e2-005-disposition.jsonl`; cycle 2 re-dispatch re-derives the hand-off at HEAD and confirms all five obligations unchanged (`owned_sum=1404 unowned=0`, no discoveries): `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle2_receipt.md` |
+| 31 | `epic-2-wrapup-gate` | 2 | Epic 2 wrap-up (`workflow-instruction.md §10` steps 0-3, `§5` one row per extra cycle) — not a criterion | complete | Gate run by the isolated read-only worker at `a542652c5e`: **FAIL, 45 of 48 PASS**, `artifacts/epic-2-sheet-rule/EPIC-2_wrapup_gate_report.md`; `docs/retro/events/at-35-e2-wrapup.jsonl`. Correction cycle fixed all three red stages and the `disk-full` incident-key defect, full gate re-run GREEN: `artifacts/epic-2-sheet-rule/EPIC-2_wrapup_fix_cycle_receipt.md`; `docs/retro/events/at-35-e2-wrapup-fix.jsonl` |
 | 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; `class_feature` B = 0 (`completion_atlas.py --by-kind`). Cycle 1's `blocked-escalated` superseded by the cycle-2 bundle |
 | 13 | `other-kinds-b-zero` | 3 | AT-35-E3-002 | not-started | |
 | 14 | `bucket-c-zero` | 3 | AT-35-E3-003 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; bucket C 79 → 0, emptied by the same bundled cycle (`completion_atlas.py --check`) |

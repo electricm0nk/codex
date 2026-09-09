@@ -41,6 +41,68 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-08 — Epic 2 wrap-up (`§10` steps 0-3) — gate RED at `a542652c5e`, correction cycle GREEN — **complete**
+
+Two agents, per `decisions.md §3`'s worker split. The **isolated read-only worker** ran the full
+gate and pushed nothing; the **correction cycle** (this entry) ran local on the shared checkout,
+fixed every red stage, and committed the worker's hand-off along with its own work.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2`'s named
+  exemption. Residue checked at start **and** end, unchanged: `live_files=260 live_hits=12736
+  baseline_files=260 baseline_hits=12736 verdict=PASS` (`python3 scripts/pcgen_residue_gate.py --check`).
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since c62ac91e10`). No `*.rs` touched.
+- **Step 0 — the gate.** `scripts/verify.sh` full at `a542652c5e`, wall clock **1:39:21**,
+  **48 stages, 45 PASS / 3 FAIL**. Report `artifacts/epic-2-sheet-rule/EPIC-2_wrapup_gate_report.md`.
+  The three reds, all reproduced against the tree before being fixed:
+  1. **`site-dashboard-check`** — the published feed had not been regenerated since SD-34
+     wave 51 (`git log -- site/dashboard/PF1e-dashboard.json` → `2a00af8439`). Epic 2's
+     conversion had moved the site's headline **51.4% → 94.3%** of 37,880 rated items (`"done": 19454 → 35722` over an
+     unchanged `"denominator": 37880`). Fixed by `./scripts/publish-site-dashboard.sh` (1m14s;
+     53 files, `28761 insertions(+), 29551 deletions(-)`); both PI gates green afterwards.
+  2. **`reachability-audit-selftest`** — 1 of 11: the SD-34-era pin
+     `assertEqual(no_done, {"ambiguous"})` against a set that is now **empty**. The engine is
+     right: `ambiguous` still carries **545** units but **339** are `sheet-complete`, and
+     AT-35-E2-003's rung makes that status reach `done`, so the live `reachability-audit` stage
+     passes at a **100.00%** ceiling of 49,438 units. The **fourth** stale live-figure pin of the shape
+     AT-35-E1-002 fixed in three other files. Re-pinned on the **property** — no wiring class
+     carrying on-board units may be dead-ended, plus a ceiling-agrees-with-its-own-dead-ends
+     identity — *not* on today's empty set, which would re-arm the trap in the other direction.
+     `python3 -m unittest scripts.tests.test_reachability_audit` → `Ran 11 tests OK`.
+  3. **`figure-provenance`** — `violations=4 of 194`, all four in
+     `AT-35-E2-005-DISPOSITION_cycle2_receipt.md`. Each figure **did** carry its re-derive
+     command, wrapped onto the following line; `denominator_gate.find_provenance_violations`
+     (`scripts/denominator_gate.py:413-451`) accepts it only on the same line. Re-flowed, no
+     figure's value changed, gate not widened → `files_checked=165 figures_examined=198
+     violations=0`.
+- **Step 1 — retro.** 208 events / 90 commits; verification fail rate **0.1119** (15 of 134);
+  failing stages **figure-provenance 10, site-dashboard-check 4** — two of this gate's three
+  reds had already fired 14 times between them during the epic with no cycle owning either.
+  **Mandatory control (`AGENTS.md` rule 8):** the only incident key at 3+ was `disk-full`, 12
+  firings, and **all 12 were false** — clean 4-hourly `reclaim.sh --apply` cron runs of a
+  control working as designed, at 60% of 1,500 GB with 594G free, every one with `used_percent=None`.
+  `reclaim.sh` logged **every** successful run as `incident`/`disk-full`, the key tranche/7's
+  120-firing catastrophe owns, so a working mechanism was burying the keys that are real.
+  Fixed TDD (RED `Ran 4 … FAILED (failures=2)` → GREEN `Ran 23 tests OK`): `reclaim.sh` now
+  reads `df -P` used-percent and emits `incident`/`disk-full` only at or above
+  `RECLAIM_PRESSURE_PERCENT` (default 90), a `note` tagged `reclaim-routine` below it, with
+  `used_percent` recorded either way. Below threshold and named, not fixed:
+  `duplicate-criterion-dispatch=2`. **Ratio review:** no Epic 2 cycle exceeded 3.0; epic-wide
+  9,475 Rust lines / 21,911 closed = **0.43**.
+- **Step 2 — worktree sweep: deferred by the worker and still open.** 8 sibling workflow
+  worktrees; lane AT-35-E3-001 was observably live mid-gate, no disk pressure (594G free), and
+  the harness refuses a git op on another agent's worktree. Filed as a `deferral` in
+  `docs/retro/events/at-35-e2-wrapup.jsonl`; ~146 GB of reclaimable `/tmp` target dirs listed in
+  the worker's report §3.
+- **Step 3 — no PR.** Correct.
+- **Baselines.** Five floors raised to **this** cycle's measured actuals (all upward; three
+  differ from the worker's, the tree having moved between the runs). No floor lowered.
+- **Refused tokens:** none. **Discoveries:** none outside `token-coverage.json` and the atlas;
+  three `correction` events in `docs/retro/events/at-35-e2-wrapup-fix.jsonl`.
+- **Receipt:** `artifacts/epic-2-sheet-rule/EPIC-2_wrapup_fix_cycle_receipt.md`. **Epic 2's
+  wrap-up is closed and Epic 3's second cycle is unblocked** (`workflow-instruction.md §10`
+  step 0's gating condition).
+
 ### 2026-09-08 — AT-35-E3-001 cycle 2 — `class-feature-b-zero` — **complete** (bundled B+C; term-level refusal replaces record-level refusal in the converter)
 
 - **Scope gate:** `scoped=516 remaining_non_done=1404 floor=500 verdict=PASS` —
