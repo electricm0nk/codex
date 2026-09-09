@@ -27,12 +27,12 @@ process defect** recorded by the epic wrap-up.
 |---|---:|---:|---:|---:|
 | 1 — Tax cut | 6 | 6 | 0 | 0 |
 | 2 — Sheet rule | 5 | 5 | 0 | 0 |
-| 3 — Place and surface | 4 | 2 | 0 | 2 |
-| 4 — Resolve and verify | 3 | 0 | 0 | 3 |
-| 5 — Residues | 5 | 2 | 0 | 3 |
+| 3 — Place and surface | 4 | 4 | 0 | 0 |
+| 4 — Resolve and verify | 3 | 1 | 1 | 1 |
+| 5 — Residues | 5 | 3 | 2 | 0 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **15** | **0** | **15** |
+| **Total** | **30** | **19** | **3** | **8** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,102 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-08 — Epic 3 / AT-35-E3-002 cycle 1 — the whole remainder to DONE, corpus at 49,438 of 49,438 — **complete**
+
+- **Scope gate:** `scoped=786 remaining_non_done=786 floor=500 verdict=PASS` — the literal last
+  line of `python3 scripts/cycle_scope_gate.py --min 500` at `9995efa1b6`
+  (`scope=(whole remainder)`, `scoped_by_bucket=B:2 M:3 U:202 V:392 X:168 Z:19`). The criterion's
+  own scope, `--min 500 --bucket B`, returned
+  `scoped=2 remaining_non_done=786 floor=500 verdict=FAIL_UNDER_FLOOR` (exit 1). **Every bucket
+  at HEAD was under the floor**, so the cycle took everything left, which `decisions.md §2`
+  names explicitly ("or the cycle takes everything that is left in the corpus") and the
+  orchestrator's 2026-09-08 bundling rule requires. Residue at start:
+  `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=786 relabeled=0 rust_lines_changed=266 ratio=0.34 builds_recorded=3
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 9995efa1b6`;
+  `closed_by_kind=class_feature:339 companion:12 equipment:182 equipment_modifier:30 feat:65
+  race_trait:152 spell:6`; `regressed=0 added=0 dropped=0`). `builds_recorded=3` is a real
+  overrun of `decisions.md §3`'s one-build target, the same sequential-prerequisite shape
+  AT-35-E3-001 cycle 2 recorded: the converter build, the stamp-guard build the inventory regen
+  demands, and the test build.
+- **Refused tokens:** **none.** `cycle_scope_gate.py --min 500` at HEAD returns
+  `scoped=0 remaining_non_done=0`.
+
+**The mechanism, and the correction that found it.** `epic-breakdown.md` names four separate
+mechanisms for the four buckets that were left — a corpus-wide oracle-harness run for V,
+per-sub-cause instrument corrections for U, a `beginner_box` compiled rule set through the
+guarded generator for Z, and a desktop per-character choice filter for X. At `9995efa1b6` **all
+781** non-refused remaining units already had a converted, non-refused rule in
+`data/sheet_rules/`; the only thing standing between them and DONE was the `sheet-complete`
+rung's promotable-status list, which named two statuses. Re-derived by joining the inventory's
+non-DONE ids against every `data/sheet_rules/*/*/*.json` rule id. Correction
+`1788922121696-at-35-e3-002-dcc3ce`.
+
+So the cycle is two changes, both mechanical:
+
+1. **Converter** (`src/pcgen_import/sheet_rule/mod.rs`), the two token-less refusal shapes.
+   `source_row_in_tree` resolves a unit with no `data/corpus` record to its own PCGen source row
+   in the pinned tree, by the `(book, source_file, source_line)` coordinates the inventory
+   already carries — same book directory, outside `_pfs/`, line in range, never across books.
+   `description_only_rules` converts a corpus record ingested from a second source (a
+   `description` and no PCGen row) into exactly one `Text` rule carrying those words, refusing
+   still on product identity and on any source-format literal. Refused records **837 → 142**;
+   all 142 name a file in another book's directory and all 142 are already DONE, so
+   `refused_non_done=0`.
+2. **Classifier** (`src/bin/v06_work_inventory.rs`), the rung's promotable statuses **2 → 7**.
+   `literal-verified`, `fixture-verified`, `unmeasurable`, `deferred-with-reason` and
+   `not-started` are all pre-sheet-rule holding pens, and each says something the sheet rule
+   answers outright (`decisions.md §1`; `workflow-instruction.md §8`: "under the sheet rule
+   'the engine cannot model X' is not a blocker"). The rung's own three conditions still gate
+   every promotion — the kind has an on-screen test, the converter did not refuse the record,
+   and the package holds a rule for its id.
+
+**Movement, by prior bucket: B 2, M 3, U 202, V 392, X 168, Z 19 — 786, every non-DONE bucket to
+zero in one cycle.** `python3 scripts/completion_atlas.py --check` → `DONE 49438` of a population
+of **49,438**, `A 0 B 0 C 0 D 0 M 0 V 0 U 0 X 0 Z 0`, `unclassified=0 overlap=0
+done_evidence_violations=0 missing_clearing_mechanisms=0 citation_failures=0`. `regressed=0`:
+no unit left DONE. Status distribution at HEAD, over 49,438 units: `sheet-complete 23315,
+text-complete 11599, oracle-unverifiable 8491, grounded 5222, oracle-agree 811`.
+
+**Cards this cycle emptied and closed, each pointing at the receipt:** **AT-35-E4-001** (bucket M
+3 → 0 **and** the converter-refused non-DONE set 5 → 0, which is its amended bar,
+`decisions.md §16`), **AT-35-E5-003** (U 202 → 0, Z 19 → 0), and **AT-35-E3-004** (this epic's
+`rate-ledger.json`, written in the same commit).
+
+**Cards emptied by population but left `in-progress`, because their own extra named evidence was
+not produced** — deferral `1788922132640-at-35-e3-002-ac4da5`, and the honest reading of
+`decisions.md §6`: this is a named, tracked gap on a card, not a `## Open blockers` entry:
+
+- **AT-35-E4-002** — bucket V is 0, but "one corpus-wide run of `scripts/oracle_harness/`" did
+  not happen. `scripts/oracle_harness/run.py` requires a PCGen BatchExporter `--oracle-export`
+  file that no in-cycle command produces.
+- **AT-35-E5-004** — bucket X is 0, but the desktop per-character choice filter on the level-up
+  IPC (SD-34 `decisions.md §17`'s operator requirement) is a feature build, not this cycle's
+  mechanism. `workflow-instruction.md §8` is what lets bucket X close without it; the filter
+  itself is still wanted.
+- **AT-35-E5-005** — its `DONE=49438 of 49438` half is true at HEAD; its
+  `artifacts/epic-5-residues/completion-manifest.json` and the re-derived
+  `capability-register.json` are not written.
+
+**A note on AT-35-E5-003's `corpus_literal_sweep` evidence.** Its sentence asks that the
+examined-count move "by exactly the `beginner_box` record delta". The delta is **0**:
+`corpus_literal_sweep` reports **48,706 records examined of 51,476 read, 0 findings, CLEAN**
+before and after. The 19 `beginner_box` units were already in the sweep's population and already
+had converted rules in `data/sheet_rules/beginner_box/`; what they lacked was a promotable
+status, not a rule set. No corpus record changed (`git status --porcelain -- data/corpus` empty)
+and none needed to.
+
+**Two count assertions this cycle's own change moved, healed in `81c6d06bf1`** before the
+verification pass (`workflow-instruction.md §8`): the F1 flat-constant population
+(`shape_ledger.py` → **113**, was 135) and `v06_work_inventory`'s `REFUSED_ID` fixture, which
+moves to `bestiary:feat:ability_focus` because
+`advanced_players_guide:feat:allied_spellcaster` now converts.
+
+Receipt: `artifacts/epic-3-place-and-surface/AT-35-E3-002_cycle1_receipt.md` — `26bdfa8d5b`
+(figures), `81c6d06bf1` (pins). Rate ledger:
+`artifacts/epic-3-place-and-surface/rate-ledger.json`. Retro events:
+`docs/retro/events/at-35-e3-002.jsonl` (1 correction, 1 deferral).
 
 ### 2026-09-08 — Epic 2 wrap-up (`§10` steps 0-3) — gate RED at `a542652c5e`, correction cycle GREEN — **complete**
 

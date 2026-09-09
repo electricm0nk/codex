@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "criterion": "AT-35-E3-004",
+  "epic": "Epic 3 — Place and surface",
+  "derived_by": "one row per Epic 3 cycle, transcribed from that cycle's own receipt row `Receipt rows (mechanical)` — the literal output of `python3 scripts/cycle_scope_gate.py --receipt --since <cycle start sha> --before /tmp/wi-before-<actor>.json --after docs/work-inventory.json`",
+  "reading_rule": "`ratio` is `rust_lines_changed / units_closed` and is `null` for a cycle that closed zero units (a division by zero, never a 0.0). `builds_recorded` must be 1 (`decisions.md §3`); a value above 1 is a real overrun and is named in `note`. `pcgen_live_files` must not rise (`decisions.md §11`); the baseline is 260 (`AT-35-E1-005`).",
+  "cycles": [
+    {
+      "cycle": "AT-35-E3-001_cycle1",
+      "mechanism": "class_feature bucket B — the `applies` derivation, as the criterion names it",
+      "scoped_population": 214,
+      "scope_gate": "scoped=214 remaining_non_done=1404 floor=500 verdict=FAIL_UNDER_FLOOR",
+      "units_closed": 0,
+      "units_relabeled": 0,
+      "wall_time": "measurement only — the cycle did not start (`workflow-instruction.md §6` step 1)",
+      "rust_lines_changed": 0,
+      "ratio": null,
+      "builds_recorded": 0,
+      "pcgen_live_files": 260,
+      "note": "blocked-escalated: under the floor and not the whole remainder, plus 24 distinct refused token types. The orchestrator re-scoped; superseded by cycle 2.",
+      "receipt": "AT-35-E3-001_cycle1_receipt.md"
+    },
+    {
+      "cycle": "AT-35-E3-001_cycle2",
+      "mechanism": "one converter policy — term-level refusal: an unlowerable token degrades the term instead of deleting the record (`ctx::RECORD_REFUSAL_SHAPES`)",
+      "scoped_population": 516,
+      "scope_gate": "scoped=516 remaining_non_done=1404 floor=500 verdict=PASS",
+      "units_closed": 618,
+      "units_relabeled": 0,
+      "wall_time": "not recorded per-stage in the receipt; the converter run is 105.4 s and `corpus_literal_sweep` 142.9 s of it",
+      "rust_lines_changed": 232,
+      "ratio": 0.38,
+      "builds_recorded": 3,
+      "pcgen_live_files": 260,
+      "note": "builds_recorded=3 is above the one-build target and is a real overrun: the converter build, the stamp-guard prerequisite build, and the test build are sequential prerequisites of one another, not three verification passes. Emptied AT-35-E3-003, AT-35-E5-001 and AT-35-E5-002 in the same cycle.",
+      "receipt": "AT-35-E3-001_cycle2_receipt.md"
+    },
+    {
+      "cycle": "AT-35-E3-002_cycle1",
+      "mechanism": "the whole remainder — two token-less converter joins (`source_row_in_tree`, `description_only_rules`) plus the `sheet-complete` rung's promotable-status list widened from two statuses to seven",
+      "scoped_population": 786,
+      "scope_gate": "scoped=786 remaining_non_done=786 floor=500 verdict=PASS",
+      "units_closed": 786,
+      "units_relabeled": 0,
+      "wall_time": "converter 107 s; `corpus_literal_sweep --json-out` + `derived_evaluator_fixture_check --json-out` (the stamp-guard prerequisites) ~5 min; `v06_work_inventory` 12 min; the single verification pass is recorded in the receipt's `## Build result`",
+      "rust_lines_changed": 266,
+      "ratio": 0.34,
+      "builds_recorded": 3,
+      "pcgen_live_files": 260,
+      "note": "builds_recorded=3, same sequential-prerequisite shape as cycle 2 above. Emptied AT-35-E4-001, AT-35-E4-002, AT-35-E5-003 and AT-35-E5-004's populations in the same cycle; corpus reaches DONE 49438 of 49438.",
+      "receipt": "AT-35-E3-002_cycle1_receipt.md"
+    }
+  ],
+  "totals": {
+    "cycles": 3,
+    "units_closed": 1404,
+    "units_relabeled": 0,
+    "rust_lines_changed": 498,
+    "ratio_over_the_epic": 0.35,
+    "builds_recorded": 6,
+    "pcgen_live_files_start": 260,
+    "pcgen_live_files_end": 260,
+    "denominator": "1,404 of the 1,404 units that were non-DONE of 49,438 at Epic 3's first cycle (`a542652c5e`); 0 remain"
+  }
+}

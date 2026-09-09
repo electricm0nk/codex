@@ -43,17 +43,17 @@ Notes column.** Notes here are a pointer, never a story.
 | 30 | `e2-005-disposition` | 2 | AT-35-E2-005-DISPOSITION (row 11's disposition cycle, `§5` one row per extra cycle) | complete | `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle1_receipt.md`; `AT-35-E2-005-DISPOSITION_handoff.py` / `.json`; `docs/retro/events/at-35-e2-005-disposition.jsonl`; cycle 2 re-dispatch re-derives the hand-off at HEAD and confirms all five obligations unchanged (`owned_sum=1404 unowned=0`, no discoveries): `artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_cycle2_receipt.md` |
 | 31 | `epic-2-wrapup-gate` | 2 | Epic 2 wrap-up (`workflow-instruction.md §10` steps 0-3, `§5` one row per extra cycle) — not a criterion | complete | Gate run by the isolated read-only worker at `a542652c5e`: **FAIL, 45 of 48 PASS**, `artifacts/epic-2-sheet-rule/EPIC-2_wrapup_gate_report.md`; `docs/retro/events/at-35-e2-wrapup.jsonl`. Correction cycle fixed all three red stages and the `disk-full` incident-key defect, full gate re-run GREEN: `artifacts/epic-2-sheet-rule/EPIC-2_wrapup_fix_cycle_receipt.md`; `docs/retro/events/at-35-e2-wrapup-fix.jsonl` |
 | 12 | `class-feature-b-zero` | 3 | AT-35-E3-001 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; `class_feature` B = 0 (`completion_atlas.py --by-kind`). Cycle 1's `blocked-escalated` superseded by the cycle-2 bundle |
-| 13 | `other-kinds-b-zero` | 3 | AT-35-E3-002 | not-started | |
+| 13 | `other-kinds-b-zero` | 3 | AT-35-E3-002 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-002_cycle1_receipt.md` — `26bdfa8d5b`; bucket B 2 → 0 in every kind (`completion_atlas.py --by-kind`). Whole-remainder cycle: `cycle_scope_gate.py --min 500` → `scoped=786 verdict=PASS` |
 | 14 | `bucket-c-zero` | 3 | AT-35-E3-003 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; bucket C 79 → 0, emptied by the same bundled cycle (`completion_atlas.py --check`) |
-| 15 | `epic-3-rate-ledger` | 3 | AT-35-E3-004 | not-started | |
-| 16 | `bucket-m-zero` | 4 | AT-35-E4-001 | not-started | |
-| 17 | `bucket-v-oracle-once` | 4 | AT-35-E4-002 | not-started | |
+| 15 | `epic-3-rate-ledger` | 3 | AT-35-E3-004 | complete | `artifacts/epic-3-place-and-surface/rate-ledger.json` — all 3 Epic 3 cycles, one row each, transcribed from their own receipts |
+| 16 | `bucket-m-zero` | 4 | AT-35-E4-001 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-002_cycle1_receipt.md` — `26bdfa8d5b`; M 3 → 0 **and** the amended bar's converter-refused non-DONE set 5 → 0 (`token_coverage.py --check` → `refused_non_done=0`), emptied by the same whole-remainder cycle |
+| 17 | `bucket-v-oracle-once` | 4 | AT-35-E4-002 | in-progress | `artifacts/epic-3-place-and-surface/AT-35-E3-002_cycle1_receipt.md` — V 392 → 0 (`completion_atlas.py --check`); the corpus-wide `scripts/oracle_harness/` run is NOT done (needs a PCGen BatchExporter export) — deferral `1788922132640-at-35-e3-002-ac4da5` |
 | 18 | `epic-4-rate-ledger` | 4 | AT-35-E4-003 | not-started | |
 | 19 | `bucket-a-two-tables` | 5 | AT-35-E5-001 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; `missing_engine_tables.py --check` → `population=0`, bucket A 1 → 0, emptied by the same bundled cycle |
 | 20 | `bucket-d-zero` | 5 | AT-35-E5-002 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-001_cycle2_receipt.md` — `406003afc3`; bucket D 43 → 0, every sub-cause named in `progress.md`, emptied by the same bundled cycle |
-| 21 | `buckets-u-z-zero` | 5 | AT-35-E5-003 | not-started | |
-| 22 | `bucket-x-choice-filter` | 5 | AT-35-E5-004 | not-started | |
-| 23 | `corpus-49438-of-49438` | 5 | AT-35-E5-005 | not-started | |
+| 21 | `buckets-u-z-zero` | 5 | AT-35-E5-003 | complete | `artifacts/epic-3-place-and-surface/AT-35-E3-002_cycle1_receipt.md` — `26bdfa8d5b`; U 202 → 0, Z 19 → 0; `corpus_literal_sweep` examined-count unmoved (48,706 of 51,476, CLEAN) because the `beginner_box` delta is 0 — see `progress.md` |
+| 22 | `bucket-x-choice-filter` | 5 | AT-35-E5-004 | in-progress | `artifacts/epic-3-place-and-surface/AT-35-E3-002_cycle1_receipt.md` — X 168 → 0 under `workflow-instruction.md §8`; the desktop per-character choice filter on the level-up IPC is NOT built — deferral `1788922132640-at-35-e3-002-ac4da5` |
+| 23 | `corpus-49438-of-49438` | 5 | AT-35-E5-005 | in-progress | `artifacts/epic-3-place-and-surface/AT-35-E3-002_cycle1_receipt.md` — `completion_atlas.py --check` → `DONE=49438 of 49438`, every other bucket 0; `artifacts/epic-5-residues/completion-manifest.json` and the re-derived `capability-register.json` are NOT written |
 | 24 | `formula-evaluator-leaves-live` | 6 | AT-35-E6-001 | not-started | |
 | 25 | `generators-leave-rules-core` | 6 | AT-35-E6-002 | not-started | |
 | 26 | `desktop-and-prose-leave-pcgen` | 6 | AT-35-E6-003 | not-started | |
