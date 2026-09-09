@@ -41,6 +41,58 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — AT-35-E5-002 cycle 1 — `bucket-d-zero` — **complete** (the criterion's second Evidence clause, unpaid until now: every D sub-cause named with its mechanism and count)
+
+- **Scope gate:** `python3 scripts/cycle_scope_gate.py --min 500 --bucket D` →
+  `inventory=docs/work-inventory.json scope=bucket=D scoped_by_bucket= scoped_by_kind=
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. Not an exemption: the
+  gate ran and passed. The dispatch's mandatory-bundling instruction was moot —
+  `remaining_non_done=0` is the whole corpus, so there was nothing anywhere to bundle in.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 00d0611e87`; `regressed=0 added=0
+  dropped=0`, `closed_by_kind=` and `relabeled_moves=` empty). No Rust, no `data/`, no `apps/`,
+  no `scripts/` file changed — this cycle moves no unit.
+- **Refused tokens:** none. `python3 scripts/token_coverage.py --check` → `non_done=0
+  refused_non_done=0 verdict=PASS` at HEAD.
+- **What this cycle did.** Kanban row 20 read `complete` on one half of a two-clause Evidence
+  sentence. D **was** at 0 (`completion_atlas.py --check`), but "every sub-cause named with its
+  mechanism and count" had no artifact: `progress.md` named the **43** sub-causes standing at the
+  start of Epic 3 and no mechanism for any of them, while the criterion is written against the
+  **1,982** at the `tranche/15` cut. This cycle enumerates all 1,982, in **14 sub-cause families**,
+  and traces every unit id from the cut to HEAD. Command:
+  `python3 artifacts/epic-5-residues/AT-35-E5-002_bucket_d_sub_causes.py --transitions` →
+  `families=14 d_units=1982 ... not_sheet_complete_at_HEAD=0 verdict=PASS`. The families, largest
+  first, with the count at `4c6c57eb9f`: `template_content_table_holds_zero_magnitude_record_pending_wiring_class_review`
+  595, `class_feature_of_unmodelled_corpus_class:*` 446 (58 distinct classes, one chassis),
+  `deity_content_table_holds_...` 408, `race_trait_generic_table_holds_...` 157,
+  `ability_content_table_holds_...` 108, `language_content_table_holds_...` 81,
+  `domain_content_table_holds_...` 80, `class_modelled_but_no_observed_delta_on_the_rendered_snapshot`
+  29, `class_feature_no_dedicated_magnitude_id_matched_the_record_slug` 25,
+  `skill_content_table_holds_...` 21,
+  `race_trait_skinwalker_change_shape_option_resolves_real_kin_pool_but_no_activation_mechanism_computes_its_magnitude`
+  19, `trait_content_table_holds_...` 6, `race_trait_record_loaded_but_never_applies` 6,
+  `race_trait_template_bonus_language_grant_verified_but_has_no_upstream_activation_gate` 1 —
+  summing to 1,982. **All 1,982 ids are `sheet-complete` at HEAD; 0 are anywhere else**, so no D
+  unit was lost, dropped or relabelled into another non-DONE bucket. The mechanism in every row is
+  the same one: the converter renders the corpus record as a sheet line instead of refusing it
+  (`AT-35-E2-005` took D 1,982 → 43 at `51f91bba11`; `AT-35-E3-001` cycle 2's term-level
+  degradation took the last 43 → 0 at `406003afc3`).
+- **Correction.** `1788976580859-at-35-e5-002-5363c6`: the criterion's own scope note (and the
+  dispatch prompt quoting it) states `class_feature_of_unmodelled_corpus_class` at **634 units
+  over 60 classes**; derived from the live inventory at the cut it is **446 units over 58
+  classes** — the other 25 of `class_feature`'s 471 D units carry a different sub-cause,
+  `class_feature_no_dedicated_magnitude_id_matched_the_record_slug`. Verified by
+  `python3 artifacts/epic-5-residues/AT-35-E5-002_bucket_d_sub_causes.py --at 4c6c57eb9f`. No code
+  or instrument consumed the figure, and it does not change `decisions.md §7`'s ruling — one
+  chassis, not 58 hand-written functions. The other nine by-kind figures in the criterion text
+  re-derive exactly.
+- **Cards emptied and closed in this cycle:** none beyond its own. Every bucket was already 0 at
+  dispatch, so no other criterion's population moved and no other kanban row changed.
+- **Receipt:** `artifacts/epic-5-residues/AT-35-E5-002_cycle1_receipt.md`. **Next:** AT-35-E5-004
+  (the desktop per-character choice filter, deferral `1788922132640-at-35-e3-002-ac4da5`) and
+  AT-35-E5-005 (`completion-manifest.json` + the re-derived `capability-register.json`) are the
+  two Epic 5 rows still `in-progress`; both are artifact-shaped, like this one.
+
 ### 2026-09-09 — Epic 4 wrap-up (`§10` step 0) — gate RED on `figure-provenance`, correction cycle GREEN — **complete**
 
 **Status: complete.** Docs + one baseline line; zero units moved by design. Receipt
