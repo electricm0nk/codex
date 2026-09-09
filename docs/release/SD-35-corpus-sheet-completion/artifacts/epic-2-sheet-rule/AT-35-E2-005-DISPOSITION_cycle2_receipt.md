@@ -114,21 +114,17 @@ confirms the amended bar still holds. **No unit moved and no file outside `docs/
   to the 659) stands and needs no re-issue. No new token type, kind, or remaining-step category
   outside `token-coverage.json` and the atlas.
 - **Figures + their re-derive commands:**
-  - non-DONE **1,404 of 49,438**, DONE **48,034**, bucket row `A 1 B 437 C 79 D 43 M 63 V 392
-    U 202 X 168 Z 19` — `python3 scripts/completion_atlas.py --check` →
+  - non-DONE **1,404 of 49,438**, DONE **48,034**, bucket row `A 1 B 437 C 79 D 43 M 63 V 392 U 202 X 168 Z 19` — `python3 scripts/completion_atlas.py --check` →
     `population=49438 buckets=10 unclassified=0 overlap=0 done_evidence_violations=0
     missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`
-  - refused non-DONE **659 of 1,404**, shapes **81**, token types **231** —
-    `python3 scripts/token_coverage.py --check` → `non_done=1404 tokened=1399 token_less=5
+  - refused non-DONE **659 of 1,404**, shapes **81**, token types **231** — `python3 scripts/token_coverage.py --check` →
+    `non_done=1404 tokened=1399 token_less=5
     refused=1810 refused_non_done=659 token_types=231 shapes=81 verdict=PASS`
     (all six sub-checks `ok=True`: population, double_count, coverage, refused_set, shape_totals,
     partition)
-  - the hand-off partition (owners 659 / 391 / 217 / 137, sum 1,404; 13 cells; by kind; the 69
-    refusal strings; `class` 182 refused / 144 non-DONE) —
-    `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py`
-    → exit 0, `owned_sum=1404 unowned=0 duplicate_ids=0 verdict=PASS` (denominators: 49,438 units,
-    1,404 non-DONE, 1,810 refused records; it imports `scripts/completion_atlas._bucket_of`, so DONE
-    is the atlas partition and not a second list)
+  - the hand-off partition (owners 659 / 391 / 217 / 137, sum 1,404; 13 cells; by kind; the 69 refusal strings; `class` 182 refused / 144 non-DONE) — `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py`
+    → exit 0, `owned_sum=1404 unowned=0 duplicate_ids=0 verdict=PASS` (denominators: 49,438 units, 1,404 non-DONE, 1,810 refused records — re-derive all three with `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-2-sheet-rule/AT-35-E2-005-DISPOSITION_handoff.py`; it imports
+    `scripts/completion_atlas._bucket_of`, so DONE is the atlas partition and not a second list)
   - receipt rows — the `cycle_scope_gate.py --receipt` invocation above
   - scope-gate line — `python3 scripts/cycle_scope_gate.py --min 500` →
     `scoped=1404 remaining_non_done=1404 floor=500 verdict=PASS`

@@ -444,12 +444,23 @@ class BranchTests(unittest.TestCase):
 
 
 class RetroEventTests(unittest.TestCase):
-    """reclaim.sh must emit a retro.py `incident` event when --apply actually
-    reclaims something -- and, just as important for every OTHER test in
-    this file, must never do so against the real docs/retro/events/ log
-    during a test run. Both properties are asserted here, into a redirected
-    RETRO_EVENTS_DIR rather than RETRO_DISABLE, specifically so this test
-    can look at what got written."""
+    """reclaim.sh must record what it did -- and record it as the RIGHT KIND of
+    event -- and, just as important for every OTHER test in this file, must
+    never write to the real docs/retro/events/ log during a test run. All of
+    that is asserted here into a redirected RETRO_EVENTS_DIR rather than
+    RETRO_DISABLE, specifically so this test can look at what got written.
+
+    WHY THE EVENT TYPE IS ITSELF UNDER TEST (SD-35 Epic 2 wrap-up). Until this
+    cycle, EVERY successful `--apply` run logged `type=incident`,
+    `recurrence-key=disk-full` -- the same key as tranche/7's 120-firing
+    disk-exhaustion catastrophe. The 4-hourly cron therefore manufactured
+    ~6 "incidents" a day out of a control WORKING AS DESIGNED: the SD-35
+    Epic 2 retro summary showed `disk-full` as the only key firing 3+ times
+    (12 firings), every one a clean preventive run with no disk pressure at
+    all, which is exactly the noise that buries a key that is real. A run is
+    an incident only when it fired UNDER PRESSURE; a routine preventive run
+    is a `note`. `AGENTS.md` rule 8 -- recurrence is data -- is only usable
+    if the recurrence counts mean something."""
 
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory(prefix="reclaim-retro-test-")
@@ -460,9 +471,15 @@ class RetroEventTests(unittest.TestCase):
         self.scratch.mkdir()
         self.cache.mkdir()
 
-    def test_apply_emits_incident_event_into_the_redirected_log_only(self):
+    def _apply(self, used_percent):
+        """Run an --apply that reclaims one directory, with the filesystem's
+        used-percent forced to `used_percent`, and return the event text."""
         make_cargo_target_dir(self.scratch, "codex-target-abandoned", mtime_hours_ago=48)
-        env = _sandboxed_env({"RETRO_EVENTS_DIR": str(self.events_dir), "RETRO_DISABLE": ""})
+        env = _sandboxed_env({
+            "RETRO_EVENTS_DIR": str(self.events_dir),
+            "RETRO_DISABLE": "",
+            "RECLAIM_USED_PERCENT_OVERRIDE": str(used_percent),
+        })
         proc = run(
             ["--only", "cargo-target", "--scratchpad-root", str(self.scratch),
              "--cache-root", str(self.cache), "--older-than", "6", "--apply"],
@@ -471,7 +488,38 @@ class RetroEventTests(unittest.TestCase):
         self.assertEqual(proc.returncode, 0, proc.stderr)
         shards = list(self.events_dir.glob("*.jsonl")) if self.events_dir.exists() else []
         self.assertTrue(shards, "an --apply run that reclaimed something must emit a retro event")
-        content = shards[0].read_text()
+        return shards[0].read_text()
+
+    def test_apply_under_disk_pressure_is_the_disk_full_incident(self):
+        content = self._apply(97)
+        self.assertIn('"type": "incident"', content)
+        self.assertIn("disk-full", content)
+        self.assertIn('"used_percent": 97', content)
+
+    def test_apply_without_disk_pressure_is_a_note_not_a_disk_full_incident(self):
+        content = self._apply(42)
+        self.assertNotIn('"type": "incident"', content)
+        self.assertNotIn("disk-full", content)
+        self.assertIn('"type": "note"', content)
+        self.assertIn('"used_percent": 42', content)
+
+    def test_the_pressure_threshold_is_configurable_and_inclusive(self):
+        """The boundary is named, not folded into a magic literal: a run at
+        exactly the threshold is pressure."""
+        make_cargo_target_dir(self.scratch, "codex-target-abandoned", mtime_hours_ago=48)
+        env = _sandboxed_env({
+            "RETRO_EVENTS_DIR": str(self.events_dir),
+            "RETRO_DISABLE": "",
+            "RECLAIM_USED_PERCENT_OVERRIDE": "55",
+            "RECLAIM_PRESSURE_PERCENT": "55",
+        })
+        proc = run(
+            ["--only", "cargo-target", "--scratchpad-root", str(self.scratch),
+             "--cache-root", str(self.cache), "--older-than", "6", "--apply"],
+            env=env,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        content = list(self.events_dir.glob("*.jsonl"))[0].read_text()
         self.assertIn('"type": "incident"', content)
         self.assertIn("disk-full", content)
 

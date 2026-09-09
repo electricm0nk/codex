@@ -9,10 +9,12 @@ case. This test feeds the audit a FABRICATED dead-end -- a
 `(wiring_class, status)` pair `_doneness_verdict_uncapped()` has no rule for
 -- and confirms both that it lands in the audit's own `dead_end_cells` /
 `unmapped_cells_with_units` output AND that the audit's CLI exits non-zero
-for it. Companion tests confirm the clean case exits zero, that a KNOWN,
-currently-tracked dead end (`ambiguous` -- Decision 4's 2,109-unit gap) is
-reported but does not by itself fail the gate (it is owned by Epic 2, not a
-defect in this script), and that the real corpus carries zero unmapped
+for it. Companion tests confirm the clean case exits zero, that a
+dead-ended `wiring_class` is reported but does not by itself fail the gate
+(a capability gap is owned by an epic, not a defect in this script), and
+that the corpus-live checks are stated as PROPERTIES rather than as pins on
+a live figure -- no class carrying units may be stranded, and the ceiling
+must agree with its own dead-end arithmetic -- and that the real corpus carries zero unmapped
 cells today (the post-remediation state `test_pf1e_dashboard_producer.py`'s
 `test_full_grid_yields_no_unmapped_cells` already proves for the producer's
 own table -- this is the standing, corpus-live check that it stays that
@@ -29,6 +31,7 @@ cell is silently absent from the grid instead of raising.
 """
 from __future__ import annotations
 
+import collections
 import importlib.util
 import json
 import os
@@ -123,12 +126,19 @@ class FabricatedDeadEndTest(unittest.TestCase):
         self.assertEqual(result["unmapped_cells_with_units"], [])
         self.assertEqual(result["reachable_ceiling"], 1.0)
 
-    def test_ambiguous_is_a_known_dead_end_but_does_not_fail_ok(self):
-        """`ambiguous` never reaches `done` at any status (Decision 4) -- a
-        real, currently-open capability gap owned by Epic 2, not a defect in
-        this audit script. It must show up as a `no-done-path` dead end and
-        depress the reachable ceiling, but must NOT flip `ok` to False --
-        only an unmapped cell (an actual audit-table bug) does that."""
+    def test_a_dead_ended_class_is_reported_but_does_not_fail_ok(self):
+        """A `wiring_class` with no done-reaching status in the grid must show
+        up as a `no-done-path` dead end and depress the reachable ceiling, but
+        must NOT flip `ok` to False -- only an unmapped cell (an actual
+        audit-table bug) does that.
+
+        SYNTHETIC vocabulary, deliberately. `ambiguous` is used as the
+        dead-ended class because it was one on the real corpus through SD-34,
+        and `_STANDARD_STATUS_VOCAB` above omits AT-35-E2-003's
+        `sheet-complete` rung, which is what gave it a done path in the live
+        inventory. The point of this case is the MECHANISM, not the class:
+        the live-corpus claim is made as a property by
+        `test_real_inventory_strands_no_wiring_class_that_carries_units`."""
         units = [
             {"id": "amb-1", "book": "core_rulebook", "kind": "spell",
              "wiring_class": "ambiguous", "status": "grounded"},
@@ -208,19 +218,63 @@ class RealCorpusStandingGateTest(unittest.TestCase):
         )
         self.assertTrue(result["ok"])
 
-    def test_real_inventory_ambiguous_is_the_known_no_done_path_class(self):
+    def test_real_inventory_strands_no_wiring_class_that_carries_units(self):
+        """PROPERTY, not a value pin.
+
+        The audit exists to catch a `wiring_class` whose units can never
+        reach `done` at ANY status the corpus actually uses -- those units
+        are stranded: no amount of work on them can move the rollup. The
+        standing invariant is therefore that no dead-ended class carries
+        on-board units, stated as a property so it holds however the classes
+        are named and however many there are.
+
+        WHY THIS IS NOT THE ASSERTION THAT USED TO BE HERE. Until SD-35
+        Epic 2 this test pinned the literal set `{"ambiguous"}` -- SD-34's
+        known capability gap. AT-35-E2-003's `sheet-complete` rung gave
+        `ambiguous` a done-reaching status (the sheet rule: an unresolvable
+        record renders as the rule's words and the unit is done), the set
+        went empty, and the equality pin went red against a CORRECT engine.
+        Re-pinning on today's empty set would simply re-arm the same trap in
+        the other direction, so the assertion below is red only when a real
+        dead end exists. Prove-it-can-fail: the fabricated-dead-end tests
+        above exercise the same `no-done-path` code path on a synthetic doc.
+        """
         doc = audit_mod.load_inventory(audit_mod.DEFAULT_INVENTORY)
         result = audit_mod.audit(doc)
         no_done = {d["wiring_class"] for d in result["dead_end_cells"]
                    if d["reason"] == "no-done-path"}
-        self.assertIn("ambiguous", no_done)
-        # display/static/derived/computed each have >=1 done-reaching status
-        # today -- only ambiguous is structurally dead-ended at every status.
-        self.assertEqual(no_done, {"ambiguous"})
+        # Count units the same way audit() does -- excluded books are out of
+        # the grid, so they must be out of this denominator too.
+        excluded = audit_mod.PRODUCER.EXCLUDED_BOOKS
+        counts = collections.Counter(
+            u.get("wiring_class") or "ambiguous"
+            for u in (doc.get("units") or [])
+            if (u.get("book") or "unknown") not in excluded
+        )
+        stranded = {wc: counts[wc] for wc in no_done if counts.get(wc)}
+        self.assertEqual(
+            stranded, {},
+            "a wiring_class carrying on-board units has no status in the "
+            "current grid that reaches `done` -- every unit in it is "
+            "stranded and no cycle can close it; give the class a "
+            "done-reaching status or reclassify the units",
+        )
 
-    def test_real_inventory_reachable_ceiling_is_between_0_and_1(self):
+    def test_real_inventory_reachable_ceiling_agrees_with_its_own_dead_ends(self):
+        """PROPERTY: the headline ceiling is exactly the arithmetic of the
+        dead-end cells it is derived from, on the live corpus. A ceiling that
+        drifts from its own dead-end total is the instrument lying, which is
+        the failure mode `SD-30 state-goals-and-lessons.md §3.1` names."""
         doc = audit_mod.load_inventory(audit_mod.DEFAULT_INVENTORY)
         result = audit_mod.audit(doc)
+        excluded = audit_mod.PRODUCER.EXCLUDED_BOOKS
+        total = len([u for u in (doc.get("units") or [])
+                     if (u.get("book") or "unknown") not in excluded])
+        self.assertGreater(total, 0)
+        self.assertEqual(
+            result["reachable_ceiling"],
+            round(1 - result["dead_end_unit_total"] / total, 6),
+        )
         self.assertGreater(result["reachable_ceiling"], 0.0)
         self.assertLessEqual(result["reachable_ceiling"], 1.0)
 

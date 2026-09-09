@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 3,
+      "done": 5,
       "partial": 3,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 8,
-      "pct": 37.5,
+      "pct": 62.5,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 8,
@@ -39,7 +39,7 @@
         },
         {
           "name": "Hellish Soul",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Hellish Soul"
@@ -53,7 +53,7 @@
         },
         {
           "name": "Imp Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Animal Companion",
           "standing": "origin",
           "display_name": "Imp Companion"
@@ -91,11 +91,11 @@
     {
       "kind": "class",
       "label": "Classes",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1
@@ -103,7 +103,7 @@
       "items": [
         {
           "name": "Diabolist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PC.Prestige",
           "standing": "origin",
           "display_name": "Diabolist"
@@ -113,11 +113,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 1,
+      "done": 24,
       "partial": 1,
-      "not_started": 23,
+      "not_started": 0,
       "denominator": 25,
-      "pct": 4.0,
+      "pct": 96.0,
       "excluded_from_percentage": 6,
       "standing_breakdown": {
         "unclassified": 6,
@@ -133,35 +133,35 @@
         },
         {
           "name": "Alternate Form (Boar)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.ImpCompTrick.ImpCompStartTrick",
           "standing": "origin",
           "display_name": "Alternate Form (Boar)"
         },
         {
           "name": "Alternate Form (Rat)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.ImpCompTrick.ImpCompStartTrick",
           "standing": "origin",
           "display_name": "Alternate Form (Rat)"
         },
         {
           "name": "Alternate Form (Raven)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.ImpCompTrick.ImpCompStartTrick",
           "standing": "origin",
           "display_name": "Alternate Form (Raven)"
         },
         {
           "name": "Alternate Form (Young Giant Spider)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ImpCompTrick.ImpCompStartTrick",
           "standing": "origin",
           "display_name": "Alternate Form (Young Giant Spider)"
         },
         {
           "name": "Bonus Tricks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bonus Tricks"
@@ -182,7 +182,7 @@
         },
         {
           "name": "Link",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Link"
@@ -196,147 +196,147 @@
         },
         {
           "name": "Shape Change",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Shape Change"
         },
         {
           "name": "Share Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Share Spells"
         },
         {
           "name": "Spell-like Ability 1/day (Curse Water)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability 1/day (Curse Water)"
         },
         {
           "name": "Spell-like Ability 1/day (Floating Disk)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability 1/day (Floating Disk)"
         },
         {
           "name": "Spell-like Ability 1/day (Grease)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability 1/day (Grease)"
         },
         {
           "name": "Spell-like Ability 1/day (Hold Portal)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability 1/day (Hold Portal)"
         },
         {
           "name": "Spell-like Ability 1/day (Identify)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability 1/day (Identify)"
         },
         {
           "name": "Spell-like Ability 1/day (Silent Image)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability 1/day (Silent Image)"
         },
         {
           "name": "Spell-like Ability 1/day (Unseen Servant)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability 1/day (Unseen Servant)"
         },
         {
           "name": "Spell-like Ability 1/day (Ventriloquism)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability 1/day (Ventriloquism)"
         },
         {
           "name": "Spell-like Ability At-will (Bleed)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Bleed)"
         },
         {
           "name": "Spell-like Ability At-will (Deathwatch)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Deathwatch)"
         },
         {
           "name": "Spell-like Ability At-will (Detect Evil)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Detect Evil)"
         },
         {
           "name": "Spell-like Ability At-will (Detect Law)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Detect Law)"
         },
         {
           "name": "Spell-like Ability At-will (Doom)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Doom)"
         },
         {
           "name": "Spell-like Ability At-will (Ghost Sound)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Ghost Sound)"
         },
         {
           "name": "Spell-like Ability At-will (Mage Hand)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Mage Hand)"
         },
         {
           "name": "Spell-like Ability At-will (Message)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Message)"
         },
         {
           "name": "Spell-like Ability At-will (Open/Close)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Open/Close)"
         },
         {
           "name": "Spell-like Ability At-will (Prestidigitation)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ImpCompTrick",
           "standing": "origin",
           "display_name": "Spell-like Ability At-will (Prestidigitation)"
         },
         {
           "name": "Telepathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal.ImpCompTrick",
           "standing": "unclassified",
           "display_name": "Telepathy"
@@ -686,11 +686,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 0,
-      "partial": 4,
+      "done": 4,
+      "partial": 0,
       "not_started": 0,
       "denominator": 4,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "unclassified": 2,
@@ -699,42 +699,42 @@
       "items": [
         {
           "name": "Agonize",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Agonize"
         },
         {
           "name": "Greater Teleport (Self Plus 50 Lbs. Of Objects Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Greater Teleport (Self Plus 50 Lbs. Of Objects Only)"
         },
         {
           "name": "Hellfire Ray",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Hellfire Ray"
         },
         {
           "name": "Maledication",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Maledication"
         },
         {
           "name": "Sacrifice",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Sacrifice"
         },
         {
           "name": "Vision of Hell",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Vision of Hell"

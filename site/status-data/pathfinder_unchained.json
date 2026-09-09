@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 305,
+      "done": 311,
       "partial": 0,
-      "not_started": 6,
+      "not_started": 0,
       "denominator": 311,
-      "pct": 98.1,
+      "pct": 100.0,
       "excluded_from_percentage": 54,
       "standing_breakdown": {
         "origin": 311,
@@ -319,7 +319,7 @@
         },
         {
           "name": "Combat Trick Tracker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Combat Trick Tracker"
@@ -522,7 +522,7 @@
         },
         {
           "name": "Destroyer's Blessing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Combat Trick",
           "standing": "unclassified",
           "display_name": "Destroyer's Blessing"
@@ -641,7 +641,7 @@
         },
         {
           "name": "Dragon Style",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Combat Trick",
           "standing": "origin",
           "display_name": "Dragon Style"
@@ -1089,7 +1089,7 @@
         },
         {
           "name": "Horse Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Combat Trick",
           "standing": "origin",
           "display_name": "Horse Master"
@@ -1355,14 +1355,14 @@
         },
         {
           "name": "Kirin Path",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Combat Trick",
           "standing": "origin",
           "display_name": "Kirin Path"
         },
         {
           "name": "Kirin Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Combat Trick",
           "standing": "origin",
           "display_name": "Kirin Strike"
@@ -2482,7 +2482,7 @@
         },
         {
           "name": "Two-Handed Thrower",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Combat Trick",
           "standing": "origin",
           "display_name": "Two-Handed Thrower"
@@ -2576,11 +2576,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 257,
+      "done": 348,
       "partial": 2,
-      "not_started": 91,
+      "not_started": 0,
       "denominator": 350,
-      "pct": 73.4,
+      "pct": 99.4,
       "excluded_from_percentage": 254,
       "standing_breakdown": {
         "origin": 350,
@@ -2589,140 +2589,140 @@
       "items": [
         {
           "name": "+1 Charisma",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Ability",
           "standing": "origin",
           "display_name": "+1 Charisma"
         },
         {
           "name": "+1 Constitution",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Ability",
           "standing": "origin",
           "display_name": "+1 Constitution"
         },
         {
           "name": "+1 Dexterity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Ability",
           "standing": "origin",
           "display_name": "+1 Dexterity"
         },
         {
           "name": "+1 Intelligence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Ability",
           "standing": "origin",
           "display_name": "+1 Intelligence"
         },
         {
           "name": "+1 Strength",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Ability",
           "standing": "origin",
           "display_name": "+1 Strength"
         },
         {
           "name": "+1 Wisdom",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Ability",
           "standing": "origin",
           "display_name": "+1 Wisdom"
         },
         {
           "name": "+2 Charisma",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Mental Prowess",
           "standing": "origin",
           "display_name": "+2 Charisma"
         },
         {
           "name": "+2 Constitution",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Physical Prowess",
           "standing": "origin",
           "display_name": "+2 Constitution"
         },
         {
           "name": "+2 Dexterity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Physical Prowess",
           "standing": "origin",
           "display_name": "+2 Dexterity"
         },
         {
           "name": "+2 Intelligence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Mental Prowess",
           "standing": "origin",
           "display_name": "+2 Intelligence"
         },
         {
           "name": "+2 Strength",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Physical Prowess",
           "standing": "origin",
           "display_name": "+2 Strength"
         },
         {
           "name": "+2 Wisdom",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Mental Prowess",
           "standing": "origin",
           "display_name": "+2 Wisdom"
         },
         {
           "name": "ABP_AC_Deflection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ABP_AC_Deflection"
         },
         {
           "name": "ABP_AC_Natural_Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ABP_AC_Natural_Armor"
         },
         {
           "name": "ABP_Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ABP_Armor"
         },
         {
           "name": "ABP_Legendary",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ABP_Legendary"
         },
         {
           "name": "ABP_Mental",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ABP_Mental"
         },
         {
           "name": "ABP_Physical",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ABP_Physical"
         },
         {
           "name": "ABP_Save",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ABP_Save"
         },
         {
           "name": "ABP_Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ABP_Weapon"
@@ -2743,14 +2743,14 @@
         },
         {
           "name": "Accurate Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Accurate Stance"
         },
         {
           "name": "Acrobatics",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Acrobatics (SpecialQuality.Certainty)"
@@ -2764,35 +2764,35 @@
         },
         {
           "name": "Acrobatics",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Acrobatics (SkillUnlock)"
         },
         {
           "name": "Advanced Talent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Talent.IncreaseRogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Advanced Talent"
         },
         {
           "name": "Alchemist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "origin",
           "display_name": "Alchemist"
         },
         {
           "name": "Animal Fury",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Animal Fury"
         },
         {
           "name": "Appraise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Appraise (SpecialQuality.Certainty)"
@@ -2806,14 +2806,14 @@
         },
         {
           "name": "Appraise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Appraise (SkillUnlock)"
         },
         {
           "name": "Armor Attunement",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Defensive.Automatic Bonus Progression.Applied Bonus",
           "standing": "origin",
           "display_name": "Armor Attunement"
@@ -2827,21 +2827,21 @@
         },
         {
           "name": "Armor Training 1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass Fighter.SpecialQuality",
           "standing": "origin",
           "display_name": "Armor Training 1"
         },
         {
           "name": "Armor Training 2",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass Fighter.SpecialQuality",
           "standing": "origin",
           "display_name": "Armor Training 2"
         },
         {
           "name": "Artistry is a Class Skill",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Artistry is a Class Skill"
@@ -2855,112 +2855,112 @@
         },
         {
           "name": "Attuned Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Attuned Armor",
           "standing": "origin",
           "display_name": "Attuned Armor"
         },
         {
           "name": "Attuned Shield",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Attuned Shield",
           "standing": "origin",
           "display_name": "Attuned Shield"
         },
         {
           "name": "Attuned Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Attuned Weapon",
           "standing": "origin",
           "display_name": "Attuned Weapon"
         },
         {
           "name": "Attuned Weapon (Fist)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Attuned Weapon Fist",
           "standing": "origin",
           "display_name": "Attuned Weapon (Fist)"
         },
         {
           "name": "Attuned Weapon (Off-Hand)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Attuned Weapon Off-Hand",
           "standing": "origin",
           "display_name": "Attuned Weapon (Off-Hand)"
         },
         {
           "name": "Attuned Weapon (Primary)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Attuned Weapon Primary",
           "standing": "origin",
           "display_name": "Attuned Weapon (Primary)"
         },
         {
           "name": "Auspicious Mark",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Auspicious Mark"
         },
         {
           "name": "Automatic Bonus Progression",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Automatic Bonus Progression"
         },
         {
           "name": "Background Skill",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BackgroundSkill",
           "standing": "origin",
           "display_name": "Background Skill"
         },
         {
           "name": "Barbarian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Barbarian"
         },
         {
           "name": "Barbarian ~ Unchained Class Full",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barbarian ~ Unchained Class Full"
         },
         {
           "name": "Barbarian ~ Unchained Ex-Class",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barbarian ~ Unchained Ex-Class"
         },
         {
           "name": "Bard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bard"
         },
         {
           "name": "Bleeding Attack*",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.Unchained Rogue Talent.AttackOption",
           "standing": "unclassified",
           "display_name": "Bleeding Attack*"
         },
         {
           "name": "Bleeding Blow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Bleeding Blow"
         },
         {
           "name": "Bluff",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Bluff (SpecialQuality.Certainty)"
@@ -2974,7 +2974,7 @@
         },
         {
           "name": "Bluff",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Bluff (SkillUnlock)"
@@ -2995,7 +2995,7 @@
         },
         {
           "name": "Bravery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass Fighter.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bravery"
@@ -3023,35 +3023,35 @@
         },
         {
           "name": "Catch Off-Guard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Catch Off-Guard"
         },
         {
           "name": "Cavalier",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "origin",
           "display_name": "Cavalier"
         },
         {
           "name": "Certainty",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.Unchained Rogue Talent",
           "standing": "origin",
           "display_name": "Certainty (Extraordinary.Unchained Rogue Talent)"
         },
         {
           "name": "Certainty",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Certainty (SpecialQuality.Extraordinary)"
         },
         {
           "name": "Class Skills ~ Unchained Monk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Class Skills ~ Unchained Monk"
@@ -3065,14 +3065,14 @@
         },
         {
           "name": "Cleric",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Cleric"
         },
         {
           "name": "Climb",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Climb (SpecialQuality.Certainty)"
@@ -3086,7 +3086,7 @@
         },
         {
           "name": "Climb",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Climb (SkillUnlock)"
@@ -3107,28 +3107,28 @@
         },
         {
           "name": "Combat Reflexes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Combat Reflexes"
         },
         {
           "name": "Combat Swipe",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Talent",
           "standing": "unclassified",
           "display_name": "Combat Swipe"
         },
         {
           "name": "Combat Trick",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Talent",
           "standing": "unclassified",
           "display_name": "Combat Trick"
         },
         {
           "name": "Combat Trick / Agile Maneuvers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Combat Trick",
           "standing": "origin",
           "display_name": "Combat Trick / Agile Maneuvers"
@@ -3842,14 +3842,14 @@
         },
         {
           "name": "Combat Trick Tracker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Combat Trick Tracker"
         },
         {
           "name": "Craft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Craft (SpecialQuality.Certainty)"
@@ -3863,14 +3863,14 @@
         },
         {
           "name": "Craft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Craft (SkillUnlock)"
         },
         {
           "name": "Crippling Blow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Crippling Blow"
@@ -3884,7 +3884,7 @@
         },
         {
           "name": "Cutting Edge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.Unchained Rogue Advanced Talent",
           "standing": "origin",
           "display_name": "Cutting Edge"
@@ -3898,7 +3898,7 @@
         },
         {
           "name": "Danger Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive.BarbarianClassFeatures.ClassFeatures",
           "standing": "origin",
           "display_name": "Danger Sense (SpecialQuality.Extraordinary.Defensive.BarbarianClassFeatures.ClassFeatures)"
@@ -3919,7 +3919,7 @@
         },
         {
           "name": "Deadly Accuracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Deadly Accuracy"
@@ -3940,7 +3940,7 @@
         },
         {
           "name": "Default",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Default"
@@ -3961,14 +3961,14 @@
         },
         {
           "name": "Deflect Arrows",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Deflect Arrows"
         },
         {
           "name": "Deflection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Defensive.Automatic Bonus Progression.Applied Bonus",
           "standing": "unclassified",
           "display_name": "Deflection"
@@ -4003,7 +4003,7 @@
         },
         {
           "name": "Diplomacy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Diplomacy (SpecialQuality.Certainty)"
@@ -4017,14 +4017,14 @@
         },
         {
           "name": "Diplomacy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Diplomacy (SkillUnlock)"
         },
         {
           "name": "Disable Device",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Disable Device (SpecialQuality.Certainty)"
@@ -4038,14 +4038,14 @@
         },
         {
           "name": "Disable Device",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Disable Device (SkillUnlock)"
         },
         {
           "name": "Disguise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Disguise (SpecialQuality.Certainty)"
@@ -4059,21 +4059,21 @@
         },
         {
           "name": "Disguise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Disguise (SkillUnlock)"
         },
         {
           "name": "Dispelling Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.Unchained Rogue Advanced Talent",
           "standing": "unclassified",
           "display_name": "Dispelling Attack"
         },
         {
           "name": "Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Dodge"
@@ -4087,7 +4087,7 @@
         },
         {
           "name": "Druid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Druid"
@@ -4129,7 +4129,7 @@
         },
         {
           "name": "Elemental Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Elemental Stance"
@@ -4143,21 +4143,21 @@
         },
         {
           "name": "Energy Absorption",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Energy Absorption"
         },
         {
           "name": "Energy Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Energy Resistance"
         },
         {
           "name": "Escape Artist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Escape Artist (SpecialQuality.Certainty)"
@@ -4171,7 +4171,7 @@
         },
         {
           "name": "Escape Artist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Escape Artist (SkillUnlock)"
@@ -4192,7 +4192,7 @@
         },
         {
           "name": "Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature",
           "standing": "unclassified",
           "display_name": "Evasion (Unchained Rogue Class Feature)"
@@ -4248,7 +4248,7 @@
         },
         {
           "name": "Fighter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Fighter"
@@ -4276,14 +4276,14 @@
         },
         {
           "name": "Flurry of Blows",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Flurry of Blows",
           "standing": "unclassified",
           "display_name": "Flurry of Blows"
         },
         {
           "name": "Fly",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Fly (SpecialQuality.Certainty)"
@@ -4297,7 +4297,7 @@
         },
         {
           "name": "Fly",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Fly (SkillUnlock)"
@@ -4339,14 +4339,14 @@
         },
         {
           "name": "Gorgon's Fist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Gorgon's Fist"
         },
         {
           "name": "Grant Standard Unchained Rage Benefits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Grant Standard Unchained Rage Benefits"
@@ -4381,21 +4381,21 @@
         },
         {
           "name": "Ground Breaker, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Ground Breaker, Greater"
         },
         {
           "name": "Guarded Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Guarded Stance"
         },
         {
           "name": "Gunslinger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "origin",
           "display_name": "Gunslinger"
@@ -4409,7 +4409,7 @@
         },
         {
           "name": "Handle Animal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Handle Animal (SpecialQuality.Certainty)"
@@ -4423,7 +4423,7 @@
         },
         {
           "name": "Handle Animal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Handle Animal (SkillUnlock)"
@@ -4437,7 +4437,7 @@
         },
         {
           "name": "Heal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Heal (SpecialQuality.Certainty)"
@@ -4451,7 +4451,7 @@
         },
         {
           "name": "Heal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Heal (SkillUnlock)"
@@ -4472,21 +4472,21 @@
         },
         {
           "name": "Improved Bull Rush",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Bull Rush"
         },
         {
           "name": "Improved Critical",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Critical"
         },
         {
           "name": "Improved Disarm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Disarm"
@@ -4500,28 +4500,28 @@
         },
         {
           "name": "Improved Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Advanced Talent",
           "standing": "unclassified",
           "display_name": "Improved Evasion (SpecialQuality.Extraordinary.Unchained Rogue Advanced Talent)"
         },
         {
           "name": "Improved Feint",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Feint"
         },
         {
           "name": "Improved Grapple",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Grapple"
         },
         {
           "name": "Improved Trip",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Improved Trip"
@@ -4542,7 +4542,7 @@
         },
         {
           "name": "Increased Damage Reduction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Increased Damage Reduction"
@@ -4556,7 +4556,7 @@
         },
         {
           "name": "Inquisitor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "origin",
           "display_name": "Inquisitor"
@@ -4570,7 +4570,7 @@
         },
         {
           "name": "Inspire Ferocity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Inspire Ferocity"
@@ -4584,7 +4584,7 @@
         },
         {
           "name": "Intimidate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Intimidate (SpecialQuality.Certainty)"
@@ -4598,14 +4598,14 @@
         },
         {
           "name": "Intimidate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Intimidate (SkillUnlock)"
         },
         {
           "name": "Intimidating Glare",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Intimidating Glare"
@@ -4682,7 +4682,7 @@
         },
         {
           "name": "Knockback",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Knockback"
@@ -4703,7 +4703,7 @@
         },
         {
           "name": "Knowledge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Knowledge (SpecialQuality.Certainty)"
@@ -4717,14 +4717,14 @@
         },
         {
           "name": "Knowledge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Knowledge (SkillUnlock)"
         },
         {
           "name": "Lasting Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Talent",
           "standing": "unclassified",
           "display_name": "Lasting Poison"
@@ -4745,28 +4745,28 @@
         },
         {
           "name": "Legendary Ability",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Gifts.Automatic Bonus Progression",
           "standing": "origin",
           "display_name": "Legendary Ability"
         },
         {
           "name": "Legendary Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Gifts.Automatic Bonus Progression",
           "standing": "origin",
           "display_name": "Legendary Armor"
         },
         {
           "name": "Legendary Body",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Gifts.Automatic Bonus Progression",
           "standing": "origin",
           "display_name": "Legendary Body"
         },
         {
           "name": "Legendary Body 2",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Gifts.Automatic Bonus Progression",
           "standing": "origin",
           "display_name": "Legendary Body 2"
@@ -4780,14 +4780,14 @@
         },
         {
           "name": "Legendary Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Gifts.Automatic Bonus Progression",
           "standing": "origin",
           "display_name": "Legendary Mind"
         },
         {
           "name": "Legendary Mind 2",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Gifts.Automatic Bonus Progression",
           "standing": "origin",
           "display_name": "Legendary Mind 2"
@@ -4801,21 +4801,21 @@
         },
         {
           "name": "Legendary Twin Weapons",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Gifts.Automatic Bonus Progression",
           "standing": "origin",
           "display_name": "Legendary Twin Weapons"
         },
         {
           "name": "Legendary Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ABP Legendary Gifts.Automatic Bonus Progression",
           "standing": "origin",
           "display_name": "Legendary Weapon"
         },
         {
           "name": "Lethal Accuracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Lethal Accuracy"
@@ -4850,7 +4850,7 @@
         },
         {
           "name": "Linguistics",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Linguistics (SpecialQuality.Certainty)"
@@ -4864,7 +4864,7 @@
         },
         {
           "name": "Linguistics",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Linguistics (SkillUnlock)"
@@ -4878,14 +4878,14 @@
         },
         {
           "name": "Magus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Magus"
         },
         {
           "name": "Major Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Unchained Rogue Talent",
           "standing": "unclassified",
           "display_name": "Major Magic"
@@ -4913,14 +4913,14 @@
         },
         {
           "name": "Medusa's Wrath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Medusa's Wrath"
         },
         {
           "name": "Mental Prowess",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Special Quality.Automatic Bonus Progression.Applied Bonus",
           "standing": "unclassified",
           "display_name": "Mental Prowess"
@@ -4941,35 +4941,35 @@
         },
         {
           "name": "Mighty Swing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Mighty Swing"
         },
         {
           "name": "Minor Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Unchained Rogue Talent",
           "standing": "unclassified",
           "display_name": "Minor Magic"
         },
         {
           "name": "Mobility",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Mobility"
         },
         {
           "name": "Monk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Monk"
         },
         {
           "name": "Multitalented",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Talent",
           "standing": "origin",
           "display_name": "Multitalented"
@@ -5018,21 +5018,21 @@
         },
         {
           "name": "Oracle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "origin",
           "display_name": "Oracle"
         },
         {
           "name": "Paladin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Paladin"
         },
         {
           "name": "Perception",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Perception (SpecialQuality.Certainty)"
@@ -5046,7 +5046,7 @@
         },
         {
           "name": "Perception",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Perception (SkillUnlock)"
@@ -5067,7 +5067,7 @@
         },
         {
           "name": "Perform",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Perform (SpecialQuality.Certainty)"
@@ -5081,14 +5081,14 @@
         },
         {
           "name": "Perform",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Perform (SkillUnlock)"
         },
         {
           "name": "Physical Prowess",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Special Quality.Automatic Bonus Progression.Applied Bonus",
           "standing": "origin",
           "display_name": "Physical Prowess"
@@ -5102,14 +5102,14 @@
         },
         {
           "name": "Powerful Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Powerful Stance"
         },
         {
           "name": "Profession",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Profession (SpecialQuality.Certainty)"
@@ -5123,7 +5123,7 @@
         },
         {
           "name": "Profession",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Profession (SkillUnlock)"
@@ -5144,7 +5144,7 @@
         },
         {
           "name": "Qinggong Power",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Ki Power.SpecialQuality.Supernatural.Qinggong Power",
           "standing": "origin",
           "display_name": "Qinggong Power"
@@ -5200,84 +5200,84 @@
         },
         {
           "name": "Raging Climber",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Raging Climber"
         },
         {
           "name": "Raging Leaper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Raging Leaper"
         },
         {
           "name": "Raging Swimmer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Raging Swimmer"
         },
         {
           "name": "Ranger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Ranger"
         },
         {
           "name": "Reckless Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Reckless Stance"
         },
         {
           "name": "Reflexive Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Reflexive Dodge"
         },
         {
           "name": "Regenerative Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Regenerative Stance"
         },
         {
           "name": "Renewed Vigor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Renewed Vigor"
         },
         {
           "name": "Renewed Vitality",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Renewed Vitality"
         },
         {
           "name": "Resiliency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Talent.Defensive",
           "standing": "unclassified",
           "display_name": "Resiliency"
         },
         {
           "name": "Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Defensive.Automatic Bonus Progression.Applied Bonus",
           "standing": "unclassified",
           "display_name": "Resistance"
         },
         {
           "name": "Ride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Ride (SpecialQuality.Certainty)"
@@ -5291,14 +5291,14 @@
         },
         {
           "name": "Ride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Ride (SkillUnlock)"
         },
         {
           "name": "Rogue",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Rogue"
@@ -5333,91 +5333,91 @@
         },
         {
           "name": "Rule - Multiclass Variant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Multiclass Variant"
         },
         {
           "name": "Rule - Use Automatic Bonus Progression",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Automatic Bonus Progression"
         },
         {
           "name": "Rule - Use Automatic Bonus Progression ~ Magic Items Removed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Automatic Bonus Progression ~ Magic Items Removed"
         },
         {
           "name": "Rule - Use Background Skills",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Background Skills"
         },
         {
           "name": "Rule - Use Combat Trick System",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Combat Trick System"
         },
         {
           "name": "Rule - Use Consolidated Skills",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Consolidated Skills"
         },
         {
           "name": "Rule - Use Fractional BAB",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Fractional BAB"
         },
         {
           "name": "Rule - Use Fractional Saves",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Fractional Saves"
         },
         {
           "name": "Rule - Use Skill Rule ~ Artistry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Skill Rule ~ Artistry"
         },
         {
           "name": "Rule - Use Skill Rule ~ Disable Signature Skill Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Skill Rule ~ Disable Signature Skill Feat"
         },
         {
           "name": "Rule - Use Skill Rule ~ Everyone gets free access to skill Unlocks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Skill Rule ~ Everyone gets free access to skill Unlocks"
         },
         {
           "name": "Rule - Use Unchained Skills",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Use Unchained Skills"
         },
         {
           "name": "Rule - Wound Threshold",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "OptionalRules",
           "standing": "origin",
           "display_name": "Rule - Wound Threshold"
@@ -5431,14 +5431,14 @@
         },
         {
           "name": "Scorpion Style",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Scorpion Style"
         },
         {
           "name": "Sense Motive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Sense Motive (SpecialQuality.Certainty)"
@@ -5452,7 +5452,7 @@
         },
         {
           "name": "Sense Motive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Sense Motive (SkillUnlock)"
@@ -5494,7 +5494,7 @@
         },
         {
           "name": "Skill Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Unchained Rogue Advanced Talent",
           "standing": "unclassified",
           "display_name": "Skill Mastery"
@@ -5641,7 +5641,7 @@
         },
         {
           "name": "Skill unlock diplomacy 10 Ranks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Skill unlock diplomacy 10 Ranks"
@@ -5858,7 +5858,7 @@
         },
         {
           "name": "Skill unlock intimidate 5 Ranks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Signature Skill 05",
           "standing": "origin",
           "display_name": "Skill unlock intimidate 5 Ranks"
@@ -6236,21 +6236,21 @@
         },
         {
           "name": "Skills",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature",
           "standing": "unclassified",
           "display_name": "Skills (Unchained Rogue Class Feature)"
         },
         {
           "name": "Skills",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Summoner Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Skills (Unchained Summoner Class Feature.SpecialQuality)"
         },
         {
           "name": "Sleight Of Hand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Sleight Of Hand (SpecialQuality.Certainty)"
@@ -6264,14 +6264,14 @@
         },
         {
           "name": "Sleight Of Hand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Sleight Of Hand (SkillUnlock)"
         },
         {
           "name": "Slippery Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Extraordinary.Unchained Rogue Advanced Talent",
           "standing": "unclassified",
           "display_name": "Slippery Mind"
@@ -6292,14 +6292,14 @@
         },
         {
           "name": "Smasher",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Smasher"
         },
         {
           "name": "Snatch Arrows",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Snatch Arrows"
@@ -6313,14 +6313,14 @@
         },
         {
           "name": "Sorcerer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Sorcerer"
         },
         {
           "name": "Spellcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Spellcraft (SpecialQuality.Certainty)"
@@ -6334,7 +6334,7 @@
         },
         {
           "name": "Spellcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Spellcraft (SkillUnlock)"
@@ -6355,7 +6355,7 @@
         },
         {
           "name": "Spring Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Spring Attack"
@@ -6376,14 +6376,14 @@
         },
         {
           "name": "Standard Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedRageSelection",
           "standing": "unclassified",
           "display_name": "Standard Rage"
         },
         {
           "name": "Stealth",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Stealth (SpecialQuality.Certainty)"
@@ -6397,7 +6397,7 @@
         },
         {
           "name": "Stealth",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Stealth (SkillUnlock)"
@@ -6411,7 +6411,7 @@
         },
         {
           "name": "Strength Stance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Strength Stance"
@@ -6446,7 +6446,7 @@
         },
         {
           "name": "Summoner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Summoner"
@@ -6460,14 +6460,14 @@
         },
         {
           "name": "Surprise Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Talent",
           "standing": "unclassified",
           "display_name": "Surprise Attack"
         },
         {
           "name": "Survival",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Survival (SpecialQuality.Certainty)"
@@ -6481,21 +6481,21 @@
         },
         {
           "name": "Survival",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Survival (SkillUnlock)"
         },
         {
           "name": "Swift Foot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Swift Foot"
         },
         {
           "name": "Swim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Swim (SpecialQuality.Certainty)"
@@ -6509,7 +6509,7 @@
         },
         {
           "name": "Swim",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Swim (SkillUnlock)"
@@ -6530,14 +6530,14 @@
         },
         {
           "name": "Terrifying Howl",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Terrifying Howl"
         },
         {
           "name": "Throw Anything",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Throw Anything"
@@ -6565,7 +6565,7 @@
         },
         {
           "name": "Toughening",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Defensive.Automatic Bonus Progression.Applied Bonus",
           "standing": "origin",
           "display_name": "Toughening"
@@ -6579,7 +6579,7 @@
         },
         {
           "name": "Trap Spotter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Talent",
           "standing": "unclassified",
           "display_name": "Trap Spotter"
@@ -6621,14 +6621,14 @@
         },
         {
           "name": "Unchained Barbarian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Selection.AltBarbarianChoice",
           "standing": "origin",
           "display_name": "Unchained Barbarian"
         },
         {
           "name": "Unchained Barbarian Core Class Skills",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unchained Barbarian Core Class Skills"
@@ -6642,21 +6642,21 @@
         },
         {
           "name": "Unchained Monk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monk Class Selection.AltMonkChoice",
           "standing": "origin",
           "display_name": "Unchained Monk"
         },
         {
           "name": "Unchained Monk Archetype",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Monk Archetype",
           "standing": "origin",
           "display_name": "Unchained Monk Archetype"
         },
         {
           "name": "Unchained Rogue",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Selection.AltRogueChoice",
           "standing": "origin",
           "display_name": "Unchained Rogue"
@@ -6670,7 +6670,7 @@
         },
         {
           "name": "Unchained Summoner",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Summoner Class Selection.SummonerAlternative",
           "standing": "origin",
           "display_name": "Unchained Summoner"
@@ -6684,7 +6684,7 @@
         },
         {
           "name": "Use Magic Device",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Certainty",
           "standing": "unclassified",
           "display_name": "Use Magic Device (SpecialQuality.Certainty)"
@@ -6698,7 +6698,7 @@
         },
         {
           "name": "Use Magic Device",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUnlock",
           "standing": "unclassified",
           "display_name": "Use Magic Device (SkillUnlock)"
@@ -6712,14 +6712,14 @@
         },
         {
           "name": "Weapon Attunement",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Special Attack.Automatic Bonus Progression.Applied Bonus",
           "standing": "origin",
           "display_name": "Weapon Attunement"
         },
         {
           "name": "Weapon Choice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Finesse Damage Choice.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Weapon Choice"
@@ -6733,21 +6733,21 @@
         },
         {
           "name": "Weapon Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Talent",
           "standing": "unclassified",
           "display_name": "Weapon Training"
         },
         {
           "name": "Weapon Training 1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass Fighter.SpecialQuality",
           "standing": "origin",
           "display_name": "Weapon Training 1"
         },
         {
           "name": "Weapon Training 2",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass Fighter.SpecialQuality",
           "standing": "origin",
           "display_name": "Weapon Training 2"
@@ -6789,28 +6789,28 @@
         },
         {
           "name": "Witch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "origin",
           "display_name": "Witch"
         },
         {
           "name": "Witch Hunter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Witch Hunter"
         },
         {
           "name": "Wizard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Variant Multiclass.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Wizard"
         },
         {
           "name": "Wound Threshold",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Wound Threshold"
@@ -6820,11 +6820,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 38,
-      "partial": 4,
+      "done": 42,
+      "partial": 0,
       "not_started": 0,
       "denominator": 42,
-      "pct": 90.5,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 42
@@ -6832,28 +6832,28 @@
       "items": [
         {
           "name": "+0 ABP (Enhancement to Ammunition)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition",
           "standing": "origin",
           "display_name": "+0 ABP (Enhancement to Ammunition)"
         },
         {
           "name": "+0 ABP (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin",
           "display_name": "+0 ABP (Enhancement to Armor)"
         },
         {
           "name": "+0 ABP (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin",
           "display_name": "+0 ABP (Enhancement to Shield)"
         },
         {
           "name": "+0 ABP (Enhancement to Weapon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon",
           "standing": "origin",
           "display_name": "+0 ABP (Enhancement to Weapon)"
@@ -7129,11 +7129,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 3,
-      "partial": 4,
+      "done": 7,
+      "partial": 0,
       "not_started": 0,
       "denominator": 7,
-      "pct": 42.9,
+      "pct": 100.0,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "origin": 7,
@@ -7163,28 +7163,28 @@
         },
         {
           "name": "Extra Stamina",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Stamina",
           "standing": "origin",
           "display_name": "Extra Stamina"
         },
         {
           "name": "Extra Unchained Rogue Talent",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Extra Unchained Rogue Talent"
         },
         {
           "name": "Push the Limits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Stamina",
           "standing": "origin",
           "display_name": "Push the Limits"
         },
         {
           "name": "Signature Skill",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Signature Skill"
@@ -7720,11 +7720,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 5,
-      "partial": 47,
-      "not_started": 2,
+      "done": 54,
+      "partial": 0,
+      "not_started": 0,
       "denominator": 54,
-      "pct": 9.3,
+      "pct": 100.0,
       "excluded_from_percentage": 51,
       "standing_breakdown": {
         "origin": 54,
@@ -7733,7 +7733,7 @@
       "items": [
         {
           "name": "Ability Increase",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Ability Increase"
@@ -7747,42 +7747,42 @@
         },
         {
           "name": "Agathion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Agathion"
         },
         {
           "name": "Angel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Angel"
         },
         {
           "name": "Archon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Archon"
         },
         {
           "name": "Azata",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Azata"
         },
         {
           "name": "Biped",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Base Form Selection",
           "standing": "unclassified",
           "display_name": "Biped"
         },
         {
           "name": "Bite",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Push Evolution",
           "standing": "unclassified",
           "display_name": "Bite (Push Evolution)"
@@ -7796,49 +7796,49 @@
         },
         {
           "name": "Bite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Bite (Unchained Evolution.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Bite Str 1-1/2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Bite Str 1-1/2"
         },
         {
           "name": "Blindsense",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Blindsense"
         },
         {
           "name": "Blindsight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Blindsight"
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Breath Weapon"
         },
         {
           "name": "Burrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Burrow"
         },
         {
           "name": "Claws",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Push Evolution",
           "standing": "unclassified",
           "display_name": "Claws (Push Evolution)"
@@ -7852,14 +7852,14 @@
         },
         {
           "name": "Claws Arms",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Claws Arms"
         },
         {
           "name": "Claws Legs",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Claws Legs"
@@ -7873,28 +7873,28 @@
         },
         {
           "name": "Climb +20",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Climb +20"
         },
         {
           "name": "Constrict",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Constrict"
         },
         {
           "name": "Daemon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Daemon"
         },
         {
           "name": "Damage Reduction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Damage Reduction"
@@ -7908,14 +7908,14 @@
         },
         {
           "name": "Demon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Demon"
         },
         {
           "name": "Devil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Devil"
@@ -7929,77 +7929,77 @@
         },
         {
           "name": "Div",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Div"
         },
         {
           "name": "Eidolon Ability Increase CHA +2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Ability Increase",
           "standing": "origin",
           "display_name": "Eidolon Ability Increase CHA +2"
         },
         {
           "name": "Eidolon Ability Increase CON +2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Ability Increase",
           "standing": "origin",
           "display_name": "Eidolon Ability Increase CON +2"
         },
         {
           "name": "Eidolon Ability Increase CON +2 / Large",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Ability Increase",
           "standing": "origin",
           "display_name": "Eidolon Ability Increase CON +2 / Large"
         },
         {
           "name": "Eidolon Ability Increase DEX +2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Ability Increase",
           "standing": "origin",
           "display_name": "Eidolon Ability Increase DEX +2"
         },
         {
           "name": "Eidolon Ability Increase INT +2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Ability Increase",
           "standing": "origin",
           "display_name": "Eidolon Ability Increase INT +2"
         },
         {
           "name": "Eidolon Ability Increase STR +2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Ability Increase",
           "standing": "origin",
           "display_name": "Eidolon Ability Increase STR +2"
         },
         {
           "name": "Eidolon Ability Increase STR +2 / Large",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Ability Increase",
           "standing": "origin",
           "display_name": "Eidolon Ability Increase STR +2 / Large"
         },
         {
           "name": "Eidolon Ability Increase WIS +2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Ability Increase",
           "standing": "origin",
           "display_name": "Eidolon Ability Increase WIS +2"
         },
         {
           "name": "Elemental",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Elemental"
         },
         {
           "name": "Energy Attacks",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Energy Attacks"
@@ -8013,35 +8013,35 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Fast Healing"
         },
         {
           "name": "Flight (Magic)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Flight (Magic)"
         },
         {
           "name": "Flight (Wings)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Flight (Wings)"
         },
         {
           "name": "Flight Increase +20",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Flight Increase +20"
         },
         {
           "name": "Frightful Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Frightful Presence"
@@ -8055,35 +8055,35 @@
         },
         {
           "name": "Gore",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Gore"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Grab"
         },
         {
           "name": "Huge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Huge"
         },
         {
           "name": "Immunity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Immunity"
         },
         {
           "name": "Improved Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Improved Damage"
@@ -8097,35 +8097,35 @@
         },
         {
           "name": "Improved Natural Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Improved Natural Armor"
         },
         {
           "name": "Inevitable",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Inevitable"
         },
         {
           "name": "Large",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Large"
         },
         {
           "name": "Limbs (Arms)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Limbs (Arms)"
         },
         {
           "name": "Limbs (Legs)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Limbs (Legs)"
@@ -8146,7 +8146,7 @@
         },
         {
           "name": "Mount",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Mount"
@@ -8160,7 +8160,7 @@
         },
         {
           "name": "Pincers",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Push Evolution",
           "standing": "origin",
           "display_name": "Pincers (Push Evolution)"
@@ -8174,70 +8174,70 @@
         },
         {
           "name": "Pincers",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Pincers (Unchained Evolution.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison"
         },
         {
           "name": "Pounce",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Pounce"
         },
         {
           "name": "Protean",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Protean"
         },
         {
           "name": "Psychopomp",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Psychopomp"
         },
         {
           "name": "Pull",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Pull"
         },
         {
           "name": "Push",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Push"
         },
         {
           "name": "Quadruped",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Base Form Selection",
           "standing": "unclassified",
           "display_name": "Quadruped"
         },
         {
           "name": "Rake",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Rake"
         },
         {
           "name": "Reach",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Reach"
@@ -8251,14 +8251,14 @@
         },
         {
           "name": "Rend",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Rend"
         },
         {
           "name": "Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Resistance"
@@ -8272,7 +8272,7 @@
         },
         {
           "name": "Serpentine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Eidolon Base Form Selection",
           "standing": "unclassified",
           "display_name": "Serpentine"
@@ -8286,14 +8286,14 @@
         },
         {
           "name": "Skilled",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Skilled"
         },
         {
           "name": "Slam",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Push Evolution",
           "standing": "unclassified",
           "display_name": "Slam (Push Evolution)"
@@ -8307,7 +8307,7 @@
         },
         {
           "name": "Slam",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Slam (Unchained Evolution.SpecialQuality.Extraordinary)"
@@ -8321,14 +8321,14 @@
         },
         {
           "name": "Spell Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Spell Resistance"
         },
         {
           "name": "Sting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Push Evolution",
           "standing": "unclassified",
           "display_name": "Sting (Push Evolution)"
@@ -8342,14 +8342,14 @@
         },
         {
           "name": "Sting",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Sting (Unchained Evolution.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Swallow Whole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Swallow Whole"
@@ -8363,21 +8363,21 @@
         },
         {
           "name": "Swim +20",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Swim +20"
         },
         {
           "name": "Tail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Tail"
         },
         {
           "name": "Tail Slap",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Push Evolution",
           "standing": "unclassified",
           "display_name": "Tail Slap (Push Evolution)"
@@ -8391,14 +8391,14 @@
         },
         {
           "name": "Tail Slap",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Tail Slap (Unchained Evolution.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Tentacle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Push Evolution",
           "standing": "origin",
           "display_name": "Tentacle (Push Evolution)"
@@ -8412,35 +8412,35 @@
         },
         {
           "name": "Tentacle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Tentacle (Unchained Evolution.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Trample",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Trample"
         },
         {
           "name": "Tremorsense",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Tremorsense"
         },
         {
           "name": "Trip",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Trip"
         },
         {
           "name": "Weapon Training (Martial)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Weapon Training (Martial)"
@@ -8454,14 +8454,14 @@
         },
         {
           "name": "Web",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Web"
         },
         {
           "name": "Wing Buffet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Wing Buffet"
@@ -8471,11 +8471,11 @@
     {
       "kind": "skill",
       "label": "Skills",
-      "done": 7,
+      "done": 24,
       "partial": 0,
-      "not_started": 17,
+      "not_started": 0,
       "denominator": 24,
-      "pct": 29.2,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 24
@@ -8483,7 +8483,7 @@
       "items": [
         {
           "name": "Artistry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background",
           "standing": "origin",
           "display_name": "Artistry"
@@ -8511,105 +8511,105 @@
         },
         {
           "name": "Lore (A particular small city)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (A particular small city)"
         },
         {
           "name": "Lore (Bandits in a region)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Bandits in a region)"
         },
         {
           "name": "Lore (Cats)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Cats)"
         },
         {
           "name": "Lore (Dagon)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Dagon)"
         },
         {
           "name": "Lore (Drow matriarchs)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Drow matriarchs)"
         },
         {
           "name": "Lore (Dwarven history)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Dwarven history)"
         },
         {
           "name": "Lore (Famous battles in a region)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Famous battles in a region)"
         },
         {
           "name": "Lore (Frost giants)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Frost giants)"
         },
         {
           "name": "Lore (Military commanders)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Military commanders)"
         },
         {
           "name": "Lore (One district of a large city or metropolis)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (One district of a large city or metropolis)"
         },
         {
           "name": "Lore (Phlegethon)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Phlegethon)"
         },
         {
           "name": "Lore (Sarenrae)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Sarenrae)"
         },
         {
           "name": "Lore (Taverns in a region)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (Taverns in a region)"
         },
         {
           "name": "Lore (The spice trade)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (The spice trade)"
         },
         {
           "name": "Lore (_______________________)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "Lore (_______________________)"
@@ -8644,7 +8644,7 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Intelligence.Base.Background.Lore",
           "standing": "origin",
           "display_name": "[redacted PI]"
@@ -8654,11 +8654,11 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 1,
+      "done": 12,
       "partial": 0,
-      "not_started": 11,
+      "not_started": 0,
       "denominator": 12,
-      "pct": 8.3,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 12
@@ -8666,77 +8666,77 @@
       "items": [
         {
           "name": "Legs 02",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 02"
         },
         {
           "name": "Legs 04",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 04"
         },
         {
           "name": "Legs 06",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 06"
         },
         {
           "name": "Legs 08",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 08"
         },
         {
           "name": "Legs 10",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 10"
         },
         {
           "name": "Legs 12",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 12"
         },
         {
           "name": "Legs 14",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 14"
         },
         {
           "name": "Legs 16",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 16"
         },
         {
           "name": "Legs 18",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 18"
         },
         {
           "name": "Legs 20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 20"
         },
         {
           "name": "Legs 22",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Legs 22"

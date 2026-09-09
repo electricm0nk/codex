@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 0,
-      "partial": 1,
+      "done": 1,
+      "partial": 0,
       "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1
@@ -17,7 +17,7 @@
       "items": [
         {
           "name": "Racial Traits ~ Rougarou",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Rougarou"
@@ -27,11 +27,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 1,
+      "done": 4,
       "partial": 0,
-      "not_started": 3,
+      "not_started": 0,
       "denominator": 4,
-      "pct": 25.0,
+      "pct": 100.0,
       "excluded_from_percentage": 18,
       "standing_breakdown": {
         "origin": 4,
@@ -40,21 +40,21 @@
       "items": [
         {
           "name": "Chastisement",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Chastisement"
         },
         {
           "name": "Dark Tapestry Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
           "display_name": "Dark Tapestry Subdomain"
         },
         {
           "name": "Dragon Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
           "display_name": "Dragon Subdomain"
@@ -68,7 +68,7 @@
         },
         {
           "name": "Feed on Fear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Feed on Fear"
@@ -82,7 +82,7 @@
         },
         {
           "name": "Hasten the End",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Hasten the End"
@@ -103,7 +103,7 @@
         },
         {
           "name": "Part the Veil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Part the Veil"
@@ -117,28 +117,28 @@
         },
         {
           "name": "Scalykind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal",
           "standing": "unclassified",
           "display_name": "Scalykind (Internal)"
         },
         {
           "name": "Scalykind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
           "display_name": "Scalykind (InquisitorDomain)"
         },
         {
           "name": "Serpent Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower.Animal Companion",
           "standing": "unclassified",
           "display_name": "Serpent Companion"
         },
         {
           "name": "Stars Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
           "display_name": "Stars Subdomain"
@@ -152,21 +152,21 @@
         },
         {
           "name": "Tyrannical Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Tyrannical Strike"
         },
         {
           "name": "Venomous Saliva",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Venomous Saliva"
         },
         {
           "name": "Venomous Stare",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike.DomainPower",
           "standing": "unclassified",
           "display_name": "Venomous Stare"
@@ -180,14 +180,14 @@
         },
         {
           "name": "Void",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal",
           "standing": "unclassified",
           "display_name": "Void (Internal)"
         },
         {
           "name": "Void",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
           "display_name": "Void (InquisitorDomain)"
@@ -532,7 +532,7 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #19"
@@ -617,7 +617,7 @@
         },
         {
           "name": "Scalykind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Scalykind"
@@ -645,7 +645,7 @@
         },
         {
           "name": "Void",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Void"
@@ -655,11 +655,11 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1
@@ -667,7 +667,7 @@
       "items": [
         {
           "name": "Rougarou",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Rougarou"
@@ -805,11 +805,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 8,
       "standing_breakdown": {
         "unclassified": 8,
@@ -860,7 +860,7 @@
         },
         {
           "name": "Rougarou",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Rougarou"
@@ -935,11 +935,11 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 0,
+      "done": 9,
       "partial": 0,
-      "not_started": 9,
+      "not_started": 0,
       "denominator": 9,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 9
@@ -947,63 +947,63 @@
       "items": [
         {
           "name": "Blight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blight"
         },
         {
           "name": "Bonus Language ~ Rougarou",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Rougarou"
         },
         {
           "name": "Derro",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Derro"
         },
         {
           "name": "IsRougarou",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsRougarou"
         },
         {
           "name": "Munavri",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Munavri"
         },
         {
           "name": "Rougarou",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rougarou"
         },
         {
           "name": "Rougarou",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Rougarou (Racial Heritage)"
         },
         {
           "name": "Troop",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Troop"
         },
         {
           "name": "Wild Hunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wild Hunt"

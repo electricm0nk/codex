@@ -242,7 +242,7 @@
         },
         {
           "name": "Damage Reduction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Damage Reduction (SpecialQuality.Extraordinary)"
@@ -452,7 +452,7 @@
         },
         {
           "name": "Frightful Presence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Frightful Presence"
@@ -487,7 +487,7 @@
         },
         {
           "name": "Hibernation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hibernation"
@@ -508,7 +508,7 @@
         },
         {
           "name": "Immunities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Immunities"
@@ -837,7 +837,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary)"
@@ -1012,7 +1012,7 @@
         },
         {
           "name": "Spell Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Spell Resistance"
@@ -1299,7 +1299,7 @@
         },
         {
           "name": "Unstoppable Force",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Unstoppable Force"
@@ -1365,11 +1365,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 38,
+      "done": 40,
       "partial": 0,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 40,
-      "pct": 95.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 40
@@ -1419,7 +1419,7 @@
         },
         {
           "name": "Chemnosit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Chemnosit"
@@ -1622,7 +1622,7 @@
         },
         {
           "name": "Volnagur",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Volnagur"
@@ -1660,11 +1660,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 0,
-      "partial": 1,
+      "done": 1,
+      "partial": 0,
       "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "unclassified": 1,
@@ -1673,14 +1673,14 @@
       "items": [
         {
           "name": "Paralysis",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAtack.Supernatural",
           "standing": "unclassified",
           "display_name": "Paralysis"
         },
         {
           "name": "Resistance to Mind-Affecting",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Resistance to Mind-Affecting"
@@ -1690,11 +1690,11 @@
     {
       "kind": "skill",
       "label": "Skills",
-      "done": 0,
+      "done": 4,
       "partial": 0,
-      "not_started": 4,
+      "not_started": 0,
       "denominator": 4,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 4
@@ -1702,28 +1702,28 @@
       "items": [
         {
           "name": "Perception (Dim Light)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUse",
           "standing": "origin",
           "display_name": "Perception (Dim Light)"
         },
         {
           "name": "Stealth (Cane Fields)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUse",
           "standing": "origin",
           "display_name": "Stealth (Cane Fields)"
         },
         {
           "name": "Stealth (Dim Light)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUse",
           "standing": "origin",
           "display_name": "Stealth (Dim Light)"
         },
         {
           "name": "Stealth (Jungle)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SkillUse",
           "standing": "origin",
           "display_name": "Stealth (Jungle)"
@@ -1733,11 +1733,11 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 0,
-      "partial": 3,
+      "done": 3,
+      "partial": 0,
       "not_started": 0,
       "denominator": 3,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "origin": 3,
@@ -1746,28 +1746,28 @@
       "items": [
         {
           "name": "Blighted Fey",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blighted Fey"
         },
         {
           "name": "Fungoid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fungoid"
         },
         {
           "name": "Vetala",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vetala"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI]"

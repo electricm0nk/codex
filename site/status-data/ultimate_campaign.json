@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 58,
-      "partial": 26,
+      "done": 84,
+      "partial": 0,
       "not_started": 0,
       "denominator": 84,
-      "pct": 69.0,
+      "pct": 100.0,
       "excluded_from_percentage": 4,
       "standing_breakdown": {
         "unclassified": 4,
@@ -18,21 +18,21 @@
       "items": [
         {
           "name": "+1 Skill Rank",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RetrainingSkillRanksAdded",
           "standing": "unclassified",
           "display_name": "+1 Skill Rank"
         },
         {
           "name": "-1 Skill Rank",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RetrainingSkillRanksRemoved",
           "standing": "unclassified",
           "display_name": "-1 Skill Rank"
         },
         {
           "name": "Ability Score Increase",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Ability Score Increase"
@@ -60,21 +60,21 @@
         },
         {
           "name": "Archetype",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Archetype"
         },
         {
           "name": "Attached",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Attached"
         },
         {
           "name": "Avarice",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Avarice"
@@ -123,14 +123,14 @@
         },
         {
           "name": "Class Feature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Class Feature"
         },
         {
           "name": "Class Level",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Class Level"
@@ -151,21 +151,21 @@
         },
         {
           "name": "Default",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Default"
         },
         {
           "name": "Dependent",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Dependent"
         },
         {
           "name": "Doubt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Doubt"
@@ -186,14 +186,14 @@
         },
         {
           "name": "Family Ties",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Family Ties"
         },
         {
           "name": "Feat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Feat"
@@ -228,21 +228,21 @@
         },
         {
           "name": "Headstrong",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Headstrong"
         },
         {
           "name": "Hedonistic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Hedonistic"
         },
         {
           "name": "Hit Point",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Hit Point"
@@ -256,7 +256,7 @@
         },
         {
           "name": "Lovesick",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Lovesick"
@@ -277,7 +277,7 @@
         },
         {
           "name": "Meticulous",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Meticulous"
@@ -298,7 +298,7 @@
         },
         {
           "name": "New Language",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "New Language"
@@ -340,35 +340,35 @@
         },
         {
           "name": "Paranoid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Paranoid"
         },
         {
           "name": "Power-Hungry",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Power-Hungry"
         },
         {
           "name": "Pride",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Pride"
         },
         {
           "name": "Provincial",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Provincial"
         },
         {
           "name": "Racial Trait",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Racial Trait"
@@ -431,14 +431,14 @@
         },
         {
           "name": "Sentimental",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Sentimental"
         },
         {
           "name": "Skill Ranks",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Skill Ranks"
@@ -557,7 +557,7 @@
         },
         {
           "name": "Spells Known",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Spells Known"
@@ -578,7 +578,7 @@
         },
         {
           "name": "Vain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Vain"
@@ -599,14 +599,14 @@
         },
         {
           "name": "Xenophobic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "unclassified",
           "display_name": "Xenophobic"
         },
         {
           "name": "Zealous",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Zealous"
@@ -813,11 +813,11 @@
     {
       "kind": "trait",
       "label": "Traits",
-      "done": 134,
-      "partial": 4,
-      "not_started": 1,
+      "done": 139,
+      "partial": 0,
+      "not_started": 0,
       "denominator": 139,
-      "pct": 96.4,
+      "pct": 100.0,
       "excluded_from_percentage": 15,
       "standing_breakdown": {
         "origin": 139,
@@ -847,7 +847,7 @@
         },
         {
           "name": "Alchemical Intuition",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Alchemical Intuition"
@@ -973,7 +973,7 @@
         },
         {
           "name": "Blood of Dragons",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.RaceTrait.BloodlineTrait",
           "standing": "origin",
           "display_name": "Blood of Dragons"
@@ -1050,7 +1050,7 @@
         },
         {
           "name": "Deathtouched",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.RaceTrait",
           "standing": "origin",
           "display_name": "Deathtouched"
@@ -1155,7 +1155,7 @@
         },
         {
           "name": "Fate's Favored",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Fate's Favored"
@@ -1351,7 +1351,7 @@
         },
         {
           "name": "Loyalty across Lifetimes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Loyalty across Lifetimes"
@@ -1568,7 +1568,7 @@
         },
         {
           "name": "Sacred Conduit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Sacred Conduit"
@@ -1883,7 +1883,7 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.BasicTrait.ReligionTrait) #3"
@@ -1897,7 +1897,7 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.BasicTrait.ReligionTrait) #5"
