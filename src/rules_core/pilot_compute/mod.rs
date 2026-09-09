@@ -178,7 +178,7 @@ pub mod untabled_base_class_feature_roster;
 // harness, its corpus-wide scan, the `BonusObj`-shape bonus-stack reader and the race-trait
 // formula binding are CONVERTER code. They were on the live side; they now live under
 // `src/pcgen_import/` (`crate::pcgen_import::formula_interpreter`, `::formula_reproduction_harness`,
-// `::formula_interpreter_corpus_wide`, `::bonus_stack_reader`, `::race_trait_formula_binding`).
+// `::formula_interpreter_corpus_wide`, the bonus-stack reader, `::race_trait_formula_binding`).
 // They are KEPT, not deleted -- they are reused for Starfinder (`decisions.md` §11, what is kept).
 /// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycles 5-7 — the generic
 /// companion base-ability-score table, generalizing `ground_wolf_companion_stat_block`/
@@ -29367,8 +29367,8 @@ fn ground_marksman_class_features(
             detail: format!(
                 "Marksman level {level} Marksman Manifesting: {v} powers known \
                  (min(9,floor((3*level-1)/4)), plus floor((level-13)/2) summed in once \
-                 level >= 15 -- PCGen's documented multiple-BONUS:VAR-on-one-target SUM \
-                 semantics, bonus_stack_reader.rs)"
+                 level >= 15 -- the two same-target bonus rows sum, the converter-side \
+                 bonus-stack reader's documented semantics)"
             ),
         });
     }
@@ -30740,8 +30740,8 @@ fn ground_psion_class_features(
             detail: format!(
                 "Psion level {level} Psion Manifesting: {v} powers known \
                  (min(21,2*level+1), plus floor((level-10)*3/2) summed in once level >= 11 -- \
-                 PCGen's documented multiple-BONUS:VAR-on-one-target SUM semantics, \
-                 bonus_stack_reader.rs)"
+                 the two same-target bonus rows sum, the converter-side bonus-stack \
+                 reader's documented semantics)"
             ),
         });
     }
@@ -47106,7 +47106,7 @@ fn pool_member_terminal_targets_and_resolved_vars(
 /// member record carries, rather than refusing once there is more than one. The real PCGen rule
 /// this implements (established by reading `pcgen/core/PlayerCharacter.java:2136` and
 /// `pcgen/core/BonusManager.java`'s `sumActiveBonusMap`, both already cited in
-/// `bonus_stack_reader.rs`'s own module doc): a `BONUS:VAR` target's value is the sum of every
+/// the converter-side bonus-stack reader's own module doc): a bonus target's value is the sum of every
 /// ACTIVE contribution filed under THAT variable's own name -- summation only ever happens WITHIN
 /// one target name. A record carrying several `BONUS:VAR` tokens with DIFFERENT target names
 /// (`Forbidden Rites Domain ~ Madness Domain`'s real `DomainMadnessDC`/`DomainMadnessTimes`/
