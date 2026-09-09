@@ -36,14 +36,15 @@
   > failed-prereq option and includes a met one.
 
 - **Receipt rows (mechanical):**
-  `closed=0 relabeled=0 rust_lines_changed=835 ratio=n/a builds_recorded=3 pcgen_live_files=260`
+  `closed=0 relabeled=0 rust_lines_changed=844 ratio=n/a builds_recorded=4 pcgen_live_files=260`
   (`python3 scripts/cycle_scope_gate.py --receipt --since 7557ab00fa --before
   /tmp/wi-before-AT-35-E5-004.json --after docs/work-inventory.json --target-dir
   /tmp/cargo-sd35-AT-35-E5-004`; detail lines `regressed=0 added=0 dropped=0`,
   `closed_by_kind=` and `relabeled_moves=` both empty). `closed=0` is correct and expected:
-  the population was already 0 at the cycle start. `builds_recorded=3` counts the lib build,
-  the converter/inventory generator runs and the test-target build — the generator runs the
-  procedure itself mandates, not one build per item.
+  the population was already 0 at the cycle start. `builds_recorded=4` counts the lib build, the
+  converter/inventory generator runs, the test-target build and the clippy pass — the generator
+  runs the procedure itself mandates, not one build per item. Both figures are quoted at the
+  cycle's final HEAD (`0f5ada8377`), not at its first commit.
 - **PCGen residue:**
   `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`
   (`python3 scripts/pcgen_residue_gate.py --check`). Identical to the baseline, and identical

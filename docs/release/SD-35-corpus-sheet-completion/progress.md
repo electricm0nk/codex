@@ -50,7 +50,7 @@ re-measured at the cut by the launch-readiness audit.
   the whole corpus, so there was nothing in any bucket to bundle in. Bucket X reached 0 at
   `26bdfa8d5b`; this cycle pays the criterion's **second** Evidence clause, which kanban row 22
   recorded as explicitly unpaid.
-- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=835 ratio=n/a builds_recorded=3
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=844 ratio=n/a builds_recorded=4
   pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 7557ab00fa --target-dir
   /tmp/cargo-sd35-AT-35-E5-004`; `regressed=0 added=0 dropped=0`, `closed_by_kind=` and
   `relabeled_moves=` empty). This cycle moves no unit — the criterion's 168 closed at
