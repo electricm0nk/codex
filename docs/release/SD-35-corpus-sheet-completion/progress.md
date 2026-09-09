@@ -41,6 +41,54 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — Epic 4 wrap-up (`§10` step 0) — gate RED on `figure-provenance`, correction cycle GREEN — **complete**
+
+**Status: complete.** Docs + one baseline line; zero units moved by design. Receipt
+`artifacts/epic-4-resolve-and-verify/EPIC-4_wrapup_correction_cycle_receipt.md`.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2`. Not exempt
+  from the residue check, which ran at start and at end.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=null builds_recorded=1 pcgen_live_files=260`
+  (`ratio` is **null**, not `0.0` — 0 lines over 0 units is a division by zero; `git diff --stat HEAD -- '*.rs'` empty).
+- **Refused tokens:** none — this cycle converts nothing, so it emits no `deferral`. The 15 open
+  Epic 1-3 deferrals are unchanged and remain Epic 7 business (`retro.py summary` → `15 total, 15 open`).
+- **The gate:** the Epic 4 wrap-up worker's full `scripts/verify.sh` was 47 PASS / 1 FAIL over 48
+  stages in 5,432 s at `5e2c0c8c5b`. The one red stage was **`figure-provenance`**
+  (`denominator_gate.py --check-provenance`), `violations=2` of `figures_examined=228`. Not a code
+  defect — root-full 8,727 passed across 412 suites, desktop 574, clippy 0/0, corpus-sweep 0
+  findings, `sheet-rules-check` / `token-coverage` / `pcgen-residue-gate` all PASS, frontend 101/101.
+- **Fix 1 — the red stage.** Both violations were one sentence in
+  `AT-35-E4-003_cycle1_receipt.md` (lines 129/131) carrying three inline figures
+  (`0 units non-DONE`, `49,438`, `4,726`) sourced by a cross-reference instead of a same-line
+  command. The three figures were **moved into the table as rows, each with its own command**; the
+  header sentence is now figure-free. No ignore list, no glob narrowing, no deleted figures.
+- **Fix 2 — the control (`AGENTS.md` rule 8).** Incident key
+  `figure-provenance-command-on-next-line` has fired **3 times** (Epic 2, 3, 4 wrap-ups). Root
+  cause, verified against the repo: `§6` step 3's per-cycle gate block ran `denominator_gate.py
+  --check`, while the `verify.sh` stage runs the **different flag** `--check-provenance` — so no
+  cycle could ever catch the shape locally and every instance surfaced only on the ~90-minute
+  wrap-up gate. `§6` step 3 now runs **both**, with the second annotated as a different flag whose
+  nonzero exit blocks the push.
+- **Fix 3 — the stale baseline, RAISED not lowered.** `BASELINE_ROOT_TEST_BINARIES` 411 → 412.
+  Attributed exhaustively, not copied: `git log --diff-filter=A --name-only e0280a8fea..HEAD --
+  'src/bin/*.rs' 'tests/*.rs'` returns **exactly one** file, `src/bin/sheet_rule_bucket_v_render.rs`
+  (AT-35-E4-002 cycle 1), which has **0** `#[test]` fns — `cargo test` builds a harness for every
+  bin target, so it adds one `Running` line and no passing test. `check_floor` asserts measured ≥
+  baseline, so this tightens the gate.
+- **Discovery — the gate accepts a command that does not run.** `--check-provenance` verifies a
+  re-derive command is *present* and its script path *resolves*, never that it *executes*. Two of
+  the three commands first written to clear the stage made it green while erroring on execution
+  (a nonexistent `state` unit field; a regex missing the `V` in `4,334 + V 392`). Caught by
+  running each command; the third, invented and unsourceable, was **dropped rather than guessed**.
+  Correction `1788965350822-at-35-e4-wrapup-fix-3de362`; the standing instruction to execute every
+  figure command is now in `§6` step 3.
+- **Gate-worker artifacts committed here** (it pushed nothing; all three were untracked in
+  worktree `wf_291be5c8-5f3-27`): `EPIC-4_wrapup_gate_report.md`,
+  `docs/retro/events/at-35-e4-wrapup.jsonl` (3 events),
+  `docs/retro/events/epic4-wrapup-gate.jsonl` (`verify.sh`'s own verification event).
+- **Notable:** `site-dashboard-check` PASSED — it was red at both the Epic 2 and Epic 3 wrap-ups;
+  the Epic 3 fix cycle's control held across Epic 4's three cycles.
+
 ### 2026-09-09 — Epic 5 / AT-35-E5-001 cycle 1 — bucket A's two tables, transcript clause paid — **complete**
 
 **Status: complete.** Code + artifact commit `7a0bf64bbf` (cycle start `5e2c0c8c5b`); docs
