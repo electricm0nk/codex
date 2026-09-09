@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "criterion": "AT-35-E4-003",
+  "epic": "Epic 4 — Resolve and verify",
+  "derived_by": "one row per Epic 4 cycle, transcribed from that cycle's own receipt row `Receipt rows (mechanical)` — the literal output of `python3 scripts/cycle_scope_gate.py --receipt --since <cycle start sha> --before /tmp/wi-before-<actor>.json --after docs/work-inventory.json`",
+  "reading_rule": "`ratio` is `rust_lines_changed / units_closed` and is `null` for a cycle that closed zero units (a division by zero, never a 0.0). `builds_recorded` must be 1 (`decisions.md §3`); a value above 1 is a real overrun and is named in `note`; 0 is the counter's reading for a cycle that paid no build-number bump — either a docs-only cycle that changed no Rust, or a converter/inventory cycle whose cargo runs do not bump the repo's build-number file (that case is named in `note` with the builds actually paid). `pcgen_live_files` must not rise (`decisions.md §11`); the baseline is 260 (`AT-35-E1-005`).",
+  "verified_at": {
+    "sha": "e7f66b1f80029b3d8eb0c8892d614943fe5491cd",
+    "by": "AT-35-E4-003 cycle 1",
+    "method": "every row re-read against its `receipt` file's `- **Scope gate:**` and `- **Receipt rows (mechanical):**` lines: `grep -hnE '^\\- \\*\\*(Receipt rows|Scope gate|Status)' docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/*_receipt.md` and `grep -hE 'closed=[0-9]+ relabeled' docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/*_receipt.md`; totals re-summed from the rows with `python3 -c \"import json;c=json.load(open('docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/rate-ledger.json'))['cycles'];print(len(c),sum(x['units_closed'] for x in c),sum(x['units_relabeled'] for x in c),sum(x['rust_lines_changed'] for x in c),sum(x['builds_recorded'] for x in c))\"`",
+    "result": "3 rows, 0 transcription discrepancies against the two committed receipts; the third row is this verification cycle's own and is transcribed from `AT-35-E4-003_cycle1_receipt.md`",
+    "completeness": "the epic's cycle set is closed at this sha: `ls docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/*_receipt.md | wc -l` = 2 before this cycle, 3 after, one `cycles` row each. The Epic 4 wrap-up gate (`workflow-instruction.md §10`) has not run at this sha and is not a cycle row — the Epic 3 precedent is the same (its ledger was written at `697b7780ea`, before `EPIC-3_wrapup_gate_report.md` and `EPIC-3_wrapup_fix_cycle_receipt.md` existed)."
+  },
+  "cycles": [
+    {
+      "cycle": "AT-35-E4-001_cycle1",
+      "mechanism": "24 converter mapping rows plus one head alias (`GLOBALVAR:ABILITY` → the existing `ABILITY` row) — the table gap behind `token-coverage.json`'s 25 unmapped compute-bearing token types, taken 25 → 0",
+      "scoped_population": 0,
+      "scope_gate": "scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER",
+      "units_closed": 0,
+      "units_relabeled": 0,
+      "wall_time": "`corpus_literal_sweep` 154.39 s; `derived_evaluator_fixture_check` 12.80 s; `v06_work_inventory` 755.88 s; `sheet_rule_convert` 110.9 s; `sheet_rule_parity` 17.9 s; the single verification pass is recorded in the receipt's `Build scope verified` row (`cargo test --locked --no-fail-fast -j 6` → 8,754 passed over 412 suites)",
+      "rust_lines_changed": 131,
+      "ratio": null,
+      "builds_recorded": 0,
+      "pcgen_live_files": 260,
+      "note": "Closes zero units by design: bucket M — and the whole remainder — was already 0 at the cycle start (`AT-35-E3-002_cycle1` had taken the corpus to DONE 49,438 of 49,438), so the gate reads `PASS_WHOLE_REMAINDER`, not a floor exemption. `ratio` is null (division by zero). `builds_recorded=0` is the counter's reading — this cycle paid four cargo builds and four corpus-scale runs, but a converter/inventory cycle does not bump the repo's build-number file. Movement is evidence, not bucket: 127 units moved inside `sheet-complete` (126 `sheet_rule_rendered:words` → `:number`, 1 → `:dice`), `degraded_records` 974 → 603, and `unmapped_token_types` 25 → 0. Oracle parity `compared=146 agree=145 disagree=1` (lines) / `compared=382 agree=376 disagree=6` (chassis): 7 disagreements, all pre-existing, 0 introduced, 0 fixed. One self-healed test assertion (`token_census_names_the_row_for_every_token_and_the_head_under_each_refusal`) that pinned the very table gap this cycle closed.",
+      "receipt": "AT-35-E4-001_cycle1_receipt.md"
+    },
+    {
+      "cycle": "AT-35-E4-002_cycle1",
+      "mechanism": "bucket V's 392 units through the oracle harness once — a new two-tier parity run (`export`: PCGen's BatchExporter over 21 computed campaign carriers, 286 units; `source`: the record's own row in the pinned checkout, 106 units) against the live evaluator's rendered values, not the old string-formula path's",
+      "scoped_population": 0,
+      "scope_gate": "scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER",
+      "units_closed": 0,
+      "units_relabeled": 0,
+      "wall_time": "engine side (392 units rendered) 2.8 s; `source` oracle tier 1.5 s; `export` oracle tier 264.1 s (4.4 min) at `--jobs 3`, 0 export failures, against a stated projection of ≈ 329 s measured from the first 3 carriers; `cargo test --locked --no-fail-fast -j 6` ≈ 74 min",
+      "rust_lines_changed": 171,
+      "ratio": null,
+      "builds_recorded": 1,
+      "pcgen_live_files": 260,
+      "note": "Closes zero units by design: bucket V was already 0 at the cycle start (`AT-35-E3-002_cycle1`, `26bdfa8d5b`, closed V 392 → 0). What was outstanding was the second half of the Evidence sentence — the corpus-wide oracle run, which had never been made. `ratio` is null (division by zero). `builds_recorded=1`, on target; the 171 Rust lines are one new tool-side binary (`src/bin/sheet_rule_bucket_v_render.rs`) and no existing Rust file changed. Oracle verdicts: `compared=392 oracle_agree=184 oracle_disagreement=10 oracle_unverifiable=198`, every disagreement named in the receipt. Two instrument corrections, both in this cycle's own new harness and both caught by the run itself.",
+      "receipt": "AT-35-E4-002_cycle1_receipt.md"
+    },
+    {
+      "cycle": "AT-35-E4-003_cycle1",
+      "mechanism": "the ledger itself — the two preceding rows re-verified against their committed receipts, this row added, and the epic's cycle set proved closed (2 receipts before, 3 after; one `cycles` row each)",
+      "scoped_population": 0,
+      "scope_gate": "SCOPE_GATE: EXEMPT (ledger cycle — records this epic's per-cycle rows; closes zero units by design)",
+      "units_closed": 0,
+      "units_relabeled": 0,
+      "wall_time": "gates only, no figure-moving run: `pcgen_residue_gate.py --check`, `completion_atlas.py --check`, `token_coverage.py --check`, `shape_engine_boundary.py --check`, `missing_engine_tables.py --check`, the `data/sheet_rules/` token grep, `denominator_gate.py --check` and `verify.sh --only pi-sweep`, all under 3 min together",
+      "rust_lines_changed": 0,
+      "ratio": null,
+      "builds_recorded": 0,
+      "pcgen_live_files": 260,
+      "note": "Docs-only: the diff is this file plus the receipt, `progress.md` and `kanban.md`, so no Rust changed and no cargo build was paid — `builds_recorded=0`, not 1 (`workflow-instruction.md §6` step 3: the build runs after a figure-moving change; the `AT-35-E3-004_cycle1` precedent). `ratio` is null (division by zero). Closes zero units by design; the epic's unit population was already 0 at cycle start (`completion_atlas.py --check` → DONE 49,438 of 49,438).",
+      "receipt": "AT-35-E4-003_cycle1_receipt.md"
+    }
+  ],
+  "totals": {
+    "cycles": 3,
+    "units_closed": 0,
+    "units_relabeled": 0,
+    "rust_lines_changed": 302,
+    "ratio_over_the_epic": null,
+    "builds_recorded": 1,
+    "pcgen_live_files_start": 260,
+    "pcgen_live_files_end": 260,
+    "denominator": "0 of the 0 units that were non-DONE of 49,438 at Epic 4's first cycle start (`07e29075b4`, the `since=` sha of `AT-35-E4-001_cycle1`). Epic 4's authoring-time population — M 4,334 + V 392 = 4,726 of the 23,315 then non-DONE — had already been closed by Epic 3's cycles, `AT-35-E3-001_cycle2` (618 units) and `AT-35-E3-002_cycle1` (786 units, the whole remainder), so every Epic 4 cycle closed 0 of a 0-unit scoped population and `ratio_over_the_epic` is null (division by zero), not 0.0. What Epic 4's cycles moved instead is recorded per row: `AT-35-E4-001_cycle1` took `unmapped_token_types` 25 → 0 and `degraded_records` 974 → 603 without moving a bucket, and `AT-35-E4-002_cycle1` produced the corpus-wide oracle verdicts (392 compared, 184 agree, 10 disagree, 198 unverifiable) that bucket V's closure was owed."
+  }
+}
