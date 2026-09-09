@@ -3,7 +3,14 @@
   "criterion": "AT-35-E3-004",
   "epic": "Epic 3 — Place and surface",
   "derived_by": "one row per Epic 3 cycle, transcribed from that cycle's own receipt row `Receipt rows (mechanical)` — the literal output of `python3 scripts/cycle_scope_gate.py --receipt --since <cycle start sha> --before /tmp/wi-before-<actor>.json --after docs/work-inventory.json`",
-  "reading_rule": "`ratio` is `rust_lines_changed / units_closed` and is `null` for a cycle that closed zero units (a division by zero, never a 0.0). `builds_recorded` must be 1 (`decisions.md §3`); a value above 1 is a real overrun and is named in `note`. `pcgen_live_files` must not rise (`decisions.md §11`); the baseline is 260 (`AT-35-E1-005`).",
+  "reading_rule": "`ratio` is `rust_lines_changed / units_closed` and is `null` for a cycle that closed zero units (a division by zero, never a 0.0). `builds_recorded` must be 1 (`decisions.md §3`); a value above 1 is a real overrun and is named in `note`; 0 is a docs-only cycle that changed no Rust and so paid no build. `pcgen_live_files` must not rise (`decisions.md §11`); the baseline is 260 (`AT-35-E1-005`).",
+  "verified_at": {
+    "sha": "697b7780ea28f9a7ee284a54d676069c23961101",
+    "by": "AT-35-E3-004 cycle 1",
+    "method": "every row re-read against its `receipt` file's `- **Scope gate:**` and `- **Receipt rows (mechanical):**` lines: `grep -hnE '^\\- \\*\\*(Receipt rows|Scope gate|Status)' docs/release/SD-35-corpus-sheet-completion/artifacts/epic-3-place-and-surface/*_receipt.md`; totals re-summed from the rows with `python3 -c \"import json;c=json.load(open('docs/release/SD-35-corpus-sheet-completion/artifacts/epic-3-place-and-surface/rate-ledger.json'))['cycles'];print(len(c),sum(x['units_closed'] for x in c),sum(x['units_relabeled'] for x in c),sum(x['rust_lines_changed'] for x in c),sum(x['builds_recorded'] for x in c))\"`",
+    "result": "5 rows, 0 transcription discrepancies against the four committed receipts; the fifth row is this verification cycle's own and is transcribed from `AT-35-E3-004_cycle1_receipt.md`",
+    "completeness": "the epic's cycle set is closed at this sha: `ls docs/release/SD-35-corpus-sheet-completion/artifacts/epic-3-place-and-surface/*_receipt.md | wc -l` = 5, one `cycles` row each"
+  },
   "cycles": [
     {
       "cycle": "AT-35-E3-001_cycle1",
@@ -64,10 +71,25 @@
       "pcgen_live_files": 260,
       "note": "Closes zero units by design -- bucket C was already 0 at cycle start, and so was the whole remainder. ratio is null (division by zero), not 0.0. builds_recorded=1, on target. The 37 Rust lines are entirely #[cfg(test)] plus one comment: the suffix list they guard is byte-identical to before (git diff --stat = 37 insertions, 0 deletions), so the inventory was not regenerated. Emptied no card.",
       "receipt": "AT-35-E3-003_cycle1_receipt.md"
+    },
+    {
+      "cycle": "AT-35-E3-004_cycle1",
+      "mechanism": "the ledger itself — the four preceding rows re-verified against their committed receipts, this row added, and the epic's cycle set proved closed (5 receipts, 5 rows)",
+      "scoped_population": 0,
+      "scope_gate": "SCOPE_GATE: EXEMPT (ledger cycle — records this epic's per-cycle rows; closes zero units by design)",
+      "units_closed": 0,
+      "units_relabeled": 0,
+      "wall_time": "gates only, no figure-moving run: completion_atlas.py --check, token_coverage.py --check, shape_engine_boundary.py --check, missing_engine_tables.py --check, the data/sheet_rules token grep, denominator_gate.py --check and verify.sh --only pi-sweep, all under 3 min together",
+      "rust_lines_changed": 0,
+      "ratio": null,
+      "builds_recorded": 0,
+      "pcgen_live_files": 260,
+      "note": "Docs-only: the diff is this file plus the receipt, progress.md and kanban.md, so no Rust changed and no cargo build was paid — builds_recorded=0, not 1 (`§6` step 3: the build runs after a figure-moving change; the AT-35-E3-001_cycle1 precedent). ratio is null (division by zero). Closes zero units by design; the epic's unit population was already 0 at cycle start (`completion_atlas.py --check` → DONE 49438 of 49438).",
+      "receipt": "AT-35-E3-004_cycle1_receipt.md"
     }
   ],
   "totals": {
-    "cycles": 4,
+    "cycles": 5,
     "units_closed": 1404,
     "units_relabeled": 0,
     "rust_lines_changed": 535,
@@ -75,6 +97,6 @@
     "builds_recorded": 7,
     "pcgen_live_files_start": 260,
     "pcgen_live_files_end": 260,
-    "denominator": "1,404 of the 1,404 units that were non-DONE of 49,438 at Epic 3's first cycle (`a542652c5e`); 0 remain. Cycle 4 (AT-35-E3-003_cycle1) closed 0 of a 0-unit scoped population -- a verification cycle -- so it moves rust_lines_changed and builds_recorded but not units_closed, and ratio_over_the_epic stays over the same 1,404 denominator."
+    "denominator": "1,404 of the 1,404 units that were non-DONE of 49,438 at Epic 3's first cycle (`a542652c5e`); 0 remain. Cycles 4 and 5 (AT-35-E3-003_cycle1, AT-35-E3-004_cycle1) each closed 0 of a 0-unit scoped population -- a verification cycle and this ledger cycle -- so cycle 4 moves rust_lines_changed and builds_recorded and cycle 5 moves neither, while units_closed and ratio_over_the_epic stay over the same 1,404 denominator."
   }
 }

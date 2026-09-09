@@ -41,6 +41,66 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — Epic 3 / AT-35-E3-004 cycle 1 — the rate ledger verified against its receipts and closed over its own cycle — **complete**
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (ledger cycle — records this epic's per-cycle rows; closes
+  zero units by design)` — `decisions.md §2` / `workflow-instruction.md §6` step 1. The
+  exemption is legitimate because the cycle moves no unit **and** the population was already
+  zero: `python3 scripts/completion_atlas.py --check` at `697b7780ea` → `DONE 49438 of 49438`,
+  every other bucket 0. **Nothing is exempt from the residue check:** `python3
+  scripts/pcgen_residue_gate.py --check` at start and at end →
+  `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since
+  697b7780ea28f9a7ee284a54d676069c23961101 --before /tmp/wi-before-AT-35-E3-004.json --after
+  docs/work-inventory.json`, `residue_gate=present`; `closed_by_kind=` and `relabeled_moves=`
+  empty; `regressed=0 added=0 dropped=0`). Docs-only diff, so **no cargo build was paid** —
+  `builds_recorded=0`, not 1; the `AT-35-E3-001_cycle1` shape. `ratio` is `n/a`, a division by
+  zero, never `0.0`.
+- **Refused tokens:** **none** — the cycle read no corpus record and added no converter mapping
+  row.
+- **What the cycle found.** All four transcribed rows were **correct** — every `scope_gate`,
+  `units_closed`, `units_relabeled`, `rust_lines_changed`, `ratio`, `builds_recorded` and
+  `pcgen_live_files` value re-verified against its receipt's literal `- **Receipt rows
+  (mechanical):**` line (`grep -hnE '^- \*\*(Receipt rows|Scope gate|Status)'
+  artifacts/epic-3-place-and-surface/*_receipt.md`), and `totals` re-summed to
+  `5 1404 0 535 7`. The defect was **completeness, not a figure**: a ledger written by cycles 3
+  and 4 cannot contain the cycle that verifies it, so the epic's fifth cycle had no row and
+  `kanban.md` row 15 read `complete` with no receipt behind it. Fixed by adding the
+  `AT-35-E3-004_cycle1` row, a `verified_at` block naming the closure test
+  (`ls …/*_receipt.md | wc -l` must equal `len(cycles)` — 5 = 5), and a `reading_rule` sentence
+  that reads `builds_recorded: 0` as a docs-only cycle rather than a missing figure.
+  Correction event `1788931528463-at-35-e3-004-61942b`.
+- **`ratio_over_the_epic` = 0.38 = 535 / 1404.** Denominator: the **1,404** units non-DONE of
+  49,438 at Epic 3's first cycle (`a542652c5e`) — not the 23,315 of bundle launch. The three
+  zero-closing cycles (E3-001 c1, E3-003 c1, this one) contribute Rust lines and builds but no
+  closures, so the denominator does not move.
+- **`builds_recorded` = 7 over 5 cycles** against a per-cycle target of 1 (`decisions.md §3`).
+  Reported, not smoothed: 0 / 3 / 3 / 1 / 0. The two 3s are named in their `note` rows as three
+  sequential prerequisite builds (converter → stamp-guard → test), not three verification passes.
+- **`pcgen_live_files` = 260 on every row, start to end** — it did not rise on any Epic 3 cycle.
+- **Gates run at HEAD** (no cargo stage: nothing outside `docs/` changed — `git diff --stat
+  697b7780ea..HEAD -- src scripts tests data apps` empty, `§6` step 3's figure-moving guard):
+  `completion_atlas.py --check` exit 0 (`unclassified=0 overlap=0 done_evidence_violations=0
+  missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`);
+  `token_coverage.py --check` exit 0 (`refused=142 refused_non_done=0 token_types=232 shapes=1
+  verdict=PASS`); `shape_engine_boundary.py --check` exit 0 (`magnitude_bearing=26396
+  not_held_by_engine=0 citation_ok=True`); `missing_engine_tables.py --check` exit 0
+  (`population=0 kinds=0 citation_failures=0`); `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL='
+  data/sheet_rules/ | wc -l` → `0`; `denominator_gate.py --check` → `files_checked=52
+  violations=0`; `scripts/verify.sh --only pi-sweep` → `PASS (11 hits over
+  src/rules_core/rules_tables, 11 baseline rows)`. Audits: `OK_NO_BUNDLE_TAGS` /
+  `OK_NO_TOKENS` on this cycle's diff.
+- **Tree hygiene.** The atlas `--check` re-stamped SD-34's `completion-atlas.json` `derived_at`;
+  reverted, outside this cycle's set, as every prior Epic 3 cycle did. `verify.sh` logged its
+  own `pi-sweep` verification event under the ambient `RETRO_ACTOR=sd31-transcribe`
+  (`1788931488891-sd31-transcribe-95f204`, `head=697b7780ea`, the log dir matches this run);
+  folded into this commit rather than left as tree litter.
+- **Receipt:** `artifacts/epic-3-place-and-surface/AT-35-E3-004_cycle1_receipt.md`.
+- **Next-cycle scope:** criterion at zero. Epic 3's four criteria are all `complete`; the
+  remaining board exposure (rows 17, 22, 23) is elsewhere, carried by deferral
+  `1788922132640-at-35-e3-002-ac4da5`.
+
 ### 2026-09-09 — Epic 3 / AT-35-E3-003 cycle 1 — bucket C verified at zero at HEAD, and SD-34 register C1.8's carried one-liner dispositioned — **complete**
 
 - **Scope gate:** `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER` — the
