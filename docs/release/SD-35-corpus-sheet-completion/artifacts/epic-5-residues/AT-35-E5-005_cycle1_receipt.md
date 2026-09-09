@@ -30,7 +30,10 @@
 - **Wired-integration audit result:** OK_NO_TOKENS on this cycle's own diff. Over Epic 5's whole
   file-touch set since `fe5ae6cd4a` the same grep
   (`\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b`) returns **14** matches at
-  start and **14** on the final diff — **0 of them added by this cycle**, and every one already
+  start and **16** once this receipt itself is committed. The **2** added are this receipt's own
+  two lines — the sentence you are reading, which quotes the pattern, and the line below naming
+  the Tophet / Plant Growth rulebook prose. **0 code hits were added by this cycle**, which ships
+  no code; the other 14 were already
   named by AT-35-E3-001's and AT-35-E5-003's receipts: rulebook-prose strings inside
   `data/sheet_rules/**` `ProsePiece::Text` (Tophet "hack or smash", Plant Growth "hack or force"),
   earlier receipts' own audit sentences quoting the pattern, and **removed** (`-`) inventory lines
