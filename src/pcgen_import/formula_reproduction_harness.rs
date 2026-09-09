@@ -76,15 +76,15 @@ pub struct HandModelledCitation {
 /// which functions inside these files count — that is [`citations_in_source`]'s job, driven by
 /// the doc-comment text alone.
 const HAND_MODELLED_FUNCTION_HOME_FILES: &[(&str, &str)] = &[
-    ("pilot_compute/mod.rs", include_str!("mod.rs")),
-    ("pilot_compute/class_slayer.rs", include_str!("class_slayer.rs")),
+    ("pilot_compute/mod.rs", include_str!("../rules_core/pilot_compute/mod.rs")),
+    ("pilot_compute/class_slayer.rs", include_str!("../rules_core/pilot_compute/class_slayer.rs")),
     (
         "pilot_compute/class_ultimate_combat.rs",
-        include_str!("class_ultimate_combat.rs"),
+        include_str!("../rules_core/pilot_compute/class_ultimate_combat.rs"),
     ),
     (
         "pilot_compute/class_feature_grant_consumer.rs",
-        include_str!("class_feature_grant_consumer.rs"),
+        include_str!("../rules_core/pilot_compute/class_feature_grant_consumer.rs"),
     ),
 ];
 
@@ -300,7 +300,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "CavalierLVL",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::cavalier_challenge_uses_per_day(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::cavalier_challenge_uses_per_day(s.level))
         ),
         case!(
             cavalier_bonus_combat_feat_count,
@@ -309,7 +309,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "CavalierLVL",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::cavalier_bonus_combat_feat_count(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::cavalier_bonus_combat_feat_count(s.level))
         ),
         case!(
             alchemist_bomb_damage_dice,
@@ -318,7 +318,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "AlchemistBombLVL",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::alchemist_bomb_damage_dice(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::alchemist_bomb_damage_dice(s.level))
         ),
         case!(
             alchemist_bomb_damage_bonus,
@@ -327,7 +327,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "",
             "INT",
             "pilot_compute/mod.rs",
-            |s| super::alchemist_bomb_damage_bonus(s.ability_mod as i16) as i64
+            |s| crate::rules_core::pilot_compute::alchemist_bomb_damage_bonus(s.ability_mod as i16) as i64
         ),
         case!(
             alchemist_bomb_dc,
@@ -336,7 +336,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "AlchemistBombLVL",
             "INT",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::alchemist_bomb_dc(s.level, s.ability_mod as i16))
+            |s| i64::from(crate::rules_core::pilot_compute::alchemist_bomb_dc(s.level, s.ability_mod as i16))
         ),
         case!(
             slayer_sneak_attack_dice,
@@ -345,7 +345,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "SlayerSneakAttackLVL",
             "",
             "pilot_compute/class_slayer.rs",
-            |s| i64::from(super::slayer_sneak_attack_dice(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::slayer_sneak_attack_dice(s.level))
         ),
         case!(
             slayer_trap_sense_bonus,
@@ -354,7 +354,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "SlayerTrapSenseLVL",
             "",
             "pilot_compute/class_slayer.rs",
-            |s| i64::from(super::slayer_trap_sense_bonus(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::slayer_trap_sense_bonus(s.level))
         ),
         case!(
             monk_high_jump_acrobatics_bonus,
@@ -363,7 +363,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "MonkLVL",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::monk_high_jump_acrobatics_bonus(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::monk_high_jump_acrobatics_bonus(s.level))
         ),
         case!(
             monk_wholeness_of_body_healing,
@@ -372,7 +372,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "MonkLVL",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::monk_wholeness_of_body_healing(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::monk_wholeness_of_body_healing(s.level))
         ),
         case!(
             inquisitor_bane_pool_rounds,
@@ -381,7 +381,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "InquisitorLVL",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::inquisitor_bane_pool_rounds(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::inquisitor_bane_pool_rounds(s.level))
         ),
         case!(
             inquisitor_monster_lore_bonus,
@@ -390,7 +390,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "",
             "WIS",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::inquisitor_monster_lore_bonus(s.ability_mod as i16))
+            |s| i64::from(crate::rules_core::pilot_compute::inquisitor_monster_lore_bonus(s.ability_mod as i16))
         ),
         case!(
             inquisitor_cunning_initiative_bonus,
@@ -399,7 +399,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "",
             "WIS",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::inquisitor_cunning_initiative_bonus(s.ability_mod as i16))
+            |s| i64::from(crate::rules_core::pilot_compute::inquisitor_cunning_initiative_bonus(s.ability_mod as i16))
         ),
         case!(
             witch_ward_bonus,
@@ -408,7 +408,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "WitchLVL",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::witch_ward_bonus(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::witch_ward_bonus(s.level))
         ),
         case!(
             animal_companion_natural_armor_bonus,
@@ -417,7 +417,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "MasterLevel",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::animal_companion_natural_armor_bonus(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::animal_companion_natural_armor_bonus(s.level))
         ),
         case!(
             animal_companion_stat_bonus,
@@ -426,7 +426,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "MasterLevel",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::animal_companion_stat_bonus(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::animal_companion_stat_bonus(s.level))
         ),
         case!(
             summoner_bond_senses_rounds_per_day,
@@ -435,7 +435,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::summoner_bond_senses_rounds_per_day(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::summoner_bond_senses_rounds_per_day(s.level))
         ),
         case!(
             summoner_makers_call_uses_per_day,
@@ -444,7 +444,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::summoner_makers_call_uses_per_day(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::summoner_makers_call_uses_per_day(s.level))
         ),
         case!(
             summoner_merge_forms_rounds_per_day,
@@ -453,7 +453,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::summoner_merge_forms_rounds_per_day(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::summoner_merge_forms_rounds_per_day(s.level))
         ),
         case!(
             summoner_twin_eidolon_minutes_per_day,
@@ -462,7 +462,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::summoner_twin_eidolon_minutes_per_day(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::summoner_twin_eidolon_minutes_per_day(s.level))
         ),
         case!(
             summoner_summon_monster_duration_minutes,
@@ -471,7 +471,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::summoner_summon_monster_duration_minutes(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::summoner_summon_monster_duration_minutes(s.level))
         ),
         case!(
             oracle_battlecry_bonus,
@@ -480,7 +480,7 @@ pub fn reproduction_cases() -> Vec<ReproductionCase> {
             "OracleLVL",
             "",
             "pilot_compute/mod.rs",
-            |s| i64::from(super::oracle_battlecry_bonus(s.level))
+            |s| i64::from(crate::rules_core::pilot_compute::oracle_battlecry_bonus(s.level))
         ),
     ]
 }
@@ -508,7 +508,7 @@ pub fn scorpion_style_case() -> ReproductionCase {
         level_var: "TL",
         ability_var: "WIS",
         citation_source: CitationSource::KnownGapNoDocComment,
-        hand_eval: |s| i64::from(super::monk_scorpion_style_dc(s.level, s.ability_mod as i16)),
+        hand_eval: |s| i64::from(crate::rules_core::pilot_compute::monk_scorpion_style_dc(s.level, s.ability_mod as i16)),
     }
 }
 

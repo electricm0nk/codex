@@ -375,7 +375,7 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::rules_core::pilot_compute::formula_interpreter::PcgenFormulaEvaluator;
+    use crate::pcgen_import::formula_interpreter::PcgenFormulaEvaluator;
 
     fn vars(pairs: &[(&str, i64)]) -> BTreeMap<String, i64> {
         pairs.iter().map(|(k, v)| (k.to_string(), *v)).collect()

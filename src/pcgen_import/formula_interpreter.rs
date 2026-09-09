@@ -1013,7 +1013,7 @@ pub fn extract_formula_field<'a>(token_key: &str, token_value: &'a str) -> Optio
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::rules_core::pilot_compute::formula_reproduction_harness::{
+    use crate::pcgen_import::formula_reproduction_harness::{
         all_cases, default_ability_mods, default_levels, run_reproduction, summarize,
     };
 
