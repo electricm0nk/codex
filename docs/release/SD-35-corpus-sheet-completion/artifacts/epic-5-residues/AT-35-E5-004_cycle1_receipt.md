@@ -1,6 +1,6 @@
 # Cycle AT-35-E5-004-cycle1 — Epic 5 Residues / AT-35-E5-004
 
-- **Commit SHA:** `a56096b861` (the feature) and `<docs-sha>` (this receipt, progress and kanban)
+- **Commit SHA:** `a56096b861` (the feature) and `ef4dd0102a` (this receipt, progress and kanban)
 - **Scope gate:** `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`
   (`python3 scripts/cycle_scope_gate.py --min 500 --bucket X`). Bucket X was already at **0**
   when this cycle started: `AT-35-E3-002 cycle 1` emptied it at `26bdfa8d5b`. The whole
