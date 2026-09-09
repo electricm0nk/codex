@@ -1,6 +1,6 @@
 # Cycle AT-35-E5-001_cycle1 — Epic 5 Residues / AT-35-E5-001
 
-- **Commit SHA:** `7a0bf64bbf` (code + artifact), `DOCS_SHA` (baselines + progress/kanban/receipt). Cycle start `5e2c0c8c5b`.
+- **Commit SHA:** `7a0bf64bbf` (code + artifact), `9123db2955` (baselines + progress/kanban/receipt). Cycle start `5e2c0c8c5b`.
 - **Scope gate:**
   ```
   inventory=docs/work-inventory.json
