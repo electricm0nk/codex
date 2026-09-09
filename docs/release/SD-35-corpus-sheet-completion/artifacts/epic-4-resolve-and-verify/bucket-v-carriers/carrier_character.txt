@@ -1,0 +1,12 @@
+# SD-35 AT-35-E4-002 -- the engine twin of every bucket-V carrier .pcg
+# (bucket_v_parity.py carriers). Human Fighter 20, every ability score 14.
+case_id=bucket-v-carrier
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:20
+ability=strength:14
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:14
+ability=wisdom:14
+ability=charisma:14
