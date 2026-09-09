@@ -19,7 +19,7 @@ import { CompanionCatalogScreen } from '../companionCatalog/CompanionCatalogScre
 import { MonsterCatalogScreen } from '../monsterCatalog/MonsterCatalogScreen';
 import { IntelligentItemCatalogScreen } from '../intelligentItemCatalog/IntelligentItemCatalogScreen';
 import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
-import { StubScreen } from './StubScreen';
+import { DmToolkitScreen } from '../dmToolkit/DmToolkitScreen';
 import { isGoogleDriveConfigured } from '../settings/googleDrive';
 import { computeCampaignManagerAccessGate } from '../campaign/campaignManagerAccessGate';
 import { CampaignManagerScreen } from '../campaign/CampaignManagerScreen';
@@ -124,13 +124,11 @@ export function CharacterHubPage() {
   }
 
   if (mode === 'dm-toolkit') {
-    return (
-      <StubScreen
-        title="DM Toolkit"
-        description="Encounter building, initiative tracking, and other GM-side tools. Not built yet."
-        onBack={() => setMode('landing')}
-      />
-    );
+    // v0.8 D-6: the real campaign console (world / timeline / places /
+    // people / clues / scenes / rules, cross-linked, exportable). The old
+    // stub promised encounter building and initiative tracking; neither is
+    // in v1 and no affordance hints at them.
+    return <DmToolkitScreen onBack={() => setMode('landing')} />;
   }
 
   if (mode === 'campaign-list') {

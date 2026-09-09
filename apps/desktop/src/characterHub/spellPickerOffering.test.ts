@@ -48,6 +48,8 @@ const CLASS_SPELL_LEVELS: ClassSpellLevelsDto[] = [
   {
     classId: 'class:wizard',
     known: true,
+    spellcasting: 'listIngested',
+    spellType: 'Arcane',
     entries: [
       { key: 'Magic Missile', level: 1 },
       { key: 'Tsunami', level: 9 },
@@ -58,10 +60,12 @@ const CLASS_SPELL_LEVELS: ClassSpellLevelsDto[] = [
   {
     classId: 'class:cleric',
     known: true,
+    spellcasting: 'listIngested',
+    spellType: 'Arcane',
     entries: [{ key: 'Cure Light Wounds', level: 1 }],
   },
   // A real class the engine has ingested no spell list for.
-  { classId: 'class:magus', known: false, entries: [] },
+  { classId: 'class:magus', known: false, entries: [], spellcasting: 'casterListNotIngested', spellType: 'Arcane' },
 ];
 
 async function main() {

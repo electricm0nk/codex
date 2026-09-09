@@ -1081,6 +1081,25 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         });
     }
 
+    // v0.8 B-6 (audit item 12): the player's own class choices. Each named
+    // set's seeded default(s) are dropped first so the caller's entry is
+    // the one the engine reads (`choice_selection` takes the first match
+    // for a set); every other seed stays. Applied before the Dodge check
+    // below so a caller who overrides a bonus-feat slot does not also get
+    // the seeded Dodge on `selected_feats`.
+    let overridden_sets: Vec<&str> = request
+        .additional_choices
+        .iter()
+        .map(|choice| choice.choice_set_id.as_str())
+        .collect();
+    selected_choices.retain(|choice| !overridden_sets.contains(&choice.choice_set_id.as_str()));
+    for choice in &request.additional_choices {
+        selected_choices.push(SelectedChoice {
+            choice_set_id: choice.choice_set_id.clone(),
+            selection_id: choice.selection_id.clone(),
+        });
+    }
+
     let dodge_is_granted_by_a_seeded_slot = selected_choices.iter().any(|choice| {
         choice.selection_id == DODGE_FEAT_SELECTION
             && (choice.choice_set_id == HUMAN_BONUS_FEAT_CHOICE_ID
@@ -1907,6 +1926,7 @@ mod tests {
             companion_species: None,
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
+            additional_choices: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         }
     }

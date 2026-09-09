@@ -234,6 +234,7 @@ mod tests {
             companion_species: None,
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
+            additional_choices: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         };
         let character_input = compose_character_input(&request);

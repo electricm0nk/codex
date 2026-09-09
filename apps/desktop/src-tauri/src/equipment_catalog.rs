@@ -120,6 +120,15 @@ pub struct EquipmentCatalogEntryDto {
     pub category: String,
     pub name: String,
     pub cost_gp: Option<f64>,
+    /// v0.8 B-8: the record's weight in pounds, from the compiled table's
+    /// own `weight_lbs` (a transcription of the corpus `WT:` token -- the
+    /// same token `encumbrance` reads for the carried-weight total, proven
+    /// to agree by `catalog_weight_agrees_with_the_encumbrance_corpus_read_
+    /// for_every_resolvable_crb_row`). `None` is a genuine absence -- a
+    /// `(Base)` template row, a formula-weighted modifier, or a book whose
+    /// table carries no weight (PU) -- never a fabricated 0, so a caller
+    /// can render nothing rather than a misleading "0 lb".
+    pub weight_lbs: Option<f64>,
     /// Which ingested book this record came from: one of
     /// [`equipment_catalog_books`]. Additive field — a consumer that does
     /// not read it is unaffected, and one that does can label or filter
@@ -162,6 +171,7 @@ fn map_crb_entry(entry: &crb::equipment_tables::EquipmentTableEntry) -> Equipmen
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight_lbs,
         book: BOOK_CRB.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -173,6 +183,7 @@ fn map_apg_entry(entry: &apg::equipment_tables::EquipmentTableEntry) -> Equipmen
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight,
         book: BOOK_APG.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -184,6 +195,7 @@ fn map_acg_entry(entry: &acg::equipment_tables::EquipmentTableEntry) -> Equipmen
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight_lbs,
         book: BOOK_ACG.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -197,6 +209,7 @@ fn map_beastiary1_entry(
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight_lbs,
         book: BOOK_B1.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -208,6 +221,7 @@ fn map_arg_entry(entry: &arg::equipment_tables::EquipmentTableEntry) -> Equipmen
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight_lbs,
         book: BOOK_ARG.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -224,6 +238,7 @@ fn map_pu_entry(entry: &pu::equipment_tables::EquipmentTableEntry) -> EquipmentC
         category: PU_CATEGORY.to_string(),
         name: entry.name.to_string(),
         cost_gp: None,
+        weight_lbs: None,
         book: BOOK_PU.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -244,6 +259,7 @@ fn map_ui_entry(entry: &ui::equipment_tables::EquipmentTableEntry) -> EquipmentC
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight_lbs,
         book: BOOK_UI.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -260,6 +276,7 @@ fn map_ue_entry(entry: &ue::equipment_tables::EquipmentTableEntry) -> EquipmentC
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight_lbs,
         book: BOOK_UE.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -283,6 +300,7 @@ fn map_um_entry(entry: &um::equipment_tables::EquipmentTableEntry) -> EquipmentC
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight_lbs,
         book: BOOK_UM.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -300,6 +318,7 @@ fn map_upsi_entry(entry: &upsi::equipment_tables::EquipmentTableEntry) -> Equipm
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight_lbs,
         book: BOOK_UPSI.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -317,6 +336,7 @@ fn map_uc_entry(entry: &uc::equipment_tables::EquipmentTableEntry) -> EquipmentC
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
+        weight_lbs: entry.weight_lbs,
         book: BOOK_UC.to_string(),
         description: entry.description.map(serve_description),
     }
@@ -334,6 +354,7 @@ fn map_gap_entry(
         category: row.category.to_string(),
         name: row.name.to_string(),
         cost_gp: row.cost_gp,
+        weight_lbs: row.weight_lbs,
         book: row.book.to_string(),
         description: row.description.map(serve_description),
     }
@@ -1060,6 +1081,82 @@ mod tests {
         // PU has no category enum: every row is an `pu_equipmods.lst`
         // equipment modifier, so all 42 land in Equipmods and nowhere else.
         assert_eq!(count_by_book_category(&response, "PU", "Equipmods"), 42);
+    }
+
+    // ----- v0.8 B-8: weight on the catalog DTO -----
+
+    /// The compiled row's own `weight_lbs` reaches the wire. Longsword
+    /// (Base) is CRB's 15 gp / 4 lb row; its non-`(Base)` twin is a
+    /// template row that carries neither cost nor weight, and must arrive
+    /// as `None` (no weight known), never a fabricated 0.
+    #[test]
+    fn crb_longsword_base_carries_its_weight_and_its_template_twin_does_not() {
+        let response = build_equipment_catalog();
+        let base = response
+            .entries
+            .iter()
+            .find(|e| e.book == "CRB" && e.key == "Longsword (Base)")
+            .expect("CRB Longsword (Base) must be in the catalog");
+        assert_eq!(base.weight_lbs, Some(4.0));
+        assert_eq!(base.cost_gp, Some(15.0));
+
+        let template = response
+            .entries
+            .iter()
+            .find(|e| e.book == "CRB" && e.key == "Longsword")
+            .expect("CRB's Longsword template row must be in the catalog");
+        assert_eq!(template.weight_lbs, None, "a template row has no weight of its own");
+        assert_eq!(template.cost_gp, None);
+    }
+
+    /// PU's entry type carries no weight field at all (`pu_equipmods.lst`
+    /// has no `WT:` on any row), so every PU row is an honest `None`.
+    #[test]
+    fn pu_rows_arrive_with_an_honest_absent_weight() {
+        let response = build_equipment_catalog();
+        let pu: Vec<_> = response.entries.iter().filter(|e| e.book == "PU").collect();
+        assert_eq!(pu.len(), 42);
+        for entry in pu {
+            assert!(entry.weight_lbs.is_none(), "{:?} must not fabricate a weight", entry.key);
+        }
+    }
+
+    /// **One weight, not two.** Encumbrance reads each carried item's
+    /// weight off its corpus record's own `WT:` token
+    /// (`encumbrance::weight_and_cost_from_record`); this catalog reads
+    /// the compiled table's `weight_lbs`. Both are transcriptions of the
+    /// same token, and this test proves they agree for every CRB catalog
+    /// row the corpus resolver can find -- so the picker's weight can
+    /// never disagree with the encumbrance tab's for the same item.
+    #[test]
+    fn catalog_weight_agrees_with_the_encumbrance_corpus_read_for_every_resolvable_crb_row() {
+        use codex::rules_core::equipment_resolver::equipment_id_resolve;
+        use codex::rules_core::rules_tables::RuleSetId;
+        use crate::corpus_full::full_corpus_bundle;
+
+        let corpus = full_corpus_bundle();
+        let response = build_equipment_catalog();
+        let mut compared = 0usize;
+        let mut disagreements: Vec<String> = Vec::new();
+        for entry in response.entries.iter().filter(|e| e.book == "CRB") {
+            let Some((record, _cell)) = equipment_id_resolve(&entry.key, RuleSetId::Crb, corpus) else {
+                continue;
+            };
+            let corpus_weight = record
+                .tokens
+                .iter()
+                .find(|token| token.key == "WT")
+                .and_then(|token| token.value.parse::<f64>().ok());
+            compared += 1;
+            if corpus_weight != entry.weight_lbs {
+                disagreements.push(format!(
+                    "{}: catalog {:?} vs corpus WT {:?}",
+                    entry.key, entry.weight_lbs, corpus_weight
+                ));
+            }
+        }
+        assert!(compared >= 100, "expected to compare at least 100 CRB rows, compared {compared}");
+        assert!(disagreements.is_empty(), "{} disagreement(s):\n{}", disagreements.len(), disagreements.join("\n"));
     }
 
     #[test]

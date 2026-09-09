@@ -476,6 +476,28 @@ pub struct CreateCharacterRequest {
     /// rather than fabricate" discipline), never a blocked save.
     #[serde(default)]
     pub trait_skill_choices: Vec<SelectedChoiceDto>,
+    /// **v0.8 B-6 (audit item 12)**: the player's creation-time class
+    /// choices the engine reads from `chosen.selected_choices` --
+    /// `choice:cleric_domain`, `choice:sorcerer_bloodline`,
+    /// `choice:wizard_school_specialization`, `choice:druid_nature_bond`,
+    /// `choice:oracle_mystery`, ... -- as `SelectedChoiceDto {
+    /// choice_set_id, selection_id }` pairs, the same shape and channel
+    /// `LevelUpCharacterRequest::additional_choices` already uses.
+    ///
+    /// Before this field `compose_character_input` seeded a canonical
+    /// default for every such set (Good domain, Arcane bloodline, Evocation
+    /// school, ...) with no way to say otherwise, so every Cleric was Good
+    /// and every Sorcerer was Arcane. A caller entry **replaces** the seeded
+    /// entries for its `choice_set_id` wholesale (the engine reads the
+    /// first match for a set, so sitting beside the seed would be silently
+    /// ignored); a set the caller does not name keeps its seed; a set the
+    /// composer never seeds is appended verbatim. Passed through unvalidated
+    /// like `selected_traits`: an id the engine does not recognize is inert
+    /// or surfaces as the engine's own diagnostic, never a fabricated value.
+    /// `#[serde(default)]` so every pre-existing caller keeps working
+    /// unchanged.
+    #[serde(default)]
+    pub additional_choices: Vec<SelectedChoiceDto>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -611,6 +633,27 @@ pub struct LoadSavedCharacterResponse {
     /// verbatim: they are corpus prose with the engine's numbers resolved into
     /// it, not text to paraphrase.
     pub resolved_racial_traits: crate::race_trait_picker::RaceSelectionResponse,
+    /// v0.8 B-2 (audit item 16): the character's *effective* ability
+    /// scores -- `chosen.ability_scores` with the engine's own Human +2
+    /// chosen-ability bonus applied (`apply_human_ability_bonus`), i.e.
+    /// exactly the scores the engine derived `snapshot.ability_modifiers`
+    /// from. Before this field the sheet reconstructed scores as
+    /// `10 + 2*modifier`, which prints every odd score one low.
+    pub ability_scores: AbilityScoresDto,
+    /// v0.8 B-3 (audit item 19): the character's full persisted
+    /// `chosen.skill_allocations`, verbatim and in persisted order -- the
+    /// same set `set_skill_allocations` last wrote. Before this field the
+    /// sheet re-seeded a Climb/Intimidate/Swim constant on every open
+    /// while the engine held the player's real allocation.
+    pub skill_allocations: Vec<SkillAllocationDto>,
+    /// v0.8 B-5 (audit item 39): every persisted
+    /// `chosen.equipment_selections` entry with its current active state,
+    /// in persisted order -- stowed (`SelectedInactive`) items included.
+    /// `corpus_derived.equipped_items` is scoped to active items, so
+    /// without this a stowed item would vanish from the sheet with no way
+    /// to re-equip it. Reuses `EquipmentSelectionImportDto` (already the
+    /// export/import wire shape for the same data).
+    pub equipment_selections: Vec<EquipmentSelectionImportDto>,
 }
 
 /// Wire form of `pilot_compute::ComputationExplanation`.
@@ -1563,6 +1606,7 @@ pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), St
         // immediately above.
         selected_traits: Vec::new(),
         trait_skill_choices: Vec::new(),
+        additional_choices: Vec::new(),
     };
 
     let character_input = compose_character_input(&request);
@@ -1614,6 +1658,19 @@ pub fn load_saved_character(
     load_saved_character_at_root(&root)
 }
 
+/// PF1 character level: the SUM of the character's class levels (a
+/// Fighter 3 / Wizard 1 is level 4), never the highest single class --
+/// the identity the engine's own `skill_allocation::character_level`
+/// documents. The one place this crate states it; `preview_level_up` and
+/// `rate_encounter` (E-1) both read it from here.
+pub(crate) fn character_level(input: &CharacterInput) -> u8 {
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .fold(0u8, |sum, class_level| sum.saturating_add(class_level.level))
+}
+
 /// The real body of `load_saved_character`, split out from the
 /// `AppHandle`-taking command so it is directly testable against a
 /// temp-dir character root — the same `*_at_root` convention
@@ -1660,7 +1717,55 @@ pub(crate) fn load_saved_character_at_root(
         selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
         selected_traits: envelope.character_input.chosen.selected_traits.clone(),
         resolved_racial_traits: resolve_racial_traits_for_character(&envelope.character_input),
+        ability_scores: effective_ability_scores_dto(&envelope.character_input),
+        skill_allocations: map_skill_allocations_dto(&envelope.character_input),
+        equipment_selections: map_equipment_selections_dto(&envelope.character_input),
     })
+}
+
+/// `chosen.equipment_selections` as its wire DTO, order preserved.
+pub(crate) fn map_equipment_selections_dto(
+    input: &CharacterInput,
+) -> Vec<EquipmentSelectionImportDto> {
+    input
+        .chosen
+        .equipment_selections
+        .iter()
+        .map(|selection| EquipmentSelectionImportDto {
+            item_id: selection.item_id.clone(),
+            active_state: selection.active_state.into(),
+        })
+        .collect()
+}
+
+/// `chosen.skill_allocations` as its wire DTO, order preserved.
+pub(crate) fn map_skill_allocations_dto(input: &CharacterInput) -> Vec<SkillAllocationDto> {
+    input
+        .chosen
+        .skill_allocations
+        .iter()
+        .map(|allocation| SkillAllocationDto {
+            skill_id: allocation.skill_id.clone(),
+            ranks: allocation.ranks,
+        })
+        .collect()
+}
+
+/// The engine's effective ability scores for a build, as a DTO. The
+/// explanations `apply_human_ability_bonus` emits are already carried on
+/// `LoadSavedCharacterResponse::explanations` via the full compute, so
+/// they are discarded here rather than duplicated.
+pub(crate) fn effective_ability_scores_dto(input: &CharacterInput) -> AbilityScoresDto {
+    let mut discarded_explanations = Vec::new();
+    let scores = apply_human_ability_bonus(input, &mut discarded_explanations);
+    AbilityScoresDto {
+        strength: scores.strength,
+        dexterity: scores.dexterity,
+        constitution: scores.constitution,
+        intelligence: scores.intelligence,
+        wisdom: scores.wisdom,
+        charisma: scores.charisma,
+    }
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -1835,11 +1940,7 @@ pub(crate) fn preview_level_up_at_root(
         .map(|held| held.level)
         .unwrap_or(0);
     let to_level = from_level.saturating_add(1);
-    let character_level = class_levels
-        .iter()
-        .map(|held| held.level)
-        .fold(0u8, |sum, level| sum.saturating_add(level))
-        .saturating_add(1);
+    let character_level = character_level(&envelope.character_input).saturating_add(1);
 
     // `compute_level_up_grants_for_class`, not the top-level
     // `compute_level_up_grants`: the latter dispatches on the character's
@@ -2924,6 +3025,281 @@ pub fn remove_feat_selection(
     )
 }
 
+// ----- v0.8 B-5: `set_equipment_active_state` -----
+//
+// Audit item 39: every purchase lands as `EquippedActive` and nothing could
+// be stowed, so a character who bought two suits of armor wore both. The
+// engine's `EquipmentSelection.active_state` carried the enum the whole
+// time; this command changes it through the same
+// load -> mutate -> recompute -> re-save gate as every other mutation.
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SetEquipmentActiveStateRequest {
+    pub character_id: String,
+    pub item_id: String,
+    pub active_state: ActiveStateDto,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, sets the named carried item's active state
+/// (`EquippedActive` worn/wielded, `SelectedInactive` stowed, `Absent`),
+/// recomputes via the real engine, and re-saves. See
+/// `set_equipment_active_state_at_root`.
+#[tauri::command]
+pub fn set_equipment_active_state(
+    app: tauri::AppHandle,
+    request: SetEquipmentActiveStateRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    set_equipment_active_state_at_root(
+        &root,
+        &request.item_id,
+        request.active_state.into(),
+        &request.saved_at,
+    )
+}
+
+/// Sets `active_state` on the first carried copy of `item_id` (the same
+/// case-insensitive first-match rule `apply_remove_equipment_selection`
+/// uses), keeping the derived `equipped_or_active` flag in step with it
+/// exactly as `EquipmentSelection`'s own doc comment requires. Returns
+/// `false` without mutating when the item is not carried.
+pub(crate) fn apply_set_equipment_active_state(
+    character_input: &mut CharacterInput,
+    item_id: &str,
+    active_state: ActiveState,
+) -> bool {
+    let Some(selection) = character_input
+        .chosen
+        .equipment_selections
+        .iter_mut()
+        .find(|selection| selection.item_id.eq_ignore_ascii_case(item_id))
+    else {
+        return false;
+    };
+    selection.active_state = active_state;
+    selection.equipped_or_active = active_state == ActiveState::EquippedActive;
+    true
+}
+
+/// Refuses (as `Err`, leaving the saved character untouched) an item the
+/// character does not carry; past that, `mutate_saved_character_at_root`
+/// supplies the recompute-before-persist gate.
+pub(crate) fn set_equipment_active_state_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let mut probe = envelope.character_input.clone();
+    if !apply_set_equipment_active_state(&mut probe, item_id, active_state) {
+        return Err(format!(
+            "'{item_id}' cannot change state: this character does not carry it"
+        ));
+    }
+
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_set_equipment_active_state(character_input, item_id, active_state);
+    })
+}
+
+// ----- v0.8 B-4: `add_trait_selection` / `remove_trait_selection` -----
+//
+// Audit item 33: `ChosenCharacterState.selected_traits` (and the per-trait
+// `trait_choice:<trait>` skill choice on `selected_choices`) were writable
+// only at creation. These two commands wrap add/remove the way
+// `add_feat_selection` / `remove_feat_selection` do -- same
+// load -> mutate -> recompute -> re-save gate via
+// `mutate_saved_character_at_root`, same honest `Err` for a request the
+// character's state cannot satisfy.
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AddTraitSelectionRequest {
+    pub character_id: String,
+    /// `trait_effects`' own wire id (`"trait:trait_acrobat"`) -- exactly
+    /// the `id` `list_available_character_traits` emits.
+    pub trait_id: String,
+    /// For a `%LIST` trait (one whose picker option carries a
+    /// `choiceSetId`), the chosen skill id from that option's
+    /// `skillOptions`. `None` for a flat trait, and also legitimate for a
+    /// choice trait whose skill is not chosen yet (the engine then treats
+    /// the trait as inert until it is, per
+    /// `skill_choice_bonuses_from_traits`).
+    #[serde(default)]
+    pub skill_choice: Option<String>,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, appends the requested trait (recording its
+/// skill choice, if any, under the engine's own `trait_choice:` set id),
+/// recomputes via the real engine, and re-saves. See
+/// `add_trait_selection_at_root`.
+#[tauri::command]
+pub fn add_trait_selection(
+    app: tauri::AppHandle,
+    request: AddTraitSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    add_trait_selection_at_root(
+        &root,
+        &request.trait_id,
+        request.skill_choice.as_deref(),
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RemoveTraitSelectionRequest {
+    pub character_id: String,
+    pub trait_id: String,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, removes the named trait together with any
+/// skill choice recorded for it, recomputes, and re-saves -- the inverse
+/// of `add_trait_selection`. See `remove_trait_selection_at_root`.
+#[tauri::command]
+pub fn remove_trait_selection(
+    app: tauri::AppHandle,
+    request: RemoveTraitSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    remove_trait_selection_at_root(&root, &request.trait_id, &request.saved_at)
+}
+
+/// Resolves the `SelectedChoice` an add must record for `trait_id`, or an
+/// error when the request and the picker's own catalog disagree:
+///
+/// * an id `list_available_character_traits` never offers -- refused
+///   rather than stored inert, because a stored-but-inert trait would show
+///   on the sheet and compute as nothing;
+/// * a `skill_choice` for a flat trait (no `choice_set_id`);
+/// * a `skill_choice` that is not one of the trait's own `skill_options`.
+///
+/// The set id and option list are read from the picker's catalog, not
+/// assembled here, so this cannot drift from what the picker offered.
+fn resolve_trait_skill_choice(
+    trait_id: &str,
+    skill_choice: Option<&str>,
+) -> Result<Option<SelectedChoice>, String> {
+    let options = crate::trait_picker::list_available_character_traits();
+    let Some(option) = options.iter().find(|option| option.id == trait_id) else {
+        return Err(format!("'{trait_id}' is not a character trait this build offers"));
+    };
+    match (option.choice_set_id.as_deref(), skill_choice) {
+        (_, None) => Ok(None),
+        (None, Some(skill)) => Err(format!(
+            "'{trait_id}' takes no skill choice, but '{skill}' was given"
+        )),
+        (Some(choice_set_id), Some(skill)) => {
+            if !option.skill_options.iter().any(|candidate| candidate.skill_id == skill) {
+                return Err(format!(
+                    "'{skill}' is not one of the skills '{trait_id}' lets a character choose"
+                ));
+            }
+            Ok(Some(SelectedChoice {
+                choice_set_id: choice_set_id.to_owned(),
+                selection_id: skill.to_owned(),
+            }))
+        }
+    }
+}
+
+/// Appends `trait_id` to `chosen.selected_traits` and, when given, its
+/// skill choice to `chosen.selected_choices`. Pure mutation; the checks
+/// live in `add_trait_selection_at_root`.
+pub(crate) fn apply_add_trait_selection(
+    character_input: &mut CharacterInput,
+    trait_id: &str,
+    skill_choice: Option<SelectedChoice>,
+) {
+    character_input.chosen.selected_traits.push(trait_id.to_owned());
+    if let Some(choice) = skill_choice {
+        character_input.chosen.selected_choices.push(choice);
+    }
+}
+
+/// Removes `trait_id` from `chosen.selected_traits` and every
+/// `trait_choice:<trait_id>` entry from `chosen.selected_choices`, so no
+/// orphaned skill choice survives for a trait the character no longer
+/// holds. Returns `false` without mutating when the trait is not held.
+pub(crate) fn apply_remove_trait_selection(
+    character_input: &mut CharacterInput,
+    trait_id: &str,
+) -> bool {
+    let Some(index) = character_input
+        .chosen
+        .selected_traits
+        .iter()
+        .position(|held| held == trait_id)
+    else {
+        return false;
+    };
+    character_input.chosen.selected_traits.remove(index);
+    let choice_set_id = codex::rules_core::trait_effects::trait_skill_choice_id(trait_id);
+    character_input
+        .chosen
+        .selected_choices
+        .retain(|choice| choice.choice_set_id != choice_set_id);
+    true
+}
+
+/// Refuses (as `Err`, leaving the saved character untouched) a trait the
+/// picker does not offer, a trait already held (PF1 traits are taken at
+/// most once), or a skill choice the trait does not take; past those,
+/// `mutate_saved_character_at_root` supplies the recompute-before-persist
+/// gate every add path has.
+pub(crate) fn add_trait_selection_at_root(
+    root: &Path,
+    trait_id: &str,
+    skill_choice: Option<&str>,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let choice = resolve_trait_skill_choice(trait_id, skill_choice)?;
+    if envelope
+        .character_input
+        .chosen
+        .selected_traits
+        .iter()
+        .any(|held| held == trait_id)
+    {
+        return Err(format!("'{trait_id}' cannot be added: this character already holds it"));
+    }
+
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_add_trait_selection(character_input, trait_id, choice);
+    })
+}
+
+/// Refuses (as `Err`) a trait the character does not hold; otherwise
+/// removes it and its skill choice through the same recompute-before-
+/// persist gate as every other mutation.
+pub(crate) fn remove_trait_selection_at_root(
+    root: &Path,
+    trait_id: &str,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    if !envelope
+        .character_input
+        .chosen
+        .selected_traits
+        .iter()
+        .any(|held| held == trait_id)
+    {
+        return Err(format!("'{trait_id}' cannot be removed: this character does not hold it"));
+    }
+
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_remove_trait_selection(character_input, trait_id);
+    })
+}
+
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RemoveSpellSelectionRequest {
@@ -3154,6 +3530,10 @@ const BIO_FILE_NAME: &str = "bio.json";
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CharacterBioDto {
+    /// The human at the table playing this character (v0.8 B-1). Not a
+    /// rules input -- pure sheet-header flavor, like every other bio field.
+    #[serde(default)]
+    pub player_name: String,
     #[serde(default)]
     pub alignment: String,
     #[serde(default)]
@@ -5023,6 +5403,7 @@ mod tests {
             companion_species: None,
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
+            additional_choices: Vec::new(),
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }
@@ -7748,6 +8129,7 @@ mod tests {
 
     fn sample_bio() -> CharacterBioDto {
         CharacterBioDto {
+            player_name: "Sam".to_owned(),
             alignment: "Lawful Good".to_owned(),
             deity: "Iomedae".to_owned(),
             sex: "Female".to_owned(),
@@ -7800,6 +8182,749 @@ mod tests {
 
         let reloaded = load_character_bio_at_root(&root).expect("reload should not error");
         assert_eq!(reloaded, updated);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- B-2 (v0.8): real ability scores on `load_saved_character` -----
+
+    /// A Human's +2 chosen-ability bonus is applied at compute time, so the
+    /// score the sheet shows must be the engine's *effective* score (18),
+    /// not the pre-bonus base the player typed (16).
+    #[test]
+    fn load_saved_character_at_root_exposes_effective_ability_scores_for_a_human() {
+        let root = tempdir("load-ability-scores-human");
+        let request = request_for("race:human", 1); // str 16, bonus target strength
+        saved_or_panic(
+            create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error"),
+        );
+
+        let loaded = load_saved_character_at_root(&root).expect("the saved Human must load back");
+
+        assert_eq!(loaded.ability_scores.strength, 18, "human +2 applied to the chosen target");
+        assert_eq!(loaded.ability_scores.dexterity, 14);
+        assert_eq!(loaded.ability_scores.constitution, 14);
+        assert_eq!(loaded.ability_scores.intelligence, 10);
+        assert_eq!(loaded.ability_scores.wisdom, 12);
+        assert_eq!(loaded.ability_scores.charisma, 8);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Audit item 16: an odd score must survive as itself. Reconstructing
+    /// from the modifier (`10 + 2*mod`) turns 17 into 16.
+    #[test]
+    fn load_saved_character_at_root_preserves_odd_ability_scores_verbatim() {
+        let root = tempdir("load-ability-scores-odd");
+        let mut request = request_for("race:dwarf", 1);
+        request.ability_scores.intelligence = 17;
+        saved_or_panic(
+            create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error"),
+        );
+
+        let loaded = load_saved_character_at_root(&root).expect("the saved Dwarf must load back");
+
+        assert_eq!(loaded.ability_scores.intelligence, 17);
+        assert_eq!(
+            loaded.snapshot.as_ref().map(|s| s.ability_modifiers.intelligence),
+            Some(3),
+            "and the modifier the engine derived from it agrees"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- B-3 (v0.8): persisted skill allocations on `load_saved_character` -----
+
+    /// Audit item 19: what `set_skill_allocations` persisted must come back
+    /// on load, in the persisted order, so the sheet can seed from real
+    /// state instead of a Climb/Intimidate/Swim constant. Uses a re-ordered
+    /// triple so the assertion proves the read-back, not the demo default.
+    #[test]
+    fn load_saved_character_at_root_exposes_persisted_skill_allocations() {
+        let root = tempdir("load-skill-allocations");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        let response = set_skill_allocations_at_root(
+            &root,
+            vec![
+                SkillAllocation { skill_id: "skill:swim".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:intimidate".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 1 },
+            ],
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("set skill allocations call should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }));
+
+        let loaded = load_saved_character_at_root(&root).expect("the saved character must load back");
+
+        let seen: Vec<(String, u8)> = loaded
+            .skill_allocations
+            .iter()
+            .map(|a| (a.skill_id.clone(), a.ranks))
+            .collect();
+        assert_eq!(
+            seen,
+            vec![
+                ("skill:swim".to_owned(), 1),
+                ("skill:intimidate".to_owned(), 1),
+                ("skill:climb".to_owned(), 1),
+            ]
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- B-4 (v0.8): `add_trait_selection` / `remove_trait_selection` -----
+
+    #[test]
+    fn add_trait_selection_at_root_appends_and_persists_a_flat_trait() {
+        let root = tempdir("add-trait-flat");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response =
+            add_trait_selection_at_root(&root, "trait:trait_acrobat", None, "2026-07-21T00:00:00Z")
+                .expect("add trait call should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "got {response:?}");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.selected_traits,
+            vec!["trait:trait_acrobat".to_owned()]
+        );
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:00:00Z");
+
+        let loaded = load_saved_character_at_root(&root).expect("load should succeed");
+        assert_eq!(loaded.selected_traits, vec!["trait:trait_acrobat".to_owned()]);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// **EXPECTED RED pending an engine fix -- do not weaken or `#[ignore]`.**
+    /// This test is the acceptance criterion named in
+    /// `docs/release/v0.8/engine-handoff-trait-choice-save.md` (blocker B13):
+    /// the engine's `trait_skill_choice_id` emits a three-segment
+    /// `trait_choice:trait:<name>` id that `SavedCharacterStore` refuses
+    /// (`local_store.rs`, "exactly two colon-segments"). It goes green
+    /// untouched once repo-root `src/` lands either candidate fix.
+    /// A `%LIST` trait (Criminal) records the player's skill under the
+    /// engine's own `trait_choice:<trait>` set id, so
+    /// `skill_choice_bonuses_from_traits` can read it back.
+    #[test]
+    fn add_trait_selection_at_root_records_the_skill_choice_for_a_choice_trait() {
+        let root = tempdir("add-trait-choice");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = add_trait_selection_at_root(
+            &root,
+            "trait:trait_criminal",
+            Some("skill:intimidate"),
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("add trait call should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "got {response:?}");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.selected_traits,
+            vec!["trait:trait_criminal".to_owned()]
+        );
+        let choice = reloaded
+            .character_input
+            .chosen
+            .selected_choices
+            .iter()
+            .find(|c| c.choice_set_id == "trait_choice:trait:trait_criminal")
+            .expect("the skill choice must be recorded under the trait's own set id");
+        assert_eq!(choice.selection_id, "skill:intimidate");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn add_trait_selection_at_root_refuses_a_skill_choice_for_a_flat_trait() {
+        let root = tempdir("add-trait-flat-with-choice");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let result = add_trait_selection_at_root(
+            &root,
+            "trait:trait_acrobat",
+            Some("skill:acrobatics"),
+            "2026-07-21T00:00:00Z",
+        );
+
+        assert!(result.is_err(), "a flat trait takes no skill choice");
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(reloaded.character_input.chosen.selected_traits.is_empty(), "nothing persisted");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn add_trait_selection_at_root_refuses_an_unknown_trait_id() {
+        let root = tempdir("add-trait-unknown");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let result =
+            add_trait_selection_at_root(&root, "trait:no_such_trait", None, "2026-07-21T00:00:00Z");
+
+        assert!(result.is_err(), "an id the picker never offered must be refused, not stored inert");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn add_trait_selection_at_root_refuses_a_trait_already_held() {
+        let root = tempdir("add-trait-duplicate");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        add_trait_selection_at_root(&root, "trait:trait_acrobat", None, "2026-07-21T00:00:00Z")
+            .expect("first add should not error");
+
+        let result =
+            add_trait_selection_at_root(&root, "trait:trait_acrobat", None, "2026-07-21T00:01:00Z");
+
+        assert!(result.is_err(), "a trait can be taken once");
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(reloaded.character_input.chosen.selected_traits.len(), 1);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn add_trait_selection_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("add-trait-missing-character");
+
+        let result =
+            add_trait_selection_at_root(&root, "trait:trait_acrobat", None, "2026-07-21T00:00:00Z");
+
+        assert!(result.is_err());
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// **EXPECTED RED pending an engine fix -- do not weaken or `#[ignore]`.**
+    /// This test is the acceptance criterion named in
+    /// `docs/release/v0.8/engine-handoff-trait-choice-save.md` (blocker B13):
+    /// the engine's `trait_skill_choice_id` emits a three-segment
+    /// `trait_choice:trait:<name>` id that `SavedCharacterStore` refuses
+    /// (`local_store.rs`, "exactly two colon-segments"). It goes green
+    /// untouched once repo-root `src/` lands either candidate fix.
+    /// Removal takes the trait's recorded skill choice with it, so no
+    /// orphaned `trait_choice:` entry is left behind for a trait the
+    /// character no longer has.
+    #[test]
+    fn remove_trait_selection_at_root_removes_the_trait_and_its_skill_choice() {
+        let root = tempdir("remove-trait-golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        add_trait_selection_at_root(&root, "trait:trait_acrobat", None, "2026-07-21T00:00:00Z")
+            .expect("add acrobat should not error");
+        add_trait_selection_at_root(
+            &root,
+            "trait:trait_criminal",
+            Some("skill:intimidate"),
+            "2026-07-21T00:01:00Z",
+        )
+        .expect("add criminal should not error");
+
+        let response =
+            remove_trait_selection_at_root(&root, "trait:trait_criminal", "2026-07-21T00:02:00Z")
+                .expect("remove trait call should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "got {response:?}");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.selected_traits,
+            vec!["trait:trait_acrobat".to_owned()],
+            "only the named trait goes"
+        );
+        assert!(
+            !reloaded
+                .character_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == "trait_choice:trait:trait_criminal"),
+            "the orphaned skill choice must go with it"
+        );
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:02:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn remove_trait_selection_at_root_refuses_a_trait_not_held() {
+        let root = tempdir("remove-trait-not-held");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let result =
+            remove_trait_selection_at_root(&root, "trait:trait_acrobat", "2026-07-21T00:00:00Z");
+
+        assert!(result.is_err(), "removing an unheld trait must fail, not silently no-op");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- B-5 (v0.8): `set_equipment_active_state` -----
+
+    /// Audit item 39: a bought item can be stowed (`SelectedInactive`) and
+    /// re-equipped, and the persisted selection's derived
+    /// `equipped_or_active` flag follows the state.
+    #[test]
+    fn set_equipment_active_state_at_root_stows_and_re_equips_a_carried_item() {
+        let root = tempdir("set-equipment-state-golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        add_equipment_selection_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::EquippedActive,
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("buying the dagger should not error");
+
+        let response = set_equipment_active_state_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::SelectedInactive,
+            "2026-07-21T00:01:00Z",
+        )
+        .expect("stowing should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "got {response:?}");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let dagger = reloaded
+            .character_input
+            .chosen
+            .equipment_selections
+            .iter()
+            .find(|s| s.item_id == "item:dagger")
+            .expect("the dagger is still carried");
+        assert_eq!(dagger.active_state, ActiveState::SelectedInactive);
+        assert!(!dagger.equipped_or_active, "the derived flag must follow the state");
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:01:00Z");
+
+        set_equipment_active_state_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::EquippedActive,
+            "2026-07-21T00:02:00Z",
+        )
+        .expect("re-equipping should not error");
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let dagger = reloaded
+            .character_input
+            .chosen
+            .equipment_selections
+            .iter()
+            .find(|s| s.item_id == "item:dagger")
+            .expect("the dagger is still carried");
+        assert_eq!(dagger.active_state, ActiveState::EquippedActive);
+        assert!(dagger.equipped_or_active);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// `Absent` too: the derived flag is false for every state but
+    /// `EquippedActive`, matching the engine's own parse-time derivation
+    /// (`character_input.rs`, `matches!(active_state, EquippedActive)`).
+    #[test]
+    fn set_equipment_active_state_at_root_marks_an_absent_item_not_equipped() {
+        let root = tempdir("set-equipment-state-absent");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        add_equipment_selection_at_root(&root, "item:dagger", ActiveState::EquippedActive, "2026-07-21T00:00:00Z")
+            .expect("buying the dagger should not error");
+
+        set_equipment_active_state_at_root(&root, "item:dagger", ActiveState::Absent, "2026-07-21T00:01:00Z")
+            .expect("marking absent should not error");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let dagger = reloaded
+            .character_input
+            .chosen
+            .equipment_selections
+            .iter()
+            .find(|s| s.item_id == "item:dagger")
+            .expect("the selection is still recorded");
+        assert_eq!(dagger.active_state, ActiveState::Absent);
+        assert!(!dagger.equipped_or_active);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The sheet must be able to render the current state of every carried
+    /// item, stowed ones included -- `corpus_derived.equipped_items` is
+    /// scoped to active items, so a stowed item would otherwise vanish.
+    #[test]
+    fn load_saved_character_at_root_exposes_each_equipment_selection_with_its_state() {
+        let root = tempdir("load-equipment-selections");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        add_equipment_selection_at_root(&root, "item:dagger", ActiveState::EquippedActive, "2026-07-21T00:00:00Z")
+            .expect("buying the dagger should not error");
+        set_equipment_active_state_at_root(&root, "item:dagger", ActiveState::SelectedInactive, "2026-07-21T00:01:00Z")
+            .expect("stowing should not error");
+
+        let loaded = load_saved_character_at_root(&root).expect("load should succeed");
+
+        let dagger = loaded
+            .equipment_selections
+            .iter()
+            .find(|s| s.item_id == "item:dagger")
+            .expect("a stowed item is still listed");
+        assert!(matches!(dagger.active_state, ActiveStateDto::SelectedInactive));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn set_equipment_active_state_at_root_refuses_an_item_not_carried() {
+        let root = tempdir("set-equipment-state-not-carried");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let result = set_equipment_active_state_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::SelectedInactive,
+            "2026-07-21T00:00:00Z",
+        );
+
+        assert!(result.is_err(), "changing the state of an item not carried must fail");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn set_equipment_active_state_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("set-equipment-state-missing-character");
+
+        let result = set_equipment_active_state_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::SelectedInactive,
+            "2026-07-21T00:00:00Z",
+        );
+
+        assert!(result.is_err());
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- B-6 (v0.8): `additional_choices` on `CreateCharacterRequest` -----
+
+    fn choices_for<'a>(input: &'a CharacterInput, choice_set_id: &str) -> Vec<&'a str> {
+        input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|c| c.choice_set_id == choice_set_id)
+            .map(|c| c.selection_id.as_str())
+            .collect()
+    }
+
+    /// Audit item 12: a Cleric was always Good domain because
+    /// `compose_character_input` seeds a canonical default with no channel
+    /// to override it. The caller's choice must *replace* the seed, not sit
+    /// beside it -- the engine reads the first match.
+    #[test]
+    fn compose_character_input_lets_an_additional_choice_replace_the_seeded_default() {
+        let mut request = request_for_class("race:human", "class:cleric", 1);
+        request.additional_choices = vec![SelectedChoiceDto {
+            choice_set_id: "choice:cleric_domain".to_owned(),
+            selection_id: "domain:war".to_owned(),
+        }];
+
+        let input = compose_character_input(&request);
+
+        assert_eq!(choices_for(&input, "choice:cleric_domain"), vec!["domain:war"]);
+    }
+
+    /// A set the composer seeds with several entries (Wizard opposed
+    /// schools: necromancy + transmutation) is replaced wholesale by the
+    /// caller's entries for that set.
+    #[test]
+    fn compose_character_input_replaces_a_multi_entry_seeded_set_wholesale() {
+        let mut request = request_for_class("race:human", "class:wizard", 1);
+        request.additional_choices = vec![
+            SelectedChoiceDto {
+                choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+                selection_id: "school:abjuration".to_owned(),
+            },
+            SelectedChoiceDto {
+                choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+                selection_id: "school:illusion".to_owned(),
+            },
+        ];
+
+        let input = compose_character_input(&request);
+
+        assert_eq!(
+            choices_for(&input, "choice:wizard_opposed_schools"),
+            vec!["school:abjuration", "school:illusion"]
+        );
+        assert_eq!(
+            choices_for(&input, "choice:wizard_school_specialization"),
+            vec!["school:evocation"],
+            "an untouched seeded set keeps its default"
+        );
+    }
+
+    #[test]
+    fn compose_character_input_appends_an_additional_choice_for_an_unseeded_set() {
+        let mut request = request_for_class("race:human", "class:ranger", 1);
+        request.additional_choices = vec![SelectedChoiceDto {
+            choice_set_id: "choice:ranger_favored_enemy".to_owned(),
+            selection_id: "enemy:orc".to_owned(),
+        }];
+
+        let input = compose_character_input(&request);
+
+        assert_eq!(choices_for(&input, "choice:ranger_favored_enemy"), vec!["enemy:orc"]);
+        assert_eq!(
+            choices_for(&input, "choice:level_1_character_feat"),
+            vec!["feat:power_attack"],
+            "seeds for other sets are untouched"
+        );
+    }
+
+    /// Through the same `create_character` path the UI button calls: a
+    /// Cleric of War is persisted, read back, and is still War -- not Good.
+    #[test]
+    fn a_creation_time_domain_choice_survives_save_and_load() {
+        let root = tempdir("create-character-additional-choice-domain");
+        let mut request = request_for_class("race:human", "class:cleric", 1);
+        request.additional_choices = vec![SelectedChoiceDto {
+            choice_set_id: "choice:cleric_domain".to_owned(),
+            selection_id: "domain:war".to_owned(),
+        }];
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "got {response:?}");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            choices_for(&reloaded.character_input, "choice:cleric_domain"),
+            vec!["domain:war"]
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- G-1 (v0.8 iteration 2): does a level-up pick persist and reload? -----
+
+    fn created_at_level_1(root: &Path, class_id: &str) {
+        let request = request_for_class("race:human", class_id, 1);
+        let created = create_character_at_root(root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(created, CreateCharacterResponse::Saved { .. }), "{class_id}: {created:?}");
+    }
+
+    /// The finding G-1 was opened to establish: the engine's `LevelUpPlan`
+    /// carries NO pick lists for any of the classes whose level-2 pick the
+    /// audit named -- `PickList` is never constructed anywhere in the engine
+    /// (`grep -rn "PickList {" src/ --include=*.rs` finds only the type).
+    /// So `LevelUpDialog` is not ignoring candidates; there are none. If the
+    /// engine ever starts emitting them, this test flips and the picker
+    /// work becomes real.
+    #[test]
+    fn the_engine_emits_no_level_up_pick_lists_for_rogue_barbarian_or_witch() {
+        for class_id in ["class:rogue", "class:barbarian", "class:witch", "class:unchained_rogue"] {
+            let root = tempdir(&format!("g1-no-lists-{}", class_id.replace(':', "-")));
+            created_at_level_1(&root, class_id);
+            let preview = preview_level_up_at_root(&root, class_id).expect("preview");
+            assert_eq!(preview.to_level, 2);
+            assert!(
+                preview.pick_from_lists.is_empty(),
+                "{class_id}: the engine now emits pick lists -- G-1's finding is out of date"
+            );
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The choice channel itself round-trips for the engine's own
+    /// two-segment ids: sent on `level_up_character`'s `additional_choices`,
+    /// persisted verbatim, read back on load, and -- for the one talent the
+    /// engine computes -- grounded as a real magnitude.
+    #[test]
+    fn a_rogue_talent_pick_on_level_up_persists_reloads_and_grounds() {
+        let root = tempdir("g1-rogue-talent");
+        created_at_level_1(&root, "class:rogue");
+
+        let outcome = level_up_character_at_root(
+            &root,
+            "class:rogue",
+            vec![SelectedChoice {
+                choice_set_id: "choice:rogue_talent".to_owned(),
+                selection_id: "talent:resiliency".to_owned(),
+            }],
+            None,
+            "2026-09-02T00:00:00Z",
+        )
+        .expect("level up");
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload");
+        assert!(reloaded.character_input.chosen.selected_choices.iter().any(|c| {
+            c.choice_set_id == "choice:rogue_talent" && c.selection_id == "talent:resiliency"
+        }));
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        let ids: Vec<&str> = loaded.explanations.iter().map(|e| e.id.as_str()).collect();
+        assert!(ids.contains(&"class_chassis.rogue.talent_choice"), "{ids:?}");
+        assert!(ids.contains(&"class_feature.rogue.resiliency_temp_hp"), "{ids:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Same channel for a Barbarian rage power and a Witch hex.
+    #[test]
+    fn a_rage_power_and_a_hex_pick_on_level_up_persist_and_ground() {
+        for (class_id, set, selection, grounded_id) in [
+            (
+                "class:barbarian",
+                "choice:barbarian_rage_power",
+                "rage_power:superstition",
+                "class_feature.barbarian.rage_power.superstition.save_bonus",
+            ),
+            (
+                "class:witch",
+                "choice:witch_hex",
+                "hex:ward",
+                "class_feature.apg.witch.ward_hex.deflection_and_resistance_bonus",
+            ),
+        ] {
+            let root = tempdir(&format!("g1-{}", class_id.replace(':', "-")));
+            created_at_level_1(&root, class_id);
+            let outcome = level_up_character_at_root(
+                &root,
+                class_id,
+                vec![SelectedChoice { choice_set_id: set.to_owned(), selection_id: selection.to_owned() }],
+                None,
+                "2026-09-02T00:00:00Z",
+            )
+            .expect("level up");
+            assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{class_id}: {outcome:?}");
+            let reloaded = SavedCharacterStore::load(&root).expect("reload");
+            assert!(reloaded
+                .character_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == set && c.selection_id == selection));
+            let loaded = load_saved_character_at_root(&root).expect("load");
+            assert!(
+                loaded.explanations.iter().any(|e| e.id == grounded_id),
+                "{class_id}: {grounded_id} not grounded"
+            );
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The other half of the honest answer: an id the engine does not
+    /// hand-model still persists and is echoed as a +0 "recognized" record
+    /// -- the rogue talent slot is open-ended, no talent-list validation --
+    /// so a picker over the full corpus list would look like it worked and
+    /// compute nothing for 73 of 74 talents.
+    #[test]
+    fn an_unmodelled_rogue_talent_persists_but_grounds_no_magnitude() {
+        let root = tempdir("g1-rogue-unmodelled");
+        created_at_level_1(&root, "class:rogue");
+        let outcome = level_up_character_at_root(
+            &root,
+            "class:rogue",
+            vec![SelectedChoice {
+                choice_set_id: "choice:rogue_talent".to_owned(),
+                selection_id: "talent:ledge_walker".to_owned(),
+            }],
+            None,
+            "2026-09-02T00:00:00Z",
+        )
+        .expect("level up");
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        let talent_records: Vec<&str> = loaded
+            .explanations
+            .iter()
+            .map(|e| e.id.as_str())
+            .filter(|id| id.contains("talent") || id.contains("ledge"))
+            .collect();
+        assert_eq!(talent_records, vec!["class_chassis.rogue.talent_choice"], "recognition only, value 0");
+        assert_eq!(
+            loaded.explanations.iter().find(|e| e.id == "class_chassis.rogue.talent_choice").map(|e| e.value),
+            Some(0)
+        );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A raw corpus pool key (`list_class_feature_pool_options`'s `key`)
+    /// is NOT a selection id: it has no colon segment and the store
+    /// refuses it outright -- a picker must never send one.
+    #[test]
+    fn a_raw_corpus_pool_key_is_refused_by_the_store_not_silently_dropped() {
+        let root = tempdir("g1-raw-key");
+        created_at_level_1(&root, "class:rogue");
+        let result = level_up_character_at_root(
+            &root,
+            "class:rogue",
+            vec![SelectedChoice {
+                choice_set_id: "choice:rogue_talent".to_owned(),
+                selection_id: "Rogue Talent ~ Ledge Walker".to_owned(),
+            }],
+            None,
+            "2026-09-02T00:00:00Z",
+        );
+        let err = result.expect_err("a bare corpus key must not persist");
+        assert!(err.contains("two colon-segments"), "{err}");
+        let reloaded = SavedCharacterStore::load(&root).expect("reload");
+        assert_eq!(reloaded.character_input.chosen.class_levels[0].level, 1, "the level-up did not happen either");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// B-1 (v0.8): `playerName` rides the bio sidecar and round-trips.
+    #[test]
+    fn update_character_bio_at_root_round_trips_player_name() {
+        let root = tempdir("bio-player-name");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let bio = CharacterBioDto { player_name: "Todd".to_owned(), ..sample_bio() };
+        save_character_bio_at_root(&root, &bio).expect("saving a bio should not error");
+        let reloaded = load_character_bio_at_root(&root).expect("reload should not error");
+
+        assert_eq!(reloaded.player_name, "Todd");
+        assert_eq!(reloaded, bio);
+
+        let raw = std::fs::read_to_string(root.join(BIO_FILE_NAME)).expect("bio.json should exist");
+        assert!(raw.contains("\"playerName\""), "bio.json must carry the camelCase key: {raw}");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A `bio.json` written before B-1 (no `playerName` key) still loads,
+    /// with the new field empty.
+    #[test]
+    fn load_character_bio_at_root_tolerates_a_pre_player_name_bio_file() {
+        let root = tempdir("bio-legacy-no-player-name");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        std::fs::write(
+            root.join(BIO_FILE_NAME),
+            r#"{"alignment":"Neutral Good","deity":"","sex":"","age":"","height":"","weight":"","hair":"","eyes":""}"#,
+        )
+        .expect("write legacy bio");
+
+        let bio = load_character_bio_at_root(&root).expect("legacy bio should load");
+
+        assert_eq!(bio.alignment, "Neutral Good");
+        assert_eq!(bio.player_name, "");
 
         std::fs::remove_dir_all(&root).ok();
     }

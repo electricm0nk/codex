@@ -370,6 +370,15 @@ mod tests {
                 resolved_racial_traits: resolve_racial_traits_for_character(
                     &envelope.character_input,
                 ),
+                ability_scores: crate::character_hub::effective_ability_scores_dto(
+                    &envelope.character_input,
+                ),
+                skill_allocations: crate::character_hub::map_skill_allocations_dto(
+                    &envelope.character_input,
+                ),
+                equipment_selections: crate::character_hub::map_equipment_selections_dto(
+                    &envelope.character_input,
+                ),
             })
         }
     }
@@ -409,6 +418,7 @@ mod tests {
             companion_species: None,
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
+            additional_choices: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         };
         let character_input = compose_character_input(&request);

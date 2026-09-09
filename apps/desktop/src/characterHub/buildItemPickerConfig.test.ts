@@ -34,6 +34,7 @@ async function main() {
   verifiesNullKindProducesNoPickerConfig();
   verifiesWeaponAndArmorHaveDistinctTitles();
   verifiesModifierKindNarrowsEquipmentToEquipmodsAndWiresModifierHandler();
+  verifiesGearKindLoadsGeneralAndMagicItemsAndWiresEquipmentHandler();
 }
 
 function makeDeps() {
@@ -181,3 +182,25 @@ main().catch((error: unknown) => {
   console.error(error);
   throw error;
 });
+
+/**
+ * v0.8 F-6 (scout audit item 36): both equipment pickers hard-coded
+ * `ArmsArmor`, so rope, rations and a holy symbol were unreachable. The
+ * `gear` kind queries the other purchasable categories the catalog serves
+ * (`General`, `MagicItems` — the engine's `EquipmentCategory` has no
+ * others besides `ArmsArmor` and the modifier-only `Equipmods`) and routes
+ * the pick through the same real purchase handler as armor.
+ */
+function verifiesGearKindLoadsGeneralAndMagicItemsAndWiresEquipmentHandler() {
+  const { deps, loadEquipmentCalls, equipmentSelections } = makeDeps();
+  const config = buildItemPickerConfig('gear', deps);
+  assert(config !== null, 'gear kind produces a picker config');
+  if (!config) return;
+  assertEqual(config.title, 'Add Gear', 'gear picker title');
+  config.onSelect(WEAPON_ENTRY);
+  assertEqual(equipmentSelections.length, 1, 'a gear pick is routed to the equipment purchase handler');
+  return config.loadEntries().then((entries) => {
+    assertEqual([...loadEquipmentCalls].sort().join(','), 'General,MagicItems', 'gear queries General and MagicItems, never ArmsArmor');
+    assertEqual(entries.length, 2, 'entries from every queried category are offered together');
+  });
+}

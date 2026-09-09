@@ -44,6 +44,15 @@ export interface ClassSpellLevelsDto {
   known: boolean;
   /** Sorted by key. Always empty when `known` is `false`. */
   entries: ClassSpellLevelDto[];
+  /**
+   * v0.8 B-9: what `known: false` alone could not say — whether this class
+   * casts at all. Read from the corpus class record's `FACT:SpellType`
+   * token (following an Unchained shell's TYPE one hop to its base record).
+   * `classNotInCorpus` is *unknown*, not "non-caster".
+   */
+  spellcasting: 'listIngested' | 'casterListNotIngested' | 'nonCaster' | 'classNotInCorpus';
+  /** The record's own `FACT:SpellType` value verbatim (`Arcane` / `Divine` / `Psychic` …), or `null`. */
+  spellType: string | null;
 }
 
 export interface ClassSpellLevelsResponse {
