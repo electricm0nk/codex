@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 0,
-      "partial": 0,
-      "not_started": 259,
+      "done": 47,
+      "partial": 35,
+      "not_started": 177,
       "denominator": 259,
-      "pct": 0.0,
+      "pct": 18.1,
       "excluded_from_percentage": 128,
       "standing_breakdown": {
         "origin": 259,
@@ -18,14 +18,14 @@
       "items": [
         {
           "name": "+1 on Spellcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane Depth",
           "standing": "origin",
           "display_name": "+1 on Spellcraft"
         },
         {
           "name": "+2 on Knowledge (arcana)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane Depth",
           "standing": "origin",
           "display_name": "+2 on Knowledge (arcana)"
@@ -53,21 +53,21 @@
         },
         {
           "name": "Alchemist",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Alchemist"
         },
         {
           "name": "Aligned Class",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Evangelist Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Aligned Class"
         },
         {
           "name": "Aligned Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sentinel Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Aligned Strike"
@@ -102,7 +102,7 @@
         },
         {
           "name": "Antipaladin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Antipaladin"
@@ -116,7 +116,7 @@
         },
         {
           "name": "Arcane Archer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Arcane Archer"
@@ -137,42 +137,42 @@
         },
         {
           "name": "Arcane Trickster",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Arcane Trickster"
         },
         {
           "name": "Arcanist",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Arcanist"
         },
         {
           "name": "Ardent Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Ardent Vision"
         },
         {
           "name": "Aspect of Divinity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Aspect of Divinity"
         },
         {
           "name": "Assassin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Assassin"
         },
         {
           "name": "Aura of Isolation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Aura of Isolation"
@@ -186,21 +186,21 @@
         },
         {
           "name": "Barbarian",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Barbarian"
         },
         {
           "name": "Bard",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Bard"
         },
         {
           "name": "Battle Herald",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Battle Herald"
@@ -249,7 +249,7 @@
         },
         {
           "name": "Bloodrager",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Bloodrager"
@@ -263,14 +263,14 @@
         },
         {
           "name": "Bonus Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sentinel Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bonus Feat"
         },
         {
           "name": "Brawler",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Brawler"
@@ -284,14 +284,14 @@
         },
         {
           "name": "Call Fire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Call Fire"
         },
         {
           "name": "Cavalier",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Cavalier"
@@ -312,7 +312,7 @@
         },
         {
           "name": "Chastisement",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Chastisement"
@@ -326,7 +326,7 @@
         },
         {
           "name": "Cleric",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Cleric"
@@ -368,7 +368,7 @@
         },
         {
           "name": "Current Flow",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Current Flow"
@@ -417,7 +417,7 @@
         },
         {
           "name": "Deific Obedience Benefits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Deific Obedience Benefits"
@@ -480,7 +480,7 @@
         },
         {
           "name": "Dinosaur Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower",
           "standing": "origin",
           "display_name": "Dinosaur Companion"
@@ -522,49 +522,49 @@
         },
         {
           "name": "Divine Boon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Evangelist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Divine Boon (Evangelist Class Feature.SpecialQuality)"
         },
         {
           "name": "Divine Boon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Divine Boon (Exalted Class Feature.SpecialQuality)"
         },
         {
           "name": "Divine Boon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sentinel Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Divine Boon (Sentinel Class Feature.SpecialQuality)"
         },
         {
           "name": "Divine Brand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Divine Brand"
         },
         {
           "name": "Divine Quickness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Sentinel Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Divine Quickness"
         },
         {
           "name": "Dragon Disciple",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Dragon Disciple"
         },
         {
           "name": "Dragonbreath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Dragonbreath"
@@ -578,14 +578,14 @@
         },
         {
           "name": "Druid",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Druid"
         },
         {
           "name": "Duelist",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Duelist"
@@ -599,7 +599,7 @@
         },
         {
           "name": "Eldritch Knight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Eldritch Knight"
@@ -634,14 +634,14 @@
         },
         {
           "name": "Evangelist Aligned Class",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Evangelist Aligned Class",
           "standing": "origin",
           "display_name": "Evangelist Aligned Class"
         },
         {
           "name": "Expanded Portfolio",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Expanded Portfolio"
@@ -690,7 +690,7 @@
         },
         {
           "name": "Feed on Fear",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Feed on Fear"
@@ -718,7 +718,7 @@
         },
         {
           "name": "Fighter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Fighter"
@@ -760,7 +760,7 @@
         },
         {
           "name": "Gift of Tongues",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Evangelist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Gift of Tongues"
@@ -802,14 +802,14 @@
         },
         {
           "name": "Guarded Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower",
           "standing": "origin",
           "display_name": "Guarded Mind"
         },
         {
           "name": "Gunslinger",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Gunslinger"
@@ -823,7 +823,7 @@
         },
         {
           "name": "Hasten the End",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Hasten the End"
@@ -865,14 +865,14 @@
         },
         {
           "name": "Holy Vindicator",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Holy Vindicator"
         },
         {
           "name": "Horizon Walker",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Horizon Walker"
@@ -886,7 +886,7 @@
         },
         {
           "name": "Hunter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Hunter"
@@ -914,14 +914,14 @@
         },
         {
           "name": "Inquisitor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Inquisitor"
         },
         {
           "name": "Intense Celebration",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Intense Celebration"
@@ -935,21 +935,21 @@
         },
         {
           "name": "Investigator",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Investigator"
         },
         {
           "name": "It Came From Beyond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DomainPower",
           "standing": "origin",
           "display_name": "It Came From Beyond"
         },
         {
           "name": "It Came from Beyond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "It Came from Beyond"
@@ -1019,7 +1019,7 @@
         },
         {
           "name": "Loremaster",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Loremaster"
@@ -1054,7 +1054,7 @@
         },
         {
           "name": "Magus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Magus"
@@ -1068,21 +1068,21 @@
         },
         {
           "name": "Master Chymist",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Master Chymist"
         },
         {
           "name": "Master Spy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Master Spy"
         },
         {
           "name": "Master's Yoke",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Master's Yoke"
@@ -1117,7 +1117,7 @@
         },
         {
           "name": "Monk",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Monk"
@@ -1131,28 +1131,28 @@
         },
         {
           "name": "Moonfire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Moonfire"
         },
         {
           "name": "Multitude of Talents",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Evangelist Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Multitude of Talents"
         },
         {
           "name": "Mystic Theurge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Mystic Theurge"
         },
         {
           "name": "Nature Warden",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Nature Warden"
@@ -1166,7 +1166,7 @@
         },
         {
           "name": "Ninja",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Ninja"
@@ -1180,21 +1180,21 @@
         },
         {
           "name": "Obedience",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Evangelist Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Obedience (Evangelist Class Feature.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Obedience",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Obedience (Exalted Class Feature.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Obedience",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sentinel Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Obedience (Sentinel Class Feature.SpecialQuality.Extraordinary)"
@@ -1208,7 +1208,7 @@
         },
         {
           "name": "Oracle",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Oracle"
@@ -1222,21 +1222,21 @@
         },
         {
           "name": "Painful Smite",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Painful Smite"
         },
         {
           "name": "Paladin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Paladin"
         },
         {
           "name": "Part the Veil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Part the Veil"
@@ -1250,7 +1250,7 @@
         },
         {
           "name": "Pathfinder Chronicler",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Pathfinder Chronicler"
@@ -1264,7 +1264,7 @@
         },
         {
           "name": "Perform Miracle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Perform Miracle"
@@ -1313,14 +1313,14 @@
         },
         {
           "name": "Powerful Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Powerful Bond"
         },
         {
           "name": "Practiced Combatant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sentinel Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Practiced Combatant"
@@ -1334,7 +1334,7 @@
         },
         {
           "name": "Protective Grace",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Evangelist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Protective Grace (Evangelist Class Feature.SpecialQuality.Supernatural)"
@@ -1362,21 +1362,21 @@
         },
         {
           "name": "Rage Prophet",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Rage Prophet"
         },
         {
           "name": "Ranger",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Ranger"
         },
         {
           "name": "Religious Speaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Religious Speaker"
@@ -1404,7 +1404,7 @@
         },
         {
           "name": "Righteous Leader",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sentinel Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Righteous Leader"
@@ -1418,7 +1418,7 @@
         },
         {
           "name": "Rogue",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Rogue"
@@ -1439,7 +1439,7 @@
         },
         {
           "name": "Samurai",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Samurai"
@@ -1467,7 +1467,7 @@
         },
         {
           "name": "Scholar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Scholar"
@@ -1516,21 +1516,21 @@
         },
         {
           "name": "Serpent Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower.Animal Companion",
           "standing": "origin",
           "display_name": "Serpent Companion"
         },
         {
           "name": "Shadowdancer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Shadowdancer"
         },
         {
           "name": "Shaman",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Shaman"
@@ -1551,7 +1551,7 @@
         },
         {
           "name": "Sift",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Sift"
@@ -1565,14 +1565,14 @@
         },
         {
           "name": "Skald",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Skald"
         },
         {
           "name": "Skilled",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Evangelist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Skilled"
@@ -1586,7 +1586,7 @@
         },
         {
           "name": "Slayer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Slayer"
@@ -1607,14 +1607,14 @@
         },
         {
           "name": "Sorcerer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Sorcerer"
         },
         {
           "name": "Spiritual Form",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Evangelist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Spiritual Form"
@@ -1635,14 +1635,14 @@
         },
         {
           "name": "Stalwart",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sentinel Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Stalwart"
         },
         {
           "name": "Stalwart Defender",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Stalwart Defender"
@@ -1698,7 +1698,7 @@
         },
         {
           "name": "Summoner",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Summoner"
@@ -1719,7 +1719,7 @@
         },
         {
           "name": "Swashbuckler",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Swashbuckler"
@@ -1733,7 +1733,7 @@
         },
         {
           "name": "Synergistic Touch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.DomainPower",
           "standing": "origin",
           "display_name": "Synergistic Touch"
@@ -1768,7 +1768,7 @@
         },
         {
           "name": "The Stars Are Right",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "The Stars Are Right"
@@ -1789,7 +1789,7 @@
         },
         {
           "name": "Touch of Loyalty",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Touch of Loyalty"
@@ -1824,7 +1824,7 @@
         },
         {
           "name": "Tyrannical Strike",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Tyrannical Strike"
@@ -1845,7 +1845,7 @@
         },
         {
           "name": "Unexpected Whimsy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Unexpected Whimsy"
@@ -1866,63 +1866,63 @@
         },
         {
           "name": "Unstoppable Warrior",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sentinel Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Unstoppable Warrior"
         },
         {
           "name": "Unstoppable Warrior (CE)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unstoppable Warrior (CE)"
         },
         {
           "name": "Unstoppable Warrior (CG)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unstoppable Warrior (CG)"
         },
         {
           "name": "Unstoppable Warrior (CN)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unstoppable Warrior (CN)"
         },
         {
           "name": "Unstoppable Warrior (LE)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unstoppable Warrior (LE)"
         },
         {
           "name": "Unstoppable Warrior (LG)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unstoppable Warrior (LG)"
         },
         {
           "name": "Unstoppable Warrior (LN)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unstoppable Warrior (LN)"
         },
         {
           "name": "Unstoppable Warrior (NE)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unstoppable Warrior (NE)"
         },
         {
           "name": "Unstoppable Warrior (TN)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unstoppable Warrior (TN)"
@@ -1943,14 +1943,14 @@
         },
         {
           "name": "Venomous Saliva",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Venomous Saliva"
         },
         {
           "name": "Venomous Stare",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.SpellLike.DomainPower",
           "standing": "origin",
           "display_name": "Venomous Stare"
@@ -1964,7 +1964,7 @@
         },
         {
           "name": "Vigilante",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Vigilante"
@@ -1985,7 +1985,7 @@
         },
         {
           "name": "Vitality",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Exalted Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Vitality"
@@ -2006,7 +2006,7 @@
         },
         {
           "name": "Warpriest",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Warpriest"
@@ -2020,21 +2020,21 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Evangelist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Weapon and Armor Proficiency (Evangelist Class Feature.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Exalted Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Weapon and Armor Proficiency (Exalted Class Feature.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Sentinel Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Weapon and Armor Proficiency (Sentinel Class Feature.SpecialQuality)"
@@ -2076,21 +2076,21 @@
         },
         {
           "name": "Winter Witch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "origin",
           "display_name": "Winter Witch"
         },
         {
           "name": "Witch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Witch"
         },
         {
           "name": "Wizard",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Aligned Class",
           "standing": "unclassified",
           "display_name": "Wizard"
@@ -2713,7 +2713,7 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #88"
@@ -4853,11 +4853,11 @@
     {
       "kind": "domain",
       "label": "Domains",
-      "done": 0,
+      "done": 10,
       "partial": 0,
-      "not_started": 10,
+      "not_started": 0,
       "denominator": 10,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 11,
       "standing_breakdown": {
         "origin": 10,
@@ -4866,147 +4866,147 @@
       "items": [
         {
           "name": "Arson Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Arson Subdomain"
         },
         {
           "name": "Cooperation Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cooperation Subdomain"
         },
         {
           "name": "Dark Tapestry Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dark Tapestry Subdomain"
         },
         {
           "name": "Dragon Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dragon Subdomain"
         },
         {
           "name": "Entropy Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Entropy Subdomain"
         },
         {
           "name": "Fear Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Fear Subdomain"
         },
         {
           "name": "Flotsam Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Flotsam Subdomain"
         },
         {
           "name": "Friendship Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Friendship Subdomain"
         },
         {
           "name": "Isolation Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Isolation Subdomain"
         },
         {
           "name": "Judgment Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Judgment Subdomain"
         },
         {
           "name": "Loyalty Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Loyalty Subdomain"
         },
         {
           "name": "Moon Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Moon Subdomain"
         },
         {
           "name": "Revelry Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Revelry Subdomain"
         },
         {
           "name": "Rivers Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rivers Subdomain"
         },
         {
           "name": "Saurian Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Saurian Subdomain"
         },
         {
           "name": "Slavery Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Slavery Subdomain"
         },
         {
           "name": "Stars Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Stars Subdomain"
         },
         {
           "name": "Torture Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Torture Subdomain"
         },
         {
           "name": "Tyranny Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Tyranny Subdomain"
         },
         {
           "name": "Venom Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Venom Subdomain"
         },
         {
           "name": "Whimsy Subdomain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Whimsy Subdomain"
@@ -5016,11 +5016,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 100,
-      "partial": 16,
+      "done": 115,
+      "partial": 1,
       "not_started": 3,
       "denominator": 119,
-      "pct": 84.0,
+      "pct": 96.6,
       "excluded_from_percentage": 31,
       "standing_breakdown": {
         "origin": 119,
@@ -5057,7 +5057,7 @@
         },
         {
           "name": "Belt Of The Snake King",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Belt.Belt",
           "standing": "origin",
           "display_name": "Belt Of The Snake King"
@@ -5106,14 +5106,14 @@
         },
         {
           "name": "Broken Chain Of The Beast",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Belt.Belt",
           "standing": "origin",
           "display_name": "Broken Chain Of The Beast"
         },
         {
           "name": "Bronze Skinning Knife",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_None",
           "standing": "origin",
           "display_name": "Bronze Skinning Knife"
@@ -5141,14 +5141,14 @@
         },
         {
           "name": "Cloak Of The Crusader",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak",
           "standing": "origin",
           "display_name": "Cloak Of The Crusader"
         },
         {
           "name": "Cloak Of The Night Sky",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak",
           "standing": "origin",
           "display_name": "Cloak Of The Night Sky"
@@ -5176,7 +5176,7 @@
         },
         {
           "name": "Dawnflower Sash",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Belt.SLOT_Head.Headgear.Belt",
           "standing": "unclassified",
           "display_name": "Dawnflower Sash"
@@ -5197,7 +5197,7 @@
         },
         {
           "name": "Deathlurker's Cloak",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak",
           "standing": "origin",
           "display_name": "Deathlurker's Cloak"
@@ -5274,7 +5274,7 @@
         },
         {
           "name": "Father's Forgehammer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_None",
           "standing": "origin",
           "display_name": "Father's Forgehammer"
@@ -5358,7 +5358,7 @@
         },
         {
           "name": "Gossamer Amberstone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
           "standing": "origin",
           "display_name": "Gossamer Amberstone"
@@ -5428,7 +5428,7 @@
         },
         {
           "name": "Icon Of The Midwife",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_None",
           "standing": "origin",
           "display_name": "Icon Of The Midwife"
@@ -5533,7 +5533,7 @@
         },
         {
           "name": "Nightstone Of Sorrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
           "standing": "origin",
           "display_name": "Nightstone Of Sorrow"
@@ -5547,7 +5547,7 @@
         },
         {
           "name": "Orb Of The Waybringer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
           "standing": "origin",
           "display_name": "Orb Of The Waybringer"
@@ -5568,7 +5568,7 @@
         },
         {
           "name": "Pallid Crystal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
           "standing": "origin",
           "display_name": "Pallid Crystal"
@@ -5652,7 +5652,7 @@
         },
         {
           "name": "Rhombocrystal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_None",
           "standing": "origin",
           "display_name": "Rhombocrystal"
@@ -5715,7 +5715,7 @@
         },
         {
           "name": "Sacrificial Dagger Of The Blood Mother",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_None",
           "standing": "origin",
           "display_name": "Sacrificial Dagger Of The Blood Mother"
@@ -5757,7 +5757,7 @@
         },
         {
           "name": "Spellsight Bracer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Wrists.Bracer",
           "standing": "origin",
           "display_name": "Spellsight Bracer"
@@ -6700,11 +6700,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 74,
+      "done": 75,
       "partial": 10,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 85,
-      "pct": 87.1,
+      "pct": 88.2,
       "excluded_from_percentage": 79,
       "standing_breakdown": {
         "unclassified": 79,
@@ -7672,7 +7672,7 @@
         },
         {
           "name": "Speed Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ModifyMovement.Extraordinary",
           "standing": "origin",
           "display_name": "Speed Burst"
@@ -8152,11 +8152,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 21,
+      "not_started": 20,
       "denominator": 21,
-      "pct": 0.0,
+      "pct": 4.8,
       "excluded_from_percentage": 4,
       "standing_breakdown": {
         "origin": 21,
@@ -8228,14 +8228,14 @@
         },
         {
           "name": "Favored Enemy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Favored Enemy"
         },
         {
           "name": "Favored Terrain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Favored Terrain"
@@ -8326,7 +8326,7 @@
         },
         {
           "name": "Truespeech",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Communicate.Supernatural",
           "standing": "unclassified",
           "display_name": "Truespeech"
@@ -8343,11 +8343,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 8,
-      "partial": 57,
-      "not_started": 27,
+      "done": 11,
+      "partial": 80,
+      "not_started": 1,
       "denominator": 92,
-      "pct": 8.7,
+      "pct": 12.0,
       "excluded_from_percentage": 4,
       "standing_breakdown": {
         "origin": 92,
@@ -8370,7 +8370,7 @@
         },
         {
           "name": "Arcane Mark (Profane Seal Signet)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Arcane Mark (Profane Seal Signet)"
@@ -8391,21 +8391,21 @@
         },
         {
           "name": "Beast Shape I (Red Hound Ring)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Beast Shape I (Red Hound Ring)"
         },
         {
           "name": "Beast Shape II (Bear Pelt Of The Bonebreaker)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Beast Shape II (Bear Pelt Of The Bonebreaker)"
         },
         {
           "name": "Beast Shape IV (Ring Of Seven Lovely Colors)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Beast Shape IV (Ring Of Seven Lovely Colors)"
@@ -8461,7 +8461,7 @@
         },
         {
           "name": "Create Water (Ataxian)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Create Water (Ataxian)"
@@ -8531,7 +8531,7 @@
         },
         {
           "name": "Feather Fall (Pavbagha)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Feather Fall (Pavbagha)"
@@ -8594,7 +8594,7 @@
         },
         {
           "name": "Heightened Charm Person",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Heightened Charm Person"
@@ -8622,7 +8622,7 @@
         },
         {
           "name": "Instant Summons (First Blade)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Instant Summons (First Blade)"
@@ -8636,7 +8636,7 @@
         },
         {
           "name": "Levitate (Self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Levitate (Self only)"
@@ -8678,14 +8678,14 @@
         },
         {
           "name": "Magic Fang (Belt Of The Snake King)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Magic Fang (Belt Of The Snake King)"
         },
         {
           "name": "Magic Jar (Ataxian)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Magic Jar (Ataxian)"
@@ -8720,14 +8720,14 @@
         },
         {
           "name": "Planar Ally (Thais)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Planar Ally (Thais)"
         },
         {
           "name": "Plane Shift (self and willing targets only)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (self and willing targets only)"
@@ -8741,14 +8741,14 @@
         },
         {
           "name": "Quickened Vomit Swarm",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Vomit Swarm"
         },
         {
           "name": "Rage (Self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Rage (Self only)"
@@ -8825,7 +8825,7 @@
         },
         {
           "name": "Speak With Animals (Zentragt)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Speak With Animals (Zentragt)"
@@ -8846,63 +8846,63 @@
         },
         {
           "name": "Summon Monster I (Ahmuuth)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster I (Ahmuuth)"
         },
         {
           "name": "Summon Monster I (Broken Chain Of The Beast)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster I (Broken Chain Of The Beast)"
         },
         {
           "name": "Summon Monster I (Red Hound Ring)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster I (Red Hound Ring)"
         },
         {
           "name": "Summon Monster II (Demon Mother's Mask)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster II (Demon Mother's Mask)"
         },
         {
           "name": "Summon Monster II (Personification of Fury)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster II (Personification of Fury)"
         },
         {
           "name": "Summon Monster IV (Yethazmari)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Yethazmari)"
         },
         {
           "name": "Summon Monster IX (Personification of Fury)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Personification of Fury)"
         },
         {
           "name": "Summon Monster V (Basileus)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Basileus)"
         },
         {
           "name": "Summon Monster VI (The Stabbing Beast)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (The Stabbing Beast)"
@@ -8979,7 +8979,7 @@
         },
         {
           "name": "Vomit Swarm (Sarcovalt)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Vomit Swarm (Sarcovalt)"
@@ -9068,11 +9068,11 @@
     {
       "kind": "trait",
       "label": "Traits",
-      "done": 0,
-      "partial": 0,
-      "not_started": 7,
+      "done": 6,
+      "partial": 1,
+      "not_started": 0,
       "denominator": 7,
-      "pct": 0.0,
+      "pct": 85.7,
       "excluded_from_percentage": 108,
       "standing_breakdown": {
         "origin": 7,
@@ -9081,231 +9081,231 @@
       "items": [
         {
           "name": "Affinity for the Elements (any elemental lord)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "origin",
           "display_name": "Affinity for the Elements (any elemental lord)"
         },
         {
           "name": "Demonic Persuasion (any demon lord)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "origin",
           "display_name": "Demonic Persuasion (any demon lord)"
         },
         {
           "name": "Elemental Resilience (any elemental lord)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "origin",
           "display_name": "Elemental Resilience (any elemental lord)"
         },
         {
           "name": "Elven Polytheist (any elven deity)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "origin",
           "display_name": "Elven Polytheist (any elven deity)"
         },
         {
           "name": "Flames of Hell (any archdevil)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "origin",
           "display_name": "Flames of Hell (any archdevil)"
         },
         {
           "name": "Propitiation (any dwarven deity)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "origin",
           "display_name": "Propitiation (any dwarven deity)"
         },
         {
           "name": "Shaper of Reality (any of the Eldest)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "origin",
           "display_name": "Shaper of Reality (any of the Eldest)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #2"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #3"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #4"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #5"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #6"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #7"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #8"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #9"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #10"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #11"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #12"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #13"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #14"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #15"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #16"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #17"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #18"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #19"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #20"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #21"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #22"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #23"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #24"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #25"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #26"
@@ -9319,567 +9319,567 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #28"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #29"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #30"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #31"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #32"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #33"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #34"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #35"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #36"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #37"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #38"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #39"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #40"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #41"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #42"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #43"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #44"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #45"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #46"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #47"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #48"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #49"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #50"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #51"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #52"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #53"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #54"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #55"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #56"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #57"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #58"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #59"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #60"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #61"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #62"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #63"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #64"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #65"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #66"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #67"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #68"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #69"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #70"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #71"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #72"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #73"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #74"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #75"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #76"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #77"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #78"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #79"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #80"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #81"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #82"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #83"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #84"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #85"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #86"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #87"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #88"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #89"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #90"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #91"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #92"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #93"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #94"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #95"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #96"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #97"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #98"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #99"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #100"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #101"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #102"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #103"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #104"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #105"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #106"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #107"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.ReligionTrait) #108"

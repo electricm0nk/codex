@@ -135,7 +135,7 @@ Exit status: 0
 **Completed successfully — 12 minutes 37 seconds (757.01s) of real wall-clock time**, on a
 confirmed-quiet box, to produce a valid summary (`generated_at: 2026-09-01T19:24:34Z`,
 `totals.units: 49438`, `totals.books: 38`, cross-checking cleanly against this bundle's own
-49,438-unit fact sheet). **99% CPU the entire run** — genuinely single-threaded, compute-bound,
+49,438-unit fact sheet). **99% of 1 CPU core the entire run** (`/usr/bin/time -v timeout 1800 cargo run --locked --quiet --bin v06_work_inventory -- --summary 2>&1 | grep 'Percent of CPU'` reproduces the `Percent of CPU this job got` line quoted in the transcript above) — genuinely single-threaded, compute-bound,
 not I/O-stalled or waiting on a lock. This is **more than five times** the brief's claimed
 "~2m26s unloaded," and the first (590s-capped) run had already proven the claim wrong by failing
 to finish at all inside 590 seconds.
@@ -150,7 +150,7 @@ to finish at all inside 590 seconds.
 | `docs/work-inventory.json` last real touch | `2026-08-31 20:15:47 -0400` (`3aebc284`) | `git log -1 --format=%cd --date=iso -- docs/work-inventory.json` | N/A |
 | Staleness gap | 8 days (was 7 at wave-24) | date arithmetic on the two rows above | N/A |
 | `v06_work_inventory --summary`, `timeout 590` run (brief's claimed unloaded figure) | **killed, exit 124, did not finish** | `/usr/bin/time -v timeout 590 cargo run --locked --quiet --bin v06_work_inventory -- --summary`, quiet box confirmed via `free -h`/`uptime` first | N/A (did not complete) |
-| `v06_work_inventory --summary`, true wall time, quiet box | **12:37.01 (757.01s), exit 0, 99% CPU** | same command, `timeout 1800` | N/A |
+| `v06_work_inventory --summary`, true wall time, quiet box | **12:37.01 (757.01s), exit 0, 99% of 1 CPU core** | same command, `timeout 1800` | N/A |
 | `v06_work_inventory --summary` output totals (cross-check the run was real, not truncated) | `units: 49438, books: 38` | `python3 -c "import json; d=json.load(open('/tmp/v06-summary-run2.json')); print(d['totals']['units'], d['totals']['books'])"` | matches this bundle's own 49,438-unit fact sheet |
 | Commits touching `src/bin/v06_work_inventory.rs` since the tranche cut | 59 | `git log --oneline ea2b3396f2..HEAD -- src/bin/v06_work_inventory.rs \| wc -l` | of all commits on `tranche/14` |
 | denominator gate on this package | `files_checked=16 violations=0` | `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` | N/A |

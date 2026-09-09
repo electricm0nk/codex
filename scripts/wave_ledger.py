@@ -74,6 +74,23 @@ KNOWN_WAVES = {
                               "NAMEISPI policy rows (masked, not a leak), B desktop/reach/site, C clippy"),
     "wf_6807ac3c-039": ("25", "last 4 data/corpus mechanisms of root-full; C re-measures the "
                               "whole gate itself -- the 14-red figure is several waves stale"),
+    "wf_4cb8e9fe-c43": ("26", "3 red left; A implements decisions.md 13 by baselining the 4 trap "
+                              "tests (they assert zero against registered debt), B settles the "
+                              "desktop contradiction, C sweeps with command+output per FAIL"),
+    "wf_cbb90b15-7b0": ("33", "bucket D is six mechanisms, not one shape -- A takes the 27 "
+                              "held-by-table records without escalating the disposition, B the 53 "
+                              "race_traits that load but never apply, C the 38 class snapshot-deltas, "
+                              "D the four baselines verify.sh flags stale"),
+    "wf_820936ab-e11": ("32", "the last 2 verify.sh FAILs -> 40/40 (A); completion_atlas condition-6 "
+                              "citation gate is correctly tripping on DONE (B); bucket D from 50.5% "
+                              "DONE, 24963/49438 (C)"),
+    # Run ids and wave numbers are NOT 1:1 from 28 onward. This single run carried
+    # several numbered cycles -- its lanes self-labelled "wave 30" (gate lane A) and
+    # "wave 31" (gate lane C). Waves 28-31 all ran and landed work; only the ledger
+    # registration was skipped, which made the ledger look like it stopped at 27.
+    "wf_71f08acc-764": ("28-31", "gate lanes across four numbered cycles -- B made site-dashboard-check "
+                                 "fail loudly instead of serving a stale cache (a893bfcb39); A turned "
+                                 "root-full GREEN; C swept 38/40 PASS with zero green-to-red"),
 }
 
 

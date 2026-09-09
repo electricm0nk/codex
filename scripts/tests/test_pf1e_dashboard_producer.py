@@ -778,5 +778,126 @@ class PublishableDocumentPathTests(unittest.TestCase):
         self.assertNotIn(str(self.root), json.dumps(index))
 
 
+class StateDumpTimeoutIsLoudUnderStrictModeTest(unittest.TestCase):
+    """SD-34 AT-34-E6-001 wave-27: `scripts/publish-site-dashboard.sh --check`
+    (the `site-dashboard-check` verify.sh gate) must fail LOUDLY when a
+    state-dump binary times out, not silently compare two stale-cache-derived
+    outputs and report the feed current. A live regeneration (the cron
+    renderer, or an interactive run) must keep the OLD stale-cache-preferred
+    behavior unchanged -- a blank public panel is worse than a stale one.
+
+    `PF1E_DASHBOARD_STRICT_TIMEOUT=1` is the switch between the two: unset
+    (the live-regen default) preserves `_load_cached_dump`'s original
+    fallback; `1` (set only by `--check`) makes a timeout raise
+    `StateDumpTimeout` instead.
+
+    Prove-it-can-fail discipline: revert the `except subprocess.TimeoutExpired`
+    branch in `_run_state_dump` back to falling through to the generic
+    `except (OSError, subprocess.SubprocessError)` catch-all (i.e. delete the
+    `if _strict_timeout_mode(): raise ...` line) and re-run --
+    `test_load_cached_dump_raises_under_strict_mode_on_timeout` goes red
+    (returns the stale cache instead of raising), while
+    `test_load_cached_dump_falls_back_to_cache_on_timeout_when_not_strict`
+    stays green either way -- it is the strict-mode branch specifically that
+    is under test.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self.root = pathlib.Path(self._tmp.name)
+        # `_run_state_dump` bails out before ever touching subprocess.run
+        # unless it sees a real cargo project directory -- give it one so
+        # the mocked `subprocess.run` is actually reached.
+        (self.root / "Cargo.toml").write_text("[package]\n", encoding="utf-8")
+        # Never let a real env var leak into these deterministic cases, and
+        # restore whatever this process actually had afterward either way.
+        self._env_patch = unittest.mock.patch.dict(os.environ, {}, clear=False)
+        self._env_patch.start()
+        self.addCleanup(self._env_patch.stop)
+        os.environ.pop("PF1E_DASHBOARD_STRICT_TIMEOUT", None)
+
+    def _stale_cache(self, payload=None):
+        cache = self.root / "cache.json"
+        cache.write_text(json.dumps(payload or {"stale": "cached-value"}), encoding="utf-8")
+        # Far enough in the past that `max_age_seconds` below always treats
+        # it as aged out, so `_load_cached_dump` always attempts a rebuild.
+        os.utime(cache, (0, 0))
+        return str(cache)
+
+    def test_run_state_dump_returns_none_on_timeout_when_not_strict(self):
+        """Unchanged pre-existing behavior: no strict mode, no raise."""
+        import subprocess as sp
+
+        with unittest.mock.patch.object(
+            sp, "run", side_effect=sp.TimeoutExpired(cmd="cargo", timeout=5)
+        ):
+            result = producer._run_state_dump("v06_work_inventory", str(self.root))
+        self.assertIsNone(result)
+
+    def test_run_state_dump_raises_state_dump_timeout_when_strict(self):
+        import subprocess as sp
+
+        os.environ["PF1E_DASHBOARD_STRICT_TIMEOUT"] = "1"
+        with unittest.mock.patch.object(
+            sp, "run", side_effect=sp.TimeoutExpired(cmd="cargo", timeout=5)
+        ):
+            with self.assertRaises(producer.StateDumpTimeout):
+                producer._run_state_dump("v06_work_inventory", str(self.root))
+
+    def test_load_cached_dump_falls_back_to_cache_on_timeout_when_not_strict(self):
+        """The live-regen path: a stale panel, never a blank one."""
+        import subprocess as sp
+
+        cache_path = self._stale_cache({"stale": "cached-value"})
+        with unittest.mock.patch.object(
+            sp, "run", side_effect=sp.TimeoutExpired(cmd="cargo", timeout=5)
+        ):
+            result = producer._load_cached_dump(
+                "v06_work_inventory", cache_path, str(self.root), max_age_seconds=1,
+                bin_args=["--summary"],
+            )
+        self.assertEqual(result, {"stale": "cached-value"})
+
+    def test_load_cached_dump_raises_under_strict_mode_on_timeout(self):
+        """The defect this cycle fixes: --check must NOT silently serve the
+        stale cache and report the feed current."""
+        import subprocess as sp
+
+        cache_path = self._stale_cache({"stale": "cached-value"})
+        os.environ["PF1E_DASHBOARD_STRICT_TIMEOUT"] = "1"
+        with unittest.mock.patch.object(
+            sp, "run", side_effect=sp.TimeoutExpired(cmd="cargo", timeout=5)
+        ):
+            with self.assertRaises(producer.StateDumpTimeout):
+                producer._load_cached_dump(
+                    "v06_work_inventory", cache_path, str(self.root), max_age_seconds=1,
+                    bin_args=["--summary"],
+                )
+
+    def test_load_work_inventory_uses_its_own_wider_timeout(self):
+        """The mechanical control wave-26's receipt named: v06_work_inventory
+        (measured ~757s) must not share the two cheaper dumps' 600s cap."""
+        self.assertGreater(
+            producer.WORK_INVENTORY_BUILD_TIMEOUT_SECONDS,
+            producer.CLASS_STATE_BUILD_TIMEOUT_SECONDS,
+        )
+        seen_timeouts = []
+
+        def _fake_run(*args, **kwargs):
+            seen_timeouts.append(kwargs.get("timeout"))
+            raise __import__("subprocess").TimeoutExpired(cmd="cargo", timeout=kwargs.get("timeout"))
+
+        import subprocess as sp
+
+        with unittest.mock.patch.object(sp, "run", side_effect=_fake_run):
+            producer.load_work_inventory(
+                cache_path=str(self.root / "wi-cache.json"),
+                repo_root=str(self.root),
+                max_age_seconds=1,
+            )
+        self.assertEqual(seen_timeouts, [producer.WORK_INVENTORY_BUILD_TIMEOUT_SECONDS])
+
+
 if __name__ == "__main__":
     unittest.main()

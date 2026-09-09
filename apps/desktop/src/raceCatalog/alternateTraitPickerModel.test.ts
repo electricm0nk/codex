@@ -1,10 +1,15 @@
 import {
   blocksByAlternateKey,
+  describeAdoptedRaceGrants,
+  describeAdoptionOptions,
+  describeAdoptiveParentageGrants,
   describeBlock,
   describeCharacterContext,
   describePicker,
   describeReplacement,
   describeSelectionOutcome,
+  describeSkinwalkerChangeShapeGrants,
+  describeSkinwalkerChangeShapeOptions,
   descriptionsByTraitKey,
   traitDescription,
   orderRacesByAlternateCount,
@@ -15,10 +20,13 @@ import {
 import { RACE_CATALOG_VIEWS } from './RaceCatalogScreen';
 import { NO_RUNTIME_MESSAGE } from './alternateTraitPickerRuntime';
 import type {
+  AdoptedRaceOptionDto,
+  AdoptiveParentageOptionDto,
   AlternateRacialTraitsResponse,
   AlternateTraitDto,
   RacePickerDto,
   RaceSelectionResponse,
+  SkinwalkerChangeShapeOptionDto,
 } from '../boundary/loadAlternateRacialTraits';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -104,12 +112,22 @@ assertEqual(empty.length, 0, 'toggleSelection does not mutate its input');
 
 const menu: AlternateRacialTraitsResponse = {
   races: [race(), race({ raceKey: 'Elf', raceName: 'Elf', alternates: [alternate({ key: 'Elf ~ A' }), alternate({ key: 'Elf ~ B' })] })],
+  adoptiveParentageOptions: [],
+  adoptedRaceOptions: [],
+  skinwalkerChangeShapeOptions: [],
   diagnostics: [],
   findings: [],
 };
 assertEqual(describePicker(menu), '3 alternate racial traits across 2 races', 'summary counts what arrived');
 assertEqual(
-  describePicker({ races: [race()], diagnostics: [], findings: [] }),
+  describePicker({
+    races: [race()],
+    adoptiveParentageOptions: [],
+    adoptedRaceOptions: [],
+    skinwalkerChangeShapeOptions: [],
+    diagnostics: [],
+    findings: [],
+  }),
   '1 alternate racial trait across 1 race',
   'singular wording',
 );
@@ -315,6 +333,148 @@ assertEqual(
   describeCharacterContext('Bilbo', null),
   "Reading Bilbo's feats…",
   'before the engine answers, the screen claims nothing about what did or did not move',
+);
+
+// --- Adoptive Parentage / Adopted Race options -----------------------------
+//
+// SD-34 wave 33 lane B's own next-cycle plan item 1: wire
+// `adoptedRaceOptions`/`adoptiveParentageOptions` into the desktop TypeScript
+// boundary and a real picker UI section. Both are `text_only` — real rendered
+// prose is the whole bar. The payloads below are copied from real corpus
+// facts `race_trait_picker.rs`'s own
+// `the_menu_command_itself_carries_all_seven_adoptive_parentage_options_with_real_grants`
+// and `the_menu_command_carries_all_twentyone_adopted_race_options_twenty_with_real_grants`
+// pin against the on-disk corpus (ARG's `Drow` Adoptive Parentage option, and
+// the `Oread`/`Rougarou` Adopted Race selectors).
+
+function adoptiveParentageOption(overrides: Partial<AdoptiveParentageOptionDto> = {}): AdoptiveParentageOptionDto {
+  return {
+    key: 'Drow',
+    name: 'Drow',
+    book: 'ARG',
+    adoptedRace: 'Drow',
+    description: 'You were adopted and raised by dark elves.',
+    grants: [
+      { key: 'Drow ~ Weapon Familiarity', name: 'Weapon Familiarity' },
+      { key: 'Drow ~ Languages', name: 'Languages' },
+    ],
+    ...overrides,
+  };
+}
+
+function adoptedRaceOption(overrides: Partial<AdoptedRaceOptionDto> = {}): AdoptedRaceOptionDto {
+  return {
+    key: 'Adopted Race ~ Oread',
+    name: 'Oread',
+    book: 'ISR',
+    adoptedRace: 'Oread',
+    grants: [
+      {
+        key: 'Oread ~ Loner of the Rocks',
+        name: 'Loner of the Rocks',
+        description:
+          'You gain a +1 trait bonus on Heal and Survival checks. Your bonus on Survival ' +
+          'checks increases by 1 in underground or mountain environments.',
+        book: 'ISR',
+      },
+    ],
+    malformedChooseToken: false,
+    ...overrides,
+  };
+}
+
+const adoptionMenu: AlternateRacialTraitsResponse = {
+  races: [],
+  adoptiveParentageOptions: [adoptiveParentageOption(), adoptiveParentageOption({ key: 'Dwarf', name: 'Dwarf', adoptedRace: 'Dwarf' })],
+  adoptedRaceOptions: [adoptedRaceOption()],
+  skinwalkerChangeShapeOptions: [],
+  diagnostics: [],
+  findings: [],
+};
+assertEqual(
+  describeAdoptionOptions(adoptionMenu),
+  '2 Adoptive Parentage options, 1 Adopted Race selector',
+  'the header counts what actually arrived, plural/singular correctly',
+);
+assertEqual(
+  describeAdoptionOptions({
+    races: [],
+    adoptiveParentageOptions: [],
+    adoptedRaceOptions: [],
+    skinwalkerChangeShapeOptions: [],
+    diagnostics: [],
+    findings: [],
+  }),
+  '0 Adoptive Parentage options, 0 Adopted Race selectors',
+  'zero is reported plainly, not hidden',
+);
+
+assertEqual(
+  describeAdoptiveParentageGrants(adoptiveParentageOption()),
+  'Grants Weapon Familiarity, Languages.',
+  'names every already-ingested trait the option grants, the real Drow shape',
+);
+assertEqual(
+  describeAdoptiveParentageGrants(adoptiveParentageOption({ grants: [] })),
+  'Grants nothing already ingested for this race.',
+  'an empty pool is reported honestly, never papered over',
+);
+
+assertEqual(
+  describeAdoptedRaceGrants(adoptedRaceOption()),
+  'Choose one: Loner of the Rocks.',
+  'names the real Trait pool, the Oread shape pinned by the backend test',
+);
+assertEqual(
+  describeAdoptedRaceGrants(adoptedRaceOption({ key: 'Adopted Race ~ Rougarou', name: 'Rougarou', adoptedRace: 'Rougarou', grants: [] })),
+  'No ingested Trait pool for Rougarou — this selector offers nothing to pick from today.',
+  "Rougarou's genuinely empty pool (SD-34 wave 33 lane B receipt: the sole honest zero among the 21 real selectors)",
+);
+assertEqual(
+  describeAdoptedRaceGrants(adoptedRaceOption({ malformedChooseToken: true, grants: [] })),
+  "Corpus finding: this selector's CHOOSE token could not be read, so its pool cannot be shown.",
+  'a malformed CHOOSE token is a distinct finding, never conflated with a real empty pool',
+);
+
+// --- Skinwalker Change Shape (SD-34 wave 33 lane B's own 20-unit remainder) -
+
+function skinwalkerChangeShapeOption(
+  overrides: Partial<SkinwalkerChangeShapeOptionDto> = {},
+): SkinwalkerChangeShapeOptionDto {
+  return {
+    key: 'Werebear-Kin ~ Change Shape',
+    name: 'Change Shape',
+    book: 'B5',
+    kin: 'Werebear-Kin',
+    grants: [
+      { key: 'Skinwalker ~ Change Shape (Bite)', name: 'Change Shape (Bite Attack)', description: null },
+      { key: 'Skinwalker ~ Change Shape (Wisdom)', name: 'Change Shape (Ability Modifier Wisdom)', description: null },
+    ],
+    ...overrides,
+  };
+}
+
+assertEqual(
+  describeSkinwalkerChangeShapeOptions({
+    races: [],
+    adoptiveParentageOptions: [],
+    adoptedRaceOptions: [],
+    skinwalkerChangeShapeOptions: [skinwalkerChangeShapeOption(), skinwalkerChangeShapeOption({ key: 'Werewolf-Kin ~ Change Shape', kin: 'Werewolf-Kin' })],
+    diagnostics: [],
+    findings: [],
+  }),
+  '2 Skinwalker kins',
+  'the header counts what actually arrived',
+);
+assertEqual(
+  describeSkinwalkerChangeShapeGrants(skinwalkerChangeShapeOption()),
+  'Choose one: Change Shape (Bite Attack), Change Shape (Ability Modifier Wisdom).',
+  'names the real option pool, the Werebear-Kin shape pinned by the backend test',
+);
+assertEqual(
+  describeSkinwalkerChangeShapeGrants(skinwalkerChangeShapeOption({ grants: [] })),
+  'No ingested option pool for Werebear-Kin — this pool offers nothing to pick from today.',
+  'an empty pool is reported honestly, never papered over',
 );
 
 console.log('alternateTraitPickerModel: all assertions passed');

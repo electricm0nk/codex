@@ -551,6 +551,126 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     // ZERO named/tier coverage, which is not the same known-boundary shape).
     // Both are real, open, honestly-reported gaps for a future cycle.
     ClassWeaponProficiency { class_id: "class:gunslinger", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    // SD-34 wave 33 lane C (`class_modelled_but_no_observed_delta_on_the_
+    // rendered_snapshot`): nine classes `untabled_base_class_chassis`/
+    // `crb_untabled_class_chassis` already compute a real BAB/save chassis
+    // for, but which `has_supported_class_chassis` did not yet recognize
+    // (fixed the same cycle, `pilot_compute/mod.rs`) -- and which this
+    // table had never carried a row for at all, so `class_weapon_
+    // proficiency` returned `None` and `combat.baseline_weapon_
+    // proficiency_unknown` claim-blocked them regardless of the chassis
+    // gate. Each row transcribes the class's OWN `data/corpus/<book>/
+    // class_feature/<class>/weapon_and_armor_proficiency*.json` (or, for
+    // Psion, `.../psion_weapon_proficiencies/psion_weapon_proficiencies.json`)
+    // token -- never the DESC prose alone, same discipline as every row
+    // above.
+    //
+    //  - Kineticist (`occult_adventures`): `TYPE=WeaponProfSimple` -> Simple
+    //    tier only, no named weapons.
+    //  - Medium (`occult_adventures`): `Weapon Prof ~ Auto|Weapon Prof ~
+    //    Simple` indirection -> Simple tier only, the same convention-2
+    //    shape Fighter/Barbarian use.
+    //  - Mesmerist (`occult_adventures`): Simple tier plus
+    //    `AUTO:WEAPONPROF|Crossbow (Hand)|Sap|Sword Cane|Whip`.
+    //  - Occultist (`occult_adventures`) and Vigilante (`ultimate_intrigue`):
+    //    the token carries ONLY `TYPE=WeaponProfMartial`, even though both
+    //    classes' own DESC says "simple and martial" -- the Ninja/Samurai
+    //    boundary above applies identically here: transcribe the token, not
+    //    the prose, so Simple is deliberately NOT added for either. This
+    //    does not affect the Longsword question below (Longsword is a
+    //    Martial-tier weapon either way).
+    //  - Psychic (`occult_adventures`): `TYPE=WeaponProfSimple` -> Simple
+    //    tier only, no named weapons or armor/shield token at all (its own
+    //    DESC states "not with any type of armor or shield").
+    //  - Spiritualist (`occult_adventures`): Simple tier plus
+    //    `AUTO:WEAPONPROF|Kukri|Sap|Scythe`.
+    //  - Psion (`ultimate_psionics`): no tier token at all, only
+    //    `AUTO:WEAPONPROF|Club|Dagger|Crossbow (Heavy)|Crossbow (Light)|
+    //    Quarterstaff|Shortspear` -- the same named-only shape as Wizard's
+    //    row above, one weapon (Shortspear) wider.
+    //  - Shifter (`ultimate_wilderness`): no tier token, only
+    //    `AUTO:WEAPONPROF|Club|Dagger|Dart|Quarterstaff|Scimitar|Scythe|
+    //    Sickle|Shortspear|Sling|Spear` (its DESC's natural-attack
+    //    proficiency clause is not a weapon-table entry and is not modelled
+    //    here).
+    //
+    // Aegis, Antipaladin, Cryptic, Dread, Magus, Marksman, Soulknife,
+    // Tactician (`ultimate_psionics`'s base class, distinct from Ultimate
+    // Combat's Tactician fighter archetype -- a corpus identifier scope
+    // collision checked and avoided), Vitalist, Wilder (`untabled_base_
+    // class_chassis`'s remaining ten), and the seven CRB NPC/Ex-* classes
+    // (`crb_untabled_class_chassis`) carry no matching corpus proficiency
+    // record found this cycle and are NOT added -- a real, open,
+    // honestly-reported gap for a future cycle, not silently assumed
+    // Simple-only.
+    ClassWeaponProficiency { class_id: "class:kineticist", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:medium", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:mesmerist", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Sap", "Sword Cane", "Whip"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:occultist", tiers: &[WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:vigilante", tiers: &[WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:psychic", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:spiritualist", tiers: &[WeaponProficiency::Simple], named: &["Kukri", "Sap", "Scythe"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:psion", tiers: &[], named: &["Club", "Dagger", "Crossbow (Heavy)", "Crossbow (Light)", "Quarterstaff", "Shortspear"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:shifter", tiers: &[], named: &["Club", "Dagger", "Dart", "Quarterstaff", "Scimitar", "Scythe", "Sickle", "Shortspear", "Sling", "Spear"], weapon_groups: &[] },
+    // SD-34 wave 34 lane C: this cycle's own re-derive of wave 33 lane C's
+    // named 19-unit remainder (`docs/release/SD-34-book-completion/
+    // artifacts/bucket-d-mining/wave33_laneC_class_snapshot_delta_cycle_
+    // receipt.md`'s "next cycle" plan item 1), checked per-class against
+    // `data/corpus/**/class_feature/<class>/` individually, not batch-
+    // assumed:
+    //
+    //  - **17 of 19 re-confirmed genuinely absent, no row added.** The 10
+    //    untabled base classes (Aegis, Antipaladin, Cryptic, Dread, Magus,
+    //    Marksman, Soulknife, Tactician [`ultimate_psionics`'s base class,
+    //    not Ultimate Combat's Tactician fighter archetype], Vitalist,
+    //    Wilder) and the 7 CRB NPC/`Ex-*` classes (Adept, Aristocrat,
+    //    Commoner, Expert, Warrior, Ex-Barbarian, Ex-Paladin) still carry
+    //    no `AUTO:WEAPONPROF` token anywhere under their own corpus
+    //    directories this cycle's own search found (Magus carries a real
+    //    `armor_proficiency.json` but no weapon-proficiency record at all;
+    //    Ex-Barbarian and Ex-Paladin carry no `class_feature/` directory of
+    //    their own whatsoever). Real, open, honestly-reported, unchanged
+    //    from wave 33 lane C's own count.
+    //  - **Samurai: a real record exists but carries nothing this table
+    //    can represent, so no row is added either.**
+    //    `ultimate_combat/class_feature/samurai_proficiencies/
+    //    samurai_proficiencies.json` carries exactly `AUTO:WEAPONPROF|
+    //    TYPE=Samurai` -- a weapon TYPE selector, not a Simple/Martial/
+    //    Exotic tier, named weapon, or weapon group this table's schema
+    //    models -- plus a virtual `Exotic Weapon Proficiency (Katana)` feat
+    //    grant, which virtual-feat grants from class features are not
+    //    modelled anywhere in this engine either (the same boundary
+    //    Unchained Monk's unarmed-strike virtual feat already documents
+    //    above). An all-empty row would be indistinguishable from a real
+    //    "proficient with nothing" claim and is deliberately not added --
+    //    the same reasoning wave 33 lane C's own comment already gave for
+    //    leaving this one open.
+    //  - **Ninja: closed.** `ultimate_combat/class_feature/ninja/
+    //    ninja_weapon_proficiencies.json` carries a real `AUTO:WEAPONPROF|
+    //    Shortbow|Sword (Short)|Kama|Kusarigama (Sickle and Chain)|
+    //    Nunchaku|Sai|Shuriken|Siangham|Wakizashi` token -- transcribed
+    //    below in full. Its DESC additionally claims blanket Simple-weapon
+    //    proficiency ("proficient with all simple weapons"), but no
+    //    matching `TYPE=WeaponProfSimple`/indirection token exists on this
+    //    record, so Simple is deliberately NOT added -- the identical
+    //    boundary this file already applies to Occultist/Vigilante's own
+    //    "simple and martial" DESC vs. Martial-only token (wave 33 lane
+    //    C's own comment above named this as the exact boundary a future
+    //    Ninja row would need). The virtual `Exotic Weapon Proficiency
+    //    (Katana)` feat grant is likewise not modelled, the same boundary
+    //    as Samurai's above. This is a real, honest, partial
+    //    transcription, not a complete proficiency list -- but it resolves
+    //    correctly for THIS table's one live consumer
+    //    (`character_is_proficient_with`, always checked against the
+    //    Longsword): Longsword is Martial-tier and not on Ninja's named
+    //    list either way, so the Longsword nonproficiency verdict below is
+    //    correct regardless of the missing Simple tier. Kusarigama (Sickle
+    //    and Chain) and Wakizashi are real Ultimate Combat weapons this
+    //    CRB-only table has no stat block for -- the same scope boundary
+    //    `OUTSIDE_THE_CRB_WEAPON_TABLE` already carries for Mesmerist's
+    //    Sword Cane, extended below rather than silently dropping either
+    //    name.
+    ClassWeaponProficiency { class_id: "class:ninja", tiers: &[], named: &["Shortbow", "Sword (Short)", "Kama", "Kusarigama (Sickle and Chain)", "Nunchaku", "Sai", "Shuriken", "Siangham", "Wakizashi"], weapon_groups: &[] },
 ];
 
 /// This class's weapon proficiency, or `None` for a class this table does
@@ -856,12 +976,15 @@ mod class_weapon_proficiency_tests {
     /// anywhere else.
     #[test]
     fn every_named_class_proficiency_matches_a_real_weapon() {
-        // Two names are legitimately absent, documented rather than skipped
-        // so the guard still catches real typos: `Bomb` is the Alchemist's
-        // class feature (no stat block), and `Sword Cane` is a real weapon
-        // but an APG one while this table is CRB-only -- a genuine scope
-        // mismatch, recorded here as a known limit.
-        const OUTSIDE_THE_CRB_WEAPON_TABLE: &[&str] = &["Bomb", "Sword Cane"];
+        // Names legitimately absent, documented rather than skipped so the
+        // guard still catches real typos: `Bomb` is the Alchemist's class
+        // feature (no stat block); `Sword Cane` is a real weapon but an APG
+        // one; `Kusarigama (Sickle and Chain)` and `Wakizashi` (SD-34 wave
+        // 34 lane C, Ninja's own corpus token) are real Ultimate Combat
+        // weapons -- all three are outside this CRB-only table's own scope,
+        // a genuine scope mismatch, recorded here as a known limit.
+        const OUTSIDE_THE_CRB_WEAPON_TABLE: &[&str] =
+            &["Bomb", "Sword Cane", "Kusarigama (Sickle and Chain)", "Wakizashi"];
         for class in CLASS_WEAPON_PROFICIENCIES {
             for named in class.named {
                 if OUTSIDE_THE_CRB_WEAPON_TABLE.contains(named) {
@@ -901,6 +1024,33 @@ mod class_weapon_proficiency_tests {
         assert!(class_is_proficient_with(gunslinger, weapon("Longsword")));
     }
 
+    /// SD-34 wave 34 lane C: Ninja's own real corpus token (`ultimate_
+    /// combat/class_feature/ninja/ninja_weapon_proficiencies.json`) --
+    /// nine named weapons, no tier, transcribed verbatim. Deliberately does
+    /// NOT assert Ninja is non-proficient with every simple weapon: real
+    /// PF1 Ninjas ARE proficient with all simple weapons per the class's
+    /// own DESC, this table just has no matching token to ground that
+    /// claim on -- a documented partial transcription, not a claim that
+    /// this row is complete.
+    #[test]
+    fn ninja_has_its_real_named_weapon_list_and_no_blanket_simple_tier() {
+        let ninja = prof("class:ninja");
+        assert!(ninja.tiers.is_empty(), "no Simple/Martial/Exotic facet on Ninja's own token");
+        assert!(ninja.weapon_groups.is_empty());
+        for granted in ["Shortbow", "Short Sword", "Kama", "Nunchaku", "Sai", "Shuriken", "Siangham"] {
+            assert!(
+                class_is_proficient_with(ninja, weapon(granted)),
+                "{granted} is on Ninja's own corpus AUTO:WEAPONPROF list"
+            );
+        }
+        // The bug this closes: Ninja now resolves a real (correct)
+        // Longsword verdict instead of leaving
+        // `combat.baseline_weapon_proficiency_unknown` claim-blocking the
+        // whole melee baseline. Longsword is Martial-tier and not on
+        // Ninja's own named list, so the correct verdict is non-proficient.
+        assert!(!class_is_proficient_with(ninja, weapon("Longsword")));
+    }
+
     #[test]
     fn an_unknown_class_reports_unknown_rather_than_non_proficient() {
         assert!(class_weapon_proficiency("class:not_a_class").is_none());
@@ -931,13 +1081,18 @@ mod class_weapon_proficiency_tests {
             "class:unchained_barbarian", "class:unchained_monk",
             "class:unchained_rogue", "class:unchained_summoner",
             "class:gunslinger",
+            "class:kineticist", "class:medium", "class:mesmerist", "class:occultist",
+            "class:vigilante", "class:psychic", "class:spiritualist", "class:psion",
+            "class:shifter",
+            // SD-34 wave 34 lane C.
+            "class:ninja",
         ] {
             assert!(
                 class_weapon_proficiency(class_id).is_some(),
                 "{class_id} has a real corpus proficiency record and must be covered"
             );
         }
-        assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 32);
+        assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 42);
     }
 
     /// Each Unchained class's grants against the class it replaces. Three
@@ -994,6 +1149,10 @@ mod class_weapon_proficiency_tests {
             "class:fighter", "class:hunter", "class:paladin", "class:ranger",
             "class:skald", "class:slayer", "class:swashbuckler", "class:warpriest",
             "class:unchained_barbarian", "class:gunslinger",
+            // SD-34 wave 33 lane C: both carry ONLY `TYPE=WeaponProfMartial`
+            // in their real corpus token (see the roster comment above),
+            // and Longsword is a Martial-tier weapon.
+            "class:occultist", "class:vigilante",
         ];
         let mut proficient = 0;
         for class in CLASS_WEAPON_PROFICIENCIES {
@@ -1006,7 +1165,10 @@ mod class_weapon_proficiency_tests {
             );
             proficient += usize::from(actual);
         }
-        assert_eq!(proficient, 14, "14 of 32 classes are Longsword-proficient");
+        // SD-34 wave 34 lane C: Ninja added to the roster, non-proficient
+        // (Longsword is Martial-tier and not on Ninja's own named list),
+        // so the proficient count is unchanged, only the denominator moves.
+        assert_eq!(proficient, 16, "16 of 42 classes are Longsword-proficient");
     }
 
     /// Bard reaches Longsword through its explicit list, NOT a martial

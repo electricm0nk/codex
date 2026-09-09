@@ -128,6 +128,17 @@
       ]
     },
     {
+      "class_id": "class:cerebremancer",
+      "display_name": "Cerebremancer",
+      "source_book": "ultimate_psionics",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "pre_tokens": [
+        "PRESKILL:2,Knowledge (Arcana)=3,Knowledge (Psionics)=3",
+        "PRESPELLTYPE:1,Arcane=2",
+        "PRESPELLTYPE:1,Psionic=2"
+      ]
+    },
+    {
       "class_id": "class:cyphermage",
       "display_name": "Cyphermage",
       "source_book": "inner_sea_magic",
@@ -233,6 +244,19 @@
       "pre_tokens": [
         "PREABILITY:1,CATEGORY=Internal,Weapon Prof ~ Martial",
         "PRESPELLTYPE:1,Arcane=3"
+      ]
+    },
+    {
+      "class_id": "class:elocater",
+      "display_name": "Elocater",
+      "source_book": "ultimate_psionics",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "pre_tokens": [
+        "PREABILITY:2,CATEGORY=FEAT,Dodge,Mobility",
+        "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Spring Attack],[PREABILITY:1,CATEGORY=Special Ability,Nomad's Step ~ Psychoportation]",
+        "PRESKILL:1,Acrobatics=5",
+        "PRESPELLTYPE:1,Psionic=1",
+        "PRETOTALAB:3"
       ]
     },
     {
@@ -465,6 +489,17 @@
       ]
     },
     {
+      "class_id": "class:metamind",
+      "display_name": "Metamind",
+      "source_book": "ultimate_psionics",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "pre_tokens": [
+        "PREABILITY:1,CATEGORY=FEAT,Psicrystal Affinity",
+        "PRESKILL:2,Knowledge (Psionics)=5,Spellcraft=2",
+        "PREVARGTEQ:MaxManifesterLVL,4"
+      ]
+    },
+    {
       "class_id": "class:metamorph",
       "display_name": "Metamorph",
       "source_book": "ultimate_psionics",
@@ -522,6 +557,40 @@
       ]
     },
     {
+      "class_id": "class:pathfinder_delver",
+      "display_name": "Pathfinder Delver",
+      "source_book": "adventurers_guide",
+      "source_file": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_classes.lst",
+      "pre_tokens": [
+        "PRESKILL:4,Acrobatics=5,Disable Device=4,Knowledge (History)=4,Perception=5"
+      ]
+    },
+    {
+      "class_id": "class:pathfinder_savant",
+      "display_name": "Pathfinder Savant",
+      "source_book": "adventurers_guide",
+      "source_file": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_classes.lst",
+      "pre_tokens": [
+        "PREABILITY:1,CATEGORY=FEAT,Magical Aptitude",
+        "PREABILITY:1,CATEGORY=FEAT,TYPE=ItemCreation",
+        "PRESKILL:3,Knowledge (Arcana)=5,Spellcraft=5,Use Magic Device=5",
+        "PRESPELLTYPE:1,Arcane=2,Divine=2"
+      ]
+    },
+    {
+      "class_id": "class:phrenic_slayer",
+      "display_name": "Phrenic Slayer",
+      "source_book": "ultimate_psionics",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "pre_tokens": [
+        "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Skill Focus (Survival)],[PREABILITY:1,CATEGORY=Special Ability,Ranger ~ Track]",
+        "PRESKILL:1,Knowledge (Psionics)=1",
+        "PRETEXT:Must have had hostile encouter with the psionic creature to be selected as a favored enemy, alone or with a small group.",
+        "PRETOTALAB:4",
+        "PREVARGT:TotalPowerPoints,0"
+      ]
+    },
+    {
       "class_id": "class:psicrystal_imprinter",
       "display_name": "Psicrystal Imprinter",
       "source_book": "ultimate_psionics",
@@ -529,6 +598,31 @@
       "pre_tokens": [
         "PREABILITY:2,CATEGORY=FEAT,Craft Cognizance Crystal,Scribe Scroll",
         "PRESKILL:2,Knowledge (Psionics)=1,Spellcraft=5"
+      ]
+    },
+    {
+      "class_id": "class:psion_uncarnate",
+      "display_name": "Psion Uncarnate",
+      "source_book": "ultimate_psionics",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "pre_tokens": [
+        "PREABILITY:1,CATEGORY=FEAT,Psionic Body",
+        "PRESKILL:2,Knowledge (Psionics)=5,Spellcraft=5",
+        "PRESPELLTYPE:1,Psionic=3",
+        "PRETEXT:Must have had some instruction by another psion uncarnate or one of the Unbodied."
+      ]
+    },
+    {
+      "class_id": "class:psychic_fist",
+      "display_name": "Psychic Fist",
+      "source_book": "ultimate_psionics",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "pre_tokens": [
+        "PREABILITY:1,CATEGORY=FEAT,Psionic Fist,Psionic Weapon",
+        "PRESKILL:1,Acrobatics=6",
+        "PRETOTALAB:4",
+        "PREVARGT:TotalPowerPoints,0",
+        "PREVARGT:KiPoints,0"
       ]
     },
     {
@@ -544,6 +638,18 @@
         "PRESKILL:2,Knowledge (religion)=5,Sense Motive=4",
         "!PRESPELLTYPE:1,Divine=1",
         "PRETEXT:Alignment: Any lawful. Deity: Cannot worship a deity. Feats: Godless Healing. Skills: Knowledge (religion) 5 ranks, Sense Motive 4 ranks. Special: Cannot cast divine spells."
+      ]
+    },
+    {
+      "class_id": "class:pyrokineticist",
+      "display_name": "Pyrokineticist",
+      "source_book": "ultimate_psionics",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "pre_tokens": [
+        "PREALIGN:CG,CN,CE",
+        "PRESKILL:3,Autohypnosis=5,Craft (Alchemy)=1,Knowledge (Psionics)=2",
+        "PRETEXT:Must have set fire to a structure of any size just to watch it burn.",
+        "PREVARGT:TotalPowerPoints,0"
       ]
     },
     {
@@ -685,6 +791,19 @@
       ]
     },
     {
+      "class_id": "class:student_of_war",
+      "display_name": "Student of War",
+      "source_book": "adventurers_guide",
+      "source_file": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_classes.lst",
+      "pre_tokens": [
+        "PRETOTALAB:5",
+        "PREABILITY:2,CATEGORY=FEAT,Combat Expertise,Dodge",
+        "PREABILITY:1,CATEGORY=FEAT,Skill Focus (Knowledge%)",
+        "PRESKILL:2,TYPE.Knowledge=4",
+        "PREWEAPONPROF:2,TYPE.Martial,TYPE.Martial"
+      ]
+    },
+    {
       "class_id": "class:telekinetic_weaponmaster",
       "display_name": "Telekinetic Weaponmaster",
       "source_book": "ultimate_psionics",
@@ -693,6 +812,18 @@
         "PREABILITY:2,CATEGORY=FEAT,Psionic Meditation,Psionic Weapon",
         "PRESPELL:1,Far Hand,Telekinetic Force",
         "PRETOTALAB:5"
+      ]
+    },
+    {
+      "class_id": "class:thrallherd",
+      "display_name": "Thrallherd",
+      "source_book": "ultimate_psionics",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "pre_tokens": [
+        "PREABILITY:1,CATEGORY=FEAT,Inquisitor,Skill Focus (Diplomacy)",
+        "PRECLASS:1,SPELLCASTER.Psionic=5",
+        "PREMULT:1,[PRESPELL:1,Mindlink,Mind Control],[PREABILITY:1,CATEGORY=Special Ability,TYPE.ThrallherdLinkMinds]",
+        "PRESKILL:2,Knowledge (Psionics)=5,Diplomacy=4"
       ]
     },
     {
@@ -715,6 +846,19 @@
         "PRESKILL:3,Knowledge (nobility)=2,Perception=5,Sense Motive=3",
         "PRETEXT:Base Attack Bonus: +5. Skills: Knowledge (nobility) 2 ranks, Perception 5 ranks, Sense Motive 3 ranks. Special: Ulfen descent.",
         "PRETOTALAB:5"
+      ]
+    },
+    {
+      "class_id": "class:war_mind",
+      "display_name": "War Mind",
+      "source_book": "ultimate_psionics",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "pre_tokens": [
+        "!PREALIGN:CG,CN,CE",
+        "PRESKILL:2,Knowledge (History)=2,Knowledge (Psionics)=5",
+        "PRETEXT:Instruction from another war mind or Codex of War.",
+        "PRETOTALAB:3",
+        "PREVARGT:TotalPowerPoints,0"
       ]
     },
     {

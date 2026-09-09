@@ -52,13 +52,18 @@ use codex::rules_core::character_input::{
 use codex::rules_core::class_feature_pool_catalog;
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
 use codex::rules_core::race_creation::race_creation_chassis;
-use codex::rules_core::race_resolver::{TraitRole, load_race_corpus};
+use codex::rules_core::race_resolver::{
+    TraitRole, adopted_race_choose_selectors, adoptive_parentage_options,
+    declared_template_bonus_languages, load_race_corpus,
+};
+use codex::rules_core::skinwalker_change_shape::skinwalker_change_shape_options;
+use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_options};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
-    HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
-    compute_pilot_base_chassis, fighter_weapon_training_canonical_catalog,
-    race_ids_with_a_magnitude_consumer,
+    HeadlessReceiptStatus, PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS, PilotBaseChassisComputation,
+    build_pilot_headless_receipt, compute_pilot_base_chassis,
+    fighter_weapon_training_canonical_catalog, race_ids_with_a_magnitude_consumer,
 };
 use codex::rules_core::pilot_compute::untabled_base_class_chassis;
 use codex::rules_core::pilot_compute::crb_untabled_class_chassis;
@@ -5370,9 +5375,13 @@ struct EngineFacts {
     /// suffix)` pairs whose own `"class_feature.fighter.weapon_training..."`
     /// explanation id was genuinely observed via
     /// [`probe_fighter_weapon_training_wiring`]. Same discipline as
-    /// `domain_power_effect_wired` above: `canonical_seeds_for("fighter")`
-    /// never seeds any weapon-training-group choice at all, so the standard
-    /// sweep below never observes any of these on its own.
+    /// `domain_power_effect_wired` above, though wave 41 (`decisions.md
+    /// §22`'s CORRECTION) narrowed the gap this field covers:
+    /// `canonical_seeds_for("fighter")` now seeds tier 1's own group choice
+    /// (so the standard sweep DOES observe tier 1's canonical `Heavy
+    /// Blades` pair on its own), but still seeds nothing for tiers 2-4 or
+    /// for any of the other 13 non-canonical tier-1 groups -- this probe
+    /// remains the only path for the other 55 of these 56 combinations.
     fighter_weapon_training_wired: BTreeSet<(u8, String)>,
     /// `AT-34-E3-001` (mechanism 3 continuation, cycle 3): the 31 canonical
     /// Ranger favored-enemy TYPE strings (`"Aberration"`, `"Humanoid
@@ -5519,6 +5528,149 @@ struct EngineFacts {
     /// Performance sub-records: 7 whose formula already existed and 3
     /// (Suggestion, Mass Suggestion, Inspire Greatness) this cycle added.
     bard_bardic_performance_wired: BTreeSet<String>,
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): the corpus key
+    /// `"Order of the Dragon"` (the base record, no `" ~ "` suffix) whose
+    /// own per-order explanation id (`class_feature.apg.cavalier.
+    /// order_of_the_dragon.survival_bonus`) was genuinely observed via
+    /// [`probe_cavalier_order_wiring`], mirroring the wizard-arcane-school
+    /// probe's own shape: the group text `"Order of the Dragon"` can never
+    /// resolve to `"cavalier"` through `class_feature_owner`'s suffix
+    /// matching (it collides instead with the bestiary's unmodelled
+    /// `Kind::Class` "Dragon" pseudo-class), so this probe is the real,
+    /// separate attribution path -- bounded to exactly the one Order
+    /// (Dragon, alongside the pre-existing hand-modelled Sword) the engine
+    /// has a real per-order formula for.
+    cavalier_order_wired: BTreeSet<String>,
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): full corpus keys
+    /// (`"Phantom Emotional Focus ~ Despair"`, ...) whose own real generic
+    /// pool-choice explanation (`push_generic_pool_choice_magnitude`, wired
+    /// this wave for Spiritualist's Shared Consciousness pool) was
+    /// genuinely observed via [`probe_spiritualist_phantom_emotional_focus_wiring`].
+    /// Same shape as the wizard-arcane-school/cavalier-order probes above:
+    /// the group text `"Phantom Emotional Focus"` can never resolve to
+    /// `"spiritualist"` through `class_feature_owner`'s prefix matching (it
+    /// collides instead with the bestiary's unmodelled `Kind::Class`
+    /// "Phantom" pseudo-class), so this probe is the real, separate
+    /// attribution path.
+    spiritualist_phantom_emotional_focus_wired: BTreeSet<String>,
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): full corpus keys
+    /// (`"PaDFE Construct"`, `"PaDFE Ooze"`, `"PaDFE Undead"`) whose own
+    /// real per-record explanation (`ground_pathfinder_delver_class_
+    /// features`) was genuinely observed via
+    /// [`probe_pathfinder_delver_padfe_wiring`]. Same shape as the
+    /// cavalier-order/spiritualist-phantom-emotional-focus probes above:
+    /// each record's own corpus `class` field is literally `"Construct"`/
+    /// `"Ooze"`/`"Undead"`, which can never resolve to `"pathfinder_
+    /// delver"` through `class_feature_owner`'s matching (it collides
+    /// instead with the bestiary's unmodelled `Kind::Class` "Construct"/
+    /// "Ooze"/"Undead" pseudo-classes), so this probe is the real, separate
+    /// attribution path. **Real audit correction**: the audit that scoped
+    /// this wave claimed these three records' real owner is Ranger,
+    /// reachable through Ranger's own open-ended favored-enemy chooser --
+    /// direct corpus read disproved that (see `ground_pathfinder_delver_
+    /// class_features`'s own doc comment in `pilot_compute/mod.rs`): the
+    /// real owner is Pathfinder Delver's own Guardbreaker feature.
+    pathfinder_delver_padfe_wired: BTreeSet<String>,
+    /// SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE, sub-mechanism-5's
+    /// "registered prestige class, magnitude-only" remainder): Phrenic
+    /// Slayer's own class id, `"phrenic_slayer"`, does not appear in
+    /// `modelled_class_books()` (its source book is `ultimate_psionics`, not
+    /// `core_rulebook`, so the CRB-only prestige loop never registers it),
+    /// so the corpus-wide union sweep never runs `class_sweep_input` for it
+    /// either -- the same "no chassis dispatch reaches it" gap as Pathfinder
+    /// Delver's own PaDFE records above, and the same reason this needs its
+    /// own bespoke probe rather than riding the general sweep. Keyed by the
+    /// record's own corpus `key` (`"Phrenic Slayer ~ Favored Enemy"` for the
+    /// base fact, `"Phrenic Slayer Favored Enemy ~ <Type>"` for each of the
+    /// 31 creature-type sub-records), exactly like `pathfinder_delver_
+    /// padfe_wired` above.
+    phrenic_slayer_favored_enemy_wired: BTreeSet<String>,
+    /// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): Pathfinder
+    /// Delver's own six-unit extension (Guardbreaker's own record,
+    /// Master Explorer, Thrilling Escape, Vigilant Combatant, Fortunate
+    /// Soul, True Seeing) -- same "no chassis dispatch reaches it" gap and
+    /// same corpus-`key`-keyed shape as `pathfinder_delver_padfe_wired`
+    /// above.
+    pathfinder_delver_wave46_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Argent Dramaturge's two magnitude-bearing class
+    /// features (Argent Performance, Dramaturgical Flourish), keyed by the
+    /// record's own corpus `key`.
+    argent_dramaturge_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Horizon Walker's three pool-size class features
+    /// (Favored Terrain, Terrain Mastery, Terrain Dominance), keyed by the
+    /// record's own corpus `key`.
+    horizon_walker_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Nature Warden's two magnitude-bearing class features
+    /// (Companion Bond, Survivalist), keyed by the record's own corpus
+    /// `key`.
+    nature_warden_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Rage Prophet's two magnitude-bearing class features
+    /// (Rage Prophet Mystery, Ragecaster), keyed by the record's own
+    /// corpus `key`.
+    rage_prophet_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Holy Vindicator's one magnitude-bearing class
+    /// feature (Stigmata), keyed by the record's own corpus `key`.
+    holy_vindicator_wired: BTreeSet<String>,
+    /// SD-34 wave 46: Stalwart Defender's four magnitude-bearing class
+    /// features (AC Bonus, Damage Reduction, Defensive Powers, Defensive
+    /// Stance), keyed by the record's own corpus `key`.
+    stalwart_defender_wired: BTreeSet<String>,
+    /// SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): Divine Scion's
+    /// 43 magnitude-bearing class features (Domain Specialization's own
+    /// pool-size base record, Divine Wrath, Deific Defense, Weapon and
+    /// Armor Proficiency, all four Opposition Alignment DR records, and 35
+    /// per-domain Domain Specialization sub-records), keyed by the
+    /// record's own corpus `key`. True Scion Charisma/Wisdom (this class's
+    /// remaining two sm5 units) are NOT covered here -- see `ground_
+    /// divine_scion_class_features`'s own doc comment.
+    divine_scion_wired: BTreeSet<String>,
+    /// SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): Twilight
+    /// Talon's 12 magnitude-bearing class features (Sneak Attack, Enhanced
+    /// Tattoo's own save DC, and all 10 per-tier tattoo caster-level
+    /// records), keyed by the record's own corpus `key`.
+    twilight_talon_wired: BTreeSet<String>,
+    /// SD-34 wave 48: Golden Legionnaire's four magnitude-bearing class
+    /// features (Allied Retribution, Authoritative Command, Improved Aid,
+    /// United Defense), keyed by the record's own corpus `key`.
+    golden_legionnaire_wired: BTreeSet<String>,
+    /// SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more
+    /// prestige classes' magnitude-bearing class features, one field per
+    /// class, each keyed by the record's own corpus `key`. See each
+    /// `ground_<class>_class_features`'s own doc comment (`pilot_compute/
+    /// mod.rs`) for corpus citations.
+    cyphermage_wave49_wired: BTreeSet<String>,
+    psychic_fist_wave49_wired: BTreeSet<String>,
+    asavir_wave49_wired: BTreeSet<String>,
+    metamorph_wave49_wired: BTreeSet<String>,
+    war_mind_wave49_wired: BTreeSet<String>,
+    hellknight_wave49_wired: BTreeSet<String>,
+    adaptive_warrior_wave49_wired: BTreeSet<String>,
+    sanguine_angel_wave49_wired: BTreeSet<String>,
+    body_snatcher_wave49_wired: BTreeSet<String>,
+    steel_falcon_wave49_wired: BTreeSet<String>,
+    lantern_bearer_wave49_wired: BTreeSet<String>,
+    storm_kindler_wave49_wired: BTreeSet<String>,
+    westcrown_devil_wave49_wired: BTreeSet<String>,
+    pyrokineticist_wave49_wired: BTreeSet<String>,
+    aspis_agent_wave49_wired: BTreeSet<String>,
+    gray_corsair_wave49_wired: BTreeSet<String>,
+    pathfinder_savant_wave49_wired: BTreeSet<String>,
+    rivethun_emissary_wave49_wired: BTreeSet<String>,
+    student_of_war_wave49_wired: BTreeSet<String>,
+    diabolist_wave49_wired: BTreeSet<String>,
+    lion_blade_wave49_wired: BTreeSet<String>,
+    bellflower_tiller_wave49_wired: BTreeSet<String>,
+    hellknight_signifer_wave49_wired: BTreeSet<String>,
+    mystic_archer_wave49_wired: BTreeSet<String>,
+    mammoth_rider_wave49_wired: BTreeSet<String>,
+    demoniac_wave49_wired: BTreeSet<String>,
+    master_chymist_wave49_wired: BTreeSet<String>,
+    enchanting_courtesan_wave49_wired: BTreeSet<String>,
+    dark_tempest_wave49_wired: BTreeSet<String>,
+    battle_herald_wave49_wired: BTreeSet<String>,
+    master_spy_wave49_wired: BTreeSet<String>,
+    evangelist_wave49_wired: BTreeSet<String>,
+    ulfen_guard_wave49_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -5547,6 +5699,29 @@ struct EngineFacts {
     /// `acg_equipmods.lst:41` is both `Flying` and `Special Ability ~ Flying
     /// ~ Melee`). Populated by [`load_corpus_json_descriptions`].
     corpus_json_descriptions: BTreeMap<(String, usize, String), String>,
+    /// Wave 51 (`decisions.md §22`): every `ability` corpus coordinate whose
+    /// record carries real player-facing prose in a RAW TOKEN the ingester
+    /// never lifted into `data.description` -- a `DESC:`/`SPROP:`/`BENEFIT:`/
+    /// `ASPECT:` token with a non-trivial value. Keyed identically to
+    /// [`Self::corpus_json_descriptions`] (`(<lst basename>, <line>, <record
+    /// key>)`); populated by [`load_corpus_json_prose_bearing_ability_tokens`].
+    ///
+    /// This exists because `has_real_description` alone is NOT sufficient
+    /// evidence that a zero-magnitude record is genuinely proseless. Direct
+    /// read of `core_rulebook`'s 109 zero-magnitude `ability` records this
+    /// wave closes found 6 whose `data.description` is `null` (so
+    /// `has_real_description` is `false`) but whose own `ASPECT:` token
+    /// carries a real sentence a player reads -- e.g. `Cloak of Displacement
+    /// (Minor) ~ Miss Chance`'s `ASPECT:CombatBonus|Attacks against you have
+    /// a 20%% chance to miss.` and the four `Unarmed <X> Burst`
+    /// `ASPECT:UnarmedNotes|...` records. Closing those as "genuinely carries
+    /// no upstream prose by design" would be false: they carry prose the
+    /// INGESTER dropped, which is a real ingestion gap, not a completion.
+    /// Wave 33 lane A's own precedent already checked `ASPECT:` alongside
+    /// `DESC:`/`SPROP:`/`BENEFIT:` when it made the same argument for the 9
+    /// wizard-school records; this field makes that check mechanical and
+    /// corpus-wide rather than a per-cycle manual read.
+    corpus_json_prose_bearing_ability_tokens: BTreeSet<(String, usize, String)>,
     /// SD31-W22-POOLMEMBER-001: `(source_book, corpus_key) -> rendered
     /// description` for every option-pool `class_feature` record
     /// [`class_feature_pool_catalog::load_pool_catalog`] proves renders with
@@ -5631,6 +5806,43 @@ impl EngineFacts {
     fn race_trait_magnitude_read_by_creation_chassis(&self, unit: &CorpusUnit) -> bool {
         let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
         self.race_trait_probe.creation_chassis_consumed.contains(&coordinate)
+    }
+
+    /// SD-34 wave 33 lane B: whether this unit is an "Adopted Race" selector
+    /// whose resolution against the real Trait pool returns at least one
+    /// real grant -- see [`RaceTraitProbe::adopted_race_selector_grants`].
+    fn race_trait_adopted_race_selector_grants(&self, unit: &CorpusUnit) -> bool {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.adopted_race_selector_grants.contains(&coordinate)
+    }
+
+    /// SD-34 wave 33 lane B: this unit's real, rendered "Adoptive Parentage"
+    /// option description, if it is one -- see
+    /// [`RaceTraitProbe::adoptive_parentage_rendered`].
+    fn race_trait_adoptive_parentage_rendered_description(&self, unit: &CorpusUnit) -> Option<&str> {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.adoptive_parentage_rendered.get(&coordinate).map(String::as_str)
+    }
+
+    /// SD-34 wave 33/35 (bucket-D mining): whether this unit is one of
+    /// Bestiary 5's 20 Skinwalker `Change Shape (<Option>)` records that a
+    /// real kin pool resolves through
+    /// `codex::rules_core::skinwalker_change_shape` -- see
+    /// [`RaceTraitProbe::skinwalker_change_shape_option_resolved`]'s own doc
+    /// comment for why this does NOT promote past `engine-does-not-hold`.
+    fn race_trait_skinwalker_change_shape_option_resolved(&self, unit: &CorpusUnit) -> bool {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.skinwalker_change_shape_option_resolved.contains(&coordinate)
+    }
+
+    /// SD-34 wave 35 lane B: the real language name(s) this unit's own
+    /// `TEMPLATE:` chain transcribes to, if any -- see
+    /// [`RaceTraitProbe::template_bonus_language_grant`]. Non-empty only for
+    /// a record whose `TEMPLATE:` chain names one or more real
+    /// `Bonus Language ~ <Lang>` rows; never a consumer observation.
+    fn race_trait_template_bonus_language_grant(&self, unit: &CorpusUnit) -> Option<&[String]> {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.template_bonus_language_grant.get(&coordinate).map(Vec::as_slice)
     }
 
     /// Whether one book really holds this unit. Delegates to
@@ -5976,6 +6188,71 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
             ],
             Vec::new(),
         ),
+        // Wave 41: `decisions.md §22`'s CORRECTION (2026-09-04) -- Fighter's
+        // Weapon Training already has a real, live `class_feature.fighter.
+        // weapon_training` explanation (`pilot_compute/mod.rs`,
+        // `fighter_weapon_training_attack_bonus`); it never fired during
+        // classification only because the generic per-class sweep never
+        // supplied a `choice:fighter_weapon_training_group` selection. Same
+        // "give the sweep one canonical default choice" gap this function
+        // already closes for every class above -- `group:heavy_blades` is
+        // one of the 14 canonical PF1 weapon-training groups
+        // (`WEAPON_TRAINING_GROUPS`), not a guess.
+        "fighter" => (
+            vec![choice("choice:fighter_weapon_training_group", "group:heavy_blades")],
+            Vec::new(),
+        ),
+        // Wave 41: same root cause and fix shape as Fighter's above --
+        // Psychic's Phrenic Pool (`class_feature.untabled.psychic.
+        // phrenic_pool.value`, `ground_psychic_class_features`) already
+        // computes a real, tested magnitude off whichever Psychic
+        // Discipline the character chose (`choice:psychic_discipline`), but
+        // the generic sweep never supplies one. `discipline:rapport` is one
+        // of the engine's own recognized Charisma-keyed disciplines
+        // (`PSYCHIC_DISCIPLINE_CHA_SELECTION_IDS`).
+        "psychic" => (
+            vec![choice("choice:psychic_discipline", "discipline:rapport")],
+            Vec::new(),
+        ),
+        // Wave 47 CORRECTION (`decisions.md §22`): Divine Scion's Domain
+        // Specialization and Opposition Alignment are both real
+        // `ABILITYPOOL`-gated one-of-N choices (`ism_abilities_class.
+        // lst:35`/`:47`'s own "choices" section headers,
+        // `ism_classes.lst:103`/`:104`'s own pool-size-1 grants), the exact
+        // same "give the sweep one canonical default choice" gap this
+        // function already closes for Cleric domain/Sorcerer bloodline/
+        // etc above -- without this arm the standard corpus-wide sweep
+        // would see NEITHER of the 39 choice-gated Divine Scion facts
+        // (`ground_divine_scion_class_features`'s own doc comment).
+        // `domain:fire`/`alignment:evil` are two of the real recognized
+        // selections (`DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY`,
+        // the four opposition alignments in `pilot_compute/mod.rs`).
+        "divine_scion" => (
+            vec![
+                choice("choice:divine_scion_domain_specialization", "domain:fire"),
+                choice("choice:divine_scion_opposition_alignment", "alignment:evil"),
+            ],
+            Vec::new(),
+        ),
+        // Wave 48 (`decisions.md §22`): Twilight Talon's Enhanced Tattoo is
+        // 5 separate `ABILITYPOOL` choices (one per tier reached), the same
+        // "give the sweep one canonical default choice per axis" gap this
+        // function already closes for Divine Scion's two axes above --
+        // without these arms the standard corpus-wide sweep would see NONE
+        // of the 10 choice-gated tattoo caster-level facts (`ground_
+        // twilight_talon_class_features`'s own doc comment). One member of
+        // each tier's own two-candidate list is picked arbitrarily as the
+        // canonical default.
+        "twilight_talon" => (
+            vec![
+                choice("choice:twilight_talon_tattoo_level_2", "tattoo:disguise_self"),
+                choice("choice:twilight_talon_tattoo_level_4", "tattoo:alter_self"),
+                choice("choice:twilight_talon_tattoo_level_6", "tattoo:glibness"),
+                choice("choice:twilight_talon_tattoo_level_8", "tattoo:modify_memory"),
+                choice("choice:twilight_talon_tattoo_level_10", "tattoo:mislead"),
+            ],
+            Vec::new(),
+        ),
         _ => (Vec::new(), Vec::new()),
     }
 }
@@ -5986,6 +6263,83 @@ fn class_sweep_input(fixture: &CharacterInput, class_name: &str, level: u8) -> C
     input.chosen.selected_choices.extend(choices);
     input.chosen.spells_selected.extend(spells);
     input
+}
+
+/// Wave 41: `decisions.md §22`'s CORRECTION (2026-09-04). Fighter's Weapon
+/// Training and Psychic's Phrenic Pool were both wrongly written up as
+/// needing a bespoke fix each; both are actually the SAME "give the sweep
+/// one canonical default choice" gap `canonical_seeds_for()` already solves
+/// for wizard/arcanist/sorcerer/cleric/druid and others. These tests prove
+/// the new `"fighter"` / `"psychic"` arms actually reach the real
+/// `compute_pilot_base_chassis` pipeline via `class_sweep_input` -- the
+/// SAME entry point the corpus-wide union sweep (`main`'s own
+/// `explanation_ids` loop) calls for every modelled class -- rather than
+/// merely returning a plausible-looking `SelectedChoice`.
+#[cfg(test)]
+mod wave_41_canonical_seeds_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Before this cycle, `canonical_seeds_for("fighter")` seeded nothing
+    /// at all (confirmed live: `fighter_weapon_training_probe_generalization_
+    /// tests` had to build its own bespoke selection precisely because the
+    /// standard sweep never supplied one) -- the real, already-wired
+    /// `class_feature.fighter.weapon_training` explanation never appeared
+    /// in `EngineFacts::explanation_ids` as a result. This proves the new
+    /// seed alone -- with no bespoke override, exactly as the corpus-wide
+    /// sweep calls it -- is now sufficient.
+    #[test]
+    fn canonical_seeds_for_fighter_makes_weapon_training_fire_through_the_real_sweep() {
+        let input = class_sweep_input(&fixture(), "fighter", 5);
+        let computation = compute_pilot_base_chassis(&input);
+        let explanation = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.fighter.weapon_training")
+            .expect(
+                "class_feature.fighter.weapon_training must fire once canonical_seeds_for \
+                 supplies a weapon-training group choice",
+            );
+        assert_eq!(explanation.value, 1, "level 5 Fighter, tier-1 rank 1");
+    }
+
+    /// Same shape as Fighter's above: `canonical_seeds_for("psychic")` used
+    /// to seed nothing, so `psychic_discipline_pool_ability` always
+    /// returned `None` for a swept Psychic and `class_feature.untabled.
+    /// psychic.phrenic_pool.value` never appeared in `explanation_ids`.
+    /// `discipline:rapport` is a Charisma-keyed discipline
+    /// (`PSYCHIC_DISCIPLINE_CHA_SELECTION_IDS`); the fixture's own Charisma
+    /// score is asserted only indirectly (a non-zero pool value proves an
+    /// ability modifier was genuinely applied, not defaulted to zero).
+    #[test]
+    fn canonical_seeds_for_psychic_makes_phrenic_pool_fire_through_the_real_sweep() {
+        let input = class_sweep_input(&fixture(), "psychic", 5);
+        let computation = compute_pilot_base_chassis(&input);
+        let explanation = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.untabled.psychic.phrenic_pool.value")
+            .expect(
+                "class_feature.untabled.psychic.phrenic_pool.value must fire once \
+                 canonical_seeds_for supplies a Psychic Discipline choice",
+            );
+        assert!(
+            explanation.value != 0,
+            "phrenic pool at level 5 with a real ability modifier must be non-zero, got {}",
+            explanation.value
+        );
+    }
 }
 
 /// `"Greater Weapon Focus"` -> `"choice:greater_weapon_focus_target"`, the
@@ -6271,6 +6625,88 @@ struct RaceTraitProbe {
     /// Populated at the bottom of [`probe_race_trait_corpus`]; see that block
     /// for what it observes and what it deliberately refuses.
     creation_chassis_consumed: BTreeSet<(String, usize)>,
+    /// SD-34 wave 33 lane B: coordinates of an "Adopted Race" selector
+    /// (`TYPE:AdoptiveRace`) whose resolution against the real `kind: trait`
+    /// pool -- `trait_pool::resolve_adopted_race_options`, the SAME call
+    /// `race_trait_picker.rs`'s own `list_alternate_racial_traits` Tauri
+    /// command makes -- returns at least one real grant. The record itself
+    /// is deliberately [`TraitRole::Unclassified`] (it never applies through
+    /// `RaceCorpus::resolve`; see that role's own doc comment). This set
+    /// exists to make its evidence string HONEST, not to promote it to
+    /// `done`: the engine genuinely resolves real payload for it through a
+    /// real, tested Tauri command (`reach_gate.rs`'s own dated
+    /// `OPEN_FINDINGS` entry confirms this independently,
+    /// `"crb"`/`"race_traits"`, 2026-08-27), but no desktop UI surface reads
+    /// the response field that carries it (verified this cycle: absent from
+    /// `apps/desktop/src/boundary/loadAlternateRacialTraits.ts`'s own
+    /// `AlternateRacialTraitsResponse` interface, and from every other file
+    /// under `apps/desktop/src`) -- so it stays `engine-does-not-hold`, with
+    /// a string that names the REAL remaining gap (desktop UI wiring)
+    /// instead of a blanket "never applies" that would misdescribe a record
+    /// the engine demonstrably does resolve. Populated at the bottom of
+    /// [`probe_race_trait_corpus`].
+    adopted_race_selector_grants: BTreeSet<(String, usize)>,
+    /// SD-34 wave 33 lane B: coordinates of an "Adoptive Parentage" option
+    /// (`CATEGORY:Adoptive Parentage`) paired with its own real, non-empty
+    /// rendered description -- read by `race_resolver::adoptive_parentage_
+    /// options`, the SAME function `race_trait_picker.rs`'s own menu command
+    /// calls (proven live by that file's own
+    /// `the_menu_command_itself_carries_all_seven_adoptive_parentage_
+    /// options_with_real_grants` test). The record is deliberately
+    /// [`TraitRole::Unclassified`] for the identical reason the Adopted-Race
+    /// selector above is, and this set exists for the identical reason: an
+    /// honest, more precise `engine-does-not-hold` evidence string, not a
+    /// `done` promotion -- the desktop UI does not read this DTO field
+    /// either (same verification as above). Populated at the bottom of
+    /// [`probe_race_trait_corpus`].
+    adoptive_parentage_rendered: BTreeMap<(String, usize), String>,
+    /// SD-34 wave 33/35 (bucket-D mining): coordinates of one of Bestiary
+    /// 5's 20 Skinwalker `Change Shape (<Option>)` records (wave 33 lane
+    /// B's own named 20-unit remainder, next-cycle plan item 2) that a real
+    /// kin pool resolves through `codex::rules_core::skinwalker_change_shape
+    /// ::skinwalker_change_shape_options` -- the SAME resolver
+    /// `race_trait_picker.rs`'s own `list_alternate_racial_traits` Tauri
+    /// command calls (proven live by that file's own
+    /// `the_menu_command_carries_all_nine_skinwalker_change_shape_kin_pools_
+    /// with_real_grants` test).
+    ///
+    /// **Unlike the Adopted Race / Adoptive Parentage sets above, this one
+    /// does NOT promote to `text-complete`.** Every one of these 20 records
+    /// carries a real, non-zero `magnitude_token_count` (a `TEMPBONUS` the
+    /// record applies once a player activates that benefit during play) --
+    /// `AGENTS.md`'s "a magnitude is not wired until it moves on the twin
+    /// the player reads" bar requires the NUMBER to move, not merely the
+    /// option's name to render. No mechanism in this engine
+    /// computes an activated-during-play temporary bonus for any record
+    /// today (verified: `grep -rln 'TEMPBONUS'` across `src/` finds no
+    /// activation-state consumer), so this set exists for the identical
+    /// honesty reason `adopted_race_selector_grants` does: a precise
+    /// `engine-does-not-hold` evidence string ("this kin pool resolves for
+    /// real, no magnitude reaches the sheet") in place of the blanket
+    /// "never applies" the 20 used to carry -- never a `done`/`text-
+    /// complete` promotion this shape has not earned. Populated at the
+    /// bottom of [`probe_race_trait_corpus`].
+    skinwalker_change_shape_option_resolved: BTreeSet<(String, usize)>,
+    /// SD-34 wave 35 lane B: coordinates of a record whose own `TEMPLATE:`
+    /// chain transcribes (via
+    /// [`race_resolver::declared_template_bonus_languages`]) to one or more
+    /// REAL language names, mapped to that transcribed list. The record is
+    /// deliberately [`TraitRole::Unclassified`] -- unlike the two sets
+    /// above, this population has no consumer to observe: wave 33 lane B's
+    /// own analysis (kept in this file's `race_trait_grounding_tests`
+    /// comment above) confirmed `Human ~ Tribalistic Languages` carries no
+    /// `FACT:<flag>|True`, no `PREFACT`, no `PREABILITY` and no upstream
+    /// `ABILITY:<category>|AUTOMATIC|<key>` grant naming it -- a genuine
+    /// upstream data gap (`reach_gate.rs`'s own dated `OPEN_FINDINGS` entry,
+    /// `"inner_sea_races"`/`"race_traits"`, names it explicitly), not a
+    /// missing consumer this engine could wire around. This set exists only
+    /// to make the fallback evidence string HONEST about what the record
+    /// itself carries -- the corpus content is real and its own `TEMPLATE:`
+    /// chain resolves to real languages, quoted in the receipt -- never to
+    /// promote the record out of `engine-does-not-hold`: it still never
+    /// applies, because nothing upstream ever fires it. Populated at the
+    /// bottom of [`probe_race_trait_corpus`].
+    template_bonus_language_grant: BTreeMap<(String, usize), Vec<String>>,
 }
 
 /// Every race the product's OWN character-creation roster would offer a
@@ -6438,6 +6874,74 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
                 file.to_string_lossy().into_owned(),
                 record.source_line as usize,
             ));
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // THIRD, INDEPENDENT consumer observation -- SD-34 wave 33 lane B. Two
+    // shapes `role != Unclassified` (the `reachable` set built at the top of
+    // this function) was never written to see: an "Adopted Race" selector
+    // and an "Adoptive Parentage" option. Both are deliberately
+    // `TraitRole::Unclassified` -- no readable default/replace/grant gate of
+    // their own -- and BOTH apply through a real, already-shipped consumer
+    // this function's per-record role check cannot observe. Read the SAME
+    // two functions `race_trait_picker.rs`'s own `list_alternate_racial_
+    // traits` Tauri command calls, over the SAME loaded corpus, never
+    // re-implemented: `adopted_race_choose_selectors` + `trait_pool::
+    // resolve_adopted_race_options` for the selector shape,
+    // `adoptive_parentage_options` for the parentage shape.
+    let selectors = adopted_race_choose_selectors(&corpus);
+    let pool = load_trait_pool(&roots);
+    let selector_keys_with_real_grants: BTreeSet<String> =
+        resolve_adopted_race_options(&selectors, &pool)
+            .into_iter()
+            .filter(|option| !option.grants.is_empty())
+            .map(|option| option.key)
+            .collect();
+    let parentage_rendered_by_key: BTreeMap<String, String> = adoptive_parentage_options(&corpus)
+        .into_iter()
+        .filter_map(|option| {
+            let description = option.description?;
+            if description.trim().is_empty() { None } else { Some((option.key, description)) }
+        })
+        .collect();
+    // SD-34 wave 33/35 (bucket-D mining): a FOURTH, INDEPENDENT consumer
+    // observation, over the SAME loaded `corpus` -- Bestiary 5's Skinwalker
+    // `Change Shape (<Option>)` records (`TraitRole::Unclassified`, same
+    // reason as the two shapes above: no readable default/replace/grant
+    // gate of its own). Read the SAME resolver
+    // `race_trait_picker.rs`'s own `list_alternate_racial_traits` Tauri
+    // command calls, never re-implemented.
+    let skinwalker_option_keys_with_real_pool: BTreeSet<String> = skinwalker_change_shape_options(&corpus)
+        .into_iter()
+        .flat_map(|option| option.grants.into_iter().map(|grant| grant.key))
+        .collect();
+    for race in corpus.race_keys() {
+        for record in corpus.traits_for(race) {
+            let Some(file) = Path::new(&record.source_path).file_name() else { continue };
+            let coordinate = (file.to_string_lossy().into_owned(), record.source_line as usize);
+            if selector_keys_with_real_grants.contains(&record.data.key) {
+                probe.adopted_race_selector_grants.insert(coordinate.clone());
+            }
+            if let Some(description) = parentage_rendered_by_key.get(&record.data.key) {
+                probe.adoptive_parentage_rendered.insert(coordinate.clone(), description.clone());
+            }
+            if skinwalker_option_keys_with_real_pool.contains(&record.data.key) {
+                probe.skinwalker_change_shape_option_resolved.insert(coordinate.clone());
+            }
+            // SD-34 wave 35 lane B: transcribe this record's own `TEMPLATE:`
+            // chain, if it names one or more real `Bonus Language ~ <Lang>`
+            // rows (`declared_template_bonus_languages`'s own doc comment
+            // for the grounding). `"Any Spoken"` -- the marker `Human ~
+            // Languages` itself carries, never a real language -- is
+            // excluded so this set only ever names verified real content.
+            let template_languages: Vec<String> = declared_template_bonus_languages(&record.data.raw_tokens)
+                .into_iter()
+                .filter(|lang| lang != "Any Spoken")
+                .collect();
+            if !template_languages.is_empty() {
+                probe.template_bonus_language_grant.insert(coordinate, template_languages);
+            }
         }
     }
 
@@ -7799,15 +8303,20 @@ fn probe_domain_power_effect_wiring(fixture: &CharacterInput) -> BTreeSet<String
 /// `AT-34-E3-001` (`decisions.md §14`, mechanism 3 continuation): the same
 /// live-computation discipline `probe_domain_power_effect_wiring` uses,
 /// applied to `"Weapon Training <tier> <group>"` corpus records.
-/// `canonical_seeds_for("fighter")` never seeds ANY
-/// `choice:fighter_weapon_training_group*` selection at all, so the
-/// standard per-class sweep that fills `EngineFacts::explanation_ids` never
-/// observes even one tier's own selection. This probe selects each of
-/// `fighter_weapon_training_canonical_catalog`'s own `(tier, group, choice
-/// id, selection)` tuples explicitly, one at a time, over the SAME real
-/// `compute_pilot_base_chassis` pipeline every other probe in this file
-/// uses, and keeps only the `(tier, group)` pairs whose own explanation id
-/// was genuinely observed.
+/// Wave 41 (`decisions.md §22`'s CORRECTION, 2026-09-04): `canonical_seeds_
+/// for("fighter")` now seeds a tier-1 `choice:fighter_weapon_training_group`
+/// selection (the fix for the `class_feature.fighter.weapon_training`
+/// classification gap this const's own doc comment describes), but still
+/// seeds nothing for tiers 2-4's own `_group_2`/`_group_3`/`_group_4` choice
+/// ids -- the standard per-class sweep that fills `EngineFacts::
+/// explanation_ids` observes tier 1 alone on its own. This probe still
+/// selects each of `fighter_weapon_training_canonical_catalog`'s own (tier,
+/// group, choice id, selection)` tuples explicitly, one at a time, over the
+/// SAME real `compute_pilot_base_chassis` pipeline every other probe in
+/// this file uses, and keeps only the `(tier, group)` pairs whose own
+/// explanation id was genuinely observed -- still the only path that
+/// credits tiers 2-4, and still the only path for this catalog's other 13
+/// non-canonical tier-1 groups.
 ///
 /// `AT-34-E3-001` (mechanism 3 continuation, cycle 9): widened from testing
 /// only the engine's 4 hardcoded canonical (tier, group) pairs to testing
@@ -8710,6 +9219,70 @@ fn probe_wizard_arcane_school_wiring(fixture: &CharacterInput) -> BTreeSet<Strin
             }
         }
 
+        // Necromancy (SD-34 wave 44, `decisions.md §22` Piece 2 item 1): swap
+        // the specialization choice again, opposing Abjuration and
+        // Conjuration (mirrors `wizard_has_canonical_necromancy_selection`'s
+        // own precondition exactly). Both the specialization AND the
+        // opposed-schools choice are swapped here, same as every
+        // non-default specialist swap above.
+        let mut necromancy_input = class_sweep_input(fixture, "wizard", level);
+        necromancy_input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:wizard_school_specialization");
+        necromancy_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_school_specialization".to_string(),
+            selection_id: "school:necromancy".to_string(),
+        });
+        necromancy_input
+            .chosen
+            .selected_choices
+            .retain(|c| c.choice_set_id != "choice:wizard_opposed_schools");
+        necromancy_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_string(),
+            selection_id: "school:abjuration".to_string(),
+        });
+        necromancy_input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_string(),
+            selection_id: "school:conjuration".to_string(),
+        });
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&necromancy_input)
+        }));
+        if let Ok(computation) = outcome {
+            if computation.explanations.iter().any(|e| {
+                e.id == "class_feature.school.necromancy.power_over_undead_uses_per_day"
+            }) {
+                wired.insert("Necromancy School ~ Power Over Undead".to_string());
+            }
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.school.necromancy.power_over_undead_turn_dc")
+            {
+                wired.insert("Power Over Undead ~ Turn Undead".to_string());
+            }
+            if computation.explanations.iter().any(|e| {
+                e.id == "class_feature.school.necromancy.power_over_undead_command_dc"
+            }) {
+                wired.insert("Power Over Undead ~ Command Undead".to_string());
+            }
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.school.necromancy.grave_touch"))
+            {
+                wired.insert("Necromancy School ~ Grave Touch".to_string());
+            }
+            if computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.school.necromancy.life_sight"))
+            {
+                wired.insert("Necromancy School ~ Life Sight".to_string());
+            }
+        }
+
         // Universal (`AT-34-E3-001` mechanism 2 continuation, cycle 8):
         // swap the specialization choice to the "no specialization" arm and
         // CLEAR the opposed-schools choice entirely -- `wizard_has_
@@ -8749,6 +9322,145 @@ fn probe_wizard_arcane_school_wiring(fixture: &CharacterInput) -> BTreeSet<Strin
 
     std::panic::set_hook(previous_hook);
     wired
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 1): real-pipeline
+/// reachability proof for `probe_wizard_arcane_school_wiring`'s new
+/// Necromancy branch -- against the REAL shared fixture and the REAL
+/// `compute_pilot_base_chassis` pipeline (never a synthetic `EngineFacts`),
+/// proving the classifier-collision fix this wave makes actually resolves
+/// end to end, not merely that `classify()` trusts a hand-inserted fact. The
+/// companion `classify()`-level proofs (that a wired key actually reaches
+/// `grounded` and never the `class_feature_of_unmodelled_corpus_class:
+/// undead` collision) live in `class_feature_text_complete_rung_tests`
+/// below, alongside the pre-existing wizard-arcane-school proofs and the
+/// `class_feature_unit` helper they share.
+#[cfg(test)]
+mod wave44_necromancy_school_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Print, don't assume: dumps the real probe's real observed set against
+    /// the real fixture, for this cycle's own re-derivation.
+    #[test]
+    fn print_the_real_observed_set_for_this_cycles_own_receipt() {
+        let wired = probe_wizard_arcane_school_wiring(&fixture());
+        eprintln!("wizard_arcane_school_wired ({} keys):", wired.len());
+        for key in &wired {
+            eprintln!("  {key}");
+        }
+        assert!(
+            wired.contains("Necromancy School ~ Power Over Undead"),
+            "expected the real pipeline to resolve Power Over Undead's own uses-per-day \
+             record: {wired:?}"
+        );
+    }
+
+    /// All five new Necromancy-shaped keys this wave adds are genuinely
+    /// observed against the real fixture and the real compute pipeline --
+    /// including the two `Power Over Undead ~ *` channeling records, whose
+    /// own corpus-record `class` field collides with the bestiary's
+    /// unmodelled `Kind::Class` "Undead" pseudo-class (`decisions.md §22`
+    /// Piece 2 item 1's own bug this wave fixes).
+    #[test]
+    fn all_five_necromancy_shaped_keys_are_wired_end_to_end() {
+        let wired = probe_wizard_arcane_school_wiring(&fixture());
+        for expected in [
+            "Necromancy School ~ Power Over Undead",
+            "Power Over Undead ~ Turn Undead",
+            "Power Over Undead ~ Command Undead",
+            "Necromancy School ~ Grave Touch",
+            "Necromancy School ~ Life Sight",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected {expected:?} to be wired by the real pipeline: {wired:?}"
+            );
+        }
+    }
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): real-pipeline
+/// reachability proof for `probe_cavalier_order_wiring` -- against the REAL
+/// shared fixture and the REAL `compute_pilot_base_chassis` pipeline,
+/// proving Order of the Dragon's classifier fix resolves end to end.
+#[cfg(test)]
+mod wave44_cavalier_order_of_the_dragon_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn order_of_the_dragon_is_wired_end_to_end() {
+        let wired = probe_cavalier_order_wiring(&fixture());
+        assert!(
+            wired.contains("Order of the Dragon"),
+            "expected the real pipeline to resolve Order of the Dragon's own Survival bonus: \
+             {wired:?}"
+        );
+    }
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): real-pipeline
+/// reachability proof for `probe_spiritualist_phantom_emotional_focus_wiring`
+/// -- against the REAL shared fixture and the REAL
+/// `compute_pilot_base_chassis` pipeline, proving all seven Phantom
+/// Emotional Focus records' classifier fix resolves end to end.
+#[cfg(test)]
+mod wave44_spiritualist_phantom_emotional_focus_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn all_seven_emotional_foci_are_wired_end_to_end() {
+        let wired = probe_spiritualist_phantom_emotional_focus_wiring(&fixture());
+        for expected in [
+            "Phantom Emotional Focus ~ Anger",
+            "Phantom Emotional Focus ~ Dedication",
+            "Phantom Emotional Focus ~ Despair",
+            "Phantom Emotional Focus ~ Fear",
+            "Phantom Emotional Focus ~ Hatred",
+            "Phantom Emotional Focus ~ Jealousy",
+            "Phantom Emotional Focus ~ Zeal",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected {expected:?} to be wired by the real pipeline: {wired:?}"
+            );
+        }
+    }
 }
 
 /// `AT-34-E3-001` (`class_feature_option_pool_record_with_magnitude_not_
@@ -8799,6 +9511,1703 @@ fn probe_bard_bardic_performance_wiring(fixture: &CharacterInput) -> BTreeSet<St
     wired
 }
 
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): the real,
+/// separate attribution path for `"Order of the Dragon"` -- its own group
+/// text can never resolve to `"cavalier"` through `class_feature_owner`'s
+/// suffix matching (it instead collides with the bestiary's unmodelled
+/// `Kind::Class` "Dragon" pseudo-class), same shape as the wizard
+/// arcane-school probe above. The canonical per-class sweep that fills
+/// `EngineFacts::explanation_ids` only ever selects Order of the Sword for
+/// Cavalier (`canonical_seeds_for("cavalier")`'s single `"order:sword"`
+/// seed), so it alone could never observe Order of the Dragon's own
+/// explanation -- this probe swaps the selection to `"order:dragon"` over
+/// the SAME real `compute_pilot_base_chassis` pipeline every other probe in
+/// this file uses.
+fn probe_cavalier_order_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &level in SWEEP_LEVELS {
+        let mut input = class_sweep_input(fixture, "cavalier", level);
+        input.chosen.selected_choices.retain(|c| c.choice_set_id != "choice:cavalier_order");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:cavalier_order".to_string(),
+            selection_id: "order:dragon".to_string(),
+        });
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        if let Ok(computation) = outcome
+            && computation.explanations.iter().any(|e| {
+                e.id == "class_feature.apg.cavalier.order_of_the_dragon.survival_bonus"
+            })
+        {
+            wired.insert("Order of the Dragon".to_string());
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): the real, separate
+/// attribution path for `"Phantom Emotional Focus ~ <Name>"` -- its own
+/// group text can never resolve to `"spiritualist"` through
+/// `class_feature_owner`'s prefix matching (it instead collides with the
+/// bestiary's unmodelled `Kind::Class` "Phantom" pseudo-class), same shape
+/// as the cavalier-order probe above. The canonical per-class sweep that
+/// fills `EngineFacts::explanation_ids` never selects any
+/// `choice:spiritualist_emotional_focus` value at all (`canonical_seeds_for`
+/// seeds none), so it alone could never observe any of these seven
+/// records' own generic-pass explanations -- this probe selects EACH real
+/// focus in turn over the SAME real `compute_pilot_base_chassis` pipeline
+/// every other probe in this file uses.
+const SPIRITUALIST_PHANTOM_EMOTIONAL_FOCUS_MEMBERS: &[&str] =
+    &["anger", "dedication", "despair", "fear", "hatred", "jealousy", "zeal"];
+
+fn probe_spiritualist_phantom_emotional_focus_wiring(
+    fixture: &CharacterInput,
+) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &slug in SPIRITUALIST_PHANTOM_EMOTIONAL_FOCUS_MEMBERS {
+        let selection_id = format!("focus:{slug}");
+        for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "spiritualist", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:spiritualist_emotional_focus");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:spiritualist_emotional_focus".to_string(),
+                selection_id: selection_id.clone(),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            if computation.explanations.iter().any(|e| {
+                e.id.starts_with(
+                    "class_feature.occult_adventures.spiritualist.phantom_emotional_focus.generic",
+                ) && e.id.contains(slug)
+            }) {
+                let title_case = {
+                    let mut chars = slug.chars();
+                    match chars.next() {
+                        Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+                        None => String::new(),
+                    }
+                };
+                wired.insert(format!("Phantom Emotional Focus ~ {title_case}"));
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): the real, separate
+/// attribution path for `"PaDFE Construct"`/`"PaDFE Ooze"`/`"PaDFE Undead"`
+/// -- each record's own corpus `class` field can never resolve to
+/// `"pathfinder_delver"` through `class_feature_owner`'s matching (it
+/// instead collides with the bestiary's unmodelled `Kind::Class`
+/// "Construct"/"Ooze"/"Undead" pseudo-classes), same shape as the
+/// cavalier-order/spiritualist-phantom-emotional-focus probes above.
+/// `canonical_seeds_for("pathfinder_delver")` seeds nothing (Pathfinder
+/// Delver's own class features carry no player choice), and the canonical
+/// per-class sweep never selects this class at all before this wave (it
+/// carried zero chassis dispatch), so this probe -- like the others above
+/// -- is the only way `EngineFacts` ever observes these three records'
+/// real explanation ids over the SAME real `compute_pilot_base_chassis`
+/// pipeline every other probe in this file uses.
+fn probe_pathfinder_delver_padfe_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    const PADFE_MEMBERS: &[(&str, &str)] = &[
+        ("padfe_construct", "PaDFE Construct"),
+        ("padfe_ooze", "PaDFE Ooze"),
+        ("padfe_undead", "PaDFE Undead"),
+    ];
+
+    for &level in SWEEP_LEVELS {
+        let input = class_sweep_input(fixture, "pathfinder_delver", level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        for (slug, corpus_key) in PADFE_MEMBERS {
+            if computation.explanations.iter().any(|e| {
+                e.id == format!("class_feature.adventurers_guide.pathfinder_delver.{slug}.bonus")
+            }) {
+                wired.insert((*corpus_key).to_string());
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE, sub-mechanism-5's
+/// "registered prestige class, magnitude-only" remainder): the real,
+/// separate attribution path for Phrenic Slayer's Favored Enemy record
+/// (base + 31 creature-type sub-records) -- same shape as `probe_
+/// pathfinder_delver_padfe_wiring` immediately above (a real prestige class
+/// registered in `prestige_class_entry_gate` but absent from `modelled_
+/// class_books()` because its source book, `ultimate_psionics`, is not
+/// `core_rulebook`, so no chassis dispatch reaches it via the general
+/// sweep). `PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS` is imported from
+/// `pilot_compute` rather than re-declared here, so the (slug, display
+/// name) list has exactly one source of truth shared with `ground_
+/// phrenic_slayer_class_features`'s own explanation-id construction.
+fn probe_phrenic_slayer_favored_enemy_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    const BASE_ID: &str = "class_feature.ultimate_psionics.phrenic_slayer.favored_enemy.bonus";
+    const BASE_KEY: &str = "Phrenic Slayer ~ Favored Enemy";
+
+    for &level in SWEEP_LEVELS {
+        let input = class_sweep_input(fixture, "phrenic_slayer", level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        if computation.explanations.iter().any(|e| e.id == BASE_ID) {
+            wired.insert(BASE_KEY.to_string());
+        }
+        for (slug, creature_type) in PHRENIC_SLAYER_FAVORED_ENEMY_MEMBERS {
+            if computation.explanations.iter().any(|e| {
+                e.id
+                    == format!(
+                        "class_feature.ultimate_psionics.phrenic_slayer.favored_enemy_{slug}.bonus"
+                    )
+            }) {
+                wired.insert(format!("Phrenic Slayer Favored Enemy ~ {creature_type}"));
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): shared probe body
+/// for every one of this wave's seven single-owner-record class-feature
+/// blocks below -- each has exactly one explanation id per corpus record
+/// (no shared many-member magnitude the way `PHRENIC_SLAYER_FAVORED_ENEMY_
+/// MEMBERS` or the Pathfinder Delver PADFE block do), so a single generic
+/// probe body, parameterised by `(explanation_id, corpus_key)` pairs, real
+/// pipeline unchanged. Same real `compute_pilot_base_chassis` entry point,
+/// same panic-guard discipline, as every other probe in this file.
+fn probe_wave46_single_owner_class_features(
+    fixture: &CharacterInput,
+    class_slug: &str,
+    members: &[(&str, &str)],
+) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &level in SWEEP_LEVELS {
+        let input = class_sweep_input(fixture, class_slug, level);
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            compute_pilot_base_chassis(&input)
+        }));
+        let Ok(computation) = outcome else { continue };
+        for (id, corpus_key) in members {
+            if computation.explanations.iter().any(|e| e.id == *id) {
+                wired.insert((*corpus_key).to_string());
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// Pathfinder Delver's own six-unit extension -- `decisions.md §22`'s WAVE
+/// 46 UPDATE. Same real, separate attribution path as `probe_pathfinder_
+/// delver_padfe_wiring` above (no chassis dispatch reaches this class
+/// otherwise); Guardbreaker's own record is distinct from the three PaDFE
+/// sub-records that probe already covers.
+fn probe_pathfinder_delver_wave46_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "pathfinder_delver",
+        &[
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.guardbreaker.bonus",
+                "Pathfinder Delver ~ Guardbreaker",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.master_explorer.skill_bonus",
+                "Pathfinder Delver ~ Master Explorer",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.thrilling_escape.\
+                 uses_per_day",
+                "Pathfinder Delver ~ Thrilling Escape",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.vigilant_combatant.\
+                 initiative_bonus",
+                "Pathfinder Delver ~ Vigilant Combatant",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.fortunate_soul.uses_per_day",
+                "Pathfinder Delver ~ Fortunate Soul",
+            ),
+            (
+                "class_feature.adventurers_guide.pathfinder_delver.true_seeing.caster_level",
+                "Pathfinder Delver ~ True Seeing",
+            ),
+        ],
+    )
+}
+
+/// Argent Dramaturge -- `decisions.md §22`'s WAVE 46 UPDATE. A real
+/// prestige class registered in `prestige_class_entry_gate` (source book
+/// `adventurers_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_argent_dramaturge_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "argent_dramaturge",
+        &[
+            (
+                "class_feature.adventurers_guide.argent_dramaturge.argent_performance.rounds",
+                "Argent Dramaturge ~ Argent Performance",
+            ),
+            (
+                "class_feature.adventurers_guide.argent_dramaturge.dramaturgical_flourish.\
+                 pool_size",
+                "Argent Dramaturge ~ Dramaturgical Flourish",
+            ),
+        ],
+    )
+}
+
+/// Horizon Walker -- `decisions.md §22`'s WAVE 46 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_horizon_walker_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "horizon_walker",
+        &[
+            (
+                "class_feature.advanced_players_guide.horizon_walker.favored_terrain.pool_size",
+                "Horizon Walker ~ Favored Terrain",
+            ),
+            (
+                "class_feature.advanced_players_guide.horizon_walker.terrain_mastery.pool_size",
+                "Horizon Walker ~ Terrain Mastery",
+            ),
+            (
+                "class_feature.advanced_players_guide.horizon_walker.terrain_dominance.\
+                 pool_size",
+                "Horizon Walker ~ Terrain Dominance",
+            ),
+        ],
+    )
+}
+
+/// Nature Warden -- `decisions.md §22`'s WAVE 46 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_nature_warden_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "nature_warden",
+        &[
+            (
+                "class_feature.advanced_players_guide.nature_warden.companion_bond.level",
+                "Nature Warden ~ Companion Bond",
+            ),
+            (
+                "class_feature.advanced_players_guide.nature_warden.survivalist.level",
+                "Nature Warden ~ Survivalist",
+            ),
+        ],
+    )
+}
+
+/// Rage Prophet -- `decisions.md §22`'s WAVE 46 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_rage_prophet_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "rage_prophet",
+        &[
+            (
+                "class_feature.advanced_players_guide.rage_prophet.rage_prophet_mystery.level",
+                "Rage Prophet ~ Rage Prophet Mystery",
+            ),
+            (
+                "class_feature.advanced_players_guide.rage_prophet.ragecaster.level",
+                "Rage Prophet ~ Ragecaster",
+            ),
+        ],
+    )
+}
+
+/// Holy Vindicator -- `decisions.md §22`'s WAVE 46 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_holy_vindicator_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "holy_vindicator",
+        &[(
+            "class_feature.advanced_players_guide.holy_vindicator.stigmata.bonus",
+            "Holy Vindicator ~ Stigmata",
+        )],
+    )
+}
+
+/// Stalwart Defender -- `decisions.md §22`'s WAVE 46 UPDATE. A real
+/// prestige class registered in `prestige_class_entry_gate` (source book
+/// `advanced_players_guide`, not `core_rulebook`), no `ClassId`-family enum
+/// entry, no chassis dispatch reaches it otherwise.
+fn probe_stalwart_defender_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "stalwart_defender",
+        &[
+            (
+                "class_feature.advanced_players_guide.stalwart_defender.ac_bonus.dodge_bonus",
+                "Stalwart Defender ~ AC Bonus",
+            ),
+            (
+                "class_feature.advanced_players_guide.stalwart_defender.damage_reduction.value",
+                "Stalwart Defender ~ Damage Reduction",
+            ),
+            (
+                "class_feature.advanced_players_guide.stalwart_defender.defensive_powers.\
+                 pool_size",
+                "Stalwart Defender ~ Defensive Powers",
+            ),
+            (
+                "class_feature.advanced_players_guide.stalwart_defender.defensive_stance.\
+                 duration_rounds",
+                "Stalwart Defender ~ Defensive Stance",
+            ),
+        ],
+    )
+}
+
+/// The 35 real PF1 domains Divine Scion's own Domain Specialization can
+/// specialize in (`ism_abilities_class.lst:49-83`, verified directly
+/// against the real oracle -- see `pilot_compute::mod.rs`'s own
+/// `DIVINE_SCION_DOMAIN_SPECIALIZATION_USES_PER_DAY`, which this list's
+/// slugs match exactly). Kept as this probe's own local correspondence
+/// table -- the same "probe-local list, never importing the engine's own
+/// internals" convention `CORE_RULEBOOK_SORCERER_BLOODLINE_ADJECTIVES` /
+/// `CORE_RULEBOOK_BARD_VERSATILE_PERFORMANCE_MEMBERS` above already
+/// establish.
+const DIVINE_SCION_DOMAIN_SPECIALIZATION_SLUGS: &[&str] = &[
+    "air", "animal", "artifice", "chaos", "charm", "community", "darkness", "death",
+    "destruction", "earth", "evil", "fire", "glory", "good", "healing", "knowledge", "law",
+    "liberation", "luck", "madness", "magic", "nobility", "plant", "protection", "repose",
+    "rune", "scalykind", "strength", "sun", "travel", "trickery", "void", "war", "water",
+    "weather",
+];
+
+/// Divine Scion -- `decisions.md §22`'s WAVE 47 UPDATE, CORRECTED same
+/// cycle. A real prestige class registered in `prestige_class_entry_gate`
+/// (source book `inner_sea_magic`, not `core_rulebook`), no `ClassId`-
+/// family enum entry, no chassis dispatch reaches it otherwise. 43
+/// members total: 4 genuinely unconditional single-owner grants (Domain
+/// Specialization's own pool-size base record, Divine Wrath, Deific
+/// Defense, Weapon and Armor Proficiency -- proven the same
+/// `probe_wave46_single_owner_class_features` way every wave-46 class
+/// above already does), plus 4 Opposition Alignment DR records and 35
+/// per-domain Domain Specialization sub-records that are each a genuine
+/// `ABILITYPOOL` one-of-N CHOICE (`ism_abilities_class.lst:35`/`:47`'s own
+/// "choices" section headers, `ism_classes.lst:103`/`:104`'s own
+/// pool-size-1 grants) -- **CORRECTION**: this wave's first draft wrongly
+/// grounded all four alignments and all 35 domains unconditionally, for
+/// every Divine Scion character simultaneously (see `pilot_compute::mod.
+/// rs`'s `ground_divine_scion_class_features` doc comment for the full
+/// story). Fixed here by sweeping every one of the 39 candidate selections
+/// in turn -- the same `probe_cleric_domain_generic_member_wiring` /
+/// `probe_sorcerer_bloodline_generic_member_wiring` idiom immediately
+/// above, adapted for a hand-rolled (not generic-pool-group) grounding
+/// function -- so a genuinely-reachable-once-selected record is never
+/// conflated with one that was merely asserted unconditionally. True
+/// Scion Charisma/Wisdom are NOT among these 43 -- see that same doc
+/// comment for why.
+fn probe_divine_scion_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = probe_wave46_single_owner_class_features(
+        fixture,
+        "divine_scion",
+        &[
+            (
+                "class_feature.inner_sea_magic.divine_scion.domain_specialization.pool_size",
+                "Divine Scion ~ Domain Specialization",
+            ),
+            (
+                "class_feature.inner_sea_magic.divine_scion.divine_wrath.bonus",
+                "Divine Scion ~ Divine Wrath",
+            ),
+            (
+                "class_feature.inner_sea_magic.divine_scion.deific_defense.bonus",
+                "Divine Scion ~ Deific Defense",
+            ),
+            (
+                "class_feature.inner_sea_magic.divine_scion.weapon_and_armor_proficiency.\
+                 qualify_flag",
+                "Divine Scion ~ Weapon and Armor Proficiency",
+            ),
+        ],
+    );
+
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    const ALIGNMENTS: &[(&str, &str)] = &[
+        ("chaotic", "Divine Scion ~ Chaotic Opposition Alignment"),
+        ("evil", "Divine Scion ~ Evil Opposition Alignment"),
+        ("good", "Divine Scion ~ Good Opposition Alignment"),
+        ("lawful", "Divine Scion ~ Lawful Opposition Alignment"),
+    ];
+    for (slug, corpus_key) in ALIGNMENTS {
+        let id = format!(
+            "class_feature.inner_sea_magic.divine_scion.{slug}_opposition_alignment.dr"
+        );
+        for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "divine_scion", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:divine_scion_opposition_alignment");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:divine_scion_opposition_alignment".to_string(),
+                selection_id: format!("alignment:{slug}"),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            if computation.explanations.iter().any(|e| e.id == id) {
+                wired.insert((*corpus_key).to_string());
+            }
+        }
+    }
+
+    for slug in DIVINE_SCION_DOMAIN_SPECIALIZATION_SLUGS {
+        let display = format!("{}{}", slug[..1].to_uppercase(), &slug[1..]);
+        let corpus_key = format!("Divine Scion ~ {display} Specialization");
+        let id = format!(
+            "class_feature.inner_sea_magic.divine_scion.{slug}_specialization.caster_level"
+        );
+        for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "divine_scion", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:divine_scion_domain_specialization");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:divine_scion_domain_specialization".to_string(),
+                selection_id: format!("domain:{slug}"),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            if computation.explanations.iter().any(|e| e.id == id) {
+                wired.insert(corpus_key.clone());
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// Golden Legionnaire -- `decisions.md §22`'s WAVE 48 UPDATE. A real
+/// prestige class registered in `prestige_class_entry_gate` (source book
+/// `adventurers_guide`), no `ClassId`-family enum entry, no chassis
+/// dispatch reaches it otherwise. All 4 members are single-owner
+/// unconditional grants (no choice-gating), the same
+/// `probe_wave46_single_owner_class_features` shape every wave-46 class
+/// already uses.
+fn probe_golden_legionnaire_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "golden_legionnaire",
+        &[
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.allied_retribution.bonus",
+                "Golden Legionnaire ~ Allied Retribution",
+            ),
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.authoritative_command.\
+                 bonus",
+                "Golden Legionnaire ~ Authoritative Command",
+            ),
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.improved_aid.bonus",
+                "Golden Legionnaire ~ Improved Aid",
+            ),
+            (
+                "class_feature.adventurers_guide.golden_legionnaire.united_defense.bonus",
+                "Golden Legionnaire ~ United Defense",
+            ),
+        ],
+    )
+}
+
+/// Twilight Talon's own 5 Enhanced Tattoo tiers -- a probe-local
+/// correspondence table (the same "probe-local list, never importing the
+/// engine's own internals" convention `DIVINE_SCION_DOMAIN_SPECIALIZATION_
+/// SLUGS` above already establishes), mirroring `pilot_compute::mod.rs`'s
+/// own `TWILIGHT_TALON_TATTOO_TIERS` exactly: tier level, choice-set id,
+/// and the tier's two (slug, display name) candidate members.
+///
+/// Type alias per clippy's own `type_complexity` lint (this bundle's
+/// zero-warning ceiling): (tier min level, choice-set id, tier members).
+type TwilightTalonTattooTierMember = (u8, &'static str, &'static [(&'static str, &'static str)]);
+const TWILIGHT_TALON_TATTOO_TIER_MEMBERS: &[TwilightTalonTattooTierMember] = &[
+    (
+        2,
+        "choice:twilight_talon_tattoo_level_2",
+        &[
+            ("disguise_self", "Disguise Self"),
+            ("undetectable_alignment", "Undetectable Alignment"),
+        ],
+    ),
+    (
+        4,
+        "choice:twilight_talon_tattoo_level_4",
+        &[("alter_self", "Alter Self"), ("invisibility", "Invisibility")],
+    ),
+    (
+        6,
+        "choice:twilight_talon_tattoo_level_6",
+        &[("glibness", "Glibness"), ("secret_page", "Secret Page")],
+    ),
+    (
+        8,
+        "choice:twilight_talon_tattoo_level_8",
+        &[("modify_memory", "Modify Memory"), ("zone_of_silence", "Zone of Silence")],
+    ),
+    (
+        10,
+        "choice:twilight_talon_tattoo_level_10",
+        &[("mislead", "Mislead"), ("seeming", "Seeming")],
+    ),
+];
+
+/// Twilight Talon -- `decisions.md §22`'s WAVE 48 UPDATE. A real prestige
+/// class registered in `prestige_class_entry_gate` (source book
+/// `adventurers_guide`), no `ClassId`-family enum entry, no chassis
+/// dispatch reaches it otherwise. 12 members total: 2 genuinely
+/// unconditional single-owner grants (Sneak Attack, Enhanced Tattoo's own
+/// save DC -- proven the same `probe_wave46_single_owner_class_features`
+/// way every wave-46 class already does), plus 10 per-tier tattoo records
+/// that are each a genuine `ABILITYPOOL` one-of-two CHOICE
+/// (`ag_abilities_class.lst:542`'s own 5 `PREVARGTEQ`-gated `ABILITYPOOL`
+/// tokens) -- fixed here by sweeping every one of the 10 candidate
+/// selections in turn, the same `probe_divine_scion_wiring` idiom
+/// immediately above, so a genuinely-reachable-once-selected record is
+/// never conflated with one that was merely asserted unconditionally.
+fn probe_twilight_talon_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = probe_wave46_single_owner_class_features(
+        fixture,
+        "twilight_talon",
+        &[
+            (
+                "class_feature.adventurers_guide.twilight_talon.sneak_attack.dice",
+                "Twilight Talon ~ Sneak Attack",
+            ),
+            (
+                "class_feature.adventurers_guide.twilight_talon.enhanced_tattoo.save_dc",
+                "Twilight Talon ~ Enhanced Tattoo",
+            ),
+        ],
+    );
+
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+
+    for &(_tier_level, choice_set_id, members) in TWILIGHT_TALON_TATTOO_TIER_MEMBERS {
+        for &(slug, display) in members {
+            let id =
+                format!("class_feature.adventurers_guide.twilight_talon.{slug}.caster_level");
+            let corpus_key = format!("Twilight Talon ~ {display}");
+            for &level in SWEEP_LEVELS {
+                let mut input = class_sweep_input(fixture, "twilight_talon", level);
+                input
+                    .chosen
+                    .selected_choices
+                    .retain(|c| c.choice_set_id != choice_set_id);
+                input.chosen.selected_choices.push(SelectedChoice {
+                    choice_set_id: choice_set_id.to_string(),
+                    selection_id: format!("tattoo:{slug}"),
+                });
+                let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                    compute_pilot_base_chassis(&input)
+                }));
+                let Ok(computation) = outcome else { continue };
+                if computation.explanations.iter().any(|e| e.id == id) {
+                    wired.insert(corpus_key.clone());
+                }
+            }
+        }
+    }
+
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more prestige
+/// classes' magnitude-only closures, same "registered in `prestige_class_
+/// entry_gate`, no `ClassId` enum entry, no chassis dispatch reaches it"
+/// family as every probe above -- one probe per class, reusing
+/// `probe_wave46_single_owner_class_features`. See each `ground_<class>_
+/// class_features`'s own doc comment (`pilot_compute/mod.rs`) for corpus
+/// citations.
+fn probe_cyphermage_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "cyphermage",
+        &[
+            ("class_feature.inner_sea_magic.cyphermage.analyze_scroll.bonus", "Cyphermage ~ Analyze Scroll"),
+            ("class_feature.adventurers_guide.cyphermage.cypher_lore.pool_size", "Cyphermage ~ Cypher Lore"),
+            ("class_feature.inner_sea_magic.cyphermage.cypher_lore.pool_size", "Cyphermage ~ Cypher Lore"),
+        ],
+    )
+}
+
+fn probe_psychic_fist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "psychic_fist",
+        &[
+            ("class_feature.ultimate_psionics.psychic_fist.infused_body.bonus", "Psychic Fist ~ Infused Body"),
+            ("class_feature.ultimate_psionics.psychic_fist.ki_power.bonus", "Psychic Fist ~ Ki Power"),
+            ("class_feature.ultimate_psionics.psychic_fist.mesmerizing_glow.targets", "Psychic Fist ~ Mesmerizing Glow"),
+        ],
+    )
+}
+
+fn probe_asavir_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "asavir",
+        &[
+            ("class_feature.adventurers_guide.asavir.camaraderie.bonus", "Asavir ~ Camaraderie"),
+            ("class_feature.adventurers_guide.asavir.djinnis_blessing.bonus", "Asavir ~ Djinni's Blessing"),
+            ("class_feature.adventurers_guide.asavir.djinnis_blessing_mount.move_bonus", "Asavir ~ Djinni's Blessing ~ Mount"),
+            ("class_feature.adventurers_guide.asavir.efreeti_blessing_mount.fire_resistance", "Asavir ~ Efreeti's Blessing ~ Mount"),
+            ("class_feature.adventurers_guide.asavir.equine_bond.companion_level", "Asavir ~ Equine Bond"),
+            ("class_feature.adventurers_guide.asavir.jannis_blessing.luck_save", "Asavir ~ Janni's Blessing"),
+            ("class_feature.adventurers_guide.asavir.jannis_blessing_mount.luck_save", "Asavir ~ Janni's Blessing ~ Mount"),
+            ("class_feature.adventurers_guide.asavir.marids_blessing_mount.reflex_save", "Asavir ~ Marid's Blessing ~ Mount"),
+            ("class_feature.adventurers_guide.asavir.shaitans_blessing.bonus", "Asavir ~ Shaitan's Blessing"),
+            ("class_feature.adventurers_guide.asavir.thunderous_charge.bonus", "Asavir ~ Thunderous Charge"),
+        ],
+    )
+}
+
+fn probe_metamorph_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "metamorph",
+        &[
+            ("class_feature.ultimate_psionics.metamorph.alter_metamorphosis.level", "Metamorph ~ Alter Metamorphosis"),
+            ("class_feature.ultimate_psionics.metamorph.free_shift.times", "Metamorph ~ Free Shift"),
+            ("class_feature.ultimate_psionics.metamorph.natural_shifter.bonus", "Metamorph ~ Natural Shifter"),
+        ],
+    )
+}
+
+fn probe_war_mind_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "war_mind",
+        &[
+            ("class_feature.ultimate_psionics.war_mind.chain_of_defensive_posture.bonus", "War Mind ~ Chain of Defensive Posture"),
+            ("class_feature.ultimate_psionics.war_mind.chain_of_personal_superiority.bonus", "War Mind ~ Chain of Personal Superiority"),
+            ("class_feature.ultimate_psionics.war_mind.enduring_body.bonus", "War Mind ~ Enduring Body"),
+        ],
+    )
+}
+
+fn probe_hellknight_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "hellknight",
+        &[
+            ("class_feature.adventurers_guide.hellknight.detect_chaos.dc", "Detect Chaos ~ HK"),
+            ("class_feature.adventurers_guide.hellknight.discern_lies.uses_per_day", "Discern Lies ~ HK"),
+            ("class_feature.adventurers_guide.hellknight.smite_chaos.uses_per_day", "Smite Chaos ~ HK"),
+            ("class_feature.adventurers_guide.hellknight.hellknight_armor.bonus", "Hellknight Armor ~ HK"),
+            ("class_feature.inner_sea_world_guide.hellknight.hellknight_armor.bonus", "Hellknight Armor ~ HK"),
+            ("class_feature.adventurers_guide.hellknight.hellknight_armor_benefits.bonus", "Hellknight Armor Benefits"),
+            ("class_feature.inner_sea_world_guide.hellknight.hellknight_armor_benefits.bonus", "Hellknight Armor Benefits"),
+        ],
+    )
+}
+
+fn probe_adaptive_warrior_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "adaptive_warrior",
+        &[
+            ("class_feature.ultimate_psionics.adaptive_warrior.combine_fighting_styles.times_per_day", "Adaptive Warrior ~ Combine Fighting Styles"),
+            ("class_feature.ultimate_psionics.adaptive_warrior.counter_fighting_style.bonus", "Adaptive Warrior ~ Counter Fighting Style"),
+            ("class_feature.ultimate_psionics.adaptive_warrior.examine_technique.targets", "Adaptive Warrior ~ Examine Technique"),
+            ("class_feature.ultimate_psionics.adaptive_warrior.extended_examination.bonus", "Adaptive Warrior ~ Extended Examination"),
+            ("class_feature.ultimate_psionics.adaptive_warrior.mimic_skill.ranks", "Adaptive Warrior ~ Mimic Skill"),
+        ],
+    )
+}
+
+fn probe_sanguine_angel_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "sanguine_angel",
+        &[
+            ("class_feature.adventurers_guide.sanguine_angel.armored_angel.level", "Sanguine Angel ~ Armored Angel"),
+            ("class_feature.adventurers_guide.sanguine_angel.mystique_of_ardad_lili.caster_level", "Sanguine Angel ~ Mystique of Ardad Lili"),
+        ],
+    )
+}
+
+fn probe_body_snatcher_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "body_snatcher",
+        &[
+            ("class_feature.ultimate_psionics.body_snatcher.body_thief.caster_level_bonus", "Body Snatcher ~ Body Thief"),
+            ("class_feature.ultimate_psionics.body_snatcher.death_is_only_the_beginning.caster_level_bonus", "Body Snatcher ~ Death Is Only the Beginning"),
+            ("class_feature.ultimate_psionics.body_snatcher.melding_exchange.bonus", "Body Snatcher ~ Melding Exchange"),
+        ],
+    )
+}
+
+fn probe_steel_falcon_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "steel_falcon",
+        &[
+            ("class_feature.adventurers_guide.steel_falcon.chainbreaker.bonus", "Steel Falcon ~ Chainbreaker"),
+            ("class_feature.adventurers_guide.steel_falcon.enemy_of_slavers.bonus", "Steel Falcon ~ Enemy of Slavers"),
+            ("class_feature.adventurers_guide.steel_falcon.sailor_and_survivalist.bonus", "Steel Falcon ~ Sailor and Survivalist"),
+            ("class_feature.adventurers_guide.steel_falcon.talmandor_s_blessing.acrobatics_bonus", "Steel Falcon ~ Talmandor's Blessing"),
+        ],
+    )
+}
+
+fn probe_lantern_bearer_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "lantern_bearer",
+        &[
+            ("class_feature.adventurers_guide.lantern_bearer.favored_enemy.pool_size", "Lantern Bearer ~ Favored Enemy"),
+            ("class_feature.adventurers_guide.lantern_bearer.proven_weapon_familiarity.bonus", "Lantern Bearer ~ Proven Weapon Familiarity"),
+            ("class_feature.adventurers_guide.lantern_bearer.superior_discernment.pool_size", "Lantern Bearer ~ Superior Discernment"),
+        ],
+    )
+}
+
+fn probe_storm_kindler_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "storm_kindler",
+        &[
+            ("class_feature.adventurers_guide.storm_kindler.aura_of_calm.radius", "Storm Kindler ~ Aura of Calm"),
+            ("class_feature.adventurers_guide.storm_kindler.oceanic_spirit.bonus", "Storm Kindler ~ Oceanic Spirit"),
+            ("class_feature.adventurers_guide.storm_kindler.storm_shape.height", "Storm Kindler ~ Storm Shape"),
+            ("class_feature.adventurers_guide.storm_kindler.weathers_fury.bonus", "Storm Kindler ~ Weather's Fury"),
+        ],
+    )
+}
+
+fn probe_westcrown_devil_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "westcrown_devil",
+        &[
+            ("class_feature.adventurers_guide.westcrown_devil.council_s_secret.pool_size", "Westcrown Devil ~ Council's Secret"),
+            ("class_feature.adventurers_guide.westcrown_devil.founders_favor.pool", "Westcrown Devil ~ Founders' Favor"),
+            ("class_feature.adventurers_guide.westcrown_devil.sneak_attack.dice", "Westcrown Devil ~ Sneak Attack"),
+        ],
+    )
+}
+
+fn probe_pyrokineticist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "pyrokineticist",
+        &[
+            ("class_feature.ultimate_psionics.pyrokineticist.bolt_of_fire.bonus", "Pyrokineticist ~ Bolt of Fire"),
+            ("class_feature.ultimate_psionics.pyrokineticist.fire_adaptation.bonus", "Pyrokineticist ~ Fire Adaptation"),
+            ("class_feature.ultimate_psionics.pyrokineticist.hand_afire.bonus", "Pyrokineticist ~ Hand Afire"),
+            ("class_feature.ultimate_psionics.pyrokineticist.leech_heat.bonus", "Pyrokineticist ~ Leech Heat"),
+            ("class_feature.ultimate_psionics.pyrokineticist.manipulate_blaze.range", "Pyrokineticist ~ Manipulate Blaze"),
+            ("class_feature.ultimate_psionics.pyrokineticist.nimbus.duration_rounds", "Pyrokineticist ~ Nimbus"),
+            ("class_feature.ultimate_psionics.pyrokineticist.penetrating_fire.bonus", "Pyrokineticist ~ Penetrating Fire"),
+            ("class_feature.ultimate_psionics.pyrokineticist.weapon_afire.bonus", "Pyrokineticist ~ Weapon Afire"),
+        ],
+    )
+}
+
+fn probe_aspis_agent_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "aspis_agent",
+        &[
+            ("class_feature.adventurers_guide.aspis_agent.agency_secrets.pool_size", "Aspis Agent ~ Agency Secrets"),
+            ("class_feature.adventurers_guide.aspis_agent.sneak_attack.dice", "Aspis Agent ~ Sneak Attack"),
+            ("class_feature.adventurers_guide.aspis_agent.trap_sense.bonus", "Aspis Agent ~ Trap Sense"),
+            ("class_feature.adventurers_guide.aspis_agent.trapfinding.bonus", "Aspis Agent ~ Trapfinding"),
+        ],
+    )
+}
+
+fn probe_gray_corsair_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "gray_corsair",
+        &[
+            ("class_feature.adventurers_guide.gray_corsair.favored_port.bonus", "Gray Corsair ~ Favored Port"),
+            ("class_feature.adventurers_guide.gray_corsair.slaver_slayer.bonus", "Gray Corsair ~ Slaver Slayer"),
+        ],
+    )
+}
+
+fn probe_pathfinder_savant_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "pathfinder_savant",
+        &[
+            ("class_feature.adventurers_guide.pathfinder_savant.master_scholar.bonus", "Pathfinder Savant ~ Master Scholar"),
+            ("class_feature.adventurers_guide.pathfinder_savant.esoteric_magic.pool_size", "Pathfinder Savant ~ Esoteric Magic"),
+            ("class_feature.adventurers_guide.pathfinder_savant.quick_identification.times_per_day", "Pathfinder Savant ~ Quick Identification"),
+            ("class_feature.adventurers_guide.pathfinder_savant.sigil_master.save_bonus", "Pathfinder Savant ~ Sigil Master"),
+            ("class_feature.adventurers_guide.pathfinder_savant.analyze_dweomer.times_per_day", "Pathfinder Savant ~ Analyze Dweomer"),
+        ],
+    )
+}
+
+fn probe_rivethun_emissary_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "rivethun_emissary",
+        &[
+            ("class_feature.adventurers_guide.rivethun_emissary.enhanced_spirit_animal.evolution_points", "Rivethun Emissary ~ Enhanced Spirit Animal"),
+            ("class_feature.adventurers_guide.rivethun_emissary.parley.uses_per_day", "Rivethun Emissary ~ Parley"),
+            ("class_feature.adventurers_guide.rivethun_emissary.sixth_sense.uses_per_day", "Rivethun Emissary ~ Sixth Sense"),
+            ("class_feature.adventurers_guide.rivethun_emissary.spirit_animal.level", "Rivethun Emissary ~ Spirit Animal"),
+            ("class_feature.adventurers_guide.rivethun_emissary.spirit_bond.hex_dc", "Rivethun Emissary ~ Spirit Bond"),
+        ],
+    )
+}
+
+fn probe_student_of_war_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "student_of_war",
+        &[
+            ("class_feature.adventurers_guide.student_of_war.additional_skill.pool_size", "Student of War ~ Additional Skill"),
+        ],
+    )
+}
+
+fn probe_diabolist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "diabolist",
+        &[
+            ("class_feature.book_of_the_damned_volume_1.diabolist.channel_hellfire.times_per_day", "Diabolist ~ Channel Hellfire"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.infernal_transport.times_per_day", "Diabolist ~ Infernal Transport"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.damned.dc", "Diabolist ~ Damned"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.infernal_charisma.bonus", "Diabolist ~ Infernal Charisma"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.heresy.bonus", "Diabolist ~ Heresy"),
+            ("class_feature.book_of_the_damned_volume_1.diabolist.hellfire_ray.caster_level", "Diabolist ~ Hellfire Ray"),
+        ],
+    )
+}
+
+fn probe_lion_blade_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "lion_blade",
+        &[
+            ("class_feature.inner_sea_intrigue.lion_blade.expeditious_advance.speed_bonus", "Lion Blade ~ Expeditious Advance"),
+            ("class_feature.inner_sea_intrigue.lion_blade.silent_soul.stealth_bonus", "Lion Blade ~ Silent Soul"),
+            ("class_feature.inner_sea_intrigue.lion_blade.sneak_attack.dice", "Lion Blade ~ Sneak Attack"),
+        ],
+    )
+}
+
+fn probe_bellflower_tiller_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "bellflower_tiller",
+        &[
+            ("class_feature.adventurers_guide.bellflower_tiller.bellflower_crop.range", "Bellflower Tiller ~ Bellflower Crop"),
+            ("class_feature.adventurers_guide.bellflower_tiller.crop_guardian.bonus", "Bellflower Tiller ~ Crop Guardian"),
+            ("class_feature.adventurers_guide.bellflower_tiller.sneak_attack.dice", "Bellflower Tiller ~ Sneak Attack"),
+            ("class_feature.adventurers_guide.bellflower_tiller.swift_sower.speed_bonus", "Bellflower Tiller ~ Swift Sower"),
+            ("class_feature.adventurers_guide.bellflower_tiller.teamwork_feat.pool_size", "Bellflower Tiller ~ Teamwork Feat"),
+        ],
+    )
+}
+
+fn probe_hellknight_signifer_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "hellknight_signifer",
+        &[
+            ("class_feature.adventurers_guide.hellknight_signifer.assiduous_gaze.pool_size", "Hellknight Signifer ~ Assiduous Gaze"),
+            ("class_feature.adventurers_guide.hellknight_signifer.signifer_mask.bonus", "Hellknight Signifer ~ Signifer Mask"),
+            ("class_feature.adventurers_guide.hellknight_signifer.infernal_resilience.dr", "Hellknight Signifer ~ Infernal Resilience"),
+        ],
+    )
+}
+
+fn probe_mystic_archer_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "mystic_archer",
+        &[
+            ("class_feature.ultimate_psionics.mystic_archer.heightened_senses.range", "Mystic Archer ~ Heightened Senses"),
+            ("class_feature.ultimate_psionics.mystic_archer.blindsense.range", "Mystic Archer ~ Blindsense"),
+            ("class_feature.ultimate_psionics.mystic_archer.blindsight.range", "Mystic Archer ~ Blindsight"),
+            ("class_feature.ultimate_psionics.mystic_archer.tremorsense.range", "Mystic Archer ~ Tremorsense"),
+            ("class_feature.ultimate_psionics.mystic_archer.inevitable_strike.uses_per_day", "Mystic Archer ~ Inevitable Strike"),
+            ("class_feature.ultimate_psionics.mystic_archer.ranged_sneak_attack.dice", "Mystic Archer ~ Ranged Sneak Attack"),
+            ("class_feature.ultimate_psionics.mystic_archer.unhindered_vision.uses_per_day", "Mystic Archer ~ Unhindered Vision"),
+        ],
+    )
+}
+
+fn probe_mammoth_rider_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "mammoth_rider",
+        &[
+            ("class_feature.adventurers_guide.mammoth_rider.born_survivor.pool_size", "Mammoth Rider ~ Born Survivor"),
+            ("class_feature.adventurers_guide.mammoth_rider.gigantic_steed.qualify_flag", "Mammoth Rider ~ Gigantic Steed"),
+            ("class_feature.adventurers_guide.mammoth_rider.rugged_steed.qualify_flag", "Mammoth Rider ~ Rugged Steed"),
+            ("class_feature.adventurers_guide.mammoth_rider.steed.companion_level", "Mammoth Rider ~ Steed"),
+            ("class_feature.adventurers_guide.mammoth_rider.steeds_reach.qualify_flag", "Mammoth Rider ~ Steed's Reach"),
+            ("class_feature.adventurers_guide.mammoth_rider.wild_coercion.level", "Mammoth Rider ~ Wild Coercion"),
+        ],
+    )
+}
+
+fn probe_demoniac_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "demoniac",
+        &[
+            ("class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_i.caster_level", "Demoniac ~ Summon Demon I"),
+            ("class_feature.book_of_the_damned_volume_2.demoniac.summon_demon_ii.caster_level", "Demoniac ~ Summon Demon II"),
+        ],
+    )
+}
+
+fn probe_master_chymist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "master_chymist",
+        &[
+            ("class_feature.advanced_players_guide.master_chymist.advanced_mutagen.pool_size", "Master Chymist ~ Advanced Mutagen"),
+            ("class_feature.advanced_players_guide.master_chymist.bomb_thrower.level", "Master Chymist ~ Bomb-Thrower"),
+            ("class_feature.advanced_players_guide.master_chymist.brutality.bonus", "Master Chymist ~ Brutality"),
+            ("class_feature.advanced_players_guide.master_chymist.extracts_per_day.level", "Master Chymist ~ Extracts per Day"),
+            ("class_feature.advanced_players_guide.master_chymist.mutate.times_per_day", "Master Chymist ~ Mutate"),
+        ],
+    )
+}
+
+fn probe_enchanting_courtesan_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "enchanting_courtesan",
+        &[
+            ("class_feature.inner_sea_intrigue.enchanting_courtesan.hidden_spell.count", "Enchanting Courtesan ~ Hidden Spell"),
+            ("class_feature.inner_sea_intrigue.enchanting_courtesan.seductive_intuition.bonus", "Enchanting Courtesan ~ Seductive Intuition"),
+        ],
+    )
+}
+
+fn probe_dark_tempest_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "dark_tempest",
+        &[
+            ("class_feature.ultimate_psionics.dark_tempest.blade_skills.pool_size", "Dark Tempest ~ Blade Skills"),
+            ("class_feature.ultimate_psionics.dark_tempest.diverse_training.level", "Dark Tempest ~ Diverse Training"),
+            ("class_feature.ultimate_psionics.dark_tempest.expanded_power_list.pool_size", "Dark Tempest ~ Expanded Power List"),
+            ("class_feature.ultimate_psionics.dark_tempest.power_strike.power_level", "Dark Tempest ~ Power Strike"),
+            ("class_feature.ultimate_psionics.dark_tempest.psychic_strike.dice", "Dark Tempest ~ Psychic Strike"),
+        ],
+    )
+}
+
+fn probe_battle_herald_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "battle_herald",
+        &[
+            ("class_feature.advanced_players_guide.battle_herald.inspiring_command.level", "Battle Herald ~ Inspiring Command"),
+            ("class_feature.advanced_players_guide.battle_herald.teamwork_feat.pool_size", "Battle Herald ~ Teamwork Feat"),
+        ],
+    )
+}
+
+fn probe_master_spy_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "master_spy",
+        &[
+            ("class_feature.advanced_players_guide.master_spy.art_of_deception.bonus", "Master Spy ~ Art of Deception"),
+            ("class_feature.advanced_players_guide.master_spy.slippery_mind.times", "Master Spy ~ Slippery Mind"),
+            ("class_feature.advanced_players_guide.master_spy.sneak_attack.dice", "Master Spy ~ Sneak Attack"),
+        ],
+    )
+}
+
+fn probe_evangelist_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "evangelist",
+        &[
+            ("class_feature.ultimate_combat.evangelist.single_minded.domain_count_delta", "Evangelist ~ Single-Minded"),
+        ],
+    )
+}
+
+fn probe_ulfen_guard_wave49_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    probe_wave46_single_owner_class_features(
+        fixture,
+        "ulfen_guard",
+        &[
+            ("class_feature.inner_sea_combat.ulfen_guard.guard_dedications.pool_size", "Ulfen Guard ~ Guard Dedications"),
+        ],
+    )
+}
+
+/// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): real-pipeline
+/// reachability proof for every one of this wave's seven probe functions --
+/// against the REAL shared fixture and the REAL `compute_pilot_base_
+/// chassis` pipeline (via `class_sweep_input`, the same entry point the
+/// corpus-wide union sweep uses for every modelled class), proving each
+/// new/extended class-feature block resolves end to end, not merely that
+/// the pure formula functions return the right numbers in isolation.
+#[cfg(test)]
+mod wave46_registered_prestige_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn pathfinder_delver_wave46_extension_is_wired_end_to_end() {
+        let wired = probe_pathfinder_delver_wave46_wiring(&fixture());
+        for expected in [
+            "Pathfinder Delver ~ Guardbreaker",
+            "Pathfinder Delver ~ Master Explorer",
+            "Pathfinder Delver ~ Thrilling Escape",
+            "Pathfinder Delver ~ Vigilant Combatant",
+            "Pathfinder Delver ~ Fortunate Soul",
+            "Pathfinder Delver ~ True Seeing",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn argent_dramaturge_is_wired_end_to_end() {
+        let wired = probe_argent_dramaturge_wiring(&fixture());
+        for expected in
+            ["Argent Dramaturge ~ Argent Performance", "Argent Dramaturge ~ Dramaturgical Flourish"]
+        {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn horizon_walker_is_wired_end_to_end() {
+        let wired = probe_horizon_walker_wiring(&fixture());
+        for expected in [
+            "Horizon Walker ~ Favored Terrain",
+            "Horizon Walker ~ Terrain Mastery",
+            "Horizon Walker ~ Terrain Dominance",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn nature_warden_is_wired_end_to_end() {
+        let wired = probe_nature_warden_wiring(&fixture());
+        for expected in ["Nature Warden ~ Companion Bond", "Nature Warden ~ Survivalist"] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn rage_prophet_is_wired_end_to_end() {
+        let wired = probe_rage_prophet_wiring(&fixture());
+        for expected in ["Rage Prophet ~ Rage Prophet Mystery", "Rage Prophet ~ Ragecaster"] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn holy_vindicator_is_wired_end_to_end() {
+        let wired = probe_holy_vindicator_wiring(&fixture());
+        assert!(
+            wired.contains("Holy Vindicator ~ Stigmata"),
+            "expected the real pipeline to resolve Holy Vindicator's Stigmata: {wired:?}"
+        );
+    }
+
+    #[test]
+    fn stalwart_defender_is_wired_end_to_end() {
+        let wired = probe_stalwart_defender_wiring(&fixture());
+        for expected in [
+            "Stalwart Defender ~ AC Bonus",
+            "Stalwart Defender ~ Damage Reduction",
+            "Stalwart Defender ~ Defensive Powers",
+            "Stalwart Defender ~ Defensive Stance",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    // NOTE: unlike a `probe_*_wired.contains(...)`-shaped negative control,
+    // there is no meaningful "probe returns empty for an unrelated fixture"
+    // case to test here -- every one of this wave's seven probes (like
+    // `probe_pathfinder_delver_padfe_wiring`/`probe_phrenic_slayer_favored_
+    // enemy_wiring` before them) builds its OWN class-specific input via
+    // `class_sweep_input(fixture, "<slug>", level)`, which overwrites
+    // `class_levels` outright regardless of what the passed-in fixture
+    // carries -- so every probe call always sweeps its own named class.
+    // The real negative control -- that none of this wave's new
+    // explanation ids leak onto an UNRELATED class -- is already proven at
+    // the explanation-id level by `mod.rs`'s own
+    // `wave46_registered_prestige_magnitude_formulas_tests::
+    // none_of_the_twenty_ids_leak_onto_an_unrelated_class`, and at the
+    // `classify()`-dispatch level by this module's own `an_unprobed_
+    // stalwart_defender_ac_bonus_record_never_falls_grounded_through_
+    // this_check` below.
+}
+
+/// SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): `classify()`-level
+/// proof that each new probe's early-return check actually wins, using
+/// `EngineFacts::default()` with the field manually populated -- the same
+/// discipline `wave44_pathfinder_delver_padfe_probe_classify_tests`-style
+/// modules elsewhere in this file already establish (proves the DISPATCH
+/// chain, independent of whether the probe itself observes the right
+/// explanation ids, which the reachability module above already proves).
+#[cfg(test)]
+mod wave46_registered_prestige_classify_tests {
+    use super::*;
+
+    fn class_feature_unit(book: &str, file: &str, line: usize, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: book.to_string(),
+            kind: Kind::ClassFeature,
+            key: key.to_string(),
+            name: key.split(" ~ ").nth(1).unwrap_or(key).to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    #[test]
+    fn pathfinder_delver_master_explorer_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .pathfinder_delver_wave46_wired
+            .insert("Pathfinder Delver ~ Master Explorer".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            379,
+            "Pathfinder Delver ~ Master Explorer",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "pathfinder_delver_wave46_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    #[test]
+    fn argent_dramaturge_argent_performance_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .argent_dramaturge_wired
+            .insert("Argent Dramaturge ~ Argent Performance".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            24,
+            "Argent Dramaturge ~ Argent Performance",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "argent_dramaturge_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    #[test]
+    fn horizon_walker_favored_terrain_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.horizon_walker_wired.insert("Horizon Walker ~ Favored Terrain".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1295,
+            "Horizon Walker ~ Favored Terrain",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "horizon_walker_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn nature_warden_survivalist_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.nature_warden_wired.insert("Nature Warden ~ Survivalist".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1429,
+            "Nature Warden ~ Survivalist",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "nature_warden_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn rage_prophet_ragecaster_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.rage_prophet_wired.insert("Rage Prophet ~ Ragecaster".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1443,
+            "Rage Prophet ~ Ragecaster",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "rage_prophet_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn holy_vindicator_stigmata_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.holy_vindicator_wired.insert("Holy Vindicator ~ Stigmata".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1278,
+            "Holy Vindicator ~ Stigmata",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "holy_vindicator_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn stalwart_defender_ac_bonus_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.stalwart_defender_wired.insert("Stalwart Defender ~ AC Bonus".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1451,
+            "Stalwart Defender ~ AC Bonus",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "stalwart_defender_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed record of one of this wave's own new
+    /// keys still falls through to whatever the pre-existing classify()
+    /// logic gives it (never a false `grounded`).
+    #[test]
+    fn an_unprobed_stalwart_defender_ac_bonus_record_never_falls_grounded_through_this_check() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1451,
+            "Stalwart Defender ~ AC Bonus",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_ne!(
+            verdict.evidence,
+            "stalwart_defender_probe_observed_a_real_computed_magnitude",
+            "an unprobed record must never resolve through this wave's own new check"
+        );
+    }
+}
+
+
+/// SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): real-pipeline
+/// reachability proof for Divine Scion's probe -- against the REAL shared
+/// fixture and the REAL `compute_pilot_base_chassis` pipeline (via
+/// `class_sweep_input`, the same entry point the corpus-wide union sweep
+/// uses for every modelled class), proving the new class-feature block
+/// resolves end to end, not merely that the pure formula functions return
+/// the right numbers in isolation. CORRECTED same cycle: 39 of these 43
+/// members are real one-of-N choices, so this assertion holds only because
+/// `probe_divine_scion_wiring` itself now sweeps every candidate
+/// domain/alignment selection in turn (see that function's own doc
+/// comment) -- the union across every possible character, never a claim
+/// that one character has all 43 simultaneously.
+#[cfg(test)]
+mod wave47_divine_scion_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn divine_scion_is_wired_end_to_end() {
+        let wired = probe_divine_scion_wiring(&fixture());
+        for expected in [
+            "Divine Scion ~ Domain Specialization",
+            "Divine Scion ~ Divine Wrath",
+            "Divine Scion ~ Deific Defense",
+            "Divine Scion ~ Weapon and Armor Proficiency",
+            "Divine Scion ~ Chaotic Opposition Alignment",
+            "Divine Scion ~ Evil Opposition Alignment",
+            "Divine Scion ~ Good Opposition Alignment",
+            "Divine Scion ~ Lawful Opposition Alignment",
+            "Divine Scion ~ Fire Specialization",
+            "Divine Scion ~ Chaos Specialization",
+            "Divine Scion ~ Weather Specialization",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+        // All 43 members resolve, not just this sample.
+        assert_eq!(wired.len(), 43, "expected all 43 Divine Scion members wired: {wired:?}");
+    }
+
+    // NOTE: no meaningful "probe returns empty for an unrelated fixture"
+    // case exists here either -- same reason `wave46_registered_prestige_
+    // probe_reachability_tests`'s own doc comment above already gives
+    // (`class_sweep_input` always overwrites `class_levels` to the named
+    // class regardless of the fixture passed in). The real negative
+    // control is `mod.rs`'s own `none_of_the_static_ids_leak_onto_an_
+    // unrelated_class`, plus this module's own classify()-dispatch
+    // negative control below.
+}
+
+/// SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): `classify()`-level
+/// proof that Divine Scion's new probe check actually wins, using
+/// `EngineFacts::default()` with the field manually populated -- the same
+/// discipline `wave46_registered_prestige_classify_tests` already
+/// establishes.
+#[cfg(test)]
+mod wave47_divine_scion_classify_tests {
+    use super::*;
+
+    fn class_feature_unit(book: &str, file: &str, line: usize, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: book.to_string(),
+            kind: Kind::ClassFeature,
+            key: key.to_string(),
+            name: key.split(" ~ ").nth(1).unwrap_or(key).to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    #[test]
+    fn divine_scion_domain_specialization_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.divine_scion_wired.insert("Divine Scion ~ Domain Specialization".to_string());
+        let unit = class_feature_unit(
+            "inner_sea_magic",
+            "ism_abilities_class.lst",
+            30,
+            "Divine Scion ~ Domain Specialization",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "divine_scion_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn divine_scion_fire_specialization_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.divine_scion_wired.insert("Divine Scion ~ Fire Specialization".to_string());
+        let unit = class_feature_unit(
+            "inner_sea_magic",
+            "ism_abilities_class.lst",
+            60,
+            "Divine Scion ~ Fire Specialization",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "divine_scion_probe_observed_a_real_computed_magnitude");
+    }
+
+    /// NEGATIVE CONTROL: an unprobed record of one of this wave's own new
+    /// keys still falls through to whatever the pre-existing classify()
+    /// logic gives it (never a false `grounded`).
+    #[test]
+    fn an_unprobed_divine_scion_record_never_falls_grounded_through_this_check() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "inner_sea_magic",
+            "ism_abilities_class.lst",
+            30,
+            "Divine Scion ~ Domain Specialization",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_ne!(
+            verdict.evidence,
+            "divine_scion_probe_observed_a_real_computed_magnitude",
+            "an unprobed record must never resolve through this wave's own new check"
+        );
+    }
+}
+
+/// SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): real-pipeline
+/// reachability proof for Twilight Talon and Golden Legionnaire -- against
+/// the REAL shared fixture and the REAL `compute_pilot_base_chassis`
+/// pipeline (via `class_sweep_input`), proving each new class-feature
+/// block resolves end to end, not merely that the pure formula functions
+/// return the right numbers in isolation.
+#[cfg(test)]
+mod wave48_registered_prestige_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn twilight_talon_is_wired_end_to_end() {
+        let wired = probe_twilight_talon_wiring(&fixture());
+        for expected in [
+            "Twilight Talon ~ Sneak Attack",
+            "Twilight Talon ~ Enhanced Tattoo",
+            "Twilight Talon ~ Disguise Self",
+            "Twilight Talon ~ Undetectable Alignment",
+            "Twilight Talon ~ Alter Self",
+            "Twilight Talon ~ Invisibility",
+            "Twilight Talon ~ Glibness",
+            "Twilight Talon ~ Secret Page",
+            "Twilight Talon ~ Modify Memory",
+            "Twilight Talon ~ Zone of Silence",
+            "Twilight Talon ~ Mislead",
+            "Twilight Talon ~ Seeming",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+        // All 12 members resolve, not just this sample.
+        assert_eq!(wired.len(), 12, "expected all 12 Twilight Talon members wired: {wired:?}");
+    }
+
+    #[test]
+    fn golden_legionnaire_is_wired_end_to_end() {
+        let wired = probe_golden_legionnaire_wiring(&fixture());
+        for expected in [
+            "Golden Legionnaire ~ Allied Retribution",
+            "Golden Legionnaire ~ Authoritative Command",
+            "Golden Legionnaire ~ Improved Aid",
+            "Golden Legionnaire ~ United Defense",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+        assert_eq!(
+            wired.len(),
+            4,
+            "expected all 4 Golden Legionnaire members wired: {wired:?}"
+        );
+    }
+
+    // NOTE: no meaningful "probe returns empty for an unrelated fixture"
+    // case exists here either -- same reason `wave46_registered_prestige_
+    // probe_reachability_tests`'s own doc comment above already gives
+    // (`class_sweep_input` always overwrites `class_levels` to the named
+    // class regardless of the fixture passed in). The real negative
+    // control is `mod.rs`'s own `none_of_the_wave48_ids_leak_onto_an_
+    // unrelated_class`, plus this module's own classify()-dispatch
+    // negative control below.
+}
+
+/// SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): `classify()`-level
+/// proof that Twilight Talon's and Golden Legionnaire's new probe checks
+/// actually win, using `EngineFacts::default()` with the field manually
+/// populated -- the same discipline `wave47_divine_scion_classify_tests`
+/// already establishes.
+#[cfg(test)]
+mod wave48_registered_prestige_classify_tests {
+    use super::*;
+
+    fn class_feature_unit(book: &str, file: &str, line: usize, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: book.to_string(),
+            kind: Kind::ClassFeature,
+            key: key.to_string(),
+            name: key.split(" ~ ").nth(1).unwrap_or(key).to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    #[test]
+    fn twilight_talon_sneak_attack_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.twilight_talon_wired.insert("Twilight Talon ~ Sneak Attack".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            541,
+            "Twilight Talon ~ Sneak Attack",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(verdict.evidence, "twilight_talon_probe_observed_a_real_computed_magnitude");
+    }
+
+    #[test]
+    fn golden_legionnaire_allied_retribution_resolves_grounded() {
+        let mut facts = EngineFacts::default();
+        facts
+            .golden_legionnaire_wired
+            .insert("Golden Legionnaire ~ Allied Retribution".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            136,
+            "Golden Legionnaire ~ Allied Retribution",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded", "evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "golden_legionnaire_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed record of one of this wave's own new
+    /// keys still falls through to whatever the pre-existing classify()
+    /// logic gives it (never a false `grounded`).
+    #[test]
+    fn an_unprobed_wave48_record_never_falls_grounded_through_either_new_check() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            541,
+            "Twilight Talon ~ Sneak Attack",
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_ne!(
+            verdict.evidence,
+            "twilight_talon_probe_observed_a_real_computed_magnitude",
+            "an unprobed record must never resolve through this wave's own new check"
+        );
+        assert_ne!(
+            verdict.evidence,
+            "golden_legionnaire_probe_observed_a_real_computed_magnitude",
+            "an unprobed record must never resolve through this wave's own new check"
+        );
+    }
+}
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -9204,6 +11613,54 @@ fn gather_engine_facts(
             probe_bard_versatile_performance_generic_member_wiring(fixture),
         wizard_arcane_school_wired: probe_wizard_arcane_school_wiring(fixture),
         bard_bardic_performance_wired: probe_bard_bardic_performance_wiring(fixture),
+        cavalier_order_wired: probe_cavalier_order_wiring(fixture),
+        spiritualist_phantom_emotional_focus_wired:
+            probe_spiritualist_phantom_emotional_focus_wiring(fixture),
+        pathfinder_delver_padfe_wired: probe_pathfinder_delver_padfe_wiring(fixture),
+        phrenic_slayer_favored_enemy_wired: probe_phrenic_slayer_favored_enemy_wiring(fixture),
+        pathfinder_delver_wave46_wired: probe_pathfinder_delver_wave46_wiring(fixture),
+        argent_dramaturge_wired: probe_argent_dramaturge_wiring(fixture),
+        horizon_walker_wired: probe_horizon_walker_wiring(fixture),
+        nature_warden_wired: probe_nature_warden_wiring(fixture),
+        rage_prophet_wired: probe_rage_prophet_wiring(fixture),
+        holy_vindicator_wired: probe_holy_vindicator_wiring(fixture),
+        stalwart_defender_wired: probe_stalwart_defender_wiring(fixture),
+        divine_scion_wired: probe_divine_scion_wiring(fixture),
+        twilight_talon_wired: probe_twilight_talon_wiring(fixture),
+        golden_legionnaire_wired: probe_golden_legionnaire_wiring(fixture),
+        cyphermage_wave49_wired: probe_cyphermage_wave49_wiring(fixture),
+        psychic_fist_wave49_wired: probe_psychic_fist_wave49_wiring(fixture),
+        asavir_wave49_wired: probe_asavir_wave49_wiring(fixture),
+        metamorph_wave49_wired: probe_metamorph_wave49_wiring(fixture),
+        war_mind_wave49_wired: probe_war_mind_wave49_wiring(fixture),
+        hellknight_wave49_wired: probe_hellknight_wave49_wiring(fixture),
+        adaptive_warrior_wave49_wired: probe_adaptive_warrior_wave49_wiring(fixture),
+        sanguine_angel_wave49_wired: probe_sanguine_angel_wave49_wiring(fixture),
+        body_snatcher_wave49_wired: probe_body_snatcher_wave49_wiring(fixture),
+        steel_falcon_wave49_wired: probe_steel_falcon_wave49_wiring(fixture),
+        lantern_bearer_wave49_wired: probe_lantern_bearer_wave49_wiring(fixture),
+        storm_kindler_wave49_wired: probe_storm_kindler_wave49_wiring(fixture),
+        westcrown_devil_wave49_wired: probe_westcrown_devil_wave49_wiring(fixture),
+        pyrokineticist_wave49_wired: probe_pyrokineticist_wave49_wiring(fixture),
+        aspis_agent_wave49_wired: probe_aspis_agent_wave49_wiring(fixture),
+        gray_corsair_wave49_wired: probe_gray_corsair_wave49_wiring(fixture),
+        pathfinder_savant_wave49_wired: probe_pathfinder_savant_wave49_wiring(fixture),
+        rivethun_emissary_wave49_wired: probe_rivethun_emissary_wave49_wiring(fixture),
+        student_of_war_wave49_wired: probe_student_of_war_wave49_wiring(fixture),
+        diabolist_wave49_wired: probe_diabolist_wave49_wiring(fixture),
+        lion_blade_wave49_wired: probe_lion_blade_wave49_wiring(fixture),
+        bellflower_tiller_wave49_wired: probe_bellflower_tiller_wave49_wiring(fixture),
+        hellknight_signifer_wave49_wired: probe_hellknight_signifer_wave49_wiring(fixture),
+        mystic_archer_wave49_wired: probe_mystic_archer_wave49_wiring(fixture),
+        mammoth_rider_wave49_wired: probe_mammoth_rider_wave49_wiring(fixture),
+        demoniac_wave49_wired: probe_demoniac_wave49_wiring(fixture),
+        master_chymist_wave49_wired: probe_master_chymist_wave49_wiring(fixture),
+        enchanting_courtesan_wave49_wired: probe_enchanting_courtesan_wave49_wiring(fixture),
+        dark_tempest_wave49_wired: probe_dark_tempest_wave49_wiring(fixture),
+        battle_herald_wave49_wired: probe_battle_herald_wave49_wiring(fixture),
+        master_spy_wave49_wired: probe_master_spy_wave49_wiring(fixture),
+        evangelist_wave49_wired: probe_evangelist_wave49_wiring(fixture),
+        ulfen_guard_wave49_wired: probe_ulfen_guard_wave49_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -9233,6 +11690,8 @@ fn gather_engine_facts(
         diagnostics,
         corpus_class_names,
         corpus_json_descriptions: load_corpus_json_descriptions(repo_root),
+        corpus_json_prose_bearing_ability_tokens:
+            load_corpus_json_prose_bearing_ability_tokens(repo_root),
         class_feature_pool_catalog: class_feature_pool_catalog::pool_catalog_index(
             &class_feature_pool_catalog::load_pool_catalog(repo_root),
         ),
@@ -9317,6 +11776,92 @@ fn load_corpus_json_descriptions(repo_root: &Path) -> BTreeMap<(String, usize, S
                         description.trim().to_string(),
                     );
                 }
+            }
+        }
+    }
+    out
+}
+
+/// Walks every observable book's `ability` corpus directory and returns the
+/// coordinate of every record carrying real player-facing prose in a RAW
+/// TOKEN the ingester never lifted into `data.description` -- see
+/// [`EngineFacts::corpus_json_prose_bearing_ability_tokens`] for why this is a
+/// separate, necessary signal from `has_real_description`.
+///
+/// The four token keys checked are exactly the four wave 33 lane A's own
+/// "genuinely `description: null` upstream, not merely un-ingested" argument
+/// checked by hand (`DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:`), never a wider or
+/// narrower set invented here. A token whose value is empty, or is PCGen's
+/// own `.CLEAR`/`.CLEARALL` erasure, is not prose -- the same three exclusions
+/// [`closure_has_real_description`] already applies to a raw `DESC:` value.
+fn load_corpus_json_prose_bearing_ability_tokens(
+    repo_root: &Path,
+) -> BTreeSet<(String, usize, String)> {
+    const PROSE_BEARING_TOKEN_KEYS: &[&str] = &["DESC", "SPROP", "BENEFIT", "ASPECT"];
+    let mut out: BTreeSet<(String, usize, String)> = BTreeSet::new();
+    for book_dir in OBSERVABLE_BOOK_DIRS {
+        let root = repo_root.join("data/corpus").join(book_dir).join("ability");
+        if !root.is_dir() {
+            continue;
+        }
+        let mut stack = vec![root];
+        while let Some(dir) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                    continue;
+                }
+                if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                    continue;
+                }
+                let Ok(text) = std::fs::read_to_string(&path) else { continue };
+                let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+                let Some(tokens) =
+                    value.pointer("/data/raw_tokens").and_then(|v| v.as_array())
+                else {
+                    continue;
+                };
+                let carries_prose = tokens.iter().any(|token| {
+                    let key = token.get("key").and_then(|v| v.as_str()).unwrap_or("");
+                    if !PROSE_BEARING_TOKEN_KEYS.contains(&key) {
+                        return false;
+                    }
+                    let raw = token.get("value").and_then(|v| v.as_str()).unwrap_or("");
+                    // An `ASPECT:`/`SPROP:` value is `<Name>|<prose>`; a
+                    // `DESC:`/`BENEFIT:` value is the prose itself. Taking the
+                    // whole value is deliberate: any of the four carrying real
+                    // text at all is enough to refuse the "proseless by
+                    // design" close, and splitting on `|` would need a
+                    // per-token grammar this check does not need.
+                    let trimmed = raw.trim();
+                    !trimmed.is_empty()
+                        && trimmed != ".CLEAR"
+                        && trimmed != ".CLEARALL"
+                        && !trimmed.contains("[redacted PI]")
+                });
+                if !carries_prose {
+                    continue;
+                }
+                let Some(src_path) = value.pointer("/source/path").and_then(|v| v.as_str()) else {
+                    continue;
+                };
+                let Some(line) = value.pointer("/source/line").and_then(|v| v.as_u64()) else {
+                    continue;
+                };
+                let Some(key) = value
+                    .pointer("/source/record_key")
+                    .and_then(|v| v.as_str())
+                    .or_else(|| value.pointer("/data/key").and_then(|v| v.as_str()))
+                else {
+                    continue;
+                };
+                let basename = Path::new(src_path)
+                    .file_name()
+                    .map(|n| n.to_string_lossy().into_owned())
+                    .unwrap_or_default();
+                out.insert((basename, line as usize, key.to_string()));
             }
         }
     }
@@ -9666,6 +12211,28 @@ const CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES: &[&str] = &[
     "limit",
 ];
 
+/// Trailing dot-segment words that mark an explanation id as a DIAGNOSTIC
+/// MIRROR, never a real computed magnitude -- the `class_feature_exact_
+/// suffix_grounded` second-to-last-segment check (SD-34 wave 38 lane C)
+/// must refuse these regardless of what the segment before them says.
+///
+/// `push_deferred_class_features` (`pilot_compute/mod.rs`) and its ~14
+/// sibling `push_*_deferred_diagnostic` functions push the SAME id into
+/// both `diagnostics` (a real "this is blocked" entry) AND `explanations`
+/// (`value: 0`, so it also satisfies `magnitude_token_count`-style checks)
+/// -- every one of the 175 corpus-wide `*.unsupported` ids and the 2
+/// `*.not_modelled` ids found live (`grep -c` against `pilot_compute/mod.rs`
+/// at this cycle's own HEAD) follows this exact shape. Confirmed live, not
+/// assumed: `class_feature.pu.unchained_barbarian.corpus_record.
+/// uncanny_dodge.unsupported` (real id, `push_pu_class_feature_records`'s
+/// `!record.is_granted` branch) has `uncanny_dodge` as its own
+/// second-to-last segment, genuinely equal to a real sibling unit's
+/// `feature_slug` -- without this guard it credited `Unchained Barbarian ~
+/// Uncanny Dodge` as grounded off a value-0 "not independently granted"
+/// marker, losing that unit's own more specific `deferred-with-reason`
+/// diagnostic message for the generic Shape-2 D-bucket evidence instead.
+const CLASS_FEATURE_ID_NON_MAGNITUDE_TRAILING_MARKERS: &[&str] = &["unsupported", "not_modelled"];
+
 /// Retries a failed `id.ends_with(&feature_slug)` check by stripping exactly
 /// one trailing `_<known-suffix-word>` from `id` and re-checking. Returns
 /// `false` (never a fix) when the exact check already passes -- this is a
@@ -9753,6 +12320,34 @@ fn id_matches_feature_slug_after_known_magnitude_suffix_strip(id: &str, feature_
 ///    Requiring the matched id's own trailing dot-segment to EQUAL
 ///    `feature_slug` closes both without touching the (correct, unrelated)
 ///    magnitude-suffix fallback's own separate underscore-stripping logic.
+///
+/// 3. **A second-to-last dot-segment match** (SD-34 wave 38 lane C,
+///    `mine-bucket-d` row 37) -- `ground_antipaladin_class_features` and its
+///    18 sibling dispatch-chain functions (`pilot_compute/mod.rs`, live
+///    since SD-32 card 11 T12: Cryptic/Dread/Marksman/Psychic Warrior/
+///    Soulknife/Aegis/Tactician/Vitalist/Wilder/Kineticist/Medium/
+///    Mesmerist/Occultist/Psychic/Spiritualist/Magus/Shifter/Vigilante/
+///    Psion) emit ids shaped `class_feature.untabled.<owner>.<feature_slug>.
+///    <magnitude_descriptor>` -- a real per-feature explanation id with the
+///    feature's own slug as its OWN dot segment, followed by a THIRD
+///    segment naming which quantity it computes (`dc`, `known`,
+///    `uses_per_day`, `damage_reduction`, ...). Neither check 2 above (which
+///    inspects the id's trailing segment -- here the descriptor, not the
+///    feature) nor `id_matches_feature_slug_after_known_magnitude_suffix_
+///    strip` (which only strips a trailing `_<word>` within a SINGLE dot
+///    segment, never crosses a `.`) recognizes this shape. Checking the
+///    SECOND-TO-LAST segment against `feature_slug` closes it without
+///    depending on `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` recognizing the
+///    descriptor word at all (real per-record magnitude, already gated by
+///    the SAME `owner`/`group` guard above -- this is strictly a wider
+///    RECOGNITION of an existing computation, never a new grounding path).
+///    Confirmed safe against every pre-existing negative case in this
+///    file's own test module before landing (verbatim, not assumed): a
+///    2-segment id belonging to a genuinely DIFFERENT feature of the same
+///    class does not cross-credit, and the existing negation-explanation
+///    regression test (`bloodrage_execution.not_raging` vs. feature_slug
+///    `raging`) stays refused, since its own second-to-last segment is
+///    `bloodrage_execution`, never `raging`.
 fn class_feature_exact_suffix_grounded<'a>(
     explanation_ids: impl Iterator<Item = &'a String>,
     owner: &str,
@@ -9767,7 +12362,366 @@ fn class_feature_exact_suffix_grounded<'a>(
         return false;
     }
     let needle = format!(".{owner}.");
-    explanation_ids.into_iter().any(|id| id.contains(&needle) && id.rsplit('.').next() == Some(feature_slug))
+    explanation_ids.into_iter().any(|id| {
+        id.contains(&needle)
+            && (id.rsplit('.').next() == Some(feature_slug)
+                || {
+                    // Skip the trailing magnitude-descriptor segment, then
+                    // compare the NEXT segment in from the end -- the
+                    // feature's own slug under the 3-segment
+                    // `<owner>.<feature_slug>.<descriptor>` convention.
+                    //
+                    // `feature_slug != owner` guard (SD-34 wave 38 lane C,
+                    // found live, not assumed): without it, a bare/no-`~`
+                    // corpus_key unit (`feature_slug` silently falls back to
+                    // `unit.name`, the SAME single-token shape the
+                    // `suffix_stripped_grounded` fallback above already
+                    // excludes for this exact reason) spuriously matches
+                    // ANY generic `class_chassis.<owner>.<fact>` id -- e.g.
+                    // `class_chassis.arcanist.caster_level`
+                    // (`pilot_compute/mod.rs`'s generic per-class
+                    // caster-level table, `format!("class_chassis.{}.
+                    // caster_level", rule.class_name)`), a real chassis
+                    // fact but NOT this bare unit's own magnitude. Confirmed
+                    // live via a temporary dump test before landing this
+                    // guard: `class_feature:arcanist`/`:bloodrager`/
+                    // `:brawler` (each `feature_slug == owner ==
+                    // "arcanist"`/`"bloodrager"`/`"brawler"`) all
+                    // false-matched this way before the guard was added.
+                    //
+                    // The trailing segment itself must also NOT be a
+                    // `CLASS_FEATURE_ID_NON_MAGNITUDE_TRAILING_MARKERS`
+                    // word -- see that constant's own doc comment for the
+                    // live-confirmed `*.unsupported` diagnostic-mirror
+                    // false match this closes.
+                    feature_slug != owner
+                        && id
+                            .rsplit('.')
+                            .next()
+                            .is_some_and(|last| {
+                                !CLASS_FEATURE_ID_NON_MAGNITUDE_TRAILING_MARKERS.contains(&last)
+                            })
+                        && {
+                            let mut segments = id.rsplit('.');
+                            segments.next();
+                            segments.next() == Some(feature_slug)
+                        }
+                })
+    })
+}
+
+/// Wave 39 lane A -- Shape 2's 20-unit word-choice-synonym remainder
+/// (`wave38_laneC_shape2_dot_segment_magnitude_id_matcher_cycle_receipt.md`'s
+/// own "Shape 2's remaining 54-unit magnitude-bearing population" section).
+///
+/// `class_feature_exact_suffix_grounded` and `id_matches_feature_slug_
+/// after_known_magnitude_suffix_strip` both require the id's own trailing
+/// dot-segment to be DERIVABLE from `feature_slug` -- an exact match, or a
+/// single trailing `_<known-suffix-word>` strip leaving an exact match.
+/// Neither can bridge an outright word substitution (`Unchained Monk ~ Ki
+/// Pool`'s `feature_slug` is `"ki_pool"`; `ground_unchained_monk_class_
+/// features` computes and emits `"...ki_points"` -- a genuinely different
+/// word, not a suffix of the same word), nor a `feature_slug` that is only
+/// a PREFIX of a real multi-word descriptor
+/// (`"fast_movement"` / `"...fast_movement_bonus_feet"`), nor a
+/// pluralization mismatch riding on an otherwise-real suffix
+/// (`"bonus_feat"` singular / `"...bonus_feats_known"` plural).
+///
+/// Every compute function behind every entry below was already shipped,
+/// already unit-tested, and already emits a real per-record magnitude
+/// (SD-32 card 11's Pathfinder Unchained dispatch family,
+/// `ground_unchained_monk_class_features` /
+/// `ground_unchained_barbarian_class_features` /
+/// `ground_unchained_rogue_class_features` /
+/// `ground_unchained_summoner_class_features`) -- the gap is purely that
+/// the classifier could not recognize the id it already writes. Each
+/// tuple's third field is the exact, full, already-shipped explanation id
+/// string, quoted verbatim from `pilot_compute/mod.rs` by direct read (not
+/// derived from any general rule), so this table can never invent a match
+/// -- it only recognizes ids that already exist. Confirmed, feature by
+/// feature, against the real corpus record and the real compute function
+/// before being added here (this cycle's own receipt names each one):
+///
+/// - `"spells"` -> `unchained_summoner_marker` is the one exception that is
+///   not a same-concept word swap: the corpus record's own (and ONLY)
+///   `raw_bonus_chain` token is `DEFINE:UnchainedSummoner|0` -- byte-
+///   identical to what `unchained_summoner_marker` computes -- so this is
+///   the SAME formula token under a different label, not a guess.
+/// - `"eidolon"` -> `eidolon_companion_level` and `"summon_monster"` ->
+///   `summon_monster_spell_level` each name ONE of several real magnitudes
+///   the class computes for that feature (Eidolon also has an evolution
+///   pool; Summon Monster also has a uses-per-day count) -- any one
+///   suffices to prove the engine holds the record; this table need not
+///   enumerate every sibling.
+///
+/// **Wave 40 lane A** extends the table with 7 more CRB entries
+/// (`wave39_laneB_shape2_crb_prestige_class_function_check_cycle_receipt.md`'s
+/// own 13-unit "real compute exists but not lane A's shape" table). Every
+/// third field below was re-confirmed live, not just read from source: a
+/// temporary dump test (`wave40_lanea_temp_synonym_candidate_dump`, removed
+/// before this cycle's own commit) ran the real `class_sweep_input` +
+/// `compute_pilot_base_chassis` pipeline this classifier's own union sweep
+/// uses, across every `SWEEP_LEVELS` level, and printed the REAL set of
+/// distinct values each candidate id carries -- catching two false starts
+/// before they were ever added to this table:
+///
+/// - **Monk's Abundant Step / Diamond Soul / Maneuver Training / Perfect
+///   Self** each carry a compound (2-word) suffix past `feature_slug`
+///   (`_caster_level`, `_spell_resistance`, `_cmb_bonus`,
+///   `_damage_reduction`) -- the same PREFIX-of-a-longer-descriptor shape
+///   as `unchained_barbarian`'s `greater_rage`/`mighty_rage` above, just
+///   with 2 words instead of 1. The live dump confirms each carries a real
+///   non-zero value once its own level gate is reached within
+///   `SWEEP_LEVELS` (Abundant Step `{0, 15, 20}`, Diamond Soul
+///   `{0, 25, 30}`, Maneuver Training `{0, 2, 3, 4, 5}`, Perfect Self
+///   `{0, 10}`).
+/// - **Bard's Bardic Performance**: the FIRST candidate read from source
+///   alone, `class_feature.bard.bardic_performance_execution.active`, is a
+///   real `ComputationExplanation` id, but it is only ever pushed when
+///   `input.chosen.class_ability_activations` carries an active Bardic
+///   Performance entry -- something no `SWEEP_LEVELS` pass this classifier
+///   runs ever seeds (`class_sweep_input`/`canonical_seeds_for` build no
+///   such activation for any class). The live dump proves it: that id
+///   never appears in the sweep's own output at all, for any level. Aliased
+///   instead to `class_chassis.bard.bardic_performance_rounds_per_day`
+///   (`feature_slug` `"bardic_performance"` is a literal PREFIX of this
+///   id's own second-to-last segment, the identical shape as
+///   `unchained_barbarian`'s `rage` -> `rage_rounds_per_day` above) --
+///   unconditional, real, confirmed non-zero at every sweep level
+///   (`{3, 11, 21, 31, 41}`).
+/// - **Ranger's Combat Style Feat**: `feature_slug` `"combat_style_feat"`
+///   is a literal PREFIX of `combat_style_feat_pool.slot_count`'s own
+///   second-to-last segment. Confirmed non-zero once the level-2 gate is
+///   reached (`{0, 1, 3, 4, 5}`).
+/// - **Sorcerer's Spells**: the FIRST candidate read from source alone,
+///   `class_spell.sorcerer.known_spells`, is real and unconditionally
+///   pushed, but its value is `known.len()` over
+///   `input.chosen.spells_selected` -- and `canonical_seeds_for("sorcerer")`
+///   seeds no spell selections at all, so the live dump shows this id is
+///   ALWAYS `{0}` across the entire sweep, for every level: the same
+///   "carries no fabricated mechanical value" shape this cycle's own brief
+///   flags for Druid's `nature_bond_choice`, not a safe pick. Aliased
+///   instead to `class_chassis.sorcerer.spontaneous.spell_level_access`
+///   (a different top-level namespace again, `class_chassis` rather than
+///   `class_spell`, but the `group == owner` guard below is namespace-
+///   blind -- it only compares the corpus group text to `owner`, never
+///   inspects the matched id's own prefix), unconditional, confirmed real
+///   and non-zero at every sweep level (`{1, 2, 5, 7, 9}`).
+///
+/// **Druid's Nature Bond is deliberately NOT added.** Its only candidate,
+/// `class_chassis.druid.nature_bond_choice`, is a `+0`-by-design
+/// recognition record (its own doc comment: "carries no fabricated
+/// mechanical value") that is never level-gated and never anything but
+/// `{0}` in the live dump, at every level -- there is no other id anywhere
+/// in `pilot_compute/mod.rs` naming Nature Bond. Adding it here would
+/// credit a `done` unit on a magnitude that was never really computed, the
+/// exact hazard this table's own doc comment exists to keep out. **Monk's
+/// Stunning Fist is also NOT added**: its real id
+/// (`feat.standalone.stunning_fist.save_dc` /
+/// `.uses_per_day`) carries `group: "standalone"`, never `"monk"` -- it
+/// fails the `group == owner` guard structurally, not by a word-spelling
+/// gap, so no table entry (which only recognizes an id STRING, never
+/// relaxes the guard) could ever close it.
+const CLASS_FEATURE_ID_KNOWN_SYNONYMS: &[(&str, &str, &str)] = &[
+    ("unchained_monk", "ac_bonus", "class_feature.pu.unchained_monk.armor_class_bonus"),
+    ("unchained_monk", "bonus_feat", "class_feature.pu.unchained_monk.bonus_feats_known"),
+    (
+        "unchained_monk",
+        "fast_movement",
+        "class_feature.pu.unchained_monk.fast_movement_bonus_feet",
+    ),
+    ("unchained_monk", "ki_pool", "class_feature.pu.unchained_monk.ki_points"),
+    ("unchained_monk", "ki_powers", "class_feature.pu.unchained_monk.ki_powers_known"),
+    (
+        "unchained_monk",
+        "stunning_fist",
+        "class_feature.pu.unchained_monk.stunning_fist_monk_level",
+    ),
+    ("unchained_monk", "style_strike", "class_feature.pu.unchained_monk.style_strikes_known"),
+    (
+        "unchained_barbarian",
+        "fast_movement",
+        "class_feature.pu.unchained_barbarian.fast_movement_bonus_feet",
+    ),
+    (
+        "unchained_barbarian",
+        "greater_rage",
+        "class_feature.pu.unchained_barbarian.greater_rage_morale_bonus",
+    ),
+    (
+        "unchained_barbarian",
+        "mighty_rage",
+        "class_feature.pu.unchained_barbarian.mighty_rage_morale_bonus",
+    ),
+    ("unchained_barbarian", "rage", "class_feature.pu.unchained_barbarian.rage_rounds_per_day"),
+    (
+        "unchained_barbarian",
+        "rage_powers",
+        "class_feature.pu.unchained_barbarian.rage_powers_known",
+    ),
+    (
+        "unchained_barbarian",
+        "uncanny_dodge_tracker",
+        "class_feature.pu.unchained_barbarian.uncanny_dodge_tier",
+    ),
+    (
+        "unchained_rogue",
+        "finesse_training",
+        "class_feature.pu.unchained_rogue.finesse_training_weapon_choices",
+    ),
+    ("unchained_rogue", "rogue_talents", "class_feature.pu.unchained_rogue.rogue_talents_known"),
+    (
+        "unchained_rogue",
+        "rogues_edge",
+        "class_feature.pu.unchained_rogue.rogues_edge_skill_unlocks",
+    ),
+    (
+        "unchained_rogue",
+        "uncanny_dodge_tracker",
+        "class_feature.pu.unchained_rogue.uncanny_dodge_tracker_steps",
+    ),
+    (
+        "unchained_summoner",
+        "eidolon",
+        "class_feature.pu.unchained_summoner.eidolon_companion_level",
+    ),
+    (
+        "unchained_summoner",
+        "spells",
+        "class_feature.pu.unchained_summoner.unchained_summoner_marker",
+    ),
+    (
+        "unchained_summoner",
+        "summon_monster",
+        "class_feature.pu.unchained_summoner.summon_monster_spell_level",
+    ),
+    // Wave 40 lane A: 7 more CRB entries, see this const's own doc comment
+    // above for the live-dump verification each one carries.
+    (
+        "monk",
+        "abundant_step",
+        "class_chassis.monk.abundant_step_caster_level",
+    ),
+    (
+        "monk",
+        "diamond_soul",
+        "class_chassis.monk.diamond_soul_spell_resistance",
+    ),
+    (
+        "monk",
+        "maneuver_training",
+        "class_chassis.monk.maneuver_training_cmb_bonus",
+    ),
+    (
+        "monk",
+        "perfect_self",
+        "class_chassis.monk.perfect_self_damage_reduction",
+    ),
+    (
+        "bard",
+        "bardic_performance",
+        "class_chassis.bard.bardic_performance_rounds_per_day",
+    ),
+    (
+        "ranger",
+        "combat_style_feat",
+        "class_feature.ranger.combat_style_feat_pool.slot_count",
+    ),
+    (
+        "sorcerer",
+        "spells",
+        "class_chassis.sorcerer.spontaneous.spell_level_access",
+    ),
+    // Wave 40 lane B: 5 base-Summoner CRB/APG "Slice A" entries -- see this
+    // const's own doc comment above for the live-dump verification each one
+    // carries. `ground_summoner_slice_a_features` (`pilot_compute/mod.rs`)
+    // computes all five under the `class_feature.apg.summoner.<descriptor>`
+    // namespace, a 4-segment id (`<kind>.apg.<owner>.<descriptor>`) where the
+    // descriptor is a compound word never equal to, nor a single-suffix-word
+    // strip of, `feature_slug` -- the identical compound-suffix shape as
+    // wave 40 lane A's Monk chassis entries, just with an extra `apg`
+    // namespace segment before `owner` (the `.{owner}.` substring needle
+    // still matches, since it is not anchored to the id's start).
+    // `Summoner ~ Greater Aspect` (the 6th unit of this wave's own 6-unit
+    // remainder) is deliberately NOT added: no compute function anywhere in
+    // `pilot_compute/mod.rs` names base Summoner's Aspect/Greater Aspect at
+    // all (`ground_summoner_slice_a_features`'s own doc comment: "Deliberately
+    // does NOT touch Aspect/Greater Aspect: those divert points out of the
+    // eidolon's own evolution pool" -- only Unchained Summoner's Aspect has a
+    // compute function, a different class's different feature) -- genuinely
+    // unbuilt scope, not a synonym gap.
+    (
+        "summoner",
+        "bond_senses",
+        "class_feature.apg.summoner.bond_senses_rounds_per_day",
+    ),
+    (
+        "summoner",
+        "makers_call",
+        "class_feature.apg.summoner.makers_call_uses_per_day",
+    ),
+    (
+        "summoner",
+        "merge_forms",
+        "class_feature.apg.summoner.merge_forms_rounds_per_day",
+    ),
+    (
+        "summoner",
+        "twin_eidolon",
+        "class_feature.apg.summoner.twin_eidolon_minutes_per_day",
+    ),
+    (
+        "summoner",
+        "summon_monster",
+        "class_feature.apg.summoner.summon_monster_uses_per_day",
+    ),
+    // Wave 41: `decisions.md §22`'s CORRECTION (2026-09-04) -- Monk's
+    // Stunning Fist was declined in wave 40 lane A against the OLDER
+    // `class_feature_exact_suffix_grounded` check alone
+    // (`feat.standalone.stunning_fist.save_dc` carries `group: "standalone"`,
+    // never `"monk"`, so it can never satisfy that check's own `owner`-
+    // substring requirement). This table's own `class_feature_known_
+    // synonym_grounded` has no such requirement on the id ITSELF -- only on
+    // this record's own corpus `group` ("Monk") matching `owner` via
+    // `class_name_as_group_text`, which it already does -- so a single
+    // literal entry closes it. The real compute
+    // (`feat_effects::stunning_fist_facts_from_feats`, wired at
+    // `pilot_compute/mod.rs`) pushes both `feat.standalone.stunning_fist.
+    // save_dc` and `.uses_per_day`; either alone proves the engine holds
+    // this record, so only one is named here (matching every other table
+    // entry's own one-id-per-unit shape).
+    ("monk", "stunning_fist", "feat.standalone.stunning_fist.save_dc"),
+];
+
+/// Whether `feature_slug` grounds via `CLASS_FEATURE_ID_KNOWN_SYNONYMS`'s
+/// own literal (owner, feature_slug) -> exact-id table. Same `group ==
+/// owner` guard as `class_feature_exact_suffix_grounded`, for the identical
+/// archetype/variant-qualified reason its own doc comment states --
+/// deliberately redundant with the exact-id match itself (which already
+/// encodes `owner` in the string), kept for defense in depth and to match
+/// every sibling check's own shape. A literal full-string equality check,
+/// never a substring or suffix scan, so this can never widen to match an
+/// id this table does not name -- including any `.corpus_record.` roster
+/// id or `.unsupported`/`.not_modelled` diagnostic-mirror id, none of which
+/// this table's own entries are (every entry names a real
+/// `ComputationExplanation`, confirmed by direct read, never a
+/// `ComputationDiagnostic`).
+fn class_feature_known_synonym_grounded<'a>(
+    mut explanation_ids: impl Iterator<Item = &'a String>,
+    owner: &str,
+    group: &str,
+    feature_slug: &str,
+) -> bool {
+    if !group.eq_ignore_ascii_case(&class_name_as_group_text(owner)) {
+        return false;
+    }
+    let Some((_, _, expected_id)) = CLASS_FEATURE_ID_KNOWN_SYNONYMS
+        .iter()
+        .find(|(o, slug, _)| *o == owner && *slug == feature_slug)
+    else {
+        return false;
+    };
+    explanation_ids.any(|id| id == expected_id)
 }
 
 /// Whether a `ComputationDiagnostic` id genuinely names `feature_slug` under
@@ -10203,6 +13157,59 @@ fn simple_kind_verdict(
         return Verdict {
             status: "ingested-magnitude",
             evidence: format!("{kind_label}_table_holds_record_magnitude_not_yet_computed"),
+            reason: None,
+            engine_book: engine_book_field,
+        };
+    }
+    // Wave 50 (`decisions.md §22` continuation, CR-only): the DOMINANT shape
+    // inside this fallback, corpus-wide, is a real held record whose own
+    // upstream `.lst` row genuinely carries no `DESC:`/`SPROP:`/`BENEFIT:`
+    // token at all -- direct read of every Core Rulebook `template`/
+    // `language`/`skill`/`race_trait_generic` record landing here (`data/
+    // corpus/core_rulebook/{template,language,skill,race_trait}/**/*.json`,
+    // `data.description: null` for every one) confirms this is genuinely a
+    // "nothing remains" case, not a hidden gap, matching `decisions.md
+    // §20`/`§21`'s already-established "genuinely has no real upstream
+    // prose, set-shaped/internal-plumbing record, by design" ruling
+    // (extended in this same wave to `Kind::ClassFeature`'s Core Domain/
+    // Sorcerer Domain groups, see that arm's own doc comment) -- 130 CRB
+    // `template` rows (123 of 130 additionally carry the corpus's own
+    // `VISIBLE:NO`, e.g. `"PC Level 11"`/`"Wild Shape"`: internal kit-
+    // application/spell-effect chassis, never player-read prose; the other
+    // 7, e.g. `"Inherent Ability Bonus (Strength)"`, are the same internal-
+    // mechanism shape without the `VISIBLE:NO` marker), all 22 CRB
+    // `language` rows (a language's own real "content" is its bare name --
+    // `cr_languages.lst`'s language block carries no `DESC:` for any of the
+    // 22, by design; e.g. `"Abyssal"`'s only token is `TYPE:Spoken.Written.
+    // Read.Planar`), 15 CRB `skill` rows (all `"<Skill> (Untrained)"` /
+    // `"Untrained <Ability>"` / `"Untrained ~ <Skill>"` internal usable-
+    // untrained bookkeeping records, never rendered to a player as their own
+    // line item), and 3 CRB `race_trait_generic` rows (`"No Race Trait
+    // Available"`, `"Region ~ None"`, `"Region ~ Unknown"` -- vacuous
+    // placeholder sentinels, the same shape `class_feature_pool_catalog::
+    // vacuous_placeholder_reason` already names for `Kind::ClassFeature`).
+    // Deliberately book-scoped to `core_rulebook` alone -- this wave's own
+    // granted scope -- rather than widened to this fallback's much larger
+    // cross-book population (e.g. 724 `template` units corpus-wide, most in
+    // Bestiary books where a template name like "Advanced"/"Celestial"
+    // genuinely groups real, un-ingested prose elsewhere in the same
+    // record's own token closure, not verified by this wave and NOT
+    // assumed to share this shape); a future wave verifying each other
+    // book's own records the same way this wave verified Core Rulebook's
+    // can widen this gate by adding its own book, never by dropping the
+    // book check.
+    if engine_book == "core_rulebook"
+        && !has_real_description
+        && matches!(
+            kind_label,
+            "template_content" | "language_content" | "skill_content" | "race_trait_generic"
+        )
+    {
+        return Verdict {
+            status: "grounded",
+            evidence: format!(
+                "{kind_label}_zero_magnitude_record_carries_no_upstream_description_by_design"
+            ),
             reason: None,
             engine_book: engine_book_field,
         };
@@ -11249,6 +14256,115 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
+            // SD-34 wave 33 lane B / wave 34 lane B: two shapes deliberately
+            // `TraitRole::Unclassified` (so `race_trait_engine_book` above
+            // returned `None`) whose OWN evidence string must not read
+            // "never applies" -- `reach_gate.rs`'s own dated `OPEN_FINDINGS`
+            // entries prove the exact opposite for both: the engine resolves
+            // real payload for them through a real, live, already-shipped
+            // Tauri command (`list_alternate_racial_traits` ->
+            // `adopted_race_choose_selectors`/`trait_pool` and ->
+            // `adoptive_parentage_options`).
+            //
+            // Wave 33 lane B verified (2026-09-02) that neither
+            // `AlternateRacialTraitsResponse.adoptive_parentage_options` nor
+            // `.adopted_race_options` was declared in the desktop
+            // TypeScript boundary and left both `engine-does-not-hold`,
+            // naming the gap precisely rather than the blanket "never
+            // applies" the 28 used to carry. Wave 34 lane B closed that
+            // exact gap: `apps/desktop/src/boundary/loadAlternateRacialTraits.ts`
+            // now declares both fields, `apps/desktop/src/raceCatalog/
+            // AlternateTraitPicker.tsx` renders a real picker section for
+            // each (`describeAdoptiveParentageGrants`/`describeAdoptedRaceGrants`
+            // in `alternateTraitPickerModel.ts`), and both descriptions are
+            // confirmed on screen (`grep -rn
+            // 'adoptedRaceOptions\|adoptiveParentageOptions'
+            // apps/desktop/src` now finds the boundary types, the model
+            // helpers and the component's own reads). That satisfies
+            // `race_trait_rendered_description`'s own doc comment and
+            // `AGENTS.md`'s "a magnitude is not wired until it moves on the
+            // twin the player reads": the SHIPPED SCREEN reads the field
+            // now, not merely the DTO. `text-complete`, not `grounded`,
+            // because both option kinds are `text_only`/zero-magnitude
+            // (Decision 7 condition 3's rung for exactly that shape).
+            if facts
+                .race_trait_adoptive_parentage_rendered_description(unit)
+                .is_some_and(is_real_description_value)
+            {
+                return Verdict {
+                    status: "text-complete",
+                    evidence: "race_trait_adoptive_parentage_option_rendered_on_the_desktop_picker_screen"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field.clone(),
+                };
+            }
+            if facts.race_trait_adopted_race_selector_grants(unit) {
+                return Verdict {
+                    status: "text-complete",
+                    evidence: "race_trait_adopted_race_selector_grants_rendered_on_the_desktop_picker_screen"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field.clone(),
+                };
+            }
+            // SD-34 wave 33/35 (bucket-D mining): Bestiary 5's Skinwalker
+            // `Change Shape (<Option>)` records, wave 33 lane B's own named
+            // 20-unit remainder. `race_trait_picker.rs`'s menu command now
+            // resolves a real kin pool for 19 of the 20 (`Endurance` is a
+            // verified, genuinely orphaned option -- see
+            // `codex::rules_core::skinwalker_change_shape` module doc), and
+            // a real desktop UI section now renders it
+            // (`AlternateTraitPicker.tsx`'s "Skinwalker Change Shape"
+            // section, confirmed by `grep -rn 'skinwalkerChangeShapeOptions'
+            // apps/desktop/src` finding the boundary type, the model
+            // helpers and the component's own reads). **Still
+            // `engine-does-not-hold`, not `text-complete`:** every one of
+            // these 20 carries a real, non-zero magnitude (a `TEMPBONUS`
+            // the record applies once activated during play) that this
+            // engine has no mechanism to compute onto any character sheet
+            // today -- `AGENTS.md`'s "the NUMBER must move, not merely the
+            // name render" bar, the exact reason the two shapes
+            // above qualify for `text-complete` (zero-magnitude,
+            // `text_only`) and this one does not.
+            if facts.race_trait_skinwalker_change_shape_option_resolved(unit) {
+                return engine_does_not_hold(
+                    "race_trait_skinwalker_change_shape_option_resolves_real_kin_pool_but_no_activation_mechanism_computes_its_magnitude",
+                );
+            }
+            // SD-34 wave 35 lane B: `Human ~ Tribalistic Languages`
+            // (`isr_abilities_race.lst:216`) and any sibling this shape
+            // ever gains. Wave 33 lane B's own analysis (this file's
+            // `race_trait_grounding_tests` comment above) and
+            // `reach_gate.rs`'s dated `OPEN_FINDINGS` entry
+            // (`"inner_sea_races"`/`"race_traits"`) both confirm the SAME
+            // fact from two independent angles: the row carries no
+            // `FACT:<flag>|True`, no `PREFACT`, no `PREABILITY` and no
+            // upstream `ABILITY:<category>|AUTOMATIC|<key>` grant naming
+            // it -- verified this cycle a third way, directly against the
+            // pinned upstream `.lst` line (`grep -n Tribalistic
+            // isr_abilities_race.lst` shows `:210`'s `FACT:
+            // Human_ReplaceLanguages|true` and `:216`'s own row with no
+            // PRE-token of any kind). This is a genuine upstream data gap,
+            // not a wiring gap this engine could close: nothing fires the
+            // row, so it must stay `engine-does-not-hold` regardless of
+            // what it would grant if it ever did fire. What CAN be made
+            // honest is the evidence string's OWN claim: the blanket
+            // "never applies" is silent on whether the record carries real
+            // content at all. Its `TEMPLATE:Bonus Language ~ Common|...`
+            // chain transcribes (`declared_template_bonus_languages`) to
+            // four real, verified languages -- quoted in this cycle's own
+            // receipt -- so a record with real, TEMPLATE-borne content and
+            // NO activation gate gets a string that says exactly that,
+            // instead of the same blanket string a record with no
+            // resolvable content at all would also carry.
+            if let Some(langs) = facts.race_trait_template_bonus_language_grant(unit)
+                && !langs.is_empty()
+            {
+                return engine_does_not_hold(
+                    "race_trait_template_bonus_language_grant_verified_but_has_no_upstream_activation_gate",
+                );
+            }
             // The honest middle: the record IS ingested and IS loaded, and
             // still no selection a player can make brings it in. Distinct
             // from "the engine holds no record matching this unit" and
@@ -11313,6 +14429,31 @@ fn classify(
             // them, is unaffected -- the retry only ever finds a record the
             // first lookup missed, it can never disagree with a HELD
             // first-lookup result).
+            // Wave 51 (bucket M, `decisions.md §22`): the same
+            // `grounded_magnitude` wiring `AT-34-E3-003` proved for
+            // `Kind::Skill` and `AT-34-E4-002` proved for `Kind::Trait`,
+            // here backed by `racial_sla::racial_sla_save_dc_is_grounded_
+            // for_corpus_key` -- an ACTUALLY-EXECUTED fixture character run
+            // through the real `compute_pilot_base_chassis`, whose COMPUTED
+            // Charisma modifier is then bound into the corpus's own
+            // `10+SpellLVL+DCMod` save-DC formula and evaluated by the
+            // crate's real `formula_interpreter::PcgenFormulaEvaluator`,
+            // never by arithmetic re-written in that module. Covers the 115
+            // of `core_rulebook`'s 118 `Racial SLA ~ <Spell>` records
+            // carrying the full five-token `BONUS:VAR` chain; every other
+            // held `race_trait_generic` record's `unit.key` resolves to
+            // `None` and falls through to `simple_kind_verdict`'s unchanged
+            // `ingested-magnitude` fallback -- a pure widening, never a
+            // regression for a record that module does not cover. See that
+            // module's own doc comment for the three deliberately-absent
+            // records and why guessing a DC for them would be worse.
+            let racial_sla_magnitude = if text_only {
+                None
+            } else {
+                codex::rules_core::racial_sla::racial_sla_save_dc_is_grounded_for_corpus_key(
+                    &unit.key,
+                )
+            };
             let generic = simple_kind_verdict(
                 Some(&facts.race_trait_generic_table),
                 "race_trait_generic",
@@ -11326,7 +14467,7 @@ fn classify(
                 universal_sheet_modifier,
                 engine_book_field.clone(),
                 None,
-                None,
+                racial_sla_magnitude,
             );
             let generic_absent = generic.status == "engine-does-not-hold"
                 && generic.evidence.contains("_absent_from_race_trait_generic_table_in_");
@@ -11344,7 +14485,7 @@ fn classify(
                     universal_sheet_modifier,
                     engine_book_field.clone(),
                     None,
-                    None,
+                    racial_sla_magnitude,
                 )
             } else {
                 generic
@@ -11460,6 +14601,40 @@ fn classify(
                         status: "grounded",
                         evidence: "domain_power_probe_observed_a_real_computed_magnitude"
                             .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+            }
+            // `SD-34 wave 37 lane A` (bucket D's "domain-vs-class_feature
+            // dual-representation" mechanism gap, item 5 of wave 36 lane C's
+            // next-cycle plan): the SUBDOMAIN-keyed sibling of the `"Domain
+            // Power ~ <Power>"` check just above -- the SAME granted power
+            // ingested a SECOND time under its own subdomain's key (e.g.
+            // `"Undead Subdomain ~ Death's Kiss"`, a real, separate `.lst`
+            // line from `"Domain Power ~ Death's Kiss"`, confirmed by direct
+            // corpus read -- not a duplicate to collapse). Matched by the
+            // catalog's own `(domain_display_name, granted_power_name)` pair
+            // -- never by `feature` alone, which a direct corpus scan proved
+            // unsafe: `"Rage Power ~ Strength Surge"` (a Barbarian rage
+            // power) and `"Strength Blessing ~ Strength Surge"` (a Warpriest
+            // blessing) both collide with this catalog's own `"Strength
+            // Surge"` granted-power name under an UNRELATED group, so a bare
+            // feature-name match would wrongly credit both as Cleric/
+            // Inquisitor domain power.
+            if group != "Domain Power" {
+                let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
+                let matches_a_catalog_spec = domain_power::domain_power_catalog_group_and_power_names()
+                    .iter()
+                    .any(|(domain_display_name, granted_power_name)| {
+                        *domain_display_name == group && *granted_power_name == feature
+                    });
+                if matches_a_catalog_spec && facts.domain_power_effect_wired.contains(feature) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence:
+                            "domain_power_probe_observed_a_real_computed_magnitude_for_the_subdomain_record"
+                                .to_string(),
                         reason: None,
                         engine_book: engine_book_field,
                     };
@@ -11871,6 +15046,507 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
+            // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): Cavalier's
+            // Order of the Dragon, same shape as the wizard arcane-school
+            // block immediately above -- `group` here is `"Order of the
+            // Dragon"`, which can never equal `"cavalier"` (it instead
+            // collides with the bestiary's unmodelled `Kind::Class` "Dragon"
+            // pseudo-class further below), so `class_feature_owner` and its
+            // two fallbacks can never resolve an owner.
+            // `probe_cavalier_order_wiring` is the real, separate
+            // attribution path -- bounded to exactly the one Order
+            // (Dragon, alongside the pre-existing hand-modelled Sword) the
+            // engine has a real per-order formula for.
+            if facts.cavalier_order_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "cavalier_order_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): Spiritualist's
+            // Phantom Emotional Focus pool, same shape as the cavalier-order
+            // block immediately above -- `group` here is `"Phantom
+            // Emotional Focus"`, which can never equal `"spiritualist"` (it
+            // instead collides with the bestiary's unmodelled `Kind::Class`
+            // "Phantom" pseudo-class further below). `probe_spiritualist_
+            // phantom_emotional_focus_wiring` is the real, separate
+            // attribution path.
+            if facts.spiritualist_phantom_emotional_focus_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence:
+                        "spiritualist_phantom_emotional_focus_probe_observed_a_real_computed_magnitude"
+                            .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): Pathfinder
+            // Delver's PaDFE Construct/Ooze/Undead, same shape as the
+            // cavalier-order/spiritualist-phantom-emotional-focus blocks
+            // immediately above -- `group` here is `"Construct"`/`"Ooze"`/
+            // `"Undead"`, which can never equal `"pathfinder_delver"` (it
+            // instead collides with the bestiary's unmodelled `Kind::Class`
+            // "Construct"/"Ooze"/"Undead" pseudo-classes further below).
+            // `probe_pathfinder_delver_padfe_wiring` is the real, separate
+            // attribution path -- see `ground_pathfinder_delver_class_
+            // features`'s own doc comment (`pilot_compute/mod.rs`) for the
+            // real-owner audit correction (Pathfinder Delver's own
+            // Guardbreaker, not Ranger's favored-enemy chooser).
+            if facts.pathfinder_delver_padfe_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "pathfinder_delver_padfe_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE): Phrenic
+            // Slayer's Favored Enemy record, same shape as the Pathfinder
+            // Delver PaDFE block immediately above -- `group` here is
+            // `"Phrenic Slayer"` (base record) or `"Phrenic Slayer Favored
+            // Enemy"` (each creature-type sub-record), neither of which is
+            // registered in `facts.class_books` (Phrenic Slayer's source
+            // book is `ultimate_psionics`, not `core_rulebook`).
+            // `probe_phrenic_slayer_favored_enemy_wiring` is the real,
+            // separate attribution path -- see `ground_phrenic_slayer_
+            // class_features`'s own doc comment (`pilot_compute/mod.rs`).
+            if facts.phrenic_slayer_favored_enemy_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence:
+                        "phrenic_slayer_favored_enemy_probe_observed_a_real_computed_magnitude"
+                            .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 46 (`decisions.md §22`'s WAVE 46 UPDATE): Pathfinder
+            // Delver's own six-unit extension (Guardbreaker's own record,
+            // Master Explorer, Thrilling Escape, Vigilant Combatant,
+            // Fortunate Soul, True Seeing) -- same shape as `pathfinder_
+            // delver_padfe_wired` above (`group` here equals `"Pathfinder
+            // Delver"`, which never matches through `facts.class_books`
+            // since this class carries no `ClassId`-family enum entry).
+            if facts.pathfinder_delver_wave46_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence:
+                        "pathfinder_delver_wave46_probe_observed_a_real_computed_magnitude"
+                            .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 46: five more prestige classes in the same
+            // "registered in `prestige_class_entry_gate`, no `ClassId`
+            // enum entry, no chassis dispatch reaches it" family as
+            // Pathfinder Delver/Phrenic Slayer above -- see each `ground_
+            // <class>_class_features`'s own doc comment (`pilot_compute/
+            // mod.rs`) for its corpus citations.
+            if facts.argent_dramaturge_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "argent_dramaturge_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.horizon_walker_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "horizon_walker_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.nature_warden_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "nature_warden_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.rage_prophet_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "rage_prophet_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.holy_vindicator_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "holy_vindicator_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.stalwart_defender_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "stalwart_defender_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 47 (`decisions.md §22`'s WAVE 47 UPDATE): Divine
+            // Scion, the same "registered in `prestige_class_entry_gate`,
+            // no `ClassId` enum entry, no chassis dispatch reaches it"
+            // family as the six wave-46 classes immediately above -- see
+            // `ground_divine_scion_class_features`'s own doc comment
+            // (`pilot_compute/mod.rs`) for its corpus citations. True Scion
+            // Charisma/Wisdom (this class's own remaining two sm5 units)
+            // are NOT covered by this probe -- left named, not attempted.
+            if facts.divine_scion_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "divine_scion_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 48 (`decisions.md §22`'s WAVE 48 UPDATE): two more
+            // prestige classes in the same "registered in `prestige_class_
+            // entry_gate`, no `ClassId` enum entry, no chassis dispatch
+            // reaches it" family as the wave-46/47 classes above -- see
+            // each `ground_<class>_class_features`'s own doc comment
+            // (`pilot_compute/mod.rs`) for its corpus citations.
+            if facts.twilight_talon_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "twilight_talon_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.golden_legionnaire_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "golden_legionnaire_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): 33 more
+            // prestige classes in the same "registered in `prestige_class_
+            // entry_gate`, no `ClassId` enum entry, no chassis dispatch
+            // reaches it" family as every class above -- see each `ground_
+            // <class>_class_features`'s own doc comment (`pilot_compute/
+            // mod.rs`) for corpus citations.
+            if facts.cyphermage_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "cyphermage_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.psychic_fist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "psychic_fist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.asavir_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "asavir_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.metamorph_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "metamorph_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.war_mind_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "war_mind_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.hellknight_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "hellknight_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.adaptive_warrior_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "adaptive_warrior_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.sanguine_angel_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "sanguine_angel_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.body_snatcher_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "body_snatcher_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.steel_falcon_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "steel_falcon_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.lantern_bearer_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "lantern_bearer_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.storm_kindler_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "storm_kindler_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.westcrown_devil_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "westcrown_devil_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.pyrokineticist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "pyrokineticist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.aspis_agent_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "aspis_agent_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.gray_corsair_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "gray_corsair_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.pathfinder_savant_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "pathfinder_savant_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.rivethun_emissary_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "rivethun_emissary_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.student_of_war_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "student_of_war_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.diabolist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "diabolist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.lion_blade_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "lion_blade_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.bellflower_tiller_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "bellflower_tiller_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.hellknight_signifer_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "hellknight_signifer_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.mystic_archer_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "mystic_archer_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.mammoth_rider_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "mammoth_rider_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.demoniac_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "demoniac_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.master_chymist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "master_chymist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.enchanting_courtesan_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "enchanting_courtesan_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.dark_tempest_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "dark_tempest_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.battle_herald_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "battle_herald_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.master_spy_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "master_spy_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.evangelist_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "evangelist_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.ulfen_guard_wave49_wired.contains(&unit.key) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "ulfen_guard_wave49_probe_observed_a_real_computed_magnitude"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+
             // `AT-34-E3-001` (mechanism 2 continuation, cycle 5): Bardic
             // Performance sub-cause, same shape as the wizard arcane-school
             // block immediately above -- `group` here is `"Bardic
@@ -11948,7 +15624,7 @@ fn classify(
                 // that name anywhere: if it does, this is a feature of a class
                 // nobody has ingested yet, which is a real `engine-does-not-hold` gap
                 // rather than a mystery.
-                if let Some(corpus_class) = class_feature_owner(
+                let corpus_class_collision = class_feature_owner(
                     &unit.key,
                     facts.corpus_class_names.iter(),
                 )
@@ -11957,16 +15633,68 @@ fn classify(
                         unit.type_facet.as_deref(),
                         facts.corpus_class_names.iter(),
                     )
-                }) {
-                    return Verdict {
-                        status: "engine-does-not-hold",
-                        evidence: format!(
-                            "class_feature_of_unmodelled_corpus_class:{}",
-                            slug(&corpus_class)
-                        ),
-                        reason: None,
-                        engine_book: engine_book_field,
-                    };
+                });
+                // SD-34 wave 36, two independent lanes each found a real gap
+                // in this early-return and are composed here (`or`-guarded --
+                // either one clearing the collision is enough, neither can
+                // ever fabricate a `grounded` verdict or its own holds-check
+                // result; the actual verdict, if any, still comes from the
+                // unchanged checks below re-running on the exact same unit):
+                //
+                // Lane A (sub-mechanism 1, `rogue` unit): every EARLIER
+                // branch in this owner-resolution chain checks
+                // `facts.class_books` membership before trusting a match;
+                // this final, `corpus_class_names`-only fallback never
+                // repeated that check, so a class that genuinely IS modelled
+                // (its own name just lost the cross-check above to a
+                // differently-shaped candidate, e.g. `"unchained_rogue"`
+                // losing to `"rogue"` because the corpus never declares a
+                // standalone `"Unchained Rogue"` class record) could still be
+                // reported as unmodelled. Compared via `class_name_as_group_
+                // text` because `facts.class_books` keys carry a mix of
+                // space- and underscore-joined multi-word names depending on
+                // which registration loop produced them.
+                //
+                // Lane C (disposition trace, sub-mechanisms 2/4): a
+                // corpus-wide NAME collision (e.g. `"Order of the Dragon"`
+                // colliding with the corpus's own unmodelled `Kind::Class`
+                // "Dragon" bestiary pseudo-class) must never preempt a record
+                // this engine ALREADY safely serves through the text-only
+                // holds-checks immediately below -- every non-colliding
+                // sibling order (`"Order of the Beast"`, `"Order of the
+                // Cockatrice"`, ...) already reaches `text-complete` through
+                // one of those two checks; only a colliding group's records
+                // were short-circuited into a false "unmodelled class" gap
+                // before ever reaching them, purely because the corpus
+                // happens to declare an unrelated (and itself unmodelled)
+                // class whose name shares the collision word. Gated on the
+                // SAME three guards those checks already require.
+                if let Some(corpus_class) = corpus_class_collision {
+                    let corpus_class_text = class_name_as_group_text(&corpus_class);
+                    let already_modelled = facts
+                        .class_books
+                        .keys()
+                        .any(|modelled| class_name_as_group_text(modelled) == corpus_class_text);
+                    let already_served_despite_collision = text_only
+                        && has_real_description
+                        && is_display_wiring_class_for_promotion(wc_class)
+                        && !universal_sheet_modifier
+                        && (facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)
+                            || facts.class_feature_standalone_catalog_holds(
+                                &unit.source_book,
+                                &unit.key,
+                            ));
+                    if !already_modelled && !already_served_despite_collision {
+                        return Verdict {
+                            status: "engine-does-not-hold",
+                            evidence: format!(
+                                "class_feature_of_unmodelled_corpus_class:{}",
+                                slug(&corpus_class)
+                            ),
+                            reason: None,
+                            engine_book: engine_book_field,
+                        };
+                    }
                 }
                 // SD28-E15: `text-complete` requires the engine to HOLD the
                 // record (status_vocabulary's own definition), not merely
@@ -12082,16 +15810,37 @@ fn classify(
                 // `weapon_tables::CLASS_WEAPON_PROFICIENCIES` table combat
                 // already consults via `character_is_proficient_with` --
                 // not a new stub, a real fact the engine already computes).
-                // This still has `description: null` (nothing to display),
-                // so it deliberately does NOT return `text-complete` --
-                // only that the record's own content is now genuinely held
-                // by an engine table (bucket B -> D, `decisions.md §2`'s
-                // "a shelf, not a half-fix"), leaving the display gap for
-                // whichever mechanism owns `has_real_description`.
+                // Wave 33 lane A verified this genuinely has `description:
+                // null` upstream, not merely un-ingested: none of the three
+                // keys' own `cr_abilities_class.lst` rows (2791/2793/2795)
+                // carry a `DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:` token at all
+                // -- `CATEGORY:Internal`, `AUTO:WEAPONPROF` only. Confirmed
+                // against BOTH the PCGen source tree
+                // (`~/workspace/repos/pcgen/data/pathfinder/paizo/
+                // roleplaying_game/core_rulebook/cr_abilities_class.lst`)
+                // and the already-ingested corpus JSON
+                // (`data/corpus/core_rulebook/class_feature/
+                // weapon_proficiencies/*.json`, `data.description: null`
+                // for all three) -- the same conclusion two independent
+                // sources. So `!has_real_description` below returns `grounded`
+                // (bucket D -> DONE, `decisions.md §20`'s extension of the
+                // zero-magnitude/text-shown ruling to a genuinely proseless
+                // set-shaped record) rather than the display-gap
+                // `engine-does-not-hold` this rung used to return
+                // unconditionally.
                 if text_only {
                     if let Some(class_id) =
                         class_feature_pool_catalog::weapon_proficiency_grant_class_id(&unit.key)
                         && weapon_tables::class_weapon_proficiency(class_id).is_some() {
+                            if !has_real_description {
+                                return Verdict {
+                                    status: "grounded",
+                                    evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+                                        .to_string(),
+                                    reason: None,
+                                    engine_book: engine_book_field,
+                                };
+                            }
                             return engine_does_not_hold(
                                 "class_feature_weapon_proficiency_grant_held_by_class_weapon_proficiency_table",
                             );
@@ -12107,17 +15856,89 @@ fn classify(
                     // match on BOTH halves against the already-shipped
                     // `weapon_tables::CLASS_WEAPON_PROFICIENCIES` table and
                     // the new `weapon_tables::CLASS_ARMOR_PROFICIENCIES`
-                    // table this cycle adds. Still `description: null`'s
-                    // display-bucket sibling concern is untouched -- this
-                    // only certifies the record's own content is now held
-                    // by real engine tables (bucket B -> D, same "a shelf,
-                    // not a half-fix" outcome as cycle 5's own rung).
+                    // table this cycle adds.
+                    //
+                    // **CORRECTION (wave 33 lane A):** this cycle 6 comment's
+                    // own "still `description: null`" claim was FALSE for
+                    // all five of these keys -- verified against both the
+                    // PCGen source (`cr_abilities_class.lst` lines 2814/
+                    // 2816/2818/2819/2820, each carrying a real,
+                    // multi-sentence `DESC:` token, e.g. Bard's "A bard is
+                    // proficient with all simple weapons, plus the
+                    // longsword, rapier, sap, short sword, shortbow, and
+                    // whip. ...") and the already-ingested corpus JSON
+                    // (`data/corpus/core_rulebook/class_feature/
+                    // weapon_and_armor_proficiency/*.json`, `data.
+                    // description` populated, `wiring_class: "display"` for
+                    // all five). `has_real_description` is therefore `true`
+                    // here, unlike cycle 5's/7's/9's genuinely proseless
+                    // siblings.
+                    //
+                    // **Wave 33 lane A's own next-cycle plan, closed here:**
+                    // `class_feature_effect_wired` (the `Kind::ClassFeature`
+                    // "owner resolved" arm's own probe, this match's very
+                    // first check) never contained these five keys, because
+                    // `pilot_compute::explain_base_class_weapon_and_armor_
+                    // proficiency`/`ground_class_weapon_and_armor_
+                    // proficiency` had never been extended to Bard, Fighter,
+                    // Paladin, Ranger, or Rogue. It now has been (see that
+                    // function's own doc comment, `decisions.md §21`), at the
+                    // same rigor Cleric's own cycle 6 applied -- every one of
+                    // these five classes' own registered archetypes was read
+                    // before trusting any replacement text, and (unlike the
+                    // wave-33 receipt's own assumption) that reading found
+                    // Ranger and Rogue carry ZERO registered archetypes that
+                    // actually supersede this slot, the same shape as
+                    // Assassin/Shadowdancer, not the "all five have real
+                    // archetypes" premise.
+                    //
+                    // **This branch still cannot promote these five to
+                    // `text-complete` on its own generic owner/group match**
+                    // -- `class_feature_owner`'s `group == class name` guard
+                    // can never hold for this key's REVERSED shape ("Weapon
+                    // and Armor Proficiency ~ <Class>", group = "Weapon and
+                    // Armor Proficiency", never a class name), which is
+                    // exactly why this whole arm is the owner-resolution-
+                    // FAILURE branch in the first place (`class_feature_
+                    // owner_via_type_facet`'s own doc comment: recovering an
+                    // owner this way -- or, as here, via a named-list
+                    // fallback -- can never widen what GROUNDS a record
+                    // through the generic `group == owner` checks below).
+                    // So this branch checks `facts.explanation_ids` directly
+                    // for the new grounding ids `ground_class_weapon_and_
+                    // armor_proficiency` now emits (`class_feature.<slug>.
+                    // weapon_and_armor_proficiency`, produced by the
+                    // per-class sweep at every `SWEEP_LEVELS` level, the
+                    // same source `facts.explanation_ids` draws from
+                    // everywhere else in this file) -- the same three
+                    // display-wiring guards (`has_real_description`,
+                    // `is_display_wiring_class_for_promotion`,
+                    // `!universal_sheet_modifier`) this arm's own sibling
+                    // `text-complete` promotions above already require.
                     if let Some(class_id) = class_feature_pool_catalog::weapon_and_armor_proficiency_grant_class_id(
                         &unit.key,
                     )
                         && weapon_tables::class_weapon_proficiency(class_id).is_some()
                             && weapon_tables::class_armor_proficiency(class_id).is_some()
                         {
+                            let grounding_explanation_id = format!(
+                                "class_feature.{}.weapon_and_armor_proficiency",
+                                class_id.trim_start_matches("class:"),
+                            );
+                            if has_real_description
+                                && is_display_wiring_class_for_promotion(wc_class)
+                                && !universal_sheet_modifier
+                                && facts.explanation_ids.contains(&grounding_explanation_id)
+                            {
+                                return Verdict {
+                                    status: "text-complete",
+                                    evidence:
+                                        "explanation_id_observed_and_corpus_record_carries_real_description"
+                                            .to_string(),
+                                    reason: None,
+                                    engine_book: engine_book_field,
+                                };
+                            }
                             return engine_does_not_hold(
                                 "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables",
                             );
@@ -12132,19 +15953,44 @@ fn classify(
                     // chassis record plus `"Jack of All Trades ~ Class
                     // Skills"`), each independently verified byte-for-byte
                     // against the live corpus's own `CSKILL` token by
-                    // `class_skill_tables`'s own test. Still `description:
-                    // null`'s display-bucket sibling concern is untouched
-                    // -- this only certifies the record's own content is
-                    // now held by a real engine table (bucket B -> D,
-                    // same "a shelf, not a half-fix" outcome as cycles 5-6's
-                    // own rungs). The remaining 3 units of the 13-unit
-                    // sub-cause (`Companion ~ Animal Companion`, `Companion
-                    // ~ Special Mount`, `Special Mount ~ Standard Choices`)
-                    // are a DIFFERENT corpus shape (`FOLLOWERS:`/
+                    // `class_skill_tables`'s own test.
+                    //
+                    // Wave 33 lane A verified this genuinely has
+                    // `description: null` upstream, not merely un-ingested:
+                    // none of the 10 keys' own `cr_abilities_class.lst` rows
+                    // (99-106, 1088, 2831-2838) carry a `DESC:`/`SPROP:`/
+                    // `BENEFIT:`/`ASPECT:` token -- `CATEGORY:Internal`,
+                    // `CSKILL:` only. Confirmed against BOTH the PCGen
+                    // source tree and the already-ingested corpus JSON
+                    // (`data/corpus/core_rulebook/class_feature/
+                    // class_skills/*.json` + `jack_of_all_trades/*.json`,
+                    // `data.description: null` for all 10) -- the same
+                    // conclusion two independent sources. So
+                    // `!has_real_description` below returns `grounded`
+                    // (bucket D -> DONE, `decisions.md §20`'s extension of
+                    // the zero-magnitude/text-shown ruling to a genuinely
+                    // proseless set-shaped record) rather than the
+                    // display-gap `engine-does-not-hold` this rung used to
+                    // return unconditionally. The remaining 3 units of the
+                    // 13-unit sub-cause (`Companion ~ Animal Companion`,
+                    // `Companion ~ Special Mount`, `Special Mount ~ Standard
+                    // Choices`) are a DIFFERENT corpus shape (`FOLLOWERS:`/
                     // `COMPANIONLIST:`, not `CSKILL:`) and fall through to
-                    // this arm's own fallback below, unchanged.
+                    // this arm's own fallback below, unchanged -- not
+                    // verified against upstream prose by this cycle, out of
+                    // scope (a different mechanism, `decisions.md §20` does
+                    // not name them).
                     if class_feature_pool_catalog::class_skill_list_grant_owner_id(&unit.key).is_some()
                     {
+                        if !has_real_description {
+                            return Verdict {
+                                status: "grounded",
+                                evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+                                    .to_string(),
+                                reason: None,
+                                engine_book: engine_book_field,
+                            };
+                        }
                         return engine_does_not_hold(
                             "class_feature_class_skill_list_held_by_class_skill_list_table",
                         );
@@ -12158,15 +16004,36 @@ fn classify(
                     // join of two already-shipped, already-tested tables
                     // (`crb::wizard_spell_list::WIZARD_SPELL_LIST` +
                     // `crb::spell_list::SPELL_LIST`), verified byte-for-byte
-                    // against all 9 corpus records. Still `description:
-                    // null` -- this only certifies the record's own content
-                    // is now held by real engine tables (bucket B -> D,
-                    // same "a shelf, not a half-fix" outcome as cycles 5-7's
-                    // own rungs), leaving the display gap for whichever
-                    // mechanism owns `has_real_description`.
+                    // against all 9 corpus records.
+                    //
+                    // Wave 33 lane A verified this genuinely has
+                    // `description: null` upstream, not merely un-ingested:
+                    // none of the 9 keys' own `cr_abilities_class.lst` rows
+                    // (2624-2632) carry a `DESC:`/`SPROP:`/`BENEFIT:`/
+                    // `ASPECT:` token -- `CATEGORY:Internal`, `SPELLKNOWN:`
+                    // only. Confirmed against BOTH the PCGen source tree and
+                    // the already-ingested corpus JSON
+                    // (`data/corpus/core_rulebook/class_feature/
+                    // <school>_wizard_spells/*.json`, `data.description:
+                    // null` for all 9) -- the same conclusion two
+                    // independent sources. So `!has_real_description` below
+                    // returns `grounded` (bucket D -> DONE, `decisions.md
+                    // §21`'s extension of the zero-magnitude/text-shown
+                    // ruling to a genuinely proseless set-shaped record)
+                    // rather than the display-gap `engine-does-not-hold`
+                    // this rung used to return unconditionally.
                     if class_feature_pool_catalog::wizard_school_spell_list_key_owner(&unit.key)
                         .is_some()
                     {
+                        if !has_real_description {
+                            return Verdict {
+                                status: "grounded",
+                                evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+                                    .to_string(),
+                                reason: None,
+                                engine_book: engine_book_field,
+                            };
+                        }
                         return engine_does_not_hold(
                             "class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join",
                         );
@@ -12286,8 +16153,24 @@ fn classify(
                             &feature_slug,
                         )
                 });
-            let grounded = exact_suffix_grounded || suffix_stripped_grounded;
-            let grounded_strict = exact_suffix_grounded_strict || suffix_stripped_grounded_strict;
+            // Wave 39 lane A: `CLASS_FEATURE_ID_KNOWN_SYNONYMS`'s own
+            // literal alias table, tried only after both dot-segment checks
+            // above have already failed -- same ordering discipline as the
+            // suffix-strip fallback's own `!exact_suffix_grounded` guard.
+            let synonym_grounded = !exact_suffix_grounded
+                && !suffix_stripped_grounded
+                && class_feature_known_synonym_grounded(
+                    facts.explanation_ids.iter(),
+                    &owner,
+                    group,
+                    &feature_slug,
+                );
+            let synonym_grounded_strict = !exact_suffix_grounded_strict
+                && !suffix_stripped_grounded_strict
+                && class_feature_known_synonym_grounded(non_roster_ids(), &owner, group, &feature_slug);
+            let grounded = exact_suffix_grounded || suffix_stripped_grounded || synonym_grounded;
+            let grounded_strict =
+                exact_suffix_grounded_strict || suffix_stripped_grounded_strict || synonym_grounded_strict;
             if grounded {
                 // SD31-D7-PROSE-003: same promotion as the
                 // `class_feature_effect_wired` branch above, for the sibling
@@ -12306,6 +16189,8 @@ fn classify(
                         status: "text-complete",
                         evidence: if suffix_stripped_grounded {
                             "explanation_id_observed_after_known_magnitude_suffix_strip_and_corpus_record_carries_real_description".to_string()
+                        } else if synonym_grounded {
+                            "explanation_id_observed_via_known_class_feature_synonym_and_corpus_record_carries_real_description".to_string()
                         } else {
                             "explanation_id_observed_and_corpus_record_carries_real_description"
                                 .to_string()
@@ -12325,6 +16210,8 @@ fn classify(
                         status: "grounded",
                         evidence: if suffix_stripped_grounded_strict {
                             "explanation_id_observed_after_known_magnitude_suffix_strip".to_string()
+                        } else if synonym_grounded_strict {
+                            "explanation_id_observed_via_known_class_feature_synonym".to_string()
                         } else {
                             "explanation_id_observed_in_a_real_computation".to_string()
                         },
@@ -12389,6 +16276,67 @@ fn classify(
                     return Verdict {
                         status: "text-complete",
                         evidence: "class_feature_pool_catalog_serves_a_rendered_description"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+                // Wave 50 (`decisions.md §22` continuation): `"Core Domain ~
+                // <X> Domain"` / `"Sorcerer Domain ~ <X> Domain"` are the
+                // internal "you selected this domain" chassis ability --
+                // `CATEGORY:Internal`, an `ABILITY` chain granting the
+                // domain's own `Domain Power`/`Domain Base` sub-records, no
+                // separate mechanical content of their own. Direct corpus
+                // read (`data/corpus/core_rulebook/class_feature/core_domain/
+                // *.json`, `.../sorcerer_domain/*.json`): 31 of 33 Core
+                // Domain records and all 22 Sorcerer Domain records carry
+                // `description: null` -- confirmed against the upstream
+                // `cr_abilities_class.lst` rows too, `CATEGORY:Internal` with
+                // no `DESC:`/`SPROP:`/`BENEFIT:` token. The remaining 2 Core
+                // Domain records (Destruction, Darkness) carry a real `data.
+                // description`, but it is a leaked SPELL description ("This
+                // spell instantly delivers...") from an unrelated corpus
+                // record, not real content describing the domain SELECTION
+                // itself -- `has_real_description` is `true` for them, so
+                // this guard correctly excludes them and they fall through
+                // to the generic fallback below unchanged, still open. Same
+                // "genuinely has no real upstream prose, set-shaped grant, by
+                // design" shape `decisions.md §20`/`§21` and this arm's own
+                // weapon-proficiency-grant rung above already established --
+                // extended here to the two DOMAIN chassis groups rather than
+                // a new one-off rule.
+                if (group == "Core Domain" || group == "Sorcerer Domain") && !has_real_description {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+                // Wave 50 (same continuation, second group): `"Sorcerer Bonus
+                // Spell L<N> ~ <Spell>"` (`N` 1-9) is the internal per-level
+                // bonus-spell SLOT record (`CATEGORY:Internal`, a
+                // `PREVARGTEQ`/`SPELLKNOWN` chain, never a `BONUS:`/`DEFINE:`
+                // token itself -- the slot's own real magnitude, if any, is
+                // the SPELL's, not this record's). Direct corpus read (`data/
+                // corpus/core_rulebook/class_feature/sorcerer_bonus_spell_l1..9/
+                // *.json`, 200 records total): exactly 22 carry `description:
+                // null` (e.g. `"Sorcerer Bonus Spell L1 ~ Burning Hands
+                // (Acid)"`) -- the other 178 (110 already `text-complete`, 68
+                // still open) carry a real, legitimately-relevant description
+                // inherited from the granted spell's own text (unlike Core
+                // Domain's Destruction/Darkless leak above, "Sorcerer Bonus
+                // Spell L2 ~ Hideous Laughter" genuinely IS about the Hideous
+                // Laughter spell this slot grants) -- `has_real_description`
+                // is `true` for those 68 and this guard correctly leaves them
+                // open for a future wave to close via a real registered-pool-
+                // catalog rung, not this "no upstream description" one. Only
+                // the 22 genuinely-proseless slots close here.
+                if group.starts_with("Sorcerer Bonus Spell L") && !has_real_description {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
                             .to_string(),
                         reason: None,
                         engine_book: engine_book_field,
@@ -12635,21 +16583,78 @@ fn classify(
             None,
             None,
         ),
-        Kind::Ability => simple_kind_verdict(
-            facts.simple_kind_tables.get("ability"),
-            "ability_content",
-            "ability",
-            &engine_book,
-            &unit.key,
-            &unit.name,
-            text_only,
-            has_real_description,
-            wc_class,
-            universal_sheet_modifier,
-            engine_book_field.clone(),
-            None,
-            None,
-        ),
+        Kind::Ability => {
+            let verdict = simple_kind_verdict(
+                facts.simple_kind_tables.get("ability"),
+                "ability_content",
+                "ability",
+                &engine_book,
+                &unit.key,
+                &unit.name,
+                text_only,
+                has_real_description,
+                wc_class,
+                universal_sheet_modifier,
+                engine_book_field.clone(),
+                None,
+                None,
+            );
+            // Wave 51 (`decisions.md §22`, extending wave 50's own CR-scoped
+            // rung inside `simple_kind_verdict` to this kind): a
+            // `core_rulebook` `ability` record that is held, carries no
+            // magnitude token at all, has no real description, AND carries no
+            // prose in any raw `DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:` token
+            // either is internal PCGen plumbing with nothing to compute and
+            // nothing to show -- the same "genuinely has no real upstream
+            // prose, set-shaped/internal record, by design" ruling
+            // `decisions.md §20`/`§21` established and wave 50 extended to
+            // `template`/`language`/`skill`/`race_trait_generic`.
+            //
+            // Direct read of every one of `core_rulebook`'s 109 records
+            // landing on this evidence string, this cycle: 102 are
+            // `CATEGORY:Class Skill` + `CSKILL:<skill>` rows -- the internal
+            // per-class class-skill LIST plumbing PCGen attaches to a class,
+            // never a line item a player reads (the player reads the skill on
+            // the Skills panel, off `skill_allocation`, which is a different
+            // record entirely); 1 is `"Default"`, a bare
+            // `TEMPLATE:Bonus Language ~ Modern Human Language` grant with no
+            // other token at all. The remaining 6 DO carry real prose in an
+            // `ASPECT:` token their `data.description` does not hold, and are
+            // deliberately excluded by
+            // `corpus_json_prose_bearing_ability_tokens` -- see that field's
+            // own doc comment. They stay open as a real INGESTION gap, which
+            // is what they are, rather than being closed as complete.
+            //
+            // Deliberately scoped to `core_rulebook` alone -- this wave's own
+            // granted scope -- exactly as wave 50 scoped its own sibling rung,
+            // and for the same reason: this fallback's cross-book population
+            // was not read this cycle and is NOT assumed to share this shape.
+            // A future wave verifying another book's own records the same way
+            // widens this by adding its book, never by dropping the check.
+            let carries_prose_in_a_raw_token =
+                facts.corpus_json_prose_bearing_ability_tokens.contains(&(
+                    unit.provenance.file.clone(),
+                    unit.provenance.line,
+                    unit.key.clone(),
+                ));
+            if verdict.status == "engine-does-not-hold"
+                && verdict.evidence
+                    == "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review"
+                && engine_book == "core_rulebook"
+                && !has_real_description
+                && !carries_prose_in_a_raw_token
+            {
+                return Verdict {
+                    status: "grounded",
+                    evidence:
+                        "ability_content_zero_magnitude_record_carries_no_upstream_description_by_design"
+                            .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            verdict
+        }
         // `trait`'s corpus records live under `trait_generic/`, not
         // `trait/` -- `simple_kind_tables::kind_dir_for` resolves that; the
         // evidence string keeps the `trait` kind name (`dir` argument is
@@ -13955,7 +17960,25 @@ fn modelled_class_books() -> BTreeMap<String, &'static str> {
                 meta.class_id
             ),
         };
-        class_books.insert(bare_name, book);
+        // SD-34 wave 36 lane A (sub-mechanism 1, `psychic_warrior` unit):
+        // `bare_name` is underscore-joined (`meta.class_id` strips
+        // `"class:"` off a runtime-dispatch id like `"class:psychic_
+        // warrior"`), but this loop's own neighbor three lines below (the
+        // CRB-prestige loop) documents the correct convention: this key is
+        // the corpus DISPLAY name, lowercased AS-IS (never underscore-
+        // slugged), because `classify`'s `Kind::Class` arm and
+        // `class_feature_owner`'s cross-check both compare against a
+        // naturally space-joined form (`corpus_class_names`, built from
+        // `unit.name.to_lowercase()`). Every entry here was single-word
+        // except `psychic_warrior`, so this silently broke only that one
+        // multi-word registry entry -- `class_feature_owner`'s own longest-
+        // match tie-break returned this raw, still-underscored key as the
+        // resolved owner, which then failed the safety cross-check against
+        // `corpus_class_names`'s space-joined `"psychic warrior"` and
+        // misrouted every `Psychic Warrior ~ <Feature>` record to
+        // `class_feature_of_unmodelled_corpus_class:psychic_warrior` despite
+        // the chassis genuinely being modelled.
+        class_books.insert(bare_name.replace('_', " "), book);
     }
     // SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_
     // from_ClassId_ALL_and_book_class_id_enums`): CRB's ten prestige
@@ -15045,16 +19068,18 @@ fn main() {
     // nothing, classifies nothing, moves no unit.
     if args.iter().any(|a| a == "--class-probe") {
         let fixture = load_probe_fixture(&repo_root);
-        let mut modelled: BTreeSet<String> = BTreeSet::new();
-        for id in ClassId::ALL {
-            modelled.insert(crb_class_name(*id).to_string());
-        }
-        for id in ApgClassId::ALL {
-            modelled.insert(id.name().to_string());
-        }
-        for id in AcgClassId::ALL {
-            modelled.insert(id.name().to_string());
-        }
+        // SD-34 wave 33 lane C: this used to reconstruct only
+        // ClassId+ApgClassId+AcgClassId (27 classes) -- a stale subset that
+        // predated `modelled_class_books()`'s later UC/PU/untabled-base-
+        // class/prestige/NPC widenings and silently never probed any of
+        // them, so the CLI's own ceiling report was blind to exactly the
+        // population `main()`'s real classification runs against. Reusing
+        // `modelled_class_books()` (the same set `classify`'s `Kind::Class`
+        // arm builds `EngineFacts` from) is the fix: the probe that reports
+        // "27 examined, 27 wired" while never calling `probe_class_name` on
+        // the other 44 is the "reports success without executing anything"
+        // failure shape this instrument must not repeat.
+        let modelled: BTreeSet<String> = modelled_class_books().keys().cloned().collect();
         let outcomes = probe_class_effect_wiring(&fixture, &modelled);
         print!("{}", class_probe_ceiling_report(&outcomes));
         return;
@@ -18322,8 +22347,23 @@ mod race_trait_grounding_tests {
     /// already transcribed.** The exact same unit now resolves: the
     /// generic table holds a real, magnitude-bearing record (`BONUS:VAR`
     /// tokens), so bucket B's bar (`decisions.md §2`: "placing the
-    /// record") is met and the verdict moves to `ingested-magnitude` --
-    /// bucket M, an honest reclassification, not a fabricated `done`.
+    /// record") is met.
+    ///
+    /// Wave 51 updated this test's own expected terminus, exactly the way
+    /// wave 50 updated its zero-magnitude sibling's below: `Racial SLA ~
+    /// Aid` is one of the 115 `Racial SLA ~ <Spell>` records
+    /// `rules_core::racial_sla::RACIAL_SLA_CATALOG` now covers, so the
+    /// `grounded_magnitude` argument this arm passes to
+    /// `simple_kind_verdict` resolves for it and the verdict moves past
+    /// `ingested-magnitude` (bucket M) to `grounded` -- the record's own
+    /// corpus-stated save DC, really computed against a real
+    /// `compute_pilot_base_chassis` run. `Aid` is a 2nd-level spell and
+    /// the module's fixture carries a `+2` Charisma modifier, so the
+    /// computed DC is `10 + 2 + 2 = 14`, which the shared evidence
+    /// string's `_flat_<n>` suffix carries verbatim. The invariant this
+    /// test exists for -- that the generic table PLACES this row rather
+    /// than leaving it `race_trait_race_not_modelled` -- is unchanged and
+    /// is still what the RED half above proves can fail.
     #[test]
     fn a_real_cross_book_sla_library_row_is_placed_by_the_generic_table() {
         let facts = EngineFacts {
@@ -18336,8 +22376,11 @@ mod race_trait_grounding_tests {
         };
         let unit = core_rulebook_race_trait_unit("cr_abilities_race.lst", 245, "Racial SLA ~ Aid", 3);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
-        assert_eq!(verdict.status, "ingested-magnitude");
-        assert_eq!(verdict.evidence, "race_trait_generic_table_holds_record_magnitude_not_yet_computed");
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_generic_magnitude_computed_and_verified_by_fixture_execution_flat_14"
+        );
     }
 
     /// The zero-magnitude sibling shape (`No Race Trait Available`,
@@ -18346,6 +22389,14 @@ mod race_trait_grounding_tests {
     /// `_pending_wiring_class_review` evidence every one of Epic 2's eight
     /// kinds already uses for this exact posture, never `engine-does-not-
     /// hold: race_trait_race_not_modelled` (a materially different claim).
+    ///
+    /// Wave 50 updated this test's own expected terminus: `"No Race Trait
+    /// Available"` is one of the 3 CRB `race_trait_generic` vacuous-
+    /// placeholder records (`decisions.md §22` continuation) `simple_kind_
+    /// verdict`'s own new CRB-scoped, no-upstream-description rung now
+    /// closes directly to `grounded` rather than parking at the
+    /// `_pending_wiring_class_review` fallback -- still never `race_trait_
+    /// race_not_modelled`, the one invariant this test's own name asserts.
     #[test]
     fn a_real_zero_magnitude_pool_bookkeeping_row_is_placed_not_left_race_not_modelled() {
         let facts = EngineFacts {
@@ -18359,9 +22410,10 @@ mod race_trait_grounding_tests {
         let unit = core_rulebook_race_trait_unit("cr_abilities_race.lst", 12, "No Race Trait Available", 0);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
         assert_ne!(verdict.evidence, "race_trait_race_not_modelled");
+        assert_eq!(verdict.status, "grounded");
         assert_eq!(
             verdict.evidence,
-            "race_trait_generic_table_holds_zero_magnitude_record_pending_wiring_class_review"
+            "race_trait_generic_zero_magnitude_record_carries_no_upstream_description_by_design"
         );
     }
 
@@ -18425,6 +22477,351 @@ mod race_trait_grounding_tests {
         assert_ne!(verdict.evidence, "race_trait_race_not_modelled");
         assert_eq!(verdict.status, "ingested-magnitude");
         assert_eq!(verdict.evidence, "race_trait_generic_table_holds_record_magnitude_not_yet_computed");
+    }
+
+    // -----------------------------------------------------------------
+    // SD-34 wave 33 lane B / wave 34 lane B: two shapes deliberately
+    // `TraitRole::Unclassified` (`race_resolver`'s own vocabulary was never
+    // written to describe them) whose OWN evidence string must not read the
+    // blanket "never applies" -- `race_resolver::adopted_race_choose_
+    // selectors`/`trait_pool::resolve_adopted_race_options` and
+    // `race_resolver::adoptive_parentage_options`, both called by
+    // `race_trait_picker.rs`'s real `list_alternate_racial_traits` Tauri
+    // command, resolve real payload for 27 of the 53
+    // `race_trait_record_loaded_but_never_applies` records -- confirmed
+    // independently by `reach_gate.rs`'s own dated `OPEN_FINDINGS` entry
+    // (`"crb"`/`"race_traits"`, 2026-08-27).
+    //
+    // Wave 33 lane B (2026-09-02) found the DTOs unwired at the desktop
+    // TypeScript boundary and left both `engine-does-not-hold`, per
+    // `AGENTS.md`'s "a magnitude is not wired until it moves on the twin
+    // the player reads": real, but strictly weaker than the
+    // `text-complete`/`grounded` rung's bar, which requires the SHIPPED
+    // SCREEN to read the field, not merely the DTO to carry it.
+    //
+    // Wave 34 lane B closed that gap. `apps/desktop/src/boundary/
+    // loadAlternateRacialTraits.ts`'s `AlternateRacialTraitsResponse` now
+    // declares `adoptiveParentageOptions`/`adoptedRaceOptions`,
+    // `apps/desktop/src/raceCatalog/AlternateTraitPicker.tsx` renders a
+    // real picker section for each (name, book, rendered description,
+    // grants -- `describeAdoptiveParentageGrants`/`describeAdoptedRaceGrants`
+    // in `alternateTraitPickerModel.ts`), and the render path was confirmed,
+    // not assumed: `grep -rln 'adoptedRaceOptions\|adoptiveParentageOptions'
+    // apps/desktop/src` now finds the boundary types, the model helpers and
+    // the component's own reads (previously zero matches). Both option
+    // kinds are `text_only`/zero-magnitude, so `text-complete` (not
+    // `grounded`) is the correct DONE status -- Decision 7 condition 3's
+    // rung for exactly that shape. These 27 now move DONE; the `Rougarou`
+    // selector (the sole genuinely empty pool among the 21 real oracle
+    // rows) still resolves no grants and correctly falls through to the
+    // unchanged fallback below.
+    //
+    // SD-34 wave 35 (bucket-D mining) closes wave 33 lane B's own named
+    // 20-unit remainder (next-cycle plan item 2): 19 of Bestiary 5's 20
+    // Skinwalker `Change Shape (<Option>)` components now resolve a real
+    // kin pool through `codex::rules_core::skinwalker_change_shape` (the
+    // SAME resolver `race_trait_picker.rs`'s menu command calls) and move
+    // off the blanket "never applies" onto a precise evidence string --
+    // still `engine-does-not-hold`, never `text-complete`/`grounded`,
+    // because every one carries real (non-zero) magnitude a `TEMPBONUS`
+    // applies only once activated during play, which no mechanism in this
+    // engine computes onto any character sheet today. `Endurance` is the
+    // one verified, genuinely orphaned option (no kin's `.MOD` row ever
+    // names it) and correctly stays unchanged, the identical disposition
+    // `Rougarou`'s selector gets among the Adopted Race population.
+    //
+    // The other 6 `Unclassified` bucket-D records (`Oversized Goblin`, 2
+    // Human Ethnicity placeholders, `Human ~ Tribalistic Languages`,
+    // `Suli ~ Trusted Mediator`, `Rougarou`'s selector) are UNCHANGED by
+    // this cycle -- `reach_gate` names a real remedy for each, and every
+    // one is "a new mechanism, not a missing wire" (its own words); the
+    // negative test below pins that this fix does not sweep `Oversized
+    // Goblin` in too.
+    // -----------------------------------------------------------------
+
+    /// RED/GREEN proof case 1, against the REAL corpus and the REAL
+    /// resolver chain (`adopted_race_choose_selectors` + `load_trait_pool` +
+    /// `resolve_adopted_race_options` -- the identical three calls
+    /// `race_trait_picker.rs`'s own menu command makes). `Adopted Race ~
+    /// Dwarf` (`dwarf_abilities_race.lst:37`) is one of the 7 Core Rulebook
+    /// selectors `reach_gate.rs`'s own finding names as reaching "4 real
+    /// grants apiece for Dwarf/Elf/Gnome/Half-Elf/Half-Orc/Human" through
+    /// the IPC builder. Wave 33 lane B's fix already stopped this reading
+    /// as the blanket `race_trait_record_loaded_but_never_applies`; wave 34
+    /// lane B's desktop wiring closes the remaining gap, so this now reads
+    /// `text-complete`, not `engine-does-not-hold`.
+    #[test]
+    fn an_adopted_race_selector_with_real_pool_grants_reaches_text_complete() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = core_rulebook_race_trait_unit("dwarf_abilities_race.lst", 37, "Adopted Race ~ Dwarf", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_ne!(
+            verdict.evidence, "race_trait_record_loaded_but_never_applies",
+            "the selector resolves real grants through trait_pool and must not read as inert"
+        );
+        assert_ne!(verdict.status, "grounded", "text_only/zero-magnitude reaches text-complete, not grounded");
+        assert_ne!(verdict.status, "engine-does-not-hold", "the desktop picker now reads this DTO field");
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_adopted_race_selector_grants_rendered_on_the_desktop_picker_screen"
+        );
+    }
+
+    /// RED/GREEN proof case 2, against the REAL corpus. ARG's `Drow`
+    /// (`arg_abilities_race.lst:296`, `CATEGORY:Adoptive Parentage`) carries
+    /// a real, non-PI description ("You were adopted and raised by drow.")
+    /// the engine genuinely renders -- `race_trait_picker.rs`'s own
+    /// `the_menu_command_itself_carries_all_seven_adoptive_parentage_
+    /// options_with_real_grants` test already proves the real Tauri command
+    /// serves it. Wave 34 lane B's `AlternateTraitPicker.tsx` now renders
+    /// that description on the desktop screen, so Decision 7 condition 3
+    /// ("the prose is available to print... on the character sheet") is
+    /// met and this reaches `text-complete`.
+    #[test]
+    fn an_adoptive_parentage_option_with_a_real_description_reaches_text_complete() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = race_trait_unit("arg_abilities_race.lst", 296, "Drow", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_ne!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
+        assert_ne!(verdict.status, "engine-does-not-hold", "the desktop picker now renders this description");
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_adoptive_parentage_option_rendered_on_the_desktop_picker_screen"
+        );
+        // The real text still must be independently provable -- it is what
+        // makes this real content, genuinely rendered, rather than a
+        // pretended completion.
+        let rendered = facts.race_trait_adoptive_parentage_rendered_description(&unit).unwrap();
+        assert!(
+            rendered.contains("You were adopted and raised by drow"),
+            "expected the real DESC: text, got {rendered:?}"
+        );
+    }
+
+    /// Regression: `Oversized Goblin` (`mc_abilities_race.lst:31`) is
+    /// neither an Adopted-Race selector nor an Adoptive Parentage option --
+    /// its own `ABILITY:...AUTOMATIC...` grant targets two OTHER, already-
+    /// `Alternate` records, never itself. `reach_gate.rs`'s own
+    /// `OPEN_FINDINGS` names its real remedy as a whole new ability-pool
+    /// variant mechanism ("outside the race-trait lane's replace-flag
+    /// protocol"), so this fix must leave it exactly where it was.
+    #[test]
+    fn oversized_goblin_is_unaffected_and_still_reads_never_applies() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "monster_codex".to_string(),
+            source_book: "monster_codex".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Oversized Goblin".to_string(),
+            name: "Oversized Goblin".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "mc_abilities_race.lst".to_string(), line: 31 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
+    }
+
+    /// SD-34 wave 35 (bucket-D mining), closing wave 33 lane B's own named
+    /// 20-unit remainder (next-cycle plan item 2): a Skinwalker `Change
+    /// Shape (<Option>)` component (`skinwalker_abilities_race_subrace.
+    /// lst:236`, `VISIBLE:NO`) is a TYPE-pool-referenced sub-record whose
+    /// real kin pool `codex::rules_core::skinwalker_change_shape` now
+    /// resolves -- the SAME resolver `race_trait_picker.rs`'s own menu
+    /// command calls. This unit (`Bite`, a real member of 8 of the 9 real
+    /// kin pools) must therefore move OFF the blanket "never applies" onto
+    /// the precise new evidence string. It still carries a real magnitude
+    /// token (`text_only` false), so `AGENTS.md`'s "the NUMBER
+    /// must move" bar is unmet regardless -- `engine-does-not-hold`, never
+    /// `text-complete`/`grounded`, is the correct status (see this evidence
+    /// string's own doc comment for why).
+    #[test]
+    fn a_skinwalker_change_shape_component_with_a_real_kin_pool_gets_the_precise_evidence() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "bestiary_5".to_string(),
+            source_book: "bestiary_5".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Skinwalker ~ Change Shape (Bite)".to_string(),
+            name: "Change Shape (Bite Attack)".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance {
+                file: "skinwalker_abilities_race_subrace.lst".to_string(),
+                line: 236,
+            },
+            magnitude_token_count: 2,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_ne!(
+            verdict.evidence, "race_trait_record_loaded_but_never_applies",
+            "Bite resolves through a real kin pool and must not read as the blanket 'never applies'"
+        );
+        assert_ne!(verdict.status, "text-complete", "real magnitude means the text-only rung never applies here");
+        assert_ne!(verdict.status, "grounded");
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_skinwalker_change_shape_option_resolves_real_kin_pool_but_no_activation_mechanism_computes_its_magnitude"
+        );
+    }
+
+    /// `Endurance` (`skinwalker_abilities_race_subrace.lst:240`) is the one
+    /// verified, genuinely orphaned option among the 20 -- no kin's `.MOD`
+    /// row ever names it (`codex::rules_core::skinwalker_change_shape`
+    /// module doc). It must stay on the unchanged blanket evidence, the
+    /// identical disposition `Rougarou`'s selector gets among the Adopted
+    /// Race population: correctly inert, not swept in by this fix.
+    #[test]
+    fn endurance_is_the_verified_orphan_and_still_reads_never_applies() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "bestiary_5".to_string(),
+            source_book: "bestiary_5".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Skinwalker ~ Change Shape (Endurance)".to_string(),
+            name: "Change Shape (Endurance)".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance {
+                file: "skinwalker_abilities_race_subrace.lst".to_string(),
+                line: 240,
+            },
+            magnitude_token_count: 2,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
+    }
+
+    // -----------------------------------------------------------------
+    // SD-34 wave 35 lane B: `Human ~ Tribalistic Languages`
+    // (`isr_abilities_race.lst:216`), wave 33 lane B's own named 2-unit
+    // remainder (`Next-cycle plan` item 4, this file's `race_trait_
+    // grounding_tests` comment above). Confirmed a genuine upstream data
+    // gap this cycle -- verified directly against the pinned upstream
+    // `.lst` line, not merely against the corpus JSON -- so it stays
+    // `engine-does-not-hold`. What changes is the evidence string: it now
+    // names the real, TEMPLATE-borne content instead of a blanket "never
+    // applies" that would be silent on it.
+    // -----------------------------------------------------------------
+
+    /// RED/GREEN proof, against the REAL corpus. Before this cycle's fix,
+    /// this exact coordinate read the blanket
+    /// `race_trait_record_loaded_but_never_applies` (confirmed by
+    /// temporarily reverting the new `classify()` branch and re-running
+    /// this test, which failed on the `assert_ne!` below for that reason).
+    #[test]
+    fn tribalistic_languages_gets_a_precise_template_grant_evidence_not_the_blanket_string() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "inner_sea_races".to_string(),
+            source_book: "inner_sea_races".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Human ~ Tribalistic Languages".to_string(),
+            name: "Languages".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "isr_abilities_race.lst".to_string(), line: 216 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_ne!(
+            verdict.evidence, "race_trait_record_loaded_but_never_applies",
+            "the record's own TEMPLATE: chain resolves to four real languages and must not \
+             read as indistinguishable from a record with no resolvable content at all"
+        );
+        // Still NOT done: nothing upstream ever fires this row (verified against
+        // the pinned `.lst` line -- no `FACT`, `PREFACT`, `PREABILITY` or
+        // `ABILITY:...AUTOMATIC...` naming it), so `engine-does-not-hold` is
+        // the correct, honest status, unchanged.
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_template_bonus_language_grant_verified_but_has_no_upstream_activation_gate"
+        );
+    }
+
+    /// Regression: the probe's transcription is real, not a guess -- pinned
+    /// against the exact four languages the row's own `TEMPLATE:` chain
+    /// names (`data/corpus/inner_sea_races/race_trait/human/
+    /// human_tribalistic_languages.json`'s own `TEMPLATE` raw token).
+    #[test]
+    fn tribalistic_languages_template_grant_transcribes_the_real_four_languages() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "inner_sea_races".to_string(),
+            source_book: "inner_sea_races".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Human ~ Tribalistic Languages".to_string(),
+            name: "Languages".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "isr_abilities_race.lst".to_string(), line: 216 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let langs = facts
+            .race_trait_template_bonus_language_grant(&unit)
+            .expect("Human ~ Tribalistic Languages must carry a transcribed TEMPLATE grant");
+        assert_eq!(langs, ["Common", "Giant", "Goblin", "Halfling"]);
+    }
+
+    /// Negative control: `Suli ~ Trusted Mediator` (`isr_abilities_race.lst:
+    /// 1266`) is the OTHER inner_sea_races Unclassified residue this same
+    /// wave 33 lane B remainder item named, but it carries NO `TEMPLATE:`
+    /// token at all (its own `PREMULT` wraps a self-exclusion guard, unlike
+    /// a bonus-language grant) -- this fix must not touch it.
+    #[test]
+    fn suli_trusted_mediator_is_unaffected_and_still_reads_never_applies() {
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "inner_sea_races".to_string(),
+            source_book: "inner_sea_races".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Suli ~ Trusted Mediator".to_string(),
+            name: "Trusted Mediator".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "isr_abilities_race.lst".to_string(), line: 1266 },
+            magnitude_token_count: 2,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "race_trait_record_loaded_but_never_applies");
     }
 }
 
@@ -20095,6 +24492,62 @@ mod class_feature_text_complete_rung_tests {
         assert_eq!(verdict.evidence, "domain_power_probe_observed_a_real_computed_magnitude");
     }
 
+    /// SD-34 wave 37 lane A (bucket D's "domain-vs-class_feature dual-
+    /// representation" mechanism gap, item 5 of wave 36 lane C's next-cycle
+    /// plan): the SUBDOMAIN-keyed sibling of the `"Domain Power ~ *"` check
+    /// above -- `"Undead Subdomain ~ Death's Kiss"` is the SAME granted
+    /// power ingested a second time under its own subdomain's key (a real,
+    /// separate `.lst` line, confirmed by direct corpus read, not a
+    /// duplicate to collapse). Matched by the catalog's own
+    /// `domain_display_name`/`granted_power_name` pair
+    /// (`domain_power_catalog_group_and_power_names`), never by a bare
+    /// feature-name check: `"Rage Power ~ Strength Surge"` and `"Strength
+    /// Blessing ~ Strength Surge"` both collide with this catalog's own
+    /// `"Strength Surge"` granted-power name (confirmed by direct corpus
+    /// scan) -- a bare feature-name match would wrongly credit both.
+    #[test]
+    fn a_subdomain_keyed_sibling_of_a_domain_power_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.domain_power_effect_wired.insert("Death's Kiss".to_string());
+        let unit = class_feature_unit(
+            "advanced_players_guide",
+            "apg_abilities_class.lst",
+            1807,
+            "Undead Subdomain ~ Death's Kiss",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "domain_power_probe_observed_a_real_computed_magnitude_for_the_subdomain_record"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a bare feature-name collision must NOT be credited
+    /// -- `"Rage Power ~ Strength Surge"` (a real, separate corpus record,
+    /// `core_rulebook/class_feature/rage_power/strength_surge.json`, a
+    /// Barbarian rage power sharing only a NAME with the Cleric/Inquisitor
+    /// Strength domain's own granted power) must stay `engine-does-not-hold`
+    /// even when the probe genuinely observed `"Strength Surge"` via the
+    /// UNRELATED Strength-domain mechanism, proving the new check matches
+    /// the catalog's own `(domain_display_name, granted_power_name)` pair,
+    /// never the feature name alone.
+    #[test]
+    fn a_bare_feature_name_collision_with_a_different_group_is_not_credited() {
+        let mut facts = EngineFacts::default();
+        facts.domain_power_effect_wired.insert("Strength Surge".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_feats.lst",
+            1,
+            "Rage Power ~ Strength Surge",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "derived", false);
+        assert_ne!(verdict.status, "grounded");
+    }
+
     /// NEGATIVE CONTROL: a magnitude-bearing `"Domain Power ~ *"` record
     /// `domain_power::DOMAIN_POWER_CATALOG` carries no formula for (Acid
     /// Dart's own multi-`DESC`-token, level-gated shape is one this module's
@@ -21025,6 +25478,393 @@ mod class_feature_text_complete_rung_tests {
         );
     }
 
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 1): the exact real
+    /// bug this wave fixes -- `"Power Over Undead ~ Turn Undead"`'s own
+    /// corpus-record `class` field is literally `"Undead"`, colliding with
+    /// the bestiary's unmodelled `Kind::Class` "Undead" pseudo-class. Before
+    /// this wave's fix, `classify()`'s group-text collision fallback (this
+    /// key's own `" ~ "`-split group, `"Power Over Undead"`, ends with the
+    /// whole word `" Undead"`) short-circuited this record into
+    /// `engine-does-not-hold:class_feature_of_unmodelled_corpus_class:undead`
+    /// before it ever reached the wizard-arcane-school probe check. This
+    /// test proves the probe's own early-return check (populated by the
+    /// REAL, end-to-end-reachable `probe_wizard_arcane_school_wiring`, see
+    /// `wave44_necromancy_school_probe_reachability_tests` above) now wins
+    /// first, so the collision fallback is never reached.
+    #[test]
+    fn power_over_undead_turn_undead_resolves_grounded_never_the_undead_collision() {
+        let mut facts = EngineFacts::default();
+        facts.wizard_arcane_school_wired.insert("Power Over Undead ~ Turn Undead".to_string());
+        // The collision condition is left ABLE to fire (matching the
+        // negative control below) to prove the probe's early-return check
+        // really does win FIRST, rather than merely never being exercised.
+        facts.corpus_class_names.insert("undead".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2681,
+            "Power Over Undead ~ Turn Undead",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "wizard_arcane_school_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:undead",
+            "must never fall into the Undead bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// The sibling `"Power Over Undead ~ Command Undead"` record, same
+    /// collision shape, same proof.
+    #[test]
+    fn power_over_undead_command_undead_resolves_grounded_never_the_undead_collision() {
+        let mut facts = EngineFacts::default();
+        facts.wizard_arcane_school_wired.insert("Power Over Undead ~ Command Undead".to_string());
+        facts.corpus_class_names.insert("undead".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2680,
+            "Power Over Undead ~ Command Undead",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:undead",
+            "must never fall into the Undead bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Power Over Undead ~ *"` record (the
+    /// probe's own `wizard_arcane_school_wired` set is empty here, while
+    /// `corpus_class_names` still carries the bestiary's real "Undead"
+    /// pseudo-class the way `build_facts` always populates it corpus-wide)
+    /// still falls through to the PRE-EXISTING collision finding, unchanged
+    /// -- proving this wave's fix credits nothing it did not actually
+    /// observe, and that the collision fallback this wave's own bug report
+    /// names is still real and still reachable for a genuinely-unwired
+    /// sibling.
+    #[test]
+    fn an_unprobed_power_over_undead_record_still_falls_into_the_undead_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("undead".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2681,
+            "Power Over Undead ~ Turn Undead",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:undead");
+    }
+
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 2): the exact real
+    /// bug this wave fixes -- `"Order of the Dragon"`'s own corpus-record
+    /// `class` field is literally `"Dragon"`, colliding with the bestiary's
+    /// unmodelled `Kind::Class` "Dragon" pseudo-class. Before this wave's
+    /// fix, `classify()`'s group-text collision fallback (this key's own
+    /// group, `"Order of the Dragon"`, ends with the whole word `"
+    /// Dragon"`) short-circuited this record into
+    /// `engine-does-not-hold:class_feature_of_unmodelled_corpus_class:dragon`
+    /// before it ever reached the Cavalier-order probe check.
+    #[test]
+    fn order_of_the_dragon_resolves_grounded_never_the_dragon_collision() {
+        let mut facts = EngineFacts::default();
+        facts.cavalier_order_wired.insert("Order of the Dragon".to_string());
+        facts.corpus_class_names.insert("dragon".to_string());
+        let unit =
+            class_feature_unit("advanced_players_guide", "apg_abilities_class.lst", 243, "Order of the Dragon", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "expected grounded, evidence={:?}", verdict.evidence
+        );
+        assert_eq!(verdict.evidence, "cavalier_order_probe_observed_a_real_computed_magnitude");
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:dragon",
+            "must never fall into the Dragon bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Order of the Dragon"` record still
+    /// falls through to the PRE-EXISTING collision finding, unchanged.
+    #[test]
+    fn an_unprobed_order_of_the_dragon_record_still_falls_into_the_dragon_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("dragon".to_string());
+        let unit =
+            class_feature_unit("advanced_players_guide", "apg_abilities_class.lst", 243, "Order of the Dragon", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:dragon");
+    }
+
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 4): the exact real
+    /// bug this wave fixes -- `"Phantom Emotional Focus ~ Despair"`'s own
+    /// corpus-record `class` field is literally `"Phantom"`, colliding with
+    /// the bestiary's unmodelled `Kind::Class` "Phantom" pseudo-class
+    /// (this key's own group, `"Phantom Emotional Focus"`, STARTS WITH the
+    /// whole word `"Phantom "`).
+    #[test]
+    fn phantom_emotional_focus_despair_resolves_grounded_never_the_phantom_collision() {
+        let mut facts = EngineFacts::default();
+        facts
+            .spiritualist_phantom_emotional_focus_wired
+            .insert("Phantom Emotional Focus ~ Despair".to_string());
+        facts.corpus_class_names.insert("phantom".to_string());
+        let unit = class_feature_unit(
+            "occult_adventures",
+            "oa_abilities_class.lst",
+            1298,
+            "Phantom Emotional Focus ~ Despair",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "expected grounded, evidence={:?}", verdict.evidence
+        );
+        assert_eq!(
+            verdict.evidence,
+            "spiritualist_phantom_emotional_focus_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:phantom",
+            "must never fall into the Phantom bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Phantom Emotional Focus ~ *"` record
+    /// still falls through to the PRE-EXISTING collision finding, unchanged.
+    #[test]
+    fn an_unprobed_phantom_emotional_focus_record_still_falls_into_the_phantom_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("phantom".to_string());
+        let unit = class_feature_unit(
+            "occult_adventures",
+            "oa_abilities_class.lst",
+            1298,
+            "Phantom Emotional Focus ~ Despair",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:phantom");
+    }
+
+    /// SD-34 wave 44 (`decisions.md §22`, Piece 2 item 3): the exact real
+    /// bug this wave fixes -- `"PaDFE Construct"`/`"PaDFE Ooze"`/`"PaDFE
+    /// Undead"` carry no `" ~ "` separator, so `classify()`'s group-text
+    /// collision fallback uses the key's own full text as the group --
+    /// `"PaDFE Construct"` ends with the whole word `"Construct"`,
+    /// colliding with the bestiary's unmodelled `Kind::Class` "Construct"
+    /// pseudo-class, the same shape as Power Over Undead/Order of the
+    /// Dragon/Phantom Emotional Focus above. This is the ONE item of the
+    /// four Piece-2 fixes with no classify()-level reachability test in
+    /// mod.rs's own `wave44_pathfinder_delver_padfe_tests` (those prove
+    /// the pipeline explanation ids exist; this proves `classify()`'s new
+    /// early-return check actually wins over the collision fallback).
+    #[test]
+    fn padfe_construct_resolves_grounded_never_the_construct_collision() {
+        let mut facts = EngineFacts::default();
+        facts.pathfinder_delver_padfe_wired.insert("PaDFE Construct".to_string());
+        // Left ABLE to fire, matching the negative control below, to prove
+        // the probe's early-return check really does win FIRST.
+        facts.corpus_class_names.insert("construct".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            390,
+            "PaDFE Construct",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "pathfinder_delver_padfe_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:construct",
+            "must never fall into the Construct bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// The sibling `"PaDFE Ooze"` record, same collision shape, same proof.
+    #[test]
+    fn padfe_ooze_resolves_grounded_never_the_ooze_collision() {
+        let mut facts = EngineFacts::default();
+        facts.pathfinder_delver_padfe_wired.insert("PaDFE Ooze".to_string());
+        facts.corpus_class_names.insert("ooze".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            391,
+            "PaDFE Ooze",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:ooze",
+            "must never fall into the Ooze bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// The sibling `"PaDFE Undead"` record, same collision shape, same
+    /// proof -- a DIFFERENT collision path than Power Over Undead's own
+    /// "Undead" collision above (this one triggers off the key's own full
+    /// text, not a `" ~ "`-split group prefix), so both must be proven
+    /// independently.
+    #[test]
+    fn padfe_undead_resolves_grounded_never_the_undead_collision() {
+        let mut facts = EngineFacts::default();
+        facts.pathfinder_delver_padfe_wired.insert("PaDFE Undead".to_string());
+        facts.corpus_class_names.insert("undead".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            392,
+            "PaDFE Undead",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:undead",
+            "must never fall into the Undead bestiary-collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"PaDFE Construct"` record still falls
+    /// through to the PRE-EXISTING collision finding, unchanged.
+    #[test]
+    fn an_unprobed_padfe_construct_record_still_falls_into_the_construct_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("construct".to_string());
+        let unit = class_feature_unit(
+            "adventurers_guide",
+            "ag_abilities_class.lst",
+            390,
+            "PaDFE Construct",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:construct");
+    }
+
+    /// SD-34 wave 45 (`decisions.md §22`'s WAVE 45 UPDATE): the base
+    /// `"Phrenic Slayer ~ Favored Enemy"` record -- `group` here is
+    /// `"Phrenic Slayer"`, which the corpus genuinely declares as a real
+    /// (unmodelled-by-`class_books`) `Kind::Class`, so without the probe
+    /// this record falls into the same `class_feature_of_unmodelled_
+    /// corpus_class` fallback shape as PaDFE above, just colliding with the
+    /// record's own TRUE class rather than an unrelated bestiary pseudo-
+    /// class.
+    #[test]
+    fn phrenic_slayer_favored_enemy_base_resolves_grounded_never_the_collision() {
+        let mut facts = EngineFacts::default();
+        facts
+            .phrenic_slayer_favored_enemy_wired
+            .insert("Phrenic Slayer ~ Favored Enemy".to_string());
+        // Left ABLE to fire, matching the negative control below, to prove
+        // the probe's early-return check really does win FIRST.
+        facts.corpus_class_names.insert("phrenic slayer".to_string());
+        let unit = class_feature_unit(
+            "ultimate_psionics",
+            "up_abilities_class.lst",
+            1326,
+            "Phrenic Slayer ~ Favored Enemy",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "phrenic_slayer_favored_enemy_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:phrenic_slayer",
+            "must never fall into the Phrenic Slayer collision fallback this wave fixes"
+        );
+    }
+
+    /// The `"Phrenic Slayer Favored Enemy ~ Dragon"` sub-record -- a
+    /// DIFFERENT `group` (`"Phrenic Slayer Favored Enemy"`, not `"Phrenic
+    /// Slayer"`) than the base record above, so both must be proven
+    /// independently; still resolves through the same probe.
+    #[test]
+    fn phrenic_slayer_favored_enemy_dragon_resolves_grounded_never_the_collision() {
+        let mut facts = EngineFacts::default();
+        facts
+            .phrenic_slayer_favored_enemy_wired
+            .insert("Phrenic Slayer Favored Enemy ~ Dragon".to_string());
+        facts.corpus_class_names.insert("phrenic slayer".to_string());
+        let unit = class_feature_unit(
+            "ultimate_psionics",
+            "up_abilities_class.lst",
+            1341,
+            "Phrenic Slayer Favored Enemy ~ Dragon",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded", "expected grounded, evidence={:?}", verdict.evidence);
+        assert_eq!(
+            verdict.evidence,
+            "phrenic_slayer_favored_enemy_probe_observed_a_real_computed_magnitude"
+        );
+        assert_ne!(
+            verdict.evidence, "class_feature_of_unmodelled_corpus_class:phrenic_slayer",
+            "must never fall into the Phrenic Slayer collision fallback this wave fixes"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Phrenic Slayer ~ Favored Enemy"`
+    /// record still falls through to the PRE-EXISTING collision finding,
+    /// unchanged.
+    #[test]
+    fn an_unprobed_phrenic_slayer_favored_enemy_base_record_still_falls_into_the_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("phrenic slayer".to_string());
+        let unit = class_feature_unit(
+            "ultimate_psionics",
+            "up_abilities_class.lst",
+            1326,
+            "Phrenic Slayer ~ Favored Enemy",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:phrenic_slayer");
+    }
+
+    /// NEGATIVE CONTROL: an unprobed `"Phrenic Slayer Favored Enemy ~
+    /// Dragon"` sub-record still falls through to the same PRE-EXISTING
+    /// collision finding, unchanged.
+    #[test]
+    fn an_unprobed_phrenic_slayer_favored_enemy_dragon_record_still_falls_into_the_collision() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("phrenic slayer".to_string());
+        let unit = class_feature_unit(
+            "ultimate_psionics",
+            "up_abilities_class.lst",
+            1341,
+            "Phrenic Slayer Favored Enemy ~ Dragon",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:phrenic_slayer");
+    }
+
     /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
     /// held_by_engine` mechanism, cycle 6, wizard Transmutation school
     /// sub-cause, proof case: `probe_wizard_arcane_school_wiring`'s new
@@ -21684,20 +26524,22 @@ mod class_feature_text_complete_rung_tests {
         );
     }
 
-    /// `AT-34-E3-001` cycle 5, weapon-proficiency-grant shard: a
-    /// `description: null` internal chassis row whose corpus key is one of
+    /// `AT-34-E3-001` cycle 5 / wave 33 lane A: a `description: null`
+    /// internal chassis row whose corpus key is one of
     /// `class_feature_pool_catalog::WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_
-    /// MATCHES`' three verified members must leave bucket B for bucket D --
-    /// `engine-does-not-hold` status still (nothing displays yet), but
-    /// evidence naming a real held fact, never the mechanism's own generic
-    /// `class_feature_option_pool_record_not_held_by_engine` fallback.
-    /// Proves this FAILS before the fix (the intended-reason RED): before
-    /// `weapon_proficiency_grant_class_id` was consulted, this exact unit
-    /// fell all the way through to the generic fallback despite the engine
-    /// already computing this exact class's weapon proficiency for real
-    /// combat (`character_is_proficient_with`).
+    /// MATCHES`' three verified members, with NO real description anywhere
+    /// upstream (verified against both the PCGen source and the ingested
+    /// corpus JSON, `decisions.md §20`) must now reach bucket D's own DONE
+    /// closure -- `status: "grounded"` with the wave-33 no-prose evidence
+    /// string, never `text-complete` (which would assert prose that does
+    /// not exist) and never the old unconditional `engine-does-not-hold`
+    /// this rung returned before this cycle. Proves this FAILS before the
+    /// fix (the intended-reason RED): before the `!has_real_description`
+    /// check was added, this exact unit (real `has_real_description: false`
+    /// input) stayed at `engine-does-not-hold` forever, with no closure
+    /// path at all for a genuinely proseless record.
     #[test]
-    fn a_weapon_proficiency_grant_verified_against_the_class_table_leaves_bucket_b() {
+    fn a_weapon_proficiency_grant_with_no_upstream_prose_reaches_the_no_prose_done_closure() {
         let facts = EngineFacts::default();
         let unit = class_feature_unit(
             "core_rulebook",
@@ -21707,15 +26549,39 @@ mod class_feature_text_complete_rung_tests {
             0,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "a genuinely proseless held-by-table record must close bucket D: status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+        );
+    }
+
+    /// Control: the SAME key, but with `has_real_description: true` (a
+    /// hypothetical -- production has none, but the branch must be real
+    /// content-gated, never a bare shape/key match) must NOT take the
+    /// no-prose closure and must keep falling to the pre-existing bucket-D
+    /// `engine-does-not-hold` rung, exactly as the whole family did before
+    /// this cycle -- proving `!has_real_description` is a real, live gate.
+    #[test]
+    fn a_weapon_proficiency_grant_with_a_hypothetical_real_description_does_not_take_the_no_prose_closure()
+    {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            57,
+            "Weapon Proficiencies ~ Bard",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(
             verdict.evidence,
             "class_feature_weapon_proficiency_grant_held_by_class_weapon_proficiency_table"
-        );
-        assert!(
-            !verdict.evidence.contains("not_held_by_engine"),
-            "must NOT carry a bucket-B marker any more: evidence={}",
-            verdict.evidence
         );
     }
 
@@ -21739,22 +26605,20 @@ mod class_feature_text_complete_rung_tests {
         assert_eq!(verdict.evidence, "class_feature_option_pool_record_not_held_by_engine");
     }
 
-    /// `AT-34-E3-001` cycle 9, wizard-opposition-school-spell-tracking
-    /// sub-cause: a `description: null` `"<School> Wizard Spells"` internal
-    /// chassis row whose corpus key is one of
-    /// `class_feature_pool_catalog::WIZARD_SCHOOL_SPELL_LIST_KEY_OWNER`'s
-    /// nine verified members must leave bucket B for bucket D --
-    /// `engine-does-not-hold` status still (nothing displays yet), but
-    /// evidence naming a real held fact (the `wizard_spell_list`/
-    /// `spell_list` join), never the mechanism's own generic
-    /// `class_feature_option_pool_record_not_held_by_engine` fallback.
-    /// Proves this FAILS before the fix (the intended-reason RED): before
-    /// `wizard_school_spell_list_key_owner` was consulted, this exact unit
-    /// fell all the way through to the generic fallback despite the engine
-    /// already holding this exact school's 0-level Wizard spell list, for
-    /// real, via two already-shipped tables.
+    /// `AT-34-E3-001` cycle 9 / wave 33 lane A: a `description: null`
+    /// `"<School> Wizard Spells"` internal chassis row whose corpus key is
+    /// one of `class_feature_pool_catalog::WIZARD_SCHOOL_SPELL_LIST_KEY_
+    /// OWNER`'s nine verified members, with NO real description anywhere
+    /// upstream (verified against both the PCGen source and the ingested
+    /// corpus JSON, `decisions.md §20`) must now reach bucket D's own DONE
+    /// closure -- `status: "grounded"` with the wave-33 no-prose evidence
+    /// string. Proves this FAILS before the fix (the intended-reason RED):
+    /// before the `!has_real_description` check was added, this exact unit
+    /// (real `has_real_description: false` input) stayed at
+    /// `engine-does-not-hold` forever, with no closure path at all for a
+    /// genuinely proseless record.
     #[test]
-    fn a_wizard_school_spell_list_row_verified_against_the_join_leaves_bucket_b() {
+    fn a_wizard_school_spell_list_row_with_no_upstream_prose_reaches_the_no_prose_done_closure() {
         let facts = EngineFacts::default();
         let unit = class_feature_unit(
             "core_rulebook",
@@ -21764,15 +26628,175 @@ mod class_feature_text_complete_rung_tests {
             0,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "a genuinely proseless held-by-table record must close bucket D: status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+        );
+    }
+
+    /// Control: the SAME key, but with `has_real_description: true` (a
+    /// hypothetical -- production has none) must NOT take the no-prose
+    /// closure and must keep falling to the pre-existing bucket-D
+    /// `engine-does-not-hold` rung, proving `!has_real_description` is a
+    /// real, live gate rather than a bare shape/key match.
+    #[test]
+    fn a_wizard_school_spell_list_row_with_a_hypothetical_real_description_does_not_take_the_no_prose_closure()
+    {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2624,
+            "Abjuration Wizard Spells",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(
             verdict.evidence,
             "class_feature_wizard_school_spell_list_held_by_wizard_spell_list_and_spell_list_join"
         );
-        assert!(
-            !verdict.evidence.contains("not_held_by_engine"),
-            "must NOT carry a bucket-B marker any more: evidence={}",
-            verdict.evidence
+    }
+
+    /// `AT-34-E3-001` cycle 7 / wave 33 lane A: the class-skill-list rung's
+    /// own sibling of the two tests above -- a `description: null` `"Class
+    /// Skills ~ <Class>"` internal chassis row whose corpus key is one of
+    /// `class_feature_pool_catalog::CLASS_SKILL_LIST_GRANT_OWNER_TABLE_
+    /// MATCHES`' ten verified members, with NO real description anywhere
+    /// upstream (verified against both the PCGen source and the ingested
+    /// corpus JSON, `decisions.md §20`) must reach the SAME no-prose DONE
+    /// closure.
+    #[test]
+    fn a_class_skill_list_row_with_no_upstream_prose_reaches_the_no_prose_done_closure() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2831,
+            "Class Skills ~ Barbarian",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "a genuinely proseless held-by-table record must close bucket D: status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_set_shaped_grant_carries_no_upstream_description_by_design"
+        );
+    }
+
+    /// Control: the SAME class-skill-list key with a hypothetical real
+    /// description must keep falling to the pre-existing bucket-D
+    /// `engine-does-not-hold` rung, unaffected.
+    #[test]
+    fn a_class_skill_list_row_with_a_hypothetical_real_description_does_not_take_the_no_prose_closure() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2831,
+            "Class Skills ~ Barbarian",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_class_skill_list_held_by_class_skill_list_table"
+        );
+    }
+
+    /// `AT-34-E3-001` cycle 6's `weapon-and-armor-proficiency` sibling rung
+    /// genuinely DOES have real upstream prose for all five of its keys
+    /// (`decisions.md §20`), and `pilot_compute` is now wired (wave 34 lane
+    /// A, `decisions.md §21`) to ground Bard/Fighter/Paladin/Ranger/Rogue's
+    /// own version of this record shape. This module's own generic
+    /// `class_feature_effect_wired`/`explanation_id_observed` promotion
+    /// paths (above) can never reach this shape, though -- its own corpus
+    /// key is REVERSED (`"Weapon and Armor Proficiency ~ <Class>"`), so
+    /// `class_feature_owner`'s `group == class name` guard can never
+    /// resolve an owner for it (confirmed directly: with `EngineFacts::
+    /// default()`'s empty `explanation_ids`, this test proves the rung
+    /// still correctly falls to `engine-does-not-hold` with its own
+    /// original evidence, never the no-prose closure, which would be
+    /// dishonest for a record that DOES have real prose).
+    #[test]
+    fn a_weapon_and_armor_proficiency_grant_with_no_grounding_explanation_id_still_falls_to_bucket_d()
+    {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2814,
+            "Weapon and Armor Proficiency ~ Bard",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables"
+        );
+    }
+
+    /// The positive sibling of the test immediately above: once
+    /// `facts.explanation_ids` carries the grounding id
+    /// `ground_class_weapon_and_armor_proficiency` now emits for Bard (the
+    /// same id shape the real per-class sweep in `EngineFacts` production
+    /// code populates), this rung DOES promote to `text-complete` -- proving
+    /// the branch this cycle added to `weapon_and_armor_proficiency_grant_
+    /// class_id`'s own consumer, not merely that `pilot_compute` grounds the
+    /// explanation in isolation (the `pilot_compute` module's own
+    /// `base_class_weapon_and_armor_proficiency_tests` proves that half).
+    #[test]
+    fn a_weapon_and_armor_proficiency_grant_with_the_grounding_explanation_id_present_reaches_text_complete()
+    {
+        let mut facts = EngineFacts::default();
+        facts.explanation_ids.insert("class_feature.bard.weapon_and_armor_proficiency".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2814,
+            "Weapon and Armor Proficiency ~ Bard",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "explanation_id_observed_and_corpus_record_carries_real_description"
+        );
+    }
+
+    /// Control: the same explanation id gates on the RIGHT class. A Fighter
+    /// unit must not promote off Bard's own grounding id -- proving the
+    /// per-class `class_id.trim_start_matches("class:")` slug, not a bare
+    /// presence check.
+    #[test]
+    fn a_weapon_and_armor_proficiency_grant_does_not_promote_off_a_different_classs_explanation_id()
+    {
+        let mut facts = EngineFacts::default();
+        facts.explanation_ids.insert("class_feature.bard.weapon_and_armor_proficiency".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            2816,
+            "Weapon and Armor Proficiency ~ Fighter",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables"
         );
     }
 
@@ -21978,6 +27002,82 @@ mod class_feature_type_facet_owner_fallback_tests {
         assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:vigilante");
     }
 
+    /// SD-34 wave-36 lane-C disposition trace, sub-mechanism 2 (`"Order of
+    /// the Dragon"`): `"dragon"` collides with the corpus's own unmodelled
+    /// `Kind::Class` bestiary pseudo-class "Dragon" (real corpus record,
+    /// `bestiary:class:dragon`, itself `engine-does-not-hold` -- confirmed
+    /// live, `docs/work-inventory.json`). Before this fix that collision
+    /// short-circuited straight to `class_feature_of_unmodelled_corpus_
+    /// class:dragon`, even for a text-only record the pool catalog already
+    /// safely renders -- exactly the shape every NON-colliding sibling
+    /// order (`"Order of the Beast"`, `"Order of the Cockatrice"`, ...)
+    /// already reaches `text-complete` through, live on `docs/work-
+    /// inventory.json` today. The record's TRUE owner is Cavalier
+    /// (`type_facet: CavalierClassFeatures.CavalierOrder...`), which
+    /// `class_feature_owner`'s own group-text rule can never recover
+    /// (`"order of the dragon"` neither starts nor ends with `"cavalier "`)
+    /// -- this fix does not need to resolve that owner at all, only decline
+    /// to report a false gap when the SAME text-only holds-check every
+    /// sibling already passes through also holds for this one.
+    #[test]
+    fn a_creature_type_collision_does_not_block_an_already_served_pool_catalog_record() {
+        let mut facts = EngineFacts::default();
+        // "dragon" is a real corpus class name (the bestiary pseudo-class)
+        // but deliberately NOT in `class_books` -- unmodelled, exactly like
+        // the live corpus.
+        facts.corpus_class_names.insert("dragon".to_string());
+        facts.class_feature_pool_catalog.insert(
+            (
+                "advanced_players_guide".to_string(),
+                "Order of the Dragon ~ Edicts".to_string(),
+            ),
+            "Whenever an order of the dragon cavalier uses Survival...".to_string(),
+        );
+        let unit = CorpusUnit {
+            book: "advanced_players_guide".to_string(),
+            source_book: "advanced_players_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Order of the Dragon ~ Edicts".to_string(),
+            name: "Edicts".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "apg_abilities_class.lst".to_string(), line: 243 },
+            magnitude_token_count: 0,
+            type_facet: Some("SpecialQuality".to_string()),
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(verdict.evidence, "class_feature_pool_catalog_serves_a_rendered_description");
+    }
+
+    /// NEGATIVE CONTROL, same fix: a creature-type collision with NO
+    /// pool-catalog (or standalone-catalog) holds-check backing it must
+    /// still report the real gap exactly as before -- the fix declines a
+    /// false gap only when a holds-check independently proves the record is
+    /// already served, never unconditionally.
+    #[test]
+    fn a_creature_type_collision_with_no_holds_check_still_reads_unmodelled_corpus_class() {
+        let mut facts = EngineFacts::default();
+        facts.corpus_class_names.insert("dragon".to_string());
+        // Deliberately no `class_feature_pool_catalog` / `class_feature_
+        // standalone_catalog` entry for this key.
+        let unit = CorpusUnit {
+            book: "advanced_players_guide".to_string(),
+            source_book: "advanced_players_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Order of the Dragon ~ Aid Allies".to_string(),
+            name: "Aid Allies".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "apg_abilities_class.lst".to_string(), line: 260 },
+            magnitude_token_count: 0,
+            type_facet: Some("CavalierClassFeatures.SpecialQuality.Extraordinary".to_string()),
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:dragon");
+    }
+
     /// NEGATIVE CONTROL: without the type_facet fix, a record with no
     /// class-name signal anywhere still reads `engine-does-not-hold` -- the
     /// fallback is additive, it does not change behaviour for the
@@ -22007,6 +27107,164 @@ mod class_feature_type_facet_owner_fallback_tests {
         assert_eq!(
             verdict.evidence,
             "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `SD-34 wave 36 lane A`, fix (a) direct unit coverage: `modelled_class_
+    /// books()`'s untabled-registry loop (`untabled_base_class_chassis::
+    /// untabled_base_class_registry()`) must space-join a multi-word
+    /// `bare_name` the same way its own neighboring CRB-prestige loop
+    /// already does, three lines below in the source. Before the fix the
+    /// loop inserted the raw underscore form (`"psychic_warrior"`) as the
+    /// `class_books` key; `class_feature_owner` clones and returns that
+    /// exact candidate string on a match (its internal comparison
+    /// normalizes underscores to spaces, but the RETURNED owner string is
+    /// the original, unconverted key), so the resolved owner never equalled
+    /// `corpus_class_names`'s naturally space-joined `"psychic warrior"` in
+    /// the downstream safety cross-check. Wired directly against the real
+    /// `modelled_class_books()` output, not a hand-built substitute, so a
+    /// regression in either function turns this test RED.
+    #[test]
+    fn modelled_class_books_space_joins_a_multi_word_untabled_registry_name() {
+        let books = modelled_class_books();
+        assert!(
+            books.contains_key("psychic warrior"),
+            "modelled_class_books() must register the untabled `psychic_warrior` chassis \
+             under its space-joined display name \"psychic warrior\", matching the \
+             CRB-prestige loop's own documented convention; psychic-related keys present: \
+             {:?}",
+            books.keys().filter(|k| k.contains("psychic")).collect::<Vec<_>>()
+        );
+        let owner = class_feature_owner("Psychic Warrior ~ Eternal Warrior", books.keys());
+        assert_eq!(
+            owner,
+            Some("psychic warrior".to_string()),
+            "class_feature_owner's own returned candidate string must already be space-joined \
+             so it can equal corpus_class_names's naturally-spaced form in the downstream \
+             cross-check; got {owner:?}"
+        );
+    }
+
+    /// `SD-34 wave 36 lane A`, fix (a) integration coverage (RED before the
+    /// fix): reproduces wave 35 lane C's own traced real record,
+    /// `ultimate_psionics:class_feature:psychic_warrior_eternal_warrior`
+    /// (`corpus_key: "Psychic Warrior ~ Eternal Warrior"`). `psychic_warrior`
+    /// is a real, computed `untabled_base_class_chassis` chassis (confirmed
+    /// against `tests/fixtures/rules_core/untabled-base-class-chassis.json`)
+    /// AND the corpus separately declares its own `"Psychic Warrior"`
+    /// `Kind::Class` record (`data/corpus/ultimate_psionics/class/
+    /// psychic_warrior.json`, `data.name: "Psychic Warrior"`) -- so it must
+    /// never be reported as an unmodelled corpus class. Populated from the
+    /// real `modelled_class_books()` output (not a hand-picked substitute)
+    /// so the fix (a) space-join is exercised exactly as production runs it.
+    #[test]
+    fn psychic_warrior_class_feature_is_not_misreported_as_an_unmodelled_corpus_class() {
+        let mut facts = EngineFacts::default();
+        for (name, book) in modelled_class_books() {
+            facts.class_books.insert(name, book);
+        }
+        facts.corpus_class_names.insert("psychic warrior".to_string());
+        let unit = CorpusUnit {
+            book: "ultimate_psionics".to_string(),
+            source_book: "ultimate_psionics".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Psychic Warrior ~ Eternal Warrior".to_string(),
+            name: "Eternal Warrior".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "up_abilities_class.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(
+            verdict.evidence,
+            "class_feature_of_unmodelled_corpus_class:psychic_warrior",
+            "psychic_warrior has a real untabled_base_class_chassis chassis and a real corpus \
+             Kind::Class record; it must not be misreported as an unmodelled corpus class \
+             (wave 35 lane C sub-mechanism 1), got status={:?} evidence={:?}",
+            verdict.status,
+            verdict.evidence
+        );
+    }
+
+    /// `SD-34 wave 36 lane A`, fix (b) integration coverage (RED before the
+    /// fix): reproduces wave 35 lane C's own traced real record,
+    /// `pathfinder_unchained:class_feature:unchained_rogue_finesse_
+    /// training_choice` (`corpus_key: "Unchained Rogue ~ Finesse Training
+    /// Choice"`, no `"<Class> Class Feature"` marker in its own
+    /// `type_facet`). `class_feature_owner`'s longest-match tie-break
+    /// resolves `modelled_owner` to PU's own `"unchained_rogue"` registry
+    /// entry over the shorter `"rogue"`, but the corpus never declares a
+    /// standalone `"Unchained Rogue"` `Kind::Class` record (PF Unchained's
+    /// Rogue variant is alternate features grafted onto base Rogue, not a
+    /// separate class file), so the safety cross-check against
+    /// `corpus_class_names` correctly discards that candidate -- and every
+    /// other fallback misses too for this record. The FINAL,
+    /// `corpus_class_names`-only fallback then finds `"rogue"` and, before
+    /// this fix, reported it as unmodelled WITHOUT checking whether `"rogue"`
+    /// is itself a `facts.class_books` member -- which it unambiguously is
+    /// (CRB's own base class, single word, immune to fix (a)'s underscore
+    /// bug).
+    #[test]
+    fn rogue_final_fallback_checks_class_books_membership_before_declaring_unmodelled() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("rogue".to_string(), "core_rulebook");
+        facts.class_books.insert("unchained_rogue".to_string(), "pathfinder_unchained");
+        facts.corpus_class_names.insert("rogue".to_string());
+        let unit = CorpusUnit {
+            book: "pathfinder_unchained".to_string(),
+            source_book: "pathfinder_unchained".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Unchained Rogue ~ Finesse Training Choice".to_string(),
+            name: "Finesse Training Choice".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "pu_abilities_class.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: Some("Unchained Rogue Finesse Damage Choice.SpecialQuality.Extraordinary".to_string()),
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(
+            verdict.evidence,
+            "class_feature_of_unmodelled_corpus_class:rogue",
+            "the final corpus_class_names-only fallback must check facts.class_books \
+             membership before declaring a class unmodelled -- \"rogue\" IS a class_books \
+             member (CRB base class); got status={:?} evidence={:?}",
+            verdict.status,
+            verdict.evidence
+        );
+    }
+
+    /// NEGATIVE CONTROL for fix (b): a class the corpus declares but this
+    /// engine genuinely does NOT model (no `facts.class_books` entry under
+    /// any spelling) must still read `class_feature_of_unmodelled_corpus_
+    /// class` -- the membership check only suppresses the branch for a
+    /// class that really is modelled, it must not swallow the genuine
+    /// Sub-mechanism 5 (832-unit, 60-class) population this same branch
+    /// also serves.
+    #[test]
+    fn a_genuinely_unmodelled_corpus_class_still_reads_unmodelled_after_the_membership_check() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("rogue".to_string(), "core_rulebook");
+        facts.corpus_class_names.insert("horizon walker".to_string());
+        let unit = CorpusUnit {
+            book: "ultimate_psionics".to_string(),
+            source_book: "ultimate_psionics".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Horizon Walker ~ Terrain Mastery".to_string(),
+            name: "Terrain Mastery".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "ds_abilities_class.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_of_unmodelled_corpus_class:horizon_walker"
         );
     }
 }
@@ -22198,6 +27456,406 @@ mod class_feature_exact_suffix_grounded_tests {
             "trapfinding_bonus",
         ));
     }
+
+    /// SD-34 wave 38 lane C finding (`mine-bucket-d` row 37): a real,
+    /// already-wired per-feature compute function (`ground_antipaladin_
+    /// class_features`, `pilot_compute/mod.rs`, live since SD-32 card 11
+    /// T12) emits ids shaped `class_feature.untabled.<owner>.<feature_slug>.
+    /// <magnitude_descriptor>` -- a THIRD dot segment naming which quantity
+    /// the feature computes (`dc`, `known`, `uses_per_day`, ...), distinct
+    /// from every id shape the four tests above already cover (which are
+    /// all EXACTLY TWO segments after `owner`, or one). Neither the exact
+    /// check (`id.rsplit('.').next() == feature_slug`, which sees the
+    /// magnitude-descriptor segment, not the feature) nor the underscore-
+    /// suffix fallback (which only strips a trailing `_<word>` from a
+    /// SINGLE dot segment, never crosses a dot boundary) recognizes this
+    /// shape, so 7 real, already-grounded Antipaladin features (and, by the
+    /// same convention, sibling units on every other class this dispatch
+    /// chain also covers -- Cryptic/Dread/Marksman/Soulknife/Aegis/
+    /// Tactician/Vitalist/Wilder/Kineticist/Medium/Mesmerist/Occultist/
+    /// Psychic/Spiritualist/Magus/Shifter/Vigilante/Psion) stayed
+    /// `engine-does-not-hold` under `class_feature_no_dedicated_magnitude_
+    /// id_matched_the_record_slug` despite the engine genuinely holding
+    /// and computing them. Id quoted verbatim from `ground_antipaladin_
+    /// class_features`'s own `cruelty.dc` explanation.
+    #[test]
+    fn a_dot_separated_magnitude_descriptor_grounds_via_its_own_feature_segment() {
+        let ids = ["class_feature.untabled.antipaladin.cruelty.dc".to_string()];
+        assert!(class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "antipaladin",
+            "Antipaladin",
+            "cruelty",
+        ));
+    }
+
+    /// The same shape must resolve correctly even when the feature's own
+    /// slug is itself a multi-word underscored phrase (`touch_of_
+    /// corruption`) and the magnitude-descriptor segment is ALSO a
+    /// multi-word underscored phrase (`uses_per_day`) -- proving the new
+    /// check splits on the DOT boundary, not on underscores, so it never
+    /// depends on `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` recognizing the
+    /// descriptor word at all. Id quoted verbatim from the same function's
+    /// `touch_of_corruption.uses_per_day` explanation.
+    #[test]
+    fn a_multi_word_feature_slug_and_a_multi_word_descriptor_both_resolve_on_dot_boundaries() {
+        let ids =
+            ["class_feature.untabled.antipaladin.touch_of_corruption.uses_per_day".to_string()];
+        assert!(class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "antipaladin",
+            "Antipaladin",
+            "touch_of_corruption",
+        ));
+    }
+
+    /// Negative control: the new second-to-last-segment check must NOT
+    /// widen into a bare substring/contains scan. An id genuinely belonging
+    /// to a DIFFERENT feature of the SAME class (real, quoted verbatim --
+    /// `unholy_resilience`'s own explanation) must not credit `cruelty`
+    /// merely because both live under the same `.antipaladin.` owner.
+    #[test]
+    fn a_dot_separated_id_for_a_different_feature_does_not_cross_credit() {
+        let ids =
+            ["class_feature.untabled.antipaladin.unholy_resilience.save_bonus".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "antipaladin",
+            "Antipaladin",
+            "cruelty",
+        ));
+    }
+
+    /// Negative control, the shape the existing `a_negation_explanation_
+    /// cannot_ground_an_active_state_record` test above already proves for
+    /// the OLD trailing-segment check: confirms the NEW second-to-last
+    /// check does not accidentally reopen it. `bloodrage_execution.
+    /// not_raging`'s own second-to-last segment is `bloodrage_execution`,
+    /// never `raging`, so `feature_slug = "raging"` still cannot ground.
+    #[test]
+    fn the_second_to_last_segment_check_does_not_reopen_the_negation_regression() {
+        let ids =
+            ["class_feature.acg.bloodrager.bloodrage_execution.not_raging".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "bloodrager",
+            "Bloodrager",
+            "raging",
+        ));
+    }
+
+    /// Live-confirmed false-positive #1 (found via a temporary explanation-
+    /// id dump, not assumed): a bare/no-`~` corpus_key unit's `feature_slug`
+    /// falls back to `unit.name` and equals `owner` exactly
+    /// (`class_feature:arcanist`, id quoted verbatim from `pilot_compute/
+    /// mod.rs`'s generic per-class `class_chassis.<class>.caster_level`
+    /// table). Without the `feature_slug != owner` guard this credited the
+    /// bare class overview record off a chassis fact that names no
+    /// per-feature magnitude at all.
+    #[test]
+    fn a_generic_class_chassis_fact_cannot_ground_the_bare_class_name_unit() {
+        let ids = ["class_chassis.arcanist.caster_level".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "arcanist",
+            "Arcanist",
+            "arcanist",
+        ));
+    }
+
+    /// Live-confirmed false-positive #2 (found via the same dump): a
+    /// diagnostic-mirror id (`push_pu_class_feature_records`'s
+    /// `!record.is_granted` branch, id quoted verbatim) is pushed into BOTH
+    /// `diagnostics` and `explanations` with `value: 0` -- its own
+    /// second-to-last segment genuinely equals a real feature's slug
+    /// (`uncanny_dodge`), but its trailing segment is the diagnostic-only
+    /// `unsupported` marker, not a magnitude descriptor. Must stay refused
+    /// even though `feature_slug != owner` holds here.
+    #[test]
+    fn a_diagnostic_mirror_id_ending_in_unsupported_cannot_ground_via_its_own_feature_segment() {
+        let ids = [
+            "class_feature.pu.unchained_barbarian.corpus_record.uncanny_dodge.unsupported"
+                .to_string(),
+        ];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "unchained_barbarian",
+            "Unchained Barbarian",
+            "uncanny_dodge",
+        ));
+    }
+}
+
+/// Wave 39 lane A: every one of `CLASS_FEATURE_ID_KNOWN_SYNONYMS`'s 20
+/// entries proven to actually ground, plus the negative controls this
+/// function's own guards exist for.
+#[cfg(test)]
+mod class_feature_known_synonym_grounded_tests {
+    use super::*;
+
+    /// Every `(owner, feature_slug, id)` triple in the live table grounds
+    /// when the id is present, using each entry's own real `owner`'s
+    /// spaced group text (`class_name_as_group_text`).
+    #[test]
+    fn every_known_synonym_table_entry_grounds_via_its_own_exact_id() {
+        for (owner, feature_slug, id) in CLASS_FEATURE_ID_KNOWN_SYNONYMS {
+            let ids = [(*id).to_string()];
+            let group = class_name_as_group_text(owner);
+            assert!(
+                class_feature_known_synonym_grounded(ids.iter(), owner, &group, feature_slug),
+                "expected ({owner}, {feature_slug}) to ground via {id}",
+            );
+        }
+    }
+
+    /// An owner/feature_slug pair the table does not name (even a real
+    /// owner from the table) must not ground -- proves the lookup is a
+    /// literal table hit, never a fallback that invents a match.
+    #[test]
+    fn an_unlisted_feature_slug_for_a_known_owner_does_not_ground() {
+        let ids = ["class_feature.pu.unchained_monk.armor_class_bonus".to_string()];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "unchained_monk",
+            "Unchained Monk",
+            "some_feature_not_in_the_table",
+        ));
+    }
+
+    /// A known (owner, feature_slug) pair whose expected id is simply
+    /// absent from `explanation_ids` (the engine never emitted it for this
+    /// character) must not ground -- the table names what to look FOR, it
+    /// does not manufacture the id.
+    #[test]
+    fn a_known_pair_with_the_expected_id_absent_does_not_ground() {
+        let ids: [String; 0] = [];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "unchained_monk",
+            "Unchained Monk",
+            "ac_bonus",
+        ));
+    }
+
+    /// A near-miss id (one extra trailing character) must not ground --
+    /// proves the check is full literal-string equality, never a prefix or
+    /// substring scan that could widen past the table's own exact strings.
+    #[test]
+    fn a_near_miss_id_does_not_ground_via_substring_or_prefix() {
+        let ids = ["class_feature.pu.unchained_monk.armor_class_bonus_level_component"
+            .to_string()];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "unchained_monk",
+            "Unchained Monk",
+            "ac_bonus",
+        ));
+    }
+
+    /// The operator's own worked example, restated for this check: an
+    /// archetype/variant-qualified group must not ground off a base-owner
+    /// table entry's id purely because the substring guard on `owner`
+    /// would otherwise pass.
+    #[test]
+    fn an_archetype_qualified_group_cannot_ground_via_the_synonym_table() {
+        let ids = ["class_feature.pu.unchained_monk.armor_class_bonus".to_string()];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "unchained_monk",
+            "Ironskin Monk",
+            "ac_bonus",
+        ));
+    }
+
+    /// Wave 40 lane A: the 7 CRB entries this cycle adds, pinned as a
+    /// literal manifest -- catches a typo'd id or slug silently landing
+    /// (the generic `every_known_synonym_table_entry_grounds_via_its_own_
+    /// exact_id` test above proves each entry grounds via ITSELF, which
+    /// would still pass even if the wrong id were typo'd consistently in
+    /// both the table and this manifest; this test independently restates
+    /// the exact expected string so a mismatch between the two is caught).
+    #[test]
+    fn wave_40_lane_a_entries_match_the_receipts_own_manifest() {
+        let expected: &[(&str, &str, &str)] = &[
+            ("monk", "abundant_step", "class_chassis.monk.abundant_step_caster_level"),
+            ("monk", "diamond_soul", "class_chassis.monk.diamond_soul_spell_resistance"),
+            ("monk", "maneuver_training", "class_chassis.monk.maneuver_training_cmb_bonus"),
+            ("monk", "perfect_self", "class_chassis.monk.perfect_self_damage_reduction"),
+            (
+                "bard",
+                "bardic_performance",
+                "class_chassis.bard.bardic_performance_rounds_per_day",
+            ),
+            (
+                "ranger",
+                "combat_style_feat",
+                "class_feature.ranger.combat_style_feat_pool.slot_count",
+            ),
+            (
+                "sorcerer",
+                "spells",
+                "class_chassis.sorcerer.spontaneous.spell_level_access",
+            ),
+        ];
+        for entry in expected {
+            assert!(
+                CLASS_FEATURE_ID_KNOWN_SYNONYMS.contains(entry),
+                "expected {entry:?} to be a live table entry",
+            );
+        }
+    }
+
+    /// Bard's Bardic Performance and Sorcerer's Spells each had a FIRST
+    /// candidate id, read from source alone, that the live sweep dump
+    /// proved unsafe (Bard's `.active` never appears in any sweep pass;
+    /// Sorcerer's `known_spells` is always `{0}`) -- proves this table was
+    /// NOT built with either of those two ids, so a future edit
+    /// reintroducing one of them (e.g. "cleaning up" back to the
+    /// source-obvious id) regresses silently without this guard.
+    #[test]
+    fn bard_and_sorcerer_do_not_alias_to_their_own_unsafe_first_candidates() {
+        let unsafe_ids = [
+            "class_feature.bard.bardic_performance_execution.active",
+            "class_spell.sorcerer.known_spells",
+        ];
+        for (_, _, id) in CLASS_FEATURE_ID_KNOWN_SYNONYMS {
+            assert!(
+                !unsafe_ids.contains(id),
+                "{id} was proven unsafe this cycle (never emitted, or always zero) and must not \
+                 be a table entry",
+            );
+        }
+    }
+
+    /// Druid's Nature Bond remains declined (its only id is a permanent
+    /// `+0`-by-design recognition record, unaffected by wave 41's own
+    /// correction) -- proves it was not silently added for its feature
+    /// slug. Fighter's Weapon Training and Psychic's Phrenic Pool are
+    /// checked in the SAME negative shape by
+    /// `fighter_and_psychic_are_fixed_via_canonical_seeds_not_the_synonym_
+    /// table` below (wave 41 resolved both, but via `canonical_seeds_for()`,
+    /// never a table entry) -- kept as a separate test because the reason
+    /// differs (fixed-elsewhere vs. genuinely declined).
+    #[test]
+    fn declined_units_are_not_in_the_table() {
+        let declined: &[(&str, &str)] = &[("druid", "nature_bond")];
+        for (owner, slug) in declined {
+            assert!(
+                !CLASS_FEATURE_ID_KNOWN_SYNONYMS
+                    .iter()
+                    .any(|(o, s, _)| o == owner && s == slug),
+                "({owner}, {slug}) was deliberately declined this cycle and must not be a table \
+                 entry",
+            );
+        }
+    }
+
+    /// Wave 41: `decisions.md §22`'s CORRECTION (2026-09-04) -- Fighter's
+    /// Weapon Training and Psychic's Phrenic Pool were wrongly believed to
+    /// need a bespoke fix each; both are actually fixed by a
+    /// `canonical_seeds_for()` match arm (see that function), never a
+    /// `CLASS_FEATURE_ID_KNOWN_SYNONYMS` entry -- their real explanation ids
+    /// (`class_feature.fighter.weapon_training`,
+    /// `class_feature.untabled.psychic.phrenic_pool.value`) already ground
+    /// via the EXISTING exact-suffix / second-to-last-segment checks the
+    /// instant the sweep observes them, with no synonym needed. Proves
+    /// neither owner/slug pair was also (redundantly, or by mistake) added
+    /// to the table.
+    #[test]
+    fn fighter_and_psychic_are_fixed_via_canonical_seeds_not_the_synonym_table() {
+        let fixed_elsewhere: &[(&str, &str)] =
+            &[("fighter", "weapon_training"), ("psychic", "phrenic_pool")];
+        for (owner, slug) in fixed_elsewhere {
+            assert!(
+                !CLASS_FEATURE_ID_KNOWN_SYNONYMS
+                    .iter()
+                    .any(|(o, s, _)| o == owner && s == slug),
+                "({owner}, {slug}) is fixed via canonical_seeds_for(), not a table entry",
+            );
+        }
+    }
+
+    /// Wave 41: Monk's Stunning Fist -- the third of `decisions.md §22`'s
+    /// three corrected units, and the one genuinely fixed BY a table entry
+    /// (its real id already carries `group: "standalone"`, so no
+    /// `canonical_seeds_for()` seed could ever make the exact-suffix/
+    /// suffix-strip checks recognize it; only this table's own pure
+    /// `(owner, feature_slug)` -> id lookup, gated on the record's own
+    /// corpus `group` rather than the id, can).
+    #[test]
+    fn monk_stunning_fist_grounds_via_the_synonym_table() {
+        let ids = ["feat.standalone.stunning_fist.save_dc".to_string()];
+        assert!(class_feature_known_synonym_grounded(ids.iter(), "monk", "Monk", "stunning_fist"));
+    }
+
+    /// Wave 40 lane B: the 5 base-Summoner entries this cycle adds, pinned
+    /// as a literal manifest independent of the table itself -- same
+    /// discipline as `wave_40_lane_a_entries_match_the_receipts_own_manifest`.
+    #[test]
+    fn wave_40_lane_b_entries_match_the_receipts_own_manifest() {
+        let expected: &[(&str, &str, &str)] = &[
+            (
+                "summoner",
+                "bond_senses",
+                "class_feature.apg.summoner.bond_senses_rounds_per_day",
+            ),
+            (
+                "summoner",
+                "makers_call",
+                "class_feature.apg.summoner.makers_call_uses_per_day",
+            ),
+            (
+                "summoner",
+                "merge_forms",
+                "class_feature.apg.summoner.merge_forms_rounds_per_day",
+            ),
+            (
+                "summoner",
+                "twin_eidolon",
+                "class_feature.apg.summoner.twin_eidolon_minutes_per_day",
+            ),
+            (
+                "summoner",
+                "summon_monster",
+                "class_feature.apg.summoner.summon_monster_uses_per_day",
+            ),
+        ];
+        for entry in expected {
+            assert!(
+                CLASS_FEATURE_ID_KNOWN_SYNONYMS.contains(entry),
+                "expected {entry:?} to be a live table entry",
+            );
+        }
+    }
+
+    /// `Summoner ~ Greater Aspect` (this wave's 6th unit) was investigated
+    /// and deliberately declined: no compute function anywhere names it for
+    /// base (non-Unchained) Summoner. Proves it was not silently added.
+    #[test]
+    fn summoner_greater_aspect_is_not_in_the_table() {
+        assert!(
+            !CLASS_FEATURE_ID_KNOWN_SYNONYMS
+                .iter()
+                .any(|(o, s, _)| *o == "summoner" && *s == "greater_aspect"),
+            "(summoner, greater_aspect) was deliberately declined this cycle (no compute function \
+             exists) and must not be a table entry",
+        );
+    }
+
+    /// Guards the specific `owner == "summoner"` group check: base Summoner
+    /// grounds via the table only under the group text `"Summoner"`, never
+    /// `"Unchained Summoner"` (a different owner already in this table with
+    /// its own entries) -- the two must not cross-credit each other's ids.
+    #[test]
+    fn base_summoner_does_not_ground_via_unchained_summoners_own_entries() {
+        let ids = ["class_feature.pu.unchained_summoner.summon_monster_spell_level".to_string()];
+        assert!(!class_feature_known_synonym_grounded(
+            ids.iter(),
+            "summoner",
+            "Summoner",
+            "summon_monster",
+        ));
+    }
 }
 
 /// `SD31-E5-F1-003`: `diagnostic_id_names_feature`'s prefix-strip fix and
@@ -22334,10 +27992,18 @@ mod modelled_class_books_registry_tests {
         assert_eq!(registry.len(), 20, "registry population drifted; re-run its own census script");
         for meta in registry {
             let bare = meta.class_id.strip_prefix("class:").unwrap_or(meta.class_id.as_str());
+            // SD-34 wave 36 lane A fixed the registration loop to space-join
+            // a multi-word `bare_name` (matching the CRB-prestige loop's own
+            // documented convention and `corpus_class_names`'s naturally
+            // space-joined form) instead of leaving raw underscores in the
+            // key -- look the class up the same way production now stores
+            // it, not by the registry's own underscore-slugged `class_id`.
+            let lookup_key = bare.replace('_', " ");
             assert_eq!(
-                class_books.get(bare).copied(),
+                class_books.get(lookup_key.as_str()).copied(),
                 Some(meta.source_book.as_str()),
-                "{bare} (registry entry) must be registered under its own source_book"
+                "{bare} (registry entry) must be registered under its own source_book, keyed \
+                 by its space-joined display name {lookup_key:?}"
             );
         }
         // Spot check two by name, so a reader sees a concrete example rather
@@ -24021,6 +29687,56 @@ mod class_probe_tests {
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "class_absent_from_ClassId_ALL_and_book_class_id_enums");
     }
+
+    /// SD-34 wave 33 lane C: the class consumer-delta probe, run against the
+    /// FULL `modelled_class_books()` set (71 classes, not the CLI's former
+    /// 27-class stale subset -- see `--class-probe`'s own fix note), must
+    /// observe a real `Wired` outcome for every one of the nine classes this
+    /// cycle gave both a `has_supported_class_chassis` gate arm AND a real
+    /// `CLASS_WEAPON_PROFICIENCIES` row. This is `classify`'s own
+    /// `Kind::Class` arm's grounding condition, exercised end to end.
+    #[test]
+    fn nine_classes_are_now_probe_observed_wired_against_the_full_modelled_set() {
+        let fixture = fixture();
+        let class_books = modelled_class_books();
+        let modelled: BTreeSet<String> = class_books.keys().cloned().collect();
+        let baseline = class_probe_baseline_numbers(&fixture);
+        for name in [
+            "kineticist", "medium", "mesmerist", "occultist", "vigilante", "psychic",
+            "spiritualist", "psion", "shifter",
+        ] {
+            assert!(class_books.contains_key(name), "{name} must be in modelled_class_books()");
+            let outcome = probe_class_name(&fixture, name, &modelled, baseline.as_ref());
+            assert!(
+                matches!(outcome, ClassProbeOutcome::Wired { .. }),
+                "{name} must now be observed Wired, got {outcome:?}"
+            );
+        }
+    }
+
+    /// The ten prestige classes in bucket D's 38-unit remainder correctly
+    /// stay unwired: `prestige_class_entry_gate` deliberately returns no
+    /// chassis magnitude, so `has_supported_class_chassis` was NOT widened
+    /// for them (see that gate's own doc comment) and the probe must keep
+    /// reporting them un-grounded rather than silently promoting them.
+    #[test]
+    fn the_ten_prestige_classes_stay_unwired() {
+        let fixture = fixture();
+        let class_books = modelled_class_books();
+        let modelled: BTreeSet<String> = class_books.keys().cloned().collect();
+        let baseline = class_probe_baseline_numbers(&fixture);
+        for name in [
+            "arcane archer", "arcane trickster", "assassin", "dragon disciple", "duelist",
+            "eldritch knight", "loremaster", "mystic theurge", "pathfinder chronicler",
+            "shadowdancer",
+        ] {
+            let outcome = probe_class_name(&fixture, name, &modelled, baseline.as_ref());
+            assert!(
+                !matches!(outcome, ClassProbeOutcome::Wired { .. }),
+                "{name} (prestige, no chassis by design) must stay unwired, got {outcome:?}"
+            );
+        }
+    }
 }
 
 #[cfg(test)]
@@ -25606,4 +31322,549 @@ mod reattribution_widening_tests {
         assert!(!by_name_only.holds_unit_by_key("bestiary_1", &unit));
         assert!(by_key.holds_unit_by_key("bestiary_1", &unit));
     }
+}
+
+/// SD-34 wave 49 (`decisions.md §22`'s WAVE 49 UPDATE): real-pipeline
+/// reachability proof for every one of this wave's 33 probe functions --
+/// against the REAL shared fixture and the REAL `compute_pilot_base_
+/// chassis` pipeline (via `class_sweep_input`, the same entry point the
+/// corpus-wide union sweep uses for every modelled class), proving each
+/// new class-feature block resolves end to end, not merely that the pure
+/// formula functions return the right numbers in isolation. One test per
+/// class, following wave 46-48's own established pattern.
+#[cfg(test)]
+mod wave49_registered_prestige_probe_reachability_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    #[test]
+    fn cyphermage_wave49_is_wired_end_to_end() {
+        let wired = probe_cyphermage_wave49_wiring(&fixture());
+        for expected in [
+            "Cyphermage ~ Analyze Scroll",
+            "Cyphermage ~ Cypher Lore",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn psychic_fist_wave49_is_wired_end_to_end() {
+        let wired = probe_psychic_fist_wave49_wiring(&fixture());
+        for expected in [
+            "Psychic Fist ~ Infused Body",
+            "Psychic Fist ~ Ki Power",
+            "Psychic Fist ~ Mesmerizing Glow",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn asavir_wave49_is_wired_end_to_end() {
+        let wired = probe_asavir_wave49_wiring(&fixture());
+        for expected in [
+            "Asavir ~ Camaraderie",
+            "Asavir ~ Djinni's Blessing",
+            "Asavir ~ Djinni's Blessing ~ Mount",
+            "Asavir ~ Efreeti's Blessing ~ Mount",
+            "Asavir ~ Equine Bond",
+            "Asavir ~ Janni's Blessing",
+            "Asavir ~ Janni's Blessing ~ Mount",
+            "Asavir ~ Marid's Blessing ~ Mount",
+            "Asavir ~ Shaitan's Blessing",
+            "Asavir ~ Thunderous Charge",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn metamorph_wave49_is_wired_end_to_end() {
+        let wired = probe_metamorph_wave49_wiring(&fixture());
+        for expected in [
+            "Metamorph ~ Alter Metamorphosis",
+            "Metamorph ~ Free Shift",
+            "Metamorph ~ Natural Shifter",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn war_mind_wave49_is_wired_end_to_end() {
+        let wired = probe_war_mind_wave49_wiring(&fixture());
+        for expected in [
+            "War Mind ~ Chain of Defensive Posture",
+            "War Mind ~ Chain of Personal Superiority",
+            "War Mind ~ Enduring Body",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn hellknight_wave49_is_wired_end_to_end() {
+        let wired = probe_hellknight_wave49_wiring(&fixture());
+        for expected in [
+            "Detect Chaos ~ HK",
+            "Discern Lies ~ HK",
+            "Smite Chaos ~ HK",
+            "Hellknight Armor ~ HK",
+            "Hellknight Armor Benefits",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn adaptive_warrior_wave49_is_wired_end_to_end() {
+        let wired = probe_adaptive_warrior_wave49_wiring(&fixture());
+        for expected in [
+            "Adaptive Warrior ~ Combine Fighting Styles",
+            "Adaptive Warrior ~ Counter Fighting Style",
+            "Adaptive Warrior ~ Examine Technique",
+            "Adaptive Warrior ~ Extended Examination",
+            "Adaptive Warrior ~ Mimic Skill",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn sanguine_angel_wave49_is_wired_end_to_end() {
+        let wired = probe_sanguine_angel_wave49_wiring(&fixture());
+        for expected in [
+            "Sanguine Angel ~ Armored Angel",
+            "Sanguine Angel ~ Mystique of Ardad Lili",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn body_snatcher_wave49_is_wired_end_to_end() {
+        let wired = probe_body_snatcher_wave49_wiring(&fixture());
+        for expected in [
+            "Body Snatcher ~ Body Thief",
+            "Body Snatcher ~ Death Is Only the Beginning",
+            "Body Snatcher ~ Melding Exchange",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn steel_falcon_wave49_is_wired_end_to_end() {
+        let wired = probe_steel_falcon_wave49_wiring(&fixture());
+        for expected in [
+            "Steel Falcon ~ Chainbreaker",
+            "Steel Falcon ~ Enemy of Slavers",
+            "Steel Falcon ~ Sailor and Survivalist",
+            "Steel Falcon ~ Talmandor's Blessing",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn lantern_bearer_wave49_is_wired_end_to_end() {
+        let wired = probe_lantern_bearer_wave49_wiring(&fixture());
+        for expected in [
+            "Lantern Bearer ~ Favored Enemy",
+            "Lantern Bearer ~ Proven Weapon Familiarity",
+            "Lantern Bearer ~ Superior Discernment",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn storm_kindler_wave49_is_wired_end_to_end() {
+        let wired = probe_storm_kindler_wave49_wiring(&fixture());
+        for expected in [
+            "Storm Kindler ~ Aura of Calm",
+            "Storm Kindler ~ Oceanic Spirit",
+            "Storm Kindler ~ Storm Shape",
+            "Storm Kindler ~ Weather's Fury",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn westcrown_devil_wave49_is_wired_end_to_end() {
+        let wired = probe_westcrown_devil_wave49_wiring(&fixture());
+        for expected in [
+            "Westcrown Devil ~ Council's Secret",
+            "Westcrown Devil ~ Founders' Favor",
+            "Westcrown Devil ~ Sneak Attack",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn pyrokineticist_wave49_is_wired_end_to_end() {
+        let wired = probe_pyrokineticist_wave49_wiring(&fixture());
+        for expected in [
+            "Pyrokineticist ~ Bolt of Fire",
+            "Pyrokineticist ~ Fire Adaptation",
+            "Pyrokineticist ~ Hand Afire",
+            "Pyrokineticist ~ Leech Heat",
+            "Pyrokineticist ~ Manipulate Blaze",
+            "Pyrokineticist ~ Nimbus",
+            "Pyrokineticist ~ Penetrating Fire",
+            "Pyrokineticist ~ Weapon Afire",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn aspis_agent_wave49_is_wired_end_to_end() {
+        let wired = probe_aspis_agent_wave49_wiring(&fixture());
+        for expected in [
+            "Aspis Agent ~ Agency Secrets",
+            "Aspis Agent ~ Sneak Attack",
+            "Aspis Agent ~ Trap Sense",
+            "Aspis Agent ~ Trapfinding",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn gray_corsair_wave49_is_wired_end_to_end() {
+        let wired = probe_gray_corsair_wave49_wiring(&fixture());
+        for expected in [
+            "Gray Corsair ~ Favored Port",
+            "Gray Corsair ~ Slaver Slayer",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn pathfinder_savant_wave49_is_wired_end_to_end() {
+        let wired = probe_pathfinder_savant_wave49_wiring(&fixture());
+        for expected in [
+            "Pathfinder Savant ~ Master Scholar",
+            "Pathfinder Savant ~ Esoteric Magic",
+            "Pathfinder Savant ~ Quick Identification",
+            "Pathfinder Savant ~ Sigil Master",
+            "Pathfinder Savant ~ Analyze Dweomer",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn rivethun_emissary_wave49_is_wired_end_to_end() {
+        let wired = probe_rivethun_emissary_wave49_wiring(&fixture());
+        for expected in [
+            "Rivethun Emissary ~ Enhanced Spirit Animal",
+            "Rivethun Emissary ~ Parley",
+            "Rivethun Emissary ~ Sixth Sense",
+            "Rivethun Emissary ~ Spirit Animal",
+            "Rivethun Emissary ~ Spirit Bond",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn student_of_war_wave49_is_wired_end_to_end() {
+        let wired = probe_student_of_war_wave49_wiring(&fixture());
+        {
+            let expected = "Student of War ~ Additional Skill";
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn diabolist_wave49_is_wired_end_to_end() {
+        let wired = probe_diabolist_wave49_wiring(&fixture());
+        for expected in [
+            "Diabolist ~ Channel Hellfire",
+            "Diabolist ~ Infernal Transport",
+            "Diabolist ~ Damned",
+            "Diabolist ~ Infernal Charisma",
+            "Diabolist ~ Heresy",
+            "Diabolist ~ Hellfire Ray",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn lion_blade_wave49_is_wired_end_to_end() {
+        let wired = probe_lion_blade_wave49_wiring(&fixture());
+        for expected in [
+            "Lion Blade ~ Expeditious Advance",
+            "Lion Blade ~ Silent Soul",
+            "Lion Blade ~ Sneak Attack",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn bellflower_tiller_wave49_is_wired_end_to_end() {
+        let wired = probe_bellflower_tiller_wave49_wiring(&fixture());
+        for expected in [
+            "Bellflower Tiller ~ Bellflower Crop",
+            "Bellflower Tiller ~ Crop Guardian",
+            "Bellflower Tiller ~ Sneak Attack",
+            "Bellflower Tiller ~ Swift Sower",
+            "Bellflower Tiller ~ Teamwork Feat",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn hellknight_signifer_wave49_is_wired_end_to_end() {
+        let wired = probe_hellknight_signifer_wave49_wiring(&fixture());
+        for expected in [
+            "Hellknight Signifer ~ Assiduous Gaze",
+            "Hellknight Signifer ~ Signifer Mask",
+            "Hellknight Signifer ~ Infernal Resilience",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn mystic_archer_wave49_is_wired_end_to_end() {
+        let wired = probe_mystic_archer_wave49_wiring(&fixture());
+        for expected in [
+            "Mystic Archer ~ Heightened Senses",
+            "Mystic Archer ~ Blindsense",
+            "Mystic Archer ~ Blindsight",
+            "Mystic Archer ~ Tremorsense",
+            "Mystic Archer ~ Inevitable Strike",
+            "Mystic Archer ~ Ranged Sneak Attack",
+            "Mystic Archer ~ Unhindered Vision",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn mammoth_rider_wave49_is_wired_end_to_end() {
+        let wired = probe_mammoth_rider_wave49_wiring(&fixture());
+        for expected in [
+            "Mammoth Rider ~ Born Survivor",
+            "Mammoth Rider ~ Gigantic Steed",
+            "Mammoth Rider ~ Rugged Steed",
+            "Mammoth Rider ~ Steed",
+            "Mammoth Rider ~ Steed's Reach",
+            "Mammoth Rider ~ Wild Coercion",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn demoniac_wave49_is_wired_end_to_end() {
+        let wired = probe_demoniac_wave49_wiring(&fixture());
+        for expected in [
+            "Demoniac ~ Summon Demon I",
+            "Demoniac ~ Summon Demon II",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn master_chymist_wave49_is_wired_end_to_end() {
+        let wired = probe_master_chymist_wave49_wiring(&fixture());
+        for expected in [
+            "Master Chymist ~ Advanced Mutagen",
+            "Master Chymist ~ Bomb-Thrower",
+            "Master Chymist ~ Brutality",
+            "Master Chymist ~ Extracts per Day",
+            "Master Chymist ~ Mutate",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn enchanting_courtesan_wave49_is_wired_end_to_end() {
+        let wired = probe_enchanting_courtesan_wave49_wiring(&fixture());
+        for expected in [
+            "Enchanting Courtesan ~ Hidden Spell",
+            "Enchanting Courtesan ~ Seductive Intuition",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn dark_tempest_wave49_is_wired_end_to_end() {
+        let wired = probe_dark_tempest_wave49_wiring(&fixture());
+        for expected in [
+            "Dark Tempest ~ Blade Skills",
+            "Dark Tempest ~ Diverse Training",
+            "Dark Tempest ~ Expanded Power List",
+            "Dark Tempest ~ Power Strike",
+            "Dark Tempest ~ Psychic Strike",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn battle_herald_wave49_is_wired_end_to_end() {
+        let wired = probe_battle_herald_wave49_wiring(&fixture());
+        for expected in [
+            "Battle Herald ~ Inspiring Command",
+            "Battle Herald ~ Teamwork Feat",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn master_spy_wave49_is_wired_end_to_end() {
+        let wired = probe_master_spy_wave49_wiring(&fixture());
+        for expected in [
+            "Master Spy ~ Art of Deception",
+            "Master Spy ~ Slippery Mind",
+            "Master Spy ~ Sneak Attack",
+        ] {
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn evangelist_wave49_is_wired_end_to_end() {
+        let wired = probe_evangelist_wave49_wiring(&fixture());
+        {
+            let expected = "Evangelist ~ Single-Minded";
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn ulfen_guard_wave49_is_wired_end_to_end() {
+        let wired = probe_ulfen_guard_wave49_wiring(&fixture());
+        {
+            let expected = "Ulfen Guard ~ Guard Dedications";
+            assert!(
+                wired.contains(expected),
+                "expected the real pipeline to resolve {expected:?}: {wired:?}"
+            );
+        }
+    }
+
 }

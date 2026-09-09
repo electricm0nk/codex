@@ -5,11 +5,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 106,
-      "partial": 15,
-      "not_started": 3,
+      "done": 112,
+      "partial": 12,
+      "not_started": 0,
       "denominator": 124,
-      "pct": 85.5,
+      "pct": 90.3,
       "excluded_from_percentage": 68,
       "standing_breakdown": {
         "origin": 124,
@@ -18,14 +18,14 @@
       "items": [
         {
           "name": "Acid Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.MutantSpecialAbility",
           "standing": "origin",
           "display_name": "Acid Resistance"
         },
         {
           "name": "Acidic Pustules",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.MutantSpecialAbility",
           "standing": "origin",
           "display_name": "Acidic Pustules"
@@ -270,14 +270,14 @@
         },
         {
           "name": "Deformed Arm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MutantDeformity",
           "standing": "origin",
           "display_name": "Deformed Arm"
         },
         {
           "name": "Deformed Leg",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MutantDeformity",
           "standing": "origin",
           "display_name": "Deformed Leg"
@@ -305,7 +305,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.MutantSpecialAbility",
           "standing": "unclassified",
           "display_name": "Disease (SpecialAttack.Supernatural.MutantSpecialAbility)"
@@ -963,7 +963,7 @@
         },
         {
           "name": "Shattered Mind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MutantDeformity",
           "standing": "origin",
           "display_name": "Shattered Mind"
@@ -1061,7 +1061,7 @@
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpellLike)"
@@ -1334,7 +1334,7 @@
         },
         {
           "name": "Warped Hide",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MutantDeformity",
           "standing": "origin",
           "display_name": "Warped Hide"
@@ -1355,7 +1355,7 @@
         },
         {
           "name": "Weapon Selection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "PetrifiedMaidenWeaponSelection",
           "standing": "origin",
           "display_name": "Weapon Selection"
@@ -1661,8 +1661,8 @@
       "kind": "race_trait",
       "label": "Race Traits",
       "done": 0,
-      "partial": 0,
-      "not_started": 1,
+      "partial": 1,
+      "not_started": 0,
       "denominator": 1,
       "pct": 0.0,
       "excluded_from_percentage": 1,
@@ -1673,14 +1673,14 @@
       "items": [
         {
           "name": "Paralysis",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAtack.Supernatural",
           "standing": "unclassified",
           "display_name": "Paralysis"
         },
         {
           "name": "Resistance to Mind-Affecting",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Resistance to Mind-Affecting"
@@ -1734,8 +1734,8 @@
       "kind": "template",
       "label": "Templates",
       "done": 0,
-      "partial": 0,
-      "not_started": 3,
+      "partial": 3,
+      "not_started": 0,
       "denominator": 3,
       "pct": 0.0,
       "excluded_from_percentage": 1,
@@ -1746,28 +1746,28 @@
       "items": [
         {
           "name": "Blighted Fey",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blighted Fey"
         },
         {
           "name": "Fungoid",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fungoid"
         },
         {
           "name": "Vetala",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vetala"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI]"

@@ -1,6 +1,6 @@
 //! SD-27 Cycle E2.2 — Shape B v1 key-set + key-order conformance test for
 //! the Pathfinder Unchained (PU) corpus cache at
-//! `data/corpus/pathfinder_unchained/{feat,equipment}/*.json`, generated
+//! `data/corpus/pathfinder_unchained/{feat,equipment}/**/*.json`, generated
 //! by `cargo run --bin gen_book_cache -- pathfinder_unchained`
 //! (`src/bin/gen_book_cache.rs`). Reads only the already-generated
 //! files — this test does not require a live PCGen corpus checkout,
@@ -33,19 +33,41 @@ fn cache_dir() -> PathBuf {
     repo_root().join("data/corpus/pathfinder_unchained")
 }
 
+/// Walks `data/corpus/pathfinder_unchained/<kind>/` **recursively**.
+///
+/// Recursion is load-bearing, not defensive tidying. `gen_book_cache` writes a
+/// record either flat (`<kind>/<slug>.json`) or category-nested
+/// (`<kind>/<category>/<slug>.json`), and a record can move between the two
+/// layouts without its content changing at all. `b34bf2b4f0` did exactly that
+/// to PU's four `+0 ABP (Enhancement to ...)` equipmods, relocating them from
+/// `equipment/` to `equipment/equipmods/`; a flat `read_dir` then stopped
+/// seeing them and this file's ceilings read 38/42 and 3/7.
+///
+/// **Those four records were never deleted from the corpus.** What
+/// `e5fd8dddb1` deleted was the four *stale flat duplicates* a regen had
+/// re-created beside the relocated originals. Repinning the ceilings to the
+/// short counts would therefore have deleted a real assertion — the loader was
+/// wrong, not the corpus — so the loader is what changes here. The ceilings
+/// stay at their independently re-verified corpus values of 42 and 7.
 fn load_all(kind: &str) -> Vec<(PathBuf, Value)> {
     let dir = cache_dir().join(kind);
     let mut out = Vec::new();
-    for entry in fs::read_dir(&dir).unwrap_or_else(|e| panic!("read_dir {}: {e}", dir.display())) {
+    load_all_under(&dir, &mut out);
+    out
+}
+
+fn load_all_under(dir: &Path, out: &mut Vec<(PathBuf, Value)>) {
+    for entry in fs::read_dir(dir).unwrap_or_else(|e| panic!("read_dir {}: {e}", dir.display())) {
         let path = entry.unwrap().path();
-        if path.extension().map(|e| e == "json").unwrap_or(false) {
+        if path.is_dir() {
+            load_all_under(&path, out);
+        } else if path.extension().map(|e| e == "json").unwrap_or(false) {
             let text = fs::read_to_string(&path).unwrap_or_else(|e| panic!("read {}: {e}", path.display()));
             let value: Value =
                 serde_json::from_str(&text).unwrap_or_else(|e| panic!("invalid JSON in {}: {e}", path.display()));
             out.push((path, value));
         }
     }
-    out
 }
 
 const ALLOWED_SOURCE_KINDS: &[&str] =

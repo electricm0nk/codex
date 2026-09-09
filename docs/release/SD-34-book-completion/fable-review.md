@@ -1,5 +1,9 @@
 # Fable Review — repo code review + SD-35 backlog assessment
 
+**NOTE 2026-09-07:** the numbers below are as of 2026-09-01 and predate waves 47-50 (roughly
+500 more units closed since) — see `forward-scope-register.md` C1.7 for the current snapshot
+(commit `5f6b18f4e3`).
+
 Started: 2026-08-31. HEAD at start: `3aebc284774cbfa09a84a3d6cb25d60e9b1be447` (tranche/14).
 Operator commission: (1) code review — gaps, improvements, bloat; report + low-risk fixes only; (2) TOP PRIORITY: judge whether the SD pipeline addresses the ~29,283-unit remaining backlog properly and whether processing engines can expedite SD-35+ (propose, don't build). Plan: `~/.claude/plans/model-agile-eagle.md`.
 

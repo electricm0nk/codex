@@ -312,8 +312,16 @@ fn ranger_level_21_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
+            .any(|e| (e.id.starts_with("class_chassis.ranger.")
+                || e.id.starts_with("class_feature.ranger."))
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Ranger's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.ranger.weapon_and_armor_proficiency"),
         "level-21 Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );
@@ -350,8 +358,16 @@ fn multiclass_ranger_level14_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
+            .any(|e| (e.id.starts_with("class_chassis.ranger.")
+                || e.id.starts_with("class_feature.ranger."))
+                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
+                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
+                // receipt.md`): Ranger's own Weapon and Armor Proficiency identity
+                // grant is now genuinely grounded as a level-independent, always-on
+                // +0 record (true since level 1, mirrors the same "no gate to lift"
+                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
+                // this slice's negative control is checking for.
+                && e.id != "class_feature.ranger.weapon_and_armor_proficiency"),
         "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );

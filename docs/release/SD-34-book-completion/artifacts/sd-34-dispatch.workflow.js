@@ -547,8 +547,18 @@ const REGEN_SCHEMA = {
 function regenPrompt(laneSummaries) {
   return 'You are the SINGLE closing cycle of a GATE-REMEDIATION wave for bundle SD-34, in '
     + '/home/ubuntu/workspace/repos/codex on branch ' + BT + 'tranche/14' + BT + '. Three lanes just fixed failing '
-    + 'verify.sh stages. **Your job is the full sweep, NOT a regeneration** — do not run the inventory '
-    + 'regenerator or the dashboard producer (the review names both as silent stamp-droppers).\n\n'
+    + 'verify.sh stages. **Your job is the full sweep, NOT a regeneration.**\n\n'
+    + '**CORRECTION to a warning earlier waves carried, including from me.** Briefs up to wave 27 said '
+    + '"do not run the inventory regenerator or the dashboard producer — both silently drop stamps". '
+    + 'That conflated two different claims and one of them is false:\n'
+    + '  - The INVENTORY REGENERATOR is **guarded**. Losing stamps requires an explicit '
+    + BT + '--allow-stamp-loss' + BT + ' flag; the default path refuses. The fable review rejected the old '
+    + 'retro claim (finding R9-01) as stale, and the guard is visible in ' + BT + 'v06_work_inventory.rs' + BT + '. '
+    + 'It is still not YOUR job this cycle — the point is that it is not forbidden, it is out of scope.\n'
+    + '  - The DASHBOARD PRODUCER hazard is **real and verified**: on timeout it falls back to a stale '
+    + 'cache instead of failing, so a gate can pass on stale data. Do not run it from this cycle.\n\n'
+    + 'Repeat neither claim without checking it. A hazard nobody re-tests outlives the defect and starts '
+    + 'costing real work — this one made a guarded tool look untouchable for several waves.\n\n'
     + '1. ' + BT + 'git fetch origin tranche/14 && git rebase origin/tranche/14' + BT + '.\n'
     + '2. Run ' + BT + 'bash scripts/verify.sh' + BT + ' (full, not quick). It is long — foreground it.\n'
     + '3. Report the stage table: which PASS, which FAIL, and the count of each.\n'
@@ -656,74 +666,225 @@ function salvageNote(branch, what) {
 
 function ucLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
-    title: 'GATE LANE A — the four data/corpus mechanisms that are the last of root-full.\n\n'
-      + 'The gate has gone 14 red -> 5 -> nearly clear. Wave 24`s lane A diagnosed the last root-full\n'
-      + 'failures completely and withheld the fixes only because its territory was PI-only. **You have\n'
-      + 'the corpus grant it lacked.** Read ' + BT + 'artifacts/epic-6-closure/AT-34-E6-001_gate-lane-a_wave24_cycle_receipt.md' + BT + '\n'
-      + 'FIRST — all four are fully diagnosed, none needs further investigation:\n\n'
-      + '1. ' + BT + 'sd27_book_license_record_counts.rs' + BT + ' (2 tests) — 21 books` ' + BT + 'records_processed' + BT + ' and\n'
-      + '   19 books` ' + BT + 'records_redacted' + BT + ' are stale in ' + BT + 'data/corpus/**/LICENSE.json' + BT + '. The receipt\n'
-      + '   captured every book and value live. This is a **guarded LICENSE-only** regeneration, NOT a full\n'
-      + '   corpus regen — a full one has previously destroyed licence metadata and raw_tokens.\n'
-      + '2. ' + BT + 'sd27_equipment_modifier_price_matches_corpus_cost_token.rs' + BT + ' (2 tests) —\n'
-      + '   ' + BT + 'pathfinder_unchained' + BT + ' has 4 genuinely duplicated corpus keys (Special Ability ~ ABP +0 ~\n'
-      + '   {Ammunition,Armor,Shield,Weapon}). That is a GENERATOR defect: find why it emits duplicates\n'
-      + '   before writing corpus. The sibling price count (447,1,126)->(447,1,130) is plausibly the same 4,\n'
-      + '   unconfirmed — confirm it rather than assuming.\n'
-      + '3. ' + BT + 'sd31_class_feature_corpus_key_uniqueness.rs' + BT + ' (1 test) — delete ONE stale leftover:\n'
-      + '   ' + BT + 'data/corpus/adventurers_guide/class_feature/enlightened_bloodrager/bloodline_feat-2.json' + BT + ',\n'
-      + '   superseded at the same source line by ' + BT + 'bloodline_feat.json' + BT + ' after a08973ae35. Verify the\n'
-      + '   supersession before deleting — read both files.\n'
-      + '4. ' + BT + 'v06_corpus_trap_report.rs' + BT + ' (4 tests) — 3,181 findings (249+650+2117+165). Wave 24 judged\n'
-      + '   these belong to the EXISTING AT-34-E1-007/AT-34-E1-008 trap epic, not here. Route them: record\n'
-      + '   the population against that epic and say so. Do NOT silently re-scope 3,181 findings into this\n'
-      + '   card, and do NOT weaken the trap tests to make them pass.\n\n'
-      + '**Territory:** ' + BT + 'src/' + BT + ', ' + BT + 'tests/' + BT + ', ' + BT + 'data/corpus/**' + BT + '.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+    title: 'GATE LANE A — the last three root-full tests.\n\n'
+      + '**Wave 26 closed the big one.** The four trap tests now baseline against\n'
+      + BT + 'docs/governance/corpus-trap-baseline.tsv' + BT + ' instead of asserting zero, and the reconciler\n'
+      + 'fires in BOTH directions (Added / Stale / Unbaselined / Matched) with a mutation proof. That is\n'
+      + 'done — do not revisit it.\n\n'
+      + '**Three tests remain, and wave 26`s own receipt says they were NOT re-derived live.** Treat its\n'
+      + 'numbers as leads, not facts, and measure each yourself before touching anything:\n'
+      + '  - ' + BT + 'tests/sd24_wired_integration_audit.rs' + BT + ' (1 test) — reported as needing the allowlist\n'
+      + '    widened for legitimate "placeholder" prose at ' + BT + 'reach_gate.rs:3192' + BT + '. **Widening an\n'
+      + '    allowlist is the single easiest way to disable a gate by accident.** Read what the audit is\n'
+      + '    actually for, confirm the prose really is legitimate UI text and not a real stub, and if you\n'
+      + '    widen it, name the exact string and why it is not what the audit hunts.\n'
+      + '  - ' + BT + 'tests/sd27_pathfinder_unchained_cache_shape.rs' + BT + ' (2 tests) — reported as 42->38 and\n'
+      + '    7->3 restatements matching the corrected corpus. Those look like consequences of wave 25`s\n'
+      + '    deletion of 4 duplicate PU records; **confirm that causally** (the same deletion already\n'
+      + '    staled a desktop pin at 1144->1140) rather than repinning to whatever the test prints.\n\n'
+      + 'A count changed to match current output is the assertion deleted. State old value, new value,\n'
+      + 'the command, and the commit that caused the change.\n\n'
+      + '**ALSO YOURS THIS WAVE — a confirmed P1 with no owner (fable-review R14-02).** Saving a '
+      + 'character is TWO sequential ' + BT + 'fs::write' + BT + ' calls with no temp-file-and-rename '
+      + '(' + BT + 'src/saved_character/local_store.rs:69,73' + BT + '). A crash between them corrupts the '
+      + 'app`s most valuable artifact — the user`s saved character. I confirmed both writes are still '
+      + 'there at HEAD. The same pattern is in ' + BT + 'src/campaign/local_store.rs' + BT + ' and '
+      + BT + 'src/homebrew_authoring/package_store.rs' + BT + ', so it is systemic, and '
+      + BT + 'scripts/transcribe_companion_tables.py' + BT + ' already carries the correct fix to copy '
+      + '(temp file + atomic rename, SD31-W9-INTEGRATE-001). Write to a temp file and rename; a rename '
+      + 'on the same filesystem is atomic, two writes are not. Prove it with a test that fails on the '
+      + 'old shape.\n\n'
+      + '**Territory (NARROWED this wave — two new lanes now hold the rest of ' + BT + 'src/' + BT + '):** '
+      + BT + 'tests/' + BT + ', ' + BT + 'src/bin/' + BT + ', ' + BT + 'src/pcgen_import/' + BT + ', '
+      + BT + 'src/saved_character/' + BT + ', ' + BT + 'docs/governance/' + BT + '. **Do NOT touch '
+      + BT + 'src/rules_core/pilot_compute/' + BT + ' (lane D) or ' + BT + 'src/campaign/' + BT + ' / '
+      + BT + 'src/homebrew_authoring/' + BT + ' (lane E).**\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 function cLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
-    title: 'GATE LANE B — site-dashboard-check, and the producer timeout behind it.\n\n'
-      + 'Wave 24 closed 6 of the 7 desktop failures. ' + BT + 'site-dashboard-check' + BT + ' is the stage still\n'
-      + 'attributed to your territory. Read ' + BT + '..._gate-lane-b_wave24_cycle_receipt.md' + BT + ' FIRST.\n\n'
-      + 'The committed feeds under ' + BT + 'site/dashboard/' + BT + ' are stale against the current inventory. The\n'
-      + 'obstacle is real and measured, not hypothetical: the producer`s own\n'
-      + BT + 'v06_work_inventory --summary' + BT + ' step times out at its 600s cap when the box is under wave\n'
-      + 'load. Unloaded it takes about 2m26s. **That is contention, not a performance bug — do not raise\n'
-      + 'the cap to hide it.** You are the only heavy lane running, so you have the quiet box; measure it\n'
-      + 'and report the real number.\n\n'
-      + '**The standing hazard, which the review states twice:** do NOT run the inventory regenerator or\n'
-      + 'the dashboard producer from a lane — both can silently drop stamps. If the feed genuinely can\n'
-      + 'only be refreshed by running the producer, say so plainly in your receipt and leave it for the\n'
-      + 'closing sweep. An honest deferral is worth more than a feed refreshed by a tool that ate its own\n'
-      + 'provenance.\n\n'
-      + 'If ' + BT + 'desktop' + BT + ' or ' + BT + 'reach' + BT + ' are still red, the 7th desktop failure is yours too — wave 24\'s\n'
-      + 'receipt names it.\n\n'
-      + '**Territory:** ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+    title: 'GATE LANE B — site-dashboard-check: make the timeout fail loudly instead of lying.\n\n'
+      + '**Wave 26 settled desktop (572/0, genuinely closed) and traced this one to the bottom.** Read\n'
+      + BT + 'artifacts/epic-6-closure/AT-34-E6-001_gate-lane-b_wave26-settle_cycle_receipt.md' + BT + ' FIRST. Its\n'
+      + 'chain, which I re-confirmed in the code:\n'
+      + '  1. ' + BT + 'verify.sh' + BT + '`s stage has no outer timeout wrapper.\n'
+      + '  2. ' + BT + 'publish-site-dashboard.sh --check' + BT + ' still invokes the real producer in check mode.\n'
+      + '  3. The producer bounds ' + BT + 'v06_work_inventory --summary' + BT + ' with ' + BT + 'PF1E_CLASS_STATE_TIMEOUT' + BT + ',\n'
+      + '     default **600s**, against a measured real runtime of **~757s on a quiet box**.\n'
+      + '  4. **On timeout it silently falls back to a stale cache rather than failing.**\n\n'
+      + 'Step 4 is the actual defect and it is worse than a red stage: a gate that passes on stale data\n'
+      + 'tells you the site is current when it is not. **Fix that, not the number.** A timeout should be a\n'
+      + 'loud failure — the stage then either has fresh data or says plainly that it could not get it.\n\n'
+      + 'Raising the cap remains forbidden as a substitute for fixing the silent fallback. If, once the\n'
+      + 'failure is loud, the honest conclusion is that 600s is simply the wrong bound for a 757s job,\n'
+      + 'you may set it deliberately — with the measurement, the margin you chose, and why, in the receipt.\n'
+      + 'That is a different act from hiding a fallback behind a bigger number.\n\n'
+      + '**ALSO YOURS THIS WAVE, AND DO IT FIRST — a confirmed P1 security defect (fable-review '
+      + 'R11-01).** ' + BT + 'resolve_character_root' + BT + ' does '
+      + BT + 'resolve_characters_root(app)?.join(character_id)' + BT + ' at '
+      + BT + 'apps/desktop/src-tauri/src/character_hub.rs:3025' + BT + ' with **zero validation** of '
+      + BT + 'character_id' + BT + ' — no check for ' + BT + '..' + BT + ', path separators, or an absolute '
+      + 'path. It arrives from the frontend and reaches 14+ character-scoped commands, including '
+      + BT + 'delete_character' + BT + ' -> ' + BT + 'fs::remove_dir_all' + BT + '. I confirmed the unguarded '
+      + 'join is still there at HEAD.\n\n'
+      + 'Add ONE shared validator in ' + BT + 'resolve_character_root' + BT + ' so every caller inherits it — '
+      + 'not a check per call site, which is how one gets missed. Reject rather than sanitise: a '
+      + 'rejected id is a bug report, a silently rewritten one hides the caller that sent it. Prove it '
+      + 'with tests for ' + BT + '..' + BT + ', a separator, and an absolute path, and confirm no legitimate '
+      + 'existing id is refused.\n\n'
+      + '**Territory this wave INCLUDES ' + BT + 'scripts/' + BT + '** — wave 26 could not fix this because the owning\n'
+      + 'files sit outside ' + BT + 'apps/desktop/' + BT + ' and ' + BT + 'site/' + BT + '. You have them now. Lane A owns\n'
+      + BT + 'tests/' + BT + ' and ' + BT + 'src/' + BT + '; coordinate on ' + BT + 'scripts/verify.sh' + BT + ' if C needs it.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
 function mLanePrompt() {
   return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
-    title: 'GATE LANE C — hold clippy at zero, then re-measure the whole gate honestly.\n\n'
-      + '**Clippy is at 0/0 and the ceilings are now 0/0 — no slack at all.** Wave 24 fixed 86 root and\n'
-      + '25 desktop warnings and tightened the ceilings to match, which is right, but it means any warning\n'
-      + 'a sibling lane introduces is an instant FAIL. I already had to fix two that appeared right after\n'
-      + '(199ec991e0): ' + BT + 'probe_reachable_race_traits' + BT + ' and ' + BT + 'probe_equipment_key_universe' + BT + '\n'
-      + 'read as dead under ' + BT + '--all-targets' + BT + ' but are called from `#[cfg(test)]` modules — **scoped with\n'
-      + BT + '#[cfg(test)]' + BT + ', not deleted, because deleting them breaks three live tests.** Expect more of\n'
-      + 'that shape and apply the same test: before deleting a "never used" function, grep for callers\n'
-      + 'inside test modules.\n\n'
-      + 'You run LAST. Rebase, re-measure clippy for both crates, and fix anything lanes A and B\n'
-      + 'introduced. Do not raise the ceilings — a ceiling raised to meet the count is the gate disabled.\n\n'
-      + '**Then the real job: re-measure the whole gate and write down what is actually left.** Run\n'
-      + BT + 'bash scripts/verify.sh' + BT + ' (full) and produce the stage table: PASS/FAIL for all 40, the count\n'
-      + 'of each, and for every remaining FAIL a one-line named cause. The bundle has been carrying a\n'
-      + '"14 red" figure from a review that is now several waves stale; nobody has stated the current\n'
-      + 'truth in one place. **Do not report a stage as green because a lane said so — you ran it.**\n\n'
-      + '**Territory:** clippy anywhere, plus the sweep. Lanes A and B own the corpus and the desktop/site\n'
-      + 'trees respectively; report their stages, do not edit their files.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+    title: 'GATE LANE C — hold clippy, then sweep and state the truth.\n\n'
+      + 'Clippy is at 0/0 with ceilings at 0/0 — no slack. Re-measure both crates after A and B land.\n'
+      + '**Before deleting any "never used" function, grep for callers in ' + BT + '#[cfg(test)]' + BT + ' modules** —\n'
+      + 'two such were caught in 199ec991e0 and scoped rather than deleted; deleting them breaks three\n'
+      + 'live tests. Never raise a ceiling.\n\n'
+      + '**Then the sweep.** The bar it has to clear is that the last two sweeps were each wrong about\n'
+      + 'their own results:\n'
+      + '  - wave 28 marked ' + BT + 'denominator-gate' + BT + ' FAIL when a live re-run showed ' + BT + 'violations=0' + BT + ',\n'
+      + '    and claimed "zero green->red" while ' + BT + 'figure-provenance' + BT + ' had genuinely regressed.\n'
+      + '  - wave 25`s lane B reported desktop 572/0 when it was 571/1.\n'
+      + 'Every one of those was caught only by someone re-running the thing afterwards.\n\n'
+      + 'So: **for every stage, PASS or FAIL, paste the command and its last output line.** A status is\n'
+      + 'the output of running it, never a row carried from a prior table. Diff your table against\n'
+      + 'wave 28`s stage by stage and name any PASS that is now FAIL as a regression this wave caused.\n\n'
+      + 'Truth to beat, hand-measured: 3 red of 40 at 2bbc9c87a7, and wave 26 has since closed the trap\n'
+      + 'tests and desktop — so ' + BT + 'root-full' + BT + ' and ' + BT + 'site-dashboard-check' + BT + ' are the live questions.\n'
+      + '**If the gate is green, say so plainly and say what closure now requires.**\n\n'
+      + '**Territory:** clippy anywhere, plus the sweep. Report A`s and B`s stages, do not edit their files.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
 }
 
+
+function dLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'LANE D — the pilot_compute correctness bugs the review confirmed and nobody owns.\n\n'
+      + 'These are NOT gate stages. They are confirmed wrong-answer defects in character maths, found by\n'
+      + 'the fable review, marked report_only because none was safely auto-fixable, and therefore owned by\n'
+      + 'no lane for several waves. Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + '\n'
+      + 'sections 2 (P1 table) and the P2 list FIRST, then ' + BT + 'artifacts/fable-review/findings-all.json' + BT + '\n'
+      + 'for each finding`s evidence and line ranges.\n\n'
+      + '**Start with PC8-2 — it is the one that gives players wrong numbers.**\n'
+      + BT + 'pilot_compute/mod.rs:51698-51844' + BT + ': the per-weapon attack total omits the PF1 size modifier\n'
+      + 'that the sibling ' + BT + 'compute_combat_baseline' + BT + ' applies — the function never receives size at\n'
+      + 'all. Every non-Medium character`s per-weapon rows are wrong. Fix it so both paths get size from one\n'
+      + 'place rather than two, and add a test with a non-Medium character that fails on the old code.\n\n'
+      + 'Then, in your judgement of cheapest-first:\n'
+      + '  - **PC8-1** — Skill Focus / Master Craftsman explanation ids keep literal parens\n'
+      + '    (' + BT + 'feat.master_craftsman_bonus.craft_(armor)' + BT + '). A wire-format defect. **Consumers may\n'
+      + '    match on these ids** — find out who does before changing them, and say so.\n'
+      + '  - **PC4-1** — the Warpriest/Skald/Bloodrager chooser `recognized` flag checks only hand-modelled\n'
+      + '    selections while the generic pool-group pass already grounded the records, so diagnostics can\n'
+      + '    contradict the same run`s own records.\n'
+      + '  - **PC3-1** — Good-domain Inquisitor explanation emits the literal ' + BT + '{magnitude}' + BT + '.\n'
+      + '  - **PC2-1** — stale ' + BT + 'race.semantics.unverified' + BT + ' co-fires with real grounded explanations.\n'
+      + '  - **PC2-2** — Undine alternate-trait formula silently drops its explanation on evaluator failure.\n'
+      + '  - **PC5-1** — Hunter`s ' + BT + 'other_features_deferred' + BT + ' never reaches the sheet`s "Not computed" lane.\n\n'
+      + '**Take as many as you can finish properly; a partial with a named remainder beats a rushed sweep.**\n'
+      + 'Each fix needs a test that fails on the old behaviour — otherwise you cannot show it was real.\n'
+      + 'Two of the review`s findings were REJECTED on re-verification because the code was already right,\n'
+      + 'and one "fix" would have introduced a bug, so **verify each finding against the code before\n'
+      + 'changing anything** and report any you find already correct.\n\n'
+      + '**Territory:** ' + BT + 'src/rules_core/pilot_compute/' + BT + ' ONLY, plus its tests. Lane A holds\n'
+      + BT + 'tests/' + BT + ' and ' + BT + 'src/bin/' + BT + ' — coordinate if a test file overlaps.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+}
+
+function eLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'LANE E — finish the non-atomic write family, everywhere it lives.\n\n'
+      + 'The review found (R14-02) that saving a character is two sequential ' + BT + 'fs::write' + BT + ' calls with\n'
+      + 'no temp-file-and-rename: a crash between them corrupts the app`s most valuable artifact. Lane A is\n'
+      + 'fixing ' + BT + 'src/saved_character/local_store.rs' + BT + '. **The same pattern is in three more places,\n'
+      + 'and they are yours:**\n'
+      + '  - ' + BT + 'src/campaign/local_store.rs:69' + BT + '\n'
+      + '  - ' + BT + 'src/homebrew_authoring/package_store.rs:49' + BT + '\n'
+      + '  - ' + BT + 'scripts/transcribe_companion_tables.py:1565' + BT + ' (R12-01) — the companion_data.rs emitter\n\n'
+      + '**The correct fix already exists in this repo** — the sibling monster emitter carries it\n'
+      + '(SD31-W9-INTEGRATE-001): write to a temp file, then ' + BT + 'os.replace' + BT + ' / ' + BT + 'fs::rename' + BT + '.\n'
+      + 'A rename within one filesystem is atomic; two writes never are. Port it rather than inventing a\n'
+      + 'variant, and say in your receipt that you did.\n\n'
+      + '**Also yours: R12-02** — 11 of 11 ' + BT + 'derive_*_fixtures.py' + BT + ' generators non-atomically overwrite\n'
+      + 'the ONE shared fixture file they all merge into. Same fix, eleven call sites; a shared helper is\n'
+      + 'better than eleven copies, and this bundle has already been bitten by copied helpers drifting\n'
+      + '(R8-01: 3 of 6 copies missing a fix the others had).\n\n'
+      + 'Prove each one: a test that fails on the old shape, or if a crash-between-writes test is not\n'
+      + 'practical, state plainly how you established the fix is correct. **Do not claim atomicity you have\n'
+      + 'not demonstrated** — this is data-loss territory, and a confident claim is worse than an honest\n'
+      + '"verified by inspection, not by test".\n\n'
+      + '**Territory:** ' + BT + 'src/campaign/' + BT + ', ' + BT + 'src/homebrew_authoring/' + BT + ', and the named\n'
+      + BT + 'scripts/' + BT + ' generators. Lane B holds the rest of ' + BT + 'scripts/' + BT + ' — it is working in\n'
+      + BT + 'verify.sh' + BT + ' and ' + BT + 'publish-site-dashboard.sh' + BT + ', not in the transcribers.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+}
+
+// Lanes F and G run on FABLE, the planning tier (operator tiering: Fable for planning, Sonnet
+// for execution, Opus for adversarial verification). They are DESIGN-ONLY and write no code --
+// not to be cautious, but because every code-bearing territory is already claimed this wave:
+// F's subject is tests/ (lane A holds it) and G's is pilot_compute/ (lane D holds it). A design
+// lane that emits a plan collides with nobody, and the review already re-classed this work from
+// "mechanical" to "genuine refactors requiring design" after batch D correctly produced zero
+// commits against it.
+function fLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'LANE F (DESIGN ONLY, no code) — a migration plan for the test-suite duplication.\n\n'
+      + '**Write a plan. Change no code.** Every file you would touch is held by another lane this wave.\n'
+      + 'Your deliverable is one document; if you edit a `.rs` file you have broken the wave.\n\n'
+      + 'Read ' + BT + 'docs/release/SD-34-book-completion/fable-review.md' + BT + ' section 4 item 1 and\n'
+      + BT + 'artifacts/fable-review/R10.json' + BT + ' FIRST. Measured at HEAD, by me, just now:\n'
+      + '  89 ' + BT + 'tests/sd18_*_widening.rs' + BT + '\n'
+      + '  95 ' + BT + 'tests/sd13_*progression*.rs' + BT + '\n'
+      + '  179,393 total lines across ' + BT + 'tests/' + BT + '\n'
+      + 'The review estimates these templates are ~80k of those lines, and that consolidation takes the\n'
+      + 'test binary count from 543 to roughly 360 — a large compile-time win on a box where a full\n'
+      + 'sweep already costs ~2 hours.\n\n'
+      + '**Re-derive those figures yourself before building on them.** The review\'s own numbers have been\n'
+      + 'wrong before, and its 543 predates wave 23\'s deletion of 11 binaries.\n\n'
+      + 'What the plan must contain:\n'
+      + '  1. The real duplication shape — read a sample of BOTH families and say what genuinely varies\n'
+      + '     per file versus what is copied. A table-driven rewrite is only safe where the variation is\n'
+      + '     data; where a file diverges for a reason, say so and exclude it.\n'
+      + '  2. A migration path that is **coverage-identical**, and how you would PROVE that rather than\n'
+      + '     assert it — the failure mode here is deleting assertions and calling it consolidation.\n'
+      + '  3. An ordering that lands in slices, each independently verifiable, so a half-finished\n'
+      + '     migration is not a broken suite.\n'
+      + '  4. What it costs, with the measurement behind the estimate.\n\n'
+      + '**Prove the shape on ONE family, on paper.** Show the concrete before/after for two or three\n'
+      + 'real files rather than describing a transformation in the abstract.\n\n'
+      + '**Territory:** ' + BT + 'docs/release/SD-34-book-completion/artifacts/fable-review/' + BT + ' — write\n'
+      + BT + 'R10-MIGRATION-PLAN.md' + BT + ' there. Nothing else, anywhere.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+}
+
+function gLanePrompt() {
+  return cycleProcedurePrompt({ id: 'AT-34-E6-001', dir: 'epic-6-closure',
+    title: 'LANE G (DESIGN ONLY, no code) — a seam map for the two files nobody can safely edit.\n\n'
+      + '**Write a plan. Change no code.** ' + BT + 'pilot_compute/mod.rs' + BT + ' is lane D\'s territory this\n'
+      + 'wave and ' + BT + 'v06_work_inventory.rs' + BT + ' is lane A\'s. Your deliverable is one document.\n\n'
+      + 'Measured at HEAD, by me, just now:\n'
+      + '  ' + BT + 'src/rules_core/pilot_compute/mod.rs' + BT + ' — **78,400 lines**\n'
+      + '  ' + BT + 'src/bin/v06_work_inventory.rs' + BT + ' — 24,537 lines, of which ' + BT + 'classify()' + BT + '\n'
+      + '  is a single ~2,555-line function\n\n'
+      + 'These two files are the reason several defects in this bundle went unfixed for waves: they are\n'
+      + 'too large to change confidently, and the review notes R9-02\'s fix will force the second one open\n'
+      + 'anyway. Read ' + BT + 'fable-review.md' + BT + ' section 4 items 2 and 4, and the ' + BT + 'PC*' + BT + ' findings\n'
+      + 'in ' + BT + 'artifacts/fable-review/findings-all.json' + BT + '.\n\n'
+      + '**The review already learned something here that must shape your plan.** Batch D attempted four\n'
+      + 'pilot_compute dedup items as "mechanical" and correctly produced ZERO commits: PC1-1 is duplicated\n'
+      + 'for a ratified reason stated in the code (lines 7398-7405), PC2-3\'s seven race seams genuinely\n'
+      + 'diverge, and the evidence for one partly misidentified its own target. **The extraction seams\n'
+      + 'stand; the "quick win" framing did not.** So: for each seam you propose, say whether it is a move\n'
+      + 'or a merge, and for any merge, what you checked to be sure the two sides are actually the same.\n\n'
+      + 'What the plan must contain:\n'
+      + '  1. A seam map — what comes out, in what order, and what each extraction depends on.\n'
+      + '  2. For each seam, how a reviewer would confirm behaviour did not change.\n'
+      + '  3. Which seams are safe to do WHILE other lanes work in the file, and which need it quiet.\n'
+      + '  4. An honest note on any seam you looked at and rejected, and why — that is as useful as the\n'
+      + '     ones you propose, and batch D\'s four rejections are the proof.\n\n'
+      + '**Territory:** ' + BT + 'docs/release/SD-34-book-completion/artifacts/fable-review/' + BT + ' — write\n'
+      + BT + 'SEAM-MAP.md' + BT + ' there. Nothing else, anywhere.\n\n' + COMMIT_RULE + GENERATED_FILE_BAN + FRESH_BASE_RULE })
+}
 
 async function runBucketBMechanisms() {
   const title = 'Epic 3 — Core Rulebook to zero'
@@ -736,20 +897,41 @@ async function runBucketBMechanisms() {
   // build in src/rules_core + apps/desktop) and was disjoint from both in wave 13's own diff,
   // so it still runs alongside. Serializing costs wall-clock, which no longer matters: the
   // 20-minute checkpoint rule means a host reset costs minutes regardless of how long a wave is.
-  log('wave 25 (GATE): the last corpus mechanisms + a full, honest gate re-measure')
+  log('wave 28: 7 lanes -- 3 gate + D/E correctness (sonnet) + F/G design-only (fable)')
 
-  const [uc, [vled, m]] = await parallel([
-    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'A: corpus mechanisms', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+  // Wave 28 widens to FIVE lanes on operator instruction -- there is quota to spend and the
+  // fable review left 6 confirmed P1s and 7 P2s owned by nobody, because every lane so far was
+  // scoped to a verify.sh stage and those defects belong to no stage.
+  //
+  // D and E can run in parallel with A/B/C only because A's territory was NARROWED in the same
+  // change: it used to claim all of src/, which would have collided with both. The fences are
+  // now file-level and disjoint --
+  //   A  tests/, src/bin/, src/pcgen_import/, src/saved_character/, docs/governance/
+  //   B  apps/desktop/, site/, scripts/verify.sh + publish-site-dashboard.sh
+  //   C  clippy anywhere + the sweep (reports, never edits, A/B/D/E files)
+  //   D  src/rules_core/pilot_compute/ only
+  //   E  src/campaign/, src/homebrew_authoring/, scripts/ transcribers + derive_*_fixtures.py
+  // A bucket fence failed this bundle before (wave 13, two lanes on one classifier); these are
+  // path fences, which is the shape that held afterwards.
+  //
+  // C still runs after B because the sweep must see B's edits. D and E are independent of both.
+  const [uc, [vled, m], d, e, f, g] = await parallel([
+    () => agent(ucLanePrompt(), { model: 'sonnet', phase: title, label: 'A: last 3 root-full tests', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
     async () => {
-      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: site-dashboard + producer', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const c = await agent(cLanePrompt(), { model: 'sonnet', phase: title, label: 'B: site-dashboard timeout', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       log('B -> ' + (c && c.status) + '; starting C (docs gates)')
-      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: clippy + full gate re-measure', schema: CYCLE_SCHEMA, isolation: 'worktree' })
+      const mm = await agent(mLanePrompt(), { model: 'sonnet', phase: title, label: 'C: clippy + honest sweep', schema: CYCLE_SCHEMA, isolation: 'worktree' })
       return [c, mm]
     },
+    () => agent(dLanePrompt(), { model: 'sonnet', phase: title, label: 'D: pilot_compute P1/P2 bugs', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(eLanePrompt(), { model: 'sonnet', phase: title, label: 'E: atomic writes family', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(fLanePrompt(), { model: 'fable', phase: title, label: 'F: test-consolidation plan', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
+    () => agent(gLanePrompt(), { model: 'fable', phase: title, label: 'G: pilot_compute seam map', schema: CYCLE_SCHEMA, isolation: 'worktree' }),
   ])
+  log('D -> ' + (d && d.status) + ' | E -> ' + (e && e.status) + ' | F -> ' + (f && f.status) + ' | G -> ' + (g && g.status))
   log('UC -> ' + (uc && uc.status) + ' | C -> ' + (vled && vled.status) + ' | M -> ' + (m && m.status))
 
-  const summary = [['A rust-suites', uc], ['B frontend', vled], ['C docs-gates', m]].map(([n, r]) =>
+  const summary = [['A rust-suites', uc], ['B frontend', vled], ['C docs-gates', m], ['D pilot_compute', d], ['E atomic-writes', e], ['F test-plan', f], ['G seam-map', g]].map(([n, r]) =>
     '- ' + n + ' (' + ((r && r.status) || '?') + '): ' + String((r && (r.discoveries || r.remainder)) || 'no report').slice(0, 400)).join('\n')
   const regen = await agent(regenPrompt(summary), {
     model: 'sonnet', phase: title, label: 'full verify.sh sweep', schema: REGEN_SCHEMA,

@@ -2077,7 +2077,18 @@ mod tests {
         // "engine-does-not-hold"` with this evidence string; the EXCLUDED-CLASS ROSTER, the 7
         // names above, is unchanged and not the cause -- only membership in `mechanism_units`
         // shrank). `null_desc`/`real_desc_refused` below are unaffected (18/6 still hold live).
-        assert_eq!(excluded, 213, "excluded-class population (sibling lane's, do not touch)");
+        // Wave 50 re-derivation: 213 -> 138. `classify()`'s `Kind::ClassFeature` owner-matched
+        // arm gained two new rungs this wave (Core Domain/Sorcerer Domain, Sorcerer Bonus Spell
+        // L1-L9 -- both genuinely proseless, set-shaped internal chassis grants, `decisions.md
+        // §22` wave-50 update) that promote 75 `core_rulebook` units straight to `grounded`
+        // rather than the `class_feature_owner_matched_by_name_but_record_not_held_by_engine`
+        // evidence this test's own `mechanism_units` filter reads -- all 75 have `class: "Cleric"`
+        // or `class: "Sorcerer"`, both already in the excluded-class roster above (31 Core
+        // Domain + 22 Sorcerer Domain + 22 Sorcerer Bonus Spell = 75, 213 - 75 = 138, confirmed
+        // by re-running this test's own live query standalone post-regen). This lane's OWN
+        // owned population (`null_desc`/`real_desc_refused` below, neither Cleric nor Sorcerer
+        // was ever counted there) is unaffected -- still 18/6, still summing to 24.
+        assert_eq!(excluded, 138, "excluded-class population (sibling lane's, do not touch)");
         assert_eq!(null_desc, 18, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
         assert_eq!(real_desc_refused, 6, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
         assert_eq!(excluded + null_desc + real_desc_refused, mechanism_units.len() as u32);

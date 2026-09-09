@@ -72,8 +72,46 @@ ENGINE_SURFACE_CITATIONS = {
     # intervening cycles' own insertions (AT-34-E3-002 Cleric Domain probe, AT-34-E4-002
     # cycle 4 choice-based trait spine, AT-34-E3-003 bucket-M BASEITEM chase) since the
     # prior re-derivation. Re-grepped fresh against the real construction sites.
-    "companion": {"line": 11719, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 11819, "must_contain": "power_content_has_no_engine_table"},
+    #
+    # SD-34 wave 44 re-derivation: both pins were already stale at HEAD
+    # (before this wave's own edits), never caught because this test is not
+    # wired into `verify.sh` (only invoked via `scripts/tests` discovery).
+    # Piece 1/2's own insertions into this file shifted them further still.
+    # Re-grepped fresh against the real construction sites, 11719 -> 14013
+    # and 11819 -> 14113.
+    # SD-34 wave 45 re-derivation: this cycle's own Phrenic Slayer Favored
+    # Enemy insertions (above both sites) shifted them again, 14013 -> 14093
+    # and 14113 -> 14193.
+    # SD-34 wave 46 re-derivation: this cycle's own six new `EngineFacts`
+    # fields, seven new probe functions, and `classify()` early-return block
+    # (all above both sites) shifted them again, 14093 -> 14716 and
+    # 14193 -> 14816.
+    # SD-34 wave 47 re-derivation: this cycle's own Divine Scion
+    # `EngineFacts` field, choice-gating consts, rewritten probe function,
+    # and `classify()` early-return block (all above both sites) shifted
+    # them again, 14716 -> 15030 and 14816 -> 15130.
+    # SD-34 wave 48 re-derivation: this cycle's own Twilight Talon/Golden
+    # Legionnaire `EngineFacts` fields, probe functions, and choice-seed arm
+    # (all above both sites) shifted them again, 15030 -> 15380 and
+    # 15130 -> 15480.
+    # SD-34 wave 48 CORRECTION (same cycle, before commit): the derivation
+    # above was against a pre-clippy-fix snapshot; this cycle's own `type
+    # TwilightTalonTattooTierMember` alias (inserted above both sites to
+    # clear a `clippy::type_complexity` warning) shifted them by a further
+    # uniform +4, 15380 -> 15384 and 15480 -> 15484 -- caught re-running
+    # `--check` AFTER the clippy fix, read back and confirmed.
+    # SD-34 wave 51 re-derivation, and a REAL PRE-EXISTING STALENESS this wave
+    # found rather than caused: `--check` already failed at HEAD
+    # (`5f6b18f4e3`), where the two arms live at 16306 and 16406, not 16192 and
+    # 16292 -- wave 49's and wave 50's own `src/bin/v06_work_inventory.rs`
+    # edits shifted them and neither wave's gate re-ran THIS instrument (both
+    # re-derived `completion_atlas.py`'s ten citations only). Re-derived here
+    # for the post-wave-51 file by fresh `grep -n 'Kind::Companion =>
+    # engine_does_not_hold'` / `'Kind::Power => engine_does_not_hold'` -- one
+    # real construction site each -- content read back and confirmed, never the
+    # arithmetic alone.
+    "companion": {"line": 16442, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 16542, "must_contain": "power_content_has_no_engine_table"},
 }
 
 

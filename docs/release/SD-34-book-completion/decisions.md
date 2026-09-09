@@ -313,6 +313,31 @@ with a named resolution point, not an unresolved placeholder.
 
 ---
 
+## §20 — Wave 33 lane A: `§2a`'s zero-magnitude ruling extends to set-shaped `class_feature` records with genuinely no upstream prose
+
+**Question.** Bucket D's 27-unit `class_feature_*_held_by_*_table` shape (four rungs: `weapon-proficiency` 3, `weapon-and-armor-proficiency` 5, `class-skill-list` 10, `wizard-school-spell-list` 9) all carry `description: null` in `docs/work-inventory.json`. Wave 32 lane C recommended escalating the disposition to the operator. This cycle was directed **not** to escalate, and instead to determine from the data whether real `DESC:` prose exists upstream and was never ingested (a content fix), or genuinely does not exist anywhere (a different-shape ruling).
+
+**Method — every one of the 27 checked individually against two independent sources**, not assumed from the shape:
+1. The PCGen source tree (`~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst`) — the raw `.lst` row for every one of the 27 keys, read directly, checked for a `DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:` token.
+2. The already-ingested corpus JSON (`data/corpus/core_rulebook/class_feature/**/*.json`) — `data.description`, checked directly, not inferred from `work-inventory.json` (which does not export a `description` field at all).
+
+**Finding — the 27 split into two genuinely different shapes, not one:**
+
+| Rung | Units | Real `DESC:` prose upstream? | Disposition |
+|---|---:|---|---|
+| `weapon-proficiency` (Bard/Druid/Rogue, `CATEGORY:Internal`) | 3 of 27 | **No** — confirmed absent both sources | Closed this cycle: `!has_real_description` → `grounded`/`class_feature_set_shaped_grant_carries_no_upstream_description_by_design` |
+| `class-skill-list` (9 base classes + Jack of All Trades, `CATEGORY:Internal`) | 10 of 27 | **No** — confirmed absent both sources | Closed this cycle, same evidence string |
+| `wizard-school-spell-list` (9 schools, `CATEGORY:Internal`) | 9 of 27 | **No** — confirmed absent both sources | Closed this cycle, same evidence string |
+| `weapon-and-armor-proficiency` (Bard/Fighter/Paladin/Ranger/Rogue) | 5 of 27 | **Yes** — real multi-sentence `DESC:` prose exists in BOTH the PCGen source (`cr_abilities_class.lst` lines 2814/2816/2818/2819/2820) AND is already ingested into the corpus JSON (`data.description` populated, `VISIBLE:DISPLAY`, `wiring_class: "display"`) | **Not closed this cycle** — see below |
+
+**22 of 27 (the first three rungs): the "different shape" branch.** These are genuinely set/list-shaped records (`CSKILL:`/`SPELLKNOWN:`/`AUTO:WEAPONPROF` tokens only) with no player-facing prose anywhere upstream — not an ingestion gap, a real absence. `§2a`'s standing ruling ("a zero-magnitude feature whose description is shown to the player is COMPLETE") is extended here to its honest sibling: **a zero-magnitude, set-shaped record that has no description to show is also complete** — there is no display gap to close because there is nothing to display. A new, distinct evidence string, `class_feature_set_shaped_grant_carries_no_upstream_description_by_design`, marks this — deliberately NOT `text-complete` (that status would assert real rendered prose that does not exist) and carrying no substring of `completion_atlas.py`'s `_DONE_VIOLATION_MARKERS`. It uses the SAME `status: "grounded"` the file's own existing "bounded grant-only identity record" idiom already uses (Sorcerer/Wizard's own Weapon and Armor Proficiency grounding, `pilot_compute/mod.rs`), so `completion_atlas.py`'s existing `DONE` citation (`status in {grounded, text-complete}`, `v06_work_inventory.rs:10195`) already covers it — no `BUCKET_DEFINITIONS` schema change needed, only the new marker itself, verified absent from `_DONE_VIOLATION_MARKERS`.
+
+**5 of 27 (`weapon-and-armor-proficiency`): the "ingest it" branch, discovered to already be half-true and half-blocked — reported, not rushed.** The prose exists AND is already ingested; what's missing is that the ENGINE side never wired it. `v06_work_inventory.rs`'s `Kind::ClassFeature` arm promotes a text-only, real-description, `display`-wiring-class record to `text-complete` only once `pilot_compute`'s own `class_feature_effect_wired` probe observes a grounded explanation for that exact key — and `pilot_compute::explain_base_class_weapon_and_armor_proficiency`/`ground_class_weapon_and_armor_proficiency` (the precedented idiom that already grounds Sorcerer, Wizard, Cleric, Assassin and Shadowdancer's own version of this exact record shape) has never been extended to Bard, Fighter, Paladin, Ranger, or Rogue. Extending it is real, in-scope-shaped, precedented work — but doing it at the SAME rigor the precedent requires (Cleric's own cycle 6 read every one of that class's registered archetypes before trusting any replacement text) is not a same-cycle-safe move here: all five of these classes have real, registered archetypes across `rules_tables/*/archetype_tables.rs` that supersede one or more of their proficiency slots (many more matches than Cleric's single Ecclesitheurge case) — grounding them without reading every one risks shipping stale archetype text to a player who selected one, which is exactly the fabrication risk `AGENTS.md` rule 7/8 warns against. Named exactly as next-cycle scope in this wave's own receipt, not closed here.
+
+**Enforced by:** `python3 scripts/completion_atlas.py --check` (population/DONE/D deltas, `done_evidence_violations=0`, `citation_failures=0`); the two source-file checks named above, individually, per key (this receipt's own `figures` section carries the literal grep commands); `cargo test` on the touched module.
+
+---
+
 ## §19 — Operator ruling, 2026-08-29: `§17`'s disposition principle extends to bucket `V`
 
 **Operator ruling:** *"assume the correctness of previous ruling and continue."* `§17`'s reasoning
@@ -817,5 +842,1110 @@ Companion ~ …` book-wide-grant ability rows were already attributed to creatur
 reaches_zero` and `companion_class_record_generalizes_to_its_three_real_consumers` tests, both
 re-derived against the live corpus and `docs/work-inventory.json` rather than transcribed from a
 prior cycle's receipt.
+
+---
+
+## §21 — Wave 34 lane A: `§20`'s deferred 5-unit `weapon-and-armor-proficiency` rung closes, and the wave-33 receipt's own "all five have real archetypes" premise was wrong for two of them
+
+**Decision.** `pilot_compute::explain_base_class_weapon_and_armor_proficiency`/
+`ground_class_weapon_and_armor_proficiency` — the idiom already grounding Sorcerer, Wizard,
+Cleric, Assassin, and Shadowdancer's own version of this record shape — is extended to Bard,
+Fighter, Paladin, Ranger, and Rogue, closing `§20`'s named 5-unit deferral
+(`class_feature_weapon_and_armor_proficiency_grant_held_by_class_proficiency_tables`). All five
+now ground to `text-complete` (bucket D → DONE).
+
+**Method — every one of these five classes' own registered archetypes read individually**, the
+same rigor `§20`'s own next-cycle plan demanded (Cleric's cycle 6 precedent), not grep-and-trust:
+
+| Class | `proficiency_slot_ids` passed | Archetypes found claiming a slot | Own replacement text resolved? |
+|---|---|---|---|
+| Bard | `BardWeaponProficiencies`, `BardArmorProficiencies` | Geisha (UM, both), Dervish Dancer (UC, weapon only) | No — both archetypes' own catalog `grants` name no "~ Weapon and Armor Proficiency" sub-feature with text; "not resolved" branch |
+| Fighter | `FighterArmorProficiencies`, `FighterTowerShieldProficiency` | Cad, Gladiator, Tactician, Unarmed Fighter (armor); Dragoon, Unbreakable (tower shield) — all UC | No — all six carry `description: None` on their own proficiency grant; "not resolved" branch |
+| Paladin | `PaladinArmorProficiencies`, `PaladinWeaponProficiencies` | Holy Gun (UC, both) | No — `description: None`; "not resolved" branch |
+| Ranger | `&[]` (empty) | **None** | N/A |
+| Rogue | `&[]` (empty) | **None** | N/A |
+
+**The wave-33 receipt's own premise — "all five of these classes have real archetypes doing
+exactly that, unlike the zero-archetype Assassin/Shadowdancer precedent" — does not hold for
+Ranger or Rogue.** Every registered archetype for both classes across every archetype-table
+module that carries them was read; not one `replaces` list names any of the eight TYPE facets
+the base Ranger/Rogue corpus record's own `!PREABILITY` negation gates reference
+(`RangerArmorProficiencies`/`RangerWeaponProficiency`/`RangerLightArmorProficiency`/
+`RangerMediumArmorProficiency`/`RangerShieldProficiency`/`RogueWeaponProficiencies`/
+`RogueArmorProficiencies`/`RogueLightArmor` — confirmed by direct grep, zero matches for any).
+PCGen's own upstream data anticipates such an archetype existing somewhere in the wider game
+line; none of the books this engine has ingested happens to be it. Ranger and Rogue pass empty
+`proficiency_slot_ids`, the identical shape to Assassin/Shadowdancer — a corrected finding, not a
+shortcut (`scripts/retro.py correction --subject wave33-lane-a-receipt --claimed
+"all_five_classes_have_superseding_archetypes" --actual
+"ranger_and_rogue_have_zero_superseding_archetypes_in_this_engines_catalog" --verified-by "grep
+-rn 'RangerArmorProficiencies\|RangerWeaponProficiency\|RangerLightArmorProficiency\|
+RangerMediumArmorProficiency\|RangerShieldProficiency\|RogueWeaponProficiencies\|
+RogueArmorProficiencies\|RogueLightArmor' src/rules_core/rules_tables/*/archetype_tables.rs"`).
+
+**The fabrication hazard the dispatch named by name, confirmed real and closed by omission, not
+by a runtime guard.** Paladin's own `Divine Hunter` archetype replaces
+`PaladinArmorProficiencyHeavy` alone (heavy armor only — light/medium armor and every weapon
+proficiency are untouched), and names no "~ Weapon and Armor Proficiency" sub-feature of its own
+(its real grant is "Divine Hunter ~ Precise Shot", "This ability replaces her Heavy Armor
+Proficiency"). `PaladinArmorProficiencyHeavy` is deliberately absent from Paladin's
+`proficiency_slot_ids` list for exactly this reason: including it would make a Divine Hunter
+selection wrongly claim "the base progression does not apply" for a class whose light/medium
+armor and weapon proficiencies remain fully in force — shipping stale, over-broad archetype text
+to a real player who selected a real archetype. `pilot_compute::base_class_weapon_and_armor_
+proficiency_tests::paladin_weapon_and_armor_proficiency_divine_hunter_does_not_supersede_the_
+base_grant` pins this directly: with Divine Hunter selected, the base grant's own full text
+still renders, unchanged, un-superseded.
+
+**A second, distinct blocker beyond `pilot_compute` wiring, found and closed in the same
+cycle.** Wiring `pilot_compute` alone does not promote this key shape to `text-complete` through
+`v06_work_inventory.rs`'s own GENERIC owner/group match (`class_feature_exact_suffix_grounded`'s
+`group.eq_ignore_ascii_case(&class_name_as_group_text(owner))` guard) — this record's own key is
+REVERSED (`"Weapon and Armor Proficiency ~ <Class>"`, `group` = the constant text `"Weapon and
+Armor Proficiency"`, never a class name), which is exactly why `classify()`'s `Kind::ClassFeature`
+arm treats it as an owner-resolution FAILURE and falls to `weapon_and_armor_proficiency_grant_
+class_id`'s own named-list branch in the first place. `class_feature_owner_via_type_facet`'s own
+doc comment proves this generic path can never widen what grounds a record through that owner/
+group guard — so the wave-33 receipt's assumption that grounding these five would "promote [them]
+to `text-complete` via that SAME earlier check" the way Cleric did was also incomplete. This
+cycle's fix is in the SAME branch `§20`'s own comment already named
+(`weapon_and_armor_proficiency_grant_class_id`'s consumer in `v06_work_inventory.rs`): it now
+checks `facts.explanation_ids` directly for the new `class_feature.<slug>.weapon_and_armor_
+proficiency` ids `ground_class_weapon_and_armor_proficiency` emits, gated by the same three
+display-wiring guards (`has_real_description`, `is_display_wiring_class_for_promotion`,
+`!universal_sheet_modifier`) every sibling `text-complete` promotion in this file already
+requires.
+
+**Figures.** `python3 scripts/completion_atlas.py --check`: population **49438** (unchanged),
+`D: 2924 → 2919` (**-5**), `DONE: 24994 → 24999` (**+5**), `overlap=0 unclassified=0
+done_evidence_violations=0 citation_failures=0`.
+
+**Enforced by:** 10 new `pilot_compute::base_class_weapon_and_armor_proficiency_tests` cases (a
+base-grounding + an archetype-supersession/non-supersession test per class, including the Divine
+Hunter negative-control above) plus 2 new `v06_work_inventory.rs` classify() tests (the positive
+promotion case and a per-class-slug control) and 1 renamed pre-existing negative control;
+`cargo test --lib --bin v06_work_inventory -- weapon_and_armor_proficiency` (lib 24 passed, bin 3
+passed, 0 failed); `python3 scripts/completion_atlas.py --check` (figures above).
+
+---
+
+## §22 — Operator ruling, 2026-09-04: bucket D's genuine new-chassis remainder stays in scope for SD-34
+
+**Decision.** The growing "genuine new-chassis, not a classifier fix" remainder inside bucket D
+— confirmed across waves 37-40's own investigations — **stays in scope for SD-34**. It is not
+deferred to a future bundle (an "SD-35"-style split), and it is not to be silently left as "the
+rest" once the cheap classifier-side fixes run out.
+
+**What this remainder actually is, named precisely as of wave 40's own close:**
+- Shape 2's own confirmed new-chassis units (no per-feature compute function exists anywhere):
+  Duelist (4), Shadowdancer (4), Assassin (2), Loremaster (2), Cleric's Aura (1), Paladin's
+  Detect Evil (1), Wizard's Arcane Bond (1) — 15 units, each independently traced against real
+  engine source (wave 39 lane B's own receipt).
+- Sub-mechanism 5 (`class_feature_of_unmodelled_corpus_class`'s own largest split): 634 units
+  across 60 classes, independently investigated twice (wave 37 lane B, wave 38 lane B) and both
+  times found genuinely too large for a single wave-sized cycle — real per-class chassis-
+  building work, not a matcher widening.
+- Three individually-named single-unit gaps needing a genuinely different fix each (Fighter's
+  Weapon Training — a new engine-side explanation id; Psychic's Phrenic Pool — a probe-input
+  widening; Monk's Stunning Fist — a classifier owner/namespace-recognition change), all
+  confirmed and declined-not-attempted across waves 39-40.
+
+**Why this needed a ruling rather than another "pick the cheapest item" wave:** the cheap,
+classifier-side fixes in this area are now largely exhausted (waves 38-40 closed 144 units this
+way in three waves; the confirmed remainder above is qualitatively different work). Continuing
+to dispatch "cheapest next item" waves against this remainder without a scope ruling risked
+either silently treating the 634-unit sub-mechanism-5 population as permanently out of reach, or
+under-scoping a wave against work that genuinely needs real chassis-building effort.
+
+**How to apply.** Future waves against this remainder should be scoped as real feature-building
+work (new `ground_<class>_class_features`-style dispatch functions, following the same
+SD-32-card-11 precedent this whole area already established), not classifier-matcher tweaks.
+Expect materially lower units-closed-per-wave-effort than the classifier-fix waves that preceded
+this ruling — that is the honest shape of the remaining work, not a regression. No further
+operator ruling is needed to keep dispatching against this remainder; this entry is the standing
+authorization.
+
+**CORRECTION, 2026-09-04 (same day, operator-prompted re-audit): the three named single-unit
+"genuinely different fix" gaps above were OVERSTATED — do not trust the "structurally larger"
+framing for any of them without re-checking, and treat the 15/634-unit piles as UNVERIFIED
+difficulty, not confirmed-hard, until someone actually reads the code:**
+- **Monk's Stunning Fist**: the compute is already fully wired and tested
+  (`feat_effects::stunning_fist_facts_from_feats`, emits
+  `feat.standalone.stunning_fist.save_dc` / `.uses_per_day`). `class_feature_known_synonym_
+  grounded` (the literal `CLASS_FEATURE_ID_KNOWN_SYNONYMS` table built in wave 39) does a pure
+  `owner`/`group` + full-string-id lookup with NO requirement that the id contain `.owner.` as a
+  substring — this record's own `group` ("Monk") already satisfies that guard. **A single table
+  entry closes this**, no new mechanism needed. The "needs the classifier's own group==owner
+  guard... a structurally larger change" framing was written against the OLDER
+  `class_feature_exact_suffix_grounded` check only, without re-checking against the synonym
+  table that already supersedes it for exactly this shape.
+- **Fighter's Weapon Training**: the claim "no discrete id — folded directly into a combined
+  total, never pushed as its own `ComputationExplanation`" is **factually wrong**, verified by
+  direct read: `pilot_compute/mod.rs` pushes a real, live `class_feature.fighter.weapon_training`
+  explanation (an exact-match id, no synonym table even needed). It simply never fires during
+  classification because the classifier's own generic per-class sweep never supplies a
+  `FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID` selection — the SAME "needs one canonical default
+  choice" gap `canonical_seeds_for()` already solves for wizard/arcanist/sorcerer/cleric/druid
+  and others. Adding a `"fighter" => (...)` arm to that same existing match statement is the
+  fix, not new engine code.
+- **Psychic's Phrenic Pool**: same root cause as Fighter's — the compute and its explanation id
+  (`class_feature.untabled.psychic.phrenic_pool.value`) already exist and are tested; the
+  generic sweep just never selects a Psychic Discipline. Same `canonical_seeds_for()` fix shape
+  as Fighter's, not a bespoke "probe-input widening."
+
+**What held up on re-check:** Wizard's Arcane Bond (one of the 15), spot-checked in full —
+genuinely no compute exists anywhere for it (confirmed by exhaustive grep, unlike the three
+above). Paladin's Detect Evil and Cleric's Aura were spot-checked only partially (inconclusive)
+— a real antipaladin analog (`detect_good`) already exists for Paladin's own opposite-alignment
+case, which is at minimum suggestive that Detect Evil may follow the identical already-built
+shape rather than needing new work; this was NOT confirmed either way and needs an actual check
+before scoping a wave against it. The 634-unit sub-mechanism-5 population has not been
+re-audited at all since this correction — its own "genuinely too large" framing from waves 37/38
+predates this finding and should be treated as unverified, not confirmed, until it is.
+
+**How to apply, corrected:** before scoping ANY future wave's difficulty against this
+remainder's own prior write-ups, re-verify against the real compute functions first (grep the
+real `pilot_compute/mod.rs`, don't trust a prior wave's "no compute exists" or "needs a
+different kind of fix" claim at face value) — this bundle has now demonstrated a repeatable
+failure mode where a cheap, already-precedented fix (a table entry, or an existing
+`canonical_seeds_for()` match arm) got mischaracterized as bespoke new-feature work. Fighter's
+Weapon Training and Psychic's Phrenic Pool are BOTH now believed to be `canonical_seeds_for()`
+match-arm additions, not real feature-building — re-scope wave 41+ accordingly rather than
+routing them into "Epic 4/5-shaped" effort.
+
+**FURTHER UPDATE, 2026-09-04 (wave 41): all three of the above (Stunning Fist, Fighter's Weapon
+Training, Psychic's Phrenic Pool) are now closed** — `core_rulebook:class_feature:monk_stunning_fist`
+→ `literal-verified` (V), `core_rulebook:class_feature:fighter_weapon_training` and
+`occult_adventures:class_feature:psychic_phrenic_pool` → `grounded` (DONE), independently
+re-verified by the orchestrator against a fresh `docs/work-inventory.json` join, not just taken
+on the fixing agent's word. `DONE: 25358→25360`, `D: 2523→2520`, `V: 321→322`. Full receipt:
+`artifacts/bucket-d-mining/wave41_shape2_three_corrected_units_cycle_receipt.md`.
+
+**Paladin's Detect Evil and Cleric's Aura, now properly checked (real verdict, not a guess):**
+neither matches the cheap classifier-wiring shape that closed the three above — for both, an
+exhaustive grep confirms **no compute function and no `ComputationExplanation` id exist at all**
+anywhere in the engine (unlike Stunning Fist/Weapon Training/Phrenic Pool, where the compute
+already existed and only classifier-visibility was missing). By the strict cheap-fix/genuinely-hard
+binary this maps to genuinely-hard, same bucket as Wizard's Arcane Bond. **But with a real,
+material caveat**: both are pure class-level pass-through magnitudes with an exact, already-built
+structural precedent sitting in the same file family, for the antipaladin (Paladin's own mirror
+class) — `detect_good_caster_level()` and `aura_of_evil_strength_level()` in
+`src/rules_core/rules_tables/apg/antipaladin_features.rs` (built as an SD-32 follow-up
+specifically noted as "mirroring the CRB Paladin's Aura of Good/Detect Evil," but the Paladin/Cleric
+originals were never symmetrically added). Writing `detect_evil_caster_level()` / a Cleric
+aura-strength function is realistically a ~10-line copy-adapt of those two existing functions,
+plus wiring (Paladin currently has no `ground_paladin_class_features`-style push at all; Cleric's
+would extend `explain_cleric_level1_spell_baseline`). **Scope these as "small, precedented new
+compute, citing the antipaladin functions as literal templates" — not as classifier-reachability
+work (like the three above), and not as open-ended Epic 4/5 feature-building (like Arcane Bond).**
+This is a third difficulty tier this bundle has not previously named explicitly; worth watching
+for elsewhere in the 15-unit new-chassis list and the 634-unit sub-mechanism-5 population before
+assuming everything left is one of the two extremes.
+
+**WAVE 42 UPDATE, 2026-09-04: Paladin's Detect Evil and Cleric's Aura are now CLOSED** — both
+`core_rulebook:class_feature:paladin_detect_evil` and `core_rulebook:class_feature:cleric_aura`
+→ `grounded` (DONE), via two new pure functions (`paladin_detect_evil_caster_level`,
+`cleric_aura_strength_level`) copying the antipaladin precedent exactly, independently
+re-verified by the orchestrator (fresh `completion_atlas.py --check` + a direct id→status join).
+`DONE: 25360→25362`, `D: 2520→2518`. Full receipt:
+`artifacts/bucket-d-mining/wave42_paladin_detect_evil_and_cleric_aura_cycle_receipt.md`.
+
+**Also this wave: a real, rigorous re-audit of the remaining 12 units** from the original 15-unit
+"genuinely new-chassis" list (Duelist ×4, Shadowdancer ×4, Assassin ×2, Loremaster ×2) —
+NOT yet fixed, but the difficulty finding matters for scoping. **Headline: none of the 12 is
+genuinely-hard. All 12 are small-precedented-new-compute**, several with an even stronger
+precedent than Paladin/Cleric had (multiple existing byte-for-byte-comparable functions already
+shipped for other classes, not just one antipaladin mirror). Specifics:
+- All 4 classes (Duelist, Shadowdancer, Assassin, Loremaster) are prestige classes already
+  registered in `prestige_class_entry_gate::is_registered`, and a generic mechanism
+  (`class_feature_grant_consumer::push_generic_class_feature_grant_records`) already fires for
+  all of them — but it only emits the feature's grant LEVEL, never its real magnitude, which is
+  why these 12 units still show `engine-does-not-hold` despite that mechanism running. This is
+  NOT a classifier-visibility gap (unlike wave 41's 3 units) — each genuinely needs one new
+  formula function.
+- Every one of the 12 has a directly comparable existing function already in
+  `pilot_compute/mod.rs` to copy: e.g. Duelist's Precise Strike (`+level` weapon damage) mirrors
+  `swashbuckler_precise_strike_damage` almost verbatim; Assassin's Save Against Poisons formula
+  (`AssassinLVL/2`) is already a literal string in this repo's own test fixtures
+  (`class_feature_grant_consumer.rs:2392`); Shadowdancer's Shadow Illusion/Shadow Call mirror the
+  already-shipped `ground_summoner_slice_a_features` "ground the SLA triple, don't model the
+  effect" split; Loremaster's Secret Lore pool mirrors the already-wired generic pool-choice
+  mechanism (`push_generic_pool_choice_magnitude`).
+- No `ClassId` enum entry or dedicated per-class file exists yet for any of the four prestige
+  classes — the fix shape is 4 new `ground_or_block_<class>_class_features`-style dispatch
+  functions (one per class, following `ground_swashbuckler_deeds`/`ground_summoner_slice_a_features`
+  as the template), not 12 separate ad-hoc additions.
+- **Recommendation for wave 43+: re-scope this 12-unit population OUT of "genuinely new-chassis"
+  framing entirely** and treat it the same as the Paladin/Cleric precedented-add track — it is
+  cheaper than Paladin/Cleric was, not harder, since most units have multiple precedents rather
+  than one. Only Wizard's Arcane Bond (of the original 15) still holds up as genuinely open-ended
+  new-chassis work requiring real subsystem modeling (weapon enhancement bonuses, no precedent
+  anywhere in the engine).
+- The 634-unit sub-mechanism-5 population is still completely unaudited under this scrutiny —
+  four straight small-population checks (3 cheap-fix, 2 precedented-new-compute, 12
+  precedented-new-compute) all landed away from "genuinely hard," so its own "too large to be
+  worth auditing" framing from waves 37/38 should be treated as unverified, not confirmed, same
+  as before.
+
+**WAVE 43 UPDATE, 2026-09-05: all 12 of the 12-unit remainder named above are now CLOSED** —
+Duelist's Canny Defense / Improved Reaction / Precise Strike / Elaborate Defense, Shadowdancer's
+Shadow Illusion / Shadow Call / Shadow Jump / Summon Shadow, Assassin's Save against Poisons /
+Death Attack, Loremaster's Lore / Secret Lore — via four new `ground_or_block_<class>_class_
+features`-style dispatch functions (`ground_duelist_class_features`, `ground_shadowdancer_class_
+features`, `ground_assassin_class_features`, `ground_loremaster_class_features`), each called
+unconditionally from `compute_pilot_base_chassis` (no `ClassId`-family enum entry exists for any
+of the four, confirmed directly), the same shape wave 42's `ground_paladin_detect_evil`
+established. Two real corpus discrepancies between DESC prose and the computed token were found
+and resolved by transcribing the literal token (Shadow Illusion's uses/day is a literal `1`, not
+DESC's implied `floor(level/2)`; Shadow Jump's daily distance is a literal cumulative
+`20/40/80/160`, not DESC's doubling `40/80/160/320`) — both follow the same authoritative-token-
+over-DESC-prose ruling `warpriest_channel_energy_dc` already established for this bundle, not a
+new precedent. Independently re-verified by the orchestrator (fresh `completion_atlas.py --check`
++ a direct id→status join over 49438 units, confirming exactly these 12 changed and nothing
+else): `DONE: 25362→25369 (+7)`, `D: 2518→2506 (−12)`, `V: 322→327 (+5)` — not all 12 landed in
+DONE; 5 landed in bucket V (`literal-verified`/`fixture-verified`, "verified by proxy, never by
+the oracle"), the same D→V shape wave 41 hit for Monk's Stunning Fist, a legitimately-resolved
+bucket rather than a lesser outcome. Both `cargo test --locked --lib` (3077 passed, up from 3068)
+AND the full `cargo test --locked --no-fail-fast` integration suite were run this cycle — the
+exact step wave 42's own cycle skipped, which is what let that wave's real regression through
+undetected until its own wave-end gate. Full receipt:
+`artifacts/bucket-d-mining/wave43_duelist_shadowdancer_assassin_loremaster_cycle_receipt.md`.
+
+**Shape 2's new-chassis remainder after this cycle: 1 unit — Wizard's Arcane Bond** — the only
+unit of the original 15-unit list that still holds up as genuinely open-ended new-chassis work
+requiring real subsystem modeling (weapon enhancement bonuses, no precedent anywhere in the
+engine). Every other unit named in this section across waves 39-43 is now closed.
+
+**WAVE 44 UPDATE, 2026-09-05: a real script bug fixed (13 prestige classes, 191 units,
+recovered into the entry-requirement registry) and 4 of the 5 wave-43-wave-end-gate-audit's
+classifier-collision candidates closed** — `scripts/census_prestige_class_entry_requirements.py`'s
+`extract()` keyed purely by display name across the full 158-book oracle
+(`prestige_names.setdefault(name, path)`), so a filesystem-order race could let an older,
+un-ingested predecessor book silently win over the real ingested book and drop the entry forever.
+Fixed by ranking every candidate source by whether its own book is ingested BEFORE breaking ties
+by relative path, proven with a new regression test that forces both walk orders against a
+synthetic corpus reproducing the exact collision
+(`scripts/tests/test_census_prestige_class_entry_requirements.py`, 4 tests). Re-ran against the
+real pinned oracle: population `62 -> 74`. 12 of the 13 named classes recovered (Phrenic Slayer,
+Thrallherd, Psychic Fist, War Mind, Elocater, Psion Uncarnate, Pyrokineticist, Metamind,
+Cerebremancer, Pathfinder Savant, Student of War, Pathfinder Delver); **Gifted Blade was NOT
+recovered** — it never actually carries a `TYPE:...Prestige` line anywhere in the oracle, the
+audit's own 13-name list was one name too long. Diffed the regenerated fixture against its pre-fix
+committed version: 144 insertions, 0 deletions — every pre-existing entry byte-identical. 3 of the
+12 spot-checked directly against the real `.lst` source (Phrenic Slayer, Thrallherd, Cerebremancer)
+— exact match.
+
+**4 classifier collisions closed, 3 of the 4 audits corrected by direct corpus read before any code
+was written:**
+
+- **Item 1 (`power_over_undead_turn_undead`/`command_undead`) — audit's real-owner claim was
+  WRONG.** Not Cleric: `cr_abilities_class.lst:2681`'s own `TYPE:WizardClassFeatures...` facet and
+  `PowerOverUndeadLVL <- NecromancySchoolLVL <- WizardLVL` chain are Wizard-Necromancy-School-only,
+  no `ClericLVL` anywhere. This is Wizard's Necromancy School arcane-school power (mimics Channel
+  Energy mechanically, which misled the audit), not Cleric's own Channel Positive/Negative Energy —
+  that remains a real, separate, still-open gap (`cleric_channel_positive_energy`/
+  `cleric_channel_negative_energy`), explicitly untouched. Closed 5 facts (uses/day, Turn/Command
+  DC, Command HD, Grave Touch, Life Sight) via `wizard_has_canonical_necromancy_selection`.
+- **Item 2 (`order_of_the_dragon`) — audit's formula-shape caution was correct to raise, and
+  checked out true.** `apg_abilities_class.lst:243`'s Survival bonus is the identical
+  `max(1,CavalierLVL/2)` shape as Order of the Sword's own Sense Motive bonus, verified rather than
+  assumed. Closed via `cavalier_order_of_the_dragon_survival_bonus`. **Also fixed, found during
+  this wave's own review, not shipped as an oversight:** two diagnostic messages and the
+  `cavalier_deferred_remainder_posture` helper unconditionally named only "Order of the Sword" and
+  "the one canonical Order" — false prose for a character who recorded Order of the Dragon instead.
+  Widened to name both Orders generically.
+- **Item 3 (`padfe_construct`/`padfe_ooze`/`padfe_undead`) — audit's real-owner claim was WRONG.**
+  Not Ranger: each PaDFE record's `%1` substitution is set ONLY by Pathfinder Delver's own
+  Guardbreaker feature (`ag_abilities_class.lst:382`), gated to apply only when the character does
+  NOT already have Ranger's real Favored Enemy of that type — no `RangerLVL` anywhere in the
+  record's own token closure. Ranger's `choice:ranger_favored_enemy` recognizer is real and
+  untouched; it was simply never the right attribution path for this record. Closed via
+  `pathfinder_delver_padfe_bonus`/`ground_pathfinder_delver_class_features` (a fifth "no `ClassId`
+  enum entry" prestige-class dispatch, same shape as wave 43's four). This item's own classify()-
+  level reachability coverage was added this cycle (3 reachability + 1 negative-control test) to
+  match the rigor the other three items already had.
+- **Item 4 — split finding.** Spiritualist's Phantom Emotional Focus pool (7 records) closed via
+  one new `push_generic_pool_choice_magnitude` call — the audit's "misrouted, not unmodelled"
+  framing was half right (classifier routing was the bug), but no existing function named which
+  focus was picked, so a small compute addition was genuinely needed too. **Summoner's Eidolon half
+  NOT closed — audit's "already wired" claim was WRONG.**
+  `eidolon_companion_progression_standard`'s real record is the First Worlder archetype's own
+  master-linked progression trigger (`mastervar("FirstWorlderEidolon")`), not one of the base
+  Eidolon facts `ground_summoner_eidolon` already grounds — confirmed by reading all 7 of that
+  function's existing explanations directly. Widening the search found **15 sibling units**
+  (`ultimate_magic`'s per-body-size/per-tier Eidolon evolution progressions) under the identical
+  collision marker — a materially larger, genuinely harder population than the audit's single-unit
+  framing suggested. Left named and unclosed for a future wave.
+
+**Item 5 (also-check), Psychic Detective — NOT attempted, genuinely more involved than the
+archetype-recognition shape alone.** Confirmed `VISIBLE:NO` (an Investigator archetype, matching
+the audit), but the specific unit's own magnitude is a `STACK:YES`/`MULT:YES` Expanded Arcana
+choice-pool slot gated at combined level >= 16 — needs Investigator's own archetype-substitution
+handling checked first, not a simple owner-reroute. Left named and unclosed.
+
+**Verification, independently re-derived by the orchestrator against a fresh `docs/work-
+inventory.json` join, not just taken on the fixing agent's word:** exactly **16 units** changed
+status, zero collateral movement (id-set unchanged at 49438) — `DONE: 25369→25375 (+6)`,
+`B: 11769→11766 (−3)`, `D: 2506→2493 (−13)`, `V: 327→337 (+10)`. Not all 16 landed in DONE: 6
+landed `grounded` (Order of the Dragon, all 5 Necromancy facts), 10 landed `literal-verified` (3
+PaDFE + 7 Phantom Emotional Focus) — the same D/B→V shape waves 41/43 already hit. F1/`shape_
+ledger.py` census re-derived: `5206 -> 5196`, verified per-id (Pathfinder Delver's 3 PaDFE records
+plus all 7 Phantom Emotional Focus records are F1-shaped; Order of the Dragon and the 5 Necromancy
+facts are not). Both `cargo test --locked --lib` (3090 passed, up from 3077) and the full `cargo
+test --locked --no-fail-fast` integration suite were run this cycle.
+
+Every citation this wave's own insertions shifted was re-derived, not just the new compute's own
+tests — `scripts/completion_atlas.py`'s 10 bucket citations, `scripts/shape_engine_boundary.py`'s
+promotion-ladder citation, and `scripts/missing_engine_tables.py`'s two engine-surface citations,
+all stale purely from this wave's own line-number shift (the shape_engine_boundary/
+missing_engine_tables ones were ALSO already stale at HEAD before this wave touched anything,
+never caught because those two scripts' own tests are not wired into `verify.sh` — named as a
+finding for a future wave, not fixed beyond re-deriving the pins this wave's own edits require).
+Full receipt: `artifacts/bucket-d-mining/wave44_census_bug_and_classifier_collisions_cycle_
+receipt.md`.
+
+**What remains open after this wave:** Summoner Eidolon's 16-unit population (1 First Worlder
+trigger + 15 Broodmaster multi-companion progressions, genuinely harder than the audit assumed);
+Psychic Detective's Expanded Arcana choice-pool record (genuinely more involved than the
+archetype-recognition shape alone); Cerebremancer's "Advance Manifesting" sub-cause (unexamined
+this wave); sub-mechanism 5's remaining ~500 (of 699) units (un-re-audited since wave 43's own
+wave-end-gate finding).
+
+**WAVE 45 UPDATE, 2026-09-05: sub-mechanism 5's population re-derived fresh (686, not 634 or
+699), cross-referenced against the now-74-entry prestige registry (598 registered / 88 not), and
+Ultimate Psionics Phrenic Slayer's full 32-unit Favored Enemy remainder closed.**
+
+**Fresh population re-derivation.** Neither wave 37/38's 634 nor wave 43/44's 699 held up:
+querying `docs/work-inventory.json` directly for units whose evidence contains
+`class_feature_of_unmodelled_corpus_class` at this cycle's own pre-edit HEAD (`4e96826b5e`)
+returns **686** — both the registry fixture (wave 44's own census-script fix, 62→74 entries) and
+the classifier itself have changed materially since either prior count was written, and this
+population moves every time a classifier-collision item elsewhere in this section closes (it
+shares evidence-string real estate with several of wave 44's own closures).
+
+**Cross-referenced against `tests/fixtures/rules_core/prestige-class-entry-requirements.json`'s
+74 entries** (extract each unit's evidence-suffix slug, check membership against the fixture's own
+`class_id` set): **598 registered / 88 not registered**, summing exactly to 686. The 598
+registered units are exactly the population `decisions.md`'s own standing ruling above already
+names as "registered prestige class... only a per-feature magnitude formula is missing" — this
+wave's own re-derivation confirms that framing still holds at the current, corrected population
+size, not merely at wave 42's smaller 12-unit slice. The 88 not-registered units split cleanly:
+`psychic_detective` (18) and `eidolon` (16) are the SAME two populations wave 44 already named
+and left open (Expanded Arcana choice-pool, Summoner Eidolon/Broodmaster); `animal` (17),
+`phantom` (9), `plant` (9), `undead` (8), `dragon` (8) are unrelated corpus name-collisions with
+bestiary/pseudo-class records sharing a name (a Shaman spirit choice, a rogue-talent set, a
+Ranger-archetype focus choice, a mixed Wizard/Cleric population, and a mixed Cavalier/Ultimate-
+Magic population respectively — none of them prestige classes at all); `gifted_blade` (3) is
+wave 44's own confirmed non-prestige exclusion. None of the 88 is a registered prestige class;
+all are named, none attempted this wave.
+
+**Closed this wave: Ultimate Psionics Phrenic Slayer's full Favored Enemy remainder, 32 of the
+class's 43 sm5 units** (the base record plus all 31 creature-type sub-records) — the exact
+"favored-enemy-style choice" shape this section's own WAVE 42 UPDATE named as precedented
+(`ground_pathfinder_delver_class_features`'s PaDFE bonus, wave 44), needing only
+`PhrenicSlayerLVL` (the class's own raw level, `up_classes.lst:932`) with no cross-class prime-
+stat resolution. `SlayerFavoredEnemy = 2*floor((2+PhrenicSlayerLVL)/3)`
+(`up_abilities_class.lst:1326`), shared identically by every one of the 31 creature-type display
+sub-records (each carrying no own `DEFINE`/`BONUS` token, only an `ASPECT` referencing the base
+record's own variable) — verified not just against the ingested corpus JSON but independently
+cross-checked byte-for-byte against the real, non-ingested PCGen oracle
+(`~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/ultimate_psionics/
+up_abilities_class.lst:1326,1338-1368`), a stronger bar than prior waves in this section applied.
+**A real miscount caught during this cycle's own investigation:** the creature-type population was
+first (wrongly) counted as 30; a direct file-count and a second independent oracle cross-check
+both confirm 31, caught by the new test module's own first assertion (RED for the right reason)
+before any test was allowed to pass. `DONE: 25375→25407 (+32)`, `D: 2493→2461 (−32)`,
+`V: 337 (unchanged — all 32 landed straight in DONE, none in V)` (independently re-derived,
+before/after id-set unchanged at 49438, zero collateral movement — full accounting in
+`artifacts/bucket-d-mining/wave45_registered_prestige_magnitude_formulas_cycle_receipt.md`). Both
+`cargo test --locked --lib` (3095 passed, up from 3090) and the full `cargo test --locked
+--no-fail-fast` integration suite were run this cycle. F1/`shape_ledger.py` census re-derived:
+unchanged at 5196 (0 of the 32 closed units are F1-shaped — 31 are `F0`, 1 is `F5`, verified
+per-id; a separate, older doneness instrument `shape_ledger.py` reuses,
+`scripts/observer/pf1e_dashboard_producer.py`, treats `wiring_class` `display`/`derived` +
+`grounded` as `HELD` not `DONE`, so this cycle's units correctly stay counted in that instrument's
+own population even though `completion_atlas.py`'s SD-34 buckets correctly show them DONE — two
+instruments drawing the line differently, not a defect).
+
+**Phrenic Slayer's own remaining 11 units, named and not attempted:** Advance Astral Suit/Mind
+Blade/Manifesting and their 4 two-and-three-way combinations key off cross-class variables
+(`AegisCL`, `MndBladeLVL`, `ABILITYPOOL|Manifesting Level Advancement`) that depend on which
+parent psionic class granted entry into the prestige class; Brain Nausea, Lucid Buffer, Power
+Resistance, and Rebound Attack all key off `PhrenicSlayerPrimeStat` (a class-specific "prime
+manifesting ability" fact, itself gated on the entry-class choice) — both are genuinely separate
+subsystem-modeling questions from the raw-level-only Favored Enemy record this wave closes, left
+named for a future wave rather than folded in speculatively.
+
+**Sub-mechanism 5's remaining population after this wave: 654 (686 − 32)**, split **566
+registered** (the highest-value remaining target — every one already benefits from the SAME
+`chassis_supported(...) || prestige_class_entry_gate::is_registered(...)` generic grant-level
+mechanism; only per-feature magnitude formulas remain, the identical shape this wave's own
+Phrenic Slayer closure and waves 42-44's own precedent both demonstrate) and **88 not registered**
+(named above by slug, out of scope). This population has now been fresh-re-derived and
+cross-referenced for population make-up in three consecutive waves (43, 44, 45); the "genuinely
+too large for a single wave" framing from waves 37/38 continues to not hold up under scrutiny —
+every population checked so far resolves to precedented, closable small-compute work, not
+open-ended new subsystem modeling, with the sole exception of Summoner Eidolon/Broodmaster and
+Psychic Detective, both already separately named.
+
+**WAVE 46 UPDATE, 2026-09-05: sub-mechanism-5 re-derived fresh a fourth consecutive time (654,
+exactly matching wave 45's own post-cycle figure -- unlike every prior re-derivation in this
+section, no drift found this time), and 20 units closed across seven registered prestige
+classes.**
+
+**Fresh re-derivation, unchanged from wave 45's close.** `654` total, split `566` registered / `88`
+not registered, identical to wave 45's own post-cycle split — the registry fixture and classifier
+have not moved since wave 45 closed. The 88 not-registered units are the same population wave 45
+named by slug, re-confirmed unchanged.
+
+**Population grouped by owning prestige class: 58 distinct classes** among the 566 registered
+units, from 45 (Divine Scion) down to 1 (Sentinel). Phrenic Slayer's own remaining 11 units stay
+explicitly out of scope (cross-class prime-stat/parent-entry dependency, unchanged from wave 45).
+**A real, useful negative finding from this wave's own scan:** at least 9 Ultimate Psionics
+prestige classes (Sighted Seeker, Thrallherd, Psion Uncarnate, Cerebremancer, Metamind, Elocater,
+Psicrystal Imprinter, Soul Archer, Metaforge) carry the IDENTICAL `AS`/`MB`/`MBAS`/`Ma`/`MaAS`/
+`MaMB`/`MaMBAS` cross-class-manifester-level shape Phrenic Slayer's own excluded 11 units already
+carry — confirmed by direct read, not assumed from the naming pattern alone. This is the same
+underlying subsystem-modeling question repeated across at least 10 classes now, not 10 separate
+questions; a future wave scoping real work against it should treat it as one question.
+
+**Closed this wave: 20 units across seven prestige classes**, every formula read directly from
+its own corpus record (three of the seven needed the class's own level-table file too, not just
+the class_feature record's own tokens — the same cross-file idiom wave 44 established for
+Pathfinder Delver's Guardbreaker), independently cross-checked against the real, non-ingested
+PCGen oracle:
+- **Pathfinder Delver** (extends wave 44's dispatch, no new `ClassId`): Guardbreaker's own record,
+  Master Explorer, Thrilling Escape, Vigilant Combatant, Fortunate Soul, True Seeing — 6 units, all
+  self-contained on the class's own raw level.
+- **Argent Dramaturge**: Argent Performance (rounds + save DC, the "10 + level + ability modifier"
+  idiom) and Dramaturgical Flourish (pool size) — 2 units.
+- **Horizon Walker**: Favored Terrain, Terrain Mastery, Terrain Dominance — 3 pool-size-only units.
+- **Nature Warden**: Companion Bond, Survivalist — 2 raw-level-tracking units (Woodforging, the
+  class's third open unit, carries no magnitude token at all and is left unattempted).
+- **Rage Prophet**: Rage Prophet Mystery, Ragecaster — 2 raw-level-tracking units (Spirit Warrior,
+  the class's third open unit, same no-magnitude-token shape as Woodforging, left unattempted).
+- **Holy Vindicator**: Stigmata — 1 unit (Channel Smite, a bonus-feat grant with no magnitude
+  token, left unattempted).
+- **Stalwart Defender**: AC Bonus, Damage Reduction, Defensive Powers, Defensive Stance — 4 units
+  (Increased Damage Reduction, a pool-member magnitude needing untracked selection state, and
+  Renewed Defense, dice notation this engine does not parse, both left unattempted).
+
+Every new formula was written against real pure-formula tests plus a real-pipeline reachability
+test (26 new lib tests, 15 new bin-level tests), `DONE: 25407→25419 (+12)`,
+`D: 2461→2441 (−20)`, `V: 337→345 (+8)` — not all 20 landed in DONE; 8 landed in bucket V
+(`literal-verified`, "verified by proxy, never by the oracle"), the same D→V shape waves
+41/43/44 already hit, a legitimately-resolved bucket rather than a lesser outcome — independently
+re-derived by the orchestrator against a fresh `completion_atlas.py --check` + direct id→status
+join over 49438 units, confirming exactly these 20 changed and nothing else. Both `cargo test
+--locked --lib` (3121 passed, up from 3095) and the full `cargo test --locked --no-fail-fast`
+integration suite were run this cycle (run to completion twice against the fully-settled tree,
+identically 8545 passed / 0 failed / 67 ignored both times). F1/`shape_ledger.py` census
+re-derived: `5196 → 5193`, verified per-id (3 of the 20 closed units are F1-shaped — Nature
+Warden's Companion Bond and Pathfinder Delver's Thrilling Escape/Fortunate Soul; the other 17 are
+F0/F2/F4/F5), `formula_interpreter_corpus_wide.rs`'s own pinned census test updated to match. Full
+receipt: `artifacts/bucket-d-mining/wave46_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
+**Sub-mechanism 5's remaining population after this wave: 634 (654 − 20)**, split **546
+registered** (across 55 remaining prestige classes; at least 9 confirmed AS/MB/Ma-shaped classes
+are genuinely harder, same bucket as Phrenic Slayer's own remaining 11; several large
+heterogeneous classes like Divine Scion (45 units) remain real but slower closable work) and **88
+not registered** (unchanged, named above).
+
+**WAVE 47 UPDATE, 2026-09-06: a stalled prior build agent's Divine Scion work was recovered,
+ONE real correctness bug found and fixed, and 43 of Divine Scion's 45 sub-mechanism-5 units
+closed.**
+
+**Recovery context.** This wave's own dispatched build agent (`sd34-wave47.workflow.js`) ran for
+~48 minutes and wrote real, substantial code targeting Divine Scion (source book
+`inner_sea_magic`, 45 sub-mechanism-5 units, the single largest remaining class wave 46 named) —
+a `probe_divine_scion_wiring` function and `divine_scion_wired` `EngineFacts` field in
+`v06_work_inventory.rs`, and a `ground_divine_scion_class_features` implementation plus a full
+test module in `pilot_compute/mod.rs` — then stalled without committing, writing a receipt, or
+running any verification. This cycle read the FULL uncommitted diff against the real corpus
+records directly (never trusting the diff's own comments or the prior agent's characterization of
+its own work, the same distrust this bundle applies to every prior wave's own self-report), found
+one genuine correctness bug, fixed it, finished the wiring, verified/rewrote the tests, and
+completed every verification step the stalled agent never ran.
+
+**The bug, found by reading the real oracle rather than trusting the recovered draft's own doc
+comments.** The recovered draft's `ground_divine_scion_class_features` ground all 35 per-domain
+Domain Specialization sub-records AND all 4 Opposition Alignment DR records unconditionally, for
+every Divine Scion character simultaneously, regardless of which domain or opposition alignment
+the character actually has. Both are real `ABILITYPOOL`-gated one-of-N choices — confirmed
+against the real, non-ingested PCGen oracle
+(`~/workspace/repos/pcgen/data/pathfinder/paizo/campaign_setting/inner_sea_magic/
+ism_classes.lst:103`/`:104`'s own `BONUS:ABILITYPOOL|Opposition Alignment|1` / `BONUS:ABILITYPOOL|
+Domain Specialization|1`, pool SIZE 1, and `ism_abilities_class.lst`'s own section headers at
+lines 35 and 47, reading literally `# Opposition Alignment choices` and `# Domain Specialization
+choices`) — the exact shape this codebase already gates everywhere else via a real
+`choice_selection(input, CHOICE_ID)` check (`SORCERER_BLOODLINE_CHOICE_ID`,
+`CLERIC_DOMAIN_CHOICE_ID`, `BLOODRAGER_BLOODLINE_CHOICE_ID`, `RANGER_COMBAT_STYLE_CHOICE_ID`, and
+roughly 30 other call sites). The recovered draft's OWN doc comment correctly excluded True Scion
+Charisma/Wisdom citing this exact reasoning ("a genuine pool-selection-state question this engine
+does not yet track") — but did not notice its own two siblings, Domain Specialization and
+Opposition Alignment, carried the identical `ABILITYPOOL` shape, and ground them unconditionally
+instead. This is exactly the class of defect this bundle's own standing doctrine (`§2a`'s "a shape
+engine computes a number; it does not complete a record", and the ruling this file opened under
+-- "a wrong computed number looks like a right one") exists to catch: a computed value that looks
+right (a real formula, a real corpus citation, real passing tests) but is factually wrong for any
+real character querying it.
+
+**The fix.** Two new choice-set-id consts
+(`DIVINE_SCION_DOMAIN_SPECIALIZATION_CHOICE_ID`/`DIVINE_SCION_OPPOSITION_ALIGNMENT_CHOICE_ID`),
+following the `"domain:<slug>"`/`"alignment:<slug>"` selection-id convention already established
+elsewhere. `ground_divine_scion_class_features` now gates the per-domain block and the
+per-alignment DR block on `choice_selection(input, <CHOICE_ID>)` matching the recorded selection —
+a real character's own receipt now surfaces exactly the ONE domain and ONE alignment it actually
+recorded, never all 39 (35 + 4) simultaneously. The 4 genuinely unconditional single-owner facts
+(Domain Specialization's own pool-SIZE, Divine Wrath, Deific Defense, Weapon and Armor
+Proficiency) are untouched. `probe_divine_scion_wiring` (used both by the corpus-wide census
+sweep and this wave's own reachability tests) was rewritten to sweep every one of the 35 domain
+selections and 4 alignment selections in turn, collecting the union of corpus keys the real
+pipeline resolves — the same `probe_cleric_domain_generic_member_wiring` idiom this file already
+uses for Cleric Domain/Sorcerer Bloodline, adapted for a hand-rolled (not generic-pool-group)
+grounding function. `canonical_seeds_for` gained a `"divine_scion"` arm (`domain:fire` /
+`alignment:evil`), the same "give the sweep one canonical default choice" convention already used
+for wizard/cleric/sorcerer/fighter/psychic and others.
+
+**Net effect on this wave's own closure count: none** — all 43 corpus keys the recovered draft
+targeted still resolve reachable, because reachability at the corpus-wide census level means "the
+real pipeline resolves this key for SOME real character configuration," not "every character has
+it," the same existence-based semantics Cleric Domain's own ~9-domain population already
+established (confirmed directly: none of Cleric Domain's own per-domain records are grounded
+unconditionally for every cleric either). What changed is CORRECTNESS: a real Divine Scion
+character's own receipt now shows exactly the domain/alignment they recorded, not a fabricated
+39-facts-at-once answer.
+
+**Closed this wave: 43 of Divine Scion's 45 sub-mechanism-5 units** — Domain Specialization's own
+pool-size record, Divine Wrath, Deific Defense, Weapon and Armor Proficiency, all four Opposition
+Alignment DR records (Chaotic/Evil/Good/Lawful), and all 35 per-domain Domain Specialization
+sub-records (Air through Weather) — every formula verified directly against the real corpus JSON
+and independently cross-checked against the real, non-ingested PCGen oracle; all 35 domains' own
+uses-per-day tokens were cross-checked EXHAUSTIVELY (not sampled) against the raw `.lst` file and
+matched exactly. **True Scion Charisma/Wisdom (2 units) remain named, not attempted**, unchanged
+from the recovered draft's own honest scoping: a real `ABILITYPOOL|True Scion|1` mutually-exclusive
+choice between an ability-score bump to Charisma or Wisdom, each also re-stating the same
+`DomainSpecBonus`/`DivineWrathBonus`/`DeificDefenseBonus` increments already excluded above — a
+genuine pool-selection-state question this engine does not yet track for this specific choice.
+
+Independently re-derived by the orchestrator against a fresh `docs/work-inventory.json` join, not
+just taken on the fixing agent's word: exactly **43 units** changed status, zero collateral
+movement (id-set unchanged at 49438) — `DONE: 25419→25458 (+39)`, `D: 2441→2398 (−43)`,
+`V: 345→349 (+4)`. 39 landed `grounded` (all 35 per-domain records + all 4 Opposition Alignment
+records, every one `wiring_class: computed`); 4 landed `literal-verified` (the 4 unconditional
+records, every one `wiring_class: static` and swept-verified) — the same D→V shape waves
+41/43/44/45/46 already hit. F1/`shape_ledger.py` census re-derived: `5193 → 5155`, verified
+per-id (38 of the 43 closed units are F1-shaped; the other 5 are 4 `F0` + 1 `F8`). Both
+`cargo test --locked --lib` (3134 passed, up from 3121) and the full `cargo test --locked
+--no-fail-fast` integration suite were run this cycle (run to completion twice against the fully-
+settled tree — the F1 pin update is a real `.rs` edit — identically 8562 passed / 0 failed / 67
+ignored both times). Full receipt:
+`artifacts/bucket-d-mining/wave47_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
+**A generalizable finding for future waves against this same sub-mechanism-5 population:** before
+grounding ANY corpus record shaped `# <X> choices` / granted via `BONUS:ABILITYPOOL|<X>|1`, check
+whether the class's OTHER already-excluded units (like True Scion here) share the identical
+`ABILITYPOOL` shape — a wave that correctly excludes one such choice but grounds a sibling choice
+unconditionally is the exact defect this cycle's own correction fixed. Grep the raw oracle's own
+section-header comments (`# ... choices`) as a cheap first signal before scoping a future wave.
+
+**Sub-mechanism 5's remaining population after this wave: 591 (634 − 43)**, split across the
+remaining 54 registered prestige classes (Divine Scion no longer among the large ones — only its
+own 2-unit True Scion remainder is left) and the 88 not-registered units (unchanged, named
+above). The ≥10-class AS/MB/Ma cross-class-manifester-level population is unchanged, untouched
+this wave.
+
+**WAVE 48 UPDATE, 2026-09-06: sub-mechanism-5 re-derived fresh a fifth consecutive time (591,
+unchanged from wave 47's own post-cycle figure), and 16 units closed across two prestige classes
+(Twilight Talon, Golden Legionnaire).**
+
+**Fresh re-derivation, unchanged from wave 47's close.** `591` total, split `503` registered / `88`
+not registered, identical to wave 47's own post-cycle split — the registry fixture and classifier
+have not moved since wave 47 closed. Of the 503 registered, the SAME 116-unit excluded
+cross-class-manifester-level group (Sighted Seeker, Thrallherd, Psion Uncarnate, Elocater,
+Psicrystal Imprinter, Metamind, Phrenic Slayer, Cerebremancer, Soul Archer, Metaforge) and the
+SAME 2-unit Divine Scion True Scion remainder are unchanged, leaving **385** as the real working
+pool across 44 remaining prestige classes.
+
+**Closed this wave: 16 units across two `adventurers_guide` prestige classes**, every formula read
+directly from its own corpus record, independently cross-checked against the real, non-ingested
+PCGen oracle:
+- **Twilight Talon** (12 of 17 sm5 units): Sneak Attack (the classic sneak-attack-dice-by-level
+  idiom, `(TwilightTalonLVL+2)/3`), Enhanced Tattoo's own save DC (the classic "10 + level factor +
+  ability modifier" idiom, `10+TwilightTalonLVL/2+CHA`), and all 10 per-tier Enhanced Tattoo
+  caster-level records -- a genuine 5-tier, one-of-two-per-tier `ABILITYPOOL` choice
+  (`ag_abilities_class.lst:542`'s own 5 `PREVARGTEQ`-gated `BONUS:ABILITYPOOL|Twilight Talon Tattoo
+  Level <N>|1` tokens), gated via 5 new `choice_selection(input, <CHOICE_ID>)` checks (one per
+  tier, since a character accumulates a NEW tattoo at each tier reached, unlike Divine Scion's
+  single career-long pick) -- the exact discipline wave 47's own generalizable finding named:
+  before grounding any `# <X> choices`-shaped record, check whether it is a real `ABILITYPOOL`
+  one-of-N selection rather than a single-owner unconditional grant. 5 units left named, not
+  attempted (Many Hats, Eye for Detail, Dead Drop, Resourceful Agent, Unassuming Presence -- pure
+  prose, no `BONUS`/`DEFINE` token).
+- **Golden Legionnaire** (4 of 16 sm5 units): Allied Retribution, Authoritative Command, Improved
+  Aid, United Defense -- all flat step-bonuses (`1+(GoldenLegionnaireLVL>=N)`), the same idiom
+  already used repeatedly this bundle. 12 units left named, not attempted: 10 pure-prose/automatic
+  single-feat-grant records, plus Combat Feat and Legion Feats (both real bonus-feat `ABILITYPOOL`
+  grants this cycle chose not to model a bare pool-of-feats magnitude for -- a future wave's own
+  scoping question, not a correctness gap).
+
+**A new finding: not every `adventurers_guide` prestige class carrying `DESCISPI:YES` is
+PI-name-blacklisted.** Twilight Talon and Golden Legionnaire's own DESC prose is scrubbed
+(`DESCISPI:YES`, matching the same redaction this whole book carries throughout) but their class
+NAMES and formula tokens are NOT -- both ingest normally under an ordinary `data/corpus/
+adventurers_guide/class_feature/<slug>/` directory. Aldori Swordlord and Magaambyan Arcanist,
+investigated and explicitly SKIPPED this wave, are a different, stricter case: their class NAME
+itself is Product Identity, so their records ingest under a redacted `codex_named_unit_*` directory
+with `data.class` replaced by the redaction marker -- confirmed directly against
+`src/rules_core/cache_gen/class_feature.rs`'s own
+`generate_redacts_a_class_field_resolved_from_a_real_corpus_class_name_that_is_itself_pi` test
+names Aldori Swordlord as its own worked example. **Check for an ingested directory under the
+class's own slug (`data/corpus/<book>/class_feature/<slug>/`) before scoping a future wave against
+any `adventurers_guide` prestige class** -- its absence is the cheap signal this wave used to skip
+both without writing PI-blacklisted content into new source citations.
+
+**A second citation-pin hazard, caught before commit:** this wave's citation-pin re-derivation was
+first done BEFORE the `clippy::type_complexity` fix (a `type TwilightTalonTattooTierMember` alias)
+was applied, and that alias sits above every one of the bucket/promotion-ladder/table citation
+sites in `v06_work_inventory.rs` -- so its insertion shifted all of them by a further uniform +4
+lines. Re-running `completion_atlas.py --check` one final time before commit caught this
+immediately: all 10 bucket citations failed at once (an unambiguous single-shared-cause signal).
+Corrected every citation across all four affected files (`completion_atlas.py`,
+`shape_engine_boundary.py`, `missing_engine_tables.py`, `test_shape_engine_boundary.py`),
+re-confirmed `citation_failures=0` everywhere. **Lesson: citation-pin re-derivation must be the
+LAST thing done before commit, re-run again after every real `.rs` edit including a late clippy
+fix, however small.**
+
+**Verification, independently re-derived by the orchestrator against a fresh `docs/work-
+inventory.json` join, not just taken on the fixing agent's word:** exactly **16 units** changed
+status, zero collateral movement (id-set unchanged at 49438) -- `DONE: 25458->25474 (+16)`,
+`D: 2398->2382 (-16)`, `V: 349->349 (unchanged, +0)` -- every one of this wave's 16 closures landed
+straight in `grounded` (DONE); none landed in `literal-verified`/`fixture-verified` (V), since none
+of the 16 has a corresponding `derived_evaluator_fixture_check` fixture row -- a legitimate,
+different outcome from several prior waves' own D->V shape, not a lesser one. Both `cargo test
+--locked --lib` (3143 passed, up from 3134) and the full `cargo test --locked --no-fail-fast`
+integration suite were run this cycle, the full suite run TWICE end to end (a real clippy-fix `.rs`
+edit -- two `clippy::type_complexity` warnings on this wave's own new tier tables, the exact
+zero-warning-ceiling hazard wave 47 named -- landed between the two runs). F1/`shape_ledger.py`
+census re-derived: unchanged at 5155 (0 of the 16 closed units are F1-shaped -- 6 are `F2`,
+per-level arithmetic; 10 are `F0`, an unrecognized `SPELLS:Innate` token, the same blind spot
+Divine Scion's domain records already hit). Full receipt:
+`artifacts/bucket-d-mining/wave48_registered_prestige_magnitude_formulas_cycle_receipt.md`.
+
+**Sub-mechanism 5's remaining population after this wave: 575 (591 - 16)**, split across the
+SAME 44 registered prestige classes as before this wave (neither Twilight Talon nor Golden
+Legionnaire was fully closed, so neither drops out of the working-pool class count; largest
+remaining: cyphermage 17, psychic_fist 16, asavir 15, metamorph 15, war_mind 15, hellknight 14,
+adaptive_warrior 14, aldori_swordlord 13 [PI-name-blacklisted, see above], sanguine_angel 13,
+body_snatcher 13, golden_legionnaire 12 [own remainder], steel_falcon 12, magaambyan_arcanist 11
+[PI-name-blacklisted], and roughly 30 smaller classes) and the 88 not-registered units (unchanged,
+named above). The ≥10-class AS/MB/Ma cross-class-manifester-level population is unchanged,
+untouched this wave.
+
+**WAVE 49 UPDATE, 2026-09-06: 33 more prestige classes swept in one batched cycle (the operator's
+own "batch big, verify once" directive), 129 units closed, two real bugs self-caught and fixed
+before commit (one correctness, one a census-registration gap that would have silently zeroed out
+this entire wave's own closure count).**
+
+**Fresh re-derivation.** Sub-mechanism-5 re-derived at `575` (591 − 16, unchanged from wave 48's own
+post-cycle figure — no drift since wave 48 closed), split `487` registered / `88` not registered.
+Of the 487 registered: `116` remain the excluded cross-class-manifester-level group, `2` Divine
+Scion's own True Scion remainder, `13`/`11` Aldori Swordlord/Magaambyan Arcanist (PI-name-
+blacklisted, wave 48's own finding) — leaving **345** as this wave's real working pool across **42**
+remaining prestige classes, matching the dispatch brief's own count exactly.
+
+**Method, widened for throughput per the operator's own directive:** rather than 2-5 classes per
+wave with a full re-verify cycle between each, ALL 42 classes' code and tests were written first,
+then the full verification sequence (lib tests, full integration suite, clippy, guarded regen, gate
+scripts) was run once at the end. One clippy warning and one real correctness bug were found on that
+single pass, both fixed, triggering exactly one second full-suite run — not a return to the
+per-class cycle.
+
+**A real, new negative finding: three more Ultimate Psionics classes carry the excluded AS/MB/Ma
+cross-class-manifester-level shape.** Psychic Fist, Metamorph, and War Mind (none named in the
+prior 10-class exclusion list) each carry the identical `Advance Astral Suit`/`Advance Mind Blade`/
+`Advance Manifesting` family, confirmed by direct read. Their OTHER units (not AS/MB/Ma-shaped) were
+still closed normally. This widens the excluded class count from 10 to 13 (the unit count inside the
+already-counted 116 is unchanged).
+
+**A real correctness bug self-caught on this wave's own re-verification, before commit.** Three
+classes' draft formulas (Hellknight, Pathfinder Savant, Diabolist) initially used
+`total_character_level(input)` for a class-table-fed `<X>LVL|CL` variable. Re-checking against this
+bundle's OWN already-shipped precedent for the identical idiom (`PaDLVL|CL`, `TwilightTalonLVL|CL`,
+`GoldenLegionnaireLVL|CL` — all already shipped treating bare `CL` on a class's own table row as
+**that class's own raw level**, not total character level) showed the three drafts were wrong: a
+multiclass character would have received an inflated value from every other class level they held.
+Fixed to use the raw per-class level directly. The single-class test fixture this bundle's own test
+modules always use made the bug numerically invisible (level == total level with no other classes
+present) — caught only by tracing the real oracle's own class-table semantics against this
+codebase's own prior precedent, not by any failing test. Exactly the "a wrong computed number looks
+like a right one" failure mode this section's own standing doctrine exists to catch.
+
+**A second, more consequential self-caught bug: the census tool itself never knew about any of
+these 33 classes.** After writing all 33 `ground_<class>_class_features` functions and their
+`pilot_compute/mod.rs` tests, a first `docs/work-inventory.json` regen showed **zero** status
+changes — every one of this wave's own new explanation ids fires correctly against the real
+pipeline (proven by the `pilot_compute/mod.rs` test module, 39 passing tests), but
+`src/bin/v06_work_inventory.rs`'s own `classify()` function has NO knowledge that these classes'
+formulas exist unless a dedicated `probe_<class>_wiring` function, a matching `EngineFacts` field,
+and a `classify()` early-return check are ALSO added for each one — exactly the four-part pattern
+waves 43-48 each applied per class but that this wave's own "batch the compute code first" plan
+never accounted for. Fixed by adding all 33 probes (reusing the existing generic
+`probe_wave46_single_owner_class_features` helper, one call per class) plus their `EngineFacts`
+fields, constructor lines, and `classify()` checks, and a new `pilot_compute`-analog reachability
+test module (`wave49_registered_prestige_probe_reachability_tests`, one test per class) proving
+each probe resolves the real corpus keys through the real pipeline. This is the second
+"corpus-wide census is a SEPARATE registration surface from the runtime compute path" hazard
+following this bundle's own repeated-attribution-collision findings — worth naming explicitly for
+any future wave: writing a working `ground_*` function and its own direct tests is necessary but
+not sufficient; the census needs its own probe wired in too, and a "zero deltas" regen result is
+the signal to check for exactly this, not to assume nothing changed.
+
+**Closed this wave: 129 units across 33 prestige classes** (full class-by-class table in
+`artifacts/bucket-d-mining/wave49_registered_prestige_magnitude_formulas_cycle_receipt.md` — one
+unit short of the 130 originally drafted: Student of War's own Mind Over Metal is a real,
+independently-tested formula (`student_of_war_mind_over_metal_ac_bonus`, gated on Intelligence
+exceeding Dexterity) but the shared probe fixture's own ability scores never satisfy that gate at
+any level, so the corpus-wide census cannot observe it reachable through the standard probe path —
+left named, not force-closed, rather than fabricating a bespoke fixture override for one unit under
+time pressure).
+**5 classes fully closed** (mystic_archer 7/7, mammoth_rider 6/6, master_chymist 5/5, dark_tempest
+5/5, ulfen_guard 1/1). Every formula
+was transcribed directly from its own ingested corpus record, cross-checked against the real,
+non-ingested PCGen oracle where a cross-file class-table lookup was needed (the same
+`nature_warden_companion_bond_level` idiom already established). Genuinely un-attemptable units
+(216 named, not attempted) split by reason: pure prose / no `BONUS`/`DEFINE` token; the excluded
+cross-class prime-stat/manifester-level shape; an untracked equipment/state gate (armor equipped,
+psionic focus active); dice notation this engine's formula interpreter does not parse; a real
+`ABILITYPOOL` one-of-N discipline choice needing new choice-gating machinery (Sanguine Angel's own
+Discipline pool, left for a future wave rather than rushed); an ability-score-gated formula the
+shared probe fixture cannot exercise (Student of War's Mind Over Metal, above); and one genuinely
+different-owner shape (Sentinel's one sm5 unit keys off a Ranger Combat Style FEAT chain, not
+`class:sentinel` level, the first unit in this whole population found to NOT be level-gated on its
+own registered class at all).
+
+Independently re-derived by the orchestrator against a fresh `docs/work-inventory.json` join, not
+just taken on the fixing agent's word: exactly **129 units** changed status (`DONE: 25474->25603`,
+`D: 2382->2253`, `V: 349->349`), zero collateral movement (population unchanged at 49438). Both
+`cargo test --locked --lib -j 6` (3182 passed, up from 3143) and the full `cargo test --locked
+--no-fail-fast -j 6` integration suite were run this cycle (run TWICE: the clippy fix and the
+CL-semantics correctness fix both landed between the two runs). `cargo clippy --locked --tests -j 6`:
+0 warnings after the fix. F1/`shape_ledger.py` census: unchanged at 5155 (this wave's own new engine
+code touches no corpus data).
+
+**Sub-mechanism 5's remaining population after this wave: 446 (575 − 129)**, split across **37**
+registered prestige classes still carrying an open remainder (5 of this wave's 42 -- Mystic Archer,
+Mammoth Rider, Master Chymist, Dark Tempest, Ulfen Guard -- fully closed and drop out of the
+working-pool class count; largest remaining: sanguine_angel 11, cyphermage 14, lantern_bearer 8,
+golden_legionnaire 12 [own remainder, unchanged], telekinetic_weaponmaster 9 [unattempted, AS/MB/Ma
+shape], and roughly 30 smaller remainders) and the 88 not-registered units (unchanged). The excluded
+cross-class-manifester-level group is now confirmed at 13 classes (not 10), untouched this wave.
+
+**WAVE 50 UPDATE, 2026-09-07: a first Core Rulebook + Ultimate Campaign, buckets B/C/D/M wave --
+343 units closed (244 inside the wave's own CR+UC scope, 99 as a verified cross-book bonus), the
+dispatch brief's own "cleanest/most mechanical" characterization of buckets M and B corrected by
+direct investigation, and both bucket D's dominant shape and bucket C's wiring gap named precisely
+by root cause.**
+
+**Fresh re-derivation.** Re-classified every Core Rulebook and Ultimate Campaign unit using
+`completion_atlas.py`'s own `_bucket_of()` logic directly (not the classifier's own prior output):
+CR **M 778 / B 467 / C 191 / D 307** = 1,743; UC **M 36 / D 2** = 38; **1,781 total**, matching the
+dispatch brief's own figure exactly.
+
+**The dispatch brief's own characterization of buckets M and B did not survive direct
+investigation.** Bucket M is not one shape: 347 of CR's 778 (`ability`/`template`/`domain`) have
+**no `grounded` precedent anywhere in this engine** (a corpus-wide grep of every `grounded` unit by
+kind returns zero for these three) -- genuinely new-chassis compute-path work, not a missing
+formula in an existing path. `equipment_modifier` (210) splits into 111 real-formula-needed and 99
+`%CHOICE`-parameterized alias rows needing player-choice-gated computation. Only 221 of 778
+(`race_trait`/`feat`/`skill`/`equipment`/`spell`) have established precedent. Bucket B (467, all
+`class_feature`) is not "a table exists, add entries" -- there is no single table; it is
+`classify()`'s `Kind::ClassFeature` arm failing to resolve an owner/promotion path across ~140
+distinct option-pool groups, each its own investigation.
+
+**Two concentrated, verified, low-risk mechanisms closed instead of spreading effort across ~140
+unverified groups.** (1) `"Core Domain ~ <X> Domain"` (33 CR records) / `"Sorcerer Domain ~ <X>
+Domain"` (22) -- the internal "you selected this domain" chassis ability, `CATEGORY:Internal`, no
+separate content of its own. Direct corpus read: 31/33 and 22/22 respectively carry `description:
+null` by design (confirmed against the upstream `.lst` rows too); the other 2 Core Domain records
+(Destruction, Darkness) carry a real `description`, but it is a leaked SPELL description from an
+unrelated record, not domain-selection content -- correctly excluded and left open. (2) `"Sorcerer
+Bonus Spell L1"`-`"L9" ~ <Spell>"` (200 CR records across 9 levels): the internal per-level
+bonus-spell-slot grant; 22 of 200 carry `description: null`, the other 178 carry the granted
+spell's own real, legitimately-relevant description (a different, valuable registered-pool-catalog
+opportunity for a future wave, not this shape) -- only the 22 genuinely-proseless ones close here.
+Both extend `decisions.md §20`/`§21`'s already-established "genuinely has no real upstream prose,
+set-shaped/internal grant, by design" ruling to two groups it had not yet reached, reusing the same
+`class_feature_set_shaped_grant_carries_no_upstream_description_by_design` evidence string rather
+than minting a new one.
+
+**A third mechanism, shared across four OTHER kinds for the first time.** `simple_kind_verdict`'s
+shared zero-magnitude fallback (`<kind>_content_table_holds_zero_magnitude_record_pending_wiring_
+class_review`, backing `template`/`language`/`skill`/`race_trait_generic`/`ability`/`domain`/
+`equipment`/`deity`) fires whenever a held, zero-magnitude record fails the
+`has_real_description && is_display_wiring_class_for_promotion(wc_class) && !universal_sheet_
+modifier` promotion gate. Sampled every CR `template` (262 corpus files), `language` (22), `skill`
+(15 D-bucket), and `race_trait_generic` (3) record directly: **all 169 of 169 CR D-bucket units
+in this shape fail on the FIRST condition alone, by design, not by an ingestion gap** --
+`template` (130, 123 additionally `VISIBLE:NO`) is internal PCGen kit/auto-application chassis
+(`"PC Level 11"`, `"Wild Shape"`, `"Righteous Might (Damage Reduction/Good)"`), never player-read
+prose; `language` (22) has no `DESC:` for any CRB language by design (a language's real content is
+its own name); `skill` (15) is internal usable-untrained bookkeeping (`"Craft (Untrained)"`,
+`"Untrained ~ Disable Device"`); `race_trait_generic` (3) is vacuous placeholder sentinels (`"No
+Race Trait Available"`, `"Region ~ None/Unknown"`), the shape `class_feature_pool_catalog::
+vacuous_placeholder_reason` already names. New rung added, gated on `engine_book == "core_rulebook"`
+(this wave's own granted scope -- corpus-wide this same shape carries 724 `template` units alone,
+most in Bestiary books where a template name genuinely groups real prose elsewhere in its own
+closure, NOT verified this wave and not assumed to share CR's shape) `&& !has_real_description`.
+Closed 169 of 169 CR units sampled this way; one CR template (`Wild Shape`) resolves
+`has_real_description == true` through a wider closure this cycle did not trace further and
+correctly stayed open.
+
+**Bucket C's wiring gap, named precisely.** `no_explanation_id_and_no_diagnostic_names_this_
+feature` (191 CR units, 103 distinct owner groups, largest Rage Power 13/Rogue Talent 10/Dragon
+Disciple 9/Druid Domain 7/Arcane Archer 6/Elemental Bloodline 6): this bundle's own `AT-34-E3-002`
+generic pool-group-selection/pool-choice mechanism (`push_generic_pool_group_selection_magnitude`/
+`push_generic_pool_choice_magnitude`) **already closes the resolvable majority** of this shape for
+Cleric Domain and Sorcerer Bloodline specifically -- confirmed live: `Elemental Bloodline ~
+Elemental Blast`/`~ Elemental Ray`/`~ Elemental Movement (Air)` already read `grounded`/
+`literal-verified`. What remains for those two groups is residual the generic formula interpreter
+genuinely cannot resolve (dice notation, non-numeric qualitative grants, multi-terminal records) --
+a FORMULA-INTERPRETER gap, not a wiring gap. The other ~85 groups (Rage Power, Rogue Talent, Monk,
+Barbarian, Dragon Disciple, ...) have never had either generic pass wired to them at all --
+real per-pool wiring for a future wave (`push_generic_pool_choice_magnitude` already exists and
+already serves two other classes; extending it to Rage Power/Rogue Talent is the same shape, not a
+new mechanism), not attempted this cycle given the per-group verification cost (103 groups, ~2
+units/group).
+
+**A real cross-book bonus, honestly reported rather than hidden.** Both `classify()` fixes key on
+the record's own `group`/`kind_label` text (the class_feature fix) or `engine_book` (the
+simple_kind_verdict fix, deliberately book-scoped). The class_feature fix is NOT book-scoped (the
+"Core Domain"/"Sorcerer Bonus Spell L<N>" shape is structural to the record, not CR-specific), so
+it also closed 99 real units in 10 other books carrying the identical corpus shape (`advanced_
+players_guide` 68 -- APG's own subdomains reuse the same `"Core Domain ~ <X> Subdomain"` internal
+chassis pattern -- `occult_adventures` 14, `ultimate_magic` 8, and 7 smaller books) -- the same
+"keyed on the record's own shape, not the book" payoff `decisions.md`'s own `AT-34-E4-002` cycle 3
+already established as legitimate. Every one spot-checked against its own book's real corpus JSON
+(`description: null` confirmed) before trusting it.
+
+**Ultimate Campaign: 0 units closed, all 38 investigated and named precisely** rather than banked
+as a silent zero. 18 `Drawback` records (of the 36 M-bucket units) carry only `COST:0` as their
+sole "magnitude" token -- a real, precisely-diagnosed classifier gap for a future wave: `COST:`
+counts as a `MAGNITUDE_TOKENS` entry even at value 0, forcing a genuinely narrative, zero-mechanical
+-effect record into the `ingested-magnitude` (M) purgatory a real `text_only` record would instead
+promote past. 10 `Retrain ~ *` records need a downtime-retraining tracking subsystem this engine
+has none of. 2 `trait ~ *` records are real `BONUS:ABILITYPOOL` one-of-N choices needing the
+choice-gating machinery this bundle's own standing rule #3 already defers (Sanguine Angel
+precedent, wave 49). `Trait ~ Wrecking Wrath (Rovagug)` has no matching corpus file anywhere under
+`trait_generic/` -- a genuine, pre-existing data gap, the same shape already named for
+`trait_shadow_whispers`.
+
+**A real, live test caught and fixed by the wave's own final verification pass, not shipped as an
+oversight.** `class_feature_pool_catalog.rs`'s own live-query test
+(`class_feature_owner_matched_non_excluded_remainder_is_24_and_named_by_subcause`) pins the
+excluded-class population (Cleric/Sorcerer/... own share of the `class_feature_owner_matched_by_
+name_but_record_not_held_by_engine` mechanism) at a literal count re-derived by each wave that
+moves it. This wave's own Core Domain/Sorcerer Domain/Sorcerer Bonus Spell fix moves 75 CR units
+(all `class: "Cleric"` or `class: "Sorcerer"`) out of that evidence string entirely, so the pinned
+`213` needed re-deriving to `138` -- caught by the full suite's own second run (the standing
+citation/pinned-count hazard this section has named repeatedly), fixed, re-verified, not the
+mistake of trusting the first (stale) full-suite pass.
+
+**Real movement, independently re-derived via a direct `id`→`status`/`evidence` join** over
+before/after `docs/work-inventory.json` snapshots (not just `completion_atlas.py`'s own bucket
+counts): exactly **343** units changed status, all `engine-does-not-hold` → `grounded`, **zero
+collateral movement** (population unchanged at 49438). `completion_atlas.py --check`: `DONE
+25563→25906`, `B 11763→11589` (−174, exactly the class_feature closures), `D 2253→2084` (−169,
+exactly the template/language/skill/race_trait closures). Both `cargo test --locked --lib -j 6`
+(3182 passed, unchanged -- this wave's own code lives entirely in `src/bin/v06_work_inventory.rs`,
+which `--lib` excludes) and the full `cargo test --locked --no-fail-fast -j 6` integration suite
+were run (twice -- the pinned-count fix above triggered the second run). `cargo clippy --locked
+--tests -j 6`: 0 warnings both runs. F1/`shape_ledger.py` census: unchanged at 5124 (this wave's
+own engine code closes only zero-magnitude/no-formula-token units, never a formula-bearing one).
+
+**Remaining named for a future wave:** CR M 778 (221 with established precedent, 347 genuinely
+new-chassis, 210 equipment_modifier split real-formula/choice-gated); CR B remainder 392 (~140
+unverified option-pool groups); CR C 191 across 103 groups (the Rage-Power/Rogue-Talent-shaped
+flat pools and the Dragon-Disciple/Druid-Domain-shaped group-selection pools both need the SAME
+generic passes already proven for Cleric Domain/Sorcerer Bloodline, wired for classes they have
+never reached); CR D remainder 138 (`ability` 109, `class` 17 -- 17 distinct classes each needing
+their own probe investigation, `class_feature` 9, `race_trait` 2); UC 38 (see above, each named).
+
+**WAVE 51 UPDATE, 2026-09-07: 217 units closed out of the 1,537 actionable Core Rulebook + Ultimate
+Campaign units in scope, via two generic mechanisms -- a genuinely new `racial_sla` engine module
+(115 bucket-M units from ONE corpus-stated formula) and a prose-bearing-raw-token guard that made
+wave 50's own "proseless by design" ruling safe to extend to `ability` (102 bucket-D units) -- plus
+a real, pre-existing citation staleness in two instruments found and closed rather than caused.**
+
+**Fresh re-derivation, matching the dispatch brief exactly.** CR **M 778 / B 392 / C 191 / D 138**
+= 1,499 actionable, out of 6,701 core_rulebook units; UC **M 36 / D 2** = 38 actionable, out of 265
+ultimate_campaign units; **1,537 total**.
+
+**Mechanism 1 -- `src/rules_core/racial_sla.rs`, new this wave. The bundle's cleanest instance yet
+of "one corpus-stated formula, many records."** `cr_abilities_race.lst` declares a `Racial SLA ~
+<Spell>` record for every spell any race in the whole PCGen library grants as a racial spell-like
+ability; Core Rulebook ingests 118 of them and every one sat at `ingested-magnitude`. Reading all
+118 directly and classifying by `raw_tokens` shape found **one mechanism, not 118 pieces of
+content**: **115 records, out of the 118 ingested, carry the identical five-token `BONUS:VAR` chain**
+(`_LVL|TL`, `_SpellLVL|<n>`, `_Times|1`, `_DCMod|CHA`, `_DC|10+_SpellLVL+_DCMod`), so the corpus
+itself states PF1's spell-like-ability save DC rule and the ONLY datum that varies across the 115
+is the spell's own level. `RACIAL_SLA_SAVE_DC_FORMULA` is therefore ONE shared string, not a
+per-record transcription -- the same `domain_power` discipline `OPERATOR-RULINGS-2026-08-21.md §20`
+established, wired through the same `grounded_magnitude` seam `AT-34-E3-003`/`AT-34-E4-002` already
+proved for `Kind::Skill`/`Kind::Trait`. Each record is grounded by a REAL
+`compute_pilot_base_chassis` run whose COMPUTED Charisma modifier is bound into the formula and
+evaluated by the crate's real `PcgenFormulaEvaluator`, behind three independent refuse-don't-paper-
+over guards. **The fixture carries Charisma 14 (`+2`), deliberately not 10 (`+0`)**: with a `+0`
+modifier the formula's `CHA` term contributes nothing, so a wrong binding would still produce the
+right number -- the "validate the proxy where it makes the confident claim" bar. The 3 records
+excluded (`Dispel Magic`/`Divine Favor`/`Suggestion`) carry the `DC` formula with NO `DCMod|CHA`
+row, so their DC resolves against the `DEFINE`'s own `0` default; that is very likely an upstream
+`.lst` omission, and shipping `10 + spell level` for them would be a specific, checkable,
+probably-wrong DC.
+
+**Mechanism 2 -- and the real root cause it exposed: `has_real_description == false` is NOT
+sufficient evidence that a record is proseless.** Extending wave 50's CR-scoped zero-magnitude rung
+to `ability` was the obvious next move, and the naive version would have been WRONG for **6 records,
+out of the 109 CR `ability` records in that evidence shape**: `Cloak of Displacement (Minor) ~ Miss
+Chance` and the four `Unarmed <X> Burst`/`Thundering` records carry a real player-facing sentence in
+an `ASPECT:` token the ingester never lifted into `data.description`. Closing those as "genuinely
+carries no upstream prose by design" would have been false -- they carry prose the INGESTER dropped,
+a real ingestion gap, not a completion. New `EngineFacts::corpus_json_prose_bearing_ability_tokens`
+records the coordinate of any record carrying non-trivial text in a raw
+`DESC:`/`SPROP:`/`BENEFIT:`/`ASPECT:` token -- exactly the four keys wave 33 lane A's own argument
+checked by hand for its 9 wizard-school records, now mechanical and corpus-wide instead of a
+per-cycle manual read. The remaining 102 close: 102 are `CATEGORY:Class Skill` + `CSKILL:` internal
+class-skill-list plumbing, plus `"Default"` and `Belt of Dwarvenkind ~ Languages`. Applied as a
+post-check in `classify()`'s own `Kind::Ability` arm, NOT inside the shared `simple_kind_verdict`,
+so no other kind can move -- confirmed: zero collateral movement.
+
+**A second real finding from the same guard, named not forced.** `Fly` and `Heal` are plain
+`CATEGORY:Class Skill` + `CSKILL:` rows with no `.MOD` and no prose token of their own (read
+directly against the upstream `.lst` bytes), yet still resolve `has_real_description == true` --
+their bare one-word names collide with the same-named SKILL and SPELL records, whose `DESC:` the
+token closure picks up. That is the "a shared name never implies a shared thing" corpus-scope-
+collision hazard living inside the classifier's own closure resolution. The guard's conservative
+direction is correct; the finding is new, pre-existing, and now named.
+
+**Bucket C's pool-group wiring gap: a generic fix was designed and deliberately NOT shipped, for a
+real reason.** The largest single coherent family in bucket C is `Monk Unarmed Damage LVL <N>
+(<Size>)` -- **48 units, out of the 191 core_rulebook bucket-C units** (6 band levels x 8 non-Medium
+sizes) -- and all 54 size/level cells are unambiguously stated by their own corpus records'
+`BONUS:VAR|PrimaryAttackDamage{Dice,Size}` tokens, dumped in full this cycle. Transcribing all nine
+columns into `monk_unarmed_strike_damage_die_for_size` (which returns `None` for seven of the nine
+today) is easy and correct. Making the 48 records `grounded` is not, and this is the ruling: **this
+bundle's bar is a magnitude OBSERVED reaching a consumer through a real pipeline run, and no
+character in this engine can occupy any size but Small or Medium** -- `race_resolver::RACE_SIZES`
+gives all 18 playable races exactly those two, `ChosenCharacterState` carries no size field, and no
+template/size-change subsystem exists. The only route to a "grounded" verdict would be making that
+private function public and having the probe call it directly, which is asserting the engine against
+itself -- exactly what `probe_monk_unarmed_damage_die_wiring`'s own doc comment already refuses. A
+nine-column table with no reachable consumer closes 0 units and makes the word "grounded" mean less;
+the blocker is a **character-size subsystem, not a damage table**, and that is what a future wave
+should build. Bucket B's own largest family (`Domain Power` 58 + `Domain Base` 33 = **91 units, out
+of the 392 core_rulebook bucket-B units**) was dumped the same way: most open `Domain Power` records
+carry multi-`%N`, `PREVARLT`-gated, dice-bearing or ally/enemy-facing formulas `DOMAIN_POWER_CATALOG`
+already documents as out of grammar; the genuinely catalog-shaped remainder is **5 records, out of
+the 58 open `Domain Power` records** (Chaos Blade, Holy Lance, Staff of Order, Scythe of Evil,
+Sun's Blessing -- all the Death's-Kiss `grounds_self_application: false` shape), each still needing
+its own provenance and fixture check. Named precisely rather than half-done.
+
+**A pre-existing instrument staleness, found by asking the gates before touching anything.** Two of
+the three citation instruments ALREADY failed at HEAD `5f6b18f4e3`: `shape_engine_boundary.py`
+(ladder pinned at 15274-15277, really at 16135-16138) and `missing_engine_tables.py` (arms pinned at
+16192/16292, really at 16306/16406). Waves 49 and 50 both edited the engine source and both
+re-derived `completion_atlas.py`'s ten citations ONLY. The `--check` gates worked; nobody asked
+them. Both re-derived here by content grep and line-content read-back. `test_shape_engine_boundary.
+py`'s own `not_held_by_engine` pin was also stale and had been carried as a KNOWN deferred item
+since wave 44 -- **closed here rather than carried a seventh wave**, precisely because a red pin in
+that file keeps the whole instrument's test red, which is how its citation went two more waves
+unnoticed. Re-derived to 8784 and confirmed NOT moved by this wave (8784 in both snapshots -- this
+wave's 102 closures all carry `magnitude_token_count == 0`). **Root cause named, fix deliberately
+deferred:** none of those three checks is a `scripts/verify.sh` stage, which is why they drift;
+adding them changes the wave-end gate's own 40-stage count and belongs in a wave that updates that
+gate too.
+
+**Real movement, independently re-derived** via a direct `id`->`status`/`evidence` join over
+before/after `docs/work-inventory.json` snapshots: **exactly 217 units changed, out of a population
+of 49,438 units identical on both sides** -- 115 `ingested-magnitude` -> `grounded` and 102
+`engine-does-not-hold` -> `grounded`, **zero collateral movement**. `completion_atlas.py --check`:
+`DONE 25906 -> 26123`, `M 4449 -> 4334` (-115, exactly the Racial SLA closures), `D 2084 -> 1982`
+(-102, exactly the ability closures), `citation_failures=0`. Post-wave CR buckets: **M 663 / B 392 /
+C 191 / D 36, out of 6,701 core_rulebook units**.
+
+**Remaining named for a future wave:** CR M 663 (`ability` 217 per-record SLA/`SPELLS:` chassis,
+`equipment_modifier` 210 split 130 compute-path / 99 choice-gated, `template` 96 needing a
+`TEMPBONUS` temporary-effect subsystem, `domain` 34 new chassis, 106 across
+feat/skill/equipment/spell/race_trait on precedented seams); CR B 392 (Domain Power/Base 91 is the
+largest family, 5 catalog-shaped today); CR C 191 (Monk Unarmed Damage 48 blocked on a character-size
+subsystem, ~85 pool groups still needing `push_generic_pool_choice_magnitude` wired); CR D 36
+(`class` 17, `ability` 7 -- 5 of them the real `ASPECT:` ingestion gap named above, `class_feature`
+9, `race_trait` 2, `template` 1); UC 38, unchanged, wave 50's four named blockers all still standing.
+
+---
+
+## §23 — Operator ruling, 2026-09-07: Campaign Codex is a paper character-sheet generator, not a simulation — `§2a`/`§20`'s text-only-features precedent generalizes to the whole remaining backlog
+
+**Operator ruling (verbatim intent, communicated out-of-band via a parallel planning session; first
+flagged in-repo by `forward-scope-register.md` row C1.8, which named it "NOT YET recorded in
+`decisions.md`" until this entry):** *Campaign Codex is a paper character-sheet generator, not a
+video game. Most rules only need their text printed on the sheet; only values that actually feed
+sheet totals need to be genuinely computed. Agents must not build simulation-style compute engines
+or "consumer-delta" proofs for print-only rules.* Also reiterated, as a standing process rule, not
+a new one: **batch large swaths of homogeneous work, then run ONE build+test pass** (a `cargo build`
+is ~30 min; one-item-per-build dispatch was measured at ~90 min/item and is unacceptable).
+
+**What this generalizes.** `§2a` established the base ruling ("a zero-magnitude feature whose
+description is shown to the player is COMPLETE") and `§20` extended it to the honest sibling case
+(a zero-magnitude, set-shaped record with genuinely no upstream description is *also* complete —
+there is no display gap to close because there is nothing to display). Both were scoped to
+zero-magnitude records. **This ruling removes that scope limit.** The controlling question is no
+longer "does this record carry a magnitude token" but **"does this unit's value ever land in a
+number the rendered character sheet totals or displays."** A unit whose value never feeds a sheet
+total is a **print-only unit**, and it is complete once its text is ingested and surfaced to the
+player — regardless of whether it happens to carry a magnitude token in the corpus. A unit whose
+value genuinely does feed a sheet total (an AC bonus, a save DC, a skill modifier, a damage
+formula the sheet displays as a number) still needs the real compute this bundle has built
+throughout — that requirement is unchanged. What changes is which units get sorted into which pile:
+some units this bundle's own bucket taxonomy (`M`/`B`/`C`/`D`) treats as "magnitude held, not yet
+computed" or "not yet wired" may, on inspection, never reach a sheet total at all, and are
+print-only under this ruling regardless of their bucket label.
+
+**Consequence for future waves.** Wave 52 and beyond must classify remaining units into two piles
+before scoping any dispatch:
+
+1. **Feeds-a-sheet-total** — build or extend real compute, exactly as this bundle has done
+   throughout (the `grounded_magnitude` seam, `pilot_compute`'s formula functions, the
+   `racial_sla`/`domain_power` "one corpus-stated formula, many records" discipline). Unchanged.
+2. **Print-only** — the unit's text is ingested and reaches the player through the existing
+   display/description path. It is complete on that basis alone. **Do not build a simulation-style
+   compute engine or a "consumer-delta" proof (a probe that asserts a magnitude by calling private
+   engine internals directly, rather than observing it through a real character-sheet-shaped
+   consumer) for a print-only rule.** The character-size subsystem `wave51`'s own receipt named as
+   the blocker for Monk Unarmed Damage by size (§ below) is the canonical example of the kind of
+   subsystem this ruling says NOT to build for a print-only-shaped remainder without first checking
+   whether the value in question actually reaches a sheet total anywhere this engine renders one.
+
+**Wave 51 was dispatched, and largely executed, BEFORE this ruling reached the orchestrator, under
+the pre-ruling bar (a magnitude observed reaching a consumer through a real pipeline run).** Its
+work is not wrong under the bar it was scoped against: `racial_sla` (115 units) computes a real
+save DC that a spell-like ability's own consumer would render as a number, and the 102 `ability`
+closures are genuinely proseless internal plumbing, not print-only content withheld from a player.
+Wave 51 also correctly *declined* to build a subsystem it would not have built under this ruling
+either way — Monk Unarmed Damage by size (48 units, `progress.md`/receipt §5) was named as blocked
+on "a character-size subsystem," and declined rather than force-shipped, which is the same
+conservatism this ruling now makes mandatory rather than a judgment call. **Wave 52+ must re-scope
+under this ruling before dispatching:** re-read the remaining CR/UC buckets (and, per
+`forward-scope-register.md` C1.8, the wider `fable-review.md §1` B-SYNTH classification feeding
+SD-35's cost model) against the feeds-a-sheet-total/print-only split above, rather than continuing
+to treat "magnitude token present" as a proxy for "must be computed." This is expected to
+re-classify some units this bundle's own bucket labels call `M`/`D`-not-yet-computed as print-only-
+already-complete, and to shrink the compute-shaped remainder `fable-review.md §1.b`'s cost model
+assumed.
+
+**Enforced by:** this entry itself, cited by `forward-scope-register.md` row C1.8 (updated in the
+same commit to point here); no code or classifier change is made by this entry alone — re-scoping
+the remainder against this ruling is wave 52+'s own work, not retroactive relabeling of wave 51's
+closures.
 
 ---

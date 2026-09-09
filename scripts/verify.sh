@@ -598,7 +598,24 @@ run_site_dashboard_selftest() {
 # ---------------------------------------------------------------------------
 
 run_site_dashboard_check() {
-    stage_start "site-dashboard-check — scripts/publish-site-dashboard.sh --check"
+    # Own outer timeout wrapper (AT-34-E6-001 wave-27; same `${VAR:-default}`
+    # shape `corpus-trap-audit` above already uses, and the exact gap that
+    # stage's own comment names this stage for): `publish-site-dashboard.sh
+    # --check` invokes the real producer, which bounds each of its three
+    # state-dump binaries individually (`v06_class_state_dump`,
+    # `v06_content_state_dump` at the shared `PF1E_CLASS_STATE_TIMEOUT`
+    # default 600s each; `v06_work_inventory` at its own, wider
+    # `PF1E_WORK_INVENTORY_TIMEOUT` default 950s -- see that constant's own
+    # comment in pf1e_dashboard_producer.py for the 757s measurement behind
+    # it) but neither `verify.sh` nor the script it calls ever bounded the
+    # STAGE as a whole. Sum of all three cold: ~2150s worst case; rounded up
+    # with slack for the public-status projection's own `--check` and
+    # process overhead, not tightened further since this lane does not run
+    # the real producer to remeasure the full-stage wall time (forbidden by
+    # this cycle's own brief -- "do NOT run the inventory regenerator or the
+    # dashboard producer from a lane").
+    local timeout_s="${SITE_DASHBOARD_CHECK_TIMEOUT_S:-2400}"
+    stage_start "site-dashboard-check — timeout ${timeout_s}s scripts/publish-site-dashboard.sh --check"
     local log="$LOG_DIR/site-dashboard-check.log"
     local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
 
@@ -607,8 +624,18 @@ run_site_dashboard_check() {
         return
     fi
 
-    ( cd "$REPO_ROOT" && exec "$script" --check ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" "$script" --check ) >"$log" 2>&1
     local status=$?
+
+    if (( status == 124 )); then
+        stage_fail site-dashboard-check "timed out after ${timeout_s}s bounding its own runtime — the producer did not finish, and neither did any stale-cache fallback silently paper over it (PF1E_DASHBOARD_STRICT_TIMEOUT=1 in --check mode) — $log"
+        return
+    fi
+
+    if (( status == 3 )); then
+        stage_fail site-dashboard-check "a state-dump binary timed out inside the producer (StateDumpTimeout, loud by design under --check) before the stage's own ${timeout_s}s outer bound was reached — $log"
+        return
+    fi
 
     if (( status != 0 )); then
         stage_fail site-dashboard-check "exit $status — $log"

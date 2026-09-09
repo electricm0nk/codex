@@ -31,6 +31,7 @@
 
 use std::path::{Path, PathBuf};
 
+use codex::pcgen_import::corpus_trap_baseline::{load_baseline, reconcile_trap_count};
 use codex::pcgen_import::corpus_traps::{
     RecordShape, Severity, Trap, audit_ingested_cache, concept_census, scan_lst,
 };
@@ -58,6 +59,15 @@ fn books_dir(root: &Path) -> PathBuf {
 
 fn cache_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus")
+}
+
+/// `docs/governance/corpus-trap-baseline.tsv` — the registered, SD-33
+/// inherited-debt baseline for four of this suite's corpus-invariant tests
+/// (`decisions.md §13`). Loaded fresh every call, same pattern
+/// `pi_sweep_rules_tables` uses for `pi-sweep-baseline.tsv`.
+fn load_trap_baseline() -> Vec<codex::pcgen_import::corpus_trap_baseline::TrapBaselineEntry> {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("docs/governance/corpus-trap-baseline.tsv");
+    load_baseline(&path).expect("docs/governance/corpus-trap-baseline.tsv parses")
 }
 
 // ===========================================================================
@@ -428,9 +438,17 @@ fn concept_census_reports_per_book_never_a_bare_total() {
 // Corpus invariants — ratchets over already-ingested content
 // ===========================================================================
 
-/// **Invariant.** No ingested record may be sourced from a `#`-disabled
-/// line. This one holds outright today (0 of 776 lst-sourced cache
-/// records cite a disabled row) and is asserted with no allowance.
+/// **Baselined ratchet, `decisions.md §13`.** SD-33's already-verified,
+/// already-out-of-DoD inherited debt (`forward-scope-register.md` D1.1) —
+/// "registered, not absorbed": the bar is not "zero", it is "matches the
+/// count `docs/governance/corpus-trap-baseline.tsv` registers", checked in
+/// both directions exactly the way `pi_sweep_rules_tables` reconciles
+/// `pi-sweep-baseline.tsv` (`corpus_trap_baseline::reconcile_trap_count`,
+/// mutation-proved below in
+/// `the_trap_baseline_reconciler_actually_fires_on_a_planted_regression_and_a_stale_row`).
+/// A live count ABOVE the row is a real regression; a live count BELOW it is
+/// a stale row that must be updated deliberately, not left to rot. Driving
+/// this population to zero is `AT-34-E1-008`'s scope, not this test's.
 #[test]
 fn no_ingested_record_is_sourced_from_a_disabled_line() {
     let Some(root) = corpus_root() else {
@@ -442,9 +460,13 @@ fn no_ingested_record_is_sourced_from_a_disabled_line() {
         .iter()
         .filter(|f| f.trap == Trap::DisabledLine)
         .collect();
+    let baseline = load_trap_baseline();
+    let verdict = reconcile_trap_count(Trap::DisabledLine.id(), violations.len(), &baseline);
     assert!(
-        violations.is_empty(),
-        "ingested records cite #-disabled corpus lines: {violations:#?}"
+        verdict.is_matched(),
+        "{}\nfindings ({}): {violations:#?}",
+        verdict.explain(),
+        violations.len()
     );
 }
 
@@ -468,9 +490,15 @@ fn every_ingested_citation_resolves_to_a_real_line() {
     );
 }
 
-/// **Invariant.** No two ingested records within the same book and kind
-/// may share a `record_key`. Distinct records must be distinguishable by
-/// key, which is exactly what trap 3 and trap 5 attack.
+/// **Baselined ratchet, `decisions.md §13`.** No two ingested records within
+/// the same book and kind may share a `record_key` *beyond the registered
+/// baseline* — distinct records must be distinguishable by key, which is
+/// exactly what trap 3 and trap 5 attack, but this population is SD-33's
+/// already-verified, already-out-of-DoD inherited debt
+/// (`forward-scope-register.md` D1.1), "registered, not absorbed." Checked
+/// both directions against `docs/governance/corpus-trap-baseline.tsv`, the
+/// same way `pi_sweep_rules_tables` reconciles `pi-sweep-baseline.tsv`. A
+/// live count ABOVE the row is a real regression; BELOW it is a stale row.
 #[test]
 fn no_two_ingested_records_share_a_record_key() {
     let Some(root) = corpus_root() else {
@@ -482,9 +510,13 @@ fn no_two_ingested_records_share_a_record_key() {
         .iter()
         .filter(|f| f.trap == Trap::SharedNameDistinctRecords)
         .collect();
+    let baseline = load_trap_baseline();
+    let verdict = reconcile_trap_count(Trap::SharedNameDistinctRecords.id(), violations.len(), &baseline);
     assert!(
-        violations.is_empty(),
-        "ingested records collide on record_key: {violations:#?}"
+        verdict.is_matched(),
+        "{}\nfindings ({}): {violations:#?}",
+        verdict.explain(),
+        violations.len()
     );
 }
 
@@ -505,6 +537,15 @@ fn no_two_ingested_records_share_a_record_key() {
 /// enumerated (currently empty) so *any* key mismatch anywhere in any
 /// book — including a regression of the nine rows just fixed — fails.
 /// The debt cannot silently grow back, and it cannot hide.
+///
+/// **Beyond that narrow, already-paid-to-zero allowlist**, the live corpus
+/// carries a much larger, separately-registered population of this same
+/// trap kind: SD-33's already-verified, already-out-of-DoD inherited debt
+/// (`decisions.md §13`, `forward-scope-register.md` D1.1), "registered, not
+/// absorbed." That population is checked against
+/// `docs/governance/corpus-trap-baseline.tsv` in both directions, the same
+/// way `pi_sweep_rules_tables` reconciles `pi-sweep-baseline.tsv` — a live
+/// count above the row is a real regression, below it is a stale row.
 #[test]
 fn ingested_record_keys_match_their_cited_line() {
     let Some(root) = corpus_root() else {
@@ -554,17 +595,23 @@ fn ingested_record_keys_match_their_cited_line() {
                 .any(|(book, key)| f.file.contains(book) && f.record == *key)
         })
         .collect();
-    assert!(
-        unexpected.is_empty(),
-        "new record_key/KEY: mismatches beyond the enumerated ACG debt: {unexpected:#?}"
-    );
 
-    assert_eq!(
+    // Beyond the ACG-Naturalist/equipment-citation debt this file already paid
+    // to zero (KNOWN_KEY_MISMATCH_DEBT above — still enforced: any regression
+    // of those specific rows shows up as `unexpected` growing beyond the
+    // baseline, since it is not in that allowlist), the remaining population
+    // is SD-33's separately-registered inherited debt (`decisions.md §13`).
+    // Baselined, not zero-toleranced, checked both directions.
+    let baseline = load_trap_baseline();
+    let verdict = reconcile_trap_count(Trap::KeyDiffersFromName.id(), unexpected.len(), &baseline);
+    assert!(
+        verdict.is_matched(),
+        "{}\nunexpected findings ({} of {} total, {} already paid to zero and enumerated \
+         above): {unexpected:#?}",
+        verdict.explain(),
+        unexpected.len(),
         mismatches.len(),
         KNOWN_KEY_MISMATCH_DEBT.len(),
-        "the ACG Naturalist debt shrank or grew; update the enumeration deliberately \
-         (found {} mismatches)",
-        mismatches.len()
     );
     for f in &mismatches {
         assert_eq!(f.severity, Severity::Defect, "a mis-keyed ingest is a defect");
@@ -580,6 +627,15 @@ fn ingested_record_keys_match_their_cited_line() {
 /// The checkable form of that is: every `.MOD`-cited ingested record must
 /// have a live base declaration of the same name in the same file. If it
 /// does not, the ingest manufactured a record out of a modification.
+///
+/// **Baselined ratchet, `decisions.md §13`.** The population of such orphaned
+/// records is SD-33's already-verified, already-out-of-DoD inherited debt
+/// (`forward-scope-register.md` D1.1), "registered, not absorbed" — checked
+/// both directions against `docs/governance/corpus-trap-baseline.tsv`, the
+/// same way `pi_sweep_rules_tables` reconciles `pi-sweep-baseline.tsv`. A
+/// live count ABOVE the row is a real regression; BELOW it is a stale row.
+/// Driving this population to zero is `AT-34-E1-008`'s scope, not this
+/// test's — its own bar is `wiring-class-mismatch = 0`, a different trap.
 #[test]
 fn every_mod_sourced_ingest_has_a_live_base_declaration() {
     let Some(root) = corpus_root() else {
@@ -591,10 +647,63 @@ fn every_mod_sourced_ingest_has_a_live_base_declaration() {
         .iter()
         .filter(|f| f.trap == Trap::ModRecord && f.severity == Severity::Defect)
         .collect();
+    let baseline = load_trap_baseline();
+    let verdict = reconcile_trap_count(Trap::ModRecord.id(), orphans.len(), &baseline);
     assert!(
-        orphans.is_empty(),
-        "ingested records built from a .MOD with no base declaration: {orphans:#?}"
+        verdict.is_matched(),
+        "{}\nfindings ({}): {orphans:#?}",
+        verdict.explain(),
+        orphans.len()
     );
+}
+
+/// **Mutation proof, modelled on
+/// `sd30_declared_product_identity_in_shipped_class_features::the_leak_
+/// detectors_actually_fire_on_a_planted_leak_and_clear_on_a_redacted_row`.**
+/// The four baselined tests above only prove the reconciliation mechanism
+/// PASSES against today's live population — that alone is exactly the
+/// "cannot fail, so it proves nothing when it passes" trap this repo has
+/// been burned by before. This proves the mechanism can also FAIL, in both
+/// directions `decisions.md §13` and `pi_table_sweep::reconcile` require it
+/// to catch, independent of whatever the live corpus currently contains: a
+/// synthetic baseline, never touching `data/corpus/**` or the real
+/// `docs/governance/corpus-trap-baseline.tsv`, is checked against a planted
+/// regression, a planted stale row, and an exact match. Runs unconditionally
+/// — no `PCGEN_CORPUS_ROOT` needed, exactly like `sd30`'s own proof.
+#[test]
+fn the_trap_baseline_reconciler_actually_fires_on_a_planted_regression_and_a_stale_row() {
+    let synthetic_baseline_text = "mod-record\t2117\tsynthetic baseline, this proof only\n";
+    let baseline = codex::pcgen_import::corpus_trap_baseline::parse_baseline(synthetic_baseline_text)
+        .expect("synthetic baseline parses");
+
+    // 1. A planted regression — one MORE live finding than the baseline
+    //    records — must be flagged, not silently accepted.
+    let regressed = reconcile_trap_count("mod-record", 2118, &baseline);
+    assert!(
+        !regressed.is_matched(),
+        "the baseline reconciler failed to flag a planted regression (2118 vs baseline 2117) \
+         — this instrument cannot fail, which means it proves nothing when it passes"
+    );
+
+    // 2. A planted stale row — one FEWER live finding than the baseline
+    //    records (debt paid down without the row being updated) — must also
+    //    be flagged, not treated as a free pass.
+    let stale = reconcile_trap_count("mod-record", 2116, &baseline);
+    assert!(
+        !stale.is_matched(),
+        "the baseline reconciler failed to flag a stale row (2116 vs baseline 2117) — a \
+         baseline that only catches increases would let debt paid down silently rot the file"
+    );
+
+    // 3. The same trap, exactly at the baseline — must clear (the gate goes
+    //    green once the count genuinely matches, not stay permanently red).
+    let matched = reconcile_trap_count("mod-record", 2117, &baseline);
+    assert!(matched.is_matched(), "an exact match must clear the gate");
+
+    // 4. A trap id with no row at all — must be flagged, never a silent
+    //    zero-tolerance default.
+    let missing = reconcile_trap_count("disabled-line", 0, &baseline);
+    assert!(!missing.is_matched(), "a trap id absent from the baseline must not silently pass");
 }
 
 // ===========================================================================

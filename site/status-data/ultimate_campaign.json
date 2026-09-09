@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 0,
-      "partial": 0,
-      "not_started": 84,
+      "done": 58,
+      "partial": 26,
+      "not_started": 0,
       "denominator": 84,
-      "pct": 0.0,
+      "pct": 69.0,
       "excluded_from_percentage": 4,
       "standing_breakdown": {
         "unclassified": 4,
@@ -18,616 +18,616 @@
       "items": [
         {
           "name": "+1 Skill Rank",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RetrainingSkillRanksAdded",
           "standing": "unclassified",
           "display_name": "+1 Skill Rank"
         },
         {
           "name": "-1 Skill Rank",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RetrainingSkillRanksRemoved",
           "standing": "unclassified",
           "display_name": "-1 Skill Rank"
         },
         {
           "name": "Ability Score Increase",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Ability Score Increase"
         },
         {
           "name": "Alchemist Discovery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Alchemist Discovery"
         },
         {
           "name": "Antipaladin Cruelty",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Antipaladin Cruelty"
         },
         {
           "name": "Antipaladin Fiendish Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Antipaladin Fiendish Bond"
         },
         {
           "name": "Archetype",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Archetype"
         },
         {
           "name": "Attached",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Attached"
         },
         {
           "name": "Avarice",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Avarice"
         },
         {
           "name": "Barbarian Rage Power",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Barbarian Rage Power"
         },
         {
           "name": "Bard Verstile Performance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Bard Verstile Performance"
         },
         {
           "name": "Blood of Dragons ~ Low-Light Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Blood of Dragons",
           "standing": "origin",
           "display_name": "Blood of Dragons ~ Low-Light Vision"
         },
         {
           "name": "Blood of Dragons ~ Perception",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Blood of Dragons",
           "standing": "origin",
           "display_name": "Blood of Dragons ~ Perception"
         },
         {
           "name": "Blood of Dragons ~ Saving Throw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Blood of Dragons",
           "standing": "origin",
           "display_name": "Blood of Dragons ~ Saving Throw"
         },
         {
           "name": "Cavalier Order",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Cavalier Order"
         },
         {
           "name": "Class Feature",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Class Feature"
         },
         {
           "name": "Class Level",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Class Level"
         },
         {
           "name": "Cleric Channel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Cleric Channel"
         },
         {
           "name": "Cleric Domain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Cleric Domain"
         },
         {
           "name": "Default",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Default"
         },
         {
           "name": "Dependent",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Dependent"
         },
         {
           "name": "Doubt",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Doubt"
         },
         {
           "name": "Druid Domain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Druid Domain"
         },
         {
           "name": "Druid Nature's Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Druid Nature's Bond"
         },
         {
           "name": "Family Ties",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Family Ties"
         },
         {
           "name": "Feat",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Feat"
         },
         {
           "name": "Fighter Weapon Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Fighter Weapon Training"
         },
         {
           "name": "Fortitude",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Deathtouched Choice",
           "standing": "origin",
           "display_name": "Fortitude"
         },
         {
           "name": "Gunslinger Deed for True Grit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Gunslinger Deed for True Grit"
         },
         {
           "name": "Gunslinger Gun Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Gunslinger Gun Training"
         },
         {
           "name": "Headstrong",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Headstrong"
         },
         {
           "name": "Hedonistic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Hedonistic"
         },
         {
           "name": "Hit Point",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Hit Point"
         },
         {
           "name": "Inquisitor Domain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Inquisitor Domain"
         },
         {
           "name": "Lovesick",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Lovesick"
         },
         {
           "name": "Loyalty across Lifetimes ~ Eidolon Bonus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Loyalty across Lifetimes ~ Eidolon Bonus"
         },
         {
           "name": "Magus Arcana",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Magus Arcana"
         },
         {
           "name": "Meticulous",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Meticulous"
         },
         {
           "name": "Mind-Affecting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Deathtouched Choice",
           "standing": "origin",
           "display_name": "Mind-Affecting"
         },
         {
           "name": "Monk Feat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Monk Feat"
         },
         {
           "name": "New Language",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "New Language"
         },
         {
           "name": "Ninja Trick",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Ninja Trick"
         },
         {
           "name": "Oracle Revalation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Oracle Revalation"
         },
         {
           "name": "Oracle Spell Choice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Oracle Spell Choice"
         },
         {
           "name": "Paladin Divine Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Paladin Divine Bond"
         },
         {
           "name": "Paladin Mercy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Paladin Mercy"
         },
         {
           "name": "Paranoid",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Paranoid"
         },
         {
           "name": "Power-Hungry",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Power-Hungry"
         },
         {
           "name": "Pride",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Pride"
         },
         {
           "name": "Provincial",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Provincial"
         },
         {
           "name": "Racial Trait",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Racial Trait"
         },
         {
           "name": "Ranger Combat Style",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Ranger Combat Style"
         },
         {
           "name": "Ranger Favored Enemy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Ranger Favored Enemy"
         },
         {
           "name": "Ranger Favored Terrain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Ranger Favored Terrain"
         },
         {
           "name": "Ranger Hunter's Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Ranger Hunter's Bond"
         },
         {
           "name": "Retraining",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Retraining"
         },
         {
           "name": "Rogue Talent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Rogue Talent"
         },
         {
           "name": "Samurai Order",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Samurai Order"
         },
         {
           "name": "Samurai Weapon Expertise",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Samurai Weapon Expertise"
         },
         {
           "name": "Sentimental",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Sentimental"
         },
         {
           "name": "Skill Ranks",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Skill Ranks"
         },
         {
           "name": "Skill Ranks  1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks  1"
         },
         {
           "name": "Skill Ranks  2",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks  2"
         },
         {
           "name": "Skill Ranks  3",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks  3"
         },
         {
           "name": "Skill Ranks  4",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks  4"
         },
         {
           "name": "Skill Ranks  5",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks  5"
         },
         {
           "name": "Skill Ranks  6",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks  6"
         },
         {
           "name": "Skill Ranks  7",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks  7"
         },
         {
           "name": "Skill Ranks  8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks  8"
         },
         {
           "name": "Skill Ranks  9",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks  9"
         },
         {
           "name": "Skill Ranks 10",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks 10"
         },
         {
           "name": "Skill Ranks 11",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks 11"
         },
         {
           "name": "Skill Ranks 12",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks 12"
         },
         {
           "name": "Skill Ranks 13",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks 13"
         },
         {
           "name": "Skill Ranks 14",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks 14"
         },
         {
           "name": "Skill Ranks 15",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skill Ranks 15"
         },
         {
           "name": "Sorcerer Bloodline",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Sorcerer Bloodline"
         },
         {
           "name": "Spells Known",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Retraining",
           "standing": "origin",
           "display_name": "Spells Known"
         },
         {
           "name": "Summoner Eidolon Base Form",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Summoner Eidolon Base Form"
         },
         {
           "name": "Summoner Eidolor Revolution",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Summoner Eidolor Revolution"
         },
         {
           "name": "Vain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Vain"
         },
         {
           "name": "Witch Hex",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Witch Hex"
         },
         {
           "name": "Wizard Arcane Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassFeature",
           "standing": "origin",
           "display_name": "Wizard Arcane Bond"
         },
         {
           "name": "Xenophobic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "unclassified",
           "display_name": "Xenophobic"
         },
         {
           "name": "Zealous",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Drawback",
           "standing": "origin",
           "display_name": "Zealous"
         },
         {
           "name": "from a non-NPC class to a synnergy class",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassLevel",
           "standing": "origin",
           "display_name": "from a non-NPC class to a synnergy class"
         },
         {
           "name": "from an NPC class to any class",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassLevel",
           "standing": "origin",
           "display_name": "from an NPC class to any class"
         },
         {
           "name": "from any class to any class",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RetrainingClassLevel",
           "standing": "origin",
           "display_name": "from any class to any class"
@@ -813,11 +813,11 @@
     {
       "kind": "trait",
       "label": "Traits",
-      "done": 0,
-      "partial": 0,
-      "not_started": 139,
+      "done": 134,
+      "partial": 4,
+      "not_started": 1,
       "denominator": 139,
-      "pct": 0.0,
+      "pct": 96.4,
       "excluded_from_percentage": 15,
       "standing_breakdown": {
         "origin": 139,
@@ -826,21 +826,21 @@
       "items": [
         {
           "name": "Acrobat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Acrobat"
         },
         {
           "name": "Air-Touched",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Air-Touched"
         },
         {
           "name": "Alchemical Adept",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Alchemical Adept"
@@ -854,1043 +854,1043 @@
         },
         {
           "name": "Almost Human",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Half-Orc Race Trait",
           "standing": "origin",
           "display_name": "Almost Human"
         },
         {
           "name": "Ambitious",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Ambitious"
         },
         {
           "name": "Arcane Revitalization",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Arcane Revitalization"
         },
         {
           "name": "Arcane Temper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Arcane Temper"
         },
         {
           "name": "Artisan",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Artisan"
         },
         {
           "name": "Ascendant Recollection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Ascendant Recollection"
         },
         {
           "name": "Axe to Grind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Axe to Grind"
         },
         {
           "name": "Bastard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Bastard"
         },
         {
           "name": "Battlefield Disciple",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Battlefield Disciple"
         },
         {
           "name": "Beacon of Faith",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Beacon of Faith"
         },
         {
           "name": "Beast Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Beast Bond"
         },
         {
           "name": "Birthmark",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Birthmark"
         },
         {
           "name": "Black Powder Bravado",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Black Powder Bravado"
         },
         {
           "name": "Black Powder Fortune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Black Powder Fortune"
         },
         {
           "name": "Black Powder Interjection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Black Powder Interjection"
         },
         {
           "name": "Bladed Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Bladed Magic"
         },
         {
           "name": "Blessed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Blessed"
         },
         {
           "name": "Blood of Dragons",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.BasicTrait.RaceTrait.BloodlineTrait",
           "standing": "origin",
           "display_name": "Blood of Dragons"
         },
         {
           "name": "Bloodthirsty",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Bloodthirsty"
         },
         {
           "name": "Brewmaster",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.RaceTrait.Dwarf Race Trait",
           "standing": "origin",
           "display_name": "Brewmaster"
         },
         {
           "name": "Bruising Intellect",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Bruising Intellect"
         },
         {
           "name": "Caretaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Caretaker"
         },
         {
           "name": "Child of the Temple",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Child of the Temple"
         },
         {
           "name": "Civilized",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Civilized"
         },
         {
           "name": "Cold and Calculating",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Cold and Calculating"
         },
         {
           "name": "Criminal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Criminal"
         },
         {
           "name": "Cross-Disciplined",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Cross-Disciplined"
         },
         {
           "name": "Cross-Knowledge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Cross-Knowledge"
         },
         {
           "name": "Deathtouched",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.BasicTrait.RaceTrait",
           "standing": "origin",
           "display_name": "Deathtouched"
         },
         {
           "name": "Dedicated Defender",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Dedicated Defender"
         },
         {
           "name": "Desperate Resolve",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Desperate Resolve"
         },
         {
           "name": "Desperate Speed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Desperate Speed"
         },
         {
           "name": "Destined Diplomat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Destined Diplomat"
         },
         {
           "name": "Devotee of the Green",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Devotee of the Green"
         },
         {
           "name": "Disdainful Defender",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Disdainful Defender"
         },
         {
           "name": "Dispelled Battler",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Dispelled Battler"
         },
         {
           "name": "Earth-Touched",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Earth-Touched"
         },
         {
           "name": "Ease of Faith",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Ease of Faith"
         },
         {
           "name": "Easy Way or the Hard Way",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Easy Way or the Hard Way"
         },
         {
           "name": "Eldritch Delver",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Eldritch Delver"
         },
         {
           "name": "Enduring Mutagen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Enduring Mutagen"
         },
         {
           "name": "Evasive Sting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Evasive Sting"
         },
         {
           "name": "Faith's Hunter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Faith's Hunter"
         },
         {
           "name": "Fate's Favored",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Fate's Favored"
         },
         {
           "name": "Fearless Defiance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Fearless Defiance"
         },
         {
           "name": "Fiend Blood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.RaceTrait.BloodlineTrait",
           "standing": "origin",
           "display_name": "Fiend Blood"
         },
         {
           "name": "Flame-Touched",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Flame-Touched"
         },
         {
           "name": "Focused Burn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Focused Burn"
         },
         {
           "name": "Focused Disciple",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Focused Disciple"
         },
         {
           "name": "Friend in Every Town",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Friend in Every Town"
         },
         {
           "name": "Frontier-Forged (Any Frontier Area)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.RegionalTrait",
           "standing": "origin",
           "display_name": "Frontier-Forged (Any Frontier Area)"
         },
         {
           "name": "Greater Link",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Greater Link"
         },
         {
           "name": "Greater Purpose",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Greater Purpose"
         },
         {
           "name": "Grief-Filled",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Grief-Filled"
         },
         {
           "name": "Harvester",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Harvester"
         },
         {
           "name": "Hidden Hand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Hidden Hand"
         },
         {
           "name": "History of Heresy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "History of Heresy"
         },
         {
           "name": "Hunter's Knack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Hunter's Knack"
         },
         {
           "name": "Imposing Scion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Imposing Scion"
         },
         {
           "name": "Indelible Ire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Indelible Ire"
         },
         {
           "name": "Indomitable Faith",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Indomitable Faith"
         },
         {
           "name": "Influence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Influence"
         },
         {
           "name": "Inspired",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Inspired"
         },
         {
           "name": "Just Like New",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Just Like New"
         },
         {
           "name": "Kin Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Kin Bond"
         },
         {
           "name": "Kin Guardian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Kin Guardian"
         },
         {
           "name": "Knowing the Enemy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Knowing the Enemy"
         },
         {
           "name": "Knowledgeable Caster",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Knowledgeable Caster"
         },
         {
           "name": "Larger Than Life",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Larger Than Life"
         },
         {
           "name": "Life of Toil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Life of Toil"
         },
         {
           "name": "Linked Surge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Linked Surge"
         },
         {
           "name": "Loyalty across Lifetimes",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Loyalty across Lifetimes"
         },
         {
           "name": "Magic Crafter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Magic Crafter"
         },
         {
           "name": "Malleable Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Malleable Magic"
         },
         {
           "name": "Martial Manuscript",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Martial Manuscript"
         },
         {
           "name": "Martial Performer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Martial Performer"
         },
         {
           "name": "Mentored",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Mentored"
         },
         {
           "name": "Mercenary",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Mercenary"
         },
         {
           "name": "Merchant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Merchant"
         },
         {
           "name": "Meticulous Concoction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Meticulous Concoction"
         },
         {
           "name": "Nature's Mimic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Nature's Mimic"
         },
         {
           "name": "Never Stop Shooting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Never Stop Shooting"
         },
         {
           "name": "Oathbound",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Oathbound"
         },
         {
           "name": "Omen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Omen"
         },
         {
           "name": "Ordinary",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Ordinary"
         },
         {
           "name": "Orphaned",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Orphaned"
         },
         {
           "name": "Outcast's Intuition",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Outcast's Intuition"
         },
         {
           "name": "Partial Protege",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Partial Protege"
         },
         {
           "name": "Perfectionist's Brew",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Perfectionist's Brew"
         },
         {
           "name": "Perpetual Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Perpetual Companion"
         },
         {
           "name": "Planar Savant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Planar Savant"
         },
         {
           "name": "Possessed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Possessed"
         },
         {
           "name": "Pragmatic Activator",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Pragmatic Activator"
         },
         {
           "name": "Precise Treatment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Precise Treatment"
         },
         {
           "name": "Principled",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Principled"
         },
         {
           "name": "Prophesied",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Prophesied"
         },
         {
           "name": "Reckless",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Reckless"
         },
         {
           "name": "Reckless Contempt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Reckless Contempt"
         },
         {
           "name": "Reincarnated",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Reincarnated"
         },
         {
           "name": "Reluctant Apprentice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Reluctant Apprentice"
         },
         {
           "name": "Resilient Caster",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Resilient Caster"
         },
         {
           "name": "Resolve of the Rejected",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Resolve of the Rejected"
         },
         {
           "name": "Sacred Conduit",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Sacred Conduit"
         },
         {
           "name": "Sacred Touch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Sacred Touch"
         },
         {
           "name": "Savage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Savage"
         },
         {
           "name": "Scarred Descendant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Scarred Descendant"
         },
         {
           "name": "Scholar of the Great Beyond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "unclassified",
           "display_name": "Scholar of the Great Beyond"
         },
         {
           "name": "Schooled Inquisitor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Schooled Inquisitor"
         },
         {
           "name": "Scrapper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.RaceTrait",
           "standing": "origin",
           "display_name": "Scrapper"
         },
         {
           "name": "Sea-Souled (Coastline or Island)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.RegionalTrait",
           "standing": "origin",
           "display_name": "Sea-Souled (Coastline or Island)"
         },
         {
           "name": "Seeker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Seeker"
         },
         {
           "name": "Self-Taught Scholar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Self-Taught Scholar"
         },
         {
           "name": "Shrouded Casting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Shrouded Casting"
         },
         {
           "name": "Simple Disciple",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Simple Disciple"
         },
         {
           "name": "Spirit Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Spirit Sense"
         },
         {
           "name": "Startling Report",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Startling Report"
         },
         {
           "name": "Storm-Touched",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Storm-Touched"
         },
         {
           "name": "Strength Foretold",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Strength Foretold"
         },
         {
           "name": "Style Sage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Style Sage"
         },
         {
           "name": "Surface Stranger (Underground)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.RegionalTrait",
           "standing": "origin",
           "display_name": "Surface Stranger (Underground)"
         },
         {
           "name": "Surprise Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Surprise Weapon"
         },
         {
           "name": "Tactician",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Tactician"
         },
         {
           "name": "Talented",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Talented"
         },
         {
           "name": "Tenacious Shifting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Tenacious Shifting"
         },
         {
           "name": "Tireless Avenger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Tireless Avenger"
         },
         {
           "name": "Tireless Logic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Tireless Logic"
         },
         {
           "name": "Trustworthy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Trustworthy"
         },
         {
           "name": "Truth's Agent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Truth's Agent"
         },
         {
           "name": "Tundra Child (Tundra or Cold Regions)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.RegionalTrait",
           "standing": "origin",
           "display_name": "Tundra Child (Tundra or Cold Regions)"
         },
         {
           "name": "Twinned Presence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Twinned Presence"
         },
         {
           "name": "Unblemished Barrel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Unblemished Barrel"
         },
         {
           "name": "Unintentional Linguist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Unintentional Linguist"
         },
         {
           "name": "Unnatural Revenge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Unnatural Revenge"
         },
         {
           "name": "Unpredictable",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Unpredictable"
         },
         {
           "name": "Unscathed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Unscathed"
         },
         {
           "name": "Unseen but Not Undone",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Unseen but Not Undone"
         },
         {
           "name": "Unstable Mutagen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Unstable Mutagen"
         },
         {
           "name": "Veiled Disciple",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Veiled Disciple"
         },
         {
           "name": "Vigilant Battler",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.CombatTrait",
           "standing": "origin",
           "display_name": "Vigilant Battler"
         },
         {
           "name": "Volatile Conduit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Volatile Conduit"
         },
         {
           "name": "Wanderer's Shroud",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Wanderer's Shroud"
         },
         {
           "name": "Water-Touched",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.MagicTrait",
           "standing": "origin",
           "display_name": "Water-Touched"
         },
         {
           "name": "Weathered Emissary",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Weathered Emissary"
         },
         {
           "name": "Worldly",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.SocialTrait",
           "standing": "origin",
           "display_name": "Worldly"
         },
         {
           "name": "Zealous Striker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.FaithTrait",
           "standing": "origin",
           "display_name": "Zealous Striker"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.BasicTrait.ReligionTrait)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.BasicTrait.ReligionTrait) #2"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Trait.BasicTrait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.BasicTrait.ReligionTrait) #3"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Trait.BasicTrait.ReligionTrait",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Trait.BasicTrait.ReligionTrait) #4"

@@ -122,6 +122,20 @@ CLASS_STATE_MAX_AGE_SECONDS = int(
 CLASS_STATE_BUILD_TIMEOUT_SECONDS = int(
     os.environ.get("PF1E_CLASS_STATE_TIMEOUT", "600")
 )
+# `v06_work_inventory --summary` alone was measured at ~757s wall time on a
+# confirmed-quiet box (SD-34 AT-34-E6-001 wave-26 receipt: 44Gi free, load
+# 2.80/24, zero other cargo processes) -- over the shared 600s cap above by a
+# fixed ~157s shortfall, not a load spike, and the code on both sides of that
+# measurement (the cap and the binary being timed) is unchanged at this
+# cycle's HEAD. It gets its own, wider, deliberately-reviewed timeout
+# (757s + ~25% margin, rounded) separate from the shared cap the two cheaper
+# dumps (`v06_class_state_dump`, `v06_content_state_dump`) still use --
+# AT-34-E6-001 wave-27: this is the "mechanical control" the wave-26 receipt
+# named as the next owner's obligation, done alongside the loud-failure fix
+# below rather than as a substitute for it.
+WORK_INVENTORY_BUILD_TIMEOUT_SECONDS = int(
+    os.environ.get("PF1E_WORK_INVENTORY_TIMEOUT", "950")
+)
 # A private target dir keeps this refresh from fighting the swarm's agents
 # over the shared checkout's target/ lock.
 DEFAULT_CLASS_STATE_TARGET_DIR = os.environ.get(
@@ -496,8 +510,33 @@ def _resolve_cargo() -> str | None:
     return None
 
 
+class StateDumpTimeout(RuntimeError):
+    """A state-dump binary's subprocess call exceeded its timeout while
+    `PF1E_DASHBOARD_STRICT_TIMEOUT=1` was set.
+
+    Only `scripts/publish-site-dashboard.sh --check` (the `site-dashboard-
+    check` verify.sh gate) opts into this. A live regeneration -- the cron
+    renderer, or an interactive `./scripts/publish-site-dashboard.sh` --
+    leaves strict mode off on purpose: `_load_cached_dump`'s stale-cache
+    fallback exists so the PUBLIC site never renders a blank panel over one
+    slow build. But that same fallback, unconditional, is exactly what let
+    `--check` report a feed "current" after silently comparing two outputs
+    both built from the same stale cache -- a gate that passes on stale data
+    lies about the site being fresh. `--check` needs the opposite bias: a
+    timeout there must surface as a loud failure, not a quiet stale-cache
+    hit, so the stage either has fresh data or says plainly it could not get
+    it (SD-34 AT-34-E6-001 wave-27)."""
+
+
+def _strict_timeout_mode() -> bool:
+    return os.environ.get("PF1E_DASHBOARD_STRICT_TIMEOUT") == "1"
+
+
 def _run_state_dump(
-    bin_name: str, repo_root: str, bin_args: list[str] | None = None
+    bin_name: str,
+    repo_root: str,
+    bin_args: list[str] | None = None,
+    timeout_seconds: int | None = None,
 ) -> dict | None:
     """Run one of the engine's own state-dump binaries and return its JSON.
 
@@ -508,9 +547,22 @@ def _run_state_dump(
     one implementation rather than three that can drift.
 
     `bin_args` are passed after `--` to the binary itself; the work inventory
-    uses it for `--summary`.
+    uses it for `--summary`. `timeout_seconds` defaults to the shared
+    `CLASS_STATE_BUILD_TIMEOUT_SECONDS` cap; `load_work_inventory` passes its
+    own, wider `WORK_INVENTORY_BUILD_TIMEOUT_SECONDS` instead -- see that
+    constant's own comment for why.
+
+    Raises `StateDumpTimeout` on a subprocess timeout when
+    `PF1E_DASHBOARD_STRICT_TIMEOUT=1`; otherwise returns `None`, the same as
+    every other failure mode this function absorbs, and prints a message to
+    stderr either way -- a timeout is never silent, only its return shape
+    differs by caller.
     """
     import subprocess
+
+    timeout_s = (
+        timeout_seconds if timeout_seconds is not None else CLASS_STATE_BUILD_TIMEOUT_SECONDS
+    )
 
     root = pathlib.Path(repo_root)
     if not (root / "Cargo.toml").exists():
@@ -539,8 +591,14 @@ def _run_state_dump(
             env=env,
             capture_output=True,
             text=True,
-            timeout=CLASS_STATE_BUILD_TIMEOUT_SECONDS,
+            timeout=timeout_s,
         )
+    except subprocess.TimeoutExpired as exc:
+        msg = f"pf1e-producer: {bin_name} timed out after {timeout_s}s"
+        if _strict_timeout_mode():
+            raise StateDumpTimeout(msg) from exc
+        print(msg, file=sys.stderr)
+        return None
     except (OSError, subprocess.SubprocessError) as exc:
         print(f"pf1e-producer: {bin_name} failed to run: {exc}", file=sys.stderr)
         return None
@@ -565,6 +623,7 @@ def _load_cached_dump(
     repo_root: str,
     max_age_seconds: int,
     bin_args: list[str] | None = None,
+    timeout_seconds: int | None = None,
 ) -> dict | None:
     """The engine's own truth for `bin_name`, refreshed when it ages out.
 
@@ -572,6 +631,13 @@ def _load_cached_dump(
     engine. A STALE cache is deliberately preferred over None: a blank panel
     renders as "not started", which is the exact failure this whole mechanism
     exists to prevent.
+
+    That preference is deliberately NOT extended to a build that times out
+    while `PF1E_DASHBOARD_STRICT_TIMEOUT=1` (`--check` mode): `_run_state_dump`
+    raises `StateDumpTimeout` in that case instead of returning `None`, and
+    this function does not catch it -- it propagates straight to the caller,
+    because silently serving `cached` here is precisely the "gate passes on
+    stale data" defect this strict mode exists to end.
     """
     cache = pathlib.Path(cache_path)
     cached = None
@@ -587,7 +653,7 @@ def _load_cached_dump(
     if cached is not None and fresh_enough:
         return cached
 
-    produced = _run_state_dump(bin_name, repo_root, bin_args)
+    produced = _run_state_dump(bin_name, repo_root, bin_args, timeout_seconds=timeout_seconds)
     if produced is None:
         return cached
     try:
@@ -627,6 +693,7 @@ def load_work_inventory(
         repo_root,
         max_age_seconds,
         bin_args=["--summary"],
+        timeout_seconds=WORK_INVENTORY_BUILD_TIMEOUT_SECONDS,
     )
 
 
@@ -5019,4 +5086,12 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except StateDumpTimeout as exc:
+        # PF1E_DASHBOARD_STRICT_TIMEOUT=1 (set only by `publish-site-
+        # dashboard.sh --check`) turned a state-dump timeout into a raise
+        # instead of a silent stale-cache fallback -- surface it as a clean,
+        # loud, non-zero-exit failure rather than an unhandled traceback.
+        print(f"pf1e-producer: {exc}", file=sys.stderr)
+        sys.exit(3)

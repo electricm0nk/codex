@@ -56,13 +56,83 @@ _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 # block down to `:10854-10857` -- re-verified at HEAD 2026-08-28
 # (AT-34-E1-004 re-verification cycle); the anchor below is the CURRENT
 # line, not the one those two docs still print.
+#
+# SD-34 wave 44 re-derivation: Piece 1/2's own insertions into this file
+# (the census-collision classifier fixes and their new compute functions)
+# shifted this block again, 10854 -> 13903. Fresh `grep -n 'if
+# has_real_description'` against the live file, taking the promotion-ladder
+# hit (not the two sibling `has_real_description` checks earlier in the
+# file), line content read back and confirmed still the real construction
+# site.
+#
+# SD-34 wave 45 re-derivation: this cycle's own Phrenic Slayer Favored
+# Enemy `EngineFacts` field doc comment + probe function + wiring +
+# `classify()` early-return block (all inserted above this site) shifted
+# this block again, 13903 -> 13983. Fresh `grep -n 'if
+# has_real_description'` against the live file -- now THREE hits, not two
+# (11826, 13640, 13983) -- taking the one whose own next three lines match
+# this block's remaining conditions verbatim, line content read back and
+# confirmed still the real construction site. Population count NOT
+# re-derived this cycle (same finding wave 44 named and left open: this
+# script's own `not_held_by_engine` pin is stale by hundreds of units,
+# unrelated to this cycle's own scope, not wired into `verify.sh`).
+#
+# SD-34 wave 46 re-derivation: this cycle's own six new `EngineFacts` fields,
+# seven new probe functions, and `classify()` early-return block (all
+# inserted above this site) shifted this block again, 13983 -> 14606. Fresh
+# `grep -n 'if has_real_description'` against the live file -- three hits
+# again -- taking the one whose own next three lines match this block's
+# remaining conditions verbatim, line content read back and confirmed still
+# the real construction site. Population count NOT re-derived this cycle,
+# same reason as wave 44/45's own choice.
+#
+# SD-34 wave 47 re-derivation: this cycle's own Divine Scion `EngineFacts`
+# field, choice-gating consts, rewritten probe function, and `classify()`
+# early-return block (all inserted above this site) shifted this block
+# again, 14606 -> 14920. Fresh `grep -n 'if has_real_description'` against
+# the live file -- three hits again -- taking the one whose own next three
+# lines match this block's remaining conditions verbatim, line content read
+# back and confirmed still the real construction site. Population count NOT
+# re-derived this cycle, same reason as wave 44/45/46's own choice.
+#
+# SD-34 wave 48 re-derivation: this cycle's own Twilight Talon/Golden
+# Legionnaire `EngineFacts` fields, probe functions, and choice-seed arm
+# (all inserted above this site) shifted this block again, 14920 -> 15270.
+# Fresh `grep -n 'if has_real_description'` against the live file -- three
+# hits again -- taking the one whose own next three lines match this
+# block's remaining conditions verbatim, line content read back and
+# confirmed still the real construction site. Population count NOT
+# re-derived this cycle, same reason as wave 44/45/46/47's own choice.
+#
+# SD-34 wave 48 CORRECTION (same cycle, before commit): the first pass above
+# was derived against a pre-clippy-fix snapshot. This cycle's own
+# `clippy::type_complexity` fix (a `type TwilightTalonTattooTierMember` alias
+# inserted earlier in the file, above this site) shifted this block by a
+# further uniform +4, 15270 -> 15274 -- caught by re-running
+# `python3 scripts/shape_engine_boundary.py --check` AFTER the clippy fix
+# instead of trusting the pre-fix derivation, exactly the silent-shift hazard
+# this file's own comments already name. Fresh `grep -n 'if
+# has_real_description'` against the live post-fix file, line content read
+# back and confirmed the real construction site.
+#
+# SD-34 wave 51 re-derivation, and a REAL PRE-EXISTING STALENESS this wave
+# found rather than caused: running `--check` before touching anything showed
+# this citation ALREADY failed at HEAD (`5f6b18f4e3`) -- at that commit the
+# block lives at 16135-16138, not 15274-15277, so wave 49's and wave 50's own
+# edits to `src/bin/v06_work_inventory.rs` shifted it and neither wave's gate
+# re-ran THIS instrument (both re-derived `completion_atlas.py`'s ten
+# citations only). The `--check` gate did exactly what it exists to do; the
+# gap was that nobody asked it. Re-derived here for the post-wave-51 file:
+# fresh `grep -n 'if has_real_description$'` (two hits), taking the one whose
+# own next three lines match this block's remaining conditions verbatim, every
+# line's content read back and confirmed rather than arithmetic alone.
 PROMOTION_LADDER_LINES = {
-    10854: "if has_real_description",
-    10855: "&& is_display_wiring_class_for_promotion(wc_class)",
-    10856: "&& !universal_sheet_modifier",
-    10857: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
+    16271: "if has_real_description",
+    16272: "&& is_display_wiring_class_for_promotion(wc_class)",
+    16273: "&& !universal_sheet_modifier",
+    16274: "&& facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)",
 }
-PROMOTION_LADDER_ANCHOR_LINE = 10857
+PROMOTION_LADDER_ANCHOR_LINE = 16274
 
 
 class StaleCitationError(RuntimeError):
@@ -127,7 +197,7 @@ def build_report(units: list) -> dict:
     stuck = not_held_by_engine(mag)
 
     ladder_source = "".join(
-        _read_source_lines(_ENGINE_SRC)[10853:10857]  # lines 10854..10857, 0-indexed slice
+        _read_source_lines(_ENGINE_SRC)[16270:16274]  # lines 16271..16274, 0-indexed slice
     )
 
     return {

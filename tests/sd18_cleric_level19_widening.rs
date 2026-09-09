@@ -287,7 +287,19 @@ fn cleric_level_21_is_not_promoted_by_this_slice() {
                 // this file's own doc comment). Neither is promotion by THIS
                 // slice's widening; both are pre-existing, already-tested closures.
                 && e.id != "class_feature.cleric.weapon_and_armor_proficiency"
-                && e.id != "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes"),
+                && e.id != "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes"
+                // WAVE 42 REGRESSION FIX (2026-09-04, decisions.md §wave-42-addendum): wave 42
+                // (`af674409f5`/`884c10ef5f`) grounded Cleric's Aura strength-level pass-through
+                // unconditionally at any Cleric level >= 1 (`cr_abilities_class.lst:563`'s
+                // `BONUS:VAR|AlignmentAuraLVL|ClericLVL` carries no level gate beyond the class
+                // feature's own grant gate, `PREVARGTEQ:Cleric_CFP_Level,1`, and no deity/
+                // alignment precondition on the MAGNITUDE itself -- only on which of the four
+                // aura flavors displays, which this engine does not model at all). Real PF1
+                // content, any Cleric level, any multiclass mix -- not gated the way this
+                // widening slice is, mirroring the Weapon and Armor Proficiency and Rebuke Death
+                // carve-outs immediately above (same shape, same file, `d1e0c26e06`). Not
+                // promotion by THIS slice's widening; a pre-existing, already-tested closure.
+                && e.id != "class_feature.cleric.aura.strength_level"),
         "level-21 Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
@@ -342,7 +354,19 @@ fn multiclass_cleric_level19_is_not_promoted_by_this_slice() {
                 // this file's own doc comment). Neither is promotion by THIS
                 // slice's widening; both are pre-existing, already-tested closures.
                 && e.id != "class_feature.cleric.weapon_and_armor_proficiency"
-                && e.id != "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes"),
+                && e.id != "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes"
+                // WAVE 42 REGRESSION FIX (2026-09-04, decisions.md §wave-42-addendum): wave 42
+                // (`af674409f5`/`884c10ef5f`) grounded Cleric's Aura strength-level pass-through
+                // unconditionally at any Cleric level >= 1 (`cr_abilities_class.lst:563`'s
+                // `BONUS:VAR|AlignmentAuraLVL|ClericLVL` carries no level gate beyond the class
+                // feature's own grant gate, `PREVARGTEQ:Cleric_CFP_Level,1`, and no deity/
+                // alignment precondition on the MAGNITUDE itself -- only on which of the four
+                // aura flavors displays, which this engine does not model at all). Real PF1
+                // content, any Cleric level, any multiclass mix -- not gated the way this
+                // widening slice is, mirroring the Weapon and Armor Proficiency and Rebuke Death
+                // carve-outs immediately above (same shape, same file, `d1e0c26e06`). Not
+                // promotion by THIS slice's widening; a pre-existing, already-tested closure.
+                && e.id != "class_feature.cleric.aura.strength_level"),
         "multiclass Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );

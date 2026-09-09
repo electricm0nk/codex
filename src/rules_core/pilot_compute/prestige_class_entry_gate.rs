@@ -24,20 +24,44 @@
 //! `compute_pilot_base_chassis`) -- it proves and reports whether entry
 //! requirements are met, which is the acceptance criterion's own scope.
 //!
-//! # Population: 62 of the quoted 77, and why
+//! # Population: 74 of the quoted 77, and why
 //!
 //! `epic-breakdown.md` Epic 3 and this criterion both quote **77** prestige
 //! classes. `scripts/census_prestige_class_entry_requirements.py` --
 //! this module's own re-derive command, run against the pinned oracle --
 //! finds **131** `TYPE:...Prestige` `CLASS:` names corpus-wide (all 158
-//! oracle books) and **62** of them anchored in a book this repo has
+//! oracle books) and **74** of them anchored in a book this repo has
 //! actually ingested (`data/corpus/<book>/` exists). Gating logic for the
-//! other 69 would be untestable fiction: no ingested corpus data exists to
+//! other 57 would be untestable fiction: no ingested corpus data exists to
 //! fixture-check it against, and most of their source books are exactly
 //! the "28 books-without-ruleset" `AT-32-E3-001` names as Epic 4's own
 //! precondition. The 77 figure is corrected in
 //! `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-0-census-closure/`'s
 //! cycle receipt for this card, via a logged `scripts/retro.py correction`.
+//!
+//! **62 -> 74, a REAL script-bug fix (SD-34 wave 44, 2026-09-05).** The
+//! script's own `prestige_names.setdefault(name, path)` keyed purely by
+//! display name across the full 158-book oracle, so whichever source file
+//! `os.walk` happened to visit FIRST for a given class name won -- even a
+//! non-ingested predecessor book. 13 real ingested-book prestige classes
+//! (Phrenic Slayer, Thrallherd, Psychic Fist, War Mind, Elocater, Psion
+//! Uncarnate, Pyrokineticist, Metamind, Cerebremancer, Pathfinder Savant,
+//! Student of War, Pathfinder Delver, Gifted Blade) were silently dropped
+//! by this race. Fixed by ranking every candidate source by whether its
+//! own book is ingested BEFORE choosing among ties, so an ingested-book
+//! match always wins regardless of walk order (`scripts/census_prestige_
+//! class_entry_requirements.py`'s own `extract()`, plus a new regression
+//! test, `scripts/tests/test_census_prestige_class_entry_requirements.py`,
+//! that reproduces the exact collision and fails against the pre-fix
+//! script). Of the 13 named, 12 were genuinely recovered this way (Gifted
+//! Blade never actually carries a `TYPE:...Prestige` line anywhere in the
+//! oracle under this script's own census method -- the audit's own list
+//! was one name too long, corrected here rather than propagated). 62 + 12
+//! = 74, confirmed by re-running the script against the pinned oracle and
+//! diffing the regenerated `tests/fixtures/rules_core/prestige-class-
+//! entry-requirements.json` against its pre-fix committed version: the
+//! pre-existing 62 entries are byte-identical or, where they were one of
+//! the 12 collision victims, now correct; zero regressions.
 //!
 //! # Three outcomes per clause, matching `pre_tokens::ClauseOutcome`
 //!
@@ -256,8 +280,11 @@ mod prestige_class_entry_gate_tests {
     fn registry_loads_and_matches_the_re_derive_command() {
         let entries = prestige_class_entry_requirements();
         // scripts/census_prestige_class_entry_requirements.py's own stderr
-        // population figure at commit time.
-        assert_eq!(entries.len(), 62, "population drifted from the fixture the script wrote");
+        // population figure at commit time. 62 -> 74, SD-34 wave 44: see
+        // this file's own module doc comment ("62 -> 74, a REAL script-bug
+        // fix") for the ingested-book-collision bug the script's own
+        // extract() function had, and its fix.
+        assert_eq!(entries.len(), 74, "population drifted from the fixture the script wrote");
         assert!(entries.iter().all(|e| !e.raw_pre_tokens.is_empty()));
         assert!(entries.iter().all(|e| e.class_id.starts_with("class:")));
     }
