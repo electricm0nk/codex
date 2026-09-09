@@ -49,17 +49,32 @@
       "pcgen_live_files": 260,
       "note": "builds_recorded=3, same sequential-prerequisite shape as cycle 2 above. Emptied AT-35-E4-001, AT-35-E4-002, AT-35-E5-003 and AT-35-E5-004's populations in the same cycle; corpus reaches DONE 49438 of 49438.",
       "receipt": "AT-35-E3-002_cycle1_receipt.md"
+    },
+    {
+      "cycle": "AT-35-E3-003_cycle1",
+      "mechanism": "verification at HEAD of a criterion emptied by AT-35-E3-001 cycle 2's bundle, plus the disposition of SD-34 forward-scope-register.md C1.8's carried one-liner (applied, measured, reverted; kept out by a control test)",
+      "scoped_population": 0,
+      "scope_gate": "scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER",
+      "units_closed": 0,
+      "units_relabeled": 0,
+      "wall_time": "no figure-moving run: sheet_rule_convert --check 116.7 s; corpus_literal_sweep + derived_evaluator_fixture_check + a v06_work_inventory --stdout-only measurement run ~9 min (the C1.8 measurement only -- docs/work-inventory.json was never written); cargo test --locked --no-fail-fast -j 6 the single verification pass",
+      "rust_lines_changed": 37,
+      "ratio": null,
+      "builds_recorded": 1,
+      "pcgen_live_files": 260,
+      "note": "Closes zero units by design -- bucket C was already 0 at cycle start, and so was the whole remainder. ratio is null (division by zero), not 0.0. builds_recorded=1, on target. The 37 Rust lines are entirely #[cfg(test)] plus one comment: the suffix list they guard is byte-identical to before (git diff --stat = 37 insertions, 0 deletions), so the inventory was not regenerated. Emptied no card.",
+      "receipt": "AT-35-E3-003_cycle1_receipt.md"
     }
   ],
   "totals": {
-    "cycles": 3,
+    "cycles": 4,
     "units_closed": 1404,
     "units_relabeled": 0,
-    "rust_lines_changed": 498,
-    "ratio_over_the_epic": 0.35,
-    "builds_recorded": 6,
+    "rust_lines_changed": 535,
+    "ratio_over_the_epic": 0.38,
+    "builds_recorded": 7,
     "pcgen_live_files_start": 260,
     "pcgen_live_files_end": 260,
-    "denominator": "1,404 of the 1,404 units that were non-DONE of 49,438 at Epic 3's first cycle (`a542652c5e`); 0 remain"
+    "denominator": "1,404 of the 1,404 units that were non-DONE of 49,438 at Epic 3's first cycle (`a542652c5e`); 0 remain. Cycle 4 (AT-35-E3-003_cycle1) closed 0 of a 0-unit scoped population -- a verification cycle -- so it moves rust_lines_changed and builds_recorded but not units_closed, and ratio_over_the_epic stays over the same 1,404 denominator."
   }
 }

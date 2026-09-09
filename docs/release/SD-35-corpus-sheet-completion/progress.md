@@ -41,6 +41,73 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — Epic 3 / AT-35-E3-003 cycle 1 — bucket C verified at zero at HEAD, and SD-34 register C1.8's carried one-liner dispositioned — **complete**
+
+- **Scope gate:** `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER` — the
+  literal last line of `python3 scripts/cycle_scope_gate.py --min 500 --bucket C` at
+  `7216215725` (`scope=bucket=C`, `scoped_by_bucket=` and `scoped_by_kind=` both empty). **The
+  criterion's population was already zero at cycle start**, and so was the whole corpus
+  remainder, so the mandated bundling ladder had nothing to bundle — there is no other bucket to
+  add, and the whole remainder is what the gate returned. Residue at start and at end, unchanged:
+  `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=37 ratio=n/a builds_recorded=1
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since 7216215725f095ec8ee93406ba873d96db1ea054`,
+  `target_dir=/tmp/cargo-sd35-AT-35-E3-003 residue_gate=present`; `closed_by_kind=` and
+  `relabeled_moves=` empty; `regressed=0 added=0 dropped=0`). **Closes zero units by design** —
+  this is the criterion's own verification cycle, not a no-op; `ratio` is `n/a`, a division by
+  zero, never `0.0`. `builds_recorded=1`, on target.
+- **Refused tokens:** **none.** `sheet_rule_convert -- --check` → `kind class_feature:
+  records=18043 converted=18043 refused=0` — every record of the only kind bucket C ever held
+  converts, so the criterion's "refused by token type" clause has an empty residue. Corpus-wide
+  `records=49438 converted=49296 refused=142`, all one type (`no_corpus_record`: `race` 27,
+  `race_trait` 104, `feat` 11) and **none non-DONE** (`token_coverage.py --check` →
+  `refused_non_done=0`).
+- **Evidence (the criterion's own sentence, run at HEAD):** `python3
+  scripts/completion_atlas.py --check` → `population=49438 buckets=10 unclassified=0 overlap=0`,
+  `DONE: 49438`, **`C: 0`** (A/B/D/M/V/U/X/Z all 0), `done_evidence_violations=0
+  missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`, exit 0;
+  `--by-kind` → `C=0` on all 19 kind rows (0 of each kind's own `n`, and 0 of the 49,438-unit
+  corpus), with `class_feature (n=18043): DONE=18043(100.0%)` — 18,043 DONE of 18,043;
+  `grep -c 'no_explanation_id_and_no_diagnostic_names_this_feature' docs/work-inventory.json`
+  → **0**. The C rung itself is **kept** (`v06_work_inventory.rs:16366`,
+  `completion_atlas.py:177`, ladder assertions at `:27542`/`:30750`) — the criterion says the
+  rung is *replaced*, and a rung with no unit on it is the proof, not a rung deleted.
+- **C's 4,180 authoring population accounted for in full: 4,101 + 79 = 4,180.** 4,101 closed by
+  AT-35-E2-005's `sheet-complete` rung (its by-prior-bucket breakdown, above in this log);
+  79 closed by AT-35-E3-001 cycle 2 at `406003afc3` (its receipt's `By prior bucket: … C 79 …`).
+  Nothing in C was carved out, refused, or relabelled sideways.
+- **Discovery — SD-34 `forward-scope-register.md` C1.8 is superseded, not outstanding.** The
+  register's carried one-liner (assigned to this criterion by AT-35-E1-006's entry below) asked
+  for `"size"` in `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` so the engine's real
+  `class_chassis.monk.ki_pool_size` would ground `core_rulebook:class_feature:monk_ki_pool`.
+  This cycle **applied it, measured it, and reverted it**: the one-liner was authored against the
+  pre-sheet-rule ladder, where grounding was the only road to DONE. Under `decisions.md §1` the
+  unit is already DONE on a stronger rung (`sheet-complete` / `sheet_rule_rendered:words`), and
+  adding the word makes the older suffix-strip rung win first — **exactly 1 unit of 49,438
+  changes, `sheet-complete` → `grounded`**. Both are DONE, so bucket C stays 0 either way, but
+  one of the 32,617 `DONE_RUNG_STAMP_STATUSES` stamps is lost and the regenerator's stamp-loss
+  guard refuses the write naming that unit. Kept out by a **control test**, not a comment
+  (`AGENTS.md` rule 8): `size_is_deliberately_absent_the_sheet_rule_superseded_register_c1_8`.
+  Corrections `1788929025647-at-35-e3-003-247627` (first reading) and
+  `1788929587859-at-35-e3-003-be4117` (measured reversal, `--corrects` the first).
+- **Build:** `cargo test --locked --no-run -j 6` exit 0, 0 `error` lines; `cargo test --locked
+  --no-fail-fast -j 6` → **411 test binaries executed (+1 doc-test = 412 `test result:` lines),
+  8,726 passed, 0 failed, 0 failing suites, exit 0**, counted two agreeing ways. The launch
+  baseline's 590 targets became 408 at AT-35-E1-003's tax cut (its own receipt: "590 before →
+  408 after"); the +3 since are Epic 2's and Epic 3's gate binaries — **not a count this cycle
+  moved**. Fast gates green: `shape_engine_boundary` (`not_held_by_engine=0`),
+  `missing_engine_tables` (`population=0`), `token_coverage` (`verdict=PASS`), `denominator_gate`
+  (`files_checked=50 violations=0`), `verify.sh --only pi-sweep` PASS,
+  `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → **0**.
+  `corpus_literal_sweep` CLEAN, 48,706 of 51,476, unmoved — no corpus record changed. Desktop and
+  frontend at epic cadence (no `apps/` path touched); clippy not run and stated as such — the
+  only Rust is a `#[cfg(test)]` assertion plus a comment.
+- **Cards emptied by this cycle: none** — it moved no units, so no other criterion's row changes.
+- **Receipt:** `artifacts/epic-3-place-and-surface/AT-35-E3-003_cycle1_receipt.md`; code
+  `0e0298d7fe`. **Next:** criterion at zero; `--min 500 --bucket C` → `scoped=0
+  remaining_non_done=0`, and the whole corpus remainder is 0, so Epic 3 has no successor cycle on
+  any bucket. The open rows (17, 18, 22, 23) are instrument- and artifact-shaped, not unit-shaped.
+
 ### 2026-09-08 — Epic 3 / AT-35-E3-002 cycle 1 — the whole remainder to DONE, corpus at 49,438 of 49,438 — **complete**
 
 - **Scope gate:** `scoped=786 remaining_non_done=786 floor=500 verdict=PASS` — the literal last
