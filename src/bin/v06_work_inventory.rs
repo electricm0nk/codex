@@ -12229,6 +12229,8 @@ const CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES: &[&str] = &[
     "amount", "die", "damage", "save", "resistance", "reduction", "range", "duration", "radius",
     "limit",
 ];
+// "size" is DELIBERATELY absent -- see
+// `size_is_deliberately_absent_the_sheet_rule_superseded_register_c1_8`.
 
 /// Trailing dot-segment words that mark an explanation id as a DIAGNOSTIC
 /// MIRROR, never a real computed magnitude -- the `class_feature_exact_
@@ -27919,6 +27921,41 @@ mod class_feature_id_magnitude_suffix_strip_tests {
         assert!(id_matches_feature_slug_after_known_magnitude_suffix_strip(
             "class_feature.acg.slayer.advance_uses_per_day",
             "advance_uses"
+        ));
+    }
+
+    #[test]
+    fn size_is_deliberately_absent_the_sheet_rule_superseded_register_c1_8() {
+        // SD-34 `forward-scope-register.md` C1.8 carried a one-line census
+        // fix into SD-35 (recovered from the wave-13 lane-2 salvage at
+        // `358a71516f`, assigned to AT-35-E3-003): add "size" to
+        // `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` so that the engine's real
+        // `class_chassis.monk.ki_pool_size` (`pilot_compute/mod.rs`;
+        // `KI_POOL_SIZE_EXPLANATION_ID` in `level_up/monk.rs`) grounds
+        // `core_rulebook:class_feature:monk_ki_pool`, which was then stuck
+        // at `engine-does-not-hold`.
+        //
+        // AT-35-E3-003 applied it, measured it, and REVERTED it. The
+        // one-liner was authored against the PRE-sheet-rule ladder, where
+        // grounding was the only road to DONE. Under `decisions.md §1` the
+        // unit is already DONE by a stronger rung: `sheet-complete` /
+        // `sheet_rule_rendered:words`. Adding "size" makes the older
+        // suffix-strip rung win FIRST, so the unit is measurably DEMOTED
+        // `sheet-complete` -> `grounded` -- both DONE (`completion_atlas.py
+        // ::_bucket_of`), so no bucket moves, but one of the 32,617
+        // verification stamps in `DONE_RUNG_STAMP_STATUSES` is lost, and
+        // the regenerator's own stamp-loss guard refuses the write naming
+        // exactly this unit. Measured with the word added: `changed
+        // units: 1`, `core_rulebook:class_feature:monk_ki_pool
+        // sheet-complete/sheet_rule_rendered:words -> grounded/
+        // explanation_id_observed_after_known_magnitude_suffix_strip`.
+        //
+        // So the word stays out, and this test is the control that keeps it
+        // out rather than a comment that asks nicely (`AGENTS.md` rule 8).
+        assert!(!CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES.contains(&"size"));
+        assert!(!id_matches_feature_slug_after_known_magnitude_suffix_strip(
+            "class_chassis.monk.ki_pool_size",
+            "ki_pool"
         ));
     }
 
