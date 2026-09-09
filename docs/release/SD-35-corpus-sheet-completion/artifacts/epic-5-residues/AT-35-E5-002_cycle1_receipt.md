@@ -1,6 +1,6 @@
 # Cycle AT-35-E5-002_cycle1 — Epic 5 Residues / AT-35-E5-002
 
-- **Commit SHA:** `7e517b9521` (the sub-cause census script + retro event), `<docs-sha>` (this receipt,
+- **Commit SHA:** `7e517b9521` (the sub-cause census script + retro event), `f0a7e62e36` (this receipt,
   `progress.md`, `kanban.md`). Cycle start `00d0611e87`.
 - **Scope gate:**
   ```
