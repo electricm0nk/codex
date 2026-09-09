@@ -1,6 +1,6 @@
 # Cycle EPIC-4-WRAPUP-CORRECTION — Resolve and verify / epic wrap-up correction (workflow-instruction.md §10 step 0)
 
-- **Commit SHA:** work `1f4c0ad9fe` (the three fixes, the gate worker's report, all four retro-event files); docs `__DOCS_SHA__` (this receipt, `progress.md`, `kanban.md`). The full gate was run on the working tree of `1f4c0ad9fe`; the docs commit changes no gated input.
+- **Commit SHA:** work `1f4c0ad9fe` (the three fixes, the gate worker's report, all four retro-event files); docs `20812af147` (this receipt, `progress.md`, `kanban.md`). The full gate was run on the working tree of `1f4c0ad9fe`; the docs commit changes no gated input.
 - **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2`. A wrap-up
   fix cycle closes zero units by design; the batch floor does not apply. **Not** exempt from the
   residue check, which ran at start and at end (below).
