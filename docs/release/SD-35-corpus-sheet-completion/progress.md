@@ -41,6 +41,106 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — Epic 5 / AT-35-E5-001 cycle 1 — bucket A's two tables, transcript clause paid — **complete**
+
+**Status: complete.** Code + artifact commit `7a0bf64bbf` (cycle start `5e2c0c8c5b`); docs
+commit follows in the same push. Receipt
+`artifacts/epic-5-residues/AT-35-E5-001_cycle1_receipt.md`; deliverable
+`artifacts/epic-5-residues/table-proofs.md`; events `docs/retro/events/at-35-e5-001.jsonl`
+(1 `correction`). Kanban row 19.
+
+- **Scope gate:**
+  ```
+  inventory=docs/work-inventory.json
+  scope=bucket=A
+  scoped_by_bucket=
+  scoped_by_kind=
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+  Not an exemption claim — the gate ran and passed. `scoped=0` **is** the whole remainder:
+  `remaining_non_done=0` is over the entire 49,438-unit corpus, not merely over bucket A,
+  and `cycle_scope_gate.py --min 500` with no scope flags returns the identical line. The
+  dispatch's mandatory-bundling instruction was therefore moot; there was nothing left
+  anywhere to bundle in.
+- **Receipt rows (mechanical):**
+  ```
+  since=5e2c0c8c5bac24cf1ffdb84df1badb0ed09da49a residue_gate=present
+  closed_by_kind=
+  relabeled_moves=
+  regressed=0 added=0 dropped=0
+  closed=0 relabeled=0 rust_lines_changed=252 ratio=n/a builds_recorded=0 pcgen_live_files=260
+  ```
+- **Refused tokens:** none.
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736
+  verdict=PASS` — identical at start and end. Nothing new on the live side reads a PCGen token.
+- **What was actually outstanding.** The criterion's Evidence sentence has **two** clauses.
+  The first — `missing_engine_tables.py --check` → `population=0` — was already true at
+  dispatch, paid at `406003afc3` by `AT-35-E3-001` cycle 2's bundle, and row 19 had been
+  marked `complete` on that basis. The second — "the refusal/success transcript pair", whose
+  artifact `acceptance-and-verification.md` names as
+  `artifacts/epic-5-residues/table-proofs.md` — had **never been paid**: the entire
+  `epic-5-residues/` artifact directory contained nothing but `.gitkeep`. This cycle paid it
+  and touched the first clause not at all. Correction
+  `1788960015819-at-35-e5-001-d79575`.
+- **The mechanism.** A read-only `--epic5-table-transcript` mode on `v06_work_inventory`,
+  alongside the existing `--epic2-table-transcript` and under the same contract: it writes
+  nothing, classifies nothing, and moves no unit on any board. Per table — `power` in
+  `ultimate_psionics` and `companion` in `bestiary`, which were bucket A's *entire*
+  population at the cut (`missing_engine_tables.py`'s `ENGINE_SURFACE_CITATIONS` names those
+  two kinds and no others) — it prints one success line and one refusal line, read off the
+  **live sheet-rule package**, which loads `SheetRule.applies` and never a source token.
+  The success half takes each table's first record by sorted rule id, off the live package
+  rather than hand-picked (`decisions.md §4`), and renders it through the live evaluator for
+  the probe character; the refusal half asks the same table for a key no record carries and
+  requires a *named* refusal.
+- **Fail-closed, three ways, each with its own marker and its own test:**
+  `REFUSAL_CHECK_FAILED` (a fabricated match), `SUCCESS_CHECK_FAILED` (an indexed id that
+  will not resolve), `TABLE_EMPTY` (a table that silently stopped loading — which must not be
+  allowed to read as a clean transcript). Three tests read the live `data/sheet_rules/`
+  directory, never a hand-written per-unit fixture. **Each guard was mutated and observed
+  failing before being reverted** (`AGENTS.md` rule 7 — a fail-closed test that cannot fail
+  is worse than none); all three RED runs are quoted verbatim in `table-proofs.md §3`.
+- **The closure, per unit set rather than in aggregate.** All **421 of 421** `power` units in
+  `ultimate_psionics` are `sheet-complete` with a rendered sheet line (412 `words` + 9
+  `number` = 421). Of the **154** `companion` units in `bestiary`, exactly **28** are
+  `sheet-complete` via `sheet_rule_rendered:words` — the same 28 the criterion names as the
+  `companion` widening; the other 126 of the 154 were already DONE by other rungs and were
+  never bucket A. 421 + 28 = the 449 bucket A held at the cut.
+- **A denominator trap, named rather than tripped.** The transcript's `records=447` (`power`)
+  and `records=450` (`companion`) are **rules in the package**, not units: 421 principal +
+  26 `#suffix` siblings, and 154 principal + 296 siblings. The unit counts are 421 and 154.
+  Both populations are stated separately, each with its own re-derive command, in
+  `table-proofs.md §2`.
+- **Why `citation_failures=0` and `population=0` are not a contradiction.** The two
+  `engine_does_not_hold("<kind>_content_has_no_engine_table")` arms still exist in
+  `src/bin/v06_work_inventory.rs` and still resolve against the live file. They did not go
+  away — **no unit reaches them**, because the `sheet-complete` rung fires first. The
+  fall-through refusal remains in place to catch a future record the tables do not hold, and
+  currently catches none.
+- **Verification, once, at `7a0bf64bbf`** (`CARGO_TARGET_DIR=/tmp/cargo-sd35-AT-35-E5-001`,
+  `CARGO_INCREMENTAL=0`, `-j 6`): `cargo test --locked --no-run` → `NO_RUN_EXIT=0`;
+  `cargo test --locked --no-fail-fast` → `FULL_EXIT=0`, **8730 passed / 0 failed / 67
+  ignored across 412 suites**, 0 `FAILED` lines; `cargo clippy --locked --tests --bin
+  v06_work_inventory` → 0 warnings; `sheet_rule_convert --check` →
+  `records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS`;
+  `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → **0**;
+  `completion_atlas.py --check` → `DONE 49438 of 49438`, every other bucket 0;
+  `token_coverage.py --check` → `verdict=PASS`; `shape_engine_boundary.py --check` →
+  `not_held_by_engine=0`; `missing_engine_tables.py --check` → `population=0 kinds=0
+  citation_failures=0`; `denominator_gate.py --check` → `violations=0` of 58 files;
+  `verify.sh --only pi-sweep` → `RESULT: PASS`. Desktop crate and frontend at **epic
+  cadence** — this cycle touched no `apps/` path. `corpus_literal_sweep` not re-run: no
+  corpus record changed.
+- **Baseline moved, with attribution.** `BASELINE_ROOT_FULL_TESTS` 8727 → **8730** in
+  `scripts/verify-baselines.env`: `+3`, exactly this cycle's three new `#[test]` functions
+  (`git show 7a0bf64bbf -- '*.rs' | grep -c '^+\s*#\[test\]'` → 3). `§8` self-heal, in the
+  same push. `BASELINE_ROOT_TEST_BINARIES` deliberately **not** raised: 412 measured vs 411
+  recorded, and that `+1` predates this cycle — no new test FILE was added here, so raising
+  it would credit this cycle with a suite it did not add.
+- **No other criterion emptied.** This cycle moved no unit, so no other kanban row was closed
+  by it. Rows 22 (`AT-35-E5-004`) and 23 (`AT-35-E5-005`) remain `in-progress` with their
+  own unpaid obligations, unchanged by this cycle.
+
 ### 2026-09-09 — Epic 4 / AT-35-E4-003 cycle 1 — the rate ledger — **complete**
 
 **Status: complete.** Work commit `ea9650ffc9` (cycle start `e7f66b1f80`); litter fold
