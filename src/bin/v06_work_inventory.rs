@@ -18060,6 +18060,151 @@ fn render_for_probe(
     evaluate(rule, &held, &probe.package, &probe.facts, ctx)
 }
 
+// ---------------------------------------------------------------------------
+// AT-35-E5-001 -- the two Epic-5 tables, and their refusal/success transcript
+// ---------------------------------------------------------------------------
+
+/// The two tables `AT-35-E5-001` owns, as `(kind, book)`. Bucket A's whole
+/// population at SD-35's launch was these two kinds and nothing else
+/// (`scripts/missing_engine_tables.py`'s `ENGINE_SURFACE_CITATIONS`): `power`
+/// (421 units, all `ultimate_psionics`) and `companion`'s `bestiary` widening
+/// (28 units). Both are served here by the LIVE sheet-rule package, which
+/// loads `SheetRule.applies` -- never a source token (`decisions.md §11`).
+const EPIC5_TABLES: &[(&str, &str)] = &[("power", "ultimate_psionics"), ("companion", "bestiary")];
+
+/// The key no corpus record carries, for the refusal half. Same literal the
+/// Epic-2 seven-table transcript uses, so the two transcripts read alike.
+const EPIC5_ABSENT_KEY: &str = "___a_key_no_corpus_record_carries___";
+
+/// The source-format markers `data/sheet_rules/` must never carry
+/// (`workflow-instruction.md §12` row 36). Counted inside each transcribed
+/// record's own serialization, so the transcript states the "loads `applies`,
+/// not tokens" half of the criterion as a number rather than as prose.
+const EPIC5_PCGEN_MARKERS: &[&str] = &["BONUS:", "DEFINE:", "%CHOICE", "CL=", "PRE"];
+
+/// The `Applies` arm a rule's gate is built from -- the variant name only, so
+/// the transcript shows that the table's gate is a typed `Applies` tree and
+/// not a retained token string.
+fn epic5_applies_variant(a: &codex::rules_core::sheet_rule::Applies) -> &'static str {
+    use codex::rules_core::sheet_rule::Applies;
+    match a {
+        Applies::Always => "Always",
+        Applies::Never => "Never",
+        Applies::All(_) => "All",
+        Applies::AtLeast { .. } => "AtLeast",
+        Applies::Not(_) => "Not",
+        Applies::Compare { .. } => "Compare",
+        Applies::Holds { .. } => "Holds",
+        Applies::Chosen { .. } => "Chosen",
+        Applies::ItemHas { .. } => "ItemHas",
+        Applies::Situational { .. } => "Situational",
+    }
+}
+
+/// Source-format markers present in one rule's own serialization. Must be 0:
+/// a non-zero count is a token that survived conversion into a record the
+/// live side reads.
+fn epic5_pcgen_markers_in(rule: &codex::rules_core::sheet_rule::SheetRule) -> usize {
+    let text = serde_json::to_string(rule).unwrap_or_default();
+    EPIC5_PCGEN_MARKERS
+        .iter()
+        .map(|m| {
+            if *m == "PRE" {
+                // `PRExxx:` only -- an upper-case run after `PRE`, then a colon.
+                text.match_indices("PRE")
+                    .filter(|(i, _)| {
+                        let rest = &text[i + 3..];
+                        let run = rest.chars().take_while(|c| c.is_ascii_uppercase()).count();
+                        run > 0 && rest[run..].starts_with(':')
+                    })
+                    .count()
+            } else {
+                text.matches(m).count()
+            }
+        })
+        .sum()
+}
+
+/// One table's refusal/success transcript pair (`AT-35-E5-001`'s Evidence
+/// clause; artifact `artifacts/epic-5-residues/table-proofs.md`).
+///
+/// The success half takes the table's FIRST record by sorted rule id -- read
+/// off the live package, never a hand-picked key (`decisions.md §4`: a
+/// per-kind gate that reads the live directory, not a per-unit fixture with a
+/// hand-derived value) -- resolves it, and renders it through the live
+/// evaluator for the probe character. The refusal half asks the same table for
+/// a key no record carries and requires a named refusal; a resolve there is
+/// `REFUSAL_CHECK_FAILED`, a fabricated match, and the caller's test fails.
+///
+/// **Fail-closed:** a table with no records at all emits `TABLE_EMPTY` rather
+/// than an empty transcript, so a table that silently stopped loading cannot
+/// read as a clean run.
+fn epic5_table_transcript_pair(probe: &SheetRuleProbe, kind: &str, book: &str) -> Vec<String> {
+    use codex::rules_core::sheet_rule::split_rule_id;
+
+    let prefix = format!("{book}:{kind}:");
+    let ids: Vec<&String> = probe
+        .package
+        .rules
+        .keys()
+        .filter(|id| {
+            let (b, k, _) = split_rule_id(id);
+            b == book && k == kind
+        })
+        .collect();
+    let records = ids.len();
+    let location = format!("data/sheet_rules/{book}/{kind}/*.json");
+
+    if records == 0 {
+        return vec![format!(
+            "kind={kind} book={book} location={location} records=0 -> TABLE_EMPTY (fail-closed: the table loaded no records)"
+        )];
+    }
+
+    let mut out = Vec::with_capacity(2);
+
+    // Success half.
+    let sample_id = ids[0];
+    match probe.package.rule(sample_id) {
+        Some(rule) => {
+            let line = render_for_probe(probe, rule);
+            out.push(format!(
+                "kind={kind} book={book} location={location} records={records} sample={sample_id:?} -> HELD label={:?} applies={} sheet_line={} printed={:?} prose_len={} pcgen_markers_in_record={}",
+                rule.label,
+                epic5_applies_variant(&rule.applies),
+                sheet_line_form(&line.value),
+                line.printed,
+                line.prose.len(),
+                epic5_pcgen_markers_in(rule),
+            ));
+        }
+        None => out.push(format!(
+            "kind={kind} book={book} location={location} records={records} sample={sample_id:?} -> SUCCESS_CHECK_FAILED (an id the package indexes did not resolve)"
+        )),
+    }
+
+    // Refusal half, on the same table.
+    let absent_id = format!("{prefix}{EPIC5_ABSENT_KEY}");
+    match probe.package.rule(&absent_id) {
+        Some(_) => out.push(format!(
+            "kind={kind} book={book} location={location} records={records} sample={absent_id:?} -> REFUSAL_CHECK_FAILED (fabricated match)"
+        )),
+        None => out.push(format!(
+            "kind={kind} book={book} location={location} records={records} sample={absent_id:?} -> REFUSED (absent key)"
+        )),
+    }
+
+    out
+}
+
+/// Both Epic-5 tables' transcripts, in [`EPIC5_TABLES`] order.
+fn epic5_table_transcript(probe: &SheetRuleProbe) -> Vec<String> {
+    EPIC5_TABLES
+        .iter()
+        .flat_map(|(kind, book)| epic5_table_transcript_pair(probe, kind, book))
+        .collect()
+}
+
 /// The rung. A unit in one of [`SHEET_COMPLETE_PROMOTABLE_STATUSES`] whose
 /// kind has an on-screen test, whose id the converter did not refuse, and
 /// whose id has a rule in the package is rendered for the probe character
@@ -18128,6 +18273,95 @@ mod apply_sheet_complete_rung_tests {
     fn kind_from_id(id: &str) -> Kind {
         let kind = id.split(':').nth(1).unwrap_or_default();
         *Kind::ALL.iter().find(|k| k.id() == kind).unwrap_or_else(|| panic!("{id}: unknown kind {kind:?}"))
+    }
+
+    // -- AT-35-E5-001: the two Epic-5 tables, fail-closed ------------------
+    //
+    // The criterion's Evidence is `missing_engine_tables.py --check ->
+    // population=0` PLUS "the refusal/success transcript pair". These three
+    // tests are the transcript's RED half: they read the LIVE
+    // `data/sheet_rules/` directory (never a hand-written per-unit fixture,
+    // `decisions.md §4`) and fail if either table stops holding records, if
+    // either table fabricates a match for a key no record carries, or if a
+    // transcribed record carries a source-format token.
+
+    /// Success half: both tables hold real records and both render a sheet
+    /// line through the live evaluator. A table that emptied reports
+    /// `TABLE_EMPTY` and fails here rather than producing a clean-looking
+    /// empty transcript.
+    #[test]
+    fn both_epic5_tables_hold_a_real_record_and_render_it() {
+        for (kind, book) in EPIC5_TABLES {
+            let lines = epic5_table_transcript_pair(probe(), kind, book);
+            assert_eq!(lines.len(), 2, "{kind}/{book}: expected a success line and a refusal line, got {lines:?}");
+            assert!(
+                lines[0].contains(" -> HELD "),
+                "{kind}/{book}: success half did not resolve: {}",
+                lines[0]
+            );
+            assert!(
+                !lines[0].contains("records=0"),
+                "{kind}/{book}: the table holds no records: {}",
+                lines[0]
+            );
+            // One of `decisions.md §1`'s three sheet-line forms, never absent.
+            assert!(
+                ["sheet_line=number", "sheet_line=dice", "sheet_line=words"]
+                    .iter()
+                    .any(|f| lines[0].contains(f)),
+                "{kind}/{book}: no rendered sheet-line form: {}",
+                lines[0]
+            );
+        }
+    }
+
+    /// Refusal half: a key no record carries is refused BY NAME, never
+    /// fabricated and never silently skipped.
+    #[test]
+    fn both_epic5_tables_refuse_an_absent_key_rather_than_fabricate() {
+        for (kind, book) in EPIC5_TABLES {
+            let lines = epic5_table_transcript_pair(probe(), kind, book);
+            let refusal = lines.last().expect("transcript is never empty");
+            assert!(
+                refusal.contains("-> REFUSED (absent key)"),
+                "{kind}/{book}: absent key was not refused: {refusal}"
+            );
+            assert!(
+                !refusal.contains("REFUSAL_CHECK_FAILED"),
+                "{kind}/{book}: the table fabricated a match: {refusal}"
+            );
+        }
+    }
+
+    /// The criterion's "the tables load `SheetRule.applies`, NOT tokens"
+    /// clause, as a number: every record of both tables carries a typed
+    /// `Applies` gate and zero source-format markers
+    /// (`workflow-instruction.md §12` row 36).
+    #[test]
+    fn epic5_table_records_carry_a_typed_applies_and_no_source_tokens() {
+        use codex::rules_core::sheet_rule::split_rule_id;
+        for (kind, book) in EPIC5_TABLES {
+            let mut checked = 0usize;
+            for rule in probe().package.rules.values() {
+                let (b, k, _) = split_rule_id(&rule.id);
+                if b != *book || k != *kind {
+                    continue;
+                }
+                checked += 1;
+                // A variant name always resolves -- the assertion is that the
+                // gate is a typed tree, which `epic5_applies_variant`'s
+                // exhaustive match makes a compile-time fact; what can fail at
+                // run time is a retained token.
+                let _ = epic5_applies_variant(&rule.applies);
+                assert_eq!(
+                    epic5_pcgen_markers_in(rule),
+                    0,
+                    "{}: a source-format token survived conversion into a record the live side reads",
+                    rule.id
+                );
+            }
+            assert!(checked > 0, "{kind}/{book}: no records to check -- the table emptied");
+        }
     }
 
     fn unit(id: &str, status: &'static str) -> InventoryUnit {
@@ -19589,6 +19823,24 @@ fn main() {
                     book.companions.len()
                 ),
             }
+        }
+        return;
+    }
+
+    // AT-35-E5-001's own evidence transcript: the two Epic-5 tables (`power`,
+    // `companion`) through the LIVE sheet-rule package, one success line and
+    // one refusal line each. Reads `data/sheet_rules/` and the probe fixture,
+    // writes nothing, classifies nothing, moves no unit on any board -- same
+    // contract as `--epic2-table-transcript` above.
+    if args.iter().any(|a| a == "--epic5-table-transcript") {
+        let Some(probe) = load_sheet_rule_probe(&repo_root) else {
+            eprintln!(
+                "--epic5-table-transcript: data/sheet_rules/ is absent -- run `cargo run --locked --bin sheet_rule_convert` first"
+            );
+            std::process::exit(1);
+        };
+        for line in epic5_table_transcript(&probe) {
+            println!("{line}");
         }
         return;
     }
