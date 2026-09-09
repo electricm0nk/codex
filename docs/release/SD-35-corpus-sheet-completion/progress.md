@@ -29,10 +29,10 @@ process defect** recorded by the epic wrap-up.
 | 2 — Sheet rule | 5 | 5 | 0 | 0 |
 | 3 — Place and surface | 4 | 4 | 0 | 0 |
 | 4 — Resolve and verify | 3 | 3 | 0 | 0 |
-| 5 — Residues | 5 | 4 | 1 | 0 |
+| 5 — Residues | 5 | 5 | 0 | 0 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **22** | **1** | **7** |
+| **Total** | **30** | **23** | **0** | **7** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,73 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-09 — AT-35-E5-005 cycle 1 — `corpus-49438-of-49438` — **complete** (the corpus closed per unit and per capability; one 10-unit residue named, gated and handed on)
+
+- **Scope gate:** `python3 scripts/cycle_scope_gate.py --min 500` → `inventory=docs/work-inventory.json
+  scope=(whole remainder) scoped_by_bucket= scoped_by_kind= scoped=0 remaining_non_done=0
+  floor=500 verdict=PASS_WHOLE_REMAINDER`. The dispatch flagged the cycle
+  `SCOPE_GATE: EXEMPT (closure-accounting cycle)`; the gate was run anyway and returns the
+  stronger statement — the remainder it would have scoped is **empty**.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since ac2165b393 --before
+  /tmp/wi-before-AT-35-E5-005.json --after docs/work-inventory.json`; `regressed=0 added=0
+  dropped=0`, `closed_by_kind=` and `relabeled_moves=` empty). `closed=0` is the point of the
+  cycle: the population was already zero and this proves it rather than moving it.
+- **Refused tokens:** none. **Named residue, which is not a refused token and not a carve-out:**
+  `desc_token_present_but_no_prose_on_the_sheet_rule=10`.
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736
+  verdict=PASS` — identical at start and at HEAD. No file under `src/`, `apps/`, `data/`,
+  `tests/` or `scripts/` was written.
+- **What landed, one artifact per Evidence clause.** (1) The atlas prints
+  `DONE 49438 / A 0 / B 0 / C 0 / D 0 / M 0 / V 0 / U 0 / X 0 / Z 0`,
+  `unclassified=0 overlap=0 done_evidence_violations=0 citation_failures=0`.
+  (2) `artifacts/epic-5-residues/completion-manifest.json` — **one row per unit, 49,438 rows**
+  over 37 books, 19 kinds and 155 distinct evidence strings, each row carrying its bucket, its
+  evidence, its source row and the sheet-rule content its line actually renders. The generator
+  imports `completion_atlas._bucket_of` instead of re-implementing bucket derivation, so the two
+  cannot drift, and it fails closed three ways (any non-DONE row aborts; the row count must equal
+  the atlas's own `examined`; the histogram must equal `partition()`'s counts).
+  (3) `artifacts/epic-5-residues/capability-register-rederived.json` — SD-34's register closed:
+  **11 of 11 rows, 5 `built: true`, 6 `unnecessary-under-sheet-rule`, 0 still open**, over
+  **11,055** units, **0** of them non-DONE. Each sized row is closed on its own id set,
+  re-derived by the register's own stated query against
+  `git show 837dbbcf6b:docs/work-inventory.json`. The two rows SD-34 left UNSIZED are sized here
+  (1,906 pointer rows; 8,380 records with no upstream description) and the two it left as bare
+  cited counts are pinned to live `source_file` queries resolving to exactly the cited 2 and 14 —
+  the live citation SD-34's own `verification_note` asked the next lane to pin.
+- **Two corrections, both `--verified-by`** (`docs/retro/events/at-35-e5-005.jsonl`).
+  `1788994085684-at-35-e5-005-ca03fd`: SD-34's register states
+  `oracle_probe_surface_for_no_table_kinds` population **2062**; the row's own command at the
+  register's own head returns **130**. Both are carried in the re-derivation rather than one
+  silently replacing the other; the disposition is unchanged, because at HEAD all 8,491
+  `oracle-unverifiable` units — a superset of both figures — are DONE.
+  `1788994100695-at-35-e5-005-9a36f1`: the manifest's new `sheet_rule_content` column found
+  **10 of 23,315** `sheet-complete` units whose line reads `sheet_rule_rendered:words` while the
+  rule carries **no words** (no prose, no value, and for the 5 pointer rows a granter that is
+  equally empty) although the corpus record carries a real `DESC` token with 224–829 characters
+  of published text. The other **10,276** of the 10,286 label-bearing rows (8,380 `label_only` +
+  1,906 `label_only_with_granted_by`, less the 5 hollow in each) are correct: their corpus record
+  has no description upstream at all, so the feature's NAME is the finished sheet line.
+- **The residue is handed on, never exempted.** The fix is converter-side
+  (`src/pcgen_import/sheet_rule/`), outside Epic 5's file-touch set (`workflow-instruction.md
+  §3`), so the cycle measured it, named all ten in
+  `artifacts/epic-5-residues/desc-without-prose.json`, and left a **red gate**:
+  `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-5-residues/AT-35-E5-005_desc_without_prose.py --check`
+  exits 1 until the count is 0. Deferral `1788994100821-at-35-e5-005-5973cb`.
+- **Verification.** `cargo test --locked --no-run -j 6` `NO_RUN_EXIT=0` (412 test executables);
+  `cargo run --locked --bin sheet_rule_convert -- --check` →
+  `records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS`;
+  `cargo clippy --locked --tests -j 6` 0 warnings;
+  `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → 0;
+  `token_coverage.py --check` `verdict=PASS`; `shape_engine_boundary.py --check`
+  `not_held_by_engine=0`; `missing_engine_tables.py --check` `population=0`;
+  `denominator_gate.py --check` `files_checked=65 violations=0`; `--check-provenance`
+  `figures_examined=268 violations=0`; `scripts/verify.sh --only pi-sweep` `RESULT: PASS`.
+  `cargo test --locked --no-fail-fast` deliberately not run — `§6` step 3 requires it when `src/`
+  or the classifier changed and this cycle changed neither.
+- **Receipt:** `artifacts/epic-5-residues/AT-35-E5-005_cycle1_receipt.md` — `103693b365`
+  (cycle start `ac2165b393`).
 
 ### 2026-09-09 — AT-35-E5-004 cycle 1 — `bucket-x-choice-filter` — **complete** (the per-character choice filter itself, recorded as NOT built until now — and the converter defect that building it exposed)
 
