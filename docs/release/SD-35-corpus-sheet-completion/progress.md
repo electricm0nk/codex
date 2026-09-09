@@ -41,6 +41,43 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — Epic 4 / AT-35-E4-001 cycle 1 — the 25 unmapped token types get a mapping row; bucket M's criterion meets all three Evidence clauses — **complete**
+
+- **Scope gate:** `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`
+  (`python3 scripts/cycle_scope_gate.py --min 500 --bucket M`). Bucket M — and every other
+  bucket — was already 0 at `07e29075b4`, so the bundled scope the dispatch mandates **is** the
+  whole remainder. Not a floor exemption, not an under-floor cycle. Residue check at start:
+  `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=131 ratio=n/a builds_recorded=0
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since
+  07e29075b4453605f1dcdd06f21ae4b1fd7deef1 --before /tmp/wi-before-AT-35-E4-001.json --after
+  docs/work-inventory.json`; `residue_gate=present`, `closed_by_kind=` and `relabeled_moves=`
+  empty, `regressed=0 added=0 dropped=0`). `closed=0` is correct: the unit population was
+  already 0 non-DONE. `ratio` is `n/a`, a division by zero, never `0.0`.
+- **What actually moved.** The criterion's Evidence sentence has three clauses; two were met by
+  `AT-35-E3-002` (`completion_atlas.py --check` → M at 0; the inherited refused-non-DONE set at
+  0). The third — *"`token-coverage.json` shows every compute-bearing token type with a mapping
+  row or a named refusal with count"* — was **not**: `token_coverage.py --check` reported
+  `unmapped_token_types=25`, and those 25 heads degraded **974** records. That is a table gap,
+  not an unreadable rule. 24 mapping rows (`mapping-table.v1.json` 249 → 273 rows, 245 → 269
+  distinct; `table.rs` transcribes them) plus one head alias (`GLOBALVAR:ABILITY` → the
+  existing `ABILITY` row, the `PRERACETYPE` precedent) close it:
+  `unmapped_token_types` **25 → 0**, `degraded_records` **974 → 603**, `refused` unchanged at
+  **142** (one shape, `no_corpus_record`, `refused_non_done=0`). **127 units** changed evidence
+  inside `sheet-complete` — 126 `sheet_rule_rendered:words` → `:number`, 1 → `:dice`.
+- **No new `Number` mapping**, so no new oracle obligation; the parity run was made anyway
+  because 127 units began rendering a magnitude. `compared=146 agree=145 disagree=1` (lines),
+  `382/376/6` (chassis), `PCGEN_ORACLE_SHA=7f818006e3` — comparable lines rose **42 → 146**,
+  agreements **41 → 145**, and the 7-disagreement set is identical to Epic 2's: **0 introduced,
+  0 fixed**. Artifact: `artifacts/epic-4-resolve-and-verify/AT-35-E4-001_cycle1_sheet-parity.json`.
+- **Refused tokens:** **none**. **Self-heal:** one test of 8,727 failed —
+  `tests/sheet_rule_convert_gate.rs` asserted *`unmapped:STARTSKILLPTS` degrades the Arcanist*,
+  pinning the gap this cycle closed. Rewritten in the same commit to assert the new truth and
+  the criterion's own bar (no census entry carries any `unmapped:` type); that suite re-ran
+  `28 passed; 0 failed`, the workspace `8,754 passed / 0 failed / 67 ignored` over 412 suites.
+- **Receipt:** `artifacts/epic-4-resolve-and-verify/AT-35-E4-001_cycle1_receipt.md`.
+  One `correction` retro event `1788937257113-at-35-e4-001-faa72b`.
+
 ### 2026-09-09 — Epic 3 / AT-35-E3-004 cycle 1 — the rate ledger verified against its receipts and closed over its own cycle — **complete**
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (ledger cycle — records this epic's per-cycle rows; closes

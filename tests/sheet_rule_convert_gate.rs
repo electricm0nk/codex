@@ -242,16 +242,17 @@ fn token_census_names_the_row_for_every_token_and_the_head_under_each_refusal() 
     let c = convert_unit("core_rulebook:equipment:longsword");
     assert!(c.tokens.contains("DAMAGE / ALTDAMAGE"), "the longsword's DAMAGE token names its row: {:?}", c.tokens);
     assert!(c.refusals.is_empty() && c.refusal_under.is_empty());
-    // A DEGRADED record (SD-35 AT-35-E3-001): an unmapped head no longer deletes the record --
-    // the term degrades, the record converts, and every degradation shape is still recorded
-    // under the token type it arose under, so the census names it exactly as before.
+    // SD-35 AT-35-E4-001. The Arcanist used to degrade under `unmapped:STARTSKILLPTS` and
+    // `unmapped:MEMORIZE` -- not because either term was unreadable, but because the mapping
+    // table carried no row for the head. Both heads now have a `Metadata` row (the class
+    // chassis holds the value and prints it), so the census names the ROW and the record does
+    // not degrade for them. The degradation-recording behaviour the old assertion pinned is
+    // proved on `eldritch_scion_spells` below, on a shape that is still genuinely unreadable.
     let c = convert_unit("advanced_class_guide:class:arcanist");
     assert!(c.refusals.is_empty(), "an unmapped head is not a RECORD-level refusal: {:?}", c.refusals);
-    for shape in ["unmapped:STARTSKILLPTS", "unmapped:MEMORIZE"] {
-        assert!(c.degradations.contains(shape), "{shape} degrades the Arcanist: {:?}", c.degradations);
-        let under: Vec<&String> = c.degraded_under.get(shape).map(|s| s.iter().collect()).unwrap_or_default();
-        assert_eq!(under, vec![shape], "{shape} arose under itself");
-        assert!(c.tokens.contains(shape), "an unmapped head is still a token the record carries");
+    for row in ["STARTSKILLPTS", "MEMORIZE"] {
+        assert!(c.tokens.contains(row), "the census names the row the head resolved to: {:?}", c.tokens);
+        assert!(!c.degradations.contains(&format!("unmapped:{row}")), "{row} has a mapping row, so it degrades nothing: {:?}", c.degradations);
     }
     // A formula-shaped degradation names the TOKEN it arose under, not the formula family.
     let c = convert_unit("advanced_class_guide:class_feature:eldritch_scion_spells");
@@ -267,6 +268,11 @@ fn token_census_names_the_row_for_every_token_and_the_head_under_each_refusal() 
     let census_refused: BTreeSet<&String> = r.tokens.entries.iter().filter(|e| !e.refusals.is_empty()).map(|e| &e.id).collect();
     let refused: BTreeSet<&String> = r.refused.entries.iter().map(|e| &e.id).collect();
     assert_eq!(census_refused, refused, "the census refuses exactly the records _refused.json refuses");
+    // SD-35 AT-35-E4-001's own bar: the census carries NO `unmapped:<HEAD>` token type at all.
+    // Every head the corpus's closures carry resolves to a mapping-table row, so a degradation
+    // can only mean a term the converter genuinely could not read -- never a table gap.
+    let unmapped: BTreeSet<&String> = r.tokens.entries.iter().flat_map(|e| e.tokens.iter()).filter(|t| t.starts_with("unmapped:")).collect();
+    assert!(unmapped.is_empty(), "every head has a mapping row; still unmapped: {unmapped:?}");
     let rendered = codex::pcgen_import::sheet_rule::render(&r);
     assert!(rendered.contains_key("_tokens.json"), "the census is written into the package");
 }

@@ -12831,6 +12831,590 @@
    },
    "provenance": "synthesis",
    "covers_token_heads": []
+  },
+  {
+   "token_type": "BONUS:EQM",
+   "family": "bonus",
+   "maps_to": "Metadata",
+   "rule": "BONUS:EQM|<property>|<formula> on an equipment MODIFIER adjusts the item the modifier is attached to (HANDS, WEIGHTADD). Weight and hand count are already Metadata rows (WT, LEGS / HANDS), and the converter has no equipment-modifier application engine -- EQMOD / ALTEQMOD and the equipment-modifier COST row are Metadata for the same reason. The modifier's own sheet line is its name and its words.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "13 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "BONUS:EQM"
+   ]
+  },
+  {
+   "token_type": "BONUS:EQMWEAPON",
+   "family": "bonus",
+   "maps_to": "Metadata",
+   "rule": "BONUS:EQMWEAPON|<property>|<formula> adjusts the WEAPON the modifier is attached to (CRITRANGEDOUBLE, DAMAGESIZE, RANGEADD). Same disposition as BONUS:EQM: the adjustment lands only when the modifier is attached to an item, which is the equipment-modifier application the converter does not perform. DAMAGESIZE with no base die reachable through the grant closure is blockers.md B8's shape.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "1 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "BONUS:EQMWEAPON"
+   ]
+  },
+  {
+   "token_type": "BONUS:ITEMCOST",
+   "family": "bonus",
+   "maps_to": "Metadata",
+   "rule": "BONUS:ITEMCOST|TYPE.<t>|<formula> is equipment-modifier PRICING. Price is not a character-sheet total; the equipment-modifier COST rows and the %SPELLLEVEL / %CHARGES / BASECOST pricing row are Metadata for exactly this reason.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "10 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "BONUS:ITEMCOST"
+   ]
+  },
+  {
+   "token_type": "[redacted PI] token",
+   "family": "prose",
+   "maps_to": "Metadata",
+   "rule": "A token whose HEAD itself is `[redacted PI]` in the ingested record. decisions.md §15 R2 (RULED): omit the redacted field, stamp `provenance.pi`, print the codex-neutral label and whatever is licensed; never refuse. The converter already stamps this before any row lookup (`convert.rs::token_key` returns this census key for a redacted head); the row records the disposition so the census carries no unmapped type.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "4 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "[redacted PI]"
+   ]
+  },
+  {
+   "token_type": "ALTTYPE",
+   "family": "formula",
+   "maps_to": "Metadata",
+   "rule": "ALTTYPE:<tag>.<tag>... is the equipment record's SECOND-head type list (a double weapon's off head, a weapon/armour combination's alternate form). It is a tag list exactly like TYPE, which is Metadata: tags select rules, they are never a term of a sheet total.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "49 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "ALTTYPE"
+   ]
+  },
+  {
+   "token_type": "ARMORTYPE",
+   "family": "formula",
+   "maps_to": "Metadata",
+   "rule": "ARMORTYPE:<from>|<to> on an equipment modifier remaps the armour's proficiency category. The proficiency category is a tag the item carries, the same shape as PROFICIENCY / WIELD, which is Metadata.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "15 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "ARMORTYPE"
+   ]
+  },
+  {
+   "token_type": "BONUSSPELLSTAT",
+   "family": "prereq",
+   "maps_to": "Metadata",
+   "rule": "BONUSSPELLSTAT:<STAT|NONE> names the ability score that grants a class its bonus spells per day. It is a class-chassis field the engine's class record already holds; the sheet prints the bonus-spell row from the chassis, not from a SheetRule.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "4 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "BONUSSPELLSTAT"
+   ]
+  },
+  {
+   "token_type": "DOMAIN",
+   "family": "prereq",
+   "maps_to": "Applies",
+   "rule": "DOMAIN:<name>|<name>|<PRE...> grants domains. On a numbered class level line the existing `class LEVEL grants` row already reads it (Granter::Class at that level); on the class BASE row the same head grants at level 1. The class chassis is the granter either way, so the base row is level_gate 1 rather than a refusal (SD-35 AT-35-E4-001; blockers.md B5's level-line reader is the level-numbered half of the same head).",
+   "expr_shape": "Applies (see rule)",
+   "applies_shape": "the gate this row builds -- see rule",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "4 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "DOMAIN"
+   ]
+  },
+  {
+   "token_type": "GROUP",
+   "family": "prereq",
+   "maps_to": "Metadata",
+   "rule": "GROUP:<name> (deity rows; `UNSELECTED` in this corpus) is a builder grouping label. It selects nothing the player writes on paper.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "1 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "GROUP"
+   ]
+  },
+  {
+   "token_type": "ITEMCREATE",
+   "family": "formula",
+   "maps_to": "Metadata",
+   "rule": "ITEMCREATE:<formula> (e.g. CL-3) adjusts the caster level used when this class CRAFTS a magic item. Item creation is not a character-sheet line; the class feature that carries it prints its own words.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "3 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "ITEMCREATE"
+   ]
+  },
+  {
+   "token_type": "KNOWNSPELLS",
+   "family": "prereq",
+   "maps_to": "Metadata",
+   "rule": "KNOWNSPELLS:<LEVEL=n|...|spell name> filters which spells a class automatically knows. It constrains the spell LIST the class chassis holds, not a number on the sheet; the spells themselves print from the chassis's spell list.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "14 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "KNOWNSPELLS"
+   ]
+  },
+  {
+   "token_type": "MEMORIZE",
+   "family": "prereq",
+   "maps_to": "Metadata",
+   "rule": "MEMORIZE:YES|NO is the class-chassis flag for a prepared caster. The engine's class record holds it; nothing on the sheet is computed from the token.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "38 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "MEMORIZE"
+   ]
+  },
+  {
+   "token_type": "MODTOSKILLS",
+   "family": "prereq",
+   "maps_to": "Metadata",
+   "rule": "MODTOSKILLS:YES|NO says whether the INT modifier is added to this class's skill points per level. It is a class-chassis flag; the skill-ranks line is printed by the class chassis (`Skill Ranks per Level: n + Int modifier`), never recomputed from a SheetRule.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "41 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "MODTOSKILLS"
+   ]
+  },
+  {
+   "token_type": "MONCCSKILL",
+   "family": "prereq",
+   "maps_to": "Applies",
+   "rule": "MONCCSKILL:<skill>|... is MONCSKILL's cross-class twin: the monster class treats each named skill as a CROSS-CLASS skill. It reads through the same arm as CSKILL / CCSKILL / MONCSKILL, emitting Effect::FactGrant(Fact::CrossClassSkill).",
+   "expr_shape": "Applies (see rule)",
+   "applies_shape": "the gate this row builds -- see rule",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "2 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "MONCCSKILL"
+   ]
+  },
+  {
+   "token_type": "NUMPAGES",
+   "family": "formula",
+   "maps_to": "Metadata",
+   "rule": "NUMPAGES:<n> is a spellbook's page capacity. It is an equipment property (the same shape as CONTAINS / CHARGES / BASEQTY, all Metadata), not a character-sheet total.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "16 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "NUMPAGES"
+   ]
+  },
+  {
+   "token_type": "PAGEUSAGE",
+   "family": "formula",
+   "maps_to": "Metadata",
+   "rule": "PAGEUSAGE:<formula> (max(SPELLLEVEL,1)) is how many spellbook pages one spell consumes. Equipment bookkeeping, same disposition as NUMPAGES.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "5 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "PAGEUSAGE"
+   ]
+  },
+  {
+   "token_type": "PRESPELLSCHOOL",
+   "family": "prereq",
+   "maps_to": "Applies",
+   "rule": "PRESPELLSCHOOL:<n>,<School>=<level> requires n spells of a school at or above a spell level. The record holds no per-school spell census, so the gate is Applies::Situational and prints its own words (`decisions.md` §1 form 3), the same disposition as PREDR and PRESA -- never a silent Exclude.",
+   "expr_shape": "Applies (see rule)",
+   "applies_shape": "the gate this row builds -- see rule",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "3 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "PRESPELLSCHOOL"
+   ]
+  },
+  {
+   "token_type": "PRESPELLSCHOOLSUB",
+   "family": "prereq",
+   "maps_to": "Applies",
+   "rule": "PRESPELLSCHOOLSUB:<n>,<SubSchool>=<level> is PRESPELLSCHOOL over a sub-school. Same disposition, same words template.",
+   "expr_shape": "Applies (see rule)",
+   "applies_shape": "the gate this row builds -- see rule",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "2 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "PRESPELLSCHOOLSUB"
+   ]
+  },
+  {
+   "token_type": "PROHIBITSPELL",
+   "family": "prose",
+   "maps_to": "Text",
+   "rule": "PROHIBITSPELL:SCHOOL.<x>|DESCRIPTOR.<x>|<PRE...> bars a school, sub-school or descriptor from a caster's list. There is no number: the sheet prints the rule's words (`Prohibited: Abjuration.`) as a Special prose segment, carrying the token's trailing PRE tail as the segment's `applies`.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "prints the rule's words as a Special prose segment",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "1 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "PROHIBITSPELL"
+   ]
+  },
+  {
+   "token_type": "SLOTS",
+   "family": "formula",
+   "maps_to": "Metadata",
+   "rule": "SLOTS:<n> is how many equipment slots an item occupies. BONUS:SLOTS is already a Metadata row for the same reason; slot count is item bookkeeping, not a sheet total.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "95 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "SLOTS"
+   ]
+  },
+  {
+   "token_type": "SPELLBOOK",
+   "family": "prereq",
+   "maps_to": "Metadata",
+   "rule": "SPELLBOOK:YES|NO is the class-chassis flag for a class that uses a spellbook. Chassis field; nothing computed.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "9 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "SPELLBOOK"
+   ]
+  },
+  {
+   "token_type": "SPELLLIST",
+   "family": "prereq",
+   "maps_to": "Metadata",
+   "rule": "SPELLLIST:<count>|<class>|<class> lets a class draw its spells from other classes' lists. It selects which LIST the class chassis reads, not a number on the sheet.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "19 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "SPELLLIST"
+   ]
+  },
+  {
+   "token_type": "SPELLSTAT",
+   "family": "prereq",
+   "maps_to": "Metadata",
+   "rule": "SPELLSTAT:<STAT> names a class's casting ability score. The class chassis holds it and prints the save-DC and bonus-spell lines from it; the token itself yields no SheetRule value.",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "49 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "SPELLSTAT"
+   ]
+  },
+  {
+   "token_type": "STARTSKILLPTS",
+   "family": "prereq",
+   "maps_to": "Metadata",
+   "rule": "STARTSKILLPTS:<n> is a class's skill ranks per level. The class chassis holds it and prints `Skill Ranks per Level: n + Int modifier` from the chassis; no SheetRule recomputes it (a magnitude is not wired until it moves on the twin the player reads -- here that twin is the class chassis, and it already does).",
+   "expr_shape": "n/a",
+   "applies_shape": "None.",
+   "prose_effect": "None.",
+   "units": {
+    "non_done": 0,
+    "of": 0,
+    "basis": "AT-35-E4-001 cycle 1: the population was already 0 non-DONE at 07e29075b4 (completion_atlas.py --check: DONE 49438 of 49438). This row's magnitude is the DEGRADED-record count it removes, below.",
+    "lane_units": "162 records degraded under this token type at 07e29075b4 (data/sheet_rules/_report.json::degraded_by_token_type)",
+    "note": "row added by AT-35-E4-001 cycle 1; the head was in token-coverage.json::unmapped_token_types at 07e29075b4"
+   },
+   "examples": [],
+   "oracle_check": "n/a -- not a Number mapping, so no PCGen total is owed (decisions.md §15; AT-35-E4-001's oracle obligation binds Number rows only).",
+   "confidence": "high",
+   "provenance": "synthesis",
+   "resolved_conflict": [],
+   "covers_token_heads": [
+    "STARTSKILLPTS"
+   ]
+  }
+ ],
+ "rows_added": [
+  {
+   "by": "AT-35-E4-001 cycle 1",
+   "at": "07e29075b4453605f1dcdd06f21ae4b1fd7deef1",
+   "count": 24,
+   "why": "token-coverage.json listed 25 token types with no mapping row and no named refusal; 24 get a row here and GLOBALVAR:ABILITY is a head alias onto the ABILITY row (table.rs::row_for_head, the PRERACETYPE precedent). None is a Number mapping."
   }
  ]
 }

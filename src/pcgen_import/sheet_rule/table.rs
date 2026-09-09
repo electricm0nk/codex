@@ -286,6 +286,34 @@ pub const ROWS: &[Row] = &[
     Row { token_type: "NAMEOPT / ITYPE / REPLACES / FORMATCAT / ASSIGNTOALL", family: Family::Prereq, maps_to: MapsTo::Metadata },
     Row { token_type: "REGION / REMOVABLE / VARIANTS / INFO / EXCLUSIVE / ALLOWBASECLASS / EXCLASS / WEAPONBONUS / ACHECK / CHANGEPROF / ADDSPELLLEVEL", family: Family::Prereq, maps_to: MapsTo::Metadata },
     Row { token_type: "%CHOICE / %LIST (all positions)", family: Family::Synthesis, maps_to: MapsTo::Choice },
+    // ---- SD-35 AT-35-E4-001: the 25 heads the census carried with no row -----------------
+    // Every head below was in `token-coverage.json`'s `unmapped_token_types` at `07e29075b4`
+    // and degraded 974 records for want of a row, not for want of a readable rule. None is a
+    // term of a sheet total, so none is a `Number` and no oracle comparison is owed.
+    Row { token_type: "BONUS:EQM", family: Family::Bonus, maps_to: MapsTo::Metadata },
+    Row { token_type: "BONUS:EQMWEAPON", family: Family::Bonus, maps_to: MapsTo::Metadata },
+    Row { token_type: "BONUS:ITEMCOST", family: Family::Bonus, maps_to: MapsTo::Metadata },
+    Row { token_type: "[redacted PI] token", family: Family::Prose, maps_to: MapsTo::Metadata },
+    Row { token_type: "ALTTYPE", family: Family::Formula, maps_to: MapsTo::Metadata },
+    Row { token_type: "ARMORTYPE", family: Family::Formula, maps_to: MapsTo::Metadata },
+    Row { token_type: "BONUSSPELLSTAT", family: Family::Prereq, maps_to: MapsTo::Metadata },
+    Row { token_type: "DOMAIN", family: Family::Prereq, maps_to: MapsTo::Applies },
+    Row { token_type: "GROUP", family: Family::Prereq, maps_to: MapsTo::Metadata },
+    Row { token_type: "ITEMCREATE", family: Family::Formula, maps_to: MapsTo::Metadata },
+    Row { token_type: "KNOWNSPELLS", family: Family::Prereq, maps_to: MapsTo::Metadata },
+    Row { token_type: "MEMORIZE", family: Family::Prereq, maps_to: MapsTo::Metadata },
+    Row { token_type: "MODTOSKILLS", family: Family::Prereq, maps_to: MapsTo::Metadata },
+    Row { token_type: "MONCCSKILL", family: Family::Prereq, maps_to: MapsTo::Applies },
+    Row { token_type: "NUMPAGES", family: Family::Formula, maps_to: MapsTo::Metadata },
+    Row { token_type: "PAGEUSAGE", family: Family::Formula, maps_to: MapsTo::Metadata },
+    Row { token_type: "PRESPELLSCHOOL", family: Family::Prereq, maps_to: MapsTo::Applies },
+    Row { token_type: "PRESPELLSCHOOLSUB", family: Family::Prereq, maps_to: MapsTo::Applies },
+    Row { token_type: "PROHIBITSPELL", family: Family::Prose, maps_to: MapsTo::Text },
+    Row { token_type: "SLOTS", family: Family::Formula, maps_to: MapsTo::Metadata },
+    Row { token_type: "SPELLBOOK", family: Family::Prereq, maps_to: MapsTo::Metadata },
+    Row { token_type: "SPELLLIST", family: Family::Prereq, maps_to: MapsTo::Metadata },
+    Row { token_type: "SPELLSTAT", family: Family::Prereq, maps_to: MapsTo::Metadata },
+    Row { token_type: "STARTSKILLPTS", family: Family::Prereq, maps_to: MapsTo::Metadata },
 ];
 
 pub fn row(token_type: &str) -> Option<&'static Row> {
@@ -371,6 +399,10 @@ pub fn row_for_head(head: &str, value: &str) -> Option<&'static Row> {
         // Head alias: the table's PRERACE row carries the `RACETYPE=<t>` clause this head
         // spells as its own token (37 units; recorded as a table defect in the cycle receipt).
         "PRERACETYPE" => "PRERACE",
+        // Head alias (SD-35 AT-35-E4-001): the ingest's own key for an ABILITY token a
+        // global-variable contributor row added to this record. The value is an ABILITY token
+        // body verbatim, so it reads under the ABILITY row.
+        "GLOBALVAR:ABILITY" => "ABILITY",
         other => other,
     };
     row(key)
@@ -418,11 +450,11 @@ mod tests {
             .map(|r| r["token_type"].as_str().unwrap().to_string())
             .collect();
         let rust_types: BTreeSet<String> = ROWS.iter().map(|r| r.token_type.to_string()).collect();
-        assert_eq!(json["rows"].as_array().unwrap().len(), 249, "the table has 249 rows (decisions.md §15)");
-        assert_eq!(ROWS.len(), 249, "every JSON row is transcribed, duplicates included");
-        // 249 rows spell 245 distinct token types: four rows repeat a type string (two families
-        // wrote a row for the same head); the transcription keeps all 249.
-        assert_eq!(json_types.len(), 245);
+        assert_eq!(json["rows"].as_array().unwrap().len(), 273, "the table has 273 rows (decisions.md §15's 249 plus AT-35-E4-001's 24)");
+        assert_eq!(ROWS.len(), 273, "every JSON row is transcribed, duplicates included");
+        // 273 rows spell 269 distinct token types: four rows repeat a type string (two families
+        // wrote a row for the same head); the transcription keeps all 273.
+        assert_eq!(json_types.len(), 269);
         let missing: Vec<_> = json_types.difference(&rust_types).collect();
         let extra: Vec<_> = rust_types.difference(&json_types).collect();
         assert!(missing.is_empty() && extra.is_empty(), "missing={missing:?} extra={extra:?}");

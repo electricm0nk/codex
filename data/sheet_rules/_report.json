@@ -3,7 +3,7 @@
   "converted": 49296,
   "refused": 142,
   "rules_written": 69344,
-  "var_tables": 5269,
+  "var_tables": 5277,
   "by_kind": {
     "ability": {
       "records": 4337,
@@ -104,14 +104,11 @@
   "refused_by_token_type": {
     "no_corpus_record": 142
   },
-  "degraded_records": 974,
+  "degraded_records": 603,
   "degraded_by_token_type": {
     "ADD (CLASSSKILLS)": 1,
     "ASPECT\u003a<malformed sub-key>": 1,
     "BONUS (shape)": 3,
-    "BONUS\u003aEQM": 13,
-    "BONUS\u003aEQMWEAPON": 1,
-    "BONUS\u003aITEMCOST": 10,
     "BONUS\u003aLOADMULT": 2,
     "BONUS\u003aSITUATION (target shape)": 12,
     "BONUS\u003aSTAT (target )": 1,
@@ -162,29 +159,7 @@
     "HITDIE (\u0025-step\u003a \u0025+1, \u0025/4)": 8,
     "NATURALATTACKS (die shape)": 7,
     "SIZE (formula)": 1,
-    "SPELLS (PI-redacted token)": 78,
-    "unmapped\u003aALTTYPE": 49,
-    "unmapped\u003aARMORTYPE": 15,
-    "unmapped\u003aBONUSSPELLSTAT": 4,
-    "unmapped\u003aDOMAIN": 4,
-    "unmapped\u003aGLOBALVAR\u003aABILITY": 9,
-    "unmapped\u003aGROUP": 1,
-    "unmapped\u003aITEMCREATE": 3,
-    "unmapped\u003aKNOWNSPELLS": 14,
-    "unmapped\u003aMEMORIZE": 38,
-    "unmapped\u003aMODTOSKILLS": 41,
-    "unmapped\u003aMONCCSKILL": 2,
-    "unmapped\u003aNUMPAGES": 16,
-    "unmapped\u003aPAGEUSAGE": 5,
-    "unmapped\u003aPRESPELLSCHOOL": 3,
-    "unmapped\u003aPRESPELLSCHOOLSUB": 2,
-    "unmapped\u003aPROHIBITSPELL": 1,
-    "unmapped\u003aSLOTS": 95,
-    "unmapped\u003aSPELLBOOK": 9,
-    "unmapped\u003aSPELLLIST": 19,
-    "unmapped\u003aSPELLSTAT": 49,
-    "unmapped\u003aSTARTSKILLPTS": 162,
-    "unmapped\u003a[redacted PI]": 4
+    "SPELLS (PI-redacted token)": 78
   },
   "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6",
   "converter_version": "sheet_rule_convert/0.15.0"

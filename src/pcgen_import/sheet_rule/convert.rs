@@ -646,7 +646,38 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         | "RACESUBTYPE" | "SUBRACE" | "DEITYWEAP" | "ALIGN" | "USEUNTRAINED" | "ROLE" | "NAMEOPT" | "ITYPE" | "REPLACES" | "FORMATCAT" | "ASSIGNTOALL" | "REGION" | "REMOVABLE" | "VARIANTS"
         | "INFO" | "EXCLUSIVE" | "ALLOWBASECLASS" | "EXCLASS" | "WEAPONBONUS" | "ACHECK" | "CHANGEPROF" | "ADDSPELLLEVEL" | "WT" | "COST" | "PLUS" | "ADDLEVEL" | "KEYSTAT" | "ITEM" | "EQMOD"
         | "ALTEQMOD" | "PROFICIENCY" | "WIELD" | "CONTAINS" | "CHARGES" | "BASEITEM" | "BASEQTY" | "MODS" | "FUMBLERANGE" | "SIZE" | "LEGS" | "HANDS" | "SPELLLEVEL" | "SPELLKNOWN" | "CRMOD"
-        | "DEFINESTAT" | "STAT" | "AC" | "LEVELADJUSTMENT" | "SITUATION" | "MONSTERCLASS" | "FACTSET" => {}
+        | "DEFINESTAT" | "STAT" | "AC" | "LEVELADJUSTMENT" | "SITUATION" | "MONSTERCLASS" | "FACTSET"
+        // SD-35 AT-35-E4-001. The class-chassis and equipment-bookkeeping heads the table
+        // maps `Metadata`: the class chassis / equipment record already holds each of these,
+        // and none of them is a term of a sheet total, so the converter reads and drops them
+        // rather than degrading the record for a head the table had no row for.
+        | "ALTTYPE" | "ARMORTYPE" | "BONUSSPELLSTAT" | "GROUP" | "ITEMCREATE" | "KNOWNSPELLS"
+        | "MEMORIZE" | "MODTOSKILLS" | "NUMPAGES" | "PAGEUSAGE" | "SLOTS" | "SPELLBOOK"
+        | "SPELLLIST" | "SPELLSTAT" | "STARTSKILLPTS" => {}
+        // SD-35 AT-35-E4-001, row PROHIBITSPELL: the class's barred schools/descriptors are
+        // the rule's own words on the sheet (`decisions.md` §1 form 3), never a number.
+        "PROHIBITSPELL" => {
+            let (fields, gates) = split_gates(v);
+            let when = gates_of(ctx, &gates, level_gate)?;
+            let barred: Vec<String> = fields
+                .iter()
+                .flat_map(|f| f.split(','))
+                .map(|f| f.trim().replace("SCHOOL.", "").replace("DESCRIPTOR.", "").replace("SUBSCHOOL.", "").replace("SPELL.", ""))
+                .filter(|f| !f.is_empty())
+                .collect();
+            if !barred.is_empty() {
+                acc.special.push(ProseSegment {
+                    family: ProseFamily::Special,
+                    pieces: vec![ProsePiece::Text(format!("Prohibited: {}.", barred.join(", ")))],
+                    applies: match when {
+                        Applies::Always => None,
+                        other => Some(other),
+                    },
+                    pick_last: false,
+                    suppress_when_all_zero: false,
+                });
+            }
+        }
         "CATEGORY" => {
             acc.category = v.to_string();
         }
@@ -1082,7 +1113,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         out.var_contribs.push((id, name.trim().to_ascii_uppercase(), VarContribution { rule_id: ctx.record.id.clone(), expr: expr.clone(), bonus_type: bonus_type.clone(), when: when.clone() }));
                     }
                 }
-                "SLOTS" | "FOLLOWERS" | "MONSKILLPTS" => {}
+                // SD-35 AT-35-E4-001 adds EQM / EQMWEAPON / ITEMCOST: an equipment
+                // MODIFIER's adjustment to the item it is attached to (weight, hands,
+                // crit range, damage size, price). The converter has no equipment-modifier
+                // application engine (`EQMOD / ALTEQMOD` and the equipment-modifier COST
+                // rows are Metadata for the same reason); the modifier's own sheet line is
+                // its name and words.
+                "SLOTS" | "FOLLOWERS" | "MONSKILLPTS" | "EQM" | "EQMWEAPON" | "ITEMCOST" => {}
                 "WEAPONPROF" => {
                     // Row BONUS:WEAPONPROF=<name>: the property named by the second field.
                     let weapon = weapon_ref(ctx, sub_arg.as_deref().unwrap_or(""));
@@ -1184,7 +1221,10 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             }
         }
         // ---- ownership / choice rows ------------------------------------------------------------
-        "ABILITY" => {
+        // `GLOBALVAR:ABILITY` is the ingest's own key for an ABILITY token contributed to this
+        // record by a global-variable contributor row; the value is an ABILITY token body
+        // verbatim, so it routes to the ABILITY row (head alias, SD-35 AT-35-E4-001).
+        "ABILITY" | "GLOBALVAR:ABILITY" => {
             // Row ABILITY: a grant edge from this record to each target.
             let (fields, gates) = split_gates(v);
             if fields.len() < 3 {
@@ -1247,7 +1287,8 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             }
             let _ = when;
         }
-        "CSKILL" | "CCSKILL" | "MONCSKILL" => {
+        // `MONCCSKILL` is `MONCSKILL`'s cross-class twin (SD-35 AT-35-E4-001).
+        "CSKILL" | "CCSKILL" | "MONCSKILL" | "MONCCSKILL" => {
             let (fields, _gates) = split_gates(v);
             let choice = ctx.choice_id.clone().unwrap_or_else(|| ctx.record.id.clone());
             for s in fields {
@@ -1261,7 +1302,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     Fact::ClassSkillGroup(g.to_string())
                 } else if s.eq_ignore_ascii_case("ALL") {
                     Fact::ClassSkillGroup("All".into())
-                } else if key == "CCSKILL" {
+                } else if key.ends_with("CCSKILL") {
                     Fact::CrossClassSkill(ctx.skill_id(s))
                 } else {
                     Fact::ClassSkill(ctx.skill_id(s))
@@ -1307,10 +1348,10 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             }
         }
         "DOMAIN" => {
-            // Row `class LEVEL grants` (B5): a numbered DOMAIN line -- the class offers the domain.
-            if row_kind != ClosureRowKind::LevelLine {
-                return Err("unmapped:DOMAIN".into());
-            }
+            // Row `class LEVEL grants` (B5): a numbered DOMAIN line -- the class offers the
+            // domain. SD-35 AT-35-E4-001, row DOMAIN: the same head on the class's BASE row
+            // (not a level line) grants the domain at level 1 -- the class chassis is the
+            // granter either way, so the base row is `level_gate` 1 rather than a refusal.
             let (fields, gates) = split_gates(v);
             let when = gates_of(ctx, &gates, level_gate)?;
             let cls = ctx.owning_class.clone().unwrap_or_else(|| slug(&ctx.record.key));

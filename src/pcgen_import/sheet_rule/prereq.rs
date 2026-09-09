@@ -86,6 +86,14 @@ pub fn convert_pre_token(ctx: &mut RecordCtx, token: &str) -> Result<Applies, St
             other => Applies::Not(Box::new(other)),
         });
     }
+    // SD-35 AT-35-E4-001, row `[redacted PI] token`. A PREMULT body whose nested sub-token is
+    // redacted whole (no `<HEAD>:<body>` left to split): `decisions.md` §15 R2 (RULED) omits
+    // the withheld requirement and prints the codex-neutral words, never refuses. The
+    // top-level path already did this; this nested one degraded the record instead.
+    if t.trim().starts_with("[redacted") {
+        ctx.pi_declared.push("PRE".to_string());
+        return Ok(situational("requirement withheld"));
+    }
     let (kind, body) = match t.split_once(':') {
         Some((k, b)) => (k.trim(), b.trim()),
         None => return Err(format!("unmapped:{t}")),
@@ -472,6 +480,22 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
             let names: Vec<String> = items.iter().map(|i| i.trim_start_matches("TYPE.").trim_start_matches("TYPE=").to_ascii_lowercase()).collect();
             situational(&format!("while {} is equipped", names.join(" or ")))
         }
+        // SD-35 AT-35-E4-001, rows PRESPELLSCHOOL / PRESPELLSCHOOLSUB. The gate counts spells
+        // of a school (or sub-school) at or above a spell level; the record does not hold a
+        // per-school spell census, so the gate prints its words rather than silently
+        // evaluating (`decisions.md` §1 form 3, the same shape as PREDR / PRESA).
+        "PRESPELLSCHOOL" | "PRESPELLSCHOOLSUB" => {
+            let (n, items) = count_prefix(body);
+            let what = if kind == "PRESPELLSCHOOL" { "school" } else { "sub-school" };
+            let words: Vec<String> = items
+                .iter()
+                .map(|i| match i.split_once('=') {
+                    Some((school, lvl)) => format!("{} {} spells of level {} or higher", school.trim(), what, lvl.trim()),
+                    None => format!("{} {} spells", i.trim(), what),
+                })
+                .collect();
+            situational(&format!("requires {n} {}", words.join(" or ")))
+        }
         "PREDR" => situational("requires damage reduction"),
         "PREHANDSGTEQ" | "PREHANDSGT" | "PREHANDSEQ" | "PREHANDSLT" | "PREHANDSLTEQ" => situational(&format!("requires {} hands", body.trim())),
         "PREREACHGTEQ" | "PREREACHGT" | "PREREACHEQ" => situational(&format!("requires reach {} ft. or more", body.trim())),
@@ -527,7 +551,6 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
         }
         "PRESPELLBOOK" => situational("requires a spellbook"),
         "PRESPELLDESCRIPTOR" => situational("requires a spell with the named descriptor"),
-        "PRESPELLSCHOOL" => situational("requires a spell of the named school"),
         // Row PREMOVE / PREVISION / PRELANG / PREGENDER / PREAGESET.
         "PREMOVE" => {
             let (n, items) = count_prefix(body);
@@ -571,6 +594,11 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
         // Metadata rows: never gate the sheet.
         "PRERULE" | "PRECAMPAIGN" | "PRECHARACTERTYPE" | "PRE" | "PREKIT" | "PREAPPLY" | "PREDEFAULTMONSTER" | "PREPOINTBUYMETHOD" | "PREBIRTHPLACE" | "PRECITY" | "PREREGION" => Applies::Always,
         "PRESA" | "PRESRGTEQ" | "PREUATT" | "PREHASDEITY" | "PREWIELD" | "PREARMORPROF" | "PRESHIELDPROF" | "PREVAR" => situational(&format!("requires {}", body.trim().to_ascii_lowercase())),
+        // SD-35 AT-35-E4-001, row `[redacted PI] token`. A PREMULT body whose nested sub-token
+        // HEAD is redacted: `decisions.md` §15 R2 (RULED) says omit the withheld requirement
+        // and print the codex-neutral words, never refuse. The top-level path already does
+        // this (`convert.rs`); the nested path degraded the record instead.
+        other if other.starts_with("[redacted") => situational("requirement withheld"),
         other => return Err(format!("unmapped:{other}")),
     })
 }
