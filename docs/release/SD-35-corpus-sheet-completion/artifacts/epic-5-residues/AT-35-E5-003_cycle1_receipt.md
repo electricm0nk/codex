@@ -1,7 +1,7 @@
 # Cycle AT-35-E5-003_cycle1 — Epic 5 Residues / AT-35-E5-003
 
 - **Commit SHA:** `6555dec327` (the converter scrub, its gate, the census script and the retro
-  events), `<DOCS_SHA>` (this receipt, `progress.md`, `kanban.md`). Cycle start
+  events), `0d524e7ff8` (this receipt, `progress.md`, `kanban.md`). Cycle start
   `aca9ac83babc7664f0581306cba2dbc62d22cce5`.
 - **Scope gate:**
   ```
