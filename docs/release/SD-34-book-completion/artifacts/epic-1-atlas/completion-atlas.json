@@ -24,7 +24,7 @@
         "resolved_line": 16060
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 2,
+      "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
@@ -69,7 +69,7 @@
         "resolved_line": 13166
       },
       "clears": "\u2014",
-      "count": 48652,
+      "count": 49438,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete, oracle-agree, oracle-unverifiable, sheet-complete})",
       "meaning": "nothing remains"
     },
@@ -84,7 +84,7 @@
         "resolved_line": 13177
       },
       "clears": "running the compute path (shape engine)",
-      "count": 3,
+      "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
       "meaning": "magnitude ingested, never computed or applied"
     },
@@ -99,7 +99,7 @@
         "resolved_line": 13482
       },
       "clears": "instrument correction",
-      "count": 202,
+      "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
       "meaning": "instrument cannot express a verdict"
     },
@@ -113,7 +113,7 @@
         "resolved_line": 17307
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
-      "count": 392,
+      "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
       "meaning": "verified by proxy, never by the oracle"
     },
@@ -128,7 +128,7 @@
         "resolved_line": 13442
       },
       "clears": "revisiting the stated condition",
-      "count": 168,
+      "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
       "meaning": "deferred with a stated reason"
     },
@@ -143,13 +143,13 @@
         "resolved_line": 13303
       },
       "clears": "ordinary work",
-      "count": 19,
+      "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == not-started)",
       "meaning": "not started"
     }
   },
   "citation_failures": [],
-  "derived_at": "c62ac91e1021b1d54de281c83e82aca7c4248e6f",
+  "derived_at": "9995efa1b692cdab8626b8e781248e6a4710426c",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -159,10 +159,7 @@
   "stale_derived_at": false,
   "sub_causes": {
     "D": {},
-    "U": {
-      "feat_served_description_is_a_placeholder_marker_not_prose": 51,
-      "text_only_but_corpus_record_carries_no_description_to_show_a_player": 151
-    }
+    "U": {}
   },
   "unclassified": 0
 }

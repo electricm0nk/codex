@@ -1,9 +1,9 @@
 {
   "records": 49438,
-  "converted": 48601,
-  "refused": 837,
-  "rules_written": 68648,
-  "var_tables": 5268,
+  "converted": 49296,
+  "refused": 142,
+  "rules_written": 69344,
+  "var_tables": 5269,
   "by_kind": {
     "ability": {
       "records": 4337,
@@ -37,8 +37,8 @@
     },
     "equipment": {
       "records": 6223,
-      "converted": 6221,
-      "refused": 2
+      "converted": 6223,
+      "refused": 0
     },
     "equipment_modifier": {
       "records": 1532,
@@ -47,8 +47,8 @@
     },
     "feat": {
       "records": 2764,
-      "converted": 2068,
-      "refused": 696
+      "converted": 2753,
+      "refused": 11
     },
     "language": {
       "records": 136,
@@ -87,8 +87,8 @@
     },
     "spell": {
       "records": 2843,
-      "converted": 2835,
-      "refused": 8
+      "converted": 2843,
+      "refused": 0
     },
     "template": {
       "records": 2248,
@@ -102,10 +102,9 @@
     }
   },
   "refused_by_token_type": {
-    "no_corpus_record": 829,
-    "no_source_row": 8
+    "no_corpus_record": 142
   },
-  "degraded_records": 973,
+  "degraded_records": 974,
   "degraded_by_token_type": {
     "ADD (CLASSSKILLS)": 1,
     "ASPECT\u003a<malformed sub-key>": 1,
@@ -178,7 +177,7 @@
     "unmapped\u003aNUMPAGES": 16,
     "unmapped\u003aPAGEUSAGE": 5,
     "unmapped\u003aPRESPELLSCHOOL": 3,
-    "unmapped\u003aPRESPELLSCHOOLSUB": 1,
+    "unmapped\u003aPRESPELLSCHOOLSUB": 2,
     "unmapped\u003aPROHIBITSPELL": 1,
     "unmapped\u003aSLOTS": 95,
     "unmapped\u003aSPELLBOOK": 9,

@@ -17856,10 +17856,41 @@ const SHEET_KINDS_WITH_ON_SCREEN_TEST: &[&str] = &[
     "trait",
 ];
 
-/// The two statuses the rung lifts. `grounded`, `text-complete`, the
-/// static/derived stamps and the oracle dispositions sit above it and keep
-/// their own word (`technical-design.md §3`, "ladder position").
-const SHEET_COMPLETE_PROMOTABLE_STATUSES: &[&str] = &["engine-does-not-hold", "ingested-magnitude"];
+/// The statuses the rung lifts. `grounded`, `text-complete` and the oracle
+/// dispositions sit ABOVE it and keep their own word (`technical-design.md §3`,
+/// "ladder position") -- they are already terminal.
+///
+/// The first two are AT-35-E2-003's. The other five are SD-35 `AT-35-E3-002`'s
+/// whole-remainder cycle: every one of them is a *pre-sheet-rule* holding pen,
+/// and each says something the sheet rule answers outright
+/// (`decisions.md §1`; `workflow-instruction.md §8`, "under the sheet rule
+/// 'the engine cannot model X' is not a blocker -- the record renders as words
+/// and the unit is done"):
+///
+/// - `literal-verified` / `fixture-verified` (bucket V) -- the magnitude was
+///   read from the corpus literal but no consumer had been observed. The rung
+///   renders the value the sheet prints, which is the observation.
+/// - `unmeasurable` (bucket U) -- "carries no description a player reads". A
+///   rendered rule is the counter-evidence; where it renders bare the label is
+///   still the line and nothing further exists to build.
+/// - `deferred-with-reason` (bucket X) -- an engine diagnostic naming a
+///   subsystem (a pool option, an advancement table) nobody is required to
+///   model to print the rule's words.
+/// - `not-started` (bucket Z) -- no compiled engine rule set for the book. The
+///   converted package IS the rule set the sheet reads.
+///
+/// The rung's own three conditions still gate every one of them: the kind has
+/// an on-screen test, the converter did not refuse the record, and the package
+/// holds a rule for its id. A unit that fails any of those keeps its status.
+const SHEET_COMPLETE_PROMOTABLE_STATUSES: &[&str] = &[
+    "engine-does-not-hold",
+    "ingested-magnitude",
+    "literal-verified",
+    "fixture-verified",
+    "unmeasurable",
+    "deferred-with-reason",
+    "not-started",
+];
 
 /// What the rung reads: the live package, the converter's refusal set, and
 /// the probe character (the deterministic Human Fighter 1 fixture) with its

@@ -32,7 +32,7 @@ fn shared() -> &'static Shared {
     static S: OnceLock<Shared> = OnceLock::new();
     S.get_or_init(|| {
         let tree = PinnedTree::load(&corpus_root()).expect("pinned corpus checkout present (scripts/fetch-pcgen-oracle.sh)");
-        let records = load_population(&repo()).expect("docs/work-inventory.json and data/corpus readable");
+        let records = load_population(&repo(), &tree).expect("docs/work-inventory.json and data/corpus readable");
         let (index, closures) = build_index(&tree, records);
         Shared { tree, index, closures }
     })
@@ -269,4 +269,70 @@ fn token_census_names_the_row_for_every_token_and_the_head_under_each_refusal() 
     assert_eq!(census_refused, refused, "the census refuses exactly the records _refused.json refuses");
     let rendered = codex::pcgen_import::sheet_rule::render(&r);
     assert!(rendered.contains_key("_tokens.json"), "the census is written into the package");
+}
+
+/// SD-35 `AT-35-E3-002`: the two token-less refusal shapes are closed against the LIVE
+/// population, never against a hand-derived fixture (`decisions.md §4`).
+///
+/// A record the converter still refuses as `no_corpus_record` or `no_source_row` must
+/// genuinely have nothing to print: no source row resolvable in the pinned tree by the
+/// coordinates the inventory itself carries, **and** no printable `description` in a shipped
+/// `data/corpus` record. If either exists, the sheet rule (`decisions.md §1` form 3) says the
+/// record prints those words and the converter must emit them, so the refusal is a defect.
+#[test]
+fn no_token_less_refusal_still_has_words_to_print() {
+    let s = shared();
+    let inv_text = std::fs::read_to_string(repo().join("docs/work-inventory.json")).unwrap();
+    let inv: serde_json::Value = serde_json::from_str(&inv_text).unwrap();
+    let by_id: BTreeMap<&str, &serde_json::Value> =
+        inv["units"].as_array().unwrap().iter().map(|u| (u["id"].as_str().unwrap(), u)).collect();
+
+    let refused_text = std::fs::read_to_string(repo().join("data/sheet_rules/_refused.json")).unwrap();
+    let refused: serde_json::Value = serde_json::from_str(&refused_text).unwrap();
+    let token_less: Vec<&serde_json::Value> = refused["entries"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|e| {
+            e["token_types"]
+                .as_array()
+                .map(|t| t.iter().all(|x| matches!(x.as_str(), Some("no_corpus_record") | Some("no_source_row"))))
+                .unwrap_or(false)
+        })
+        .collect();
+
+    let mut with_words: Vec<String> = Vec::new();
+    for e in &token_less {
+        let id = e["id"].as_str().unwrap();
+        let Some(u) = by_id.get(id) else { continue };
+        let book = u["book"].as_str().unwrap_or("");
+        // 1. Is the unit's own source row resolvable in the pinned tree?
+        if let (Some(file), Some(line)) = (u["source_file"].as_str(), u["source_line"].as_u64())
+            && s.tree.files.iter().any(|f| {
+                f.book == book && !f.is_pfs && f.rel_path.rsplit('/').next() == Some(file) && (line as usize) <= f.lines.len() && line > 0
+            })
+        {
+            with_words.push(format!("{id} (pinned row {file}:{line})"));
+            continue;
+        }
+        // 2. Does a shipped corpus record carry a printable description?
+        let kind = u["kind"].as_str().unwrap_or("");
+        let slug = id.splitn(3, ':').nth(2).unwrap_or("");
+        let path = repo().join(format!("data/corpus/{book}/{kind}/{slug}.json"));
+        if let Ok(text) = std::fs::read_to_string(&path)
+            && let Ok(json) = serde_json::from_str::<serde_json::Value>(&text)
+            && let Some(desc) = json["data"]["description"].as_str().or_else(|| json["data"]["full_text"].as_str())
+            && !desc.trim().is_empty()
+            && !desc.contains("[redacted PI]")
+        {
+            with_words.push(format!("{id} (corpus description)"));
+        }
+    }
+    assert!(
+        with_words.is_empty(),
+        "{} token-less refusal(s) of {} still have words to print, e.g. {:?}",
+        with_words.len(),
+        token_less.len(),
+        with_words.iter().take(5).collect::<Vec<_>>()
+    );
 }

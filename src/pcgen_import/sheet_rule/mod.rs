@@ -205,9 +205,37 @@ fn record_from_json(unit: &InventoryUnit, path: &Path) -> Option<RecordRef> {
     })
 }
 
-/// The population: every inventory unit, joined to its corpus record where one exists. A unit
-/// with no record comes back with an empty `rel_path` and is refused as `no_corpus_record`.
-pub fn load_population(repo: &Path) -> Result<Vec<RecordRef>, String> {
+/// Locate an inventory unit's own source row in the pinned tree by the coordinates the
+/// inventory already carries: `(book, source_file basename, source_line)`.
+///
+/// SD-35 `AT-35-E3-002`. Used only when the `data/corpus` join found no record at all. Two
+/// units in the shipped corpus are in that state (`book_of_the_damned_volume_2:spell:summon_
+/// demons_nascent_demon_lord`, `ultimate_combat:spell:share_language_communal`): the corpus
+/// ingest wrote no JSON for them, but the row they name is present in the pinned tree with a
+/// real `description` head. Under the sheet rule (`decisions.md §1` form 3) a record whose
+/// words exist prints those words, so resolving the row here is what turns a refusal with a
+/// blank sheet line into a printed rule. Never invents a row: the file must sit in the unit's
+/// own book directory, outside `_pfs/`, and the line must exist in it.
+fn source_row_in_tree(tree: &PinnedTree, unit: &InventoryUnit) -> Option<(String, usize)> {
+    let basename = unit.source_file.as_deref()?;
+    let line = unit.source_line?;
+    if line == 0 {
+        return None;
+    }
+    let file = tree
+        .files
+        .iter()
+        .find(|f| f.book == unit.book && !f.is_pfs && f.rel_path.rsplit('/').next() == Some(basename))?;
+    if line > file.lines.len() {
+        return None;
+    }
+    Some((file.rel_path.clone(), line))
+}
+
+/// The population: every inventory unit, joined to its corpus record where one exists, else to
+/// its own source row in the pinned tree ([`source_row_in_tree`]). A unit that resolves to
+/// neither comes back with an empty `rel_path` and is refused as `no_corpus_record`.
+pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>, String> {
     let inv_text = std::fs::read_to_string(repo.join("docs/work-inventory.json")).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
     let inv: InventoryFile = serde_json::from_str(&inv_text).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
     let entries = walk_corpus(repo);
@@ -234,24 +262,28 @@ pub fn load_population(repo: &Path) -> Result<Vec<RecordRef>, String> {
             })
             .copied();
         let rec = idx.and_then(|i| record_from_json(u, &entries[i].path));
-        out.push(rec.unwrap_or_else(|| RecordRef {
-            id: u.id.clone(),
-            book: u.book.clone(),
-            kind: u.kind.clone(),
-            name: u.name.clone(),
-            key: u.corpus_key.clone().unwrap_or_default(),
-            category: String::new(),
-            type_facet: String::new(),
-            rel_path: String::new(),
-            line: 0,
-            shipped_tokens: None,
-            prerequisites: Vec::new(),
-            copy_base_key: None,
-            license_pi: false,
-            pi_fields: Vec::new(),
-            description: None,
-            class_name: None,
-            joined: false,
+        out.push(rec.unwrap_or_else(|| {
+            let (rel_path, line) = source_row_in_tree(tree, u).unwrap_or_default();
+            let joined = !rel_path.is_empty();
+            RecordRef {
+                id: u.id.clone(),
+                book: u.book.clone(),
+                kind: u.kind.clone(),
+                name: u.name.clone(),
+                key: u.corpus_key.clone().unwrap_or_default(),
+                category: if u.kind == "feat" { "FEAT".to_string() } else { String::new() },
+                type_facet: u.type_facet.clone().unwrap_or_default(),
+                rel_path,
+                line,
+                shipped_tokens: None,
+                prerequisites: Vec::new(),
+                copy_base_key: None,
+                license_pi: false,
+                pi_fields: Vec::new(),
+                description: None,
+                class_name: None,
+                joined,
+            }
         }));
     }
     Ok(out)
@@ -416,6 +448,59 @@ pub fn rule_file_rel(book: &str, kind: &str, id: &str) -> String {
 }
 
 /// Convert the whole population in memory.
+/// The one rule a record with no source row still yields: its own words.
+///
+/// SD-35 `AT-35-E3-002`. Some shipped corpus records carry no PCGen row at all -- they were
+/// ingested from a second source (`"source": {"kind": "web_second_source"}`) and hold a
+/// `description` and nothing else. There is no closure to convert, so the token path refuses
+/// them; under the sheet rule (`decisions.md §1` form 3) the words ARE the sheet line, so the
+/// record converts to exactly one `Text` rule carrying them. Returns `None` -- and the caller
+/// refuses as before -- when there is no description, when it is product identity
+/// (`prose::pi_hit`, `§15` R2: the sheet must not print a redacted field), or when it would put
+/// a source-format literal in the package (`FORBIDDEN_LITERALS`; the glyph scrub belongs to the
+/// token path's `RecordCtx`, which this path has none of).
+fn description_only_rules(r: &RecordRef) -> Option<Vec<SheetRule>> {
+    let text = prose::decode_entities(r.description.as_deref()?.trim());
+    if text.is_empty() || prose::pi_hit(&text).is_some() || r.license_pi || r.pi_fields.iter().any(|f| f == "description") {
+        return None;
+    }
+    if FORBIDDEN_LITERALS.iter().any(|lit| text.contains(lit)) || has_pre_head(&text) || text.contains("%1") {
+        return None;
+    }
+    Some(vec![SheetRule {
+        id: r.id.clone(),
+        label: r.name.clone(),
+        value: SheetValue::Text,
+        also: Vec::new(),
+        prose: vec![ProseSegment {
+            family: ProseFamily::Desc,
+            pieces: vec![ProsePiece::Text(text)],
+            applies: None,
+            pick_last: false,
+            suppress_when_all_zero: false,
+        }],
+        applies: Applies::Always,
+        target: None,
+        bonus_type: None,
+        print: true,
+        pool: String::new(),
+        tags: r.type_facet.split('.').map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect(),
+        subject: Subject::Character,
+        repeatable: false,
+        granted_by: Vec::new(),
+        offers: None,
+        grants: Vec::new(),
+        provenance: Provenance {
+            book: r.book.clone(),
+            kind: r.kind.clone(),
+            closure_rows: Vec::new(),
+            oracle_pin: oracle_pin(),
+            converter_version: convert::CONVERTER_VERSION.into(),
+            ..Default::default()
+        },
+    }])
+}
+
 pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run {
     let mut files: BTreeMap<String, Vec<SheetRule>> = BTreeMap::new();
     let mut grants_out: BTreeMap<RuleId, Vec<Grant>> = BTreeMap::new();
@@ -432,6 +517,20 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         let kc = report.by_kind.entry(r.kind.clone()).or_default();
         kc.records += 1;
         if !r.joined || r.rel_path.is_empty() {
+            if let Some(rules) = description_only_rules(r) {
+                census.entries.push(TokenCensusRecord {
+                    id: r.id.clone(),
+                    book: r.book.clone(),
+                    kind: r.kind.clone(),
+                    tokens: Vec::new(),
+                    refusals: BTreeMap::new(),
+                    degradations: BTreeMap::new(),
+                });
+                kc.converted += 1;
+                converted_ids.push((r.book.clone(), r.kind.clone(), r.id.clone()));
+                files.insert(rule_file_rel(&r.book, &r.kind, &r.id), rules);
+                continue;
+            }
             let tt = if r.joined { "no_source_row".to_string() } else { "no_corpus_record".to_string() };
             *refused.by_token_type.entry(tt.clone()).or_default() += 1;
             refused.entries.push(RefusedRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), token_types: vec![tt.clone()] });
@@ -440,6 +539,20 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             continue;
         }
         if tree.file_index(&r.rel_path).is_none() && r.prerequisites.is_empty() && r.shipped_tokens.as_ref().is_none_or(|t| t.is_empty()) {
+            if let Some(rules) = description_only_rules(r) {
+                census.entries.push(TokenCensusRecord {
+                    id: r.id.clone(),
+                    book: r.book.clone(),
+                    kind: r.kind.clone(),
+                    tokens: Vec::new(),
+                    refusals: BTreeMap::new(),
+                    degradations: BTreeMap::new(),
+                });
+                kc.converted += 1;
+                converted_ids.push((r.book.clone(), r.kind.clone(), r.id.clone()));
+                files.insert(rule_file_rel(&r.book, &r.kind, &r.id), rules);
+                continue;
+            }
             let tt = "no_source_row".to_string();
             *refused.by_token_type.entry(tt.clone()).or_default() += 1;
             refused.entries.push(RefusedRecord { id: r.id.clone(), book: r.book.clone(), kind: r.kind.clone(), token_types: vec![tt.clone()] });
@@ -744,7 +857,7 @@ pub fn check(out_dir: &Path, run: &Run) -> Result<(), Vec<String>> {
 /// Load everything and run once: the tree, the population, the index, the conversion.
 pub fn convert_repo(repo: &Path) -> Result<(Run, CorpusIndex), String> {
     let tree = PinnedTree::load(&closure::corpus_root())?;
-    let records = load_population(repo)?;
+    let records = load_population(repo, &tree)?;
     let (index, closures) = build_index(&tree, records);
     let run = run(&tree, &index, &closures);
     Ok((run, index))
@@ -754,7 +867,7 @@ pub fn convert_repo(repo: &Path) -> Result<(Run, CorpusIndex), String> {
 /// is converted, and its `Converted` is returned with the closure rows it read.
 pub fn convert_one(repo: &Path, unit_id: &str) -> Result<(convert::Converted, Vec<String>), String> {
     let tree = PinnedTree::load(&closure::corpus_root())?;
-    let records = load_population(repo)?;
+    let records = load_population(repo, &tree)?;
     let (index, closures) = build_index(&tree, records);
     let pos = index.records.iter().position(|r| r.id == unit_id).ok_or_else(|| format!("no unit {unit_id}"))?;
     let c = convert::convert_record(&tree, &index, &index.records[pos], &closures[pos]);
