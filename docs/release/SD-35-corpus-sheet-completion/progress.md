@@ -28,11 +28,11 @@ process defect** recorded by the epic wrap-up.
 | 1 — Tax cut | 6 | 6 | 0 | 0 |
 | 2 — Sheet rule | 5 | 5 | 0 | 0 |
 | 3 — Place and surface | 4 | 4 | 0 | 0 |
-| 4 — Resolve and verify | 3 | 1 | 1 | 1 |
+| 4 — Resolve and verify | 3 | 2 | 0 | 1 |
 | 5 — Residues | 5 | 3 | 2 | 0 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **19** | **3** | **8** |
+| **Total** | **30** | **20** | **2** | **8** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,73 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-09 — Epic 4 / AT-35-E4-002 cycle 1 — bucket V's 392 units through the oracle harness once — **complete**
+
+**Status: complete.** Work commit `2645a3c85a` (cycle start `cdcfc897ea`); receipt
+`artifacts/epic-4-resolve-and-verify/AT-35-E4-002_cycle1_receipt.md`; run outputs
+`AT-35-E4-002_cycle1_bucket-v-parity.json`, `_bucket-v-units.json`, `_ours.json`,
+`bucket-v-carriers/`; events `docs/retro/events/at-35-e4-002.jsonl` (4 `correction`, 1
+`deferral`). Kanban row 17.
+
+- **Scope gate:**
+  ```
+  inventory=docs/work-inventory.json
+  scope=bucket=V
+  scoped_by_bucket=
+  scoped_by_kind=
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+  Bucket V was already 0 (`AT-35-E3-002_cycle1_receipt.md`, `26bdfa8d5b`), and so was every
+  other bucket, so the bundled scope the dispatch mandates **is** the whole remainder. What was
+  outstanding on row 17 was the second half of the Evidence sentence — the corpus-wide oracle
+  run, never made, deferral `1788922132640-at-35-e3-002-ac4da5`. This cycle makes it.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=171 ratio=n/a builds_recorded=1 pcgen_live_files=260`.
+  `closed=0` is correct: the population was already 0 non-DONE at the cycle start. The 171 Rust
+  lines are one new tool-side binary; no existing Rust file changed, and no live-side file was
+  touched at all.
+- **Refused tokens:** none — this cycle added no mapping row and no refusal
+  (`token_coverage.py --check` → `refused=142 refused_non_done=0`, unchanged).
+- **The run:** `compared=392 oracle_agree=184 oracle_disagreement=10 of 392
+  oracle_unverifiable=198`, `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+  Two tiers, never conflated: **`export` 286 of 392** (PCGen's BatchExporter over 21 carrier
+  characters, 0 export failures — the engine oracle) and **`source` 106 of 392** (the record's
+  own identity-checked row at the pin — a data oracle). Before this cycle exactly **1** of the
+  392 was reachable by any PCGen run.
+- **Measured before the run, as the criterion requires:** engine side **0.4 ms/unit** (first 50
+  in 0.02 s); export tier **1.02 s/unit** (first 3 carriers, 46 units, 47.0 s at `--jobs 3`),
+  from which the stated projection was **≈ 329 s for the full 21 carriers**; actual **264.1 s**.
+- **The 10 disagreements, named, in two mechanical causes:** 8 are
+  `value-role-number-the-oracle-never-prints-words-agree` (the sheet's *words* agree with the
+  oracle; only the value column carries a number PCGen never prints) — `antipaladin_unholy_champion`,
+  `clockwork_familiar_item_installation`, `divine_scion_domain_specialization`,
+  `spiritualist_shared_consciousness`, `emotional_focus_zeal_tracking`,
+  `phantom_manifestation_incorporeal`, `unchained_evolution_climb`, `unchained_evolution_swim`.
+  2 are `rendered-words-disagree` and each carries its own `correction`:
+  `evocation_school_force_missile` (one `Var` rendered `1d4+0` in the prose and `1d4+1` in the
+  aspect, on the same line, for the same character) and `bat_sootwing_paralysis` (the aspect
+  renders `(0d0+0 rounds, DC 0)` where the pinned row declares `1d4+1`). All 10 are booked as
+  **Epic 6's parity baseline** (`deferral 1788955474431-at-35-e4-002-0f136c`): E6-001/E6-004 run
+  the oracle before and after the PCGen exit, and fixing them here would move the baseline the
+  exit is measured against. Every one of the 392 is DONE under the sheet rule — its words render
+  and they agree with the oracle's words.
+- **The 198 `oracle-unverifiable` verdicts are named by reason, never bucketed:**
+  `line-carries-no-number` 79, `export-desc-has-no-number` 63,
+  `rule-is-print-false-nothing-reaches-the-sheet` 37, `pinned-row-declares-no-number` 19.
+- **Discovery worth carrying:** campaign closures are **computable**, not guessable — reading
+  each `.pcc`'s own transitive `PRECAMPAIGN:` chain produced a working closure for 21 of 21
+  books with 0 export failures, where the hand-written table in
+  `charbuild_remainder_generate.py` covered 4 and had recorded 6 books failing under a wrong
+  one. That is what took the engine tier from 150 units to 286.
+- **Verification, once, at `2645a3c85a`:** `--no-run` exit 0; `--lib` 3,220 passed / 0 failed;
+  full workspace suite (below); clippy 0 warnings after one self-heal (`ptr_arg`);
+  `test_bucket_v_parity` 16 passed; residue `live_files=260` unchanged; `sheet_rule_convert
+  --check` exit 0; `data/sheet_rules/` token leaks 0; atlas `DONE: 49438`; `token_coverage`
+  PASS; `shape_engine_boundary` `not_held_by_engine=0`; `missing_engine_tables` `population=0`;
+  denominator gate `files_checked=55 violations=0`; `verify.sh --only pi-sweep` PASS.
+  `corpus_literal_sweep` not owed (no corpus record changed); `apps/` untouched, so the desktop
+  crate and frontend run at the Epic 4 wrap-up.
+- **Full workspace suite:** PENDING_FULL_SUITE
 
 ### 2026-09-09 — Epic 3 wrap-up (`§10` steps 0-3) — gate RED at `07e29075b4`, correction cycle GREEN — **complete**
 
