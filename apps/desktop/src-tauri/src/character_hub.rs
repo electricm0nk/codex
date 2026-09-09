@@ -2675,7 +2675,7 @@ pub(crate) fn character_prereq_facts_at_root(
 ) -> Result<
     (
         codex::saved_character::SavedCharacterEnvelope,
-        codex::rules_core::feat_prereqs::pre_tokens::CharacterPrereqFacts,
+        codex::pcgen_import::pre_tokens::CharacterPrereqFacts,
     ),
     String,
 > {

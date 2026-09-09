@@ -75,7 +75,9 @@ pub mod combat;
 pub mod general;
 pub mod item_creation;
 pub mod metamagic;
-pub mod pre_tokens;
+// SD-35 AT-35-E6-001 (`decisions.md` §11): the PCGen `PRE*`-token parser/evaluator moved to
+// `src/pcgen_import/pre_tokens.rs`. It is converter and oracle code -- KEPT, not deleted.
+pub use crate::pcgen_import::pre_tokens;
 
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;

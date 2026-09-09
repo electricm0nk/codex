@@ -55,8 +55,8 @@ use std::sync::OnceLock;
 
 use serde_json::Value;
 
-use super::formula_interpreter::{extract_formula_field, PcgenFormulaEvaluator};
-use super::formula_reproduction_harness::FormulaEvaluator as _;
+use crate::pcgen_import::formula_interpreter::{extract_formula_field, PcgenFormulaEvaluator};
+use crate::pcgen_import::formula_reproduction_harness::FormulaEvaluator as _;
 
 /// The seven CRB classes this module covers, by their `"class:<slug>"` id
 /// convention -- five `TYPE:Base.NPC` classes and two `TYPE:Base.PC,

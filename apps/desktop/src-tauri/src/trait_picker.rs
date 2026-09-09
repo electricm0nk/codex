@@ -112,9 +112,10 @@ pub struct TraitOtherPillarBonusDto {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TraitAbilitySubstitutionDto {
-    /// The formula's own literal text (`"max(INT,CHA)-CHA"`), transcribed
-    /// verbatim from the corpus token -- same string
-    /// `PcgenFormulaEvaluator` evaluates server-side.
+    /// The substitution in the rule's own words (`"the higher of your
+    /// Intelligence and Charisma modifiers"`) -- the same converted
+    /// arithmetic the server evaluates, never an ingest-format formula
+    /// string (SD-35 `AT-35-E6-001`, `decisions.md` §11).
     pub formula: String,
     /// A second, flat bonus on the SAME skill this record also carries
     /// (`0` for three of the four records; Precise Treatment's own `+1`
@@ -342,9 +343,10 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
     // carries only the record's own separate FLAT token (`0` for three of
     // the four -- never fabricated as the formula's own dynamic result,
     // which this DTO cannot know ahead of the character's real ability
-    // scores), and `ability_substitution` carries the formula text itself
-    // so the frontend states the real mechanism rather than a
-    // misleadingly-static "+0".
+    // scores), and `ability_substitution` carries the substitution in the
+    // rule's OWN WORDS so the frontend states the real mechanism rather
+    // than a misleadingly-static "+0" (SD-35 `AT-35-E6-001`: the words,
+    // never the source's formula text).
     let ability_diff = ABILITY_DIFF_SKILL_TRAIT_BONUSES.iter().map(|entry| {
         CharacterTraitOptionDto {
             id: entry.trait_id.to_owned(),
@@ -357,7 +359,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             save: None,
             other_pillars: Vec::new(),
             ability_substitution: Some(TraitAbilitySubstitutionDto {
-                formula: entry.formula.to_owned(),
+                formula: entry.substitution_words(),
                 flat_bonus: entry.flat_bonus,
             }),
         }
@@ -577,8 +579,10 @@ mod tests {
         }
     }
 
-    /// Bruising Intellect (sixth slice: `max(INT,CHA)-CHA`, no separate
-    /// flat token) reaches the DTO with its real corpus formula verbatim.
+    /// Bruising Intellect (sixth slice: the higher of Int and Cha instead of
+    /// Cha, no separate flat token) reaches the DTO with the substitution in
+    /// the rule's own words -- never an ingest-format formula string
+    /// (SD-35 `AT-35-E6-001`).
     #[test]
     fn bruising_intellect_option_carries_its_real_corpus_formula() {
         let bruising_intellect = list_available_character_traits()
@@ -590,7 +594,10 @@ mod tests {
         let substitution = bruising_intellect
             .ability_substitution
             .expect("Bruising Intellect must carry an ability_substitution");
-        assert_eq!(substitution.formula, "max(INT,CHA)-CHA");
+        assert_eq!(
+            substitution.formula,
+            "the higher of your Intelligence and Charisma modifiers, instead of your Charisma modifier"
+        );
         assert_eq!(substitution.flat_bonus, 0);
     }
 
@@ -608,7 +615,10 @@ mod tests {
         let substitution = precise_treatment
             .ability_substitution
             .expect("Precise Treatment must carry an ability_substitution");
-        assert_eq!(substitution.formula, "max(INT,WIS)-WIS");
+        assert_eq!(
+            substitution.formula,
+            "the higher of your Intelligence and Wisdom modifiers, instead of your Wisdom modifier"
+        );
         assert_eq!(substitution.flat_bonus, 1);
     }
 

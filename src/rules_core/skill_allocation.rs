@@ -798,9 +798,10 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         *slot = slot.saturating_add(bonus);
     }
     // Sixth slice (`AT-34-E4-002`): `BONUS:SKILL` traits whose magnitude
-    // is an ability-score-difference formula (`max(A,B)-B`), evaluated
-    // via the crate's real `formula_interpreter::PcgenFormulaEvaluator`
-    // against `chassis.ability_modifiers` -- folded into the same map,
+    // is an ability-score DIFFERENCE ("use the higher of two ability
+    // modifiers on this skill"), evaluated as converted arithmetic by the
+    // sheet renderer's own evaluator (SD-35 `AT-35-E6-001`) against
+    // `chassis.ability_modifiers` -- folded into the same map,
     // never double-applied, because a trait id can only ever appear in
     // one of the four tables (enforced by
     // `no_ability_diff_trait_id_appears_in_any_other_skill_table`).

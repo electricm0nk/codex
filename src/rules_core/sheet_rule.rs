@@ -710,6 +710,7 @@ impl SheetRule {
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::ops::{Add, Div, Mul};
+use std::sync::OnceLock;
 
 /// An exact rational: `num / den`, `den > 0`, reduced. Division by zero yields 0
 /// (`technical-design.md` §2).
@@ -1690,6 +1691,32 @@ pub fn evaluate(rule: &SheetRule, held: &HeldSet, package: &SheetRulePackage, fa
 /// Evaluate a gate for a character.
 pub fn evaluate_applies(a: &Applies, held: &HeldSet, package: &SheetRulePackage, facts: &CharacterFacts, ctx: EvalContext) -> Gate {
     Evaluator::new(package, held, facts, ctx).applies(a)
+}
+
+/// Evaluate one converted [`Expr`] for a character -- the same arithmetic
+/// [`evaluate`] applies to a rule's own value, exposed for the live consumers that hold an
+/// `Expr` directly rather than a whole [`SheetRule`].
+///
+/// SD-35 `AT-35-E6-001`: this is the live side's ONE arithmetic path. Before this cycle several
+/// `rules_core` modules carried a PCGen formula STRING and ran it through the PCGen formula
+/// interpreter at run time (`decisions.md` §11: "there should be nothing left of pcgen" on the
+/// live side). Conversion from a PCGen token to an `Expr` now happens at ingest, in
+/// `src/pcgen_import/`; the live side evaluates the converted `Expr` and nothing else.
+pub fn evaluate_expr(e: &Expr, held: &HeldSet, package: &SheetRulePackage, facts: &CharacterFacts, ctx: EvalContext) -> Rat {
+    Evaluator::new(package, held, facts, ctx).expr(e)
+}
+
+/// [`evaluate_expr`] for an expression whose every term is settled by [`CharacterFacts`] alone
+/// -- no `Var`, no `Choice`, no held-set lookup. The overwhelming majority of the converted
+/// arithmetic the live chassis and trait tables carry is of exactly this shape (ability
+/// modifiers, class levels, total level), and a caller with no package in hand should not have
+/// to fabricate one.
+pub fn evaluate_expr_from_facts(e: &Expr, facts: &CharacterFacts) -> Rat {
+    static EMPTY_PACKAGE: OnceLock<SheetRulePackage> = OnceLock::new();
+    static EMPTY_HELD: OnceLock<HeldSet> = OnceLock::new();
+    let package = EMPTY_PACKAGE.get_or_init(SheetRulePackage::new);
+    let held = EMPTY_HELD.get_or_init(HeldSet::default);
+    Evaluator::new(package, held, facts, EvalContext::default()).expr(e)
 }
 
 /// The held set: the fixpoint over the seed (`technical-design.md` §2). Seed rules are held

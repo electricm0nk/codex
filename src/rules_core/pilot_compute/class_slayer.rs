@@ -14,7 +14,7 @@ use super::*;
 /// PF1 Advanced Class Guide Slayer Sneak Attack: dice count
 /// `SlayerLVL/3`, verified directly against `acg_abilities_class.lst`'s
 /// own `BONUS:VAR|SneakAttackDice|SlayerSneakAttackLVL/3`.
-pub(super) fn slayer_sneak_attack_dice(level: u8) -> i16 {
+pub(crate) fn slayer_sneak_attack_dice(level: u8) -> i16 {
     i16::from(level) / 3
 }
 
@@ -26,7 +26,7 @@ pub(super) fn slayer_sneak_attack_dice(level: u8) -> i16 {
 /// `class_feature.rogue.trap_sense` exactly -- this codebase has no
 /// "trap AC/save" pillar for either of those closures to integrate into
 /// either, an already-established idiom.
-pub(super) fn slayer_trap_sense_bonus(level: u8) -> i16 {
+pub(crate) fn slayer_trap_sense_bonus(level: u8) -> i16 {
     (i16::from(level) / 3).max(1)
 }
 

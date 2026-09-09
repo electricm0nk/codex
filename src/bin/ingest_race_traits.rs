@@ -62,7 +62,7 @@
 //! literals, `%N` is substituted from those literals, and `%%` collapses to
 //! one sign. An argument that is a same-row *expression* over those literals
 //! — ARG has exactly one, `Halfling_AdaptableLuck_Bonus-1` — is resolved via
-//! `codex::rules_core::pilot_compute::race_trait_formula_binding::resolve_same_row_formula`,
+//! `codex::pcgen_import::race_trait_formula_binding::resolve_same_row_formula`,
 //! which wires in `formula_interpreter::PcgenFormulaEvaluator`
 //! (`SD-31 decisions.md` Decision 20 overturned `SD-27 decisions.md §24.1`'s
 //! ban on 2026-08-21; SD-32's own `decisions.md §3` restates the fixture
@@ -95,7 +95,7 @@ use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
-use codex::rules_core::pilot_compute::race_trait_formula_binding::resolve_same_row_formula;
+use codex::pcgen_import::race_trait_formula_binding::resolve_same_row_formula;
 use codex::rules_core::race_resolver::{
     ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX, ADOPTED_RACE_SELECTOR_TYPE, ADOPTIVE_PARENTAGE_CATEGORY,
 };

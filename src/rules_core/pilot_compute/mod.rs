@@ -174,36 +174,12 @@ mod class_ultimate_combat;
 pub mod prestige_class_entry_gate;
 pub mod untabled_base_class_chassis;
 pub mod untabled_base_class_feature_roster;
-/// SD-31 wave 25's interpreter reproduction harness (`OPERATOR-RULINGS-2026-08-21.md` §20) --
-/// see its own module doc. A sibling of the three submodules above, not a call-site consumer of
-/// them: it reads their functions through `super::` the same way `mod.rs`'s own inline
-/// `#[cfg(test)]` modules already do, and never edits any hand-modelled function's logic.
-pub mod formula_reproduction_harness;
-/// SD-31 wave 25b's formula interpreter core (`OPERATOR-RULINGS-2026-08-21.md` §20). Implements
-/// the `FormulaEvaluator` trait `formula_reproduction_harness` defines. `pub`, like the harness
-/// above: its non-test API has zero callers outside `#[cfg(test)]` yet (no unit-banking consumer
-/// is wired this wave — see its own module doc's opening paragraph), and a private `mod` here
-/// would make every one of those items a genuine `dead_code` lint.
-pub mod formula_interpreter;
-/// SD-32 Gate 2 (`gate-2-corpus-wide-runs`, kanban `#8`) — the corpus-wide,
-/// closed-Gate-1-census-scoped run AT-32-G2-004 requires of
-/// `formula_interpreter.rs` (F1..F9). `pub` for the same reason as the three
-/// modules above: its non-test API's only caller today is
-/// `src/bin/formula_interpreter.rs`, a separate compilation unit, not this
-/// crate's own internals.
-pub mod formula_interpreter_corpus_wide;
-/// SD-31 wave 26's "BonusObj-shape reader" (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on) --
-/// see its own module doc. `pub` for the same reason as the two modules above: no unit-banking
-/// consumer is wired to it yet (this lane is scoped to closing interpreter refusals and reading
-/// the real multi-token `PREVARGTEQ` bonus-stack shape, not to wiring a consumer), so a private
-/// `mod` here would make its non-test API dead code.
-pub mod bonus_stack_reader;
-/// SD-32 — wires `formula_interpreter`/`PcgenFormulaEvaluator` into
-/// `src/bin/ingest_race_traits.rs` and `src/bin/ingest_races.rs`'s shared
-/// `same_row_vars`/`substitute_placeholders`/`eval_prevar_gate` shape (see its
-/// own module doc). `pub`: both binaries are separate compilation units, so
-/// this crate's own internals are not the only caller.
-pub mod race_trait_formula_binding;
+// SD-35 AT-35-E6-001 (`decisions.md` §11): the PCGen formula interpreter, its reproduction
+// harness, its corpus-wide scan, the `BonusObj`-shape bonus-stack reader and the race-trait
+// formula binding are CONVERTER code. They were on the live side; they now live under
+// `src/pcgen_import/` (`crate::pcgen_import::formula_interpreter`, `::formula_reproduction_harness`,
+// `::formula_interpreter_corpus_wide`, `::bonus_stack_reader`, `::race_trait_formula_binding`).
+// They are KEPT, not deleted -- they are reused for Starfinder (`decisions.md` §11, what is kept).
 /// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycles 5-7 — the generic
 /// companion base-ability-score table, generalizing `ground_wolf_companion_stat_block`/
 /// `ground_horse_companion_stat_block` (below) into a table-driven function. `pub(crate)`,
@@ -227,7 +203,7 @@ pub mod crb_untabled_class_chassis;
 /// `domain_power::domain_power_probe_catalog()` directly, the same
 /// visibility shape `crb_untabled_class_chassis` above already uses.
 pub mod domain_power;
-use class_slayer::*;
+pub(crate) use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
 use domain_power::*;
 
@@ -2811,7 +2787,7 @@ const CAVALIER_CHALLENGE_ARMOR_CLASS_PENALTY: i16 = -2;
 /// Cavalier's Challenge uses per day: `(CavalierLVL+2)/3`, verified
 /// directly against `apg_abilities_class.lst`'s own
 /// `BONUS:VAR|CavalierChallengeTimes|(CavalierLVL+2)/3`.
-fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
+pub(crate) fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
     (i16::from(level) + 2) / 3
 }
 
@@ -2824,7 +2800,7 @@ fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
 /// a specific archetype, and this repo ingests no Cavalier archetype at
 /// all -- provably vacuous here, the same check that cleared Alchemist's
 /// Gnome-only and Ultimate-Magic-gated Bomb terms.
-fn cavalier_bonus_combat_feat_count(level: u8) -> i16 {
+pub(crate) fn cavalier_bonus_combat_feat_count(level: u8) -> i16 {
     i16::from(level) / 6
 }
 
@@ -7359,7 +7335,7 @@ fn animal_companion_table_index(master_level: u8) -> usize {
 /// This has a live consumer -- the companion's own `.armor_class`
 /// explanation record -- so widening Hit Dice without widening this would
 /// have shipped an understated Armor Class from master level 3 upward.
-fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
+pub(crate) fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
     let clamped = master_level.clamp(1, MAX_ANIMAL_COMPANION_MASTER_LEVEL);
     2 * (i16::from(clamped) / 3)
 }
@@ -7382,7 +7358,7 @@ fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
 /// (`BONUS:ABILITYPOOL|Companion Stat Increase|1` at master levels 4, 9,
 /// 14 and 20, `apg_companionmods.lst:77,82,87,93`), which is a chooser
 /// input with no canonical default and stays deferred.
-fn animal_companion_stat_bonus(master_level: u8) -> i16 {
+pub(crate) fn animal_companion_stat_bonus(master_level: u8) -> i16 {
     let clamped = master_level.clamp(1, MAX_ANIMAL_COMPANION_MASTER_LEVEL);
     i16::from(clamped) / 3
 }
@@ -12255,15 +12231,72 @@ pub(crate) const UNDINE_RACE_TRAIT_FORMULAS: &[(&str, &str, &str)] = &[
     ("advanced_race_guide:race_trait:undine_ooze_breath", "Undine_OozeBreath_DC", "10+(TL/2)+CON"),
 ];
 
-/// Looks up one formula's raw text from [`UNDINE_RACE_TRAIT_FORMULAS`] by its field name. Panics
-/// on a missing field — every field this function is ever called with is a literal named
-/// directly below, so a mismatch is a coding error in this file, not a runtime corpus condition.
-fn undine_formula(field: &str) -> &'static str {
-    UNDINE_RACE_TRAIT_FORMULAS
-        .iter()
-        .find(|(_, f, _)| *f == field)
-        .unwrap_or_else(|| panic!("UNDINE_RACE_TRAIT_FORMULAS carries no field named {field:?}"))
-        .2
+/// The ability-modifier slot [`CharacterFacts::ability_mods`] uses, so this file can seed the
+/// two modifiers Undine's alternate racial traits actually reference without duplicating the
+/// sheet evaluator's own ordering.
+fn ability_index_of(a: crate::rules_core::sheet_rule::Ability) -> usize {
+    use crate::rules_core::sheet_rule::Ability;
+    match a {
+        Ability::Str => 0,
+        Ability::Dex => 1,
+        Ability::Con => 2,
+        Ability::Int => 3,
+        Ability::Wis => 4,
+        Ability::Cha => 5,
+    }
+}
+
+/// One Undine alternate-racial-trait field's arithmetic, as a CONVERTED
+/// [`Expr`](crate::rules_core::sheet_rule::Expr) over total character level and one ability
+/// modifier (SD-35 `AT-35-E6-001`, `decisions.md` §11 -- the live side holds converted
+/// arithmetic, never an ingest-format formula string).
+///
+/// Each arm is the conversion of the corresponding row of
+/// [`UNDINE_RACE_TRAIT_FORMULAS`], which the
+/// converter/oracle side still carries verbatim and which
+/// `derived_evaluator_fixture_check`'s race_trait_formula bar still checks both halves of.
+/// Panics on a field name this file does not build -- every field this function is ever called
+/// with is a literal named directly below, so a mismatch is a coding error here, never a
+/// runtime condition.
+fn undine_expr(field: &str) -> crate::rules_core::sheet_rule::Expr {
+    use crate::rules_core::sheet_rule::{Ability, Expr};
+    // `10 + (TL/2) + <ability modifier>` -- the save DC shape all three alternates share.
+    let dc = |a: Ability| {
+        Expr::sum(vec![
+            Expr::Const(10),
+            Expr::div(Expr::Level, Expr::Const(2)),
+            Expr::AbilityMod(a),
+        ])
+    };
+    match field {
+        "Undine_AcidBreath_Times"
+        | "Undine_NereidFascination_Times"
+        | "Undine_OozeBreath_Times" => Expr::Const(1),
+        // `min(floor((TL+1)/2),5)`
+        "Undine_AcidBreath_Dice" => Expr::min(
+            Expr::Floor(Box::new(Expr::div(
+                Expr::sum(vec![Expr::Level, Expr::Const(1)]),
+                Expr::Const(2),
+            ))),
+            Expr::Const(5),
+        ),
+        "Undine_AcidBreath_DC" | "Undine_OozeBreath_DC" => dc(Ability::Con),
+        // `max((TL/2),1)`
+        "Undine_NereidFascination_Duration" => {
+            Expr::max(Expr::div(Expr::Level, Expr::Const(2)), Expr::Const(1))
+        }
+        "Undine_NereidFascination_DC" => dc(Ability::Cha),
+        // `min(floor((TL+1/2)),5)` -- genuinely `TL + one half`, not `(TL+1)/2`; see the
+        // section doc above `UNDINE_RACE_TRAIT_FORMULAS` for why that asymmetry is faithful.
+        "Undine_OozeBreath_Dice" => Expr::min(
+            Expr::Floor(Box::new(Expr::sum(vec![
+                Expr::Level,
+                Expr::div(Expr::Const(1), Expr::Const(2)),
+            ]))),
+            Expr::Const(5),
+        ),
+        other => panic!("undine_expr carries no converted arithmetic for field {other:?}"),
+    }
 }
 
 /// Undine (Advanced Race Guide): three selectable alternate racial traits, each replacing the
@@ -12282,19 +12315,22 @@ fn explain_undine_formula_race_trait(
     if input.chosen.race_id != UNDINE_RACE_ID {
         return;
     }
-    use formula_reproduction_harness::FormulaEvaluator as _;
-    let evaluator = formula_interpreter::PcgenFormulaEvaluator;
+    use crate::rules_core::sheet_rule::{evaluate_expr_from_facts, Ability, CharacterFacts};
 
     let total_level: i64 = input.chosen.class_levels.iter().map(|c| i64::from(c.level)).sum();
-    let mut vars: std::collections::BTreeMap<String, i64> = std::collections::BTreeMap::new();
-    vars.insert("TL".to_owned(), total_level);
-    vars.insert("CON".to_owned(), i64::from(ability_modifiers.constitution));
-    vars.insert("CHA".to_owned(), i64::from(ability_modifiers.charisma));
+    let mut facts = CharacterFacts { level: total_level, ..CharacterFacts::default() };
+    facts.ability_mods[ability_index_of(Ability::Con)] = i64::from(ability_modifiers.constitution);
+    facts.ability_mods[ability_index_of(Ability::Cha)] = i64::from(ability_modifiers.charisma);
 
     let selected = selected_alternate_trait_keys(input);
 
+    // SD-35 `AT-35-E6-001` (`decisions.md` §11): each field's arithmetic is a CONVERTED
+    // `sheet_rule::Expr`, evaluated by the sheet renderer's own evaluator. The source's own
+    // formula TEXT is no longer read here at all -- it lives on the converter/oracle side
+    // ([`UNDINE_RACE_TRAIT_FORMULAS`] above), which is
+    // what `derived_evaluator_fixture_check`'s race_trait_formula bar still compares against.
     let eval = |field: &str| -> Option<i16> {
-        evaluator.evaluate(undine_formula(field), &vars).ok().and_then(|v| i16::try_from(v).ok())
+        i16::try_from(evaluate_expr_from_facts(&undine_expr(field), &facts).trunc()).ok()
     };
 
     if selected.iter().any(|k| k == UNDINE_ACID_BREATH_TRAIT_KEY)
@@ -12311,7 +12347,7 @@ fn explain_undine_formula_race_trait(
                      BONUS:VAR|Undine_AcidBreath_Dice|min(floor((TL+1)/2),5), \
                      BONUS:VAR|Undine_AcidBreath_DC|10+(TL/2)+CON, evaluated at total character \
                      level {total_level} and Constitution modifier \
-                     {con:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                     {con:+} by the sheet evaluator over the converted arithmetic, gated by \
                      `derived_evaluator_fixture_check`'s race_trait_formula bar)",
                     con = ability_modifiers.constitution,
                 ),
@@ -12335,7 +12371,7 @@ fn explain_undine_formula_race_trait(
                      BONUS:VAR|Undine_NereidFascination_Duration|max((TL/2),1), \
                      BONUS:VAR|Undine_NereidFascination_DC|10+(TL/2)+CHA, evaluated at total \
                      character level {total_level} and Charisma modifier \
-                     {cha:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                     {cha:+} by the sheet evaluator over the converted arithmetic, gated by \
                      `derived_evaluator_fixture_check`'s race_trait_formula bar)",
                     cha = ability_modifiers.charisma,
                 ),
@@ -12357,7 +12393,7 @@ fn explain_undine_formula_race_trait(
                      BONUS:VAR|Undine_OozeBreath_Dice|min(floor((TL+1/2)),5), \
                      BONUS:VAR|Undine_OozeBreath_DC|10+(TL/2)+CON, evaluated at total character \
                      level {total_level} and Constitution modifier \
-                     {con:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                     {con:+} by the sheet evaluator over the converted arithmetic, gated by \
                      `derived_evaluator_fixture_check`'s race_trait_formula bar). This \
                      record's `Dice` formula really is `TL+1/2`, not `(TL+1)/2` — real upstream \
                      PCGen arithmetic, transcribed faithfully rather than \"corrected\" to match \
@@ -14931,7 +14967,7 @@ fn active_alchemist_mutagen_bonus(
 /// own light-armor check and Dodge's own AC bonus already established --
 /// the base formula is the real, complete answer for this closure's
 /// scope.
-fn alchemist_bomb_damage_dice(level: u8) -> i16 {
+pub(crate) fn alchemist_bomb_damage_dice(level: u8) -> i16 {
     1 + (i16::from(level) - 1) / 2
 }
 
@@ -14939,7 +14975,7 @@ fn alchemist_bomb_damage_dice(level: u8) -> i16 {
 /// Intelligence modifier added to bomb damage (deepening 2026-07-26,
 /// task #4), verified directly against `apg_abilities_class.lst`'s own
 /// `BONUS:VAR|AlchemistBombDamageBonus|INT`.
-fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
+pub(crate) fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
     intelligence_modifier
 }
 
@@ -14948,7 +14984,7 @@ fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
 /// directly against `apg_abilities_class.lst`'s own
 /// `BONUS:VAR|AlchemistBombDC|10+(AlchemistBombLVL/2)+INT`, the same
 /// flat-DC standalone shape Blessing's/Mutagen's own DC-style facts use.
-fn alchemist_bomb_dc(level: u8, intelligence_modifier: i16) -> i16 {
+pub(crate) fn alchemist_bomb_dc(level: u8, intelligence_modifier: i16) -> i16 {
     10 + i16::from(level) / 2 + intelligence_modifier
 }
 
@@ -15935,7 +15971,7 @@ fn active_inquisitor_purity_judgment_bonus(input: &CharacterInput) -> Option<(u8
 /// consumer was never actually required, only a genuinely verified
 /// magnitude. No Knowledge-skill total exists anywhere in this codebase,
 /// so this grounds only the flat bonus value.
-fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
+pub(crate) fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
     wisdom_modifier
 }
 
@@ -15947,7 +15983,7 @@ fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
 /// Monster Lore above: no Initiative total exists anywhere in this
 /// codebase (confirmed directly), so this grounds only the flat bonus
 /// value.
-fn inquisitor_cunning_initiative_bonus(wisdom_modifier: i16) -> i16 {
+pub(crate) fn inquisitor_cunning_initiative_bonus(wisdom_modifier: i16) -> i16 {
     wisdom_modifier
 }
 
@@ -15978,7 +16014,7 @@ fn inquisitor_track_bonus(level: u8) -> i16 {
 /// own Fervor uses/day: this grounds only the flat daily pool size --
 /// which creature type (and subtype, for humanoid/outsider) is imbued,
 /// and how the rounds are spent/tracked across a day, is not modeled.
-fn inquisitor_bane_pool_rounds(level: u8) -> i16 {
+pub(crate) fn inquisitor_bane_pool_rounds(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -17118,7 +17154,7 @@ fn oracle_level_with_battlecry_revelation(input: &CharacterInput) -> Option<u8> 
 /// `ORACLE_BATTLECRY_UPGRADE_LEVEL` (10) -- `BONUS:VAR|OracleBattlecryBonus|1`
 /// plus `|1|PRECLASS:1,Oracle=10` (the two flat additions sum to +2, they
 /// do not replace one another).
-fn oracle_battlecry_bonus(oracle_level: u8) -> i16 {
+pub(crate) fn oracle_battlecry_bonus(oracle_level: u8) -> i16 {
     if oracle_level >= ORACLE_BATTLECRY_UPGRADE_LEVEL {
         ORACLE_BATTLECRY_UPGRADED_BONUS
     } else {
@@ -18336,7 +18372,7 @@ fn push_oracle_other_features_deferred_diagnostic(
 /// (`PREVARGTEQ:WitchHexAbilityLVL,16`) -- `WitchHexAbilityLVL` resolves
 /// to `WitchLVL` directly, confirmed unconditional (no delayed-grant gate
 /// the way Shaman's Healer's Touch has).
-fn witch_ward_bonus(level: u8) -> i16 {
+pub(crate) fn witch_ward_bonus(level: u8) -> i16 {
     let mut bonus = 2;
     if level >= 8 {
         bonus += 1;
@@ -18540,7 +18576,7 @@ const SUMMONER_TWIN_EIDOLON_LEVEL: u8 = 20;
 
 /// Bond Senses: `BONUS:VAR|BondSensesRounds|classlevel("Summoner")` --
 /// rounds per day the summoner may share the eidolon's senses.
-fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
+pub(crate) fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -18548,17 +18584,17 @@ fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
 /// -- 1/day at 6th, +1 every four levels after (6->1, 10->2, 14->3, 18->4).
 /// The formula is self-gating (it is 0 below 6th), and its first non-zero
 /// value lands exactly on the independently-confirmed grant level.
-fn summoner_makers_call_uses_per_day(level: u8) -> i16 {
+pub(crate) fn summoner_makers_call_uses_per_day(level: u8) -> i16 {
     (i16::from(level) - 2) / 4
 }
 
 /// Merge Forms: `BONUS:VAR|MergeFormsRounds|classlevel("Summoner")`.
-fn summoner_merge_forms_rounds_per_day(level: u8) -> i16 {
+pub(crate) fn summoner_merge_forms_rounds_per_day(level: u8) -> i16 {
     i16::from(level)
 }
 
 /// Twin Eidolon: `BONUS:VAR|TwinEidolonMinutes|classlevel("Summoner")`.
-fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
+pub(crate) fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -18568,7 +18604,7 @@ fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
 /// creatures remain for %3 **minutes** (instead of %3 rounds)", where `%3`
 /// is this variable. Worth pinning, because the summoned-creature default
 /// really is rounds and this ability's whole point is upgrading that unit.
-fn summoner_summon_monster_duration_minutes(level: u8) -> i16 {
+pub(crate) fn summoner_summon_monster_duration_minutes(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -28051,7 +28087,7 @@ fn compute_class_chassis(
         // rebase, row 18 cycle 9 — see `generic_class_chassis`'s own module doc). Same shape
         // as the `untabled_base_class_chassis::resolve` arm above: real
         // base attack bonus and all three base saves, computed from the class's own corpus
-        // `BONUS:COMBAT|BASEAB`/`BONUS:SAVE` formulas via `PcgenFormulaEvaluator`, not a
+        // the class record's own converted base-attack/save arithmetic, not a
         // hand-typed table.
         let base_attack_bonus = row.base_attack_bonus;
         let base_saves =
@@ -44470,18 +44506,18 @@ fn monk_ac_bonus_dodge_progression(level: u8) -> i16 {
 /// swift action, you gain a +20 bonus". Only the +20 costs ki. An earlier
 /// deferral of this feature cited the ki cost as a blocker for the whole
 /// ability; that conflated the two clauses.
-fn monk_high_jump_acrobatics_bonus(level: u8) -> i16 {
+pub(crate) fn monk_high_jump_acrobatics_bonus(level: u8) -> i16 {
     i16::from(level)
 }
 
 /// Monk Wholeness of Body's self-heal magnitude: `WholenessOfBody =
 /// WholenessOfBodyLVL = MonkLVL` hit points, for 2 ki points -- verified
 /// against the corpus's own two `BONUS:VAR` tokens.
-fn monk_wholeness_of_body_healing(level: u8) -> i16 {
+pub(crate) fn monk_wholeness_of_body_healing(level: u8) -> i16 {
     i16::from(level)
 }
 
-fn monk_scorpion_style_dc(level: u8, wisdom_modifier: i16) -> i16 {
+pub(crate) fn monk_scorpion_style_dc(level: u8, wisdom_modifier: i16) -> i16 {
     10 + i16::from(level) / 2 + wisdom_modifier
 }
 

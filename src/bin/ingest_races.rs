@@ -64,7 +64,7 @@ use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
-use codex::rules_core::pilot_compute::race_trait_formula_binding::resolve_same_row_formula;
+use codex::pcgen_import::race_trait_formula_binding::resolve_same_row_formula;
 use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, License, Population, RaceCacheData, RaceTraitCacheData, RawBonusChain,
     RawToken,

@@ -53,8 +53,8 @@ use std::sync::OnceLock;
 
 use serde_json::Value;
 
-use super::formula_interpreter::{extract_formula_field, PcgenFormulaEvaluator};
-use super::formula_reproduction_harness::FormulaEvaluator as _;
+use crate::pcgen_import::formula_interpreter::{extract_formula_field, PcgenFormulaEvaluator};
+use crate::pcgen_import::formula_reproduction_harness::FormulaEvaluator as _;
 
 /// See `class_catalog_generic.rs`'s own doc comment, "Reachability, honestly
 /// scoped" — same 14 books, same population.

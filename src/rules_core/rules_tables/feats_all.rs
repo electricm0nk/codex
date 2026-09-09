@@ -1365,7 +1365,7 @@ mod tests {
                     "PREABILITY:1,CATEGORY=FEAT,Two-Weapon Fighting",
                     // Note the corpus states the Dex 17 requirement purely
                     // through PCGen variables -- there is no `PRESTAT:` on
-                    // this record at all. `pre_tokens` models both:
+                    // this record at all. The converter models both:
                     // `PreStatScore_DEX` IS the Dex score per
                     // `cr__stats.lst`, and `FeatDexRequirement` is 0 for
                     // every character built here.

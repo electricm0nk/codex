@@ -81,14 +81,14 @@ export interface TraitOtherPillarBonusDto {
 }
 
 /**
- * A sixth-slice ability-score-substitution formula. The real numeric
- * result depends on the character's own computed ability modifiers
- * (evaluated backend-side, never by this DTO), so this carries the
- * formula text itself plus any additional flat component rather than a
- * single pre-computed number.
+ * A sixth-slice ability-score substitution. The real numeric result
+ * depends on the character's own computed ability modifiers (evaluated
+ * backend-side, never by this DTO), so this carries the substitution in
+ * the rule's own WORDS plus any additional flat component rather than a
+ * single pre-computed number (SD-35 `AT-35-E6-001`).
  */
 export interface TraitAbilitySubstitutionDto {
-  /** The formula's own literal text (`'max(INT,CHA)-CHA'`), verbatim from the corpus token. */
+  /** The substitution in the rule's own words ('the higher of your Intelligence and Charisma modifiers, instead of your Charisma modifier'). */
   formula: string;
   /** A second, flat bonus on the SAME skill this record also carries (`0` for three of the four records). */
   flatBonus: number;

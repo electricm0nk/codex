@@ -47,10 +47,11 @@
 //! `pilot_compute::compute_pilot_base_chassis`, takes the **computed**
 //! Charisma modifier off that computation (never `(score - 10) / 2`
 //! re-derived here), binds it as the `CHA` variable, and evaluates
-//! [`RACIAL_SLA_SAVE_DC_FORMULA`] with the crate's real
-//! `formula_interpreter::PcgenFormulaEvaluator` -- the same evaluator
-//! `race_trait_formula_binding`, `crb_untabled_class_chassis` and
-//! `trait_effects` already use. The fixture deliberately carries Charisma 14
+//! [`racial_sla_save_dc_expr`] -- the record's own CONVERTED arithmetic --
+//! through [`evaluate_expr_from_facts`], the same evaluator the sheet
+//! renderer itself uses (SD-35 `AT-35-E6-001`, `decisions.md` §11: nothing on
+//! the live side reads an ingest-format formula string). The fixture
+//! deliberately carries Charisma 14
 //! (`+2`), never 10 (`+0`): a zero Charisma modifier would make the formula's
 //! `CHA` term unobservable, so a wrong binding would still produce the right
 //! number. The independently hand-derived expectation is `12 + spell_level`,
@@ -82,13 +83,10 @@
 //! * **The spell's own effect.** No spell resolution engine exists in this
 //!   crate; this grounds the DC a target saves against, not what happens.
 
-use std::collections::BTreeMap;
-
 use crate::rules_core::character_input::{
     AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState,
 };
-use crate::rules_core::pilot_compute::formula_interpreter::PcgenFormulaEvaluator;
-use crate::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvaluator;
+use crate::rules_core::sheet_rule::{evaluate_expr_from_facts, Ability, CharacterFacts, Expr};
 
 /// The save-DC formula every [`RACIAL_SLA_CATALOG`] entry shares, transcribed
 /// verbatim from each record's own `BONUS:VAR|RacialSLA_<S>_DC|10+RacialSLA_
@@ -864,6 +862,21 @@ fn racial_sla_fixture_input() -> CharacterInput {
 /// between the two is reported as a refusal, never reconciled.
 const RACIAL_SLA_FIXTURE_CHARISMA_MODIFIER: i64 = 2;
 
+/// One record's save DC as CONVERTED arithmetic: `10 + <spell level> + Cha`.
+///
+/// SD-35 `AT-35-E6-001` (`decisions.md` §11). [`RACIAL_SLA_SAVE_DC_FORMULA`] is retained as the
+/// converter/oracle-side transcription every corpus record was verified byte-for-byte against
+/// (`tests/sd34_wave51_racial_sla_catalog_matches_the_corpus.rs`); this function is its
+/// conversion, and it is what the live side evaluates. The two must state the same arithmetic --
+/// `racial_sla_save_dc_expr_states_the_transcribed_formula` below pins that.
+pub fn racial_sla_save_dc_expr(spell_level: i64) -> Expr {
+    Expr::sum(vec![
+        Expr::Const(10),
+        Expr::Const(i32::try_from(spell_level).unwrap_or(0)),
+        Expr::AbilityMod(Ability::Cha),
+    ])
+}
+
 /// Grounds one `Racial SLA ~ <Spell>` record's save DC by really computing
 /// it, or `None` for a corpus key this catalog does not carry (the 3 records
 /// named in this module's doc comment, and every non-`core_rulebook` book's
@@ -871,8 +884,8 @@ const RACIAL_SLA_FIXTURE_CHARISMA_MODIFIER: i64 = 2;
 ///
 /// The value returned is the spell-like ability's save DC:
 /// `10 + <spell level> + <the character's computed Charisma modifier>`,
-/// evaluated by [`PcgenFormulaEvaluator`] over
-/// [`RACIAL_SLA_SAVE_DC_FORMULA`], never by arithmetic re-written here.
+/// evaluated by the sheet renderer's own evaluator over
+/// [`racial_sla_save_dc_expr`], never by arithmetic re-written here.
 pub fn racial_sla_save_dc_is_grounded_for_corpus_key(corpus_key: &str) -> Option<i8> {
     let entry = RACIAL_SLA_CATALOG.iter().find(|e| e.corpus_key == corpus_key)?;
 
@@ -890,12 +903,13 @@ pub fn racial_sla_save_dc_is_grounded_for_corpus_key(corpus_key: &str) -> Option
         return None;
     }
 
-    let mut vars: BTreeMap<String, i64> = BTreeMap::new();
-    vars.insert("SpellLVL".to_owned(), entry.spell_level);
-    vars.insert("CHA".to_owned(), charisma_modifier);
-    let computed = PcgenFormulaEvaluator
-        .evaluate(RACIAL_SLA_SAVE_DC_FORMULA, &vars)
-        .ok()?;
+    let mut facts = CharacterFacts::default();
+    facts.ability_mods[5] = charisma_modifier; // Cha -- `CharacterFacts::ability_mods` order
+    let computed = evaluate_expr_from_facts(
+        &racial_sla_save_dc_expr(entry.spell_level),
+        &facts,
+    )
+    .trunc();
 
     // The hand-derived expectation, independent of both the evaluator and the
     // formula string: PF1's spell-like-ability save DC is 10 + the spell's

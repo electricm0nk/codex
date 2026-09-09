@@ -27,8 +27,8 @@ use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
 use crate::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use crate::rules_core::equipment_effects::compute_equipment_effects;
 use crate::rules_core::pilot_compute::UNDINE_RACE_TRAIT_FORMULAS;
-use crate::rules_core::pilot_compute::formula_interpreter::PcgenFormulaEvaluator;
-use crate::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvaluator;
+use crate::pcgen_import::formula_interpreter::PcgenFormulaEvaluator;
+use crate::pcgen_import::formula_reproduction_harness::FormulaEvaluator;
 use crate::rules_core::rules_tables::companion_chassis::companion_book;
 use crate::rules_core::rules_tables::monster_chassis::{MonsterStatBlock, MONSTER_BOOKS};
 
@@ -5977,7 +5977,7 @@ fn run_race_trait_formula_bar_check(repo_root: &Path) -> BarCheckReport {
 #[cfg(test)]
 mod race_trait_formula_bar_check_tests {
     use super::*;
-    use crate::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvalError;
+    use crate::pcgen_import::formula_reproduction_harness::FormulaEvalError;
 
     fn repo_root() -> std::path::PathBuf {
         std::path::PathBuf::from(

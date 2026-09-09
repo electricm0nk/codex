@@ -1,5 +1,5 @@
 //! F10 binding-layer engine CLI: corpus-wide run and fixture-check for
-//! `codex::rules_core::pilot_compute::bonus_stack_reader` (kanban card 8,
+//! `codex::pcgen_import::bonus_stack_reader` (kanban card 8,
 //! `gate-2-corpus-wide-runs`, AT-32-G2-004).
 //!
 //! `card 7`'s cycle (`docs/release/SD-32-.../artifacts/gate-2-engines/007_cycle_receipt.md`)
@@ -11,7 +11,7 @@
 //!
 //! - `--corpus-wide --output <path>`: walks every `data/corpus/**/*.json` record (excluding
 //!   `LICENSE.json`), reads each one's `data.raw_tokens`, and runs
-//!   [`codex::rules_core::pilot_compute::bonus_stack_reader::resolve_all_producer_chains_corpus_wide`]
+//!   [`codex::pcgen_import::bonus_stack_reader::resolve_all_producer_chains_corpus_wide`]
 //!   over the FULL record population — the corpus-wide run AT-32-G2-004 requires ("no engine is
 //!   complete until it has been run corpus-wide once... a cycle that runs an engine against a
 //!   subset... is out of protocol"). Writes a deterministic JSON report to `<path>`.
@@ -29,7 +29,7 @@
 //! Usage: `bonus_stack_reader --corpus-wide --output <path> [--repo-root <path>] [--corpus-root <path>]`
 //! or `bonus_stack_reader --fixture-check --input <path> --expected-from <path>`
 
-use codex::rules_core::pilot_compute::bonus_stack_reader::{
+use codex::pcgen_import::bonus_stack_reader::{
     resolve_all_producer_chains_corpus_wide, CorpusWideOutcome, CorpusWideReport,
 };
 use std::path::{Path, PathBuf};

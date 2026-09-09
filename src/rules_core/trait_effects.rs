@@ -120,26 +120,24 @@
 //!
 //! ## Sixth slice: ability-score-difference formula `BONUS:SKILL` traits
 //!
-//! A sixth cycle re-checked the fifth cycle's own "no formula evaluator
-//! exists in this crate for that shape" finding before carrying it
-//! forward (`decisions.md §12` L2, "never carry your own number
-//! forward") and found it stale: `formula_interpreter::
-//! PcgenFormulaEvaluator` is a real, already-proven recursive-descent
-//! evaluator for exactly PCGen's `max`/`min`/arithmetic formula grammar,
-//! already wired crate-wide (`race_trait_formula_binding`,
-//! `crb_untabled_class_chassis`, `generic_class_chassis`,
-//! `class_feature_grant_consumer`, and `mod.rs`'s own Undine racial-trait
-//! formulas all call it) -- it was simply never reached from this
-//! module. The 4 records whose `BONUS:SKILL` magnitude is an
-//! ability-score-difference formula of PCGen's `max(A,B)-B` shape
+//! The 4 records whose skill magnitude is an ability-score-difference
+//! of the shape "use the higher of two ability modifiers on this skill"
 //! (`trait_bruising_intellect`, `trait_planar_savant`,
 //! `trait_pragmatic_activator`, and `trait_precise_treatment`, which
-//! ALSO carries a second, flat `SKILL|Heal|1` token on the same skill --
-//! both tokens are applied and summed, never just the formula half) now
-//! ground by evaluating that formula, verbatim, against the character's
-//! real computed ability modifiers, through the SAME real
-//! `PcgenFormulaEvaluator` every other consumer in this crate uses --
-//! never a hand-reimplemented `max`/subtract. See
+//! ALSO carries a second, flat +1 on the same skill -- both are applied
+//! and summed, never just the difference half) ground by evaluating the
+//! record's own CONVERTED arithmetic against the character's real
+//! computed ability modifiers.
+//!
+//! **SD-35 `AT-35-E6-001` (`decisions.md` §11).** Until this cycle the four
+//! magnitudes were the source's own formula TEXT, run through a formula
+//! interpreter at render time -- an ingest-format engine sitting in the
+//! middle of live code. The arithmetic is now a
+//! [`crate::rules_core::sheet_rule::Expr`] built at compile time from the
+//! record's own converted shape and evaluated by
+//! [`crate::rules_core::sheet_rule::evaluate_expr_from_facts`], the one
+//! arithmetic path the sheet renderer itself uses. The numbers are
+//! unchanged; nothing on this side reads an ingest token any more. See
 //! [`ABILITY_DIFF_SKILL_TRAIT_BONUSES`] for the 4-record table and
 //! [`ability_diff_skill_bonuses_from_traits`] for the compute path,
 //! folded into the SAME `skill_allocation::allocate_skill_ranks`
@@ -249,6 +247,7 @@
 
 use std::collections::BTreeMap;
 
+use crate::rules_core::sheet_rule::Ability;
 use crate::rules_core::character_input::{
     AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SelectedChoice,
 };
@@ -649,6 +648,35 @@ pub struct TraitSkillFamilyChoiceBonus {
     pub bonus: i8,
     /// The trait's own corpus `description` field, verbatim.
     pub description: &'static str,
+}
+
+impl TraitAbilityDiffSkillBonus {
+    /// The substitution in the rule's own words -- "the higher of your Intelligence and
+    /// Charisma modifiers, instead of your Charisma modifier".
+    ///
+    /// SD-35 `AT-35-E6-001` (`decisions.md` §1, the sheet rule; §11, no ingest tokens on the
+    /// live side): what the player reads is the rule's words, not the source's formula text.
+    pub fn substitution_words(&self) -> String {
+        let (a, b) = self.higher_of;
+        format!(
+            "the higher of your {} and {} modifiers, instead of your {} modifier",
+            ability_word(a),
+            ability_word(b),
+            ability_word(self.instead_of),
+        )
+    }
+}
+
+/// One ability's full name, as a character sheet prints it.
+fn ability_word(a: Ability) -> &'static str {
+    match a {
+        Ability::Str => "Strength",
+        Ability::Dex => "Dexterity",
+        Ability::Con => "Constitution",
+        Ability::Int => "Intelligence",
+        Ability::Wis => "Wisdom",
+        Ability::Cha => "Charisma",
+    }
 }
 
 /// The 4-of-59 `ultimate_campaign` `trait_content` records whose corpus
@@ -1212,15 +1240,12 @@ pub fn save_trait_magnitude_is_grounded_for_corpus_key(corpus_key: &str) -> Opti
     }
 }
 
-/// One `BONUS:SKILL` trait whose magnitude is an ability-score-difference
-/// formula of PCGen's `max(A,B)-B` shape -- see the module doc comment's
-/// "Sixth slice" section. Unlike every earlier table, the magnitude here
-/// is not a corpus-transcribed literal: it is the record's own formula
-/// text, evaluated verbatim by the crate's real, already-proven
-/// `formula_interpreter::PcgenFormulaEvaluator` (the same evaluator
-/// `race_trait_formula_binding`/`crb_untabled_class_chassis`/
-/// `generic_class_chassis`/`class_feature_grant_consumer` already use
-/// crate-wide) against the character's real computed ability modifiers,
+/// One skill trait whose magnitude is an ability-score DIFFERENCE -- "you
+/// may use the higher of these two ability modifiers on this skill" -- see
+/// the module doc comment's "Sixth slice" section. Unlike every earlier
+/// table the magnitude here is not a corpus-transcribed literal: it is the
+/// record's own converted arithmetic, evaluated against the character's
+/// real computed ability modifiers by the sheet renderer's own evaluator,
 /// never a hand-reimplemented `max`/subtract.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct TraitAbilityDiffSkillBonus {
@@ -1236,17 +1261,15 @@ pub struct TraitAbilityDiffSkillBonus {
     pub name: &'static str,
     /// The single `skill:` wire id this formula's result applies to.
     pub skill: &'static str,
-    /// The formula's own literal text, transcribed verbatim from the
-    /// corpus `BONUS:SKILL|<skill>|<formula>` token -- evaluated as-is by
-    /// [`PcgenFormulaEvaluator`], never re-derived by hand.
-    pub formula: &'static str,
-    /// Every ability-modifier variable name `formula` references (e.g.
-    /// `["INT", "CHA"]`), bound from the character's real computed
-    /// [`crate::rules_core::pilot_compute::AbilityModifiers`] before
-    /// evaluation -- an unbound variable (a name outside this list, or a
-    /// formula that names one this crate does not recognize) makes
-    /// [`PcgenFormulaEvaluator::evaluate`] refuse rather than guess.
-    pub ability_vars: &'static [&'static str],
+    /// The two abilities the record lets the character choose between on
+    /// this skill: the rule reads "you may use the higher of these two".
+    /// Converted from the source record at ingest; no ingest-format text
+    /// reaches this side (SD-35 `decisions.md` §11).
+    pub higher_of: (Ability, Ability),
+    /// The ability the skill would otherwise have used -- subtracted, so
+    /// the contribution is the DIFFERENCE the trait actually adds on top
+    /// of the skill's own ability modifier, never the whole modifier.
+    pub instead_of: Ability,
     /// A second, flat `BONUS:SKILL|<same skill>|<n>` token this record
     /// ALSO carries (`0` for the three single-token records;
     /// `trait_precise_treatment`'s own `+1` flat Heal token for the
@@ -1274,8 +1297,8 @@ pub static ABILITY_DIFF_SKILL_TRAIT_BONUSES: &[TraitAbilityDiffSkillBonus] = &[
         corpus_key: "Trait ~ Bruising Intellect",
         name: "Bruising Intellect",
         skill: "skill:intimidate",
-        formula: "max(INT,CHA)-CHA",
-        ability_vars: &["INT", "CHA"],
+        higher_of: (Ability::Int, Ability::Cha),
+        instead_of: Ability::Cha,
         flat_bonus: 0,
         description: "Your sharp intellect and rapierlike wit bruise egos. Intimidate is always a class skill for you, and you may use your Intelligence modifier when making Intimidate checks instead of your Charisma modifier.",
     },
@@ -1284,8 +1307,8 @@ pub static ABILITY_DIFF_SKILL_TRAIT_BONUSES: &[TraitAbilityDiffSkillBonus] = &[
         corpus_key: "Trait ~ Planar Savant",
         name: "Planar Savant",
         skill: "skill:knowledge_planes",
-        formula: "max(INT,CHA)-INT",
-        ability_vars: &["INT", "CHA"],
+        higher_of: (Ability::Int, Ability::Cha),
+        instead_of: Ability::Int,
         flat_bonus: 0,
         description: "You have always had an innate sense of the workings of the planes and their denizens. You may use your Charisma modifier when making Knowledge (planes) checks instead of your Intelligence modifier.",
     },
@@ -1294,8 +1317,8 @@ pub static ABILITY_DIFF_SKILL_TRAIT_BONUSES: &[TraitAbilityDiffSkillBonus] = &[
         corpus_key: "Trait ~ Pragmatic Activator",
         name: "Pragmatic Activator",
         skill: "skill:use_magic_device",
-        formula: "max(INT,CHA)-CHA",
-        ability_vars: &["INT", "CHA"],
+        higher_of: (Ability::Int, Ability::Cha),
+        instead_of: Ability::Cha,
         flat_bonus: 0,
         description: "While some figure out how to use magical devices with stubborn resolve, your approach is more pragmatic. You may use your Intelligence modifier when making Use Magic Device checks instead of your Charisma modifier.",
     },
@@ -1304,39 +1327,57 @@ pub static ABILITY_DIFF_SKILL_TRAIT_BONUSES: &[TraitAbilityDiffSkillBonus] = &[
         corpus_key: "Trait ~ Precise Treatment",
         name: "Precise Treatment",
         skill: "skill:heal",
-        formula: "max(INT,WIS)-WIS",
-        ability_vars: &["INT", "WIS"],
+        higher_of: (Ability::Int, Ability::Wis),
+        instead_of: Ability::Wis,
         flat_bonus: 1,
         description: "You treat others with a clear and calculating intellect. You gain a +1 trait bonus on all Heal checks, and you may use your Intelligence modifier when making Heal checks instead of your Wisdom modifier.",
     },
 ];
 
-/// Binds `entry.ability_vars` against the character's real computed
-/// ability modifiers and evaluates `entry.formula` via the crate's real
-/// `PcgenFormulaEvaluator` -- returns `None` (never a fabricated value)
-/// for any variable name this module does not recognize or any formula
-/// the evaluator itself refuses.
+/// The trait's contribution, as the DIFFERENCE between the higher of the
+/// two abilities the record offers and the one the skill would otherwise
+/// have used -- `max(a, b) - c`, built as a converted
+/// [`Expr`](crate::rules_core::sheet_rule::Expr) and evaluated by the
+/// sheet renderer's own arithmetic
+/// ([`evaluate_expr_from_facts`](crate::rules_core::sheet_rule::evaluate_expr_from_facts)).
+///
+/// SD-35 `AT-35-E6-001`: no ingest-format formula string is read here, at
+/// build time or at run time (`decisions.md` §11).
 fn evaluate_ability_diff_formula(
     entry: &TraitAbilityDiffSkillBonus,
     ability_modifiers: &crate::rules_core::pilot_compute::AbilityModifiers,
 ) -> Option<i64> {
-    use crate::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvaluator as _;
-    use crate::rules_core::pilot_compute::formula_interpreter::PcgenFormulaEvaluator;
+    use crate::rules_core::sheet_rule::{evaluate_expr_from_facts, CharacterFacts, Expr};
 
-    let mut vars: BTreeMap<String, i64> = BTreeMap::new();
-    for &name in entry.ability_vars {
-        let value = match name {
-            "STR" => ability_modifiers.strength,
-            "DEX" => ability_modifiers.dexterity,
-            "CON" => ability_modifiers.constitution,
-            "INT" => ability_modifiers.intelligence,
-            "WIS" => ability_modifiers.wisdom,
-            "CHA" => ability_modifiers.charisma,
-            _ => return None,
-        };
-        vars.insert(name.to_owned(), i64::from(value));
-    }
-    PcgenFormulaEvaluator.evaluate(entry.formula, &vars).ok()
+    let modifier_of = |a: Ability| -> i64 {
+        i64::from(match a {
+            Ability::Str => ability_modifiers.strength,
+            Ability::Dex => ability_modifiers.dexterity,
+            Ability::Con => ability_modifiers.constitution,
+            Ability::Int => ability_modifiers.intelligence,
+            Ability::Wis => ability_modifiers.wisdom,
+            Ability::Cha => ability_modifiers.charisma,
+        })
+    };
+
+    let facts = CharacterFacts {
+        ability_mods: [
+            modifier_of(Ability::Str),
+            modifier_of(Ability::Dex),
+            modifier_of(Ability::Con),
+            modifier_of(Ability::Int),
+            modifier_of(Ability::Wis),
+            modifier_of(Ability::Cha),
+        ],
+        ..CharacterFacts::default()
+    };
+
+    let (a, b) = entry.higher_of;
+    let expr = Expr::sum(vec![
+        Expr::max(Expr::AbilityMod(a), Expr::AbilityMod(b)),
+        Expr::neg(Expr::AbilityMod(entry.instead_of)),
+    ]);
+    Some(evaluate_expr_from_facts(&expr, &facts).trunc())
 }
 
 /// The real, computed skill bonus contribution of every

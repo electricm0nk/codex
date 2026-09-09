@@ -74,7 +74,8 @@
 //! book's feats carry (`PREABILITY`/`!PREABILITY`, `PREALIGN`,
 //! `PRECLASS`, `PREMULT`, `PRESKILL`, `PRESPELL`, `PRESTAT`, `PRETEXT`,
 //! `PRETOTALAB`, `PREVAREQ`, `PREVARGT`, `PREVARGTEQ`) already has a
-//! modelled or declared-unmodelled arm in `pre_tokens.rs` from earlier
+//! modelled or declared-unmodelled arm in the converter-side prerequisite
+//! reader (`src/pcgen_import/`) from earlier
 //! books -- unlike UC's `PREDR`/`PRERULE` and UM's `PREDEITY`/
 //! `PREVARLTEQ`, this book breaks the "every book adds a new PRE kind"
 //! streak. Checked directly, not assumed from the streak.

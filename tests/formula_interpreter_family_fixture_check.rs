@@ -32,8 +32,8 @@
 use std::collections::BTreeMap;
 use std::path::Path;
 
-use codex::rules_core::pilot_compute::formula_interpreter::{extract_formula_field, PcgenFormulaEvaluator};
-use codex::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvaluator;
+use codex::pcgen_import::formula_interpreter::{extract_formula_field, PcgenFormulaEvaluator};
+use codex::pcgen_import::formula_reproduction_harness::FormulaEvaluator;
 
 const FIXTURE_RELATIVE_PATH: &str = "tests/fixtures/rules_core/formula-interpreter-family-fixtures.json";
 
@@ -157,7 +157,7 @@ fn mutated_evaluator_is_caught_disagreeing_with_the_family_fixtures() {
             &self,
             formula: &str,
             vars: &BTreeMap<String, i64>,
-        ) -> Result<i64, codex::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvalError> {
+        ) -> Result<i64, codex::pcgen_import::formula_reproduction_harness::FormulaEvalError> {
             PcgenFormulaEvaluator.evaluate(formula, vars).map(|v| v + 1)
         }
     }

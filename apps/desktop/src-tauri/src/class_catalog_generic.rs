@@ -90,10 +90,10 @@ use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 
-use codex::rules_core::pilot_compute::formula_interpreter::{
+use codex::pcgen_import::formula_interpreter::{
     extract_formula_field, PcgenFormulaEvaluator,
 };
-use codex::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvaluator;
+use codex::pcgen_import::formula_reproduction_harness::FormulaEvaluator;
 
 use crate::class_catalog::ClassCatalogEntryDto;
 

@@ -79,7 +79,7 @@
 use std::sync::OnceLock;
 
 use crate::rules_core::character_input::CharacterInput;
-use crate::rules_core::feat_prereqs::pre_tokens::{
+use crate::pcgen_import::pre_tokens::{
     evaluate_prerequisite_token, CharacterPrereqFacts, ClauseOutcome,
 };
 

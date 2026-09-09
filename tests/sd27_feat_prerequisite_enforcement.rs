@@ -37,7 +37,7 @@ use std::path::PathBuf;
 use codex::rules_core::character_input::{
     AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SkillAllocation,
 };
-use codex::rules_core::feat_prereqs::pre_tokens::{
+use codex::pcgen_import::pre_tokens::{
     token_kind, CharacterPrereqFacts, MODELLED_KINDS, UNMODELLED_KINDS,
 };
 use codex::rules_core::feat_prereqs::{
@@ -791,13 +791,13 @@ fn race_subtypes_match_the_corpus_race_templates() {
             // evaluation path rather than by reading the table.
             let token = format!("PRERACE:1,RACESUBTYPE={subtype}");
             let outcome =
-                codex::rules_core::feat_prereqs::pre_tokens::evaluate_prerequisite_token(
+                codex::pcgen_import::pre_tokens::evaluate_prerequisite_token(
                     &token, &facts,
                 );
             assert!(
                 matches!(
                     outcome,
-                    codex::rules_core::feat_prereqs::pre_tokens::ClauseOutcome::Met { .. }
+                    codex::pcgen_import::pre_tokens::ClauseOutcome::Met { .. }
                 ),
                 "{race_token} must satisfy {token}, got {outcome:?}"
             );

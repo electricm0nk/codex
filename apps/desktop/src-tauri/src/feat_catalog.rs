@@ -24,7 +24,7 @@
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::feat_effects;
-use codex::rules_core::feat_prereqs::pre_tokens::CharacterPrereqFacts;
+use codex::pcgen_import::pre_tokens::CharacterPrereqFacts;
 use codex::rules_core::feat_prereqs::{evaluate_catalog_feat_prerequisites, FeatPrerequisiteReport};
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 

@@ -179,9 +179,9 @@ use std::sync::OnceLock;
 
 use serde_json::Value;
 
-use super::bonus_stack_reader;
-use super::formula_interpreter::PcgenFormulaEvaluator;
-use super::formula_reproduction_harness::FormulaEvaluator as _;
+use crate::pcgen_import::bonus_stack_reader;
+use crate::pcgen_import::formula_interpreter::PcgenFormulaEvaluator;
+use crate::pcgen_import::formula_reproduction_harness::FormulaEvaluator as _;
 use super::{AbilityModifiers, ComputationExplanation, pu_feature_slug};
 
 /// SD-34 `decisions.md` §18 ruling: the anti-fabrication gates for

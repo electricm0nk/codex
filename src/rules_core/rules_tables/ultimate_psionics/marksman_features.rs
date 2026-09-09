@@ -80,7 +80,8 @@ pub fn ranged_specialist_critical_multiplier_bonus(level: u8) -> Option<i16> {
 // (`min(9,floor((3*MarksmanPKL-1)/4))` unconditional, plus
 // `floor((MarksmanLVL-13)/2)` once `MarksmanPKL>=15`) -- resolved by the
 // same SUM semantics `psion_features::psion_powers_known` documents
-// (`bonus_stack_reader.rs`, citing `pcgen/core/PlayerCharacter.java:2136`).
+// (the converter-side bonus-stack reader, citing
+// `pcgen/core/PlayerCharacter.java:2136`).
 // `MarksmanMaxPowerLevel`'s single term carries its own
 // `PREVARGTEQ:MarksmanMPL,2` gate -- 0 below level 2.
 

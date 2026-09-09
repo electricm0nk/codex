@@ -92,7 +92,8 @@
 //! `BONUS:VAR` combination-semantics ambiguity this repo cannot resolve
 //! without live PCGen." **That claim does not survive a check against this
 //! repo's own already-built, PCGen-source-cited resolution**:
-//! `pilot_compute::bonus_stack_reader`'s module doc (point 2) cites
+//! the converter-side bonus-stack reader's module doc (point 2,
+//! `src/pcgen_import/`) cites
 //! `pcgen/core/PlayerCharacter.java:2136` -> `BonusManager.java`'s
 //! `getTotalBonusTo`/`sumActiveBonusMap` directly: **multiple `BONUS:VAR`
 //! entries sharing one target variable SUM, gated by each entry's own
@@ -145,7 +146,8 @@ pub fn psion_power_points_total(level: u8, int_mod: i16) -> Option<i16> {
 
 /// `PsionPowersKnown`: `min(21,(2*PsionPKL)+1)` always active, plus
 /// `floor((PsionPKL-10)*3/2)` summed on top once `PsionPKL>=11`
-/// (`bonus_stack_reader`'s documented PCGen "multiple `BONUS:VAR` on one
+/// (the converter-side bonus-stack reader's documented "multiple
+/// same-target bonus rows on one
 /// target SUM, gated by each entry's own currently-passing `PREVARGTEQ`"
 /// semantics -- see this module's own doc comment). `PsionPKL` is the raw
 /// class level on a single-classed Psion (no bonus manifester levels
