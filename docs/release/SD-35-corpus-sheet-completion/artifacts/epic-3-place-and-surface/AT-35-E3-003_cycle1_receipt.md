@@ -1,7 +1,7 @@
 # Cycle AT-35-E3-003_cycle1 — Epic 3 — Place and surface / AT-35-E3-003
 
 - **Commit SHA:** `0e0298d7fe` (the control test and its comment in
-  `src/bin/v06_work_inventory.rs` — the only code this cycle commits) and `<DOCS_SHA>` (this
+  `src/bin/v06_work_inventory.rs` — the only code this cycle commits) and `ce87728795` (this
   receipt, `rate-ledger.json`, `progress.md`, `kanban.md`, `docs/retro/events/at-35-e3-003.jsonl`,
   and the atlas artifact's re-derived `derived_at` stamp). Cycle start
   `7216215725f095ec8ee93406ba873d96db1ea054` on `tranche/15`.
@@ -42,7 +42,7 @@
   audit pattern — **11 matches** over the set before this receipt is committed, and this receipt's
   own quotation of the pattern (this sentence) raises that count again, exactly as every prior
   Epic 3 receipt recorded of itself. **Restricted to this cycle's own diff**
-  (`git diff --unified=0 7216215725..HEAD -- <the Epic 3 set>`) the same grep returns
+  (`git diff --unified=0 7216215725..HEAD` over the same Epic 3 file-touch set listed above) the same grep returns
   **OK_NO_TOKENS**. **No stub, inline mock or `"Would …"` string in shipping code**, and this
   cycle adds none — its only code is a `#[cfg(test)]` assertion.
 - **Acceptance criterion:** verbatim from `epic-breakdown.md` `### AT-35-E3-003`: "**AT-35-E3-003
