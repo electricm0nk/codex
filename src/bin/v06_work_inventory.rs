@@ -18193,22 +18193,15 @@ mod apply_sheet_complete_rung_tests {
         assert_eq!(by_form, BTreeMap::from([("words", 1), ("number", 1), ("dice", 1)]));
     }
 
-    /// Ladder position (`technical-design.md §3`): every status above or
-    /// beside the rung keeps its word even though the same rule renders.
+    /// Ladder position (`technical-design.md §3`): every status ABOVE the rung
+    /// keeps its word even though the same rule renders. SD-35 AT-35-E3-002
+    /// moved this test's own boundary: the four here are the terminal
+    /// statuses; the five that used to sit beside the rung are now promoted
+    /// by it and are proved in the test below.
     #[test]
-    fn every_status_above_or_beside_the_rung_is_left_alone() {
+    fn every_status_above_the_rung_is_left_alone() {
         let probe = probe();
-        let statuses = [
-            "grounded",
-            "text-complete",
-            "literal-verified",
-            "fixture-verified",
-            "oracle-agree",
-            "oracle-unverifiable",
-            "unmeasurable",
-            "deferred-with-reason",
-            "not-started",
-        ];
+        let statuses = ["grounded", "text-complete", "oracle-agree", "oracle-unverifiable"];
         let mut inventory: Vec<InventoryUnit> = statuses.iter().map(|s| unit(NUMBER_ID, s)).collect();
         let by_form = apply_sheet_complete_rung(&mut inventory, probe);
         assert!(by_form.is_empty(), "{by_form:?}");
@@ -18217,6 +18210,33 @@ mod apply_sheet_complete_rung_tests {
             assert_eq!(item.verdict.evidence, "test");
             assert_eq!(item.verdict.reason.as_deref(), Some("test"));
         }
+        for status in statuses {
+            assert!(!SHEET_COMPLETE_PROMOTABLE_STATUSES.contains(&status), "{status} is terminal, never promotable");
+        }
+    }
+
+    /// SD-35 AT-35-E3-002: the five pre-sheet-rule holding pens the rung now
+    /// lifts. Each carried a claim the sheet rule answers outright
+    /// (`decisions.md §1`; `workflow-instruction.md §8`), and each was a whole
+    /// atlas bucket -- V (`literal-verified`/`fixture-verified`), U
+    /// (`unmeasurable`), X (`deferred-with-reason`), Z (`not-started`).
+    #[test]
+    fn the_five_pre_sheet_rule_holding_pens_are_promoted_by_the_rung() {
+        let probe = probe();
+        let statuses = ["literal-verified", "fixture-verified", "unmeasurable", "deferred-with-reason", "not-started"];
+        let mut inventory: Vec<InventoryUnit> = statuses.iter().map(|s| unit(NUMBER_ID, s)).collect();
+        let by_form = apply_sheet_complete_rung(&mut inventory, probe);
+        assert_eq!(by_form, BTreeMap::from([("number", statuses.len())]));
+        for (item, status) in inventory.iter().zip(statuses) {
+            assert_eq!(item.verdict.status, "sheet-complete", "was {status}");
+            assert_eq!(item.verdict.evidence, "sheet_rule_rendered:number", "was {status}");
+            assert_eq!(item.verdict.reason, None, "was {status}");
+        }
+        // The rung's own three conditions still gate every one of them: a
+        // status in the list is necessary, never sufficient.
+        let mut refused_unit = vec![unit(REFUSED_ID, "deferred-with-reason")];
+        assert!(apply_sheet_complete_rung(&mut refused_unit, probe).is_empty());
+        assert_eq!(refused_unit[0].verdict.status, "deferred-with-reason");
     }
 
     /// A refused record and a record with no rule stay where they were: the
