@@ -12,7 +12,7 @@ use super::closure::{Closure, ClosureRowKind, PinnedTree};
 use super::ctx::{parse_bonus_type, slug, split_gates, split_top_level, CorpusIndex, RecordCtx, RecordRef};
 use super::formula::{convert_formula, integer_literal};
 use super::prereq::{convert_pre_token, resolve_holdable_rule};
-use super::prose::{convert_desc_like, convert_labelled, convert_positional, decode_entities, expand_output_name, pi_hit};
+use super::prose::{convert_desc_like, convert_labelled, convert_positional, decode_entities, expand_output_name, pi_hit, strip_editorial_not_implemented_markers};
 use super::table::{row_for_head, MapsTo};
 use crate::rules_core::sheet_rule::*;
 
@@ -558,7 +558,11 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         }
         out.rules.push(SheetRule {
             id,
-            label: if i == 0 { label.clone() } else { line.label },
+            // SD-35 AT-35-E5-003: five `mythic_adventures` templates carry upstream PCGen's
+            // editorial admission in the record NAME (`... ~ Agile (Not Implemented)`), not
+            // only in a description. One scrub here covers every line's label -- principal
+            // and derived alike.
+            label: strip_editorial_not_implemented_markers(&if i == 0 { label.clone() } else { line.label }),
             value: line.value,
             also,
             prose: line_prose,

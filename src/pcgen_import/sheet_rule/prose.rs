@@ -37,6 +37,92 @@ pub fn scrub_literal_glyphs(ctx: &mut RecordCtx, text: &str, field_name: &str) -
     out
 }
 
+/// The longest bracketed aside that can still be an editorial marker, in bytes. Same span the
+/// detector uses (`wiring_class::EDITORIAL_MARKER_MAX_SPAN`), so scrub and detector agree.
+const EDITORIAL_MARKER_MAX_SPAN: usize = 96;
+
+/// Whether a bracketed group's words are upstream PCGen's not-implemented admission -- a `not`
+/// followed by an `implement*`, the detector's own rule
+/// (`wiring_class::carries_editorial_not_implemented_marker`).
+fn group_is_editorial_marker(group: &str) -> bool {
+    let lower = group.to_ascii_lowercase();
+    let mut saw_not = false;
+    for word in lower.split(|c: char| !c.is_ascii_alphanumeric()) {
+        if word == "not" {
+            saw_not = true;
+        } else if saw_not && word.starts_with("implement") {
+            return true;
+        }
+    }
+    false
+}
+
+/// Remove upstream PCGen's own editorial not-implemented admission from a description.
+///
+/// SD-35 AT-35-E5-003. The marker (`[NOT IMPLEMENTED]`, `[Not Implemented]`,
+/// `(NOT IMPLEMENTED)`, `[ML bonus not implemented.]`, and the mismatched-closer
+/// `[NOT IMPLEMENTED}` one corpus record ships) says something about **PCGen's** automation,
+/// not about the rule. Under the sheet rule (`decisions.md §1`) the sheet prints the rule's
+/// words; a source tool's editorial aside is leakage of the same class the
+/// `FORBIDDEN_LITERALS` scrub already removes.
+///
+/// Targeted, never a general bracket remover: only a bracketed group whose own words are the
+/// admission is cut, and only when its closer is present, so a bracketed aside that belongs to
+/// the rule (`Skill Focus (Knowledge [Arcana])`) is untouched. The seam is closed so the
+/// remaining sentence reads as it did before the marker was inserted.
+pub fn strip_editorial_not_implemented_markers(text: &str) -> String {
+    let mut out = text.to_string();
+    loop {
+        let bytes = out.as_bytes();
+        let mut cut: Option<(usize, usize)> = None;
+        for (i, b) in bytes.iter().enumerate() {
+            if *b != b'[' && *b != b'(' {
+                continue;
+            }
+            let start = i + 1;
+            let hard_end = (start + EDITORIAL_MARKER_MAX_SPAN).min(bytes.len());
+            // Only a closed group is cut: without a closer the span's end is arbitrary and
+            // removing it would take the rule's own words with it.
+            let Some(off) = bytes[start..hard_end].iter().position(|c| matches!(c, b']' | b')' | b'}'))
+            else {
+                continue;
+            };
+            let end = start + off;
+            if end <= start {
+                continue;
+            }
+            // Byte slicing is safe only on a char boundary; a marker is ASCII, so anything
+            // that is not is not a marker.
+            let Some(group) = out.get(start..end) else { continue };
+            if group_is_editorial_marker(group) {
+                cut = Some((i, end + 1));
+                break;
+            }
+        }
+        let Some((from, to)) = cut else { return out };
+        let prefix = &out[..from];
+        let suffix = &out[to..];
+        // Close the seam: when the marker sat at the start of the text or just after
+        // whitespace, the space that separated it from the next word goes with it.
+        let joined = if prefix.is_empty() || prefix.ends_with(char::is_whitespace) {
+            format!("{prefix}{}", suffix.trim_start())
+        } else {
+            format!("{prefix}{suffix}")
+        };
+        out = joined.trim_end().to_string();
+    }
+}
+
+/// [`strip_editorial_not_implemented_markers`], recording the removal as a converter defect so
+/// the run's `_defects` report names every record it fired on.
+pub fn scrub_editorial_markers(ctx: &mut RecordCtx, text: &str, field_name: &str) -> String {
+    let scrubbed = strip_editorial_not_implemented_markers(text);
+    if scrubbed != text {
+        ctx.defect("editorial-marker-in-prose", format!("{}: {field_name}", ctx.record.id));
+    }
+    scrubbed
+}
+
 /// Screen one text for product identity. `Some(term)` on a hit.
 pub fn pi_hit(text: &str) -> Option<&'static str> {
     if text.contains("[redacted PI]") {
@@ -229,6 +315,7 @@ pub fn convert_desc_like(ctx: &mut RecordCtx, family: ProseFamily, value: &str, 
         return Ok(None);
     }
     let text = scrub_literal_glyphs(ctx, &text, field_name);
+    let text = scrub_editorial_markers(ctx, &text, field_name);
     let mut args = Vec::new();
     for a in fields.iter().skip(1) {
         args.push(convert_argument(ctx, a)?);
@@ -256,6 +343,7 @@ pub fn convert_positional(ctx: &mut RecordCtx, family: ProseFamily, value: &str,
         return Ok(None);
     }
     let text = scrub_literal_glyphs(ctx, &text, field_name);
+    let text = scrub_editorial_markers(ctx, &text, field_name);
     let mut vars: Vec<Slot> = Vec::new();
     for a in fields.iter().skip(1) {
         vars.push(convert_argument(ctx, a)?);
@@ -366,5 +454,71 @@ mod tests {
     #[test]
     fn entities_decode() {
         assert_eq!(decode_entities("a&colon; b &amp; c"), "a: b & c");
+    }
+
+    /// SD-35 AT-35-E5-003. Upstream PCGen's own editorial not-implemented admission is an
+    /// annotation about PCGen's automation, not the rule's words, and a paper sheet must
+    /// never print it (`decisions.md §1`, the sheet rule). Every shape below is a real
+    /// corpus one: the bracketed prefix, the mismatched `}` closer that
+    /// `monster_codex:feat:vampiric_companion` ships, the parenthesised spelling, and the
+    /// sentence-shaped `[ML bonus not implemented.]` aside.
+    #[test]
+    fn upstream_editorial_not_implemented_markers_are_stripped_from_prose() {
+        assert_eq!(
+            strip_editorial_not_implemented_markers("[Not Implemented] Your curse weighs down your soul."),
+            "Your curse weighs down your soul."
+        );
+        assert_eq!(
+            strip_editorial_not_implemented_markers(
+                "reflects the vile nature of vampirism.\n[NOT IMPLEMENTED}Your animal companion changes."
+            ),
+            "reflects the vile nature of vampirism.\nYour animal companion changes."
+        );
+        assert_eq!(
+            strip_editorial_not_implemented_markers("(NOT IMPLEMENTED) You gain a +2 bonus."),
+            "You gain a +2 bonus."
+        );
+        assert_eq!(
+            strip_editorial_not_implemented_markers("You gain fast healing 1. [ML bonus not implemented.]"),
+            "You gain fast healing 1."
+        );
+        assert_eq!(
+            strip_editorial_not_implemented_markers(
+                "You have mastered ancient techniques.\n[NOT IMPLEMENTED] You're proficient with them."
+            ),
+            "You have mastered ancient techniques.\nYou're proficient with them."
+        );
+    }
+
+    /// The scrub is targeted, never a general bracket remover: a bracketed aside that is part
+    /// of the rule's own words survives untouched, and so does an unmarked description.
+    #[test]
+    fn a_bracketed_aside_that_is_the_rules_own_words_survives_the_scrub() {
+        for text in [
+            "Skill Focus (Knowledge [Arcana]) applies.",
+            "You gain a +2 bonus on Intimidate checks (see page 42).",
+            "The implement is not usable underwater.",
+            "",
+        ] {
+            assert_eq!(strip_editorial_not_implemented_markers(text), text);
+        }
+    }
+
+    /// The scrub and the detector agree: nothing the detector flags survives the scrub.
+    #[test]
+    fn nothing_the_detector_flags_survives_the_scrub() {
+        for text in [
+            "[Not Implemented] Your curse weighs down your soul.",
+            "vampirism.\n[NOT IMPLEMENTED}Your animal companion changes.",
+            "(NOT IMPLEMENTED) You gain a +2 bonus.",
+            "You gain fast healing 1. [ML bonus not implemented.]",
+        ] {
+            assert!(crate::rules_core::wiring_class::carries_editorial_not_implemented_marker(text));
+            let scrubbed = strip_editorial_not_implemented_markers(text);
+            assert!(
+                !crate::rules_core::wiring_class::carries_editorial_not_implemented_marker(&scrubbed),
+                "marker survived the scrub: {scrubbed:?}"
+            );
+        }
     }
 }

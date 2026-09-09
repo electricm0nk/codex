@@ -206,6 +206,31 @@ fn package_carries_no_source_format_literal() {
     assert!(hits.is_empty(), "{} files carry a source-format literal, e.g. {:?}", hits.len(), hits.iter().take(5).collect::<Vec<_>>());
 }
 
+/// SD-35 AT-35-E5-003 -- the live-package gate for bucket U's
+/// `feat_served_description_is_a_placeholder_marker_not_prose` sub-cause. Upstream PCGen's own
+/// editorial not-implemented admission is an annotation about PCGen's automation, not the
+/// rule's words; under the sheet rule (`decisions.md §1`) the paper sheet prints the rule's
+/// words and nothing of the source tool. Reads the LIVE package -- never a per-unit fixture
+/// (`decisions.md §4`) -- and uses the same detector the classifier demotes on
+/// (`wiring_class::carries_editorial_not_implemented_marker`), so the gate and the demotion
+/// can never disagree about what a marker is.
+#[test]
+fn package_prose_carries_no_upstream_editorial_marker() {
+    let mut hits: Vec<String> = Vec::new();
+    for (name, bytes) in package_files() {
+        let text = String::from_utf8_lossy(&bytes);
+        if codex::rules_core::wiring_class::carries_editorial_not_implemented_marker(&text) {
+            hits.push(name);
+        }
+    }
+    assert!(
+        hits.is_empty(),
+        "{} package files carry upstream PCGen's editorial not-implemented marker, e.g. {:?}",
+        hits.len(),
+        hits.iter().take(5).collect::<Vec<_>>()
+    );
+}
+
 /// The `--check` gate: the package on disk equals a fresh conversion byte for byte, every
 /// referenced variable has a table, and converted + refused sums to the population.
 #[test]
