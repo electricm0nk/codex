@@ -1,6 +1,6 @@
 # Cycle 1 — Epic 4, Resolve and verify / AT-35-E4-001
 
-- **Commit SHA:** `PENDING_SELF_SHA`
+- **Commit SHA:** `9bae2cfa1f`
 - **Scope gate:**
   ```
   inventory=docs/work-inventory.json
@@ -145,7 +145,7 @@
   stamps) — the guard working as designed; the re-run supplied
   `CORPUS_LITERAL_SWEEP_REPORT` and `DERIVED_FIXTURE_CHECK_REPORT` and wrote cleanly.
   `--allow-stamp-loss` was never passed.
-- **Build scope verified**, run at `PENDING_SELF_SHA`:
+- **Build scope verified**, run at `9bae2cfa1f`:
   - `cargo test --locked --no-run -j 6` → `NO_RUN_EXIT=0`
   - `cargo test --locked --lib -j 6` → `ok. 3220 passed; 0 failed; 14 ignored`
   - `cargo test --locked --no-fail-fast -j 6` → **8,754 passed, 0 failed, 67 ignored over 412 suites** after the self-heal below. The first run had **1 failure of 8,727**: `tests/sheet_rule_convert_gate.rs::token_census_names_the_row_for_every_token_and_the_head_under_each_refusal` asserted *`unmapped:STARTSKILLPTS` degrades the Arcanist* — an assertion pinning the very table gap this cycle closed, self-healed in the same commit (`workflow-instruction.md §8`, "a count assertion your own change moved"). It now asserts the new truth **and** the criterion's own bar: no census entry anywhere carries an `unmapped:` token type. Re-run of that suite: `28 passed; 0 failed`
