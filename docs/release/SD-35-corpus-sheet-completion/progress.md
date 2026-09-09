@@ -41,6 +41,81 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — AT-35-E5-003 cycle 1 — `buckets-u-z-zero` — **complete** (the criterion's per-sub-cause obligation, unpaid until now — and the defect paying it exposed)
+
+- **Scope gate:** `python3 scripts/cycle_scope_gate.py --min 500 --bucket U --bucket Z` →
+  `inventory=docs/work-inventory.json scope=bucket=U|Z scoped_by_bucket= scoped_by_kind=
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. Not an exemption: the
+  gate ran and passed. The dispatch's mandatory-bundling instruction was moot —
+  `remaining_non_done=0` is the whole corpus, so there was nothing anywhere to bundle in.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=187 ratio=n/a builds_recorded=6
+  pcgen_live_files=260` (`cycle_scope_gate.py --receipt --since
+  aca9ac83babc7664f0581306cba2dbc62d22cce5`; `regressed=0 added=0 dropped=0`, `closed_by_kind=`
+  and `relabeled_moves=` empty). This cycle moves no unit — the criterion's 221 closed at
+  `26bdfa8d5b`.
+- **Refused tokens:** none. `python3 scripts/token_coverage.py --check` → `non_done=0
+  refused_non_done=0 refused=142 verdict=PASS` at HEAD.
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736
+  verdict=PASS`, at cycle start and at the end. Nothing on the live side changed; the fix is on
+  the converter side, where `decisions.md §11` requires it.
+
+**What this cycle did.** Kanban row 21 read `complete` on the bucket-count half of a two-part
+criterion. U and Z **were** at 0, but "per sub-cause, the instrument correction or a proven
+statement that the record carries nothing a player reads" had no artifact behind it, and neither
+did the `beginner_box` clause. `AT-35-E5-003_buckets_u_z.py` pays all of it: **four** sub-causes
+over the 221 cut-state U+Z units (`--transitions` → `sub_causes=4 uz_units=221
+not_sheet_complete_at_HEAD=0 verdict=PASS`), every unit's converted rule opened (`--proof` →
+`missing_rule_file=0 rules_without_a_label=0`), and every unit's line put through the **live
+evaluator** (`--rendered` → `label + prose=124, label only=83, label + magnitude=7,
+label + magnitude + prose=3, not-printed (source print:false)=4`).
+
+**The defect that paying it exposed.** Sub-cause 2 —
+`feat_served_description_is_a_placeholder_marker_not_prose`, 51 feats — is *defined* by upstream
+PCGen's own editorial not-implemented admission being inside the served description.
+`AT-35-E3-002` closed it by widening the rung's promotable statuses; nothing removed the marker.
+**30 of those 51 units, and 166 package files corpus-wide, were still printing it on the sheet**
+— `[NOT IMPLEMENTED]`, `[Not Implemented]`, `(NOT IMPLEMENTED)`, `[ML bonus not implemented.]`,
+the mismatched-closer `[NOT IMPLEMENTED}` that `monster_codex:feat:vampiric_companion` ships,
+and five `mythic_adventures` templates carrying it in the record **name**
+(`Mythic Simple Template ~ Agile (Not Implemented)`). That is a statement about PCGen's
+automation, not the rule's words; a paper sheet must never print it (`decisions.md §1`), and it
+is leakage of the same class the converter's existing `FORBIDDEN_LITERALS` scrub already removes.
+Correction `1788980300753-at-35-e5-003-25094e`.
+
+TDD, and the fix is one mechanism on the **converter** side:
+`tests/sheet_rule_convert_gate.rs::package_prose_carries_no_upstream_editorial_marker` reads the
+LIVE package (never a per-unit fixture, `decisions.md §4`) and went RED at `166 package files`;
+`src/pcgen_import/sheet_rule/prose.rs::strip_editorial_not_implemented_markers` cuts only a
+bracketed group whose own words are the admission, and only when its closer is present, so
+`Skill Focus (Knowledge [Arcana])` is untouched; `convert.rs` applies it to every line's label.
+The gate uses the same detector the classifier demotes on
+(`wiring_class::carries_editorial_not_implemented_marker`), so the two can never disagree about
+what a marker is. **166 rule files regenerated** through the guarded generator path, `_defects/
+editorial-marker-in-prose.json` naming all 161 prose records; `grep -rlEi 'not[ _]*implemented'
+data/sheet_rules/` 161 → 0, gate GREEN, and the guarded inventory regen produced a
+`generated_at`-only diff (reverted) — **no unit's status moved**.
+
+**Four units of the 221 never reach the sheet, and that is the criterion's second branch, not a
+gap.** `ultimate_combat:feat:gundarme_bonus_feat` and `ultimate_magic:feat:skill_focus_intimidate`
+/ `_knowledge_arcana` / `_swim` carry the source record's own `print: false`; their corpus
+`description` is `null` and their converted `prose` is `null`. There is nothing a player reads,
+proven from the record rather than asserted. Correction `1788980300891-at-35-e5-003-e6ac04`.
+
+**The `corpus_literal_sweep` clause, met exactly at zero.** `--sweep-delta` →
+`corpus_records_before=19 corpus_records_after=19 record_delta=0 corpus_files_changed=0
+compiled_rule_files_at_head=19`, and the sweep at HEAD reports **`48706 records examined of 51476
+read, 0 findings`, `CLEAN`** — the identical number recorded before and after `AT-35-E3-002`. The
+reason it is zero is the mechanism: `beginner_box`'s compiled rule set landed in
+`data/sheet_rules/beginner_box/` at `72ad0be010` through
+`cargo run --locked --bin sheet_rule_convert`, the guarded generator path, and never in
+`data/corpus/`, whose `beginner_box` records were already in the sweep's population and are
+byte-identical to the cut (`git diff --name-only 4c6c57eb9f..HEAD -- data/corpus/beginner_box` is
+empty).
+
+Receipt: `artifacts/epic-5-residues/AT-35-E5-003_cycle1_receipt.md`. Census script:
+`artifacts/epic-5-residues/AT-35-E5-003_buckets_u_z.py`. Retro events:
+`docs/retro/events/at-35-e5-003.jsonl` (2 corrections).
+
 ### 2026-09-09 — AT-35-E5-002 cycle 1 — `bucket-d-zero` — **complete** (the criterion's second Evidence clause, unpaid until now: every D sub-cause named with its mechanism and count)
 
 - **Scope gate:** `python3 scripts/cycle_scope_gate.py --min 500 --bucket D` →
