@@ -106,7 +106,8 @@ re-measured at the cut by the launch-readiness audit.
   `cargo test --locked --no-fail-fast` deliberately not run — `§6` step 3 requires it when `src/`
   or the classifier changed and this cycle changed neither.
 - **Receipt:** `artifacts/epic-5-residues/AT-35-E5-005_cycle1_receipt.md` — `103693b365`
-  (cycle start `ac2165b393`).
+  (artifacts), `39dfd59b7e` (docs), `5cf43cd337` (re-stamp), `59993d3e8d` (audit-count
+  re-measure); cycle start `ac2165b393`.
 
 ### 2026-09-09 — AT-35-E5-004 cycle 1 — `bucket-x-choice-filter` — **complete** (the per-character choice filter itself, recorded as NOT built until now — and the converter defect that building it exposed)
 

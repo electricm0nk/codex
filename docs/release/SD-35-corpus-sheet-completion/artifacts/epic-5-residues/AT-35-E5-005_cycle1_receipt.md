@@ -1,6 +1,6 @@
 # Cycle AT-35-E5-005_cycle1 — Epic 5 — Residues / AT-35-E5-005
 
-- **Commit SHA:** `103693b365` (the artifacts) plus `__DOCS_SHA__` (this receipt, `progress.md`, `kanban.md`). This cycle writes no code and moves no unit: three
+- **Commit SHA:** `103693b365` (the artifacts), `39dfd59b7e` (this receipt, `progress.md`, `kanban.md`), `5cf43cd337` (the derived artifacts re-stamped at the final HEAD) and `59993d3e8d` (this receipt's re-measured wired-integration count). This cycle writes no code and moves no unit: three
   re-derivation scripts, their three artifacts, the re-stamped atlas artifact, the retro events,
   this receipt, `progress.md` and `kanban.md`). Cycle start
   `ac2165b393abec7ecf910599e0d5bd3139660af1` on `tranche/15`.
