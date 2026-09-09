@@ -229,7 +229,12 @@
     record changed (`data/corpus/**` untouched, `git status --porcelain` clean there).
   - the desktop crate and the frontend did **not** run: this cycle touched no path under
     `apps/`. They run at the Epic 4 wrap-up (`workflow-instruction.md §10`).
-- **Full-suite result:** `cargo test --locked --no-fail-fast -j 6` — **PENDING_FULL_SUITE**
+- **Full-suite result:** `cargo test --locked --no-fail-fast -j 6` at `2645a3c85a` →
+  **8,727 passed, 0 failed, 67 ignored over 412 targets executed / 413 `test result` lines**,
+  process `EXIT=0`, wall ≈ 74 min. Zero failing suites; no self-heal was needed. Re-derive:
+  `awk '/^test result: ok\./ {p+=$4; f+=$6; i+=$8} END {print p, f, i}' <log>` and
+  `grep -c '^     Running ' <log>`. The 8,727 figure matches Epic 3's re-pinned
+  `BASELINE_ROOT_FULL_TESTS` exactly — this cycle moved no test count.
 - **Sweep population:** N/A — no corpus record was written this cycle.
 - **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
   (`scripts/pcgen-oracle-pin.env`), the checkout resolved through `$PCGEN_REPO_DIR`, read-only.

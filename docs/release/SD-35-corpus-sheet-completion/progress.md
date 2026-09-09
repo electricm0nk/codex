@@ -106,7 +106,7 @@ re-measured at the cut by the launch-readiness audit.
   denominator gate `files_checked=55 violations=0`; `verify.sh --only pi-sweep` PASS.
   `corpus_literal_sweep` not owed (no corpus record changed); `apps/` untouched, so the desktop
   crate and frontend run at the Epic 4 wrap-up.
-- **Full workspace suite:** PENDING_FULL_SUITE
+- **Full workspace suite:** `cargo test --locked --no-fail-fast -j 6` at `2645a3c85a` — **8,727 passed, 0 failed, 67 ignored over 412 targets**, `EXIT=0`, ≈ 74 min. Equal to Epic 3's re-pinned `BASELINE_ROOT_FULL_TESTS`: this cycle moved no test count.
 
 ### 2026-09-09 — Epic 3 wrap-up (`§10` steps 0-3) — gate RED at `07e29075b4`, correction cycle GREEN — **complete**
 
