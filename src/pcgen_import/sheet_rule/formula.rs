@@ -445,6 +445,25 @@ fn lower_ident(ctx: &mut RecordCtx, name: &str, strict: bool) -> Result<Expr, St
     {
         return Ok(Expr::AbilityScore(a));
     }
+    // `PreStatScore_<AB>` -- the source's own prerequisite-facing stat score, and the lhs of
+    // every `PREVARGTEQ:PreStatScore_STR,13`-shaped ability prerequisite. `cr__stats.lst`
+    // declares it 0 and each stat row carries its base term as
+    // `max(<AB>SCORE, Alt<AB>SCORE)|TYPE=Base` on a row that belongs to no corpus record, so
+    // the var table this converter builds carries ONLY the records that raise the floor (a
+    // shield ability's `MAX(15,DEX)`, a talent's flat 19) and the base term is silently lost:
+    // the gate then reads 0 and refuses the option for every character. Bind the base term to
+    // the character's own ability score and keep the raisers as the other side of the max, so
+    // the prerequisite reads what the sheet reads.
+    if let Some(stripped) = upper.strip_prefix("PRESTATSCORE_")
+        && let Some(a) = ability(stripped)
+    {
+        let score = Expr::AbilityScore(a);
+        return Ok(match ctx.resolve_variable(name, strict) {
+            Ok(raisers) => Expr::max(score, raisers),
+            // DEFINEd nowhere in this tree: the base term is the whole value.
+            Err(_) => score,
+        });
+    }
     match upper.as_str() {
         "TL" => return Ok(Expr::Level),
         "CL" => return owning_class_level(ctx),

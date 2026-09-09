@@ -44,6 +44,18 @@ export function LevelUpDialog(props: {
    */
   const [enginePlan, setEnginePlan] = useState<PreviewLevelUpResponse | null>(null);
   const [enginePlanFailed, setEnginePlanFailed] = useState(false);
+  /**
+   * The feat-option list is the whole eligible pool for this character, which
+   * is hundreds of records — a search box is what makes it usable, not a
+   * decoration. Purely local: the backend already did the rules filtering.
+   */
+  const [featSearch, setFeatSearch] = useState('');
+  /**
+   * Refused options are collapsed by default and shown on request, never
+   * dropped: a player who cannot see why an option is missing cannot plan
+   * toward it.
+   */
+  const [showRefusedFeats, setShowRefusedFeats] = useState(false);
 
   /**
    * Only the classes whose *next* level this app actually claims to build.
@@ -253,6 +265,86 @@ export function LevelUpDialog(props: {
                   </li>
                 ) : null}
               </ul>
+
+              {/*
+                SD-35 AT-35-E5-004 — the per-character choice filter. The
+                backend joined the feat pool against THIS character's own
+                prerequisites (`SheetRule.applies`); this list renders that
+                answer and re-derives nothing. The refused half is shown on
+                request with the requirement each option failed, in the
+                engine's own words.
+              */}
+              {enginePlan && enginePlan.optionFilterUnavailableReason === null ? (
+                <div style={{ borderTop: '1px solid var(--color-border)', marginTop: '0.6rem', paddingTop: '0.6rem' }}>
+                  <p style={{ color: 'var(--color-accent)', fontSize: '0.8rem', fontWeight: 700, margin: '0 0 0.35rem' }}>
+                    Feats you qualify for — {enginePlan.featOptions.length} of{' '}
+                    {enginePlan.featOptions.length + enginePlan.refusedFeatOptions.length}
+                  </p>
+                  <input
+                    type="search"
+                    value={featSearch}
+                    onChange={(event) => setFeatSearch(event.target.value)}
+                    placeholder="Search feats"
+                    aria-label="Search feats"
+                    style={{
+                      backgroundColor: 'var(--color-surface)',
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 6,
+                      color: 'var(--color-text)',
+                      fontSize: '0.8rem',
+                      padding: '0.3rem 0.5rem',
+                      width: '100%',
+                    }}
+                  />
+                  <ul style={{ margin: '0.4rem 0 0', maxHeight: 180, overflowY: 'auto', paddingLeft: '1.1rem' }}>
+                    {enginePlan.featOptions
+                      .filter((option) => option.name.toLowerCase().includes(featSearch.trim().toLowerCase()))
+                      .map((option) => (
+                        <li key={option.id} style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', marginBottom: '0.1rem' }}>
+                          {option.name}
+                          {option.condition ? (
+                            <span style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem' }}> — {option.condition}</span>
+                          ) : null}
+                        </li>
+                      ))}
+                  </ul>
+                  {enginePlan.refusedFeatOptions.length > 0 ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setShowRefusedFeats((shown) => !shown)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: 'var(--color-accent)',
+                          cursor: 'pointer',
+                          fontSize: '0.72rem',
+                          padding: '0.35rem 0 0',
+                        }}
+                      >
+                        {showRefusedFeats ? 'Hide' : 'Show'} the {enginePlan.refusedFeatOptions.length} you do not
+                        yet qualify for
+                      </button>
+                      {showRefusedFeats ? (
+                        <ul style={{ margin: '0.25rem 0 0', maxHeight: 180, overflowY: 'auto', paddingLeft: '1.1rem' }}>
+                          {enginePlan.refusedFeatOptions
+                            .filter((option) => option.name.toLowerCase().includes(featSearch.trim().toLowerCase()))
+                            .map((option) => (
+                              <li key={option.id} style={{ color: 'var(--color-text-faint)', fontSize: '0.78rem', marginBottom: '0.1rem' }}>
+                                {option.name} — {option.unmet}
+                              </li>
+                            ))}
+                        </ul>
+                      ) : null}
+                    </>
+                  ) : null}
+                </div>
+              ) : enginePlan ? (
+                <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.35rem 0 0' }}>
+                  Feat options could not be read from the rules package: {enginePlan.optionFilterUnavailableReason}
+                </p>
+              ) : null}
+
               {/*
                 Three genuinely different states, kept apart. "Not yet
                 loaded" and "could not be read" are not the same as "the

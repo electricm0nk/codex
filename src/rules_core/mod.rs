@@ -21,6 +21,7 @@ pub mod feat_effects;
 pub mod feat_identity;
 pub mod feat_prereqs;
 pub mod level_up;
+pub mod level_up_option_filter;
 pub mod money;
 pub mod party_cr;
 pub mod pcgen_desc;

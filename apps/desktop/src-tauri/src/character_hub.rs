@@ -29,10 +29,13 @@ use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDam
 use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
 use codex::rules_core::feat_effects;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
+use codex::rules_core::level_up_option_filter::{filter_option_pool, FEAT_POOL};
 use codex::rules_core::money;
+use codex::rules_core::sheet_rule::{held_set, CharacterFacts, HeldSeed};
 use codex::rules_core::pilot_compute::{
     ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt,
-    race_alternate_trait_selection_id, ComputationExplanation, HeadlessReceiptStatus,
+    compute_pilot_base_chassis, race_alternate_trait_selection_id, ComputationExplanation,
+    HeadlessReceiptStatus,
     PilotBaseChassisComputation, RACE_ALTERNATE_TRAIT_CHOICE_ID, RACE_ALTERNATE_TRAIT_SELECTION_PREFIX,
 };
 use codex::rules_core::pilot_compute_corpus::{
@@ -706,6 +709,56 @@ pub(crate) fn sheet_lines_for(
         }
         Err(reason) => (Vec::new(), Some(reason.clone())),
     }
+}
+
+/// The per-character choice filter for the feat pool (SD-35 AT-35-E5-004; SD-34
+/// `decisions.md §17`): which feats THIS character qualifies for, and which it does not
+/// together with the requirement each one failed.
+///
+/// Built from the same three inputs the "Rules and features" section is rendered from —
+/// the `data/sheet_rules/` package, the chassis computation's held set, and the character's
+/// own facts — so the option list and the sheet agree by construction rather than by
+/// coincidence. `decisions.md §29.1`'s rule is one renderer with several consumers; this is
+/// another consumer of `sheet_rule`'s evaluator, not a second evaluator.
+///
+/// The third element is why the two lists are empty when the package could not be read: an
+/// unavailable package and "no feat qualifies" are different claims, and only the second is a
+/// statement about the rules.
+pub(crate) fn feat_options_for(
+    input: &CharacterInput,
+) -> (Vec<LevelUpOptionDto>, Vec<LevelUpRefusedOptionDto>, Option<String>) {
+    let package = match sheet_rule_package() {
+        Ok(package) => package,
+        Err(reason) => return (Vec::new(), Vec::new(), Some(reason.clone())),
+    };
+    let base = compute_pilot_base_chassis(input);
+    let mut seed = HeldSeed::from_character(input, &base);
+    seed.race_traits.extend(
+        resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()),
+    );
+    let facts = CharacterFacts::from_character(input, &base);
+    let held = held_set(package, &seed, &facts);
+
+    let filtered = filter_option_pool(package, &held, &facts, FEAT_POOL, &[]);
+    let eligible = filtered
+        .eligible
+        .iter()
+        .map(|option| LevelUpOptionDto {
+            id: option.id.clone(),
+            name: option.label.clone(),
+            condition: option.condition.clone(),
+        })
+        .collect();
+    let refused = filtered
+        .refused
+        .iter()
+        .map(|option| LevelUpRefusedOptionDto {
+            id: option.id.clone(),
+            name: option.label.clone(),
+            unmet: option.unmet.clone(),
+        })
+        .collect();
+    (eligible, refused, None)
 }
 
 /// Wire form of `pilot_compute::ComputationExplanation`.
@@ -1865,6 +1918,42 @@ pub struct PreviewLevelUpResponse {
     pub resource_pool_changes: Vec<LevelUpResourcePoolDeltaDto>,
     /// True when `to_level` crosses this class's PF1 capstone.
     pub capstone_threshold: bool,
+    /// **SD-35 AT-35-E5-004 — the per-character choice filter.** The feat options THIS
+    /// character qualifies for at this level-up, joined over `SheetRule.applies` by
+    /// `codex::rules_core::level_up_option_filter::filter_option_pool`. Prerequisites are
+    /// `Applies`, converted from the source's `PRE*` rows at ingest; this side reads no token.
+    pub feat_options: Vec<LevelUpOptionDto>,
+    /// The feat options this character does **not** qualify for, each carrying the
+    /// requirement it failed in the rule's own words. A refusal is a number the sheet
+    /// reports, never an option that silently disappears from the list.
+    pub refused_feat_options: Vec<LevelUpRefusedOptionDto>,
+    /// Why both option lists are empty when they are empty for a reason other than "no
+    /// option qualifies": the `data/sheet_rules/` package could not be read. `None` when the
+    /// package loaded — same discipline as `sheet_rules_unavailable_reason`.
+    pub option_filter_unavailable_reason: Option<String>,
+}
+
+/// One option this character may take at this level-up.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpOptionDto {
+    /// `<book>:<kind>:<slug>`, the same id `docs/work-inventory.json` keys the unit by.
+    pub id: String,
+    pub name: String,
+    /// The situational condition that prints on the line, when the gate included the option
+    /// situationally. `None` for an unconditional include.
+    pub condition: Option<String>,
+}
+
+/// One option this character may not take, and why — in the rule's words.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpRefusedOptionDto {
+    pub id: String,
+    pub name: String,
+    /// The failing requirement, rendered verbatim by the engine
+    /// (`"requires Dodge"`, `"base attack bonus at least 6"`). Never empty.
+    pub unmet: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1952,7 +2041,13 @@ pub(crate) fn preview_level_up_at_root(
         to_level,
     );
 
+    let (feat_options, refused_feat_options, option_filter_unavailable_reason) =
+        feat_options_for(&envelope.character_input);
+
     Ok(PreviewLevelUpResponse {
+        feat_options,
+        refused_feat_options,
+        option_filter_unavailable_reason,
         from_level,
         to_level,
         character_level,
@@ -9347,6 +9442,139 @@ mod tests {
                 .iter()
                 .any(|effect| effect.description.is_empty())),
             "every reported grant effect must carry the engine's own description"
+        );
+    }
+
+    /// **SD-35 AT-35-E5-004's evidence.** The criterion: "a level-3 fixture's option list
+    /// excludes a failed-prereq option and includes a met one."
+    ///
+    /// The fixture is the level-3 Human Fighter `request_for` already builds — Strength 16,
+    /// Dexterity 14, no selected feats. Against the live `data/sheet_rules/` package:
+    ///
+    /// * **Leadership is excluded.** Its converted gate is character level at least 7, and
+    ///   this character is level 3. It is not silently dropped: it appears in
+    ///   `refused_feat_options` carrying the requirement in the rule's own words.
+    /// * **Power Attack is included.** Its gate is base attack bonus at least 1 (a level-3
+    ///   Fighter has +3) and a Strength score of at least 13 (this character has 16).
+    /// * **Mobility is included, and that is the sharpest half of the proof.** Its gate holds
+    ///   `core_rulebook:feat:dodge`, and this fixture holds Dodge because
+    ///   `compose_character_input` really put `feat:dodge` on `chosen.selected_feats`. The
+    ///   same option refused for a character without Dodge is offered to this one: the join
+    ///   reads THIS character's own selections, not a static eligibility table.
+    ///
+    /// Power Attack is the load-bearing half of this test, not decoration. Before this
+    /// cycle's converter fix the Strength half of that gate lowered to a bare corpus variable
+    /// whose only contributions were the records that RAISE the prerequisite floor — the base
+    /// `max(STRSCORE, AltSTRSCORE)` term belongs to no corpus record and was lost — so the
+    /// gate read 0, and a Strength-16 fighter was refused Power Attack. A filter that
+    /// excludes a met prerequisite is worse than no filter, because it looks like it works.
+    #[test]
+    fn preview_level_up_filters_the_feat_options_by_this_characters_own_prerequisites() {
+        let input = compose_character_input(&request_for("race:human", 3));
+        let root = saved_root_for("preview-feat-options-3", input);
+
+        let preview =
+            preview_level_up_at_root(&root, FIGHTER_CLASS_ID).expect("preview should compute");
+
+        assert_eq!(preview.character_level, 4, "a level-3 fixture leveling to 4");
+        assert_eq!(
+            preview.option_filter_unavailable_reason, None,
+            "the sheet-rule package must be readable for this test to mean anything"
+        );
+
+        let offered: Vec<&str> =
+            preview.feat_options.iter().map(|option| option.name.as_str()).collect();
+        assert!(
+            !offered.is_empty(),
+            "the live feat pool must produce a real option list, not an empty one"
+        );
+
+        // Excluded: a level-7 requirement a level-3 character cannot meet.
+        let leadership = preview
+            .refused_feat_options
+            .iter()
+            .find(|option| option.id == "core_rulebook:feat:leadership")
+            .unwrap_or_else(|| {
+                panic!(
+                    "Leadership must be refused at character level 3. offered={} refused={}",
+                    preview.feat_options.len(),
+                    preview.refused_feat_options.len(),
+                )
+            });
+        assert!(
+            leadership.unmet.contains("character level") && leadership.unmet.contains('7'),
+            "the refusal must name the requirement in the rule's words, got {:?}",
+            leadership.unmet
+        );
+        assert!(
+            !preview.feat_options.iter().any(|o| o.id == "core_rulebook:feat:leadership"),
+            "a failed-prereq option must not also be offered"
+        );
+
+        // Included: an ungated option is always on offer.
+        assert!(
+            preview.feat_options.iter().any(|o| o.id == "core_rulebook:feat:improved_initiative"),
+            "an option with no prerequisite must be offered; it was refused as {:?}",
+            preview
+                .refused_feat_options
+                .iter()
+                .find(|o| o.id == "core_rulebook:feat:improved_initiative")
+                .map(|o| o.unmet.as_str())
+        );
+
+        // Included because of a feat THIS character actually selected.
+        assert!(
+            preview.feat_options.iter().any(|o| o.id == "core_rulebook:feat:mobility"),
+            "Mobility's gate holds Dodge, which this fixture selected; it was refused as {:?}",
+            preview
+                .refused_feat_options
+                .iter()
+                .find(|o| o.id == "core_rulebook:feat:mobility")
+                .map(|o| o.unmet.as_str())
+        );
+        // A non-repeatable feat the character already holds is neither on offer nor a refusal
+        // — it is not a choice at all. This fixture really selected both.
+        for held in ["core_rulebook:feat:dodge", "core_rulebook:feat:power_attack"] {
+            assert!(
+                !preview.feat_options.iter().any(|o| o.id == held),
+                "{held} is already held and must not be offered again"
+            );
+            assert!(
+                !preview.refused_feat_options.iter().any(|o| o.id == held),
+                "{held} is already held and must not be reported as refused"
+            );
+        }
+
+        // A **repeatable** feat the character already holds stays on offer: Weapon Focus is
+        // taken again for a different weapon, and this fixture holds one. `repeatable` is the
+        // record's own flag, so this is the corpus's answer, not a special case.
+        assert!(
+            preview.feat_options.iter().any(|o| o.id == "core_rulebook:feat:weapon_focus"),
+            "Weapon Focus is repeatable and must remain on offer to a character who holds it"
+        );
+    }
+
+    /// Every option in the pool lands in exactly one of the two lists, and the two never
+    /// overlap: a refusal is a number this response reports, not a record that vanishes.
+    #[test]
+    fn no_feat_option_is_both_offered_and_refused() {
+        let input = compose_character_input(&request_for("race:human", 3));
+        let root = saved_root_for("preview-feat-options-disjoint", input);
+
+        let preview =
+            preview_level_up_at_root(&root, FIGHTER_CLASS_ID).expect("preview should compute");
+
+        let offered: BTreeSet<&str> =
+            preview.feat_options.iter().map(|option| option.id.as_str()).collect();
+        let refused: BTreeSet<&str> =
+            preview.refused_feat_options.iter().map(|option| option.id.as_str()).collect();
+
+        assert_eq!(offered.len(), preview.feat_options.len(), "offered ids must be unique");
+        assert_eq!(refused.len(), preview.refused_feat_options.len(), "refused ids must be unique");
+        assert!(offered.is_disjoint(&refused));
+        assert!(
+            preview.refused_feat_options.iter().all(|option| !option.unmet.trim().is_empty()),
+            "every refusal must carry the requirement it failed"
         );
     }
 
