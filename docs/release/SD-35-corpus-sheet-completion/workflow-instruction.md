@@ -554,8 +554,23 @@ Runs **inside a dispatched agent** (§2.2). Steps 0 and 3 are where SD-35 differ
      python3 scripts/shape_engine_boundary.py --check
      python3 scripts/missing_engine_tables.py --check
      python3 scripts/denominator_gate.py --check 'docs/release/SD-35-corpus-sheet-completion/*.md' 'docs/release/SD-35-corpus-sheet-completion/artifacts/**/*.md'
+     python3 scripts/denominator_gate.py --check-provenance   # DIFFERENT flag from --check above; nonzero exit BLOCKS the push
      scripts/verify.sh --only pi-sweep
      ```
+     **Why both `denominator_gate.py` lines are here, and why neither substitutes for the other:**
+     `--check` and `--check-provenance` are different checks. `--check` scans for unsourced
+     figures the gate can reach by path; `--check-provenance` is the flag `verify.sh`'s
+     `figure-provenance` stage runs (no path arguments — it uses its own default paths), and it
+     enforces that every figure *inside a "Figures + their re-derive commands" section* carries a
+     re-derive command **on its own line**. Until 2026-09-09 only `--check` ran per-cycle, so a
+     `--check-provenance` violation could not be caught by any cycle and instead surfaced only at
+     the ~90-minute epic wrap-up gate — which is exactly how the Epic 2, Epic 3 and Epic 4
+     wrap-ups each went red on `figure-provenance` (incident key
+     `figure-provenance-command-on-next-line`, 3 occurrences). This line is the mechanical control
+     for that key: it is Python only, needs no build, and runs in seconds.
+     **Note the gate checks that a command is present and resolvable, not that it runs.** After
+     adding or editing a figure row, actually execute its command and confirm it prints the value
+     you wrote; a green gate over a broken command is the failure rule 9 exists to prevent.
      The desktop crate and frontend run here **only if the cycle touched `apps/`**; otherwise
      they run at the epic wrap-up (§10). `cargo clippy --locked --tests -j 6` on the touched
      targets; fix warnings in the same cycle.

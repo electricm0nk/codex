@@ -126,12 +126,16 @@
   `docs/retro/events/at-35-e4-003.jsonl`); the
   mechanism a later cycle should build is `git add -N` in step 2's snippet, not a caution
   (`AGENTS.md` rule 8).
-- **Figures + their re-derive commands** (denominator: **0 units non-DONE of 49,438** at Epic 4's
-  first cycle start `07e29075b4` — see the ledger's `totals.denominator` for why the epic's
-  authoring-time population of 4,726 was already closed by Epic 3):
+- **Figures + their re-derive commands.** The scoped denominator, its Epic-4 start pin, and the
+  epic's authoring-time population — all previously stated inline in this sentence without a
+  re-derive command — are now the first three rows of the table, each with the command that
+  produces it:
 
   | figure | value | command |
   |---|---|---|
+  | scoped denominator at Epic 4's first cycle start (`07e29075b4`) | **0 units non-DONE of 49,438** | `python3 -c "import json;print(json.load(open('docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/rate-ledger.json'))['totals']['denominator'])"` |
+  | total units in the corpus at that same pin `07e29075b4` | **49,438** | `git show 07e29075b4:docs/work-inventory.json > /tmp/wi-e4start.json && python3 -c "import json;print(json.load(open('/tmp/wi-e4start.json'))['totals']['units'])"` |
+  | Epic 4's authoring-time population (M 4,334 + V 392), closed by Epic 3 before Epic 4 began | **4,726** | `python3 -c "import json,re;d=json.load(open('docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/rate-ledger.json'))['totals']['denominator'];print(re.search(r'4,334 . V 392 = ([0-9,]+)',d).group(1))"` |
   | Epic 4 cycle receipts on disk before this cycle | **2** | `ls docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/*_receipt.md \| wc -l` |
   | ledger rows written | **3** (2 transcribed + this cycle's own) | `python3 -c "import json;print(len(json.load(open('docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/rate-ledger.json'))['cycles']))"` |
   | transcription discrepancies | **0** | `grep -hE 'closed=[0-9]+ relabeled' docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/*_receipt.md` compared against the ledger's `units_closed` / `units_relabeled` / `rust_lines_changed` / `builds_recorded` / `pcgen_live_files` fields |
