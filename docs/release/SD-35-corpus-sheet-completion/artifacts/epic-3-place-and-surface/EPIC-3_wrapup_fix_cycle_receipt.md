@@ -1,7 +1,8 @@
 # Cycle EPIC-3-WRAPUP-FIX — Epic 3, Place and surface / wrap-up correction cycle
 
-- **Commit SHA:** `<work-commit>` (this receipt's own SHA pinned by the follow-up docs commit, per
-  `workflow-instruction.md §6`)
+- **Commit SHA:** `2dc322ae32` — the single work commit carrying every change this cycle made
+  (`git show --stat 2dc322ae32`: 44 files). This line was pinned by the follow-up docs commit, per
+  `workflow-instruction.md §6`.
 - **Cycle start SHA:** `e91b1d8873` — the tip of `origin/tranche/15` when this cycle began, **14
   commits above `07e29075b4`, the HEAD the RED wrap-up gate ran at.** The tree moved between the
   two runs (AT-35-E3-004 cycle 1 and AT-35-E4-001 cycle 1 landed), and that movement changed one
@@ -15,7 +16,7 @@
   - `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-4-resolve-and-verify/AT-35-E4-001_cycle1_receipt.md` (2 figure lines — not in the gate's list; see **Discoveries**)
   - `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-3-place-and-surface/EPIC-3_wrapup_gate_report.md` (committed from the gate worker's worktree; 3 denominator lines fixed)
   - `docs/retro/events/at-35-e3-wrapup.jsonl`, `docs/retro/events/epic-3-wrapup-gate.jsonl` (committed from the gate worker's worktree, unmodified)
-  - `docs/retro/events/at-35-e3-wrapup-fix.jsonl` (this cycle's 5 events)
+  - `docs/retro/events/at-35-e3-wrapup-fix.jsonl` (this cycle's 6 events: 3 `correction`, 2 `resolution`, 1 `verification` — `wc -l < docs/retro/events/at-35-e3-wrapup-fix.jsonl`)
   - `scripts/verify-baselines.env` (`BASELINE_ROOT_FULL_TESTS` 8724 → 8727, with its derived attribution)
   - `site/dashboard/PF1e-dashboard.json`, `site/dashboard/PF1e-dashboard.json.last-good`,
     `site/dashboard/units/*.json` (8 files + `index.json`), `site/status-data.json`,

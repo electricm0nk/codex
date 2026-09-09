@@ -43,7 +43,8 @@ re-measured at the cut by the launch-readiness audit.
 
 ### 2026-09-09 — Epic 3 wrap-up (`§10` steps 0-3) — gate RED at `07e29075b4`, correction cycle GREEN — **complete**
 
-**Status: complete.** Receipt `artifacts/epic-3-place-and-surface/EPIC-3_wrapup_fix_cycle_receipt.md`;
+**Status: complete.** Work commit `2dc322ae32` (cycle start `e91b1d8873`); receipt
+`artifacts/epic-3-place-and-surface/EPIC-3_wrapup_fix_cycle_receipt.md`;
 gate report `artifacts/epic-3-place-and-surface/EPIC-3_wrapup_gate_report.md`; events
 `docs/retro/events/at-35-e3-wrapup.jsonl`, `epic-3-wrapup-gate.jsonl`, `at-35-e3-wrapup-fix.jsonl`.
 Kanban row 32.
