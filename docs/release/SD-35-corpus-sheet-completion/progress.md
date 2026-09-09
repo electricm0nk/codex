@@ -28,11 +28,11 @@ process defect** recorded by the epic wrap-up.
 | 1 — Tax cut | 6 | 6 | 0 | 0 |
 | 2 — Sheet rule | 5 | 5 | 0 | 0 |
 | 3 — Place and surface | 4 | 4 | 0 | 0 |
-| 4 — Resolve and verify | 3 | 2 | 0 | 1 |
+| 4 — Resolve and verify | 3 | 3 | 0 | 0 |
 | 5 — Residues | 5 | 3 | 2 | 0 |
 | 6 — PCGen exit | 4 | 0 | 0 | 4 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **20** | **2** | **8** |
+| **Total** | **30** | **21** | **2** | **7** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,66 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-09 — Epic 4 / AT-35-E4-003 cycle 1 — the rate ledger — **complete**
+
+**Status: complete.** Work commit `ea9650ffc9` (cycle start `e7f66b1f80`); litter fold
+`59346e8fd3`; receipt `artifacts/epic-4-resolve-and-verify/AT-35-E4-003_cycle1_receipt.md`;
+deliverable `artifacts/epic-4-resolve-and-verify/rate-ledger.json`; events
+`docs/retro/events/at-35-e4-003.jsonl` (1 `correction`). Kanban row 18.
+
+- **Scope gate:**
+  ```
+  SCOPE_GATE: EXEMPT (ledger cycle — records this epic's per-cycle rows; closes zero units by design)
+  ```
+  `decisions.md §2`'s floor exemption, claimed on the "closes zero units by design" clause. Run
+  anyway for the record, the gate reports what both preceding Epic 4 cycles' gates did —
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`; there is nothing left
+  to scope.
+- **Receipt rows (mechanical):**
+  ```
+  since=e7f66b1f80029b3d8eb0c8892d614943fe5491cd residue_gate=present
+  closed_by_kind=
+  relabeled_moves=
+  regressed=0 added=0 dropped=0
+  closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=260
+  ```
+  Docs-only: no Rust written, so no cargo build was owed (`§6` step 3 ties the build to a
+  figure-moving change; the `AT-35-E3-004_cycle1` precedent). `ratio` is `n/a`, a division by
+  zero, never `0.0`.
+- **Refused tokens:** none.
+- **PCGen residue:** `live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736
+  verdict=PASS` — identical at start and end.
+- **The ledger.** Three rows, one per Epic 4 cycle, each transcribed from that cycle's own
+  committed receipt with **0 discrepancies**
+  (`grep -hE 'closed=[0-9]+ relabeled' artifacts/epic-4-resolve-and-verify/*_receipt.md`).
+  Totals: **3 cycles / 0 units closed / 0 relabeled / 302 rust lines / 1 build recorded**,
+  `pcgen_live_files` **260 → 260**. `ratio_over_the_epic` is **null**, a division by zero, never
+  `0.0`: Epic 4's authoring-time population — M 4,334 + V 392 = **4,726** of the 23,315 then
+  non-DONE — had already been closed by Epic 3's `AT-35-E3-001_cycle2` (618) and
+  `AT-35-E3-002_cycle1` (786, the whole remainder), so every Epic 4 cycle closed 0 of a 0-unit
+  scoped population. What Epic 4 moved is recorded per row instead: `AT-35-E4-001_cycle1` took
+  `unmapped_token_types` 25 → 0 and `degraded_records` 974 → 603 without moving a bucket, and
+  `AT-35-E4-002_cycle1` produced the corpus-wide oracle verdicts (392 compared, 184 agree, 10
+  disagree, 198 unverifiable) bucket V's closure was owed.
+- **Discovery / correction `1788959112531-at-35-e4-003-d78240`:** `workflow-instruction.md §6`
+  step 2's two audit greps run over `git diff <base>...HEAD`, and **a cycle whose entire output
+  is new files sees an empty diff** — an untracked file is invisible to `git diff` until it is
+  added. Run as written, before committing, the audit reads a false `OK_NO_TOKENS` over nothing
+  at all. Caught by re-running with `git add -N` on this cycle's two new files, which surfaced 4
+  real hits — all self-referential prose in the receipt (three quoted phrases being
+  dispositioned, plus the grep's own pattern string), none in code or data. The mechanism a
+  later cycle should build is `git add -N` inside step 2's snippet, not a caution
+  (`AGENTS.md` rule 8).
+- **Gates at HEAD:** `pcgen_residue_gate.py --check` PASS · `completion_atlas.py --check`
+  `DONE: 49438` of 49,438, every other bucket 0 · `token_coverage.py --check` `verdict=PASS`,
+  `refused_non_done=0` · `shape_engine_boundary.py --check` `not_held_by_engine=0` ·
+  `missing_engine_tables.py --check` `population=0` · `data/sheet_rules/` token grep `0` ·
+  `denominator_gate.py --check` `files_checked=56 violations=0` · `verify.sh --only pi-sweep`
+  `RESULT: PASS`. Cargo and the desktop crate not run and not owed — no Rust, no `data/`, no
+  `scripts/`, no `apps/` path changed.
+- **Next:** criterion at zero; Epic 4's three criteria are all `complete`. Next step is the
+  Epic 4 wrap-up gate (`workflow-instruction.md §10`), then Epic 5.
 
 ### 2026-09-09 — Epic 4 / AT-35-E4-002 cycle 1 — bucket V's 392 units through the oracle harness once — **complete**
 

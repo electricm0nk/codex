@@ -1,6 +1,9 @@
 # Cycle 1 — Epic 4, Resolve and verify / AT-35-E4-003
 
-- **Commit SHA:** `PENDING` (cycle start `e7f66b1f80`)
+- **Commit SHA:** `ea9650ffc9` (cycle start `e7f66b1f80`; the litter fold `59346e8fd3` — the
+  atlas `derived_at` re-stamp `completion_atlas.py --check` makes as a side effect, plus one
+  live `sd31-transcribe.jsonl` append from another session on the shared checkout — and the
+  docs-row commit that pins this line follow it)
 - **Scope gate:**
   ```
   SCOPE_GATE: EXEMPT (ledger cycle — records this epic's per-cycle rows; closes zero units by design)
