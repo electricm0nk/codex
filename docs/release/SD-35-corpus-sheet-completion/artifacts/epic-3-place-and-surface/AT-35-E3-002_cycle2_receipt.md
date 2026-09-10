@@ -5,7 +5,7 @@ code, and exists to re-derive the criterion's evidence bar at the current HEAD a
 the one standing claim in cycle 1's receipt that the intervening epics made false. Cycle 1
 (`AT-35-E3-002_cycle1_receipt.md`, `26bdfa8d5b`) is the cycle that closed the units.
 
-- **Commit SHA:** `bb47e1eff5` — the docs commit carrying this receipt, the two retro events,
+- **Commit SHA:** `7d237da322` — the docs commit carrying this receipt, the two retro events,
   the re-stamped SD-34 atlas artifact and the `progress.md` / `kanban.md` rows. Cycle start
   `59f0215ff18008fa864ad4e712387044af883fa7` on `tranche/15` (itself this cycle's first commit,
   `chore: fold the reclaim daemon's routine event append`, which cleared the tree the rebase
@@ -43,7 +43,11 @@ the one standing claim in cycle 1's receipt that the intervening epics made fals
   receipts themselves, which quote the pattern; and **3** are **removed** (`-`) lines — the
   `engine_diagnostic:vacuous_placeholder_row_no_corpus_content_to_render` evidence strings cycle
   1 deleted from `docs/work-inventory.json`. No stub, inline mock or `"Would …"` string. **This
-  figure is cycle 1's, corrected** — see **Discoveries**.
+  figure is cycle 1's, corrected** — see **Discoveries**. **On the final diff, after this
+  receipt is committed, the same grep returns 19**: the five added lines are this receipt's own,
+  the five in it that quote the grep pattern and quote cycle 1's sentence. The receipt-prose
+  subtotal is therefore 9 → 14 and every other subtotal is unchanged (2 added prose, 3 removed
+  lines). Re-run of the step-2 audits at `7d237da322`: identifier audit `OK_NO_BUNDLE_TAGS`.
 - **Acceptance criterion:** verbatim from `epic-breakdown.md` `### AT-35-E3-002`: "**AT-35-E3-002
   — every other kind's bucket B reaches zero.** 3,723 units at authoring: template 1,092,
   companion 634, feat 490, ability 475, spell 391, race_trait 319, class 118, equipment 74, race
