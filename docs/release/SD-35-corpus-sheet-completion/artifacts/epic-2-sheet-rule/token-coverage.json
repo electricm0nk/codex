@@ -1348,7 +1348,7 @@
   "MAXLEVEL": {
    "mapping_row": {
     "family": "prereq",
-    "maps_to": "Metadata(ignored-by-sheet)"
+    "maps_to": "Applies(class level ceiling)"
    },
    "carrying": 184,
    "carrying_non_done": 0,
