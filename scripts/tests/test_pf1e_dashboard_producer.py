@@ -448,6 +448,9 @@ class WiringSummaryTopLevelKeysCanaryTest(unittest.TestCase):
 
     _EXPECTED_TOP_LEVEL_KEYS = frozenset({
         "available", "schema", "generated_at", "source_document",
+        # The content guard added in the SD-35 Epic 2 wrap-up correction
+        # round 2 -- see ForeignContentCacheIsRejectedTest below.
+        "source_document_sha256",
         "wiring_class_values", "corpus_wide", "by_book", "cross_tab",
         "cross_tab_by_book", "cross_tab_by_kind", "cross_tab_by_kind_by_book",
         "doneness_values", "doneness_meaning", "doneness", "doneness_by_book",
@@ -912,6 +915,160 @@ class StateDumpTimeoutIsLoudUnderStrictModeTest(unittest.TestCase):
                 max_age_seconds=1,
             )
         self.assertEqual(seen_timeouts, [producer.WORK_INVENTORY_BUILD_TIMEOUT_SECONDS])
+
+
+class ForeignContentCacheIsRejectedTest(unittest.TestCase):
+    """SD-35 Epic 2 wrap-up correction round 2 — the mechanism that actually
+    published a wrong public dashboard.
+
+    THE OBSERVED FAILURE. `verify.sh`'s `site-dashboard-pin` stage PASSED
+    (`docs/work-inventory.json` still hashed to the pin the feed was
+    published from) while `site-dashboard-check` FAILED, and the committed
+    feed carried `work_inventory.by_doneness` = `done 23,650 /
+    in-progress 17,563` where a fresh render from that same pinned inventory
+    gives `done 46,965 / in-progress 160` — the public site understating the
+    corpus by ~23,300 units. Re-derive either figure with
+    `python3 -c "import json;print(json.load(open('site/dashboard/PF1e-dashboard.json'))['work_inventory']['by_doneness'])"`.
+
+    WHY THE STRICT-TIMEOUT THEORY IS WRONG. The re-gate report attributed
+    this to `publish-site-dashboard.sh`'s publish branch running the producer
+    without `PF1E_DASHBOARD_STRICT_TIMEOUT=1`, so a timing-out state dump
+    fell back to a stale cache. Measured, that is not it: on the shared
+    checkout at `f1f547a41e`, `python3 scripts/observer/pf1e_dashboard_producer.py`
+    run WITHOUT the strict flag returns the CORRECT `done 46,965` in 12.7 s.
+    Strictness only changes behaviour on a timeout, and no timeout occurred.
+    A control aimed at that flag would not have observed this failure at all.
+
+    WHAT DID IT. `compute_wiring_class_summary()` is the sole source of
+    `by_doneness`, and its cache (`WIRING_CLASS_CACHE`, default
+    `~/swarm-observer/wiring-class-summary.json`) lives OUTSIDE the repo —
+    one file shared by the main checkout and all 14 linked worktrees. Its
+    warm-cache guard accepted a cache on three predicates: mtime newer than
+    the source doc, equal `schema`, and equal `source_document`. That last
+    one is `publishable_document_path()`, which deliberately normalises to
+    the repo-relative string `docs/work-inventory.json` so an absolute path
+    never reaches `site/` — so EVERY tree's inventory answers to the same
+    name. None of the three predicates says anything about the source
+    document's CONTENT. A cache computed in another tree (or from an earlier
+    revision of the same path) and written a few minutes later is therefore
+    newer, same-schema, same-name — and gets served verbatim for a document
+    it was never computed from. `site-dashboard-pin` then certifies the
+    INPUT, while the OUTPUT came from somewhere else entirely, which is
+    exactly the pair of stage results observed.
+
+    THE CONTROL. The cache records `source_document_sha256`, and the warm
+    path requires it to equal the sha256 of the bytes on disk now. Content,
+    not mtime, not a normalised name.
+
+    Prove-it-can-fail: delete the `source_document_sha256` comparison from
+    `compute_wiring_class_summary()`'s warm-cache guard and re-run — this
+    test goes red, because the foreign cache below is then served verbatim
+    and `doneness` comes back with the OTHER document's tally. Verified red
+    before the fix landed and green after.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+
+    @staticmethod
+    def _units(n):
+        return [
+            {"id": f"core_rulebook:spell:u{i}", "book": "core_rulebook",
+             "kind": "spell", "wiring_class": "static", "status": "sheet-complete"}
+            for i in range(n)
+        ]
+
+    def _write_doc(self, path, n, stamp):
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump({"generated_at": stamp, "units": self._units(n)}, f)
+
+    def test_cache_computed_from_other_content_at_same_path_is_rejected(self):
+        doc_path = os.path.join(self._tmp.name, "work-inventory.json")
+        cache_path = os.path.join(self._tmp.name, "wiring-class-summary.json")
+
+        # 1. A cold run against document A (1 unit) writes the cache.
+        self._write_doc(doc_path, 1, "2026-09-01T00:00:00Z")
+        first = producer.compute_wiring_class_summary(
+            doc_path=doc_path, cache_path=cache_path)
+        self.assertTrue(first.get("available"), first.get("note"))
+        self.assertEqual(first["doneness"].get(producer.DONENESS_DONE, 0), 1)
+
+        # 2. The document at that SAME path is now different content —
+        #    document B, 7 units. This is the shared-checkout shape: the
+        #    cache in ~/swarm-observer was computed from another tree's
+        #    (or an earlier revision's) docs/work-inventory.json.
+        self._write_doc(doc_path, 7, "2026-09-09T06:23:53Z")
+
+        # 3. …and the cache is NEWER by mtime than that document, so the
+        #    mtime predicate is satisfied. Schema matches (same producer),
+        #    and `source_document` matches too, because it normalises to the
+        #    repo-relative name every tree shares.
+        doc_mtime = os.path.getmtime(doc_path)
+        os.utime(cache_path, (doc_mtime + 600, doc_mtime + 600))
+        with open(cache_path, encoding="utf-8") as f:
+            warm = json.load(f)
+        self.assertEqual(warm.get("schema"), producer.WIRING_SUMMARY_SCHEMA)
+        self.assertEqual(warm.get("source_document"),
+                         producer.publishable_document_path(doc_path))
+
+        second = producer.compute_wiring_class_summary(
+            doc_path=doc_path, cache_path=cache_path)
+
+        # The summary must describe the document on disk NOW (7 units), not
+        # the one the cache was computed from (1 unit). Serving the cache
+        # here is the live defect: a feed published from it reports another
+        # tree's tally while its input pin certifies this tree's inventory.
+        self.assertEqual(
+            second["doneness"].get(producer.DONENESS_DONE, 0), 7,
+            "the warm cache was computed from DIFFERENT content at the same "
+            "path and was served anyway — by_doneness now describes a "
+            "document that is not the pinned one",
+        )
+        self.assertEqual(sum(second["corpus_wide"].values()), 7)
+
+    def test_summary_records_the_sha256_of_the_document_it_read(self):
+        """The recorded hash must be the real digest of the bytes on disk —
+        a field that is merely present, or self-consistently wrong, would
+        make the guard above always-pass (the always-green shape)."""
+        import hashlib
+
+        doc_path = os.path.join(self._tmp.name, "work-inventory.json")
+        cache_path = os.path.join(self._tmp.name, "wiring-class-summary.json")
+        self._write_doc(doc_path, 3, "2026-09-01T00:00:00Z")
+        with open(doc_path, "rb") as f:
+            expected = hashlib.sha256(f.read()).hexdigest()
+
+        summary = producer.compute_wiring_class_summary(
+            doc_path=doc_path, cache_path=cache_path)
+        self.assertEqual(summary.get("source_document_sha256"), expected)
+
+    def test_warm_cache_is_still_served_when_the_content_matches(self):
+        """The guard must not defeat caching outright: an untouched document
+        still gets its cache back, or the ~2-minute recompute would run on
+        every 5-minute cron tick."""
+        doc_path = os.path.join(self._tmp.name, "work-inventory.json")
+        cache_path = os.path.join(self._tmp.name, "wiring-class-summary.json")
+        self._write_doc(doc_path, 4, "2026-09-01T00:00:00Z")
+        producer.compute_wiring_class_summary(
+            doc_path=doc_path, cache_path=cache_path)
+
+        # Mark the cached object so a served cache is distinguishable from a
+        # recomputed one, and keep it newer than the doc.
+        with open(cache_path, encoding="utf-8") as f:
+            warm = json.load(f)
+        warm["_served_from_cache_marker"] = True
+        with open(cache_path, "w", encoding="utf-8") as f:
+            json.dump(warm, f)
+        doc_mtime = os.path.getmtime(doc_path)
+        os.utime(cache_path, (doc_mtime + 600, doc_mtime + 600))
+
+        again = producer.compute_wiring_class_summary(
+            doc_path=doc_path, cache_path=cache_path)
+        self.assertTrue(
+            again.get("_served_from_cache_marker"),
+            "an unchanged document must still hit the warm cache",
+        )
 
 
 if __name__ == "__main__":

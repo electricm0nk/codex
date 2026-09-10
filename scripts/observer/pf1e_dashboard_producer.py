@@ -29,6 +29,7 @@ Stdlib only. Runs via hermes cron, watchdog, or manual tick.
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
 import json
 import os
 import pathlib
@@ -3693,7 +3694,14 @@ WIRING_CLASS_CACHE = os.environ.get(
 # `WiringSummaryTopLevelKeysCanaryTest` in
 # `scripts/tests/test_pf1e_dashboard_producer.py` for the regression
 # coverage this incident earned.
-WIRING_SUMMARY_SCHEMA = 13
+# Bumped 13 -> 14 (SD-35 Epic 2 wrap-up correction round 2): the return/cache
+# shape gained `source_document_sha256`, the content guard that finally makes
+# the warm-cache branch answer "was this computed from THIS document?" rather
+# than only "is it newer, same-schema and same-name?". The guard alone already
+# rejects every pre-existing cache (the field is absent, so the comparison
+# fails closed), but the shape genuinely changed, and this constant is the
+# repo's stated convention for that -- see `WiringSummaryTopLevelKeysCanaryTest`.
+WIRING_SUMMARY_SCHEMA = 14
 
 # ---------------------------------------------------------------------------
 # Doneness (added 2026-08-12, operator directive; SD-29 `decisions.md §46`)
@@ -4239,6 +4247,44 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
     except OSError as exc:
         return {"available": False, "note": f"could not stat {doc_path}: {exc}"}
 
+    # THE CONTENT GUARD (SD-35 Epic 2 wrap-up correction round 2). Read the
+    # document's bytes ONCE, here, and hash them: the warm-cache branch below
+    # compares that digest, and the cold path parses `raw` rather than
+    # re-reading. `cache_path` defaults to `~/swarm-observer/...` -- OUTSIDE
+    # the repo, one file shared by the main checkout and every linked
+    # worktree -- and the three predicates that used to guard it (mtime,
+    # `schema`, `source_document`) say nothing about the document's CONTENT.
+    # `source_document` in particular is `publishable_document_path()`, which
+    # normalises to the repo-relative string `docs/work-inventory.json` so an
+    # absolute path never reaches `site/`, which means every tree's inventory
+    # answers to the same name. A cache computed in another tree, or from an
+    # earlier revision of this same path, and written minutes later is newer,
+    # same-schema and same-name -- and was served verbatim for a document it
+    # had never read.
+    #
+    # That is not hypothetical. It published a wrong public dashboard: at
+    # `f1f547a41e`, `site-dashboard-pin` PASSED (the inventory still hashed to
+    # its pin) while `site-dashboard-check` FAILED, with the committed feed
+    # carrying `work_inventory.by_doneness` = `done 23,650 /
+    # in-progress 17,563` against a fresh render's `done 46,965 /
+    # in-progress 160` from that same pinned inventory -- ~23,300 units of
+    # public under-reporting. `by_doneness` has exactly one source: this
+    # function. The pin certified the INPUT while the OUTPUT came from
+    # another tree's document, which is precisely the pair of stage results
+    # observed. Covered by
+    # `scripts/tests/test_pf1e_dashboard_producer.py::ForeignContentCacheIsRejectedTest`.
+    #
+    # Not the strict-timeout theory the re-gate report proposed: measured on
+    # the shared checkout at that SHA, the producer run WITHOUT
+    # `PF1E_DASHBOARD_STRICT_TIMEOUT=1` returns the correct 46,965 in 12.7 s.
+    # No timeout occurred, so no stale-dump fallback could have been taken.
+    try:
+        with open(doc_path, "rb") as f:
+            raw = f.read()
+    except (OSError, MemoryError) as exc:
+        return {"available": False, "note": f"could not read {doc_path}: {exc}"}
+    doc_sha256 = hashlib.sha256(raw).hexdigest()
+
     try:
         if os.path.getmtime(cache_path) >= src_mtime:
             with open(cache_path, encoding="utf-8") as f:
@@ -4258,18 +4304,23 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
             # false zero happened during measurement. Require the cache's own
             # recorded `source_document` to match the doc_path being asked
             # for now, not just a schema and a timestamp.
+            #
+            # …and the content guard: the cache must name the sha256 of the
+            # bytes just read. A cache written before this guard existed has
+            # no such field, so `None != doc_sha256` rejects it -- the empty
+            # case fails closed rather than reading as agreement.
             if (cached.get("available")
                     and cached.get("schema") == WIRING_SUMMARY_SCHEMA
                     and cached.get("source_document")
-                        == publishable_document_path(doc_path)):
+                        == publishable_document_path(doc_path)
+                    and cached.get("source_document_sha256") == doc_sha256):
                 return cached
     except (OSError, json.JSONDecodeError):
         pass
 
     try:
-        with open(doc_path, encoding="utf-8") as f:
-            doc = json.load(f)
-    except (OSError, json.JSONDecodeError, MemoryError) as exc:
+        doc = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError, MemoryError, ValueError) as exc:
         return {"available": False, "note": f"could not read {doc_path}: {exc}"}
 
     corpus_wide: dict[str, int] = {}
@@ -4437,6 +4488,13 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
         "schema": WIRING_SUMMARY_SCHEMA,
         "generated_at": doc.get("generated_at"),
         "source_document": publishable_document_path(doc_path),
+        # The digest of the bytes this summary was actually computed from --
+        # the content guard's other half (see the block comment on the
+        # warm-cache branch above). `source_document` names WHICH file in a
+        # form safe to publish; this names WHICH CONTENT of it, which is the
+        # part a normalised path cannot carry and the part a shared
+        # out-of-repo cache gets wrong.
+        "source_document_sha256": doc_sha256,
         "wiring_class_values": list(WIRING_CLASS_VALUES),
         "corpus_wide": corpus_wide,
         "by_book": by_book,

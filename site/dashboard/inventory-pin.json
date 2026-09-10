@@ -1,6 +1,6 @@
 {
   "_comment": "Written by scripts/publish-site-dashboard.sh. The sha256 of the docs/work-inventory.json that site/dashboard/PF1e-dashboard.json was rendered from. `--check-pin` re-hashes that file and compares, so a cycle that moves the inventory without republishing the feed goes red in milliseconds at its own push gate instead of 90 minutes later at the epic wrap-up.",
-  "pinned_at": "2026-09-10T05:57:19Z",
+  "pinned_at": "2026-09-10T10:34:12Z",
   "pinned_from": "docs/work-inventory.json",
   "work_inventory_sha256": "5a0a0787312b5181d41214cb52abcd6e0c250fc409a75675ed6e839b4142e36f"
 }
