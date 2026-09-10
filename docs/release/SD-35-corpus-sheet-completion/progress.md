@@ -41,6 +41,68 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — AT-35-E6-001 cycle 3 — `formula-evaluator-leaves-live` — **partial** (the feat-prerequisite family closed: `pre_tokens` 4 files / 19 hits → **0 / 0**; 1 file remains in 1 named family)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `python3 scripts/cycle_scope_gate.py --min 500` → `inventory=docs/work-inventory.json
+  scope=(whole remainder) scoped_by_bucket= scoped_by_kind= scoped=0 remaining_non_done=0
+  floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=1168 ratio=n/a builds_recorded=1
+  pcgen_live_files=253` (`cycle_scope_gate.py --receipt --since da5e9f8d3c --before
+  /tmp/wi-before-AT-35-E6-001-c3.json --after docs/work-inventory.json`; `regressed=0 added=0
+  dropped=0`, `closed_by_kind=` and `relabeled_moves=` empty). Epic 6 moves no unit by design.
+- **Refused tokens:** none — no converter refusal was added or cleared; `_refused.json` unchanged
+  at 142 records, one shape, `refused_non_done=0`.
+- **PCGen residue:** `live_files=253 live_hits=12336 baseline_files=260 baseline_hits=12736
+  verdict=PASS` — down on hits from cycle 2's `253 / 12,354`, up on neither axis. The three
+  identifiers this criterion owns: `pre_tokens` 4 files/19 hits → **0/0, closed**;
+  `PcgenFormulaEvaluator` 1/6 → 1/6 and `bonus_stack_reader` 1/9 → 1/9, both untouched.
+  **Not zero — hence `partial`.**
+- **What moved.** `feat_prereqs` and `pilot_compute::prestige_class_entry_gate` no longer parse
+  the ingest format's `PRE`-family token text at run time. Both read each record's CONVERTED
+  `applies` gate out of `data/sheet_rules/` and decide it with `sheet_rule::evaluate_applies` —
+  the evaluator the sheet renders through and `level_up_option_filter` filters with. The new
+  `feat_prereqs::converted_gate` is the shared reading of a gate as the same three outcomes the
+  token evaluator produced: only a definitively unmet term blocks, and a term over a fact the
+  character record does not carry is reported, never refused. The token parser is untouched under
+  `src/pcgen_import/` and still read by the converter, the oracle harness and the oracle-corpus
+  subtype test (`decisions.md §11`: KEPT, for Starfinder).
+- **Discovery — a converter defect nothing had noticed, fixed at the source.** 963 of the 1,830
+  gated feat records stated every requirement **exactly twice**: the converter conjoins a record's
+  own gate onto every line it emits, and a record whose only line-level gate IS the record gate
+  doubled it. `A and A` is `A`, so no verdict ever changed — but every consumer that *reports* a
+  gate printed each requirement twice, and one that counts terms counted six where the record has
+  three. `Applies::all` now drops a term already in the conjunction; `data/sheet_rules/`
+  regenerated, 1,926 files.
+- **Discovery — the token evaluator was passing prerequisites it could not read.** A starting
+  Fighter's eligible catalog feats go **755 → 549 of 2,227**, re-derived by the test rather than
+  adjusted to fit: Combat Expertise at Int 10 and Desert Dweller at Con 12 with 0 Survival ranks
+  are now denied *with the character's own value in the line*, and `Fey Foundling` joins `Wilding`
+  as a `PRELEVEL:MAX=1` ceiling that is actually enforced. What deliberately did NOT tighten: a
+  `Holds` counting a "special ability" **pool** stays reported, because the held set's grant edges
+  reach a Barbarian's Rage and a Paladin's Lay on Hands but not a Cleric's Channel Positive Energy
+  (its grant is conditioned on an alignment the character record has no field for) — and this path
+  refuses a *save*, not merely a picker row. Measured, and pinned by
+  `a_class_feature_pool_holding_is_reported_not_refused`.
+- **Build scope:** `cargo test --locked --no-run -j 6` → `NO_RUN_EXIT=0`; `--lib` →
+  `3244 passed; 0 failed`; `--no-fail-fast -j 6` → **413 suites, 8,752 passed, 1 failing suite**
+  (`sd27_feat_prerequisite_enforcement`, 3 assertions this cycle's own change moved), self-healed
+  and re-run green (`9 passed; 0 failed; 3 ignored`) — the assertions are **strengthened**, not
+  relaxed: a denial must now also carry the character's own value. The desktop crate
+  (`576 passed`), the frontend (`101/101 test files`, `tsc --noEmit` clean) and
+  `cargo clippy --locked --tests -j 6` (**0 warnings**) all run here because the cycle touched
+  `apps/`. The suite's own strongest row needed no edit and passed unchanged:
+  `the_verdicts_match_the_published_core_rulebook_for_a_starting_fighter` — 25 well-known CRB
+  feats, each with its published eligibility and reason, and the converted gate agrees with the
+  rulebook on every one.
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-001_cycle3_receipt.md`.
+- **Next-cycle scope:** the one remaining family, `pilot_compute/class_feature_grant_consumer.rs`
+  (`PcgenFormulaEvaluator` 6 hits, `bonus_stack_reader` 9). Its two real uses feed live
+  class-feature magnitudes; the converted `_vars/<VarId>.json` fold is the replacement but
+  resolves a different population, so it needs the same corpus-wide before/after comparison this
+  cycle ran for the feat gate. Deferred with that reason as retro
+  `deferral 1789009691631-at-35-e6-001-c3-d74d1a`.
+
 ### 2026-09-09 — AT-35-E6-001 cycle 2 — `formula-evaluator-leaves-live` — **partial** (two of cycle 1's four named families closed: the fixture-check oracle and the class chassis; `PcgenFormulaEvaluator` 28 → 6 hits, 5 → 1 files; 5 files remain in 2 named families)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.

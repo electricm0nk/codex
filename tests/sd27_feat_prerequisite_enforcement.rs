@@ -401,9 +401,13 @@ fn the_reported_defect_is_closed_in_both_directions() {
         .expect("catalog record");
     assert!(!denied.is_eligible);
     let reason = denied.unavailable_reason().expect("a denial must state why");
-    assert!(reason.contains("base attack bonus +6"), "{reason}");
+    // SD-35 `AT-35-E6-001`: the same three requirements, in the CONVERTED gate's own words,
+    // and now each with the character's own value where the engine holds one.
+    assert!(reason.contains("base attack bonus at least 6"), "{reason}");
+    assert!(reason.contains("this character: 1"), "{reason}");
     assert!(reason.contains("Two-Weapon Fighting"), "{reason}");
-    assert!(reason.contains("DEX 17"), "{reason}");
+    assert!(reason.contains("Dexterity"), "{reason}");
+    assert!(reason.contains("17"), "{reason}");
 
     let qualified = build(
         "race:human",
@@ -457,7 +461,10 @@ fn allocating_the_required_skill_ranks_unlocks_a_skill_gated_feat() {
     let skill_gated: Vec<String> = evaluate_every_catalog_feat(&facts)
         .into_iter()
         .filter(|report| {
-            report.unmet.iter().any(|unmet| unmet.reason.contains("rank(s) in"))
+            // `describe_expr`'s words for `Expr::SkillRanks`, which is what `PRESKILL`
+            // converts to (SD-35 `AT-35-E6-001`; before it, the token evaluator's
+            // "rank(s) in").
+            report.unmet.iter().any(|unmet| unmet.reason.contains(" ranks at least "))
         })
         .map(|report| report.feat_key)
         .collect();
@@ -575,9 +582,22 @@ fn unverifiable_clauses_never_block_and_are_always_reported() {
                 "an unverified note must say so plainly: {}",
                 note.message
             );
+            // SD-35 `AT-35-E6-001`: the note names the REQUIREMENT, in the rule's own words
+            // and in parentheses, plus the fact the engine does not hold -- never a source
+            // token, which is exactly what stopped being read. A note with no requirement in
+            // it tells a player nothing about what was skipped.
+            let (reason, requirement) = note
+                .message
+                .split_once(" (")
+                .unwrap_or_else(|| panic!("an unverified note must name the requirement it skipped: {}", note.message));
             assert!(
-                note.message.contains("PRE"),
-                "an unverified note must name the token it could not evaluate: {}",
+                reason.len() > "not verified: ".len(),
+                "an unverified note must say WHY it could not be checked: {}",
+                note.message
+            );
+            assert!(
+                requirement.ends_with(')') && requirement.len() > 1,
+                "an unverified note must carry the requirement in the rule's own words: {}",
                 note.message
             );
         }
