@@ -8,7 +8,7 @@ gate matches**. This cycle is scoped to exactly that named remainder. It takes i
 names the 110 that survive with the reason each one survives. Status is **partial**.
 
 - **Commit SHA:** `62220d19a1` — the relocation, the new tool-side accessor, the re-pointed
-  ground-truth assertions and this cycle's deferral event. `<DOCS_SHA>` carries this receipt, the
+  ground-truth assertions and this cycle's deferral event. `ec09114280` carries this receipt, the
   `progress.md` / `kanban.md` rows and the folded atlas re-stamp; a third commit pins both SHAs
   into this line (a receipt cannot name the commit that carries it). Cycle start `938e3f1b7b`.
 - **Scope gate:**
