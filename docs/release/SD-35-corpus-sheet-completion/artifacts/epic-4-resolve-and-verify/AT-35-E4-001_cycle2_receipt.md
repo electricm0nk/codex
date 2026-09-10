@@ -5,7 +5,7 @@ This cycle moves no unit — it re-derives all three Evidence clauses **at HEAD*
 work later, and corrects the dispatch's stale scope figures. It is a `PASS_WHOLE_REMAINDER`
 cycle, not a floor exemption.
 
-- **Commit SHA:** `4a53b2b8ac`
+- **Commit SHA:** `a3c5d455b6` (this receipt landed in it; its own SHA row pinned by the follow-up commit below, the `AT-35-E3-004_cycle2` precedent)
 - **Cycle start SHA:** `137658f31a8f87c0dc2af34ed9e3bdf79b4207b2`
 - **Scope gate:**
   ```
