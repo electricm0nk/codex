@@ -1,6 +1,8 @@
 # Cycle AT-35-E3-003_cycle2 — Epic 3 — Place and surface / AT-35-E3-003
 
-- **Commit SHA:** `<filled below>` — this cycle commits **no code**. Cycle start
+- **Commit SHA:** `033970e470` (this receipt, `progress.md`, `kanban.md`,
+  `docs/retro/events/at-35-e3-003.jsonl`, `docs/retro/events/sd31-transcribe.jsonl`, and the SD-34
+  atlas artifact's re-derived `derived_at` stamp) — this cycle commits **no code**. Cycle start
   `a8c193f055bf0ce56e075a65e1a976e18ad0da4d` on `tranche/15`. This is a **re-dispatch
   verification cycle**: the orchestrator dispatched AT-35-E3-003 again as "cycle 1", but
   `kanban.md` row 14 has carried `complete` since cycle 1 (`0e0298d7fe`). Rather than repeat a
