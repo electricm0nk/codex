@@ -1,6 +1,7 @@
 # Cycle AT-35-E5-003_cycle2 — Epic 5 Residues / AT-35-E5-003
 
-- **Commit SHA:** pinned in the follow-up commit named at the end of this row. Cycle start
+- **Commit SHA:** `9ce830f2fe` (this receipt, `progress.md`, `kanban.md` and the retro correction,
+  in one commit), plus this SHA-pinning follow-up commit. Cycle start
   `ccb9d8d515` — "pin AT-35-E5-002 cycle 2's commit SHA in its own receipt and kanban row".
   Kanban row 21 was already `complete` at dispatch; this is a **re-dispatch of an already-closed
   card**, and it redoes nothing. Nothing under `src/`, `data/`, `apps/` or `scripts/` changed.
