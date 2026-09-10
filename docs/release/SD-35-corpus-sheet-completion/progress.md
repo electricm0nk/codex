@@ -41,6 +41,71 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-10 — Epic 5 wrap-up correction cycle — `epic-5-wrapup-gate` — **complete** (the one red stage fixed at its source, and the incident key behind it given its first mechanism)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2`. A wrap-up
+  fix cycle closes zero units by design.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=253`
+- **Refused tokens:** none — this cycle converted nothing.
+- **PCGen residue:** `live_files=253 live_hits=12256 baseline_files=260 baseline_hits=12736 verdict=PASS`,
+  identical at cycle start and cycle end. No Rust written, no live path touched.
+
+**The red stage.** The gate worker returned **47 of 48 PASS, 1 FAIL** at `c3500e7984`, pushing
+nothing. The failure was `site-dashboard-check`:
+`site/dashboard/PF1e-dashboard.json is STALE`. Reproduced independently on the shared checkout at
+HEAD `00e44eee02` — same single line, exit 1, **904 s**. Fixed by
+`./scripts/publish-site-dashboard.sh`. That is fixing the thing, not re-arming the trap: the red
+stage is not a stale pin on a live figure, it is a **generated artifact that had diverged from its
+input**. Nothing was silenced, skipped, ignore-listed or lowered.
+
+**The control, which is the actual work of this cycle.**
+`site-dashboard-json-stale-after-inventory-move` had fired **3 times** as an `incident` event and
+accounts for **7 failing runs** of the stage, and every previous disposition was "regenerate it in
+the wrap-up correction cycle" — a chore, which `AGENTS.md` rule 8 says is not a control. The cause
+was never detection logic but **detection latency**: `--check` runs the real ~4,000-line producer
+and costs ~15 minutes, so it could only live in the ~90-minute epic wrap-up, by which point the
+cycle that broke the feed had already pushed.
+
+So: a real publish now records `sha256(docs/work-inventory.json)` into the new
+`site/dashboard/inventory-pin.json` **in the same run that renders the feed**, and
+`./scripts/publish-site-dashboard.sh --check-pin` re-hashes that one file and compares in
+milliseconds — no producer, no corpus, no cargo. It is wired **both** as `verify.sh` stage
+`site-dashboard-pin` (`ALL_STAGES` and `QUICK_STAGES`, 48 → 49 stages) **and** as a push-blocking
+line in `workflow-instruction.md` §6 step 3, which is the gate of the cycle that actually creates
+the divergence. The full `--check` now runs the pin first and fails fast.
+
+**Named limit (`AGENTS.md` rule 7):** the pin watches **one** input. A feed made stale by a
+unit-ledger or owner-state change hashes clean under `--check-pin` and is caught only by the full
+`--check`, so **both stages stay**. An absent pin is a failure, never a silent pass — self-test
+case 13. RED→GREEN preserved: the 5 new cases failed for the intended reason before the
+implementation and pass after, **13 of 13** in
+`scripts/tests/test_publish_site_dashboard.sh`, up from 8.
+
+**Baselines — and a correction to the gate report.** The report named **three** stale baselines.
+The certified re-run found **four**: it omitted `BASELINE_ROOT_TEST_BINARIES` (412 recorded, 413
+measured), and three of the figures it quoted had already moved, because HEAD advanced six commits
+past `c3500e7984` while Epic 6 landed. A cycle that had copied its three numbers would have
+re-armed the same trap on a fourth. Advanced on **this** run's measurement:
+`BASELINE_ROOT_LIB_TESTS` 3223 → 3261, `BASELINE_ROOT_FULL_TESTS` 8734 → 8772,
+`BASELINE_ROOT_TEST_BINARIES` 412 → 413, `BASELINE_DESKTOP_TESTS` 574 → 576. The 413th binary is
+attributed exhaustively to `src/bin/gen_record_vars.rs`, the only `tests/*.rs` or `src/bin/*.rs`
+file **added** between `c3500e7984` and `00e44eee02` (`ac38c5bf3c`). These are floors
+(`check_floor`), so setting one to a value the same green run measured cannot mask a regression.
+Correction `1789024087133-at-35-e5-wrapup-fix-d6d8f0`.
+
+**Owed, not built here** (each fired once, so rule 8's recurrence trigger is not met; `AGENTS.md`
+rule 3 forbids the detour): `wrong-base-worktree` (`1788995389793-at-35-e5-wrapup-156d6c`, control
+= a `preflight-base` stage) and `cross-worktree-codemod-contamination`
+(`1788996810915-at-35-e5-wrapup-e2468e`, control = agent worktrees outside the repo root, or a ban
+on `.`-anchored codemods).
+
+**Gate:** full `scripts/verify.sh -j 4` run ONCE — **`RESULT: PASS` — 49 of 49 stages green, 0 red**, 3,916 s = 65 min 16 s, logs
+`/tmp/codex-verify-00NKWe`. `site-dashboard-check` PASS (the sole red stage, now current) and the
+new `site-dashboard-pin` PASS. `root-lib` 3261, `root-full` 8772 across 413 suites (all 361
+`tests/*.rs` executed), `desktop` 576, `clippy` root:0 desktop:0.
+**Receipt:** `artifacts/epic-5-residues/EPIC-5_wrapup_correction_cycle_receipt.md`.
+**Events:** `docs/retro/events/at-35-e5-wrapup-fix.jsonl`.
+
 ### 2026-09-10 — AT-35-E6-001 cycle 4 — `formula-evaluator-leaves-live` — **complete** (all three identifiers at **0 live hits**; the variable chain is converted at ingest, not evaluated live)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.

@@ -555,6 +555,7 @@ Runs **inside a dispatched agent** (§2.2). Steps 0 and 3 are where SD-35 differ
      python3 scripts/missing_engine_tables.py --check
      python3 scripts/denominator_gate.py --check 'docs/release/SD-35-corpus-sheet-completion/*.md' 'docs/release/SD-35-corpus-sheet-completion/artifacts/**/*.md'
      python3 scripts/denominator_gate.py --check-provenance   # DIFFERENT flag from --check above; nonzero exit BLOCKS the push
+     ./scripts/publish-site-dashboard.sh --check-pin          # nonzero exit BLOCKS the push; run the script without the flag and commit the feed
      scripts/verify.sh --only pi-sweep
      ```
      **Why both `denominator_gate.py` lines are here, and why neither substitutes for the other:**
@@ -568,6 +569,21 @@ Runs **inside a dispatched agent** (§2.2). Steps 0 and 3 are where SD-35 differ
      wrap-ups each went red on `figure-provenance` (incident key
      `figure-provenance-command-on-next-line`, 3 occurrences). This line is the mechanical control
      for that key: it is Python only, needs no build, and runs in seconds.
+     **Why `publish-site-dashboard.sh --check-pin` is here, and why it is not the full `--check`:**
+     the same shape, one incident key later. `site/dashboard/PF1e-dashboard.json` is derived from
+     `docs/work-inventory.json`, and a cycle that regenerates the inventory without republishing
+     the feed leaves the two diverged. The full `--check` catches that correctly but costs ~15
+     minutes of real producer time (measured 904 s, 2026-09-10, at HEAD `00e44eee02`), so it only
+     ever ran at the ~90-minute epic wrap-up — by which point the offending cycle had pushed. That
+     is incident key `site-dashboard-json-stale-after-inventory-move`, 3 firings and 7 failing runs
+     of the `site-dashboard-check` stage, and the disposition every time was "regenerate it in the
+     wrap-up correction cycle" — a chore, which `AGENTS.md` rule 8 says is not a control.
+     `--check-pin` re-hashes that one input against the pin a real publish records in
+     `site/dashboard/inventory-pin.json`: milliseconds, no producer, no build, so it belongs in
+     every cycle's push gate. **It does not replace the full check.** The pin watches one input; a
+     feed made stale by a unit-ledger or owner-state change hashes clean here and is caught only by
+     `site-dashboard-check`. Both stages are in `verify.sh` (`site-dashboard-pin` beside it) for
+     exactly that reason.
      **Note the gate checks that a command is present and resolvable, not that it runs.** After
      adding or editing a figure row, actually execute its command and confirm it prints the value
      you wrote; a green gate over a broken command is the failure rule 9 exists to prevent.

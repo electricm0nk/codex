@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -582,6 +582,51 @@ run_site_dashboard_selftest() {
     fi
 
     stage_pass site-dashboard-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-dashboard-pin
+#
+# The fast half of the freshness gate, and the control for incident key
+# `site-dashboard-json-stale-after-inventory-move` (3 firings; 7 failing runs
+# of `site-dashboard-check`). `--check` below is correct but costs ~15 minutes
+# of real producer time (measured 904 s, 2026-09-10, HEAD 00e44eee02), which
+# is why it only ever ran at the ~90-minute epic wrap-up -- long after the
+# cycle that broke the feed had pushed. Every firing had one cause: the
+# inventory was regenerated and the feed derived from it was not.
+#
+# This stage re-hashes `docs/work-inventory.json` and compares it to the pin a
+# real publish recorded. Milliseconds, no producer, no cargo. The same command
+# is in `workflow-instruction.md` §6 step 3, so a cycle now goes red at its own
+# push gate instead of at the next wrap-up. It does NOT replace
+# `site-dashboard-check`: the pin watches one input, and a feed made stale by a
+# unit-ledger or owner-state change hashes clean here.
+# ---------------------------------------------------------------------------
+
+run_site_dashboard_pin() {
+    stage_start "site-dashboard-pin — scripts/publish-site-dashboard.sh --check-pin"
+    local log="$LOG_DIR/site-dashboard-pin.log"
+    local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-dashboard-pin "script missing at scripts/publish-site-dashboard.sh"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec "$script" --check-pin ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-dashboard-pin "the feed's recorded input moved — run ./scripts/publish-site-dashboard.sh and commit the refreshed feed — $log"
+        return
+    fi
+
+    if ! grep -q "input pin matches" "$log"; then
+        stage_fail site-dashboard-pin "exited 0 without confirming the pin — $log"
+        return
+    fi
+
+    stage_pass site-dashboard-pin "docs/work-inventory.json matches the pin the feed was published from"
 }
 
 # ---------------------------------------------------------------------------
@@ -2586,6 +2631,7 @@ for stage in "${SELECTED[@]}"; do
         pi-redaction-selftest) run_pi_redaction_selftest ;;
         provenance-selftest) run_provenance_selftest ;;
         site-dashboard-selftest) run_site_dashboard_selftest ;;
+        site-dashboard-pin) run_site_dashboard_pin ;;
         site-dashboard-check) run_site_dashboard_check ;;
         site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
         build-public-status-selftest) run_build_public_status_selftest ;;
