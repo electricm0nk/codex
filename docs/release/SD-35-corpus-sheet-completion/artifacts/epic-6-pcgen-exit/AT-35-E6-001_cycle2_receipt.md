@@ -1,8 +1,9 @@
 # Cycle 2 — Epic 6 (PCGen exit) / AT-35-E6-001
 
-- **Commit SHA:** `03724c6654` (cycle start `c729c0f659`; code commits
-  `5a2ff6f08c` fixture-check family, `74abb60839` class-chassis family, `03724c6654`
-  mapping-row correction + two self-heals + this receipt)
+- **Commit SHA:** the cycle is the range `c729c0f659..HEAD` (cycle start `c729c0f659`).
+  Three commits: `5a2ff6f08c` fixture-check oracle family, `74abb60839` class-chassis family,
+  `e190b343a4` mapping-row correction + two self-heals + this receipt, plus this one-line
+  correction to the SHA above (a receipt cannot name the commit that carries it).
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
   Run anyway for the record:
   ```
