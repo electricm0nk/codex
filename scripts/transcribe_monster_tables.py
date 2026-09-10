@@ -730,7 +730,143 @@ def parse_sla_cl_token(row: list[str]) -> str | None:
     value = tokens[0][len("BONUS:VAR|SLA_CL|") :]
     if "|" in value:
         return None
-    return value.strip() or None
+    value = value.strip()
+    if not value:
+        return None
+    return resolve_sla_cl_arithmetic(value, row)
+
+
+#: The two corpus-observed spellings of "apply the generic Universal Monster
+#: Rule" (`dragon_magma`'s row wraps the second in a redundant extra paren
+#: pair; both mean the same thing). They are the rule's own words, not a
+#: number, and stay verbatim for the live side to apply.
+SLA_CL_GENERIC_RULE_SPELLINGS = ("HD", "max(TL,1)", "(max(TL,1))")
+
+
+def resolve_sla_cl_arithmetic(value: str, row: list[str]) -> str | None:
+    """Resolve an arithmetic SLA caster-level value to the literal integer the
+    sheet prints, at ingest -- SD-35 `AT-35-E6-001` (`decisions.md` §1, §11).
+
+    A monster's racial Hit Dice are a fixed property of its own row, so a
+    value like `HD*3/4` (`book_of_the_damned_volume_2`'s Demon (Vermlek),
+    4 racial HD -> caster level 3) is a constant, not a run-time formula.
+    Before this pass the string was transcribed verbatim and the LIVE side ran
+    it through the PCGen formula interpreter at render time; the ruling is that
+    nothing live reads a PCGen formula, so the arithmetic is done here instead.
+
+    Three outcomes, never a guess:
+
+      * a plain integer, or one of :data:`SLA_CL_GENERIC_RULE_SPELLINGS`
+        (the rule's own words) -- returned verbatim;
+      * `HD`/`TL` arithmetic over `+ - * /` and parentheses, with the row's
+        own `MONSTERCLASS:` Hit Dice bound to both names -- returned as the
+        evaluated integer (PCGen integer division, truncating toward zero);
+      * anything else, or a row with no readable `MONSTERCLASS:` Hit Dice --
+        `None`, an honest absence, exactly as an unparseable row already was.
+
+    Re-derive the population this touches::
+
+        grep -rn 'sla_cl_token: Some("' src/rules_core/rules_tables/ \\
+          | grep -vE 'Some\\("[0-9]+"\\)|Some\\("HD"\\)|max\\(TL,1\\)'
+    """
+    if value in SLA_CL_GENERIC_RULE_SPELLINGS:
+        return value
+    try:
+        int(value)
+    except ValueError:
+        pass
+    else:
+        return value
+    monster_class = token(row, "MONSTERCLASS:")
+    if not monster_class:
+        return None
+    hd_text = monster_class.rsplit(":", 1)[-1].strip()
+    try:
+        hit_dice = int(hd_text)
+    except ValueError:
+        return None
+    resolved = _eval_hd_arithmetic(value, hit_dice)
+    return None if resolved is None else str(resolved)
+
+
+def _eval_hd_arithmetic(expression: str, hit_dice: int) -> int | None:
+    """`expression` over `HD`/`TL` and the four integer operators, or `None`.
+
+    Deliberately its own tiny recursive-descent evaluator rather than a call
+    into the PCGen interpreter: this script is converter code, and binding the
+    two names a monster row can carry is the whole grammar. Division truncates
+    toward zero, matching PCGen's own integer division (and the live
+    `spell_like_ability_caster_level` arm this replaces).
+    """
+    text = expression.replace("HD", str(hit_dice)).replace("TL", str(hit_dice))
+    if not re.fullmatch(r"[0-9+\-*/() ]+", text):
+        return None
+    pos = 0
+
+    def peek() -> str | None:
+        return text[pos] if pos < len(text) else None
+
+    def skip() -> None:
+        nonlocal pos
+        while pos < len(text) and text[pos] == " ":
+            pos += 1
+
+    def atom() -> int | None:
+        nonlocal pos
+        skip()
+        if peek() == "(":
+            pos += 1
+            inner = additive()
+            skip()
+            if peek() != ")":
+                return None
+            pos += 1
+            return inner
+        start = pos
+        while pos < len(text) and text[pos].isdigit():
+            pos += 1
+        if start == pos:
+            return None
+        return int(text[start:pos])
+
+    def multiplicative() -> int | None:
+        nonlocal pos
+        left = atom()
+        while left is not None:
+            skip()
+            op = peek()
+            if op not in ("*", "/"):
+                break
+            pos += 1
+            right = atom()
+            if right is None:
+                return None
+            if op == "*":
+                left = left * right
+            else:
+                if right == 0:
+                    return None
+                left = int(left / right)
+        return left
+
+    def additive() -> int | None:
+        nonlocal pos
+        left = multiplicative()
+        while left is not None:
+            skip()
+            op = peek()
+            if op not in ("+", "-"):
+                break
+            pos += 1
+            right = multiplicative()
+            if right is None:
+                return None
+            left = left + right if op == "+" else left - right
+        return left
+
+    result = additive()
+    skip()
+    return result if pos == len(text) else None
 
 
 def parse_spell_like_abilities(row: list[str]) -> list[tuple]:

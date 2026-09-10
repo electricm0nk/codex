@@ -11,4 +11,7 @@ pub mod golden_fixture;
 pub mod normalization;
 pub mod parity_report;
 pub mod pcgen_runner;
+/// SD-35 `AT-35-E6-001`: the `kind=race_trait` FORMULA bar check, moved off the
+/// live side (`decisions.md` §11).
+pub mod race_trait_formula_bar_check;
 pub mod selected_parity_dimensions;

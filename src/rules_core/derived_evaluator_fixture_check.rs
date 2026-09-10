@@ -26,9 +26,6 @@ use std::path::{Path, PathBuf};
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
 use crate::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use crate::rules_core::equipment_effects::compute_equipment_effects;
-use crate::rules_core::pilot_compute::UNDINE_RACE_TRAIT_FORMULAS;
-use crate::pcgen_import::formula_interpreter::PcgenFormulaEvaluator;
-use crate::pcgen_import::formula_reproduction_harness::FormulaEvaluator;
 use crate::rules_core::rules_tables::companion_chassis::companion_book;
 use crate::rules_core::rules_tables::monster_chassis::{MonsterStatBlock, MONSTER_BOOKS};
 
@@ -120,7 +117,10 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let companion_skill = run_companion_skill_bar_check(repo_root);
     let companion_save_dc = run_companion_save_dc_bar_check(repo_root);
     let class_feature_description = run_class_feature_description_bar_check(repo_root);
-    let race_trait_formula = run_race_trait_formula_bar_check(repo_root);
+    let race_trait_formula =
+        crate::oracle_validation::race_trait_formula_bar_check::run_race_trait_formula_bar_check(
+            repo_root,
+        );
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
     cleared.extend(monster_sla.cleared);
@@ -292,10 +292,10 @@ fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
 /// spells it differently) -- an honest absence, never a guessed value.
 ///
 /// **SD31-E6-F9-003: the rule's own "unless otherwise noted" clause is not
-/// decorative.** A monster's `BONUS:VAR|SLA_CL|<value>` token
+/// decorative.** A monster's transcribed SLA caster-level field
 /// ([`MonsterStatBlock::sla_cl_token`]) states EITHER the generic rule
 /// (`HD`, or the equivalent `max(TL,1)`/`(max(TL,1))`) OR a monster-specific
-/// literal override -- Couatl carries `BONUS:VAR|SLA_CL|9` against 12 Hit
+/// literal override -- Couatl carries `9` against 12 Hit
 /// Dice; Demon (Glabrezu) carries `14` against 12 HD. Before this function
 /// read `sla_cl_token` it always applied the generic HD rule regardless,
 /// which silently served the WRONG caster level for every monster whose row
@@ -305,7 +305,7 @@ fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
 /// `HD`/`max(TL,1)` spelling the function used to assume unconditionally.
 pub fn spell_like_ability_caster_level(monster: &MonsterStatBlock) -> Option<i32> {
     // SD31-E6-F1-002 (`OPEN-ISSUES.md` row 44): a monster with no
-    // `BONUS:VAR|SLA_CL|` token has no spell-like abilities, and this
+    // transcribed SLA caster-level field has no spell-like abilities, and this
     // function has a real production caller now
     // (`apps/desktop/src-tauri/src/monster_catalog.rs`) that would otherwise
     // hand every monster with a readable `MONSTERCLASS:` a caster level it
@@ -329,32 +329,25 @@ pub fn spell_like_ability_caster_level(monster: &MonsterStatBlock) -> Option<i32
         // rather than silently losing its caster level.
         Some("HD") | Some("max(TL,1)") | Some("(max(TL,1))") | None => Some(hd),
         // Every other value is the row's own STATED override -- trust the
-        // corpus over the generic rule. A plain integer parses directly.
+        // corpus over the generic rule, and it is always a plain integer.
         //
-        // W26-INTERPRETER-INTEGRATE (`OPERATOR-RULINGS-2026-08-21.md` §20):
-        // a value that is not a plain integer is no longer an automatic
-        // refusal -- `formula_interpreter::PcgenFormulaEvaluator` reads real
-        // PCGen arithmetic now, and `HD*3/4`
-        // (`book_of_the_damned_volume_2`'s Demon (Vermlek)) is exactly such
-        // a formula: multiply and divide over the monster's OWN Hit Dice,
-        // which this function already read two lines above to apply the
-        // generic rule. `TL` is bound to the same value as `HD` (PCGen's own
-        // `TL` == "total levels", which for a monster with only a
-        // `MONSTERCLASS:` token and no PC class levels sums to exactly the
-        // racial HD -- the same equivalence
-        // `monster_ability_formula_save_dc`'s own `parse_formula_base_plus_
-        // ability` already establishes and cites for this corpus). The
-        // interpreter refuses -- returns `Err`, never a guess -- on any
-        // identifier this repo has not bound (a race-specific bonus name
-        // with no `DEFINE:` on the row, say), so `.ok()` below is still the
-        // same honest-absence contract every other arm of this function
-        // keeps: `Some(value)` only when the formula both parses AND
-        // evaluates against the two variables this function can honestly
-        // supply.
-        Some(raw) => raw.trim().parse::<i32>().ok().or_else(|| {
-            let vars = BTreeMap::from([("HD".to_string(), i64::from(hd)), ("TL".to_string(), i64::from(hd))]);
-            PcgenFormulaEvaluator.evaluate(raw.trim(), &vars).ok().and_then(|v| i32::try_from(v).ok())
-        }),
+        // SD-35 `AT-35-E6-001` (`decisions.md` §1, §11). Until this cycle this
+        // arm ran an arithmetic value through the PCGen formula interpreter at
+        // render time, for exactly one corpus row -- Demon (Vermlek)'s
+        // `HD*3/4` against its own 4 racial Hit Dice. A monster's racial Hit
+        // Dice are a fixed property of its own row, so that value is a
+        // constant, and the arithmetic now happens at ingest instead:
+        // `scripts/transcribe_monster_tables.py::resolve_sla_cl_arithmetic`
+        // resolves it and the transcribed table states the number the sheet
+        // prints (`sla_cl_token: Some("3")`). Nothing live evaluates a formula
+        // string. A value the converter could not resolve is transcribed as an
+        // honest absence, so `.ok()` below keeps the same contract every other
+        // arm keeps: `Some(value)` only for a value that really is a number.
+        //
+        // Re-derive that this arm now sees integers only:
+        //   grep -rn 'sla_cl_token: Some("' src/rules_core/rules_tables/ \
+        //     | grep -vE 'Some\("[0-9]+"\)|Some\("HD"\)|max\(TL,1\)'
+        Some(raw) => raw.trim().parse::<i32>().ok(),
     }
 }
 
@@ -2816,45 +2809,59 @@ mod monster_seam_tests {
         assert_eq!(spell_like_ability_caster_level(&block), Some(9));
     }
 
-    // W26-INTERPRETER-INTEGRATE (`OPERATOR-RULINGS-2026-08-21.md` §20):
-    // `HD*3/4` -- the real Demon (Vermlek) worked example,
-    // `book_of_the_damned_volume_2`, `BONUS:VAR|SLA_CL|HD*3/4` -- is a real
-    // arithmetic formula over the monster's own Hit Dice, which
-    // `formula_interpreter::PcgenFormulaEvaluator` can now read (`HD*3/4`
-    // is plain multiply/divide, no unbound identifier). This test used to
-    // assert `None` under §24.1's "no formula interpreter" ban; the
-    // arithmetic is genuinely `16*3/4 = 12`, and refusing an evaluable
-    // formula once the interpreter exists would be exactly the "leave a
-    // real answer on the table" failure mode the ruling exists to fix. The
-    // exact real-corpus value (`HD=4` -> `3`) is pinned separately by
+    // SD-35 `AT-35-E6-001` (`decisions.md` §1, §11): the one arithmetic SLA
+    // caster-level value the corpus carries -- the real Demon (Vermlek) worked
+    // example, `book_of_the_damned_volume_2`, three quarters of its own racial
+    // Hit Dice -- is resolved at ingest now
+    // (`scripts/transcribe_monster_tables.py::resolve_sla_cl_arithmetic`), so
+    // the shipped table states the number and this live function sees an
+    // integer. A row whose value is still an unresolved expression is an
+    // honest absence here, exactly as an unreadable row always was. The exact
+    // real-corpus value (4 Hit Dice -> 3) is pinned separately by
     // `hd_times_three_quarters_matches_the_real_demon_vermlek_worked_example`
     // below and by `monster_entries`'s own
     // `book_of_the_damned_volume_2:monster:demon_vermlek` fixture row.
     #[test]
-    fn a_multiply_divide_sla_cl_formula_now_evaluates_via_the_interpreter() {
+    fn an_unresolved_arithmetic_sla_cl_value_refuses_on_the_live_side() {
         let block = stat_block_full(Some("Outsider:16"), true, Some("HD*3/4"));
-        assert_eq!(spell_like_ability_caster_level(&block), Some(12));
+        assert_eq!(
+            spell_like_ability_caster_level(&block),
+            None,
+            "the live side evaluates no formula: an arithmetic value the converter left \
+             unresolved is an honest absence, not a run-time interpretation"
+        );
     }
 
     // The real Demon (Vermlek) worked example itself
     // (`book_of_the_damned_volume_2/botd2_races.lst:7`,
-    // `MONSTERCLASS:Outsider (Fort/Will):4`, `BONUS:VAR|SLA_CL|HD*3/4`) --
-    // `4*3/4 = 3` exactly, no truncation ambiguity. Pinned independently by
-    // `monster_entries`'s own fixture row for this unit.
+    // `MONSTERCLASS:Outsider (Fort/Will):4`, three quarters of 4 racial Hit
+    // Dice) -- `4*3/4 = 3` exactly, no truncation ambiguity. Read from the
+    // SHIPPED table rather than a hand-built stat block, so a regression in
+    // `scripts/transcribe_monster_tables.py::resolve_sla_cl_arithmetic` fails
+    // HERE and not only in a fixture nothing player-facing reads. Pinned
+    // independently by `monster_entries`'s own fixture row for this unit.
     #[test]
     fn hd_times_three_quarters_matches_the_real_demon_vermlek_worked_example() {
-        let block = stat_block_full(Some("Outsider (Fort/Will):4"), true, Some("HD*3/4"));
-        assert_eq!(spell_like_ability_caster_level(&block), Some(3));
+        let vermlek = crate::rules_core::rules_tables::monster_chassis::monster_book(
+            "book_of_the_damned_volume_2",
+        )
+        .expect("book_of_the_damned_volume_2 has a monster book")
+        .monster_resolve("Demon (Vermlek)")
+        .expect("book_of_the_damned_volume_2 carries the Demon (Vermlek) row");
+        assert_eq!(
+            vermlek.sla_cl_token,
+            Some("3"),
+            "the converter resolves this row's arithmetic at ingest"
+        );
+        assert_eq!(spell_like_ability_caster_level(vermlek), Some(3));
     }
 
-    // An interpreter refusal (an unbound identifier the corpus has never
-    // shown this repo, e.g. a race-specific bonus name with no `DEFINE:`
-    // anywhere on the row) must still surface as `None`, never a guess --
-    // the interpreter's own "never default to zero" contract, restated at
-    // this seam's boundary so a future formula shape this repo cannot bind
-    // fails exactly as honestly as an unparseable one always has.
+    // A value this repo cannot read as a number must still surface as `None`,
+    // never a guess -- restated at this seam's boundary so a future shape the
+    // converter cannot resolve fails exactly as honestly as an unparseable one
+    // always has.
     #[test]
-    fn an_sla_cl_formula_naming_an_unbound_identifier_still_refuses() {
+    fn an_sla_cl_value_that_is_not_a_number_still_refuses() {
         let block = stat_block_full(Some("Outsider:16"), true, Some("HD*SomeRaceSpecificBonus"));
         assert_eq!(spell_like_ability_caster_level(&block), None);
     }
@@ -4521,8 +4528,8 @@ fn ability_modifiers_from_fixture_inputs(
 }
 
 /// The `class_feature_description_entries` half of [`run_bar_check`]. Runs the REAL production
-/// resolver (`pilot_compute::class_feature_grant_consumer::resolve_pcgen_var_chain`, which
-/// drives the proven `formula_interpreter::PcgenFormulaEvaluator`) against the SAME live corpus
+/// resolver (`pilot_compute::class_feature_grant_consumer::resolve_pcgen_var_chain`) against the
+/// SAME live corpus
 /// record (`class_feature_grant_consumer::class_feature_record_tokens`) the shipped engine reads
 /// -- never a second, hand-rolled Rust evaluator -- at every level the fixture pins, for every
 /// PCGen variable name the fixture names. A unit clears only when EVERY (arg, level) pair
@@ -5760,310 +5767,5 @@ mod companion_save_dc_seam_tests {
         let _ = std::fs::remove_dir_all(&root);
         assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
         assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
-    }
-}
-
-
-// -------------------------------------------------------------------------------------------
-// Folded into SD-33 from `worktree-wf_be4660f2-72a-3` (2026-08-26) per
-// `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` row 365's remediation
-// path (a). The seam + fixtures below are unchanged from the branch (reviewer-confirmed sound);
-// the branch's race-level `FORMULA_RACE_TRAIT_RACES` doneness-credit const was NOT folded — see
-// `src/rules_core/pilot_compute/mod.rs`'s own fold-note next to `explain_undine_formula_race_trait`.
-// -------------------------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------------------------
-// `kind=race_trait`, FORMULA shape (SD31-W26-RACETRAIT-001).
-// ---------------------------------------------------------------------------------------------
-//
-// The first consumer of `formula_interpreter::PcgenFormulaEvaluator` anywhere in this codebase
-// (`grep -rn PcgenFormulaEvaluator src/` before this addition returns only the evaluator's own
-// module) — wave 25b built and proved the interpreter but shipped no consumer of it, per
-// `OPERATOR-RULINGS-2026-08-21.md` §20's own condition: "every interpreted value must clear
-// `derived_evaluator_fixture_check` ... An interpreted value with no fixture is not done." This
-// is that gate for `src/rules_core/pilot_compute/mod.rs`'s
-// `explain_undine_formula_race_trait`/`UNDINE_RACE_TRAIT_FORMULAS`.
-//
-// Runs against the SHIPPED table (`UNDINE_RACE_TRAIT_FORMULAS`), exactly as
-// `run_companion_skill_bar_check` runs against `record.skill_ability_diff_bonuses` and for the
-// same reason: a transcription that corrupted the formula text in `pilot_compute::mod.rs` must
-// fail HERE, not pass silently against a corpus file no player-facing code reads.
-
-/// One `kind=race_trait` formula fixture row — a sibling top-level
-/// `race_trait_formula_entries` array in the same committed fixture JSON.
-#[derive(Debug, Clone)]
-pub struct RaceTraitFormulaFixture {
-    pub unit_id: String,
-    pub book: String,
-    pub record_key: String,
-    pub upstream_lst: String,
-    pub upstream_lst_sha256: String,
-    pub upstream_line: u64,
-    /// field name -> raw formula text, as the generator re-verified against
-    /// the pinned oracle. Compared against `UNDINE_RACE_TRAIT_FORMULAS`
-    /// below so a transcription regression in EITHER the shipped table or
-    /// the fixture turns this check red, never just the arithmetic.
-    pub formulas: BTreeMap<String, String>,
-    /// `(TL, CON, CHA, {field: expected_value})` at each of the ten sample
-    /// points `scripts/derive_race_trait_formula_fixtures.py` computed with
-    /// its own from-scratch Python function per formula shape — never read
-    /// back from this repo's evaluator.
-    pub expected_at: Vec<(i64, i64, i64, BTreeMap<String, i64>)>,
-}
-
-/// Reads the `race_trait_formula_entries` array of the same committed
-/// fixture file [`load_fixtures`] reads `entries` from.
-pub fn load_race_trait_formula_fixtures(repo_root: &Path) -> Vec<RaceTraitFormulaFixture> {
-    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
-    let text = std::fs::read_to_string(&path)
-        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
-    let doc: serde_json::Value =
-        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
-    let Some(entries) = doc.get("race_trait_formula_entries").and_then(|v| v.as_array()) else {
-        return Vec::new();
-    };
-    entries
-        .iter()
-        .map(|e| {
-            let formulas: BTreeMap<String, String> = e["formulas"]
-                .as_object()
-                .expect("formulas")
-                .iter()
-                .map(|(k, v)| (k.clone(), v.as_str().expect("formula value").to_string()))
-                .collect();
-            let expected_at = e["expected_at_sample_points"]
-                .as_array()
-                .expect("expected_at_sample_points")
-                .iter()
-                .map(|p| {
-                    let expected: BTreeMap<String, i64> = p["expected"]
-                        .as_object()
-                        .expect("expected")
-                        .iter()
-                        .map(|(k, v)| (k.clone(), v.as_i64().expect("expected value fits in i64")))
-                        .collect();
-                    (
-                        p["TL"].as_i64().expect("TL"),
-                        p["CON"].as_i64().expect("CON"),
-                        p["CHA"].as_i64().expect("CHA"),
-                        expected,
-                    )
-                })
-                .collect();
-            RaceTraitFormulaFixture {
-                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
-                book: e["book"].as_str().expect("book").to_string(),
-                record_key: e["record_key"].as_str().expect("record_key").to_string(),
-                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
-                upstream_lst_sha256: e["upstream_lst_sha256"]
-                    .as_str()
-                    .expect("upstream_lst_sha256")
-                    .to_string(),
-                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
-                formulas,
-                expected_at,
-            }
-        })
-        .collect()
-}
-
-/// The `kind=race_trait` formula half of [`run_bar_check`].
-fn run_race_trait_formula_bar_check(repo_root: &Path) -> BarCheckReport {
-    let fixtures = load_race_trait_formula_fixtures(repo_root);
-    let fixtures_total = fixtures.len();
-
-    let mut cleared = BTreeSet::new();
-    let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
-
-    let evaluator = PcgenFormulaEvaluator;
-
-    for fixture in &fixtures {
-        let mut mismatch: Option<String> = None;
-
-        for (field, expected_formula) in &fixture.formulas {
-            let Some((_, _, shipped_formula)) =
-                UNDINE_RACE_TRAIT_FORMULAS.iter().find(|(_, f, _)| f == field)
-            else {
-                mismatch = Some(format!(
-                    "fixture names field {field:?} but UNDINE_RACE_TRAIT_FORMULAS carries no \
-                     entry for it at all"
-                ));
-                break;
-            };
-            // The independence check: confirm the SHIPPED table states the
-            // SAME formula text the fixture (independently re-derived from
-            // the oracle) expects, not merely SOME formula for this field --
-            // the same posture `run_companion_skill_bar_check` takes for
-            // `parsed.plus`/`parsed.minus` against `fixture.plus_ability`.
-            if shipped_formula != expected_formula {
-                mismatch = Some(format!(
-                    "fixture expects {field}={expected_formula:?} but UNDINE_RACE_TRAIT_FORMULAS \
-                     states {field}={shipped_formula:?}"
-                ));
-                break;
-            }
-        }
-        if let Some(message) = mismatch {
-            failures.insert(fixture.unit_id.clone(), message);
-            continue;
-        }
-
-        if fixture.expected_at.is_empty() {
-            // A fixture that pins no sample point asserts nothing about the
-            // evaluator. Refused rather than counted -- a gate that cannot
-            // fail is worse than no gate (`decisions.md` Decision 1(a)).
-            failures.insert(
-                fixture.unit_id.clone(),
-                format!("fixture for {:?} pins no sample point at all, so it asserts nothing", fixture.record_key),
-            );
-            continue;
-        }
-
-        let mut all_matched = true;
-        for (tl, con, cha, expected) in &fixture.expected_at {
-            let mut vars: BTreeMap<String, i64> = BTreeMap::new();
-            vars.insert("TL".to_owned(), *tl);
-            vars.insert("CON".to_owned(), *con);
-            vars.insert("CHA".to_owned(), *cha);
-
-            for (field, expected_value) in expected {
-                let Some((_, _, formula)) = UNDINE_RACE_TRAIT_FORMULAS.iter().find(|(_, f, _)| f == field)
-                else {
-                    // Already reported as a mismatch above; unreachable here.
-                    all_matched = false;
-                    continue;
-                };
-                match evaluator.evaluate(formula, &vars) {
-                    Ok(actual) if actual == *expected_value => {}
-                    Ok(actual) => {
-                        failures.insert(
-                            fixture.unit_id.clone(),
-                            format!(
-                                "at TL={tl} CON={con} CHA={cha}, {field} expected \
-                                 {expected_value} but PcgenFormulaEvaluator produced {actual} \
-                                 for formula {formula:?}"
-                            ),
-                        );
-                        all_matched = false;
-                    }
-                    Err(e) => {
-                        failures.insert(
-                            fixture.unit_id.clone(),
-                            format!(
-                                "at TL={tl} CON={con} CHA={cha}, {field}'s formula {formula:?} \
-                                 refused to evaluate: {e}"
-                            ),
-                        );
-                        all_matched = false;
-                    }
-                }
-                if !all_matched {
-                    break;
-                }
-            }
-            if !all_matched {
-                break;
-            }
-        }
-        if all_matched {
-            cleared.insert(fixture.unit_id.clone());
-        }
-    }
-
-    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
-}
-
-#[cfg(test)]
-mod race_trait_formula_bar_check_tests {
-    use super::*;
-    use crate::pcgen_import::formula_reproduction_harness::FormulaEvalError;
-
-    fn repo_root() -> std::path::PathBuf {
-        std::path::PathBuf::from(
-            std::env::var("CODEX_REPO_ROOT").unwrap_or_else(|_| ".".to_string()),
-        )
-    }
-
-    /// The real gate, run against the real committed fixture and the real
-    /// shipped `UNDINE_RACE_TRAIT_FORMULAS` table: every entry must clear.
-    #[test]
-    fn run_race_trait_formula_bar_check_clears_every_committed_fixture() {
-        let report = run_race_trait_formula_bar_check(&repo_root());
-        assert!(
-            report.failures.is_empty(),
-            "every committed race_trait_formula fixture must clear: {:?}",
-            report.failures
-        );
-        assert!(report.engine_does_not_hold.is_empty());
-        assert_eq!(report.fixtures_total, 3, "3 Undine alternate-trait records are fixture-pinned");
-        assert_eq!(report.cleared.len(), 3);
-    }
-
-    /// Anti-gaming mutation proof (Decision 1(a)): a wrong-but-plausible
-    /// evaluator must be caught. Mirrors `harness_detects_a_deliberately_
-    /// wrong_evaluator` in `formula_reproduction_harness.rs` and every other
-    /// bar check's own mutation test in this file -- a gate that cannot
-    /// fail is worse than no gate.
-    struct OffByOneEvaluator;
-    impl FormulaEvaluator for OffByOneEvaluator {
-        fn evaluate(
-            &self,
-            formula: &str,
-            vars: &BTreeMap<String, i64>,
-        ) -> Result<i64, FormulaEvalError> {
-            PcgenFormulaEvaluator.evaluate(formula, vars).map(|v| v + 1)
-        }
-    }
-
-    #[test]
-    fn a_mutated_evaluator_is_caught_by_the_race_trait_formula_gate() {
-        let fixtures = load_race_trait_formula_fixtures(&repo_root());
-        assert!(!fixtures.is_empty(), "the committed fixture must carry at least one entry");
-        let evaluator = OffByOneEvaluator;
-        let mut any_mismatch = false;
-        for fixture in &fixtures {
-            for (tl, con, cha, expected) in &fixture.expected_at {
-                let mut vars: BTreeMap<String, i64> = BTreeMap::new();
-                vars.insert("TL".to_owned(), *tl);
-                vars.insert("CON".to_owned(), *con);
-                vars.insert("CHA".to_owned(), *cha);
-                for (field, expected_value) in expected {
-                    let (_, _, formula) =
-                        UNDINE_RACE_TRAIT_FORMULAS.iter().find(|(_, f, _)| f == field).unwrap();
-                    let actual = evaluator.evaluate(formula, &vars).unwrap();
-                    if actual != *expected_value {
-                        any_mismatch = true;
-                    }
-                }
-            }
-        }
-        assert!(
-            any_mismatch,
-            "an evaluator that is off by one on every result must disagree with at least one \
-             pinned expected value -- if this fails, the fixture itself cannot detect a wrong \
-             evaluator"
-        );
-    }
-
-    /// The shipped table and the committed fixture must state the IDENTICAL
-    /// formula text for every field -- proves the independence check inside
-    /// `run_race_trait_formula_bar_check` itself is reachable and correct,
-    /// not merely present in the source.
-    #[test]
-    fn a_transcription_regression_in_the_shipped_table_is_caught() {
-        let fixtures = load_race_trait_formula_fixtures(&repo_root());
-        for fixture in &fixtures {
-            for (field, expected_formula) in &fixture.formulas {
-                let (_, _, shipped_formula) =
-                    UNDINE_RACE_TRAIT_FORMULAS.iter().find(|(_, f, _)| f == field).unwrap_or_else(|| {
-                        panic!("UNDINE_RACE_TRAIT_FORMULAS carries no entry for {field:?}")
-                    });
-                assert_eq!(
-                    shipped_formula, expected_formula,
-                    "shipped formula for {field} must match the independently-derived fixture"
-                );
-            }
-        }
     }
 }

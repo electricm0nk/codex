@@ -12181,8 +12181,8 @@ fn explain_nagaji_flat_override_race_trait(
 //
 // **The formula text is the single source of truth for BOTH the compute path and its own fixture
 // gate**: [`UNDINE_RACE_TRAIT_FORMULAS`] is read by [`explain_undine_formula_race_trait`] below
-// AND by `derived_evaluator_fixture_check::run_race_trait_formula_bar_check` (a separate crate
-// module) — a transcription regression in this table therefore fails the SAME gate whether it
+// AND by `oracle_validation::race_trait_formula_bar_check` (a separate crate
+// module, oracle-side since SD-35 `AT-35-E6-001`) — a transcription regression in this table therefore fails the SAME gate whether it
 // corrupts the value a player sees or the value the bar check verifies.
 //
 // Re-verified against this repo's own independently re-ingested corpus records
