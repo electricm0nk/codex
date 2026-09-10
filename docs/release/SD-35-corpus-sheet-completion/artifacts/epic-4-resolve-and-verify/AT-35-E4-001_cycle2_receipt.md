@@ -38,14 +38,17 @@ cycle, not a floor exemption.
   `docs/release/SD-35-corpus-sheet-completion`. No identifier in any code or data file matches.
 - **Wired-integration audit result:** OK_NO_TOKENS.
   Same pathspec, `grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b'`
-  → **17 lines**, none in a shipping code path, and every one already recorded by
+  → **17 lines** before this receipt landed and **20** after it (`git diff --unified=0 fe5ae6cd4a...HEAD -- <the same pathspec> | grep -cE '…'`); the delta of **3** is this receipt's own quotation of the audit grep, and the final-diff re-run bounded to this cycle alone
+  (`git diff --unified=0 137658f31a..HEAD -- <the same pathspec>`) returns exactly those 3 and
+  nothing else. None is in a shipping code path, and every pre-existing one is already recorded by
   `AT-35-E4-001_cycle1_receipt.md` / `AT-35-E3-002_cycle1_receipt.md`:
   generated Paizo prose inside `data/sheet_rules/` (*"creatures must hack or force a way
   through"*, `core_rulebook:spell:plant_growth`; *"Once swallowed by a tophet…"*), the bracketed
   upstream editorial note *"[Change to magical beast and stacking restriction not yet
   implemented]"*, receipt prose quoting this very grep, and **removed** (`-`) `"no selection"`
   placeholder rows deleted from `docs/work-inventory.json`. This cycle's own diff adds no match
-  outside this receipt's quotation of the audit.
+  outside this receipt's quotation of the audit. **Identifier audit on this cycle's diff alone:
+  0 matches.**
 - **Acceptance criterion** (verbatim, `epic-breakdown.md § AT-35-E4-001`):
   > 4,334 units at authoring: ability 1,483, race_trait 697, spell 558, feat 518,
   > equipment_modifier 443, template 305, trait 123, equipment 99, domain 67, skill 29, deity 9,
