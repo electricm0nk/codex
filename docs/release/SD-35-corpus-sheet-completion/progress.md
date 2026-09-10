@@ -30,9 +30,9 @@ process defect** recorded by the epic wrap-up.
 | 3 — Place and surface | 4 | 4 | 0 | 0 |
 | 4 — Resolve and verify | 3 | 3 | 0 | 0 |
 | 5 — Residues | 5 | 5 | 0 | 0 |
-| 6 — PCGen exit | 4 | 0 | 1 | 3 |
+| 6 — PCGen exit | 4 | 1 | 0 | 3 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **23** | **0** | **7** |
+| **Total** | **30** | **24** | **0** | **6** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -40,6 +40,81 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-10 — AT-35-E6-001 cycle 4 — `formula-evaluator-leaves-live` — **complete** (all three identifiers at **0 live hits**; the variable chain is converted at ingest, not evaluated live)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `python3 scripts/cycle_scope_gate.py --min 500` → `inventory=docs/work-inventory.json
+  scope=(whole remainder) scoped_by_bucket= scoped_by_kind= scoped=0 remaining_non_done=0
+  floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=2520 ratio=n/a builds_recorded=1
+  pcgen_live_files=253` (`cycle_scope_gate.py --receipt --since 292d90f13e --before
+  /tmp/wi-before-AT-35-E6-001-c4.json --after docs/work-inventory.json`; `regressed=0 added=0
+  dropped=0`, `closed_by_kind=` and `relabeled_moves=` empty). Epic 6 moves no unit by design.
+- **Refused tokens:** none — no converter refusal was added or cleared; `_refused.json` unchanged
+  at 142 records, one shape, `refused_non_done=0` (`scripts/token_coverage.py --check`).
+- **PCGen residue:** `live_files=253 live_hits=12256 baseline_files=260 baseline_hits=12736
+  verdict=PASS` — flat on files, down 80 on hits from cycle 3's `253 / 12,336`. The three
+  identifiers this criterion owns are **all at `files=0 hits=0`**: `pre_tokens` (closed at cycle
+  3), and now `PcgenFormulaEvaluator` (was 1 file / 6 hits) and `bonus_stack_reader` (was 1 / 9).
+  **Zero — hence `complete`.**
+- **What moved.** The last live caller was one file,
+  `pilot_compute/class_feature_grant_consumer.rs`, and three things in it ran at REQUEST time:
+  which source rows a target sums over (`bonus_stack_reader::extract_addends` plus its `TYPE=`
+  strip and sole-ungated-row fallback), the formula parse, and the evaluation. All three now run
+  ONCE, at ingest, in the new `pcgen_import::class_feature_vars`, and ship as
+  `data/converted/record_vars.json` (`src/bin/gen_record_vars`; `-- --check` is its freshness
+  gate, `verdict=PASS`). The live side reads that artifact and folds our own `Expr` through
+  `sheet_rule`'s arithmetic (`rules_core::record_vars::resolve_chain`) — substitute what the
+  chain reaches, then default only a reference the corpus binds nowhere, then evaluate what
+  closed; anything that still does not close is absent, never guessed. The parser, the row
+  reader and the oracle harness are untouched under `src/pcgen_import/` (`decisions.md §11`:
+  KEPT, for Starfinder).
+- **The corpus-wide before/after cycle 3 asked for, delivered.** Cycle 3 deferred this swap
+  (retro `deferral 1789009691631-at-35-e6-001-c3-d74d1a`) because the converted fold "resolves a
+  different population". Measured, over every record the live table carries at every level
+  1..=20 under two ability-modifier probes —
+  `artifacts/epic-6-pcgen-exit/AT-35-E6-001_cycle4_varchain-parity.json`, 1,150 rows:
+  **`agree=199610 disagree=1070 lost=0 gained=80 records_moved=23`**, and **0** resolved values
+  inside the 65 records that carry a chain before and none after. Re-derive:
+  `AT35_E6_VARCHAIN_DUMP=<path> cargo test --locked --lib -j 6 -- --ignored
+  class_feature_grant_consumer::tests::dump_the_whole_var_chain_population`, at `292d90f13e` and
+  at HEAD, then diff.
+- **Discovery — every moved value is ONE mechanism, and it is a defect the swap fixes:
+  identifier case.** The retired evaluator looked a variable name up by exact bytes. Variable
+  and class names are case-insensitive in the rule source, and the converted package mints one
+  opaque id per case-folded name — so a corpus row writing `RogueLvl` where the class declares
+  `RogueLVL`, or `HUNTERLVL` where it declares `HunterLVL`, or a gate reading
+  `PREVARGTEQ:PaladinLvl`, or `classlevel("bard")` where the class is `Bard`, never bound, fell
+  to the corpus-wide-unbound `0` path, and printed a silent `0` on the sheet. Three checked
+  against the published rule and pinned by
+  `a_mixed_case_class_level_reference_now_scales`: **Knife Master ~ Hidden Blade** is +1/2 rogue
+  level (5 at 10th), not 0; **Empyreal Knight ~ Celestial Heart** is resistance 5 at 3rd and 10
+  at 9th, not 0; **Loremaster ~ Secret Lore** is (level+1)/2 secrets, not unresolved. Emitted as
+  retro `correction 1789015501781-at-35-e6-001-55b9ac`.
+- **Discovery — 65 records carried a chain that never evaluated.** Their every target uses a
+  shape the parser refuses (`skillinfo("RANK", …)`, `count("ABILITIES", …)`, `var("CL=Magus")`,
+  `charbonusto("PCLEVEL", …)`), so they resolved **0** values before this cycle and 0 after. The
+  artifact no longer carries a chain that cannot evaluate, which correctly hands those records
+  to the description-argument resolver instead of both paths refusing. All 65 named in the
+  parity artifact.
+- **Discovery — `%N` description arguments were a second live-parsing family, now converted
+  too.** 4,142 arguments across 3,034 records are lowered at ingest and keyed by the exact
+  argument text the renderer matches on. The six pinned pool-census tests pass unchanged; the
+  census figures did not move.
+- **Build scope verified** at `ac38c5bf3c`: `cargo test --locked --no-run -j 6` → `NO_RUN_EXIT=0`;
+  `cargo test --locked --lib -j 6` → **3,261 passed, 0 failed, 15 ignored**;
+  `cargo test --locked --no-fail-fast -j 6` → see the receipt's Build note;
+  `cargo run --locked --release --bin sheet_rule_convert -- --check` →
+  `records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS`;
+  `gen_record_vars -- --check` → `verdict=PASS`;
+  `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → **0**;
+  `completion_atlas.py --check`, `token_coverage.py --check`,
+  `shape_engine_boundary.py --check`, `missing_engine_tables.py --check`,
+  `denominator_gate.py --check` (69 files, 0 violations) and `--check-provenance`
+  (315 figures, 0 violations), `verify.sh --only pi-sweep` → `RESULT: PASS`. The desktop crate
+  and frontend run at epic cadence — this cycle touched no file under `apps/`.
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-001_cycle4_receipt.md`.
 
 ### 2026-09-09 — AT-35-E6-001 cycle 3 — `formula-evaluator-leaves-live` — **partial** (the feat-prerequisite family closed: `pre_tokens` 4 files / 19 hits → **0 / 0**; 1 file remains in 1 named family)
 

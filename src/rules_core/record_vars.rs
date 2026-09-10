@@ -382,7 +382,7 @@ mod tests {
         // `defaults` carries only names the corpus binds NOWHERE; this one is absent from it.
         let out =
             resolve_chain(&chain, "RogueLVL", 10, SeedAbilityMods::default(), &BTreeMap::new());
-        assert!(out.get("Target").is_none(), "an unreachable reference is never guessed");
+        assert!(!out.contains_key("Target"), "an unreachable reference is never guessed");
     }
 
     #[test]
@@ -414,7 +414,7 @@ mod tests {
         let mut defaults = BTreeMap::new();
         defaults.insert("Zeroed".to_string(), 0i64);
         let out = resolve_chain(&chain, "RogueLVL", 10, SeedAbilityMods::default(), &defaults);
-        assert!(out.get("Target").is_none(), "the interpreter refused this; so does the fold");
+        assert!(!out.contains_key("Target"), "the interpreter refused this; so does the fold");
     }
 
     #[test]
@@ -450,6 +450,6 @@ mod tests {
         let out =
             resolve_chain(&chain, "SummonerLVL", 9, SeedAbilityMods::default(), &BTreeMap::new());
         assert_eq!(out.get("Same"), Some(&9));
-        assert!(out.get("Other").is_none());
+        assert!(!out.contains_key("Other"));
     }
 }
