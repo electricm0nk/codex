@@ -60,16 +60,20 @@ the residue gate measures **one of the ingest format's two arrays**. Its sibling
   that every `AT-35-E5-*` and `AT-35-E6-*` receipt has recorded — pre-existing and unchanged
   here. This cycle's own diff (`git diff --unified=0 66a6c76948..HEAD -- $CODE`) contributes
   **0**.
-- **Wired-integration audit result:** OK_NO_TOKENS for this cycle's own diff. The
-  `${BASE_BRANCH}...HEAD` form reports **3 pre-existing matches**, all of the domain word
-  `placeholder` describing PCGen's own `%LIST` / `p.xx` "no selection" rows, none of them a
-  stub marker; this cycle's own diff adds none and removes two of them along with the doc
-  comments that moved to `src/pcgen_import/`.
+- **Wired-integration audit result:** **2 matches, both attributed, neither a stub marker.**
   ```
   git diff --unified=0 66a6c76948..HEAD -- $CODE ':!**/__tests__/**' ':!**/*.test.*' \
-    | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b'
-  ->  only `-` lines (the two moved `placeholder` doc comments); no `+` line matches
+    | grep -nE '^\+.*\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b'
+  ->  198:+/// rows in `core_essentials/races/*/*_races.lst` carry a placeholder
+      395:+    /// `p.xx` placeholder (`decisions.md §27.2`)
   ```
+  Both are the **domain word** `placeholder` naming PCGen's own `SOURCEPAGE:p.xx` non-citation
+  (`decisions.md §26`, §27.2) — the reason `RaceCacheData` deliberately has no page field. They
+  appear as `+` lines only because the doc comments carrying them moved verbatim into the new
+  `src/pcgen_import/ingest_payload.rs`, whose whole content is an addition; the same two lines
+  appear as `-` in `src/rules_core/shape_b_v1.rs` in the same diff. Text unchanged, count
+  unchanged, no shipping-code stub. The `${BASE_BRANCH}...HEAD` form reports the same 2 plus 1
+  more (`%LIST` "whatever the player chose" placeholder), all pre-existing.
 - **Acceptance criterion** (verbatim, `epic-breakdown.md` `### AT-35-E6-002`):
   > `src/rules_core/cache_gen/**` and `wiring_class.rs` relocate to `src/pcgen_import/`
   > behavior-identically (they are converter code that lives on the wrong side). Every `src/bin`
