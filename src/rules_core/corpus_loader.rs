@@ -375,17 +375,9 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
 
     let mut tokens = Vec::new();
     let mut bonus_chains = Vec::new();
-    if let Some(raw_tokens) = data.get("raw_tokens").and_then(serde_json::Value::as_array) {
-        for entry in raw_tokens {
-            let (Some(k), Some(v)) = (
-                entry.get("key").and_then(serde_json::Value::as_str),
-                entry.get("value").and_then(serde_json::Value::as_str),
-            ) else {
-                continue;
-            };
-            let raw_pair = format!("{k}:{v}");
-            tokens.push(EquipmentToken { key: k.to_string(), value: v.to_string(), line_number: 1, raw_pair });
-        }
+    for (k, v) in crate::pcgen_import::ingest_record::token_pairs(data) {
+        let raw_pair = format!("{k}:{v}");
+        tokens.push(EquipmentToken { key: k.to_string(), value: v.to_string(), line_number: 1, raw_pair });
     }
     if let Some(raw_chains) = data.get("raw_bonus_chains").and_then(serde_json::Value::as_array) {
         for entry in raw_chains {

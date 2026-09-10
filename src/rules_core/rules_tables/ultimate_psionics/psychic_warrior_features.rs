@@ -6,7 +6,7 @@
 //!
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested tokens (`data/corpus/ultimate_psionics/class_feature/
-//! psychic_warrior/*.json`, each record's own `raw_tokens`, sourced from
+//! psychic_warrior/*.json`, each record's own ingest token array, sourced from
 //! `up_classes.lst`/`up_abilities_class.lst`).
 
 /// `up_classes.lst:319`, `BONUS:VAR|WarriorPathLVL|CL` (unconditional for a

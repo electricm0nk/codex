@@ -29,7 +29,7 @@
 //! # Method: the converted chassis, read through the one live reader
 //!
 //! SD-35 `AT-35-E6-001` (`decisions.md` §11). Until that cycle this module
-//! read `data/corpus/core_rulebook/class/<slug>.json`'s `raw_tokens`, pulled
+//! read `data/corpus/core_rulebook/class/<slug>.json`'s ingest token array, pulled
 //! the `BONUS:COMBAT|BASEAB` / `BONUS:SAVE` formula STRINGS out of them, and
 //! evaluated those strings through the PCGen formula interpreter at render
 //! time. Nothing on the live side reads a PCGen token or formula any more:

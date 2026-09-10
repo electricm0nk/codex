@@ -361,7 +361,7 @@ caught-before-commit data loss). Records whose `source.kind` is not
 LST line to enrich from) are left untouched and counted separately, not
 treated as an error.
 
-`src/rules_core/corpus_literal_sweep.rs` (see above, "the closure, not the
+`src/pcgen_import/corpus_literal_sweep.rs` (see above, "the closure, not the
 base row alone, is the correct comparand") is the independent verifier that
 byte-compares those populated `raw_tokens` against its own `.MOD`-chain
 closure derived from the pinned oracle. Two real defects in the sweep's own

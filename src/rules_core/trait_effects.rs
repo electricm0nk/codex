@@ -17,7 +17,7 @@
 //!
 //! Every one of `ultimate_campaign`'s 59 `trait_content` bucket-M records'
 //! real corpus JSON (`data/corpus/ultimate_campaign/trait_generic/*.json`)
-//! was read directly and its `BONUS` `raw_tokens` classified by shape.
+//! was read directly and its `BONUS` ingest tokens classified by shape.
 //! **31 of the 59** carry exactly one `BONUS` token, of the form
 //! `SKILL|<Name>[,<Name>...]|<integer>[|TYPE=Trait]` -- a fixed named skill
 //! (or comma-separated list of skills, each granted the identical flat

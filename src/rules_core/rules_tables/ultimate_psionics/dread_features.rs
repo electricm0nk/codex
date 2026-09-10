@@ -7,7 +7,7 @@
 //!
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested `BONUS:VAR` tokens (`data/corpus/ultimate_psionics/
-//! class_feature/dread/*.json`, each record's own `raw_tokens`, sourced
+//! class_feature/dread/*.json`, each record's own ingest token array, sourced
 //! from `up_abilities_class.lst` — the roster's own `source_file` for every
 //! Dread record). `DreadPrimeStat` is `CHA` (`up_classes.lst:115`,
 //! `BONUS:VAR|DreadPrimeStat|CHA`), threaded here as `charisma_modifier`.

@@ -101,7 +101,7 @@ pub fn eqmod_referenced_records<'a>(
     // `<record_key>.MOD` row elsewhere in the LST also attaches an
     // `EQMOD:`. Confirmed against the real committed corpus record
     // (`data/corpus/advanced_race_guide/equipment/rending_claw_blades.json`,
-    // two `EQMOD` entries in `raw_tokens`). The prior `.find()` read only
+    // two `EQMOD` entries in the ingest token array). The prior `.find()` read only
     // the first, so a record whose *own* line already carried an `EQMOD:`
     // (however trivial -- `Material ~ Steel` here has no bonus chain of
     // its own) silently never inspected the richer, `.MOD`-folded token at

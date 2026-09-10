@@ -23,7 +23,7 @@ use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use crate::rules_core::corpus_literal_sweep::token_closure;
+use crate::pcgen_import::corpus_literal_sweep::token_closure;
 use crate::rules_core::pi_screening::declared_product_identity;
 use crate::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 use crate::pcgen_import::wiring_class::build_mod_index;

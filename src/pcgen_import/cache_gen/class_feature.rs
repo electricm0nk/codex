@@ -149,7 +149,7 @@ use serde_json::Value;
 
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::codex_neutral_name::{neutral_key, neutral_name};
-use crate::rules_core::corpus_literal_sweep::tab_tokens;
+use crate::pcgen_import::corpus_literal_sweep::tab_tokens;
 use crate::rules_core::pi_screening::{self, DeclaredProductIdentity, PI_BLACKLIST_TERMS};
 
 /// `(book id, corpus-relative directory, primary `_abilities_class.lst`

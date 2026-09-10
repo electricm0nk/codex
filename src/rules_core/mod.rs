@@ -6,7 +6,6 @@ pub mod class_feature_pool_catalog;
 pub mod codex_neutral_name;
 pub mod composed_input;
 pub mod contract;
-pub mod corpus_literal_sweep;
 pub mod corpus_loader;
 pub mod damage_total;
 pub mod derived_evaluator_fixture_check;

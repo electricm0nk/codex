@@ -168,6 +168,7 @@ pub fn class_skill_list(owner_id: &str) -> Option<&'static ClassSkillList> {
 #[cfg(test)]
 mod class_skill_list_tests {
     use super::*;
+    use crate::pcgen_import::ingest_record;
     use std::path::PathBuf;
 
     /// Every base-class row's own claim, re-derived from the LIVE corpus
@@ -203,13 +204,8 @@ mod class_skill_list_tests {
                     continue;
                 }
                 found_file = true;
-                let cskill = json["data"]["raw_tokens"]
-                    .as_array()
-                    .expect("raw_tokens is an array")
-                    .iter()
-                    .find(|t| t["key"].as_str() == Some("CSKILL"))
-                    .and_then(|t| t["value"].as_str())
-                    .unwrap_or_default();
+                let cskill =
+                    ingest_record::first_token_value(&json, "CSKILL").unwrap_or_default();
                 let expected: Vec<&str> = cskill.split('|').collect();
                 assert_eq!(row.skills, expected.as_slice(), "{class_name} CSKILL list");
             }
@@ -231,13 +227,7 @@ mod class_skill_list_tests {
         );
         let text = std::fs::read_to_string(&path).expect("readable corpus json");
         let json: serde_json::Value = serde_json::from_str(&text).expect("valid corpus json");
-        let cskill = json["data"]["raw_tokens"]
-            .as_array()
-            .expect("raw_tokens is an array")
-            .iter()
-            .find(|t| t["key"].as_str() == Some("CSKILL"))
-            .and_then(|t| t["value"].as_str())
-            .unwrap_or_default();
+        let cskill = ingest_record::first_token_value(&json, "CSKILL").unwrap_or_default();
         assert_eq!(cskill, "ALL");
     }
 

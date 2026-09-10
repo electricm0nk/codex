@@ -824,6 +824,7 @@ pub fn grant_token_only_dispatch_reason(key: &str) -> Option<&'static str> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::pcgen_import::ingest_record;
     use serde_json::Value;
     use std::collections::BTreeMap;
     use std::path::PathBuf;
@@ -1800,20 +1801,17 @@ mod tests {
         assert_eq!(GRANT_TOKEN_ONLY_DISPATCH_ROWS.len(), 12);
         for (key, _reason) in GRANT_TOKEN_ONLY_DISPATCH_ROWS {
             let doc = find_by_key(key);
-            let raw = doc["data"]["raw_tokens"].as_array().expect("raw_tokens is an array");
-            let has_modelled_token = raw
-                .iter()
-                .any(|t| matches!(t["key"].as_str(), Some("TYPE") | Some("DESC") | Some("BONUS")));
+            let has_modelled_token = ingest_record::token_keys(doc)
+                .into_iter()
+                .any(|k| matches!(k, "TYPE" | "DESC" | "BONUS"));
             assert!(
                 !has_modelled_token,
                 "{key}: expected zero-content (ABILITY grant only), but a modelled token is \
                  present -- this row may now carry real content and no longer belong here"
             );
-            let ability_targets: Vec<&str> = raw
-                .iter()
-                .filter(|t| t["key"].as_str() == Some("ABILITY"))
-                .map(|t| {
-                    let value = t["value"].as_str().expect("ABILITY token has a string value");
+            let ability_targets: Vec<&str> = ingest_record::token_values(doc, "ABILITY")
+                .into_iter()
+                .map(|value| {
                     // `Companion Class Feature|AUTOMATIC|<target key>|<optional PRE conditions>`
                     value.split('|').nth(2).unwrap_or_else(|| {
                         panic!("{key}: ABILITY token has no target key segment: {value}")

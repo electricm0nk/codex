@@ -22,6 +22,11 @@ pub mod bonus_stack_reader;
 // sitting on the live side; behaviour-identical here, and KEPT for Starfinder.
 pub mod cache_gen;
 pub mod wiring_class;
+// SD-35 AT-35-E6-002 cycle 2 (`decisions.md` §11): relocated from `src/rules_core/` -- the
+// ingest-format literal-token audit. Every consumer is already tool side (`src/bin/` and
+// `src/pcgen_import/cache_gen/`); it reads the ingest record's token array, which is converter
+// business. Behaviour-identical here, and KEPT for Starfinder.
+pub mod corpus_literal_sweep;
 pub mod class_feature_vars;
 pub mod formula_interpreter;
 pub mod formula_interpreter_corpus_wide;
@@ -30,6 +35,7 @@ pub mod pre_tokens;
 pub mod race_trait_formula_binding;
 pub mod corpus_trap_baseline;
 pub mod corpus_traps;
+pub mod ingest_record;
 pub mod include_resolver;
 pub mod ir_converter;
 pub mod lst_parser;

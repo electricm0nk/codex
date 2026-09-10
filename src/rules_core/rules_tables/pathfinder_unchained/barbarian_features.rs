@@ -587,6 +587,7 @@ pub mod prose_derived {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::pcgen_import::ingest_record;
     use std::path::PathBuf;
 
     fn corpus_dir() -> PathBuf {
@@ -1043,15 +1044,11 @@ mod tests {
             bonus_tokens(&indomitable).is_empty(),
             "Indomitable Will carries no BONUS chain in the corpus"
         );
-        let aspect = indomitable["raw_tokens"]
-            .as_array()
-            .expect("raw_tokens is an array")
-            .iter()
-            .find(|t| t["key"] == "ASPECT")
+        let aspect = ingest_record::first_token_value(&indomitable, "ASPECT")
             .expect("Indomitable Will must carry an ASPECT token");
         assert_eq!(
-            aspect["value"].as_str(),
-            Some("SaveBonus|+4 bonus to Will saves vs. Enchantment spells while raging")
+            aspect,
+            "SaveBonus|+4 bonus to Will saves vs. Enchantment spells while raging"
         );
     }
 

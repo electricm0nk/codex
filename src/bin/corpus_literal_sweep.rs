@@ -10,7 +10,7 @@
 //! does not decide anyone's doneness verdict and it does not write anything.
 //!
 //! Comparison rules, and why each is what it is, live in
-//! [`codex::rules_core::corpus_literal_sweep`]. This file is the walker: it
+//! [`codex::pcgen_import::corpus_literal_sweep`]. This file is the walker: it
 //! resolves the corpus, reads the records, assembles each one's token closure
 //! from `wiring_class`'s own `.MOD` index, and reports.
 //!
@@ -28,7 +28,7 @@
 //! `v06_work_inventory` uses, for the same reason (`workspace/` is synced, an
 //! absolute other-user path is not).
 
-use codex::rules_core::corpus_literal_sweep::{
+use codex::pcgen_import::corpus_literal_sweep::{
     compare_digest, compare_tokens, parse_document, tab_tokens, token_closure, Finding,
     ProvenanceClaim, ShippedRecord, SweepTally, SYNTHESIZED_TOKEN_KEYS,
 };

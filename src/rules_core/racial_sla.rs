@@ -12,7 +12,7 @@
 //!
 //! Reading all 118 of `core_rulebook`'s ingested `Racial SLA ~ *` corpus
 //! records directly (`data/corpus/core_rulebook/race_trait_generic/
-//! racial_sla_*.json`, this cycle, `raw_tokens` classified by shape) found
+//! racial_sla_*.json`, this cycle, the ingest token array classified by shape) found
 //! ONE mechanism, not 118 pieces of per-spell content. Every record carries
 //! the identical seven `DEFINE:RacialSLA_<Slug>_{LVL,SpellLVL,Times,DCMod,
 //! DC,AtWill,Constant}|0` block and, for 115 of the 118, the identical

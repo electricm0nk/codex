@@ -6,7 +6,7 @@
 //!
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested `BONUS:VAR` tokens (`data/corpus/ultimate_psionics/
-//! class_feature/cryptic/*.json`, each record's own `raw_tokens`, sourced
+//! class_feature/cryptic/*.json`, each record's own ingest token array, sourced
 //! from `up_abilities_class.lst` — the roster's own `source_file` for every
 //! Cryptic record), not from memory of the printed rulebook text. None of
 //! Cryptic's six magnitude-bearing records reads `CrypticPrimeStat`

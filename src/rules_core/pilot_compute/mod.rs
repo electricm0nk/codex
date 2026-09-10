@@ -11644,7 +11644,7 @@ const TREE_STRANGER_VANARA_SPEED_FEET: i16 = 30;
 /// 1d4 bite, secondary if the character also wields a manufactured weapon).
 /// Source: `core_essentials/races/rougarou/rougarou_abilities_race.lst:17-20`
 /// (`data/corpus/bestiary_6/race_trait/rougarou/rougarou_{speed,vision,
-/// natural_weapon}.json`'s own `source.line`/`raw_tokens`, read directly, not
+/// natural_weapon}.json`'s own `source.line` and ingest token array, read directly, not
 /// transcribed from the ledger).
 fn explain_rougarou_flat_override_race_trait(
     input: &CharacterInput,
@@ -87513,7 +87513,7 @@ mod generic_pool_group_selection_wiring_tests {
     /// "Animal Domain" header's own chain) which itself needs `DomainLVL` -- bound ONLY on the
     /// CLERIC CLASS RECORD (`data/corpus/core_rulebook/class/cleric.json`, `BONUS:VAR|DomainLVL|
     /// ClericLVL`), never on any `class_feature` record at all (cycle 7's own receipt, "out of
-    /// `class_feature`'s ingestion scope entirely"). Row 21 restored `raw_tokens` onto all 168 real
+    /// `class_feature`'s ingestion scope entirely"). Row 21 restored the ingest token array onto all 168 real
     /// class records; this cycle's own NEW `class_record_bonus_vars` table (mirroring `class_
     /// feature_bonus_vars_any_record`'s shape one dir level up) is the missing READ side, merged
     /// into `resolve_pool_member_sole_magnitude` unconditionally (every owning class, not gated by

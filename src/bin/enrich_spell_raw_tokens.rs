@@ -137,7 +137,7 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::corpus_literal_sweep::token_closure;
+    use codex::pcgen_import::corpus_literal_sweep::token_closure;
     use serde_json::Value;
     use std::collections::BTreeSet;
     use std::fs;

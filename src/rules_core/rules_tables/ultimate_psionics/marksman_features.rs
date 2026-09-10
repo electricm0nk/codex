@@ -6,7 +6,7 @@
 //!
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested `BONUS:VAR` tokens (`data/corpus/ultimate_psionics/
-//! class_feature/marksman/*.json`, each record's own `raw_tokens`, sourced
+//! class_feature/marksman/*.json`, each record's own ingest token array, sourced
 //! from `up_abilities_class.lst` — the roster's own `source_file` for every
 //! Marksman record). `MarksmanSecondaryStat` is `DEX` (`up_classes.lst:174`,
 //! `BONUS:VAR|MarksmanSecondaryStat|DEX`), threaded here as

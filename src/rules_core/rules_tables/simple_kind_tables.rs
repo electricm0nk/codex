@@ -165,7 +165,7 @@ pub fn load_simple_kind_table_for_dir(
                 let Some(key) = data["key"].as_str() else { continue };
                 let name = data["name"].as_str().unwrap_or(key).to_string();
                 let description = data["description"].as_str().map(str::to_string);
-                let raw_token_count = data["raw_tokens"].as_array().map(|a| a.len()).unwrap_or(0);
+                let raw_token_count = crate::pcgen_import::ingest_record::token_count(data);
                 let source_path = v["source"]["path"].as_str().unwrap_or_default().to_string();
                 let source_line = v["source"]["line"].as_u64().unwrap_or(0);
                 if let Some(coordinate) = v["rename"]["coordinate"].as_str() {
@@ -197,7 +197,7 @@ pub fn load_simple_kind_table_for_dir(
 pub fn transcript_line(table: &SimpleKindTable, sample_book: &str, sample_key: &str) -> String {
     match table.resolve(sample_book, sample_key) {
         Some(r) => format!(
-            "kind={} location=data/corpus/*/{}/*.json records={} sample=({sample_book}, {sample_key:?}) -> HELD name={:?} source={}:{} raw_tokens={}",
+            "kind={} location=data/corpus/*/{}/*.json records={} sample=({sample_book}, {sample_key:?}) -> HELD name={:?} source={}:{} ingest_tokens={}",
             table.kind, table.dir, table.len(), r.name, r.source_path, r.source_line, r.raw_token_count
         ),
         None => format!(

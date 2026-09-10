@@ -489,6 +489,7 @@ pub mod prose_derived {
 mod tests {
     use super::prose_derived;
     use super::*;
+    use crate::pcgen_import::ingest_record;
 
     /// The ingested `data` block for one Unchained Rogue record, read off
     /// disk. The prose-derived readings in this module are checked against
@@ -725,12 +726,8 @@ mod tests {
             "Debilitating Injury must still carry no BONUS: chain -- if it gained one, the \
              prose-derived readings are no longer the only source and must be revisited"
         );
-        let token_keys: Vec<String> = record["raw_tokens"]
-            .as_array()
-            .expect("raw_tokens is an array")
-            .iter()
-            .map(|t| t["key"].as_str().expect("token key is a string").to_owned())
-            .collect();
+        let token_keys: Vec<String> =
+            ingest_record::token_keys(&record).into_iter().map(str::to_owned).collect();
         assert_eq!(
             token_keys,
             vec!["KEY", "CATEGORY", "TYPE", "DESC"],
@@ -774,16 +771,9 @@ mod tests {
             record["raw_bonus_chains"].as_array().expect("array").is_empty(),
             "the row carries no BONUS: chain"
         );
-        let tokens: Vec<(String, String)> = record["raw_tokens"]
-            .as_array()
-            .expect("raw_tokens is an array")
-            .iter()
-            .map(|t| {
-                (
-                    t["key"].as_str().expect("key").to_owned(),
-                    t["value"].as_str().expect("value").to_owned(),
-                )
-            })
+        let tokens: Vec<(String, String)> = ingest_record::token_pairs(&record)
+            .into_iter()
+            .map(|(k, v)| (k.to_owned(), v.to_owned()))
             .collect();
         assert!(
             tokens.contains(&(

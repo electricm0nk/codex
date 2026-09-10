@@ -7,7 +7,7 @@
 //!
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested `BONUS:VAR` tokens (`data/corpus/advanced_players_guide/
-//! class_feature/antipaladin/*.json`, each record's own `raw_tokens`), the
+//! class_feature/antipaladin/*.json`, each record's own ingest token array), the
 //! same discipline `barbarian_features.rs` uses for Unchained Barbarian —
 //! nothing here is derived from memory of the printed rulebook text.
 //!

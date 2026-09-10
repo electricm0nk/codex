@@ -75,7 +75,7 @@ use serde_json::{json, Value};
 use crate::pcgen_import::cache_gen::equipment_gap::{
     disabled_identity_column, find_citation, sha256_file,
 };
-use crate::rules_core::corpus_literal_sweep::token_closure;
+use crate::pcgen_import::corpus_literal_sweep::token_closure;
 use crate::pcgen_import::wiring_class::build_mod_index;
 
 /// Why one record was left alone. Every variant is reported by name rather
@@ -500,7 +500,7 @@ pub fn repair_book(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::rules_core::corpus_literal_sweep::tab_tokens;
+    use crate::pcgen_import::corpus_literal_sweep::tab_tokens;
 
     fn row_index(rows: &[&str]) -> BTreeMap<String, Vec<String>> {
         let mut index: BTreeMap<String, Vec<String>> = BTreeMap::new();

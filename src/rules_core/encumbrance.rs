@@ -585,7 +585,7 @@ Dogslicer\tKEY:Dogslicer\tTYPE:Weapon.Resizable.Melee.Slashing.Goblin\tCOST:8\tW
     /// `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): real
     /// corpus record (`core_rulebook:equipment:horn_of_valhalla_brass`,
     /// `data/corpus/core_rulebook/equipment/magic_items/
-    /// horn_of_valhalla_brass.json`'s own `raw_tokens`, verbatim) whose
+    /// horn_of_valhalla_brass.json`'s own ingest token array, verbatim) whose
     /// only `MAGNITUDE_TOKENS` fields are `COST:`/`WT:` -- no `BONUS:`,
     /// `TEMPBONUS:`, or any other chain. A real, already-wired consumer
     /// (`compute_encumbrance`) resolves its weight; the probe must now

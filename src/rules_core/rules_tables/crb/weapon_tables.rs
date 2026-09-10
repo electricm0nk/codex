@@ -807,6 +807,7 @@ pub fn class_armor_proficiency(class_id: &str) -> Option<&'static ClassArmorProf
 #[cfg(test)]
 mod class_armor_proficiency_tests {
     use super::*;
+    use crate::pcgen_import::ingest_record;
 
     /// Every row's own claim, re-derived from the LIVE corpus record's own
     /// `ABILITY` tokens -- not merely asserted in the table above. RED if
@@ -837,12 +838,9 @@ mod class_armor_proficiency_tests {
                     continue;
                 }
                 found_file = true;
-                let ability_tokens: Vec<String> = json["data"]["raw_tokens"]
-                    .as_array()
-                    .expect("raw_tokens is an array")
-                    .iter()
-                    .filter(|t| t["key"].as_str() == Some("ABILITY"))
-                    .map(|t| t["value"].as_str().unwrap_or_default().to_string())
+                let ability_tokens: Vec<String> = ingest_record::token_values(&json, "ABILITY")
+                    .into_iter()
+                    .map(str::to_string)
                     .collect();
                 let has = |needle: &str| ability_tokens.iter().any(|v| v.contains(needle));
                 assert_eq!(has("Armor Prof ~ Light"), row.light, "{class_name} light armor");
