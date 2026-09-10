@@ -36,6 +36,12 @@ pub mod race_trait_formula_binding;
 pub mod corpus_trap_baseline;
 pub mod corpus_traps;
 pub mod ingest_record;
+// SD-35 AT-35-E6-002 cycle 4 (`decisions.md` §11, `technical-design.md` §0): the ingest cache's
+// per-content-kind `data` payload types and the verbatim token carriers they hold, relocated
+// from `src/rules_core/shape_b_v1.rs`. The record envelope (`CorpusRecordV1`, `License`, the PI
+// markers) is ours and stays live-side; these are the converter's output format.
+// Behaviour-identical, and KEPT for Starfinder.
+pub mod ingest_payload;
 // SD-35 AT-35-E6-002 cycle 3 (`decisions.md` §11, `technical-design.md` §0): every reading of
 // an ingested race/race-trait row's token array that `src/rules_core/race_resolver.rs`,
 // `race_creation.rs` and `trait_pool.rs` used to do by hand, one named function per fact.

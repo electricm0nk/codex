@@ -52,6 +52,33 @@ pub fn token_pairs(doc: &Value) -> Vec<(&str, &str)> {
         .collect()
 }
 
+/// Every `BONUS:` chain on `doc`, as its pipe-delimited qualifier list, in file
+/// order.
+///
+/// The sibling of [`token_pairs`] for the record's other ingest array. A record
+/// carrying no chains -- a "thin" record, or one whose LST row had no `BONUS:`
+/// clause -- yields an empty `Vec`, and a malformed entry is skipped rather
+/// than panicking, exactly as [`token_pairs`] treats a malformed token.
+///
+/// SD-35 `AT-35-E6-002` cycle 4: `rules_core::corpus_loader` open-coded this
+/// traversal, naming the ingest field and re-implementing the search inside a
+/// live module -- the same defect cycle 2 built this module to remove for the
+/// token array, missed then only because the residue gate's pattern names
+/// `raw_tokens` and not its sibling.
+pub fn bonus_chain_qualifiers(doc: &Value) -> Vec<Vec<&str>> {
+    let data = if doc.get("data").is_some_and(Value::is_object) { &doc["data"] } else { doc };
+    let Some(chains) = data.get("raw_bonus_chains").and_then(Value::as_array) else {
+        return Vec::new();
+    };
+    chains
+        .iter()
+        .filter_map(|entry| {
+            let qualifiers = entry.get("qualifiers")?.as_array()?;
+            Some(qualifiers.iter().filter_map(Value::as_str).collect())
+        })
+        .collect()
+}
+
 /// Every token key on `doc`, in file order, with duplicates kept.
 pub fn token_keys(doc: &Value) -> Vec<&str> {
     tokens(doc).iter().filter_map(|t| t.get("key")?.as_str()).collect()

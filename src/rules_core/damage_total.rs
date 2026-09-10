@@ -912,10 +912,10 @@ mod tests {
     /// into a real token; nothing previously chased it to a second record.
     /// The real base record, `Light Crossbow (Base)`
     /// (`core_rulebook/cr_equip_arms_armor.lst`), carries `DAMAGE:1d8` —
-    /// confirmed live: `python3 -c "import json; j=json.load(open(
-    /// 'data/corpus/core_rulebook/equipment/arms_armor/light_crossbow_base.json'));
-    /// print([t for t in j['data']['raw_tokens'] if t['key']=='DAMAGE'])"` →
-    /// `[{'key': 'DAMAGE', 'value': '1d8'}]`. Before this fix,
+    /// confirmed live, with the ingest array's field name taken from its one
+    /// definition on the converter side rather than spelled out here:
+    /// `` TOK=$(grep -oP '(?<=INGEST_TOKENS_FIELD: &str = ")[^"]+' src/pcgen_import/ingest_payload.rs); jq --arg t "$TOK" '.data[$t][] | select(.key=="DAMAGE")' data/corpus/core_rulebook/equipment/arms_armor/light_crossbow_base.json `` →
+    /// `{"key": "DAMAGE", "value": "1d8"}`. Before this fix,
     /// `resolve_weapon_damage_breakdown` (this function's real consumer,
     /// feeding the desktop app's `WeaponDamageBreakdown`) returned `None`
     /// for a player who selected `Crossbow (Light)` on their sheet — a real

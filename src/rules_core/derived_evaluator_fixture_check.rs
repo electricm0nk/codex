@@ -691,7 +691,7 @@ const SPELL_CORPUS_BOOK_DIRS: &[&str] = &[
     "ultimate_combat",
     // W19-INTEGRATE: `inner_sea_gods` was found live, already carrying a
     // real `data/corpus/inner_sea_gods/spell/` cache (92 files, already
-    // `raw_tokens`-enriched by `enrich_spell_raw_tokens.rs`'s own
+    // token-array-enriched by `enrich_spell_raw_tokens.rs`'s own
     // `TARGET_BOOKS` since `SD31-E6-F10-001`) but MISSING from this list --
     // the exact same silent-gap shape the `ultimate_wilderness` entry below
     // fixes, discovered while fixing it. Neither this book's own `spell`
@@ -1936,16 +1936,15 @@ mod class_feature_seam_tests {
             std::fs::create_dir_all(&cf_dir).unwrap();
             std::fs::write(
                 cf_dir.join("scratch_power.json"),
-                r#"{"data":{"key":"Probe ~ Scratch Power","raw_tokens":[
-                    {"key":"BONUS","value":"VAR|ScratchPowerBonus|2+ProbeLVL/4"}
-                ]}}"#,
+                crate::pcgen_import::ingest_payload::ingest_record_json(
+                    "Probe ~ Scratch Power",
+                    &[("BONUS", "VAR|ScratchPowerBonus|2+ProbeLVL/4")],
+                ),
             )
             .unwrap();
             std::fs::write(
                 cf_dir.join("scratch_pool_header.json"),
-                r#"{"data":{"key":"Probe ~ Scratch Powers","raw_tokens":[
-                    {"key":"BONUS","value":"VAR|ProbeLVL|ProbeClassLVL"}
-                ]}}"#,
+                crate::pcgen_import::ingest_payload::ingest_record_json("Probe ~ Scratch Powers", &[("BONUS", "VAR|ProbeLVL|ProbeClassLVL")]),
             )
             .unwrap();
             let fixture_dir = root.join("tests/fixtures/rules_core");
@@ -2076,16 +2075,12 @@ mod class_feature_seam_tests {
         std::fs::create_dir_all(&cf_dir).unwrap();
         std::fs::write(
             cf_dir.join("scratch_power.json"),
-            r#"{"data":{"key":"Probe ~ Scratch Power","raw_tokens":[
-                {"key":"BONUS","value":"VAR|ScratchPowerBonus|2+ProbeLVL/4"}
-            ]}}"#,
+            crate::pcgen_import::ingest_payload::ingest_record_json("Probe ~ Scratch Power", &[("BONUS", "VAR|ScratchPowerBonus|2+ProbeLVL/4")]),
         )
         .unwrap();
         std::fs::write(
             cf_dir.join("scratch_pool_header.json"),
-            r#"{"data":{"key":"Probe ~ Scratch Powers","raw_tokens":[
-                {"key":"BONUS","value":"VAR|ProbeLVL|ProbeClassLVL"}
-            ]}}"#,
+            crate::pcgen_import::ingest_payload::ingest_record_json("Probe ~ Scratch Powers", &[("BONUS", "VAR|ProbeLVL|ProbeClassLVL")]),
         )
         .unwrap();
         let fixture_dir = root.join("tests/fixtures/rules_core");
@@ -2345,7 +2340,7 @@ mod spell_range_seam_tests {
             std::fs::create_dir_all(&spell_dir).unwrap();
             std::fs::write(
                 spell_dir.join("scratch_close_spell.json"),
-                r#"{"data":{"key":"scratch_close_spell","raw_tokens":[{"key":"RANGE","value":"Close"}]}}"#,
+                crate::pcgen_import::ingest_payload::ingest_record_json("scratch_close_spell", &[("RANGE", "Close")]),
             )
             .unwrap();
             let fixture_dir = root.join("tests/fixtures/rules_core");
@@ -2553,7 +2548,7 @@ mod spell_seam_tests {
             std::fs::create_dir_all(&spell_dir).unwrap();
             std::fs::write(
                 spell_dir.join("scratch_duration_spell.json"),
-                r#"{"data":{"key":"scratch_duration_spell","raw_tokens":[{"key":"DURATION","value":"(CASTERLEVEL*10) minutes [D]"}]}}"#,
+                crate::pcgen_import::ingest_payload::ingest_record_json("scratch_duration_spell", &[("DURATION", "(CASTERLEVEL*10) minutes [D]")]),
             )
             .unwrap();
             let fixture_dir = root.join("tests/fixtures/rules_core");

@@ -87,9 +87,8 @@ use crate::pcgen_import::race_trait_tokens;
 use crate::rules_core::corpus_loader::BookCorpusRoot;
 use crate::rules_core::feat_effects::FeatDisplayValueDeltas;
 use crate::rules_core::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues, RenderedPcgenDesc};
-use crate::rules_core::shape_b_v1::{
-    validate_license, CorpusRecordV1, CorpusSource, RaceCacheData, RaceTraitCacheData, RawBonusChain,
-};
+use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData, RawBonusChain};
+use crate::rules_core::shape_b_v1::{validate_license, CorpusRecordV1, CorpusSource};
 use crate::rules_core::size::SizeCategory;
 
 /// Why one corpus file was skipped. A malformed record must not take down a

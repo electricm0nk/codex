@@ -30,7 +30,7 @@
 //!
 //! KEPT for Starfinder, like the rest of `src/pcgen_import/`.
 
-use crate::rules_core::shape_b_v1::{RaceCacheData, RaceTraitCacheData, RawToken};
+use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData, RawToken};
 use crate::rules_core::size::SizeCategory;
 
 /// A record deserialized from a corpus file that still carries the `.lst` row

@@ -51,9 +51,8 @@ use sha2::{Digest, Sha256};
 
 use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
-use codex::rules_core::shape_b_v1::{
-    Completeness, CorpusRecordV1, CorpusSource, Population, RaceTraitCacheData, RawBonusChain, RawToken,
-};
+use codex::pcgen_import::ingest_payload::{RaceTraitCacheData, RawBonusChain, RawToken};
+use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, Population};
 
 /// The one source file this binary ingests, relative to the PCGen `data/` root.
 const LST_RELATIVE: &str = "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst";

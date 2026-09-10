@@ -65,10 +65,8 @@ use sha2::{Digest, Sha256};
 use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use codex::pcgen_import::race_trait_formula_binding::resolve_same_row_formula;
-use codex::rules_core::shape_b_v1::{
-    Completeness, CorpusRecordV1, CorpusSource, License, Population, RaceCacheData, RaceTraitCacheData, RawBonusChain,
-    RawToken,
-};
+use codex::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData, RawBonusChain, RawToken};
+use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
 /// `wiring_class`'s corpus-wide book id for the shared race storage all
 /// 18 in-scope races and their traits live under.

@@ -312,7 +312,7 @@ mod tests {
     }
 
     fn ability_trait(name: &str, chains: &[(&str, &str, &str)]) -> ResolvedTrait {
-        use crate::rules_core::shape_b_v1::RawBonusChain;
+        use crate::pcgen_import::ingest_payload::RawBonusChain;
         ResolvedTrait {
             key: format!("Test ~ {name}"),
             name: name.to_owned(),

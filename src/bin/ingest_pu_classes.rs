@@ -85,10 +85,8 @@ use sha2::{Digest, Sha256};
 
 use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
-use codex::rules_core::shape_b_v1::{
-    ClassFeatureCacheData, ClassFeatureGrant, ClassVariantCacheData, Completeness, CorpusRecordV1, CorpusSource,
-    License, Population, RawBonusChain, RawToken,
-};
+use codex::pcgen_import::ingest_payload::{ClassFeatureCacheData, ClassFeatureGrant, ClassVariantCacheData, RawBonusChain, RawToken};
+use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
 /// The one source file this binary ingests, relative to the PCGen `data/`
 /// root. The same string is written into every record's `source.path`.

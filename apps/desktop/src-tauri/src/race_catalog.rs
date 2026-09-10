@@ -66,7 +66,7 @@ use serde::{Deserialize, Serialize};
 
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, ResolvedTrait};
-use codex::rules_core::shape_b_v1::RawBonusChain;
+use codex::pcgen_import::ingest_payload::RawBonusChain;
 
 use crate::authoring_workbench::codex_repo_root;
 

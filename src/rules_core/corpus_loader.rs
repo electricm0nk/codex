@@ -12,8 +12,10 @@
 //! unchanged, reading `record.tokens`/`record.bonus_chains` exactly as it
 //! does from a raw-LST-parsed fixture today.
 //!
-//! Records enriched with `raw_tokens`/`raw_bonus_chains`
-//! (`scripts`/`src/bin/enrich_equipment_raw_tokens.rs`, commit `094acde1`)
+//! Records enriched with the two ingest arrays -- the token array and the
+//! bonus-chain array, whose field names and traversal belong to the converter
+//! and are reached only through `pcgen_import::ingest_record`
+//! (`scripts`/`src/bin/enrich_equipment_raw_tokens.rs`, commit `094acde1`) --
 //! reconstruct a full, accurate `EquipmentRecord`. A record without those
 //! fields (not yet enriched, or a `web_second_source`/`same_book_fallback`
 //! record with no raw LST line to enrich from) reconstructs a *thin*
@@ -379,26 +381,20 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
         let raw_pair = format!("{k}:{v}");
         tokens.push(EquipmentToken { key: k.to_string(), value: v.to_string(), line_number: 1, raw_pair });
     }
-    if let Some(raw_chains) = data.get("raw_bonus_chains").and_then(serde_json::Value::as_array) {
-        for entry in raw_chains {
-            let Some(qualifiers) = entry.get("qualifiers").and_then(serde_json::Value::as_array) else {
-                continue;
-            };
-            let qualifiers: Vec<String> =
-                qualifiers.iter().filter_map(|q| q.as_str().map(str::to_string)).collect();
-            let raw_bonus = format!("BONUS:{}", qualifiers.join("|"));
-            bonus_chains.push(BonusToken { line_number: 1, raw_bonus, qualifiers });
-        }
+    for qualifiers in crate::pcgen_import::ingest_record::bonus_chain_qualifiers(data) {
+        let qualifiers: Vec<String> = qualifiers.into_iter().map(str::to_string).collect();
+        let raw_bonus = format!("BONUS:{}", qualifiers.join("|"));
+        bonus_chains.push(BonusToken { line_number: 1, raw_bonus, qualifiers });
     }
     // SD-33 remediation wave 5 (`sd33-r5-skillcombat`): synthesize a KEY:
-    // token from the ingested `data.key` field whenever `raw_tokens` did
-    // not itself carry a literal `KEY:` entry -- not only when
-    // `raw_tokens` was completely empty. `data.key` is ALWAYS the
+    // token from the ingested `data.key` field whenever the ingest token
+    // array did not itself carry a literal `KEY:` entry -- not only when
+    // that array was completely empty. `data.key` is ALWAYS the
     // ingestion pipeline's own record identity (the real `KEY:` token
     // when the LST line had one, else the record's own bare name --
     // `equipment_id_resolve`'s doc comment states this rule and the
     // ingestion `source.record_key` field already computes it this way).
-    // Before this fix, a record with a non-empty `raw_tokens` list but no
+    // Before this fix, a record with a non-empty token array but no
     // literal `KEY:` entry among them (common: a keyless LST line whose
     // identity is its own first-column name) fell through
     // `equipment_key_token` to `None`, and `equipment_id_resolve` fell
@@ -428,7 +424,7 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
     // (`WT:`/`COST:`). The ingestion pipeline always captures a record's
     // own weight/cost as top-level `data.weight_lbs`/`data.cost_gp`
     // (`equipment_record_from_json`'s own caller, `arrow_slaying.json`'s
-    // real on-disk shape among many: `"weight_lbs": 0.1`, no `raw_tokens`
+    // real on-disk shape among many: `"weight_lbs": 0.1`, no ingest token
     // array at all -- this module's own doc comment already names this a
     // "thin" record). Before this fix, a thin record's `tokens` list held
     // only the synthesized `KEY:` entry, so `weight_and_cost_from_record`
@@ -437,12 +433,12 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
     // `None` for it even though the exact weight/cost this record's own
     // ingestion already captured was sitting one field over, unread. This
     // does not fabricate a value: `weight_lbs`/`cost_gp` are the SAME
-    // ingested data `raw_tokens`' own `WT:`/`COST:` entries would carry
+    // ingested data the token array's own `WT:`/`COST:` entries would carry
     // when present (confirmed corpus-wide, not sampled: every one of the
     // 4,470 enriched equipment/equipment_modifier records under
     // `data/corpus/**/equipment/**/*.json` that carries both a `WT:`
     // token and a `weight_lbs` field has the two agree exactly). Only fires
-    // when `raw_tokens` itself did not already carry the token, so an
+    // when the token array itself did not already carry the token, so an
     // enriched record's own literal value always wins unchanged.
     if !tokens.iter().any(|t| t.key == "WT")
         && let Some(weight) = data.get("weight_lbs").and_then(serde_json::Value::as_f64) {
@@ -501,10 +497,10 @@ mod tests {
     }
 
     /// `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): a real,
-    /// on-disk "thin" record (no `raw_tokens` array at all --
+    /// on-disk "thin" record (no ingest token array at all --
     /// `data/corpus/core_rulebook/equipment/arms_armor/arrow_slaying.json`,
     /// verbatim: `"data": {"key": "Arrow (Slaying)", ..., "cost_gp": 0.0,
-    /// "weight_lbs": 0.1}`, no `raw_tokens` key). Before this cycle's fix
+    /// "weight_lbs": 0.1}`, no token-array key). Before this cycle's fix
     /// the loaded record's `tokens` held only a synthesized `KEY:` entry;
     /// now `WT:`/`COST:` are synthesized from the same already-ingested
     /// `weight_lbs`/`cost_gp` fields, so the real, already-wired
@@ -536,7 +532,7 @@ mod tests {
     }
 
     /// Unit-level proof of the synthesis rule itself, isolated from the
-    /// full loader: no `raw_tokens` at all, only the top-level
+    /// full loader: no ingest token array at all, only the top-level
     /// `weight_lbs`/`cost_gp` fields every ingested record carries.
     #[test]
     fn equipment_record_from_json_synthesizes_wt_and_cost_when_raw_tokens_is_absent() {
@@ -554,27 +550,25 @@ mod tests {
     }
 
     /// Negative control: an already-enriched record's own real `WT:`/
-    /// `COST:` tokens (from `raw_tokens`) must win unchanged -- synthesis
+    /// `COST:` tokens (from the ingest token array) must win unchanged -- synthesis
     /// only fires when the token is genuinely absent, never overriding a
     /// real ingested literal.
     #[test]
     fn equipment_record_from_json_never_overrides_a_real_raw_tokens_wt_or_cost() {
-        let value: serde_json::Value = serde_json::json!({
+        let mut value: serde_json::Value = serde_json::json!({
             "key": "Test Enriched Record",
             "name": "Test Enriched Record",
-            "raw_tokens": [
-                {"key": "WT", "value": "99"},
-                {"key": "COST", "value": "1"}
-            ],
-            // Deliberately different from the raw_tokens values, to prove
-            // a real conflict resolves in the raw_tokens' favor.
+            // Deliberately different from the token-array values, to prove
+            // a real conflict resolves in the token array's favor.
             "weight_lbs": 3.5,
             "cost_gp": 120.0
         });
+        value[crate::pcgen_import::ingest_payload::INGEST_TOKENS_FIELD] =
+            crate::pcgen_import::ingest_payload::ingest_tokens_value(&[("WT", "99"), ("COST", "1")]);
         let record = equipment_record_from_json(&value).expect("must build a record");
         assert_eq!(record.tokens.iter().filter(|t| t.key == "WT").count(), 1, "no duplicate WT: token");
         let wt = record.tokens.iter().find(|t| t.key == "WT").unwrap();
-        assert_eq!(wt.value, "99", "the real raw_tokens WT: value must win, not the top-level field");
+        assert_eq!(wt.value, "99", "the real ingested WT: token value must win, not the top-level field");
         let cost = record.tokens.iter().find(|t| t.key == "COST").unwrap();
         assert_eq!(cost.value, "1");
     }
@@ -693,7 +687,7 @@ mod tests {
     /// [NAME]"` (an unresolved `OUTPUTNAME:Companion Stone of [NAME]`
     /// placeholder, never meant to be an identity). Before this fix,
     /// `equipment_id_resolve("Companion Stone (Diplomacy)", ...)` returned
-    /// `None`: no raw `KEY:` token exists among `raw_tokens` (the field
+    /// `None`: no raw `KEY:` token exists in the ingest token array (the field
     /// simply isn't present on this LST line), so `equipment_key_token`
     /// returned `None` and identity fell back to `.name`, the OUTPUTNAME
     /// placeholder -- not `Companion Stone (Diplomacy)`. This is the same
