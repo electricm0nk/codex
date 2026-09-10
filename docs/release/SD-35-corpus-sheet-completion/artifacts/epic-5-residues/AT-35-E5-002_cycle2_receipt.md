@@ -1,7 +1,7 @@
 # Cycle AT-35-E5-002_cycle2 — Epic 5 Residues / AT-35-E5-002
 
-- **Commit SHA:** `a7c2645913` (cycle start — the reclaim daemon's folded retro append), then this
-  receipt + `progress.md` + `kanban.md` + the two retro corrections. Row 20 was already `complete`
+- **Commit SHA:** `65cdf7276d` (this receipt, `progress.md`, `kanban.md` and the two retro
+  corrections, in one commit). Cycle start `a7c2645913` — the reclaim daemon's folded retro append. Row 20 was already `complete`
   at dispatch; this is a **re-dispatch of an already-closed card** and it redoes nothing.
 - **Scope gate:**
   ```
