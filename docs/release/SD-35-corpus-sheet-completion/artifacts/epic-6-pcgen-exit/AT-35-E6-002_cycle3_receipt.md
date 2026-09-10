@@ -10,10 +10,10 @@ schema's own field declarations, test fixtures, and doc comments, enumerated bel
 mechanism each needs.
 
 - **Commit SHA:** `b1c0eb9870` — the two new tool-side modules, the live-side re-pointings, the
-  two struct narrowings, and this cycle's `deferral` + `incident` + `verification` events. A
-  second commit carries this receipt, the `progress.md` / `kanban.md` rows and the folded atlas
-  re-stamp; a third pins both SHAs into this line (a receipt cannot name the commit that carries
-  it). Cycle start `4cff876d7b`.
+  two struct narrowings, and this cycle's `deferral` + `incident` + `verification` events.
+  `0d960703ff` carries this receipt and the `progress.md` / `kanban.md` rows; this line is
+  pinned by a third commit (a receipt cannot name the commit that carries it). Cycle start
+  `4cff876d7b`.
 - **Scope gate:**
   `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
   Run anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
