@@ -7,7 +7,7 @@ what cycle 1 could not have known: **four more Epic 4 cycles landed after it**, 
 carried 3 rows for 6 cycles and its `verified_at.completeness` claim had gone false. This cycle
 closes zero units by design and moves no figure.
 
-- **Commit SHA:** `<pinned by the follow-up commit below — the `AT-35-E3-004_cycle2` precedent>`
+- **Commit SHA:** `1a59c40909` (this receipt, `rate-ledger.json`, `progress.md`, `kanban.md` and the retro event all landed in it; its own SHA row pinned by the follow-up commit — the `AT-35-E3-004_cycle2` precedent)
 - **Cycle start SHA:** `5341630c0e5f7141ca84b91ffc13b97cff9920d8`
 - **Scope gate:** `SCOPE_GATE: EXEMPT (ledger cycle — closes zero units by design)` — `decisions.md §2`.
   Recorded for completeness, the unflagged gate at the same sha:
