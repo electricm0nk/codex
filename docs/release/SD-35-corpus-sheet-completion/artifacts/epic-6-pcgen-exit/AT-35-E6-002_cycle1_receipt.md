@@ -6,9 +6,10 @@ clauses**. `gen_book_cache` output is byte-identical before and after; the `raw_
 remainder enumerated file-by-file below.
 
 - **Commit SHA:** `b91d16a66b` — the relocation, the 63 rewritten import sites, the emptied
-  residue-gate carve-out and this cycle's deferral event. A second commit carries this receipt,
-  the `progress.md` / `kanban.md` rows and the two folded working-tree files, and pins that SHA
-  into this line (a receipt cannot name the commit that carries it). Cycle start `c03e35f8c0`.
+  residue-gate carve-out and this cycle's deferral event. `9c7cfdf25a` carries this receipt, the
+  `progress.md` / `kanban.md` rows and the two folded working-tree files; a third commit pins
+  both SHAs into this line (a receipt cannot name the commit that carries it). Cycle start
+  `c03e35f8c0`.
 - **Scope gate:**
   `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
   Run anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
