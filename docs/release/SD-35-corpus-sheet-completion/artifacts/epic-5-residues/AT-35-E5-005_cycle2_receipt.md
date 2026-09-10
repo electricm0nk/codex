@@ -5,7 +5,7 @@ row 23 has read `complete` since. This cycle writes **no code**, moves **no unit
 **nothing**: it re-derives all three of the criterion's Evidence clauses at HEAD, records that
 each reproduces, and files the extra cycle as `§5` requires (one row per extra cycle).
 
-- **Commit SHA:** `<pinned below>` (this receipt, `progress.md`, `kanban.md`, the two retro events,
+- **Commit SHA:** `392fc95e33` (this receipt, `progress.md`, `kanban.md`, the two retro events,
   and the `derived_at` re-stamp `completion_atlas.py --check` writes into
   `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`). Cycle start
   `5e68380ac47bdd36f45a080254b4a008c18e4200` on `tranche/15`.
@@ -32,8 +32,10 @@ each reproduces, and files the extra cycle as `§5` requires (one row per extra 
   (`git diff --name-only 5e68380ac4..HEAD -- src apps data tests scripts` is empty).
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS — **0 from this cycle**.
   `BASE_BRANCH=fe5ae6cd4a5f3c65d5d10f4d523f00e33b04ac47` (`git merge-base HEAD origin/develop`).
-  Over Epic 5's whole file-touch set the grep returns **15** at cycle start and **15** on the
-  final diff, attributed exhaustively: `src/rules_core/` **2**
+  Over Epic 5's whole file-touch set the grep returns **15** at cycle start and **17** on the
+  final diff at `392fc95e33`; the **+2** are this receipt's own two quotations of a pre-existing
+  test filename, and `git diff --unified=0 5e68380ac4..HEAD -- src/ apps/ data/ | grep -c` over
+  both audit patterns returns **0**. Attributed exhaustively (cycle-start figures): `src/rules_core/` **2**
   (`tests/sd27_feat_prerequisite_enforcement.rs` on a removed doc-comment line,
   `tests/sd34_wave51_racial_sla_catalog_matches_the_corpus.rs` on an added one),
   `artifacts/epic-5-residues/` **13** (earlier receipts' prose quoting those same pre-existing
@@ -45,7 +47,9 @@ each reproduces, and files the extra cycle as `§5` requires (one row per extra 
 - **Wired-integration audit result:** OK_NO_TOKENS — **0 code hits from this cycle**, which ships
   no code. Over Epic 5's whole file-touch set the grep
   (`\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b`) returns **27** at cycle
-  start and **27** on the final diff, attributed exhaustively: `data/sheet_rules/` **2** —
+  start and **32** on the final diff at `392fc95e33`; the **+5** are this receipt's own
+  self-referential quotations of the pattern, and this cycle's diff over `src/ apps/ data/`
+  carries **0**. Attributed exhaustively (cycle-start figures): `data/sheet_rules/` **2** —
   published rulebook prose inside `ProsePiece::Text` (Tophet "hack or smash", Plant Growth
   "creatures must hack or force a way through"), which is the sheet rule working, not a stub;
   `docs/work-inventory.json` **3** — all on **removed** (`-`) lines carrying PCGen's own
