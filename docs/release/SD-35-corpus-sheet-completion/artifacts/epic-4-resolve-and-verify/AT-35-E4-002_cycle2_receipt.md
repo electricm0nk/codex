@@ -1,6 +1,6 @@
 # Cycle 2 — Epic 4, Resolve and verify / AT-35-E4-002
 
-- **Commit SHA:** `<this commit>` (cycle start `18dbe0e1659eef8fe8608aa2c2c620e5ef39c74a`)
+- **Commit SHA:** `89e93ace82` (cycle start `18dbe0e1659eef8fe8608aa2c2c620e5ef39c74a`)
 - **Scope gate:**
   ```
   inventory=docs/work-inventory.json
