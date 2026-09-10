@@ -1,6 +1,6 @@
 ---
 title: Engine handoff — choice-trait characters cannot be saved
-status: open
+status: resolved 2026-09-10 by fix (b); see "Resolution" at the foot of this file
 severity: user-facing data loss (save refused)
 found_by: backend teammate, v0.8 UI sprint, during ticket B-4
 found_on: 2026-09-01
@@ -136,3 +136,28 @@ Left for the repo-root `src/` owner per the operator hand-off ruling; not applie
 session. Surfaced because merging the deliberately-red tests to `develop` turns the
 `publish-tester-release` "Test before publish" job red (the "Run desktop shell tests" step)
 until (b) lands.
+
+## Resolution — 2026-09-10: candidate (b) landed
+
+The addendum above is correct and was reached independently by the engine owner before PR #388 was
+read. Candidate (b) is what shipped. What changed, exactly:
+
+- `src/rules_core/trait_effects.rs` — `trait_skill_choice_id` now drops the record id's `kind:`
+  prefix, so `trait:trait_criminal` yields the two-segment `trait_choice:trait_criminal`. Written as
+  `split_once(':')` rather than `trim_start_matches("trait:")`, so it strips exactly one prefix
+  segment for any kind and cannot chew through a name that happens to repeat it.
+- The two `character_hub.rs` acceptance-test expectations, corrected to the 2-segment id as the
+  addendum requires, and their `EXPECTED RED` banners rewritten — they now say the tests are green
+  and must not be weakened, rather than claiming a failure that no longer exists.
+- The pins at `trait_picker.rs:888,914` and `composeCreateCharacterRequest.test.ts:141,146`.
+
+No migration: a choice-trait character was never saveable, so no 3-segment id exists on disk.
+
+Verified before the PR, covering every `Test before publish` step that was failing or unreached:
+
+| Command | Result |
+|---|---|
+| `cd apps/desktop/src-tauri && cargo test --locked` | **636 passed, 0 failed** (was 634 / 2) |
+| `cargo test --locked --lib trait_effects` | 70 passed, 0 failed |
+| `npm run typecheck` | clean |
+| `npm test` | **121/121 test files passed** |
