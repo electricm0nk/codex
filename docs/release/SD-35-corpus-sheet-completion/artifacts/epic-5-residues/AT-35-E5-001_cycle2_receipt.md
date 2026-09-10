@@ -6,7 +6,7 @@ already `complete` on `kanban.md` row 19 before this cycle started (cycle 1, `7a
 census; it re-derives the whole Evidence sentence at the current `HEAD` rather than redoing
 work, and records the result. Nothing in `src/`, `scripts/`, `data/` or `apps/` was touched.
 
-- **Commit SHA:** `<this commit>`. Cycle start `a4efb1a91b4616d2e0607901c7c1bcc5005b99da`.
+- **Commit SHA:** `fe7f666ef6` (receipt, progress, kanban, retro event, atlas `derived_at` stamp), `8b4f234cfb` (the derived verify event this cycle's `pi-sweep` run appended), `<this commit>` (this SHA row). Cycle start `a4efb1a91b4616d2e0607901c7c1bcc5005b99da`.
 - **Scope gate:**
   ```
   inventory=docs/work-inventory.json
