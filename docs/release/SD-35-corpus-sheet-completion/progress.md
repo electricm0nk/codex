@@ -41,6 +41,72 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-10 — Epic 4 / `bucket-v-oracle-once` — AT-35-E4-002 **cycle 2** — **complete** (a re-dispatch of an already-closed criterion: every Evidence clause re-derived at HEAD, the corpus-wide harness deliberately not re-run, and the dispatch's own stale scope figures corrected)
+
+- **Scope gate** (`python3 scripts/cycle_scope_gate.py --min 500 --bucket V`):
+  ```
+  inventory=docs/work-inventory.json
+  scope=bucket=V
+  scoped_by_bucket=
+  scoped_by_kind=
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+  The dispatch mandated bundling if bucket V came back under the floor. It came back at **zero**,
+  and so did the unscoped whole remainder (`python3 scripts/cycle_scope_gate.py --min 500` →
+  `scoped=0 remaining_non_done=0 verdict=PASS_WHOLE_REMAINDER`) — no criterion in this bundle has
+  a non-empty population at HEAD, so there is nothing to bundle. `PASS_WHOLE_REMAINDER`, not a
+  floor exemption and not an under-floor cycle. No card was emptied by this cycle, so none was
+  closed by it.
+- **Receipt rows (mechanical):** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a
+  builds_recorded=0 pcgen_live_files=253`; `regressed=0 added=0 dropped=0`,
+  `closed_by_kind=` and `relabeled_moves=` empty
+  (`python3 scripts/cycle_scope_gate.py --receipt --since 18dbe0e1659eef8fe8608aa2c2c620e5ef39c74a --before /tmp/wi-before-AT-35-E4-002.json --after docs/work-inventory.json`).
+- **Refused tokens:** none. `python3 scripts/token_coverage.py --check` → `refused=142
+  refused_non_done=0` — every converter-refused record is DONE, so no refusal holds a bucket-V
+  unit, or any unit, open. The cycle closed 0 of a scoped population of 0, so no `deferral`
+  event is owed.
+- **The Evidence sentence, re-derived at HEAD** (`epic-breakdown.md` `### AT-35-E4-002`: "V at 0;
+  the harness receipt with `PCGEN_ORACLE_SHA`; `oracle_disagreement=<n> of 392`, every
+  disagreement named"): **V at 0** — `python3 scripts/completion_atlas.py --check` → `V: 0`,
+  `DONE: 49438`, every non-DONE bucket 0, `unclassified=0 overlap=0`. **The corpus-wide run** —
+  `AT-35-E4-002_cycle1_bucket-v-parity.json` carries `population=392` and 392 `units`.
+  **`PCGEN_ORACLE_SHA`** — `7f818006e371188e5717fd18d74d18a420747fc6`. **The verdicts** —
+  `oracle-agree 184 / oracle-disagree 10 / oracle-unverifiable 198`, by tier `export`
+  165 / 9 / 112 and `source` 19 / 1 / 86, and all **10** disagreements are carried as records
+  with `id`, `book`, `corpus_key`, `form` and `cause` (8 `value-role-number-the-oracle-never-prints-words-agree`,
+  2 `rendered-words-disagree`), re-listed by name in the receipt.
+- **The harness was not re-run, deliberately.** The criterion says the run happens **once**; it
+  happened at `2645a3c85a` on 2026-09-09, and the evaluator it compared is byte-identical at
+  HEAD (`src/`, `data/sheet_rules/` and `docs/work-inventory.json` unchanged since, and
+  `cargo run --locked --bin sheet_rule_convert -- --check` green at `18dbe0e165`:
+  `records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS` in
+  113.5 s). Re-running a 392-unit corpus-wide pass against an unchanged evaluator would repeat a
+  clean gate. No per-unit cost projection was owed either: the cycle ran no population-scoped
+  pass, because the population is zero.
+- **Correction recorded** (`1789054081017-at-35-e4-002-82fb71`): the dispatch called this cycle 1
+  with 392 units scoped and treated `--min 500 --bucket V` as an under-floor re-scope. All three
+  are authoring-time figures — cycle 1 completed on 2026-09-09, kanban row 17 has read `complete`
+  since, and the gate returns `PASS_WHOLE_REMAINDER` at 0, not `FAIL_UNDER_FLOOR`.
+- **Gates green at HEAD:** `pcgen_residue_gate.py --check` →
+  `live_files=253 live_hits=12256 baseline_files=260 baseline_hits=12736 verdict=PASS` (not above
+  `AT-35-E4-001_cycle2_receipt.md`'s line); `token_coverage.py --check` →
+  `token_types=231 refused=142 refused_non_done=0 verdict=PASS`;
+  `shape_engine_boundary.py --check` → `magnitude_bearing=26396 not_held_by_engine=0`;
+  `missing_engine_tables.py --check` → `population=0 citation_failures=0`;
+  `denominator_gate.py --check` over the package → `files_checked=79 violations=0`;
+  `denominator_gate.py --check-provenance` → `files_checked=196 figures_examined=362
+  violations=0`; `./scripts/publish-site-dashboard.sh --check-pin` → matches
+  (`5a0a0787312b…e36f`); `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l`
+  → `0`; `scripts/verify.sh --only pi-sweep` → `PASS` (11 hits, 11 baseline rows).
+- **Audits:** `OK_NO_BUNDLE_TAGS` and `OK_NO_TOKENS` on this cycle's own diff. The range greps
+  over `fe5ae6cd4a...HEAD` return only the already-itemised pre-existing set — prior receipts'
+  prose quoting their own grep patterns and the real paths `tests/sd18_widening/` /
+  `tests/sd13_progression/`, plus generated Paizo prose containing the English word *hack*
+  (`core_rulebook:spell:plant_growth`, `bestiary_3:monster_ability:tophet_swallow_whole`).
+- **Discoveries:** none.
+- **Receipt:** `artifacts/epic-4-resolve-and-verify/AT-35-E4-002_cycle2_receipt.md`.
+  **Next-cycle scope:** criterion at zero — no next cycle.
+
 ### 2026-09-10 — Epic 4 / `bucket-m-zero` — AT-35-E4-001 **cycle 2** — **complete** (a re-dispatch of an already-closed criterion: all three Evidence clauses plus the inherited refused-set clause re-derived at HEAD, and the dispatch's own stale scope figures corrected)
 
 - **Scope gate:** `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER` — the literal last line of `python3 scripts/cycle_scope_gate.py --min 500 --bucket M` at `137658f31a`, exit 0 (`scope=bucket=M`, `scoped_by_bucket=` and `scoped_by_kind=` both empty); the unfiltered `--min 500` returns the identical line. **The criterion's bucket is not under the floor — it is empty, and so is the whole corpus remainder**, so the dispatch's mandatory-bundling ladder had nothing to bind to and no card for this cycle to empty. No `SCOPE_GATE: EXEMPT` line was taken: the gate passes on its own terms and the literal line is the better evidence.
