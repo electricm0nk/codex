@@ -1,6 +1,6 @@
 # Cycle EPIC-5-WRAPUP-FIX — Epic 5 Residues / wrap-up correction cycle
 
-- **Commit SHA:** `<COMMIT_SHA>` (cycle start `00e44eee02`)
+- **Commit SHA:** `6e4b1f7b4e` (cycle start `00e44eee02`)
 - **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2`. A wrap-up
   fix cycle closes zero units by design; Epic 5's populations were emptied by Epic 3
   (`26bdfa8d5b`, `406003afc3`, `51f91bba11`) and `cycle_scope_gate` has returned
