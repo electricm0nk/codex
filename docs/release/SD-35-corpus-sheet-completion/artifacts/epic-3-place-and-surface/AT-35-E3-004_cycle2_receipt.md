@@ -7,7 +7,7 @@ the artifact's own `completeness` claim — "the epic's cycle set is closed at t
 5 rows" — was false at HEAD. This cycle transcribes the three missing rows, adds its own, and
 replaces the one-time completeness claim with a `staleness_rule` that names the re-derive command.
 
-- **Commit SHA:** `<pinned by the follow-up docs commit>` — the docs commit carrying this receipt,
+- **Commit SHA:** `5c49e21b37` — the single docs commit carrying this receipt,
   `artifacts/epic-3-place-and-surface/rate-ledger.json`, the `progress.md` entry, the `kanban.md`
   row 15 update, `docs/retro/events/at-35-e3-004-c2.jsonl` and two generated side effects the gate
   scripts stamped (`docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`
