@@ -5,8 +5,6 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use sha2::{Digest, Sha256};
-
 use super::closure::{Closure, PinnedTree, RowRef};
 use crate::rules_core::sheet_rule::{Applies, BonusType, ClassId, Expr, RuleId, SkillId, StackMode, VarId};
 
@@ -48,10 +46,7 @@ pub fn slug(name: &str) -> String {
 /// `VarId` for a source variable name: `"v"` + 16 hex of SHA-256 over the upper-cased name
 /// (`SYNTHESIS.md` A2).
 pub fn var_id(name: &str) -> VarId {
-    let upper = name.trim().to_ascii_uppercase();
-    let digest = Sha256::digest(upper.as_bytes());
-    let hex: String = digest.iter().take(8).map(|b| format!("{b:02x}")).collect();
-    format!("v{hex}")
+    crate::rules_core::sheet_rule::var_id(name)
 }
 
 /// One corpus record as the converter sees it: the inventory unit joined to its shipped record.

@@ -416,7 +416,7 @@ fn tokenize(s: &str) -> Result<Vec<Tok>, FormulaEvalError> {
 // -------------------------------------------------------------------------------------------
 
 #[derive(Debug, Clone, PartialEq)]
-enum Expr {
+pub(crate) enum Expr {
     Num(f64),
     Var(String),
     Neg(Box<Expr>),
@@ -465,7 +465,7 @@ enum Expr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
-enum CmpOp {
+pub(crate) enum CmpOp {
     Ge,
     Le,
     Eq,
@@ -841,7 +841,7 @@ impl<'a> Parser<'a> {
 /// this module recognise the grammar at all) can be answered without needing to also supply
 /// variable bindings. Returns `Err` for anything this module does not recognise — never a partial
 /// or best-guess AST.
-fn parse(formula: &str) -> Result<Expr, FormulaEvalError> {
+pub(crate) fn parse(formula: &str) -> Result<Expr, FormulaEvalError> {
     let tokens = tokenize(formula)?;
     let mut p = Parser { tokens: &tokens, pos: 0 };
     // `parse_arith_or_bool`, not the plain arithmetic `parse_expr`, so a bare top-level boolean

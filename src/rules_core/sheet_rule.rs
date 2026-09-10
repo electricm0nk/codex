@@ -22,6 +22,19 @@ pub type RuleId = String;
 /// An opaque converter-minted variable id: `"v"` + 16 hex of SHA-256 over the upper-cased
 /// source name. The name -> id map is written tool-side only.
 pub type VarId = String;
+/// Mint a [`VarId`] for a source variable name: `"v"` + 16 hex of SHA-256 over the upper-cased
+/// name (`technical-design.md` §1, `SYNTHESIS.md` A2). A pure hash -- it knows nothing about
+/// what the name meant, which is why it can live on the schema side and be minted by either the
+/// converter or a live reader that already holds a name (`record_vars`). The name -> id map is
+/// written tool-side only.
+pub fn var_id(name: &str) -> VarId {
+    use sha2::{Digest, Sha256};
+    let upper = name.trim().to_ascii_uppercase();
+    let digest = Sha256::digest(upper.as_bytes());
+    let hex: String = digest.iter().take(8).map(|b| format!("{b:02x}")).collect();
+    format!("v{hex}")
+}
+
 /// A class id: the slug of the class name (`"fighter"`, `"psychic_detective"`).
 pub type ClassId = String;
 /// A skill id: the slug of the skill name (`"perception"`, `"knowledge_arcana"`).

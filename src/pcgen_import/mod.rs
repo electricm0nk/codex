@@ -17,6 +17,7 @@
 // SD-35 AT-35-E6-001 (`decisions.md` §11): relocated from `src/rules_core/` -- converter and
 // oracle code that was sitting on the live side. Behaviour-identical; KEPT for Starfinder.
 pub mod bonus_stack_reader;
+pub mod class_feature_vars;
 pub mod formula_interpreter;
 pub mod formula_interpreter_corpus_wide;
 pub mod formula_reproduction_harness;

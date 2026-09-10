@@ -46740,9 +46740,9 @@ fn pool_header_record_by_normalized_suffix(
     class: &str,
     pool_group: &str,
     registered_name: Option<&str>,
-) -> std::collections::BTreeMap<String, String> {
+) -> crate::rules_core::record_vars::ConvertedChain {
     let table = class_feature_grant_consumer::class_feature_bonus_vars_any_record();
-    let mut merged: std::collections::BTreeMap<String, String> = std::collections::BTreeMap::new();
+    let mut merged = crate::rules_core::record_vars::ConvertedChain::new();
     let mut merge_in = |header: &class_feature_grant_consumer::ClassFeatureRecordTokens| {
         class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
             &mut merged,
@@ -46953,22 +46953,22 @@ fn pool_group_header_vars_merged(
     owning_class: &str,
     pool_group: &str,
     registered_name_for_tracker: Option<&str>,
-) -> std::collections::BTreeMap<String, String> {
-    let mut combined_vars: std::collections::BTreeMap<String, String> = std::collections::BTreeMap::new();
+) -> crate::rules_core::record_vars::ConvertedChain {
+    let mut combined_vars = crate::rules_core::record_vars::ConvertedChain::new();
     let header_vars = pool_header_record_by_normalized_suffix(
         owning_class,
         pool_group,
         registered_name_for_tracker,
     );
-    for (name, formula) in &header_vars {
-        combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+    for (name, var) in &header_vars {
+        combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
     }
     if let Some(registered_name) = registered_name_for_tracker {
         let tracker_name = format!("{registered_name} Tracker");
         let tracker_vars =
             pool_header_record_by_normalized_suffix(owning_class, &tracker_name, None);
-        for (name, formula) in &tracker_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        for (name, var) in &tracker_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
         }
         // SD-32 T12 Epic 8 row 18 cycle 13: a THIRD real corpus shape for the class-wide shared
         // base of a "select ONE group, inherit every member" pool, distinct from both the
@@ -47004,8 +47004,8 @@ fn pool_group_header_vars_merged(
         // function out rather than duplicating a narrower, incomplete merge at the new call site.
         let base_vars =
             pool_header_record_by_normalized_suffix(owning_class, registered_name, None);
-        for (name, formula) in &base_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        for (name, var) in &base_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
         }
     }
     // SD-32 T12 Epic 8 row 18 cycle 8: the owning CLASS's own record-level `BONUS:VAR` chain
@@ -47014,8 +47014,8 @@ fn pool_group_header_vars_merged(
     // tried (no gating flag -- a class with no such record simply merges nothing, exactly like an
     // absent per-group/tracker header above).
     if let Some(class_vars) = class_feature_grant_consumer::class_record_bonus_vars().get(owning_class) {
-        for (name, formula) in class_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        for (name, var) in class_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
         }
     }
     // SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`/`§17a`): an EIGHTH real corpus header shape -- the
@@ -47045,8 +47045,8 @@ fn pool_group_header_vars_merged(
     if let Some(header) = class_feature_grant_consumer::class_feature_bonus_vars_any_record()
         .get(&format!("{owning_class} ~ Spells"))
     {
-        for (name, formula) in &header.bonus_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        for (name, var) in &header.bonus_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
         }
     }
     combined_vars
@@ -47081,7 +47081,7 @@ fn pool_member_terminal_targets_and_resolved_vars(
         record
             .bonus_vars
             .iter()
-            .any(|(other_name, formula)| other_name != name && formula_names_identifier(formula, name))
+            .any(|(other_name, var)| other_name != name && converted_var_names_identifier(var, name))
     };
     let terminals: Vec<String> = record
         .bonus_vars
@@ -47095,8 +47095,8 @@ fn pool_member_terminal_targets_and_resolved_vars(
     let mut combined_vars = record.bonus_vars.clone();
     let merged_header_vars =
         pool_group_header_vars_merged(owning_class, pool_group, registered_name_for_tracker);
-    for (name, formula) in &merged_header_vars {
-        combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+    for (name, var) in &merged_header_vars {
+        combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
     }
     let class_level_var = class_feature_grant_consumer::class_level_variable_name(owning_class);
     let vars = class_feature_grant_consumer::resolve_pcgen_var_chain(
@@ -47163,10 +47163,15 @@ pub(crate) fn resolve_pool_member_all_magnitudes(
 /// not `[A-Za-z0-9_]`, PCGen formula syntax's own identifier-boundary set
 /// (the same character class `formula_interpreter.rs`'s tokenizer treats
 /// as an identifier body).
-fn formula_names_identifier(formula: &str, identifier: &str) -> bool {
-    formula
-        .split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'))
-        .any(|token| token == identifier)
+/// Whether a converted variable's source form referenced `identifier`. SD-35 `AT-35-E6-001`
+/// cycle 4: this used to tokenize the source formula TEXT. The converter records each variable's
+/// references by name at ingest (`ConvertedVar::refs`) precisely because the converted `Expr`
+/// carries opaque ids, so the same question is now answered from the artifact.
+fn converted_var_names_identifier(
+    var: &crate::rules_core::record_vars::ConvertedVar,
+    identifier: &str,
+) -> bool {
+    var.refs.iter().any(|r| r == identifier)
 }
 
 /// Resolves a real, recorded `SelectedChoice::selection_id` (e.g.
@@ -86662,12 +86667,19 @@ mod generic_pool_group_selection_wiring_tests {
     #[test]
     fn pool_header_lookup_reaches_a_bare_plural_class_independent_base_record() {
         let merged = super::pool_header_record_by_normalized_suffix("Cleric", "Domain", None);
-        assert_eq!(
-            merged.get("DomainPowerTimes").map(String::as_str),
-            Some("3+WIS"),
-            "the bare, plural \"Domains\" base record's own DomainPowerTimes chain must merge \
-             when looked up by its singular registered name \"Domain\": {merged:?}"
+        let times = merged.get("DomainPowerTimes").unwrap_or_else(|| {
+            panic!(
+                "the bare, plural \"Domains\" base record's own DomainPowerTimes chain must \
+                 merge when looked up by its singular registered name \"Domain\": {:?}",
+                merged.keys().collect::<Vec<_>>()
+            )
+        });
+        // `3+WIS` -- asserted as what it computes, not as the text it was written in.
+        let resolved = crate::rules_core::record_vars::evaluate_with_bindings(
+            times,
+            &std::collections::BTreeMap::from([("WIS".to_string(), 4i64)]),
         );
+        assert_eq!(resolved, Some(7), "DomainPowerTimes is 3 + the caster's Wisdom modifier");
     }
 
     /// SD-32 T12 Epic 8 row 18 cycle 13: proves the existing `"<class> ~ "`-prefixed wildcard
@@ -86681,12 +86693,23 @@ mod generic_pool_group_selection_wiring_tests {
     #[test]
     fn pool_header_lookup_reaches_the_class_wide_registered_name_base_record() {
         let merged = super::pool_header_record_by_normalized_suffix("Shaman", "Spirit", None);
-        assert_eq!(
-            merged.get("ShamanSpiritLVL").map(String::as_str),
-            Some("ShamanLVL"),
-            "\"Shaman ~ Spirit\"'s own real ShamanSpiritLVL chain must merge when looked up by \
-             its own bare registered name: {merged:?}"
+        let spirit_level = merged.get("ShamanSpiritLVL").unwrap_or_else(|| {
+            panic!(
+                "\"Shaman ~ Spirit\"'s own real ShamanSpiritLVL chain must merge when looked \
+                 up by its own bare registered name: {:?}",
+                merged.keys().collect::<Vec<_>>()
+            )
+        });
+        assert!(
+            spirit_level.refs.iter().any(|r| r == "ShamanLVL"),
+            "ShamanSpiritLVL is the Shaman's own class level: {:?}",
+            spirit_level.refs
         );
+        let resolved = crate::rules_core::record_vars::evaluate_with_bindings(
+            spirit_level,
+            &std::collections::BTreeMap::from([("ShamanLVL".to_string(), 9i64)]),
+        );
+        assert_eq!(resolved, Some(9));
     }
 
     /// SD-32 T12 Epic 8 row 18 cycle 20: the new multi-terminal resolver genuinely resolves TWO
@@ -87199,8 +87222,7 @@ mod generic_pool_group_selection_wiring_tests {
     fn mountain_domain_foothold_desc_formula_needs_the_header_merge_to_resolve() {
         let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
         let key = "Mountain Domain ~ Foothold";
-        let empty_header_vars: std::collections::BTreeMap<String, String> =
-            std::collections::BTreeMap::new();
+        let empty_header_vars = crate::rules_core::record_vars::ConvertedChain::new();
         assert!(
             super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
                 key,

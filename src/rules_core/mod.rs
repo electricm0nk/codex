@@ -32,6 +32,7 @@ pub mod pilot_compute_corpus;
 pub mod pilot_failure;
 pub mod pilot_view_model;
 pub mod race_creation;
+pub mod record_vars;
 pub mod race_resolver;
 pub mod racial_sla;
 pub mod rules_tables;
