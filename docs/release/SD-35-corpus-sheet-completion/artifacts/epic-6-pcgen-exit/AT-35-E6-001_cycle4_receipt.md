@@ -206,11 +206,23 @@
 - **Build scope verified**, run at `ac38c5bf3c`:
   - `cargo test --locked --lib -j 6` → **`ok. 3261 passed; 0 failed; 15 ignored`**
   - `cargo test --locked --no-run -j 6` → `NO_RUN_EXIT=0` (every bin and test target links).
-  - `cargo test --locked --no-fail-fast -j 6` → **IN FLIGHT at the time this receipt was first
-    committed** (see the amendment below; the run is slow on this box for a pre-existing reason
-    cycle 3 already measured and attributed — every test binary loads the whole corpus, 87,987
-    `openat` calls under `data/corpus/` for a representative one, and cargo runs test binaries
-    serially).
+  - `cargo test --locked --no-fail-fast -j 6` → **`FULL_EXIT=0`**, **414 `test result` lines
+    (413 targets plus the lib), 8,772 passed, 68 ignored, and ZERO failing suites**
+    (`grep -cE '^test result: FAILED' <log>` → `0`). The run takes roughly two hours on this box
+    for a pre-existing reason cycle 3 already measured and attributed — every test binary loads
+    the whole corpus (87,987 `openat` calls under `data/corpus/` for a representative one) and
+    cargo runs test binaries serially. This cycle adds none of that: the converted artifact is a
+    single 3.7 MB read, parsed once per process.
+  - **The `test result` line count moved 413 → 414, and this cycle moved it deliberately.** The
+    extra target is the new `src/bin/gen_record_vars.rs`. Nothing in `tests/`, `src/`, `apps/` or
+    `scripts/` asserts either number — `grep -rn '\b413\b'` over those trees finds it only in
+    this epic's own earlier receipts and `progress.md`, where it correctly records what those
+    cycles saw, and in generated build artifacts under `apps/desktop/src-tauri/target/`.
+  - `cargo test --locked --lib -j 6`, **re-run at the final tree** (the workspace run above had
+    already built the lib target when three `get(..).is_none()` clippy lints on this cycle's own
+    new tests were fixed) → **`ok. 3261 passed; 0 failed; 15 ignored`**. The fix is confined to
+    assertion FORM inside `#[cfg(test)]` code in the lib, so no other target's result can have
+    moved.
   - `cargo run --locked --release --bin sheet_rule_convert -- --check` →
     **`records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS`** (20.9 s)
     — the shipped `data/sheet_rules/` package is unchanged by this cycle, which is the point:
@@ -224,10 +236,18 @@
     `unnecessary use of get(..).is_none()` lints on this cycle's own new tests; fixed in the same
     cycle.
   - `scripts/verify.sh --only pi-sweep` → **`RESULT: PASS`** (1 stage).
-  - `cargo run --locked --release --bin v06_work_inventory` → `docs/work-inventory.json`
-    regenerated and **byte-identical** (`git status --porcelain -- docs/work-inventory.json` is
-    empty), which is the expected result for a cycle that moves no unit. Never
-    `--allow-stamp-loss`.
+  - `cargo run --locked --release --bin v06_work_inventory` → **the binary REFUSED to write, and
+    that is the correct outcome, not a failure of this cycle.** Its own guard: *"this run would
+    drop 7385 of the 32617 verification stamp(s) it currently carries … set
+    `CORPUS_LITERAL_SWEEP_REPORT` and `DERIVED_FIXTURE_CHECK_REPORT` to the sweep's and the
+    fixture check's `--json-out` reports before regenerating … or pass `--allow-stamp-loss`."*
+    This cycle changed no corpus record, so `corpus_literal_sweep` is guarded OFF (`§6` step 3),
+    so those two reports do not exist for this tree — the stamps they carry cannot be
+    reconstructed and the guard refuses rather than losing them. `--allow-stamp-loss` was NOT
+    passed. `docs/work-inventory.json` is byte-identical on disk
+    (`git status --porcelain -- docs/work-inventory.json` is empty), which is also the expected
+    content for a cycle that moves no unit: the `--receipt` rows above were computed against it
+    and read `closed=0 relabeled=0`.
   - `apps/desktop/src-tauri` and the frontend: **epic cadence** — this cycle touched no file
     under `apps/`.
 - **Sweep population:** N/A — no corpus record changed this cycle, so `corpus_literal_sweep` was

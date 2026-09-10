@@ -104,7 +104,9 @@ re-measured at the cut by the launch-readiness audit.
   census figures did not move.
 - **Build scope verified** at `ac38c5bf3c`: `cargo test --locked --no-run -j 6` → `NO_RUN_EXIT=0`;
   `cargo test --locked --lib -j 6` → **3,261 passed, 0 failed, 15 ignored**;
-  `cargo test --locked --no-fail-fast -j 6` → see the receipt's Build note;
+  `cargo test --locked --no-fail-fast -j 6` → **`FULL_EXIT=0`, 414 `test result` lines, 8,772
+  passed, 68 ignored, zero failing suites** (413 → 414 targets: this cycle adds the
+  `gen_record_vars` bin, and no test or source asserts either count);
   `cargo run --locked --release --bin sheet_rule_convert -- --check` →
   `records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS`;
   `gen_record_vars -- --check` → `verdict=PASS`;
@@ -114,6 +116,12 @@ re-measured at the cut by the launch-readiness audit.
   `denominator_gate.py --check` (69 files, 0 violations) and `--check-provenance`
   (315 figures, 0 violations), `verify.sh --only pi-sweep` → `RESULT: PASS`. The desktop crate
   and frontend run at epic cadence — this cycle touched no file under `apps/`.
+  `cargo run --locked --release --bin v06_work_inventory` **refused to write** rather than drop
+  7,385 of the 32,617 verification stamps it carries — the correct outcome, because this cycle
+  changed no corpus record, so `corpus_literal_sweep` is guarded off and the reports those stamps
+  are reconstructed from do not exist for this tree. `--allow-stamp-loss` was NOT passed, and
+  `docs/work-inventory.json` is byte-identical on disk, which is what a cycle that moves no unit
+  should leave behind.
 - **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-001_cycle4_receipt.md`.
 
 ### 2026-09-09 — AT-35-E6-001 cycle 3 — `formula-evaluator-leaves-live` — **partial** (the feat-prerequisite family closed: `pre_tokens` 4 files / 19 hits → **0 / 0**; 1 file remains in 1 named family)
