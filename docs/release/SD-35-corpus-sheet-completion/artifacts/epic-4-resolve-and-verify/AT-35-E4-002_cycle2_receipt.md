@@ -37,14 +37,18 @@
   the epic file-touch set grep over `${BASE_BRANCH}...HEAD` returns one pre-existing hit, a prior
   receipt's own prose quoting its grep pattern and the real test-directory paths
   `tests/sd18_widening/` and `tests/sd13_progression/`
-  (`EPIC-4_wrapup_correction_cycle_receipt.md`), already itemised there. This cycle adds no
-  match.
+  (`EPIC-4_wrapup_correction_cycle_receipt.md`), already itemised there. This cycle's own diff
+  adds no match in code, data, or an instrument — its only three hits are **this receipt and
+  `progress.md` quoting those two pre-existing paths in order to name them**, the same recursive
+  artifact every prior receipt in this epic produced.
 - **Wired-integration audit result:** OK_NO_TOKENS on this cycle's own diff.
   The same range grep returns the pre-existing, already-itemised set: generated Paizo prose
   inside `data/sheet_rules/` containing the ordinary English word *hack*
   (`core_rulebook:spell:plant_growth`, `bestiary_3:monster_ability:tophet_swallow_whole`), and
   earlier receipts' own prose quoting the pattern. No shipping-code stub, mock or `"Would …"`
-  string. This cycle adds no match.
+  string. This cycle's own diff adds no match in code, data, or an instrument — its only two
+  hits are **this receipt and `progress.md` quoting the word *hack* in order to name where it
+  pre-exists**, the same recursive artifact every prior receipt in this epic produced.
 - **Acceptance criterion** (verbatim, `epic-breakdown.md` `### AT-35-E4-002`):
 
   > ### AT-35-E4-002 — bucket V goes through the oracle harness once
