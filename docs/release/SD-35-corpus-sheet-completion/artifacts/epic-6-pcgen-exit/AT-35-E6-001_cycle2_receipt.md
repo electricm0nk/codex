@@ -61,7 +61,7 @@
   closed_by_kind=
   relabeled_moves=
   regressed=0 added=0 dropped=0
-  closed=0 relabeled=0 rust_lines_changed=2127 ratio=n/a builds_recorded=1 pcgen_live_files=254
+  closed=0 relabeled=0 rust_lines_changed=2173 ratio=n/a builds_recorded=1 pcgen_live_files=253
   ```
   `closed=0` / `relabeled=0` is correct and expected: the unit population was already `0`
   non-DONE when the cycle started. `ratio` is `n/a`, a division by zero, never `0.0`.
@@ -169,7 +169,7 @@
   | converted class records gaining a ceiling gate | **142** of 184 rows carrying the token | `git show --stat HEAD~1 -- data/sheet_rules \| tail -1` | 184 rows |
   | conventional-class chassis population | **61 → 62** | `cargo test --locked --lib -j 6 generic_class_chassis::tests::all_sixty_two_conventional_classes_resolve` | 96 converted class records over the 14 books |
   | rows in `src/rules_core/rules_tables/` still stating an arithmetic SLA caster level | **1 → 0** | `grep -rn 'sla_cl_token: Some("' src/rules_core/rules_tables/ \| grep -vE 'Some\("[0-9]+"\)\|Some\("HD"\)\|max\(TL,1\)'` | 220 rows stating one |
-  | rust lines changed | **2,127** | `python3 scripts/cycle_scope_gate.py --receipt --since c729c0f659 --before /tmp/wi-before-AT-35-E6-001-c2.json --after docs/work-inventory.json` | 49,438 units |
+  | rust lines changed | **2,173** | `python3 scripts/cycle_scope_gate.py --receipt --since c729c0f659 --before /tmp/wi-before-AT-35-E6-001-c2.json --after docs/work-inventory.json` | 49,438 units |
   | atlas | `missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0` | `python3 scripts/completion_atlas.py --check` | 49,438 units |
   | token coverage | `non_done=0 refused=142 refused_non_done=0 token_types=231 verdict=PASS` | `python3 scripts/token_coverage.py --check` | 49,438 units |
   | converter re-derivation | `records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS` (20.6 s) | `cargo run --locked --release --bin sheet_rule_convert -- --check` | 49,438 units |

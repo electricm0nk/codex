@@ -47,8 +47,8 @@ re-measured at the cut by the launch-readiness audit.
   Run anyway: `python3 scripts/cycle_scope_gate.py --min 500` → `inventory=docs/work-inventory.json
   scope=(whole remainder) scoped_by_bucket= scoped_by_kind= scoped=0 remaining_non_done=0
   floor=500 verdict=PASS_WHOLE_REMAINDER`.
-- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=2127 ratio=n/a builds_recorded=1
-  pcgen_live_files=254` (`cycle_scope_gate.py --receipt --since c729c0f659 --before
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=2173 ratio=n/a builds_recorded=1
+  pcgen_live_files=253` (`cycle_scope_gate.py --receipt --since c729c0f659 --before
   /tmp/wi-before-AT-35-E6-001-c2.json --after docs/work-inventory.json`; `regressed=0 added=0
   dropped=0`, `closed_by_kind=` and `relabeled_moves=` empty). Epic 6 moves no unit by design.
 - **Refused tokens:** none — no converter refusal was added or cleared; `_refused.json` unchanged
