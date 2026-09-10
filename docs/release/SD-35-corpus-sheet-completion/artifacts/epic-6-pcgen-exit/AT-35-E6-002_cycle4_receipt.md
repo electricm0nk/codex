@@ -253,6 +253,9 @@ the residue gate measures **one of the ingest format's two arrays**. Its sibling
   | missing engine tables | `population=0 kinds=0 citation_failures=0` | `python3 scripts/missing_engine_tables.py --check` | 49,438 units |
   | denominator gate | `files_checked=89 violations=0` | `python3 scripts/denominator_gate.py --check 'docs/release/SD-35-corpus-sheet-completion/*.md' 'docs/release/SD-35-corpus-sheet-completion/artifacts/**/*.md'` | 89 bundle docs |
   | figure provenance | `figures_examined=443 violations=0` | `python3 scripts/denominator_gate.py --check-provenance` | 206 docs |
+  | sheet-rule package | `records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS (111.7s)` | `cargo run --locked --bin sheet_rule_convert -- --check` | 49,438 units |
+  | PI sweep | `RESULT: PASS`, 11 hits over `src/rules_core/rules_tables`, 11 baseline rows | `scripts/verify.sh --only pi-sweep` | 137 generated table files |
+  | workspace suite, partial and incomplete | **259 of 414 targets; 7,850 passed, 0 failed, 42 ignored, 0 FAILED suites** | `grep -c '^test result' /tmp/e6002c4-full.log`, and `awk '/^test result/{for(i=1;i<=NF;i++){if($(i+1)=="passed;")p+=$i}} END{print p}'` over the same log | 414 test targets |
   | site dashboard pin | `input pin matches docs/work-inventory.json (5a0a0787312b5181d41214cb52abcd6e0c250fc409a75675ed6e839b4142e36f)` | `./scripts/publish-site-dashboard.sh --check-pin` | 1 feed input |
   | `Light Crossbow (Base)` damage, the doc comment's own re-derive | `{"key": "DAMAGE", "value": "1d8"}` | the two-line `TOK=…; jq …` command quoted above | 1 corpus record |
 - **Build scope verified**, all at `b2839b631a`, `CARGO_INCREMENTAL=0`:
@@ -275,21 +278,27 @@ the residue gate measures **one of the ingest format's two arrays**. Its sibling
     cargo test --locked -j 4` → `ok. 576 passed; 0 failed; 0 ignored` (87.81 s),
     `DESKTOP_EXIT=0`, own target dir `/tmp/cargo-sd35-AT-35-E6-002-desktop`,
     `grep -c '^test result: FAILED'` → **0**. Identical to cycle 3's 576 / 0 / 0.
+  - `cargo run --locked --bin sheet_rule_convert -- --check` →
+    `records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS (111.7s)`
+    — identical to cycle 3 on every field. `git status --porcelain -- data/` empty afterwards.
+  - `scripts/verify.sh --only pi-sweep` → `RESULT: PASS` (1 stage, 11 hits over
+    `src/rules_core/rules_tables`, 11 baseline rows), `RETRO_ACTOR` exported in the same shell
+    invocation so the derived `verification` event lands in this cycle's log.
   - `cargo test --locked --no-fail-fast -j 6`: **did NOT finish inside this cycle's turn.** At
-    the point the turn ended it had run **105 of 414** test targets with **4,516 passed,
-    0 failed, 15 ignored**, `grep -c '^test result: FAILED'` → **0** and
+    the point the turn ended it had run **259 of 414** test targets with **7,850 passed,
+    0 failed, 42 ignored**, `grep -c '^test result: FAILED'` → **0** and
     `grep -cE '^(error|warning)'` → **0**, and was still advancing. Totals derived with `awk`
     over the `test result` lines, not `grep -o` (`AGENTS.md` §Concurrency). **This is an
     incomplete observation, not a pass** — see Notes for the measured cause.
+    `incident 1789083427731-at-35-e6-002-ece484`, key `workspace-suite-too-slow-for-one-turn`.
   - **Not run, and why:** `cargo run --locked --bin v06_work_inventory` — this cycle changed no
     corpus record, so `corpus_literal_sweep` is guarded off (`§6` step 3), so the two reports
     the binary rebuilds its verification stamps from do not exist for this tree; it would refuse
     to write, and `--allow-stamp-loss` is forbidden. `git status --porcelain --
     docs/work-inventory.json` is empty and the `--receipt` rows above were computed against the
-    file on disk. `cargo run --locked --bin sheet_rule_convert -- --check` and
-    `scripts/verify.sh --only pi-sweep` did not get a turn on the workspace target dir, which
-    the full suite held for the whole cycle; `data/sheet_rules/` is byte-unchanged
-    (`git status --porcelain -- data/` empty) and its token-leak grep prints **0**.
+    file on disk. `corpus_literal_sweep` is guarded off for the same reason, and
+    `data/sheet_rules/` is byte-unchanged (`git status --porcelain -- data/` empty) with its
+    token-leak grep printing **0**.
 - **Sweep population:** N/A — no corpus record changed (`git status --porcelain -- data/` empty
   at every checkpoint), so `corpus_literal_sweep` was correctly not run (`§6` step 3's guard).
 - **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
@@ -303,10 +312,11 @@ the residue gate measures **one of the ingest format's two arrays**. Its sibling
   the "presence gate over a correctness gate" failure the bundle exists to avoid.
 - **Notes:**
   - **The workspace suite did not finish inside the turn, and the work was committed anyway**
-    (`§6`'s standing instruction). It reached **105 of 414** targets — **4,516 passed, 0 failed,
-    0 FAILED suites** — and was still advancing when the turn ended; it is re-run at the epic
-    wrap-up (`§10`) and at cycle 5. **The measured cause is throughput, not this cycle's
-    change.** `cargo` runs test binaries sequentially and the corpus-wide ones are
+    (`§6`'s standing instruction). It reached **259 of 414** targets — **7,850 passed, 0 failed,
+    0 FAILED suites, 0 errors, 0 warnings** — and was still advancing when the turn ended; it is re-run at the epic
+    wrap-up (`§10`) and at cycle 5. Every other required command in `§6` step 3 **did** run and is
+    recorded above, including `sheet_rule_convert -- --check` and `pi-sweep`.
+    **The measured cause is throughput, not this cycle's change.** `cargo` runs test binaries sequentially and the corpus-wide ones are
     single-threaded: exactly one test binary was consuming one whole core,
     `sd13_druid_level1_spell_baseline` (`ps aux --sort=-%cpu | head -6`), while the box's load
     average sat between five and eleven (`uptime`) with other sessions live on the same shared
@@ -316,7 +326,7 @@ the residue gate measures **one of the ingest format's two arrays**. Its sibling
     What *is* proven at this tree: all **413** test binaries link (`--no-run` exit 0, 0 errors,
     0 warnings), the whole library suite passes at cycle 3's exact figures, clippy is clean, the
     desktop crate passes at cycle 3's exact figures, and the frontend and typecheck are green.
-    The 105 targets that did run include `rules_core::corpus_loader`'s own suite — the module
+    The 259 targets that did run include `rules_core::corpus_loader`'s own suite — the module
     this cycle changed the production path of.
   - **`git status --porcelain` is non-empty for every cycle on `tranche/15`** because the shared
     checkout carries an untracked, un-gitignored `.worktrees/` directory holding another
