@@ -13,7 +13,7 @@ below is the disproof; §3 is the mechanism that actually did it.
 
 - **Commit SHA:** `265cd65fa5` (the producer content guard, its three tests, the republished
   feed, the two denominator fixes in the copied report, and the gate worker's hand-off), and
-  `<receipt-sha>` carrying this receipt with `kanban.md` / `progress.md`. Cycle start
+  `083dd7f89a` carrying this receipt with `kanban.md` / `progress.md`. Cycle start
   `f1f547a41e`.
 - **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2`'s named
   exemption; a wrap-up fix cycle closes zero units by design. **Not** exempt from the residue
