@@ -52,9 +52,11 @@ use codex::rules_core::character_input::{
 use codex::rules_core::class_feature_pool_catalog;
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
 use codex::rules_core::race_creation::race_creation_chassis;
+// SD-35 `AT-35-E6-002` cycle 3: the `TEMPLATE:` reading moved to the tool side of
+// `technical-design.md` §0's path boundary. Same function, same behaviour, new home.
+use codex::pcgen_import::race_trait_tokens::declared_template_bonus_languages;
 use codex::rules_core::race_resolver::{
-    TraitRole, adopted_race_choose_selectors, adoptive_parentage_options,
-    declared_template_bonus_languages, load_race_corpus,
+    TraitRole, adopted_race_choose_selectors, adoptive_parentage_options, load_race_corpus,
 };
 use codex::rules_core::skinwalker_change_shape::skinwalker_change_shape_options;
 use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_options};

@@ -374,9 +374,9 @@ fn declared_magnitudes_excluding_flags(resolved: &ResolvedTrait) -> Vec<i32> {
 /// range is a reading and several are not.
 fn declared_vision_range_ft(resolved: &ResolvedTrait) -> Option<i32> {
     let mut ranges: Vec<i32> = Vec::new();
-    for token in resolved.raw_tokens.iter().filter(|token| token.key == "VISION") {
-        for segment in token.value.split('(').skip(1) {
-            let Some((digits, _)) = segment.split_once(')') else { continue };
+    for segment in &resolved.declared_vision {
+        for tail in segment.split('(').skip(1) {
+            let Some((digits, _)) = tail.split_once(')') else { continue };
             if let Ok(range) = digits.trim().parse::<i32>() {
                 if !ranges.contains(&range) {
                     ranges.push(range);
@@ -406,7 +406,7 @@ fn display_value(resolved: &ResolvedTrait) -> i16 {
             return value;
         }
     }
-    if let Some(feet) = resolved.declared_walk_speed_ft() {
+    if let Some(feet) = resolved.declared_walk_speed_ft {
         if let Ok(value) = i16::try_from(feet) {
             return value;
         }
@@ -883,7 +883,7 @@ mod tests {
                 // a non-`BONUS:` token (`VISION:`, `MOVE:`) — never from the
                 // flag itself.
                 let honest = declared_vision_range_ft(resolved)
-                    .or_else(|| resolved.declared_walk_speed_ft())
+                    .or_else(|| resolved.declared_walk_speed_ft)
                     .unwrap_or(0);
                 let shown = i32::from(display_value(resolved));
                 if shown != honest {

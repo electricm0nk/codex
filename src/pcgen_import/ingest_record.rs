@@ -68,6 +68,17 @@ pub fn first_token_value<'a>(doc: &'a Value, key: &str) -> Option<&'a str> {
     token_pairs(doc).into_iter().find(|(k, _)| *k == key).map(|(_, v)| v)
 }
 
+/// The tail of the first `TYPE:` token on `doc` whose value starts with
+/// `prefix` — `None` when the record carries no such token.
+///
+/// `TYPE:Trait.RaceTrait.Oread Race Trait` with prefix `"Trait.RaceTrait."`
+/// yields `"Oread Race Trait"`. A `TYPE:` token that does not carry the
+/// prefix contributes nothing, which is how a non-race-scoped row honestly
+/// reports that it belongs to no race pool.
+pub fn type_token_suffix<'a>(doc: &'a Value, prefix: &str) -> Option<&'a str> {
+    token_values(doc, "TYPE").into_iter().find_map(|v| v.strip_prefix(prefix))
+}
+
 /// How many tokens `doc` carries. `0` for a record with no token array.
 pub fn token_count(doc: &Value) -> usize {
     tokens(doc).len()
@@ -114,6 +125,17 @@ mod tests {
     fn an_absent_token_is_none_not_a_fabricated_empty_string() {
         assert_eq!(first_token_value(&doc(), "SPELLKNOWN"), None);
         assert!(token_values(&doc(), "SPELLKNOWN").is_empty());
+    }
+
+    #[test]
+    fn a_type_token_yields_only_the_tail_behind_its_prefix() {
+        let row = json!({"data": {"raw_tokens": [
+            {"key": "TYPE", "value": "Trait.RaceTrait.Oread Race Trait"}
+        ]}});
+        assert_eq!(type_token_suffix(&row, "Trait.RaceTrait."), Some("Oread Race Trait"));
+        let bare = json!({"data": {"raw_tokens": [{"key": "TYPE", "value": "Trait"}]}});
+        assert_eq!(type_token_suffix(&bare, "Trait.RaceTrait."), None);
+        assert_eq!(type_token_suffix(&doc(), "Trait.RaceTrait."), None);
     }
 
     #[test]

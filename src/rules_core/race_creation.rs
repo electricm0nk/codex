@@ -210,33 +210,29 @@ fn floating_ability_bonus_points(ability_trait: &ResolvedTrait) -> Result<u8, St
 fn vision_reading(race: &ResolvedRace) -> Result<String, String> {
     let mut readings: Vec<String> = Vec::new();
     for resolved in &race.traits {
-        for token in resolved.raw_tokens.iter().filter(|t| t.key == "VISION") {
-            // PCGen states more than one sense on a single `VISION:` row two
-            // different ways: as separate `VISION:`-keyed fields on the same
-            // row (Svirfneblin's `VISION:Darkvision (120) VISION:Low-Light
-            // Vision`, two distinct `RawToken`s this loop already visits
-            // separately) or as one field with a `|`-joined tail (Dhampir's
-            // `VISION:Darkvision (60)|Low-Light Vision`, SD-32 card-11 T2b
-            // lane, 2026-08-23). Both are the same fact stated two ways, so
-            // both are split into segments here rather than only the first
-            // shape being read.
-            for segment in token.value.split('|') {
-                let value = segment.trim();
-                let reading = if let Some(range) =
-                    value.strip_prefix("Darkvision (").and_then(|rest| rest.strip_suffix(')'))
-                {
-                    range
-                        .parse::<u16>()
-                        .map(|feet| format!("Darkvision {feet} ft."))
-                        .map_err(|_| format!("{}: unreadable Darkvision range {value:?}", resolved.key))?
-                } else if value == "Low-Light Vision" {
-                    "Low-light vision".to_owned()
-                } else {
-                    return Err(format!("{}: unrecognized VISION token {value:?}", resolved.key));
-                };
-                if !readings.contains(&reading) {
-                    readings.push(reading);
-                }
+        // Both of PCGen's ways of stating more than one sense on one row --
+        // separate keyed fields (Svirfneblin's `Darkvision (120)` +
+        // `Low-Light Vision`) and one field with a `|`-joined tail (Dhampir's
+        // `Darkvision (60)|Low-Light Vision`, SD-32 card-11 T2b lane,
+        // 2026-08-23) -- are already flattened to one segment list by
+        // `ResolvedTrait::declared_vision`, so this loop reads the same facts
+        // it always did without knowing how the row spelled them.
+        for segment in &resolved.declared_vision {
+            let value = segment.as_str();
+            let reading = if let Some(range) =
+                value.strip_prefix("Darkvision (").and_then(|rest| rest.strip_suffix(')'))
+            {
+                range
+                    .parse::<u16>()
+                    .map(|feet| format!("Darkvision {feet} ft."))
+                    .map_err(|_| format!("{}: unreadable Darkvision range {value:?}", resolved.key))?
+            } else if value == "Low-Light Vision" {
+                "Low-light vision".to_owned()
+            } else {
+                return Err(format!("{}: unrecognized declared sense {value:?}", resolved.key));
+            };
+            if !readings.contains(&reading) {
+                readings.push(reading);
             }
         }
     }
@@ -325,7 +321,9 @@ mod tests {
             type_tokens: vec![RACIAL_ABILITY_SCORES_TYPE.to_owned()],
             description: None,
             source_page: None,
-            raw_tokens: Vec::new(),
+            declared_walk_speed_ft: None,
+            declared_size: None,
+            declared_vision: Vec::new(),
             raw_bonus_chains: chains
                 .iter()
                 .map(|(a, b, c)| RawBonusChain {

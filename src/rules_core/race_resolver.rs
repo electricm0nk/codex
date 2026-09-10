@@ -80,11 +80,15 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
 use std::path::{Path, PathBuf};
 
+// SD-35 `AT-35-E6-002` cycle 3 (`decisions.md` §11, `technical-design.md` §0): every reading
+// of an ingested `.lst` row's token array this module used to do by hand now happens on the
+// tool side of the path boundary, one named function per fact.
+use crate::pcgen_import::race_trait_tokens;
 use crate::rules_core::corpus_loader::BookCorpusRoot;
 use crate::rules_core::feat_effects::FeatDisplayValueDeltas;
 use crate::rules_core::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues, RenderedPcgenDesc};
 use crate::rules_core::shape_b_v1::{
-    validate_license, CorpusRecordV1, CorpusSource, RaceCacheData, RaceTraitCacheData, RawBonusChain, RawToken,
+    validate_license, CorpusRecordV1, CorpusSource, RaceCacheData, RaceTraitCacheData, RawBonusChain,
 };
 use crate::rules_core::size::SizeCategory;
 
@@ -202,18 +206,17 @@ impl RaceTraitRecord {
     /// declared in a different file. It is then absent rather than guessed,
     /// which leaves its `%N` dropped and reported exactly as before.
     ///
-    /// `BONUS:` tokens live in `raw_bonus_chains`, not `raw_tokens` — the
-    /// ingest splits them out, and reading `raw_tokens` for them silently finds
-    /// nothing.
+    /// `BONUS:` chains live in `raw_bonus_chains`, not in the row's token
+    /// array — the ingest splits them out, so the same-row variable reading
+    /// and the chain reading below are two separate readings of one row.
     pub fn same_row_display_values(&self) -> PcgenDisplayValues {
         // `Option<i64>` while accumulating so "declared but unresolvable" is
         // distinguishable from "never mentioned"; only the resolved ones are
         // published.
         let mut accumulator: BTreeMap<String, Option<i64>> = BTreeMap::new();
 
-        for token in self.data.raw_tokens.iter().filter(|token| token.key == "DEFINE") {
-            let Some((name, base)) = token.value.split_once('|') else { continue };
-            accumulator.insert(name.trim().to_string(), base.trim().parse::<i64>().ok());
+        for (name, base) in race_trait_tokens::same_row_defines(&self.data) {
+            accumulator.insert(name, base);
         }
 
         for chain in &self.data.raw_bonus_chains {
@@ -299,13 +302,7 @@ impl RaceTraitRecord {
                 dropped_args: Vec::new(),
             };
         }
-        let tokens: Vec<&str> = self
-            .data
-            .raw_tokens
-            .iter()
-            .filter(|token| token.key == "DESC")
-            .map(|token| token.value.as_str())
-            .collect();
+        let tokens: Vec<&str> = race_trait_tokens::description_segments(&self.data);
         if tokens.is_empty() {
             return RenderedPcgenDesc {
                 text: self.data.description.clone().unwrap_or_default(),
@@ -327,12 +324,7 @@ impl RaceTraitRecord {
     /// would hide the rest, and "we found content we cannot place" is a fact
     /// this module deliberately keeps visible.
     pub fn automatic_trait_grants(&self) -> Vec<String> {
-        self.data
-            .raw_tokens
-            .iter()
-            .filter(|token| token.key == "ABILITY")
-            .flat_map(|token| automatic_grant_targets(&token.value))
-            .collect()
+        race_trait_tokens::automatic_ability_grants(&self.data)
     }
 }
 
@@ -415,7 +407,18 @@ pub struct ResolvedTrait {
     pub type_tokens: Vec<String>,
     pub description: Option<String>,
     pub source_page: Option<String>,
-    pub raw_tokens: Vec<RawToken>,
+    /// This trait's `MOVE:Walk,N` in feet, if it declares one — read once at
+    /// resolution time, so nothing downstream holds the ingest token array.
+    pub declared_walk_speed_ft: Option<i32>,
+    /// The creature size this trait assigns, if it declares one. Read once at
+    /// resolution time; see
+    /// [`race_trait_tokens::declared_size`](crate::pcgen_import::race_trait_tokens::declared_size)
+    /// for why reading it off the row that declares it is transcription.
+    pub declared_size: Option<SizeCategory>,
+    /// Every sense this trait declares, one entry per segment, verbatim
+    /// (`Darkvision (60)`, `Low-Light Vision`). Rendering them as sheet lines
+    /// is [`crate::rules_core::race_creation`]'s job.
+    pub declared_vision: Vec<String>,
     pub raw_bonus_chains: Vec<RawBonusChain>,
 }
 
@@ -443,32 +446,6 @@ impl ResolvedTrait {
             }
         }
         out
-    }
-
-    /// This trait's `MOVE:Walk,N` in feet, if it declares one.
-    pub fn declared_walk_speed_ft(&self) -> Option<i32> {
-        self.raw_tokens.iter().filter(|t| t.key == "MOVE").find_map(|t| walk_speed_from_move(&t.value))
-    }
-
-    /// The creature size this trait's `TEMPLATE:SIZE_<code>` assigns, if it
-    /// carries one.
-    ///
-    /// This is transcription, not interpretation (`decisions.md §24`): PCGen's
-    /// `SIZE_*` templates are defined in
-    /// `core_essentials/ce_templates.lst:924-933` and each one's entire body
-    /// *is* a size assignment —
-    /// `SIZE_S  SIZE:S  VISIBLE:NO`, `SIZE_M  SIZE:M  VISIBLE:NO`, and so on
-    /// for `F D T S M L H G C`, using the same single-letter code set as
-    /// `FACT:BaseSize`. Reading `SIZE_M` off the row that declares it is
-    /// reading a constant off the row that defines it.
-    ///
-    /// `SIZE_C+` (which maps to the non-`SizeCategory` code `P`) and any
-    /// other unrecognized suffix yield `None` rather than a guess.
-    pub fn declared_size(&self) -> Option<SizeCategory> {
-        self.raw_tokens
-            .iter()
-            .filter(|t| t.key == "TEMPLATE")
-            .find_map(|t| size_from_size_template(&t.value))
     }
 }
 
@@ -617,7 +594,7 @@ impl RaceCorpus {
         }
         for path in find_json_files(&dir) {
             let Some(record) = self.read_record::<RaceTraitCacheData>(&path) else { continue };
-            let requires_flag = positive_prefact_flag(&record.data.raw_tokens);
+            let requires_flag = race_trait_tokens::positive_prefact_flag(&record.data);
             let role = classify(&record.data, requires_flag.is_some());
             let race_key = record.data.race_key.clone();
             let (source_path, source_line) = lst_citation(&record.source);
@@ -629,12 +606,12 @@ impl RaceCorpus {
                 // `load_race_corpus`'s post-load pass.
                 granted_by_trait_key: None,
                 // `pi_field` is a comma-joined list when more than one field
-                // was redacted (`ingest_race_traits.rs`'s own
-                // `raw_tokens`-widening idiom: `f.split(',').any(|p| p ==
-                // "raw_tokens")`) -- a record whose `raw_tokens` ALSO carried
-                // PI (concatenated-identifier scan hits) stores
-                // `"description,raw_tokens"`, not the bare `"description"`
-                // this used to require byte-for-byte. An exact-equals check
+                // was redacted (`ingest_race_traits.rs`'s own widening idiom,
+                // `f.split(',').any(|p| p == <the token-array field>)`) -- a
+                // record whose ingested token array ALSO carried PI
+                // (concatenated-identifier scan hits) names two fields, not
+                // the bare `"description"` this used to require
+                // byte-for-byte. An exact-equals check
                 // here silently returned `false` for such a record even
                 // though its `description` field genuinely is the marker,
                 // which is exactly the class of defect this field's own doc
@@ -880,7 +857,9 @@ impl RaceCorpus {
                 type_tokens: record.data.type_tokens.clone(),
                 description: record.data.description.clone(),
                 source_page: record.data.source_page.clone(),
-                raw_tokens: record.data.raw_tokens.clone(),
+                declared_walk_speed_ft: race_trait_tokens::declared_walk_speed_ft(&record.data),
+                declared_size: race_trait_tokens::declared_size(&record.data),
+                declared_vision: race_trait_tokens::declared_vision_segments(&record.data),
                 raw_bonus_chains: record.data.raw_bonus_chains.clone(),
             })
             .collect();
@@ -891,7 +870,7 @@ impl RaceCorpus {
         let mut walk_speed_ft = chassis_walk_speed_ft;
         let mut speed_source = if chassis_walk_speed_ft.is_some() { SpeedSource::Chassis } else { SpeedSource::Unknown };
         for resolved in &traits {
-            if let Some(ft) = resolved.declared_walk_speed_ft() {
+            if let Some(ft) = resolved.declared_walk_speed_ft {
                 walk_speed_ft = Some(ft);
                 speed_source = SpeedSource::Trait(resolved.key.clone());
             }
@@ -909,7 +888,7 @@ impl RaceCorpus {
         let mut size = chassis_size;
         let mut size_source = if chassis_size.is_some() { SizeSource::Chassis } else { SizeSource::Unknown };
         for resolved in &traits {
-            if let Some(declared) = resolved.declared_size() {
+            if let Some(declared) = resolved.declared_size {
                 size = Some(declared);
                 size_source = SizeSource::Trait(resolved.key.clone());
             }
@@ -1169,12 +1148,8 @@ pub struct AdoptedRaceSelector {
 pub fn adopted_race_choose_selectors(corpus: &RaceCorpus) -> Vec<AdoptedRaceSelector> {
     let mut out = Vec::new();
     for record in corpus.traits_by_type_token(ADOPTED_RACE_SELECTOR_TYPE) {
-        let pool_type_suffix = record
-            .data
-            .raw_tokens
-            .iter()
-            .find(|t| t.key == "CHOOSE" && t.value.trim_start().starts_with(ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX))
-            .map(|t| t.value.trim_start()[ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX.len()..].to_string());
+        let pool_type_suffix =
+            race_trait_tokens::choice_pool_suffix(&record.data, ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX);
         out.push(AdoptedRaceSelector {
             key: record.data.key.clone(),
             name: record.data.name.clone(),
@@ -1964,176 +1939,6 @@ fn lst_citation(source: &CorpusSource) -> (String, u32) {
         | CorpusSource::LstCorrectedIngest { path, line, .. } => (path.clone(), *line),
         CorpusSource::WebSecondSource { .. } | CorpusSource::SameBookFallback { .. } => (String::new(), 0),
     }
-}
-
-/// Reads a *positive* `PREFACT:1,ABILITIES,<flag>=True` token — the gate on
-/// ARG's replacement-content rows. The negated form is stored under the
-/// distinct `!PREFACT` key by the ingest tools and is deliberately not matched
-/// here; its payload already lives in
-/// [`RaceTraitCacheData::suppressed_by_flag`].
-/// `Orc Racial Trait|AUTOMATIC|Feral ~ Languages` -> `["Feral ~ Languages"]`;
-/// `Dwarf Racial Trait|AUTOMATIC|Dwarf ~ Weapon Familiarity|Dwarf ~ Languages`
-/// -> both keys.
-///
-/// The token's first field is the ability CATEGORY and the second is the
-/// *nature* (`AUTOMATIC`, `VIRTUAL`, `NORMAL`); only `AUTOMATIC` grants
-/// unconditionally, so any other nature yields nothing. Everything after that
-/// is a `|`-separated key list terminated by PCGen's prerequisite qualifiers
-/// (`PRESTAT:`, `PREABILITY:`, `PRELEVEL:`, `PREVAREQ:` and their negations),
-/// which are dropped along with the rest of the list — a key list is a run,
-/// not a set, and a qualifier applies to what follows it.
-///
-/// `%LIST` is skipped: it is PCGen's "whatever the player chose" placeholder
-/// and names no concrete record.
-fn automatic_grant_targets(value: &str) -> Vec<String> {
-    let mut parts = value.split('|');
-    let _category = parts.next();
-    if !parts.next().is_some_and(|nature| nature.eq_ignore_ascii_case("AUTOMATIC")) {
-        return Vec::new();
-    }
-    let mut out = Vec::new();
-    for part in parts {
-        let part = part.trim();
-        if part.starts_with("PRE") || part.starts_with("!PRE") {
-            break;
-        }
-        if part.is_empty() || part == "%LIST" {
-            continue;
-        }
-        out.push(part.to_string());
-    }
-    out
-}
-
-fn positive_prefact_flag(raw_tokens: &[RawToken]) -> Option<String> {
-    raw_tokens
-        .iter()
-        .filter(|t| t.key == "PREFACT")
-        .find_map(|t| first_ability_flag(&t.value))
-}
-
-/// `1,ABILITIES,Dwarf_ReplaceGreed=True` -> `Dwarf_ReplaceGreed`.
-fn first_ability_flag(value: &str) -> Option<String> {
-    let mut parts = value.split(',');
-    if parts.next()? != "1" {
-        return None;
-    }
-    if !parts.next()?.eq_ignore_ascii_case("ABILITIES") {
-        return None;
-    }
-    let clause = parts.next()?;
-    let (flag, _) = clause.split_once('=')?;
-    Some(flag.to_string())
-}
-
-/// `SIZE_M` -> [`SizeCategory::Medium`]. Any `TEMPLATE:` payload that is not
-/// one of `ce_templates.lst`'s nine `SIZE_<code>` rows yields `None` — a race
-/// trait carries plenty of other templates, and `SIZE_C+` (whose body is
-/// `SIZE:P`, a code `SizeCategory` does not model) must not be mistaken for
-/// Colossal.
-fn size_from_size_template(value: &str) -> Option<SizeCategory> {
-    let code = value.trim().strip_prefix("SIZE_")?;
-    if code.len() != 1 {
-        return None;
-    }
-    SizeCategory::from_base_size_code(code)
-}
-
-/// A row's own `TEMPLATE:Bonus Language ~ <Lang>|...` chain, transcribed
-/// verbatim into the language name(s) it names — **reading, not applying**,
-/// the same claim [`size_from_size_template`] makes for `SIZE_<code>`.
-///
-/// Verified directly against the real corpus, not assumed: every
-/// `Bonus Language ~ <Lang>` row PCGen defines is a single-purpose template
-/// whose entire body is one `LANGBONUS:<Lang>` token —
-/// `data/corpus/core_rulebook/template/bonus_language_common.json`'s own
-/// `raw_tokens` are exactly `[VISIBLE:NO, LANGBONUS:Common]`, and the same
-/// shape holds for every sibling this function is used against
-/// (`bonus_language_giant.json`, `_goblin.json`, `_halfling.json`). Reading
-/// `"Bonus Language ~ Common"` off a `TEMPLATE:` chain and returning
-/// `"Common"` is therefore transcription of a real, verified 1:1 name
-/// mapping, not an interpretation.
-///
-/// A `TEMPLATE:` value that does not carry the `"Bonus Language ~ "` prefix
-/// contributes nothing. One real corpus row's own chain, `Human ~ Languages`'
-/// `TEMPLATE:Bonus Language ~ Any Spoken`, DOES match the prefix and yields
-/// the literal marker `"Any Spoken"` — that is PCGen's own "no restriction"
-/// template, not a real language, and callers that care about the
-/// difference must check for it; this function only transcribes, it does
-/// not classify what it reads.
-pub fn declared_template_bonus_languages(raw_tokens: &[RawToken]) -> Vec<String> {
-    raw_tokens
-        .iter()
-        .filter(|t| t.key == "TEMPLATE")
-        .flat_map(|t| t.value.split('|'))
-        .filter_map(|part| part.trim().strip_prefix("Bonus Language ~ ").map(str::to_string))
-        .collect()
-}
-
-#[cfg(test)]
-mod declared_template_bonus_languages_tests {
-    use super::*;
-
-    fn token(key: &str, value: &str) -> RawToken {
-        RawToken { key: key.to_string(), value: value.to_string() }
-    }
-
-    /// `isr_abilities_race.lst:216`'s own `TEMPLATE:` value, copied verbatim
-    /// from `data/corpus/inner_sea_races/race_trait/human/
-    /// human_tribalistic_languages.json` — real corpus content, not a
-    /// fabricated example.
-    #[test]
-    fn tribalistic_languages_template_chain_transcribes_to_four_real_languages() {
-        let raw = vec![token(
-            "TEMPLATE",
-            "Bonus Language ~ Common|Bonus Language ~ Giant|Bonus Language ~ Goblin|Bonus Language ~ Halfling",
-        )];
-        assert_eq!(
-            declared_template_bonus_languages(&raw),
-            vec![
-                "Common".to_string(),
-                "Giant".to_string(),
-                "Goblin".to_string(),
-                "Halfling".to_string(),
-            ]
-        );
-    }
-
-    /// `core_rulebook`'s standard `Human ~ Languages` row (`suppressed_by_flag:
-    /// Human_ReplaceLanguages`) carries the "no restriction" marker template,
-    /// not a real language — transcribed, not filtered, so a caller sees the
-    /// literal name and can decide what it means.
-    #[test]
-    fn any_spoken_marker_transcribes_literally_not_as_a_language_name() {
-        let raw = vec![token("TEMPLATE", "Bonus Language ~ Any Spoken")];
-        assert_eq!(declared_template_bonus_languages(&raw), vec!["Any Spoken".to_string()]);
-    }
-
-    /// A `TEMPLATE:` chain naming something other than a `Bonus Language ~`
-    /// row (e.g. a `SIZE_<code>` row) contributes nothing here — the two
-    /// readers are deliberately independent.
-    #[test]
-    fn non_bonus_language_template_yields_nothing() {
-        let raw = vec![token("TEMPLATE", "SIZE_M")];
-        assert!(declared_template_bonus_languages(&raw).is_empty());
-    }
-
-    /// No `TEMPLATE:` token at all yields nothing, not a guess.
-    #[test]
-    fn no_template_token_yields_nothing() {
-        let raw = vec![token("DESC", "irrelevant")];
-        assert!(declared_template_bonus_languages(&raw).is_empty());
-    }
-}
-
-/// `Walk,20` / `Walk,15,Swim,30` -> `20` / `15`. `None` when the token names
-/// no walk movement at all.
-fn walk_speed_from_move(value: &str) -> Option<i32> {
-    let parts: Vec<&str> = value.split(',').collect();
-    parts
-        .windows(2)
-        .find(|pair| pair[0].trim().eq_ignore_ascii_case("Walk"))
-        .and_then(|pair| pair[1].trim().parse::<i32>().ok())
 }
 
 fn classify(data: &RaceTraitCacheData, has_positive_gate: bool) -> TraitRole {
@@ -3373,20 +3178,6 @@ mod tests {
         assert_eq!(human.size_source, SizeSource::Chassis);
     }
 
-    /// `TEMPLATE:` is a busy token; only the nine `SIZE_<code>` rows of
-    /// `ce_templates.lst` may be read as a size, and `SIZE_C+` (body
-    /// `SIZE:P`) is not one of them.
-    #[test]
-    fn only_a_real_size_template_token_is_read_as_a_size() {
-        assert_eq!(size_from_size_template("SIZE_M"), Some(SizeCategory::Medium));
-        assert_eq!(size_from_size_template("SIZE_S"), Some(SizeCategory::Small));
-        assert_eq!(size_from_size_template("SIZE_C"), Some(SizeCategory::Colossal));
-        assert_eq!(size_from_size_template("SIZE_C+"), None, "its body is SIZE:P, not a modelled code");
-        assert_eq!(size_from_size_template("Dragon Size Tracker"), None);
-        assert_eq!(size_from_size_template("SIZE_"), None);
-        assert_eq!(size_from_size_template("Half-Orc Language Template"), None);
-        assert_eq!(size_from_size_template(""), None);
-    }
 
     /// The hand-modelled token table and the corpus must agree for every
     /// race, or one of them is lying. `decisions.md §24` allows the table;
@@ -3500,17 +3291,6 @@ mod tests {
         assert_eq!(selectable_alternate_trait_keys().len(), 415);
     }
 
-    #[test]
-    fn move_and_prefact_token_parsing_reads_the_real_token_forms() {
-        assert_eq!(walk_speed_from_move("Walk,20"), Some(20));
-        assert_eq!(walk_speed_from_move("Walk,15,Swim,30"), Some(15));
-        assert_eq!(walk_speed_from_move("Walk,0"), Some(0));
-        assert_eq!(walk_speed_from_move("Swim,50"), None, "no walk component");
-        assert_eq!(first_ability_flag("1,ABILITIES,Dwarf_ReplaceGreed=True"), Some("Dwarf_ReplaceGreed".into()));
-        assert_eq!(first_ability_flag("1,ABILITIES,Dwarf_ReplaceGreed=true"), Some("Dwarf_ReplaceGreed".into()));
-        assert_eq!(first_ability_flag("1,SOMETHINGELSE,X=True"), None);
-        assert_eq!(first_ability_flag("garbage"), None);
-    }
 
     /// `declared_bonus_magnitudes` reads numbers, it does not interpret them.
     /// Pinned against a real record: Stonecunning's magnitude lives on its

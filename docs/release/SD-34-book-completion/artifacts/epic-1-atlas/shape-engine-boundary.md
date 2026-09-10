@@ -27,7 +27,7 @@ file by content anchor, not assumed:
 ```
 
 (`src/bin/v06_work_inventory.rs`, inside `fn classify`, resolving to
-line 16295 at the time of this run -- found by searching for
+line 16297 at the time of this run -- found by searching for
 these exact four lines on every run of this instrument, so a refactor that moves them keeps this
 citation green and a change to any of them fails it.)
 

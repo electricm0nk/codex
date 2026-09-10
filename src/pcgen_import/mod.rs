@@ -36,6 +36,15 @@ pub mod race_trait_formula_binding;
 pub mod corpus_trap_baseline;
 pub mod corpus_traps;
 pub mod ingest_record;
+// SD-35 AT-35-E6-002 cycle 3 (`decisions.md` §11, `technical-design.md` §0): every reading of
+// an ingested race/race-trait row's token array that `src/rules_core/race_resolver.rs`,
+// `race_creation.rs` and `trait_pool.rs` used to do by hand, one named function per fact.
+// Behaviour-identical, and KEPT for Starfinder.
+pub mod race_trait_tokens;
+// SD-35 AT-35-E6-002 cycle 3 (`decisions.md` §11, `technical-design.md` §0): the four
+// ingest-row predicates `src/rules_core/class_feature_pool_catalog.rs` gates pool membership
+// on. Behaviour-identical, and KEPT for Starfinder.
+pub mod pool_member_tokens;
 pub mod include_resolver;
 pub mod ir_converter;
 pub mod lst_parser;

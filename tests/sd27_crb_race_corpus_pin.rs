@@ -151,9 +151,8 @@ fn resolved_vision_matches_the_hardcoded_senses_row_for_all_seven() {
         let corpus_vision: Vec<&str> = resolved
             .traits
             .iter()
-            .flat_map(|t| t.raw_tokens.iter())
-            .filter(|t| t.key == "VISION")
-            .map(|t| t.value.as_str())
+            .flat_map(|t| t.declared_vision.iter())
+            .map(String::as_str)
             .collect();
         match vision {
             Some(v) => assert_eq!(corpus_vision, vec![*v], "{key}: corpus VISION token"),

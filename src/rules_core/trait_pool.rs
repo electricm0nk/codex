@@ -19,11 +19,14 @@
 //! stays agnostic to how many books carry Trait content at any given time
 //! (`decisions.md §17`: a generic pass, not a per-book table).
 //!
-//! **Nothing is computed.** A pool record's own `raw_tokens` are read
-//! verbatim off disk (the same `ingest_generic_kind.py` guarantee its module
-//! doc comment states); this loader only indexes them by the `TYPE:` third
+//! **Nothing is computed.** A pool record's own ingested row is read verbatim
+//! off disk (the same `ingest_generic_kind.py` guarantee its module doc
+//! comment states); this loader only indexes each record by the `TYPE:` third
 //! dot-segment so [`resolve_adopted_race_options`] can look one up by the
-//! exact string an Adopted-Race selector's `CHOOSE:` token names.
+//! exact string an Adopted-Race selector's `CHOOSE:` token names. The row
+//! reading itself happens on the tool side of `technical-design.md` §0's path
+//! boundary, in `pcgen_import::ingest_record`; nothing but the resolved pool
+//! name reaches this module (SD-35 `AT-35-E6-002` cycle 3).
 //!
 //! **The `ability/` fallback this module carried through `epic-6-kind-trait`
 //! cycle 2 has been retired.** That cycle's own `§4`/`§6` named the reason it
@@ -45,9 +48,9 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
+use crate::pcgen_import::ingest_record;
 use crate::rules_core::corpus_loader::BookCorpusRoot;
 use crate::rules_core::race_resolver::AdoptedRaceSelector;
-use crate::rules_core::shape_b_v1::RawToken;
 
 /// PCGen's `TYPE:` prefix every real Trait row's third dot-segment sits
 /// behind: `TYPE:Trait.RaceTrait.<X> Race Trait` -> `"<X> Race Trait"`. The
@@ -64,21 +67,16 @@ pub struct TraitPoolRecord {
     pub key: String,
     pub name: String,
     pub description: Option<String>,
-    pub raw_tokens: Vec<RawToken>,
-}
-
-impl TraitPoolRecord {
-    /// The `<X> Race Trait` pool this record belongs to, read from its own
-    /// `TYPE:` token(s) -- `None` for a Trait record that is not a
-    /// race-adoptable pool member (PF1e also has non-race-scoped Traits,
+    /// The `<X> Race Trait` pool this record belongs to, resolved once at load
+    /// time from its own `TYPE:` token(s) -- `None` for a Trait record that is
+    /// not a race-adoptable pool member (PF1e also has non-race-scoped Traits,
     /// e.g. bare `TYPE:Trait` with no `RaceTrait.` component, which an
     /// Adopted-Race selector never references).
-    pub fn race_trait_pool(&self) -> Option<&str> {
-        self.raw_tokens
-            .iter()
-            .filter(|t| t.key == "TYPE")
-            .find_map(|t| t.value.strip_prefix(RACE_TRAIT_TYPE_PREFIX))
-    }
+    ///
+    /// A resolved name, not the ingested row: this struct carried the whole
+    /// token array until SD-35 `AT-35-E6-002` cycle 3, and no consumer ever
+    /// read anything else out of it.
+    pub race_trait_pool: Option<String>,
 }
 
 /// Every loaded `kind: trait` record, indexed by [`TraitPoolRecord::race_trait_pool`].
@@ -130,7 +128,7 @@ pub fn load_trait_pool(roots: &[BookCorpusRoot<'_>]) -> TraitPool {
         }
         for path in find_json_files(&dir) {
             let Some(record) = read_trait_record(root.book_id, &path) else { continue };
-            let Some(pool_key) = record.race_trait_pool().map(str::to_string) else { continue };
+            let Some(pool_key) = record.race_trait_pool.clone() else { continue };
             let bucket = pool.by_pool.entry(pool_key).or_default();
             if bucket.iter().any(|existing| existing.key == record.key) {
                 continue;
@@ -151,20 +149,9 @@ fn read_trait_record(book_id: &str, path: &Path) -> Option<TraitPoolRecord> {
     let key = data.get("key")?.as_str()?.to_string();
     let name = data.get("name").and_then(serde_json::Value::as_str).unwrap_or(&key).to_string();
     let description = data.get("description").and_then(serde_json::Value::as_str).map(str::to_string);
-    let raw_tokens: Vec<RawToken> = data
-        .get("raw_tokens")
-        .and_then(serde_json::Value::as_array)
-        .map(|arr| {
-            arr.iter()
-                .filter_map(|entry| {
-                    let k = entry.get("key")?.as_str()?.to_string();
-                    let v = entry.get("value")?.as_str()?.to_string();
-                    Some(RawToken { key: k, value: v })
-                })
-                .collect()
-        })
-        .unwrap_or_default();
-    Some(TraitPoolRecord { book_id: book_id.to_string(), key, name, description, raw_tokens })
+    let race_trait_pool =
+        ingest_record::type_token_suffix(data, RACE_TRAIT_TYPE_PREFIX).map(str::to_string);
+    Some(TraitPoolRecord { book_id: book_id.to_string(), key, name, description, race_trait_pool })
 }
 
 fn find_json_files(dir: &Path) -> Vec<PathBuf> {
@@ -279,12 +266,13 @@ mod tests {
             key: "Oread ~ Something".to_string(),
             name: "Something".to_string(),
             description: Some("desc".to_string()),
-            raw_tokens: vec![RawToken {
-                key: "TYPE".to_string(),
-                value: "Trait.RaceTrait.Oread Race Trait".to_string(),
-            }],
+            // The `TYPE:Trait.RaceTrait.<X> Race Trait` -> `<X> Race Trait`
+            // reading itself is proven tool side, against the real on-disk
+            // document shape, by
+            // `pcgen_import::ingest_record::tests::a_type_token_yields_only_the_tail_behind_its_prefix`.
+            race_trait_pool: Some("Oread Race Trait".to_string()),
         };
-        assert_eq!(record.race_trait_pool(), Some("Oread Race Trait"));
+        assert_eq!(record.race_trait_pool.as_deref(), Some("Oread Race Trait"));
     }
 
     #[test]
@@ -294,9 +282,11 @@ mod tests {
             key: "Some Background Trait".to_string(),
             name: "Some Background Trait".to_string(),
             description: None,
-            raw_tokens: vec![RawToken { key: "TYPE".to_string(), value: "Trait".to_string() }],
+            // A bare `TYPE:Trait` row resolves to no pool -- same reader,
+            // same tool-side test as above.
+            race_trait_pool: None,
         };
-        assert_eq!(record.race_trait_pool(), None);
+        assert_eq!(record.race_trait_pool, None);
     }
 
     #[test]
@@ -322,7 +312,7 @@ mod tests {
                 key: "Oread ~ Meditative".to_string(),
                 name: "Meditative".to_string(),
                 description: Some("You gain a +2 trait bonus on Sense Motive checks.".to_string()),
-                raw_tokens: vec![],
+                race_trait_pool: Some("Oread Race Trait".to_string()),
             }],
         );
         // A DIFFERENT pool must never leak into Oread's resolution.
@@ -333,7 +323,7 @@ mod tests {
                 key: "Sylph ~ Something Else".to_string(),
                 name: "Something Else".to_string(),
                 description: None,
-                raw_tokens: vec![],
+                race_trait_pool: Some("Sylph Race Trait".to_string()),
             }],
         );
         let resolved = resolve_adopted_race_options(&[oread_selector()], &pool);

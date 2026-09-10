@@ -23,6 +23,10 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
+// SD-35 `AT-35-E6-002` cycle 3 (`decisions.md` §11, `technical-design.md` §0): the three
+// corpus-wide token sweeps below read the ingested row through the tool-side accessor rather
+// than open-coding its traversal.
+use crate::pcgen_import::ingest_record;
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
 use crate::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use crate::rules_core::equipment_effects::compute_equipment_effects;
@@ -661,14 +665,8 @@ fn load_spell_durations(spell_dir: &Path) -> BTreeMap<String, String> {
             let Ok(text) = std::fs::read_to_string(&path) else { continue };
             let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
             let Some(key) = doc["data"]["key"].as_str() else { continue };
-            let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
-            for t in tokens {
-                if t["key"].as_str() == Some("DURATION") {
-                    if let Some(v) = t["value"].as_str() {
-                        out.insert(key.to_string(), v.to_string());
-                    }
-                    break;
-                }
+            if let Some(v) = ingest_record::first_token_value(&doc, "DURATION") {
+                out.insert(key.to_string(), v.to_string());
             }
         }
     }
@@ -1010,14 +1008,8 @@ fn load_spell_ranges(spell_dir: &Path) -> BTreeMap<String, String> {
             let Ok(text) = std::fs::read_to_string(&path) else { continue };
             let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
             let Some(key) = doc["data"]["key"].as_str() else { continue };
-            let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
-            for t in tokens {
-                if t["key"].as_str() == Some("RANGE") {
-                    if let Some(v) = t["value"].as_str() {
-                        out.insert(key.to_string(), v.to_string());
-                    }
-                    break;
-                }
+            if let Some(v) = ingest_record::first_token_value(&doc, "RANGE") {
+                out.insert(key.to_string(), v.to_string());
             }
         }
     }
@@ -1384,13 +1376,8 @@ fn load_class_feature_bonus_vars(
             let Ok(text) = std::fs::read_to_string(&path) else { continue };
             let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
             let Some(key) = doc["data"]["key"].as_str() else { continue };
-            let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
             let mut vars = Vec::new();
-            for t in tokens {
-                if t["key"].as_str() != Some("BONUS") {
-                    continue;
-                }
-                let Some(v) = t["value"].as_str() else { continue };
+            for v in ingest_record::token_values(&doc, "BONUS") {
                 let Some(rest) = v.strip_prefix("VAR|") else { continue };
                 let Some((name, formula)) = rest.split_once('|') else { continue };
                 vars.push((name.to_string(), formula.to_string()));
