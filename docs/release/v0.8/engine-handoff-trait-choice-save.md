@@ -95,3 +95,44 @@ accepts the id:
 
 Current state: `cargo test --manifest-path apps/desktop/src-tauri/Cargo.toml trait_selection_at_root`
 → 6 passed, 2 failed (exactly the two above). B-4's flat-trait path is complete and green.
+
+## Addendum 2026-09-10 — candidate (a) does NOT work; the loader keeps the first *two* segments
+
+Re-traced the actual save/load round-trip end-to-end. The "Two candidate fixes" section
+above is wrong about candidate (a), and both acceptance tests' hardcoded id is wrong for the
+only correct fix. Findings, all by direct read:
+
+- **Write path** (`src/saved_character/local_store.rs:380`) serializes each choice as a single
+  colon-joined line: `choice={choice_set_id}:{selection_id}`.
+- **Loader** (`src/rules_core/character_input.rs:588` `apply_selected_choice`) splits that value
+  on **every** colon and reconstructs `choice_set_id = parts[0..2].join(":")` (the first *two*
+  segments), `selection_id = parts[2..].join(":")` (the rest). It does **not** "split on the
+  first colon and keep the remainder" — the prerequisite candidate (a) named is false.
+
+Consequences:
+
+- **Candidate (a) is broken.** Relaxing `!= 2` to `< 2` lets a 3-segment
+  `trait_choice:trait:trait_criminal` pass save-time validation, but on reload the loader parses
+  it back as `choice_set_id = "trait_choice:trait"` and
+  `selection_id = "trait_criminal:skill:intimidate"` — a *different* record. The two acceptance
+  tests reload and then `.find(|c| c.choice_set_id == "trait_choice:trait:trait_criminal")`, so
+  they still fail. Do not ship (a).
+- **Candidate (b) is the only round-trip-safe fix.** Emitting the 2-segment
+  `trait_choice:trait_criminal` (strip the redundant `trait:` prefix in
+  `trait_effects.rs:517`) round-trips correctly, and the reader at `trait_effects.rs:542` uses
+  the same function so it stays self-consistent. No migration is needed — a choice-trait
+  character was never saveable, so no old 3-segment id exists on disk.
+- **The two acceptance tests DO need one edit each after all.** They hardcode the 3-segment
+  `trait_choice:trait:trait_criminal` (`character_hub.rs` ~:8342 and the remove test's
+  equivalent). Under candidate (b) the persisted id is `trait_choice:trait_criminal`, so those
+  expectations must be corrected to the 2-segment form. This is a correction of a wrong
+  expectation, not a weakening — the "require no edit / do not weaken" banner was written under
+  the mistaken candidate-(a) assumption.
+- **Full candidate-(b) change set:** `trait_effects.rs:517`; the two id expectations in
+  `character_hub.rs`; and the pins already named above (`trait_picker.rs:888,914`,
+  `composeCreateCharacterRequest.test.ts:141,146`).
+
+Left for the repo-root `src/` owner per the operator hand-off ruling; not applied from the UI
+session. Surfaced because merging the deliberately-red tests to `develop` turns the
+`publish-tester-release` "Test before publish" job red (the "Run desktop shell tests" step)
+until (b) lands.
