@@ -885,7 +885,7 @@ mod tests {
         assert!(criminal.skills.is_empty());
         assert_eq!(
             criminal.choice_set_id.as_deref(),
-            Some("trait_choice:trait:trait_criminal")
+            Some("trait_choice:trait_criminal")
         );
         let option_ids: Vec<&str> =
             criminal.skill_options.iter().map(|o| o.skill_id.as_str()).collect();
@@ -911,7 +911,7 @@ mod tests {
         assert!(artisan.skills.is_empty());
         assert_eq!(
             artisan.choice_set_id.as_deref(),
-            Some("trait_choice:trait:trait_artisan")
+            Some("trait_choice:trait_artisan")
         );
         assert_eq!(artisan.skill_options.len(), 23);
         assert!(artisan.skill_options.iter().any(|o| o.skill_id == "skill:craft_weapons"));

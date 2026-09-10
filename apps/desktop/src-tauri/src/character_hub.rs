@@ -8304,13 +8304,14 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    /// **EXPECTED RED pending an engine fix -- do not weaken or `#[ignore]`.**
-    /// This test is the acceptance criterion named in
-    /// `docs/release/v0.8/engine-handoff-trait-choice-save.md` (blocker B13):
-    /// the engine's `trait_skill_choice_id` emits a three-segment
+    /// GREEN since the B13 engine fix. This test is the acceptance criterion
+    /// named in `docs/release/v0.8/engine-handoff-trait-choice-save.md`: the
+    /// engine's `trait_skill_choice_id` used to emit a three-segment
     /// `trait_choice:trait:<name>` id that `SavedCharacterStore` refuses
-    /// (`local_store.rs`, "exactly two colon-segments"). It goes green
-    /// untouched once repo-root `src/` lands either candidate fix.
+    /// (`local_store.rs`, "exactly two colon-segments"). It now drops the
+    /// record id's `kind:` prefix and emits two segments. Do not weaken or
+    /// `#[ignore]` this test -- a red here means choice-trait characters
+    /// cannot be saved at all.
     /// A `%LIST` trait (Criminal) records the player's skill under the
     /// engine's own `trait_choice:<trait>` set id, so
     /// `skill_choice_bonuses_from_traits` can read it back.
@@ -8339,7 +8340,7 @@ mod tests {
             .chosen
             .selected_choices
             .iter()
-            .find(|c| c.choice_set_id == "trait_choice:trait:trait_criminal")
+            .find(|c| c.choice_set_id == "trait_choice:trait_criminal")
             .expect("the skill choice must be recorded under the trait's own set id");
         assert_eq!(choice.selection_id, "skill:intimidate");
 
@@ -8410,13 +8411,14 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    /// **EXPECTED RED pending an engine fix -- do not weaken or `#[ignore]`.**
-    /// This test is the acceptance criterion named in
-    /// `docs/release/v0.8/engine-handoff-trait-choice-save.md` (blocker B13):
-    /// the engine's `trait_skill_choice_id` emits a three-segment
+    /// GREEN since the B13 engine fix. This test is the acceptance criterion
+    /// named in `docs/release/v0.8/engine-handoff-trait-choice-save.md`: the
+    /// engine's `trait_skill_choice_id` used to emit a three-segment
     /// `trait_choice:trait:<name>` id that `SavedCharacterStore` refuses
-    /// (`local_store.rs`, "exactly two colon-segments"). It goes green
-    /// untouched once repo-root `src/` lands either candidate fix.
+    /// (`local_store.rs`, "exactly two colon-segments"). It now drops the
+    /// record id's `kind:` prefix and emits two segments. Do not weaken or
+    /// `#[ignore]` this test -- a red here means choice-trait characters
+    /// cannot be saved at all.
     /// Removal takes the trait's recorded skill choice with it, so no
     /// orphaned `trait_choice:` entry is left behind for a trait the
     /// character no longer has.
@@ -8452,7 +8454,7 @@ mod tests {
                 .chosen
                 .selected_choices
                 .iter()
-                .any(|c| c.choice_set_id == "trait_choice:trait:trait_criminal"),
+                .any(|c| c.choice_set_id == "trait_choice:trait_criminal"),
             "the orphaned skill choice must go with it"
         );
         assert_eq!(reloaded.saved_at, "2026-07-21T00:02:00Z");

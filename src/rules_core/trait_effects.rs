@@ -514,8 +514,21 @@ fn find_choice_by_trait_id(trait_id: &str) -> Option<&'static TraitSkillChoiceBo
 /// CHOICE_ID` already establishes, scoped per-trait (not a single shared
 /// id) so a character who somehow selected two `%LIST` traits records
 /// each one's choice independently rather than colliding on one slot.
+///
+/// The record id's `kind:` prefix is dropped, so `trait:trait_criminal`
+/// yields `trait_choice:trait_criminal` -- **exactly two colon-segments**.
+/// That is not cosmetic: `saved_character::local_store` renders a choice as
+/// `choice=<choice_set_id>:<selection_id>` and
+/// `rules_core::character_input::apply_selected_choice` splits it back
+/// positionally at `parts[0..2]` / `parts[2..]`, so a three-segment
+/// `choice_set_id` cannot round-trip -- it would reload as
+/// `trait_choice:trait` with the trait name swallowed into the selection.
+/// `local_store::validate` refuses to persist one for that reason, which is
+/// what failed "Test before publish" on the desktop crate. Every producer and
+/// every consumer goes through this one function, so the id stays symmetric.
 pub fn trait_skill_choice_id(trait_id: &str) -> String {
-    format!("trait_choice:{trait_id}")
+    let unprefixed = trait_id.split_once(':').map_or(trait_id, |(_kind, rest)| rest);
+    format!("trait_choice:{unprefixed}")
 }
 
 /// The real, computed skill bonus contribution of every
