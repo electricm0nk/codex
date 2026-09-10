@@ -41,6 +41,74 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-09 — AT-35-E6-001 cycle 2 — `formula-evaluator-leaves-live` — **partial** (two of cycle 1's four named families closed: the fixture-check oracle and the class chassis; `PcgenFormulaEvaluator` 28 → 6 hits, 5 → 1 files; 5 files remain in 2 named families)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `python3 scripts/cycle_scope_gate.py --min 500` → `inventory=docs/work-inventory.json
+  scope=(whole remainder) scoped_by_bucket= scoped_by_kind= scoped=0 remaining_non_done=0
+  floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=2127 ratio=n/a builds_recorded=1
+  pcgen_live_files=254` (`cycle_scope_gate.py --receipt --since c729c0f659 --before
+  /tmp/wi-before-AT-35-E6-001-c2.json --after docs/work-inventory.json`; `regressed=0 added=0
+  dropped=0`, `closed_by_kind=` and `relabeled_moves=` empty). Epic 6 moves no unit by design.
+- **Refused tokens:** none — no converter refusal was added or cleared; `_refused.json` unchanged
+  at 142 records, one shape, `refused_non_done=0`.
+- **PCGen residue:** `live_files=253 live_hits=12354 baseline_files=260 baseline_hits=12736
+  verdict=PASS` — down on both axes from cycle 1's `254 / 12,396`, up on neither. The three
+  identifiers this criterion owns: `PcgenFormulaEvaluator` 5 files/28 hits → **1/6**;
+  `bonus_stack_reader` 2/13 → **1/9**; `pre_tokens` 4/19 → **4/19** (untouched this cycle).
+  **Not zero — hence `partial`.**
+- **What landed.** Two of the four families cycle 1's receipt named by mechanism.
+  *Fixture-check oracle:* the `kind=race_trait` FORMULA bar check moved verbatim to
+  `src/oracle_validation/race_trait_formula_bar_check.rs` (`run_bar_check` still folds its
+  report in, so the gate's reach is identical), and
+  `spell_like_ability_caster_level` stopped interpreting a formula at render time — the one
+  arithmetic SLA caster level in the corpus (Demon (Vermlek), three quarters of its own 4 racial
+  Hit Dice) is a constant, resolved at ingest by
+  `transcribe_monster_tables.py::resolve_sla_cl_arithmetic`.
+  *Class chassis:* `MAXLEVEL` stopped converting to nothing. It is `Family::Prereq`, and a level
+  ceiling IS a gate, so it now converts to `Compare { ClassLevel(slug), Lte, Const(n) }` on the
+  record's `applies` (142 of 184 rows; `NOLIMIT` and unreadable values gain no gate rather than a
+  false one). That unblocked the family cycle 1 recorded as blocked: one new live module,
+  `pilot_compute::class_chassis_sheet_rules`, is the ONE live reader of the converted chassis, and
+  `crb_untabled_class_chassis`, `generic_class_chassis` and the desktop `class_catalog_generic`
+  all call it — which also collapses two parallel copies of the same derivation into one.
+- **Oracle parity:** `lines 146/145/1, chassis 382/376/6, characters=29, exports_missing=0,
+  PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` — the same seven
+  `(character, family, unit, ours, oracle)` disagreement tuples as cycle 1's after-run,
+  **0 introduced, 0 fixed**.
+- **Three figures moved, each named rather than absorbed.** (1) `mapping-table.v1.json`'s
+  `MAXLEVEL` row corrected `Metadata` → `Applies`; the transcription test is the enforcement and
+  it failed first, exactly as designed. (2) The conventional-class chassis population is **62,
+  not 61**: +2 `adventurers_guide` Pathfinder Delver and Pathfinder Savant (records
+  `data/corpus/` never held; the converter reads the pinned oracle corpus), −1 `inner_sea_gods`
+  Evangelist (its degraded record converts every magnitude to the rule's own words per
+  `decisions.md` §1, so it is prose, not a chassis). The desktop catalog row count follows,
+  1108 → 1128, with its four-term derivation in the assertion. (3) A confidently-wrong number
+  caught before it shipped: binding the level to the record's FILE slug made a redacted-name
+  class evaluate to zero at every level while still returning a row; the binding is read off the
+  expressions now, guarded corpus-wide by
+  `no_class_resolves_a_degenerate_all_zero_progression`.
+- **Build scope:** `cargo test --locked --no-fail-fast -j 6` → 413 `test result` lines, 5,511
+  passed, 53 ignored, **1 failure** — the mapping-table transcription gate, self-healed in the
+  same cycle by correcting the JSON row and re-verified with `cargo test --locked --lib -j 6` →
+  `3238 passed; 0 failed`. Desktop crate `576 passed; 0 failed` (one moved count assertion fixed
+  first). `cargo clippy --locked --tests -j 6` → 0 warnings (two `type_complexity` warnings in
+  this cycle's own new module, fixed here). `sheet_rule_convert -- --check` →
+  `records=49438 converted=49296 refused=142 rules=69344 var_tables=5277 verdict=PASS`.
+  `v06_work_inventory` refused to write behind its stamp guard (7,385 of 32,617 stamps would
+  drop without the sweep/fixture reports); `--allow-stamp-loss` is forbidden, so the inventory is
+  unchanged — the right answer for a cycle that moved no unit.
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-001_cycle2_receipt.md`.
+- **Remainder, named by mechanism (2 families, 5 files, 34 hits):** the **class-feature var
+  chain** (`pilot_compute/class_feature_grant_consumer.rs`, `PcgenFormulaEvaluator` 6 +
+  `bonus_stack_reader` 9 — replace `resolve_pcgen_var_chain` with the converter's own
+  `_vars/<VarId>.json` `VarTable` fold, and follow its one non-test consumer into
+  `src/oracle_validation/`), and **feat prerequisites** (`rules_core/feat_prereqs.rs`,
+  `pilot_compute/prestige_class_entry_gate.rs`, desktop `feat_catalog.rs`, desktop
+  `character_hub.rs`, `pre_tokens` 19 — the replacement already ships as
+  `level_up_option_filter::filter_option_pool` over `SheetRule.applies` + `unmet_words`).
+
 ### 2026-09-09 — AT-35-E6-001 cycle 1 — `formula-evaluator-leaves-live` — **partial** (the interpreter, its harness, the bonus-stack reader and the `PRE*` reader leave `rules_core`; three live callers now hold converted `Expr`; 9 files still carry one of the three identifiers)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.

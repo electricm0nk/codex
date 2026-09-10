@@ -11986,29 +11986,29 @@
   {
    "token_type": "MAXLEVEL",
    "family": "prereq",
-   "maps_to": "Metadata(ignored-by-sheet)",
-   "rule": "MAXLEVEL:<n> is class metadata (level cap; PCGen enforces at level-up). Never printed. 184 instances / 184 units / 141 non-DONE.",
+   "maps_to": "Applies(class level ceiling)",
+   "rule": "MAXLEVEL:<n> is the class's own level ceiling: above it the class's chassis rows (base attack bonus, the three base saves) and every other line the record states do not apply. It converts to a gate on the record's applies -- Compare { ClassLevel(<class slug>), Lte, Const(<n>) } -- never printed as a line. MAXLEVEL:NOLIMIT states there is no ceiling and converts to no gate, not a false one. 184 instances / 184 units; 142 records gain a gate, 38 NOLIMIT and 4 unreadable values gain none. SD-35 AT-35-E6-001 corrected this row from Metadata(ignored-by-sheet): the live class chassis had to re-read the raw token to learn the ceiling, which decisions.md §11 forbids.",
    "expr_shape": "n/a",
-   "applies_shape": "none",
+   "applies_shape": "Compare { lhs: ClassLevel(<class slug>), op: Lte, rhs: Const(<n>) }, folded into the record's applies with All",
    "prose_effect": "none",
    "examples": [
     {
      "record": "occult_adventures:class:homunculus_companion",
      "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst:184",
      "raw": "MAXLEVEL:20",
-     "sheet_line": "(no line)"
+     "sheet_line": "(no line; the record's lines apply only at or below the ceiling)"
     },
     {
      "record": "inner_sea_world_guide:class:red_mantis_assassin",
      "source": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_classes.lst:57",
      "raw": "MAXLEVEL:10",
-     "sheet_line": "(no line)"
+     "sheet_line": "(no line; the record's lines apply only at or below the ceiling)"
     },
     {
      "record": "occult_adventures:class:phantom",
      "source": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst:176",
      "raw": "MAXLEVEL:20",
-     "sheet_line": "(as the row rule states for this token; fixture value not hand-derived -- census top-up)"
+     "sheet_line": "(no line; the record's lines apply only at or below the ceiling)"
     }
    ],
    "oracle_check": "sheet-line only -- no PCGen total covers it",
@@ -12019,7 +12019,7 @@
     "of": 23315,
     "basis": "synthesis census 2026-09-07"
    },
-   "provenance": "synthesis",
+   "provenance": "synthesis; maps_to corrected by SD-35 AT-35-E6-001 (2026-09-09)",
    "examples_note": "1 example(s) topped up from the census (real records, sheet_line not hand-derived)",
    "covers_token_heads": [
     "MAXLEVEL"

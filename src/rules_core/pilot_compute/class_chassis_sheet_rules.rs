@@ -81,6 +81,13 @@ pub struct ClassChassis {
     saves: [Expr; 3],
 }
 
+/// One row of a class's printed progression table: `(level, base attack bonus,
+/// Fortitude, Reflex, Will)`.
+pub type ProgressionRow = (u8, i16, i16, i16, i16);
+
+/// The process-wide `(book, slug)` cache [`record`] keeps.
+type RecordCache = std::sync::Mutex<BTreeMap<(String, String), Option<&'static ClassChassis>>>;
+
 /// One resolved level's row.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ClassChassisRow {
@@ -124,7 +131,7 @@ impl ClassChassis {
     /// Every level `1..=max_level` as `(level, bab, fort, ref, will)`, or
     /// `None` when any level fails to resolve — a partial progression is never
     /// returned.
-    pub fn full_progression(&self) -> Option<Vec<(u8, i16, i16, i16, i16)>> {
+    pub fn full_progression(&self) -> Option<Vec<ProgressionRow>> {
         let mut rows = Vec::with_capacity(usize::from(self.max_level));
         for level in 1..=self.max_level {
             let row = self.row_at(level)?;
@@ -269,8 +276,7 @@ pub fn records(books: &[&str]) -> BTreeMap<(String, String), ClassChassis> {
 
 /// One class's chassis in one named book, cached across calls.
 pub fn record(book: &str, slug: &str) -> Option<&'static ClassChassis> {
-    static CACHE: OnceLock<std::sync::Mutex<BTreeMap<(String, String), Option<&'static ClassChassis>>>> =
-        OnceLock::new();
+    static CACHE: OnceLock<RecordCache> = OnceLock::new();
     let cache = CACHE.get_or_init(|| std::sync::Mutex::new(BTreeMap::new()));
     let key = (book.to_string(), slug.to_string());
     let mut guard = cache.lock().expect("class chassis cache");
