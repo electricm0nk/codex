@@ -330,6 +330,35 @@ pub fn load_sheet_rules_filtered(dir: &Path, keep: &dyn Fn(&str, &str) -> bool) 
     SheetRuleLoad { package, diagnostics, rule_files, var_files }
 }
 
+/// This checkout's own `data/sheet_rules/` package, loaded once per process.
+///
+/// SD-35 `AT-35-E6-001`: the live-side prerequisite readers (`feat_prereqs`,
+/// `pilot_compute::prestige_class_entry_gate`) evaluate a record's CONVERTED
+/// [`Applies`](crate::rules_core::sheet_rule::Applies) gate rather than parsing the
+/// ingest format's `PRE*` token text at run time, so they need the package the sheet is
+/// rendered from. The desktop crate already keeps exactly this cache
+/// (`character_hub::sheet_rule_package`) and passes its package down; a caller inside
+/// `rules_core` that has no package to pass -- `compute_class_chassis`'s prestige entry
+/// gate is called before any package is attached -- reads it here instead.
+///
+/// `None` when the directory is absent or carries no rules. A missing package is never a
+/// verdict: every caller reports "not verified" for it rather than refusing a character.
+pub fn live_sheet_rules() -> Option<&'static crate::rules_core::sheet_rule::SheetRulePackage> {
+    static PACKAGE: std::sync::OnceLock<Option<crate::rules_core::sheet_rule::SheetRulePackage>> =
+        std::sync::OnceLock::new();
+    PACKAGE
+        .get_or_init(|| {
+            let dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/sheet_rules");
+            let load = load_sheet_rules(&dir);
+            if load.package.rules.is_empty() {
+                None
+            } else {
+                Some(load.package)
+            }
+        })
+        .as_ref()
+}
+
 fn load_diagnostic(path: &Path, message: &str) -> crate::rules_core::source_content::SourceContentDiagnostic {
     use crate::rules_core::source_content::{SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentSeverity};
     SourceContentDiagnostic {

@@ -610,15 +610,32 @@ impl Expr {
 }
 
 impl Applies {
-    /// `All` with flattening: `Always` terms drop, a `Never` term wins, one term is itself.
+    /// `All` with flattening: `Always` terms drop, a `Never` term wins, one term is itself,
+    /// and a term already in the conjunction is not added twice.
+    ///
+    /// **Why the dedupe** (SD-35 `AT-35-E6-001`): the converter conjoins a record's own gate
+    /// onto each line it emits (`sheet_rule/convert.rs`, the `Applies::all(vec![
+    /// record_applies, line.applies])` call), and for a record whose only line-level gate IS
+    /// the record gate that produced a conjunction stating every requirement exactly twice --
+    /// **963 of the corpus's 1,830 gated feat records** were doubled that way
+    /// (`python3 - <<'EOF'` over `data/sheet_rules/*/feat/*.json`, counting `All` gates whose
+    /// term list equals itself repeated). It never changed a verdict -- `A and A` is `A` --
+    /// but every consumer that REPORTS the gate printed each requirement twice, and
+    /// `feat_prereqs` counts terms, so a record with three prerequisites reported six. A
+    /// requirement stated twice is one requirement.
     pub fn all(terms: Vec<Applies>) -> Applies {
-        let mut out = Vec::new();
+        let mut out: Vec<Applies> = Vec::new();
+        let push = |out: &mut Vec<Applies>, t: Applies| {
+            if !out.contains(&t) {
+                out.push(t);
+            }
+        };
         for t in terms {
             match t {
                 Applies::Always => {}
                 Applies::Never => return Applies::Never,
-                Applies::All(inner) => out.extend(inner),
-                other => out.push(other),
+                Applies::All(inner) => inner.into_iter().for_each(|i| push(&mut out, i)),
+                other => push(&mut out, other),
             }
         }
         match out.len() {

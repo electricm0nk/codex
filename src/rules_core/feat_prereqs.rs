@@ -58,12 +58,17 @@
 //! and the Two-Weapon Fighting feat. All 690 offered feats were accepted by
 //! every character regardless of prerequisites.
 //!
-//! [`evaluate_catalog_feat_prerequisites`] below is the real check. It
-//! reads the `PRE`-family tokens off the book-spanning catalog
-//! (`rules_tables::feats_all`, which now carries them for all five books --
-//! ARG's 187 rows and PU's 17 had never been gathered at all) and evaluates
-//! them against the character through [`pre_tokens`], which is hand-modelled
-//! per token kind per `decisions.md` §24.
+//! [`evaluate_catalog_feat_prerequisites`] below is the real check. It reads the CONVERTED
+//! gate off each record's `data/sheet_rules/` rule and decides it through the same
+//! [`evaluate_applies`](crate::rules_core::sheet_rule::evaluate_applies) the sheet renders
+//! through (SD-35 `AT-35-E6-001`; `decisions.md` §11 -- nothing on the live side reads the
+//! ingest format). Until that cycle it parsed the `PRE`-family token text at run time; the
+//! parser it used is converter and oracle code now, kept under `src/pcgen_import/` and read
+//! by the converter and the oracle harness, never by the product.
+//!
+//! The three-outcome contract is unchanged and is `feat_prereqs::converted_gate`'s own
+//! subject: only a definitively unmet term blocks, and a term over a fact the character
+//! record does not carry is reported, never refused.
 //!
 //! ## Why the SD-20 functions are still here
 //!
@@ -72,19 +77,22 @@
 //! them; `evaluate_catalog_feat_prerequisites` does not route through them.
 
 pub mod combat;
+pub mod converted_gate;
 pub mod general;
 pub mod item_creation;
 pub mod metamagic;
-// SD-35 AT-35-E6-001 (`decisions.md` §11): the PCGen `PRE*`-token parser/evaluator moved to
-// `src/pcgen_import/pre_tokens.rs`. It is converter and oracle code -- KEPT, not deleted.
-pub use crate::pcgen_import::pre_tokens;
 
 use crate::rules_core::character_input::CharacterInput;
+use crate::rules_core::pilot_compute::PilotBaseChassisComputation;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::feats::FeatCategory;
 use crate::rules_core::rules_tables::feats_all::{all_feat_tables, FeatCatalogRecord};
 use crate::rules_core::rules_tables::RuleSetId;
-use pre_tokens::{evaluate_prerequisite_token, CharacterPrereqFacts, ClauseOutcome};
+use crate::rules_core::sheet_rule::{
+    held_set, split_rule_id, Applies, CharacterFacts, HeldSeed, HeldSet, SheetRule,
+    SheetRulePackage,
+};
+use converted_gate::TermVerdict;
 
 /// Identifies one catalog feat: its id (matches `FeatTableEntry.key` /
 /// `.name`, and `CharacterInput.chosen.selected_feats` entries) plus the
@@ -300,9 +308,16 @@ pub struct FeatPrerequisiteReport {
     /// with only unverifiable clauses is eligible-with-a-note, never a
     /// silent denial.
     pub is_eligible: bool,
-    /// How many top-level `PRE`-family tokens the corpus record carries.
-    /// `0` means the record genuinely has no prerequisites.
+    /// How many top-level terms the record's CONVERTED gate carries (SD-35 `AT-35-E6-001`;
+    /// before that cycle, how many `PRE`-family tokens the source record carried). `0` means
+    /// the record genuinely has no prerequisites -- or, when [`Self::converted`] is false,
+    /// that there was no gate to count.
     pub prerequisite_token_count: usize,
+    /// Whether `data/sheet_rules/` carries a converted rule for this record at all. `false`
+    /// is a number to report, never an exemption: the record is still offered, with one
+    /// `unverified` note saying so, because an absent conversion is a statement about this
+    /// repo and not about the character.
+    pub converted: bool,
     pub met: Vec<String>,
     pub unmet: Vec<FailedPrerequisite>,
     pub unverified: Vec<PrerequisiteWarning>,
@@ -327,38 +342,180 @@ impl FeatPrerequisiteReport {
     }
 }
 
-/// Evaluates one catalog record's real corpus prerequisites against
-/// `facts`.
+/// One character's prerequisite context, entirely on the live side (SD-35 `AT-35-E6-001`).
 ///
-/// A record with `prerequisites: None` is eligible with an empty report --
-/// that is the corpus saying the feat has no prerequisites, and 91 of the
-/// catalog's 690 records really are like that.
+/// The three things a converted gate is decided against: the `data/sheet_rules/` package, the
+/// character's held set, and their facts — the same three the sheet itself is rendered from
+/// (`character_hub::sheet_lines_for`, `level_up_option_filter::filter_option_pool`). One
+/// evaluator, several consumers; no ingest-format token is read to build or use it.
+///
+/// This replaces the token-side `CharacterPrereqFacts` snapshot, which held a hand-modelled
+/// projection of the character purely so the `PRE*` parser had something to compare against.
+pub struct PrereqFacts {
+    package: &'static SheetRulePackage,
+    held: HeldSet,
+    facts: CharacterFacts,
+    /// Folded catalog identity -> the converted rule that record's gate lives on. Built once
+    /// per context: `evaluate_every_catalog_feat` asks it 2,227 times, and a linear scan of the
+    /// package's 2,753 converted feat rules per question is 6M string folds per character.
+    feat_index: std::collections::BTreeMap<String, crate::rules_core::sheet_rule::RuleId>,
+}
+
+impl PrereqFacts {
+    /// From an already-loaded package plus the chassis computation the caller has in hand.
+    ///
+    /// `extra_race_traits` is the race resolver's applied-trait key list, exactly as
+    /// `PilotBaseChassisComputation::with_sheet_rules` takes it; pass `&[]` when the caller
+    /// has not resolved them (a racial-trait gate then reports unmet rather than met, the
+    /// same way it does on the sheet).
+    pub fn new(
+        package: &'static SheetRulePackage,
+        input: &CharacterInput,
+        computation: &PilotBaseChassisComputation,
+        extra_race_traits: &[String],
+    ) -> PrereqFacts {
+        let mut seed = HeldSeed::from_character(input, computation);
+        seed.race_traits.extend(extra_race_traits.iter().cloned());
+        // A feat recorded with its sub-choice -- `"Weapon Focus (Longbow)"`, the shape the
+        // catalog picker sends -- names the same converted record as `weapon_focus`. The
+        // seed carries both so a gate over the feat resolves for either shape; a record that
+        // genuinely is its own feat keeps its own slug and is unaffected.
+        let bases: Vec<String> = input
+            .chosen
+            .selected_feats
+            .iter()
+            .filter_map(|f| f.split_once('(').map(|(base, _)| base.trim().to_owned()))
+            .map(|base| crate::rules_core::sheet_rule::id_slug(&base))
+            .collect();
+        seed.feats.extend(bases);
+        let facts = CharacterFacts::from_character(input, computation);
+        let held = held_set(package, &seed, &facts);
+        PrereqFacts { package, held, facts, feat_index: feat_rule_index(package) }
+    }
+
+    /// The same, reading this checkout's own `data/sheet_rules/` package
+    /// ([`corpus_loader::live_sheet_rules`](crate::rules_core::corpus_loader::live_sheet_rules)).
+    /// `None` when that package is unavailable — never a verdict.
+    pub fn from_character(
+        input: &CharacterInput,
+        computation: &PilotBaseChassisComputation,
+        extra_race_traits: &[String],
+    ) -> Option<PrereqFacts> {
+        let package = crate::rules_core::corpus_loader::live_sheet_rules()?;
+        Some(PrereqFacts::new(package, input, computation, extra_race_traits))
+    }
+
+    pub fn package(&self) -> &'static SheetRulePackage {
+        self.package
+    }
+
+    pub fn held(&self) -> &HeldSet {
+        &self.held
+    }
+
+    pub fn facts(&self) -> &CharacterFacts {
+        &self.facts
+    }
+}
+
+/// Every converted feat rule, keyed by the folded identity a catalog record is matched on.
+///
+/// The fold is [`feat_identity::fold`](crate::rules_core::feat_identity::fold) -- the one place
+/// in this codebase that decides whether two feat identifiers name the same feat. A record's
+/// slug and its display label are both indexed, because a catalog `key` is genuinely either
+/// shape. A `#`-suffixed sibling is never a principal record and is skipped, and an entry
+/// already present is never overwritten: `core_rulebook` sorts first, so the CRB printing of a
+/// re-listed feat wins, the same preference [`SheetRulePackage::find`] applies.
+fn feat_rule_index(
+    package: &SheetRulePackage,
+) -> std::collections::BTreeMap<String, crate::rules_core::sheet_rule::RuleId> {
+    use crate::rules_core::feat_identity;
+    let mut out = std::collections::BTreeMap::new();
+    for rule in package.rules_of_kind("feat") {
+        if rule.id.contains('#') {
+            continue;
+        }
+        let (_, _, slug) = split_rule_id(&rule.id);
+        out.entry(feat_identity::fold(slug)).or_insert_with(|| rule.id.clone());
+        if !rule.label.is_empty() {
+            out.entry(feat_identity::fold(&rule.label)).or_insert_with(|| rule.id.clone());
+        }
+    }
+    out
+}
+
+/// The converted rule for one catalog record, or `None` when the package carries none.
+fn converted_feat_rule<'a>(
+    facts: &'a PrereqFacts,
+    feat_key: &str,
+) -> Option<&'a SheetRule> {
+    use crate::rules_core::feat_identity;
+    let id = facts.feat_index.get(&feat_identity::fold(feat_key))?;
+    facts.package.rule(id)
+}
+
+/// Evaluates one catalog record's real prerequisites, read off its CONVERTED
+/// [`Applies`] gate, against `facts`.
+///
+/// A record whose converted gate is [`Applies::Always`] is eligible with an empty report --
+/// that is the corpus saying the feat has no prerequisites, and 91 of the catalog's 690
+/// records really are like that.
+///
+/// A record the package carries no converted rule for is eligible with ONE `unverified`
+/// entry naming that. It is never a refusal: an absent conversion is a statement about this
+/// repo, not about the character.
 pub fn evaluate_catalog_feat_prerequisites(
     record: &FeatCatalogRecord,
     rule_set: RuleSetId,
-    facts: &CharacterPrereqFacts,
+    facts: &PrereqFacts,
 ) -> FeatPrerequisiteReport {
-    let tokens = record.prerequisites.unwrap_or(&[]);
+    let Some(rule) = converted_feat_rule(facts, record.key) else {
+        return FeatPrerequisiteReport {
+            feat_key: record.key.to_owned(),
+            rule_set,
+            is_eligible: true,
+            prerequisite_token_count: 0,
+            converted: false,
+            met: Vec::new(),
+            unmet: Vec::new(),
+            unverified: vec![PrerequisiteWarning {
+                message: format!(
+                    "not verified: no converted rule for this record in data/sheet_rules/ ({})",
+                    record.key
+                ),
+            }],
+        };
+    };
+    report_from_gate(record.key, rule_set, &rule.applies, facts)
+}
+
+/// The shared projection of a converted gate onto the report shape.
+fn report_from_gate(
+    feat_key: &str,
+    rule_set: RuleSetId,
+    gate: &Applies,
+    facts: &PrereqFacts,
+) -> FeatPrerequisiteReport {
+    let verdicts = converted_gate::verdicts(facts.package, &facts.held, &facts.facts, gate);
     let mut met = Vec::new();
     let mut unmet = Vec::new();
     let mut unverified = Vec::new();
-
-    for token in tokens {
-        match evaluate_prerequisite_token(token, facts) {
-            ClauseOutcome::Met { requirement } => met.push(requirement),
-            ClauseOutcome::Unmet { reason, .. } => unmet.push(FailedPrerequisite { reason }),
-            ClauseOutcome::Unmodelled { token, note } => unverified.push(PrerequisiteWarning {
-                message: format!("not verified: {note} ({token})"),
-            }),
-            ClauseOutcome::Informational { .. } => {}
+    for verdict in &verdicts {
+        match verdict {
+            TermVerdict::Met(words) => met.push(words.clone()),
+            TermVerdict::Unmet(reason) => unmet.push(FailedPrerequisite { reason: reason.clone() }),
+            TermVerdict::Unverified(note) => {
+                unverified.push(PrerequisiteWarning { message: note.clone() })
+            }
+            TermVerdict::Informational(_) => {}
         }
     }
-
     FeatPrerequisiteReport {
-        feat_key: record.key.to_owned(),
+        feat_key: feat_key.to_owned(),
         rule_set,
         is_eligible: unmet.is_empty(),
-        prerequisite_token_count: tokens.len(),
+        prerequisite_token_count: verdicts.len(),
+        converted: true,
         met,
         unmet,
         unverified,
@@ -368,9 +525,7 @@ pub fn evaluate_catalog_feat_prerequisites(
 /// Every catalog record's verdict for one character, in book order --
 /// what a feat picker needs to render 690 rows with the unavailable ones
 /// greyed and reasoned.
-pub fn evaluate_every_catalog_feat(
-    facts: &CharacterPrereqFacts,
-) -> Vec<FeatPrerequisiteReport> {
+pub fn evaluate_every_catalog_feat(facts: &PrereqFacts) -> Vec<FeatPrerequisiteReport> {
     all_feat_tables()
         .iter()
         .flat_map(|book| {
@@ -390,7 +545,7 @@ pub fn evaluate_every_catalog_feat(
 /// stays visible.
 pub fn evaluate_feat_key_prerequisites(
     feat_key: &str,
-    facts: &CharacterPrereqFacts,
+    facts: &PrereqFacts,
 ) -> Option<FeatPrerequisiteReport> {
     use crate::rules_core::feat_identity;
 
@@ -402,14 +557,13 @@ pub fn evaluate_feat_key_prerequisites(
     })
 }
 
-/// Builds the fact snapshot from chosen input plus the caller's already
-/// computed base attack bonus. A thin re-export so callers need only this
-/// module.
-pub fn character_prereq_facts(
-    input: &CharacterInput,
-    base_attack_bonus: i16,
-) -> CharacterPrereqFacts {
-    CharacterPrereqFacts::from_character(input, base_attack_bonus)
+/// Builds the prerequisite context from chosen input, computing the chassis this checkout's
+/// own engine computes for it. The convenience the tests and the `*_at_root` desktop seams
+/// share; a caller that already has a computation uses [`PrereqFacts::new`] instead and does
+/// not compute twice.
+pub fn character_prereq_facts(input: &CharacterInput) -> Option<PrereqFacts> {
+    let computation = crate::rules_core::pilot_compute::compute_pilot_base_chassis(input);
+    PrereqFacts::from_character(input, &computation, &[])
 }
 
 #[cfg(test)]
@@ -453,23 +607,27 @@ mod prerequisite_tests {
     #[test]
     fn a_fighter_1_cannot_take_improved_two_weapon_fighting_and_is_told_why() {
         let input = character(1, 13, &[]);
-        let facts = character_prereq_facts(&input, 1);
+        let facts = character_prereq_facts(&input).expect("data/sheet_rules/ must be loadable in a repo checkout");
         let report = evaluate_feat_key_prerequisites("Improved Two-Weapon Fighting", &facts)
             .expect("the feat is in the catalog");
 
         assert!(!report.is_eligible);
         let reason = report.unavailable_reason().expect("an ineligible feat must state a reason");
-        assert!(reason.contains("base attack bonus +6"), "{reason}");
-        assert!(reason.contains("+1"), "{reason}");
+        // SD-35 `AT-35-E6-001`: the same three requirements, now in the CONVERTED gate's own
+        // words rather than the token evaluator's. The requirement AND the character's own
+        // value both print -- a refusal a player cannot act on is as bad as no refusal.
+        assert!(reason.contains("base attack bonus at least 6"), "{reason}");
+        assert!(reason.contains("this character: 1"), "{reason}");
         assert!(reason.contains("Two-Weapon Fighting"), "{reason}");
-        assert!(reason.contains("DEX 17"), "{reason}");
+        assert!(reason.contains("Dexterity"), "{reason}");
+        assert!(reason.contains("17"), "{reason}");
     }
 
     /// ...and the build that legitimately qualifies is not blocked.
     #[test]
     fn a_fighter_6_with_dex_17_and_two_weapon_fighting_can_take_it() {
         let input = character(6, 17, &["Two-Weapon Fighting"]);
-        let facts = character_prereq_facts(&input, 6);
+        let facts = character_prereq_facts(&input).expect("data/sheet_rules/ must be loadable in a repo checkout");
         let report = evaluate_feat_key_prerequisites("Improved Two-Weapon Fighting", &facts)
             .expect("the feat is in the catalog");
 
@@ -499,7 +657,7 @@ mod prerequisite_tests {
     #[test]
     fn a_starting_fighter_keeps_a_real_catalog_and_every_denial_states_why() {
         let input = character(1, 13, &[]);
-        let facts = character_prereq_facts(&input, 1);
+        let facts = character_prereq_facts(&input).expect("data/sheet_rules/ must be loadable in a repo checkout");
         let reports = evaluate_every_catalog_feat(&facts);
 
         // 1578 hand-authored records + the 649 corpus gap rows the feat gap
@@ -517,7 +675,7 @@ mod prerequisite_tests {
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
         // 211 (of the original 690) + all 23 UCA Story Feats: every one of
         // UCA's records carries only a `PRETEXT:` prose prerequisite, which
-        // `pre_tokens` cannot mechanically verify and therefore never
+        // the converted gate reports rather than verifies, and therefore never
         // blocks -- so all 23 land in `met`/`unverified` rather than
         // `unmet`, exactly the same non-blocking treatment PU's own
         // `PRETEXT:` rows already get. Re-derived with this test after
@@ -540,7 +698,7 @@ mod prerequisite_tests {
         // (2026-08-17). Most of Mythic's own gate is `PREVARGTEQ:
         // MythicTierLevel,...` -- an unmodelled var this evaluator already
         // treats as non-blocking for every OTHER book's records
-        // (`pre_tokens::tests::an_unrecognised_kind_never_blocks`), so a
+        // (`converted_gate::unverifiable_reason` names the fact), so a
         // level-1 Fighter is reported, not denied, on the mythic-tier gate
         // alone; a colliding row's OWN `PREABILITY:...,CATEGORY=FEAT,<key>`
         // clause (proven present for every collision by
@@ -562,8 +720,8 @@ mod prerequisite_tests {
         // carry a `PREMULT` whose alternatives are `[PRESKILL:...]` OR
         // `[PREABILITY:1,CATEGORY=Special Ability,Vigilante ~ Dual
         // Identity]` -- an unmodelled special-ability category the engine
-        // cannot verify -- so `pre_tokens`' own
-        // `a_premult_with_an_unmodelled_alternative_reports_rather_than_denies`
+        // cannot verify -- so the converted gate's own
+        // "a term over a fact the record does not carry is reported, never refused"
         // rule reports rather than denies the whole clause, landing both in
         // `eligible` (unverified, not confirmed met) exactly like every
         // other unmodelled-alternative record already does.
@@ -572,8 +730,8 @@ mod prerequisite_tests {
         // Swings`, `Implacable` and `Muddled Morals` carry no `PRE` token at
         // all; `Tavern Regular`'s `PREVARGTEQ:PreStatScore_CHA,14` names an
         // unmodelled variable this evaluator already treats as non-blocking
-        // for every book (`pre_tokens::tests::an_unrecognised_kind_never_
-        // blocks`), so it reports rather than denies. The other 4
+        // for every book (`converted_gate`'s own unverifiable classification),
+        // so it reports rather than denies. The other 4
         // (`Drunken God's Blessings`, `Drunken Sing-Along`, `Hardy Liver`,
         // `Read the Room`) each carry a modelled, AND-chained `PREDEITY`/
         // `PRESKILL`/`PREABILITY` clause this level-1 build does not meet,
@@ -596,7 +754,30 @@ mod prerequisite_tests {
         // not a real regression: most of the 109 new rows carry genuine
         // Combat-style/Aldori/Rage-class-feature `PRE`-family prerequisites
         // a fresh level-1 13-STR Fighter with no feats does not meet.
-        assert_eq!(eligible, 755, "a starting Fighter's real eligible-feat count");
+        // **755 -> 549 with SD-35 `AT-35-E6-001`**, which moved this gate from the ingest
+        // format's `PRE`-family token text to each record's CONVERTED `applies`. Re-derived
+        // by this test, not adjusted to fit. The direction is the point (`decisions.md` §1):
+        // the converted gate decides shapes the token evaluator reported rather than
+        // checked, so a build is offered fewer feats it never qualified for. Two families
+        // account for nearly all of it, each verified against the rulebook:
+        //  * **ability-score and rank thresholds the token evaluator passed.** `Combat
+        //    Expertise` requires Int 13 and this Fighter has Int 10; `Desert Dweller`
+        //    requires 1 Survival rank and Con 13 and this Fighter has 0 and 12. Each is now
+        //    denied with the requirement AND the character's own value in the line.
+        //  * **holdings named as one concrete record.** `Extra Rage Power`, `Extra
+        //    Discovery`, `Extra Grit` and the Ultimate Psionics families name a class
+        //    feature this Fighter does not hold; the held set grows through the package's
+        //    own grant edges, so "you do not hold it" is a real verdict for a record the
+        //    fixpoint could have granted.
+        // What did NOT tighten, deliberately: a `Holds` counting a "special ability" POOL by
+        // name stays reported rather than refused -- see `converted_gate::ROSTERED_POOLS`
+        // and `a_class_feature_pool_holding_is_reported_not_refused` below for the measured
+        // reason.
+        assert_eq!(eligible, 549, "a starting Fighter's real eligible-feat count");
+        // A catalog record `data/sheet_rules/` carries no converted rule for is a number to
+        // report, never an exemption: it is still offered, with one "not verified" note.
+        let unconverted = reports.iter().filter(|report| !report.converted).count();
+        assert_eq!(unconverted, 21, "catalog records with no converted rule");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();
@@ -618,8 +799,8 @@ mod prerequisite_tests {
         let weak = character(1, 13, &[]);
         let strong = character(6, 17, &["Power Attack", "Dodge", "Two-Weapon Fighting"]);
 
-        let weak_facts = character_prereq_facts(&weak, 1);
-        let strong_facts = character_prereq_facts(&strong, 6);
+        let weak_facts = character_prereq_facts(&weak).expect("data/sheet_rules/ must be loadable in a repo checkout");
+        let strong_facts = character_prereq_facts(&strong).expect("data/sheet_rules/ must be loadable in a repo checkout");
 
         let eligible_keys = |facts: &_| -> std::collections::BTreeSet<String> {
             evaluate_every_catalog_feat(facts)
@@ -641,8 +822,15 @@ mod prerequisite_tests {
         // Named explicitly rather than silently excluded from the
         // comparison, so a second such exception fails here instead of
         // being absorbed.
+        // `Fey Foundling` (`isw_feats.lst`) joins it with SD-35 `AT-35-E6-001`: it carries
+        // the same `PRELEVEL:MAX=1` ceiling ("you must take this feat at 1st level"), which
+        // the converted gate states as `at least 1 of: requires Fey Foundling, character
+        // level at most 1` and now enforces. The token evaluator listed maximum-level
+        // ceilings as unmodelled, so a 6th-level character was offered a 1st-level-only feat
+        // until this cycle. Re-derive:
+        // `python3 -c "import json;print(json.load(open('data/sheet_rules/inner_sea_world_guide/feat/fey_foundling.json'))[0]['applies'])"`
         let known_level_ceiling_exceptions: std::collections::BTreeSet<&str> =
-            ["Wilding"].into_iter().collect();
+            ["Wilding", "Fey Foundling"].into_iter().collect();
         let lost: Vec<&String> = weak_keys
             .difference(&strong_keys)
             .filter(|key| !known_level_ceiling_exceptions.contains(key.as_str()))
@@ -664,9 +852,9 @@ mod prerequisite_tests {
     #[test]
     fn records_with_no_corpus_prerequisite_are_always_eligible() {
         let input = character(1, 13, &[]);
-        let facts = character_prereq_facts(&input, 1);
+        let facts = character_prereq_facts(&input).expect("data/sheet_rules/ must be loadable in a repo checkout");
         for report in evaluate_every_catalog_feat(&facts) {
-            if report.prerequisite_token_count == 0 {
+            if report.converted && report.prerequisite_token_count == 0 {
                 assert!(report.is_eligible, "'{}' has no prerequisites", report.feat_key);
                 assert!(report.unmet.is_empty());
                 assert!(report.unverified.is_empty());
@@ -679,15 +867,53 @@ mod prerequisite_tests {
     #[test]
     fn an_arg_race_gate_is_enforced_in_both_directions() {
         let mut human = character(1, 13, &[]);
-        let facts = character_prereq_facts(&human, 1);
+        let facts = character_prereq_facts(&human).expect("data/sheet_rules/ must be loadable in a repo checkout");
         let report = evaluate_feat_key_prerequisites("Armor of the Pit", &facts).unwrap();
         assert!(!report.is_eligible);
         assert!(report.unavailable_reason().unwrap().contains("Tiefling"));
 
         human.chosen.race_id = "race:tiefling".to_owned();
-        let facts = character_prereq_facts(&human, 1);
+        let facts = character_prereq_facts(&human).expect("data/sheet_rules/ must be loadable in a repo checkout");
         let report = evaluate_feat_key_prerequisites("Armor of the Pit", &facts).unwrap();
         assert!(report.is_eligible, "unmet: {:?}", report.unmet);
+    }
+
+    /// The measured reason `converted_gate::ROSTERED_POOLS` leaves the "special ability"
+    /// pool out, kept as a test so the decision cannot rot into a habit.
+    ///
+    /// The held set grows class features through the package's own grant edges, and for
+    /// three of the four classes below that genuinely reaches the holding the feat asks
+    /// for. It does not reach a Cleric's Channel Positive Energy, whose grant is
+    /// conditioned on an alignment the character record does not carry -- so a pool count
+    /// is a partial roster, and a partial roster cannot produce an honest refusal on a path
+    /// that refuses a save. Every one of the four is therefore reported, not refused.
+    #[test]
+    fn a_class_feature_pool_holding_is_reported_not_refused() {
+        for (class_id, level, feat) in [
+            ("class:barbarian", 1u8, "Extra Rage"),
+            ("class:bard", 1, "Extra Performance"),
+            ("class:paladin", 2, "Extra Lay On Hands"),
+            ("class:cleric", 1, "Extra Channel"),
+        ] {
+            let mut input = character(level, 13, &[]);
+            input.chosen.class_levels[0].class_id = class_id.to_owned();
+            input.chosen.class_levels[0].level = level;
+            let facts = character_prereq_facts(&input)
+                .expect("data/sheet_rules/ must be loadable in a repo checkout");
+            let report = evaluate_feat_key_prerequisites(feat, &facts)
+                .unwrap_or_else(|| panic!("{feat} is in the catalog"));
+            assert!(
+                report.is_eligible,
+                "{class_id} must not be REFUSED {feat} over a pool the engine only partly \
+                 rosters: {:?}",
+                report.unmet
+            );
+            assert!(
+                report.unverified.iter().any(|w| w.message.contains("roster of this pool")),
+                "{class_id}/{feat} must SAY the pool count was not checked: {:?}",
+                report.unverified
+            );
+        }
     }
 
     /// An unknown feat id resolves to `None` rather than to a fabricated
@@ -695,7 +921,7 @@ mod prerequisite_tests {
     #[test]
     fn an_unknown_feat_id_resolves_to_nothing() {
         let input = character(1, 13, &[]);
-        let facts = character_prereq_facts(&input, 1);
+        let facts = character_prereq_facts(&input).expect("data/sheet_rules/ must be loadable in a repo checkout");
         assert_eq!(evaluate_feat_key_prerequisites("Not A Real Feat", &facts), None);
     }
 }

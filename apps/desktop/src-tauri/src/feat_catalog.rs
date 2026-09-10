@@ -24,8 +24,9 @@
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::feat_effects;
-use codex::pcgen_import::pre_tokens::CharacterPrereqFacts;
-use codex::rules_core::feat_prereqs::{evaluate_catalog_feat_prerequisites, FeatPrerequisiteReport};
+use codex::rules_core::feat_prereqs::{
+    evaluate_catalog_feat_prerequisites, FeatPrerequisiteReport, PrereqFacts,
+};
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 
 /// One feat's prerequisite verdict for the character the picker is open
@@ -50,10 +51,10 @@ pub struct FeatEligibilityDto {
     /// `eligible`.
     pub unmet: Vec<String>,
     /// Prerequisites the engine could not evaluate. These never block --
-    /// see `feat_prereqs::pre_tokens`' three-outcome design.
+    /// see `feat_prereqs::converted_gate`'s three-outcome design.
     pub unverified: Vec<String>,
-    /// How many `PRE`-family tokens the corpus record carries. `0` means
-    /// the feat genuinely has no prerequisites.
+    /// How many top-level prerequisite terms the record's converted gate carries. `0`
+    /// means the feat genuinely has no prerequisites.
     pub prerequisite_count: usize,
 }
 
@@ -210,7 +211,7 @@ pub fn feat_description_by_exact_name(name: &str) -> Option<String> {
     None
 }
 
-fn build_feat_catalog_for(facts: Option<&CharacterPrereqFacts>) -> FeatCatalogResponse {
+fn build_feat_catalog_for(facts: Option<&PrereqFacts>) -> FeatCatalogResponse {
     let mut entries = Vec::new();
     for book in all_feat_tables() {
         let source = format!("{:?}", book.rule_set);
@@ -279,14 +280,14 @@ pub fn filter_feat_catalog(filter: &FeatCatalogFilter) -> FeatCatalogResponse {
 /// visible and explained, never removed from the list.
 pub fn filter_feat_catalog_with_eligibility(
     filter: &FeatCatalogFilter,
-    facts: &CharacterPrereqFacts,
+    facts: &PrereqFacts,
 ) -> FeatCatalogResponse {
     filter_feat_catalog_for(filter, Some(facts))
 }
 
 fn filter_feat_catalog_for(
     filter: &FeatCatalogFilter,
-    facts: Option<&CharacterPrereqFacts>,
+    facts: Option<&PrereqFacts>,
 ) -> FeatCatalogResponse {
     let name_needle = filter
         .name_contains

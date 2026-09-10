@@ -2675,17 +2675,33 @@ pub(crate) fn character_prereq_facts_at_root(
 ) -> Result<
     (
         codex::saved_character::SavedCharacterEnvelope,
-        codex::pcgen_import::pre_tokens::CharacterPrereqFacts,
+        codex::rules_core::feat_prereqs::PrereqFacts,
     ),
     String,
 > {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let receipt = compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
-    let facts = codex::rules_core::feat_prereqs::character_prereq_facts(
-        &envelope.character_input,
-        receipt.base.base_attack_bonus,
-    );
+    let facts = prereq_facts_for(&envelope.character_input, &receipt.base)?;
     Ok((envelope, facts))
+}
+
+/// The prerequisite context for one character, built from THIS process's loaded
+/// `data/sheet_rules/` package -- the same one the sheet and the level-up option filter read,
+/// so a picker's verdict and the sheet cannot disagree (SD-35 `AT-35-E6-001`).
+///
+/// `Err` names why the package is unavailable. An unavailable package is not a verdict about
+/// the character, so every caller surfaces the reason rather than refusing a build.
+fn prereq_facts_for(
+    input: &CharacterInput,
+    base: &PilotBaseChassisComputation,
+) -> Result<codex::rules_core::feat_prereqs::PrereqFacts, String> {
+    let package = sheet_rule_package().as_ref().map_err(Clone::clone)?;
+    let race_traits: Vec<String> = resolve_racial_traits_for_character(input)
+        .applied_traits
+        .iter()
+        .map(|t| t.key.clone())
+        .collect();
+    Ok(codex::rules_core::feat_prereqs::PrereqFacts::new(package, input, base, &race_traits))
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -2885,22 +2901,13 @@ pub(crate) fn feat_removal_dependency_refusal(
     before: &CharacterInput,
     after: &CharacterInput,
 ) -> Option<String> {
-    use codex::rules_core::feat_prereqs::{
-        character_prereq_facts, evaluate_feat_key_prerequisites,
-    };
+    use codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites;
 
-    let facts_before = character_prereq_facts(
-        before,
-        compute_pilot_with_corpus(before, corpus_fixture_bundle())
-            .base
-            .base_attack_bonus,
-    );
-    let facts_after = character_prereq_facts(
-        after,
-        compute_pilot_with_corpus(after, corpus_fixture_bundle())
-            .base
-            .base_attack_bonus,
-    );
+    let receipt_before = compute_pilot_with_corpus(before, corpus_fixture_bundle());
+    let receipt_after = compute_pilot_with_corpus(after, corpus_fixture_bundle());
+    // No package, no verdict: a removal is never refused over an unreadable rules package.
+    let Ok(facts_before) = prereq_facts_for(before, &receipt_before.base) else { return None };
+    let Ok(facts_after) = prereq_facts_for(after, &receipt_after.base) else { return None };
 
     for dependent in &after.chosen.selected_feats {
         let Some(report_after) = evaluate_feat_key_prerequisites(dependent, &facts_after) else {
@@ -7185,9 +7192,13 @@ mod tests {
         .expect_err("a Fighter 1 must not be able to take Improved Two-Weapon Fighting");
 
         assert!(error.contains("Improved Two-Weapon Fighting"), "{error}");
-        assert!(error.contains("base attack bonus +6"), "{error}");
-        assert!(error.contains("Two-Weapon Fighting feat"), "{error}");
-        assert!(error.contains("DEX 17"), "{error}");
+        // SD-35 `AT-35-E6-001`: the same three requirements, now in the converted gate's own
+        // words, and each with the character's own value where the engine holds one.
+        assert!(error.contains("base attack bonus at least 6"), "{error}");
+        assert!(error.contains("this character: 1"), "{error}");
+        assert!(error.contains("Two-Weapon Fighting"), "{error}");
+        assert!(error.contains("Dexterity"), "{error}");
+        assert!(error.contains("17"), "{error}");
 
         let after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats;
         assert_eq!(before, after, "a refused feat must not be written to disk");

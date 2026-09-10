@@ -15,10 +15,9 @@
 //! prestige classes need a caster-level-stacking mechanism this codebase
 //! does not have. **Neither blocker touches entry-requirement gating** --
 //! whether a character's already-chosen feats, skill ranks, alignment,
-//! spellcasting type and so on satisfy a prestige class's real PCGen
-//! `PRE*`-family tokens is a self-contained question this module answers
-//! for real, reusing the exact evaluator `feat_prereqs::pre_tokens` already
-//! proved against 690 catalog records. This module still returns no
+//! spellcasting type and so on satisfy a prestige class's real entry
+//! requirements is a self-contained question this module answers for real,
+//! reusing the exact evaluator the sheet itself renders through. This module still returns no
 //! chassis magnitude (that stays claim-blocked via the caller's existing
 //! `class_chassis.unsupported` diagnostic, `mod.rs`
 //! `compute_pilot_base_chassis`) -- it proves and reports whether entry
@@ -63,25 +62,31 @@
 //! pre-existing 62 entries are byte-identical or, where they were one of
 //! the 12 collision victims, now correct; zero regressions.
 //!
-//! # Three outcomes per clause, matching `pre_tokens::ClauseOutcome`
+//! # Where the requirements are read from (SD-35 `AT-35-E6-001`)
 //!
-//! A clause this module cannot evaluate is reported `Unmodelled`, never
-//! silently passed or silently failed -- the same discipline
-//! `pre_tokens.rs` documents at length. **Only `Unmet` blocks
-//! `qualifies`.** `PRETOTALAB` (total base attack bonus) is a special case:
-//! at this call site (`compute_class_chassis`, before this very class's own
-//! chassis has been computed) the character's base attack bonus for a
-//! from-nothing prestige entry is not a known fact, so this module reports
-//! it `Unmodelled` explicitly rather than defaulting to `0` and fabricating
-//! an `Unmet` verdict against a character who may well qualify -- the exact
-//! "confidently wrong" trap `pre_tokens.rs`'s own doc comment names.
+//! From the CONVERTED class record, `data/sheet_rules/<book>/class/<slug>.json`, whose
+//! `applies` gate is exactly this class's entry requirements plus its own level ceiling.
+//! Until that cycle this module parsed the ingest format's `PRE`-family token text at run
+//! time; `decisions.md` §11 rules that out, and the conversion had already happened. The
+//! committed census fixture stays: it is what says WHICH class ids are prestige classes
+//! and which book each one's record lives in.
+//!
+//! # Three outcomes per clause, unchanged
+//!
+//! A clause this module cannot evaluate is reported `unmodelled`, never silently passed or
+//! silently failed -- `feat_prereqs::converted_gate` classifies which those are and why.
+//! **Only `unmet` blocks `qualifies`.** The base attack bonus is the standing special case:
+//! at this call site (`compute_class_chassis`, before this very class's own chassis has been
+//! computed) a from-nothing prestige entry's base attack bonus is not a known fact, so a term
+//! reading it is reported `unmodelled` explicitly rather than being decided against a `0` and
+//! fabricating an `unmet` verdict against a character who may well qualify.
 
 use std::sync::OnceLock;
 
 use crate::rules_core::character_input::CharacterInput;
-use crate::pcgen_import::pre_tokens::{
-    evaluate_prerequisite_token, CharacterPrereqFacts, ClauseOutcome,
-};
+use crate::rules_core::feat_prereqs::converted_gate::{self, TermVerdict};
+use crate::rules_core::feat_prereqs::PrereqFacts;
+use crate::rules_core::sheet_rule::{Applies, Expr, SheetRule};
 
 /// One prestige class's real, corpus-derived entry-requirement tokens.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -90,7 +95,6 @@ pub struct PrestigeClassEntryRequirement {
     pub display_name: String,
     pub source_book: String,
     pub source_file: String,
-    pub raw_pre_tokens: Vec<String>,
 }
 
 #[derive(serde::Deserialize)]
@@ -98,13 +102,16 @@ struct FixtureFile {
     entries: Vec<FixtureEntry>,
 }
 
+/// The census fixture's own row shape. The entry-requirement rows it also carries are
+/// deliberately not deserialised: SD-35 `AT-35-E6-001` decides the CONVERTED record's gate,
+/// and the fixture's remaining job is to say WHICH class ids are prestige classes and which
+/// book each one's record lives in. Serde ignores the fields no struct field names.
 #[derive(serde::Deserialize)]
 struct FixtureEntry {
     class_id: String,
     display_name: String,
     source_book: String,
     source_file: String,
-    pre_tokens: Vec<String>,
 }
 
 const FIXTURE_JSON: &str =
@@ -129,7 +136,6 @@ pub fn prestige_class_entry_requirements() -> &'static [PrestigeClassEntryRequir
                     display_name: e.display_name,
                     source_book: e.source_book,
                     source_file: e.source_file,
-                    raw_pre_tokens: e.pre_tokens,
                 })
                 .collect()
         })
@@ -175,7 +181,7 @@ pub struct PrestigeEntryGateOutcome {
     pub display_name: String,
     /// True iff no clause evaluated `Unmet`. `Unmodelled` and
     /// `Informational` clauses never block, matching
-    /// `pre_tokens::ClauseOutcome::blocks`'s own contract.
+    /// `converted_gate::TermVerdict::blocks`'s own contract.
     pub qualifies: bool,
     pub met: Vec<String>,
     pub unmet: Vec<String>,
@@ -183,57 +189,52 @@ pub struct PrestigeEntryGateOutcome {
     pub informational: Vec<String>,
 }
 
-/// Evaluates `class_id_str`'s real entry-requirement tokens against
-/// `input`, or `None` when `class_id_str` names no prestige class this
-/// module's registry covers (not every unrecognized class id is a
-/// prestige class -- an unmodelled base class, a typo, or a class this
-/// repo has not census'd at all all look identical from here, and this
-/// function only speaks for the registry it actually holds).
+/// Evaluates `class_id_str`'s real entry requirements against `input`, or `None` when
+/// `class_id_str` names no prestige class this module's registry covers (not every
+/// unrecognized class id is a prestige class -- an unmodelled base class, a typo, or a class
+/// this repo has not census'd at all all look identical from here, and this function only
+/// speaks for the registry it actually holds).
+///
+/// `None` also when this checkout carries no converted package, or no converted record for
+/// this registered class: an absent conversion is a statement about the repo, not a verdict
+/// about the character, and reporting it as a failed gate would be a fabricated refusal.
 pub fn evaluate_prestige_class_entry(
     class_id_str: &str,
     input: &CharacterInput,
 ) -> Option<PrestigeEntryGateOutcome> {
     let requirement = find_by_class_id(class_id_str)?;
+    let package = crate::rules_core::corpus_loader::live_sheet_rules()?;
+    let rule = converted_class_rule(package, requirement)?;
 
-    // `base_attack_bonus: 0` is a filler value the loop below never trusts:
-    // every `PRETOTALAB` clause is special-cased to `Unmodelled` before it
-    // ever reaches `evaluate_prerequisite_token`, so this filler value can
-    // never silently produce a wrong `Unmet` verdict from it. See this
-    // module's doc comment.
-    let facts = CharacterPrereqFacts::from_character(input, 0);
+    // The chassis this gate's own caller (`compute_class_chassis`) is in the middle of
+    // computing is not available here, and re-entering the engine would recurse. The facts
+    // that needs are exactly the ones `unmodelled_reason` below reports rather than decides,
+    // so the computation this gate builds carries the character's real ability modifiers and
+    // nothing else.
+    let computation = entry_gate_computation(input);
+    let facts = PrereqFacts::new(package, input, &computation, &[]);
 
     let mut met = Vec::new();
     let mut unmet = Vec::new();
     let mut unmodelled = Vec::new();
     let mut informational = Vec::new();
 
-    for token in &requirement.raw_pre_tokens {
-        let bare_kind = token
-            .trim_start_matches('!')
-            .split(':')
+    for term in top_level_terms(&rule.applies) {
+        let words = converted_gate::describe(facts.package(), term);
+        if let Some(note) = unmodelled_reason(term) {
+            unmodelled.push(format!("{words} ({note})"));
+            continue;
+        }
+        match converted_gate::verdicts(facts.package(), facts.held(), facts.facts(), term)
+            .into_iter()
             .next()
-            .unwrap_or(token)
-            .trim();
-        let outcome = if bare_kind == "PRETOTALAB" {
-            ClauseOutcome::Unmodelled {
-                token: token.clone(),
-                note: "base attack bonus is this class's own not-yet-computed chassis output, \
-                       not a known fact at the compute_class_chassis entry-gate call site"
-                    .to_owned(),
-            }
-        } else {
-            evaluate_prerequisite_token(token, &facts)
-        };
-
-        match outcome {
-            ClauseOutcome::Met { requirement } => met.push(requirement),
-            ClauseOutcome::Unmet { requirement, reason } => {
-                unmet.push(format!("{requirement} ({reason})"))
-            }
-            ClauseOutcome::Unmodelled { token, note } => {
-                unmodelled.push(format!("{token} ({note})"))
-            }
-            ClauseOutcome::Informational { text } => informational.push(text),
+        {
+            Some(TermVerdict::Met(requirement)) => met.push(requirement),
+            Some(TermVerdict::Unmet(reason)) => unmet.push(reason),
+            Some(TermVerdict::Unverified(note)) => unmodelled.push(note),
+            Some(TermVerdict::Informational(text)) => informational.push(text),
+            // `Applies::Always` -- the record states no requirement here.
+            None => {}
         }
     }
 
@@ -246,6 +247,75 @@ pub fn evaluate_prestige_class_entry(
         unmodelled,
         informational,
     })
+}
+
+/// The converted `<book>:class:<slug>` record for one registry row.
+fn converted_class_rule<'a>(
+    package: &'a crate::rules_core::sheet_rule::SheetRulePackage,
+    requirement: &PrestigeClassEntryRequirement,
+) -> Option<&'a SheetRule> {
+    let slug = requirement.class_id.strip_prefix("class:").unwrap_or(&requirement.class_id);
+    package
+        .rule(&format!("{}:class:{slug}", requirement.source_book))
+        .or_else(|| package.find("class", slug).and_then(|id| package.rule(id)))
+}
+
+fn top_level_terms(gate: &Applies) -> Vec<&Applies> {
+    match gate {
+        Applies::All(terms) => terms.iter().collect(),
+        other => vec![other],
+    }
+}
+
+/// The base attack bonus is this class's own not-yet-computed chassis output, not a known
+/// fact at the `compute_class_chassis` entry-gate call site. A term reading it is reported,
+/// never decided against a filler `0` -- the "confidently wrong" trap this module's doc
+/// comment names. Everything else `converted_gate` already classifies.
+fn unmodelled_reason(term: &Applies) -> Option<&'static str> {
+    reads_base_attack(term).then_some(
+        "base attack bonus is this class's own not-yet-computed chassis output, not a known \
+         fact at the compute_class_chassis entry-gate call site",
+    )
+}
+
+fn reads_base_attack(term: &Applies) -> bool {
+    match term {
+        Applies::All(terms) | Applies::AtLeast { of: terms, .. } => {
+            terms.iter().any(reads_base_attack)
+        }
+        Applies::Not(inner) => reads_base_attack(inner),
+        Applies::Compare { lhs, rhs, .. } => expr_reads_base_attack(lhs) || expr_reads_base_attack(rhs),
+        _ => false,
+    }
+}
+
+fn expr_reads_base_attack(e: &Expr) -> bool {
+    match e {
+        Expr::BaseAttack => true,
+        Expr::Sum(terms) => terms.iter().any(expr_reads_base_attack),
+        Expr::Mul(a, b) | Expr::Div(a, b) | Expr::Min(a, b) | Expr::Max(a, b) => {
+            expr_reads_base_attack(a) || expr_reads_base_attack(b)
+        }
+        Expr::Floor(inner) | Expr::Ceil(inner) => expr_reads_base_attack(inner),
+        _ => false,
+    }
+}
+
+/// A computation carrying the character's real ability modifiers and no chassis -- see
+/// [`evaluate_prestige_class_entry`] for why the chassis half is deliberately absent.
+fn entry_gate_computation(input: &CharacterInput) -> super::PilotBaseChassisComputation {
+    super::PilotBaseChassisComputation {
+        ability_modifiers: super::ability_modifiers_from_scores(&input.chosen.ability_scores),
+        base_attack_bonus: 0,
+        base_saves: super::BaseSaves::default(),
+        baseline_melee_attack_bonus: 0,
+        baseline_armor_class: 0,
+        total_saves: super::BaseSaves::default(),
+        selected_skill_modifiers: super::SelectedSkillModifiers::default(),
+        explanations: Vec::new(),
+        diagnostics: Vec::new(),
+        sheet_lines: Vec::new(),
+    }
 }
 
 #[cfg(test)]
@@ -285,8 +355,18 @@ mod prestige_class_entry_gate_tests {
         // fix") for the ingested-book-collision bug the script's own
         // extract() function had, and its fix.
         assert_eq!(entries.len(), 74, "population drifted from the fixture the script wrote");
-        assert!(entries.iter().all(|e| !e.raw_pre_tokens.is_empty()));
         assert!(entries.iter().all(|e| e.class_id.starts_with("class:")));
+        // SD-35 `AT-35-E6-001`: the gate decides the CONVERTED record, so a registry row
+        // whose record the package does not carry is a row this gate silently stops
+        // answering for. Counted, not assumed.
+        let package = crate::rules_core::corpus_loader::live_sheet_rules()
+            .expect("data/sheet_rules/ must be loadable in a repo checkout");
+        let missing: Vec<&str> = entries
+            .iter()
+            .filter(|e| converted_class_rule(package, e).is_none())
+            .map(|e| e.class_id.as_str())
+            .collect();
+        assert!(missing.is_empty(), "registry rows with no converted class record: {missing:?}");
     }
 
     #[test]
@@ -333,13 +413,23 @@ mod prestige_class_entry_gate_tests {
 
     #[test]
     fn mutation_proof_a_fabricated_impossible_clause_is_caught() {
-        // Proves the check itself can fail: a clause no character can ever
-        // satisfy must surface as Unmet, not silently disappear.
-        let facts = CharacterPrereqFacts::from_character(&empty_input("class:arcane_archer"), 0);
-        let outcome = evaluate_prerequisite_token(
-            "PRESKILL:1,Nonexistent Skill No Character Has=99",
-            &facts,
+        // Proves the check itself can fail: a term no character can ever satisfy must
+        // surface as Unmet, not silently disappear.
+        let package = crate::rules_core::corpus_loader::live_sheet_rules()
+            .expect("data/sheet_rules/ must be loadable in a repo checkout");
+        let input = empty_input("class:arcane_archer");
+        let computation = entry_gate_computation(&input);
+        let facts = PrereqFacts::new(package, &input, &computation, &[]);
+        let impossible = Applies::Compare {
+            lhs: Expr::SkillRanks("no_character_has_this_skill".to_owned()),
+            op: crate::rules_core::sheet_rule::Cmp::Gte,
+            rhs: Expr::Const(99),
+        };
+        let verdicts =
+            converted_gate::verdicts(facts.package(), facts.held(), facts.facts(), &impossible);
+        assert!(
+            verdicts.iter().any(TermVerdict::blocks),
+            "an impossible term must block: {verdicts:?}"
         );
-        assert!(outcome.blocks(), "an impossible clause must block");
     }
 }
