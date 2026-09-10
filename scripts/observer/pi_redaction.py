@@ -40,7 +40,7 @@ Both are read-only over the pinned PCGen checkout; neither ever writes to it.
 
 The book-directory resolution below (`build_book_index`,
 `find_file_recursive`) is deliberately reimplemented rather than imported
-from `src/rules_core/wiring_class.rs` or shared with
+from `src/pcgen_import/wiring_class.rs` or shared with
 `scripts/ground_truth_evidence_guard.py` -- same rationale that guard's own
 module doc gives: there is no Python binding for the Rust resolver, and a
 module that shared a resolver's bug would be blind to exactly the failure

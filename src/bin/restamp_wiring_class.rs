@@ -11,7 +11,7 @@
 //! (wired as `scripts/verify.sh --only corpus-trap-audit`, AT-34-E1-007) reads
 //! every cache record's stored `wiring_class` and recomputes it FRESH from the
 //! record's own cited `.lst` token closure via
-//! `codex::rules_core::cache_gen::WiringClassIndex`. Some per-book kinds
+//! `codex::pcgen_import::cache_gen::WiringClassIndex`. Some per-book kinds
 //! (`companion`, `class`, `spell`, `equipment` for the books this cycle
 //! touches) are produced by `gen_book_cache.rs`/`gen_core_rulebook_cache.rs`/
 //! `gen_cache_apg.rs`, which already call that SAME index at generation time,
@@ -47,7 +47,7 @@ use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::pcgen_import::cache_gen::WiringClassIndex;
 use serde_json::Value;
 
 fn pcgen_data_root() -> PathBuf {

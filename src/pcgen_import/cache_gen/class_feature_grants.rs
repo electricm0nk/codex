@@ -1,7 +1,7 @@
 //! Per-record `class_feature` GRANT-fact ingest (SD-31 wave 22, rebuild of
 //! wave 21's `SD31-W21-CF-GRANT-001`, which was `GAMED-REJECTED`,
 //! `OPEN-ISSUES.md` row 334 -- read that row and
-//! `worktree-wf_a45ece26-3fc-1:src/rules_core/cache_gen/class_feature_grants.rs`
+//! `worktree-wf_a45ece26-3fc-1:src/pcgen_import/cache_gen/class_feature_grants.rs`
 //! before touching this file again).
 //!
 //! ## The fact this module ingests, and why nothing ingested it before
@@ -214,7 +214,7 @@ use std::path::Path;
 
 use serde::Serialize;
 
-use crate::rules_core::cache_gen::class_feature::{BOOK_PRIMARY_FILES, sha256_file};
+use crate::pcgen_import::cache_gen::class_feature::{BOOK_PRIMARY_FILES, sha256_file};
 use crate::rules_core::pi_screening;
 use crate::rules_core::shape_b_v1::License;
 

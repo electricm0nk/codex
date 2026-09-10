@@ -17,6 +17,11 @@
 // SD-35 AT-35-E6-001 (`decisions.md` §11): relocated from `src/rules_core/` -- converter and
 // oracle code that was sitting on the live side. Behaviour-identical; KEPT for Starfinder.
 pub mod bonus_stack_reader;
+// SD-35 AT-35-E6-002 (`decisions.md` §11): relocated from `src/rules_core/` -- the per-book
+// cache generators and the token-closure classifier they call. Converter code that was
+// sitting on the live side; behaviour-identical here, and KEPT for Starfinder.
+pub mod cache_gen;
+pub mod wiring_class;
 pub mod class_feature_vars;
 pub mod formula_interpreter;
 pub mod formula_interpreter_corpus_wide;

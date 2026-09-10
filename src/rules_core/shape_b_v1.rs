@@ -165,7 +165,7 @@ pub struct CorpusRecordV1<T> {
     #[serde(default)]
     pub pi_marker: Option<String>,
     /// GE-01: what kind of evidence would prove this record done, from
-    /// `codex::rules_core::wiring_class`'s real corpus token closure.
+    /// `codex::pcgen_import::wiring_class`'s real corpus token closure.
     /// `#[serde(default)]` following this struct's own versioning
     /// convention (see `license`'s doc comment above): a pre-GE-01
     /// record deserializes with this defaulting to empty rather than a

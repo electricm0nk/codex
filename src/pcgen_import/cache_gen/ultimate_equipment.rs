@@ -57,8 +57,8 @@ use std::path::{Path, PathBuf};
 
 use serde::Serialize;
 
-use crate::rules_core::cache_gen::WiringClassIndex;
-use crate::rules_core::cache_gen::equipment_gap::{RenameInfo, resolve_name_or_rename};
+use crate::pcgen_import::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::equipment_gap::{RenameInfo, resolve_name_or_rename};
 use crate::rules_core::pi_screening::{self, DeclaredProductIdentity};
 use crate::rules_core::rules_tables::ultimate_equipment as ue;
 use crate::rules_core::rules_tables::ultimate_equipment::equipment_tables::EquipmentCategory;

@@ -152,7 +152,7 @@ pub struct BookIngestStatus {
 /// `ClassId::ALL`/`ApgClassId::ALL`/`AcgClassId::ALL`). SD-26 Epic 3
 /// Criterion 3.4 (`decisions.md §11.6`) added the real
 /// `MonsterId::ALL` constant so this diagnostic and the JSON-cache
-/// generator (`codex::rules_core::cache_gen::beastiary1`) both read the
+/// generator (`codex::pcgen_import::cache_gen::beastiary1`) both read the
 /// same single source of truth instead of each maintaining their own
 /// copy of this list a second/third time.
 const ALL_BESTIARY1_MONSTERS: &[MonsterId] = MonsterId::ALL;

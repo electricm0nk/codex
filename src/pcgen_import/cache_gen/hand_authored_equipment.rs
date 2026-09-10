@@ -83,10 +83,10 @@
 use std::collections::{BTreeSet, HashMap};
 use std::path::Path;
 
-use crate::rules_core::cache_gen::equipment_gap::{
+use crate::pcgen_import::cache_gen::equipment_gap::{
     self, CacheRecord, Completeness, EquipmentData, Population, Source,
 };
-use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::pi_screening;
 
 /// One row from a hand-authored per-book `equipment_tables()`, reduced to

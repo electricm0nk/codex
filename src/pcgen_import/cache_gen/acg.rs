@@ -80,7 +80,7 @@ use std::path::{Path, PathBuf};
 
 use serde::Serialize;
 
-use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use crate::rules_core::pi_screening;
 use crate::rules_core::rules_tables::acg::equipment_tables::EquipmentCategory;
@@ -154,7 +154,7 @@ pub struct CacheRecord<T: Serialize> {
     pub source: Source,
     /// GE-01: what kind of evidence would prove this record done --
     /// `display`/`static`/`derived`/`computed`/`ambiguous`, determined by
-    /// `codex::rules_core::wiring_class` from this record's real corpus
+    /// `codex::pcgen_import::wiring_class` from this record's real corpus
     /// token closure (its base row plus every `.MOD` row targeting it),
     /// never hand-stamped.
     pub wiring_class: String,

@@ -36,7 +36,7 @@
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 
-use codex::rules_core::wiring_class::{self, CorpusLines, WiringClass};
+use codex::pcgen_import::wiring_class::{self, CorpusLines, WiringClass};
 use serde_json::Value;
 
 /// Canned boilerplate `OPEN-ISSUES.md` row 3 identified — a unit whose

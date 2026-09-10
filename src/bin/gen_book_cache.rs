@@ -57,7 +57,7 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
-use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
@@ -111,7 +111,7 @@ fn wiring_class_file_arg(book_id: &str, path: &str) -> String {
 
 fn wiring_class_for_source(
     index: &WiringClassIndex,
-    lines: &mut codex::rules_core::wiring_class::CorpusLines,
+    lines: &mut codex::pcgen_import::wiring_class::CorpusLines,
     source: &CorpusSource,
 ) -> (String, Vec<String>) {
     match wiring_citation(source) {
@@ -723,7 +723,7 @@ fn gen_pathfinder_unchained() {
         // `cache_gen::feat_gap` nor `cache_gen::hand_authored_feat_dump`
         // registers `pathfinder_unchained` -- SD-32 cross-generator sweep,
         // 2026-08-23), so an unscoped citation predicate is safe here.
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("feat"),
             &current_feat_keys,
             &|_path, _line| true,
@@ -822,7 +822,7 @@ fn gen_pathfinder_unchained() {
         // underlying verification (no other writer of THIS function's own
         // `out_root.join("equipment")`) was already correct; only the
         // comment's book name was wrong).
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("equipment"),
             &current_equipment_keys,
             &|_path, _line| true,
@@ -1004,7 +1004,7 @@ fn gen_advanced_race_guide() {
         // `advanced_race_guide` is in neither `cache_gen::spell_lane_dump`'s
         // nor `cache_gen::spell_mod_access`'s book lists -- SD-32
         // cross-generator sweep, 2026-08-23).
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("spell"),
             &current_spell_keys,
             &|_path, _line| true,
@@ -1975,7 +1975,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         // Single writer of `<book>/companion/` (verified: `gen_companion_book`
         // is the only generator that writes a `companion` kind directory --
         // SD-32 cross-generator sweep, 2026-08-23).
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("companion"),
             &current_companion_keys,
             &|_path, _line| true,

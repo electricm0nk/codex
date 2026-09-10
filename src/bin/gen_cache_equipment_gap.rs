@@ -30,7 +30,7 @@ use std::collections::BTreeSet;
 use std::path::PathBuf;
 use std::process::Command;
 
-use codex::rules_core::cache_gen::equipment_gap;
+use codex::pcgen_import::cache_gen::equipment_gap;
 
 /// Parses a `--coordinates <file>` list into the `(book_id, source_file,
 /// source_line)` set `equipment_gap::generate`'s own `coordinates` filter

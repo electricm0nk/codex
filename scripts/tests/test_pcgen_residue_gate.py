@@ -55,8 +55,8 @@ class _TreeCase(unittest.TestCase):
         # files that must NOT count.
         _write(self.root, "src/rules_core/reader.rs",
                "fn f(r: &Rec) { let t = &r.raw_tokens; let _ = t; }\n")
-        _write(self.root, "src/rules_core/cache_gen/gen.rs",
-               "// converter side on the wrong path: raw_tokens raw_tokens BONUS:\n")
+        _write(self.root, "src/pcgen_import/cache_gen/gen.rs",
+               "// converter side, relocated by AT-35-E6-002: raw_tokens raw_tokens BONUS:\n")
         _write(self.root, "src/pcgen_import/parser.rs",
                "// tool side: raw_tokens PcgenFormulaEvaluator BONUS:STAT|STR|2\n")
         _write(self.root, "src/bin/gen_thing.rs", "// raw_tokens\n")
@@ -209,8 +209,11 @@ class TestLiveRootsAreTheDesignBoundary(unittest.TestCase):
              "src/homebrew_authoring", "apps/desktop"],
         )
 
-    def test_only_cache_gen_is_carved_out_of_rules_core(self):
-        self.assertEqual(list(prg.EXCLUDED_PREFIXES), ["src/rules_core/cache_gen/"])
+    def test_no_live_path_is_carved_out(self):
+        # AT-35-E6-002 moved `src/rules_core/cache_gen/` to the tool side, which
+        # emptied the one carve-out this gate ever had. Pinned empty so a live
+        # path cannot be quietly re-exempted.
+        self.assertEqual(list(prg.EXCLUDED_PREFIXES), [])
 
 
 if __name__ == "__main__":

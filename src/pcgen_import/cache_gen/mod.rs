@@ -31,7 +31,7 @@ use std::process::Command;
 use serde::Serialize;
 
 use crate::rules_core::pi_screening;
-use crate::rules_core::wiring_class::{
+use crate::pcgen_import::wiring_class::{
     ClosureIndexes, CorpusLines, build_copy_base_index, build_mod_index, determine_closure,
     token_closure_rows,
 };

@@ -17,7 +17,7 @@
 //!
 //! **R8-04 consolidation:** the file walk, citation resolution, and
 //! PI-screen-then-write sequence now live in
-//! `codex::rules_core::cache_gen::enrich_raw_tokens_shared` (shared with
+//! `codex::pcgen_import::cache_gen::enrich_raw_tokens_shared` (shared with
 //! `enrich_companion_raw_tokens.rs`/`enrich_monster_raw_tokens.rs`/
 //! `enrich_monster_ability_raw_tokens.rs` — see that module's doc comment
 //! for which axes are configurable and why). This bin is the one that sets
@@ -56,7 +56,7 @@ const TARGET_BOOKS: &[&str] = &[
 
 use std::path::PathBuf;
 
-use codex::rules_core::cache_gen::enrich_raw_tokens_shared::{
+use codex::pcgen_import::cache_gen::enrich_raw_tokens_shared::{
     self as shared, EnrichConfig, Outcome,
 };
 use codex::rules_core::pi_screening;

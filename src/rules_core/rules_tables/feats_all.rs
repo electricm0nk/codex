@@ -1655,7 +1655,7 @@ mod tests {
                 .description
                 .unwrap_or_else(|| panic!("'{key}' must have a served description"));
             assert!(
-                crate::rules_core::wiring_class::carries_editorial_not_implemented_marker(desc),
+                crate::pcgen_import::wiring_class::carries_editorial_not_implemented_marker(desc),
                 "'{key}'s served description no longer carries the editorial marker -- \
                  the unmeasurable verdict may now be stale and worth re-litigating"
             );

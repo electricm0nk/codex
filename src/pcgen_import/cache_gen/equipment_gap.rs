@@ -95,7 +95,7 @@ use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
-use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use crate::rules_core::pi_screening::{self, DeclaredProductIdentity};
 use crate::rules_core::rules_tables::equipment_gap_tables;

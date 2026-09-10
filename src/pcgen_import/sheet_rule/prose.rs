@@ -513,10 +513,10 @@ mod tests {
             "(NOT IMPLEMENTED) You gain a +2 bonus.",
             "You gain fast healing 1. [ML bonus not implemented.]",
         ] {
-            assert!(crate::rules_core::wiring_class::carries_editorial_not_implemented_marker(text));
+            assert!(crate::pcgen_import::wiring_class::carries_editorial_not_implemented_marker(text));
             let scrubbed = strip_editorial_not_implemented_markers(text);
             assert!(
-                !crate::rules_core::wiring_class::carries_editorial_not_implemented_marker(&scrubbed),
+                !crate::pcgen_import::wiring_class::carries_editorial_not_implemented_marker(&scrubbed),
                 "marker survived the scrub: {scrubbed:?}"
             );
         }

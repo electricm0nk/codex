@@ -144,7 +144,7 @@ def is_candidate(unit: dict) -> bool:
     """Whether `unit` is eligible for a `spell_range_entries` fixture row.
 
     Deliberately does NOT consult `wiring_class_reason`. That field is
-    `src/rules_core/wiring_class.rs::classify()`'s tie-break -- the
+    `src/pcgen_import/wiring_class.rs::classify()`'s tie-break -- the
     LEXICOGRAPHICALLY SMALLEST `derived:` signal on the row
     (`sigs.iter().filter(|s| s.starts_with("derived:")).min()`) -- so a unit
     carrying both `derived:prose_expr` and `derived:range_keyword` always

@@ -30,7 +30,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::corpus_literal_sweep::tab_tokens;
 use codex::rules_core::pi_screening::{classify_field, declared_product_identity, DeclaredProductIdentity};
 use codex::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};

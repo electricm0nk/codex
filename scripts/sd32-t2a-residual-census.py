@@ -49,7 +49,7 @@ def is_dispatched(v):
 
 def load_corpus_class_names(inventory_path):
     """Every kind=='class' unit's name, lowercased -> natural-case spelling.
-    Same population src/rules_core/cache_gen/class_feature.rs's
+    Same population src/pcgen_import/cache_gen/class_feature.rs's
     corpus_class_names_from_inventory_json() reads (and the same fact
     v06_work_inventory.rs's corpus_class_names is built from)."""
     doc = json.load(open(inventory_path))

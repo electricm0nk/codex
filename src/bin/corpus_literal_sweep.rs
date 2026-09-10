@@ -32,7 +32,7 @@ use codex::rules_core::corpus_literal_sweep::{
     compare_digest, compare_tokens, parse_document, tab_tokens, token_closure, Finding,
     ProvenanceClaim, ShippedRecord, SweepTally, SYNTHESIZED_TOKEN_KEYS,
 };
-use codex::rules_core::wiring_class::build_mod_index;
+use codex::pcgen_import::wiring_class::build_mod_index;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};

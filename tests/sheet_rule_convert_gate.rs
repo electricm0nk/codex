@@ -219,7 +219,7 @@ fn package_prose_carries_no_upstream_editorial_marker() {
     let mut hits: Vec<String> = Vec::new();
     for (name, bytes) in package_files() {
         let text = String::from_utf8_lossy(&bytes);
-        if codex::rules_core::wiring_class::carries_editorial_not_implemented_marker(&text) {
+        if codex::pcgen_import::wiring_class::carries_editorial_not_implemented_marker(&text) {
             hits.push(name);
         }
     }

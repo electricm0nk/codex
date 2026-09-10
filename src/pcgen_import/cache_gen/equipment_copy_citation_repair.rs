@@ -59,7 +59,7 @@ use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 
-use crate::rules_core::cache_gen::equipment_gap::find_citation;
+use crate::pcgen_import::cache_gen::equipment_gap::find_citation;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Refusal {

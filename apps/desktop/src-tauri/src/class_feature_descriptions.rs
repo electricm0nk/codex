@@ -20,7 +20,7 @@
 //! # Source of truth: the `cache_gen::class_feature` JSON cache, not the raw
 //! `.lst`
 //!
-//! `src/rules_core/cache_gen/class_feature.rs` (SD31-E5-F1-001) already
+//! `src/pcgen_import/cache_gen/class_feature.rs` (SD31-E5-F1-001) already
 //! transcribes every in-scope `class_feature` unit's real corpus row --
 //! `DESC:` included, already PI-screened (`§52.3`/`§53.5`, both contracts) --
 //! into `data/corpus/<book>/class_feature/<class-slug>/<feature-slug>.json`.

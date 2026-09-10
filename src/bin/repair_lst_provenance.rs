@@ -7,7 +7,7 @@
 //! `scripts/fetch-pcgen-oracle.sh`; defaults to
 //! `$HOME/workspace/repos/pcgen/data`). The full rationale, and the bar a
 //! record has to clear before its citation is narrowed, is in
-//! `rules_core::cache_gen::lst_provenance_repair`'s module doc comment.
+//! `pcgen_import::cache_gen::lst_provenance_repair`'s module doc comment.
 //!
 //! `--check` reports what would change and exits non-zero if anything would,
 //! without writing; the default run writes.
@@ -21,7 +21,7 @@
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 
-use codex::rules_core::cache_gen::lst_provenance_repair::{repair_book, RepairReport};
+use codex::pcgen_import::cache_gen::lst_provenance_repair::{repair_book, RepairReport};
 
 /// The books whose equipment records are known to carry `web_second_source`
 /// citations for corpus-derived values, each with the corpus directory its

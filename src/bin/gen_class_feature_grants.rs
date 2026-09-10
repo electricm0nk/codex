@@ -8,7 +8,7 @@
 //! Writes `data/class_feature_grants/<book>/<class-slug>.json` (a sibling
 //! tree to `data/corpus/`, deliberately not inside it) for every book
 //! `class_feature::BOOK_PRIMARY_FILES` names. See
-//! `codex::rules_core::cache_gen::class_feature_grants`'s module doc
+//! `codex::pcgen_import::cache_gen::class_feature_grants`'s module doc
 //! comment for the grant-token shapes, the resolution rules, and the
 //! correctness proof.
 //!
@@ -18,7 +18,7 @@
 
 use std::path::PathBuf;
 
-use codex::rules_core::cache_gen::class_feature_grants;
+use codex::pcgen_import::cache_gen::class_feature_grants;
 
 fn main() {
     let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {

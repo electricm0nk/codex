@@ -18,7 +18,7 @@
 //! `source.line` + `source.record_key`, e.g. `CLASS:Fighter`) -- this tool re-reads that exact
 //! cited line, plus (row 21's own finding: a `.MOD`-appended line targeting the same identity can
 //! live on a separate row) the record's full `.MOD`/`.COPY=` closure via
-//! [`codex::rules_core::cache_gen::WiringClassIndex::closure_rows_for_book`] -- the IDENTICAL
+//! [`codex::pcgen_import::cache_gen::WiringClassIndex::closure_rows_for_book`] -- the IDENTICAL
 //! closure machinery row 21 already proved safe for `class_feature`, reused here rather than a
 //! fourth mechanism (`decisions.md §17`). Operates on raw `serde_json::Value` and only ever
 //! inserts the one new `raw_tokens` key, so every other field (`class_id`, `bab`, `save_fort`,
@@ -35,7 +35,7 @@ use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::corpus_literal_sweep::tab_tokens;
 use codex::rules_core::pi_screening::{classify_field, declared_product_identity, DeclaredProductIdentity};
 use codex::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};

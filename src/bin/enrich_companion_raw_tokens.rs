@@ -60,7 +60,7 @@
 //!
 //! **R8-04 consolidation:** the file walk, citation resolution, and
 //! PI-screen-then-write sequence now live in
-//! `codex::rules_core::cache_gen::enrich_raw_tokens_shared` (shared with
+//! `codex::pcgen_import::cache_gen::enrich_raw_tokens_shared` (shared with
 //! `enrich_monster_raw_tokens.rs`/`enrich_monster_ability_raw_tokens.rs`/
 //! `enrich_spell_raw_tokens.rs` — see that module's doc comment for which
 //! axes are configurable and why). This file supplies only this kind's own
@@ -69,7 +69,7 @@
 use std::fs;
 use std::path::PathBuf;
 
-use codex::rules_core::cache_gen::enrich_raw_tokens_shared::{
+use codex::pcgen_import::cache_gen::enrich_raw_tokens_shared::{
     self as shared, EnrichConfig, Outcome,
 };
 

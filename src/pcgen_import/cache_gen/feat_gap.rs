@@ -79,7 +79,7 @@ use std::path::{Path, PathBuf};
 
 use serde::Serialize;
 
-use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::pi_screening::{self, DeclaredProductIdentity};
 use crate::rules_core::rules_tables::feat_gap_tables::feat_gap_rows_for;
 use crate::rules_core::rules_tables::RuleSetId;

@@ -40,9 +40,9 @@
 use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 
-use crate::rules_core::cache_gen::feat_gap::{declared_pi_at, find_citation, screen_prerequisites, BookSpec};
-use crate::rules_core::cache_gen::feat_gap::{CacheRecord, Completeness, FeatData, Population, Source};
-use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::feat_gap::{declared_pi_at, find_citation, screen_prerequisites, BookSpec};
+use crate::pcgen_import::cache_gen::feat_gap::{CacheRecord, Completeness, FeatData, Population, Source};
+use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::pi_screening;
 use crate::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
 use crate::rules_core::rules_tables::RuleSetId;

@@ -1,7 +1,6 @@
 //! Headless rules-core surfaces.
 
 pub mod archetype_resolver;
-pub mod cache_gen;
 pub mod character_input;
 pub mod class_feature_pool_catalog;
 pub mod codex_neutral_name;
@@ -43,7 +42,6 @@ pub mod skill_allocation;
 pub mod skinwalker_change_shape;
 pub mod source_content;
 pub mod spell_resolver;
-pub mod wiring_class;
 pub mod spellbook;
 pub mod support_state_matrix;
 pub mod trait_effects;

@@ -93,7 +93,7 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
-use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use codex::pcgen_import::race_trait_formula_binding::resolve_same_row_formula;
 use codex::rules_core::race_resolver::{

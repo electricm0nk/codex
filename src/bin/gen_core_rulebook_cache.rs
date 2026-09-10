@@ -26,8 +26,8 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
-use codex::rules_core::cache_gen::WiringClassIndex;
-use codex::rules_core::cache_gen::equipment_gap::resolve_name_or_rename;
+use codex::pcgen_import::cache_gen::WiringClassIndex;
+use codex::pcgen_import::cache_gen::equipment_gap::resolve_name_or_rename;
 use codex::rules_core::pi_screening;
 use codex::rules_core::rules_tables::crb::class_tables::{self, ClassId, ClassTableRow};
 use codex::rules_core::rules_tables::crb::equipment_tables::{self, EquipmentCategory, EquipmentTableEntry};
@@ -58,7 +58,7 @@ fn wiring_citation(source: &CorpusSource) -> Option<(&str, u32, &str)> {
 
 fn wiring_class_for_source(
     index: &WiringClassIndex,
-    lines: &mut codex::rules_core::wiring_class::CorpusLines,
+    lines: &mut codex::pcgen_import::wiring_class::CorpusLines,
     source: &CorpusSource,
 ) -> (String, Vec<String>) {
     match wiring_citation(source) {
@@ -618,7 +618,7 @@ fn main() {
         // is in neither `cache_gen::spell_lane_dump`'s nor
         // `cache_gen::spell_mod_access`'s book lists -- SD-32 cross-generator
         // sweep, 2026-08-23).
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("spell"),
             &current_spell_keys,
             &|_path, _line| true,

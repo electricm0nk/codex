@@ -3,7 +3,7 @@
 //! This is the single production port of the reference determinator
 //! (`wiring-class-determination.py`, a documentary artifact, not
 //! production code). Every consumer — `v06_work_inventory`'s classifier
-//! and `rules_core::cache_gen`'s per-book generators — calls this module
+//! and `pcgen_import::cache_gen`'s per-book generators — calls this module
 //! rather than reimplementing the rules, so the two surfaces cannot drift
 //! against each other.
 //!
@@ -958,7 +958,7 @@ pub fn determine_closure(rows: &[Option<&str>]) -> (WiringClass, String, BTreeSe
 // ---------------------------------------------------------------------------
 //
 // Shared by every real caller (`v06_work_inventory`'s classifier,
-// `rules_core::cache_gen`'s per-book generators) so a `.MOD` row's base
+// `pcgen_import::cache_gen`'s per-book generators) so a `.MOD` row's base
 // name is resolved exactly once, the same way everywhere. A unit's real
 // magnitude can live on a `.MOD` row rather than its own base row
 // (`wiring-class-determination.py` commit 9e9e6993/2e2ba619), so any

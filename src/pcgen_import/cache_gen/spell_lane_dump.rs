@@ -55,7 +55,7 @@ use std::path::Path;
 use serde::Serialize;
 
 use crate::pcgen_import::lst_parser::spell::parse_lst_spell_file;
-use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::codex_neutral_name::neutral_name;
 use crate::rules_core::pi_screening::{
     self, classify_optional_field_declared, declared_product_identity,
@@ -876,7 +876,7 @@ pub fn generate(
         // even though the file and the key both collide.
         let owned_path = format!("{}/{}", spec.dir, spec.spell_file);
         let owned_lines: std::collections::HashSet<u32> = lines_by_name.values().copied().collect();
-        crate::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        crate::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_spell_dir,
             &current_keys,
             &|path, line| path == owned_path && owned_lines.contains(&line),

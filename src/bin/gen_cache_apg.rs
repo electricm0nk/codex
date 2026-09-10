@@ -13,7 +13,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 
-use codex::rules_core::cache_gen::apg;
+use codex::pcgen_import::cache_gen::apg;
 
 fn real_now_iso8601() -> String {
     let output = Command::new("date")

@@ -18,8 +18,10 @@ What it counts
 --------------
 Under the live roots (`technical-design.md` §0's boundary table)::
 
-    src/rules_core/**   (minus cache_gen/ -- converter code on the wrong side,
-                         relocated by AT-35-E6-002 and counted from then on)
+    src/rules_core/**   (in full -- AT-35-E6-002 relocated cache_gen/ to
+                         src/pcgen_import/cache_gen/, so the carve-out that
+                         used to sit here is gone; nothing under a live root
+                         is exempt any more)
     src/saved_character/**
     src/campaign/**
     src/homebrew_authoring/**
@@ -83,7 +85,12 @@ LIVE_ROOTS = (
     "src/homebrew_authoring",
     "apps/desktop",
 )
-EXCLUDED_PREFIXES = ("src/rules_core/cache_gen/",)
+# AT-35-E6-002 emptied this. `src/rules_core/cache_gen/` was the one carve-out;
+# the directory now lives at `src/pcgen_import/cache_gen/`, which is tool side and
+# never scanned in the first place. An empty tuple is the point: no live path is
+# exempt (`acceptance-and-verification.md` §3a -- "a live path quietly added to
+# its allow-list is a defect"). test_pcgen_residue_gate.py pins it empty.
+EXCLUDED_PREFIXES: tuple[str, ...] = ()
 EXCLUDED_DIR_NAMES = frozenset({"node_modules", "dist", "target", ".git"})
 SOURCE_EXTENSIONS = frozenset({".rs", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"})
 

@@ -805,7 +805,7 @@ mod tests {
             let head = row.split('\t').next().unwrap_or("");
             if let Some(at) = head.find(".MOD") {
                 index
-                    .entry(crate::rules_core::wiring_class::mod_base_name(&head[..at]))
+                    .entry(crate::pcgen_import::wiring_class::mod_base_name(&head[..at]))
                     .or_default()
                     .push((*row).to_string());
             }

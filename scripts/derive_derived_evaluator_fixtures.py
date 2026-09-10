@@ -38,7 +38,7 @@ post-hoc" is a recorded hazard with no test covering it until now.
 
 WHAT `derived` MEANS, AND WHAT ITS BAR IS
 -----------------------------------------
-`src/rules_core/wiring_class.rs`: a row is `derived` when a magnitude-bearing
+`src/pcgen_import/wiring_class.rs`: a row is `derived` when a magnitude-bearing
 field's value is a function of a character/item scalar rather than a bare
 literal. The dashboard's own `doneness_meaning` states the bar for a `derived`
 unit: "needs an evaluator-vs-fixture check" -- the engine's evaluator output
@@ -91,7 +91,7 @@ FIXTURE = os.path.join(
 )
 CORPUS_RELATIVE_ROOT = "pathfinder/paizo/roleplaying_game"
 
-# Transcribed from `src/rules_core/wiring_class.rs` (MAGNITUDE_TOKENS,
+# Transcribed from `src/pcgen_import/wiring_class.rs` (MAGNITUDE_TOKENS,
 # SCALARS_SUBSTRING, SCALARS_WORD, has_arith). Used ONLY to find which field of
 # a row carries the derived magnitude -- never to decide a unit's class, which
 # `docs/work-inventory.json` already carries. Reproducing the field-level scan

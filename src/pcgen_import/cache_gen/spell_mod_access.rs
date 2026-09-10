@@ -55,7 +55,7 @@ use std::path::{Path, PathBuf};
 
 use serde::Serialize;
 
-use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::pi_screening::{self, declared_product_identity};
 use crate::rules_core::shape_b_v1::License;
 

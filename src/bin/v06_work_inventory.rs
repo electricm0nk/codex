@@ -95,7 +95,7 @@ use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
 use codex::rules_core::rules_tables::ultimate_combat::UcClassId;
-use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
+use codex::pcgen_import::wiring_class::{self, MAGNITUDE_TOKENS};
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
 /// Read at runtime rather than `include_str!`ed, exactly as
@@ -1059,7 +1059,7 @@ const TRAP_RULES: &[TrapRule] = &[
 ];
 
 // `MAGNITUDE_TOKENS` -- the tab-field prefixes that carry a real numeric
-// magnitude -- is imported from `codex::rules_core::wiring_class` above.
+// magnitude -- is imported from `codex::pcgen_import::wiring_class` above.
 // `wiring-class-determination.md` "Magnitude-bearing fields" is explicit
 // that the determinator MUST NOT fork this list: a second copy here would
 // drift from the one the generator itself uses to select magnitude fields,
@@ -1167,7 +1167,7 @@ fn tab_fields(line: &str) -> Vec<&str> {
 }
 
 // `mod_base_name` (resolving a `.MOD` row's base record name) lives in
-// `codex::rules_core::wiring_class` -- imported below -- and is shared by
+// `codex::pcgen_import::wiring_class` -- imported below -- and is shared by
 // this file's `mod_only_rescue` path and `wiring_class`'s own token-closure
 // index, so the two always agree about which record a `.MOD` row belongs
 // to (the same resolution `wiring-class-determination.py`'s `mod_index()`
@@ -4715,12 +4715,12 @@ fn enumerate_book(book_dir: &Path, book: &str, corpus_pc_class_names: &BTreeSet<
 }
 
 // `build_mod_index`, `CorpusLines`, and `token_closure_rows` -- the shared
-// GE-01 token-closure machinery -- live in `codex::rules_core::wiring_class`
+// GE-01 token-closure machinery -- live in `codex::pcgen_import::wiring_class`
 // so `cache_gen::*`'s per-book generators can build the same closure a
 // `.MOD` row belongs to without a second implementation. Only
 // `mod_base_name` stays local: it is also the `mod_only_rescue` path's own
 // base-name resolver, imported by name below.
-use codex::rules_core::wiring_class::{
+use codex::pcgen_import::wiring_class::{
     CorpusLines, build_copy_base_index, build_mod_index, copy_base_identity, mod_base_name,
     token_closure_rows,
 };

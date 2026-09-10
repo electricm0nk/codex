@@ -72,11 +72,11 @@ use std::path::{Path, PathBuf};
 
 use serde_json::{json, Value};
 
-use crate::rules_core::cache_gen::equipment_gap::{
+use crate::pcgen_import::cache_gen::equipment_gap::{
     disabled_identity_column, find_citation, sha256_file,
 };
 use crate::rules_core::corpus_literal_sweep::token_closure;
-use crate::rules_core::wiring_class::build_mod_index;
+use crate::pcgen_import::wiring_class::build_mod_index;
 
 /// Why one record was left alone. Every variant is reported by name rather
 /// than counted, so a run that repaired nothing says which records refused
@@ -295,8 +295,8 @@ fn refreshed_wiring_class(
         }
     }
     let row_refs: Vec<Option<&str>> = rows.iter().map(|r| Some(r.as_str())).collect();
-    let signals = crate::rules_core::wiring_class::closure_signals(&row_refs);
-    let (class, _reason) = crate::rules_core::wiring_class::classify(&signals);
+    let signals = crate::pcgen_import::wiring_class::closure_signals(&row_refs);
+    let (class, _reason) = crate::pcgen_import::wiring_class::classify(&signals);
     (class.id().to_string(), signals.into_iter().collect())
 }
 
@@ -508,7 +508,7 @@ mod tests {
             let head = row.split('\t').next().unwrap_or("");
             if let Some(at) = head.find(".MOD") {
                 index
-                    .entry(crate::rules_core::wiring_class::mod_base_name(&head[..at]))
+                    .entry(crate::pcgen_import::wiring_class::mod_base_name(&head[..at]))
                     .or_default()
                     .push((*row).to_string());
             }

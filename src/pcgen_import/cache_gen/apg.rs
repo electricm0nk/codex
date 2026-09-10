@@ -61,7 +61,7 @@ use std::path::{Path, PathBuf};
 
 use serde::Serialize;
 
-use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use crate::rules_core::pi_screening;
 use crate::rules_core::rules_tables::apg::equipment_tables::EquipmentCategory;
@@ -122,7 +122,7 @@ pub struct CacheRecord<T: Serialize> {
     pub data: T,
     pub source: Source,
     /// GE-01: what kind of evidence would prove this record done, from
-    /// `codex::rules_core::wiring_class`'s real corpus token closure --
+    /// `codex::pcgen_import::wiring_class`'s real corpus token closure --
     /// see `cache_gen::acg::CacheRecord::wiring_class`'s doc comment.
     pub wiring_class: String,
     pub wiring_class_signals: Vec<String>,
